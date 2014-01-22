@@ -1,16 +1,12 @@
 \name{htmlOptions}
 \alias{htmlOptions}
-\alias{htmlTemplate}
 \alias{mathjaxURL}
 \title{Options for HTML Conversion}
 \usage{
-  htmlOptions(toc = FALSE, toc.depth = 3,
-    template = htmlTemplate())
-
-  htmlTemplate(bootstrap = TRUE, highlight = TRUE,
-    mathjax = mathjaxURL(), css = NULL,
-    include.header = NULL, include.before = NULL,
-    include.after = NULL)
+  htmlOptions(toc = FALSE, toc.depth = 3, bootstrap = TRUE,
+    highlight = "default", mathjax = mathjaxURL(),
+    css = NULL, include.header = NULL,
+    include.before = NULL, include.after = NULL)
 
   mathjaxURL()
 }
@@ -21,19 +17,15 @@
   \item{toc.depth}{Depth of headers to include in table of
   contents}
 
-  \item{template}{HTML template to use for rendering
-  document. This should either be the path to a pandoc
-  template or an object that provides a
-  \code{pandocOptions} S3 method. Pass \code{NULL} to
-  create an HTML fragment rather than a full document.}
-
   \item{bootstrap}{\code{TRUE} to style the document using
   \href{http://getbootstrap.com}{Bootstrap}. If you pass
   \code{FALSE} you can provide your own styles using the
   \code{css} and/or \code{include.header} parameters.}
 
-  \item{highlight}{\code{TRUE} to syntax highlight R code
-  within the document.}
+  \item{highlight}{Style for syntax highlighting. Options
+  are default, pygments, kate, monochrome, espresso,
+  zenburn, haddock, and tango. Pass \code{NULL} to prevent
+  syntax highlighting.}
 
   \item{mathjax}{Include mathjax from the specified URL.
   Pass \code{NULL} to not include mathjax.}
@@ -57,12 +49,6 @@
   Define the options for converting R Markdown to HTML.
 }
 \details{
-  The \code{htmlTemplate} function provides a default
-  template that includes Bootstrap CSS, syntax
-  highlighting, and MathJax. Additional css and header and
-  footer content can also be included, and the resulting
-  HTML file is fully standalone.
-
   Paths for resources referenced from the \code{css},
   \code{include.header}, \code{include.before}, and
   \code{include.after} parameters are resolved relative to

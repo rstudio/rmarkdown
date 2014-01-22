@@ -36,6 +36,13 @@ $if(highlightjs)$
 <script src="highlight/highlight.js"></script>
 $endif$
 
+$if(highlighting-css)$
+<style type="text/css">
+code{white-space: pre;}
+$highlighting-css$
+</style>
+$endif$
+
 $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$

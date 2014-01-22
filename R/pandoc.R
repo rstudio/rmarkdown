@@ -14,18 +14,18 @@ pandocTemplateOptions <- function(template) {
     "--data-dir", dirname(template))
 }
 
-pandocPdfHighlightOptions <- function(highlightOptions) {
+pandocHighlightOptions <- function(highlightOptions) {
 
   options <- c()
 
-  if (!highlightOptions$highlight) {
+  if (is.null(highlightOptions$highlight))
     options <- c(options, "--no-highlight")
+  else {
+    highlight <-  highlightOptions$highlight
+    if (identical(highlight, "default"))
+      highlight <- "pygments"
+    options <- c(options, "--highlight-style", highlightOptions$highlight)
   }
-  else if (!is.null(highlightOptions$template)) {
-    options <- c(options, "--highlight-style",
-                          highlightOptions$template$highlight.style)
-  }
-
   options
 }
 

@@ -50,15 +50,13 @@ knitrRenderHTML <- function(format, fig.width, fig.height) {
 #'
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc.depth Depth of headers to include in table of contents
-#' @param template HTML template to use for rendering document. This should
-#'   either be the path to a pandoc template or an object that provides a
-#'   \code{pandocOptions} S3 method. Pass \code{NULL} to create an HTML fragment
-#'   rather than a full document.
 #' @param bootstrap \code{TRUE} to style the document using
 #'   \href{http://getbootstrap.com}{Bootstrap}. If you pass \code{FALSE} you can
 #'   provide your own styles using the \code{css} and/or \code{include.header}
 #'   parameters.
-#' @param highlight \code{TRUE} to syntax highlight R code within the document.
+#' @param highlight Style for syntax highlighting. Options are default,
+#'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
+#'   \code{NULL} to prevent syntax highlighting.
 #' @param mathjax Include mathjax from the specified URL. Pass \code{NULL} to
 #'   not include mathjax.
 #' @param css One or more css files to include
@@ -69,45 +67,34 @@ knitrRenderHTML <- function(format, fig.width, fig.height) {
 #' @param include.after One or more files with HTML content to be included after
 #'   the document body.
 #'
-#' @details The \code{htmlTemplate} function provides a default template that
-#'   includes Bootstrap CSS, syntax highlighting, and MathJax. Additional css
-#'   and header and footer content can also be included, and the resulting HTML
-#'   file is fully standalone.
-#'
-#'   Paths for resources referenced from the \code{css}, \code{include.header},
-#'   \code{include.before}, and \code{include.after} parameters are resolved
-#'   relative to the directory of the input document.
+#' @details Paths for resources referenced from the \code{css},
+#'   \code{include.header}, \code{include.before}, and \code{include.after}
+#'   parameters are resolved relative to the directory of the input document.
 #'
 #' @return A list of HTML options that can be passed to \code{\link{rmd2html}}.
 #'
 #' @export
 htmlOptions <- function(toc = FALSE,
                         toc.depth = 3,
-                        template = htmlTemplate()) {
+                        bootstrap = TRUE,
+                        highlight = "default",
+                        mathjax = mathjaxURL(),
+                        css = NULL,
+                        include.header = NULL,
+                        include.before = NULL,
+                        include.after = NULL) {
   structure(list(toc = toc,
                  toc.depth = toc.depth,
-                 template = htmlTemplate()),
-            class = "htmlOptions")
-}
-
-#' @rdname htmlOptions
-#' @export
-htmlTemplate <- function(bootstrap = TRUE,
-                         highlight = TRUE,
-                         mathjax = mathjaxURL(),
-                         css = NULL,
-                         include.header = NULL,
-                         include.before = NULL,
-                         include.after = NULL) {
-  structure(list(bootstrap = bootstrap,
+                 bootstrap = bootstrap,
                  highlight = highlight,
                  mathjax = mathjax,
                  css = css,
                  include.header = include.header,
                  include.before = include.before,
                  include.after = include.after),
-            class = "htmlTemplate")
+            class = "htmlOptions")
 }
+
 
 #' @rdname htmlOptions
 #' @export
@@ -121,82 +108,43 @@ mathjaxURL <- function() {
 pandocOptions.htmlOptions <- function(htmlOptions) {
 
   # base options for all HTML output
-  options <- c("--smart")
+  options <- c("--smart", "--self-contained")
 
   # table of contents
   options <- c(options, pandocTableOfContentsOptions(htmlOptions))
-
-  if (!is.null(htmlOptions$template)) {
-
-    # standalone
-    options <- c(options, "--standalone")
-
-    # check for a template path
-    if (is.character(htmlOptions$template)) {
-
-      # template and data dir
-      template <- tools::file_path_as_absolute(htmlOptions$template)
-      options <- c(options,
-                   "--template", template,
-                   "--data-dir", dirname(template))
-
-      # process math (template still needs to include mathjax js)
-      options <- c(options, "--mathjax")
-
-      # assume highlighting is taken care of by the template
-      options <- c(options, "--no-highlight")
-    }
-    # dispatch to S3
-    else  {
-      options <- c(options, pandocOptions(htmlOptions$template))
-    }
-  }
-
-  # not standalone
-  else {
-
-    # use ascii since we weren't able to include a content-type in the head
-    options <- c(options, "--ascii")
-
-    # make sure math is escaped properly (since this is a fragment the
-    # containing HTML will still need to include MathJax js)
-    options <- c(options, "--mathjax")
-  }
-
-  options
-}
-
-#' @S3method pandocOptions htmlTemplate
-pandocOptions.htmlTemplate <- function(htmlTemplate) {
-
-  # self-contained html
-  options <- c("--self-contained")
 
   # template path and assets
   options <- c(options, pandocTemplateOptions("html/default.html"))
 
   # bootstrap
-  if (htmlTemplate$bootstrap)
+  if (htmlOptions$bootstrap)
     options <- c(options, "--variable", "bootstrap")
 
   # highlighting
-  options <- c(options, "--no-highlight")
-  if (htmlTemplate$highlight)
+  if (is.null(htmlOptions$highlight)) {
+    options <- c(options, "--no-highlight")
+  }
+  else if (identical(htmlOptions$highlight, "default")) {
+    options <- c(options, "--no-highlight")
     options <- c(options, "--variable", "highlightjs")
+  }
+  else {
+    options <- c(options, "--highlight-style", htmlOptions$highlight)
+  }
 
   # mathjax
-  if (!is.null(htmlTemplate$mathjax)) {
+  if (!is.null(htmlOptions$mathjax)) {
     options <- c(options, "--mathjax")
     options <- c(options,
-                 "--variable", paste0("mathjax-url:", htmlTemplate$mathjax))
+                 "--variable", paste0("mathjax-url:", htmlOptions$mathjax))
   }
 
   # additional css
-  for (css in htmlTemplate$css)
+  for (css in htmlOptions$css)
     options <- c(options, "--css", css)
 
   # content includes
-  options <- c(options, pandocIncludeOptions(htmlTemplate))
+  options <- c(options, pandocIncludeOptions(htmlOptions))
 
   options
 }
