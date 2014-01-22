@@ -30,6 +30,20 @@ rmd2html <- function(input,
 }
 
 
+#' @rdname knitrRender
+#' @export
+knitrRenderHTML <- function(format, fig.width, fig.height) {
+
+  # inherit defaults
+  knitrRender(format)
+
+  # graphics device
+  knitr::opts_chunk$set(dev = 'png',
+                        fig.width = fig.width,
+                        fig.height = fig.height)
+}
+
+
 #' Options for HTML Conversion
 #'
 #' Define the options for converting R Markdown to HTML.

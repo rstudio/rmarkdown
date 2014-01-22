@@ -29,6 +29,28 @@ rmd2pdf <- function(input,
   rmd2pandoc(input, "latex", output, options, envir, quiet, encoding)
 }
 
+
+
+#' @rdname knitrRender
+#' @export
+knitrRenderPDF <- function(format, fig.width, fig.height) {
+
+  # inherit defaults
+  knitrRender(format)
+
+  # crop
+  knitr::knit_hooks$set(crop = knitr::hook_pdfcrop)
+
+  # graphics device
+  knitr::opts_chunk$set(dev = 'cairo_pdf',
+                        fig.width = fig.width,
+                        fig.height = fig.height)
+}
+
+
+
+
+
 #' Options for PDF conversion
 #'
 #' Define the options for converting R Markdown to PDF.

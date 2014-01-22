@@ -19,3 +19,4 @@ Collate:
     'rmd2pdf.R'
     'pandoc.R'
     'rmd2pandoc.R'
+    'rmd2docx.R'

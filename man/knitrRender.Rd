@@ -1,14 +1,17 @@
-\name{knitrRender}
+\name{knitrRenderHTML}
 \alias{knitrRender}
+\alias{knitrRenderDOCX}
 \alias{knitrRenderHTML}
 \alias{knitrRenderPDF}
 \title{Set knitr hooks and options for rendering R Markdown}
 \usage{
-  knitrRender(format)
-
   knitrRenderHTML(format, fig.width, fig.height)
 
   knitrRenderPDF(format, fig.width, fig.height)
+
+  knitrRender(format)
+
+  knitrRenderDOCX(format, fig.width, fig.height)
 }
 \arguments{
   \item{format}{Pandoc format being rendered (used to
