@@ -21,10 +21,10 @@ pandocHighlightOptions <- function(highlightOptions) {
   if (is.null(highlightOptions$highlight))
     options <- c(options, "--no-highlight")
   else {
-    highlight <-  highlightOptions$highlight
+    highlight <- highlightOptions$highlight
     if (identical(highlight, "default"))
       highlight <- "pygments"
-    options <- c(options, "--highlight-style", highlightOptions$highlight)
+    options <- c(options, "--highlight-style", highlight)
   }
   options
 }
