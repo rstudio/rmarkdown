@@ -81,10 +81,14 @@ rmd2pandoc <- function(input,
   }
 
   # run the conversion
-  pandocExec(pandoc, args)
+  result <- pandocExec(pandoc, args)
 
-  # return the full path to the output file
-  invisible(tools::file_path_as_absolute(output))
+  # if we succeeded then return the full path of the output file,
+  # else throw an error
+  if (result == 0)
+    invisible(tools::file_path_as_absolute(output))
+  else
+    stop("pandoc document conversion failed", call. = FALSE)
 }
 
 
