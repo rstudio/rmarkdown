@@ -2,6 +2,7 @@
 \alias{knitrRender}
 \alias{knitrRenderDOCX}
 \alias{knitrRenderHTML}
+\alias{knitrRenderODT}
 \alias{knitrRenderPDF}
 \title{Set knitr hooks and options for rendering R Markdown}
 \usage{
@@ -12,6 +13,8 @@
   knitrRender(format)
 
   knitrRenderDOCX(format, fig.width, fig.height)
+
+  knitrRenderODT(format, fig.width, fig.height)
 }
 \arguments{
   \item{format}{Pandoc format being rendered (used to

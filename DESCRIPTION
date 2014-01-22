@@ -20,3 +20,4 @@ Collate:
     'pandoc.R'
     'rmd2pandoc.R'
     'rmd2docx.R'
+    'rmd2odt.R'
