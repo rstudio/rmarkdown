@@ -24,9 +24,9 @@
   - Bullet Text}}}
 
   \item{highlight}{Style for syntax highlighting. Options
-  are pygments, kate, monochrome, espresso, zenburn,
-  haddock, and tango. Pass \code{NULL} to prevent syntax
-  highlighting.}
+  are default, pygments, kate, monochrome, espresso,
+  zenburn, haddock, and tango. Pass \code{NULL} to prevent
+  syntax highlighting.}
 
   \item{include.header}{One or more files with LaTeX
   content to be included in the header of the document.}

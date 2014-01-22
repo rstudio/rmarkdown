@@ -43,9 +43,9 @@ rmd2beamer <- function(input,
 #'   that if you want to reverse the default incremental behavior for an
 #'   individual bullet you can preceded it with \code{>}. For example:
 #'   \emph{\code{> - Bullet Text}}
-#' @param highlight Style for syntax highlighting. Options are pygments, kate,
-#'   monochrome, espresso, zenburn, haddock, and tango. Pass \code{NULL} to
-#'   prevent syntax highlighting.
+#' @param highlight Style for syntax highlighting. Options are default,
+#'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
+#'   \code{NULL} to prevent syntax highlighting.
 #' @param include.header One or more files with LaTeX content to be included in
 #'   the header of the document.
 #' @param include.before One or more files with LaTeX content to be included
