@@ -25,4 +25,7 @@ A character vector of options that can be passed to
 Define the options for converting R Markdown to
 OpenDocument odt
 }
+\seealso{
+\code{\link{rmd2odt}}
+}
 

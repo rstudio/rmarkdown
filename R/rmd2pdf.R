@@ -99,6 +99,8 @@ knitrRenderPDF <- function(format, fig.width, fig.height) {
 #' @return A character vector of PDF options that can be passed to
 #'   \code{\link{rmd2pdf}}.
 #'
+#' @seealso \code{\link{rmd2pdf}}
+#'
 #' @export
 pdfOptions <- function(...,
                        toc = FALSE,

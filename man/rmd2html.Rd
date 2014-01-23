@@ -9,7 +9,7 @@ rmd2html(input, options = htmlOptions(), output = NULL,
   \item{input}{Input Rmd document}
 
   \item{options}{Character vector of pandoc options created
-  by calling \code{htmlOptions}}
+  by calling \code{\link{htmlOptions}}}
 
   \item{output}{Target output file (defaults to
   <input>.html if not specified)}
@@ -29,6 +29,21 @@ The compiled document is written into the output file, and
 the path of the output file is returned.
 }
 \description{
-Converts an R Markdown (Rmd) file to HTML
+Converts an R Markdown (Rmd) file to HTML. The document is
+\code{\link[knitr:knit]{knit}} and then converted to HTML
+using
+\href{http://johnmacfarlane.net/pandoc/index.html}{pandoc}.
+}
+\section{Metadata}{
+  Rmd files include a metadata section (typically located
+  at the top of the file) that include title, author, and
+  date information. Here is an example metadata section:
+
+  \tabular{l}{ \code{---} \cr \code{title: "Crop Analysis
+  Q3 2013"} \cr \code{author: Martha Smith} \cr \code{date:
+  October 23rd, 2013} \cr \code{---} }
+}
+\seealso{
+\code{\link[knitr:knit]{knit}}, \code{\link{htmlOptions}},
 }
 

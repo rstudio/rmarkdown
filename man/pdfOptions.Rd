@@ -42,4 +42,7 @@ A character vector of PDF options that can be passed to
 \description{
 Define the options for converting R Markdown to PDF.
 }
+\seealso{
+\code{\link{rmd2pdf}}
+}
 

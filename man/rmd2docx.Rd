@@ -9,7 +9,7 @@ rmd2docx(input, options = docxOptions(), output = NULL,
   \item{input}{input Rmd document}
 
   \item{options}{Character vector of pandoc options created
-  by calling \code{docxOptions}}
+  by calling \code{\link{docxOptions}}}
 
   \item{output}{Target output file (defaults to
   <input>.docx if not specified)}
@@ -29,6 +29,21 @@ The compiled document is written into the output file, and
 the path of the output file is returned.
 }
 \description{
-Converts an R Markdown (Rmd) file to an MS Word docx
+Converts an R Markdown (Rmd) file to an MS Word docx. The
+document is \code{\link[knitr:knit]{knit}} and then
+converted to docx using
+\href{http://johnmacfarlane.net/pandoc/index.html}{pandoc}.
+}
+\section{Metadata}{
+  Rmd files include a metadata section (typically located
+  at the top of the file) that include title, author, and
+  date information. Here is an example metadata section:
+
+  \tabular{l}{ \code{---} \cr \code{title: "Crop Analysis
+  Q3 2013"} \cr \code{author: Martha Smith} \cr \code{date:
+  October 23rd, 2013} \cr \code{---} }
+}
+\seealso{
+\code{\link[knitr:knit]{knit}}, \code{\link{docxOptions}},
 }
 

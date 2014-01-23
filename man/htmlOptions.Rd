@@ -44,4 +44,7 @@ A character vector of HTML options that can be passed to
 \description{
 Define the options for converting R Markdown to HTML.
 }
+\seealso{
+\code{\link{rmd2html}}
+}
 

@@ -79,6 +79,8 @@ rmd2beamer <- function(input,
 #' @return A character vector of options that can be passed to
 #'   \code{\link{rmd2beamer}}.
 #'
+#' @seealso \code{\link{rmd2beamer}}
+#'
 #' @export
 beamerOptions <- function(...,
                           toc = FALSE,

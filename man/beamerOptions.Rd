@@ -39,4 +39,7 @@ A character vector of options that can be passed to
 \description{
 Define the options for converting R Markdown to Beamer
 }
+\seealso{
+\code{\link{rmd2beamer}}
+}
 

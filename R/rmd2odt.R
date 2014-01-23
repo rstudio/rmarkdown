@@ -1,10 +1,12 @@
 #' Convert R Markdown to OpenDocument Text
 #'
-#' Converts an R Markdown (Rmd) file to an OpenDocument odt file
+#' Converts an R Markdown (Rmd) file to an OpenDocument odt file. The document
+#' is \code{\link[knitr:knit]{knit}} and then converted to odt using
+#' \href{http://johnmacfarlane.net/pandoc/index.html}{pandoc}.
 #'
 #' @param input input Rmd document
 #' @param options Character vector of pandoc options created by calling
-#'   \code{odtOptions}
+#'   \code{\link{odtOptions}}
 #' @param output Target output file (defaults to <input>.odt if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
 #'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
@@ -13,6 +15,19 @@
 #'
 #' @return The compiled document is written into the output file, and the path
 #'   of the output file is returned.
+#'
+#' @section Metadata:
+#'  Rmd files include a metadata section (typically located at the top of the file) that include title, author, and date information. Here is an example metadata section:
+#'
+#' \tabular{l}{
+#' \code{---} \cr
+#' \code{title: "Crop Analysis Q3 2013"} \cr
+#' \code{author: Martha Smith} \cr
+#' \code{date: October 23rd, 2013} \cr
+#' \code{---}
+#' }
+#'
+#' @seealso \code{\link[knitr:knit]{knit}}, \code{\link{odtOptions}},
 #'
 #' @export
 rmd2odt <- function(input,
@@ -59,6 +74,8 @@ knitrRenderODT <- function(format, fig.width, fig.height) {
 #'
 #' @return A character vector of options that can be passed to
 #'   \code{\link{rmd2odt}}.
+#'
+#' @seealso \code{\link{rmd2odt}}
 #'
 #' @export
 odtOptions <- function(...,

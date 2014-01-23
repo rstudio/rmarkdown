@@ -1,10 +1,12 @@
 #' Convert R Markdown to HTML
 #'
-#' Converts an R Markdown (Rmd) file to HTML
+#' Converts an R Markdown (Rmd) file to HTML. The document is
+#' \code{\link[knitr:knit]{knit}} and then converted to HTML using
+#' \href{http://johnmacfarlane.net/pandoc/index.html}{pandoc}.
 #'
 #' @param input Input Rmd document
 #' @param options Character vector of pandoc options created by calling
-#'   \code{htmlOptions}
+#'   \code{\link{htmlOptions}}
 #' @param output Target output file (defaults to <input>.html if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
 #'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
@@ -13,6 +15,20 @@
 #'
 #' @return The compiled document is written into the output file, and the path
 #'   of the output file is returned.
+#'
+#' @section Metadata:
+#'  Rmd files include a metadata section (typically located at the top of the file) that include title, author, and date information. Here is an example metadata section:
+#'
+#' \tabular{l}{
+#' \code{---} \cr
+#' \code{title: "Crop Analysis Q3 2013"} \cr
+#' \code{author: Martha Smith} \cr
+#' \code{date: October 23rd, 2013} \cr
+#' \code{---}
+#' }
+#'
+#' @seealso \code{\link[knitr:knit]{knit}}, \code{\link{htmlOptions}},
+#'
 #'
 #' @export
 rmd2html <- function(input,
@@ -66,6 +82,8 @@ knitrRenderHTML <- function(format, fig.width, fig.height) {
 #'
 #' @return A character vector of HTML options that can be passed to
 #'   \code{\link{rmd2html}}.
+#'
+#' @seealso \code{\link{rmd2html}}
 #'
 #' @export
 htmlOptions <- function(...,
