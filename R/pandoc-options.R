@@ -1,5 +1,5 @@
 
-#' Convenience Functions for Generating Pandoc Options
+#' Functions for Generating Pandoc Options
 #'
 #' Functions that assist in creating various types of pandoc command line
 #' options (e.g. for templates, table of contents, highlighting, and content
@@ -23,7 +23,8 @@
 #'   \code{include.header}, \code{include.before}, and \code{include.after}
 #'   parameters are resolved relative to the directory of the input document.
 #'
-#' @rdname pandocOptions
+#' @name pandocOptions
+#' @aliases includeOptions
 #' @export
 includeOptions <- function(header = NULL,
                            before.body = NULL,

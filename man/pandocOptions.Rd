@@ -1,9 +1,10 @@
-\name{includeOptions}
+\name{pandocOptions}
 \alias{highlightOptions}
 \alias{includeOptions}
+\alias{pandocOptions}
 \alias{tableOfContentsOptions}
 \alias{templateOptions}
-\title{Convenience Functions for Generating Pandoc Options}
+\title{Functions for Generating Pandoc Options}
 \usage{
 includeOptions(header = NULL, before.body = NULL, after.body = NULL)
 
