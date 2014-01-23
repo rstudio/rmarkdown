@@ -48,6 +48,7 @@ knitrRenderHTML <- function(format, out.width, out.height) {
 #'
 #' Define the options for converting R Markdown to HTML.
 #'
+#' @param \dots Command line options to pass to pandoc
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc.depth Depth of headers to include in table of contents
 #' @param theme Visual theme ("default", "cerulean", or "slate"). Pass
@@ -66,7 +67,8 @@ knitrRenderHTML <- function(format, out.width, out.height) {
 #'   \code{\link{rmd2html}}.
 #'
 #' @export
-htmlOptions <- function(toc = FALSE,
+htmlOptions <- function(...,
+                        toc = FALSE,
                         toc.depth = 3,
                         theme = "default",
                         highlight = "default",
@@ -114,6 +116,9 @@ htmlOptions <- function(toc = FALSE,
 
   # content includes
   options <- c(options, includes)
+
+  # dots
+  options <- c(options, as.character(list(...)))
 
   options
 }

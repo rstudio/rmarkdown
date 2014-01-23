@@ -34,6 +34,7 @@ rmd2beamer <- function(input,
 #'
 #' Define the options for converting R Markdown to Beamer
 #'
+#' @param \dots Command line options to pass to pandoc
 #' @param toc \code{TRUE} to include a table of contents in the output (only
 #'   level 1 headers will be included in the table of contents).
 #' @param slide.level The heading level which defines indvidual slides. By
@@ -53,7 +54,8 @@ rmd2beamer <- function(input,
 #'   \code{\link{rmd2beamer}}.
 #'
 #' @export
-beamerOptions <- function(toc = FALSE,
+beamerOptions <- function(...,
+                          toc = FALSE,
                           slide.level = 2,
                           incremental = FALSE,
                           highlight = "default",
@@ -80,6 +82,9 @@ beamerOptions <- function(toc = FALSE,
 
   # content includes
   options <- c(options, includes)
+
+  # dots
+  options <- c(options, as.character(list(...)))
 
   options
 }

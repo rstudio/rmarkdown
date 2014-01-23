@@ -2,9 +2,11 @@
 \alias{odtOptions}
 \title{Options for OpenDocument conversion}
 \usage{
-odtOptions(highlight = "default", reference.odt = NULL)
+odtOptions(..., highlight = "default", reference.odt = NULL)
 }
 \arguments{
+  \item{\dots}{Command line options to pass to pandoc}
+
   \item{highlight}{Style for syntax highlighting. Options
   are default, pygments, kate, monochrome, espresso,
   zenburn, haddock, and tango. Pass \code{NULL} to prevent

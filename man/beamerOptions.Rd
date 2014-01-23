@@ -2,10 +2,12 @@
 \alias{beamerOptions}
 \title{Options for Beamer conversion}
 \usage{
-beamerOptions(toc = FALSE, slide.level = 2, incremental = FALSE,
+beamerOptions(..., toc = FALSE, slide.level = 2, incremental = FALSE,
   highlight = "default", includes = NULL)
 }
 \arguments{
+  \item{\dots}{Command line options to pass to pandoc}
+
   \item{toc}{\code{TRUE} to include a table of contents in
   the output (only level 1 headers will be included in the
   table of contents).}

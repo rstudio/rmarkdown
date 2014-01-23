@@ -2,10 +2,12 @@
 \alias{pdfOptions}
 \title{Options for PDF conversion}
 \usage{
-pdfOptions(toc = FALSE, toc.depth = 2, number.sections = FALSE,
+pdfOptions(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
   geometry = c(margin = "1in"), highlight = "default", includes = NULL)
 }
 \arguments{
+  \item{\dots}{Command line options to pass to pandoc}
+
   \item{toc}{\code{TRUE} to include a table of contents in
   the output}
 

@@ -48,6 +48,7 @@ knitrRenderODT <- function(format, fig.width, fig.height) {
 #'
 #' Define the options for converting R Markdown to OpenDocument odt
 #'
+#' @param \dots Command line options to pass to pandoc
 #' @param highlight Style for syntax highlighting. Options are default,
 #'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
 #'   \code{NULL} to prevent syntax highlighting.
@@ -59,7 +60,8 @@ knitrRenderODT <- function(format, fig.width, fig.height) {
 #'   \code{\link{rmd2odt}}.
 #'
 #' @export
-odtOptions <- function(highlight = "default",
+odtOptions <- function(...,
+                       highlight = "default",
                        reference.odt = NULL) {
 
   # base options for all odt output
@@ -74,6 +76,9 @@ odtOptions <- function(highlight = "default",
                  "--reference-odt",
                  tools::file_path_as_absolute(reference.odt))
   }
+
+  # dots
+  options <- c(options, as.character(list(...)))
 
   options
 }

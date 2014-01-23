@@ -52,6 +52,7 @@ knitrRenderPDF <- function(format, fig.width, fig.height) {
 #'
 #' Define the options for converting R Markdown to PDF.
 #'
+#' @param \dots Command line options to pass to pandoc
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc.depth Depth of headers to include in table of contents
 #' @param number.sections \code{TRUE} Number section headings
@@ -66,7 +67,8 @@ knitrRenderPDF <- function(format, fig.width, fig.height) {
 #'   \code{\link{rmd2pdf}}.
 #'
 #' @export
-pdfOptions <- function(toc = FALSE,
+pdfOptions <- function(...,
+                       toc = FALSE,
                        toc.depth = 2,
                        number.sections = FALSE,
                        geometry = c(margin = "1in"),
@@ -96,6 +98,9 @@ pdfOptions <- function(toc = FALSE,
 
   # content includes
   options <- c(options, includes)
+
+  # dots
+  options <- c(options, as.character(list(...)))
 
   options
 }
