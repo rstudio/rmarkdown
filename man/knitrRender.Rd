@@ -2,7 +2,6 @@
 \alias{knitrRender}
 \alias{knitrRenderDOCX}
 \alias{knitrRenderHTML}
-\alias{knitrRenderODT}
 \alias{knitrRenderPDF}
 \title{Set knitr hooks and options for rendering R Markdown}
 \usage{
@@ -11,8 +10,6 @@ knitrRender(format)
 knitrRenderDOCX(format, fig.width, fig.height)
 
 knitrRenderHTML(format, fig.width, fig.height)
-
-knitrRenderODT(format, fig.width, fig.height)
 
 knitrRenderPDF(format, fig.width, fig.height)
 }
