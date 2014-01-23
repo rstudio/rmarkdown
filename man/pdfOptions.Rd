@@ -3,7 +3,7 @@
 \title{Options for PDF conversion}
 \usage{
 pdfOptions(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
-  geometry = c(margin = "1in"), highlight = "default", includes = NULL)
+  highlight = "default", geometry = c(margin = "1in"), includes = NULL)
 }
 \arguments{
   \item{\dots}{Command line options to pass to pandoc}
@@ -17,13 +17,13 @@ pdfOptions(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
   \item{number.sections}{\code{TRUE} Number section
   headings}
 
-  \item{geometry}{Named LaTeX geometry options for the
-  document.}
-
   \item{highlight}{Style for syntax highlighting. Options
   are default, pygments, kate, monochrome, espresso,
   zenburn, haddock, and tango. Pass \code{NULL} to prevent
   syntax highlighting.}
+
+  \item{geometry}{Named LaTeX geometry options for the
+  document.}
 
   \item{includes}{Additional content to include within the
   document (typically created using the

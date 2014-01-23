@@ -56,10 +56,10 @@ knitrRenderPDF <- function(format, fig.width, fig.height) {
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc.depth Depth of headers to include in table of contents
 #' @param number.sections \code{TRUE} Number section headings
-#' @param geometry Named LaTeX geometry options for the document.
 #' @param highlight Style for syntax highlighting. Options are default,
 #'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
 #'   \code{NULL} to prevent syntax highlighting.
+#' @param geometry Named LaTeX geometry options for the document.
 #' @param includes Additional content to include within the document (typically
 #'   created using the \code{\link{includeOptions}} function).
 #'
@@ -71,8 +71,8 @@ pdfOptions <- function(...,
                        toc = FALSE,
                        toc.depth = 2,
                        number.sections = FALSE,
-                       geometry = c(margin = "1in"),
                        highlight = "default",
+                       geometry = c(margin = "1in"),
                        includes = NULL) {
 
   # base options for all PDF output
@@ -85,6 +85,9 @@ pdfOptions <- function(...,
   if (number.sections)
     options <- c(options, "--number-sections")
 
+  # highlighting
+  options <- c(options, highlightOptions(highlight))
+
   # geometry
   for (name in names(geometry)) {
     value <- geometry[[name]]
@@ -92,9 +95,6 @@ pdfOptions <- function(...,
               "--variable",
               paste0("geometry:", name, "=", value))
   }
-
-  # highlighting
-  options <- c(options, highlightOptions(highlight))
 
   # content includes
   options <- c(options, includes)
