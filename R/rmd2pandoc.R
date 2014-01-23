@@ -74,8 +74,8 @@ rmd2pandoc <- function(input,
 
   # show pandoc command line if requested
   if (!quiet) {
-    cat(paste0(shQuote(pandoc), " "))
-    cat(paste(shQuote(args), collapse=" "))
+    cat(paste0(pandoc, " "))
+    cat(paste(args, collapse=" "))
     cat("\n")
   }
 
