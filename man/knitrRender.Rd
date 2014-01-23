@@ -10,7 +10,7 @@ knitrRender(format)
 
 knitrRenderDOCX(format, fig.width, fig.height)
 
-knitrRenderHTML(format, out.width, out.height)
+knitrRenderHTML(format, fig.width, fig.height)
 
 knitrRenderODT(format, fig.width, fig.height)
 
@@ -23,10 +23,6 @@ knitrRenderPDF(format, fig.width, fig.height)
   \item{fig.width}{Default width (in inches) for figures}
 
   \item{fig.height}{Default height (in inches) for figures}
-
-  \item{out.width}{Default width (in pixels) for figures}
-
-  \item{out.height}{Default height (in pixels) for figures}
 }
 \description{
 These functions set knitr hooks and options for markdown
