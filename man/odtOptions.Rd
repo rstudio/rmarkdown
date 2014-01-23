@@ -16,7 +16,7 @@ odtOptions(highlight = "default", reference.odt = NULL)
   produced using pandoc.}
 }
 \value{
-A list of options that can be passed to
+A character vector of options that can be passed to
 \code{\link{rmd2odt}}.
 }
 \description{

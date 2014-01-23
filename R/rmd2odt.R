@@ -3,7 +3,7 @@
 #' Converts an R Markdown (Rmd) file to an OpenDocument odt file
 #'
 #' @param input input Rmd document
-#' @param options List of OpenDocument rendering options created by calling
+#' @param options Character vector of pandoc options created by calling
 #'   \code{odtOptions}
 #' @param output Target output file (defaults to <input>.odt if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
@@ -51,38 +51,31 @@ knitrRenderODT <- function(format, fig.width, fig.height) {
 #' @param highlight Style for syntax highlighting. Options are default,
 #'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
 #'   \code{NULL} to prevent syntax highlighting.
-#' @param reference.odt Use the specified file as a style reference in
-#'   producing an odt file. For best results, the reference odt should be a
-#'   modified version of a odt file produced using pandoc.
+#' @param reference.odt Use the specified file as a style reference in producing
+#'   an odt file. For best results, the reference odt should be a modified
+#'   version of a odt file produced using pandoc.
 #'
-#' @return A list of options that can be passed to \code{\link{rmd2odt}}.
+#' @return A character vector of options that can be passed to
+#'   \code{\link{rmd2odt}}.
 #'
 #' @export
 odtOptions <- function(highlight = "default",
                        reference.odt = NULL) {
-  structure(list(highlight = highlight,
-                 reference.odt = reference.odt),
-            class = "odtOptions")
-}
-
-
-#' @S3method pandocOptions odtOptions
-pandocOptions.odtOptions <- function(options) {
 
   # base options for all odt output
-  args <- c()
+  options <- c()
 
   # highlighting
-  args <- c(args, pandocHighlightOptions(options))
+  options <- c(options, highlightOptions(highlight))
 
   # reference docx
-  if (!is.null(options$reference.odt)) {
-    args <- c(args,
-              "--reference-odt",
-              tools::file_path_as_absolute(options$reference.odt))
+  if (!is.null(reference.odt)) {
+    options <- c(options,
+                 "--reference-odt",
+                 tools::file_path_as_absolute(reference.odt))
   }
 
-  args
+  options
 }
 
 

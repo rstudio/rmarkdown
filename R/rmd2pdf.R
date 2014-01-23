@@ -3,7 +3,7 @@
 #' Converts an R Markdown (Rmd) file to PDF
 #'
 #' @param input Input Rmd document
-#' @param options List of PDF rendering options created by calling
+#' @param options Character vector of pandoc options created by calling
 #'   \code{pdfOptions}
 #' @param output Target output file (defaults to <input>.pdf if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
@@ -60,9 +60,10 @@ knitrRenderPDF <- function(format, fig.width, fig.height) {
 #'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
 #'   \code{NULL} to prevent syntax highlighting.
 #' @param includes Additional content to include within the document (typically
-#'   created using the \code{\link{pandocIncludeOptions}} function).
+#'   created using the \code{\link{includeOptions}} function).
 #'
-#' @return A list of PDF options that can be passed to \code{\link{rmd2pdf}}.
+#' @return A character vector of PDF options that can be passed to
+#'   \code{\link{rmd2pdf}}.
 #'
 #' @export
 pdfOptions <- function(toc = FALSE,
@@ -71,41 +72,30 @@ pdfOptions <- function(toc = FALSE,
                        geometry = c(margin = "1in"),
                        highlight = "default",
                        includes = NULL) {
-  structure(list(toc = toc,
-                 toc.depth = toc.depth,
-                 number.sections = number.sections,
-                 geometry = geometry,
-                 highlight = highlight,
-                 includes = includes),
-            class = "pdfOptions")
-}
-
-#' @S3method pandocOptions pdfOptions
-pandocOptions.pdfOptions <- function(options) {
 
   # base options for all PDF output
-  args <- c()
+  options <- c()
 
   # table of contents
-  args <- c(args, pandocTableOfContentsOptions(options))
+  options <- c(options, tableOfContentsOptions(toc, toc.depth))
 
   # numbered sections
-  if (options$number.sections)
-    args <- c(args, "--number-sections")
+  if (number.sections)
+    options <- c(options, "--number-sections")
 
   # geometry
-  for (name in names(options$geometry)) {
-    value <- options$geometry[[name]]
-    args <- c(args,
+  for (name in names(geometry)) {
+    value <- geometry[[name]]
+    options <- c(options,
               "--variable",
               paste0("geometry:", name, "=", value))
   }
 
   # highlighting
-  args <- c(args, pandocHighlightOptions(options))
+  options <- c(options, highlightOptions(highlight))
 
   # content includes
-  args <- c(args, pandocOptions(options$includes))
+  options <- c(options, includes)
 
-  args
+  options
 }

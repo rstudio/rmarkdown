@@ -8,7 +8,7 @@ rmd2beamer(input, options = beamerOptions(), output = NULL,
 \arguments{
   \item{input}{input Rmd document}
 
-  \item{options}{List of Beamer rendering options created
+  \item{options}{Character vector of pandoc options created
   by calling \code{beamerOptions}}
 
   \item{output}{Target output file (defaults to <input>.pdf

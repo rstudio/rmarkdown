@@ -3,8 +3,8 @@
 #' Converts an R Markdown (Rmd) file to HTML
 #'
 #' @param input Input Rmd document
-#' @param options List of HTML rendering options created by calling
-#'   \code{\link{htmlOptions}}
+#' @param options Character vector of pandoc options created by calling
+#'   \code{htmlOptions}
 #' @param output Target output file (defaults to <input>.html if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
 #'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
@@ -61,9 +61,10 @@ knitrRenderHTML <- function(format, fig.width, fig.height) {
 #'   not include mathjax.
 #' @param css One or more css files to include
 #' @param includes Additional content to include within the document (typically
-#'   created using the \code{\link{pandocIncludeOptions}} function).
+#'   created using the \code{\link{includeOptions}} function).
 #'
-#' @return A list of HTML options that can be passed to \code{\link{rmd2html}}.
+#' @return A character vector of HTML options that can be passed to
+#'   \code{\link{rmd2html}}.
 #'
 #' @export
 htmlOptions <- function(toc = FALSE,
@@ -73,65 +74,51 @@ htmlOptions <- function(toc = FALSE,
                         mathjax = mathjaxURL(),
                         css = NULL,
                         includes = NULL) {
-  structure(list(toc = toc,
-                 toc.depth = toc.depth,
-                 bootstrap = bootstrap,
-                 highlight = highlight,
-                 mathjax = mathjax,
-                 css = css,
-                 includes = includes),
-            class = "htmlOptions")
-}
 
+  # base options for all HTML output
+  options <- c("--smart", "--self-contained")
+
+  # table of contents
+  options <- c(options, tableOfContentsOptions(toc, toc.depth))
+
+  # template path and assets
+  options <- c(options, templateOptions(pandocTemplate("html/default.html")))
+
+  # bootstrap
+  if (bootstrap)
+    options <- c(options, "--variable", "bootstrap")
+
+  # highlighting
+  if (is.null(highlight)) {
+    options <- c(options, "--no-highlight")
+  }
+  else if (identical(highlight, "default")) {
+    options <- c(options, "--no-highlight")
+    options <- c(options, "--variable", "highlightjs")
+  }
+  else {
+    options <- c(options, "--highlight-style", highlight)
+  }
+
+  # mathjax
+  if (!is.null(mathjax)) {
+    options <- c(options, "--mathjax")
+    options <- c(options, "--variable", paste0("mathjax-url:", mathjax))
+  }
+
+  # additional css
+  for (cssFile in css)
+    options <- c(options, "--css", cssFile)
+
+  # content includes
+  options <- c(options, includes)
+
+  options
+}
 
 #' @rdname htmlOptions
 #' @export
 mathjaxURL <- function() {
   paste0("https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js",
          "?config=TeX-AMS-MML_HTMLorMML")
-}
-
-
-#' @S3method pandocOptions htmlOptions
-pandocOptions.htmlOptions <- function(options) {
-
-  # base options for all HTML output
-  args <- c("--smart", "--self-contained")
-
-  # table of contents
-  args <- c(args, pandocTableOfContentsOptions(options))
-
-  # template path and assets
-  args <- c(args, pandocTemplateOptions(pandocTemplate("html/default.html")))
-
-  # bootstrap
-  if (options$bootstrap)
-    args <- c(args, "--variable", "bootstrap")
-
-  # highlighting
-  if (is.null(options$highlight)) {
-    args <- c(args, "--no-highlight")
-  }
-  else if (identical(options$highlight, "default")) {
-    args <- c(args, "--no-highlight")
-    args <- c(args, "--variable", "highlightjs")
-  }
-  else {
-    args <- c(args, "--highlight-style", options$highlight)
-  }
-
-  # mathjax
-  if (!is.null(options$mathjax)) {
-    args <- c(args, "--mathjax")
-    args <- c(args, "--variable", paste0("mathjax-url:", options$mathjax))
-  }
-
-  # additional css
-  for (css in options$css)
-    args <- c(args, "--css", css)
-
-  # content includes
-  args <- c(args, pandocOptions(options$includes))
-
-  args
 }

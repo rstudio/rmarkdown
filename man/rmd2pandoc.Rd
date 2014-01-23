@@ -10,10 +10,8 @@ rmd2pandoc(input, to, options = NULL, output = NULL,
 
   \item{to}{Pandoc format to convert to}
 
-  \item{options}{Command line options to pass to pandoc.
-  This should either be a character vector of literal
-  command line options or an object that provides a
-  \code{pandocOptions} S3 method which yields the options.}
+  \item{options}{Character vector of command line options
+  to pass to pandoc.}
 
   \item{output}{Output file (if not specified then a
   default based on the specified \code{to} format is

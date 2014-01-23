@@ -8,8 +8,8 @@ rmd2odt(input, options = odtOptions(), output = NULL,
 \arguments{
   \item{input}{input Rmd document}
 
-  \item{options}{List of OpenDocument rendering options
-  created by calling \code{odtOptions}}
+  \item{options}{Character vector of pandoc options created
+  by calling \code{odtOptions}}
 
   \item{output}{Target output file (defaults to <input>.odt
   if not specified)}

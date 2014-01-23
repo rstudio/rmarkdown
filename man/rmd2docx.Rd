@@ -8,7 +8,7 @@ rmd2docx(input, options = docxOptions(), output = NULL,
 \arguments{
   \item{input}{input Rmd document}
 
-  \item{options}{List of MS Word rendering options created
+  \item{options}{Character vector of pandoc options created
   by calling \code{docxOptions}}
 
   \item{output}{Target output file (defaults to

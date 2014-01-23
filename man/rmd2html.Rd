@@ -8,8 +8,8 @@ rmd2html(input, options = htmlOptions(), output = NULL,
 \arguments{
   \item{input}{Input Rmd document}
 
-  \item{options}{List of HTML rendering options created by
-  calling \code{\link{htmlOptions}}}
+  \item{options}{Character vector of pandoc options created
+  by calling \code{htmlOptions}}
 
   \item{output}{Target output file (defaults to
   <input>.html if not specified)}

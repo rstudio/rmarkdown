@@ -3,7 +3,7 @@
 #' Converts an R Markdown (Rmd) file to a Beamer Presentation PDF
 #'
 #' @param input input Rmd document
-#' @param options List of Beamer rendering options created by calling
+#' @param options Character vector of pandoc options created by calling
 #'   \code{beamerOptions}
 #' @param output Target output file (defaults to <input>.pdf if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
@@ -47,9 +47,10 @@ rmd2beamer <- function(input,
 #'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
 #'   \code{NULL} to prevent syntax highlighting.
 #' @param includes Additional content to include within the document (typically
-#'   created using the \code{\link{pandocIncludeOptions}} function).
+#'   created using the \code{\link{includeOptions}} function).
 #'
-#' @return A list of options that can be passed to \code{\link{rmd2beamer}}.
+#' @return A character vector of options that can be passed to
+#'   \code{\link{rmd2beamer}}.
 #'
 #' @export
 beamerOptions <- function(toc = FALSE,
@@ -57,41 +58,30 @@ beamerOptions <- function(toc = FALSE,
                           incremental = FALSE,
                           highlight = "default",
                           includes = NULL) {
-  structure(list(toc = toc,
-                 slide.level = slide.level,
-                 incremental = incremental,
-                 highlight = highlight,
-                 includes = includes),
-            class = "beamerOptions")
-}
-
-
-#' @S3method pandocOptions beamerOptions
-pandocOptions.beamerOptions <- function(options) {
 
   # base options for all beamer output
-  args <- c()
+  options <- c()
 
   # table of contents
-  if (options$toc)
-    args <- c(args, "--table-of-contents")
+  if (toc)
+    options <- c(options, "--table-of-contents")
 
   # slide level
-  args <- c(args,
-            "--slide-level",
-            as.character(options$slide.level))
+  options <- c(options,
+               "--slide-level",
+               as.character(slide.level))
 
   # incremental
-  if (options$incremental)
-    args <- c(args, "--incremental")
+  if (incremental)
+    options <- c(options, "--incremental")
 
   # highlighting
-  args <- c(args, pandocHighlightOptions(options))
+  options <- c(options, highlightOptions(highlight))
 
   # content includes
-  args <- c(args, pandocOptions(options$includes))
+  options <- c(options, includes)
 
-  args
+  options
 }
 
 

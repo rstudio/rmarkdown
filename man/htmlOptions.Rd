@@ -33,10 +33,10 @@ mathjaxURL()
 
   \item{includes}{Additional content to include within the
   document (typically created using the
-  \code{\link{pandocIncludeOptions}} function).}
+  \code{\link{includeOptions}} function).}
 }
 \value{
-A list of HTML options that can be passed to
+A character vector of HTML options that can be passed to
 \code{\link{rmd2html}}.
 }
 \description{

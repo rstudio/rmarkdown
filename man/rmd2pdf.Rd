@@ -8,8 +8,8 @@ rmd2pdf(input, options = pdfOptions(), output = NULL,
 \arguments{
   \item{input}{Input Rmd document}
 
-  \item{options}{List of PDF rendering options created by
-  calling \code{pdfOptions}}
+  \item{options}{Character vector of pandoc options created
+  by calling \code{pdfOptions}}
 
   \item{output}{Target output file (defaults to <input>.pdf
   if not specified)}

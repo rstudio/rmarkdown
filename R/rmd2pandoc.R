@@ -5,9 +5,7 @@
 #'
 #' @param input Input file
 #' @param to Pandoc format to convert to
-#' @param options Command line options to pass to pandoc. This should either be
-#'   a character vector of literal command line options or an object that
-#'   provides a \code{pandocOptions} S3 method which yields the options.
+#' @param options Character vector of command line options to pass to pandoc.
 #' @param output Output file (if not specified then a default based on the
 #'   specified \code{to} format is chosen)
 #' @param envir The environment in which the code chunks are to be evaluated
@@ -66,7 +64,7 @@ rmd2pandoc <- function(input,
   args <- c(args, "--filter", file.path(dirname(pandoc), "pandoc-citeproc"))
 
   # pandoc: additional command line options
-  args <- c(args, pandocOptions(options))
+  args <- c(args, options)
 
   # pandoc: output file
   if (is.null(output))

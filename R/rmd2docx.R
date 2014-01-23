@@ -3,7 +3,7 @@
 #' Converts an R Markdown (Rmd) file to an MS Word docx
 #'
 #' @param input input Rmd document
-#' @param options List of MS Word rendering options created by calling
+#' @param options Character vector of pandoc options created by calling
 #'   \code{docxOptions}
 #' @param output Target output file (defaults to <input>.docx if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
@@ -56,34 +56,27 @@ knitrRenderDOCX <- function(format, fig.width, fig.height) {
 #'   producing a docx file. For best results, the reference docx should be a
 #'   modified version of a docx file produced using pandoc.
 #'
-#' @return A list of options that can be passed to \code{\link{rmd2docx}}.
+#' @return A character vector of options that can be passed to
+#'   \code{\link{rmd2docx}}.
 #'
 #' @export
 docxOptions <- function(highlight = "default",
                         reference.docx = NULL) {
-  structure(list(highlight = highlight,
-                 reference.docx = reference.docx),
-            class = "docxOptions")
-}
-
-
-#' @S3method pandocOptions docxOptions
-pandocOptions.docxOptions <- function(options) {
 
   # base options for all docx output
-  args <- c()
+  options <- c()
 
   # highlighting
-  args <- c(args, pandocHighlightOptions(options))
+  options <- c(options, highlightOptions(highlight))
 
   # reference docx
-  if (!is.null(options$reference.docx)) {
-    args <- c(args,
-              "--reference-docx",
-              tools::file_path_as_absolute(options$reference.docx))
+  if (!is.null(reference.docx)) {
+    options <- c(options,
+                 "--reference-docx",
+                 tools::file_path_as_absolute(reference.docx))
   }
 
-  args
+  options
 }
 
 

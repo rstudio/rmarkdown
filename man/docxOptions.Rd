@@ -16,7 +16,7 @@ docxOptions(highlight = "default", reference.docx = NULL)
   file produced using pandoc.}
 }
 \value{
-A list of options that can be passed to
+A character vector of options that can be passed to
 \code{\link{rmd2docx}}.
 }
 \description{

@@ -25,10 +25,10 @@ pdfOptions(toc = FALSE, toc.depth = 2, number.sections = FALSE,
 
   \item{includes}{Additional content to include within the
   document (typically created using the
-  \code{\link{pandocIncludeOptions}} function).}
+  \code{\link{includeOptions}} function).}
 }
 \value{
-A list of PDF options that can be passed to
+A character vector of PDF options that can be passed to
 \code{\link{rmd2pdf}}.
 }
 \description{
