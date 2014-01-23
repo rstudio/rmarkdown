@@ -71,10 +71,11 @@ rmd2pandoc <- function(input,
     output <- pandocOutputFile(input, to)
   args <- c(args, "--output", output)
 
+
   # show pandoc command line if requested
   if (!quiet) {
-    cat(paste0(pandoc, " "))
-    cat(paste(args, collapse=" "))
+    cat(paste0(shQuote(pandoc), " "))
+    cat(paste(shQuote(args), collapse=" "))
     cat("\n")
   }
 
@@ -107,7 +108,7 @@ pandocOutputFile <- function(input, pandocFormat) {
 }
 
 pandocExec <- function(pandoc, args, ...) {
-  command <- paste(pandoc, paste(shQuote(args), collapse = " "))
+  command <- paste(shQuote(pandoc), paste(shQuote(args), collapse = " "))
   system(command, ...)
 }
 
