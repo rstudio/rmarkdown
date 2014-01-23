@@ -37,7 +37,7 @@ includeOptions <- function(header = NULL,
     options <- c(options, "--include-before-body", file)
 
   for (file in after.body)
-    options <- c(options, "--include-after-body", after)
+    options <- c(options, "--include-after-body", file)
 
   options
 }
