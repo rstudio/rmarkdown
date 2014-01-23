@@ -3,7 +3,7 @@
 \alias{mathjaxURL}
 \title{Options for HTML Conversion}
 \usage{
-htmlOptions(toc = FALSE, toc.depth = 3, bootstrap = TRUE,
+htmlOptions(toc = FALSE, toc.depth = 3, theme = "default",
   highlight = "default", mathjax = mathjaxURL(), css = NULL,
   includes = NULL)
 
@@ -16,10 +16,10 @@ mathjaxURL()
   \item{toc.depth}{Depth of headers to include in table of
   contents}
 
-  \item{bootstrap}{\code{TRUE} to style the document using
-  \href{http://getbootstrap.com}{Bootstrap}. If you pass
-  \code{FALSE} you can provide your own styles using the
-  \code{css} and/or \code{include.header} parameters.}
+  \item{theme}{Visual theme ("default", "cerulean", or
+  "slate"). Pass \code{NULL} for no theme (in which case
+  you want to pass some custom CSS using the \code{css}
+  parameter)}
 
   \item{highlight}{Style for syntax highlighting. Options
   are default, pygments, kate, monochrome, espresso,

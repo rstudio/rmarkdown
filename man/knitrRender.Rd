@@ -10,7 +10,7 @@ knitrRender(format)
 
 knitrRenderDOCX(format, fig.width, fig.height)
 
-knitrRenderHTML(format, fig.width, fig.height)
+knitrRenderHTML(format, out.width, out.height)
 
 knitrRenderODT(format, fig.width, fig.height)
 
@@ -20,9 +20,13 @@ knitrRenderPDF(format, fig.width, fig.height)
   \item{format}{Pandoc format being rendered (used to
   create distinct figure directories for multiple formats)}
 
-  \item{fig.width}{Default width for figures}
+  \item{fig.width}{Default width (in inches) for figures}
 
-  \item{fig.height}{Default height for figures}
+  \item{fig.height}{Default height (in inches) for figures}
+
+  \item{out.width}{Default width (in pixels) for figures}
+
+  \item{out.height}{Default height (in pixels) for figures}
 }
 \description{
 These functions set knitr hooks and options for markdown
