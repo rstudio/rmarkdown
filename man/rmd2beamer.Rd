@@ -9,7 +9,7 @@ rmd2beamer(input, options = beamerOptions(), output = NULL,
   \item{input}{input Rmd document}
 
   \item{options}{Character vector of pandoc options created
-  by calling \code{beamerOptions}}
+  by calling \code{\link{beamerOptions}}}
 
   \item{output}{Target output file (defaults to <input>.pdf
   if not specified)}
@@ -30,6 +30,39 @@ the path of the output file is returned.
 }
 \description{
 Converts an R Markdown (Rmd) file to a Beamer Presentation
-PDF
+PDF. The document is \code{\link[knitr:knit]{knit}} and
+then converted to PDF using
+\href{http://johnmacfarlane.net/pandoc/index.html}{pandoc}.
+}
+\section{Metadata}{
+  Rmd files include a metadata section (typically located
+  at the top of the file) that include title, author, and
+  date information as well additional variables used to
+  customize document generation. Here is an example
+  metadata section:
+
+  \tabular{l}{ \code{---} \cr \code{title: "Crop Analysis
+  Q3 2013"} \cr \code{author: Martha Smith} \cr \code{date:
+  October 23rd, 2013} \cr \code{theme: Antibes} \cr
+  \code{colortheme: crane} \cr \code{---} }
+
+  In addition to the options specified by
+  \code{\link{beamerOptions}}, many other aspects of the
+  Beamer template can be customized using metadata.
+  Available variables include:
+
+  \describe{ \item{\code{lang}}{Document language code}
+  \item{\code{theme}}{Beamer theme (e.g. "AnnArbor")}
+  \item{\code{colortheme}}{Beamer color theme (e.g.
+  "dolphin")} \item{\code{fonttheme}}{Beamer font theme
+  (e.g. "structurebold")} \item{\code{biblio-style}}{LaTeX
+  bibliography style (used with \code{natbib} option)}
+  \item{\code{biblio-files}}{Bibliography files to use in
+  LaTeX (used with \code{natbib} or \code{biblatex}
+  options)} }
+}
+\seealso{
+\code{\link[knitr:knit]{knit}},
+\code{\link{beamerOptions}},
 }
 

@@ -1,9 +1,10 @@
 \name{pdfOptions}
 \alias{pdfOptions}
-\title{Options for PDF conversion}
+\title{Options for PDF Conversion}
 \usage{
 pdfOptions(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
-  highlight = "default", geometry = c(margin = "1in"), includes = NULL)
+  highlight = "default", latex.engine = "pdflatex", natbib = FALSE,
+  biblatex = FALSE, includes = NULL)
 }
 \arguments{
   \item{\dots}{Command line options to pass to pandoc}
@@ -22,8 +23,13 @@ pdfOptions(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
   zenburn, haddock, and tango. Pass \code{NULL} to prevent
   syntax highlighting.}
 
-  \item{geometry}{Named LaTeX geometry options for the
-  document.}
+  \item{latex.engine}{LaTeX engine for producing PDF
+  output. Options are pdflatex, lualatex, and xelatex.}
+
+  \item{natbib}{Use natbib for citations in LaTeX output}
+
+  \item{biblatex}{Use biblatex for citations in LaTeX
+  output}
 
   \item{includes}{Additional content to include within the
   document (typically created using the

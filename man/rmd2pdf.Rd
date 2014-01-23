@@ -9,7 +9,7 @@ rmd2pdf(input, options = pdfOptions(), output = NULL,
   \item{input}{Input Rmd document}
 
   \item{options}{Character vector of pandoc options created
-  by calling \code{pdfOptions}}
+  by calling \code{\link{pdfOptions}}}
 
   \item{output}{Target output file (defaults to <input>.pdf
   if not specified)}
@@ -29,6 +29,47 @@ The compiled document is written into the output file, and
 the path of the output file is returned.
 }
 \description{
-Converts an R Markdown (Rmd) file to PDF
+Convert an R Markdown (Rmd) file to PDF. The document is
+\code{\link[knitr:knit]{knit}} and then converted to PDF
+using
+\href{http://johnmacfarlane.net/pandoc/index.html}{pandoc}.
+}
+\section{Metadata}{
+  Rmd files include a metadata section (typically located
+  at the top of the file) that include title, author, and
+  date information as well additional variables used to
+  customize document generation. Here is an example
+  metadata section:
+
+  \tabular{l}{ \code{---} \cr \code{title: "Crop Analysis
+  Q3 2013"} \cr \code{author: Martha Smith} \cr \code{date:
+  October 23rd, 2013} \cr \code{fontsize: 11pt} \cr
+  \code{geometry: margin=1in} \cr \code{---} }
+
+  In addition to the options specified by
+  \code{\link{pdfOptions}}, many other aspects of the LaTeX
+  template used to create PDF output can be customized
+  using metadata. Available variables include:
+
+  \describe{ \item{\code{lang}}{Document language code}
+  \item{\code{fontsize}}{Font size (e.g. 10pt, 11pt, 12pt)}
+  \item{\code{documentclass}}{LaTeX document class (e.g.
+  article)} \item{\code{classoption}}{Option for
+  \code{documentclass} (e.g. oneside); may be repeated}
+  \item{\code{geometry}}{Options for geometry class (e.g.
+  margin=1in); may be repeated} \item{\code{mainfont,
+  sansfont, monofont, mathfont}}{Document fonts (works only
+  with xelatex and lualatex, see the \code{latex.engine}
+  option)} \item{\code{linkcolor, urlcolor,
+  citecolor}}{Color for internal, external, and citation
+  links (red, green, magenta, cyan, blue, black)}
+  \item{\code{biblio-style}}{LaTeX bibliography style (used
+  with \code{natbib} option)}
+  \item{\code{biblio-files}}{Bibliography files to use in
+  LaTeX (used with \code{natbib} or \code{biblatex}
+  options)} }
+}
+\seealso{
+\code{\link[knitr:knit]{knit}}, \code{\link{pdfOptions}}
 }
 
