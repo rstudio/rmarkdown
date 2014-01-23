@@ -3,9 +3,9 @@
 #' Converts an R Markdown (Rmd) file to a Beamer Presentation PDF
 #'
 #' @param input input Rmd document
-#' @param output Target output file (defaults to <input>.pdf if not specified)
 #' @param options List of Beamer rendering options created by calling
 #'   \code{beamerOptions}
+#' @param output Target output file (defaults to <input>.pdf if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
 #'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
 #' @param quiet Whether to suppress the progress bar and messages
@@ -16,8 +16,8 @@
 #'
 #' @export
 rmd2beamer <- function(input,
-                       output = NULL,
                        options = beamerOptions(),
+                       output = NULL,
                        envir = parent.frame(),
                        quiet = FALSE,
                        encoding = getOption("encoding")) {
@@ -26,7 +26,7 @@ rmd2beamer <- function(input,
   knitrRenderPDF("beamer", 4.5, 3.5)
 
   # call pandoc
-  rmd2pandoc(input, "beamer", output, options, envir, quiet, encoding)
+  rmd2pandoc(input, "beamer", options, output, envir, quiet, encoding)
 }
 
 

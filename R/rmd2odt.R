@@ -3,9 +3,9 @@
 #' Converts an R Markdown (Rmd) file to an OpenDocument odt file
 #'
 #' @param input input Rmd document
-#' @param output Target output file (defaults to <input>.odt if not specified)
 #' @param options List of OpenDocument rendering options created by calling
 #'   \code{odtOptions}
+#' @param output Target output file (defaults to <input>.odt if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
 #'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
 #' @param quiet Whether to suppress the progress bar and messages
@@ -16,8 +16,8 @@
 #'
 #' @export
 rmd2odt <- function(input,
-                    output = NULL,
                     options = odtOptions(),
+                    output = NULL,
                     envir = parent.frame(),
                     quiet = FALSE,
                     encoding = getOption("encoding")) {
@@ -26,7 +26,7 @@ rmd2odt <- function(input,
   knitrRenderODT("odt", 7, 7)
 
   # call pandoc
-  rmd2pandoc(input, "odt", output, options, envir, quiet, encoding)
+  rmd2pandoc(input, "odt", options, output, envir, quiet, encoding)
 }
 
 

@@ -5,11 +5,11 @@
 #'
 #' @param input Input file
 #' @param to Pandoc format to convert to
-#' @param output Output file (if not specified then a default based on the
-#'   specified \code{to} format is chosen)
 #' @param options Command line options to pass to pandoc. This should either be
 #'   a character vector of literal command line options or an object that
 #'   provides a \code{pandocOptions} S3 method which yields the options.
+#' @param output Output file (if not specified then a default based on the
+#'   specified \code{to} format is chosen)
 #' @param envir The environment in which the code chunks are to be evaluated
 #'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
 #' @param quiet \code{TRUE} to supress printing of the pandoc command line
@@ -25,8 +25,8 @@
 #' @export
 rmd2pandoc <- function(input,
                        to,
-                       output = NULL,
                        options = NULL,
+                       output = NULL,
                        envir = parent.frame(),
                        quiet = FALSE,
                        encoding = getOption("encoding")) {

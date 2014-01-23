@@ -3,9 +3,9 @@
 #' Converts an R Markdown (Rmd) file to HTML
 #'
 #' @param input Input Rmd document
-#' @param output Target output file (defaults to <input>.html if not specified)
 #' @param options List of HTML rendering options created by calling
 #'   \code{\link{htmlOptions}}
+#' @param output Target output file (defaults to <input>.html if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
 #'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
 #' @param quiet Whether to suppress the progress bar and messages
@@ -16,8 +16,8 @@
 #'
 #' @export
 rmd2html <- function(input,
-                     output = NULL,
                      options = htmlOptions(),
+                     output = NULL,
                      envir = parent.frame(),
                      quiet = FALSE,
                      encoding = getOption("encoding")) {
@@ -26,7 +26,7 @@ rmd2html <- function(input,
   knitrRenderHTML("html", 7, 7)
 
   # call pandoc
-  rmd2pandoc(input, "html", output, options, envir, quiet, encoding)
+  rmd2pandoc(input, "html", options, output, envir, quiet, encoding)
 }
 
 

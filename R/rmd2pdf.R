@@ -3,9 +3,9 @@
 #' Converts an R Markdown (Rmd) file to PDF
 #'
 #' @param input Input Rmd document
-#' @param output Target output file (defaults to <input>.pdf if not specified)
 #' @param options List of PDF rendering options created by calling
 #'   \code{pdfOptions}
+#' @param output Target output file (defaults to <input>.pdf if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
 #'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
 #' @param quiet Whether to suppress the progress bar and messages
@@ -16,8 +16,8 @@
 #'
 #' @export
 rmd2pdf <- function(input,
-                    output = NULL,
                     options = pdfOptions(),
+                    output = NULL,
                     envir = parent.frame(),
                     quiet = FALSE,
                     encoding = getOption("encoding")) {
@@ -26,7 +26,7 @@ rmd2pdf <- function(input,
   knitrRenderPDF("latex", 6, 5)
 
   # call pandoc
-  rmd2pandoc(input, "latex", output, options, envir, quiet, encoding)
+  rmd2pandoc(input, "latex", options, output, envir, quiet, encoding)
 }
 
 

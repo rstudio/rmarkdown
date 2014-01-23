@@ -2,17 +2,17 @@
 \alias{rmd2docx}
 \title{Convert R Markdown to MS Word}
 \usage{
-rmd2docx(input, output = NULL, options = docxOptions(),
+rmd2docx(input, options = docxOptions(), output = NULL,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{input Rmd document}
 
-  \item{output}{Target output file (defaults to
-  <input>.docx if not specified)}
-
   \item{options}{List of MS Word rendering options created
   by calling \code{docxOptions}}
+
+  \item{output}{Target output file (defaults to
+  <input>.docx if not specified)}
 
   \item{envir}{The environment in which the code chunks are
   to be evaluated (can use \code{\link{new.env}()} to

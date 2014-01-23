@@ -3,9 +3,9 @@
 #' Converts an R Markdown (Rmd) file to an MS Word docx
 #'
 #' @param input input Rmd document
-#' @param output Target output file (defaults to <input>.docx if not specified)
 #' @param options List of MS Word rendering options created by calling
 #'   \code{docxOptions}
+#' @param output Target output file (defaults to <input>.docx if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
 #'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
 #' @param quiet Whether to suppress the progress bar and messages
@@ -16,8 +16,8 @@
 #'
 #' @export
 rmd2docx <- function(input,
-                     output = NULL,
                      options = docxOptions(),
+                     output = NULL,
                      envir = parent.frame(),
                      quiet = FALSE,
                      encoding = getOption("encoding")) {
@@ -26,7 +26,7 @@ rmd2docx <- function(input,
   knitrRenderDOCX("docx", 7, 7)
 
   # call pandoc
-  rmd2pandoc(input, "docx", output, options, envir, quiet, encoding)
+  rmd2pandoc(input, "docx", options, output, envir, quiet, encoding)
 }
 
 

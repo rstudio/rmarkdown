@@ -2,7 +2,7 @@
 \alias{rmd2pandoc}
 \title{Knit and convert an R Markdown document}
 \usage{
-rmd2pandoc(input, to, output = NULL, options = NULL,
+rmd2pandoc(input, to, options = NULL, output = NULL,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
@@ -10,14 +10,14 @@ rmd2pandoc(input, to, output = NULL, options = NULL,
 
   \item{to}{Pandoc format to convert to}
 
-  \item{output}{Output file (if not specified then a
-  default based on the specified \code{to} format is
-  chosen)}
-
   \item{options}{Command line options to pass to pandoc.
   This should either be a character vector of literal
   command line options or an object that provides a
   \code{pandocOptions} S3 method which yields the options.}
+
+  \item{output}{Output file (if not specified then a
+  default based on the specified \code{to} format is
+  chosen)}
 
   \item{envir}{The environment in which the code chunks are
   to be evaluated (can use \code{\link{new.env}()} to
