@@ -23,7 +23,7 @@ rmd2html <- function(input,
                      encoding = getOption("encoding")) {
 
   # knitr options
-  knitrRenderHTML("html", 7, 7)
+  knitrRenderHTML("html", 700, 600)
 
   # call pandoc
   rmd2pandoc(input, "html", options, output, envir, quiet, encoding)
@@ -32,15 +32,15 @@ rmd2html <- function(input,
 
 #' @rdname knitrRender
 #' @export
-knitrRenderHTML <- function(format, fig.width, fig.height) {
+knitrRenderHTML <- function(format, out.width, out.height) {
 
   # inherit defaults
   knitrRender(format)
 
   # graphics device
   knitr::opts_chunk$set(dev = 'png',
-                        fig.width = fig.width,
-                        fig.height = fig.height)
+                        out.width = out.width,
+                        out.height = out.height)
 }
 
 

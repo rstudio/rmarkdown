@@ -7,8 +7,10 @@
 #'
 #' @param format Pandoc format being rendered (used to create distinct figure
 #'   directories for multiple formats)
-#' @param fig.width Default width for figures
-#' @param fig.height Default height for figures
+#' @param fig.width Default width (in inches) for figures
+#' @param fig.height Default height (in inches) for figures
+#' @param out.width Default width (in pixels) for figures
+#' @param out.height Default height (in pixels) for figures
 #'
 #' @details You typically need to call only one knitr render function, as the
 #' various format-specific functions (e.g. \code{knitrRenderPDF}) all call
