@@ -50,10 +50,9 @@ knitrRenderHTML <- function(format, fig.width, fig.height) {
 #'
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc.depth Depth of headers to include in table of contents
-#' @param bootstrap \code{TRUE} to style the document using
-#'   \href{http://getbootstrap.com}{Bootstrap}. If you pass \code{FALSE} you can
-#'   provide your own styles using the \code{css} and/or \code{include.header}
-#'   parameters.
+#' @param theme Visual theme ("default", "cerulean", or "slate"). Pass
+#' \code{NULL} for no theme (in which case you want to pass some custom
+#' CSS using the \code{css} parameter)
 #' @param highlight Style for syntax highlighting. Options are default,
 #'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
 #'   \code{NULL} to prevent syntax highlighting.
@@ -69,7 +68,7 @@ knitrRenderHTML <- function(format, fig.width, fig.height) {
 #' @export
 htmlOptions <- function(toc = FALSE,
                         toc.depth = 3,
-                        bootstrap = TRUE,
+                        theme = "default",
                         highlight = "default",
                         mathjax = mathjaxURL(),
                         css = NULL,
@@ -84,9 +83,12 @@ htmlOptions <- function(toc = FALSE,
   # template path and assets
   options <- c(options, templateOptions(pandocTemplate("html/default.html")))
 
-  # bootstrap
-  if (bootstrap)
-    options <- c(options, "--variable", "bootstrap")
+  # theme
+  if (!is.null(theme)) {
+    if (identical(theme, "default"))
+      theme <- "bootstrap"
+    options <- c(options, "--variable", paste0("theme:", theme))
+  }
 
   # highlighting
   if (is.null(highlight)) {

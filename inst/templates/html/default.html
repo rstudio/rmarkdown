@@ -18,9 +18,9 @@ $endif$
 
 <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
 
-$if(bootstrap)$
+$if(theme)$
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="bootstrap/css/$theme$.min.css" rel="stylesheet">
 <style type="text/css">
   pre {
     background-color: white;
@@ -90,7 +90,7 @@ $endfor$
 
 </div>
 
-$if(bootstrap)$
+$if(theme)$
 <!-- no bootstrap js dependencies for now, comment in if we require them -->
 <!--
 <script src="jquery/jquery.min.js"></script>
