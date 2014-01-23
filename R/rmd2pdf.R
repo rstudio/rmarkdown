@@ -23,7 +23,7 @@ rmd2pdf <- function(input,
                     encoding = getOption("encoding")) {
 
   # knitr options
-  knitrRenderPDF("latex", 7, 6)
+  knitrRenderPDF("latex", 7, 7)
 
   # call pandoc
   rmd2pandoc(input, "latex", options, output, envir, quiet, encoding)
