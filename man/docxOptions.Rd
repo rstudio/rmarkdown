@@ -2,7 +2,7 @@
 \alias{docxOptions}
 \title{Options for MS Word conversion}
 \usage{
-  docxOptions(highlight = "default", reference.docx = NULL)
+docxOptions(highlight = "default", reference.docx = NULL)
 }
 \arguments{
   \item{highlight}{Style for syntax highlighting. Options
@@ -16,11 +16,11 @@
   file produced using pandoc.}
 }
 \value{
-  A list of options that can be passed to
-  \code{\link{rmd2docx}}.
+A list of options that can be passed to
+\code{\link{rmd2docx}}.
 }
 \description{
-  Define the options for converting R Markdown to MS Word
-  docx
+Define the options for converting R Markdown to MS Word
+docx
 }
 

@@ -13,11 +13,3 @@ Imports:
     methods,
     knitr (>= 1.2)
 License: GPL (>= 2)
-Collate:
-    'rmd2beamer.R'
-    'rmd2html.R'
-    'rmd2pdf.R'
-    'pandoc.R'
-    'rmd2pandoc.R'
-    'rmd2docx.R'
-    'rmd2odt.R'

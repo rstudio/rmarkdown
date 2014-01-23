@@ -2,7 +2,7 @@
 \alias{odtOptions}
 \title{Options for OpenDocument conversion}
 \usage{
-  odtOptions(highlight = "default", reference.odt = NULL)
+odtOptions(highlight = "default", reference.odt = NULL)
 }
 \arguments{
   \item{highlight}{Style for syntax highlighting. Options
@@ -16,11 +16,11 @@
   produced using pandoc.}
 }
 \value{
-  A list of options that can be passed to
-  \code{\link{rmd2odt}}.
+A list of options that can be passed to
+\code{\link{rmd2odt}}.
 }
 \description{
-  Define the options for converting R Markdown to
-  OpenDocument odt
+Define the options for converting R Markdown to
+OpenDocument odt
 }
 

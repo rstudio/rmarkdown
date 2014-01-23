@@ -2,9 +2,8 @@
 \alias{rmd2html}
 \title{Convert R Markdown to HTML}
 \usage{
-  rmd2html(input, output = NULL, options = htmlOptions(),
-    envir = parent.frame(), quiet = FALSE,
-    encoding = getOption("encoding"))
+rmd2html(input, output = NULL, options = htmlOptions(),
+  envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{Input Rmd document}
@@ -26,10 +25,10 @@
   \code{\link{file}}}
 }
 \value{
-  The compiled document is written into the output file,
-  and the path of the output file is returned.
+The compiled document is written into the output file, and
+the path of the output file is returned.
 }
 \description{
-  Converts an R Markdown (Rmd) file to HTML
+Converts an R Markdown (Rmd) file to HTML
 }
 

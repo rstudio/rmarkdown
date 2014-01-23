@@ -1,4 +1,4 @@
-\name{knitrRenderHTML}
+\name{knitrRenderDOCX}
 \alias{knitrRender}
 \alias{knitrRenderDOCX}
 \alias{knitrRenderHTML}
@@ -6,15 +6,15 @@
 \alias{knitrRenderPDF}
 \title{Set knitr hooks and options for rendering R Markdown}
 \usage{
-  knitrRenderHTML(format, fig.width, fig.height)
+knitrRenderDOCX(format, fig.width, fig.height)
 
-  knitrRenderPDF(format, fig.width, fig.height)
+knitrRenderHTML(format, fig.width, fig.height)
 
-  knitrRender(format)
+knitrRenderODT(format, fig.width, fig.height)
 
-  knitrRenderDOCX(format, fig.width, fig.height)
+knitrRender(format)
 
-  knitrRenderODT(format, fig.width, fig.height)
+knitrRenderPDF(format, fig.width, fig.height)
 }
 \arguments{
   \item{format}{Pandoc format being rendered (used to
@@ -25,16 +25,16 @@
   \item{fig.height}{Default height for figures}
 }
 \description{
-  These functions set knitr hooks and options for markdown
-  rendering. Hooks are based on the default
-  \code{\link[knitr:render_markdown]{knitr::render_markdown}}
-  function with additional customization for various output
-  formats.
+These functions set knitr hooks and options for markdown
+rendering. Hooks are based on the default
+\code{\link[knitr:render_markdown]{knitr::render_markdown}}
+function with additional customization for various output
+formats.
 }
 \details{
-  You typically need to call only one knitr render
-  function, as the various format-specific functions (e.g.
-  \code{knitrRenderPDF}) all call the \code{knitrRender}
-  function as part of their implementation.
+You typically need to call only one knitr render function,
+as the various format-specific functions (e.g.
+\code{knitrRenderPDF}) all call the \code{knitrRender}
+function as part of their implementation.
 }
 

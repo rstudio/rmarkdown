@@ -60,16 +60,8 @@ knitrRenderHTML <- function(format, fig.width, fig.height) {
 #' @param mathjax Include mathjax from the specified URL. Pass \code{NULL} to
 #'   not include mathjax.
 #' @param css One or more css files to include
-#' @param include.header One or more files with HTML content to be included
-#'   within the HTML \code{head} tag.
-#' @param include.before One or more files with HTML content to be included
-#'   before the document body.
-#' @param include.after One or more files with HTML content to be included after
-#'   the document body.
-#'
-#' @details Paths for resources referenced from the \code{css},
-#'   \code{include.header}, \code{include.before}, and \code{include.after}
-#'   parameters are resolved relative to the directory of the input document.
+#' @param includes Additional content to include within the document (typically
+#'   created using the \code{\link{pandocIncludeOptions}} function).
 #'
 #' @return A list of HTML options that can be passed to \code{\link{rmd2html}}.
 #'
@@ -80,18 +72,14 @@ htmlOptions <- function(toc = FALSE,
                         highlight = "default",
                         mathjax = mathjaxURL(),
                         css = NULL,
-                        include.header = NULL,
-                        include.before = NULL,
-                        include.after = NULL) {
+                        includes = NULL) {
   structure(list(toc = toc,
                  toc.depth = toc.depth,
                  bootstrap = bootstrap,
                  highlight = highlight,
                  mathjax = mathjax,
                  css = css,
-                 include.header = include.header,
-                 include.before = include.before,
-                 include.after = include.after),
+                 includes = includes),
             class = "htmlOptions")
 }
 
@@ -105,46 +93,45 @@ mathjaxURL <- function() {
 
 
 #' @S3method pandocOptions htmlOptions
-pandocOptions.htmlOptions <- function(htmlOptions) {
+pandocOptions.htmlOptions <- function(options) {
 
   # base options for all HTML output
-  options <- c("--smart", "--self-contained")
+  args <- c("--smart", "--self-contained")
 
   # table of contents
-  options <- c(options, pandocTableOfContentsOptions(htmlOptions))
+  args <- c(args, pandocTableOfContentsOptions(options))
 
   # template path and assets
-  options <- c(options, pandocTemplateOptions("html/default.html"))
+  args <- c(args, pandocTemplateOptions(pandocTemplate("html/default.html")))
 
   # bootstrap
-  if (htmlOptions$bootstrap)
-    options <- c(options, "--variable", "bootstrap")
+  if (options$bootstrap)
+    args <- c(args, "--variable", "bootstrap")
 
   # highlighting
-  if (is.null(htmlOptions$highlight)) {
-    options <- c(options, "--no-highlight")
+  if (is.null(options$highlight)) {
+    args <- c(args, "--no-highlight")
   }
-  else if (identical(htmlOptions$highlight, "default")) {
-    options <- c(options, "--no-highlight")
-    options <- c(options, "--variable", "highlightjs")
+  else if (identical(options$highlight, "default")) {
+    args <- c(args, "--no-highlight")
+    args <- c(args, "--variable", "highlightjs")
   }
   else {
-    options <- c(options, "--highlight-style", htmlOptions$highlight)
+    args <- c(args, "--highlight-style", options$highlight)
   }
 
   # mathjax
-  if (!is.null(htmlOptions$mathjax)) {
-    options <- c(options, "--mathjax")
-    options <- c(options,
-                 "--variable", paste0("mathjax-url:", htmlOptions$mathjax))
+  if (!is.null(options$mathjax)) {
+    args <- c(args, "--mathjax")
+    args <- c(args, "--variable", paste0("mathjax-url:", options$mathjax))
   }
 
   # additional css
-  for (css in htmlOptions$css)
-    options <- c(options, "--css", css)
+  for (css in options$css)
+    args <- c(args, "--css", css)
 
   # content includes
-  options <- c(options, pandocIncludeOptions(htmlOptions))
+  args <- c(args, pandocOptions(options$includes))
 
-  options
+  args
 }

@@ -2,9 +2,8 @@
 \alias{rmd2odt}
 \title{Convert R Markdown to OpenDocument Text}
 \usage{
-  rmd2odt(input, output = NULL, options = odtOptions(),
-    envir = parent.frame(), quiet = FALSE,
-    encoding = getOption("encoding"))
+rmd2odt(input, output = NULL, options = odtOptions(),
+  envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{input Rmd document}
@@ -26,11 +25,11 @@
   \code{\link{file}}}
 }
 \value{
-  The compiled document is written into the output file,
-  and the path of the output file is returned.
+The compiled document is written into the output file, and
+the path of the output file is returned.
 }
 \description{
-  Converts an R Markdown (Rmd) file to an OpenDocument odt
-  file
+Converts an R Markdown (Rmd) file to an OpenDocument odt
+file
 }
 

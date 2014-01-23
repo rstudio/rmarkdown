@@ -1,5 +1,15 @@
 
 
+#' Pandoc conversion options
+#'
+#' Generic method to get pandoc command-line options from an object (typically
+#' a list containing format-specific options).
+#'
+#' @param options An object that implements the \code{pandocOptions} S3 method.
+#'
+#' @return A character vector with pandoc command line arguments
+#'
+#' @export
 pandocOptions <- function(options) {
   UseMethod("pandocOptions", options)
 }
@@ -8,8 +18,53 @@ pandocOptions.default <- function(options) {
   options
 }
 
+#' Pandoc options for including additional content
+#'
+#' Options for including HTML or LaTeX content in the header or before and after
+#' the document body.
+#'
+#' @param include.header One or more files with content to be included in the
+#'   header of the document.
+#' @param include.before One or more files with content to be included before
+#'   the document body.
+#' @param include.after One or more files with content to be included after the
+#'   document body.
+#'
+#' @return A character vector with pandoc command line arguments
+#'
+#' @details Non-absolute paths for resources referenced from the
+#'   \code{include.header}, \code{include.before}, and \code{include.after}
+#'   parameters are resolved relative to the directory of the input document.
+#'
+#' @export
+pandocIncludeOptions <- function(include.header = NULL,
+                                 include.before = NULL,
+                                 include.after = NULL) {
+  structure(list(include.header = include.header,
+                 include.before = include.before,
+                 include.after = include.after),
+            class = "pandocIncludeOptions")
+}
+
+#' @S3method pandocOptions pandocIncludeOptions
+pandocOptions.pandocIncludeOptions <- function(options) {
+
+  args <- c()
+
+  for (header in options$include.header)
+    args <- c(args, "--include-in-header", header)
+
+  for (before in options$include.before)
+    args <- c(args, "--include-before-body", before)
+
+  for (after in options$include.after)
+    args <- c(args, "--include-after-body", after)
+
+  args
+}
+
+
 pandocTemplateOptions <- function(template) {
-  template <- pandocTemplate(template)
   c("--template", template,
     "--data-dir", dirname(template))
 }
@@ -45,21 +100,7 @@ pandocTableOfContentsOptions <- function(tocOptions) {
   options
 }
 
-pandocIncludeOptions <- function(includeOptions) {
 
-  options <- c()
-
-  for (header in options$include.header)
-    options <- c(options, "--include-in-header", header)
-
-  for (before in options$include.before)
-    options <- c(options, "--include-before-body", before)
-
-  for (after in options$include.after)
-    options <- c(options, "--include-after-body", after)
-
-  options
-}
 
 pandocOutputFile <- function(input, pandocFormat) {
   if (pandocFormat %in% c("latex", "beamer"))

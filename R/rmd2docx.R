@@ -68,22 +68,22 @@ docxOptions <- function(highlight = "default",
 
 
 #' @S3method pandocOptions docxOptions
-pandocOptions.docxOptions <- function(docxOptions) {
+pandocOptions.docxOptions <- function(options) {
 
   # base options for all docx output
-  options <- c()
+  args <- c()
 
   # highlighting
-  options <- c(options, pandocHighlightOptions(docxOptions))
+  args <- c(args, pandocHighlightOptions(options))
 
   # reference docx
-  if (!is.null(docxOptions$reference.docx)) {
-    options <- c(options,
-                 "--reference-docx",
-                 tools::file_path_as_absolute(docxOptions$reference.docx))
+  if (!is.null(options$reference.docx)) {
+    args <- c(args,
+              "--reference-docx",
+              tools::file_path_as_absolute(options$reference.docx))
   }
 
-  options
+  args
 }
 
 

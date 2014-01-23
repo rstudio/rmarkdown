@@ -2,9 +2,8 @@
 \alias{rmd2docx}
 \title{Convert R Markdown to MS Word}
 \usage{
-  rmd2docx(input, output = NULL, options = docxOptions(),
-    envir = parent.frame(), quiet = FALSE,
-    encoding = getOption("encoding"))
+rmd2docx(input, output = NULL, options = docxOptions(),
+  envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{input Rmd document}
@@ -26,10 +25,10 @@
   \code{\link{file}}}
 }
 \value{
-  The compiled document is written into the output file,
-  and the path of the output file is returned.
+The compiled document is written into the output file, and
+the path of the output file is returned.
 }
 \description{
-  Converts an R Markdown (Rmd) file to an MS Word docx
+Converts an R Markdown (Rmd) file to an MS Word docx
 }
 

@@ -59,16 +59,8 @@ knitrRenderPDF <- function(format, fig.width, fig.height) {
 #' @param highlight Style for syntax highlighting. Options are default,
 #'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
 #'   \code{NULL} to prevent syntax highlighting.
-#' @param include.header One or more files with LaTeX content to be included in
-#'   the header of the document.
-#' @param include.before One or more files with LaTeX content to be included
-#'   before the document body.
-#' @param include.after One or more files with LaTeX content to be included
-#'   after the document body.
-#'
-#' @details Paths for resources referenced from the \code{include.header},
-#'   \code{include.before}, and \code{include.after} parameters are resolved
-#'   relative to the directory of the input document.
+#' @param includes Additional content to include within the document (typically
+#'   created using the \code{\link{pandocIncludeOptions}} function).
 #'
 #' @return A list of PDF options that can be passed to \code{\link{rmd2pdf}}.
 #'
@@ -78,46 +70,42 @@ pdfOptions <- function(toc = FALSE,
                        number.sections = FALSE,
                        geometry = c(margin = "1in"),
                        highlight = "default",
-                       include.header = NULL,
-                       include.before = NULL,
-                       include.after = NULL) {
+                       includes = NULL) {
   structure(list(toc = toc,
                  toc.depth = toc.depth,
                  number.sections = number.sections,
                  geometry = geometry,
                  highlight = highlight,
-                 include.header = include.header,
-                 include.before = include.before,
-                 include.after = include.after),
+                 includes = includes),
             class = "pdfOptions")
 }
 
 #' @S3method pandocOptions pdfOptions
-pandocOptions.pdfOptions <- function(pdfOptions) {
+pandocOptions.pdfOptions <- function(options) {
 
   # base options for all PDF output
-  options <- c()
+  args <- c()
 
   # table of contents
-  options <- c(options, pandocTableOfContentsOptions(pdfOptions))
+  args <- c(args, pandocTableOfContentsOptions(options))
 
   # numbered sections
-  if (pdfOptions$number.sections)
-    options <- c(options, "--number-sections")
+  if (options$number.sections)
+    args <- c(args, "--number-sections")
 
   # geometry
-  for (name in names(pdfOptions$geometry)) {
-    value <- pdfOptions$geometry[[name]]
-    options <- c(options,
-                 "--variable",
-                 paste0("geometry:", name, "=", value))
+  for (name in names(options$geometry)) {
+    value <- options$geometry[[name]]
+    args <- c(args,
+              "--variable",
+              paste0("geometry:", name, "=", value))
   }
 
   # highlighting
-  options <- c(options, pandocHighlightOptions(pdfOptions))
+  args <- c(args, pandocHighlightOptions(options))
 
   # content includes
-  options <- c(options, pandocIncludeOptions(pdfOptions))
+  args <- c(args, pandocOptions(options$includes))
 
-  options
+  args
 }

@@ -46,16 +46,8 @@ rmd2beamer <- function(input,
 #' @param highlight Style for syntax highlighting. Options are default,
 #'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
 #'   \code{NULL} to prevent syntax highlighting.
-#' @param include.header One or more files with LaTeX content to be included in
-#'   the header of the document.
-#' @param include.before One or more files with LaTeX content to be included
-#'   before the document body.
-#' @param include.after One or more files with LaTeX content to be included
-#'   after the document body.
-#'
-#' @details Paths for resources referenced from the \code{include.header},
-#'   \code{include.before}, and \code{include.after} parameters are resolved
-#'   relative to the directory of the input document.
+#' @param includes Additional content to include within the document (typically
+#'   created using the \code{\link{pandocIncludeOptions}} function).
 #'
 #' @return A list of options that can be passed to \code{\link{rmd2beamer}}.
 #'
@@ -64,46 +56,42 @@ beamerOptions <- function(toc = FALSE,
                           slide.level = 2,
                           incremental = FALSE,
                           highlight = "default",
-                          include.header = NULL,
-                          include.before = NULL,
-                          include.after = NULL) {
+                          includes = NULL) {
   structure(list(toc = toc,
                  slide.level = slide.level,
                  incremental = incremental,
                  highlight = highlight,
-                 include.header = include.header,
-                 include.before = include.before,
-                 include.after = include.after),
+                 includes = includes),
             class = "beamerOptions")
 }
 
 
 #' @S3method pandocOptions beamerOptions
-pandocOptions.beamerOptions <- function(beamerOptions) {
+pandocOptions.beamerOptions <- function(options) {
 
   # base options for all beamer output
-  options <- c()
+  args <- c()
 
   # table of contents
-  if (beamerOptions$toc)
-    options <- c(options, "--table-of-contents")
+  if (options$toc)
+    args <- c(args, "--table-of-contents")
 
   # slide level
-  options <- c(options,
-               "--slide-level",
-               as.character(beamerOptions$slide.level))
+  args <- c(args,
+            "--slide-level",
+            as.character(options$slide.level))
 
   # incremental
-  if (beamerOptions$incremental)
-    options <- c(options, "--incremental")
+  if (options$incremental)
+    args <- c(args, "--incremental")
 
   # highlighting
-  options <- c(options, pandocHighlightOptions(beamerOptions))
+  args <- c(args, pandocHighlightOptions(options))
 
   # content includes
-  options <- c(options, pandocIncludeOptions(beamerOptions))
+  args <- c(args, pandocOptions(options$includes))
 
-  options
+  args
 }
 
 

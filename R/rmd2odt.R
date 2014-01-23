@@ -67,22 +67,22 @@ odtOptions <- function(highlight = "default",
 
 
 #' @S3method pandocOptions odtOptions
-pandocOptions.odtOptions <- function(odtOptions) {
+pandocOptions.odtOptions <- function(options) {
 
   # base options for all odt output
-  options <- c()
+  args <- c()
 
   # highlighting
-  options <- c(options, pandocHighlightOptions(odtOptions))
+  args <- c(args, pandocHighlightOptions(options))
 
   # reference docx
-  if (!is.null(odtOptions$reference.odt)) {
-    options <- c(options,
-                 "--reference-odt",
-                 tools::file_path_as_absolute(odtOptions$reference.odt))
+  if (!is.null(options$reference.odt)) {
+    args <- c(args,
+              "--reference-odt",
+              tools::file_path_as_absolute(options$reference.odt))
   }
 
-  options
+  args
 }
 
 

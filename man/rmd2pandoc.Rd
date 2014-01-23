@@ -2,9 +2,8 @@
 \alias{rmd2pandoc}
 \title{Knit and convert an R Markdown document}
 \usage{
-  rmd2pandoc(input, to, output = NULL, options = NULL,
-    envir = parent.frame(), quiet = FALSE,
-    encoding = getOption("encoding"))
+rmd2pandoc(input, to, output = NULL, options = NULL,
+  envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{Input file}
@@ -31,16 +30,16 @@
   \code{\link{file}}}
 }
 \value{
-  The compiled document is written into the output file,
-  and the path of the output file is returned.
+The compiled document is written into the output file, and
+the path of the output file is returned.
 }
 \description{
-  Knit the specified R Markdown input file and convert it
-  to final output using pandoc.
+Knit the specified R Markdown input file and convert it to
+final output using pandoc.
 }
 \details{
-  Typically one of the \code{\link{knitrRender}} functions
-  is called prior to calling \code{knit2pandoc} to optimize
-  knitr rendering for the intended output format.
+Typically one of the \code{\link{knitrRender}} functions is
+called prior to calling \code{knit2pandoc} to optimize
+knitr rendering for the intended output format.
 }
 
