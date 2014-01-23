@@ -37,8 +37,9 @@ knitrRenderODT <- function(format, fig.width, fig.height) {
   # inherit defaults
   knitrRender(format)
 
-  # graphics device
+  # high resolution png
   knitr::opts_chunk$set(dev = 'png',
+                        dpi = 300,
                         fig.width = fig.width,
                         fig.height = fig.height)
 }
