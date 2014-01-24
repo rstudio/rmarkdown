@@ -143,9 +143,20 @@ $header-includes$
 $endfor$
 
 \begin{document}
+
+\begin{center}
 $if(title)$
-\maketitle
+\huge $title$ \\[0.2cm]
 $endif$
+$if(author)$
+\large \emph{$for(author)$$author$$sep$ \and $endfor$}\\[0.1cm]
+$endif$
+$if(date)$
+\large \emph{$date$} \\
+$endif$
+\normalsize
+\end{center}
+
 $if(abstract)$
 \begin{abstract}
 $abstract$
