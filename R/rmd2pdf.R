@@ -64,6 +64,11 @@ rmd2pdf <- function(input,
   if (knitRequired(input))
     knitrRenderPDF("latex", 7, 7)
 
+  # some special sauce to tweak the geometry if the user hasn't done
+  # so explicitly within the document's metadata
+  options <- c(options, pdfGeometry(readLines(input, encoding = encoding),
+                                    options))
+
   # call pandoc
   rmd2pandoc(input, "latex", options, output, envir, quiet, encoding)
 }
@@ -157,4 +162,21 @@ pdfOptions <- function(...,
   options <- c(options, as.character(list(...)))
 
   options
+}
+
+
+# helper function to set pdf geometry defaults (while making sure we
+# don't override any geometry settings already specified by the user)
+pdfGeometry <- function(inputText, options) {
+
+  geometry <- c()
+
+  # set the margin to 1 inch if not otherwise specified
+  hasMargin <- function(text) {
+    length(grep("^geometry\\:[ \\t]+margin=\\d\\w+$", inputText) > 0)
+  }
+  if (!hasMargin(inputText) && !hasMargin(options))
+    geometry <- c(geometry, "--variable", "geometry:margin=1in")
+
+  geometry
 }
