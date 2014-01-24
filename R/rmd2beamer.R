@@ -89,7 +89,7 @@ rmd2beamer <- function(input,
 #'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
 #'   \code{NULL} to prevent syntax highlighting.
 #' @param includes Additional content to include within the document (typically
-#'   created using the \code{\link{includeOptions}} function).
+#'   created using the \code{\link[pandoc:includeOptions]{includeOptions}} function).
 #'
 #' @return A character vector of options that can be passed to
 #'   \code{\link{rmd2beamer}}.
@@ -121,7 +121,7 @@ beamerOptions <- function(...,
     options <- c(options, "--incremental")
 
   # highlighting
-  options <- c(options, highlightOptions(highlight))
+  options <- c(options, pandoc::highlightOptions(highlight))
 
   # content includes
   options <- c(options, includes)

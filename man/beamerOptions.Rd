@@ -30,7 +30,8 @@ beamerOptions(..., toc = FALSE, slide.level = 2, incremental = FALSE,
 
   \item{includes}{Additional content to include within the
   document (typically created using the
-  \code{\link{includeOptions}} function).}
+  \code{\link[pandoc:includeOptions]{includeOptions}}
+  function).}
 }
 \value{
 A character vector of options that can be passed to

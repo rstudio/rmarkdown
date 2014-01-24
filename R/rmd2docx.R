@@ -102,7 +102,7 @@ docxOptions <- function(...,
   options <- c()
 
   # highlighting
-  options <- c(options, highlightOptions(highlight))
+  options <- c(options, pandoc::highlightOptions(highlight))
 
   # reference docx
   if (!is.null(reference.docx)) {

@@ -83,8 +83,8 @@ knitrRenderHTML <- function(format, fig.width, fig.height) {
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc.depth Depth of headers to include in table of contents
 #' @param theme Visual theme ("default", "cerulean", or "slate"). Pass
-#' \code{NULL} for no theme (in which case you want to pass some custom
-#' CSS using the \code{css} parameter)
+#'   \code{NULL} for no theme (in which case you want to pass some custom CSS
+#'   using the \code{css} parameter)
 #' @param highlight Style for syntax highlighting. Options are default,
 #'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
 #'   \code{NULL} to prevent syntax highlighting.
@@ -92,7 +92,8 @@ knitrRenderHTML <- function(format, fig.width, fig.height) {
 #'   not include mathjax.
 #' @param css One or more css files to include
 #' @param includes Additional content to include within the document (typically
-#'   created using the \code{\link{includeOptions}} function).
+#'   created using the \code{\link[pandoc:includeOptions]{includeOptions}}
+#'   function).
 #'
 #' @return A character vector of HTML options that can be passed to
 #'   \code{\link{rmd2html}}.
@@ -113,10 +114,11 @@ htmlOptions <- function(...,
   options <- c("--smart", "--self-contained")
 
   # table of contents
-  options <- c(options, tableOfContentsOptions(toc, toc.depth))
+  options <- c(options, pandoc::tocOptions(toc, toc.depth))
 
   # template path and assets
-  options <- c(options, templateOptions(pandocTemplate("html/default.html")))
+  options <- c(options,
+               pandoc::templateOptions(pandocTemplate("html/default.html")))
 
   # theme
   if (!is.null(theme)) {

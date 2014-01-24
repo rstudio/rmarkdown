@@ -108,7 +108,8 @@ knitrRenderPDF <- function(format, fig.width, fig.height) {
 #' @param natbib Use natbib for citations in LaTeX output
 #' @param biblatex Use biblatex for citations in LaTeX output
 #' @param includes Additional content to include within the document (typically
-#'   created using the \code{\link{includeOptions}} function).
+#'   created using the \code{\link[pandoc:includeOptions]{includeOptions}}
+#'   function).
 #'
 #' @return A character vector of PDF options that can be passed to
 #'   \code{\link{rmd2pdf}}.
@@ -130,14 +131,14 @@ pdfOptions <- function(...,
   options <- c()
 
   # table of contents
-  options <- c(options, tableOfContentsOptions(toc, toc.depth))
+  options <- c(options, pandoc::tocOptions(toc, toc.depth))
 
   # numbered sections
   if (number.sections)
     options <- c(options, "--number-sections")
 
   # highlighting
-  options <- c(options, highlightOptions(highlight))
+  options <- c(options, pandoc::highlightOptions(highlight))
 
   # latex engine
   options <- c(options, "--latex-engine", latex.engine)
