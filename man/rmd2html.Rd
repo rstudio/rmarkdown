@@ -34,39 +34,15 @@ Converts the input file to HTML using pandoc. If the input
 requires knitting then \code{\link[knitr:knit]{knit}} is
 called prior to pandoc.
 }
-\section{Metadata}{
-  Rmd files include a metadata section (typically located
-  at the top of the file) that include title, author, and
-  date information. Here is an example metadata section:
-
-  \tabular{l}{ \code{---} \cr \code{title: "Crop Analysis
-  Q3 2013"} \cr \code{author: Martha Smith} \cr \code{date:
-  October 23rd, 2013} \cr \code{---} }
-}
-
-\section{Citations}{
-  R Markdown documents can also include footnotes and
-  citations, with support for a wide variety of
-  bibliography formats and output styles. To define the
-  bibliography and citation styles for a document you add
-  the \code{bibliography} and \code{csl} metadata fields.
-  For example:
-
-  \tabular{l}{ \code{---} \cr \code{title: "Crop Analysis
-  Q3 2013"} \cr \code{bibliography: crop-analysis.bib} \cr
-  \code{csl: chicago-author-date.csl} \cr \code{---} }
-
-  Note that the referenced bibliography and csl files
-  should be located in the same directory as your R
-  Markdown document.
-
-  You can find more information on the markdown syntax for
-  citations within the pandoc documentation on
-  \href{http://johnmacfarlane.net/pandoc/README.html#footnotes}{footnotes}
-  and
-  \href{http://johnmacfarlane.net/pandoc/README.html#citations}{citations}.
+\details{
+R Markdown documents can have optional metadata that is
+used to generate a document header that includes the title,
+author, and date.  Metadata can also be provided to enable
+the use of footnotes and bibliographies. For more details
+see the documentation on \link[=rmdMetadata]{R Markdown
+Metadata}.
 }
 \seealso{
-\code{\link[knitr:knit]{knit}}, \code{\link{htmlOptions}},
+\code{\link[knitr:knit]{knit}}, \code{\link{htmlOptions}}
 }
 
