@@ -1,5 +1,5 @@
 
-## Overview
+### Overview
 
 The `rmarkdown` package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). The package has several purposes:
 
@@ -9,7 +9,7 @@ The `rmarkdown` package is a next generation implementation of R Markdown based 
 
 3. Provide a toolkit for writing R functions that support other flavors of pandoc output.
 
-## Installation
+### Installation
 
 To install the `rmarkdown` package and it's dependencies:
 
