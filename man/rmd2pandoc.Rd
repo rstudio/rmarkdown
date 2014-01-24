@@ -1,6 +1,6 @@
 \name{rmd2pandoc}
 \alias{rmd2pandoc}
-\title{Convert an R Markdown Document Using Pandoc}
+\title{Convert R Markdown Using Pandoc}
 \usage{
 rmd2pandoc(input, to, options = NULL, output = NULL,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
@@ -41,5 +41,18 @@ prior to pandoc.
 Typically one of the \code{\link{knitrRender}} functions is
 called prior to calling \code{knit2pandoc} to optimize
 knitr rendering for the intended output format.
+}
+\section{R Markdown}{
+  R Markdown supports all of the base pandoc markdown
+  features as well as some optional features for
+  compatibility with GitHub Flavored Markdown (which
+  previous versions of R Markdown were based on).
+
+  For more on pandoc markdown see the
+  \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc
+  markdown specification}. Optional pandoc markdown
+  features enabled include \code{autolink_bare_uris},
+  \code{ascii_identifiers}, and
+  \code{tex_math_single_backslash}.
 }
 

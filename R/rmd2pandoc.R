@@ -1,4 +1,4 @@
-#' Convert an R Markdown Document Using Pandoc
+#' Convert R Markdown Using Pandoc
 #'
 #' Convert the input file using pandoc. If the input requires knitting then
 #' \code{\link[knitr:knit]{knit}} is called prior to pandoc.
@@ -21,6 +21,16 @@
 #'   prior to calling \code{knit2pandoc} to optimize knitr rendering for the
 #'   intended output format.
 #'
+#' @section R Markdown: R Markdown supports all of the base pandoc markdown
+#'   features as well as some optional features for compatibility with GitHub
+#'   Flavored Markdown (which previous versions of R Markdown were based on).
+#'
+#'   For more on pandoc markdown see the
+#'   \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc
+#'    markdown specification}. Optional pandoc markdown features enabled include
+#'   \code{autolink_bare_uris}, \code{ascii_identifiers}, and
+#'   \code{tex_math_single_backslash}.
+#'
 #' @export
 rmd2pandoc <- function(input,
                        to,
@@ -41,12 +51,12 @@ rmd2pandoc <- function(input,
   oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
-  # Rmd format - support full syntax of pandoc markdown with some additional
-  # features for backward compatibility with github flavored markdown
-  from <- paste0("markdown",
-                 "+autolink_bare_uris",
-                 "+ascii_identifiers",
-                 "+tex_math_single_backslash")
+  # define markdown flavor as base pandoc markdown plus some extensions
+  # for backward compatibility with github flavored markdown
+  rmdFormat <- paste0("markdown",
+                      "+autolink_bare_uris",
+                      "+ascii_identifiers",
+                      "+tex_math_single_backslash")
 
   # automatically create an output file name if necessary
   if (is.null(output))
@@ -74,26 +84,11 @@ rmd2pandoc <- function(input,
   }
 
   # run the conversion
-  pandoc::convert(input, from, to, output, TRUE, options, !quiet)
+  pandoc::convert(input, rmdFormat, to, output, TRUE, options, !quiet)
 
   # return the full path to the output file
   tools::file_path_as_absolute(output)
 }
 
 
-# determine the output file for a pandoc conversion
-pandocOutputFile <- function(input, to) {
-  if (to %in% c("latex", "beamer"))
-    ext <- ".pdf"
-  else if (to %in% c("html", "html5", "revealjs"))
-    ext <- ".html"
-  else
-    ext <- paste0(".", to)
-  output <- paste0(tools::file_path_sans_ext(input), ext)
-  basename(output)
-}
 
-
-pandocTemplate <- function(file) {
-  system.file(file.path("templates", file), package = "rmarkdown")
-}
