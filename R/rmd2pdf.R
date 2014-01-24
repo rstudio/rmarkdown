@@ -128,6 +128,10 @@ pdfOptions <- function(...,
   # table of contents
   options <- c(options, pandoc::tocOptions(toc, toc.depth))
 
+  # template path and assets
+  options <- c(options,
+               pandoc::templateOptions(pandocTemplate("latex/default.tex")))
+
   # numbered sections
   if (number.sections)
     options <- c(options, "--number-sections")
