@@ -1,13 +1,15 @@
 #' Convert R Markdown to PDF
 #'
-#' Convert an R Markdown (Rmd) file to PDF. The document is \code{\link[knitr:knit]{knit}} and then converted to PDF using \href{http://johnmacfarlane.net/pandoc/index.html}{pandoc}.
+#' Converts the input file to PDF using pandoc. If the input requires
+#' knitting then \code{\link[knitr:knit]{knit}} is called prior to pandoc.
 #'
-#' @param input Input Rmd document
+#' @param input Input file (Rmd or plain markdown)
 #' @param options Character vector of pandoc options created by calling
 #'   \code{\link{pdfOptions}}
 #' @param output Target output file (defaults to <input>.pdf if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
-#'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
+#'   during knitting (can use \code{\link{new.env}()} to guarantee an empty
+#'   new environment)
 #' @param quiet Whether to suppress the progress bar and messages
 #' @param encoding The encoding of the input file; see \code{\link{file}}
 #'
@@ -66,8 +68,9 @@ rmd2pdf <- function(input,
                     quiet = FALSE,
                     encoding = getOption("encoding")) {
 
-  # knitr options
-  knitrRenderPDF("latex", 7, 7)
+  # knitr rendering
+  if (knitRequired(input))
+    knitrRenderPDF("latex", 7, 7)
 
   # call pandoc
   rmd2pandoc(input, "latex", options, output, envir, quiet, encoding)

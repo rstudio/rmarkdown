@@ -1,4 +1,21 @@
-#' Set knitr hooks and options for rendering R Markdown
+#' Check Whether an Input Document Requires Knitting
+#'
+#' Check whether the input document requires knitting by evaluating it's
+#' file extension. R Markdown (e.g. .Rmd) requires knitting whereas
+#' plain markdown (e.g. .md) does not.
+#'
+#' @param input Input document
+#'
+#' @return Logical indicating whether the document requires knitting.
+#'
+#' @export
+knitRequired <- function(input) {
+  ext <- tolower(tools::file_ext(input))
+  ext %in% c("rmd", "rmarkdown")
+}
+
+
+#' Set knitr Hooks and Options for Rendering R Markdown
 #'
 #' These functions set knitr hooks and options for markdown rendering. Hooks are
 #' based on the default

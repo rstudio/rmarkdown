@@ -1,6 +1,7 @@
 export(beamerOptions)
 export(docxOptions)
 export(htmlOptions)
+export(knitRequired)
 export(knitrRender)
 export(knitrRenderDOCX)
 export(knitrRenderHTML)

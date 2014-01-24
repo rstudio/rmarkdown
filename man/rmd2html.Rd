@@ -6,7 +6,7 @@ rmd2html(input, options = htmlOptions(), output = NULL,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
-  \item{input}{Input Rmd document}
+  \item{input}{Input file (Rmd or plain markdown)}
 
   \item{options}{Character vector of pandoc options created
   by calling \code{\link{htmlOptions}}}
@@ -15,8 +15,9 @@ rmd2html(input, options = htmlOptions(), output = NULL,
   <input>.html if not specified)}
 
   \item{envir}{The environment in which the code chunks are
-  to be evaluated (can use \code{\link{new.env}()} to
-  guarantee an empty new environment)}
+  to be evaluated during knitting (can use
+  \code{\link{new.env}()} to guarantee an empty new
+  environment)}
 
   \item{quiet}{Whether to suppress the progress bar and
   messages}
@@ -29,10 +30,9 @@ The compiled document is written into the output file, and
 the path of the output file is returned.
 }
 \description{
-Converts an R Markdown (Rmd) file to HTML. The document is
-\code{\link[knitr:knit]{knit}} and then converted to HTML
-using
-\href{http://johnmacfarlane.net/pandoc/index.html}{pandoc}.
+Converts the input file to HTML using pandoc. If the input
+requires knitting then \code{\link[knitr:knit]{knit}} is
+called prior to pandoc.
 }
 \section{Metadata}{
   Rmd files include a metadata section (typically located

@@ -1,15 +1,16 @@
-#' Knit and convert an R Markdown document
+#' Convert an R Markdown Document Using Pandoc
 #'
-#' Knit the specified R Markdown input file and convert it to final output using
-#' pandoc.
+#' Convert the input file using pandoc. If the input requires knitting then
+#' \code{\link[knitr:knit]{knit}} is called prior to pandoc.
 #'
-#' @param input Input file
+#' @param input Input file (Rmd or plain markdown)
 #' @param to Pandoc format to convert to
 #' @param options Character vector of command line options to pass to pandoc.
 #' @param output Output file (if not specified then a default based on the
 #'   specified \code{to} format is chosen)
 #' @param envir The environment in which the code chunks are to be evaluated
-#'   (can use \code{\link{new.env}()} to guarantee an empty new environment)
+#'   during knitting (can use \code{\link{new.env}()} to guarantee an empty new
+#'   environment)
 #' @param quiet \code{TRUE} to supress printing of the pandoc command line
 #' @param encoding the encoding of the input file; see \code{\link{file}}
 #'
@@ -40,16 +41,6 @@ rmd2pandoc <- function(input,
   oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
-  # knit
-  input <- knitr::knit(input, envir = envir, quiet = quiet, encoding = encoding)
-
-  # re-write the file in UTF-8 for passing to pandoc
-  if (identical(encoding, "native.enc"))
-    encoding <- ""
-  inputText <- readLines(input, encoding = encoding)
-  inputText <- iconv(inputText, from = encoding, to = "UTF-8")
-  writeLines(inputText, input, useBytes = TRUE)
-
   # Rmd format - support full syntax of pandoc markdown with some additional
   # features for backward compatibility with github flavored markdown
   from <- paste0("markdown",
@@ -57,9 +48,51 @@ rmd2pandoc <- function(input,
                  "+ascii_identifiers",
                  "+tex_math_single_backslash")
 
+  # automatically create an output file name if necessary
+  if (is.null(output))
+    output <- pandocOutputFile(input, to)
+
+  # knit if necessary
+  if (knitRequired(input)) {
+    input <- knitr::knit(input,
+                         envir = envir,
+                         quiet = quiet,
+                         encoding = encoding)
+  }
+
+  # if the encoding isn't UTF-8 then write a UTF-8 version
+  if (!identical(encoding, "UTF-8")) {
+    if (identical(encoding, "native.enc"))
+      encoding <- ""
+    inputText <- readLines(input, encoding = encoding)
+    inputText <- iconv(inputText, from = encoding, to = "UTF-8")
+    input <- paste0(tools::file_path_sans_ext(input),
+                    ".utf8.",
+                    tools::file_ext(input))
+    on.exit(unlink(input), add = TRUE)
+    writeLines(inputText, input, useBytes = TRUE)
+  }
+
   # run the conversion
-  pandoc::convert(input, from, to, TRUE, options, output, !quiet)
+  pandoc::convert(input, from, to, output, TRUE, options, !quiet)
+
+  # return the full path to the output file
+  tools::file_path_as_absolute(output)
 }
+
+
+# determine the output file for a pandoc conversion
+pandocOutputFile <- function(input, to) {
+  if (to %in% c("latex", "beamer"))
+    ext <- ".pdf"
+  else if (to %in% c("html", "html5", "revealjs"))
+    ext <- ".html"
+  else
+    ext <- paste0(".", to)
+  output <- paste0(tools::file_path_sans_ext(input), ext)
+  basename(output)
+}
+
 
 pandocTemplate <- function(file) {
   system.file(file.path("templates", file), package = "rmarkdown")

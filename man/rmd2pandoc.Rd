@@ -1,12 +1,12 @@
 \name{rmd2pandoc}
 \alias{rmd2pandoc}
-\title{Knit and convert an R Markdown document}
+\title{Convert an R Markdown Document Using Pandoc}
 \usage{
 rmd2pandoc(input, to, options = NULL, output = NULL,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
-  \item{input}{Input file}
+  \item{input}{Input file (Rmd or plain markdown)}
 
   \item{to}{Pandoc format to convert to}
 
@@ -18,8 +18,9 @@ rmd2pandoc(input, to, options = NULL, output = NULL,
   chosen)}
 
   \item{envir}{The environment in which the code chunks are
-  to be evaluated (can use \code{\link{new.env}()} to
-  guarantee an empty new environment)}
+  to be evaluated during knitting (can use
+  \code{\link{new.env}()} to guarantee an empty new
+  environment)}
 
   \item{quiet}{\code{TRUE} to supress printing of the
   pandoc command line}
@@ -32,8 +33,9 @@ The compiled document is written into the output file, and
 the path of the output file is returned.
 }
 \description{
-Knit the specified R Markdown input file and convert it to
-final output using pandoc.
+Convert the input file using pandoc. If the input requires
+knitting then \code{\link[knitr:knit]{knit}} is called
+prior to pandoc.
 }
 \details{
 Typically one of the \code{\link{knitrRender}} functions is
