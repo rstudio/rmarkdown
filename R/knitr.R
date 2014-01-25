@@ -39,7 +39,6 @@ knitrRender <- function(format) {
 
   # chunk options
   knitr::opts_chunk$set(tidy = FALSE,    # don't reformat R code
-                        comment = NA,    # don't preface output with ##
                         error = FALSE)   # stop immediately on errors
 
   # figure directory scope
