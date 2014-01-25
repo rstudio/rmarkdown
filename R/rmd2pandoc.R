@@ -84,7 +84,7 @@ rmd2pandoc <- function(input,
   }
 
   # run the conversion
-  pandoc::convert(input, rmdFormat, to, output, TRUE, options, !quiet)
+  pandoc::convert(input, to, rmdFormat, output, TRUE, options, !quiet)
 
   # return the full path to the output file
   tools::file_path_as_absolute(output)
