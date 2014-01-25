@@ -1,2 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+README\.(md|html)
+CONTRIBUTING\.(md|html)
+
