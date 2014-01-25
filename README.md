@@ -19,6 +19,9 @@ devtools::install_github(c("pandoc", "rmarkdown"), "rstudio")
 
 A recent version of pandoc (>= 1.12.3) is also required. You can download pandoc from the [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page. Alternatively, pandoc v1.12.3 is also included with recent [daily builds](http://www.rstudio.org/download/daily) of RStudio.
 
+### License
+
+The rmarkdown package is licensed under the GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html).
 
 
 
