@@ -1,7 +1,14 @@
 
 ### Overview
 
-The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). The package has several purposes:
+The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
+
+* A wide variety of output formats including HTML, PDF, MS Word, and Beamer,
+* Highly extensible templates for customizing output.
+* New markdown syntax including expanded support for tables, definition lists, and citations.
+* For advanced customization of PDF output, the ability to include raw LaTeX and LaTeX macros within markdown.
+
+The **rmarkdown** package has several goals:
 
 1. Generate the most common types of output (HTML, MS Word, PDF, and Beamer) using a simple R function call with one argument.
 
