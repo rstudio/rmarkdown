@@ -173,7 +173,7 @@ pdfGeometry <- function(inputText, options) {
 
   # set the margin to 1 inch if not otherwise specified
   hasMargin <- function(text) {
-    length(grep("^geometry\\:[ \\t]+margin=\\d\\w+$", inputText) > 0)
+    length(grep("^geometry\\:[ \\t]*margin=\\d+(\\.?\\d+)?\\w+$", text)) > 0
   }
   if (!hasMargin(inputText) && !hasMargin(options))
     geometry <- c(geometry, "--variable", "geometry:margin=1in")
