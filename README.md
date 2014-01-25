@@ -1,7 +1,7 @@
 
 ### Overview
 
-The `rmarkdown` package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). The package has several purposes:
+The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). The package has several purposes:
 
 1. Generate the most common types of output (HTML, MS Word, PDF, and Beamer) using a simple R function call with one argument.
 
@@ -11,7 +11,7 @@ The `rmarkdown` package is a next generation implementation of R Markdown based 
 
 ### Installation
 
-To install the `rmarkdown` package and it's dependencies:
+To install the package and it's dependencies:
 
 ```
 devtools::install_github(c("pandoc", "rmarkdown"), "rstudio")
@@ -21,7 +21,7 @@ A recent version of pandoc (>= 1.12.3) is also required. You can download pandoc
 
 ### License
 
-The rmarkdown package is licensed under the GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html).
+The **rmarkdown** package is licensed under the GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html).
 
 
 
