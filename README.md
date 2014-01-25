@@ -56,18 +56,6 @@ You can also include arbitrary pandoc command line arguments in the call to the 
 rmd2pdf("input.Rmd", pdfOptions(toc = TRUE, "--listings"))
 ```
 
-### Custom Formats
-
-To define a new R Markdown output format you write a new function with a similar structure as the functions described above. This function should:
-
-1. Use a simillar signature as the functions defined above (likely with an options parameter that is format specific)
-
-2. Set up knitr options and hooks as appropriate for the format (note that the `knitrRender` family of helper functions can be used to assist in this)
-
-3. Call the lower-level `rmd2pandoc` function to perform knitting and invocation of pandoc.
-
-
-
 ### License
 
 The **rmarkdown** package is licensed under the GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html).
