@@ -3,9 +3,9 @@
 \alias{mathjaxURL}
 \title{Options for HTML Conversion}
 \usage{
-htmlOptions(..., toc = FALSE, toc.depth = 3, theme = "default",
-  highlight = "default", mathjax = mathjaxURL(), css = NULL,
-  includes = NULL)
+htmlOptions(..., toc = FALSE, toc.depth = 3, theme = c("default",
+  "cerulean", "slate"), highlight = highlighter(), mathjax = mathjaxURL(),
+  css = NULL, includes = NULL)
 
 mathjaxURL()
 }
@@ -23,9 +23,8 @@ mathjaxURL()
   you want to pass some custom CSS using the \code{css}
   parameter)}
 
-  \item{highlight}{Style for syntax highlighting. Options
-  are default, pygments, kate, monochrome, espresso,
-  zenburn, haddock, and tango. Pass \code{NULL} to prevent
+  \item{highlight}{Syntax highlighting style (see
+  \code{\link{highlighter}}). Pass \code{NULL} to prevent
   syntax highlighting.}
 
   \item{mathjax}{Include mathjax from the specified URL.

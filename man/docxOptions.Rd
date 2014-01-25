@@ -2,14 +2,13 @@
 \alias{docxOptions}
 \title{Options for MS Word conversion}
 \usage{
-docxOptions(..., highlight = "default", reference.docx = NULL)
+docxOptions(..., highlight = highlighter(), reference.docx = NULL)
 }
 \arguments{
   \item{\dots}{Command line options to pass to pandoc}
 
-  \item{highlight}{Style for syntax highlighting. Options
-  are default, pygments, kate, monochrome, espresso,
-  zenburn, haddock, and tango. Pass \code{NULL} to prevent
+  \item{highlight}{Syntax highlighting style (see
+  \code{\link{highlighter}}).  Pass \code{NULL} to prevent
   syntax highlighting.}
 
   \item{reference.docx}{Use the specified file as a style

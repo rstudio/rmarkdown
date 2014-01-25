@@ -100,9 +100,8 @@ knitrRenderPDF <- function(format, fig.width, fig.height) {
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc.depth Depth of headers to include in table of contents
 #' @param number.sections \code{TRUE} Number section headings
-#' @param highlight Style for syntax highlighting. Options are default,
-#'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
-#'   \code{NULL} to prevent syntax highlighting.
+#' @param highlight Syntax highlighting style (see \code{\link{highlighter}}).
+#'   Pass \code{NULL} to prevent syntax highlighting.
 #' @param latex.engine LaTeX engine for producing PDF output. Options are
 #'   pdflatex, lualatex, and xelatex.
 #' @param natbib Use natbib for citations in LaTeX output
@@ -121,8 +120,8 @@ pdfOptions <- function(...,
                        toc = FALSE,
                        toc.depth = 2,
                        number.sections = FALSE,
-                       highlight = "default",
-                       latex.engine = "pdflatex",
+                       highlight = highlighter(),
+                       latex.engine = c("pdflatex", "lualatex", "xelatex"),
                        natbib = FALSE,
                        biblatex = FALSE,
                        includes = NULL) {
@@ -142,9 +141,12 @@ pdfOptions <- function(...,
     options <- c(options, "--number-sections")
 
   # highlighting
+  if (!is.null(highlight))
+    highlight <- match.arg(highlight)
   options <- c(options, pandoc::highlightOptions(highlight))
 
   # latex engine
+  latex.engine = match.arg(latex.engine)
   options <- c(options, "--latex-engine", latex.engine)
 
   # natbib

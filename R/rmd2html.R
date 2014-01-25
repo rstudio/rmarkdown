@@ -66,9 +66,8 @@ knitrRenderHTML <- function(format, fig.width, fig.height) {
 #' @param theme Visual theme ("default", "cerulean", or "slate"). Pass
 #'   \code{NULL} for no theme (in which case you want to pass some custom CSS
 #'   using the \code{css} parameter)
-#' @param highlight Style for syntax highlighting. Options are default,
-#'   pygments, kate, monochrome, espresso, zenburn, haddock, and tango. Pass
-#'   \code{NULL} to prevent syntax highlighting.
+#' @param highlight Syntax highlighting style (see
+#'   \code{\link{highlighter}}). Pass \code{NULL} to prevent syntax highlighting.
 #' @param mathjax Include mathjax from the specified URL. Pass \code{NULL} to
 #'   not include mathjax.
 #' @param css One or more css files to include
@@ -85,8 +84,8 @@ knitrRenderHTML <- function(format, fig.width, fig.height) {
 htmlOptions <- function(...,
                         toc = FALSE,
                         toc.depth = 3,
-                        theme = "default",
-                        highlight = "default",
+                        theme = c("default", "cerulean", "slate"),
+                        highlight = highlighter(),
                         mathjax = mathjaxURL(),
                         css = NULL,
                         includes = NULL) {
@@ -103,6 +102,7 @@ htmlOptions <- function(...,
 
   # theme
   if (!is.null(theme)) {
+    theme <- match.arg(theme)
     if (identical(theme, "default"))
       theme <- "bootstrap"
     options <- c(options, "--variable", paste0("theme:", theme))
@@ -111,13 +111,15 @@ htmlOptions <- function(...,
   # highlighting
   if (is.null(highlight)) {
     options <- c(options, "--no-highlight")
-  }
-  else if (identical(highlight, "default")) {
-    options <- c(options, "--no-highlight")
-    options <- c(options, "--variable", "highlightjs")
-  }
-  else {
-    options <- c(options, "--highlight-style", highlight)
+  } else {
+    highlight <- match.arg(highlight)
+    if (identical(highlight, "default")) {
+      options <- c(options, "--no-highlight")
+      options <- c(options, "--variable", "highlightjs")
+    }
+    else {
+      options <- c(options, "--highlight-style", highlight)
+    }
   }
 
   # mathjax
