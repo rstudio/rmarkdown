@@ -4,9 +4,10 @@
 The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
 
 * A wide variety of output formats including HTML, PDF, MS Word, and Beamer.
-* Highly extensible templates for customizing output.
 * New markdown syntax including expanded support for tables, definition lists, and citations.
-* For advanced customization of PDF output, the ability to include raw LaTeX and LaTeX macros within markdown.
+* A new responsive (multi-device friendly) HTML template based on [Bootstrap 3](http://getbootstrap.com).
+* The ability to include raw LaTeX and LaTeX macros within markdown for advanced customization of PDF output.
+* Extensive hooks for customizing HTML and PDF output.
 
 The **rmarkdown** package has several goals:
 
@@ -20,13 +21,51 @@ The **rmarkdown** package has several goals:
 
 To install the package and it's dependencies:
 
-```
+```r
 devtools::install_github(c("pandoc", "rmarkdown"), "rstudio")
 ```
 
 A recent version of pandoc (>= 1.12.3) is also required. You can download pandoc from the [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page. Alternatively, pandoc v1.12.3 is also included with recent [daily builds](http://www.rstudio.org/download/daily) of RStudio.
 
 ### Usage
+
+The following functions will knit the specified input document and then produce the final output document using pandoc:
+
+```r
+rmd2html("input.Rmd")
+rmd2pdf("input.Rmd")
+```
+
+You can also specify a plain markdown file in which case knitting will be bypassed:
+
+```r
+rmd2html("input.md")
+```
+
+All of the output formats have a corresponding options function which can be used to customize the ouptut, for example:
+
+```r
+rmd2html("input.Rmd", htmlOptions(toc = TRUE))
+rmd2pdf("input.Rmd", pdfOptions(latex.engine = "lualatex"))
+rmd2beamer("input.Rmd", beamerOptions(highlight = "zenburn"))
+```
+
+You can also include arbitrary pandoc command line arguments in the call to the options function:
+
+```r
+rmd2pdf("input.Rmd", pdfOptions(toc = TRUE, "--listings"))
+```
+
+### Custom Formats
+
+To define a new R Markdown output format you write a new function with a similar structure as the functions described above. This function should:
+
+1. Use a simillar signature as the functions defined above (likely with an options parameter that is format specific)
+
+2. Set up knitr options and hooks as appropriate for the format (note that the `knitrRender` family of helper functions can be used to assist in this)
+
+3. Call the lower-level `rmd2pandoc` function to perform knitting and invocation of pandoc.
+
 
 
 ### License
