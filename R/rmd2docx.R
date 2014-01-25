@@ -34,7 +34,7 @@ rmd2docx <- function(input,
 
   # knitr rendering
   if (knitRequired(input))
-    knitrRenderDOCX("docx", 7, 7)
+    knitrRenderDOCX(7, 7)
 
   # call pandoc
   rmd2pandoc(input, "docx", options, output, envir, quiet, encoding)
@@ -43,10 +43,10 @@ rmd2docx <- function(input,
 
 #' @rdname knitrRender
 #' @export
-knitrRenderDOCX <- function(format, fig.width, fig.height) {
+knitrRenderDOCX <- function(fig.width, fig.height) {
 
   # inherit defaults
-  knitrRender(format)
+  knitrRender("docx")
 
   # high resolution PNG
   knitr::opts_chunk$set(dev = 'png',
