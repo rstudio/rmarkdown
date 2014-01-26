@@ -5,7 +5,7 @@ The **rmarkdown** package is a next generation implementation of R Markdown base
 
 * A wide variety of output formats including HTML, PDF, MS Word, and Beamer.
 * New markdown syntax including expanded support for tables, definition lists, and citations.
-* A new responsive (multi-device friendly) HTML template based on [Bootstrap 3](http://getbootstrap.com).
+* A responsive (multi-device friendly) HTML template based on [Bootstrap 3](http://getbootstrap.com).
 * The ability to include raw LaTeX and LaTeX macros within markdown for advanced customization of PDF output.
 * Extensive hooks for customizing HTML and PDF output.
 
@@ -47,7 +47,7 @@ All of the output formats have a corresponding options function which can be use
 ```r
 rmd2html("input.Rmd", htmlOptions(toc = TRUE))
 rmd2pdf("input.Rmd", pdfOptions(latex.engine = "lualatex"))
-rmd2beamer("input.Rmd", beamerOptions(highlight = "zenburn"))
+rmd2beamer("input.Rmd", beamerOptions(incremental = TRUE))
 ```
 
 You can also include arbitrary pandoc command line arguments in the call to the options function:
