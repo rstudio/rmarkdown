@@ -42,6 +42,20 @@ rmd2pdf("input.Rmd", pdfOptions(latex.engine = "lualatex"))
 rmd2beamer("input.Rmd", beamerOptions(incremental = TRUE))
 ```
 
+You can include custom CSS in HTML output using the `css` option. Combining this with setting the HTML `theme` to `NULL` provides for full control over all styles:
+
+```r
+rmd2html("input.Rmd", htmlOptions(css = "styles.css"))
+rmd2html("input.Rmd", htmlOptions(theme = NULL, css = "styles.css"))
+```
+
+You can add custom content to HTML and PDF output using the `includes` option. For example:
+
+```r
+rmd2pdf("input.Rmd", pdfOptions(includes = includeOptions(before.body = "header.tex",
+                                                          after.body = "footer.tex")))
+```
+
 You can also include arbitrary pandoc command line arguments in the call to the options function:
 
 ```r
