@@ -8,8 +8,8 @@
 #'   \code{\link{beamerOptions}}
 #' @param output Target output file (defaults to <input>.pdf if not specified)
 #' @param envir The environment in which the code chunks are to be evaluated
-#'   during knitting (can use \code{\link{new.env}()} to guarantee an empty
-#'   new environment)
+#'   during knitting (can use \code{\link{new.env}()} to guarantee an empty new
+#'   environment)
 #' @param quiet Whether to suppress the progress bar and messages
 #' @param encoding The encoding of the input file; see \code{\link{file}}
 #'
@@ -18,11 +18,15 @@
 #'
 #' @details
 #'
+#' For more information on markdown syntax for presentations see
+#' \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing
+#' slide shows with pandoc}.
+#'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. Metadata can
 #' also be provided to enable the use of footnotes and bibliographies.
-#' For more details see the documentation on
-#' \link[=rmdMetadata]{R Markdown Metadata}.
+#' For more details see the documentation on R Markdown
+#' \link[=rmdMetadata]{metadata} and \link[=rmdCitations]{citations}.
 #'
 #' In addition to the options specified by \code{\link{beamerOptions}}, many
 #' other aspects of the LaTeX template used to create Beamer output can be
@@ -51,6 +55,7 @@
 #'
 #' @examples
 #' \dontrun{
+#'
 #' library(rmarkdown)
 #'
 #' # simple invocation

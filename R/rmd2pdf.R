@@ -21,8 +21,8 @@
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. Metadata can
 #' also be provided to enable the use of footnotes and bibliographies.
-#' For more details see the documentation on
-#' \link[=rmdMetadata]{R Markdown Metadata}.
+#' For more details see the documentation on R Markdown
+#' \link[=rmdMetadata]{metadata} and \link[=rmdCitations]{citations}.
 #'
 #' In addition to the options specified by \code{\link{pdfOptions}}, many other
 #' aspects of the LaTeX template used to create PDF output can be customized
@@ -54,6 +54,7 @@
 #'
 #' @examples
 #' \dontrun{
+#'
 #' library(rmarkdown)
 #'
 #' # simple invocation

@@ -35,12 +35,18 @@ input requires knitting then \code{\link[knitr:knit]{knit}}
 is called prior to pandoc.
 }
 \details{
+For more information on markdown syntax for presentations
+see
+\href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing
+slide shows with pandoc}.
+
 R Markdown documents can have optional metadata that is
 used to generate a document header that includes the title,
 author, and date. Metadata can also be provided to enable
 the use of footnotes and bibliographies. For more details
-see the documentation on \link[=rmdMetadata]{R Markdown
-Metadata}.
+see the documentation on R Markdown
+\link[=rmdMetadata]{metadata} and
+\link[=rmdCitations]{citations}.
 
 In addition to the options specified by
 \code{\link{beamerOptions}}, many other aspects of the
@@ -65,6 +71,7 @@ LaTeX (used with \code{natbib} or \code{biblatex} options)}
 }
 \examples{
 \dontrun{
+
 library(rmarkdown)
 
 # simple invocation

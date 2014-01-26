@@ -37,13 +37,15 @@ the input requires knitting then
 \details{
 R Markdown documents can have optional metadata that is
 used to generate a document header that includes the title,
-author, and date.  Metadata can also be provided to enable
+author, and date. Metadata can also be provided to enable
 the use of footnotes and bibliographies. For more details
-see the documentation on \link[=rmdMetadata]{R Markdown
-Metadata}.
+see the documentation on R Markdown
+\link[=rmdMetadata]{metadata} and
+\link[=rmdCitations]{citations}.
 }
 \examples{
 \dontrun{
+
 library(rmarkdown)
 
 # simple invocation

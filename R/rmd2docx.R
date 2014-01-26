@@ -16,16 +16,19 @@
 #' @return The compiled document is written into the output file, and the path
 #'   of the output file is returned.
 #'
-#' @details R Markdown documents can have optional metadata that is used to
-#'   generate a document header that includes the title, author, and date.
-#'   Metadata can also be provided to enable the use of footnotes and
-#'   bibliographies. For more details see the documentation on
-#'   \link[=rmdMetadata]{R Markdown Metadata}.
+#' @details
+#'
+#' R Markdown documents can have optional metadata that is used to generate a
+#' document header that includes the title, author, and date. Metadata can
+#' also be provided to enable the use of footnotes and bibliographies.
+#' For more details see the documentation on R Markdown
+#' \link[=rmdMetadata]{metadata} and \link[=rmdCitations]{citations}.
 #'
 #' @seealso \code{\link[knitr:knit]{knit}}, \code{\link{docxOptions}}
 #'
 #' @examples
 #' \dontrun{
+#'
 #' library(rmarkdown)
 #'
 #' # simple invocation
