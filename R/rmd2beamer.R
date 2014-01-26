@@ -122,9 +122,7 @@ beamerOptions <- function(...,
     options <- c(options, "--table-of-contents")
 
   # slide level
-  options <- c(options,
-               "--slide-level",
-               as.character(slide.level))
+  options <- c(options, "--slide-level", as.character(slide.level))
 
   # incremental
   if (incremental)
