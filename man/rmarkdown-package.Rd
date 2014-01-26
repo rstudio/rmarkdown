@@ -4,21 +4,13 @@
 \alias{rmarkdown-package}
 \title{R Markdown Document Conversion}
 \description{
-  The \pkg{rmarkdown} package is a next generation implementation of R Markdown based on \href{http://johnmacfarlane.net/pandoc/}{pandoc}. This implementation brings many enhancements to R Markdown, including:
-
-\itemize{
-  \item A wide variety of output formats including HTML, PDF, MS Word, and Beamer.
-  \item New markdown syntax including expanded support for tables, definition lists, and citations.
-  \item A responsive (multi-device friendly) HTML template based on \href{http://getbootstrap.com}{Bootstrap 3}.
-  \item The ability to include raw LaTeX and LaTeX macros within markdown for advanced customization of PDF output.
-  \item Extensive hooks for customizing HTML and PDF output.
-}
-
+ Convert R Markdown documents into a variety of formats
+ including HTML, MS Word, PDF, and Beamer.
 }
 
 \details{
 
-These functions knit the specified input document and then produce the final output document using pandoc:
+The \pkg{rmarkdown} package includes high level functions for converting to a variety of formats. For example:
 
 \preformatted{rmd2html("input.Rmd")
 rmd2pdf("input.Rmd")
