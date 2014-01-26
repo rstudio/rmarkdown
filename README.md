@@ -13,7 +13,7 @@ The **rmarkdown** package is a next generation implementation of R Markdown base
 
 To install the package and it's dependencies:
 
-```r
+```
 devtools::install_github(c("pandoc", "rmarkdown"), "rstudio")
 ```
 
@@ -23,20 +23,20 @@ A recent version of pandoc (>= 1.12.3) is also required. You can download pandoc
 
 The following functions will knit the specified input document and then produce the final output document using pandoc:
 
-```r
+```
 rmd2html("input.Rmd")
 rmd2pdf("input.Rmd")
 ```
 
 You can also specify a plain markdown file in which case knitting will be bypassed:
 
-```r
+```
 rmd2html("input.md")
 ```
 
 All of the output formats have a corresponding options function which can be used to customize the ouptut, for example:
 
-```r
+```
 rmd2html("input.Rmd", htmlOptions(toc = TRUE))
 rmd2pdf("input.Rmd", pdfOptions(latex.engine = "lualatex"))
 rmd2beamer("input.Rmd", beamerOptions(incremental = TRUE))
@@ -44,21 +44,21 @@ rmd2beamer("input.Rmd", beamerOptions(incremental = TRUE))
 
 You can include custom CSS in HTML output using the `css` option. Combining this with setting the HTML `theme` to `NULL` provides for full control over all styles:
 
-```r
+```
 rmd2html("input.Rmd", htmlOptions(css = "styles.css"))
 rmd2html("input.Rmd", htmlOptions(theme = NULL, css = "styles.css"))
 ```
 
 You can add custom content to HTML and PDF output using the `includes` option. For example:
 
-```r
+```
 rmd2pdf("input.Rmd", pdfOptions(includes = includeOptions(before.body = "header.tex",
                                                           after.body = "footer.tex")))
 ```
 
 You can also include arbitrary pandoc command line arguments in the call to the options function:
 
-```r
+```
 rmd2pdf("input.Rmd", pdfOptions(toc = TRUE, "--listings"))
 ```
 
