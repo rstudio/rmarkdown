@@ -45,7 +45,7 @@ rmd2docx <- function(input,
 
   # knitr rendering
   if (knitRequired(input))
-    knitrRenderDOCX(7, 7)
+    knitrRenderDocx(7, 7)
 
   # call pandoc
   rmd2pandoc(input, "docx", options, output, envir, quiet, encoding)
@@ -54,7 +54,7 @@ rmd2docx <- function(input,
 
 #' @rdname knitrRender
 #' @export
-knitrRenderDOCX <- function(fig.width, fig.height) {
+knitrRenderDocx <- function(fig.width, fig.height) {
 
   # inherit defaults
   knitrRender("docx")

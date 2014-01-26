@@ -76,7 +76,7 @@ rmd2pdf <- function(input,
 
   # knitr rendering
   if (knitRequired(input))
-    knitrRenderPDF("latex", 7, 7)
+    knitrRenderPdf("latex", 7, 7)
 
   # some special sauce to tweak the geometry if the user hasn't done
   # so explicitly within the document's metadata
@@ -91,7 +91,7 @@ rmd2pdf <- function(input,
 
 #' @rdname knitrRender
 #' @export
-knitrRenderPDF <- function(format, fig.width, fig.height) {
+knitrRenderPdf <- function(format, fig.width, fig.height) {
 
   # inherit defaults
   knitrRender(format)

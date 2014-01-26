@@ -1,21 +1,20 @@
 \name{knitrRender}
 \alias{knitrRender}
-\alias{knitrRenderDOCX}
-\alias{knitrRenderHTML}
-\alias{knitrRenderPDF}
+\alias{knitrRenderDocx}
+\alias{knitrRenderHtml}
+\alias{knitrRenderPdf}
 \title{Set knitr Hooks and Options for Rendering R Markdown}
 \usage{
 knitrRender(format)
 
-knitrRenderDOCX(fig.width, fig.height)
+knitrRenderDocx(fig.width, fig.height)
 
-knitrRenderHTML(format, fig.width, fig.height)
+knitrRenderHtml(format, fig.width, fig.height)
 
-knitrRenderPDF(format, fig.width, fig.height)
+knitrRenderPdf(format, fig.width, fig.height)
 }
 \arguments{
-  \item{format}{Pandoc format being rendered (used to
-  create distinct figure directories for multiple formats)}
+  \item{format}{Pandoc format being rendered}
 
   \item{fig.width}{Default width (in inches) for figures}
 
@@ -29,6 +28,13 @@ function with additional customization for various output
 formats.
 }
 \details{
+Some file formats like HTML and PDF have multiple potential
+pandoc formats (e.g. PDF can be either "latex" or "beamer"
+and HTML can be "html", "html5", "revealjs", etc.). The
+format argument is used to distinguish among these, as well
+as ensure that distinct formats have their own knitr figure
+directories.
+
 You typically need to call only one knitr render function,
 as the various format-specific functions (e.g.
 \code{knitrRenderPDF}) all call the \code{knitrRender}

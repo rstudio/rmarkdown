@@ -43,7 +43,7 @@ rmd2html <- function(input,
 
   # knitr rendering
   if (knitRequired(input))
-    knitrRenderHTML("html", 7, 7)
+    knitrRenderHtml("html", 7, 7)
 
   # call pandoc
   rmd2pandoc(input, "html", options, output, envir, quiet, encoding)
@@ -52,7 +52,7 @@ rmd2html <- function(input,
 
 #' @rdname knitrRender
 #' @export
-knitrRenderHTML <- function(format, fig.width, fig.height) {
+knitrRenderHtml <- function(format, fig.width, fig.height) {
 
   # inherit defaults
   knitrRender(format)
