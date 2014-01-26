@@ -22,7 +22,18 @@
 #'   bibliographies. For more details see the documentation on
 #'   \link[=rmdMetadata]{R Markdown Metadata}.
 #'
-#' @seealso \code{\link[knitr:knit]{knit}}, \code{\link{docxOptions}},
+#' @seealso \code{\link[knitr:knit]{knit}}, \code{\link{docxOptions}}
+#'
+#' @examples
+#' \dontrun{
+#' library(rmarkdown)
+#'
+#' # simple invocation
+#' rmd2docx("input.Rmd")
+#'
+#' # specify an option for syntax highlighting
+#' rmd2docx("input.Rmd", docxOptions(highlight = "zenburn"))
+#' }
 #'
 #' @export
 rmd2docx <- function(input,

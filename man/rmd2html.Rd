@@ -42,6 +42,15 @@ the use of footnotes and bibliographies. For more details
 see the documentation on \link[=rmdMetadata]{R Markdown
 Metadata}.
 }
+\examples{
+\dontrun{
+library(rmarkdown)
+
+rmd2html("input.Rmd")
+
+rmd2html("input.Rmd", htmlOptions(toc = TRUE))
+}
+}
 \seealso{
 \code{\link[knitr:knit]{knit}}, \code{\link{htmlOptions}}
 }

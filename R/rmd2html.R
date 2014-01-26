@@ -24,6 +24,15 @@
 #'
 #' @seealso \code{\link[knitr:knit]{knit}}, \code{\link{htmlOptions}}
 #'
+#' @examples
+#' \dontrun{
+#' library(rmarkdown)
+#'
+#' rmd2html("input.Rmd")
+#'
+#' rmd2html("input.Rmd", htmlOptions(toc = TRUE))
+#' }
+#'
 #' @export
 rmd2html <- function(input,
                      options = htmlOptions(),

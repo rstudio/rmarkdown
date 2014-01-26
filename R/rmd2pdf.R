@@ -52,6 +52,20 @@
 #'
 #' @seealso \code{\link[knitr:knit]{knit}}, \code{\link{pdfOptions}}
 #'
+#' @examples
+#' \dontrun{
+#' library(rmarkdown)
+#'
+#' # simple invocation
+#' rmd2pdf("input.Rmd")
+#'
+#' # specify an option for latex engine
+#' rmd2pdf("input.Rmd", pdfOptions(latex.engine = "lualatex"))
+#'
+#' # add a table of contents and pass an option to pandoc
+#' rmd2pdf("input.Rmd", pdfOptions(toc = TRUE, "--listings"))
+#' }
+#'
 #' @export
 rmd2pdf <- function(input,
                     options = pdfOptions(),

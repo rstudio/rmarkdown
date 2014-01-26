@@ -7,7 +7,7 @@
 \usage{
 knitrRender(format)
 
-knitrRenderDOCX(format, fig.width, fig.height)
+knitrRenderDOCX(fig.width, fig.height)
 
 knitrRenderHTML(format, fig.width, fig.height)
 

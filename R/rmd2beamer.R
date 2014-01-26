@@ -47,7 +47,18 @@
 #'    \item{\code{biblio-files}}{Bibliography files to use in LaTeX (used with \code{natbib} or \code{biblatex} options)}
 #' }
 #'
-#' @seealso \code{\link[knitr:knit]{knit}}, \code{\link{beamerOptions}},
+#' @seealso \code{\link[knitr:knit]{knit}}, \code{\link{beamerOptions}}
+#'
+#' @examples
+#' \dontrun{
+#' library(rmarkdown)
+#'
+#' # simple invocation
+#' rmd2beamer("pres.Rmd")
+#'
+#' # specify an option for incremental rendering
+#' rmd2beamer("pres.Rmd", beamerOptions(incremental = TRUE))
+#' }
 #'
 #' @export
 rmd2beamer <- function(input,

@@ -42,7 +42,18 @@ the use of footnotes and bibliographies. For more details
 see the documentation on \link[=rmdMetadata]{R Markdown
 Metadata}.
 }
+\examples{
+\dontrun{
+library(rmarkdown)
+
+# simple invocation
+rmd2docx("input.Rmd")
+
+# specify an option for syntax highlighting
+rmd2docx("input.Rmd", docxOptions(highlight = "zenburn"))
+}
+}
 \seealso{
-\code{\link[knitr:knit]{knit}}, \code{\link{docxOptions}},
+\code{\link[knitr:knit]{knit}}, \code{\link{docxOptions}}
 }
 

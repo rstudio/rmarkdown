@@ -63,8 +63,18 @@ bibliography style (used with \code{natbib} option)}
 LaTeX (used with \code{natbib} or \code{biblatex} options)}
 }
 }
+\examples{
+\dontrun{
+library(rmarkdown)
+
+# simple invocation
+rmd2beamer("pres.Rmd")
+
+# specify an option for incremental rendering
+rmd2beamer("pres.Rmd", beamerOptions(incremental = TRUE))
+}
+}
 \seealso{
-\code{\link[knitr:knit]{knit}},
-\code{\link{beamerOptions}},
+\code{\link[knitr:knit]{knit}}, \code{\link{beamerOptions}}
 }
 
