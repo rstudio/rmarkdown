@@ -22,6 +22,12 @@
 #' \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing
 #' slide shows with pandoc}.
 #'
+#' When including figures generated from R plots within Beamer slides it's
+#' likely you'll need to tweak their sizes for optimal results. You can do this
+#' using the \code{fig.width} and \code{fig.height} chunk options. If you find
+#' that there is too much space around a plot (common with base graphics) you
+#' can apply the pdfcrop filter by adding the \code{crop = TRUE} chunk option.
+#'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. Metadata can
 #' also be provided to enable the use of footnotes and bibliographies.
