@@ -37,7 +37,7 @@ directories.
 
 You typically need to call only one knitr render function,
 as the various format-specific functions (e.g.
-\code{knitrRenderPDF}) all call the \code{knitrRender}
+\code{knitrRenderPdf}) all call the \code{knitrRender}
 function as part of their implementation.
 }
 
