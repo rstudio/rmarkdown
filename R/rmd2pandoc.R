@@ -53,10 +53,11 @@ rmd2pandoc <- function(input,
 
   # define markdown flavor as base pandoc markdown plus some extensions
   # for backward compatibility with github flavored markdown
-  rmdFormat <- paste0("markdown",
-                      "+autolink_bare_uris",
-                      "+ascii_identifiers",
-                      "+tex_math_single_backslash")
+  rmdFormat <- paste("markdown",
+                     "+autolink_bare_uris",
+                     "+ascii_identifiers",
+                     "+tex_math_single_backslash",
+                     sep = "")
 
   # automatically create an output file name if necessary
   if (is.null(output))
@@ -76,9 +77,10 @@ rmd2pandoc <- function(input,
       encoding <- ""
     inputText <- readLines(input, encoding = encoding)
     inputText <- iconv(inputText, from = encoding, to = "UTF-8")
-    input <- paste0(tools::file_path_sans_ext(input),
-                    ".utf8.",
-                    tools::file_ext(input))
+    input <- paste(tools::file_path_sans_ext(input),
+                   ".utf8.",
+                   tools::file_ext(input),
+                   sep = "")
     on.exit(unlink(input), add = TRUE)
     writeLines(inputText, input, useBytes = TRUE)
   }

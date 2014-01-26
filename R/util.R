@@ -7,8 +7,8 @@ pandocOutputFile <- function(input, to) {
   else if (to %in% c("html", "html5", "revealjs"))
     ext <- ".html"
   else
-    ext <- paste0(".", to)
-  output <- paste0(tools::file_path_sans_ext(input), ext)
+    ext <- paste(".", to, sep = "")
+  output <- paste(tools::file_path_sans_ext(input), ext, sep = "")
   basename(output)
 }
 

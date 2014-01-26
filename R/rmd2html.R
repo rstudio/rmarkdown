@@ -114,7 +114,7 @@ htmlOptions <- function(...,
     theme <- match.arg(theme)
     if (identical(theme, "default"))
       theme <- "bootstrap"
-    options <- c(options, "--variable", paste0("theme:", theme))
+    options <- c(options, "--variable", paste("theme:", theme, sep=""))
   }
 
   # highlighting
@@ -134,7 +134,7 @@ htmlOptions <- function(...,
   # mathjax
   if (!is.null(mathjax)) {
     options <- c(options, "--mathjax")
-    options <- c(options, "--variable", paste0("mathjax-url:", mathjax))
+    options <- c(options, "--variable", paste("mathjax-url:", mathjax, sep=""))
   }
 
   # additional css
@@ -153,6 +153,6 @@ htmlOptions <- function(...,
 #' @rdname htmlOptions
 #' @export
 mathjaxURL <- function() {
-  paste0("https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js",
-         "?config=TeX-AMS-MML_HTMLorMML")
+  paste("https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js",
+        "?config=TeX-AMS-MML_HTMLorMML", sep="")
 }
