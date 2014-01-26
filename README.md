@@ -6,7 +6,7 @@ The **rmarkdown** package is a next generation implementation of R Markdown base
 * A wide variety of output formats including HTML, PDF, MS Word, and Beamer.
 * New markdown syntax including expanded support for tables, definition lists, and citations.
 * A responsive (multi-device friendly) HTML template based on [Bootstrap 3](http://getbootstrap.com).
-* The ability to include raw LaTeX and LaTeX macros within markdown for advanced customization of PDF output.
+* The ability to include raw LaTeX within markdown for advanced customization of PDF output.
 * Extensive hooks for customizing HTML and PDF output.
 
 ### Installation
