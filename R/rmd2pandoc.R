@@ -81,7 +81,8 @@ rmd2pandoc <- function(input,
                    ".utf8.",
                    tools::file_ext(input),
                    sep = "")
-    on.exit(unlink(input), add = TRUE)
+    inputAbs <- tools::file_path_as_absolute(input)
+    on.exit(file.remove(inputAbs), add = TRUE)
     writeLines(inputText, input, useBytes = TRUE)
   }
 
