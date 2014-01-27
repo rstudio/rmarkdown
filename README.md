@@ -17,7 +17,16 @@ To install the package and it's dependencies:
 devtools::install_github(c("pandoc", "rmarkdown"), "rstudio")
 ```
 
-A recent version of pandoc (>= 1.12.3) is also required. You can download pandoc from the [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page. Alternatively, pandoc v1.12.3 is also included with recent [daily builds](http://www.rstudio.org/download/daily) of RStudio.
+#### Pandoc
+
+A recent version of pandoc (>= 1.12.3) is also required. There are a few ways to obtain an up to date version of pandoc:
+
+1. If you are using the package from within RStudio you can rely on the version of pandoc that is included with recent [daily builds](http://www.rstudio.org/download/daily) of RStudio.
+
+2. Follow the instructions for your platform on the [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page.
+
+3. If you are running on Linux without RStudio and don't want to install the Haskell dependencies required for pandoc you can also copy the `pandoc` and `pandoc-citeproc` binaries out of the RStudio `bin/pandoc` directory and place them somewhere on your system path.
+
 
 ### Usage
 
