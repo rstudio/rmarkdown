@@ -35,6 +35,9 @@ requires knitting then \code{\link[knitr:knit]{knit}} is
 called prior to pandoc.
 }
 \details{
+Creating PDF output from R Markdown requires that LaTeX be
+installed.
+
 R Markdown documents can have optional metadata that is
 used to generate a document header that includes the title,
 author, and date. Metadata can also be provided to enable

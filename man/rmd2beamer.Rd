@@ -35,6 +35,9 @@ input requires knitting then \code{\link[knitr:knit]{knit}}
 is called prior to pandoc.
 }
 \details{
+Creating Beamer output from R Markdown requires that LaTeX
+be installed.
+
 For more information on markdown syntax for presentations
 see
 \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing

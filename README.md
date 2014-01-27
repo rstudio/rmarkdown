@@ -9,6 +9,8 @@ The **rmarkdown** package is a next generation implementation of R Markdown base
 * The ability to include raw LaTeX within markdown for advanced customization of PDF output.
 * Extensive hooks for customizing HTML and PDF output.
 
+Note that creating PDF and Beamer output requires that LaTeX be installed.
+
 ### Installation
 
 To install the package and it's dependencies:
