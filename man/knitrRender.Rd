@@ -3,7 +3,7 @@
 \alias{knitrRenderDocx}
 \alias{knitrRenderHtml}
 \alias{knitrRenderPdf}
-\title{Set knitr Hooks and Options for Rendering R Markdown}
+\title{Set knitr hooks and options for rendering R Markdown.}
 \usage{
 knitrRender(format)
 

@@ -1,6 +1,6 @@
 \name{rmd2pandoc}
 \alias{rmd2pandoc}
-\title{Convert R Markdown Using Pandoc}
+\title{Convert R Markdown using pandoc.}
 \usage{
 rmd2pandoc(input, to, options = NULL, output = NULL,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))

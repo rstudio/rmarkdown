@@ -1,6 +1,6 @@
 \name{beamerOptions}
 \alias{beamerOptions}
-\title{Options for Beamer Conversion}
+\title{Options for Beamer conversion.}
 \usage{
 beamerOptions(..., toc = FALSE, slide.level = 2, incremental = FALSE,
   highlight = highlighter(), includes = NULL)

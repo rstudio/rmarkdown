@@ -1,6 +1,6 @@
 \name{rmd2html}
 \alias{rmd2html}
-\title{Convert R Markdown to HTML}
+\title{Convert R Markdown to HTML.}
 \usage{
 rmd2html(input, options = htmlOptions(), output = NULL,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))

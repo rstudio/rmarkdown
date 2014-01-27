@@ -1,4 +1,4 @@
-#' Convert R Markdown Using Pandoc
+#' Convert R Markdown using pandoc.
 #'
 #' Convert the input file using pandoc. If the input requires knitting then
 #' \code{\link[knitr:knit]{knit}} is called prior to pandoc.

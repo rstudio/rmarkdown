@@ -1,6 +1,6 @@
 \name{pdfOptions}
 \alias{pdfOptions}
-\title{Options for PDF Conversion}
+\title{Options for PDF conversion.}
 \usage{
 pdfOptions(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
   highlight = highlighter(), latex.engine = c("pdflatex", "lualatex",

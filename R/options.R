@@ -1,5 +1,5 @@
 
-#' Available Syntax Highlighers
+#' Available syntax highlighers.
 #'
 #' Get the available syntax highlighters (supported highlighers are "default",
 #' "pygments", "kate", "monochrome", "espresso", "zenburn", "haddock", and

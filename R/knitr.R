@@ -1,4 +1,4 @@
-#' Check Whether an Input Document Requires Knitting
+#' Check whether an input document requires knitting.
 #'
 #' Check whether the input document requires knitting by evaluating it's
 #' file extension. R Markdown (e.g. .Rmd) requires knitting whereas
@@ -15,7 +15,7 @@ knitRequired <- function(input) {
 }
 
 
-#' Set knitr Hooks and Options for Rendering R Markdown
+#' Set knitr hooks and options for rendering R Markdown.
 #'
 #' These functions set knitr hooks and options for markdown rendering. Hooks are
 #' based on the default

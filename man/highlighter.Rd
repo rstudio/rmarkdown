@@ -1,6 +1,6 @@
 \name{highlighter}
 \alias{highlighter}
-\title{Available Syntax Highlighers}
+\title{Available syntax highlighers.}
 \usage{
 highlighter()
 }
