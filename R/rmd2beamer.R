@@ -104,10 +104,12 @@ rmd2beamer <- function(input,
 #'   that if you want to reverse the default incremental behavior for an
 #'   individual bullet you can preceded it with \code{>}. For example:
 #'   \emph{\code{> - Bullet Text}}
-#' @param highlight Syntax highlighting style (see \code{\link{highlighter}}).
-#'   Pass \code{NULL} to prevent syntax highlighting.
+#' @param highlight Syntax highlighting style. Supported styles include
+#'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
+#'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
 #' @param includes Additional content to include within the document (typically
-#'   created using the \code{\link[pandoc:includeOptions]{includeOptions}} function).
+#'   created using the \code{\link[pandoc:includeOptions]{includeOptions}}
+#'   function).
 #'
 #' @return A character vector of options that can be passed to
 #'   \code{\link{rmd2beamer}}.
@@ -119,7 +121,7 @@ beamerOptions <- function(...,
                           toc = FALSE,
                           slide.level = 2,
                           incremental = FALSE,
-                          highlight = highlighter(),
+                          highlight = "default",
                           includes = NULL) {
 
   # base options for all beamer output
@@ -138,7 +140,7 @@ beamerOptions <- function(...,
 
   # highlighting
   if (!is.null(highlight))
-    highlight <- match.arg(highlight)
+    highlight <- match.arg(highlight, highlighters())
   options <- c(options, pandoc::highlightOptions(highlight))
 
   # content includes

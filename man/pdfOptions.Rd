@@ -3,8 +3,8 @@
 \title{Options for PDF conversion.}
 \usage{
 pdfOptions(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
-  highlight = highlighter(), latex.engine = c("pdflatex", "lualatex",
-  "xelatex"), natbib = FALSE, biblatex = FALSE, includes = NULL)
+  highlight = "default", latex.engine = "pdflatex", natbib = FALSE,
+  biblatex = FALSE, includes = NULL)
 }
 \arguments{
   \item{\dots}{Command line options to pass to pandoc}
@@ -18,12 +18,15 @@ pdfOptions(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
   \item{number.sections}{\code{TRUE} Number section
   headings}
 
-  \item{highlight}{Syntax highlighting style (see
-  \code{\link{highlighter}}).  Pass \code{NULL} to prevent
-  syntax highlighting.}
+  \item{highlight}{Syntax highlighting style. Supported
+  styles include "default", "pygments", "kate",
+  "monochrome", "espresso", "zenburn", "haddock", and
+  "tango". Pass \code{NULL} to prevent syntax highlighting.
+  Pass \code{NULL} to prevent syntax highlighting.}
 
   \item{latex.engine}{LaTeX engine for producing PDF
-  output. Options are pdflatex, lualatex, and xelatex.}
+  output. Options are "pdflatex", "lualatex", and
+  "xelatex".}
 
   \item{natbib}{Use natbib for citations in LaTeX output}
 

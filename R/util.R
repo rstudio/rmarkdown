@@ -16,3 +16,15 @@ pandocOutputFile <- function(input, to) {
 pandocTemplate <- function(file) {
   system.file(file.path("templates", file), package = "rmarkdown")
 }
+
+highlighters <- function() {
+  c("default",
+    "pygments",
+    "kate",
+    "monochrome",
+    "espresso",
+    "zenburn",
+    "haddock",
+    "tango")
+}
+

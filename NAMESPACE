@@ -1,6 +1,5 @@
 export(beamerOptions)
 export(docxOptions)
-export(highlighter)
 export(htmlOptions)
 export(knitRequired)
 export(knitrRender)

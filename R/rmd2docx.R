@@ -76,8 +76,9 @@ knitrRenderDocx <- function(fig.width, fig.height) {
 #' Define the options for converting R Markdown to MS Word docx
 #'
 #' @param \dots Command line options to pass to pandoc
-#' @param highlight Syntax highlighting style (see \code{\link{highlighter}}).
-#'   Pass \code{NULL} to prevent syntax highlighting.
+#' @param highlight Syntax highlighting style. Supported styles include
+#'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
+#'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
 #' @param reference.docx Use the specified file as a style reference in
 #'   producing a docx file. For best results, the reference docx should be a
 #'   modified version of a docx file produced using pandoc.
@@ -89,7 +90,7 @@ knitrRenderDocx <- function(fig.width, fig.height) {
 #'
 #' @export
 docxOptions <- function(...,
-                        highlight = highlighter(),
+                        highlight = "default",
                         reference.docx = NULL) {
 
   # base options for all docx output
@@ -97,7 +98,7 @@ docxOptions <- function(...,
 
   # highlighting
   if (!is.null(highlight))
-    highlight <- match.arg(highlight)
+    highlight <- match.arg(highlight, highlighters())
   options <- c(options, pandoc::highlightOptions(highlight))
 
   # reference docx

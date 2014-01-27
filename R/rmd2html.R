@@ -78,8 +78,9 @@ knitrRenderHtml <- function(format, fig.width, fig.height) {
 #' @param theme Visual theme ("default", "cerulean", or "slate"). Pass
 #'   \code{NULL} for no theme (in which case you want to pass some custom CSS
 #'   using the \code{css} parameter)
-#' @param highlight Syntax highlighting style (see
-#'   \code{\link{highlighter}}). Pass \code{NULL} to prevent syntax highlighting.
+#' @param highlight Syntax highlighting style. Supported styles include
+#'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
+#'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
 #' @param mathjax Include mathjax from the specified URL. Pass \code{NULL} to
 #'   not include mathjax.
 #' @param css One or more css files to include
@@ -96,8 +97,8 @@ knitrRenderHtml <- function(format, fig.width, fig.height) {
 htmlOptions <- function(...,
                         toc = FALSE,
                         toc.depth = 3,
-                        theme = c("default", "cerulean", "slate"),
-                        highlight = highlighter(),
+                        theme = "default",
+                        highlight = "default",
                         mathjax = mathjaxURL(),
                         css = NULL,
                         includes = NULL) {
@@ -114,7 +115,7 @@ htmlOptions <- function(...,
 
   # theme
   if (!is.null(theme)) {
-    theme <- match.arg(theme)
+    theme <- match.arg(theme, c("default", "cerulean", "slate"))
     if (identical(theme, "default"))
       theme <- "bootstrap"
     options <- c(options, "--variable", paste("theme:", theme, sep=""))
@@ -124,7 +125,7 @@ htmlOptions <- function(...,
   if (is.null(highlight)) {
     options <- c(options, "--no-highlight")
   } else {
-    highlight <- match.arg(highlight)
+    highlight <- match.arg(highlight, highlighters())
     if (identical(highlight, "default")) {
       options <- c(options, "--no-highlight")
       options <- c(options, "--variable", "highlightjs")

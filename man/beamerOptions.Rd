@@ -3,7 +3,7 @@
 \title{Options for Beamer conversion.}
 \usage{
 beamerOptions(..., toc = FALSE, slide.level = 2, incremental = FALSE,
-  highlight = highlighter(), includes = NULL)
+  highlight = "default", includes = NULL)
 }
 \arguments{
   \item{\dots}{Command line options to pass to pandoc}
@@ -23,9 +23,11 @@ beamerOptions(..., toc = FALSE, slide.level = 2, incremental = FALSE,
   can preceded it with \code{>}. For example: \emph{\code{>
   - Bullet Text}}}
 
-  \item{highlight}{Syntax highlighting style (see
-  \code{\link{highlighter}}).  Pass \code{NULL} to prevent
-  syntax highlighting.}
+  \item{highlight}{Syntax highlighting style. Supported
+  styles include "default", "pygments", "kate",
+  "monochrome", "espresso", "zenburn", "haddock", and
+  "tango". Pass \code{NULL} to prevent syntax
+  highlighting.}
 
   \item{includes}{Additional content to include within the
   document (typically created using the
