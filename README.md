@@ -21,7 +21,7 @@ devtools::install_github(c("pandoc", "rmarkdown"), "rstudio")
 
 A recent version of pandoc (>= 1.12.3) is also required. There are a few ways to obtain an up to date version of pandoc:
 
-1. If you are using the package from within RStudio you can rely on the version of pandoc that is included with recent [daily builds](http://www.rstudio.org/download/daily) of RStudio.
+1. If you running within RStudio you can rely on the version of pandoc that is included with recent [daily builds](http://www.rstudio.org/download/daily) of RStudio.
 
 2. Follow the instructions for your platform on the [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page.
 
