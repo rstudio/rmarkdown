@@ -64,7 +64,7 @@ rmd2pdf("input.Rmd", pdfOptions(toc = TRUE, "--listings"))
 
 ### License
 
-The **rmarkdown** package is licensed under the GPLv2 (http://www.gnu.org/licenses/gpl-2.0.html).
+The **rmarkdown** package is licensed under the GPLv3 (http://www.gnu.org/licenses/gpl.html).
 
 
 

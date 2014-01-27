@@ -14,4 +14,4 @@ Imports:
     knitr (>= 1.5),
     pandoc (>= 0.1)
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
-License: GPL (>= 2)
+License: GPL-3
