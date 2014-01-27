@@ -11,7 +11,7 @@ Depends:
     R (>= 2.14.1)
 Imports:
     tools,
-    knitr (>= 1.5),
-    pandoc (>= 0.1)
+    knitr,
+    pandoc
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
 License: GPL-3
