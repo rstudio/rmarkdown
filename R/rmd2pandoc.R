@@ -90,7 +90,7 @@ rmd2pandoc <- function(input,
   pandoc::convert(input, to, rmdFormat, output, TRUE, options, !quiet)
 
   # return the full path to the output file
-  tools::file_path_as_absolute(output)
+  invisible(tools::file_path_as_absolute(output))
 }
 
 
