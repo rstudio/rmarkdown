@@ -81,7 +81,7 @@ rmd2pdf <- function(input,
 
   # some special sauce to tweak the geometry if the user hasn't done
   # so explicitly within the document's metadata
-  options <- c(options, pdfGeometry(readLines(input, encoding = encoding),
+  options <- c(options, pdfGeometry(readLines(input, warn = FALSE, encoding = encoding),
                                     options))
 
   # call pandoc

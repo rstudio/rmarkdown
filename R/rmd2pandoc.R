@@ -75,7 +75,7 @@ rmd2pandoc <- function(input,
   if (!identical(encoding, "UTF-8")) {
     if (identical(encoding, "native.enc"))
       encoding <- ""
-    inputText <- readLines(input, encoding = encoding)
+    inputText <- readLines(input, warn = FALSE, encoding = encoding)
     inputText <- iconv(inputText, from = encoding, to = "UTF-8")
     input <- paste(tools::file_path_sans_ext(input),
                    ".utf8.",
