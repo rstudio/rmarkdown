@@ -50,6 +50,9 @@ rmd2pandoc <- function(input,
   # execute within the input file's directory
   oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
   on.exit(setwd(oldwd), add = TRUE)
+  
+  # reset the name of the input file to be relative
+  input <- basename(input)
 
   # define markdown flavor as base pandoc markdown plus some extensions
   # for backward compatibility with github flavored markdown
