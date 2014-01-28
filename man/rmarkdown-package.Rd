@@ -12,31 +12,32 @@
 
 The \pkg{rmarkdown} package includes high level functions for converting to a variety of formats. For example:
 
-\preformatted{rmd2html("input.Rmd")
-rmd2pdf("input.Rmd")
+\preformatted{
+render("input.Rmd", html_document())
+render("input.Rmd", pdf_document())
 }
 
 You can also specify a plain markdown file in which case knitting will be bypassed:
 
-\preformatted{rmd2html("input.md")
+\preformatted{render("input.md", html_document())
 }
 
-All of the output formats have a corresponding options function which can be used to customize the ouptut, for example:
+Additional options can be specified along with the output format:
 
-\preformatted{rmd2html("input.Rmd", htmlOptions(toc = TRUE))
-rmd2pdf("input.Rmd", pdfOptions(latex.engine = "lualatex"))
-rmd2beamer("input.Rmd", beamerOptions(incremental = TRUE))
+\preformatted{render("input.Rmd", html_document(toc = TRUE))
+render("input.Rmd", pdf_document(latex.engine = "lualatex"))
+render("input.Rmd", beamer_presentation(incremental = TRUE))
 }
 
-You can also include arbitrary pandoc command line arguments in the call to the options function:
+You can also include arbitrary pandoc command line arguments along with the other options:
 
-\preformatted{rmd2pdf("input.Rmd", pdfOptions(toc = TRUE, "--listings"))
+\preformatted{render("input.Rmd", pdf_document(toc = TRUE, "--listings"))
 }
 
 }
 
 \seealso{
-\code{\link{rmd2html}}, \code{\link{rmd2pdf}}, \code{\link{rmd2docx}}, \code{\link{rmd2beamer}}
-
+\link{render}, \link{html_document}, \link{pdf_document}, \link{word_document}, \link{beamer_presentation}
 }
+
 

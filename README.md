@@ -35,42 +35,42 @@ A recent version of pandoc (>= 1.12.3) is also required. There are a few ways to
 The following functions will knit the specified input document and then produce the final output document using pandoc:
 
 ```
-rmd2html("input.Rmd")
-rmd2pdf("input.Rmd")
+render("input.Rmd", html_document())
+render("input.Rmd", pdf_document())
 ```
 
 You can also specify a plain markdown file in which case knitting will be bypassed:
 
 ```
-rmd2html("input.md")
+render("input.md", html_document())
 ```
 
 All of the output formats have a corresponding options function which can be used to customize the ouptut, for example:
 
 ```
-rmd2html("input.Rmd", htmlOptions(toc = TRUE))
-rmd2pdf("input.Rmd", pdfOptions(latex.engine = "lualatex"))
-rmd2beamer("input.Rmd", beamerOptions(incremental = TRUE))
+render("input.Rmd", html_document(toc = TRUE))
+render("input.Rmd", pdf_document(latex.engine = "lualatex"))
+render("input.Rmd", beamer_presentation(incremental = TRUE))
 ```
 
 You can include custom CSS in HTML output using the `css` option. Combining this with setting the HTML `theme` to `NULL` provides for full control over all styles:
 
 ```
-rmd2html("input.Rmd", htmlOptions(css = "styles.css"))
-rmd2html("input.Rmd", htmlOptions(theme = NULL, css = "styles.css"))
+render("input.Rmd", html_document(css = "styles.css"))
+render("input.Rmd", html_document(theme = NULL, css = "styles.css"))
 ```
 
 You can add custom content to HTML and PDF output using the `includes` option. For example:
 
 ```
-rmd2pdf("input.Rmd", pdfOptions(includes = includeOptions(before.body = "header.tex",
-                                                          after.body = "footer.tex")))
+includes <- pandoc::include_options(before.body = "header.tex", after.body = "footer.tex"))
+render("input.Rmd", pdf_document(includes = includes))
 ```
 
 You can also include arbitrary pandoc command line arguments in the call to the options function:
 
 ```
-rmd2pdf("input.Rmd", pdfOptions(toc = TRUE, "--listings"))
+render("input.Rmd", pdf_document(toc = TRUE, "--listings"))
 ```
 
 ### License

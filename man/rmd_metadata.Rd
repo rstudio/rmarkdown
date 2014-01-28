@@ -1,5 +1,5 @@
-\name{rmdMetadata}
-\alias{rmdMetadata}
+\name{rmd_metadata}
+\alias{rmd_metadata}
 
 \title{R Markdown Metadata}
 
@@ -20,9 +20,9 @@ Note that the \code{title} field is quoted. This is because titles often contain
 \details{
 When title, author, and date metadata is provided it's used to automatically create a title section within output documents. If you don't want this section included in your document then you should remove the corresponding metadata fields.
 
-Metadata can also be used to specify a bibliography and citations styles. For details see \link[=rmdCitations]{R Markdown Citations}.
+Metadata can also be used to specify a bibliography and citations styles. For details see \link[=rmd_citations]{R Markdown Citations}.
 
-When generating PDF and Beamer output there are also a number of other metadata fields that can be included to customize the appearance and theme of PDF output. For more details see the documentation for \code{\link{rmd2pdf}} and \code{\link{rmd2beamer}}.
+When generating PDF and Beamer output there are also a number of other metadata fields that can be included to customize the appearance and theme of PDF output. For more details see the documentation for \code{\link{pdf_document}} and \code{\link{beamer_presentation}}.
 
 }
 

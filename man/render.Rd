@@ -1,21 +1,18 @@
-\name{rmd2pandoc}
-\alias{rmd2pandoc}
-\title{Convert R Markdown using pandoc}
+\name{render}
+\alias{render}
+\title{Render R Markdown}
 \usage{
-rmd2pandoc(input, to, options = NULL, output = NULL,
-  envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
+render(input, output, output.file = NULL, envir = parent.frame(),
+  quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{Input file (Rmd or plain markdown)}
 
-  \item{to}{Pandoc format to convert to}
+  \item{output}{R Markdown output format to convert to (see
+  \code{\link{output_format}}).}
 
-  \item{options}{Character vector of command line options
-  to pass to pandoc.}
-
-  \item{output}{Output file (if not specified then a
-  default based on the specified \code{to} format is
-  chosen)}
+  \item{output.file}{Output file (if not specified then a
+  default based on the specified output format is chosen)}
 
   \item{envir}{The environment in which the code chunks are
   to be evaluated during knitting (can use
@@ -33,14 +30,9 @@ The compiled document is written into the output file, and
 the path of the output file is returned.
 }
 \description{
-Convert the input file using pandoc. If the input requires
-knitting then \code{\link[knitr:knit]{knit}} is called
-prior to pandoc.
-}
-\details{
-Typically one of the \code{\link{knitrRender}} functions is
-called prior to calling \code{knit2pandoc} to optimize
-knitr rendering for the intended output format.
+Render the input file to the specified output format using
+pandoc. If the input requires knitting then
+\code{\link[knitr:knit]{knit}} is called prior to pandoc.
 }
 \section{R Markdown}{
   R Markdown supports all of the base pandoc markdown
@@ -54,5 +46,9 @@ knitr rendering for the intended output format.
   features enabled include \code{autolink_bare_uris},
   \code{ascii_identifiers}, and
   \code{tex_math_single_backslash}.
+}
+\seealso{
+\link[knitr:knit]{knit}, \link{output_format},
+\href{http://johnmacfarlane.net/pandoc}{pandoc}
 }
 

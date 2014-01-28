@@ -1,7 +1,7 @@
 
 
 # determine the output file for a pandoc conversion
-pandocOutputFile <- function(input, to) {
+pandoc_output_file <- function(input, to) {
   if (to %in% c("latex", "beamer"))
     ext <- ".pdf"
   else if (to %in% c("html", "html5", "revealjs"))
@@ -13,7 +13,7 @@ pandocOutputFile <- function(input, to) {
 }
 
 
-pandocTemplate <- function(file) {
+pandoc_template <- function(file) {
   system.file(file.path("templates", file), package = "rmarkdown")
 }
 
@@ -27,4 +27,5 @@ highlighters <- function() {
     "haddock",
     "tango")
 }
+
 

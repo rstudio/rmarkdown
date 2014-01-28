@@ -1,38 +1,45 @@
-\name{rmd2beamer}
-\alias{rmd2beamer}
-\title{Convert R Markdown to Beamer}
+\name{beamer_presentation}
+\alias{beamer_presentation}
+\title{Convert to a Beamer presentation}
 \usage{
-rmd2beamer(input, options = beamerOptions(), output = NULL,
-  envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
+beamer_presentation(..., toc = FALSE, slide.level = 2,
+  incremental = FALSE, highlight = "default", includes = NULL)
 }
 \arguments{
-  \item{input}{Input file (Rmd or plain markdown)}
+  \item{toc}{\code{TRUE} to include a table of contents in
+  the output (only level 1 headers will be included in the
+  table of contents).}
 
-  \item{options}{Character vector of pandoc options created
-  by calling \code{\link{beamerOptions}}}
+  \item{slide.level}{The heading level which defines
+  indvidual slides. By default this is level 2, which
+  allows level 1 headers to be used to define sections of
+  the presentation.}
 
-  \item{output}{Target output file (defaults to <input>.pdf
-  if not specified)}
+  \item{incremental}{\code{TRUE} to render slide bullets
+  incrementally. Note that if you want to reverse the
+  default incremental behavior for an individual bullet you
+  can preceded it with \code{>}. For example: \emph{\code{>
+  - Bullet Text}}}
 
-  \item{envir}{The environment in which the code chunks are
-  to be evaluated during knitting (can use
-  \code{\link{new.env}()} to guarantee an empty new
-  environment)}
+  \item{highlight}{Syntax highlighting style. Supported
+  styles include "default", "pygments", "kate",
+  "monochrome", "espresso", "zenburn", "haddock", and
+  "tango". Pass \code{NULL} to prevent syntax
+  highlighting.}
 
-  \item{quiet}{Whether to suppress the progress bar and
-  messages}
+  \item{includes}{Additional content to include within the
+  document (typically created using the
+  \code{\link[pandoc:include_options]{include_options}}
+  function).}
 
-  \item{encoding}{The encoding of the input file; see
-  \code{\link{file}}}
+  \item{\dots}{Command line options to pass to pandoc}
 }
 \value{
-The compiled document is written into the output file, and
-the path of the output file is returned.
+R Markdown output format to pass to \code{\link{render}}
 }
 \description{
-Converts the input file to Beamer using pandoc. If the
-input requires knitting then \code{\link[knitr:knit]{knit}}
-is called prior to pandoc.
+Format for converting from R Markdown to a Beamer
+presentation.
 }
 \details{
 Creating Beamer output from R Markdown requires that LaTeX
@@ -56,13 +63,11 @@ used to generate a document header that includes the title,
 author, and date. Metadata can also be provided to enable
 the use of footnotes and bibliographies. For more details
 see the documentation on R Markdown
-\link[=rmdMetadata]{metadata} and
-\link[=rmdCitations]{citations}.
+\link[=rmd_metadata]{metadata} and
+\link[=rmd_citations]{citations}.
 
-In addition to the options specified by
-\code{\link{beamerOptions}}, many other aspects of the
-LaTeX template used to create Beamer output can be
-customized using metadata. For example:
+Many aspects of the LaTeX template used to create Beamer
+output can be customized using metadata. For example:
 
 \tabular{l}{ \code{---} \cr \code{title: "Crop Analysis Q3
 2013"} \cr \code{theme: AnnArbor} \cr \code{colortheme:
@@ -86,13 +91,10 @@ LaTeX (used with \code{natbib} or \code{biblatex} options)}
 library(rmarkdown)
 
 # simple invocation
-rmd2beamer("pres.Rmd")
+render("pres.Rmd", beamer_presentation())
 
 # specify an option for incremental rendering
-rmd2beamer("pres.Rmd", beamerOptions(incremental = TRUE))
+render("pres.Rmd", beamer_presentation(incremental = TRUE))
 }
-}
-\seealso{
-\code{\link[knitr:knit]{knit}}, \code{\link{beamerOptions}}
 }
 

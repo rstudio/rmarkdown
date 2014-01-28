@@ -1,5 +1,5 @@
-\name{rmdCitations}
-\alias{rmdCitations}
+\name{rmd_citations}
+\alias{rmd_citations}
 
 \title{R Markdown Citations}
 
