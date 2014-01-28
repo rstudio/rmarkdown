@@ -1,6 +1,6 @@
 \name{rmd2pdf}
 \alias{rmd2pdf}
-\title{Convert R Markdown to PDF.}
+\title{Convert R Markdown to PDF}
 \usage{
 rmd2pdf(input, options = pdfOptions(), output = NULL,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))

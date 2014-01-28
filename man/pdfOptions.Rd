@@ -1,6 +1,6 @@
 \name{pdfOptions}
 \alias{pdfOptions}
-\title{Options for PDF conversion.}
+\title{Options for PDF conversion}
 \usage{
 pdfOptions(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
   highlight = "default", latex.engine = "pdflatex", natbib = FALSE,

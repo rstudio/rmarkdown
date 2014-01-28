@@ -1,4 +1,4 @@
-#' Convert R Markdown to MS Word.
+#' Convert R Markdown to MS Word
 #'
 #' Converts the input file to MS Word docx using pandoc. If the input requires
 #' knitting then \code{\link[knitr:knit]{knit}} is called prior to pandoc.
@@ -71,7 +71,7 @@ knitrRenderDocx <- function(fig.width, fig.height) {
 
 
 
-#' Options for MS Word conversion.
+#' Options for MS Word conversion
 #'
 #' Define the options for converting R Markdown to MS Word docx
 #'

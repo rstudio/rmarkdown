@@ -1,7 +1,7 @@
 \name{htmlOptions}
 \alias{htmlOptions}
 \alias{mathjaxURL}
-\title{Options for HTML conversion.}
+\title{Options for HTML conversion}
 \usage{
 htmlOptions(..., toc = FALSE, toc.depth = 3, theme = "default",
   highlight = "default", mathjax = mathjaxURL(), css = NULL,

@@ -1,4 +1,4 @@
-#' Convert R Markdown to PDF.
+#' Convert R Markdown to PDF
 #'
 #' Converts the input file to PDF using pandoc. If the input requires
 #' knitting then \code{\link[knitr:knit]{knit}} is called prior to pandoc.
@@ -109,7 +109,7 @@ knitrRenderPdf <- function(format, fig.width, fig.height) {
 }
 
 
-#' Options for PDF conversion.
+#' Options for PDF conversion
 #'
 #' Define the options for converting R Markdown to PDF.
 #'

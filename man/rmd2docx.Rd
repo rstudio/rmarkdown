@@ -1,6 +1,6 @@
 \name{rmd2docx}
 \alias{rmd2docx}
-\title{Convert R Markdown to MS Word.}
+\title{Convert R Markdown to MS Word}
 \usage{
 rmd2docx(input, options = docxOptions(), output = NULL,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))

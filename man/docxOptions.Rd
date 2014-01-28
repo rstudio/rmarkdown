@@ -1,6 +1,6 @@
 \name{docxOptions}
 \alias{docxOptions}
-\title{Options for MS Word conversion.}
+\title{Options for MS Word conversion}
 \usage{
 docxOptions(..., highlight = "default", reference.docx = NULL)
 }

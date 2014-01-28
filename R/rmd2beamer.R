@@ -1,4 +1,4 @@
-#' Convert R Markdown to Beamer.
+#' Convert R Markdown to Beamer
 #'
 #' Converts the input file to Beamer using pandoc. If the input requires
 #' knitting then \code{\link[knitr:knit]{knit}} is called prior to pandoc.
@@ -90,7 +90,7 @@ rmd2beamer <- function(input,
 }
 
 
-#' Options for Beamer conversion.
+#' Options for Beamer conversion
 #'
 #' Define the options for converting R Markdown to Beamer
 #'

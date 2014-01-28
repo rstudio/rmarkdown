@@ -1,6 +1,6 @@
 \name{knitRequired}
 \alias{knitRequired}
-\title{Check whether an input document requires knitting.}
+\title{Check whether an input document requires knitting}
 \usage{
 knitRequired(input)
 }

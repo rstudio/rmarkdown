@@ -1,4 +1,4 @@
-#' Convert R Markdown using pandoc.
+#' Convert R Markdown using pandoc
 #'
 #' Convert the input file using pandoc. If the input requires knitting then
 #' \code{\link[knitr:knit]{knit}} is called prior to pandoc.
@@ -50,7 +50,7 @@ rmd2pandoc <- function(input,
   # execute within the input file's directory
   oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
   on.exit(setwd(oldwd), add = TRUE)
-  
+
   # reset the name of the input file to be relative
   input <- basename(input)
 

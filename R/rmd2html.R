@@ -1,4 +1,4 @@
-#' Convert R Markdown to HTML.
+#' Convert R Markdown to HTML
 #'
 #' Converts the input file to HTML using pandoc. If the input requires knitting
 #' then \code{\link[knitr:knit]{knit}} is called prior to pandoc.
@@ -68,7 +68,7 @@ knitrRenderHtml <- function(format, fig.width, fig.height) {
 }
 
 
-#' Options for HTML conversion.
+#' Options for HTML conversion
 #'
 #' Define the options for converting R Markdown to HTML.
 #'

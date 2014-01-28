@@ -1,6 +1,6 @@
 \name{rmd2beamer}
 \alias{rmd2beamer}
-\title{Convert R Markdown to Beamer.}
+\title{Convert R Markdown to Beamer}
 \usage{
 rmd2beamer(input, options = beamerOptions(), output = NULL,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
