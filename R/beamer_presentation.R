@@ -81,11 +81,18 @@
 beamer_presentation <- function(toc = FALSE,
                                 slide.level = 2,
                                 incremental = FALSE,
-                                fig.width = 4.5,
-                                fig.height = 3.5,
+                                fig.width = 9,
+                                fig.height = 7,
                                 highlight = "default",
                                 includes = NULL,
                                 pandoc.args = NULL) {
+
+  # knitr options
+  knitr <- list()
+  knitr$knit_hooks <- list(crop = knitr::hook_pdfcrop)
+  knitr$opts_chunk <- list(dev = 'cairo_pdf',
+                           fig.width = fig.width,
+                           fig.height = fig.height)
 
   # base pandoc options for all beamer output
   pandoc <- c()
@@ -112,9 +119,8 @@ beamer_presentation <- function(toc = FALSE,
   # dots
   pandoc <- c(pandoc, pandoc.args)
 
-  # return format
   output_format(to = "beamer",
-                knitr = knitr_pdf(fig.width, fig.height),
+                knitr = knitr,
                 pandoc = pandoc)
 }
 
