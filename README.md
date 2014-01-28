@@ -73,6 +73,28 @@ You can also include arbitrary pandoc command line arguments in the call to the 
 render("input.Rmd", pdf_document(toc = TRUE, "--listings"))
 ```
 
+### Custom Formats
+
+You aren't limited to the built in output formats like `html_document` and `pdf_document`. You can also create custom output formats that utilize arbitrary knitr options, knitr hooks, and pandoc command line options.
+
+To create a custom format you write a function that returns an object of class "rmarkdown_output_format". The easiest way to do this is the `rmarkdown::output_format` function. For example, here's a very simple custom format that converts from R Markdown to HTML using the default pandoc HTML template:
+
+```
+custom_format <- function() {
+
+  knitr <- list()
+  knitr$opts_chunk = list(dev = 'png', fig.width = 7, fig.height = 5)
+
+  pandoc <- c("--smart")
+
+  rmarkdown::output_format(to = "html",
+                           knitr = knitr,
+                           pandoc = pandoc)
+}
+```
+
+The custom format function above has no parameters however in practice you'll often want to expose several parameters to allow callers to customize the behavior of the format.
+
 ### License
 
 The **rmarkdown** package is licensed under the GPLv3 (http://www.gnu.org/licenses/gpl.html).
