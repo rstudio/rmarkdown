@@ -61,7 +61,7 @@ knitrRenderHtml <- function(format, fig.width, fig.height) {
   knitrRender(format)
 
   # graphics device
-  knitr::opts_chunk$set(dev = 'svg',
+  knitr::opts_chunk$set(dev = 'png',
                         dpi = 96,
                         fig.width = fig.width,
                         fig.height = fig.height)
