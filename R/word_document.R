@@ -2,6 +2,8 @@
 #'
 #' Format for converting from R Markdown to an MS Word document.
 #'
+#' @param fig.width Default width (in inches) for figures
+#' @param fig.height Default width (in inches) for figures
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
@@ -34,6 +36,8 @@
 #'
 #' @export
 word_document <- function(...,
+                          fig.width = 6,
+                          fig.height = 4.5,
                           highlight = "default",
                           reference.docx = NULL) {
 
@@ -41,8 +45,8 @@ word_document <- function(...,
   knitr <- list()
   knitr$opts_chunk = list(dev = 'png',
                           dpi = 300,
-                          fig.width = 6,
-                          fig.height = 4.5)
+                          fig.width = fig.width,
+                          fig.height = fig.height)
 
   # base pandoc options for all docx output
   pandoc <- c()

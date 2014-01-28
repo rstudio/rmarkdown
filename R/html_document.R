@@ -4,6 +4,8 @@
 #'
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc.depth Depth of headers to include in table of contents
+#' @param fig.width Default width (in inches) for figures
+#' @param fig.height Default width (in inches) for figures
 #' @param theme Visual theme ("default", "cerulean", or "slate"). Pass
 #'   \code{NULL} for no theme (in which case you want to pass some custom CSS
 #'   using the \code{css} parameter)
@@ -43,6 +45,8 @@
 html_document <- function(...,
                           toc = FALSE,
                           toc.depth = 3,
+                          fig.width = 7,
+                          fig.height = 5,
                           theme = "default",
                           highlight = "default",
                           mathjax = "default",
@@ -53,8 +57,8 @@ html_document <- function(...,
   knitr <- list()
   knitr$opts_chunk = list(dev = 'png',
                           dpi = 96,
-                          fig.width = 7,
-                          fig.height = 5)
+                          fig.width = fig.width,
+                          fig.height = fig.height)
 
   # base pandoc options for all HTML output
   pandoc <- c("--smart", "--self-contained")

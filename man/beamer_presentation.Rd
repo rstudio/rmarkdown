@@ -3,7 +3,8 @@
 \title{Convert to a Beamer presentation}
 \usage{
 beamer_presentation(..., toc = FALSE, slide.level = 2,
-  incremental = FALSE, highlight = "default", includes = NULL)
+  incremental = FALSE, fig.width = 4.5, fig.height = 3.5,
+  highlight = "default", includes = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -20,6 +21,10 @@ beamer_presentation(..., toc = FALSE, slide.level = 2,
   default incremental behavior for an individual bullet you
   can preceded it with \code{>}. For example: \emph{\code{>
   - Bullet Text}}}
+
+  \item{fig.width}{Default width (in inches) for figures}
+
+  \item{fig.height}{Default width (in inches) for figures}
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",

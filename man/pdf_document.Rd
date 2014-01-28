@@ -3,8 +3,9 @@
 \title{Convert to a PDF document}
 \usage{
 pdf_document(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
-  highlight = "default", latex.engine = "pdflatex", natbib = FALSE,
-  biblatex = FALSE, includes = NULL)
+  fig.width = 6, fig.height = 4.5, highlight = "default",
+  latex.engine = "pdflatex", natbib = FALSE, biblatex = FALSE,
+  includes = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -15,6 +16,10 @@ pdf_document(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
 
   \item{number.sections}{\code{TRUE} Number section
   headings}
+
+  \item{fig.width}{Default width (in inches) for figures}
+
+  \item{fig.height}{Default width (in inches) for figures}
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",

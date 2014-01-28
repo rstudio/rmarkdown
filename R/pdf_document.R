@@ -5,6 +5,8 @@
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc.depth Depth of headers to include in table of contents
 #' @param number.sections \code{TRUE} Number section headings
+#' @param fig.width Default width (in inches) for figures
+#' @param fig.height Default width (in inches) for figures
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
@@ -75,6 +77,8 @@ pdf_document <- function(...,
                          toc = FALSE,
                          toc.depth = 2,
                          number.sections = FALSE,
+                         fig.width = 6,
+                         fig.height = 4.5,
                          highlight = "default",
                          latex.engine = "pdflatex",
                          natbib = FALSE,
@@ -120,7 +124,7 @@ pdf_document <- function(...,
 
   # return format
   output_format(to = "latex",
-                knitr = knitr_pdf(6, 4.5),
+                knitr = knitr_pdf(fig.width, fig.height),
                 pandoc = pandoc,
                 filter = filter_pdf)
 }

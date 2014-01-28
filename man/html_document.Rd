@@ -2,9 +2,9 @@
 \alias{html_document}
 \title{Convert to an HTML document}
 \usage{
-html_document(..., toc = FALSE, toc.depth = 3, theme = "default",
-  highlight = "default", mathjax = "default", css = NULL,
-  includes = NULL)
+html_document(..., toc = FALSE, toc.depth = 3, fig.width = 7,
+  fig.height = 5, theme = "default", highlight = "default",
+  mathjax = "default", css = NULL, includes = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -12,6 +12,10 @@ html_document(..., toc = FALSE, toc.depth = 3, theme = "default",
 
   \item{toc.depth}{Depth of headers to include in table of
   contents}
+
+  \item{fig.width}{Default width (in inches) for figures}
+
+  \item{fig.height}{Default width (in inches) for figures}
 
   \item{theme}{Visual theme ("default", "cerulean", or
   "slate"). Pass \code{NULL} for no theme (in which case

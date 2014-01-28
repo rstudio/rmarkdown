@@ -11,6 +11,8 @@
 #'   that if you want to reverse the default incremental behavior for an
 #'   individual bullet you can preceded it with \code{>}. For example:
 #'   \emph{\code{> - Bullet Text}}
+#' @param fig.width Default width (in inches) for figures
+#' @param fig.height Default width (in inches) for figures
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
@@ -80,6 +82,8 @@ beamer_presentation <- function(...,
                                 toc = FALSE,
                                 slide.level = 2,
                                 incremental = FALSE,
+                                fig.width = 4.5,
+                                fig.height = 3.5,
                                 highlight = "default",
                                 includes = NULL) {
 
@@ -110,7 +114,7 @@ beamer_presentation <- function(...,
 
   # return format
   output_format(to = "beamer",
-                knitr = knitr_pdf(4.5, 3.5),
+                knitr = knitr_pdf(fig.width, fig.height),
                 pandoc = pandoc)
 }
 

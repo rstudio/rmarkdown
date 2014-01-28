@@ -2,9 +2,14 @@
 \alias{word_document}
 \title{Convert to an MS Word document}
 \usage{
-word_document(..., highlight = "default", reference.docx = NULL)
+word_document(..., fig.width = 6, fig.height = 4.5, highlight = "default",
+  reference.docx = NULL)
 }
 \arguments{
+  \item{fig.width}{Default width (in inches) for figures}
+
+  \item{fig.height}{Default width (in inches) for figures}
+
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",
   "monochrome", "espresso", "zenburn", "haddock", and
