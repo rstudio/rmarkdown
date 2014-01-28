@@ -2,8 +2,8 @@
 \alias{word_document}
 \title{Convert to an MS Word document}
 \usage{
-word_document(..., fig.width = 6, fig.height = 4.5, highlight = "default",
-  reference.docx = NULL)
+word_document(fig.width = 6, fig.height = 4.5, highlight = "default",
+  reference.docx = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{fig.width}{Default width (in inches) for figures}
@@ -21,7 +21,8 @@ word_document(..., fig.width = 6, fig.height = 4.5, highlight = "default",
   reference docx should be a modified version of a docx
   file produced using pandoc.}
 
-  \item{\dots}{Command line options to pass to pandoc}
+  \item{pandoc.args}{Additional command line options to
+  pass to pandoc}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

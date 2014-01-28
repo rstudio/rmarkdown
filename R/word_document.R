@@ -10,7 +10,7 @@
 #' @param reference.docx Use the specified file as a style reference in
 #'   producing a docx file. For best results, the reference docx should be a
 #'   modified version of a docx file produced using pandoc.
-#' @param \dots Command line options to pass to pandoc
+#' @param pandoc.args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -35,11 +35,11 @@
 #' }
 #'
 #' @export
-word_document <- function(...,
-                          fig.width = 6,
+word_document <- function(fig.width = 6,
                           fig.height = 4.5,
                           highlight = "default",
-                          reference.docx = NULL) {
+                          reference.docx = NULL,
+                          pandoc.args = NULL) {
 
   # knitr options and hooks
   knitr <- list()
@@ -63,8 +63,8 @@ word_document <- function(...,
                  tools::file_path_as_absolute(reference.docx))
   }
 
-  # dots
-  pandoc <- c(pandoc, as.character(list(...)))
+  # pandoc args
+  pandoc <- c(pandoc, pandoc.args)
 
   # return output format
   output_format(to = "docx",

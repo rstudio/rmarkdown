@@ -2,10 +2,10 @@
 \alias{pdf_document}
 \title{Convert to a PDF document}
 \usage{
-pdf_document(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
+pdf_document(toc = FALSE, toc.depth = 2, number.sections = FALSE,
   fig.width = 6, fig.height = 4.5, highlight = "default",
   latex.engine = "pdflatex", natbib = FALSE, biblatex = FALSE,
-  includes = NULL)
+  includes = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -41,7 +41,8 @@ pdf_document(..., toc = FALSE, toc.depth = 2, number.sections = FALSE,
   \code{\link[pandoc:include_options]{include_options}}
   function).}
 
-  \item{\dots}{Command line options to pass to pandoc}
+  \item{pandoc.args}{Additional command line options to
+  pass to pandoc}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

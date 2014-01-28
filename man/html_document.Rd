@@ -2,9 +2,9 @@
 \alias{html_document}
 \title{Convert to an HTML document}
 \usage{
-html_document(..., toc = FALSE, toc.depth = 3, fig.width = 7,
-  fig.height = 5, theme = "default", highlight = "default",
-  mathjax = "default", css = NULL, includes = NULL)
+html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
+  theme = "default", highlight = "default", mathjax = "default",
+  css = NULL, includes = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -40,7 +40,8 @@ html_document(..., toc = FALSE, toc.depth = 3, fig.width = 7,
   \code{\link[pandoc:include_options]{include_options}}
   function).}
 
-  \item{\dots}{Command line options to pass to pandoc}
+  \item{pandoc.args}{Additional command line options to
+  pass to pandoc}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

@@ -19,7 +19,7 @@
 #' @param includes Additional content to include within the document (typically
 #'   created using the \code{\link[pandoc:include_options]{include_options}}
 #'   function).
-#' @param \dots Command line options to pass to pandoc
+#' @param pandoc.args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -42,8 +42,7 @@
 #' }
 #'
 #' @export
-html_document <- function(...,
-                          toc = FALSE,
+html_document <- function(toc = FALSE,
                           toc.depth = 3,
                           fig.width = 7,
                           fig.height = 5,
@@ -51,7 +50,8 @@ html_document <- function(...,
                           highlight = "default",
                           mathjax = "default",
                           css = NULL,
-                          includes = NULL) {
+                          includes = NULL,
+                          pandoc.args = NULL) {
 
   # knitr options and hooks
   knitr <- list()
@@ -107,8 +107,8 @@ html_document <- function(...,
   # content includes
   pandoc <- c(pandoc, includes)
 
-  # dots
-  pandoc <- c(pandoc, as.character(list(...)))
+  # pandoc args
+  pandoc <- c(pandoc, pandoc.args)
 
   # return format
   output_format(to = "html",

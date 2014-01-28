@@ -2,9 +2,9 @@
 \alias{beamer_presentation}
 \title{Convert to a Beamer presentation}
 \usage{
-beamer_presentation(..., toc = FALSE, slide.level = 2,
-  incremental = FALSE, fig.width = 4.5, fig.height = 3.5,
-  highlight = "default", includes = NULL)
+beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
+  fig.width = 4.5, fig.height = 3.5, highlight = "default",
+  includes = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -37,7 +37,8 @@ beamer_presentation(..., toc = FALSE, slide.level = 2,
   \code{\link[pandoc:include_options]{include_options}}
   function).}
 
-  \item{\dots}{Command line options to pass to pandoc}
+  \item{pandoc.args}{Additional command line options to
+  pass to pandoc}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

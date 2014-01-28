@@ -19,7 +19,7 @@
 #' @param includes Additional content to include within the document (typically
 #'   created using the \code{\link[pandoc:include_options]{include_options}}
 #'   function).
-#' @param \dots Command line options to pass to pandoc
+#' @param pandoc.args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -78,14 +78,14 @@
 #' }
 #'
 #' @export
-beamer_presentation <- function(...,
-                                toc = FALSE,
+beamer_presentation <- function(toc = FALSE,
                                 slide.level = 2,
                                 incremental = FALSE,
                                 fig.width = 4.5,
                                 fig.height = 3.5,
                                 highlight = "default",
-                                includes = NULL) {
+                                includes = NULL,
+                                pandoc.args = NULL) {
 
   # base pandoc options for all beamer output
   pandoc <- c()
@@ -110,7 +110,7 @@ beamer_presentation <- function(...,
   pandoc <- c(pandoc, includes)
 
   # dots
-  pandoc <- c(pandoc, as.character(list(...)))
+  pandoc <- c(pandoc, pandoc.args)
 
   # return format
   output_format(to = "beamer",
