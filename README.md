@@ -90,7 +90,7 @@ render("input.Rmd", pdf_document(includes = includes))
 You can also include arbitrary pandoc command line arguments in the call to the options function:
 
 ```
-render("input.Rmd", pdf_document(toc = TRUE, "--listings"))
+render("input.Rmd", pdf_document(toc = TRUE, pandoc.args = c("--listings")))
 ```
 
 ### Custom Formats
