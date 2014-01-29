@@ -148,7 +148,8 @@ filter_pdf <- function(format, input) {
     length(grep("^geometry\\:[ \\t]*margin=\\d+(\\.?\\d+)?\\w+$", text)) > 0
   }
   if (!has_margin(input) && !has_margin(format$pandoc))
-    format$pandoc <- c(format$pandoc, "--variable", "geometry:margin=1in")
+    format$pandoc$args <- c(format$pandoc$args,
+                            "--variable", "geometry:margin=1in")
 
   format
 }
