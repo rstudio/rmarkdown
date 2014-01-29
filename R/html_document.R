@@ -7,7 +7,7 @@
 #' @param fig.width Default width (in inches) for figures
 #' @param fig.height Default width (in inches) for figures
 #' @param theme Visual theme ("default", "cerulean", "journal", "flatly",
-#'   "readable", "simplex", "spacelab", "united", "yeti", or "cosmo").
+#'   "readable", "spacelab", "united", "yeti", or "cosmo").
 #'   Pass \code{NULL} for no theme (in which case you want to pass some custom
 #'   CSS using the \code{css} parameter)
 #' @param highlight Syntax highlighting style. Supported styles include
@@ -123,7 +123,6 @@ themes <- function() {
     "journal",
     "flatly",
     "readable",
-    "simplex",
     "spacelab",
     "united",
     "yeti",
