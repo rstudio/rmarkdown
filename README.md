@@ -102,18 +102,20 @@ To create a custom format you write a function that returns an object of class "
 ```
 custom_format <- function() {
 
-  knitr <- list()
-  knitr$opts_chunk = list(dev = 'png', fig.width = 7, fig.height = 5)
+  knitr <- knitr_options(
+    opts_chunk = list(dev = 'png', fig.width = 7, fig.height = 5)
+  )
 
-  pandoc <- c("--smart")
+  pandoc <- pandoc_options(
+    to = "html",
+    args = c("--smart", "--standalone")
+  )
 
-  rmarkdown::output_format(to = "html",
-                           knitr = knitr,
-                           pandoc = pandoc)
+  rmarkdown::output_format(knitr = knitr, pandoc = pandoc)
 }
 ```
 
-The custom format function above has no parameters however in practice you'll often want to expose several parameters to allow callers to customize the behavior of the format.
+This custom format has no parameters however in practice you'll often want to options as function parameters to allow callers to customize the behavior of the format.
 
 ### License
 
