@@ -85,6 +85,13 @@ pdf_document <- function(toc = FALSE,
                          includes = NULL,
                          pandoc.args = NULL) {
 
+  # knitr options
+  knitr <- list()
+  knitr$knit_hooks <- list(crop = knitr::hook_pdfcrop)
+  knitr$opts_chunk <- list(dev = 'cairo_pdf',
+                           fig.width = fig.width,
+                           fig.height = fig.height)
+
   # base pandoc options for all PDF output
   pandoc <- c()
 
@@ -124,22 +131,10 @@ pdf_document <- function(toc = FALSE,
 
   # return format
   output_format(to = "latex",
-                knitr = knitr_pdf(fig.width, fig.height),
+                knitr = knitr,
                 pandoc = pandoc,
                 filter = filter_pdf)
 }
-
-
-# Helper function to create default knitr options & hooks for pdf output
-knitr_pdf <- function(fig.width, fig.height) {
-  knitr <- list()
-  knitr$knit_hooks <- list(crop = knitr::hook_pdfcrop)
-  knitr$opts_chunk <- list(dev = 'cairo_pdf',
-                           fig.width = fig.width,
-                           fig.height = fig.height)
-  knitr
-}
-
 
 
 # Use filter to set pdf geometry defaults (while making sure we don't override
