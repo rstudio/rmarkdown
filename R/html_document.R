@@ -6,9 +6,10 @@
 #' @param toc.depth Depth of headers to include in table of contents
 #' @param fig.width Default width (in inches) for figures
 #' @param fig.height Default width (in inches) for figures
-#' @param theme Visual theme ("default", "cerulean", or "slate"). Pass
-#'   \code{NULL} for no theme (in which case you want to pass some custom CSS
-#'   using the \code{css} parameter)
+#' @param theme Visual theme ("default", "cerulean", "journal", "flatly",
+#'   "readable", "simplex", "spacelab", "united", "yeti", or "cosmo").
+#'   Pass \code{NULL} for no theme (in which case you want to pass some custom
+#'   CSS using the \code{css} parameter)
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
@@ -28,8 +29,8 @@
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. Metadata can also
 #' be provided to enable the use of footnotes and bibliographies. For more
-#' details see the documentation on R Markdown \link[=rmd_metadata]{metadata} and
-#' \link[=rmd_citations]{citations}.
+#' details see the documentation on R Markdown \link[=rmd_metadata]{metadata}
+#' and \link[=rmd_citations]{citations}.
 #'
 #' @examples
 #' \dontrun{
@@ -72,7 +73,7 @@ html_document <- function(toc = FALSE,
 
   # theme
   if (!is.null(theme)) {
-    theme <- match.arg(theme, c("default", "cerulean", "slate"))
+    theme <- match.arg(theme, themes())
     if (identical(theme, "default"))
       theme <- "bootstrap"
     pandoc <- c(pandoc, "--variable", paste("theme:", theme, sep=""))
@@ -114,6 +115,19 @@ html_document <- function(toc = FALSE,
   output_format(to = "html",
                 knitr = knitr,
                 pandoc = pandoc)
+}
+
+themes <- function() {
+  c("default",
+    "cerulean",
+    "journal",
+    "flatly",
+    "readable",
+    "simplex",
+    "spacelab",
+    "united",
+    "yeti",
+    "cosmo")
 }
 
 default_mathjax <- function() {
