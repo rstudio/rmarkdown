@@ -1,7 +1,7 @@
 
 #' @export
 render <- function(input,
-                   output = NULL,
+                   output.format = NULL,
                    output.file = NULL,
                    clean = FALSE,
                    envir = parent.frame(),
@@ -32,14 +32,14 @@ render <- function(input,
   input_lines <- readLines(input, warn = FALSE, encoding = encoding)
 
   # read the output format from YAML if necessary
-  if (is.null(output))
-    output <- output_format_from_yaml(input_lines)
+  if (is.null(output.format))
+    output.format <- output_format_from_yaml(input_lines)
 
   # automatically create an output file name if necessary
   if (is.null(output.file)) {
 
     # compute output file
-    output.file <- pandoc_output_file(input, output$to)
+    output.file <- pandoc_output_file(input, output.format$pandoc$to)
 
     # if the user wants to keep the input directory clean then make
     # sure the output file goes into a temporary directory
@@ -52,8 +52,8 @@ render <- function(input,
   }
 
   # call any filter that's been specified
-  if (!is.null(output$filter))
-    output <- output$filter(output, input_lines)
+  if (!is.null(output.format$filter))
+    output.format <- output.format$filter(output.format, input_lines)
 
   # knit if necessary
   if (tolower(tools::file_ext(input)) %in% c("rmd", "rmarkdown")) {
@@ -61,14 +61,14 @@ render <- function(input,
     # default rendering and chunk options
     knitr::render_markdown()
     knitr::opts_chunk$set(tidy = FALSE, error = FALSE)
-    figures_dir <- paste("figure-", output$to, "/", sep = "")
+    figures_dir <- paste("figure-", output.format$pandoc$to, "/", sep = "")
     knitr::opts_chunk$set(fig.path=figures_dir)
 
     # merge user options and hooks
-    if (!is.null(output$knitr)) {
-      knitr::opts_knit$set(as.list(output$knitr$opts_knit))
-      knitr::opts_chunk$set(as.list(output$knitr$opts_chunk))
-      knitr::knit_hooks$set(as.list(output$knitr$knit_hooks))
+    if (!is.null(output.format$knitr)) {
+      knitr::opts_knit$set(as.list(output.format$knitr$opts_knit))
+      knitr::opts_chunk$set(as.list(output.format$knitr$opts_chunk))
+      knitr::knit_hooks$set(as.list(output.format$knitr$knit_hooks))
     }
 
     # perform the knit
@@ -98,21 +98,13 @@ render <- function(input,
     intermediates <- c(intermediates, input)
   }
 
-  # define markdown flavor as base pandoc markdown plus some extensions
-  # for backward compatibility with github flavored markdown
-  rmd <- paste("markdown",
-               "+autolink_bare_uris",
-               "+ascii_identifiers",
-               "+tex_math_single_backslash",
-               sep = "")
-
   # run the conversion
   pandoc::convert(input,
-                  output$to,
-                  rmd,
+                  output.format$pandoc$to,
+                  output.format$pandoc$from,
                   output.file,
                   TRUE,
-                  output$pandoc,
+                  output.format$pandoc$args,
                   !quiet)
 
   # return the full path to the output file

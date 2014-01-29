@@ -3,28 +3,120 @@
 #' Define an R Markdown output format based on a combination of knitr and pandoc
 #' options.
 #'
-#' @param to Pandoc format to convert to
-#' @param knitr List of knitr options and hooks. Valid list elements include
-#'   \code{\link[knitr:opts_knit]{opts_knit}},
-#'   \code{\link[knitr:opts_chunk]{opts_chunk}}, and
-#'   \code{\link[knitr:knit_hooks]{knit_hooks}}.
-#' @param pandoc Character vector of pandoc command line arguments
+#' @param knitr Knitr options for an output format (see
+#'  \code{\link{knitr_options}})
+#' @param pandoc Pandoc options for an output format (see
+#'   \code{\link{pandoc_options}})
 #' @param filter An optional filter function that receieves the format and lines
 #'   of the input file as input and can return a modified format.
 #'
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
 #'
-#' @seealso \link{render}
+#' @seealso \link{render}, \link{knitr_options}, \link{pandoc_options}
+#'
+#' @examples
+#' \dontrun{
+#' output_format(knitr = knitr_options(opts_chunk = list(dev = 'png')),
+#'               pandoc = pandoc_options(to = "html"))
+#' }
 #'
 #' @export
-output_format <- function(to, knitr, pandoc, filter = NULL) {
-  structure(list(to = to,
-                 knitr = knitr,
+output_format <- function(knitr,
+                          pandoc,
+                          filter = NULL) {
+  structure(list(knitr = knitr,
                  pandoc = pandoc,
                  filter = filter),
             class = "rmarkdown_output_format")
 }
+
+#' Knitr options for an output format
+#'
+#' Define the knitr options for an R Markdown output format.
+#'
+#' @param opts_knit List of package level knitr options (see
+#'   \code{\link[knitr:opts_knit]{opts_knit}})
+#' @param opts_chunk List of chunk level knitr options (see
+#'   \code{\link[knitr:opts_chunk]{opts_chunk}})
+#' @param knit_hooks List of hooks for R code chunks, inline R code, and output
+#'   (see \code{\link[knitr:knit_hooks]{knit_hooks}})
+#'
+#' @return An list that can be passed as the \code{knitr} argument of the
+#'   \code{\link{output_format}} function.
+#'
+#' @seealso \link{output_format}
+#'
+#' @export
+knitr_options <- function(opts_knit = NULL,
+                          opts_chunk = NULL,
+                          knit_hooks = NULL) {
+  list(opts_knit = opts_knit,
+       opts_chunk = opts_chunk,
+       knit_hooks = knit_hooks)
+}
+
+#' Pandoc options for an output format
+#'
+#' Define the pandoc options for an R Markdown output format.
+#'
+#' @param to Pandoc format to convert to
+#' @param from Pandoc format to convert from
+#' @param args Character vector of command line arguments to pass to pandoc
+#'
+#' @return An list that can be passed as the \code{pandoc} argument of the
+#'   \code{\link{output_format}} function.
+#'
+#' @details The \code{from} argument should be used very cautiously as it's
+#'   important for users to be able to rely on a stable definition of supported
+#'   markdown extensions.
+#'
+#' @seealso \link{output_format}, \link{rmarkdown_format}
+#'
+#' @export
+pandoc_options <- function(to,
+                           from = rmarkdown_format(),
+                           args = NULL) {
+  list(to = to,
+       from = from,
+       args = args)
+}
+
+#' R Markdown input format definition
+#'
+#' Compose a pandoc markdown input definition for R Markdown that can be
+#' passed as the \code{from} argument of \link{pandoc_options}.
+#'
+#' @param extensions Markdown extensions to be added or removed from the
+#' default definition of R Markdown.
+#'
+#' @return Pandoc markdown format specification
+#'
+#' @details
+#'
+#' By default R Markdown is defined as all pandoc markdown extensions plus
+#' \code{autolink_bare_uris},
+#' \code{ascii_identifier}, and
+#' \code{tex_math_single_backslash}.
+#'
+#' For more on pandoc markdown see the \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc markdown specification}.
+#'
+#' @examples
+#' \dontrun{
+#' rmarkdown_format("-implicit_figures")
+#' }
+#'
+#' @seealso \link{output_format}, \link{pandoc_options}
+#'
+#' @export
+rmarkdown_format <- function(extensions = NULL) {
+  paste0(c("markdown",
+           "+autolink_bare_uris",
+           "+ascii_identifiers",
+           "+tex_math_single_backslash",
+           extensions), collapse = "")
+}
+
 
 
 # Synthesize the output format for a document from it's YAML. If we can't

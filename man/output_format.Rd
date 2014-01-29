@@ -2,19 +2,14 @@
 \alias{output_format}
 \title{Define an R Markdown output format}
 \usage{
-output_format(to, knitr, pandoc, filter = NULL)
+output_format(knitr, pandoc, filter = NULL)
 }
 \arguments{
-  \item{to}{Pandoc format to convert to}
+  \item{knitr}{Knitr options for an output format (see
+  \code{\link{knitr_options}})}
 
-  \item{knitr}{List of knitr options and hooks. Valid list
-  elements include
-  \code{\link[knitr:opts_knit]{opts_knit}},
-  \code{\link[knitr:opts_chunk]{opts_chunk}}, and
-  \code{\link[knitr:knit_hooks]{knit_hooks}}.}
-
-  \item{pandoc}{Character vector of pandoc command line
-  arguments}
+  \item{pandoc}{Pandoc options for an output format (see
+  \code{\link{pandoc_options}})}
 
   \item{filter}{An optional filter function that receieves
   the format and lines of the input file as input and can
@@ -28,7 +23,13 @@ to \code{\link{render}}.
 Define an R Markdown output format based on a combination
 of knitr and pandoc options.
 }
+\examples{
+\dontrun{
+output_format(knitr = knitr_options(opts_chunk = list(dev = 'png')),
+              pandoc = pandoc_options(to = "html"))
+}
+}
 \seealso{
-\link{render}
+\link{render}, \link{knitr_options}, \link{pandoc_options}
 }
 

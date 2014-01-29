@@ -42,34 +42,36 @@ word_document <- function(fig.width = 6,
                           pandoc.args = NULL) {
 
   # knitr options and hooks
-  knitr <- list()
-  knitr$opts_chunk = list(dev = 'png',
-                          dpi = 300,
-                          fig.width = fig.width,
-                          fig.height = fig.height)
+  knitr <- knitr_options(
+    opts_chunk = list(dev = 'png',
+                      dpi = 300,
+                      fig.width = fig.width,
+                      fig.height = fig.height)
+  )
 
   # base pandoc options for all docx output
-  pandoc <- c()
+  args <- c()
 
   # highlighting
   if (!is.null(highlight))
     highlight <- match.arg(highlight, highlighters())
-  pandoc <- c(pandoc, pandoc::highlight_options(highlight))
+  args <- c(args, pandoc::highlight_options(highlight))
 
   # reference docx
   if (!is.null(reference.docx)) {
-    pandoc <- c(pandoc,
-                 "--reference-docx",
-                 tools::file_path_as_absolute(reference.docx))
+    args <- c(args,
+              "--reference-docx",
+              tools::file_path_as_absolute(reference.docx))
   }
 
   # pandoc args
-  pandoc <- c(pandoc, pandoc.args)
+  args <- c(args, pandoc.args)
 
   # return output format
-  output_format(to = "docx",
-                knitr = knitr,
-                pandoc = pandoc)
+  output_format(
+    knitr = knitr,
+    pandoc = pandoc_options(to = "docx", args = args)
+  )
 }
 
 

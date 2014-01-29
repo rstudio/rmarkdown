@@ -88,44 +88,47 @@ beamer_presentation <- function(toc = FALSE,
                                 pandoc.args = NULL) {
 
   # knitr options
-  knitr <- list()
-  knitr$knit_hooks <- list(crop = knitr::hook_pdfcrop)
-  knitr$opts_chunk <- list(dev = 'cairo_pdf',
-                           fig.width = fig.width,
-                           fig.height = fig.height)
+  knitr <- knitr_options(
+    knit_hooks = list(crop = knitr::hook_pdfcrop),
+    opts_chunk = list(dev = 'cairo_pdf',
+                      fig.width = fig.width,
+                      fig.height = fig.height)
+  )
 
   # base pandoc options for all beamer output
-  pandoc <- c()
+  args <- c()
 
   # template path and assets
-  pandoc <- c(pandoc,
-              pandoc::template_options(pandoc_template("beamer/default.tex")))
+  args <- c(args,
+            pandoc::template_options(pandoc_template("beamer/default.tex")))
 
   # table of contents
   if (toc)
-    pandoc <- c(pandoc, "--table-of-contents")
+    args <- c(args, "--table-of-contents")
 
   # slide level
-  pandoc <- c(pandoc, "--slide-level", as.character(slide.level))
+  args <- c(args, "--slide-level", as.character(slide.level))
 
   # incremental
   if (incremental)
-    pandoc <- c(pandoc, "--incremental")
+    args <- c(args, "--incremental")
 
   # highlighting
   if (!is.null(highlight))
     highlight <- match.arg(highlight, highlighters())
-  pandoc <- c(pandoc, pandoc::highlight_options(highlight))
+  args <- c(args, pandoc::highlight_options(highlight))
 
   # content includes
-  pandoc <- c(pandoc, includes)
+  args <- c(args, includes)
 
-  # dots
-  pandoc <- c(pandoc, pandoc.args)
+  # custom args
+  args <- c(args, pandoc.args)
 
-  output_format(to = "beamer",
-                knitr = knitr,
-                pandoc = pandoc)
+  # return format
+  output_format(
+    knitr = knitr,
+    pandoc = pandoc_options(to = "beamer", args = args)
+  )
 }
 
 

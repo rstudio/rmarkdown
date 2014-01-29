@@ -86,54 +86,56 @@ pdf_document <- function(toc = FALSE,
                          pandoc.args = NULL) {
 
   # knitr options
-  knitr <- list()
-  knitr$knit_hooks <- list(crop = knitr::hook_pdfcrop)
-  knitr$opts_chunk <- list(dev = 'cairo_pdf',
-                           fig.width = fig.width,
-                           fig.height = fig.height)
+  knitr <- knitr_options(
+    knit_hooks = list(crop = knitr::hook_pdfcrop),
+    opts_chunk = list(dev = 'cairo_pdf',
+                      fig.width = fig.width,
+                      fig.height = fig.height)
+  )
 
   # base pandoc options for all PDF output
-  pandoc <- c()
+  args <- c()
 
   # table of contents
-  pandoc <- c(pandoc, pandoc::toc_options(toc, toc.depth))
+  args <- c(args, pandoc::toc_options(toc, toc.depth))
 
   # template path and assets
-  pandoc <- c(pandoc,
-              pandoc::template_options(pandoc_template("latex/default.tex")))
+  args <- c(args,
+            pandoc::template_options(pandoc_template("latex/default.tex")))
 
   # numbered sections
   if (number.sections)
-    pandoc <- c(pandoc, "--number-sections")
+    args <- c(args, "--number-sections")
 
   # highlighting
   if (!is.null(highlight))
     highlight <- match.arg(highlight, highlighters())
-  pandoc <- c(pandoc, pandoc::highlight_options(highlight))
+  args <- c(args, pandoc::highlight_options(highlight))
 
   # latex engine
   latex.engine = match.arg(latex.engine, c("pdflatex", "lualatex", "xelatex"))
-  pandoc <- c(pandoc, "--latex-engine", latex.engine)
+  args <- c(args, "--latex-engine", latex.engine)
 
   # natbib
   if (natbib)
-    pandoc <- c(pandoc, "--natbib")
+    args <- c(args, "--natbib")
 
   # biblatex
   if (biblatex)
-    pandoc <- c(pandoc, "--biblatex")
+    args <- c(args, "--biblatex")
 
   # content includes
-  pandoc <- c(pandoc, includes)
+  args <- c(args, includes)
 
-  # pandoc args
-  pandoc <- c(pandoc, pandoc.args)
+  # args args
+  args <- c(args, pandoc.args)
 
   # return format
-  output_format(to = "latex",
-                knitr = knitr,
-                pandoc = pandoc,
-                filter = filter_pdf)
+  output_format(
+    knitr = knitr,
+    pandoc = pandoc_options(to = "latex", args = args),
+    filter = filter_pdf
+  )
 }
 
 

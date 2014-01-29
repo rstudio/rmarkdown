@@ -55,41 +55,42 @@ html_document <- function(toc = FALSE,
                           pandoc.args = NULL) {
 
   # knitr options and hooks
-  knitr <- list()
-  knitr$opts_chunk = list(dev = 'png',
-                          dpi = 96,
-                          fig.width = fig.width,
-                          fig.height = fig.height)
+  knitr <- knitr_options(
+    opts_chunk = list(dev = 'png',
+                      dpi = 96,
+                      fig.width = fig.width,
+                      fig.height = fig.height)
+  )
 
   # base pandoc options for all HTML output
-  pandoc <- c("--smart", "--self-contained")
+  args <- c("--smart", "--self-contained")
 
   # table of contents
-  pandoc <- c(pandoc, pandoc::toc_options(toc, toc.depth))
+  args <- c(args, pandoc::toc_options(toc, toc.depth))
 
   # template path and assets
-  pandoc <- c(pandoc,
-              pandoc::template_options(pandoc_template("html/default.html")))
+  args <- c(args,
+            pandoc::template_options(pandoc_template("html/default.html")))
 
   # theme
   if (!is.null(theme)) {
     theme <- match.arg(theme, themes())
     if (identical(theme, "default"))
       theme <- "bootstrap"
-    pandoc <- c(pandoc, "--variable", paste("theme:", theme, sep=""))
+    args <- c(args, "--variable", paste("theme:", theme, sep=""))
   }
 
   # highlighting
   if (is.null(highlight)) {
-    pandoc <- c(pandoc, "--no-highlight")
+    args <- c(args, "--no-highlight")
   } else {
     highlight <- match.arg(highlight, highlighters())
     if (identical(highlight, "default")) {
-      pandoc <- c(pandoc, "--no-highlight")
-      pandoc <- c(pandoc, "--variable", "highlightjs")
+      args <- c(args, "--no-highlight")
+      args <- c(args, "--variable", "highlightjs")
     }
     else {
-      pandoc <- c(pandoc, "--highlight-style", highlight)
+      args <- c(args, "--highlight-style", highlight)
     }
   }
 
@@ -97,24 +98,25 @@ html_document <- function(toc = FALSE,
   if (!is.null(mathjax)) {
     if (identical(mathjax, "default"))
       mathjax <- default_mathjax()
-    pandoc <- c(pandoc, "--mathjax")
-    pandoc <- c(pandoc, "--variable", paste("mathjax-url:", mathjax, sep=""))
+    args <- c(args, "--mathjax")
+    args <- c(args, "--variable", paste("mathjax-url:", mathjax, sep=""))
   }
 
   # additional css
   for (css_file in css)
-    pandoc <- c(pandoc, "--css", css_file)
+    args <- c(args, "--css", css_file)
 
   # content includes
-  pandoc <- c(pandoc, includes)
+  args <- c(args, includes)
 
   # pandoc args
-  pandoc <- c(pandoc, pandoc.args)
+  args <- c(args, pandoc.args)
 
   # return format
-  output_format(to = "html",
-                knitr = knitr,
-                pandoc = pandoc)
+  output_format(
+    knitr = knitr,
+    pandoc = pandoc_options(to = "html", args = args)
+  )
 }
 
 themes <- function() {
