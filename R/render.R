@@ -73,9 +73,9 @@ render <- function(input,
 
     # merge user options and hooks
     if (!is.null(output$knitr)) {
-      do.call(knitr::opts_knit$set, as.list(output$knitr$opts_knit))
-      do.call(knitr::opts_chunk$set, as.list(output$knitr$opts_chunk))
-      do.call(knitr::knit_hooks$set, as.list(output$knitr$knit_hooks))
+      knitr::opts_knit$set(as.list(output$knitr$opts_knit))
+      knitr::opts_chunk$set(as.list(output$knitr$opts_chunk))
+      knitr::knit_hooks$set(as.list(output$knitr$knit_hooks))
     }
 
     # perform the knit
