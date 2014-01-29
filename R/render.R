@@ -3,6 +3,7 @@
 render <- function(input,
                    output = NULL,
                    output.file = NULL,
+                   clean = FALSE,
                    envir = parent.frame(),
                    quiet = FALSE,
                    encoding = getOption("encoding")) {
@@ -13,6 +14,12 @@ render <- function(input,
     stop("pandoc version ", required_pandoc, " or higher ",
          "is required and was not found.", call. = FALSE)
   }
+
+  # setup a cleanup function for intermediate files
+  intermediates <- c()
+  on.exit(sapply(intermediates,
+                 function(f) unlink(f, recursive = TRUE)),
+          add = TRUE)
 
   # execute within the input file's directory
   oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
@@ -29,8 +36,20 @@ render <- function(input,
     output <- output_format_from_yaml(input_lines)
 
   # automatically create an output file name if necessary
-  if (is.null(output.file))
+  if (is.null(output.file)) {
+
+    # compute output file
     output.file <- pandoc_output_file(input, output$to)
+
+    # if the user wants to keep the input directory clean then make
+    # sure the output file goes into a temporary directory
+    if (clean) {
+      rmarkdown_dir <- file.path(tempdir(), "rmarkdown")
+      if (!file.exists(rmarkdown_dir))
+        dir.create(rmarkdown_dir)
+      output.file <- file.path(rmarkdown_dir, output.file)
+    }
+  }
 
   # call any filter that's been specified
   if (!is.null(output$filter))
@@ -42,7 +61,8 @@ render <- function(input,
     # default rendering and chunk options
     knitr::render_markdown()
     knitr::opts_chunk$set(tidy = FALSE, error = FALSE)
-    knitr::opts_chunk$set(fig.path=paste("figure-", output$to, "/", sep = ""))
+    figures_dir <- paste("figure-", output$to, "/", sep = "")
+    knitr::opts_chunk$set(fig.path=figures_dir)
 
     # merge user options and hooks
     if (!is.null(output$knitr)) {
@@ -56,6 +76,10 @@ render <- function(input,
                          envir = envir,
                          quiet = quiet,
                          encoding = encoding)
+
+    # clean if requested
+    if (clean)
+      intermediates <- c(intermediates, input, figures_dir)
   }
 
   # if the encoding isn't UTF-8 then write a UTF-8 version
@@ -69,8 +93,9 @@ render <- function(input,
                    tools::file_ext(input),
                    sep = "")
     writeLines(input_text, input, useBytes = TRUE)
-    input_abs <- tools::file_path_as_absolute(input)
-    on.exit(file.remove(input_abs), add = TRUE)
+
+    # always cleanup the utf8 version
+    intermediates <- c(intermediates, input)
   }
 
   # define markdown flavor as base pandoc markdown plus some extensions
@@ -85,7 +110,8 @@ render <- function(input,
   pandoc::convert(input,
                   output$to,
                   rmd,
-                  output.file, TRUE,
+                  output.file,
+                  TRUE,
                   output$pandoc,
                   !quiet)
 

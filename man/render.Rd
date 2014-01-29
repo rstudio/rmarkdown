@@ -2,8 +2,8 @@
 \alias{render}
 \title{Render R Markdown}
 \usage{
-render(input, output = NULL, output.file = NULL, envir = parent.frame(),
-  quiet = FALSE, encoding = getOption("encoding"))
+render(input, output = NULL, output.file = NULL, clean = FALSE,
+  envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{Input file (Rmd or plain markdown)}
@@ -15,6 +15,10 @@ render(input, output = NULL, output.file = NULL, envir = parent.frame(),
 
   \item{output.file}{Output file (if not specified then a
   default based on the specified output format is chosen)}
+
+  \item{clean}{\code{TRUE} to clean all output and intermediate
+  files after the render. In this mode the \code{output.file} will be
+  written to a temporary directory unless it is explicitly specified.}
 
   \item{envir}{The environment in which the code chunks are
   to be evaluated during knitting (can use
