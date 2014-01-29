@@ -2,14 +2,16 @@
 \alias{render}
 \title{Render R Markdown}
 \usage{
-render(input, output, output.file = NULL, envir = parent.frame(),
+render(input, output = NULL, output.file = NULL, envir = parent.frame(),
   quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{Input file (Rmd or plain markdown)}
 
   \item{output}{R Markdown output format to convert to (see
-  \code{\link{output_format}}).}
+  \code{\link{output_format}}). If \code{NULL} is passed
+  then the output format is read from the YAML front-matter
+  within the input file.}
 
   \item{output.file}{Output file (if not specified then a
   default based on the specified output format is chosen)}

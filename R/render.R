@@ -6,7 +6,8 @@
 #'
 #' @param input Input file (Rmd or plain markdown)
 #' @param output R Markdown output format to convert to (see
-#'   \code{\link{output_format}}).
+#'   \code{\link{output_format}}). If \code{NULL} is passed then the output
+#'   format is read from the YAML front-matter within the input file.
 #' @param output.file Output file (if not specified then a default based on the
 #'   specified output format is chosen)
 #' @param envir The environment in which the code chunks are to be evaluated
@@ -33,7 +34,7 @@
 #'
 #' @export
 render <- function(input,
-                   output,
+                   output = NULL,
                    output.file = NULL,
                    envir = parent.frame(),
                    quiet = FALSE,
@@ -53,15 +54,20 @@ render <- function(input,
   # reset the name of the input file to be relative
   input <- basename(input)
 
+  # read the input file
+  input_lines <- readLines(input, warn = FALSE, encoding = encoding)
+
+  # read the output format from YAML if necessary
+  if (is.null(output))
+    output <- output_format_from_yaml(input_lines)
+
   # automatically create an output file name if necessary
   if (is.null(output.file))
     output.file <- pandoc_output_file(input, output$to)
 
   # call any filter that's been specified
-  if (!is.null(output$filter)) {
-    input_lines <- readLines(input, warn = FALSE, encoding = encoding)
+  if (!is.null(output$filter))
     output <- output$filter(output, input_lines)
-  }
 
   # knit if necessary
   if (tolower(tools::file_ext(input)) %in% c("rmd", "rmarkdown")) {
