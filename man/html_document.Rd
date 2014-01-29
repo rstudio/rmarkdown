@@ -3,7 +3,7 @@
 \title{Convert to an HTML document}
 \usage{
 html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
-  implicit.figures = FALSE, theme = "default", highlight = "default",
+  fig.caption = FALSE, theme = "default", highlight = "default",
   mathjax = "default", css = NULL, includes = NULL, pandoc.args = NULL)
 }
 \arguments{

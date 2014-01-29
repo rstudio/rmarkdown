@@ -48,7 +48,7 @@ html_document <- function(toc = FALSE,
                           toc.depth = 3,
                           fig.width = 7,
                           fig.height = 5,
-                          implicit.figures = FALSE,
+                          fig.caption = FALSE,
                           theme = "default",
                           highlight = "default",
                           mathjax = "default",
@@ -118,7 +118,7 @@ html_document <- function(toc = FALSE,
   output_format(
     knitr = knitr,
     pandoc = pandoc_options(to = "html",
-                            from = from_rmarkdown(implicit.figures),
+                            from = from_rmarkdown(fig.caption),
                             args = args)
   )
 }
