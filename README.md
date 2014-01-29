@@ -53,6 +53,26 @@ render("input.Rmd", pdf_document(latex.engine = "lualatex"))
 render("input.Rmd", beamer_presentation(incremental = TRUE))
 ```
 
+Output formats can also be determined based on YAML metadate within the input file. This binding occurs when you call `render` with no arguments:
+
+```
+render("input.Rmd")
+```
+
+Here is an example of YAML that would result in a PDF document with a table of contents (title and author fields included as well):
+
+```
+---
+title: "Sample Document"
+author: John Smith
+output:
+  format: pdf_document
+  toc: true
+---
+```
+
+If there is no output format defined in YAML then a default HTML document is created.
+
 You can include custom CSS in HTML output using the `css` option. Combining this with setting the HTML `theme` to `NULL` provides for full control over all styles:
 
 ```
