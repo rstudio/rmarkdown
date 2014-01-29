@@ -36,6 +36,26 @@ Render the input file to the specified output format using
 pandoc. If the input requires knitting then
 \code{\link[knitr:knit]{knit}} is called prior to pandoc.
 }
+\details{
+If no \code{output} parmaeter is specified then the output
+format is read from the YAML front-matter of the input
+file. For example, the following YAML would yield a PDF
+document with a table of contents:
+
+\preformatted{
+output:
+  format: pdf_document
+  toc: true
+}
+
+The \code{format} can be any one of the built in formats
+(e.g. \code{\link{html_document}},
+\code{\link{pdf_document}}) or a format defined in another
+package (e.g. \code{pkg::custom_format}).
+
+If there is no format defined in the YAML then
+\code{\link{html_document}} will be used.
+}
 \section{R Markdown}{
   R Markdown supports all of the base pandoc markdown
   features as well as some optional features for
