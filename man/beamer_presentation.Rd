@@ -3,7 +3,7 @@
 \title{Convert to a Beamer presentation}
 \usage{
 beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
-  fig.width = 10, fig.height = 6.5, fig.caption = FALSE,
+  fig.width = 10, fig.height = 7, fig.caption = FALSE,
   highlight = "default", includes = NULL, pandoc.args = NULL)
 }
 \arguments{
