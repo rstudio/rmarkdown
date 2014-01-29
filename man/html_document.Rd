@@ -18,10 +18,10 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   \item{fig.height}{Default width (in inches) for figures}
 
   \item{theme}{Visual theme ("default", "cerulean",
-  "journal", "flatly", "readable", "simplex", "spacelab",
-  "united", "yeti", or "cosmo").  Pass \code{NULL} for no
-  theme (in which case you want to pass some custom CSS
-  using the \code{css} parameter)}
+  "journal", "flatly", "readable", "spacelab", "united",
+  "yeti", or "cosmo").  Pass \code{NULL} for no theme (in
+  which case you want to pass some custom CSS using the
+  \code{css} parameter)}
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",
