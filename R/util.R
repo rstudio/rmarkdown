@@ -17,6 +17,10 @@ pandoc_template <- function(file) {
   system.file(file.path("templates", file), package = "rmarkdown")
 }
 
+from_rmarkdown <- function(implicit.figures) {
+  rmarkdown_format(ifelse(implicit.figures, "", "-implicit_figures"))
+}
+
 highlighters <- function() {
   c("default",
     "pygments",

@@ -6,6 +6,7 @@
 #' @param toc.depth Depth of headers to include in table of contents
 #' @param fig.width Default width (in inches) for figures
 #' @param fig.height Default width (in inches) for figures
+#' @param fig.caption \code{TRUE} to render figures with captions
 #' @param theme Visual theme ("default", "cerulean", "journal", "flatly",
 #'   "readable", "spacelab", "united", "yeti", or "cosmo").
 #'   Pass \code{NULL} for no theme (in which case you want to pass some custom
@@ -47,6 +48,7 @@ html_document <- function(toc = FALSE,
                           toc.depth = 3,
                           fig.width = 7,
                           fig.height = 5,
+                          implicit.figures = FALSE,
                           theme = "default",
                           highlight = "default",
                           mathjax = "default",
@@ -115,7 +117,9 @@ html_document <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr,
-    pandoc = pandoc_options(to = "html", args = args)
+    pandoc = pandoc_options(to = "html",
+                            from = from_rmarkdown(implicit.figures),
+                            args = args)
   )
 }
 

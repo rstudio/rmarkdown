@@ -13,6 +13,7 @@
 #'   \emph{\code{> - Bullet Text}}
 #' @param fig.width Default width (in inches) for figures
 #' @param fig.height Default width (in inches) for figures
+#' @param fig.caption \code{TRUE} to render figures with captions
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
@@ -82,7 +83,8 @@ beamer_presentation <- function(toc = FALSE,
                                 slide.level = 2,
                                 incremental = FALSE,
                                 fig.width = 10,
-                                fig.height = 6.5,
+                                fig.height = 7,
+                                fig.caption = FALSE,
                                 highlight = "default",
                                 includes = NULL,
                                 pandoc.args = NULL) {
@@ -127,7 +129,9 @@ beamer_presentation <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr,
-    pandoc = pandoc_options(to = "beamer", args = args)
+    pandoc = pandoc_options(to = "beamer",
+                            from_rmarkdown(fig.caption),
+                            args = args)
   )
 }
 

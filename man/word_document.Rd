@@ -2,13 +2,16 @@
 \alias{word_document}
 \title{Convert to an MS Word document}
 \usage{
-word_document(fig.width = 6, fig.height = 4.5, highlight = "default",
-  reference.docx = NULL, pandoc.args = NULL)
+word_document(fig.width = 6, fig.height = 4.5, fig.caption = FALSE,
+  highlight = "default", reference.docx = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{fig.width}{Default width (in inches) for figures}
 
   \item{fig.height}{Default width (in inches) for figures}
+
+  \item{fig.caption}{\code{TRUE} to render figures with
+  captions}
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",

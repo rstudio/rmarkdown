@@ -7,6 +7,7 @@
 #' @param number.sections \code{TRUE} Number section headings
 #' @param fig.width Default width (in inches) for figures
 #' @param fig.height Default width (in inches) for figures
+#' @param fig.caption \code{TRUE} to render figures with captions
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
@@ -78,6 +79,7 @@ pdf_document <- function(toc = FALSE,
                          number.sections = FALSE,
                          fig.width = 6,
                          fig.height = 4.5,
+                         fig.caption = TRUE,
                          highlight = "default",
                          latex.engine = "pdflatex",
                          natbib = FALSE,
@@ -133,7 +135,9 @@ pdf_document <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr,
-    pandoc = pandoc_options(to = "latex", args = args),
+    pandoc = pandoc_options(to = "latex",
+                            from = from_rmarkdown(fig.caption),
+                            args = args),
     filter = filter_pdf
   )
 }

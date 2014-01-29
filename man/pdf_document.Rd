@@ -3,9 +3,9 @@
 \title{Convert to a PDF document}
 \usage{
 pdf_document(toc = FALSE, toc.depth = 2, number.sections = FALSE,
-  fig.width = 6, fig.height = 4.5, highlight = "default",
-  latex.engine = "pdflatex", natbib = FALSE, biblatex = FALSE,
-  includes = NULL, pandoc.args = NULL)
+  fig.width = 6, fig.height = 4.5, fig.caption = TRUE,
+  highlight = "default", latex.engine = "pdflatex", natbib = FALSE,
+  biblatex = FALSE, includes = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -20,6 +20,9 @@ pdf_document(toc = FALSE, toc.depth = 2, number.sections = FALSE,
   \item{fig.width}{Default width (in inches) for figures}
 
   \item{fig.height}{Default width (in inches) for figures}
+
+  \item{fig.caption}{\code{TRUE} to render figures with
+  captions}
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",

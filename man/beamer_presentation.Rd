@@ -3,8 +3,8 @@
 \title{Convert to a Beamer presentation}
 \usage{
 beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
-  fig.width = 10, fig.height = 6.5, highlight = "default",
-  includes = NULL, pandoc.args = NULL)
+  fig.width = 10, fig.height = 6.5, fig.caption = FALSE,
+  highlight = "default", includes = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -25,6 +25,9 @@ beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   \item{fig.width}{Default width (in inches) for figures}
 
   \item{fig.height}{Default width (in inches) for figures}
+
+  \item{fig.caption}{\code{TRUE} to render figures with
+  captions}
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",

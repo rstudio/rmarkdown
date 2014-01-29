@@ -4,6 +4,7 @@
 #'
 #' @param fig.width Default width (in inches) for figures
 #' @param fig.height Default width (in inches) for figures
+#' @param fig.caption \code{TRUE} to render figures with captions
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
@@ -37,6 +38,7 @@
 #' @export
 word_document <- function(fig.width = 6,
                           fig.height = 4.5,
+                          fig.caption = FALSE,
                           highlight = "default",
                           reference.docx = NULL,
                           pandoc.args = NULL) {
@@ -70,7 +72,9 @@ word_document <- function(fig.width = 6,
   # return output format
   output_format(
     knitr = knitr,
-    pandoc = pandoc_options(to = "docx", args = args)
+    pandoc = pandoc_options(to = "docx",
+                            from_rmarkdown(fig.caption),
+                            args = args)
   )
 }
 
