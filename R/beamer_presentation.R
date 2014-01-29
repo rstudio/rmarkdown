@@ -81,8 +81,8 @@
 beamer_presentation <- function(toc = FALSE,
                                 slide.level = 2,
                                 incremental = FALSE,
-                                fig.width = 9,
-                                fig.height = 7,
+                                fig.width = 10,
+                                fig.height = 6.5,
                                 highlight = "default",
                                 includes = NULL,
                                 pandoc.args = NULL) {
@@ -96,6 +96,10 @@ beamer_presentation <- function(toc = FALSE,
 
   # base pandoc options for all beamer output
   pandoc <- c()
+
+  # template path and assets
+  pandoc <- c(pandoc,
+              pandoc::template_options(pandoc_template("beamer/default.tex")))
 
   # table of contents
   if (toc)
