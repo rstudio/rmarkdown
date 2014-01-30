@@ -8,10 +8,12 @@ render(input, output.format = NULL, output.file = NULL, clean = FALSE,
 \arguments{
   \item{input}{Input file (Rmd or plain markdown)}
 
-  \item{output.format}{R Markdown output format to convert to (see
-  \code{\link{output_format}}). If \code{NULL} is passed
-  then the output format is read from the YAML front-matter
-  within the input file.}
+  \item{output.format}{R Markdown output format to convert to. This can
+  be a character vector with the name of a format; e.g. \code{"html_document"}.
+  Alternatively it can be an output format object; e.g. \code{html_document()}.
+  If \code{NULL} is passed then the output format is read from the YAML
+  metadata within the input file (defaulting to HTML if no format is specified
+  in metadata).}
 
   \item{output.file}{Output file (if not specified then a
   default based on the specified output format is chosen)}
@@ -44,15 +46,35 @@ pandoc. If the input requires knitting then
 If no \code{output} parmaeter is specified then the output
 format is read from the YAML front-matter of the input
 file. For example, the following YAML would yield a PDF
-document with a table of contents:
+document:
+
+\preformatted{
+output: pdf_document
+}
+
+Additional format options can also be specified in metadata. For example:
 
 \preformatted{
 output:
-  format: pdf_document
-  toc: true
+  pdf_document:
+    toc: true
+    highlight: zenburn
 }
 
-The \code{format} can be any one of the built in formats
+Multiple formats can be specified in metadata. If no \code{output.format}
+is passed to \code{render} then the first one defined will be used:
+
+\preformatted{
+output:
+  pdf_document:
+    toc: true
+    highlight: zenburn
+  html_document:
+    toc: true
+    theme: united
+}
+
+Formats specified in metadata can be any one of the built in formats
 (e.g. \code{\link{html_document}},
 \code{\link{pdf_document}}) or a format defined in another
 package (e.g. \code{pkg::custom_format}).

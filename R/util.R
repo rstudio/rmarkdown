@@ -21,6 +21,10 @@ from_rmarkdown <- function(implicit.figures) {
   rmarkdown_format(ifelse(implicit.figures, "", "-implicit_figures"))
 }
 
+is_null_or_string <- function(text) {
+  is.null(text) || (is.character(text) && (length(text) == 1))
+}
+
 highlighters <- function() {
   c("default",
     "pygments",

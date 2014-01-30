@@ -31,9 +31,10 @@ render <- function(input,
   # read the input file
   input_lines <- readLines(input, warn = FALSE, encoding = encoding)
 
-  # read the output format from YAML if necessary
-  if (is.null(output.format))
-    output.format <- output_format_from_yaml(input_lines)
+  # if we haven't been passed a fully formed output format then
+  # resolve it by looking at the yaml
+  if (!is_output_format(output.format))
+    output.format <- output_format_from_yaml(output.format, input_lines)
 
   # automatically create an output file name if necessary
   if (is.null(output.file)) {
