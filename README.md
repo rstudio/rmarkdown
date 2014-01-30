@@ -101,7 +101,14 @@ render("input.Rmd", "pdf_document")
 
 If no explicit format name is passed to `render` then the first one defined will be used.
 
-Output formats need not be defined in metadata. They can also be specified programatically from R, for example:
+Output formats need not be specified in metadata. In fact, metadata is just a convenient way to invoke functions that implement output formats. There are four built-in output formats each exported as a function from the package:
+
+- `html_document`
+- `pdf_document`
+- `word_document`
+- `beamer_presentation`
+
+As you'd expect, these functions can also be invoked as part of the call to `render`, for example:
 
 ```
 render("input.Rmd", html_document(toc = TRUE))
@@ -109,32 +116,7 @@ render("input.Rmd", pdf_document(latex.engine = "lualatex"))
 render("input.Rmd", beamer_presentation(incremental = TRUE))
 ```
 
-You can include custom CSS in HTML output using the `css` option:
-
-```
-render("input.Rmd", html_document(css = "extra-styles.css"))
-```
-
-You can also override all CSS styles using the `theme` option:
-
-```
-render("input.Rmd", html_document(theme = "my-theme.css"))
-```
-
-You can add custom content to HTML and PDF output using the `includes` option. For example:
-
-```
-includes <- pandoc::include_options(before.body = "header.tex",
-                                    after.body = "footer.tex"))
-
-render("input.Rmd", pdf_document(includes = includes))
-```
-
-You can also include arbitrary pandoc command line arguments:
-
-```
-render("input.Rmd", pdf_document(toc = TRUE, pandoc.args = c("--listings")))
-```
+For more details on the options available for each format see their respective help topics.
 
 ### Custom Formats
 
@@ -154,18 +136,15 @@ custom_format <- function() {
     args = c("--smart", "--standalone")
   )
 
-  rmarkdown::output_format(knitr = knitr, pandoc = pandoc)
+  rmarkdown::output_format(knitr, pandoc)
 }
 ```
-
-This custom format has no parameters however in practice you'll often want to provide options as function parameters to allow callers to customize the behavior of the format.
 
 Once you've created a custom format it can be used in the exact same fashion as the built-in formats. For example, assuming the format above was defined in a package named `pubtools` could you could specify it in Rmd metadata as follows:
 
 ```
 ---
 title: "Sample Document"
-author: John Smith
 output: pubtools::custom_format
 ---
 ```
@@ -175,6 +154,8 @@ Alternatively you could use it in a call to `render`:
 ```
 render("input.Rmd", pubtools::custom_format())
 ```
+
+This custom format has no parameters however in practice you'll often want to provide options as function parameters to allow callers to customize the behavior of the format.
 
 
 ### License
