@@ -3,8 +3,9 @@
 \title{Convert to an HTML document}
 \usage{
 html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
-  fig.caption = FALSE, theme = "default", highlight = "default",
-  mathjax = "default", css = NULL, includes = NULL, pandoc.args = NULL)
+  fig.retina = 2, fig.caption = FALSE, theme = "default",
+  highlight = "default", mathjax = "default", css = NULL,
+  includes = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -16,6 +17,12 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   \item{fig.width}{Default width (in inches) for figures}
 
   \item{fig.height}{Default width (in inches) for figures}
+
+  \item{fig.retina}{Scaling to perform for retina displays
+  (defaults to 2, which currently works for all widely used
+  retina displays). Note that this only takes effect if you
+  are using knitr >= 1.5.21. Set to \code{NULL} to prevent
+  retina scaling.}
 
   \item{fig.caption}{\code{TRUE} to render figures with
   captions}

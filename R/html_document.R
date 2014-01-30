@@ -6,6 +6,10 @@
 #' @param toc.depth Depth of headers to include in table of contents
 #' @param fig.width Default width (in inches) for figures
 #' @param fig.height Default width (in inches) for figures
+#' @param fig.retina Scaling to perform for retina displays (defaults to 2,
+#' which currently works for all widely used retina displays). Note that this
+#' only takes effect if you are using knitr >= 1.5.21. Set to \code{NULL} to
+#' prevent retina scaling.
 #' @param fig.caption \code{TRUE} to render figures with captions
 #' @param theme Visual theme ("default", "cerulean", "journal", "flatly",
 #'   "readable", "spacelab", "united", "yeti", or "cosmo").
@@ -48,6 +52,7 @@ html_document <- function(toc = FALSE,
                           toc.depth = 3,
                           fig.width = 7,
                           fig.height = 5,
+                          fig.retina = 2,
                           fig.caption = FALSE,
                           theme = "default",
                           highlight = "default",
@@ -61,7 +66,8 @@ html_document <- function(toc = FALSE,
     opts_chunk = list(dev = 'png',
                       dpi = 96,
                       fig.width = fig.width,
-                      fig.height = fig.height)
+                      fig.height = fig.height,
+                      fig.retina = fig.retina)
   )
 
   # base pandoc options for all HTML output
