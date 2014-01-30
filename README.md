@@ -32,34 +32,32 @@ A recent version of pandoc (>= 1.12.3) is also required. There are a few ways to
 
 ### Usage
 
-The following functions will knit the specified input document and then produce the final output document using pandoc:
-
-```
-render("input.Rmd", html_document())
-render("input.Rmd", pdf_document())
-```
-
-You can also specify a plain markdown file in which case knitting will be bypassed:
-
-```
-render("input.md", html_document())
-```
-
-All of the output formats have a corresponding options function which can be used to customize the ouptut, for example:
-
-```
-render("input.Rmd", html_document(toc = TRUE))
-render("input.Rmd", pdf_document(latex.engine = "lualatex"))
-render("input.Rmd", beamer_presentation(incremental = TRUE))
-```
-
-Output formats can also be determined based on YAML metadate within the input file. This binding occurs when you call `render` with no arguments:
+The `render` function is used to convert R Markdown (Rmd) files into various output formats (the default is HTML). Calling `render` will knit the specified input document and then produce the final output document using pandoc:
 
 ```
 render("input.Rmd")
 ```
 
-Here is an example of YAML that would result in a PDF document with a table of contents (title and author fields included as well):
+You can also specify a plain markdown file in which case knitting will be bypassed:
+
+```
+render("input.md")
+```
+
+R Markdown documents can now contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:
+
+```
+---
+title: "Sample Document"
+author: John Smith
+output:
+  format: html_document
+  toc: true
+  theme: united
+---
+```
+
+R Markdown has built in support for several output formats (HTML, PDF, and MS Word documents as well as Beamer presentations). These formats can also be specified in metadata, for example:
 
 ```
 ---
@@ -71,7 +69,13 @@ output:
 ---
 ```
 
-If there is no output format defined in YAML then a default HTML document is created.
+Output formats need not be defined in metadata. They can also be specified programatically from R, for example:
+
+```
+render("input.Rmd", html_document(toc = TRUE))
+render("input.Rmd", pdf_document(latex.engine = "lualatex"))
+render("input.Rmd", beamer_presentation(incremental = TRUE))
+```
 
 You can include custom CSS in HTML output using the `css` option. Combining this with setting the HTML `theme` to `NULL` provides for full control over all styles:
 
@@ -83,11 +87,13 @@ render("input.Rmd", html_document(theme = NULL, css = "styles.css"))
 You can add custom content to HTML and PDF output using the `includes` option. For example:
 
 ```
-includes <- pandoc::include_options(before.body = "header.tex", after.body = "footer.tex"))
+includes <- pandoc::include_options(before.body = "header.tex",
+                                    after.body = "footer.tex"))
+
 render("input.Rmd", pdf_document(includes = includes))
 ```
 
-You can also include arbitrary pandoc command line arguments in the call to the options function:
+You can also include arbitrary pandoc command line arguments:
 
 ```
 render("input.Rmd", pdf_document(toc = TRUE, pandoc.args = c("--listings")))
@@ -97,7 +103,7 @@ render("input.Rmd", pdf_document(toc = TRUE, pandoc.args = c("--listings")))
 
 You aren't limited to the built in output formats like `html_document` and `pdf_document`. You can also create custom output formats that utilize arbitrary knitr options, knitr hooks, and pandoc command line options.
 
-To create a custom format you write a function that returns an object of class "rmarkdown_output_format". The easiest way to do this is the `rmarkdown::output_format` function. For example, here's a very simple custom format that converts from R Markdown to HTML using the default pandoc HTML template:
+To create a custom format you write a function that returns an object of class "rmarkdown_output_format". The easiest way to do this is to call the `rmarkdown::output_format` function. For example, here's a very simple custom format that converts from R Markdown to HTML using the default pandoc HTML template:
 
 ```
 custom_format <- function() {
@@ -115,7 +121,7 @@ custom_format <- function() {
 }
 ```
 
-This custom format has no parameters however in practice you'll often want to options as function parameters to allow callers to customize the behavior of the format.
+This custom format has no parameters however in practice you'll often want to provide options as function parameters to allow callers to customize the behavior of the format.
 
 ### License
 
