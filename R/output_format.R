@@ -56,6 +56,43 @@ knitr_options <- function(opts_knit = NULL,
        knit_hooks = knit_hooks)
 }
 
+#' Knitr options for a PDF output format
+#'
+#' Define knitr options for an R Markdown output format that creates PDF output.
+#'
+#' @param fig.width Default width (in inches) for figures
+#' @param fig.height Default width (in inches) for figures
+#' @param fig.crop \code{TRUE} to automatically apply the \code{pdfcrop}
+#' utility (if available) to pdf figures
+#'
+#' @return An list that can be passed as the \code{knitr} argument of the
+#'   \code{\link{output_format}} function.
+#'
+#' @seealso \link{knitr_options}, \link{output_format}
+#'
+#' @export
+knitr_options_pdf <- function(fig.width, fig.height, fig.crop) {
+
+  # default options
+  opts_knit <- NULL
+  opts_chunk <- list(dev = 'cairo_pdf',
+                     fig.width = fig.width,
+                     fig.height = fig.height)
+  knit_hooks <- NULL
+
+  # apply cropping if requested and we have pdfcrop
+  if (fig.crop && nzchar(Sys.which("pdfcrop"))) {
+    knit_hooks = list(crop = knitr::hook_pdfcrop)
+    opts_chunk$crop = TRUE
+  }
+
+  # return options
+  knitr_options(opts_knit = opts_knit,
+                opts_chunk = opts_chunk,
+                knit_hooks = knit_hooks)
+}
+
+
 #' Pandoc options for an output format
 #'
 #' Define the pandoc options for an R Markdown output format.

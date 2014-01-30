@@ -1,6 +1,7 @@
 export(beamer_presentation)
 export(html_document)
 export(knitr_options)
+export(knitr_options_pdf)
 export(output_format)
 export(pandoc_options)
 export(pdf_document)

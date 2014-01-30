@@ -3,7 +3,7 @@
 \title{Convert to a PDF document}
 \usage{
 pdf_document(toc = FALSE, toc.depth = 2, number.sections = FALSE,
-  fig.width = 6, fig.height = 4.5, fig.caption = TRUE,
+  fig.width = 6, fig.height = 4.5, fig.crop = TRUE, fig.caption = TRUE,
   highlight = "default", latex.engine = "pdflatex", natbib = FALSE,
   biblatex = FALSE, includes = NULL, pandoc.args = NULL)
 }
@@ -20,6 +20,9 @@ pdf_document(toc = FALSE, toc.depth = 2, number.sections = FALSE,
   \item{fig.width}{Default width (in inches) for figures}
 
   \item{fig.height}{Default width (in inches) for figures}
+
+  \item{fig.crop}{\code{TRUE} to automatically apply the
+  \code{pdfcrop} utility (if available) to pdf figures}
 
   \item{fig.caption}{\code{TRUE} to render figures with
   captions}

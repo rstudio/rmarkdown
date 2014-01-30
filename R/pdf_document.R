@@ -7,6 +7,8 @@
 #' @param number.sections \code{TRUE} Number section headings
 #' @param fig.width Default width (in inches) for figures
 #' @param fig.height Default width (in inches) for figures
+#' @param fig.crop \code{TRUE} to automatically apply the \code{pdfcrop}
+#' utility (if available) to pdf figures
 #' @param fig.caption \code{TRUE} to render figures with captions
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
@@ -79,6 +81,7 @@ pdf_document <- function(toc = FALSE,
                          number.sections = FALSE,
                          fig.width = 6,
                          fig.height = 4.5,
+                         fig.crop = TRUE,
                          fig.caption = TRUE,
                          highlight = "default",
                          latex.engine = "pdflatex",
@@ -86,14 +89,6 @@ pdf_document <- function(toc = FALSE,
                          biblatex = FALSE,
                          includes = NULL,
                          pandoc.args = NULL) {
-
-  # knitr options
-  knitr <- knitr_options(
-    knit_hooks = list(crop = knitr::hook_pdfcrop),
-    opts_chunk = list(dev = 'cairo_pdf',
-                      fig.width = fig.width,
-                      fig.height = fig.height)
-  )
 
   # base pandoc options for all PDF output
   args <- c()
@@ -134,7 +129,7 @@ pdf_document <- function(toc = FALSE,
 
   # return format
   output_format(
-    knitr = knitr,
+    knitr = knitr_options_pdf(fig.width, fig.height, fig.crop),
     pandoc = pandoc_options(to = "latex",
                             from = from_rmarkdown(fig.caption),
                             args = args),
@@ -157,3 +152,4 @@ filter_pdf <- function(format, input) {
 
   format
 }
+

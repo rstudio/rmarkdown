@@ -3,7 +3,7 @@
 \title{Convert to a Beamer presentation}
 \usage{
 beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
-  fig.width = 10, fig.height = 7, fig.caption = FALSE,
+  fig.width = 10, fig.height = 7, fig.crop = TRUE, fig.caption = FALSE,
   highlight = "default", includes = NULL, pandoc.args = NULL)
 }
 \arguments{
@@ -25,6 +25,9 @@ beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   \item{fig.width}{Default width (in inches) for figures}
 
   \item{fig.height}{Default width (in inches) for figures}
+
+  \item{fig.crop}{\code{TRUE} to automatically apply the
+  \code{pdfcrop} utility (if available) to pdf figures}
 
   \item{fig.caption}{\code{TRUE} to render figures with
   captions}

@@ -1,0 +1,26 @@
+\name{knitr_options_pdf}
+\alias{knitr_options_pdf}
+\title{Knitr options for a PDF output format}
+\usage{
+knitr_options_pdf(fig.width, fig.height, fig.crop)
+}
+\arguments{
+  \item{fig.width}{Default width (in inches) for figures}
+
+  \item{fig.height}{Default width (in inches) for figures}
+
+  \item{fig.crop}{\code{TRUE} to automatically apply the
+  \code{pdfcrop} utility (if available) to pdf figures}
+}
+\value{
+An list that can be passed as the \code{knitr} argument of
+the \code{\link{output_format}} function.
+}
+\description{
+Define knitr options for an R Markdown output format that
+creates PDF output.
+}
+\seealso{
+\link{knitr_options}, \link{output_format}
+}
+
