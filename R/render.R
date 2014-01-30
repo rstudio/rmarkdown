@@ -17,7 +17,7 @@ render <- function(input,
 
   # setup a cleanup function for intermediate files
   intermediates <- c()
-  on.exit(sapply(intermediates,
+  on.exit(lapply(intermediates,
                  function(f) unlink(f, recursive = TRUE)),
           add = TRUE)
 
