@@ -45,16 +45,15 @@ You can also specify a plain markdown file in which case knitting will be bypass
 render("input.md")
 ```
 
-R Markdown documents can now contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:
+R Markdown documents can contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:
 
 ```
 ---
 title: "Sample Document"
-author: John Smith
 output:
-  format: html_document
-  toc: true
-  theme: united
+  html_document:
+    toc: true
+    theme: united
 ---
 ```
 
@@ -63,12 +62,44 @@ R Markdown has built in support for several output formats (HTML, PDF, and MS Wo
 ```
 ---
 title: "Sample Document"
-author: John Smith
 output:
-  format: pdf_document
-  toc: true
+  pdf_document:
+    toc: true
+    highlight: zenburn
 ---
 ```
+
+If you aren't specifing format options you can also just use a simple format name:
+
+```
+---
+title: "Sample Document"
+output: pdf_document
+---
+```
+
+Multiple formats can be specified in metadata:
+
+```
+---
+title: "Sample Document"
+output:
+  html_document:
+    toc: true
+    theme: united
+  pdf_document:
+    toc: true
+    highlight: zenburn
+---
+```
+
+To select from the various formats defined you can pass a format name to `render`. For example:
+
+```
+render("input.Rmd", "pdf_document")
+```
+
+If no explicit format name is passed to `render` then the first one defined will be used.
 
 Output formats need not be defined in metadata. They can also be specified programatically from R, for example:
 
@@ -130,8 +161,7 @@ Once you've created a custom format it can be used in the exact same fashion as 
 ---
 title: "Sample Document"
 author: John Smith
-output:
-  format: pubtools::custom_format
+output: pubtools::custom_format
 ---
 ```
 
