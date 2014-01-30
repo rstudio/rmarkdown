@@ -20,7 +20,7 @@ $endif$
 
 $if(theme)$
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="bootstrap/css/$theme$.min.css" rel="stylesheet">
+<link href="$theme$" rel="stylesheet">
 $endif$
 
 $if(highlightjs)$
@@ -89,14 +89,6 @@ $include-after$
 $endfor$
 
 </div>
-
-$if(theme)$
-<!-- no bootstrap js dependencies for now, comment in if we require them -->
-<!--
-<script src="jquery/jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
--->
-$endif$
 
 $if(mathjax-url)$
 <!-- dynamically load mathjax for compatibility with --self-contained -->

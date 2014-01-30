@@ -109,11 +109,16 @@ render("input.Rmd", pdf_document(latex.engine = "lualatex"))
 render("input.Rmd", beamer_presentation(incremental = TRUE))
 ```
 
-You can include custom CSS in HTML output using the `css` option. Combining this with setting the HTML `theme` to `NULL` provides for full control over all styles:
+You can include custom CSS in HTML output using the `css` option:
 
 ```
-render("input.Rmd", html_document(css = "styles.css"))
-render("input.Rmd", html_document(theme = NULL, css = "styles.css"))
+render("input.Rmd", html_document(css = "extra-styles.css"))
+```
+
+You can also override all CSS styles using the `theme` option:
+
+```
+render("input.Rmd", html_document(theme = "my-theme.css"))
 ```
 
 You can add custom content to HTML and PDF output using the `includes` option. For example:

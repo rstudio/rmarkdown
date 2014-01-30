@@ -29,9 +29,10 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
 
   \item{theme}{Visual theme ("default", "cerulean",
   "journal", "flatly", "readable", "spacelab", "united",
-  "yeti", or "cosmo").  Pass \code{NULL} for no theme (in
-  which case you want to pass some custom CSS using the
-  \code{css} parameter)}
+  "yeti", or "cosmo"). You can also pass an input document
+  relative or full path to an alternative CSS stylesheet
+  for the document. Pass \code{NULL} to apply no CSS
+  styles.}
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",

@@ -12,9 +12,9 @@
 #' prevent retina scaling.
 #' @param fig.caption \code{TRUE} to render figures with captions
 #' @param theme Visual theme ("default", "cerulean", "journal", "flatly",
-#'   "readable", "spacelab", "united", "yeti", or "cosmo").
-#'   Pass \code{NULL} for no theme (in which case you want to pass some custom
-#'   CSS using the \code{css} parameter)
+#'   "readable", "spacelab", "united", "yeti", or "cosmo"). You can also pass
+#'    an input document relative or full path to an alternative CSS stylesheet
+#'    for the document. Pass \code{NULL} to apply no CSS styles.
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
@@ -82,9 +82,14 @@ html_document <- function(toc = FALSE,
 
   # theme
   if (!is.null(theme)) {
-    theme <- match.arg(theme, themes())
-    if (identical(theme, "default"))
-      theme <- "bootstrap"
+    if (!identical(tolower(tools::file_ext(theme)), "css")) {
+      theme <- match.arg(theme, themes())
+      if (identical(theme, "default"))
+        theme <- "bootstrap"
+      theme <- paste0("bootstrap/css/", theme, ".min.css")
+    } else {
+      theme <- path.expand(theme)
+    }
     args <- c(args, "--variable", paste("theme:", theme, sep=""))
   }
 
