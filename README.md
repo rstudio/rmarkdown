@@ -3,11 +3,12 @@
 
 The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
 
-* A wide variety of output formats including HTML, PDF, MS Word, and Beamer.
+* A wide variety of built-in output formats including HTML, PDF, MS Word, and Beamer.
 * New markdown syntax including expanded support for tables, definition lists, and citations.
 * A responsive (multi-device friendly) HTML template based on [Bootstrap 3](http://getbootstrap.com).
+* Hooks for customizing HTML and PDF output (include css, headers, and footers).
 * The ability to include raw LaTeX within markdown for advanced customization of PDF output.
-* Extensive hooks for customizing HTML and PDF output.
+* Extensibility: easily define new formats for custom publishing requirements.
 
 Note that creating PDF and Beamer output requires that LaTeX be installed.
 
@@ -122,6 +123,24 @@ custom_format <- function() {
 ```
 
 This custom format has no parameters however in practice you'll often want to provide options as function parameters to allow callers to customize the behavior of the format.
+
+Once you've created a custom format it can be used in the exact same fashion as the built-in formats. For example, assuming the format above was defined in a package named `pubtools` could you could specify it in Rmd metadata as follows:
+
+```
+---
+title: "Sample Document"
+author: John Smith
+output:
+  format: pubtools::custom_format
+---
+```
+
+Alternatively you could use it in a call to `render`:
+
+```
+render("input.Rmd", pubtools::custom_format())
+```
+
 
 ### License
 
