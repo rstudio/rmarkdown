@@ -25,6 +25,19 @@ is_null_or_string <- function(text) {
   is.null(text) || (is.character(text) && (length(text) == 1))
 }
 
+read_lines_utf8 <- function(file, encoding) {
+
+  # read the file
+  lines <- readLines(file, warn = FALSE)
+
+  # normalize encoding to iconv compatible form
+  if (identical(encoding, "native.enc"))
+    encoding <- ""
+
+  # convert to utf8
+  iconv(lines, from = encoding, to = "UTF-8")
+}
+
 highlighters <- function() {
   c("default",
     "pygments",

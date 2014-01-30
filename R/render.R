@@ -29,7 +29,7 @@ render <- function(input,
   input <- basename(input)
 
   # read the input file
-  input_lines <- readLines(input, warn = FALSE, encoding = encoding)
+  input_lines <- read_lines_utf8(input, encoding)
 
   # if we haven't been passed a fully formed output format then
   # resolve it by looking at the yaml
@@ -85,10 +85,7 @@ render <- function(input,
 
   # if the encoding isn't UTF-8 then write a UTF-8 version
   if (!identical(encoding, "UTF-8")) {
-    if (identical(encoding, "native.enc"))
-      encoding <- ""
-    input_text <- readLines(input, warn = FALSE, encoding = encoding)
-    input_text <- iconv(input_text, from = encoding, to = "UTF-8")
+    input_text <- read_lines_utf8(input, encoding)
     input <- paste(tools::file_path_sans_ext(input),
                    ".utf8.",
                    tools::file_ext(input),
