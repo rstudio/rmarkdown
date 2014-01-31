@@ -2,6 +2,8 @@
 #'
 #' Format for converting from R Markdown to a Beamer presentation.
 #'
+#' @inheritParams pdf_document
+#'
 #' @param toc \code{TRUE} to include a table of contents in the output (only
 #'   level 1 headers will be included in the table of contents).
 #' @param slide.level The heading level which defines indvidual slides. By
@@ -11,18 +13,6 @@
 #'   that if you want to reverse the default incremental behavior for an
 #'   individual bullet you can preceded it with \code{>}. For example:
 #'   \emph{\code{> - Bullet Text}}
-#' @param fig.width Default width (in inches) for figures
-#' @param fig.height Default width (in inches) for figures
-#' @param fig.crop \code{TRUE} to automatically apply the \code{pdfcrop}
-#' utility (if available) to pdf figures
-#' @param fig.caption \code{TRUE} to render figures with captions
-#' @param highlight Syntax highlighting style. Supported styles include
-#'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
-#'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
-#' @param includes Additional content to include within the document (typically
-#'   created using the \code{\link[pandoc:include_options]{include_options}}
-#'   function).
-#' @param pandoc.args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -97,7 +87,7 @@ beamer_presentation <- function(toc = FALSE,
 
   # template path and assets
   args <- c(args,
-            pandoc::template_options(pandoc_template("beamer/default.tex")))
+            pandoc_template_args(pandoc_template("beamer/default.tex")))
 
   # table of contents
   if (toc)
@@ -113,10 +103,10 @@ beamer_presentation <- function(toc = FALSE,
   # highlighting
   if (!is.null(highlight))
     highlight <- match.arg(highlight, highlighters())
-  args <- c(args, pandoc::highlight_options(highlight))
+  args <- c(args, pandoc_highlight_args(highlight))
 
   # content includes
-  args <- c(args, includes)
+  args <- c(args, includes_to_pandoc_args(includes))
 
   # custom args
   args <- c(args, pandoc.args)

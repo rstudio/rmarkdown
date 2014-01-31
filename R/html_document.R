@@ -24,9 +24,8 @@
 #'   MathJax (which is copied into the output directory). You can pass an
 #'   alternate URL or pass \code{NULL} to exclude MathJax entirely.
 #' @param css One or more css files to include
-#' @param includes Additional content to include within the document (typically
-#'   created using the \code{\link[pandoc:include_options]{include_options}}
-#'   function).
+#' @param includes Named list of additional content to include within the
+#'   document (typically created using the \code{\link{includes}} function).
 #' @param pandoc.args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
@@ -67,11 +66,11 @@ html_document <- function(toc = FALSE,
   args <- c("--smart", "--self-contained")
 
   # table of contents
-  args <- c(args, pandoc::toc_options(toc, toc.depth))
+  args <- c(args, pandoc_toc_args(toc, toc.depth))
 
   # template path and assets
   args <- c(args,
-            pandoc::template_options(pandoc_template("h/default.html")))
+            pandoc_template_args(pandoc_template("h/default.html")))
 
   # theme
   if (!is.null(theme)) {
@@ -119,7 +118,7 @@ html_document <- function(toc = FALSE,
     args <- c(args, "--css", css_file)
 
   # content includes
-  args <- c(args, includes)
+  args <- c(args, includes_to_pandoc_args(includes))
 
   # pandoc args
   args <- c(args, pandoc.args)

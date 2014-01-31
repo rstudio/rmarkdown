@@ -48,10 +48,9 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
 
   \item{css}{One or more css files to include}
 
-  \item{includes}{Additional content to include within the
-  document (typically created using the
-  \code{\link[pandoc:include_options]{include_options}}
-  function).}
+  \item{includes}{Named list of additional content to
+  include within the document (typically created using the
+  \code{\link{includes}} function).}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}

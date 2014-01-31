@@ -38,10 +38,9 @@ beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   "tango". Pass \code{NULL} to prevent syntax
   highlighting.}
 
-  \item{includes}{Additional content to include within the
-  document (typically created using the
-  \code{\link[pandoc:include_options]{include_options}}
-  function).}
+  \item{includes}{Named list of additional content to
+  include within the document (typically created using the
+  \code{\link{includes}} function).}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}

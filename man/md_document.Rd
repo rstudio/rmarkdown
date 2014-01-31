@@ -34,10 +34,9 @@ md_document(variant = "markdown_strict", toc = FALSE, toc.depth = 3,
 
   \item{fig.height}{Default width (in inches) for figures}
 
-  \item{includes}{Additional content to include within the
-  document (typically created using the
-  \code{\link[pandoc:include_options]{include_options}}
-  function).}
+  \item{includes}{Named list of additional content to
+  include within the document (typically created using the
+  \code{\link{includes}} function).}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}

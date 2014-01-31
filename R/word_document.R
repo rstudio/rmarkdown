@@ -57,7 +57,7 @@ word_document <- function(fig.width = 6,
   # highlighting
   if (!is.null(highlight))
     highlight <- match.arg(highlight, highlighters())
-  args <- c(args, pandoc::highlight_options(highlight))
+  args <- c(args, pandoc_highlight_args(highlight))
 
   # reference docx
   if (!is.null(reference.docx)) {

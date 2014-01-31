@@ -4,7 +4,7 @@
 #'
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc.depth Depth of headers to include in table of contents
-#' @param number.sections \code{TRUE} Number section headings
+#' @param number.sections \code{TRUE} to number section headings
 #' @param fig.width Default width (in inches) for figures
 #' @param fig.height Default width (in inches) for figures
 #' @param fig.crop \code{TRUE} to automatically apply the \code{pdfcrop}
@@ -13,14 +13,12 @@
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
-#'   Pass \code{NULL} to prevent syntax highlighting.
 #' @param latex.engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", and "xelatex".
 #' @param natbib Use natbib for citations in LaTeX output
 #' @param biblatex Use biblatex for citations in LaTeX output
-#' @param includes Additional content to include within the document (typically
-#'   created using the \code{\link[pandoc:include_options]{include_options}}
-#'   function).
+#' @param includes Named list of additional content to include within the
+#'   document (typically created using the \code{\link{includes}} function).
 #' @param pandoc.args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
@@ -94,11 +92,11 @@ pdf_document <- function(toc = FALSE,
   args <- c()
 
   # table of contents
-  args <- c(args, pandoc::toc_options(toc, toc.depth))
+  args <- c(args, pandoc_toc_args(toc, toc.depth))
 
   # template path and assets
   args <- c(args,
-            pandoc::template_options(pandoc_template("latex/default.tex")))
+            pandoc_template_args(pandoc_template("latex/default.tex")))
 
   # numbered sections
   if (number.sections)
@@ -107,7 +105,7 @@ pdf_document <- function(toc = FALSE,
   # highlighting
   if (!is.null(highlight))
     highlight <- match.arg(highlight, highlighters())
-  args <- c(args, pandoc::highlight_options(highlight))
+  args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
   latex.engine = match.arg(latex.engine, c("pdflatex", "lualatex", "xelatex"))
@@ -122,7 +120,7 @@ pdf_document <- function(toc = FALSE,
     args <- c(args, "--biblatex")
 
   # content includes
-  args <- c(args, includes)
+  args <- c(args, includes_to_pandoc_args(includes))
 
   # args args
   args <- c(args, pandoc.args)

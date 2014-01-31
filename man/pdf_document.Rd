@@ -14,7 +14,7 @@ pdf_document(toc = FALSE, toc.depth = 2, number.sections = FALSE,
   \item{toc.depth}{Depth of headers to include in table of
   contents}
 
-  \item{number.sections}{\code{TRUE} Number section
+  \item{number.sections}{\code{TRUE} to number section
   headings}
 
   \item{fig.width}{Default width (in inches) for figures}
@@ -30,8 +30,8 @@ pdf_document(toc = FALSE, toc.depth = 2, number.sections = FALSE,
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",
   "monochrome", "espresso", "zenburn", "haddock", and
-  "tango". Pass \code{NULL} to prevent syntax highlighting.
-  Pass \code{NULL} to prevent syntax highlighting.}
+  "tango". Pass \code{NULL} to prevent syntax
+  highlighting.}
 
   \item{latex.engine}{LaTeX engine for producing PDF
   output. Options are "pdflatex", "lualatex", and
@@ -42,10 +42,9 @@ pdf_document(toc = FALSE, toc.depth = 2, number.sections = FALSE,
   \item{biblatex}{Use biblatex for citations in LaTeX
   output}
 
-  \item{includes}{Additional content to include within the
-  document (typically created using the
-  \code{\link[pandoc:include_options]{include_options}}
-  function).}
+  \item{includes}{Named list of additional content to
+  include within the document (typically created using the
+  \code{\link{includes}} function).}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}
