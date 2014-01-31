@@ -62,10 +62,7 @@ knitr_options <- function(opts_knit = NULL,
 #'
 #' Define knitr options for an R Markdown output format that creates PDF output.
 #'
-#' @param fig.width Default width (in inches) for figures
-#' @param fig.height Default width (in inches) for figures
-#' @param fig.crop \code{TRUE} to automatically apply the \code{pdfcrop}
-#' utility (if available) to pdf figures
+#' @inheritParams pdf_document
 #'
 #' @return An list that can be passed as the \code{knitr} argument of the
 #'   \code{\link{output_format}} function.

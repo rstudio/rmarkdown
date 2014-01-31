@@ -18,7 +18,10 @@ render <- function(input,
   # setup a cleanup function for intermediate files
   intermediates <- c()
   on.exit(lapply(intermediates,
-                 function(f) unlink(f, recursive = TRUE)),
+                 function(f) {
+                   if (file.exists(f))
+                     unlink(f, recursive = TRUE)
+                 }),
           add = TRUE)
 
   # execute within the input file's directory
@@ -74,24 +77,24 @@ render <- function(input,
       knitr::knit_hooks$set(as.list(output.format$knitr$knit_hooks))
     }
 
+    # calculate the output file name
+    knit_output <- file_with_meta_ext(input, "knit", "md")
+
     # perform the knit
     input <- knitr::knit(input,
+                         knit_output,
                          envir = envir,
                          quiet = quiet,
                          encoding = encoding)
 
-    # clean if requested
-    if (clean)
-      intermediates <- c(intermediates, input, figures_dir)
+    # always clean the md file
+    intermediates <- c(intermediates, input, figures_dir)
   }
 
   # if the encoding isn't UTF-8 then write a UTF-8 version
   if (!identical(encoding, "UTF-8")) {
     input_text <- read_lines_utf8(input, encoding)
-    input <- paste(tools::file_path_sans_ext(input),
-                   ".utf8.",
-                   tools::file_ext(input),
-                   sep = "")
+    input <- file_with_meta_ext(input, "utf8")
     writeLines(input_text, input, useBytes = TRUE)
 
     # always cleanup the utf8 version

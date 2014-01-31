@@ -6,6 +6,8 @@ pandoc_output_file <- function(input, to) {
     ext <- ".pdf"
   else if (to %in% c("html", "html5", "revealjs"))
     ext <- ".html"
+  else if (grepl("^markdown", to))
+    ext <- ".md"
   else
     ext <- paste(".", to, sep = "")
   output <- paste(tools::file_path_sans_ext(input), ext, sep = "")
@@ -17,7 +19,7 @@ pandoc_template <- function(file) {
   system.file(file.path("rmd", file), package = "rmarkdown")
 }
 
-from_rmarkdown <- function(implicit.figures) {
+from_rmarkdown <- function(implicit.figures = TRUE) {
   rmarkdown_format(ifelse(implicit.figures, "", "-implicit_figures"))
 }
 
@@ -37,6 +39,12 @@ read_lines_utf8 <- function(file, encoding) {
   # convert to utf8
   iconv(lines, from = encoding, to = "UTF-8")
 }
+
+file_with_meta_ext <- function(file, meta_ext, ext = tools::file_ext(file)) {
+  paste(tools::file_path_sans_ext(file),
+        ".", meta_ext, ".", ext, sep = "")
+}
+
 
 highlighters <- function() {
   c("default",

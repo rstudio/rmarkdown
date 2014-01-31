@@ -101,11 +101,12 @@ render("input.Rmd", "pdf_document")
 
 If no explicit format name is passed to `render` then the first one defined will be used.
 
-Output formats need not be specified in metadata. In fact, metadata is just a convenient way to invoke functions that implement output formats. There are four built-in output formats each exported as a function from the package:
+Output formats need not be specified in metadata. In fact, metadata is just a convenient way to invoke functions that implement output formats. There are five built-in output formats each exported as a function from the package:
 
 - `html_document`
 - `pdf_document`
 - `word_document`
+- `md_document`
 - `beamer_presentation`
 
 As you'd expect, these functions can also be invoked as part of the call to `render`, for example:

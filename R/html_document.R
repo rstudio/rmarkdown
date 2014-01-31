@@ -63,15 +63,6 @@ html_document <- function(toc = FALSE,
                           includes = NULL,
                           pandoc.args = NULL) {
 
-  # knitr options and hooks
-  knitr <- knitr_options(
-    opts_chunk = list(dev = 'png',
-                      dpi = 96,
-                      fig.width = fig.width,
-                      fig.height = fig.height,
-                      fig.retina = fig.retina)
-  )
-
   # base pandoc options for all HTML output
   args <- c("--smart", "--self-contained")
 
@@ -135,11 +126,35 @@ html_document <- function(toc = FALSE,
 
   # return format
   output_format(
-    knitr = knitr,
+    knitr = knitr_options_html(fig.width, fig.height, fig.retina),
     pandoc = pandoc_options(to = "html",
                             from = from_rmarkdown(fig.caption),
                             args = args),
     filter <- filter_html(local_mathjax)
+  )
+}
+
+
+#' Knitr options for an HTML output format
+#'
+#' Define knitr options for an R Markdown output format that creates
+#' HTML output.
+#'
+#' @inheritParams html_document
+#'
+#' @return An list that can be passed as the \code{knitr} argument of the
+#'   \code{\link{output_format}} function.
+#'
+#' @seealso \link{knitr_options}, \link{output_format}
+#'
+#' @export
+knitr_options_html <- function(fig.width, fig.height, fig.retina) {
+  knitr_options(
+    opts_chunk = list(dev = 'png',
+                      dpi = 96,
+                      fig.width = fig.width,
+                      fig.height = fig.height,
+                      fig.retina = fig.retina)
   )
 }
 
