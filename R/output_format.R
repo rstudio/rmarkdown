@@ -4,11 +4,13 @@
 #' options.
 #'
 #' @param knitr Knitr options for an output format (see
-#'  \code{\link{knitr_options}})
+#'   \code{\link{knitr_options}})
 #' @param pandoc Pandoc options for an output format (see
 #'   \code{\link{pandoc_options}})
-#' @param filter An optional filter function that receieves the format and lines
-#'   of the input file as input and can return a modified format.
+#' @param filter An optional filter function that receives the output format,
+#'   output file, and lines of the input file. The filter can be called for
+#'   it's side-effects (e.g. copying files to the output directory) and can
+#'   also return a modified format.
 #'
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.

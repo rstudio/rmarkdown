@@ -16,12 +16,13 @@
 #'   input document relative or full path to an alternative CSS stylesheet for
 #'   the document. Pass \code{NULL} to apply no CSS styles.
 #' @param highlight Syntax highlighting style. Supported styles include
-#'   "default", "pygments", "kate", "monochrome", "espresso",
-#'   "zenburn", "haddock", "tango", and "textmate". Pass \code{NULL} to
-#'   prevent syntax highlighting.
+#'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
+#'   "haddock", "tango", and "textmate". Pass \code{NULL} to prevent syntax
+#'   highlighting.
 #' @param mathjax Include mathjax. The "default" option uses an https URL from
-#'   the official MathJax CDN. You can pass an alternate URL or pass \code{NULL}
-#'   to exclude MathJax entirely.
+#'   the official MathJax CDN. The "local" option uses a local version of
+#'   MathJax (which is copied into the output directory). You can pass an
+#'   alternate URL or pass \code{NULL} to exclude MathJax entirely.
 #' @param css One or more css files to include
 #' @param includes Additional content to include within the document (typically
 #'   created using the \code{\link[pandoc:include_options]{include_options}}
@@ -108,10 +109,16 @@ html_document <- function(toc = FALSE,
     }
   }
 
-  # mathjax
+  # mathjax (track whether we specified local mathjax)
+  local_mathjax <- FALSE
   if (!is.null(mathjax)) {
-    if (identical(mathjax, "default"))
+    if (identical(mathjax, "default")) {
       mathjax <- default_mathjax()
+    }
+    else if (identical(mathjax, "local")) {
+      local_mathjax <- TRUE
+      mathjax <- local_mathjax()
+    }
     args <- c(args, "--mathjax")
     args <- c(args, "--variable", paste("mathjax-url:", mathjax, sep=""))
   }
@@ -131,8 +138,33 @@ html_document <- function(toc = FALSE,
     knitr = knitr,
     pandoc = pandoc_options(to = "html",
                             from = from_rmarkdown(fig.caption),
-                            args = args)
+                            args = args),
+    filter <- filter_html(local_mathjax)
   )
+}
+
+# Filter to copy mathjax files to the output directory if necessary
+filter_html <- function(local_mathjax) {
+
+  function(output.format, output.file, input) {
+
+    if (local_mathjax) {
+      output_dir <- dirname(output.file)
+      mathjax_dir <- file.path(dirname(output.file), "mathjax")
+      if (!file.exists(mathjax_dir)) {
+        dir.create(mathjax_dir)
+        file.copy(from = system.file("templates/html/mjax",
+                                     package = "rmarkdown"),
+                  to = output_dir,
+                  recursive = TRUE)
+        file.rename(from = file.path(output_dir, "mjax"),
+                    to = mathjax_dir)
+      }
+    }
+
+    output.format
+  }
+
 }
 
 themes <- function() {
@@ -152,6 +184,16 @@ html_highlighters <- function() {
 }
 
 default_mathjax <- function() {
-  paste("https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js",
-        "?config=TeX-AMS-MML_HTMLorMML", sep="")
+  paste("https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/",
+        mathjax_config(), sep="")
 }
+
+local_mathjax <- function() {
+  paste("mathjax/", mathjax_config(), sep="")
+}
+
+mathjax_config <- function() {
+  "MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+}
+
+

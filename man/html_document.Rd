@@ -41,9 +41,10 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   highlighting.}
 
   \item{mathjax}{Include mathjax. The "default" option uses
-  an https URL from the official MathJax CDN. You can pass
-  an alternate URL or pass \code{NULL} to exclude MathJax
-  entirely.}
+  an https URL from the official MathJax CDN. The "local"
+  option uses a local version of MathJax (which is copied
+  into the output directory). You can pass an alternate URL
+  or pass \code{NULL} to exclude MathJax entirely.}
 
   \item{css}{One or more css files to include}
 

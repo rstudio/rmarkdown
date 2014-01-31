@@ -11,8 +11,10 @@ output_format(knitr, pandoc, filter = NULL)
   \item{pandoc}{Pandoc options for an output format (see
   \code{\link{pandoc_options}})}
 
-  \item{filter}{An optional filter function that receieves
-  the format and lines of the input file as input and can
+  \item{filter}{An optional filter function that receives
+  the output format, output file, and lines of the input
+  file. The filter can be called for it's side-effects
+  (e.g. copying files to the output directory) and can also
   return a modified format.}
 }
 \value{

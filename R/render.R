@@ -54,7 +54,9 @@ render <- function(input,
 
   # call any filter that's been specified
   if (!is.null(output.format$filter))
-    output.format <- output.format$filter(output.format, input_lines)
+    output.format <- output.format$filter(output.format,
+                                          output.file,
+                                          input_lines)
 
   # knit if necessary
   if (tolower(tools::file_ext(input)) %in% c("rmd", "rmarkdown")) {
