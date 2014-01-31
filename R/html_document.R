@@ -80,7 +80,7 @@ html_document <- function(toc = FALSE,
 
   # template path and assets
   args <- c(args,
-            pandoc::template_options(pandoc_template("html/default.html")))
+            pandoc::template_options(pandoc_template("h/default.html")))
 
   # theme
   if (!is.null(theme)) {
@@ -150,14 +150,14 @@ filter_html <- function(local_mathjax) {
 
     if (local_mathjax) {
       output_dir <- dirname(output.file)
-      mathjax_dir <- file.path(dirname(output.file), "mathjax")
-      if (!file.exists(mathjax_dir)) {
+      mathjax_stage_dir <- file.path(output_dir, "m")
+      mathjax_dir <- file.path(output_dir, "mathjax")
+      if (!file.exists(mathjax_dir) && !file.exists(mathjax_stage_dir)) {
         dir.create(mathjax_dir)
-        file.copy(from = system.file("templates/html/mjax",
-                                     package = "rmarkdown"),
+        file.copy(from = file.path(pandoc_template("h"), "m"),
                   to = output_dir,
                   recursive = TRUE)
-        file.rename(from = file.path(output_dir, "mjax"),
+        file.rename(from = file.path(output_dir, "m"),
                     to = mathjax_dir)
       }
     }
