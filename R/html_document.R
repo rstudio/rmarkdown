@@ -7,17 +7,18 @@
 #' @param fig.width Default width (in inches) for figures
 #' @param fig.height Default width (in inches) for figures
 #' @param fig.retina Scaling to perform for retina displays (defaults to 2,
-#' which currently works for all widely used retina displays). Note that this
-#' only takes effect if you are using knitr >= 1.5.21. Set to \code{NULL} to
-#' prevent retina scaling.
+#'   which currently works for all widely used retina displays). Note that this
+#'   only takes effect if you are using knitr >= 1.5.21. Set to \code{NULL} to
+#'   prevent retina scaling.
 #' @param fig.caption \code{TRUE} to render figures with captions
 #' @param theme Visual theme ("default", "cerulean", "journal", "flatly",
-#'   "readable", "spacelab", "united", "yeti", or "cosmo"). You can also pass
-#'    an input document relative or full path to an alternative CSS stylesheet
-#'    for the document. Pass \code{NULL} to apply no CSS styles.
+#'   "readable", "spacelab", "united", "yeti", or "cosmo"). You can also pass an
+#'   input document relative or full path to an alternative CSS stylesheet for
+#'   the document. Pass \code{NULL} to apply no CSS styles.
 #' @param highlight Syntax highlighting style. Supported styles include
-#'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
-#'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
+#'   "default", "pygments", "kate", "monochrome", "espresso",
+#'   "zenburn", "haddock", "tango", and "textmate". Pass \code{NULL} to
+#'   prevent syntax highlighting.
 #' @param mathjax Include mathjax. The "default" option uses an https URL from
 #'   the official MathJax CDN. You can pass an alternate URL or pass \code{NULL}
 #'   to exclude MathJax entirely.
@@ -97,10 +98,10 @@ html_document <- function(toc = FALSE,
   if (is.null(highlight)) {
     args <- c(args, "--no-highlight")
   } else {
-    highlight <- match.arg(highlight, highlighters())
-    if (identical(highlight, "default")) {
+    highlight <- match.arg(highlight, html_highlighters())
+    if (highlight %in% c("default", "textmate")) {
       args <- c(args, "--no-highlight")
-      args <- c(args, "--variable", "highlightjs")
+      args <- c(args, "--variable", paste0("highlightjs=", highlight))
     }
     else {
       args <- c(args, "--highlight-style", highlight)
@@ -144,6 +145,10 @@ themes <- function() {
     "united",
     "yeti",
     "cosmo")
+}
+
+html_highlighters <- function() {
+  c(highlighters(), "textmate")
 }
 
 default_mathjax <- function() {

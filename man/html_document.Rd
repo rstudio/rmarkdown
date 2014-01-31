@@ -36,8 +36,8 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",
-  "monochrome", "espresso", "zenburn", "haddock", and
-  "tango". Pass \code{NULL} to prevent syntax
+  "monochrome", "espresso", "zenburn", "haddock", "tango",
+  and "textmate". Pass \code{NULL} to prevent syntax
   highlighting.}
 
   \item{mathjax}{Include mathjax. The "default" option uses
