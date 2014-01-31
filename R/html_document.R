@@ -87,7 +87,7 @@ html_document <- function(toc = FALSE,
       theme <- match.arg(theme, themes())
       if (identical(theme, "default"))
         theme <- "bootstrap"
-      theme <- paste0("bootstrap/css/", theme, ".min.css")
+      theme <- paste("bootstrap/css/", theme, ".min.css", sep="")
     } else {
       theme <- path.expand(theme)
     }
@@ -101,7 +101,7 @@ html_document <- function(toc = FALSE,
     highlight <- match.arg(highlight, html_highlighters())
     if (highlight %in% c("default", "textmate")) {
       args <- c(args, "--no-highlight")
-      args <- c(args, "--variable", paste0("highlightjs=", highlight))
+      args <- c(args, "--variable", paste("highlightjs=", highlight, sep=""))
     }
     else {
       args <- c(args, "--highlight-style", highlight)

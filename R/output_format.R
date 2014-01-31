@@ -147,11 +147,11 @@ pandoc_options <- function(to,
 #'
 #' @export
 rmarkdown_format <- function(extensions = NULL) {
-  paste0(c("markdown",
-           "+autolink_bare_uris",
-           "+ascii_identifiers",
-           "+tex_math_single_backslash",
-           extensions), collapse = "")
+  paste(c("markdown",
+          "+autolink_bare_uris",
+          "+ascii_identifiers",
+          "+tex_math_single_backslash",
+          extensions), collapse = "")
 }
 
 # Synthesize the output format for a document from it's YAML. If we can't
