@@ -74,7 +74,7 @@ knitr_options_pdf <- function(fig.width, fig.height, fig.crop) {
 
   # default options
   opts_knit <- NULL
-  opts_chunk <- list(dev = 'cairo_pdf',
+  opts_chunk <- list(dev = ifelse(capabilities('cairo'), 'cairo_pdf', 'pdf'),
                      fig.width = fig.width,
                      fig.height = fig.height)
   knit_hooks <- NULL
