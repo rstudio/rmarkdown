@@ -6,8 +6,13 @@ pandoc_output_file <- function(input, to) {
     ext <- ".pdf"
   else if (to %in% c("html", "html5", "revealjs"))
     ext <- ".html"
-  else if (grepl("^markdown", to))
-    ext <- ".md"
+  else if (grepl("^markdown", to)) {
+    if (!identical(tolower(tools::file_ext(input)), "md"))
+      ext <- ".md"
+    else {
+      ext <- paste(".", strsplit(to, "[\\+\\-]")[[1]][[1]], sep = "")
+    }
+  }
   else
     ext <- paste(".", to, sep = "")
   output <- paste(tools::file_path_sans_ext(input), ext, sep = "")
