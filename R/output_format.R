@@ -80,7 +80,10 @@ knitr_options_pdf <- function(fig.width, fig.height, fig.crop) {
   knit_hooks <- NULL
 
   # apply cropping if requested and we have pdfcrop
-  if (fig.crop && nzchar(Sys.which("pdfcrop"))) {
+  crop <- fig.crop &&
+          !identical(.Platform$OS.type, "windows") &&
+          nzchar(Sys.which("pdfcrop"))
+  if (crop) {
     knit_hooks = list(crop = knitr::hook_pdfcrop)
     opts_chunk$crop = TRUE
   }
