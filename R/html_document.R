@@ -11,14 +11,23 @@
 #'   only takes effect if you are using knitr >= 1.5.21. Set to \code{NULL} to
 #'   prevent retina scaling.
 #' @param fig.caption \code{TRUE} to render figures with captions
+#' @param smart Produce typographically correct output, converting straight
+#'   quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
+#'   ellipses.
+#' @param self.contained Produce a standalone HTML file with no external
+#'   dependencies, using data: URIs to incorporate the contents of linked
+#'   scripts, stylesheets, images, and videos. When \code{FALSE} the
+#'   \code{theme} parameter is not utilized (however you can still provide
+#'   custom CSS using the \code{css} parameter).
 #' @param theme Visual theme ("default", "cerulean", "journal", "flatly",
-#'   "readable", "spacelab", "united", "yeti", or "cosmo"). You can also pass an
-#'   input document relative or full path to an alternative CSS stylesheet for
-#'   the document. Pass \code{NULL} to apply no CSS styles.
+#'   "readable", "spacelab", "united", "yeti", or "cosmo"). Pass \code{NULL}
+#'    for no theme (in this case you can use the \code{css} parameter to
+#'    add your own styles).
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", "tango", and "textmate". Pass \code{NULL} to prevent syntax
-#'   highlighting.
+#'   highlighting. Note that the "textmate" style is not supported when
+#'   \code{self.contained} is \code{FALSE}.
 #' @param mathjax Include mathjax. The "default" option uses an https URL from
 #'   the official MathJax CDN. The "local" option uses a local version of
 #'   MathJax (which is copied into the output directory). You can pass an
@@ -55,6 +64,8 @@ html_document <- function(toc = FALSE,
                           fig.height = 5,
                           fig.retina = 2,
                           fig.caption = FALSE,
+                          smart = TRUE,
+                          self.contained = TRUE,
                           theme = "default",
                           highlight = "default",
                           mathjax = "default",
@@ -62,8 +73,16 @@ html_document <- function(toc = FALSE,
                           includes = NULL,
                           pandoc.args = NULL) {
 
-  # base pandoc options for all HTML output
-  args <- c("--smart", "--self-contained")
+  # build pandoc args
+  args <- c("--standalone")
+
+  # smart quotes, etc.
+  if (smart)
+    args <- c(args, "--smart")
+
+  # self contained document
+  if (self.contained)
+    args <- c(args, "--self-contained")
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc.depth))
@@ -73,30 +92,31 @@ html_document <- function(toc = FALSE,
             pandoc_template_args(pandoc_template("h/default.html")))
 
   # theme
-  if (!is.null(theme)) {
-    if (!identical(tolower(tools::file_ext(theme)), "css")) {
-      theme <- match.arg(theme, themes())
-      if (identical(theme, "default"))
-        theme <- "bootstrap"
-      theme <- paste("bootstrap/css/", theme, ".min.css", sep="")
-    } else {
-      theme <- path.expand(theme)
-    }
+  if (self.contained && !is.null(theme)) {
+    theme <- match.arg(theme, themes())
+    if (identical(theme, "default"))
+      theme <- "bootstrap"
     args <- c(args, "--variable", paste("theme:", theme, sep=""))
   }
 
-  # highlighting
-  if (is.null(highlight)) {
-    args <- c(args, "--no-highlight")
-  } else {
-    highlight <- match.arg(highlight, html_highlighters())
-    if (highlight %in% c("default", "textmate")) {
+  # highlighting (our custom styles are only supported in self.contained)
+  if (self.contained) {
+    if (is.null(highlight)) {
       args <- c(args, "--no-highlight")
-      args <- c(args, "--variable", paste("highlightjs=", highlight, sep=""))
+    } else {
+      highlight <- match.arg(highlight, html_highlighters())
+      if (highlight %in% c("default", "textmate")) {
+        args <- c(args, "--no-highlight")
+        args <- c(args, "--variable", paste("highlightjs=", highlight, sep=""))
+      }
+      else {
+        args <- c(args, "--highlight-style", highlight)
+      }
     }
-    else {
-      args <- c(args, "--highlight-style", highlight)
-    }
+  } else {
+    if (!is.null(highlight))
+      highlight <- match.arg(highlight, highlighters())
+    args <- c(args, pandoc_highlight_args(highlight))
   }
 
   # mathjax (track whether we specified local mathjax)

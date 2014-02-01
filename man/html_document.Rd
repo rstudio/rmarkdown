@@ -3,9 +3,9 @@
 \title{Convert to an HTML document}
 \usage{
 html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
-  fig.retina = 2, fig.caption = FALSE, theme = "default",
-  highlight = "default", mathjax = "default", css = NULL,
-  includes = NULL, pandoc.args = NULL)
+  fig.retina = 2, fig.caption = FALSE, smart = TRUE,
+  self.contained = TRUE, theme = "default", highlight = "default",
+  mathjax = "default", css = NULL, includes = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -27,18 +27,29 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   \item{fig.caption}{\code{TRUE} to render figures with
   captions}
 
+  \item{smart}{Produce typographically correct output,
+  converting straight quotes to curly quotes, --- to
+  em-dashes, -- to en-dashes, and ... to ellipses.}
+
+  \item{self.contained}{Produce a standalone HTML file with
+  no external dependencies, using data: URIs to incorporate
+  the contents of linked scripts, stylesheets, images, and
+  videos. When \code{FALSE} the \code{theme} parameter is
+  not utilized (however you can still provide custom CSS
+  using the \code{css} parameter).}
+
   \item{theme}{Visual theme ("default", "cerulean",
   "journal", "flatly", "readable", "spacelab", "united",
-  "yeti", or "cosmo"). You can also pass an input document
-  relative or full path to an alternative CSS stylesheet
-  for the document. Pass \code{NULL} to apply no CSS
-  styles.}
+  "yeti", or "cosmo"). Pass \code{NULL} for no theme (in
+  this case you can use the \code{css} parameter to add
+  your own styles).}
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",
   "monochrome", "espresso", "zenburn", "haddock", "tango",
   and "textmate". Pass \code{NULL} to prevent syntax
-  highlighting.}
+  highlighting. Note that the "textmate" style is not
+  supported when \code{self.contained} is \code{FALSE}.}
 
   \item{mathjax}{Include mathjax. The "default" option uses
   an https URL from the official MathJax CDN. The "local"

@@ -88,7 +88,12 @@ render <- function(input,
                          encoding = encoding)
 
     # always clean the md file
-    intermediates <- c(intermediates, input, figures_dir)
+    intermediates <- c(intermediates, input)
+
+    # clean the figures dir unless the output format has a
+    # self.contained = FALSE
+    if (isTRUE(output.format$self.contained))
+        intermediates <- c(intermediates, figures_dir)
   }
 
   # if the encoding isn't UTF-8 then write a UTF-8 version

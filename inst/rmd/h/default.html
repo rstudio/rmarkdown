@@ -20,7 +20,7 @@ $endif$
 
 $if(theme)$
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="$theme$" rel="stylesheet">
+<link href="bootstrap/css/$theme$.min.css" rel="stylesheet">
 $endif$
 
 $if(highlightjs)$
@@ -55,7 +55,9 @@ $endfor$
 
 <body>
 
+$if(theme)$
 <div class="container">
+$endif$
 
 $for(include-before)$
 $include-before$
@@ -88,7 +90,9 @@ $for(include-after)$
 $include-after$
 $endfor$
 
+$if(theme)$
 </div>
+$endif$
 
 $if(mathjax-url)$
 <!-- dynamically load mathjax for compatibility with --self-contained -->
