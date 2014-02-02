@@ -8,8 +8,6 @@
 #'
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc.depth Depth of headers to include in table of contents
-#' @param template Path to a pandoc template to use for conversion (should be
-#'   either absolute or realtive to the directory of the input file).
 #' @param highlight The name of a pandoc syntax highlighting theme.
 #'
 #' @return A character vector with pandoc command line arguments
@@ -26,11 +24,10 @@
 #' pandoc_include_args(before.body = "header.htm")
 #' pandoc_include_args(before.body = "header.tex")
 #'
-#' pandoc_template_args("custom.htm")
-#'
 #' pancoc_highlight_args("kate")
 #'
 #' pandoc_toc_args(toc = TRUE, toc.depth = 2)
+#'
 #' }
 #' @name pandoc_args
 NULL
@@ -53,16 +50,6 @@ pandoc_include_args <- function(in.header = NULL,
     args <- c(args, "--include-after-body", file)
 
   args
-}
-
-
-#' @rdname pandoc_args
-#' @export
-pandoc_template_args <- function(template) {
-  if (file.exists(template))
-    template <- tools::file_path_as_absolute(template)
-  c("--template", template,
-    "--data-dir", dirname(template))
 }
 
 #' @rdname pandoc_args
@@ -95,3 +82,31 @@ pandoc_toc_args <- function(toc, toc.depth = 3) {
 
   args
 }
+
+
+#' Transform path for passing to pandoc
+#'
+#' Transform a path for passing to pandoc on the command line. Calls
+#' \code{\link[base:path.expand]{path.expand}} on all platforms. On Windows,
+#' transform it to a short path name if it contains spaces, and then convert
+#' backslashes to forward slashes
+#'
+#' @param path Path to transform
+#'
+#' @return Transformaed path that can be passed to pandoc on the command line
+#'
+#' @export
+pandoc_path <- function(path) {
+
+  path <- path.expand(path)
+
+  if (.Platform$OS.type == "windows") {
+    if (grepl(' ', path, fixed=TRUE))
+      path <- utils::shortPathName(path)
+    path <- gsub("\\\\", "/", path)
+  }
+
+  path
+}
+
+

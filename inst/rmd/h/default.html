@@ -20,12 +20,14 @@ $endif$
 
 $if(theme)$
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="bootstrap/css/$theme$.min.css" rel="stylesheet">
+<link href="$theme$" rel="stylesheet">
 $endif$
 
 $if(highlightjs)$
-<link rel="stylesheet" href="highlight/$highlightjs$.css" $if(html5)$$else$type="text/css" $endif$/>
-<script src="highlight/highlight.js"></script>
+<link rel="stylesheet"
+      href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css"
+      $if(html5)$$else$type="text/css" $endif$/>
+<script src="$highlightjs$/highlight.js"></script>
 <style type="text/css">
   pre {
     background-color: white;

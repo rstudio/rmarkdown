@@ -2,14 +2,11 @@
 \alias{pandoc_args}
 \alias{pandoc_highlight_args}
 \alias{pandoc_include_args}
-\alias{pandoc_template_args}
 \alias{pandoc_toc_args}
 \title{Functions for generating pandoc command line arguments}
 \usage{
 pandoc_include_args(in.header = NULL, before.body = NULL,
   after.body = NULL)
-
-pandoc_template_args(template)
 
 pandoc_highlight_args(highlight)
 
@@ -21,10 +18,6 @@ pandoc_toc_args(toc, toc.depth = 3)
 
   \item{toc.depth}{Depth of headers to include in table of
   contents}
-
-  \item{template}{Path to a pandoc template to use for
-  conversion (should be either absolute or realtive to the
-  directory of the input file).}
 
   \item{highlight}{The name of a pandoc syntax highlighting
   theme.}
@@ -60,11 +53,10 @@ library(rmarkdown)
 pandoc_include_args(before.body = "header.htm")
 pandoc_include_args(before.body = "header.tex")
 
-pandoc_template_args("custom.htm")
-
 pancoc_highlight_args("kate")
 
 pandoc_toc_args(toc = TRUE, toc.depth = 2)
+
 }
 }
 

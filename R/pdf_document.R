@@ -95,8 +95,7 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_toc_args(toc, toc.depth))
 
   # template path and assets
-  args <- c(args,
-            pandoc_template_args(pandoc_template("latex/default.tex")))
+  args <- c(args, "--template", pandoc_template("latex/default.tex"))
 
   # numbered sections
   if (number.sections)

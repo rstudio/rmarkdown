@@ -34,9 +34,7 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   \item{self.contained}{Produce a standalone HTML file with
   no external dependencies, using data: URIs to incorporate
   the contents of linked scripts, stylesheets, images, and
-  videos. When \code{FALSE} the \code{theme} parameter is
-  not utilized (however you can still provide custom CSS
-  using the \code{css} parameter).}
+  videos.}
 
   \item{theme}{Visual theme ("default", "cerulean",
   "journal", "flatly", "readable", "spacelab", "united",
@@ -48,8 +46,7 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   styles include "default", "pygments", "kate",
   "monochrome", "espresso", "zenburn", "haddock", "tango",
   and "textmate". Pass \code{NULL} to prevent syntax
-  highlighting. Note that the "textmate" style is not
-  supported when \code{self.contained} is \code{FALSE}.}
+  highlighting.}
 
   \item{mathjax}{Include mathjax. The "default" option uses
   an https URL from the official MathJax CDN. The "local"

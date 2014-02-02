@@ -11,6 +11,7 @@ Depends:
     R (>= 2.14.1)
 Imports:
     tools,
+    utils,
     knitr,
     pandoc,
     yaml (>= 2.1.5)

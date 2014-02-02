@@ -85,9 +85,8 @@ beamer_presentation <- function(toc = FALSE,
   # base pandoc options for all beamer output
   args <- c()
 
-  # template path and assets
-  args <- c(args,
-            pandoc_template_args(pandoc_template("beamer/default.tex")))
+  # template path
+  args <- c(args, "--template", pandoc_template("beamer/default.tex"))
 
   # table of contents
   if (toc)
