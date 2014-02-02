@@ -4,7 +4,8 @@
 \usage{
 beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   fig.width = 10, fig.height = 7, fig.crop = TRUE, fig.caption = FALSE,
-  highlight = "default", includes = NULL, pandoc.args = NULL)
+  highlight = "default", includes = NULL, data.dir = NULL,
+  pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -22,15 +23,8 @@ beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   can preceded it with \code{>}. For example: \emph{\code{>
   - Bullet Text}}}
 
-  \item{fig.width}{Default width (in inches) for figures}
-
-  \item{fig.height}{Default width (in inches) for figures}
-
   \item{fig.crop}{\code{TRUE} to automatically apply the
   \code{pdfcrop} utility (if available) to pdf figures}
-
-  \item{fig.caption}{\code{TRUE} to render figures with
-  captions}
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "pygments", "kate",
@@ -38,9 +32,20 @@ beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   "tango". Pass \code{NULL} to prevent syntax
   highlighting.}
 
+  \item{fig.width}{Default width (in inches) for figures}
+
+  \item{fig.height}{Default width (in inches) for figures}
+
+  \item{fig.caption}{\code{TRUE} to render figures with
+  captions}
+
   \item{includes}{Named list of additional content to
   include within the document (typically created using the
   \code{\link{includes}} function).}
+
+  \item{data.dir}{Additional directory to resolve relatives
+  paths of included content against (the directory of the
+  input file is used by default).}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}

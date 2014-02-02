@@ -5,7 +5,8 @@
 html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   fig.retina = 2, fig.caption = FALSE, smart = TRUE,
   self.contained = TRUE, theme = "default", highlight = "default",
-  mathjax = "default", css = NULL, includes = NULL, pandoc.args = NULL)
+  mathjax = "default", css = NULL, includes = NULL, data.dir = NULL,
+  pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -59,6 +60,10 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   \item{includes}{Named list of additional content to
   include within the document (typically created using the
   \code{\link{includes}} function).}
+
+  \item{data.dir}{Additional directory to resolve relatives
+  paths of included content against (the directory of the
+  input file is used by default).}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}

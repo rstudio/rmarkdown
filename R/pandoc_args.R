@@ -41,13 +41,13 @@ pandoc_include_args <- function(in.header = NULL,
   args <- c()
 
   for (file in in.header)
-    args <- c(args, "--include-in-header", file)
+    args <- c(args, "--include-in-header", pandoc_path(file))
 
   for (file in before.body)
-    args <- c(args, "--include-before-body", file)
+    args <- c(args, "--include-before-body", pandoc_path(file))
 
   for (file in after.body)
-    args <- c(args, "--include-after-body", file)
+    args <- c(args, "--include-after-body", pandoc_path(file))
 
   args
 }

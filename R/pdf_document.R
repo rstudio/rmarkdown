@@ -2,14 +2,11 @@
 #'
 #' Format for converting from R Markdown to a PDF document.
 #'
-#' @param toc \code{TRUE} to include a table of contents in the output
-#' @param toc.depth Depth of headers to include in table of contents
+#' @inheritParams html_document
+#'
 #' @param number.sections \code{TRUE} to number section headings
-#' @param fig.width Default width (in inches) for figures
-#' @param fig.height Default width (in inches) for figures
 #' @param fig.crop \code{TRUE} to automatically apply the \code{pdfcrop}
 #' utility (if available) to pdf figures
-#' @param fig.caption \code{TRUE} to render figures with captions
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
@@ -17,9 +14,6 @@
 #'   "pdflatex", "lualatex", and "xelatex".
 #' @param natbib Use natbib for citations in LaTeX output
 #' @param biblatex Use biblatex for citations in LaTeX output
-#' @param includes Named list of additional content to include within the
-#'   document (typically created using the \code{\link{includes}} function).
-#' @param pandoc.args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -86,6 +80,7 @@ pdf_document <- function(toc = FALSE,
                          natbib = FALSE,
                          biblatex = FALSE,
                          includes = NULL,
+                         data.dir = NULL,
                          pandoc.args = NULL) {
 
   # base pandoc options for all PDF output
@@ -120,6 +115,10 @@ pdf_document <- function(toc = FALSE,
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
+
+  # data dir
+  if (!is.null(data.dir))
+    args <- c(args, "--data-dir", pandoc_path(data.dir))
 
   # args args
   args <- c(args, pandoc.args)

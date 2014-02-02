@@ -4,7 +4,7 @@
 \usage{
 md_document(variant = "markdown_strict", toc = FALSE, toc.depth = 3,
   fig.width = 7, fig.height = 5, fig.retina = NULL, includes = NULL,
-  pandoc.args = NULL)
+  data.dir = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{variant}{Markdown variant to produce (defaults to
@@ -37,6 +37,10 @@ md_document(variant = "markdown_strict", toc = FALSE, toc.depth = 3,
   \item{includes}{Named list of additional content to
   include within the document (typically created using the
   \code{\link{includes}} function).}
+
+  \item{data.dir}{Additional directory to resolve relatives
+  paths of included content against (the directory of the
+  input file is used by default).}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}

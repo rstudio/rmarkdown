@@ -3,9 +3,15 @@
 \title{Convert to an MS Word document}
 \usage{
 word_document(fig.width = 6, fig.height = 4.5, fig.caption = FALSE,
-  highlight = "default", reference.docx = NULL, pandoc.args = NULL)
+  highlight = "default", reference.docx = NULL, data.dir = NULL,
+  pandoc.args = NULL)
 }
 \arguments{
+  \item{reference.docx}{Use the specified file as a style
+  reference in producing a docx file. For best results, the
+  reference docx should be a modified version of a docx
+  file produced using pandoc.}
+
   \item{fig.width}{Default width (in inches) for figures}
 
   \item{fig.height}{Default width (in inches) for figures}
@@ -19,10 +25,9 @@ word_document(fig.width = 6, fig.height = 4.5, fig.caption = FALSE,
   "tango". Pass \code{NULL} to prevent syntax
   highlighting.}
 
-  \item{reference.docx}{Use the specified file as a style
-  reference in producing a docx file. For best results, the
-  reference docx should be a modified version of a docx
-  file produced using pandoc.}
+  \item{data.dir}{Additional directory to resolve relatives
+  paths of included content against (the directory of the
+  input file is used by default).}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}

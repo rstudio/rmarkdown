@@ -32,6 +32,9 @@
 #' @param css One or more css files to include
 #' @param includes Named list of additional content to include within the
 #'   document (typically created using the \code{\link{includes}} function).
+#' @param data.dir Additional directory to resolve relatives paths of
+#'   included content against (the directory of the input file is used
+#'   by default).
 #' @param pandoc.args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
@@ -68,6 +71,7 @@ html_document <- function(toc = FALSE,
                           mathjax = "default",
                           css = NULL,
                           includes = NULL,
+                          data.dir = NULL,
                           pandoc.args = NULL) {
 
   # build pandoc args
@@ -133,10 +137,14 @@ html_document <- function(toc = FALSE,
 
   # additional css
   for (css_file in css)
-    args <- c(args, "--css", css_file)
+    args <- c(args, "--css", pandoc_path(css_file))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
+
+  # data dir
+  if (!is.null(data.dir))
+    args <- c(args, "--data-dir", pandoc_path(data.dir))
 
   # pandoc args
   args <- c(args, pandoc.args)

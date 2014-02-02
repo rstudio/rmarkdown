@@ -62,6 +62,7 @@ knitr_options <- function(opts_knit = NULL,
 #'
 #' Define knitr options for an R Markdown output format that creates PDF output.
 #'
+#' @inheritParams html_document
 #' @inheritParams pdf_document
 #'
 #' @return An list that can be passed as the \code{knitr} argument of the

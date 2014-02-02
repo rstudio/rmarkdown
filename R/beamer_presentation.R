@@ -3,6 +3,7 @@
 #' Format for converting from R Markdown to a Beamer presentation.
 #'
 #' @inheritParams pdf_document
+#' @inheritParams html_document
 #'
 #' @param toc \code{TRUE} to include a table of contents in the output (only
 #'   level 1 headers will be included in the table of contents).
@@ -80,6 +81,7 @@ beamer_presentation <- function(toc = FALSE,
                                 fig.caption = FALSE,
                                 highlight = "default",
                                 includes = NULL,
+                                data.dir = NULL,
                                 pandoc.args = NULL) {
 
   # base pandoc options for all beamer output
@@ -106,6 +108,10 @@ beamer_presentation <- function(toc = FALSE,
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
+
+  # data dir
+  if (!is.null(data.dir))
+    args <- c(args, "--data-dir", pandoc_path(data.dir))
 
   # custom args
   args <- c(args, pandoc.args)
