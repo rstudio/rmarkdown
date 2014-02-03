@@ -4,8 +4,8 @@
 \usage{
 beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   fig.width = 10, fig.height = 7, fig.crop = TRUE, fig.caption = FALSE,
-  highlight = "default", includes = NULL, data.dir = NULL,
-  pandoc.args = NULL)
+  highlight = "default", template = NULL, includes = NULL,
+  data.dir = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -31,6 +31,11 @@ beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   "monochrome", "espresso", "zenburn", "haddock", and
   "tango". Pass \code{NULL} to prevent syntax
   highlighting.}
+
+  \item{template}{Pandoc template to use for rendering
+  content. See the documentation on
+  \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
+  templates} for more details.}
 
   \item{fig.width}{Default width (in inches) for figures}
 

@@ -5,7 +5,7 @@
 pdf_document(toc = FALSE, toc.depth = 2, number.sections = FALSE,
   fig.width = 6, fig.height = 4.5, fig.crop = TRUE, fig.caption = TRUE,
   highlight = "default", latex.engine = "pdflatex", natbib = FALSE,
-  biblatex = FALSE, includes = NULL, data.dir = NULL,
+  biblatex = FALSE, template = NULL, includes = NULL, data.dir = NULL,
   pandoc.args = NULL)
 }
 \arguments{
@@ -29,6 +29,11 @@ pdf_document(toc = FALSE, toc.depth = 2, number.sections = FALSE,
 
   \item{biblatex}{Use biblatex for citations in LaTeX
   output}
+
+  \item{template}{Pandoc template to use for rendering
+  content. See the documentation on
+  \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
+  templates} for more details.}
 
   \item{toc}{\code{TRUE} to include a table of contents in
   the output}

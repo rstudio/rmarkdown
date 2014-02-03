@@ -14,6 +14,9 @@
 #'   "pdflatex", "lualatex", and "xelatex".
 #' @param natbib Use natbib for citations in LaTeX output
 #' @param biblatex Use biblatex for citations in LaTeX output
+#' @param template Pandoc template to use for rendering content. See the
+#' documentation on \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
+#' templates} for more details.
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -79,6 +82,7 @@ pdf_document <- function(toc = FALSE,
                          latex.engine = "pdflatex",
                          natbib = FALSE,
                          biblatex = FALSE,
+                         template = NULL,
                          includes = NULL,
                          data.dir = NULL,
                          pandoc.args = NULL) {
@@ -90,7 +94,10 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_toc_args(toc, toc.depth))
 
   # template path and assets
-  args <- c(args, "--template", pandoc_template("latex/default.tex"))
+  if (!is.null(template))
+    args <- c(args, "--template", pandoc_path_arg(template))
+  else
+    args <- c(args, "--template", pandoc_template("latex/default.tex"))
 
   # numbered sections
   if (number.sections)

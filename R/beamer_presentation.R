@@ -80,6 +80,7 @@ beamer_presentation <- function(toc = FALSE,
                                 fig.crop = TRUE,
                                 fig.caption = FALSE,
                                 highlight = "default",
+                                template = NULL,
                                 includes = NULL,
                                 data.dir = NULL,
                                 pandoc.args = NULL) {
@@ -87,8 +88,11 @@ beamer_presentation <- function(toc = FALSE,
   # base pandoc options for all beamer output
   args <- c()
 
-  # template path
-  args <- c(args, "--template", pandoc_template("beamer/default.tex"))
+  # template path and assets
+  if (!is.null(template))
+    args <- c(args, "--template", pandoc_path_arg(template))
+  else
+    args <- c(args, "--template", pandoc_template("beamer/default.tex"))
 
   # table of contents
   if (toc)
