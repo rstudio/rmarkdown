@@ -17,7 +17,7 @@ Note that creating PDF and Beamer output requires that LaTeX be installed.
 To install the package and it's dependencies:
 
 ```
-devtools::install_github(c("pandoc", "rmarkdown"), "rstudio")
+devtools::install_github("rmarkdown", "rstudio")
 ```
 
 #### Pandoc

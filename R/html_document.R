@@ -137,14 +137,14 @@ html_document <- function(toc = FALSE,
 
   # additional css
   for (css_file in css)
-    args <- c(args, "--css", pandoc_path(css_file))
+    args <- c(args, "--css", pandoc_path_arg(css_file))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
 
   # data dir
   if (!is.null(data.dir))
-    args <- c(args, "--data-dir", pandoc_path(data.dir))
+    args <- c(args, "--data-dir", pandoc_path_arg(data.dir))
 
   # pandoc args
   args <- c(args, pandoc.args)

@@ -13,7 +13,6 @@ Imports:
     tools,
     utils,
     knitr,
-    pandoc,
     yaml (>= 2.1.5)
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
 License: GPL-3

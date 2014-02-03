@@ -1,0 +1,35 @@
+\name{pandoc_available}
+\alias{pandoc_available}
+\title{Check whether pandoc is available}
+\usage{
+pandoc_available(version = NULL)
+}
+\arguments{
+  \item{version}{Required version of pandoc}
+}
+\value{
+Logical indicating whether a version of pandoc is available
+}
+\description{
+Determine whether pandoc is currently available on the
+system, optionally checking for a specific version or
+greater.
+}
+\details{
+The system path as well as the version of pandoc shipped
+with RStudio (if running under RStudio) are scanned for
+pandoc and the highest version available is used.
+}
+\examples{
+\dontrun{
+library(rmarkdown)
+
+if (pandoc_available())
+
+  cat("pandoc is available!\\n")
+
+if (pandoc_available("1.12.3"))
+  cat("requried version of pandoc is available!\\n")
+}
+}
+

@@ -58,12 +58,12 @@ word_document <- function(fig.width = 6,
 
   # reference docx
   if (!is.null(reference.docx)) {
-    args <- c(args, "--reference-docx", pandoc_path(reference.docx))
+    args <- c(args, "--reference-docx", pandoc_path_arg(reference.docx))
   }
 
   # data dir
   if (!is.null(data.dir))
-    args <- c(args, "--data-dir", pandoc_path(data.dir))
+    args <- c(args, "--data-dir", pandoc_path_arg(data.dir))
 
   # pandoc args
   args <- c(args, pandoc.args)

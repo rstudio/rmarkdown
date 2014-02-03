@@ -61,7 +61,7 @@ md_document <- function(variant = "markdown_strict",
 
   # data dir
   if (!is.null(data.dir))
-    args <- c(args, "--data-dir", pandoc_path(data.dir))
+    args <- c(args, "--data-dir", pandoc_path_arg(data.dir))
 
   # pandoc args
   args <- c(args, pandoc.args)

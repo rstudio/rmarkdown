@@ -1,5 +1,9 @@
 
 
+is_windows <- function() {
+  identical(.Platform$OS.type, "windows")
+}
+
 # determine the output file for a pandoc conversion
 pandoc_output_file <- function(input, to) {
   if (to %in% c("latex", "beamer"))
@@ -21,7 +25,7 @@ pandoc_output_file <- function(input, to) {
 
 
 pandoc_template <- function(file) {
-  pandoc_path(system.file(file.path("rmd", file), package = "rmarkdown"))
+  pandoc_path_arg(system.file(file.path("rmd", file), package = "rmarkdown"))
 }
 
 from_rmarkdown <- function(implicit.figures = TRUE) {
@@ -62,20 +66,3 @@ highlighters <- function() {
     "tango")
 }
 
-# Transform a path for passing to pandoc on the command line.
-# Leave paths alone for posix. For Windows, mirror the behavior of the
-# R package build system by starting with the fully resolved absolute path,
-# transforming it to a short path name if it contains spaces, and then
-# converting backslashes to forward slashes
-as_pandoc_path <- function(path) {
-
-  path <- path.expand(path)
-
-  if (.Platform$OS.type == "windows") {
-    if (grepl(' ', path, fixed=TRUE))
-      path <- utils::shortPathName(path)
-    path <- gsub("\\\\", "/", path)
-  }
-
-  path
-}

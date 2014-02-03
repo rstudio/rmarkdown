@@ -1,14 +1,14 @@
-\name{pandoc_path}
-\alias{pandoc_path}
+\name{pandoc_path_arg}
+\alias{pandoc_path_arg}
 \title{Transform path for passing to pandoc}
 \usage{
-pandoc_path(path)
+pandoc_path_arg(path)
 }
 \arguments{
   \item{path}{Path to transform}
 }
 \value{
-Transformaed path that can be passed to pandoc on the
+Transformed path that can be passed to pandoc on the
 command line
 }
 \description{

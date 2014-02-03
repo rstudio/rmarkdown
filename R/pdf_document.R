@@ -118,7 +118,7 @@ pdf_document <- function(toc = FALSE,
 
   # data dir
   if (!is.null(data.dir))
-    args <- c(args, "--data-dir", pandoc_path(data.dir))
+    args <- c(args, "--data-dir", pandoc_path_arg(data.dir))
 
   # args args
   args <- c(args, pandoc.args)

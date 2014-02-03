@@ -10,7 +10,7 @@ render <- function(input,
 
   # check for required version of pandoc
   required_pandoc <- "1.12.3"
-  if (!pandoc::available(required_pandoc)) {
+  if (!pandoc_available(required_pandoc)) {
     stop("pandoc version ", required_pandoc, " or higher ",
          "is required and was not found.", call. = FALSE)
   }
@@ -107,13 +107,13 @@ render <- function(input,
   }
 
   # run the conversion
-  pandoc::convert(input,
-                  output.format$pandoc$to,
-                  output.format$pandoc$from,
-                  output.file,
-                  TRUE,
-                  output.format$pandoc$args,
-                  !quiet)
+  pandoc_convert(input,
+                 output.format$pandoc$to,
+                 output.format$pandoc$from,
+                 output.file,
+                 TRUE,
+                 output.format$pandoc$args,
+                 !quiet)
 
   # return the full path to the output file
   invisible(tools::file_path_as_absolute(output.file))
