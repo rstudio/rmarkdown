@@ -100,7 +100,7 @@ pandoc_path <- function(path) {
 
   path <- path.expand(path)
 
-  if (.Platform$OS.type == "windows") {
+  if (is_windows()) {
     if (grepl(' ', path, fixed=TRUE))
       path <- utils::shortPathName(path)
     path <- gsub("\\\\", "/", path)
