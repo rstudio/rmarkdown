@@ -39,8 +39,8 @@ md_document(variant = "markdown_strict", toc = FALSE, toc.depth = 3,
   \code{\link{includes}} function).}
 
   \item{data.dir}{Additional directory to resolve relatives
-  paths of included content against (the directory of the
-  input file is used by default).}
+  paths of templates and included content against (the
+  directory of the input file is used by default).}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}

@@ -5,8 +5,8 @@
 html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   fig.retina = 2, fig.caption = FALSE, smart = TRUE,
   self.contained = TRUE, theme = "default", highlight = "default",
-  mathjax = "default", css = NULL, includes = NULL, data.dir = NULL,
-  pandoc.args = NULL)
+  mathjax = "default", template = NULL, css = NULL, includes = NULL,
+  data.dir = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -55,6 +55,10 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   into the output directory). You can pass an alternate URL
   or pass \code{NULL} to exclude MathJax entirely.}
 
+  \item{template}{Pandoc template to use for rendering
+  HTML. See the Templates section below for more details on
+  templates.}
+
   \item{css}{One or more css files to include}
 
   \item{includes}{Named list of additional content to
@@ -62,8 +66,8 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   \code{\link{includes}} function).}
 
   \item{data.dir}{Additional directory to resolve relatives
-  paths of included content against (the directory of the
-  input file is used by default).}
+  paths of templates and included content against (the
+  directory of the input file is used by default).}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}
@@ -82,6 +86,32 @@ the use of footnotes and bibliographies. For more details
 see the documentation on R Markdown
 \link[=rmd_metadata]{metadata} and
 \link[=rmd_citations]{citations}.
+}
+\section{Templates}{
+  You can provide a custom HTML template to be used for
+  rendering. The syntax for templates is described in the
+  documentation on
+  \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
+  templates}.
+
+  Note however that if you choose to provide your own HTML
+  template then several aspects of HTML document rendering
+  will behave differently:
+
+  \itemize{ \item{The \code{theme} parameter does not work
+  (you can still provide styles using the \code{css}
+  parameter).  } \item{For the \code{highlight} parameter,
+  the default highlighting style will resolve to "pygments"
+  and the "textmate" highlighting style is not available }
+  \item{MathJax is automatically disabled if
+  \code{self.contained} is \code{TRUE} (these two options
+  can't be used together in normal pandoc templates). The
+  "local" option for \code{mathjax} is also not available.
+  } }
+
+  Due to the above restrictions, you might consider using
+  the \code{includes} parameter as an alternative to
+  providing a fully custom template.
 }
 \examples{
 \dontrun{

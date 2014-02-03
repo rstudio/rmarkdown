@@ -18,9 +18,9 @@
 #'   dependencies, using data: URIs to incorporate the contents of linked
 #'   scripts, stylesheets, images, and videos.
 #' @param theme Visual theme ("default", "cerulean", "journal", "flatly",
-#'   "readable", "spacelab", "united", "yeti", or "cosmo"). Pass \code{NULL}
-#'    for no theme (in this case you can use the \code{css} parameter to
-#'    add your own styles).
+#'   "readable", "spacelab", "united", "yeti", or "cosmo"). Pass \code{NULL} for
+#'   no theme (in this case you can use the \code{css} parameter to add your own
+#'   styles).
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'   "haddock", "tango", and "textmate". Pass \code{NULL} to prevent syntax
@@ -29,12 +29,14 @@
 #'   the official MathJax CDN. The "local" option uses a local version of
 #'   MathJax (which is copied into the output directory). You can pass an
 #'   alternate URL or pass \code{NULL} to exclude MathJax entirely.
+#' @param template Pandoc template to use for rendering HTML. See the Templates
+#'   section below for more details on templates.
 #' @param css One or more css files to include
 #' @param includes Named list of additional content to include within the
 #'   document (typically created using the \code{\link{includes}} function).
-#' @param data.dir Additional directory to resolve relatives paths of
-#'   included content against (the directory of the input file is used
-#'   by default).
+#' @param data.dir Additional directory to resolve relatives paths of templates
+#'   and included content against (the directory of the input file is used by
+#'   default).
 #' @param pandoc.args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
@@ -46,6 +48,35 @@
 #' be provided to enable the use of footnotes and bibliographies. For more
 #' details see the documentation on R Markdown \link[=rmd_metadata]{metadata}
 #' and \link[=rmd_citations]{citations}.
+#'
+#'
+#' @section Templates:
+#'
+#' You can provide a custom HTML template to be used for rendering. The syntax
+#' for templates is described in the documentation on
+#' \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
+#' templates}.
+#'
+#' Note however that if you choose to provide your own HTML template then
+#' several aspects of HTML document rendering will behave differently:
+#'
+#' \itemize{
+#'   \item{The \code{theme} parameter does not work (you can still
+#'      provide styles using the \code{css} parameter).
+#'   }
+#'   \item{For the \code{highlight} parameter, the default highlighting
+#'      style will resolve to "pygments" and the "textmate" highlighting
+#'      style is not available
+#'   }
+#'   \item{MathJax is automatically disabled if \code{self.contained} is
+#'      \code{TRUE} (these two options can't be used together in normal
+#'      pandoc templates). The "local" option for \code{mathjax} is also
+#'      not available.
+#'   }
+#' }
+#'
+#' Due to the above restrictions, you might consider using the \code{includes}
+#' parameter as an alternative to providing a fully custom template.
 #'
 #' @examples
 #' \dontrun{
@@ -69,6 +100,7 @@ html_document <- function(toc = FALSE,
                           theme = "default",
                           highlight = "default",
                           mathjax = "default",
+                          template = NULL,
                           css = NULL,
                           includes = NULL,
                           data.dir = NULL,
@@ -89,7 +121,10 @@ html_document <- function(toc = FALSE,
   args <- c(args, pandoc_toc_args(toc, toc.depth))
 
   # template path and assets
-  args <- c(args, "--template", pandoc_template("h/default.html"))
+  if (!is.null(template))
+    args <- c(args, "--template", pandoc_path_arg(template))
+  else
+    args <- c(args, "--template", pandoc_template("h/default.html"))
 
   # theme
   if (!is.null(theme)) {
@@ -104,7 +139,13 @@ html_document <- function(toc = FALSE,
   # highlighting
   if (is.null(highlight)) {
     args <- c(args, "--no-highlight")
-  } else {
+  }
+  else if (!is.null(template)) {
+    if (identical(highlight, "default"))
+      highlight <- "pygments"
+    args <- c(args, "--highlight-style", highlight)
+  }
+  else {
     highlight <- match.arg(highlight, html_highlighters())
     if (highlight %in% c("default", "textmate")) {
       args <- c(args, "--no-highlight")
@@ -123,7 +164,8 @@ html_document <- function(toc = FALSE,
 
   # mathjax (track whether we specified local mathjax)
   local_mathjax <- FALSE
-  if (!is.null(mathjax)) {
+  allow_mathjax <- is.null(template) || !self.contained
+  if (allow_mathjax && !is.null(mathjax)) {
     if (identical(mathjax, "default")) {
       mathjax <- default_mathjax()
     }
