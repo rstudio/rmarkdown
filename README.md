@@ -20,19 +20,19 @@ To install the package and it's dependencies:
 devtools::install_github("rmarkdown", "rstudio")
 ```
 
-#### Pandoc
+A recent version of pandoc (>= 1.12.3) is also required. Recent [daily builds](http://www.rstudio.org/download/daily) of RStudio include pandoc v1.12.3. If you only intend to use the **rmarkdown** package within RStudio you can rely on this version.
 
-A recent version of pandoc (>= 1.12.3) is also required. A few ways to obtain an up to date version of pandoc are described below.
+If you are not running within RStudio then you can obtain pandoc as follows:
 
-##### RStudio
+#### Mac OS X and Windows
 
-Recent [daily builds](http://www.rstudio.org/download/daily) of RStudio include pandoc v1.12.3. If you only intend to use the **rmarkdown** package within RStudio you can rely on this version.
+The [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page includes easy to use installers for Windows and Mac OS X.
 
-##### Pandoc website
+#### Linux
 
-If you want to use R Markdown outside of RStudio you should obtain a copy of pandoc from the [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page. Easy to use installers for standalone versions of pandoc are available for Windows and Mac OS X.
+The version of pandoc included in the standard repositories is not recent enough for use with the **rmarkdown** package. You can install a more recent version of pandoc by installing the Haskell Platform and then following these instructions for [building pandoc from source](http://johnmacfarlane.net/pandoc/installing.html#all-platforms).
 
-For Linux systems, you may need to install a large number of Haskell dependencies to get pandoc installed. If you are running on Linux outside of RStudio and don't want to install these dependencies see below.
+This method installs a large number of Haskell depenedencies so might not be desirable. You can also obtain a standalone version of pandoc without the dependencies as follows:
 
 ##### RedHat/CentOS 5 & 6
 
