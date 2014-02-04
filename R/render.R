@@ -67,8 +67,13 @@ render <- function(input,
     # default rendering and chunk options
     knitr::render_markdown()
     knitr::opts_chunk$set(tidy = FALSE, error = FALSE)
-    figures_dir <- paste("figure-", output.format$pandoc$to, "/", sep = "")
+
+    # use filename based files and cache directories
+    figures_dir <- paste(knitr_files_dir(input),
+                         "figure-", output.format$pandoc$to, "/",
+                         sep = "")
     knitr::opts_chunk$set(fig.path=figures_dir)
+    knitr::opts_chunk$set(cache.path=knitr_cache_dir(input))
 
     # merge user options and hooks
     if (!is.null(output.format$knitr)) {
