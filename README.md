@@ -22,13 +22,34 @@ devtools::install_github("rmarkdown", "rstudio")
 
 #### Pandoc
 
-A recent version of pandoc (>= 1.12.3) is also required. There are a few ways to obtain an up to date version of pandoc:
+A recent version of pandoc (>= 1.12.3) is also required. A few ways to obtain an up to date version of pandoc are described below.
 
-1. If you running within RStudio you can rely on the version of pandoc that is included with recent [daily builds](http://www.rstudio.org/download/daily) of RStudio.
+##### RStudio
 
-2. Follow the instructions for your platform on the [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page.
+Recent [daily builds](http://www.rstudio.org/download/daily) of RStudio include pandoc v1.12.3. If you only intend to use the **rmarkdown** package within RStudio you can rely on this version.
 
-3. If you are running on Linux without RStudio and don't want to install the Haskell dependencies required for pandoc you can also copy the `pandoc` and `pandoc-citeproc` binaries out of the RStudio `bin/pandoc` directory and place them somewhere on your system path.
+##### Pandoc website
+
+If you want to use R Markdown outside of RStudio you should obtain a copy of pandoc from the [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page. Easy to use installers for standalone versions of pandoc are available for Windows and Mac OS X.
+
+For Linux systems, you may need to install a large number of Haskell dependencies to get pandoc installed. If you are running on Linux outside of RStudio and don't want to install these dependencies see below.
+
+##### RedHat/CentOS 5 & 6
+
+For RedHat based systems you can obtain a standalone version of pandoc v1.12.3 (with no Haskell dependencies) from http://petersen.fedorapeople.org/pandoc-standalone/ as follows:
+
+```
+$ sudo wget -P /etc/yum.repos.d/ http://petersen.fedorapeople.org/pandoc-standalone/pandoc-standalone.repo
+$ yum install pandoc pandoc-citeproc
+```
+
+##### Debian/Ubuntu
+
+For Debian based systems you can obtain a standalone version of pandoc v1.12.3 by copying the binaries out of the RStudio distribution as follows:
+
+```
+$ sudo cp /usr/lib/rstudio/bin/pandoc/pandoc* /usr/bin/
+```
 
 
 ### Usage
