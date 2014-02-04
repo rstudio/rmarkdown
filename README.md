@@ -34,18 +34,18 @@ The version of pandoc included in the standard repositories is not recent enough
 
 This method installs a large number of Haskell depenedencies so might not be desirable. You can also obtain a standalone version of pandoc without the dependencies as follows:
 
-##### RedHat/CentOS 5 & 6
+##### Older Systems (RedHat/CentOS 5 & 6)
 
-For RedHat based systems you can obtain a standalone version of pandoc v1.12.3 (with no Haskell dependencies) from http://petersen.fedorapeople.org/pandoc-standalone/ as follows:
+For older Linux systems you can obtain a standalone version of pandoc v1.12.3 (with no Haskell dependencies) from http://petersen.fedorapeople.org/pandoc-standalone/ as follows:
 
 ```
 $ sudo wget -P /etc/yum.repos.d/ http://petersen.fedorapeople.org/pandoc-standalone/pandoc-standalone.repo
 $ yum install pandoc pandoc-citeproc
 ```
 
-##### Debian/Ubuntu
+##### Newer Systems (Debian/Ubuntu/Fedora)
 
-For Debian based systems you can make a standalone version of pandoc v1.12.3 available to the system by soft-linking the binaries inclued with RStudio:
+For newer Linux systems you can make a standalone version of pandoc v1.12.3 available to the system by soft-linking the binaries inclued with RStudio:
 
 ```
 $ sudo ln -s /usr/lib/rstudio/bin/pandoc/pandoc* /usr/local/bin
