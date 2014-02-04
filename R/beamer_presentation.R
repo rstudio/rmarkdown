@@ -93,7 +93,7 @@ beamer_presentation <- function(toc = FALSE,
     args <- c(args, "--template", pandoc_path_arg(template))
   else
     args <- c(args, "--template",
-              pandoc_path_arg(rmarkdown_system_file("beamer/default.tex")))
+              pandoc_path_arg(rmarkdown_system_file("rmd/beamer/default.tex")))
 
   # table of contents
   if (toc)

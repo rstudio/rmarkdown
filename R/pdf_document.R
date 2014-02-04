@@ -98,7 +98,7 @@ pdf_document <- function(toc = FALSE,
     args <- c(args, "--template", pandoc_path_arg(template))
   else
     args <- c(args, "--template",
-              pandoc_path_arg(rmarkdown_system_file("latex/default.tex")))
+              pandoc_path_arg(rmarkdown_system_file("rmd/latex/default.tex")))
 
   # numbered sections
   if (number.sections)
