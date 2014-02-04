@@ -18,9 +18,8 @@ render(input, output.format = NULL, output.file = NULL, clean = FALSE,
   \item{output.file}{Output file (if not specified then a
   default based on the specified output format is chosen)}
 
-  \item{clean}{\code{TRUE} to clean all output and intermediate
-  files after the render. In this mode the \code{output.file} will be
-  written to a temporary directory unless it is explicitly specified.}
+  \item{clean}{\code{TRUE} to clean intermediate files created
+  during rendering.}
 
   \item{envir}{The environment in which the code chunks are
   to be evaluated during knitting (can use

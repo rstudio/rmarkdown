@@ -19,7 +19,7 @@ render <- function(input,
   intermediates <- c()
   on.exit(lapply(intermediates,
                  function(f) {
-                   if (file.exists(f))
+                   if (clean && file.exists(f))
                      unlink(f, recursive = TRUE)
                  }),
           add = TRUE)
@@ -40,20 +40,8 @@ render <- function(input,
     output.format <- output_format_from_yaml(output.format, input_lines)
 
   # automatically create an output file name if necessary
-  if (is.null(output.file)) {
-
-    # compute output file
+  if (is.null(output.file))
     output.file <- pandoc_output_file(input, output.format$pandoc$to)
-
-    # if the user wants to keep the input directory clean then make
-    # sure the output file goes into a temporary directory
-    if (clean) {
-      rmarkdown_dir <- file.path(tempdir(), "rmarkdown")
-      if (!file.exists(rmarkdown_dir))
-        dir.create(rmarkdown_dir)
-      output.file <- file.path(rmarkdown_dir, output.file)
-    }
-  }
 
   # call any filter that's been specified
   if (!is.null(output.format$filter))
@@ -93,12 +81,16 @@ render <- function(input,
                          quiet = quiet,
                          encoding = encoding)
 
-    # always clean the md file
+    # add md file to intermediates
     intermediates <- c(intermediates, input)
 
-    # clean the files dir if requested
-    if (output.format$clean.supporting)
+    # clean the files_dir if we've either been asking to clean supporting
+    # files or if we know the supporting files are going to get copied
+    # to an output directory
+    if (output.format$clean.supporting ||
+        (dirname(input) != dirname(output.file))) {
        intermediates <- c(intermediates, files_dir)
+    }
   }
 
   # if the encoding isn't UTF-8 then write a UTF-8 version
@@ -107,8 +99,17 @@ render <- function(input,
     input <- file_with_meta_ext(input, "utf8")
     writeLines(input_text, input, useBytes = TRUE)
 
-    # always cleanup the utf8 version
+    # add utf8 version to intermediates
     intermediates <- c(intermediates, input)
+  }
+
+  # copy supporting files to the output directory if necessary
+  if (!output.format$clean.supporting) {
+    if (dirname(input) != dirname(output.file)) {
+      file.copy(from = files_dir,
+                to = dirname(output.file),
+                recursive = TRUE)
+    }
   }
 
   # run the conversion
