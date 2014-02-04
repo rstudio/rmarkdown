@@ -24,7 +24,7 @@ A recent version of pandoc (>= 1.12.3) is also required. Recent [daily builds](h
 
 If you are not running within RStudio then you can obtain pandoc as follows:
 
-#### Mac OS X and Windows
+#### Windows and Mac OS X
 
 The [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page includes easy to use installers for Windows and Mac OS X.
 
@@ -45,11 +45,21 @@ $ yum install pandoc pandoc-citeproc
 
 ##### Debian/Ubuntu
 
-For Debian based systems you can obtain a standalone version of pandoc v1.12.3 by copying the binaries out of the RStudio distribution as follows:
+For Debian based systems you can make a standalone version of pandoc v1.12.3 available to the system by soft-linking the binaries inclued with RStudio:
 
 ```
-$ sudo cp /usr/lib/rstudio/bin/pandoc/pandoc* /usr/bin/
+$ sudo ln -s /usr/lib/rstudio/bin/pandoc/pandoc* /usr/local/bin
 ```
+
+If you are running RStudio Server the command would be this:
+
+```
+$ sudo ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc* /usr/local/bin
+```
+
+If you aren't running RStudio at all you can simply copy the binaries out of the RStudio `bin/pandoc` directory and locate them within `/usr/local/bin` on your target system.
+
+
 
 
 ### Usage
