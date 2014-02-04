@@ -190,7 +190,7 @@ pandoc_highlight_args <- function(highlight) {
     args <- c(args, "--no-highlight")
   else {
     if (identical(highlight, "default"))
-      highlight <- "pygments"
+      highlight <- "tango"
     args <- c(args, "--highlight-style", highlight)
   }
 

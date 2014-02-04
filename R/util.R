@@ -57,12 +57,12 @@ file_with_meta_ext <- function(file, meta_ext, ext = tools::file_ext(file)) {
 
 highlighters <- function() {
   c("default",
+    "tango",
     "pygments",
     "kate",
     "monochrome",
     "espresso",
     "zenburn",
-    "haddock",
-    "tango")
+    "haddock")
 }
 

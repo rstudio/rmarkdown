@@ -22,8 +22,8 @@
 #'   no theme (in this case you can use the \code{css} parameter to add your own
 #'   styles).
 #' @param highlight Syntax highlighting style. Supported styles include
-#'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
-#'   "haddock", "tango", and "textmate". Pass \code{NULL} to prevent syntax
+#'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
+#'   "zenburn", "haddock", and "textmate". Pass \code{NULL} to prevent syntax
 #'   highlighting.
 #' @param mathjax Include mathjax. The "default" option uses an https URL from
 #'   the official MathJax CDN. The "local" option uses a local version of
@@ -65,7 +65,7 @@
 #'      provide styles using the \code{css} parameter).
 #'   }
 #'   \item{For the \code{highlight} parameter, the default highlighting
-#'      style will resolve to "pygments" and the "textmate" highlighting
+#'      style will resolve to "tango" and the "textmate" highlighting
 #'      style is not available
 #'   }
 #'   \item{MathJax is automatically disabled if \code{self.contained} is
@@ -142,7 +142,7 @@ html_document <- function(toc = FALSE,
   }
   else if (!is.null(template)) {
     if (identical(highlight, "default"))
-      highlight <- "pygments"
+      highlight <- "tango"
     args <- c(args, "--highlight-style", highlight)
   }
   else {

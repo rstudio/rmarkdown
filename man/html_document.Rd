@@ -44,9 +44,9 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   your own styles).}
 
   \item{highlight}{Syntax highlighting style. Supported
-  styles include "default", "pygments", "kate",
-  "monochrome", "espresso", "zenburn", "haddock", "tango",
-  and "textmate". Pass \code{NULL} to prevent syntax
+  styles include "default", "tango", "pygments", "kate",
+  "monochrome", "espresso", "zenburn", "haddock", and
+  "textmate". Pass \code{NULL} to prevent syntax
   highlighting.}
 
   \item{mathjax}{Include mathjax. The "default" option uses
@@ -101,7 +101,7 @@ see the documentation on R Markdown
   \itemize{ \item{The \code{theme} parameter does not work
   (you can still provide styles using the \code{css}
   parameter).  } \item{For the \code{highlight} parameter,
-  the default highlighting style will resolve to "pygments"
+  the default highlighting style will resolve to "tango"
   and the "textmate" highlighting style is not available }
   \item{MathJax is automatically disabled if
   \code{self.contained} is \code{TRUE} (these two options

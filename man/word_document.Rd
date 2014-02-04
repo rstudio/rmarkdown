@@ -20,10 +20,9 @@ word_document(fig.width = 6, fig.height = 4.5, fig.caption = FALSE,
   captions}
 
   \item{highlight}{Syntax highlighting style. Supported
-  styles include "default", "pygments", "kate",
-  "monochrome", "espresso", "zenburn", "haddock", and
-  "tango". Pass \code{NULL} to prevent syntax
-  highlighting.}
+  styles include "default", "tango", "pygments", "kate",
+  "monochrome", "espresso", "zenburn", and "haddock". Pass
+  \code{NULL} to prevent syntax highlighting.}
 
   \item{data.dir}{Additional directory to resolve relatives
   paths of templates and included content against (the

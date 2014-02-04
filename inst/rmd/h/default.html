@@ -28,14 +28,6 @@ $if(highlightjs)$
       href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css"
       $if(html5)$$else$type="text/css" $endif$/>
 <script src="$highlightjs$/highlight.js"></script>
-<style type="text/css">
-  pre {
-    background-color: white;
-  }
-  pre.r, pre.cpp {
-    background-color: #f5f5f5
-  }
-</style>
 $endif$
 
 $if(highlighting-css)$
@@ -44,6 +36,13 @@ code{white-space: pre;}
 $highlighting-css$
 </style>
 $endif$
+
+<!-- no matter what the highlighting style only shade R and C++ -->
+<style type="text/css">
+  pre:not(.r):not(.cpp) {
+    background-color: white;
+  }
+</style>
 
 $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>

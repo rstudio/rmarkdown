@@ -8,8 +8,8 @@
 #' @param fig.crop \code{TRUE} to automatically apply the \code{pdfcrop}
 #' utility (if available) to pdf figures
 #' @param highlight Syntax highlighting style. Supported styles include
-#'   "default", "pygments", "kate", "monochrome", "espresso", "zenburn",
-#'   "haddock", and "tango". Pass \code{NULL} to prevent syntax highlighting.
+#'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
+#'   "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.
 #' @param latex.engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", and "xelatex".
 #' @param natbib Use natbib for citations in LaTeX output

@@ -16,10 +16,9 @@ pdf_document(toc = FALSE, toc.depth = 2, number.sections = FALSE,
   \code{pdfcrop} utility (if available) to pdf figures}
 
   \item{highlight}{Syntax highlighting style. Supported
-  styles include "default", "pygments", "kate",
-  "monochrome", "espresso", "zenburn", "haddock", and
-  "tango". Pass \code{NULL} to prevent syntax
-  highlighting.}
+  styles include "default", "tango", "pygments", "kate",
+  "monochrome", "espresso", "zenburn", and "haddock". Pass
+  \code{NULL} to prevent syntax highlighting.}
 
   \item{latex.engine}{LaTeX engine for producing PDF
   output. Options are "pdflatex", "lualatex", and
