@@ -1,4 +1,5 @@
 export(beamer_presentation)
+export(copy_supporting_files)
 export(html_document)
 export(includes)
 export(knitr_options)

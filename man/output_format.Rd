@@ -2,7 +2,7 @@
 \alias{output_format}
 \title{Define an R Markdown output format}
 \usage{
-output_format(knitr, pandoc, filter = NULL)
+output_format(knitr, pandoc, clean.supporting = TRUE, filter = NULL)
 }
 \arguments{
   \item{knitr}{Knitr options for an output format (see
@@ -10,6 +10,9 @@ output_format(knitr, pandoc, filter = NULL)
 
   \item{pandoc}{Pandoc options for an output format (see
   \code{\link{pandoc_options}})}
+
+  \item{clean.files}{Cleanup any supporting files after
+  conversion see \code{\link{copy_supporting_files}}}
 
   \item{filter}{An optional filter function that receives
   the output format, output file, and lines of the input

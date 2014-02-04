@@ -7,6 +7,8 @@
 #'   \code{\link{knitr_options}})
 #' @param pandoc Pandoc options for an output format (see
 #'   \code{\link{pandoc_options}})
+#' @param clean.files Cleanup any supporting files after conversion
+#'   see \code{\link{copy_supporting_files}}
 #' @param filter An optional filter function that receives the output format,
 #'   output file, and lines of the input file. The filter can be called for
 #'   it's side-effects (e.g. copying files to the output directory) and can
@@ -26,9 +28,11 @@
 #' @export
 output_format <- function(knitr,
                           pandoc,
+                          clean.supporting = TRUE,
                           filter = NULL) {
   structure(list(knitr = knitr,
                  pandoc = pandoc,
+                 clean.supporting = clean.supporting,
                  filter = filter),
             class = "rmarkdown_output_format")
 }

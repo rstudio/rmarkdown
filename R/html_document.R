@@ -199,7 +199,7 @@ html_document <- function(toc = FALSE,
     pandoc = pandoc_options(to = "html",
                             from = from_rmarkdown(fig.caption),
                             args = args),
-    filter <- filter_html(local_mathjax)
+    filter = filter_html(local_mathjax)
   )
 }
 

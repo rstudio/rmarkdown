@@ -3,7 +3,7 @@
 render <- function(input,
                    output.format = NULL,
                    output.file = NULL,
-                   clean = FALSE,
+                   clean = TRUE,
                    envir = parent.frame(),
                    quiet = FALSE,
                    encoding = getOption("encoding")) {
@@ -69,7 +69,8 @@ render <- function(input,
     knitr::opts_chunk$set(tidy = FALSE, error = FALSE)
 
     # use filename based files and cache directories
-    figures_dir <- paste(knitr_files_dir(input),
+    files_dir <- knitr_files_dir(basename(input))
+    figures_dir <- paste(files_dir,
                          "figure-", output.format$pandoc$to, "/",
                          sep = "")
     knitr::opts_chunk$set(fig.path=figures_dir)
@@ -95,10 +96,9 @@ render <- function(input,
     # always clean the md file
     intermediates <- c(intermediates, input)
 
-    # clean the figures dir unless the output format has a
-    # self.contained = FALSE
-    if (isTRUE(output.format$self.contained))
-        intermediates <- c(intermediates, figures_dir)
+    # clean the files dir if requested
+    if (output.format$clean.supporting)
+       intermediates <- c(intermediates, files_dir)
   }
 
   # if the encoding isn't UTF-8 then write a UTF-8 version
@@ -123,4 +123,48 @@ render <- function(input,
   # return the full path to the output file
   invisible(tools::file_path_as_absolute(output.file))
 }
+
+
+#' Copy supporting files for an input document
+#'
+#' Copy required supporting files for an input document to the _files
+#' directory associated with the document.
+#'
+#' @param input Input document to copy supporting files for
+#' @param path Directory to copy files from
+#' @param rename.to Optional rename of source directory after it is copied
+#'
+#' @return The relative path to the supporting files. This path is suitable
+#' for inclusion in HTML\code{href} and \code{src} attributes.
+#'
+#' @export
+copy_supporting_files <- function(input, path, rename.to = NULL) {
+
+  # directory for supporting files
+  supporting_files <- knitr_files_dir(input)
+  if (!file.exists(supporting_files))
+    dir.create(supporting_files)
+
+  # target directory is based on the dirname of the path or the rename.to
+  # value if it was provided
+  target_stage_dir <- file.path(supporting_files, basename(path))
+  target_dir <- file.path(supporting_files, ifelse(is.null(rename.to),
+                                                   basename(path),
+                                                   rename.to))
+
+  # copy the directory if it hasn't already been copied
+  if (!file.exists(target_dir) && !file.exists(target_stage_dir)) {
+    file.copy(from = path,
+              to = supporting_files,
+              recursive = TRUE)
+    if (!is.null(rename.to)) {
+      file.rename(from = target_stage_dir,
+                  to = target_dir)
+    }
+  }
+
+  # return the target dir (used to form links in the HTML)
+  target_dir
+}
+
 
