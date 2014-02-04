@@ -24,8 +24,8 @@ pandoc_output_file <- function(input, to) {
 }
 
 
-pandoc_template <- function(file) {
-  pandoc_path_arg(system.file(file.path("rmd", file), package = "rmarkdown"))
+rmarkdown_system_file <- function(file) {
+  system.file(file, package = "rmarkdown")
 }
 
 from_rmarkdown <- function(implicit.figures = TRUE) {

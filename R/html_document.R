@@ -124,7 +124,8 @@ html_document <- function(toc = FALSE,
   if (!is.null(template))
     args <- c(args, "--template", pandoc_path_arg(template))
   else
-    args <- c(args, "--template", pandoc_template("h/default.html"))
+    args <- c(args, "--template",
+              pandoc_path_arg(rmarkdown_system_file("rmd/h/default.html")))
 
   # theme
   if (!is.null(theme)) {
@@ -132,7 +133,7 @@ html_document <- function(toc = FALSE,
     if (identical(theme, "default"))
       theme <- "bootstrap"
     theme <- paste("bootstrap/css/", theme, ".min.css", sep="")
-    theme <- pandoc_template(file.path("h", theme))
+    theme <- pandoc_path_arg(rmarkdown_system_file(file.path("rmd/h", theme)))
     args <- c(args, "--variable", paste("theme:", theme, sep=""))
   }
 
@@ -149,7 +150,8 @@ html_document <- function(toc = FALSE,
     highlight <- match.arg(highlight, html_highlighters())
     if (highlight %in% c("default", "textmate")) {
       args <- c(args, "--no-highlight")
-      highlight_path <- pandoc_template("h/highlight")
+      highlight_path <- pandoc_path_arg(
+                                rmarkdown_system_file("rmd/h/highlight"))
       args <- c(args,
                 "--variable", paste("highlightjs=", highlight_path, sep=""))
       if (identical(highlight, "textmate")) {
@@ -236,7 +238,7 @@ filter_html <- function(local_mathjax) {
       mathjax_dir <- file.path(output_dir, "mathjax")
       if (!file.exists(mathjax_dir) && !file.exists(mathjax_stage_dir)) {
         dir.create(mathjax_dir)
-        file.copy(from = file.path(pandoc_template("h"), "m"),
+        file.copy(from = file.path(rmarkdown_system_file("rmd/h/m")),
                   to = output_dir,
                   recursive = TRUE)
         file.rename(from = file.path(output_dir, "m"),
