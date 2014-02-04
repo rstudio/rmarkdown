@@ -45,16 +45,18 @@ $ yum install pandoc pandoc-citeproc
 
 ##### Newer Systems (Debian/Ubuntu/Fedora)
 
-For newer Linux systems you can make a standalone version of pandoc v1.12.3 available to the system by soft-linking the binaries inclued with RStudio:
+For newer Linux systems you can make a standalone version of pandoc v1.12.3 available to the system by soft-linking the binaries included with RStudio:
 
 ```
-$ sudo ln -s /usr/lib/rstudio/bin/pandoc/pandoc* /usr/local/bin
+$ sudo ln -s /usr/lib/rstudio/bin/pandoc/pandoc /usr/local/bin
+$ sudo ln -s /usr/lib/rstudio/bin/pandoc/pandoc-citeproc /usr/local/bin
 ```
 
-If you are running RStudio Server the command would be this:
+If you are running RStudio Server the commands would be:
 
 ```
-$ sudo ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc* /usr/local/bin
+$ sudo ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc /usr/local/bin
+$ sudo ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc-citeproc /usr/local/bin
 ```
 
 If you aren't running RStudio at all you can simply copy the binaries out of the RStudio `bin/pandoc` directory and locate them within `/usr/local/bin` on your target system.
