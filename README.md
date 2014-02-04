@@ -20,15 +20,48 @@ To install the package and it's dependencies:
 devtools::install_github("rmarkdown", "rstudio")
 ```
 
-#### Pandoc
+A recent version of pandoc (>= 1.12.3) is also required. Recent [daily builds](http://www.rstudio.org/download/daily) of RStudio include pandoc v1.12.3. If you only intend to use the **rmarkdown** package within RStudio you can rely on this version.
 
-A recent version of pandoc (>= 1.12.3) is also required. There are a few ways to obtain an up to date version of pandoc:
+If you are not running within RStudio then you can obtain pandoc as follows:
 
-1. If you running within RStudio you can rely on the version of pandoc that is included with recent [daily builds](http://www.rstudio.org/download/daily) of RStudio.
+#### Windows and Mac OS X
 
-2. Follow the instructions for your platform on the [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page.
+The [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page includes easy to use installers for Windows and Mac OS X.
 
-3. If you are running on Linux without RStudio and don't want to install the Haskell dependencies required for pandoc you can also copy the `pandoc` and `pandoc-citeproc` binaries out of the RStudio `bin/pandoc` directory and place them somewhere on your system path.
+#### Linux
+
+The version of pandoc included in the standard repositories is not recent enough for use with the **rmarkdown** package. You can install a more recent version of pandoc by installing the Haskell Platform and then following these instructions for [building pandoc from source](http://johnmacfarlane.net/pandoc/installing.html#all-platforms).
+
+This method installs a large number of Haskell depenedencies so might not be desirable. You can also obtain a standalone version of pandoc without the dependencies as follows:
+
+##### Older Systems (RedHat/CentOS 5 & 6)
+
+For older Linux systems you can obtain a standalone version of pandoc v1.12.3 (with no Haskell dependencies) from http://petersen.fedorapeople.org/pandoc-standalone/ as follows:
+
+```
+$ sudo wget -P /etc/yum.repos.d/ http://petersen.fedorapeople.org/pandoc-standalone/pandoc-standalone.repo
+$ yum install pandoc pandoc-citeproc
+```
+
+##### Newer Systems (Debian/Ubuntu/Fedora)
+
+For newer Linux systems you can make a standalone version of pandoc v1.12.3 available to the system by soft-linking the binaries included with RStudio:
+
+```
+$ sudo ln -s /usr/lib/rstudio/bin/pandoc/pandoc /usr/local/bin
+$ sudo ln -s /usr/lib/rstudio/bin/pandoc/pandoc-citeproc /usr/local/bin
+```
+
+If you are running RStudio Server the commands would be:
+
+```
+$ sudo ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc /usr/local/bin
+$ sudo ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc-citeproc /usr/local/bin
+```
+
+If you aren't running RStudio at all you can simply copy the binaries out of the RStudio `bin/pandoc` directory and locate them within `/usr/local/bin` on your target system.
+
+
 
 
 ### Usage
