@@ -152,6 +152,7 @@ rmarkdown_format <- function(extensions = NULL) {
           "+autolink_bare_uris",
           "+ascii_identifiers",
           "+tex_math_single_backslash",
+          "-markdown_in_html_blocks",
           extensions), collapse = "")
 }
 
