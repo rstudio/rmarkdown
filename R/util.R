@@ -55,11 +55,11 @@ file_with_meta_ext <- function(file, meta_ext, ext = tools::file_ext(file)) {
 }
 
 knitr_files_dir <- function(file) {
-  paste(tools::file_path_sans_ext(file), "_files/", sep = "")
+  paste(tools::file_path_sans_ext(file), "_files", sep = "")
 }
 
 knitr_cache_dir <- function(file) {
-  paste(tools::file_path_sans_ext(file), "_cache/", sep = "")
+  paste(tools::file_path_sans_ext(file), "_cache", sep = "")
 }
 
 

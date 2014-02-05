@@ -11,14 +11,15 @@ output_format(knitr, pandoc, clean.supporting = TRUE, filter = NULL)
   \item{pandoc}{Pandoc options for an output format (see
   \code{\link{pandoc_options}})}
 
-  \item{clean.files}{Cleanup any supporting files after
-  conversion see \code{\link{copy_supporting_files}}}
+  \item{clean.supporting}{Cleanup any supporting files
+  after conversion see
+  \code{\link{render_supporting_files}}}
 
   \item{filter}{An optional filter function that receives
-  the output format, output file, and lines of the input
-  file. The filter can be called for it's side-effects
-  (e.g. copying files to the output directory) and can also
-  return a modified format.}
+  the \code{output.format}, \code{files.dir}, and
+  \code{input.lines}.  The filter can be called for it's
+  side-effects (e.g. rendering supporting files to the
+  \code{files.dir} and can also return a modified format.}
 }
 \value{
 An R Markdown output format definition that can be passed

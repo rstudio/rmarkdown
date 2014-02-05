@@ -7,12 +7,13 @@
 #'   \code{\link{knitr_options}})
 #' @param pandoc Pandoc options for an output format (see
 #'   \code{\link{pandoc_options}})
-#' @param clean.files Cleanup any supporting files after conversion
-#'   see \code{\link{copy_supporting_files}}
-#' @param filter An optional filter function that receives the output format,
-#'   output file, and lines of the input file. The filter can be called for
-#'   it's side-effects (e.g. copying files to the output directory) and can
-#'   also return a modified format.
+#' @param clean.supporting Cleanup any supporting files after conversion
+#'   see \code{\link{render_supporting_files}}
+#' @param filter An optional filter function that receives the
+#'   \code{output.format}, \code{files.dir}, and \code{input.lines}.
+#'   The filter can be called for it's side-effects (e.g. rendering
+#'   supporting files to the \code{files.dir} and can also return a
+#'   modified format.
 #'
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.

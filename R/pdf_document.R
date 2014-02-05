@@ -144,13 +144,13 @@ pdf_document <- function(toc = FALSE,
 
 # Use filter to set pdf geometry defaults (while making sure we don't override
 # any geometry settings already specified by the user)
-filter_pdf <- function(output.format, output.file, input) {
+filter_pdf <- function(output.format, files.dir, input.lines) {
 
   # set the margin to 1 inch if not otherwise specified
   has_margin <- function(text) {
     length(grep("^geometry\\:[ \\t]*margin=\\d+(\\.?\\d+)?\\w+$", text)) > 0
   }
-  if (!has_margin(input) && !has_margin(output.format$pandoc$args))
+  if (!has_margin(input.lines) && !has_margin(output.format$pandoc$args))
     output.format$pandoc$args <- c(output.format$pandoc$args,
                                    "--variable", "geometry:margin=1in")
 

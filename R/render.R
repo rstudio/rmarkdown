@@ -43,11 +43,15 @@ render <- function(input,
   if (is.null(output.file))
     output.file <- pandoc_output_file(input, output.format$pandoc$to)
 
+  # use output filename based files dir
+  files_dir <- knitr_files_dir(basename(output.file))
+
   # call any filter that's been specified
-  if (!is.null(output.format$filter))
-    output.format <- output.format$filter(output.format,
-                                          output.file,
-                                          input_lines)
+  if (!is.null(output.format$filter)) {
+    output.format <- output.format$filter(output.format = output.format,
+                                          files.dir = files_dir,
+                                          input.lines = input_lines)
+  }
 
   # knit if necessary
   if (tolower(tools::file_ext(input)) %in% c("rmd", "rmarkdown")) {
@@ -56,13 +60,12 @@ render <- function(input,
     knitr::render_markdown()
     knitr::opts_chunk$set(tidy = FALSE, error = FALSE)
 
-    # use filename based files and cache directories
-    files_dir <- knitr_files_dir(basename(input))
+    # use filename based figure and cache directories
     figures_dir <- paste(files_dir,
-                         "figure-", output.format$pandoc$to, "/",
+                         "/figure-", output.format$pandoc$to, "/",
                          sep = "")
     knitr::opts_chunk$set(fig.path=figures_dir)
-    knitr::opts_chunk$set(cache.path=knitr_cache_dir(input))
+    knitr::opts_chunk$set(cache.path=paste(knitr_cache_dir(input), "/", sep=""))
 
     # merge user options and hooks
     if (!is.null(output.format$knitr)) {
@@ -126,37 +129,36 @@ render <- function(input,
 }
 
 
-#' Copy supporting files for an input document
+#' Render supporting files for an input document
 #'
-#' Copy required supporting files for an input document to the _files
+#' Render (copy) required supporting files for an input document to the _files
 #' directory associated with the document.
 #'
-#' @param input Input document to copy supporting files for
-#' @param path Directory to copy files from
+#' @param from Directory to copy from
+#' @param to Directory to copy files into
 #' @param rename.to Optional rename of source directory after it is copied
 #'
 #' @return The relative path to the supporting files. This path is suitable
 #' for inclusion in HTML\code{href} and \code{src} attributes.
 #'
 #' @export
-copy_supporting_files <- function(input, path, rename.to = NULL) {
+render_supporting_files <- function(from, to, rename.to = NULL) {
 
-  # directory for supporting files
-  supporting_files <- knitr_files_dir(input)
-  if (!file.exists(supporting_files))
-    dir.create(supporting_files)
+  # auto-create directory for supporting files
+  if (!file.exists(to))
+    dir.create(to)
 
   # target directory is based on the dirname of the path or the rename.to
   # value if it was provided
-  target_stage_dir <- file.path(supporting_files, basename(path))
-  target_dir <- file.path(supporting_files, ifelse(is.null(rename.to),
-                                                   basename(path),
-                                                   rename.to))
+  target_stage_dir <- file.path(to, basename(from))
+  target_dir <- file.path(to, ifelse(is.null(rename.to),
+                                     basename(from),
+                                     rename.to))
 
   # copy the directory if it hasn't already been copied
   if (!file.exists(target_dir) && !file.exists(target_stage_dir)) {
-    file.copy(from = path,
-              to = supporting_files,
+    file.copy(from = from,
+              to = to,
               recursive = TRUE)
     if (!is.null(rename.to)) {
       file.rename(from = target_stage_dir,
@@ -167,5 +169,6 @@ copy_supporting_files <- function(input, path, rename.to = NULL) {
   # return the target dir (used to form links in the HTML)
   target_dir
 }
+
 
 

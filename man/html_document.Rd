@@ -35,7 +35,9 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   \item{self.contained}{Produce a standalone HTML file with
   no external dependencies, using data: URIs to incorporate
   the contents of linked scripts, stylesheets, images, and
-  videos.}
+  videos. Note that if you specify "local" for
+  \code{mathjax} then \code{self.contained} is
+  automatically set to \code{FALSE}.}
 
   \item{theme}{Visual theme ("default", "cerulean",
   "journal", "flatly", "readable", "spacelab", "united",
@@ -105,9 +107,7 @@ see the documentation on R Markdown
   and the "textmate" highlighting style is not available }
   \item{MathJax is automatically disabled if
   \code{self.contained} is \code{TRUE} (these two options
-  can't be used together in normal pandoc templates). The
-  "local" option for \code{mathjax} is also not available.
-  } }
+  can't be used together in normal pandoc templates).  } }
 
   Due to the above restrictions, you might consider using
   the \code{includes} parameter as an alternative to
