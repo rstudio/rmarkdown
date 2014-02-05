@@ -2,7 +2,7 @@
 \alias{render}
 \title{Render R Markdown}
 \usage{
-render(input, output.format = NULL, output.file = NULL, clean = FALSE,
+render(input, output.format = NULL, output.file = NULL, clean = TRUE,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
