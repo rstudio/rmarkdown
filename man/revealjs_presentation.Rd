@@ -89,6 +89,13 @@ For more information on markdown syntax for presentations
 see
 \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing
 slide shows with pandoc}.
+
+Unlike web content produced with
+\code{\link{html_document}}, reveal.js presentations are
+not standalone web pages. Rather, they have a set of
+additional files they depend on (including the reveal.js
+library) which are written into a files directory alongside
+the presentation HTML (e.g. "MyPresentation_files").
 }
 \examples{
 \dontrun{
