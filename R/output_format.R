@@ -185,7 +185,8 @@ rmarkdown_format <- function(extensions = NULL) {
 
 # Synthesize the output format for a document from it's YAML. If we can't
 # find an output format then we just return html_document
-output_format_from_yaml <- function(output_format_expr, input_lines) {
+output_format_from_yaml_front_matter <- function(yaml_front_matter,
+                                                 output_format_expr) {
 
   # ensure input is the correct data type
   if (!is_null_or_string(output_format_expr)) {
@@ -196,8 +197,10 @@ output_format_from_yaml <- function(output_format_expr, input_lines) {
   output_format_args <- list()
 
   # parse output format from front-matter if we have it
-  output_format_yaml <- parse_output_format_yaml(input_lines)
-  if (length(output_format_yaml) > 0) {
+  if (length(yaml_front_matter$output) > 0) {
+
+    # alias the output format yaml
+    output_format_yaml <- yaml_front_matter$output
 
     # if a named format was provided then try to find it
     if (!is.null(output_format_expr)) {
@@ -257,7 +260,7 @@ is_output_format <- function(x) {
   inherits(x, "rmarkdown_output_format")
 }
 
-parse_output_format_yaml <- function(input_lines) {
+parse_yaml_front_matter <- function(input_lines) {
 
   # is there yaml front matter?
   delimiters <- grep("^---\\s*$", input_lines)
@@ -265,13 +268,13 @@ parse_output_format_yaml <- function(input_lines) {
 
     # attempt to parse the yaml
     front_matter <- input_lines[(delimiters[1]+1):(delimiters[2]-1)]
-    front_matter_yaml <- yaml::yaml.load(paste(front_matter, collapse="\n"))
-    if (!is.null(front_matter_yaml))
-      front_matter_yaml$output
+    yaml_front_matter <- yaml::yaml.load(paste(front_matter, collapse="\n"))
+    if (!is.null(yaml_front_matter))
+      yaml_front_matter
     else
-      NULL
+      list()
   }
   else {
-    NULL
+    list()
   }
 }

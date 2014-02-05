@@ -34,10 +34,15 @@ render <- function(input,
   # read the input file
   input_lines <- read_lines_utf8(input, encoding)
 
+  # parse the yaml
+  yaml_front_matter <- parse_yaml_front_matter(input_lines)
+
   # if we haven't been passed a fully formed output format then
   # resolve it by looking at the yaml
-  if (!is_output_format(output_format))
-    output_format <- output_format_from_yaml(output_format, input_lines)
+  if (!is_output_format(output_format)) {
+    output_format <- output_format_from_yaml_front_matter(yaml_front_matter,
+                                                          output_format)
+  }
 
   # automatically create an output file name if necessary
   if (is.null(output_file))
