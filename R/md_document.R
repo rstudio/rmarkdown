@@ -12,7 +12,7 @@
 #'   \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc's
 #'    markdown} for details.
 #'
-#' @param fig.retina Scaling to perform for retina displays. Defaults to
+#' @param fig_retina Scaling to perform for retina displays. Defaults to
 #'   \code{NULL} which performs no scaling. A setting of 2 will work for all
 #'   widely used retina displays, but will also result in the output of
 #'   \code{<img>} tags rather than markdown images due to the need to set the
@@ -42,34 +42,34 @@
 #' @export
 md_document <- function(variant = "markdown_strict",
                         toc = FALSE,
-                        toc.depth = 3,
-                        fig.width = 7,
-                        fig.height = 5,
-                        fig.retina = NULL,
+                        toc_depth = 3,
+                        fig_width = 7,
+                        fig_height = 5,
+                        fig_retina = NULL,
                         includes = NULL,
-                        data.dir = NULL,
-                        knitr.options = NULL,
-                        pandoc.args = NULL) {
+                        data_dir = NULL,
+                        knitr_options = NULL,
+                        pandoc_args = NULL) {
 
   # base pandoc options for all markdown output
   args <- c("--standalone")
 
   # table of contents
-  args <- c(args, pandoc_toc_args(toc, toc.depth))
+  args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
 
   # data dir
-  if (!is.null(data.dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data.dir))
+  if (!is.null(data_dir))
+    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # pandoc args
-  args <- c(args, pandoc.args)
+  args <- c(args, pandoc_args)
 
   # return format
   output_format(
-    knitr = knitr_options_html(fig.width, fig.height, fig.retina),
+    knitr = knitr_options_html(fig_width, fig_height, fig_retina),
     pandoc = pandoc_options(to = variant,
                             from = from_rmarkdown(),
                             args = args)

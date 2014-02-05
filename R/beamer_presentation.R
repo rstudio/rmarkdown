@@ -7,7 +7,7 @@
 #'
 #' @param toc \code{TRUE} to include a table of contents in the output (only
 #'   level 1 headers will be included in the table of contents).
-#' @param slide.level The heading level which defines indvidual slides. By
+#' @param slide_level The heading level which defines indvidual slides. By
 #'   default this is level 2, which allows level 1 headers to be used to define
 #'   sections of the presentation.
 #' @param incremental \code{TRUE} to render slide bullets incrementally. Note
@@ -73,18 +73,18 @@
 #'
 #' @export
 beamer_presentation <- function(toc = FALSE,
-                                slide.level = 2,
+                                slide_level = 2,
                                 incremental = FALSE,
-                                fig.width = 10,
-                                fig.height = 7,
-                                fig.crop = TRUE,
-                                fig.caption = FALSE,
+                                fig_width = 10,
+                                fig_height = 7,
+                                fig_crop = TRUE,
+                                fig_caption = FALSE,
                                 highlight = "default",
                                 template = NULL,
                                 includes = NULL,
-                                data.dir = NULL,
-                                knitr.options = NULL,
-                                pandoc.args = NULL) {
+                                data_dir = NULL,
+                                knitr_options = NULL,
+                                pandoc_args = NULL) {
 
   # base pandoc options for all beamer output
   args <- c()
@@ -101,7 +101,7 @@ beamer_presentation <- function(toc = FALSE,
     args <- c(args, "--table-of-contents")
 
   # slide level
-  args <- c(args, "--slide-level", as.character(slide.level))
+  args <- c(args, "--slide-level", as.character(slide_level))
 
   # incremental
   if (incremental)
@@ -116,17 +116,17 @@ beamer_presentation <- function(toc = FALSE,
   args <- c(args, includes_to_pandoc_args(includes))
 
   # data dir
-  if (!is.null(data.dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data.dir))
+  if (!is.null(data_dir))
+    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # custom args
-  args <- c(args, pandoc.args)
+  args <- c(args, pandoc_args)
 
   # return format
   output_format(
-    knitr = knitr_options_pdf(fig.width, fig.height, fig.crop),
+    knitr = knitr_options_pdf(fig_width, fig_height, fig_crop),
     pandoc = pandoc_options(to = "beamer",
-                            from_rmarkdown(fig.caption),
+                            from_rmarkdown(fig_caption),
                             args = args)
   )
 }

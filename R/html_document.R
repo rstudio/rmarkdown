@@ -3,21 +3,21 @@
 #' Format for converting from R Markdown to an HTML document.
 #'
 #' @param toc \code{TRUE} to include a table of contents in the output
-#' @param toc.depth Depth of headers to include in table of contents
-#' @param fig.width Default width (in inches) for figures
-#' @param fig.height Default width (in inches) for figures
-#' @param fig.retina Scaling to perform for retina displays (defaults to 2,
+#' @param toc_depth Depth of headers to include in table of contents
+#' @param fig_width Default width (in inches) for figures
+#' @param fig_height Default width (in inches) for figures
+#' @param fig_retina Scaling to perform for retina displays (defaults to 2,
 #'   which currently works for all widely used retina displays). Note that this
 #'   only takes effect if you are using knitr >= 1.5.21. Set to \code{NULL} to
 #'   prevent retina scaling.
-#' @param fig.caption \code{TRUE} to render figures with captions
+#' @param fig_caption \code{TRUE} to render figures with captions
 #' @param smart Produce typographically correct output, converting straight
 #'   quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
 #'   ellipses.
-#' @param self.contained Produce a standalone HTML file with no external
+#' @param self_contained Produce a standalone HTML file with no external
 #'   dependencies, using data: URIs to incorporate the contents of linked
 #'   scripts, stylesheets, images, and videos. Note that if you specify
-#'   "local" for \code{mathjax} then \code{self.contained} is automatically
+#'   "local" for \code{mathjax} then \code{self_contained} is automatically
 #'   set to \code{FALSE}.
 #' @param theme Visual theme ("default", "cerulean", "journal", "flatly",
 #'   "readable", "spacelab", "united", "yeti", or "cosmo"). Pass \code{NULL} for
@@ -36,12 +36,12 @@
 #' @param css One or more css files to include
 #' @param includes Named list of additional content to include within the
 #'   document (typically created using the \code{\link{includes}} function).
-#' @param data.dir Additional directory to resolve relatives paths of templates
+#' @param data_dir Additional directory to resolve relatives paths of templates
 #'   and included content against (the directory of the input file is used by
 #'   default).
-#' @param knitr.options Additional options for knitr. To provide options call
+#' @param knitr_options Additional options for knitr. To provide options call
 #'   the \code{\link{knitr_options}} function and pass it's result.
-#' @param pandoc.args Additional command line options to pass to pandoc
+#' @param pandoc_args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -72,7 +72,7 @@
 #'      style will resolve to "tango" and the "textmate" highlighting
 #'      style is not available
 #'   }
-#'   \item{MathJax is automatically disabled if \code{self.contained} is
+#'   \item{MathJax is automatically disabled if \code{self_contained} is
 #'      \code{TRUE} (these two options can't be used together in normal
 #'      pandoc templates).
 #'   }
@@ -93,28 +93,28 @@
 #'
 #' @export
 html_document <- function(toc = FALSE,
-                          toc.depth = 3,
-                          fig.width = 7,
-                          fig.height = 5,
-                          fig.retina = 2,
-                          fig.caption = FALSE,
+                          toc_depth = 3,
+                          fig_width = 7,
+                          fig_height = 5,
+                          fig_retina = 2,
+                          fig_caption = FALSE,
                           smart = TRUE,
-                          self.contained = TRUE,
+                          self_contained = TRUE,
                           theme = "default",
                           highlight = "default",
                           mathjax = "default",
                           template = NULL,
                           css = NULL,
                           includes = NULL,
-                          data.dir = NULL,
-                          knitr.options = NULL,
-                          pandoc.args = NULL) {
+                          data_dir = NULL,
+                          knitr_options = NULL,
+                          pandoc_args = NULL) {
 
   # interplay between arguments
 
-  # local mathjax forces !self.contained
+  # local mathjax forces !self_contained
   if (identical(mathjax, "local"))
-    self.contained <- FALSE
+    self_contained <- FALSE
 
   # build pandoc args
   args <- c("--standalone")
@@ -128,11 +128,11 @@ html_document <- function(toc = FALSE,
     args <- c(args, "--smart")
 
   # self contained document
-  if (self.contained)
+  if (self_contained)
     args <- c(args, "--self-contained")
 
   # table of contents
-  args <- c(args, pandoc_toc_args(toc, toc.depth))
+  args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # template path and assets
   if (!is.null(template))
@@ -169,7 +169,7 @@ html_document <- function(toc = FALSE,
   }
 
   # mathjax
-  allow_mathjax <- is.null(template) || !self.contained
+  allow_mathjax <- is.null(template) || !self_contained
   if (allow_mathjax && !is.null(mathjax)) {
     dynamic_args$mathjax <- mathjax
   }
@@ -182,15 +182,15 @@ html_document <- function(toc = FALSE,
   args <- c(args, includes_to_pandoc_args(includes))
 
   # data dir
-  if (!is.null(data.dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data.dir))
+  if (!is.null(data_dir))
+    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # pandoc args
-  args <- c(args, pandoc.args)
+  args <- c(args, pandoc_args)
 
   # build a filter we'll use for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  filter <- function(output.format, files.dir, input.lines) {
+  filter <- function(output_format, files_dir, input_lines) {
 
     # extra args
     args <- c()
@@ -198,8 +198,8 @@ html_document <- function(toc = FALSE,
     # determine bootstrap path (copy supporting if not self contained)
     if (!is.null(dynamic_args$theme)) {
       bootstrap_path <- rmarkdown_system_file("rmd/h/bootstrap")
-      if (!self.contained)
-        bootstrap_path <- render_supporting_files(bootstrap_path, files.dir)
+      if (!self_contained)
+        bootstrap_path <- render_supporting_files(bootstrap_path, files_dir)
 
       # form path to theme and add theme variable
       theme_path <- paste(bootstrap_path,
@@ -214,8 +214,8 @@ html_document <- function(toc = FALSE,
     # highlight
     if (!is.null(dynamic_args$highlight)) {
       highlight_path <- rmarkdown_system_file("rmd/h/highlight")
-      if (!self.contained)
-        highlight_path <- render_supporting_files(highlight_path, files.dir)
+      if (!self_contained)
+        highlight_path <- render_supporting_files(highlight_path, files_dir)
       highlight_path <- pandoc_path_arg(highlight_path)
       args <- c(args, "--no-highlight")
       args <- c(args,
@@ -234,7 +234,7 @@ html_document <- function(toc = FALSE,
       else if (identical(dynamic_args$mathjax, "local")) {
         mathjax_path <- rmarkdown_system_file("rmd/h/m")
         mathjax_path <- render_supporting_files(mathjax_path,
-                                                files.dir,
+                                                files_dir,
                                                 "mathjax")
         mathjax_path <- pandoc_path_arg(mathjax_path)
         mathjax_url <- paste(mathjax_path, "/", mathjax_config(), sep = "")
@@ -244,17 +244,17 @@ html_document <- function(toc = FALSE,
     }
 
     # return format with ammended args
-    output.format$pandoc$args <- c(output.format$pandoc$args, args)
-    output.format
+    output_format$pandoc$args <- c(output_format$pandoc$args, args)
+    output_format
   }
 
   # return format
   output_format(
-    knitr = knitr_options_html(fig.width, fig.height, fig.retina),
+    knitr = knitr_options_html(fig_width, fig_height, fig_retina),
     pandoc = pandoc_options(to = "html",
-                            from = from_rmarkdown(fig.caption),
+                            from = from_rmarkdown(fig_caption),
                             args = args),
-    clean.supporting = self.contained,
+    clean_supporting = self_contained,
     filter = filter
   )
 }
@@ -273,13 +273,13 @@ html_document <- function(toc = FALSE,
 #' @seealso \link{knitr_options}, \link{output_format}
 #'
 #' @export
-knitr_options_html <- function(fig.width, fig.height, fig.retina) {
+knitr_options_html <- function(fig_width, fig_height, fig_retina) {
   knitr_options(
     opts_chunk = list(dev = 'png',
                       dpi = 96,
-                      fig.width = fig.width,
-                      fig.height = fig.height,
-                      fig.retina = fig.retina)
+                      fig.width = fig_width,
+                      fig.height = fig_height,
+                      fig.retina = fig_retina)
   )
 }
 

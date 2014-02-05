@@ -2,41 +2,41 @@
 \alias{html_document}
 \title{Convert to an HTML document}
 \usage{
-html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
-  fig.retina = 2, fig.caption = FALSE, smart = TRUE,
-  self.contained = TRUE, theme = "default", highlight = "default",
+html_document(toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
+  fig_retina = 2, fig_caption = FALSE, smart = TRUE,
+  self_contained = TRUE, theme = "default", highlight = "default",
   mathjax = "default", template = NULL, css = NULL, includes = NULL,
-  data.dir = NULL, knitr.options = NULL, pandoc.args = NULL)
+  data_dir = NULL, knitr_options = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
   the output}
 
-  \item{toc.depth}{Depth of headers to include in table of
+  \item{toc_depth}{Depth of headers to include in table of
   contents}
 
-  \item{fig.width}{Default width (in inches) for figures}
+  \item{fig_width}{Default width (in inches) for figures}
 
-  \item{fig.height}{Default width (in inches) for figures}
+  \item{fig_height}{Default width (in inches) for figures}
 
-  \item{fig.retina}{Scaling to perform for retina displays
+  \item{fig_retina}{Scaling to perform for retina displays
   (defaults to 2, which currently works for all widely used
   retina displays). Note that this only takes effect if you
   are using knitr >= 1.5.21. Set to \code{NULL} to prevent
   retina scaling.}
 
-  \item{fig.caption}{\code{TRUE} to render figures with
+  \item{fig_caption}{\code{TRUE} to render figures with
   captions}
 
   \item{smart}{Produce typographically correct output,
   converting straight quotes to curly quotes, --- to
   em-dashes, -- to en-dashes, and ... to ellipses.}
 
-  \item{self.contained}{Produce a standalone HTML file with
+  \item{self_contained}{Produce a standalone HTML file with
   no external dependencies, using data: URIs to incorporate
   the contents of linked scripts, stylesheets, images, and
   videos. Note that if you specify "local" for
-  \code{mathjax} then \code{self.contained} is
+  \code{mathjax} then \code{self_contained} is
   automatically set to \code{FALSE}.}
 
   \item{theme}{Visual theme ("default", "cerulean",
@@ -67,15 +67,15 @@ html_document(toc = FALSE, toc.depth = 3, fig.width = 7, fig.height = 5,
   include within the document (typically created using the
   \code{\link{includes}} function).}
 
-  \item{data.dir}{Additional directory to resolve relatives
+  \item{data_dir}{Additional directory to resolve relatives
   paths of templates and included content against (the
   directory of the input file is used by default).}
 
-  \item{knitr.options}{Additional options for knitr. To
+  \item{knitr_options}{Additional options for knitr. To
   provide options call the \code{\link{knitr_options}}
   function and pass it's result.}
 
-  \item{pandoc.args}{Additional command line options to
+  \item{pandoc_args}{Additional command line options to
   pass to pandoc}
 }
 \value{
@@ -110,7 +110,7 @@ see the documentation on R Markdown
   the default highlighting style will resolve to "tango"
   and the "textmate" highlighting style is not available }
   \item{MathJax is automatically disabled if
-  \code{self.contained} is \code{TRUE} (these two options
+  \code{self_contained} is \code{TRUE} (these two options
   can't be used together in normal pandoc templates).  } }
 
   Due to the above restrictions, you might consider using

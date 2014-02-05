@@ -2,20 +2,20 @@
 \alias{render}
 \title{Render R Markdown}
 \usage{
-render(input, output.format = NULL, output.file = NULL, clean = TRUE,
+render(input, output_format = NULL, output_file = NULL, clean = TRUE,
   envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{Input file (Rmd or plain markdown)}
 
-  \item{output.format}{R Markdown output format to convert to. This can
+  \item{output_format}{R Markdown output format to convert to. This can
   be a character vector with the name of a format; e.g. \code{"html_document"}.
   Alternatively it can be an output format object; e.g. \code{html_document()}.
   If \code{NULL} is passed then the output format is read from the YAML
   metadata within the input file (defaulting to HTML if no format is specified
   in metadata).}
 
-  \item{output.file}{Output file (if not specified then a
+  \item{output_file}{Output file (if not specified then a
   default based on the specified output format is chosen)}
 
   \item{clean}{\code{TRUE} to clean intermediate files created
@@ -42,7 +42,7 @@ pandoc. If the input requires knitting then
 \code{\link[knitr:knit]{knit}} is called prior to pandoc.
 }
 \details{
-If no \code{output} parmaeter is specified then the output
+If no \code{output_format} parmaeter is specified then the output
 format is read from the YAML front-matter of the input
 file. For example, the following YAML would yield a PDF
 document:
@@ -60,7 +60,7 @@ output:
     highlight: zenburn
 }
 
-Multiple formats can be specified in metadata. If no \code{output.format}
+Multiple formats can be specified in metadata. If no \code{output_format}
 is passed to \code{render} then the first one defined will be used:
 
 \preformatted{
@@ -85,14 +85,9 @@ If there is no format defined in the YAML then
   R Markdown supports all of the base pandoc markdown
   features as well as some optional features for
   compatibility with GitHub Flavored Markdown (which
-  previous versions of R Markdown were based on).
+  previous versions of R Markdown were based on). See
+  \code{\link{rmarkdown_format}} for details.
 
-  For more on pandoc markdown see the
-  \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc
-  markdown specification}. Optional pandoc markdown
-  features enabled include \code{autolink_bare_uris},
-  \code{ascii_identifiers}, and
-  \code{tex_math_single_backslash}.
 }
 \seealso{
 \link[knitr:knit]{knit}, \link{output_format},

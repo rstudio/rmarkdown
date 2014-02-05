@@ -7,12 +7,12 @@
 #'   \code{\link{knitr_options}})
 #' @param pandoc Pandoc options for an output format (see
 #'   \code{\link{pandoc_options}})
-#' @param clean.supporting Cleanup any supporting files after conversion
+#' @param clean_supporting Cleanup any supporting files after conversion
 #'   see \code{\link{render_supporting_files}}
 #' @param filter An optional filter function that receives the
-#'   \code{output.format}, \code{files.dir}, and \code{input.lines}.
+#'   \code{output_format}, \code{files_dir}, and \code{input_lines}.
 #'   The filter can be called for it's side-effects (e.g. rendering
-#'   supporting files to the \code{files.dir} and can also return a
+#'   supporting files to the \code{files_dir}) and can also return a
 #'   modified format.
 #'
 #' @return An R Markdown output format definition that can be passed to
@@ -29,11 +29,11 @@
 #' @export
 output_format <- function(knitr,
                           pandoc,
-                          clean.supporting = TRUE,
+                          clean_supporting = TRUE,
                           filter = NULL) {
   structure(list(knitr = knitr,
                  pandoc = pandoc,
-                 clean.supporting = clean.supporting,
+                 clean_supporting = clean_supporting,
                  filter = filter),
             class = "rmarkdown_output_format")
 }
@@ -76,17 +76,17 @@ knitr_options <- function(opts_knit = NULL,
 #' @seealso \link{knitr_options}, \link{output_format}
 #'
 #' @export
-knitr_options_pdf <- function(fig.width, fig.height, fig.crop) {
+knitr_options_pdf <- function(fig_width, fig_height, fig_crop) {
 
   # default options
   opts_knit <- NULL
   opts_chunk <- list(dev = ifelse(capabilities('cairo'), 'cairo_pdf', 'pdf'),
-                     fig.width = fig.width,
-                     fig.height = fig.height)
+                     fig.width = fig_width,
+                     fig.height = fig_height)
   knit_hooks <- NULL
 
   # apply cropping if requested and we have pdfcrop
-  crop <- fig.crop && !is_windows() && nzchar(Sys.which("pdfcrop"))
+  crop <- fig_crop && !is_windows() && nzchar(Sys.which("pdfcrop"))
   if (crop) {
     knit_hooks = list(crop = knitr::hook_pdfcrop)
     opts_chunk$crop = TRUE

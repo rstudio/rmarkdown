@@ -2,9 +2,9 @@
 \alias{md_document}
 \title{Convert to a markdown document}
 \usage{
-md_document(variant = "markdown_strict", toc = FALSE, toc.depth = 3,
-  fig.width = 7, fig.height = 5, fig.retina = NULL, includes = NULL,
-  data.dir = NULL, knitr.options = NULL, pandoc.args = NULL)
+md_document(variant = "markdown_strict", toc = FALSE, toc_depth = 3,
+  fig_width = 7, fig_height = 5, fig_retina = NULL, includes = NULL,
+  data_dir = NULL, knitr_options = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{variant}{Markdown variant to produce (defaults to
@@ -16,7 +16,7 @@ md_document(variant = "markdown_strict", toc = FALSE, toc.depth = 3,
   \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc's
   markdown} for details.}
 
-  \item{fig.retina}{Scaling to perform for retina displays.
+  \item{fig_retina}{Scaling to perform for retina displays.
   Defaults to \code{NULL} which performs no scaling. A
   setting of 2 will work for all widely used retina
   displays, but will also result in the output of
@@ -27,26 +27,26 @@ md_document(variant = "markdown_strict", toc = FALSE, toc.depth = 3,
   \item{toc}{\code{TRUE} to include a table of contents in
   the output}
 
-  \item{toc.depth}{Depth of headers to include in table of
+  \item{toc_depth}{Depth of headers to include in table of
   contents}
 
-  \item{fig.width}{Default width (in inches) for figures}
+  \item{fig_width}{Default width (in inches) for figures}
 
-  \item{fig.height}{Default width (in inches) for figures}
+  \item{fig_height}{Default width (in inches) for figures}
 
   \item{includes}{Named list of additional content to
   include within the document (typically created using the
   \code{\link{includes}} function).}
 
-  \item{data.dir}{Additional directory to resolve relatives
+  \item{data_dir}{Additional directory to resolve relatives
   paths of templates and included content against (the
   directory of the input file is used by default).}
 
-  \item{knitr.options}{Additional options for knitr. To
+  \item{knitr_options}{Additional options for knitr. To
   provide options call the \code{\link{knitr_options}}
   function and pass it's result.}
 
-  \item{pandoc.args}{Additional command line options to
+  \item{pandoc_args}{Additional command line options to
   pass to pandoc}
 }
 \value{

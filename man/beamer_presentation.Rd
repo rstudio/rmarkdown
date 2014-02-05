@@ -2,17 +2,17 @@
 \alias{beamer_presentation}
 \title{Convert to a Beamer presentation}
 \usage{
-beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
-  fig.width = 10, fig.height = 7, fig.crop = TRUE, fig.caption = FALSE,
+beamer_presentation(toc = FALSE, slide_level = 2, incremental = FALSE,
+  fig_width = 10, fig_height = 7, fig_crop = TRUE, fig_caption = FALSE,
   highlight = "default", template = NULL, includes = NULL,
-  data.dir = NULL, knitr.options = NULL, pandoc.args = NULL)
+  data_dir = NULL, knitr_options = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
   the output (only level 1 headers will be included in the
   table of contents).}
 
-  \item{slide.level}{The heading level which defines
+  \item{slide_level}{The heading level which defines
   indvidual slides. By default this is level 2, which
   allows level 1 headers to be used to define sections of
   the presentation.}
@@ -23,7 +23,7 @@ beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   can preceded it with \code{>}. For example: \emph{\code{>
   - Bullet Text}}}
 
-  \item{fig.crop}{\code{TRUE} to automatically apply the
+  \item{fig_crop}{\code{TRUE} to automatically apply the
   \code{pdfcrop} utility (if available) to pdf figures}
 
   \item{highlight}{Syntax highlighting style. Supported
@@ -36,26 +36,26 @@ beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
   templates} for more details.}
 
-  \item{fig.width}{Default width (in inches) for figures}
+  \item{fig_width}{Default width (in inches) for figures}
 
-  \item{fig.height}{Default width (in inches) for figures}
+  \item{fig_height}{Default width (in inches) for figures}
 
-  \item{fig.caption}{\code{TRUE} to render figures with
+  \item{fig_caption}{\code{TRUE} to render figures with
   captions}
 
   \item{includes}{Named list of additional content to
   include within the document (typically created using the
   \code{\link{includes}} function).}
 
-  \item{data.dir}{Additional directory to resolve relatives
+  \item{data_dir}{Additional directory to resolve relatives
   paths of templates and included content against (the
   directory of the input file is used by default).}
 
-  \item{knitr.options}{Additional options for knitr. To
+  \item{knitr_options}{Additional options for knitr. To
   provide options call the \code{\link{knitr_options}}
   function and pass it's result.}
 
-  \item{pandoc.args}{Additional command line options to
+  \item{pandoc_args}{Additional command line options to
   pass to pandoc}
 }
 \value{

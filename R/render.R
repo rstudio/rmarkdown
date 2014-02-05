@@ -1,8 +1,8 @@
 
 #' @export
 render <- function(input,
-                   output.format = NULL,
-                   output.file = NULL,
+                   output_format = NULL,
+                   output_file = NULL,
                    clean = TRUE,
                    envir = parent.frame(),
                    quiet = FALSE,
@@ -36,21 +36,21 @@ render <- function(input,
 
   # if we haven't been passed a fully formed output format then
   # resolve it by looking at the yaml
-  if (!is_output_format(output.format))
-    output.format <- output_format_from_yaml(output.format, input_lines)
+  if (!is_output_format(output_format))
+    output_format <- output_format_from_yaml(output_format, input_lines)
 
   # automatically create an output file name if necessary
-  if (is.null(output.file))
-    output.file <- pandoc_output_file(input, output.format$pandoc$to)
+  if (is.null(output_file))
+    output_file <- pandoc_output_file(input, output_format$pandoc$to)
 
   # use output filename based files dir
-  files_dir <- knitr_files_dir(basename(output.file))
+  files_dir <- knitr_files_dir(basename(output_file))
 
   # call any filter that's been specified
-  if (!is.null(output.format$filter)) {
-    output.format <- output.format$filter(output.format = output.format,
-                                          files.dir = files_dir,
-                                          input.lines = input_lines)
+  if (!is.null(output_format$filter)) {
+    output_format <- output_format$filter(output_format = output_format,
+                                          files_dir = files_dir,
+                                          input_lines = input_lines)
   }
 
   # knit if necessary
@@ -62,16 +62,16 @@ render <- function(input,
 
     # use filename based figure and cache directories
     figures_dir <- paste(files_dir,
-                         "/figure-", output.format$pandoc$to, "/",
+                         "/figure-", output_format$pandoc$to, "/",
                          sep = "")
     knitr::opts_chunk$set(fig.path=figures_dir)
     knitr::opts_chunk$set(cache.path=paste(knitr_cache_dir(input), "/", sep=""))
 
     # merge user options and hooks
-    if (!is.null(output.format$knitr)) {
-      knitr::opts_knit$set(as.list(output.format$knitr$opts_knit))
-      knitr::opts_chunk$set(as.list(output.format$knitr$opts_chunk))
-      knitr::knit_hooks$set(as.list(output.format$knitr$knit_hooks))
+    if (!is.null(output_format$knitr)) {
+      knitr::opts_knit$set(as.list(output_format$knitr$opts_knit))
+      knitr::opts_chunk$set(as.list(output_format$knitr$opts_chunk))
+      knitr::knit_hooks$set(as.list(output_format$knitr$knit_hooks))
     }
 
     # calculate the output file name
@@ -90,8 +90,8 @@ render <- function(input,
     # clean the files_dir if we've either been asking to clean supporting
     # files or if we know the supporting files are going to get copied
     # to an output directory
-    if (output.format$clean.supporting ||
-        (dirname(input) != dirname(output.file))) {
+    if (output_format$clean_supporting ||
+        (dirname(input) != dirname(output_file))) {
        intermediates <- c(intermediates, files_dir)
     }
   }
@@ -107,25 +107,25 @@ render <- function(input,
   }
 
   # copy supporting files to the output directory if necessary
-  if (!output.format$clean.supporting) {
-    if (dirname(input) != dirname(output.file)) {
+  if (!output_format$clean_supporting) {
+    if (dirname(input) != dirname(output_file)) {
       file.copy(from = files_dir,
-                to = dirname(output.file),
+                to = dirname(output_file),
                 recursive = TRUE)
     }
   }
 
   # run the conversion
   pandoc_convert(input,
-                 output.format$pandoc$to,
-                 output.format$pandoc$from,
-                 output.file,
+                 output_format$pandoc$to,
+                 output_format$pandoc$from,
+                 output_file,
                  TRUE,
-                 output.format$pandoc$args,
+                 output_format$pandoc$args,
                  !quiet)
 
   # return the full path to the output file
-  invisible(tools::file_path_as_absolute(output.file))
+  invisible(tools::file_path_as_absolute(output_file))
 }
 
 
@@ -136,31 +136,31 @@ render <- function(input,
 #'
 #' @param from Directory to copy from
 #' @param to Directory to copy files into
-#' @param rename.to Optional rename of source directory after it is copied
+#' @param rename_to Optional rename of source directory after it is copied
 #'
 #' @return The relative path to the supporting files. This path is suitable
 #' for inclusion in HTML\code{href} and \code{src} attributes.
 #'
 #' @export
-render_supporting_files <- function(from, to, rename.to = NULL) {
+render_supporting_files <- function(from, to, rename_to = NULL) {
 
   # auto-create directory for supporting files
   if (!file.exists(to))
     dir.create(to)
 
-  # target directory is based on the dirname of the path or the rename.to
+  # target directory is based on the dirname of the path or the rename_to
   # value if it was provided
   target_stage_dir <- file.path(to, basename(from))
-  target_dir <- file.path(to, ifelse(is.null(rename.to),
+  target_dir <- file.path(to, ifelse(is.null(rename_to),
                                      basename(from),
-                                     rename.to))
+                                     rename_to))
 
   # copy the directory if it hasn't already been copied
   if (!file.exists(target_dir) && !file.exists(target_stage_dir)) {
     file.copy(from = from,
               to = to,
               recursive = TRUE)
-    if (!is.null(rename.to)) {
+    if (!is.null(rename_to)) {
       file.rename(from = target_stage_dir,
                   to = target_dir)
     }

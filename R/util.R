@@ -28,8 +28,8 @@ rmarkdown_system_file <- function(file) {
   system.file(file, package = "rmarkdown")
 }
 
-from_rmarkdown <- function(implicit.figures = TRUE) {
-  rmarkdown_format(ifelse(implicit.figures, "", "-implicit_figures"))
+from_rmarkdown <- function(implicit_figures = TRUE) {
+  rmarkdown_format(ifelse(implicit_figures, "", "-implicit_figures"))
 }
 
 is_null_or_string <- function(text) {

@@ -4,13 +4,13 @@
 #'
 #' @inheritParams html_document
 #'
-#' @param number.sections \code{TRUE} to number section headings
-#' @param fig.crop \code{TRUE} to automatically apply the \code{pdfcrop}
+#' @param number_sections \code{TRUE} to number section headings
+#' @param fig_crop \code{TRUE} to automatically apply the \code{pdfcrop}
 #' utility (if available) to pdf figures
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
 #'   "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.
-#' @param latex.engine LaTeX engine for producing PDF output. Options are
+#' @param latex_engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", and "xelatex".
 #' @param natbib Use natbib for citations in LaTeX output
 #' @param biblatex Use biblatex for citations in LaTeX output
@@ -49,7 +49,7 @@
 #'    \item{\code{documentclass}}{LaTeX document class (e.g. article)}
 #'    \item{\code{classoption}}{Option for \code{documentclass} (e.g. oneside); may be repeated}
 #'    \item{\code{geometry}}{Options for geometry class (e.g. margin=1in); may be repeated}
-#'    \item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{latex.engine} option)}
+#'    \item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{latex_engine} option)}
 #'    \item{\code{linkcolor, urlcolor, citecolor}}{Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)}
 #'    \item{\code{biblio-style}}{LaTeX bibliography style (used with \code{natbib} option)}
 #'    \item{\code{biblio-files}}{Bibliography files to use in LaTeX (used with \code{natbib} or \code{biblatex} options)}
@@ -64,7 +64,7 @@
 #' render("input.Rmd", pdf_document())
 #'
 #' # specify an option for latex engine
-#' render("input.Rmd", pdf_document(latex.engine = "lualatex"))
+#' render("input.Rmd", pdf_document(latex_engine = "lualatex"))
 #'
 #' # add a table of contents and pass an option to pandoc
 #' render("input.Rmd", pdf_document(toc = TRUE, "--listings"))
@@ -72,27 +72,27 @@
 #'
 #' @export
 pdf_document <- function(toc = FALSE,
-                         toc.depth = 2,
-                         number.sections = FALSE,
-                         fig.width = 6,
-                         fig.height = 4.5,
-                         fig.crop = TRUE,
-                         fig.caption = TRUE,
+                         toc_depth = 2,
+                         number_sections = FALSE,
+                         fig_width = 6,
+                         fig_height = 4.5,
+                         fig_crop = TRUE,
+                         fig_caption = TRUE,
                          highlight = "default",
-                         latex.engine = "pdflatex",
+                         latex_engine = "pdflatex",
                          natbib = FALSE,
                          biblatex = FALSE,
                          template = NULL,
                          includes = NULL,
-                         data.dir = NULL,
-                         knitr.options = NULL,
-                         pandoc.args = NULL) {
+                         data_dir = NULL,
+                         knitr_options = NULL,
+                         pandoc_args = NULL) {
 
   # base pandoc options for all PDF output
   args <- c()
 
   # table of contents
-  args <- c(args, pandoc_toc_args(toc, toc.depth))
+  args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # template path and assets
   if (!is.null(template))
@@ -102,7 +102,7 @@ pdf_document <- function(toc = FALSE,
               pandoc_path_arg(rmarkdown_system_file("rmd/latex/default.tex")))
 
   # numbered sections
-  if (number.sections)
+  if (number_sections)
     args <- c(args, "--number-sections")
 
   # highlighting
@@ -111,8 +111,8 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
-  latex.engine = match.arg(latex.engine, c("pdflatex", "lualatex", "xelatex"))
-  args <- c(args, "--latex-engine", latex.engine)
+  latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
+  args <- c(args, "--latex-engine", latex_engine)
 
   # natbib
   if (natbib)
@@ -126,17 +126,17 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, includes_to_pandoc_args(includes))
 
   # data dir
-  if (!is.null(data.dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data.dir))
+  if (!is.null(data_dir))
+    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # args args
-  args <- c(args, pandoc.args)
+  args <- c(args, pandoc_args)
 
   # return format
   output_format(
-    knitr = knitr_options_pdf(fig.width, fig.height, fig.crop),
+    knitr = knitr_options_pdf(fig_width, fig_height, fig_crop),
     pandoc = pandoc_options(to = "latex",
-                            from = from_rmarkdown(fig.caption),
+                            from = from_rmarkdown(fig_caption),
                             args = args),
     filter = filter_pdf
   )
@@ -145,16 +145,16 @@ pdf_document <- function(toc = FALSE,
 
 # Use filter to set pdf geometry defaults (while making sure we don't override
 # any geometry settings already specified by the user)
-filter_pdf <- function(output.format, files.dir, input.lines) {
+filter_pdf <- function(output_format, files_dir, input_lines) {
 
   # set the margin to 1 inch if not otherwise specified
   has_margin <- function(text) {
     length(grep("^geometry\\:[ \\t]*margin=\\d+(\\.?\\d+)?\\w+$", text)) > 0
   }
-  if (!has_margin(input.lines) && !has_margin(output.format$pandoc$args))
-    output.format$pandoc$args <- c(output.format$pandoc$args,
+  if (!has_margin(input_lines) && !has_margin(output_format$pandoc$args))
+    output_format$pandoc$args <- c(output_format$pandoc$args,
                                    "--variable", "geometry:margin=1in")
 
-  output.format
+  output_format
 }
 

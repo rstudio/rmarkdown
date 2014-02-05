@@ -5,7 +5,7 @@
 #' @inheritParams pdf_document
 #' @inheritParams html_document
 #'
-#' @param reference.docx Use the specified file as a style reference in
+#' @param reference_docx Use the specified file as a style reference in
 #'   producing a docx file. For best results, the reference docx should be a
 #'   modified version of a docx file produced using pandoc.
 #'
@@ -32,21 +32,21 @@
 #' }
 #'
 #' @export
-word_document <- function(fig.width = 6,
-                          fig.height = 4.5,
-                          fig.caption = FALSE,
+word_document <- function(fig_width = 6,
+                          fig_height = 4.5,
+                          fig_caption = FALSE,
                           highlight = "default",
-                          reference.docx = NULL,
-                          data.dir = NULL,
-                          knitr.options = NULL,
-                          pandoc.args = NULL) {
+                          reference_docx = NULL,
+                          data_dir = NULL,
+                          knitr_options = NULL,
+                          pandoc_args = NULL) {
 
   # knitr options and hooks
   knitr <- knitr_options(
     opts_chunk = list(dev = 'png',
                       dpi = 300,
-                      fig.width = fig.width,
-                      fig.height = fig.height)
+                      fig.width = fig_width,
+                      fig.height = fig_height)
   )
 
   # base pandoc options for all docx output
@@ -58,22 +58,22 @@ word_document <- function(fig.width = 6,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # reference docx
-  if (!is.null(reference.docx)) {
-    args <- c(args, "--reference-docx", pandoc_path_arg(reference.docx))
+  if (!is.null(reference_docx)) {
+    args <- c(args, "--reference-docx", pandoc_path_arg(reference_docx))
   }
 
   # data dir
-  if (!is.null(data.dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data.dir))
+  if (!is.null(data_dir))
+    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # pandoc args
-  args <- c(args, pandoc.args)
+  args <- c(args, pandoc_args)
 
   # return output format
   output_format(
     knitr = knitr,
     pandoc = pandoc_options(to = "docx",
-                            from_rmarkdown(fig.caption),
+                            from_rmarkdown(fig_caption),
                             args = args)
   )
 }

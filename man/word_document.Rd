@@ -2,21 +2,21 @@
 \alias{word_document}
 \title{Convert to an MS Word document}
 \usage{
-word_document(fig.width = 6, fig.height = 4.5, fig.caption = FALSE,
-  highlight = "default", reference.docx = NULL, data.dir = NULL,
-  knitr.options = NULL, pandoc.args = NULL)
+word_document(fig_width = 6, fig_height = 4.5, fig_caption = FALSE,
+  highlight = "default", reference_docx = NULL, data_dir = NULL,
+  knitr_options = NULL, pandoc_args = NULL)
 }
 \arguments{
-  \item{reference.docx}{Use the specified file as a style
+  \item{reference_docx}{Use the specified file as a style
   reference in producing a docx file. For best results, the
   reference docx should be a modified version of a docx
   file produced using pandoc.}
 
-  \item{fig.width}{Default width (in inches) for figures}
+  \item{fig_width}{Default width (in inches) for figures}
 
-  \item{fig.height}{Default width (in inches) for figures}
+  \item{fig_height}{Default width (in inches) for figures}
 
-  \item{fig.caption}{\code{TRUE} to render figures with
+  \item{fig_caption}{\code{TRUE} to render figures with
   captions}
 
   \item{highlight}{Syntax highlighting style. Supported
@@ -24,15 +24,15 @@ word_document(fig.width = 6, fig.height = 4.5, fig.caption = FALSE,
   "monochrome", "espresso", "zenburn", and "haddock". Pass
   \code{NULL} to prevent syntax highlighting.}
 
-  \item{data.dir}{Additional directory to resolve relatives
+  \item{data_dir}{Additional directory to resolve relatives
   paths of templates and included content against (the
   directory of the input file is used by default).}
 
-  \item{knitr.options}{Additional options for knitr. To
+  \item{knitr_options}{Additional options for knitr. To
   provide options call the \code{\link{knitr_options}}
   function and pass it's result.}
 
-  \item{pandoc.args}{Additional command line options to
+  \item{pandoc_args}{Additional command line options to
   pass to pandoc}
 }
 \value{
