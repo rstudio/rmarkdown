@@ -5,6 +5,7 @@
 #' @inheritParams beamer_presentation
 #' @inheritParams html_document
 #'
+#' @param center \code{TRUE} to vertically center content on slides
 #' @param theme Visual theme ("default", "sky", "beige", "simple", "serif",
 #'   or "solarized").
 #' @param transition Slide transition ("default", "cube", "page", "concave",
@@ -38,8 +39,9 @@
 #' @export
 revealjs_presentation <- function(slide_level = NULL,
                                   incremental = FALSE,
+                                  center = FALSE,
                                   fig_width = 8,
-                                  fig_height = 5,
+                                  fig_height = 6,
                                   fig_retina = 2,
                                   fig_caption = FALSE,
                                   theme = "default",
@@ -70,6 +72,10 @@ revealjs_presentation <- function(slide_level = NULL,
   # incremental
   if (incremental)
     args <- c(args, "--incremental")
+
+  # centering
+  if (center)
+    args <- c(args, "--variable", "center")
 
   # theme
   theme <- match.arg(theme, revealjs_themes())

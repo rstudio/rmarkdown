@@ -3,12 +3,15 @@
 \title{Convert to a reveal.js presentation}
 \usage{
 revealjs_presentation(slide_level = NULL, incremental = FALSE,
-  fig_width = 8, fig_height = 5, fig_retina = 2, fig_caption = FALSE,
-  theme = "default", transition = "default", highlight = "default",
-  mathjax = "default", template = NULL, includes = NULL,
-  data_dir = NULL, pandoc_args = NULL)
+  center = FALSE, fig_width = 8, fig_height = 6, fig_retina = 2,
+  fig_caption = FALSE, theme = "default", transition = "default",
+  highlight = "default", mathjax = "default", template = NULL,
+  includes = NULL, data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
+  \item{center}{\code{TRUE} to vertically center content on
+  slides}
+
   \item{theme}{Visual theme ("default", "sky", "beige",
   "simple", "serif", or "solarized").}
 
