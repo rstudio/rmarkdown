@@ -16,7 +16,7 @@ render <- function(input,
   }
 
   # verify the input file doesn't have spaces in it's name
-  if (grepl(' ', input, fixed=TRUE))
+  if (grepl(' ', basename(input), fixed=TRUE))
     stop("The name of the input file must not contain spaces.")
 
   # setup a cleanup function for intermediate files
