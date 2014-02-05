@@ -196,11 +196,22 @@ output_format_from_yaml_front_matter <- function(yaml_front_matter,
   # default to no args
   output_format_args <- list()
 
+  # parse common output.yaml if we have it
+  if (file.exists("output.yaml"))
+    common_output_format_yaml <- yaml::yaml.load_file("output.yaml")
+  else
+    common_output_format_yaml <- list()
+
   # parse output format from front-matter if we have it
-  if (length(yaml_front_matter$output) > 0) {
+  if (length(common_output_format_yaml) > 0 ||
+      length(yaml_front_matter$output) > 0) {
 
     # alias the output format yaml
     output_format_yaml <- yaml_front_matter$output
+
+    # merge against common output.yaml
+    output_format_yaml <- merge_output_yaml_lists(common_output_format_yaml,
+                                                  output_format_yaml)
 
     # if a named format was provided then try to find it
     if (!is.null(output_format_expr)) {
@@ -278,3 +289,25 @@ parse_yaml_front_matter <- function(input_lines) {
     list()
   }
 }
+
+merge_output_yaml_lists <- function(base_list, overlay_list) {
+
+  # if either one of these is a character vector then normalize to a named list
+  normalize_list <- function(target_list) {
+    if (is.character(target_list)) {
+      new_list <- list()
+      for (name in target_list)
+        new_list[[name]] <- list()
+      new_list
+    } else {
+      target_list
+    }
+  }
+
+  base_list <- normalize_list(base_list)
+  overlay_list <- normalize_list(overlay_list)
+
+  merge_lists(base_list, overlay_list)
+}
+
+
