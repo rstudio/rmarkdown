@@ -78,6 +78,8 @@ You can also specify a plain markdown file in which case knitting will be bypass
 render("input.md")
 ```
 
+#### Output Formats
+
 R Markdown documents can contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:
 
 ```
@@ -133,6 +135,23 @@ render("input.Rmd", "pdf_document")
 ```
 
 If no explicit format name is passed to `render` then the first one defined will be used.
+
+#### Shared Output Formats
+
+You can also define output formats externally in a file named `output.yaml` located in the same directory as the R Markdown source file. For example:
+
+```
+html_document:
+  toc: true
+  theme: united
+pdf_document:
+  toc: true
+  highlight: zenburn
+```
+
+Using an `output.yaml` file is a good way to share output settings across multiple R Markdown files in the same directory.
+
+#### Output Format Functions
 
 Output formats need not be specified in metadata. In fact, metadata is just a convenient way to invoke functions that implement output formats. There are five built-in output formats each exported as a function from the package:
 
