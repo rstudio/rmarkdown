@@ -38,6 +38,7 @@ word_document <- function(fig.width = 6,
                           highlight = "default",
                           reference.docx = NULL,
                           data.dir = NULL,
+                          knitr.options = NULL,
                           pandoc.args = NULL) {
 
   # knitr options and hooks

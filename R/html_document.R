@@ -39,6 +39,8 @@
 #' @param data.dir Additional directory to resolve relatives paths of templates
 #'   and included content against (the directory of the input file is used by
 #'   default).
+#' @param knitr.options Additional options for knitr. To provide options call
+#'   the \code{\link{knitr_options}} function and pass it's result.
 #' @param pandoc.args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
@@ -105,6 +107,7 @@ html_document <- function(toc = FALSE,
                           css = NULL,
                           includes = NULL,
                           data.dir = NULL,
+                          knitr.options = NULL,
                           pandoc.args = NULL) {
 
   # interplay between arguments

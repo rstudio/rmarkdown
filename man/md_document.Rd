@@ -4,7 +4,7 @@
 \usage{
 md_document(variant = "markdown_strict", toc = FALSE, toc.depth = 3,
   fig.width = 7, fig.height = 5, fig.retina = NULL, includes = NULL,
-  data.dir = NULL, pandoc.args = NULL)
+  data.dir = NULL, knitr.options = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{variant}{Markdown variant to produce (defaults to
@@ -41,6 +41,10 @@ md_document(variant = "markdown_strict", toc = FALSE, toc.depth = 3,
   \item{data.dir}{Additional directory to resolve relatives
   paths of templates and included content against (the
   directory of the input file is used by default).}
+
+  \item{knitr.options}{Additional options for knitr. To
+  provide options call the \code{\link{knitr_options}}
+  function and pass it's result.}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}

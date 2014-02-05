@@ -4,7 +4,7 @@
 \usage{
 word_document(fig.width = 6, fig.height = 4.5, fig.caption = FALSE,
   highlight = "default", reference.docx = NULL, data.dir = NULL,
-  pandoc.args = NULL)
+  knitr.options = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{reference.docx}{Use the specified file as a style
@@ -27,6 +27,10 @@ word_document(fig.width = 6, fig.height = 4.5, fig.caption = FALSE,
   \item{data.dir}{Additional directory to resolve relatives
   paths of templates and included content against (the
   directory of the input file is used by default).}
+
+  \item{knitr.options}{Additional options for knitr. To
+  provide options call the \code{\link{knitr_options}}
+  function and pass it's result.}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}

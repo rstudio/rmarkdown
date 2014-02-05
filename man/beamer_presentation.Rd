@@ -5,7 +5,7 @@
 beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   fig.width = 10, fig.height = 7, fig.crop = TRUE, fig.caption = FALSE,
   highlight = "default", template = NULL, includes = NULL,
-  data.dir = NULL, pandoc.args = NULL)
+  data.dir = NULL, knitr.options = NULL, pandoc.args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -50,6 +50,10 @@ beamer_presentation(toc = FALSE, slide.level = 2, incremental = FALSE,
   \item{data.dir}{Additional directory to resolve relatives
   paths of templates and included content against (the
   directory of the input file is used by default).}
+
+  \item{knitr.options}{Additional options for knitr. To
+  provide options call the \code{\link{knitr_options}}
+  function and pass it's result.}
 
   \item{pandoc.args}{Additional command line options to
   pass to pandoc}

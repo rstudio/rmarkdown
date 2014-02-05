@@ -85,6 +85,7 @@ pdf_document <- function(toc = FALSE,
                          template = NULL,
                          includes = NULL,
                          data.dir = NULL,
+                         knitr.options = NULL,
                          pandoc.args = NULL) {
 
   # base pandoc options for all PDF output

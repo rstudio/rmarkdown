@@ -83,6 +83,7 @@ beamer_presentation <- function(toc = FALSE,
                                 template = NULL,
                                 includes = NULL,
                                 data.dir = NULL,
+                                knitr.options = NULL,
                                 pandoc.args = NULL) {
 
   # base pandoc options for all beamer output
