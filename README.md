@@ -6,7 +6,7 @@ The **rmarkdown** package is a next generation implementation of R Markdown base
 * A wide variety of built-in output formats including HTML, PDF, MS Word, and Beamer.
 * New markdown syntax including expanded support for tables, definition lists, and citations.
 * A responsive (multi-device friendly) HTML template based on [Bootstrap 3](http://getbootstrap.com).
-* Hooks for customizing HTML and PDF output (include css, headers, and footers).
+* Hooks for customizing HTML and PDF output (include CSS, headers, and footers).
 * The ability to include raw LaTeX within markdown for advanced customization of PDF output.
 * Extensibility: easily define new formats for custom publishing requirements.
 
@@ -32,7 +32,7 @@ The [pandoc installation](http://johnmacfarlane.net/pandoc/installing.html) page
 
 The version of pandoc included in the standard repositories is not recent enough for use with the **rmarkdown** package. You can install a more recent version of pandoc by installing the Haskell Platform and then following these instructions for [building pandoc from source](http://johnmacfarlane.net/pandoc/installing.html#all-platforms).
 
-This method installs a large number of Haskell depenedencies so might not be desirable. You can also obtain a standalone version of pandoc without the dependencies as follows:
+This method installs a large number of Haskell dependencies so might not be desirable. You can also obtain a standalone version of pandoc without the dependencies as follows:
 
 ##### Older Systems (RedHat/CentOS 5 & 6)
 
@@ -102,7 +102,7 @@ output:
 ---
 ```
 
-If you aren't specifing format options you can also just use a simple format name:
+If you aren't specifying format options you can also just use a simple format name:
 
 ```
 ---
