@@ -48,7 +48,6 @@ md_document <- function(variant = "markdown_strict",
                         fig_retina = NULL,
                         includes = NULL,
                         data_dir = NULL,
-                        knitr_options = NULL,
                         pandoc_args = NULL) {
 
   # base pandoc options for all markdown output

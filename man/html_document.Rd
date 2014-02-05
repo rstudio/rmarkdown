@@ -6,7 +6,7 @@ html_document(toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
   fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, theme = "default", highlight = "default",
   mathjax = "default", template = NULL, css = NULL, includes = NULL,
-  data_dir = NULL, knitr_options = NULL, pandoc_args = NULL)
+  data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -70,10 +70,6 @@ html_document(toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
   \item{data_dir}{Additional directory to resolve relatives
   paths of templates and included content against (the
   directory of the input file is used by default).}
-
-  \item{knitr_options}{Additional options for knitr. To
-  provide options call the \code{\link{knitr_options}}
-  function and pass it's result.}
 
   \item{pandoc_args}{Additional command line options to
   pass to pandoc}

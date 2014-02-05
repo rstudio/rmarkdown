@@ -6,7 +6,7 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   fig_width = 6, fig_height = 4.5, fig_crop = TRUE, fig_caption = TRUE,
   highlight = "default", latex_engine = "pdflatex", natbib = FALSE,
   biblatex = FALSE, template = NULL, includes = NULL, data_dir = NULL,
-  knitr_options = NULL, pandoc_args = NULL)
+  pandoc_args = NULL)
 }
 \arguments{
   \item{number_sections}{\code{TRUE} to number section
@@ -54,10 +54,6 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   \item{data_dir}{Additional directory to resolve relatives
   paths of templates and included content against (the
   directory of the input file is used by default).}
-
-  \item{knitr_options}{Additional options for knitr. To
-  provide options call the \code{\link{knitr_options}}
-  function and pass it's result.}
 
   \item{pandoc_args}{Additional command line options to
   pass to pandoc}
