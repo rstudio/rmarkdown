@@ -160,6 +160,7 @@ Output formats need not be specified in metadata. In fact, metadata is just a co
 - `word_document`
 - `md_document`
 - `beamer_presentation`
+- `revealjs_presentation`
 
 As you'd expect, these functions can also be invoked as part of the call to `render`, for example:
 

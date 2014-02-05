@@ -2,12 +2,12 @@
 \alias{render_supporting_files}
 \title{Render supporting files for an input document}
 \usage{
-render_supporting_files(from, to, rename_to = NULL)
+render_supporting_files(from, files_dir, rename_to = NULL)
 }
 \arguments{
   \item{from}{Directory to copy from}
 
-  \item{to}{Directory to copy files into}
+  \item{files_dir}{Directory to copy files into}
 
   \item{rename_to}{Optional rename of source directory
   after it is copied}

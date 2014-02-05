@@ -2,7 +2,7 @@
 \alias{beamer_presentation}
 \title{Convert to a Beamer presentation}
 \usage{
-beamer_presentation(toc = FALSE, slide_level = 2, incremental = FALSE,
+beamer_presentation(toc = FALSE, slide_level = NULL, incremental = FALSE,
   fig_width = 10, fig_height = 7, fig_crop = TRUE, fig_caption = FALSE,
   highlight = "default", template = NULL, includes = NULL,
   data_dir = NULL, pandoc_args = NULL)
@@ -13,9 +13,11 @@ beamer_presentation(toc = FALSE, slide_level = 2, incremental = FALSE,
   table of contents).}
 
   \item{slide_level}{The heading level which defines
-  indvidual slides. By default this is level 2, which
-  allows level 1 headers to be used to define sections of
-  the presentation.}
+  indvidual slides. By default this is the highest header
+  level in the hierarchy that is followed immediately by
+  content, and not another header, somewhere in the
+  document.  This default can be overridden by specifying
+  an explicit \code{slide.level}.}
 
   \item{incremental}{\code{TRUE} to render slide bullets
   incrementally. Note that if you want to reverse the
@@ -69,14 +71,6 @@ For more information on markdown syntax for presentations
 see
 \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing
 slide shows with pandoc}.
-
-When including figures generated from R plots within Beamer
-slides it's likely you'll need to tweak their sizes for
-optimal results. You can do this using the \code{fig.width}
-and \code{fig.height} chunk options. If you find that there
-is too much space around a plot (common with base graphics)
-you can apply the pdfcrop filter by adding the \code{crop =
-TRUE} chunk option.
 
 R Markdown documents can have optional metadata that is
 used to generate a document header that includes the title,

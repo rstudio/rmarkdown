@@ -8,8 +8,10 @@
 #' @param toc \code{TRUE} to include a table of contents in the output (only
 #'   level 1 headers will be included in the table of contents).
 #' @param slide_level The heading level which defines indvidual slides. By
-#'   default this is level 2, which allows level 1 headers to be used to define
-#'   sections of the presentation.
+#'   default this is the highest header level in the hierarchy that is followed
+#'   immediately by content, and not another header, somewhere in the document.
+#'   This default can be overridden by specifying an explicit
+#'   \code{slide.level}.
 #' @param incremental \code{TRUE} to render slide bullets incrementally. Note
 #'   that if you want to reverse the default incremental behavior for an
 #'   individual bullet you can preceded it with \code{>}. For example:
@@ -67,7 +69,7 @@
 #'
 #' @export
 beamer_presentation <- function(toc = FALSE,
-                                slide_level = 2,
+                                slide_level = NULL,
                                 incremental = FALSE,
                                 fig_width = 10,
                                 fig_height = 7,
@@ -94,7 +96,8 @@ beamer_presentation <- function(toc = FALSE,
     args <- c(args, "--table-of-contents")
 
   # slide level
-  args <- c(args, "--slide-level", as.character(slide_level))
+  if (!is.null(slide_level))
+    args <- c(args, "--slide-level", as.character(slide_level))
 
   # incremental
   if (incremental)

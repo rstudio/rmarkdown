@@ -237,6 +237,66 @@ pandoc_path_arg <- function(path) {
   path
 }
 
+
+pandoc_mathjax_args <- function(mathjax, files_dir) {
+
+  args <- c()
+
+  if (identical(mathjax, "default"))
+    mathjax_url <- default_mathjax()
+  else if (identical(mathjax, "local")) {
+    mathjax_path <- rmarkdown_system_file("rmd/h/m")
+    mathjax_path <- render_supporting_files(mathjax_path,
+                                            files_dir,
+                                            "mathjax")
+    mathjax_path <- pandoc_path_arg(mathjax_path)
+    mathjax_url <- paste(mathjax_path, "/", mathjax_config(), sep = "")
+  }
+  args <- c(args, "--mathjax")
+  args <- c(args, "--variable", paste("mathjax-url:", mathjax_url, sep=""))
+
+  args
+}
+
+pandoc_html_highlight_args <- function(highlight,
+                                       template,
+                                       self_contained,
+                                       files_dir) {
+
+  args <- c()
+
+  if (is.null(highlight)) {
+    args <- c(args, "--no-highlight")
+  }
+  else if (!is.null(template)) {
+    if (identical(highlight, "default"))
+      highlight <- "pygments"
+    args <- c(args, "--highlight-style", highlight)
+  }
+  else {
+    highlight <- match.arg(highlight, html_highlighters())
+    if (highlight %in% c("default", "textmate")) {
+      highlight_path <- rmarkdown_system_file("rmd/h/highlight")
+      if (!self_contained)
+        highlight_path <- render_supporting_files(highlight_path, files_dir)
+      highlight_path <- pandoc_path_arg(highlight_path)
+      args <- c(args, "--no-highlight")
+      args <- c(args,
+                "--variable", paste("highlightjs=", highlight_path, sep=""))
+      if (identical(highlight, "textmate")) {
+        args <- c(args,
+                  "--variable",
+                  paste("highlightjs-theme=", highlight, sep=""))
+      }
+    }
+    else {
+      args <- c(args, "--highlight-style", highlight)
+    }
+  }
+
+  args
+}
+
 # Scan for a copy of pandoc and set the internal cache if it's found.
 find_pandoc <- function() {
 

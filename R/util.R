@@ -8,7 +8,8 @@ is_windows <- function() {
 pandoc_output_file <- function(input, to) {
   if (to %in% c("latex", "beamer"))
     ext <- ".pdf"
-  else if (to %in% c("html", "html5", "revealjs"))
+  else if (to %in% c("html", "html5", "s5", "slidy",
+                     "slideous", "dzslides", "revealjs"))
     ext <- ".html"
   else if (grepl("^markdown", to)) {
     if (!identical(tolower(tools::file_ext(input)), "md"))

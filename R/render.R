@@ -140,30 +140,30 @@ render <- function(input,
 #' directory associated with the document.
 #'
 #' @param from Directory to copy from
-#' @param to Directory to copy files into
+#' @param files_dir Directory to copy files into
 #' @param rename_to Optional rename of source directory after it is copied
 #'
 #' @return The relative path to the supporting files. This path is suitable
 #' for inclusion in HTML\code{href} and \code{src} attributes.
 #'
 #' @export
-render_supporting_files <- function(from, to, rename_to = NULL) {
+render_supporting_files <- function(from, files_dir, rename_to = NULL) {
 
   # auto-create directory for supporting files
-  if (!file.exists(to))
-    dir.create(to)
+  if (!file.exists(files_dir))
+    dir.create(files_dir)
 
   # target directory is based on the dirname of the path or the rename_to
   # value if it was provided
-  target_stage_dir <- file.path(to, basename(from))
-  target_dir <- file.path(to, ifelse(is.null(rename_to),
+  target_stage_dir <- file.path(files_dir, basename(from))
+  target_dir <- file.path(files_dir, ifelse(is.null(rename_to),
                                      basename(from),
                                      rename_to))
 
   # copy the directory if it hasn't already been copied
   if (!file.exists(target_dir) && !file.exists(target_stage_dir)) {
     file.copy(from = from,
-              to = to,
+              to = files_dir,
               recursive = TRUE)
     if (!is.null(rename_to)) {
       file.rename(from = target_stage_dir,
@@ -174,6 +174,7 @@ render_supporting_files <- function(from, to, rename_to = NULL) {
   # return the target dir (used to form links in the HTML)
   target_dir
 }
+
 
 
 

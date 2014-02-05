@@ -103,7 +103,7 @@ see the documentation on R Markdown
   \itemize{ \item{The \code{theme} parameter does not work
   (you can still provide styles using the \code{css}
   parameter).  } \item{For the \code{highlight} parameter,
-  the default highlighting style will resolve to "tango"
+  the default highlighting style will resolve to "pygments"
   and the "textmate" highlighting style is not available }
   \item{MathJax is automatically disabled if
   \code{self_contained} is \code{TRUE} (these two options

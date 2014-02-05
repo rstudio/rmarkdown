@@ -67,7 +67,7 @@
 #'      provide styles using the \code{css} parameter).
 #'   }
 #'   \item{For the \code{highlight} parameter, the default highlighting
-#'      style will resolve to "tango" and the "textmate" highlighting
+#'      style will resolve to "pygments" and the "textmate" highlighting
 #'      style is not available
 #'   }
 #'   \item{MathJax is automatically disabled if \code{self_contained} is
@@ -116,10 +116,6 @@ html_document <- function(toc = FALSE,
   # build pandoc args
   args <- c("--standalone")
 
-  # list we'll use within our filter to add arguments that depend
-  # on knowledge of the input file
-  dynamic_args <- list()
-
   # smart quotes, etc.
   if (smart)
     args <- c(args, "--smart")
@@ -137,39 +133,6 @@ html_document <- function(toc = FALSE,
   else
     args <- c(args, "--template",
               pandoc_path_arg(rmarkdown_system_file("rmd/h/default.html")))
-
-  # theme
-  if (!is.null(theme)) {
-    theme <- match.arg(theme, themes())
-    if (identical(theme, "default"))
-      theme <- "bootstrap"
-    dynamic_args$theme <- theme
-  }
-
-  # highlighting
-  if (is.null(highlight)) {
-    args <- c(args, "--no-highlight")
-  }
-  else if (!is.null(template)) {
-    if (identical(highlight, "default"))
-      highlight <- "tango"
-    args <- c(args, "--highlight-style", highlight)
-  }
-  else {
-    highlight <- match.arg(highlight, html_highlighters())
-    if (highlight %in% c("default", "textmate")) {
-      dynamic_args$highlight <- highlight
-    }
-    else {
-      args <- c(args, "--highlight-style", highlight)
-    }
-  }
-
-  # mathjax
-  allow_mathjax <- is.null(template) || !self_contained
-  if (allow_mathjax && !is.null(mathjax)) {
-    dynamic_args$mathjax <- mathjax
-  }
 
   # additional css
   for (css_file in css)
@@ -193,7 +156,12 @@ html_document <- function(toc = FALSE,
     args <- c()
 
     # determine bootstrap path (copy supporting if not self contained)
-    if (!is.null(dynamic_args$theme)) {
+    if (!is.null(theme)) {
+
+      theme <- match.arg(theme, themes())
+      if (identical(theme, "default"))
+        theme <- "bootstrap"
+
       bootstrap_path <- rmarkdown_system_file("rmd/h/bootstrap")
       if (!self_contained)
         bootstrap_path <- render_supporting_files(bootstrap_path, files_dir)
@@ -201,7 +169,7 @@ html_document <- function(toc = FALSE,
       # form path to theme and add theme variable
       theme_path <- paste(bootstrap_path,
                           "/css/",
-                          dynamic_args$theme,
+                          theme,
                           ".min.css",
                           sep="")
       theme_path <- pandoc_path_arg(theme_path)
@@ -209,35 +177,15 @@ html_document <- function(toc = FALSE,
     }
 
     # highlight
-    if (!is.null(dynamic_args$highlight)) {
-      highlight_path <- rmarkdown_system_file("rmd/h/highlight")
-      if (!self_contained)
-        highlight_path <- render_supporting_files(highlight_path, files_dir)
-      highlight_path <- pandoc_path_arg(highlight_path)
-      args <- c(args, "--no-highlight")
-      args <- c(args,
-                "--variable", paste("highlightjs=", highlight_path, sep=""))
-      if (identical(dynamic_args$highlight, "textmate")) {
-        args <- c(args,
-                  "--variable",
-                  paste("highlightjs-theme=", dynamic_args$highlight, sep=""))
-      }
-    }
+    args <- c(args, pandoc_html_highlight_args(highlight,
+                                               self_contained,
+                                               template,
+                                               files_dir))
 
     # mathjax
-    if (!is.null(dynamic_args$mathjax)) {
-      if (identical(dynamic_args$mathjax, "default"))
-        mathjax_url <- default_mathjax()
-      else if (identical(dynamic_args$mathjax, "local")) {
-        mathjax_path <- rmarkdown_system_file("rmd/h/m")
-        mathjax_path <- render_supporting_files(mathjax_path,
-                                                files_dir,
-                                                "mathjax")
-        mathjax_path <- pandoc_path_arg(mathjax_path)
-        mathjax_url <- paste(mathjax_path, "/", mathjax_config(), sep = "")
-      }
-      args <- c(args, "--mathjax")
-      args <- c(args, "--variable", paste("mathjax-url:", mathjax_url, sep=""))
+    allow_mathjax <- is.null(template) || !self_contained
+    if (allow_mathjax && !is.null(mathjax)) {
+      args <- c(args, pandoc_mathjax_args(mathjax, files_dir))
     }
 
     # return format with ammended args
