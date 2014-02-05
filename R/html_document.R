@@ -162,7 +162,7 @@ html_document <- function(toc = FALSE,
       if (identical(theme, "default"))
         theme <- "bootstrap"
 
-      bootstrap_path <- rmarkdown_system_file("rmd/h/bootstrap")
+      bootstrap_path <- rmarkdown_system_file("rmd/h/bootstrap-3.0.3")
       if (!self_contained)
         bootstrap_path <- render_supporting_files(bootstrap_path, files_dir)
 
@@ -176,11 +176,36 @@ html_document <- function(toc = FALSE,
       args <- c(args, "--variable", paste("theme:", theme_path, sep=""))
     }
 
-    # highlight
-    args <- c(args, pandoc_html_highlight_args(highlight,
-                                               self_contained,
-                                               template,
-                                               files_dir))
+    # highlight (complicated because we preserve the ability to use
+    # the old highlight.js based themes)
+    if (is.null(highlight)) {
+      args <- c(args, "--no-highlight")
+    }
+    else if (!is.null(template)) {
+      if (identical(highlight, "default"))
+        highlight <- "pygments"
+      args <- c(args, "--highlight-style", highlight)
+    }
+    else {
+      highlight <- match.arg(highlight, html_highlighters())
+      if (highlight %in% c("default", "textmate")) {
+        highlight_path <- rmarkdown_system_file("rmd/h/highlight")
+        if (!self_contained)
+          highlight_path <- render_supporting_files(highlight_path, files_dir)
+        highlight_path <- pandoc_path_arg(highlight_path)
+        args <- c(args, "--no-highlight")
+        args <- c(args,
+                  "--variable", paste("highlightjs=", highlight_path, sep=""))
+        if (identical(highlight, "textmate")) {
+          args <- c(args,
+                    "--variable",
+                    paste("highlightjs-theme=", highlight, sep=""))
+        }
+      }
+      else {
+        args <- c(args, "--highlight-style", highlight)
+      }
+    }
 
     # mathjax
     allow_mathjax <- is.null(template) || !self_contained

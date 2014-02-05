@@ -8,7 +8,7 @@
 pandoc_include_args(in_header = NULL, before_body = NULL,
   after_body = NULL)
 
-pandoc_highlight_args(highlight)
+pandoc_highlight_args(highlight, default = "tango")
 
 pandoc_toc_args(toc, toc_depth = 3)
 }
@@ -21,6 +21,9 @@ pandoc_toc_args(toc, toc_depth = 3)
 
   \item{highlight}{The name of a pandoc syntax highlighting
   theme.}
+
+  \item{default}{The highlighting theme to use if "default"
+  is specified.}
 
   \item{in_header}{One or more files with content to be
   included in the header of the document.}

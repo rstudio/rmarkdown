@@ -5,8 +5,10 @@
 #' @inheritParams beamer_presentation
 #' @inheritParams html_document
 #'
-#' @param theme
-#' @param transition
+#' @param theme Visual theme ("default", "sky", "beige", "simple", "serif",
+#'   or "solarized").
+#' @param transition Slide transition ("default", "cube", "page", "concave",
+#'   "zoom", "linear", "fade", or "none")
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -40,9 +42,9 @@ revealjs_presentation <- function(slide_level = NULL,
                                   fig_height = 5,
                                   fig_retina = 2,
                                   fig_caption = FALSE,
-                                  highlight = "default",
                                   theme = "default",
                                   transition = "default",
+                                  highlight = "default",
                                   mathjax = "default",
                                   template = NULL,
                                   includes = NULL,
@@ -74,6 +76,11 @@ revealjs_presentation <- function(slide_level = NULL,
   if (!identical(theme, "default"))
     args <- c(args, "--variable", paste("theme=", theme, sep=""))
 
+  # highlighting
+  if (!is.null(highlight))
+    highlight <- match.arg(highlight, highlighters())
+  args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))
+
   # transition
   transition <- match.arg(transition, revealjs_transitions())
   if (!identical(transition, "default"))
@@ -101,12 +108,6 @@ revealjs_presentation <- function(slide_level = NULL,
     revealjs <- render_supporting_files(revealjs_path, files_dir)
     args <- c(args, "--variable", paste("revealjs-url=", revealjs, sep=""))
 
-    # highlight
-    args <- c(args, pandoc_html_highlight_args(highlight,
-                                               template,
-                                               FALSE,
-                                               files_dir))
-
     # mathjax
     if (!is.null(mathjax))
       args <- c(args, pandoc_mathjax_args(mathjax, files_dir))
@@ -133,8 +134,6 @@ revealjs_themes <- function() {
     "beige",
     "simple",
     "serif",
-    "night",
-    "moon",
     "solarized")
 }
 

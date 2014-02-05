@@ -14,22 +14,12 @@ $endif$
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="$revealjs-url$/css/reveal.min.css"/>
-
-$if(highlightjs)$
-<link rel="stylesheet"
-      href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css"
-      $if(html5)$$else$type="text/css" $endif$/>
-<script src="$highlightjs$/highlight.js"></script>
-$endif$
-
+    <style type="text/css">code{white-space: pre;}</style>
 $if(highlighting-css)$
-<style type="text/css">
-code{white-space: pre;}
+    <style type="text/css">
 $highlighting-css$
-</style>
+    </style>
 $endif$
-
-
 $if(css)$
 $for(css)$
     <link rel="stylesheet" href="$css$"/>

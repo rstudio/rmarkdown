@@ -4,14 +4,16 @@
 \usage{
 revealjs_presentation(slide_level = NULL, incremental = FALSE,
   fig_width = 8, fig_height = 5, fig_retina = 2, fig_caption = FALSE,
-  highlight = "default", theme = "default", transition = "default",
+  theme = "default", transition = "default", highlight = "default",
   mathjax = "default", template = NULL, includes = NULL,
   data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
-  \item{theme}{}
+  \item{theme}{Visual theme ("default", "sky", "beige",
+  "simple", "serif", or "solarized").}
 
-  \item{transition}{}
+  \item{transition}{Slide transition ("default", "cube",
+  "page", "concave", "zoom", "linear", "fade", or "none")}
 
   \item{slide_level}{The heading level which defines
   indvidual slides. By default this is the highest header

@@ -137,6 +137,8 @@ pandoc_available <- function(version = NULL) {
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc_depth Depth of headers to include in table of contents
 #' @param highlight The name of a pandoc syntax highlighting theme.
+#' @param default The highlighting theme to use if "default"
+#'   is specified.
 #'
 #' @return A character vector with pandoc command line arguments
 #'
@@ -182,7 +184,7 @@ pandoc_include_args <- function(in_header = NULL,
 
 #' @rdname pandoc_args
 #' @export
-pandoc_highlight_args <- function(highlight) {
+pandoc_highlight_args <- function(highlight, default = "tango") {
 
   args <- c()
 
@@ -190,7 +192,7 @@ pandoc_highlight_args <- function(highlight) {
     args <- c(args, "--no-highlight")
   else {
     if (identical(highlight, "default"))
-      highlight <- "tango"
+      highlight <- default
     args <- c(args, "--highlight-style", highlight)
   }
 
@@ -248,7 +250,7 @@ pandoc_mathjax_args <- function(mathjax, files_dir) {
     mathjax_path <- rmarkdown_system_file("rmd/h/m")
     mathjax_path <- render_supporting_files(mathjax_path,
                                             files_dir,
-                                            "mathjax")
+                                            "mathjax-2.3.0")
     mathjax_path <- pandoc_path_arg(mathjax_path)
     mathjax_url <- paste(mathjax_path, "/", mathjax_config(), sep = "")
   }
