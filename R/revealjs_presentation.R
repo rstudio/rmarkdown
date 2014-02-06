@@ -168,10 +168,10 @@ revealjs_presentation <- function(slide_level = NULL,
                                                files_dir))
 
     # mathjax
-    allow_mathjax <- is.null(template) || !self_contained
-    if (allow_mathjax && !is.null(mathjax)) {
-      args <- c(args, pandoc_mathjax_args(mathjax, files_dir))
-    }
+    args <- c(args, pandoc_mathjax_args(mathjax,
+                                        template,
+                                        self_contained,
+                                        files_dir))
 
     # return format with ammended args
     output_format$pandoc$args <- c(output_format$pandoc$args, args)

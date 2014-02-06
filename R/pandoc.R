@@ -239,23 +239,36 @@ pandoc_path_arg <- function(path) {
   path
 }
 
-
-pandoc_mathjax_args <- function(mathjax, files_dir) {
-
+pandoc_mathjax_args <- function(mathjax,
+                                template,
+                                self_contained,
+                                files_dir) {
   args <- c()
 
-  if (identical(mathjax, "default"))
-    mathjax_url <- default_mathjax()
-  else if (identical(mathjax, "local")) {
-    mathjax_path <- rmarkdown_system_file("rmd/h/m")
-    mathjax_path <- render_supporting_files(mathjax_path,
-                                            files_dir,
-                                            "mathjax-2.3.0")
-    mathjax_path <- pandoc_path_arg(mathjax_path)
-    mathjax_url <- paste(mathjax_path, "/", mathjax_config(), sep = "")
+  if (!is.null(mathjax)) {
+
+    if (identical(mathjax, "default"))
+      mathjax <- default_mathjax()
+    else if (identical(mathjax, "local")) {
+      mathjax_path <- rmarkdown_system_file("rmd/h/m")
+      mathjax_path <- render_supporting_files(mathjax_path,
+                                              files_dir,
+                                              "mathjax-2.3.0")
+      mathjax_path <- pandoc_path_arg(mathjax_path)
+      mathjax <- paste(mathjax_path, "/", mathjax_config(), sep = "")
+    }
+
+    if (is.null(template)) {
+      args <- c(args, "--mathjax")
+      args <- c(args, "--variable", paste("mathjax-url:", mathjax_url, sep=""))
+    } else if (!self_contained) {
+      args <- c(args, "--mathjax", mathjax)
+    } else {
+      warning("mathjax doesn't work with self_contained when using ",
+              "custom pandoc templates.", call. = FALSE)
+    }
+
   }
-  args <- c(args, "--mathjax")
-  args <- c(args, "--variable", paste("mathjax-url:", mathjax_url, sep=""))
 
   args
 }
