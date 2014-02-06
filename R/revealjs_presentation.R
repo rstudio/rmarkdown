@@ -6,7 +6,7 @@
 #' @inheritParams beamer_presentation
 #'
 #' @param center \code{TRUE} to vertically center content on slides
-#' @param theme Visual theme ("default", "sky", "beige", "simple", "serif", or
+#' @param theme Visual theme ("default", "simple", sky", "beige", "serif", or
 #'   "solarized").
 #' @param transition Slide transition ("default", "cube", "page", "concave",
 #'   "zoom", "linear", "fade", or "none")
@@ -42,14 +42,19 @@
 #'
 #' \itemize{
 #'   \item{The \code{center} parameter does not work (you'd need to
-#'   set this directly in the template).
+#'      set this directly in the template).
 #'   }
 #'   \item{For the \code{highlight} parameter, the default highlighting
 #'      style will resolve to "pygments" and the "textmate" highlighting
 #'      style is not available.
 #'   }
 #'   \item{The built-in template includes some additional tweaks to styles
-#'   to optimize for output from R, these won't be present.}
+#'      to optimize for output from R, these won't be present.
+#'   }
+#'   \item{MathJax is automatically disabled if \code{self_contained} is
+#'      \code{TRUE} (these two options can't be used together in normal
+#'      pandoc templates).
+#'   }
 #' }
 #'
 #' @examples
@@ -72,6 +77,8 @@ revealjs_presentation <- function(slide_level = NULL,
                                   fig_height = 6,
                                   fig_retina = 2,
                                   fig_caption = FALSE,
+                                  smart = TRUE,
+                                  self_contained = TRUE,
                                   theme = "default",
                                   transition = "default",
                                   highlight = "default",
@@ -81,8 +88,23 @@ revealjs_presentation <- function(slide_level = NULL,
                                   data_dir = NULL,
                                   pandoc_args = NULL) {
 
+
+  # interplay between arguments
+
+  # local mathjax forces !self_contained
+  if (identical(mathjax, "local"))
+    self_contained <- FALSE
+
   # base pandoc options for all reveal.js output
   args <- c()
+
+  # smart quotes, etc.
+  if (smart)
+    args <- c(args, "--smart")
+
+  # self contained document
+  if (self_contained)
+    args <- c(args, "--self-contained")
 
   # template path and assets
   if (!is.null(template))
@@ -107,13 +129,14 @@ revealjs_presentation <- function(slide_level = NULL,
 
   # theme
   theme <- match.arg(theme, revealjs_themes())
-  if (!identical(theme, "default"))
-    args <- c(args, "--variable", paste("theme=", theme, sep=""))
+  if (identical(theme, "default"))
+    theme <- "simple"
+  args <- c(args, "--variable", paste("theme=", theme, sep=""))
+
 
   # transition
   transition <- match.arg(transition, revealjs_transitions())
-  if (!identical(transition, "default"))
-    args <- c(args, "--variable", paste("transition=", transition, sep=""))
+  args <- c(args, "--variable", paste("transition=", transition, sep=""))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
@@ -134,18 +157,21 @@ revealjs_presentation <- function(slide_level = NULL,
 
     # reveal.js
     revealjs_path <- rmarkdown_system_file("rmd/revealjs/reveal.js-2.6.1")
-    revealjs <- render_supporting_files(revealjs_path, files_dir)
-    args <- c(args, "--variable", paste("revealjs-url=", revealjs, sep=""))
+    if (!self_contained)
+      revealjs_path <- render_supporting_files(revealjs_path, files_dir)
+    args <- c(args, "--variable", paste("revealjs-url=", revealjs_path, sep=""))
 
     # highlight
     args <- c(args, pandoc_html_highlight_args(highlight,
                                                template,
-                                               FALSE,
+                                               self_contained,
                                                files_dir))
 
     # mathjax
-    if (!is.null(mathjax))
+    allow_mathjax <- is.null(template) || !self_contained
+    if (allow_mathjax && !is.null(mathjax)) {
       args <- c(args, pandoc_mathjax_args(mathjax, files_dir))
+    }
 
     # return format with ammended args
     output_format$pandoc$args <- c(output_format$pandoc$args, args)
@@ -158,16 +184,16 @@ revealjs_presentation <- function(slide_level = NULL,
     pandoc = pandoc_options(to = "revealjs",
                             from_rmarkdown(fig_caption),
                             args = args),
-    clean_supporting = FALSE,
+    clean_supporting = self_contained,
     filter = filter
   )
 }
 
 revealjs_themes <- function() {
   c("default",
+    "simple",
     "sky",
     "beige",
-    "simple",
     "serif",
     "solarized")
 }

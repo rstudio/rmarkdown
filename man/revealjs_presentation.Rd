@@ -4,16 +4,17 @@
 \usage{
 revealjs_presentation(slide_level = NULL, incremental = FALSE,
   center = FALSE, fig_width = 8, fig_height = 6, fig_retina = 2,
-  fig_caption = FALSE, theme = "default", transition = "default",
-  highlight = "default", mathjax = "default", template = NULL,
-  includes = NULL, data_dir = NULL, pandoc_args = NULL)
+  fig_caption = FALSE, smart = TRUE, self_contained = TRUE,
+  theme = "default", transition = "default", highlight = "default",
+  mathjax = "default", template = NULL, includes = NULL,
+  data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{center}{\code{TRUE} to vertically center content on
   slides}
 
-  \item{theme}{Visual theme ("default", "sky", "beige",
-  "simple", "serif", or "solarized").}
+  \item{theme}{Visual theme ("default", "simple", sky",
+  "beige", "serif", or "solarized").}
 
   \item{transition}{Slide transition ("default", "cube",
   "page", "concave", "zoom", "linear", "fade", or "none")}
@@ -30,6 +31,17 @@ revealjs_presentation(slide_level = NULL, incremental = FALSE,
 
   \item{fig_caption}{\code{TRUE} to render figures with
   captions}
+
+  \item{smart}{Produce typographically correct output,
+  converting straight quotes to curly quotes, --- to
+  em-dashes, -- to en-dashes, and ... to ellipses.}
+
+  \item{self_contained}{Produce a standalone HTML file with
+  no external dependencies, using data: URIs to incorporate
+  the contents of linked scripts, stylesheets, images, and
+  videos. Note that if you specify "local" for
+  \code{mathjax} then \code{self_contained} is
+  automatically set to \code{FALSE}.}
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "tango", "pygments", "kate",
@@ -115,7 +127,10 @@ the presentation HTML (e.g. "MyPresentation_files").
   "textmate" highlighting style is not available.  }
   \item{The built-in template includes some additional
   tweaks to styles to optimize for output from R, these
-  won't be present.} }
+  won't be present.  } \item{MathJax is automatically
+  disabled if \code{self_contained} is \code{TRUE} (these
+  two options can't be used together in normal pandoc
+  templates).  } }
 }
 \examples{
 \dontrun{
