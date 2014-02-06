@@ -3,6 +3,7 @@
 render <- function(input,
                    output_format = NULL,
                    output_file = NULL,
+                   output_options = NULL,
                    clean = TRUE,
                    envir = parent.frame(),
                    quiet = FALSE,
@@ -45,6 +46,7 @@ render <- function(input,
   # resolve it by looking at the yaml
   if (!is_output_format(output_format)) {
     output_format <- output_format_from_yaml_front_matter(yaml_front_matter,
+                                                          output_options,
                                                           output_format)
   }
 
@@ -132,6 +134,10 @@ render <- function(input,
                  TRUE,
                  output_format$pandoc$args,
                  !quiet)
+
+
+  if (!quiet)
+    message("\nOutput created: ", output_file)
 
   # return the full path to the output file
   invisible(tools::file_path_as_absolute(output_file))

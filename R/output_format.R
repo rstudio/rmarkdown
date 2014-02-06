@@ -186,6 +186,7 @@ rmarkdown_format <- function(extensions = NULL) {
 # Synthesize the output format for a document from it's YAML. If we can't
 # find an output format then we just return html_document
 output_format_from_yaml_front_matter <- function(yaml_front_matter,
+                                                 output_options,
                                                  output_format_expr) {
 
   # ensure input is the correct data type
@@ -210,8 +211,8 @@ output_format_from_yaml_front_matter <- function(yaml_front_matter,
     output_format_yaml <- yaml_front_matter$output
 
     # merge against common output.yaml
-    output_format_yaml <- merge_output_yaml_lists(common_output_format_yaml,
-                                                  output_format_yaml)
+    output_format_yaml <- merge_output_options(common_output_format_yaml,
+                                               output_format_yaml)
 
     # if a named format was provided then try to find it
     if (!is.null(output_format_expr)) {
@@ -253,6 +254,12 @@ output_format_from_yaml_front_matter <- function(yaml_front_matter,
       output_format_expr <- "html_document"
   }
 
+  # merge any output_options passed in the call to render
+  if (!is.null(output_options)) {
+    output_format_args <- merge_output_options(output_format_args,
+                                               output_options)
+  }
+
   # lookup the function
   output_format_func <- eval(parse(text = output_format_expr))
   if (!is.function(output_format_func))
@@ -290,7 +297,7 @@ parse_yaml_front_matter <- function(input_lines) {
   }
 }
 
-merge_output_yaml_lists <- function(base_list, overlay_list) {
+merge_output_options <- function(base_options, overlay_options) {
 
   # if either one of these is a character vector then normalize to a named list
   normalize_list <- function(target_list) {
@@ -304,10 +311,10 @@ merge_output_yaml_lists <- function(base_list, overlay_list) {
     }
   }
 
-  base_list <- normalize_list(base_list)
-  overlay_list <- normalize_list(overlay_list)
+  base_options <- normalize_list(base_options)
+  overlay_options <- normalize_list(overlay_options)
 
-  merge_lists(base_list, overlay_list)
+  merge_lists(base_options, overlay_options)
 }
 
 
