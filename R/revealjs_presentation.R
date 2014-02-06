@@ -2,12 +2,12 @@
 #'
 #' Format for converting from R Markdown to a reveal.js presentation.
 #'
-#' @inheritParams beamer_presentation
 #' @inheritParams html_document
+#' @inheritParams beamer_presentation
 #'
 #' @param center \code{TRUE} to vertically center content on slides
-#' @param theme Visual theme ("default", "sky", "beige", "simple", "serif",
-#'   or "solarized").
+#' @param theme Visual theme ("default", "sky", "beige", "simple", "serif", or
+#'   "solarized").
 #' @param transition Slide transition ("default", "cube", "page", "concave",
 #'   "zoom", "linear", "fade", or "none")
 #'
@@ -26,9 +26,31 @@
 #'
 #' Unlike web content produced with \code{\link{html_document}}, reveal.js
 #' presentations are not standalone web pages. Rather, they have a set of
-#' additional files they depend on (including the reveal.js library) which
-#' are written into a files directory alongside the presentation HTML
-#' (e.g. "MyPresentation_files").
+#' additional files they depend on (including the reveal.js library) which are
+#' written into a files directory alongside the presentation HTML (e.g.
+#' "MyPresentation_files").
+#'
+#' @section Templates:
+#'
+#' You can provide a custom HTML template to be used for rendering. The syntax
+#' for templates is described in the documentation on
+#' \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
+#' templates}.
+#'
+#' Note however that if you choose to provide your own HTML template then
+#' several aspects of HTML document rendering will behave differently:
+#'
+#' \itemize{
+#'   \item{The \code{center} parameter does not work (you'd need to
+#'   set this directly in the template).
+#'   }
+#'   \item{For the \code{highlight} parameter, the default highlighting
+#'      style will resolve to "pygments" and the "textmate" highlighting
+#'      style is not available.
+#'   }
+#'   \item{The built-in template includes some additional tweaks to styles
+#'   to optimize for output from R, these won't be present.}
+#' }
 #'
 #' @examples
 #' \dontrun{
@@ -88,11 +110,6 @@ revealjs_presentation <- function(slide_level = NULL,
   if (!identical(theme, "default"))
     args <- c(args, "--variable", paste("theme=", theme, sep=""))
 
-  # highlighting
-  if (!is.null(highlight))
-    highlight <- match.arg(highlight, highlighters())
-  args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))
-
   # transition
   transition <- match.arg(transition, revealjs_transitions())
   if (!identical(transition, "default"))
@@ -119,6 +136,12 @@ revealjs_presentation <- function(slide_level = NULL,
     revealjs_path <- rmarkdown_system_file("rmd/revealjs/reveal.js-2.6.1")
     revealjs <- render_supporting_files(revealjs_path, files_dir)
     args <- c(args, "--variable", paste("revealjs-url=", revealjs, sep=""))
+
+    # highlight
+    args <- c(args, pandoc_html_highlight_args(highlight,
+                                               template,
+                                               FALSE,
+                                               files_dir))
 
     # mathjax
     if (!is.null(mathjax))

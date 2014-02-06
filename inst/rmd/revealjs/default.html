@@ -65,11 +65,21 @@ $endif$
   </style>
 
     <style type="text/css">code{white-space: pre;}</style>
-$if(highlighting-css)$
-    <style type="text/css">
-$highlighting-css$
-    </style>
+
+$if(highlightjs)$
+<link rel="stylesheet"
+      href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css"
+      $if(html5)$$else$type="text/css" $endif$/>
+<script src="$highlightjs$/highlight.js"></script>
 $endif$
+
+$if(highlighting-css)$
+<style type="text/css">
+$highlighting-css$
+</style>
+$endif$
+
+
 $if(css)$
 $for(css)$
     <link rel="stylesheet" href="$css$"/>

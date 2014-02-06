@@ -23,6 +23,8 @@ $if(theme)$
 <link href="$theme$" rel="stylesheet">
 $endif$
 
+<style type="text/css">code{white-space: pre;}</style>
+
 $if(highlightjs)$
 <link rel="stylesheet"
       href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css"
@@ -32,7 +34,6 @@ $endif$
 
 $if(highlighting-css)$
 <style type="text/css">
-code{white-space: pre;}
 $highlighting-css$
 </style>
 $endif$
