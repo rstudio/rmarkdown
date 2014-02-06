@@ -134,7 +134,11 @@ render <- function(input,
                  !quiet)
 
   # return the full path to the output file
-  invisible(tools::file_path_as_absolute(output_file))
+  output_file_absolute <- tools::file_path_as_absolute(output_file)
+  if (!quiet)
+    message("render complete: ", output_file_absolute)
+
+  invisible(output_file_absolute)
 }
 
 
