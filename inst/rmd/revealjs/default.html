@@ -79,15 +79,25 @@ $highlighting-css$
 </style>
 $endif$
 
+$if(theme)$
+<link rel="stylesheet" href="$revealjs-url$/css/theme/$theme$.css" id="theme">
+$endif$
+
+$if(theme-dark)$
+<style type="text/css">
+.reveal section img {
+  background: rgba(255, 255, 255, 0.85);
+}
+</style>
+$endif$
+
+<link rel="stylesheet" media="print" href="$revealjs-url$/css/print/pdf.css" />
 
 $if(css)$
 $for(css)$
     <link rel="stylesheet" href="$css$"/>
 $endfor$
-$else$
-    <link rel="stylesheet" href="$revealjs-url$/css/theme/$theme$.css" id="theme">
 $endif$
-  <link rel="stylesheet" media="print" href="$revealjs-url$/css/print/pdf.css" />
 
 $for(header-includes)$
     $header-includes$

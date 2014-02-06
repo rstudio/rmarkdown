@@ -2,8 +2,9 @@
 #'
 #' Format for converting from R Markdown to a reveal.js presentation.
 #'
-#' @inheritParams html_document
 #' @inheritParams beamer_presentation
+#' @inheritParams pdf_document
+#' @inheritParams html_document
 #'
 #' @param center \code{TRUE} to vertically center content on slides
 #' @param theme Visual theme ("default", "simple", sky", "beige", "serif", or
@@ -37,10 +38,6 @@
 #' \itemize{
 #'   \item{The \code{center} parameter does not work (you'd need to
 #'      set this directly in the template).
-#'   }
-#'   \item{For the \code{highlight} parameter, the default highlighting
-#'      style will resolve to "pygments" and the "textmate" highlighting
-#'      style is not available.
 #'   }
 #'   \item{The built-in template includes some additional tweaks to styles
 #'      to optimize for output from R, these won't be present.
@@ -122,6 +119,10 @@ revealjs_presentation <- function(slide_level = NULL,
   theme <- match.arg(theme, revealjs_themes())
   if (identical(theme, "default"))
     theme <- "simple"
+  else if (identical(theme, "dark"))
+    theme <- "default"
+  if (theme %in% c("default"))
+    args <- c(args, "--variable", "theme-dark")
   args <- c(args, "--variable", paste("theme=", theme, sep=""))
 
 
@@ -153,10 +154,7 @@ revealjs_presentation <- function(slide_level = NULL,
     args <- c(args, "--variable", paste("revealjs-url=", revealjs_path, sep=""))
 
     # highlight
-    args <- c(args, pandoc_html_highlight_args(highlight,
-                                               template,
-                                               self_contained,
-                                               files_dir))
+    args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))
 
     # mathjax
     args <- c(args, pandoc_mathjax_args(mathjax,
@@ -183,6 +181,7 @@ revealjs_presentation <- function(slide_level = NULL,
 revealjs_themes <- function() {
   c("default",
     "simple",
+    "dark",
     "sky",
     "beige",
     "serif",

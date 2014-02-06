@@ -19,57 +19,6 @@ revealjs_presentation(slide_level = NULL, incremental = FALSE,
   \item{transition}{Slide transition ("default", "cube",
   "page", "concave", "zoom", "linear", "fade", or "none")}
 
-  \item{fig_width}{Default width (in inches) for figures}
-
-  \item{fig_height}{Default width (in inches) for figures}
-
-  \item{fig_retina}{Scaling to perform for retina displays
-  (defaults to 2, which currently works for all widely used
-  retina displays). Note that this only takes effect if you
-  are using knitr >= 1.5.21. Set to \code{NULL} to prevent
-  retina scaling.}
-
-  \item{fig_caption}{\code{TRUE} to render figures with
-  captions}
-
-  \item{smart}{Produce typographically correct output,
-  converting straight quotes to curly quotes, --- to
-  em-dashes, -- to en-dashes, and ... to ellipses.}
-
-  \item{self_contained}{Produce a standalone HTML file with
-  no external dependencies, using data: URIs to incorporate
-  the contents of linked scripts, stylesheets, images, and
-  videos. Note that if you specify "local" for
-  \code{mathjax} then \code{self_contained} is
-  automatically set to \code{FALSE}.}
-
-  \item{highlight}{Syntax highlighting style. Supported
-  styles include "default", "tango", "pygments", "kate",
-  "monochrome", "espresso", "zenburn", "haddock", and
-  "textmate". Pass \code{NULL} to prevent syntax
-  highlighting.}
-
-  \item{mathjax}{Include mathjax. The "default" option uses
-  an https URL from the official MathJax CDN. The "local"
-  option uses a local version of MathJax (which is copied
-  into the output directory). You can pass an alternate URL
-  or pass \code{NULL} to exclude MathJax entirely.}
-
-  \item{template}{Pandoc template to use for rendering
-  HTML. See the Templates section below for more details on
-  templates.}
-
-  \item{includes}{Named list of additional content to
-  include within the document (typically created using the
-  \code{\link{includes}} function).}
-
-  \item{data_dir}{Additional directory to resolve relatives
-  paths of templates and included content against (the
-  directory of the input file is used by default).}
-
-  \item{pandoc_args}{Additional command line options to
-  pass to pandoc}
-
   \item{slide_level}{The heading level which defines
   indvidual slides. By default this is the highest header
   level in the hierarchy that is followed immediately by
@@ -82,6 +31,57 @@ revealjs_presentation(slide_level = NULL, incremental = FALSE,
   default incremental behavior for an individual bullet you
   can preceded it with \code{>}. For example: \emph{\code{>
   - Bullet Text}}}
+
+  \item{fig_width}{Default width (in inches) for figures}
+
+  \item{fig_height}{Default width (in inches) for figures}
+
+  \item{fig_caption}{\code{TRUE} to render figures with
+  captions}
+
+  \item{highlight}{Syntax highlighting style. Supported
+  styles include "default", "tango", "pygments", "kate",
+  "monochrome", "espresso", "zenburn", and "haddock". Pass
+  \code{NULL} to prevent syntax highlighting.}
+
+  \item{template}{Pandoc template to use for rendering
+  content. See the documentation on
+  \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
+  templates} for more details.}
+
+  \item{includes}{Named list of additional content to
+  include within the document (typically created using the
+  \code{\link{includes}} function).}
+
+  \item{data_dir}{Additional directory to resolve relatives
+  paths of templates and included content against (the
+  directory of the input file is used by default).}
+
+  \item{pandoc_args}{Additional command line options to
+  pass to pandoc}
+
+  \item{fig_retina}{Scaling to perform for retina displays
+  (defaults to 2, which currently works for all widely used
+  retina displays). Note that this only takes effect if you
+  are using knitr >= 1.5.21. Set to \code{NULL} to prevent
+  retina scaling.}
+
+  \item{smart}{Produce typographically correct output,
+  converting straight quotes to curly quotes, --- to
+  em-dashes, -- to en-dashes, and ... to ellipses.}
+
+  \item{self_contained}{Produce a standalone HTML file with
+  no external dependencies, using data: URIs to incorporate
+  the contents of linked scripts, stylesheets, images, and
+  videos. Note that if you specify "local" for
+  \code{mathjax} then \code{self_contained} is
+  automatically set to \code{FALSE}.}
+
+  \item{mathjax}{Include mathjax. The "default" option uses
+  an https URL from the official MathJax CDN. The "local"
+  option uses a local version of MathJax (which is copied
+  into the output directory). You can pass an alternate URL
+  or pass \code{NULL} to exclude MathJax entirely.}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}
@@ -115,9 +115,6 @@ slide shows with pandoc}.
 
   \itemize{ \item{The \code{center} parameter does not work
   (you'd need to set this directly in the template).  }
-  \item{For the \code{highlight} parameter, the default
-  highlighting style will resolve to "pygments" and the
-  "textmate" highlighting style is not available.  }
   \item{The built-in template includes some additional
   tweaks to styles to optimize for output from R, these
   won't be present.  } \item{MathJax is automatically
