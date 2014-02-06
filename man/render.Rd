@@ -15,6 +15,12 @@ render(input, output_format = NULL, output_file = NULL, clean = TRUE,
   metadata within the input file (defaulting to HTML if no format is specified
   in metadata).}
 
+  \item{output_options}{List of output options that can override the options
+  specified in metadata (e.g. could be used to force \code{self_contained} or
+  \code{mathjax = "local"}). Note that this is only valid when the output
+  format is read from metadata (i.e. not a custom format object passed to
+  \code{output_format})}.
+
   \item{output_file}{Output file (if not specified then a
   default based on the specified output format is chosen)}
 
