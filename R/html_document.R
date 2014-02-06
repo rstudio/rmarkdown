@@ -108,10 +108,7 @@ html_document <- function(toc = FALSE,
                           pandoc_args = NULL) {
 
   # interplay between arguments
-
-  # local mathjax forces !self_contained
-  if (identical(mathjax, "local"))
-    self_contained <- FALSE
+  self_contained <- reconcile_self_contained(self_contained, mathjax)
 
   # build pandoc args
   args <- c("--standalone")

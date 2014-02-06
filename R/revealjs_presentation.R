@@ -90,10 +90,7 @@ revealjs_presentation <- function(slide_level = NULL,
 
 
   # interplay between arguments
-
-  # local mathjax forces !self_contained
-  if (identical(mathjax, "local"))
-    self_contained <- FALSE
+  self_contained <- reconcile_self_contained(self_contained, mathjax)
 
   # base pandoc options for all reveal.js output
   args <- c()

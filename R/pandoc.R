@@ -239,6 +239,16 @@ pandoc_path_arg <- function(path) {
   path
 }
 
+reconcile_self_contained <- function(self_contained, mathjax) {
+  if (identical(mathjax, "local")) {
+    if (self_contained)
+      warning("Local MathJax isn't compatible with self_contained ",
+              "(setting self_contained to FALSE)", call. = FALSE)
+    self_contained <- FALSE
+  }
+  self_contained
+}
+
 pandoc_mathjax_args <- function(mathjax,
                                 template,
                                 self_contained,
@@ -260,11 +270,11 @@ pandoc_mathjax_args <- function(mathjax,
 
     if (is.null(template)) {
       args <- c(args, "--mathjax")
-      args <- c(args, "--variable", paste("mathjax-url:", mathjax_url, sep=""))
+      args <- c(args, "--variable", paste("mathjax-url:", mathjax, sep=""))
     } else if (!self_contained) {
       args <- c(args, "--mathjax", mathjax)
     } else {
-      warning("mathjax doesn't work with self_contained when using ",
+      warning("MathJax doesn't work with self_contained when using ",
               "custom pandoc templates.", call. = FALSE)
     }
 
