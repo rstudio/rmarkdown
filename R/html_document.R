@@ -193,7 +193,7 @@ html_document <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina),
-    pandoc = pandoc_options(to = "html",
+    pandoc = pandoc_options(to = "html5",
                             from = from_rmarkdown(fig_caption),
                             args = args),
     clean_supporting = self_contained,
