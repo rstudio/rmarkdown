@@ -3,11 +3,11 @@
 
 The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
 
-* Support for creating HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home) and [reveal.js](http://lab.hakim.se/reveal-js/#/) presentations
+* Create HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home) and [reveal.js](http://lab.hakim.se/reveal-js/#/) presentations
 * New markdown syntax including expanded support for tables, definition lists, and bibliographies.
 * A responsive (multi-device friendly) and themeable HTML template based on [Bootstrap 3](http://getbootstrap.com).
 * Hooks for customizing HTML and PDF output (include CSS, headers, and footers).
-* The ability to include raw LaTeX within markdown for advanced customization of PDF output.
+* Include raw LaTeX within markdown for advanced customization of PDF output.
 * Extensibility: easily define new formats for custom publishing requirements.
 
 Note that creating PDF and Beamer output requires that LaTeX be installed.
