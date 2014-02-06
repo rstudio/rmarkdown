@@ -121,7 +121,7 @@ revealjs_presentation <- function(slide_level = NULL,
     theme <- "simple"
   else if (identical(theme, "dark"))
     theme <- "default"
-  if (theme %in% c("default"))
+  if (theme %in% c("default", "blood", "moon", "night"))
     args <- c(args, "--variable", "theme-dark")
   args <- c(args, "--variable", paste("theme=", theme, sep=""))
 
@@ -181,11 +181,14 @@ revealjs_presentation <- function(slide_level = NULL,
 revealjs_themes <- function() {
   c("default",
     "simple",
-    "dark",
     "sky",
     "beige",
     "serif",
-    "solarized")
+    "solarized",
+    "dark",
+    "blood",
+    "moon",
+    "night")
 }
 
 
