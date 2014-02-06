@@ -1,4 +1,3 @@
-
 ### Overview
 
 The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
@@ -14,7 +13,7 @@ Note that creating PDF and Beamer output requires that LaTeX be installed.
 
 ### Installation
 
-To install the package and it's dependencies:
+To install the package and its dependencies:
 
 ```
 devtools::install_github("rmarkdown", "rstudio")
@@ -49,7 +48,7 @@ For newer Linux systems it's possible to build a standalone version of pandoc v1
 
 [https://github.com/rstudio/rmarkdown/blob/master/tools/build-pandoc-standalone-debian.sh](https://github.com/rstudio/rmarkdown/blob/master/tools/build-pandoc-standalone-debian.sh)
 
-This is the script RStudio uses to create it's bundled version of pandoc for Debian.
+This is the script RStudio uses to create its bundled version of pandoc for Debian.
 
 You can also make pandoc available to the system by soft-linking the binaries included with RStudio:
 
