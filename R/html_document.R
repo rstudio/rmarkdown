@@ -31,8 +31,12 @@
 #'   the official MathJax CDN. The "local" option uses a local version of
 #'   MathJax (which is copied into the output directory). You can pass an
 #'   alternate URL or pass \code{NULL} to exclude MathJax entirely.
-#' @param template Pandoc template to use for rendering HTML. See the Templates
-#'   section below for more details on templates.
+#' @param template Pandoc template to use for rendering. Pass "default"
+#'   to use the rmarkdown package default template; pass \code{NULL}
+#'   to use pandoc's built-in template; pass a path to use a custom template
+#'   that you've created. Note that if you don't use the "default" template
+#'   then some features of \code{html_document} won't be available (see the
+#'   Templates section below for more details).
 #' @param css One or more css files to include
 #' @param includes Named list of additional content to include within the
 #'   document (typically created using the \code{\link{includes}} function).
@@ -57,10 +61,11 @@
 #' You can provide a custom HTML template to be used for rendering. The syntax
 #' for templates is described in the documentation on
 #' \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
-#' templates}.
+#' templates}. You can also use the basic pandoc template by passing
+#' \code{template = NULL}.
 #'
-#' Note however that if you choose to provide your own HTML template then
-#' several aspects of HTML document rendering will behave differently:
+#' Note however that if you choose not to use the "default" HTML template
+#' then several aspects of HTML document rendering will behave differently:
 #'
 #' \itemize{
 #'   \item{The \code{theme} parameter does not work (you can still
@@ -70,9 +75,8 @@
 #'      style will resolve to "pygments" and the "textmate" highlighting
 #'      style is not available
 #'   }
-#'   \item{MathJax is automatically disabled if \code{self_contained} is
-#'      \code{TRUE} (these two options can't be used together in normal
-#'      pandoc templates).
+#'   \item{MathJax will not work if \code{self_contained} is \code{TRUE}
+#'      (these two options can't be used together in normal pandoc templates).
 #'   }
 #' }
 #'
@@ -101,7 +105,7 @@ html_document <- function(toc = FALSE,
                           theme = "default",
                           highlight = "default",
                           mathjax = "default",
-                          template = NULL,
+                          template = "default",
                           css = NULL,
                           includes = NULL,
                           data_dir = NULL,
@@ -125,11 +129,11 @@ html_document <- function(toc = FALSE,
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # template path and assets
-  if (!is.null(template))
-    args <- c(args, "--template", pandoc_path_arg(template))
-  else
+  if (identical(template, "default"))
     args <- c(args, "--template",
               pandoc_path_arg(rmarkdown_system_file("rmd/h/default.html")))
+  else if (!is.null(template))
+    args <- c(args, "--template", pandoc_path_arg(template))
 
   # additional css
   for (css_file in css)
@@ -193,7 +197,7 @@ html_document <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina),
-    pandoc = pandoc_options(to = "html5",
+    pandoc = pandoc_options(to = "html",
                             from = from_rmarkdown(fig_caption),
                             args = args),
     clean_supporting = self_contained,
