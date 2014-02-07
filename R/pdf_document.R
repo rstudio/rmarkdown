@@ -14,9 +14,10 @@
 #'   "pdflatex", "lualatex", and "xelatex".
 #' @param natbib Use natbib for citations in LaTeX output
 #' @param biblatex Use biblatex for citations in LaTeX output
-#' @param template Pandoc template to use for rendering content. See the
-#' documentation on \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
-#' templates} for more details.
+#' @param template Pandoc template to use for rendering. Pass "default"
+#'   to use the rmarkdown package default template; pass \code{NULL}
+#'   to use pandoc's built-in template; pass a path to use a custom template
+#'   that you've created.  See the documentation on \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc templates} for more details.
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -79,10 +80,10 @@ pdf_document <- function(toc = FALSE,
                          fig_crop = TRUE,
                          fig_caption = TRUE,
                          highlight = "default",
+                         template = "default",
                          latex_engine = "pdflatex",
                          natbib = FALSE,
                          biblatex = FALSE,
-                         template = NULL,
                          includes = NULL,
                          data_dir = NULL,
                          pandoc_args = NULL) {
@@ -94,11 +95,11 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # template path and assets
-  if (!is.null(template))
-    args <- c(args, "--template", pandoc_path_arg(template))
-  else
+  if (identical(template, "default"))
     args <- c(args, "--template",
               pandoc_path_arg(rmarkdown_system_file("rmd/latex/default.tex")))
+  else if (!is.null(template))
+    args <- c(args, "--template", pandoc_path_arg(template))
 
   # numbered sections
   if (number_sections)
@@ -131,13 +132,19 @@ pdf_document <- function(toc = FALSE,
   # args args
   args <- c(args, pandoc_args)
 
+  # use a geometry filter when we are using the "default" template
+  if (identical(template, "default"))
+    filter <- filter_pdf
+  else
+    filter <- NULL
+
   # return format
   output_format(
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop),
     pandoc = pandoc_options(to = "latex",
                             from = from_rmarkdown(fig_caption),
                             args = args),
-    filter = filter_pdf
+    filter = filter
   )
 }
 

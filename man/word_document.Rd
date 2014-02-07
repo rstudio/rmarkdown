@@ -3,14 +3,15 @@
 \title{Convert to an MS Word document}
 \usage{
 word_document(fig_width = 6, fig_height = 4.5, fig_caption = FALSE,
-  highlight = "default", reference_docx = NULL, data_dir = NULL,
+  highlight = "default", reference_docx = "default", data_dir = NULL,
   pandoc_args = NULL)
 }
 \arguments{
   \item{reference_docx}{Use the specified file as a style
   reference in producing a docx file. For best results, the
   reference docx should be a modified version of a docx
-  file produced using pandoc.}
+  file produced using pandoc. Pass "default" to use the
+  rmarkdown default styles.}
 
   \item{fig_width}{Default width (in inches) for figures}
 

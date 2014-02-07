@@ -76,7 +76,7 @@ beamer_presentation <- function(toc = FALSE,
                                 fig_crop = TRUE,
                                 fig_caption = FALSE,
                                 highlight = "default",
-                                template = NULL,
+                                template = "default",
                                 includes = NULL,
                                 data_dir = NULL,
                                 pandoc_args = NULL) {
@@ -85,11 +85,11 @@ beamer_presentation <- function(toc = FALSE,
   args <- c()
 
   # template path and assets
-  if (!is.null(template))
-    args <- c(args, "--template", pandoc_path_arg(template))
-  else
+  if (identical(template, "default"))
     args <- c(args, "--template",
               pandoc_path_arg(rmarkdown_system_file("rmd/beamer/default.tex")))
+  else if (!is.null(template))
+    args <- c(args, "--template", pandoc_path_arg(template))
 
   # table of contents
   if (toc)

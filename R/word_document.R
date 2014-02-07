@@ -7,7 +7,8 @@
 #'
 #' @param reference_docx Use the specified file as a style reference in
 #'   producing a docx file. For best results, the reference docx should be a
-#'   modified version of a docx file produced using pandoc.
+#'   modified version of a docx file produced using pandoc. Pass "default"
+#'   to use the rmarkdown default styles.
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -36,7 +37,7 @@ word_document <- function(fig_width = 6,
                           fig_height = 4.5,
                           fig_caption = FALSE,
                           highlight = "default",
-                          reference_docx = NULL,
+                          reference_docx = "default",
                           data_dir = NULL,
                           pandoc_args = NULL) {
 
@@ -57,7 +58,7 @@ word_document <- function(fig_width = 6,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # reference docx
-  if (!is.null(reference_docx)) {
+  if (!is.null(reference_docx) && !identical(reference_docx, "default")) {
     args <- c(args, "--reference-docx", pandoc_path_arg(reference_docx))
   }
 

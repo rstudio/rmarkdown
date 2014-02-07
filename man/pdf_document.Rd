@@ -4,8 +4,8 @@
 \usage{
 pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   fig_width = 6, fig_height = 4.5, fig_crop = TRUE, fig_caption = TRUE,
-  highlight = "default", latex_engine = "pdflatex", natbib = FALSE,
-  biblatex = FALSE, template = NULL, includes = NULL, data_dir = NULL,
+  highlight = "default", template = "default", latex_engine = "pdflatex",
+  natbib = FALSE, biblatex = FALSE, includes = NULL, data_dir = NULL,
   pandoc_args = NULL)
 }
 \arguments{
@@ -29,8 +29,11 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   \item{biblatex}{Use biblatex for citations in LaTeX
   output}
 
-  \item{template}{Pandoc template to use for rendering
-  content. See the documentation on
+  \item{template}{Pandoc template to use for rendering.
+  Pass "default" to use the rmarkdown package default
+  template; pass \code{NULL} to use pandoc's built-in
+  template; pass a path to use a custom template that
+  you've created.  See the documentation on
   \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
   templates} for more details.}
 
