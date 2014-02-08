@@ -337,6 +337,8 @@ find_pandoc <- function() {
     sys_pandoc <- Sys.which("pandoc")
     sources <- c(ifelse(nzchar(sys_pandoc), dirname(sys_pandoc), ""),
                  Sys.getenv("RSTUDIO_PANDOC"))
+    if (!is_windows())
+      sources <- c(sources, "~/opt/pandoc")
 
     # determine the versions of the sources
     versions <- lapply(sources, function(src) {

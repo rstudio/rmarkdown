@@ -6,14 +6,13 @@ before_install:
   - ./travis-tool.sh bootstrap
 install:
   # Install binary pandoc from Rstudio
-  - export PATH="$HOME/pandoc:$PATH"
-  - mkdir $HOME/pandoc
+  - mkdir -p $HOME/opt/pandoc
   - curl -O https://s3.amazonaws.com/rstudio-buildtools/pandoc-1.12.3.zip
   - unzip -j pandoc-1.12.3.zip pandoc-1.12.3/linux/debian/x86_64/pandoc
-      -d $HOME/pandoc
-  - chmod +x $HOME/pandoc/pandoc
+      -d $HOME/opt/pandoc
+  - chmod +x $HOME/opt/pandoc/pandoc*
   - rm pandoc-1.12.3.zip
-  - pandoc --version
+  - $HOME/opt/pandoc/pandoc --version
 
   - ./travis-tool.sh r_binary_install knitr
   - ./travis-tool.sh r_binary_install yaml
