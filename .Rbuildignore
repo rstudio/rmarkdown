@@ -3,4 +3,4 @@
 tools/
 README\.(md|html)
 CONTRIBUTING\.(md|html)
-
+^\.travis\.yml$
