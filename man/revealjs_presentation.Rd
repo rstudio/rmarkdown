@@ -6,7 +6,7 @@ revealjs_presentation(slide_level = NULL, incremental = FALSE,
   center = FALSE, fig_width = 8, fig_height = 6, fig_retina = 2,
   fig_caption = FALSE, smart = TRUE, self_contained = TRUE,
   theme = "default", transition = "default", highlight = "default",
-  mathjax = "default", template = NULL, includes = NULL,
+  mathjax = "default", template = "default", includes = NULL,
   data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
@@ -18,6 +18,15 @@ revealjs_presentation(slide_level = NULL, incremental = FALSE,
 
   \item{transition}{Slide transition ("default", "cube",
   "page", "concave", "zoom", "linear", "fade", or "none")}
+
+  \item{template}{Pandoc template to use for rendering.
+  Pass "default" to use the rmarkdown package default
+  template; pass \code{NULL} to use pandoc's built-in
+  template; pass a path to use a custom template that
+  you've created. Note that if you don't use the "default"
+  template then some features of
+  \code{revealjs_presentation} won't be available (see the
+  Templates section below for more details).}
 
   \item{slide_level}{The heading level which defines
   indvidual slides. By default this is the highest header
@@ -43,11 +52,6 @@ revealjs_presentation(slide_level = NULL, incremental = FALSE,
   styles include "default", "tango", "pygments", "kate",
   "monochrome", "espresso", "zenburn", and "haddock". Pass
   \code{NULL} to prevent syntax highlighting.}
-
-  \item{template}{Pandoc template to use for rendering
-  content. See the documentation on
-  \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
-  templates} for more details.}
 
   \item{includes}{Named list of additional content to
   include within the document (typically created using the
@@ -107,20 +111,20 @@ slide shows with pandoc}.
   rendering. The syntax for templates is described in the
   documentation on
   \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
-  templates}.
+  templates}. You can also use the basic pandoc template by
+  passing \code{template = NULL}.
 
-  Note however that if you choose to provide your own HTML
-  template then several aspects of HTML document rendering
-  will behave differently:
+  Note however that if you choose not to use the "default"
+  reveal.js template then several aspects of reveal.js
+  presentation rendering will behave differently:
 
   \itemize{ \item{The \code{center} parameter does not work
   (you'd need to set this directly in the template).  }
   \item{The built-in template includes some additional
   tweaks to styles to optimize for output from R, these
-  won't be present.  } \item{MathJax is automatically
-  disabled if \code{self_contained} is \code{TRUE} (these
-  two options can't be used together in normal pandoc
-  templates).  } }
+  won't be present.  } \item{MathJax will not work if
+  \code{self_contained} is \code{TRUE} (these two options
+  can't be used together in normal pandoc templates).  } }
 }
 \examples{
 \dontrun{

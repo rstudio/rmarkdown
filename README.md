@@ -44,13 +44,7 @@ $ yum install pandoc pandoc-citeproc
 
 ##### Newer Systems (Debian/Ubuntu/Fedora)
 
-For newer Linux systems it's possible to build a standalone version of pandoc v1.12.3 using this script (developed and tested on Ubuntu 10.04):
-
-[https://github.com/rstudio/rmarkdown/blob/master/tools/build-pandoc-standalone-debian.sh](https://github.com/rstudio/rmarkdown/blob/master/tools/build-pandoc-standalone-debian.sh)
-
-This is the script RStudio uses to create its bundled version of pandoc for Debian.
-
-You can also make pandoc available to the system by soft-linking the binaries included with RStudio:
+For newer Linux systems you can make a standalone version of pandoc v1.12.3 available to the system by soft-linking the binaries included with RStudio:
 
 ```
 $ sudo ln -s /usr/lib/rstudio/bin/pandoc/pandoc /usr/local/bin
@@ -64,9 +58,7 @@ $ sudo ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc /usr/local/bin
 $ sudo ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc-citeproc /usr/local/bin
 ```
 
-If you aren't running RStudio at all you could also copy the binaries out of the RStudio `bin/pandoc` directory and locate them within `/usr/local/bin` on your target system.
-
-
+If you aren't running RStudio at all you can simply copy the binaries out of the RStudio `bin/pandoc` directory and locate them within `/usr/local/bin` on your target system.
 
 
 ### Usage

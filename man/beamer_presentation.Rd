@@ -4,7 +4,7 @@
 \usage{
 beamer_presentation(toc = FALSE, slide_level = NULL, incremental = FALSE,
   fig_width = 10, fig_height = 7, fig_crop = TRUE, fig_caption = FALSE,
-  highlight = "default", template = NULL, includes = NULL,
+  highlight = "default", template = "default", includes = NULL,
   data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
@@ -33,8 +33,11 @@ beamer_presentation(toc = FALSE, slide_level = NULL, incremental = FALSE,
   "monochrome", "espresso", "zenburn", and "haddock". Pass
   \code{NULL} to prevent syntax highlighting.}
 
-  \item{template}{Pandoc template to use for rendering
-  content. See the documentation on
+  \item{template}{Pandoc template to use for rendering.
+  Pass "default" to use the rmarkdown package default
+  template; pass \code{NULL} to use pandoc's built-in
+  template; pass a path to use a custom template that
+  you've created.  See the documentation on
   \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
   templates} for more details.}
 

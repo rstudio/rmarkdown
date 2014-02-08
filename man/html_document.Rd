@@ -5,8 +5,8 @@
 html_document(toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
   fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, theme = "default", highlight = "default",
-  mathjax = "default", template = NULL, css = NULL, includes = NULL,
-  data_dir = NULL, pandoc_args = NULL)
+  mathjax = "default", template = "default", css = NULL,
+  includes = NULL, data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -57,9 +57,14 @@ html_document(toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
   into the output directory). You can pass an alternate URL
   or pass \code{NULL} to exclude MathJax entirely.}
 
-  \item{template}{Pandoc template to use for rendering
-  HTML. See the Templates section below for more details on
-  templates.}
+  \item{template}{Pandoc template to use for rendering.
+  Pass "default" to use the rmarkdown package default
+  template; pass \code{NULL} to use pandoc's built-in
+  template; pass a path to use a custom template that
+  you've created. Note that if you don't use the "default"
+  template then some features of \code{html_document} won't
+  be available (see the Templates section below for more
+  details).}
 
   \item{css}{One or more css files to include}
 
@@ -94,20 +99,21 @@ see the documentation on R Markdown
   rendering. The syntax for templates is described in the
   documentation on
   \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
-  templates}.
+  templates}. You can also use the basic pandoc template by
+  passing \code{template = NULL}.
 
-  Note however that if you choose to provide your own HTML
-  template then several aspects of HTML document rendering
-  will behave differently:
+  Note however that if you choose not to use the "default"
+  HTML template then several aspects of HTML document
+  rendering will behave differently:
 
   \itemize{ \item{The \code{theme} parameter does not work
   (you can still provide styles using the \code{css}
   parameter).  } \item{For the \code{highlight} parameter,
   the default highlighting style will resolve to "pygments"
   and the "textmate" highlighting style is not available }
-  \item{MathJax is automatically disabled if
-  \code{self_contained} is \code{TRUE} (these two options
-  can't be used together in normal pandoc templates).  } }
+  \item{MathJax will not work if \code{self_contained} is
+  \code{TRUE} (these two options can't be used together in
+  normal pandoc templates).  } }
 
   Due to the above restrictions, you might consider using
   the \code{includes} parameter as an alternative to

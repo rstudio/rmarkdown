@@ -11,6 +11,12 @@
 #'   "solarized").
 #' @param transition Slide transition ("default", "cube", "page", "concave",
 #'   "zoom", "linear", "fade", or "none")
+#' @param template Pandoc template to use for rendering. Pass "default"
+#'   to use the rmarkdown package default template; pass \code{NULL}
+#'   to use pandoc's built-in template; pass a path to use a custom template
+#'   that you've created. Note that if you don't use the "default" template
+#'   then some features of \code{revealjs_presentation} won't be available
+#'   (see the Templates section below for more details).
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -30,10 +36,12 @@
 #' You can provide a custom HTML template to be used for rendering. The syntax
 #' for templates is described in the documentation on
 #' \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
-#' templates}.
+#' templates}. You can also use the basic pandoc template by passing
+#' \code{template = NULL}.
 #'
-#' Note however that if you choose to provide your own HTML template then
-#' several aspects of HTML document rendering will behave differently:
+#' Note however that if you choose not to use the "default" reveal.js template
+#' then several aspects of reveal.js presentation rendering will behave
+#' differently:
 #'
 #' \itemize{
 #'   \item{The \code{center} parameter does not work (you'd need to
@@ -42,9 +50,8 @@
 #'   \item{The built-in template includes some additional tweaks to styles
 #'      to optimize for output from R, these won't be present.
 #'   }
-#'   \item{MathJax is automatically disabled if \code{self_contained} is
-#'      \code{TRUE} (these two options can't be used together in normal
-#'      pandoc templates).
+#'   \item{MathJax will not work if \code{self_contained} is \code{TRUE}
+#'      (these two options can't be used together in normal pandoc templates).
 #'   }
 #' }
 #'
@@ -74,7 +81,7 @@ revealjs_presentation <- function(slide_level = NULL,
                                   transition = "default",
                                   highlight = "default",
                                   mathjax = "default",
-                                  template = NULL,
+                                  template = "default",
                                   includes = NULL,
                                   data_dir = NULL,
                                   pandoc_args = NULL) {
@@ -95,13 +102,12 @@ revealjs_presentation <- function(slide_level = NULL,
     args <- c(args, "--self-contained")
 
   # template path and assets
-  if (!is.null(template))
-    args <- c(args, "--template", pandoc_path_arg(template))
-  else {
+  if (!identical(template, "default"))
     args <- c(args, "--template",
               pandoc_path_arg(rmarkdown_system_file(
-                                  "rmd/revealjs/default.html")))
-  }
+                "rmd/revealjs/default.html")))
+  else if (!is.null(template))
+    args <- c(args, "--template", pandoc_path_arg(template))
 
   # slide level
   if (!is.null(slide_level))

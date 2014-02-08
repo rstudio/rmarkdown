@@ -257,8 +257,12 @@ pandoc_mathjax_args <- function(mathjax,
 
   if (!is.null(mathjax)) {
 
-    if (identical(mathjax, "default"))
-      mathjax <- default_mathjax()
+    if (identical(mathjax, "default")) {
+      if (identical(template, "default"))
+        mathjax <- default_mathjax()
+      else
+        mathjax <- NULL
+    }
     else if (identical(mathjax, "local")) {
       mathjax_path <- rmarkdown_system_file("rmd/h/m")
       mathjax_path <- render_supporting_files(mathjax_path,
@@ -268,14 +272,16 @@ pandoc_mathjax_args <- function(mathjax,
       mathjax <- paste(mathjax_path, "/", mathjax_config(), sep = "")
     }
 
-    if (is.null(template)) {
+    if (identical(template, "default")) {
       args <- c(args, "--mathjax")
       args <- c(args, "--variable", paste("mathjax-url:", mathjax, sep=""))
     } else if (!self_contained) {
-      args <- c(args, "--mathjax", mathjax)
+      args <- c(args, "--mathjax")
+      if (!is.null(mathjax))
+        args <- c(args, mathjax)
     } else {
-      warning("MathJax doesn't work with self_contained when using ",
-              "custom pandoc templates.", call. = FALSE)
+      warning("MathJax doesn't work with self_contained when not ",
+              "using the rmarkdown \"default\" template.", call. = FALSE)
     }
 
   }
@@ -293,7 +299,7 @@ pandoc_html_highlight_args <- function(highlight,
   if (is.null(highlight)) {
     args <- c(args, "--no-highlight")
   }
-  else if (!is.null(template)) {
+  else if (!identical(template, "default")) {
     if (identical(highlight, "default"))
       highlight <- "pygments"
     args <- c(args, "--highlight-style", highlight)
