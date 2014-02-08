@@ -233,7 +233,7 @@ pandoc_path_arg <- function(path) {
   if (is_windows()) {
     if (grepl(' ', path, fixed=TRUE))
       path <- utils::shortPathName(path)
-    path <- gsub("\\\\", "/", path)
+    path <- gsub("/", "\\\\", path)
   }
 
   path
