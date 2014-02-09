@@ -134,9 +134,9 @@ pdf_document <- function(toc = FALSE,
 
   # use a geometry filter when we are using the "default" template
   if (identical(template, "default"))
-    filter <- filter_pdf
+    format_filter <- filter_pdf
   else
-    filter <- NULL
+    format_filter <- NULL
 
   # return format
   output_format(
@@ -144,7 +144,7 @@ pdf_document <- function(toc = FALSE,
     pandoc = pandoc_options(to = "latex",
                             from = from_rmarkdown(fig_caption),
                             args = args),
-    filter = filter
+    format_filter = format_filter
   )
 }
 

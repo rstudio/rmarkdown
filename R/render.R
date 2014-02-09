@@ -58,10 +58,10 @@ render <- function(input,
   files_dir <- knitr_files_dir(basename(output_file))
 
   # call any filter that's been specified
-  if (!is.null(output_format$filter)) {
-    output_format <- output_format$filter(output_format = output_format,
-                                          files_dir = files_dir,
-                                          input_lines = input_lines)
+  if (!is.null(output_format$format_filter)) {
+    output_format <- output_format$format_filter(output_format = output_format,
+                                                 files_dir = files_dir,
+                                                 input_lines = input_lines)
   }
 
   # knit if necessary

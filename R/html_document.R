@@ -151,7 +151,7 @@ html_document <- function(toc = FALSE,
 
   # build a filter we'll use for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  filter <- function(output_format, files_dir, input_lines) {
+  format_filter <- function(output_format, files_dir, input_lines) {
 
     # extra args
     args <- c()
@@ -201,7 +201,7 @@ html_document <- function(toc = FALSE,
                             from = from_rmarkdown(fig_caption),
                             args = args),
     clean_supporting = self_contained,
-    filter = filter
+    format_filter = format_filter
   )
 }
 

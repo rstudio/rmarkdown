@@ -9,7 +9,7 @@
 #'   \code{\link{pandoc_options}})
 #' @param clean_supporting Cleanup any supporting files after conversion
 #'   see \code{\link{render_supporting_files}}
-#' @param filter An optional filter function that receives the
+#' @param format_filter An optional filter function that receives the
 #'   \code{output_format}, \code{files_dir}, and \code{input_lines}.
 #'   The filter can be called for it's side-effects (e.g. rendering
 #'   supporting files to the \code{files_dir}) and can also return a
@@ -30,11 +30,11 @@
 output_format <- function(knitr,
                           pandoc,
                           clean_supporting = TRUE,
-                          filter = NULL) {
+                          format_filter = NULL) {
   structure(list(knitr = knitr,
                  pandoc = pandoc,
                  clean_supporting = clean_supporting,
-                 filter = filter),
+                 format_filter = format_filter),
             class = "rmarkdown_output_format")
 }
 

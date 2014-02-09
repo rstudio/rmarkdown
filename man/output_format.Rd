@@ -2,7 +2,7 @@
 \alias{output_format}
 \title{Define an R Markdown output format}
 \usage{
-output_format(knitr, pandoc, clean_supporting = TRUE, filter = NULL)
+output_format(knitr, pandoc, clean_supporting = TRUE, format_filter = NULL)
 }
 \arguments{
   \item{knitr}{Knitr options for an output format (see
@@ -15,8 +15,8 @@ output_format(knitr, pandoc, clean_supporting = TRUE, filter = NULL)
   after conversion see
   \code{\link{render_supporting_files}}}
 
-  \item{filter}{An optional filter function that receives
-  the \code{output_format}, \code{files_dir}, and
+  \item{format_filter}{An optional filter function that
+  receives the \code{output_format}, \code{files_dir}, and
   \code{input_lines}.  The filter can be called for it's
   side-effects (e.g. rendering supporting files to the
   \code{files_dir}) and can also return a modified format.}
