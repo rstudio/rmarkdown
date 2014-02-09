@@ -102,7 +102,7 @@ revealjs_presentation <- function(slide_level = NULL,
     args <- c(args, "--self-contained")
 
   # template path and assets
-  if (!identical(template, "default"))
+  if (identical(template, "default"))
     args <- c(args, "--template",
               pandoc_path_arg(rmarkdown_system_file(
                 "rmd/revealjs/default.html")))
