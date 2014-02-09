@@ -109,6 +109,12 @@ render <- function(input,
   # read the input text
   input_text <- read_lines_utf8(input, encoding)
 
+  # partition out the front matter and call a filter if we have one
+  partitions <- partition_yaml_front_matter(input_text)
+  if (!is.null(output_format$input_filter)) {
+    input_body <- output_format$input_filter(partitions)
+    input_text <- c(partitions$front_matter, input_body)
+  }
 
   # write pandoc input text
   writeLines(input_text, pandoc_input, useBytes = TRUE)

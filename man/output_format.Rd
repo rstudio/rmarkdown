@@ -2,7 +2,8 @@
 \alias{output_format}
 \title{Define an R Markdown output format}
 \usage{
-output_format(knitr, pandoc, clean_supporting = TRUE, format_filter = NULL)
+output_format(knitr, pandoc, clean_supporting = TRUE, format_filter = NULL,
+  input_filter = NULL)
 }
 \arguments{
   \item{knitr}{Knitr options for an output format (see

@@ -30,11 +30,13 @@
 output_format <- function(knitr,
                           pandoc,
                           clean_supporting = TRUE,
-                          format_filter = NULL) {
+                          format_filter = NULL,
+                          input_filter = NULL) {
   structure(list(knitr = knitr,
                  pandoc = pandoc,
                  clean_supporting = clean_supporting,
-                 format_filter = format_filter),
+                 format_filter = format_filter,
+                 input_filter = input_filter),
             class = "rmarkdown_output_format")
 }
 
@@ -280,20 +282,37 @@ is_output_format <- function(x) {
 
 parse_yaml_front_matter <- function(input_lines) {
 
+  partitions <- partition_yaml_front_matter(input_lines)
+  if (!is.null(partitions$front_matter))
+    yaml::yaml.load(paste(partitions$front_matter, collapse="\n"))
+  else
+    list()
+}
+
+partition_yaml_front_matter <- function(input_lines) {
+
   # is there yaml front matter?
   delimiters <- grep("^---\\s*$", input_lines)
   if (length(delimiters) >= 2 && (delimiters[2] - delimiters[1] > 1)) {
 
-    # attempt to parse the yaml
     front_matter <- input_lines[(delimiters[1]+1):(delimiters[2]-1)]
-    yaml_front_matter <- yaml::yaml.load(paste(front_matter, collapse="\n"))
-    if (!is.null(yaml_front_matter))
-      yaml_front_matter
-    else
-      list()
+
+    input_body <- c()
+
+    if (delimiters[1] > 1)
+      input_body <- c(input_body,
+                      input_lines[1:delimiters[1]-1])
+
+    if (delimiters[2] < length(input_lines))
+      input_body <- c(input_body,
+                      input_lines[delimiters[2]+1:length(input_lines)])
+
+    list(front_matter = front_matter,
+         body = input_body)
   }
   else {
-    list()
+    list(front_matter = NULL,
+         body = input_lines)
   }
 }
 
