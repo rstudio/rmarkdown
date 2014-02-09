@@ -47,7 +47,10 @@ read_lines_utf8 <- function(file, encoding) {
     encoding <- ""
 
   # convert to utf8
-  iconv(lines, from = encoding, to = "UTF-8")
+  if (!identical(encoding, "UTF-8"))
+    iconv(lines, from = encoding, to = "UTF-8")
+  else
+    lines
 }
 
 file_with_meta_ext <- function(file, meta_ext, ext = tools::file_ext(file)) {

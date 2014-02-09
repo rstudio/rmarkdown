@@ -33,8 +33,13 @@ render <- function(input,
   oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
-  # reset the name of the input file to be relative
+  # reset the name of the input file to be relative and calculate variations
+  # on the filename for our various intermediate targets
   input <- basename(input)
+  knit_output <- file_with_meta_ext(input, "knit", "md")
+  intermediates <- c(intermediates, knit_output)
+  pandoc_input <- file_with_meta_ext(input, "pandoc", "md")
+  intermediates <- c(intermediates, pandoc_input)
 
   # read the input file
   input_lines <- read_lines_utf8(input, encoding)
@@ -85,18 +90,12 @@ render <- function(input,
       knitr::knit_hooks$set(as.list(output_format$knitr$knit_hooks))
     }
 
-    # calculate the output file name
-    knit_output <- file_with_meta_ext(input, "knit", "md")
-
     # perform the knit
     input <- knitr::knit(input,
                          knit_output,
                          envir = envir,
                          quiet = quiet,
                          encoding = encoding)
-
-    # add md file to intermediates
-    intermediates <- c(intermediates, input)
 
     # clean the files_dir if we've either been asking to clean supporting
     # files or if we know the supporting files are going to get copied
@@ -107,15 +106,12 @@ render <- function(input,
     }
   }
 
-  # if the encoding isn't UTF-8 then write a UTF-8 version
-  if (!identical(encoding, "UTF-8")) {
-    input_text <- read_lines_utf8(input, encoding)
-    input <- file_with_meta_ext(input, "utf8")
-    writeLines(input_text, input, useBytes = TRUE)
+  # read the input text
+  input_text <- read_lines_utf8(input, encoding)
 
-    # add utf8 version to intermediates
-    intermediates <- c(intermediates, input)
-  }
+
+  # write pandoc input text
+  writeLines(input_text, pandoc_input, useBytes = TRUE)
 
   # copy supporting files to the output directory if necessary
   if (!output_format$clean_supporting) {
@@ -127,7 +123,7 @@ render <- function(input,
   }
 
   # run the conversion
-  pandoc_convert(input,
+  pandoc_convert(pandoc_input,
                  output_format$pandoc$to,
                  output_format$pandoc$from,
                  output_file,
