@@ -82,7 +82,7 @@ ioslides_presentation <- function(fig_width = 8,
                    from = from_rmarkdown(fig_caption),
                    output = output_tmpfile,
                    options = args,
-                   verbose = FALSE)
+                   verbose = verbose)
     slides_lines <- readLines(output_tmpfile, warn = FALSE, encoding = "UTF-8")
 
     # read the output file
