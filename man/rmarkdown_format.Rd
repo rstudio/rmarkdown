@@ -19,14 +19,12 @@ that can be passed as the \code{from} argument of
 \details{
 By default R Markdown is defined as all pandoc markdown
 extensions with the following tweaks for backward
-compatibility with the markdown package and to avoid some
-current bugs of pandoc (+ features are added, - features
-are removed):
+compatibility with the markdown package (+ features are
+added, - features are removed):
 
 \tabular{l}{ \code{+autolink_bare_uris} \cr
 \code{+ascii_identifier} \cr
-\code{+tex_math_single_backslash} \cr
-\code{-markdown_in_html_blocks} \cr }
+\code{+tex_math_single_backslash} \cr }
 
 For more on pandoc markdown see the
 \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc

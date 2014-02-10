@@ -144,14 +144,12 @@ pandoc_options <- function(to,
 #'
 #' By default R Markdown is defined as all pandoc markdown extensions with
 #' the following tweaks for backward compatibility with the markdown package
-#' and to avoid some current bugs of pandoc (+ features are added, - features
-#' are removed):
+#' (+ features are added, - features are removed):
 #'
 #' \tabular{l}{
 #' \code{+autolink_bare_uris} \cr
 #' \code{+ascii_identifier} \cr
 #' \code{+tex_math_single_backslash} \cr
-#' \code{-markdown_in_html_blocks} \cr
 #' }
 #'
 #'
@@ -177,10 +175,6 @@ rmarkdown_format <- function(extensions = NULL) {
     "+autolink_bare_uris",
     "+ascii_identifiers",
     "+tex_math_single_backslash",
-
-    # we've found this to be problematic in the face of HTML that
-    # contains indentation (it gets convereted to a code block)
-    "-markdown_in_html_blocks",
 
     # caller additions or subtractions to the format
     extensions
