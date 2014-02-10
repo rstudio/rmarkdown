@@ -5,17 +5,12 @@ ioslides_presentation <- function(fig_width = 8,
                                   fig_retina = 2,
                                   fig_caption = FALSE,
                                   smart = TRUE,
+                                  self_contained = TRUE,
                                   mathjax = "default",
                                   pandoc_args = NULL) {
 
-  # set a self_contained variable to preserve all of the self_contained
-  # codepaths in case we can bring this back
-  self_contained = TRUE
-
-  # no local mathjax since ioslides have to be self_contained
-  # (we do this because the lua script needs to pick one or the other)
-  if (identical(mathjax, "local"))
-    stop("Local Mathjax is not supported for ioslides")
+  # interplay between arguments
+  self_contained <- reconcile_self_contained(self_contained, mathjax)
 
   # base pandoc options for all output
   args <- c()
@@ -72,7 +67,14 @@ ioslides_presentation <- function(fig_width = 8,
       args <- c(args, "--mathjax")
 
     # convert using our lua writer (write output to a temp file)
-    lua_writer <- rmarkdown_system_file("rmd/ioslides/slides.lua")
+    lua_writer <- tempfile("ioslides", fileext = ".lua")
+    file.copy(from = rmarkdown_system_file("rmd/ioslides/slides.lua"),
+              to = lua_writer)
+    if (self_contained) {
+      file.append(lua_writer,
+                  rmarkdown_system_file("rmd/ioslides/base64-image.lua"))
+    }
+
     output_tmpfile <- tempfile("ioslides-output", fileext = ".html")
     on.exit(unlink(output_tmpfile), add = TRUE)
     pandoc_convert(input = input_file,
@@ -80,7 +82,7 @@ ioslides_presentation <- function(fig_width = 8,
                    from = from_rmarkdown(fig_caption),
                    output = output_tmpfile,
                    options = args,
-                   verbose = verbose)
+                   verbose = FALSE)
     slides_lines <- readLines(output_tmpfile, warn = FALSE, encoding = "UTF-8")
 
     # read the output file
