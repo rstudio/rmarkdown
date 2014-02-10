@@ -201,8 +201,13 @@ function HorizontalRule()
 end
 
 function CodeBlock(s, attr)
-  return "<pre><code" .. attributes(attr) .. ">" .. escape(s) ..
-         "</code></pre>"
+
+  lang = ''
+  if attr["class"] then
+    lang = "lang-" .. attr["class"]
+  end
+
+  return "<pre class='prettyprint " .. lang .. "'>" .. escape(s) .. "</pre>"
 end
 
 function BulletList(items)
