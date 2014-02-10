@@ -1,0 +1,125 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" media="all" href="$ioslides-url$/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="$ioslides-url$/theme/css/phone.css">
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+        title: 'Title Goes Here<br>Up To Two Lines',
+        subtitle: 'Subtitle Goes Here',
+        //eventInfo: {
+        //  title: 'Google I/O',
+        //  date: '6/x/2013'
+        //},
+        useBuilds: true, // Default: true. False will turn off slide animation builds.
+        usePrettify: true, // Default: true
+        enableSlideAreas: true, // Default: true. False turns off the click areas on either slide of the slides.
+        enableTouch: true, // Default: true. If touch support should enabled. Note: the device must support touch.
+        //analytics: 'UA-XXXXXXXX-1', // TODO: Using this breaks GA for some reason (probably requirejs). Update your tracking code in template.html instead.
+        //favIcon: 'images/google_developers_logo_tiny.png',
+        fonts: [
+          'Open Sans:regular,semibold,italic,italicsemibold',
+          'Source Code Pro'
+        ],
+        //theme: ['mytheme'], // Add your own custom themes or styles in /theme/css. Leave off the .css extension.
+      },
+
+      // Author information
+      presenters: [{
+        name: 'Firstname Lastname',
+        company: 'Job Title<br>Google',
+        gplus: 'http://plus.google.com/1234567890',
+        twitter: '@yourhandle',
+        www: 'http://www.you.com',
+        github: 'http://github.com/you'
+      }/*, {
+        name: 'Second Name',
+        company: 'Job Title, Google',
+        gplus: 'http://plus.google.com/1234567890',
+        twitter: '@yourhandle',
+        www: 'http://www.you.com',
+        github: 'http://github.com/you'
+      }*/]
+    };
+  </script>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+    <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+    </hgroup>
+  </slide>
+
+  <slide>
+    <hgroup>
+      <h2>Slide with Bullets</h2>
+    </hgroup>
+    <article>
+      $body$
+    </article>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="$ioslides-url$/js/modernizr.custom.45394.js"></script>
+<script src="$ioslides-url$/js/prettify/prettify.js"></script>
+<script src="$ioslides-url$/js/hammer.js"></script>
+<script src="$ioslides-url$/js/slide-controller.js"></script>
+<script src="$ioslides-url$/js/slide-deck.js"></script>
+
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+$if(mathjax-url)$
+<!-- dynamically load mathjax for compatibility with --self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "$mathjax-url$";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+$endif$
+
+</body>
+</html>
