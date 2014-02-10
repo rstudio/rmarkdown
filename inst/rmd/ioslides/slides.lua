@@ -171,7 +171,7 @@ function Header(lev, s, attr)
     end
   end
 
-  header = "<h" .. lev .. attributes(attr) ..  ">" .. s .. "</h" .. lev .. ">"
+  header = "<h" .. lev ..  ">" .. s .. "</h" .. lev .. ">"
 
   if string.len(subtitle) > 0 then
     header = header .. "<h3>" .. subtitle .. "</h3>"
@@ -185,7 +185,8 @@ function Header(lev, s, attr)
     in_slide = true
 
     return preface .. "<slide class='" .. slide_class .. "'>" ..
-           "<hgroup>" .. header ..  "</hgroup><article>"
+           "<hgroup>" .. header ..  "</hgroup>" ..
+           "<article " .. attributes(attr) .. ">"
   else
     return header
   end
