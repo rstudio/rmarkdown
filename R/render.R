@@ -112,7 +112,7 @@ render <- function(input,
   # partition out the front matter and call a filter if we have one
   partitions <- partition_yaml_front_matter(input_text)
   if (!is.null(output_format$input_filter)) {
-    input_body <- output_format$input_filter(partitions)
+    input_body <- output_format$input_filter(partitions$body)
     input_text <- c(partitions$front_matter, input_body)
   }
 
