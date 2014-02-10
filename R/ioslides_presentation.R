@@ -5,12 +5,17 @@ ioslides_presentation <- function(fig_width = 8,
                                   fig_retina = 2,
                                   fig_caption = FALSE,
                                   smart = TRUE,
-                                  self_contained = TRUE,
                                   mathjax = "default",
                                   pandoc_args = NULL) {
 
-  # interplay between arguments
-  self_contained <- reconcile_self_contained(self_contained, mathjax)
+  # set a self_contained variable to preserve all of the self_contained
+  # codepaths in case we can bring this back
+  self_contained = TRUE
+
+  # no local mathjax since ioslides have to be self_contained
+  # (we do this because the lua script needs to pick one or the other)
+  if (identical(mathjax, "local"))
+    stop("Local Mathjax is not supported for ioslides")
 
   # base pandoc options for all output
   args <- c()
@@ -55,6 +60,44 @@ ioslides_presentation <- function(fig_width = 8,
     output_format
   }
 
+  # post processor that renders our markdown using out custom lua
+  # renderer and then inserts it into the main file
+  post_processor <- function(input_file, output_file, verbose) {
+
+    # smart, mathjax, etc.
+    args <- c()
+    if (smart)
+      args <- c(args, "--smart")
+    if (!is.null(mathjax))
+      args <- c(args, "--mathjax")
+
+    # convert using our lua writer (write output to a temp file)
+    lua_writer <- rmarkdown_system_file("rmd/ioslides/slides.lua")
+    output_tmpfile <- tempfile("ioslides-output", fileext = ".html")
+    on.exit(unlink(output_tmpfile), add = TRUE)
+    pandoc_convert(input = input_file,
+                   to = pandoc_path_arg(lua_writer),
+                   from = from_rmarkdown(fig_caption),
+                   output = output_tmpfile,
+                   options = args,
+                   verbose = verbose)
+    slides_lines <- readLines(output_tmpfile, warn = FALSE, encoding = "UTF-8")
+
+    # read the output file
+    output_lines <- readLines(output_file, warn = FALSE, encoding = "UTF-8")
+
+    # substitute slides for the sentinel line
+    sentinel_line <- grep("^RENDERED_SLIDES$", output_lines)
+    if (length(sentinel_line) == 1) {
+      preface_lines <- c(output_lines[1:sentinel_line[1]-1])
+      suffix_lines <- c(output_lines[-(1:sentinel_line[1])])
+      output_lines <- c(preface_lines, slides_lines, suffix_lines)
+      writeLines(output_lines, output_file, useBytes = TRUE)
+    } else {
+      stop("Slides placeholder not found in slides HTML", call. = FALSE)
+    }
+  }
+
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina),
@@ -63,32 +106,7 @@ ioslides_presentation <- function(fig_width = 8,
                             args = args),
     clean_supporting = self_contained,
     format_filter = format_filter,
-    input_filter = lua_input_filter(
-                        rmarkdown_system_file("rmd/ioslides/slides.lua"))
+    post_processor = post_processor
   )
 }
 
-lua_input_filter <- function(lua_script) {
-
-  function(input_text) {
-
-    # write to a temp file for pandoc
-    input_tmpfile <- tempfile("lua-input", fileext = ".md")
-    writeLines(text = input_text,
-               con = input_tmpfile,
-               useBytes = TRUE)
-    on.exit(unlink(input_tmpfile), add = TRUE)
-
-    # write to another tempfile
-    output_tmpfile <- tempfile("lua-output", fileext = ".md")
-    on.exit(unlink(output_tmpfile), add = TRUE)
-
-    # do the convert
-    pandoc_convert(input = input_tmpfile,
-                   to = lua_script,
-                   output = output_tmpfile)
-
-    # return the output
-    readLines(output_tmpfile, warn = FALSE)
-  }
-}

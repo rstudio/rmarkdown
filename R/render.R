@@ -106,17 +106,8 @@ render <- function(input,
     }
   }
 
-  # read the input text
+  # read the input text as UTF-8 then write it back out
   input_text <- read_lines_utf8(input, encoding)
-
-  # partition out the front matter and call a filter if we have one
-  partitions <- partition_yaml_front_matter(input_text)
-  if (!is.null(output_format$input_filter)) {
-    input_body <- output_format$input_filter(partitions$body)
-    input_text <- c(partitions$front_matter, input_body)
-  }
-
-  # write pandoc input text
   writeLines(input_text, pandoc_input, useBytes = TRUE)
 
   # copy supporting files to the output directory if necessary
@@ -137,6 +128,9 @@ render <- function(input,
                  output_format$pandoc$args,
                  !quiet)
 
+  # if there is a post-processor then call it
+  if (!is.null(output_format$post_processor))
+    output_format$post_processor(pandoc_input, output_file, !quiet)
 
   if (!quiet)
     message("\nOutput created: ", output_file)

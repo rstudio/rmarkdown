@@ -3,7 +3,7 @@
 \title{Define an R Markdown output format}
 \usage{
 output_format(knitr, pandoc, clean_supporting = TRUE, format_filter = NULL,
-  input_filter = NULL)
+  post_processor = NULL)
 }
 \arguments{
   \item{knitr}{Knitr options for an output format (see
@@ -21,6 +21,10 @@ output_format(knitr, pandoc, clean_supporting = TRUE, format_filter = NULL,
   \code{input_lines}.  The filter can be called for it's
   side-effects (e.g. rendering supporting files to the
   \code{files_dir}) and can also return a modified format.}
+
+  \item{post_processor}{An optional post-processor function
+  that receives the \code{input_file}, \code{output_file},
+  and \code{verbose} parmaeters.}
 }
 \value{
 An R Markdown output format definition that can be passed

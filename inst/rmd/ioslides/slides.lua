@@ -1,16 +1,20 @@
--- This is a sample custom writer for pandoc.  It produces output
--- that is very similar to that of pandoc's HTML writer.
--- There is one new feature: code blocks marked with class 'dot'
--- are piped through graphviz and images are included in the HTML
--- output using 'data:' URLs.
---
--- Invoke with: pandoc -t sample.lua
---
--- Note:  you need not have lua installed on your system to use this
--- custom writer.  However, if you do have lua installed, you can
--- use it to test changes to the script.  'lua sample.lua' will
--- produce informative error messages if your code contains
--- syntax errors.
+
+-- Lua 5.1+ base64 v3.0 (c) 2009 by Alex Kloss <alexthkloss@web.de>
+-- licensed under the terms of the LGPL2
+-- character table string
+local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+function base64encode(data)
+    return ((data:gsub('.', function(x)
+        local r,b='',x:byte()
+        for i=8,1,-1 do r=r..(b%2^i-b%2^(i-1)>0 and '1' or '0') end
+        return r;
+    end)..'0000'):gsub('%d%d%d?%d?%d?%d?', function(x)
+        if (#x < 6) then return '' end
+        local c=0
+        for i=1,6 do c=c+(x:sub(i,i)=='1' and 2^(6-i) or 0) end
+        return b:sub(c+1,c+1)
+    end)..({ '', '==', '=' })[#data%3+1])
+end
 
 -- Character escaping
 local function escape(s, in_attribute)
@@ -44,21 +48,12 @@ local function attributes(attr)
   return table.concat(attr_table)
 end
 
--- Run cmd on a temporary file containing inp and return result.
-local function pipe(cmd, inp)
-  local tmp = os.tmpname()
-  local tmph = io.open(tmp, "w")
-  tmph:write(inp)
-  tmph:close()
-  local outh = io.popen(cmd .. " " .. tmp,"r")
-  local result = outh:read("*all")
-  outh:close()
-  os.remove(tmp)
-  return result
-end
-
 -- Table to store footnotes, so they can be included at the end.
 local notes = {}
+
+
+-- Rendering state
+local in_slide = false
 
 -- Blocksep is used to separate block elements.
 function Blocksep()
@@ -70,7 +65,13 @@ end
 -- One could use some kind of templating
 -- system here; this just gives you a simple standalone HTML file.
 function Doc(body, metadata, variables)
-  return body
+
+  suffix = ""
+  if (in_slide) then
+    suffix = "</article></slide>"
+  end
+
+  return body .. suffix
 end
 
 -- The functions that follow render corresponding pandoc elements.
@@ -120,8 +121,23 @@ function Link(s, src, tit)
 end
 
 function Image(s, src, tit)
-  return "<img src='" .. escape(src,true) .. "' title='" ..
-         escape(tit,true) .. "'/>"
+
+
+end
+
+function Image(s, src, tit)
+  if string.sub(src, 1, 4) == "http" then
+    return "<img src='" .. escape(src,true) .. "' title='" ..
+            escape(tit,true) .. "'/>"
+  else
+    -- base64 encode image
+    local png_file = io.open(src, "rb")
+    local png_data = png_file:read("*all")
+    png_file:close()
+    png_data = base64encode(png_data)
+    return "<img src='data:image/png;base64," .. png_data .. "' title='"  ..
+           escape(tit,true) .. "'/>"
+  end
 end
 
 function CaptionedImage(src, tit, s)
@@ -170,7 +186,20 @@ end
 
 -- lev is an integer, the header level.
 function Header(lev, s, attr)
-  return "<h" .. lev .. attributes(attr) ..  ">" .. s .. "</h" .. lev .. ">"
+
+  header = "<h" .. lev .. attributes(attr) ..  ">" .. s .. "</h" .. lev .. ">"
+
+  if lev == 2 then
+    preface = ""
+    if in_slide then
+      preface = "</article></slide>"
+    end
+    in_slide = true
+    return preface .. "<slide><hgroup>" .. header .. "</hgroup><article>"
+  else
+    return header
+  end
+
 end
 
 function BlockQuote(s)
@@ -182,16 +211,8 @@ function HorizontalRule()
 end
 
 function CodeBlock(s, attr)
-  -- If code block has class 'dot', pipe the contents through dot
-  -- and base64, and include the base64-encoded png as a data: URL.
-  if attr.class and string.match(' ' .. attr.class .. ' ',' dot ') then
-    local png = pipe("base64", pipe("dot -Tpng", s))
-    return '<img src="data:image/png;base64,' .. png .. '"/>'
-  -- otherwise treat as code (one could pipe through a highlighter)
-  else
-    return "<pre><code" .. attributes(attr) .. ">" .. escape(s) ..
-           "</code></pre>"
-  end
+  return "<pre><code" .. attributes(attr) .. ">" .. escape(s) ..
+         "</code></pre>"
 end
 
 function BulletList(items)

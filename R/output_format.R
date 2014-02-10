@@ -14,6 +14,9 @@
 #'   The filter can be called for it's side-effects (e.g. rendering
 #'   supporting files to the \code{files_dir}) and can also return a
 #'   modified format.
+#' @param post_processor An optional post-processor function that
+#'   receives the \code{input_file}, \code{output_file}, and
+#'   \code{verbose} parmaeters.
 #'
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
@@ -31,12 +34,12 @@ output_format <- function(knitr,
                           pandoc,
                           clean_supporting = TRUE,
                           format_filter = NULL,
-                          input_filter = NULL) {
+                          post_processor = NULL) {
   structure(list(knitr = knitr,
                  pandoc = pandoc,
                  clean_supporting = clean_supporting,
                  format_filter = format_filter,
-                 input_filter = input_filter),
+                 post_processor = post_processor),
             class = "rmarkdown_output_format")
 }
 
