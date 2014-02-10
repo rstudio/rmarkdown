@@ -1,7 +1,7 @@
 
 
 ioslides_presentation <- function(fig_width = 7.5,
-                                  fig_height = 5,
+                                  fig_height = 5.5,
                                   fig_retina = 2,
                                   fig_caption = FALSE,
                                   smart = TRUE,
