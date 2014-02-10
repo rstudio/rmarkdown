@@ -35,7 +35,6 @@ URL: https://code.google.com/p/io-2012-slides
         usePrettify: true, // Default: true
         enableSlideAreas: true, // Default: true. False turns off the click areas on either slide of the slides.
         enableTouch: true, // Default: true. If touch support should enabled. Note: the device must support touch.
-        //analytics: 'UA-XXXXXXXX-1', // TODO: Using this breaks GA for some reason (probably requirejs). Update your tracking code in template.html instead.
         //favIcon: 'images/google_developers_logo_tiny.png',
         fonts: [
           'Open Sans:regular,semibold,italic,italicsemibold',
@@ -95,18 +94,6 @@ RENDERED_SLIDES
 <script src="$ioslides-url$/js/hammer.js"></script>
 <script src="$ioslides-url$/js/slide-controller.js"></script>
 <script src="$ioslides-url$/js/slide-deck.js"></script>
-
-<script>
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-XXXXXXXX-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
 
 $if(mathjax-url)$
 <!-- dynamically load mathjax for compatibility with --self-contained -->
