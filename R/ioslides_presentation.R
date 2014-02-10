@@ -72,7 +72,7 @@ ioslides_presentation <- function(fig_width = 8,
               to = lua_writer)
     if (self_contained) {
       file.append(lua_writer,
-                  rmarkdown_system_file("rmd/ioslides/base64-image.lua"))
+                  rmarkdown_system_file("rmd/ioslides/base64.lua"))
     }
 
     output_tmpfile <- tempfile("ioslides-output", fileext = ".html")
