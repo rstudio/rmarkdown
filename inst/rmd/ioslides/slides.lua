@@ -211,16 +211,19 @@ end
 
 function CodeBlock(s, attr)
 
-  lang = ''
+  class_attrib = ''
   if attr["class"] then
-    lang = "lang-" .. attr["class"]
+    class = attr["class"]
+    if string.len(class) > 0 then
+      class_attrib = "class = 'prettyprint lang-" .. class .. "'"
+    end
   end
 
   code = escape(s)
   code_sub = code:gsub("\n[ \t]*[#/]+[ \t]+highlight%-begin", "<b>")
   code = code_sub:gsub("\n[ \t]*[#/]+[ \t]+highlight%-end", "</b>")
 
-  return "<pre class='prettyprint " .. lang .. "'>" .. code .. "</pre>"
+  return "<pre " .. class_attrib .. ">" .. code .. "</pre>"
 end
 
 function BulletList(items)

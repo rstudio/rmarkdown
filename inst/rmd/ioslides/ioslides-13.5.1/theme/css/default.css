@@ -533,7 +533,6 @@ pre {
   letter-spacing: -1px;
   margin-bottom: 20px;
   width: 106%;
-  background-color: #e6e6e6;
   left: -60px;
   position: relative;
   -webkit-box-sizing: border-box;
@@ -541,6 +540,11 @@ pre {
   box-sizing: border-box;
   /*overflow: hidden;*/
 }
+
+.prettyprint {
+  background-color: #e6e6e6;
+}
+
 /* line 351, ../scss/default.scss */
 pre[data-lang]:after {
   content: attr(data-lang);
