@@ -156,15 +156,36 @@ end
 -- lev is an integer, the header level.
 function Header(lev, s, attr)
 
+  slide_class = ""
+  if lev == 1 then
+    slide_class = "segue dark nobackground"
+    lev = 2
+  end
+
+  subtitle = ""
+  if lev == 2 then
+    local i, j = string.find(s, "|")
+    if i then
+      subtitle = string.sub(s, i+1, string.len(s))
+      s = string.sub(s, 1, i-1)
+    end
+  end
+
   header = "<h" .. lev .. attributes(attr) ..  ">" .. s .. "</h" .. lev .. ">"
 
-  if lev == 2 then
+  if string.len(subtitle) > 0 then
+    header = header .. "<h3>" .. subtitle .. "</h3>"
+  end
+
+  if lev == 1 or lev == 2 then
     preface = ""
     if in_slide then
       preface = "</article></slide>"
     end
     in_slide = true
-    return preface .. "<slide><hgroup>" .. header .. "</hgroup><article>"
+
+    return preface .. "<slide class='" .. slide_class .. "'>" ..
+           "<hgroup>" .. header ..  "</hgroup><article>"
   else
     return header
   end
