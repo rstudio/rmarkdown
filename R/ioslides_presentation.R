@@ -6,6 +6,7 @@ ioslides_presentation <- function(fig_width = 8,
                                   fig_caption = FALSE,
                                   smart = TRUE,
                                   self_contained = TRUE,
+                                  widescreen = FALSE,
                                   mathjax = "default",
                                   pandoc_args = NULL) {
 
@@ -22,6 +23,10 @@ ioslides_presentation <- function(fig_width = 8,
   # self contained document
   if (self_contained)
     args <- c(args, "--self-contained")
+
+  # widescreen
+  if (widescreen)
+    args <- c(args, "--variable", "widescreen");
 
   # template path and assets
   args <- c(args,
