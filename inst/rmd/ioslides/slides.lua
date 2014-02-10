@@ -70,36 +70,7 @@ end
 -- One could use some kind of templating
 -- system here; this just gives you a simple standalone HTML file.
 function Doc(body, metadata, variables)
-  local buffer = {}
-  local function add(s)
-    table.insert(buffer, s)
-  end
-  add('<!DOCTYPE html>')
-  add('<html>')
-  add('<head>')
-  add('<title>' .. (metadata['title'] or '') .. '</title>')
-  add('</head>')
-  add('<body>')
-  if metadata['title'] and metadata['title'] ~= "" then
-    add('<h1 class="title">' .. metadata['title'] .. '</h1>')
-  end
-  for _, author in pairs(metadata['author'] or {}) do
-    add('<h2 class="author">' .. author .. '</h2>')
-  end
-  if metadata['date'] and metadata['date'] ~= "" then
-    add('<h3 class="date">' .. metadata.date .. '</h3>')
-  end
-  add(body)
-  if #notes > 0 then
-    add('<ol class="footnotes">')
-    for _,note in pairs(notes) do
-      add(note)
-    end
-    add('</ol>')
-  end
-  add('</body>')
-  add('</html>')
-  return table.concat(buffer,'\n')
+  return body
 end
 
 -- The functions that follow render corresponding pandoc elements.
@@ -151,6 +122,10 @@ end
 function Image(s, src, tit)
   return "<img src='" .. escape(src,true) .. "' title='" ..
          escape(tit,true) .. "'/>"
+end
+
+function CaptionedImage(src, tit, s)
+  return Image(s, src, tit)
 end
 
 function Code(s, attr)
