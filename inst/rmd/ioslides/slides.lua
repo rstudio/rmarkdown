@@ -38,6 +38,7 @@ local notes = {}
 
 -- Rendering state
 local in_slide = false
+local build_slide = false
 
 -- Blocksep is used to separate block elements.
 function Blocksep()
@@ -184,6 +185,13 @@ function Header(lev, s, attr)
     end
     in_slide = true
 
+    -- check build state
+    if attr["class"] and string.find(attr["class"], "build") then
+      build_slide = true
+    else
+      build_slide = false
+    end
+
     return preface .. "<slide class='" .. slide_class .. "'>" ..
            "<hgroup>" .. header ..  "</hgroup>" ..
            "<article " .. attributes(attr) .. ">"
@@ -220,7 +228,11 @@ function BulletList(items)
   for _, item in pairs(items) do
     table.insert(buffer, "<li>" .. item .. "</li>")
   end
-  return "<ul>\n" .. table.concat(buffer, "\n") .. "\n</ul>"
+  list_class = ""
+  if build_slide then
+    list_class = "class = 'build'"
+  end
+  return "<ul " .. list_class .. ">\n" .. table.concat(buffer, "\n") .. "\n</ul>"
 end
 
 function OrderedList(items)
@@ -228,7 +240,11 @@ function OrderedList(items)
   for _, item in pairs(items) do
     table.insert(buffer, "<li>" .. item .. "</li>")
   end
-  return "<ol>\n" .. table.concat(buffer, "\n") .. "\n</ol>"
+  list_class = ""
+  if build_slide then
+    list_class = "class = 'build'"
+  end
+  return "<ol " .. list_class .. ">\n" .. table.concat(buffer, "\n") .. "\n</ol>"
 end
 
 -- Revisit association list STackValue instance.
