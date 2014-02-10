@@ -323,6 +323,26 @@ function Div(s, attr)
   return "<div" .. attributes(attr) .. ">\n" .. s .. "</div>"
 end
 
+function Span(s, attr)
+  return "<span" .. attributes(attr) .. ">\n" .. s .. "</span>"
+end
+
+function RawInline(f, s)
+  if f == "html" then
+    return s
+  else
+    return ''
+  end
+end
+
+function RawBlock(f, s)
+  if f == "html" then
+    return s
+  else
+    return ''
+  end
+end
+
 -- The following code will produce runtime warnings when you haven't defined
 -- all of the functions you need for the custom writer, so it's useful
 -- to include when you're working on a writer.
