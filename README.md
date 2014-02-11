@@ -2,7 +2,7 @@
 
 The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
 
-* Create HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home) and [reveal.js](http://lab.hakim.se/reveal-js/#/) presentations
+* Create HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home) [ioslides](https://code.google.com/p/io-2012-slides/) and [reveal.js](http://lab.hakim.se/reveal-js/#/) presentations
 * New markdown syntax including expanded support for tables, definition lists, and bibliographies.
 * A responsive (multi-device friendly) and themeable HTML template based on [Bootstrap 3](http://getbootstrap.com).
 * Hooks for customizing HTML and PDF output (include CSS, headers, and footers).
@@ -157,6 +157,7 @@ Output formats need not be specified in metadata. In fact, metadata is just a co
 - `word_document`
 - `md_document`
 - `beamer_presentation`
+- `ioslides_presentation`
 - `revealjs_presentation`
 
 As you'd expect, these functions can also be invoked as part of the call to `render`, for example:
