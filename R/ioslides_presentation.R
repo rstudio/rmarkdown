@@ -112,12 +112,15 @@ ioslides_presentation <- function(incremental = FALSE,
     lua_writer <- tempfile("ioslides", fileext = ".lua")
 
     # write settings to file
-    settings <- c(paste("local incremental = ",
-                        ifelse(incremental, "true", "false")),
-                  paste("local base64_images =",
-                        ifelse(self_contained, "true", "false")),
-                  paste("local smaller =",
-                        ifelse(smaller, "true", "false")))
+    settings <- c()
+    add_setting <- function(name, value) {
+      settings <<- c(settings, paste("local", name, "=",
+                                    ifelse(value, "true", "false")))
+    }
+    add_setting("fig_caption", fig_caption)
+    add_setting("incremental", incremental)
+    add_setting("base64_images", self_contained)
+    add_setting("smaller", smaller)
     writeLines(settings, lua_writer, useBytes = TRUE)
 
     # append main body of script

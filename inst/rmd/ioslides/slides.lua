@@ -141,7 +141,11 @@ function Image(s, src, tit)
 end
 
 function CaptionedImage(src, tit, s)
-  return Image(s, src, tit)
+  local caption = ""
+  if fig_caption and (string.len(s) > 0) then
+    caption = "<p class='caption'>" .. s .. "</p>"
+  end
+  return Image(s, src, tit) .. caption
 end
 
 function Code(s, attr)
