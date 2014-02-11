@@ -2,32 +2,32 @@
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 700;
-  src: local('Montserrat-Bold'), url(fonts/Montserrat.woff) format('woff');
+  src: local('Montserrat-Bold'), url(fonts/Montserrat.woff) format('woff'), url(fonts/Montserrat.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(fonts/OpenSans.woff) format('woff');
+  src: local('Open Sans'), local('OpenSans'), url(fonts/OpenSans.woff) format('woff'), url(fonts/OpenSans.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(fonts/OpenSansBold.woff) format('woff');
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(fonts/OpenSansBold.woff) format('woff'), url(fonts/OpenSansBold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 400;
-  src: local('Open Sans Italic'), local('OpenSans-Italic'), url(fonts/OpenSansItalic.woff) format('woff');
+  src: local('Open Sans Italic'), local('OpenSans-Italic'), url(fonts/OpenSansItalic.woff) format('woff'), url(fonts/OpenSansItalic.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 700;
-  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(fonts/OpenSansBoldItalic.woff) format('woff');
+  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(fonts/OpenSansBoldItalic.woff) format('woff'), url(fonts/OpenSansBoldItalic.ttf) format('truetype');
 }
 
 
