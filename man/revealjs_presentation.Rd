@@ -2,12 +2,11 @@
 \alias{revealjs_presentation}
 \title{Convert to a reveal.js presentation}
 \usage{
-revealjs_presentation(slide_level = NULL, incremental = FALSE,
-  center = FALSE, fig_width = 8, fig_height = 6, fig_retina = 2,
-  fig_caption = FALSE, smart = TRUE, self_contained = TRUE,
-  theme = "default", transition = "default", highlight = "default",
-  mathjax = "default", template = "default", includes = NULL,
-  data_dir = NULL, pandoc_args = NULL)
+revealjs_presentation(incremental = FALSE, center = FALSE, fig_width = 8,
+  fig_height = 6, fig_retina = 2, fig_caption = FALSE, smart = TRUE,
+  self_contained = TRUE, theme = "default", transition = "default",
+  highlight = "default", mathjax = "default", template = "default",
+  includes = NULL, data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{center}{\code{TRUE} to vertically center content on
@@ -27,13 +26,6 @@ revealjs_presentation(slide_level = NULL, incremental = FALSE,
   template then some features of
   \code{revealjs_presentation} won't be available (see the
   Templates section below for more details).}
-
-  \item{slide_level}{The heading level which defines
-  indvidual slides. By default this is the highest header
-  level in the hierarchy that is followed immediately by
-  content, and not another header, somewhere in the
-  document.  This default can be overridden by specifying
-  an explicit \code{slide.level}.}
 
   \item{incremental}{\code{TRUE} to render slide bullets
   incrementally. Note that if you want to reverse the
@@ -95,11 +87,11 @@ Format for converting from R Markdown to a reveal.js
 presentation.
 }
 \details{
-In reveal.js presentations, if slide_level is 2, a
-two-dimensional layout will be produced, with level 1
-headers building horizontally and level 2 headers building
-vertically. It is not recommended that you use deeper
-nesting of section levels with reveal.js.
+In reveal.js presentations you can use level 1 or level 2
+headers for slides. If you use a mix of level 1 and level 2
+headers then a two-dimensional layout will be produced,
+with level 1 headers building horizontally and level 2
+headers building vertically.
 
 For more information on markdown syntax for presentations
 see

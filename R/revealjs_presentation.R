@@ -22,10 +22,10 @@
 #'
 #' @details
 #'
-#' In reveal.js presentations, if slide_level is 2, a two-dimensional layout
-#' will be produced, with level 1 headers building horizontally and level 2
-#' headers building vertically. It is not recommended that you use deeper
-#' nesting of section levels with reveal.js.
+#' In reveal.js presentations you can use level 1 or level 2 headers for
+#' slides. If you use a mix of level 1 and level 2 headers then a
+#' two-dimensional layout will be produced, with level 1 headers building
+#' horizontally and level 2 headers building vertically.
 #'
 #' For more information on markdown syntax for presentations see
 #' \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing
@@ -68,8 +68,7 @@
 #' }
 #'
 #' @export
-revealjs_presentation <- function(slide_level = NULL,
-                                  incremental = FALSE,
+revealjs_presentation <- function(incremental = FALSE,
                                   center = FALSE,
                                   fig_width = 8,
                                   fig_height = 6,
@@ -108,10 +107,6 @@ revealjs_presentation <- function(slide_level = NULL,
                 "rmd/revealjs/default.html")))
   else if (!is.null(template))
     args <- c(args, "--template", pandoc_path_arg(template))
-
-  # slide level
-  if (!is.null(slide_level))
-    args <- c(args, "--slide-level", as.character(slide_level))
 
   # incremental
   if (incremental)
