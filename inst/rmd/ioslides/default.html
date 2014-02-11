@@ -9,8 +9,8 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="generator" content="pandoc" />
 
-$for(author-meta)$
-  <meta name="author" content="$author-meta$" />
+$for(author)$
+  <meta name="author" content="$author$" />
 $endfor$
 
 $if(date-meta)$
@@ -47,21 +47,13 @@ $endif$
       },
 
       // Author information
-      presenters: [{
-        name: 'Firstname Lastname',
-        company: 'Job Title<br>Google',
-        gplus: 'http://plus.google.com/1234567890',
-        twitter: '@yourhandle',
-        www: 'http://www.you.com',
-        github: 'http://github.com/you'
-      }/*, {
-        name: 'Second Name',
-        company: 'Job Title, Google',
-        gplus: 'http://plus.google.com/1234567890',
-        twitter: '@yourhandle',
-        www: 'http://www.you.com',
-        github: 'http://github.com/you'
-      }*/]
+      presenters: [
+      $for(author)$
+      {
+        name: '$author$'
+      },
+      $endfor$
+      ]
     };
   </script>
 
