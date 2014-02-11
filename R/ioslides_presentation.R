@@ -25,8 +25,8 @@
 #' @export
 ioslides_presentation <- function(logo = NULL,
                                   incremental = FALSE,
-                                  fig_width = 7.5,
-                                  fig_height = 5.5,
+                                  fig_width = 8,
+                                  fig_height = 5,
                                   fig_retina = 2,
                                   fig_caption = FALSE,
                                   smart = TRUE,
