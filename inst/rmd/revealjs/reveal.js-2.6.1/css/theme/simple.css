@@ -3,37 +3,37 @@
   font-family: 'News Cycle';
   font-style: normal;
   font-weight: 400;
-  src: local('News Cycle Regular'), local('NewsCycle-Regular'), url(fonts/NewsCycle.woff) format('woff');
+  src: local('News Cycle Regular'), local('NewsCycle-Regular'), url(fonts/NewsCycle.woff) format('woff'), url(fonts/NewsCycle.ttf) format('truetype');
 }
 @font-face {
   font-family: 'News Cycle';
   font-style: normal;
   font-weight: 700;
-  src: local('News Cycle Bold'), local('NewsCycle-Bold'), url(fonts/NewsCycleBold.woff) format('woff');
+  src: local('News Cycle Bold'), local('NewsCycle-Bold'), url(fonts/NewsCycleBold.woff) format('woff'), url(fonts/NewsCycleBold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
-  src: local('Lato Regular'), local('Lato-Regular'), url(fonts/Lato.woff) format('woff');
+  src: local('Lato Regular'), local('Lato-Regular'), url(fonts/Lato.woff) format('woff'), url(fonts/Lato.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
-  src: local('Lato Bold'), local('Lato-Bold'), url(fonts/LatoBold.woff) format('woff');
+  src: local('Lato Bold'), local('Lato-Bold'), url(fonts/LatoBold.woff) format('woff'), url(fonts/LatoBold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: italic;
   font-weight: 400;
-  src: local('Lato Italic'), local('Lato-Italic'), url(fonts/LatoItalic.woff) format('woff');
+  src: local('Lato Italic'), local('Lato-Italic'), url(fonts/LatoItalic.woff) format('woff'), url(fonts/LatoItalic.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: italic;
   font-weight: 700;
-  src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(fonts/LatoBoldItalic.woff) format('woff');
+  src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(fonts/LatoBoldItalic.woff) format('woff'), url(fonts/LatoBoldItalic.ttf) format('truetype');
 }
 
 
