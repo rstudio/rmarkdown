@@ -5,6 +5,7 @@ local notes = {}
 -- Rendering state
 local in_slide = false
 local build_slide = false
+local in_notes = false
 
 -- Character escaping
 local function escape(s, in_attribute)
@@ -384,7 +385,12 @@ function Table(caption, aligns, widths, headers, rows)
 end
 
 function Div(s, attr)
-  return "<div" .. attributes(attr) .. ">\n" .. s .. "</div>"
+  if attr["class"] == "notes" then
+    return "<aside class='note'><section>" .. s ..
+           "</section></aside>"
+  else
+    return "<div" .. attributes(attr) .. ">\n" .. s .. "</div>"
+  end
 end
 
 function Span(s, attr)
@@ -401,14 +407,6 @@ end
 
 function RawBlock(f, s)
   if f == "html" then
-
-    -- use <aside> for speaker notes
-    if s == "<aside>" then
-      s = "<aside class='note'><section>"
-    elseif s == "</aside>" then
-      s = "</section></aside>"
-    end
-
     return s
   else
     return ''
