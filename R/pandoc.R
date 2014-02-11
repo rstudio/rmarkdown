@@ -343,8 +343,8 @@ find_pandoc <- function() {
 
     # define potential sources
     sys_pandoc <- Sys.which("pandoc")
-    sources <- c(ifelse(nzchar(sys_pandoc), dirname(sys_pandoc), ""),
-                 Sys.getenv("RSTUDIO_PANDOC"))
+    sources <- c(Sys.getenv("RSTUDIO_PANDOC"),
+                 ifelse(nzchar(sys_pandoc), dirname(sys_pandoc), ""))
     if (!is_windows())
       sources <- c(sources, "~/opt/pandoc")
 
