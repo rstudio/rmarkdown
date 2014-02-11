@@ -2,13 +2,16 @@
 \alias{ioslides_presentation}
 \title{Convert to an ioslides Presentation}
 \usage{
-ioslides_presentation(incremental = FALSE, fig_width = 7.5,
+ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   fig_height = 5.5, fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, widescreen = FALSE, smaller = FALSE,
   mathjax = "default", css = NULL, includes = NULL, data_dir = NULL,
   pandoc_args = NULL)
 }
 \arguments{
+  \item{logo}{Path to file that includes a logo for use in
+  the presentation (should be square and at least 128x128)}
+
   \item{widescreen}{Display presentation with wider
   dimensions.}
 

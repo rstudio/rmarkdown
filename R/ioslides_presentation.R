@@ -7,6 +7,8 @@
 #' @inheritParams beamer_presentation
 #' @inheritParams html_document
 #'
+#' @param logo Path to file that includes a logo for use in the presentation
+#'   (should be square and at least 128x128)
 #' @param widescreen Display presentation with wider dimensions.
 #' @param smaller Use smaller text on all slides.
 #'
@@ -21,7 +23,8 @@
 #' \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing slide shows with pandoc}.
 #'
 #' @export
-ioslides_presentation <- function(incremental = FALSE,
+ioslides_presentation <- function(logo = NULL,
+                                  incremental = FALSE,
                                   fig_width = 7.5,
                                   fig_height = 5.5,
                                   fig_retina = 2,
@@ -79,6 +82,18 @@ ioslides_presentation <- function(incremental = FALSE,
 
     # extra args
     args <- c()
+
+    # logo
+    if (!is.null(logo)) {
+      logo_path <- logo
+      if (!self_contained) {
+        logo_path <- file.path(files_dir, "logo.png")
+        file.copy(from = logo, to = logo_path)
+      }
+      args <- c(args, "--variable", paste("logo=",
+                                          pandoc_path_arg(logo_path),
+                                          sep = ""))
+    }
 
     # ioslides
     ioslides_path <- rmarkdown_system_file("rmd/ioslides/ioslides-13.5.1")

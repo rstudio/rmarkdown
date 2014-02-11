@@ -298,22 +298,7 @@ slides > slide.far-next {
 slides > slide.dark {
   background: #515151 !important;
 }
-/* line 135, ../scss/default.scss */
-slides > slide:not(.nobackground):before {
-  font-size: 12pt;
-  content: "";
-  position: absolute;
-  bottom: 20px;
-  left: 60px;
-  /* background: url(../../images/google_developers_icon_128.png) no-repeat 0 50%; */
-  -webkit-background-size: 30px 30px;
-  -moz-background-size: 30px 30px;
-  -o-background-size: 30px 30px;
-  background-size: 30px 30px;
-  padding-left: 40px;
-  height: 30px;
-  line-height: 1.9;
-}
+
 /* line 147, ../scss/default.scss */
 slides > slide:not(.nobackground):after {
   font-size: 12pt;

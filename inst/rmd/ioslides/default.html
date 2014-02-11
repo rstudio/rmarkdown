@@ -63,6 +63,26 @@ $endif$
     };
   </script>
 
+$if(logo)$
+  <style type="text/css">
+    slides > slide:not(.nobackground):before {
+      font-size: 12pt;
+      content: "";
+      position: absolute;
+      bottom: 20px;
+      left: 60px;
+      background: url($logo$) no-repeat 0 50%;
+      -webkit-background-size: 30px 30px;
+      -moz-background-size: 30px 30px;
+      -o-background-size: 30px 30px;
+      background-size: 30px 30px;
+      padding-left: 40px;
+      height: 30px;
+      line-height: 1.9;
+    }
+  </style>
+$endif$
+
 $for(css)$
   <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
@@ -87,6 +107,9 @@ $if(include-before)$
   $endfor$
 $else$
   <slide class="title-slide segue nobackground">
+    $if(logo)$
+    <aside class="gdbar"><img src="$logo$"></aside>
+    $endif$
     <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
     <hgroup class="auto-fadein">
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
