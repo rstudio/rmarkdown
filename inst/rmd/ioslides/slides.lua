@@ -401,6 +401,14 @@ end
 
 function RawBlock(f, s)
   if f == "html" then
+
+    -- use <aside> for speaker notes
+    if s == "<aside>" then
+      s = "<aside class='note'><section>"
+    elseif s == "</aside>" then
+      s = "</section></aside>"
+    end
+
     return s
   else
     return ''
