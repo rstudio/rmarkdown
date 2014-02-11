@@ -41,7 +41,9 @@ $endif$
         usePrettify: true,
         enableSlideAreas: true,
         enableTouch: true,
-        //favIcon: 'images/google_developers_logo_tiny.png',
+        $if(logo)$
+        favIcon: '$logo$',
+        $endif$
       },
 
       // Author information
