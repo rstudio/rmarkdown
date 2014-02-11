@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
-  <meta charset="utf-8">
+  <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
 
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+
+$if(date-meta)$
+  <meta name="date" content="$date-meta$" />
+$endif$
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -53,6 +65,14 @@
     };
   </script>
 
+$for(css)$
+  <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
+$endfor$
+
+$for(header-includes)$
+  $header-includes$
+$endfor$
+
 </head>
 
 <body style="opacity: 0">
@@ -63,6 +83,11 @@ $else$
 <slides>
 $endif$
 
+$if(include-before)$
+  $for(include-before)$
+    $include-before$
+  $endfor$
+$else$
   <slide class="title-slide segue nobackground">
     <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
     <hgroup class="auto-fadein">
@@ -71,8 +96,13 @@ $endif$
       <p data-config-presenter><!-- populated from slide_config.json --></p>
     </hgroup>
   </slide>
+$endif$
 
 RENDERED_SLIDES
+
+$for(include-after)$
+  $include-after$
+$endfor$
 
   <slide class="backdrop"></slide>
 

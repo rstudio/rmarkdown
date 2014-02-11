@@ -1,5 +1,15 @@
 
 
+#' Convert to an ioslides Presentation
+#'
+#' Convert to an ioslides Presentation
+#'
+#' @param includes Named list of additional content to include within the
+#'   document (typically created using the \code{\link{includes}} function).
+#'   Note that if \code{before_body} content is specified it will replace
+#'   the standard title slide entirely.
+#'
+#' @export
 ioslides_presentation <- function(fig_width = 7.5,
                                   fig_height = 5.5,
                                   fig_retina = 2,
@@ -9,6 +19,9 @@ ioslides_presentation <- function(fig_width = 7.5,
                                   widescreen = FALSE,
                                   smaller = FALSE,
                                   mathjax = "default",
+                                  css = NULL,
+                                  includes = NULL,
+                                  data_dir = NULL,
                                   pandoc_args = NULL) {
 
   # interplay between arguments
@@ -28,6 +41,17 @@ ioslides_presentation <- function(fig_width = 7.5,
   # widescreen
   if (widescreen)
     args <- c(args, "--variable", "widescreen");
+
+  # additional css
+  for (css_file in css)
+    args <- c(args, "--css", pandoc_path_arg(css_file))
+
+  # content includes
+  args <- c(args, includes_to_pandoc_args(includes))
+
+  # data dir
+  if (!is.null(data_dir))
+    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # template path and assets
   args <- c(args,

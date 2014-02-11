@@ -1,6 +1,7 @@
 export(beamer_presentation)
 export(html_document)
 export(includes)
+export(ioslides_presentation)
 export(knitr_options)
 export(knitr_options_html)
 export(knitr_options_pdf)
