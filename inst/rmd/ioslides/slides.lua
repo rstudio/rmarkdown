@@ -1,4 +1,10 @@
 
+-- Table to store footnotes, so they can be included at the end.
+local notes = {}
+
+-- Rendering state
+local in_slide = false
+local build_slide = false
 
 -- Character escaping
 local function escape(s, in_attribute)
@@ -50,13 +56,6 @@ local function attributes(attr)
   return table.concat(attr_table)
 end
 
--- Table to store footnotes, so they can be included at the end.
-local notes = {}
-
-
--- Rendering state
-local in_slide = false
-local build_slide = false
 
 -- Blocksep is used to separate block elements.
 function Blocksep()
@@ -69,9 +68,11 @@ end
 -- system here; this just gives you a simple standalone HTML file.
 function Doc(body, metadata, variables)
 
-  suffix = ""
+  -- complete any active slide
+  local suffix = ""
   if (in_slide) then
     suffix = "</article></slide>"
+    in_slide = false
   end
 
   return body .. suffix
@@ -125,6 +126,7 @@ end
 
 function Image(s, src, tit)
   if not base64_images or (string.sub(src, 1, 4) == "http") then
+    -- leave the image alone
     return "<img src='" .. escape(src,true) .. "' title='" ..
             escape(tit,true) .. "'/>"
   else
@@ -185,13 +187,15 @@ end
 -- lev is an integer, the header level.
 function Header(lev, s, attr)
 
-  slide_class = ""
+  -- detect level 1 header and convert it to a segue slide 
+  local slide_class = ""
   if lev == 1 then
     slide_class = "segue dark nobackground"
     lev = 2
   end
 
-  subtitle = ""
+  -- extract optional subtitle 
+  local subtitle = ""
   if lev == 2 then
     local i, j = string.find(s, "|")
     if i then
@@ -200,30 +204,35 @@ function Header(lev, s, attr)
     end
   end
 
-  header = "<h" .. lev ..  ">" .. s .. "</h" .. lev .. ">"
-
+  -- build slide header (including optional subtitle)
+  local header = "<h" .. lev ..  ">" .. s .. "</h" .. lev .. ">"
   if string.len(subtitle) > 0 then
     header = header .. "<h3>" .. subtitle .. "</h3>"
   end
 
-  if lev == 1 or lev == 2 then
-    preface = ""
+  -- treat level 2 headers as slides
+  if lev == 2 then
+
+    -- complete previous slide
+    local preface = ""
     if in_slide then
       preface = "</article></slide>"
     end
     in_slide = true
 
-    -- check build state
+    -- update build flag (used by ol and ul)
     if attr["class"] and string.find(attr["class"], "build") then
       build_slide = true
     else
       build_slide = false
     end
 
+    -- add 'smaller' class if it was globally specified
     if smaller then
       attr["class"] = "smaller " .. attr["class"]
     end
 
+    -- return the beginning of the slide
     return preface .. "<slide class='" .. slide_class .. "'>" ..
            "<hgroup>" .. header ..  "</hgroup>" ..
            "<article " .. attributes(attr) .. ">"
@@ -243,15 +252,17 @@ end
 
 function CodeBlock(s, attr)
 
-  class_attrib = ''
+  -- if this code block has a class then add prettyprint to it
+  local class_attrib = ''
   if attr["class"] then
-    class = attr["class"]
+    local class = attr["class"]
     if string.len(class) > 0 then
       class_attrib = "class = 'prettyprint lang-" .. class .. "'"
     end
   end
 
-  code = escape(s)
+  -- substitute for code highlighting/emphasis
+  local code = escape(s)
   code_sub = code:gsub("\n[ \t]*[#/]+[ \t]+highlight%-begin", "<b>")
   code = code_sub:gsub("\n[ \t]*[#/]+[ \t]+highlight%-end", "</b>")
 
