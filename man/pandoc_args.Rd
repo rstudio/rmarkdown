@@ -3,8 +3,11 @@
 \alias{pandoc_highlight_args}
 \alias{pandoc_include_args}
 \alias{pandoc_toc_args}
+\alias{pandoc_variable_arg}
 \title{Functions for generating pandoc command line arguments}
 \usage{
+pandoc_variable_arg(name, value)
+
 pandoc_include_args(in_header = NULL, before_body = NULL,
   after_body = NULL)
 
@@ -13,11 +16,15 @@ pandoc_highlight_args(highlight, default = "tango")
 pandoc_toc_args(toc, toc_depth = 3)
 }
 \arguments{
+  \item{name}{Name of template variable to set.}
+
+  \item{value}{Value of template variable.}
+
   \item{toc}{\code{TRUE} to include a table of contents in
-  the output}
+  the output.}
 
   \item{toc_depth}{Depth of headers to include in table of
-  contents}
+  contents.}
 
   \item{highlight}{The name of a pandoc syntax highlighting
   theme.}

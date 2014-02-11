@@ -4,6 +4,7 @@
 \usage{
 beamer_presentation(toc = FALSE, slide_level = NULL, incremental = FALSE,
   fig_width = 10, fig_height = 7, fig_crop = TRUE, fig_caption = FALSE,
+  theme = "default", colortheme = "default", fonttheme = "default",
   highlight = "default", template = "default", includes = NULL,
   data_dir = NULL, pandoc_args = NULL)
 }
@@ -24,6 +25,13 @@ beamer_presentation(toc = FALSE, slide_level = NULL, incremental = FALSE,
   default incremental behavior for an individual bullet you
   can preceded it with \code{>}. For example: \emph{\code{>
   - Bullet Text}}}
+
+  \item{theme}{Beamer theme (e.g. "AnnArbor").}
+
+  \item{colortheme}{Beamer color theme (e.g. "dolphin").}
+
+  \item{fonttheme}{Beamer font theme (e.g.
+  "structurebold").}
 
   \item{fig_crop}{\code{TRUE} to automatically apply the
   \code{pdfcrop} utility (if available) to pdf figures}
@@ -82,25 +90,6 @@ the use of footnotes and bibliographies. For more details
 see the documentation on R Markdown
 \link[=rmd_metadata]{metadata} and
 \link[=rmd_citations]{citations}.
-
-Many aspects of the LaTeX template used to create Beamer
-output can be customized using metadata. For example:
-
-\tabular{l}{ \code{---} \cr \code{title: "Crop Analysis Q3
-2013"} \cr \code{theme: AnnArbor} \cr \code{colortheme:
-dolphin} \cr \code{---} }
-
-Available metadata variables include:
-
-\describe{ \item{\code{lang}}{Document language code}
-\item{\code{theme}}{Beamer theme (e.g. "AnnArbor")}
-\item{\code{colortheme}}{Beamer color theme (e.g.
-"dolphin")} \item{\code{fonttheme}}{Beamer font theme (e.g.
-"structurebold")} \item{\code{biblio-style}}{LaTeX
-bibliography style (used with \code{natbib} option)}
-\item{\code{biblio-files}}{Bibliography files to use in
-LaTeX (used with \code{natbib} or \code{biblatex} options)}
-}
 }
 \examples{
 \dontrun{

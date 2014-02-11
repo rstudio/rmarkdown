@@ -16,6 +16,9 @@
 #'   that if you want to reverse the default incremental behavior for an
 #'   individual bullet you can preceded it with \code{>}. For example:
 #'   \emph{\code{> - Bullet Text}}
+#' @param theme Beamer theme (e.g. "AnnArbor").
+#' @param colortheme Beamer color theme (e.g. "dolphin").
+#' @param fonttheme Beamer font theme (e.g. "structurebold").
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -32,28 +35,6 @@
 #' also be provided to enable the use of footnotes and bibliographies.
 #' For more details see the documentation on R Markdown
 #' \link[=rmd_metadata]{metadata} and \link[=rmd_citations]{citations}.
-#'
-#' Many aspects of the LaTeX template used to create Beamer output can be
-#' customized using metadata. For example:
-#'
-#' \tabular{l}{
-#' \code{---} \cr
-#' \code{title: "Crop Analysis Q3 2013"} \cr
-#' \code{theme: AnnArbor} \cr
-#' \code{colortheme: dolphin} \cr
-#' \code{---}
-#' }
-#'
-#' Available metadata variables include:
-#'
-#' \describe{
-#'    \item{\code{lang}}{Document language code}
-#'    \item{\code{theme}}{Beamer theme (e.g. "AnnArbor")}
-#'    \item{\code{colortheme}}{Beamer color theme (e.g. "dolphin")}
-#'    \item{\code{fonttheme}}{Beamer font theme (e.g. "structurebold")}
-#'    \item{\code{biblio-style}}{LaTeX bibliography style (used with \code{natbib} option)}
-#'    \item{\code{biblio-files}}{Bibliography files to use in LaTeX (used with \code{natbib} or \code{biblatex} options)}
-#' }
 #'
 #' @examples
 #' \dontrun{
@@ -75,6 +56,9 @@ beamer_presentation <- function(toc = FALSE,
                                 fig_height = 7,
                                 fig_crop = TRUE,
                                 fig_caption = FALSE,
+                                theme = "default",
+                                colortheme = "default",
+                                fonttheme = "default",
                                 highlight = "default",
                                 template = "default",
                                 includes = NULL,
@@ -102,6 +86,14 @@ beamer_presentation <- function(toc = FALSE,
   # incremental
   if (incremental)
     args <- c(args, "--incremental")
+
+  # themes
+  if (!identical(theme, "default"))
+    args <- c(args, pandoc_variable_arg("theme", theme))
+  if (!identical(colortheme, "default"))
+    args <- c(args, pandoc_variable_arg("colortheme", colortheme))
+  if (!identical(fonttheme, "default"))
+    args <- c(args, pandoc_variable_arg("fonttheme", fonttheme))
 
   # highlighting
   if (!is.null(highlight))

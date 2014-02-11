@@ -134,8 +134,10 @@ pandoc_available <- function(version = NULL) {
 #'
 #' @inheritParams includes
 #'
-#' @param toc \code{TRUE} to include a table of contents in the output
-#' @param toc_depth Depth of headers to include in table of contents
+#' @param name Name of template variable to set.
+#' @param value Value of template variable.
+#' @param toc \code{TRUE} to include a table of contents in the output.
+#' @param toc_depth Depth of headers to include in table of contents.
 #' @param highlight The name of a pandoc syntax highlighting theme.
 #' @param default The highlighting theme to use if "default"
 #'   is specified.
@@ -161,6 +163,12 @@ pandoc_available <- function(version = NULL) {
 #' }
 #' @name pandoc_args
 NULL
+
+#' @rdname pandoc_args
+#' @export
+pandoc_variable_arg <- function(name, value) {
+  c("--variable", paste(name, "=", value, sep = ""))
+}
 
 
 #' @rdname pandoc_args
