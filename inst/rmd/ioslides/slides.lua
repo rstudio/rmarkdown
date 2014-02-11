@@ -187,14 +187,14 @@ end
 -- lev is an integer, the header level.
 function Header(lev, s, attr)
 
-  -- detect level 1 header and convert it to a segue slide 
+  -- detect level 1 header and convert it to a segue slide
   local slide_class = ""
   if lev == 1 then
     slide_class = "segue dark nobackground"
     lev = 2
   end
 
-  -- extract optional subtitle 
+  -- extract optional subtitle
   local subtitle = ""
   if lev == 2 then
     local i, j = string.find(s, "|")
@@ -243,7 +243,19 @@ function Header(lev, s, attr)
 end
 
 function BlockQuote(s)
-  return "<blockquote>\n" .. s .. "\n</blockquote>"
+  -- if this is a list then blockquote means invert the default
+  -- incremental behavior
+  local prefix = string.sub(s, 1, 3)
+  if prefix == "<ol" or prefix == "<ul" then
+    if not incremental then
+      s = s:gsub(prefix .. ">", prefix .. " class = 'build'>", 1)
+    else
+      s = s:gsub(prefix .. " class = 'build'>", prefix .. ">", 1)
+    end
+    return s
+  else
+    return "<blockquote>\n" .. s .. "\n</blockquote>"
+  end
 end
 
 function HorizontalRule()
@@ -275,10 +287,10 @@ function BulletList(items)
     table.insert(buffer, "<li>" .. item .. "</li>")
   end
   list_class = ""
-  if build_slide then
-    list_class = "class = 'build'"
+  if incremental then
+    list_class = " class = 'build'"
   end
-  return "<ul " .. list_class .. ">\n" .. table.concat(buffer, "\n") .. "\n</ul>"
+  return "<ul" .. list_class .. ">\n" .. table.concat(buffer, "\n") .. "\n</ul>"
 end
 
 function OrderedList(items)
@@ -287,10 +299,10 @@ function OrderedList(items)
     table.insert(buffer, "<li>" .. item .. "</li>")
   end
   list_class = ""
-  if build_slide then
-    list_class = "class = 'build'"
+  if incremental then
+    list_class = " class = 'build'"
   end
-  return "<ol " .. list_class .. ">\n" .. table.concat(buffer, "\n") .. "\n</ol>"
+  return "<ol" .. list_class .. ">\n" .. table.concat(buffer, "\n") .. "\n</ol>"
 end
 
 -- Revisit association list STackValue instance.

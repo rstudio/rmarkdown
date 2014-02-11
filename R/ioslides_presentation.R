@@ -4,13 +4,25 @@
 #'
 #' Convert to an ioslides Presentation
 #'
-#' @param includes Named list of additional content to include within the
-#'   document (typically created using the \code{\link{includes}} function).
-#'   Note that if \code{before_body} content is specified it will replace
-#'   the standard title slide entirely.
+#' @inheritParams beamer_presentation
+#' @inheritParams html_document
+#'
+#' @param widescreen Display presentation with wider dimensions.
+#' @param smaller Use smaller text on all slides.
+#'
+#' @return R Markdown output format to pass to \code{\link{render}}
+#'
+#' @details
+#'
+#' If a \code{before_body} include is specified then it will replace
+#' the standard title slide entirely.
+#'
+#' For more information on markdown syntax for presentations see
+#' \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing slide shows with pandoc}.
 #'
 #' @export
-ioslides_presentation <- function(fig_width = 7.5,
+ioslides_presentation <- function(incremental = FALSE,
+                                  fig_width = 7.5,
                                   fig_height = 5.5,
                                   fig_retina = 2,
                                   fig_caption = FALSE,
@@ -100,7 +112,9 @@ ioslides_presentation <- function(fig_width = 7.5,
     lua_writer <- tempfile("ioslides", fileext = ".lua")
 
     # write settings to file
-    settings <- c(paste("local base64_images =",
+    settings <- c(paste("local incremental = ",
+                        ifelse(incremental, "true", "false")),
+                  paste("local base64_images =",
                         ifelse(self_contained, "true", "false")),
                   paste("local smaller =",
                         ifelse(smaller, "true", "false")))
