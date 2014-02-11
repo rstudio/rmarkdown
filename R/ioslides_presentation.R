@@ -7,6 +7,7 @@ ioslides_presentation <- function(fig_width = 7.5,
                                   smart = TRUE,
                                   self_contained = TRUE,
                                   widescreen = FALSE,
+                                  smaller = FALSE,
                                   mathjax = "default",
                                   pandoc_args = NULL) {
 
@@ -73,12 +74,17 @@ ioslides_presentation <- function(fig_width = 7.5,
 
     # convert using our lua writer (write output to a temp file)
     lua_writer <- tempfile("ioslides", fileext = ".lua")
-    file.copy(from = rmarkdown_system_file("rmd/ioslides/slides.lua"),
-              to = lua_writer)
-    if (self_contained) {
-      file.append(lua_writer,
-                  rmarkdown_system_file("rmd/ioslides/base64.lua"))
-    }
+
+    # write settings to file
+    settings <- c(paste("local base64_images =",
+                        ifelse(self_contained, "true", "false")),
+                  paste("local smaller =",
+                        ifelse(smaller, "true", "false")))
+    writeLines(settings, lua_writer, useBytes = TRUE)
+
+    # append main body of script
+    file.append(lua_writer,
+                rmarkdown_system_file("rmd/ioslides/slides.lua"))
 
     output_tmpfile <- tempfile("ioslides-output", fileext = ".html")
     on.exit(unlink(output_tmpfile), add = TRUE)
