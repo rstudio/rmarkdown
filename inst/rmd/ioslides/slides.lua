@@ -193,8 +193,10 @@ function Header(lev, s, attr)
 
   -- detect level 1 header and convert it to a segue slide
   local slide_class = ""
+  local hgroup_class = ""
   if lev == 1 then
     slide_class = "segue dark nobackground"
+    hgroup_class = " class = 'auto-fadein'"
     lev = 2
   end
 
@@ -238,7 +240,7 @@ function Header(lev, s, attr)
 
     -- return the beginning of the slide
     return preface .. "<slide class='" .. slide_class .. "'>" ..
-           "<hgroup>" .. header ..  "</hgroup>" ..
+           "<hgroup" .. hgroup_class .. ">" .. header ..  "</hgroup>" ..
            "<article " .. attributes(attr) .. ">"
   else
     return header
