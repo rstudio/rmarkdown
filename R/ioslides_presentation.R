@@ -1,27 +1,4 @@
 
-
-#' Convert to an ioslides Presentation
-#'
-#' Convert to an ioslides Presentation
-#'
-#' @inheritParams beamer_presentation
-#' @inheritParams html_document
-#'
-#' @param logo Path to file that includes a logo for use in the presentation
-#'   (should be square and at least 128x128)
-#' @param widescreen Display presentation with wider dimensions.
-#' @param smaller Use smaller text on all slides.
-#'
-#' @return R Markdown output format to pass to \code{\link{render}}
-#'
-#' @details
-#'
-#' If a \code{before_body} include is specified then it will replace
-#' the standard title slide entirely.
-#'
-#' For more information on markdown syntax for presentations see
-#' \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing slide shows with pandoc}.
-#'
 #' @export
 ioslides_presentation <- function(logo = NULL,
                                   incremental = FALSE,
