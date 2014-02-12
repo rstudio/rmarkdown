@@ -48,7 +48,10 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 8,
   \item{widescreen}{Display presentation with wider
   dimensions.}
 
-  \item{smaller}{Use smaller text on all slides.}
+  \item{smaller}{Use smaller text on all slides. You can
+  also enable this for individual slides by adding the
+  \code{.smaller} attribute to the slide header (see
+  \emph{More Options} below for details).}
 
  \item{mathjax}{Include mathjax. The "default" option uses
   an https URL from the official MathJax CDN. The "local"
