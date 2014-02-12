@@ -57,8 +57,16 @@ $endif$
     };
   </script>
 
-$if(logo)$
   <style type="text/css">
+
+    slides > slide {
+      -webkit-transition: all $transition$s ease-in-out;
+      -moz-transition: all $transition$s ease-in-out;
+      -o-transition: all $transition$s ease-in-out;
+      transition: all $transition$s ease-in-out;
+    }
+
+$if(logo)$
     slides > slide:not(.nobackground):before {
       font-size: 12pt;
       content: "";
@@ -74,8 +82,8 @@ $if(logo)$
       height: 30px;
       line-height: 1.9;
     }
-  </style>
 $endif$
+  </style>
 
 $for(css)$
   <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>

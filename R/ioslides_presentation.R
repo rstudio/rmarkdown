@@ -10,6 +10,7 @@ ioslides_presentation <- function(logo = NULL,
                                   self_contained = TRUE,
                                   widescreen = FALSE,
                                   smaller = FALSE,
+                                  transition = "default",
                                   mathjax = "default",
                                   css = NULL,
                                   includes = NULL,
@@ -33,6 +34,19 @@ ioslides_presentation <- function(logo = NULL,
   # widescreen
   if (widescreen)
     args <- c(args, "--variable", "widescreen");
+
+  # transition
+  if (is.numeric(transition))
+    transition <- as.character(transition)
+  else if (transition %in% c("default", "faster", "slower"))
+    transition <- switch(transition,
+                         "default" = "0.6",
+                         "faster" = "0.2",
+                         "slower" = "1.0")
+  else
+    stop('transition must be "default", "faster", "slower" or a ',
+         'numeric value (representing seconds)', call. = FALSE)
+  args <- c(args, pandoc_variable_arg("transition", transition))
 
   # additional css
   for (css_file in css)

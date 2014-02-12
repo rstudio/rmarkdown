@@ -8,8 +8,8 @@
 ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 8,
   fig_height = 5, fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, widescreen = FALSE, smaller = FALSE,
-  mathjax = "default", css = NULL, includes = NULL, data_dir = NULL,
-  pandoc_args = NULL)
+  transition = "default", mathjax = "default", css = NULL, includes = NULL,
+  data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{logo}{Path to file that includes a logo for use in
@@ -52,6 +52,10 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 8,
   also enable this for individual slides by adding the
   \code{.smaller} attribute to the slide header (see
   \emph{Presentation Size} below for details).}
+
+  \item{transition}{Speed of slide transitions. This can be "default",
+  "slower", "faster", or a numeric value with a number of seconds (e.g.
+  0.5)}
 
  \item{mathjax}{Include mathjax. The "default" option uses
   an https URL from the official MathJax CDN. The "local"
