@@ -51,7 +51,7 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 8,
   \item{smaller}{Use smaller text on all slides. You can
   also enable this for individual slides by adding the
   \code{.smaller} attribute to the slide header (see
-  \emph{More Options} below for details).}
+  \emph{Presentation Size} below for details).}
 
  \item{mathjax}{Include mathjax. The "default" option uses
   an https URL from the official MathJax CDN. The "local"
@@ -163,13 +163,63 @@ others you can use this syntax:
 
 }
 
-\section{Tables}{
+\section{Presentation Size}{
 
-The ioslides template has an attractive default style for tables so you
-shouldn't hestiate to add tables for presenting more complex sets of
-information. Pandoc markdown supports several syntaxes for defining
-tables which are described in the \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc markdown specification}.
+You can display the presentation using a wider form factor using the
+\code{widescreen} option. You can specify that smaller text be used with
+the \code{smaller} option. For example:
 
+\preformatted{
+---
+output:
+  ioslides_presentation:
+    widescreen: true
+    smaller: true
+---
+}
+
+You can also enable the \code{smaller} option on a slide-by-slide basis
+by adding the \code{.smaller} attibute to the slide header:
+
+\preformatted{
+## Getting up {.smaller}
+}
+
+}
+
+\section{Adding a Logo}{
+
+You can add a logo to the presentation using the \code{logo} option (the
+logo should be square and at least 128x128). For example:
+
+\preformatted{
+---
+output:
+  ioslides_presentation:
+    logo: logo.png
+---
+}
+
+A 128x128 version of the logo graphic will be added to the title slide and
+an icon version of the logo will be included in the bottom-left footer of
+each slide.
+}
+
+\section{Build Slides}{
+
+Slides can also have a \code{.build} attribute that indicate that their
+content should be displayed incrementally. For example:
+
+\preformatted{
+## Getting up {.build}
+}
+
+Slide attributes can be combined if you need to specify more than one,
+for example:
+
+\preformatted{
+## Getting up {.smaller .build}
+}
 }
 
 \section{Code Highlighting}{
@@ -188,6 +238,67 @@ y <- x * 2
 When you press the \code{'h'} key the higlighted code will be brought
 to the foreground.
 
+}
+
+
+\section{Tables}{
+
+The ioslides template has an attractive default style for tables so you
+shouldn't hestiate to add tables for presenting more complex sets of
+information. Pandoc markdown supports several syntaxes for defining
+tables which are described in the \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc markdown specification}.
+
+}
+
+
+\section{Advanced Layout}{
+
+You can vertically center content on a slide by adding the \code{.flexbox}
+and \code{.vcenter} attributes to the slide title. For example:
+
+\preformatted{
+## Dinner {.flexbox .vcenter}
+}
+
+You can horizontally center content by enclosing it in a \code{div} tag
+with class \code{centered}. For example:
+
+\preformatted{
+<div class="centered">
+This text is centered.
+</div>
+}
+
+You can do a two-column layout using the \code{columns-2} class.
+For example:
+
+\preformatted{
+<div class="columns-2">
+  ![Image](image.png)
+
+  - Bullet 1
+  - Bullet 2
+  - Bullet 3
+</div>
+}
+
+Note that content will flow accross the columns so if you want to
+have an image on one side and text on the other you should make
+sure that the image has sufficient height to force the text to
+the other side of the slide.
+
+}
+
+\section{Text Color}{
+You can color content using base color classes red, blue, green, yellow,
+and gray (or variations of them e.g. red2, red3, blue2, blue3, etc.).
+For example:
+
+\preformatted{
+<div class="red2">
+This text is red
+</div>
+}
 }
 
 \section{Presenter Mode}{
@@ -216,47 +327,10 @@ To add presenter notes to a slide you include it within a "notes"
 \preformatted{
 <div class="notes">
 This is my note.
-
 - It can contain markdown
 - like this list
-
 </div>
 }
-
-}
-
-\section{More Options}{
-
-You can add a logo to the presentation using the \code{logo} option (the
-logo should be square and at least 128x128). You can display the presentation
-using a wider form factor using the \code{widescreen} option. You can
-specify that smaller text be used with the \code{smaller} option. For example:
-
-\preformatted{
----
-output:
-  ioslides_presentation:
-    logo: logo.png
-    widescreen: true
-    smaller: true
----
-}
-
-You can also enable the \code{smaller} option on a slide-by-slide basis
-by adding the \code{.smaller} attibute to the slide header:
-
-\preformatted{
-## Getting up {.smaller}
-}
-
-Slides can also have a \code{.build} attribute that indicate that their
-content should be displayed incrementally. For example:
-
-\preformatted{
-## Getting up {.build}
-}
-
-Slide attributes can be combined if you need to specify more than one.
 
 }
 
