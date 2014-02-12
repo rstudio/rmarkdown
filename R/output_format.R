@@ -184,17 +184,20 @@ rmarkdown_format <- function(extensions = NULL) {
 
 # Synthesize the output format for a document from it's YAML. If we can't
 # find an output format then we just return html_document
-output_format_from_yaml_front_matter <- function(yaml_front_matter,
+output_format_from_yaml_front_matter <- function(input_lines,
                                                  output_options,
-                                                 output_format_expr) {
+                                                 output_format_name) {
 
   # ensure input is the correct data type
-  if (!is_null_or_string(output_format_expr)) {
+  if (!is_null_or_string(output_format_name)) {
     stop("Unrecognized output format specified", call. = FALSE)
   }
 
-  # default to no args
-  output_format_args <- list()
+  # parse the yaml
+  yaml_front_matter <- parse_yaml_front_matter(input_lines)
+
+  # default to no options
+  output_format_options <- list()
 
   # parse common output.yaml if we have it
   if (file.exists("output.yaml"))
@@ -214,19 +217,19 @@ output_format_from_yaml_front_matter <- function(yaml_front_matter,
                                                output_format_yaml)
 
     # if a named format was provided then try to find it
-    if (!is.null(output_format_expr)) {
+    if (!is.null(output_format_name)) {
 
       # if this is a named element of the list then use that
-      if (output_format_expr %in% names(output_format_yaml)) {
+      if (output_format_name %in% names(output_format_yaml)) {
 
-        output_format_args <- output_format_yaml[[output_format_expr]]
+        output_format_options <- output_format_yaml[[output_format_name]]
 
       # otherwise this could be a heterogeneous list of characters and
       # lists so scan for an embedded list
       } else {
         for (format in output_format_yaml) {
-          if (is.list(format) && !is.null(format[[output_format_expr]]))
-            output_format_args <- format[[output_format_expr]]
+          if (is.list(format) && !is.null(format[[output_format_name]]))
+            output_format_options <- format[[output_format_name]]
         }
       }
     # no named format passed so take the first element
@@ -234,38 +237,45 @@ output_format_from_yaml_front_matter <- function(yaml_front_matter,
       if (is.list(output_format_yaml[[1]])) {
         # check for named list
         if (nzchar(names(output_format_yaml)[[1]])) {
-          output_format_expr <- names(output_format_yaml)[[1]]
-          output_format_args <- output_format_yaml[[1]]
+          output_format_name <- names(output_format_yaml)[[1]]
+          output_format_options <- output_format_yaml[[1]]
         # nested named list
         } else {
-          output_format_expr <- names(output_format_yaml[[1]])[[1]]
-          output_format_args <- output_format_yaml[[1]][[output_format_expr]]
+          output_format_name <- names(output_format_yaml[[1]])[[1]]
+          output_format_options <- output_format_yaml[[1]][[output_format_name]]
         }
       } else {
-        output_format_expr <- output_format_yaml[[1]]
+        output_format_name <- output_format_yaml[[1]]
       }
     }
 
   # no output formats defined in the file, just take the passed format
   # by name (or default to html_document if no named format was specified)
   } else {
-    if (is.null(output_format_expr))
-      output_format_expr <- "html_document"
+    if (is.null(output_format_name))
+      output_format_name <- "html_document"
   }
 
   # merge any output_options passed in the call to render
   if (!is.null(output_options)) {
-    output_format_args <- merge_output_options(output_format_args,
-                                               output_options)
+    output_format_options <- merge_output_options(output_format_options,
+                                                  output_options)
   }
 
+  # return the format name and options
+  list(name = output_format_name,
+       options = output_format_options)
+}
+
+create_output_format <- function(name, options) {
+
   # lookup the function
-  output_format_func <- eval(parse(text = output_format_expr))
+  output_format_func <- eval(parse(text = name))
   if (!is.function(output_format_func))
     stop("YAML output format must evaluate to a function", call. = FALSE)
 
   # call the function
-  output_format <- do.call(output_format_func, output_format_args)
+  output_format <- do.call(output_format_func, options)
   if (!is_output_format(output_format))
     stop("Format is not of class rmarkdown_output_format", call. = FALSE)
 
