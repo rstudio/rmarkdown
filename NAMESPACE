@@ -1,4 +1,5 @@
 export(beamer_presentation)
+export(default_output_format)
 export(html_document)
 export(includes)
 export(ioslides_presentation)
