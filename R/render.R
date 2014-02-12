@@ -38,8 +38,8 @@ render <- function(input,
   input <- basename(input)
   knit_output <- file_with_meta_ext(input, "knit", "md")
   intermediates <- c(intermediates, knit_output)
-  pandoc_input <- file_with_meta_ext(input, "pandoc", "md")
-  intermediates <- c(intermediates, pandoc_input)
+  utf8_input <- file_with_meta_ext(input, "utf8", "md")
+  intermediates <- c(intermediates, utf8_input)
 
   # read the input file
   input_lines <- read_lines_utf8(input, encoding)
@@ -108,7 +108,7 @@ render <- function(input,
 
   # read the input text as UTF-8 then write it back out
   input_text <- read_lines_utf8(input, encoding)
-  writeLines(input_text, pandoc_input, useBytes = TRUE)
+  writeLines(input_text, utf8_input, useBytes = TRUE)
 
   # copy supporting files to the output directory if necessary
   if (!output_format$clean_supporting) {
@@ -120,7 +120,7 @@ render <- function(input,
   }
 
   # run the conversion
-  pandoc_convert(pandoc_input,
+  pandoc_convert(utf8_input,
                  output_format$pandoc$to,
                  output_format$pandoc$from,
                  output_file,
@@ -130,7 +130,7 @@ render <- function(input,
 
   # if there is a post-processor then call it
   if (!is.null(output_format$post_processor))
-    output_format$post_processor(pandoc_input, output_file, !quiet)
+    output_format$post_processor(utf8_input, output_file, !quiet)
 
   if (!quiet)
     message("\nOutput created: ", output_file)
