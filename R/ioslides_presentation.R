@@ -115,7 +115,7 @@ ioslides_presentation <- function(logo = NULL,
       args <- c(args, "--mathjax")
 
     # convert using our lua writer (write output to a temp file)
-    lua_writer <- file_with_meta_ext(input_file, "ioslides", ".lua")
+    lua_writer <- "ioslides_presentation.lua"
     on.exit(unlink(lua_writer), add = TRUE)
 
     # write settings to file
