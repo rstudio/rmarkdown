@@ -130,7 +130,7 @@ ioslides_presentation <- function(logo = NULL,
 
     # append main body of script
     file.append(lua_writer,
-                rmarkdown_system_file("rmd/ioslides/slides.lua"))
+                rmarkdown_system_file("rmd/ioslides/ioslides_presentation.lua"))
 
     output_tmpfile <- tempfile("ioslides-output", fileext = ".html")
     on.exit(unlink(output_tmpfile), add = TRUE)
