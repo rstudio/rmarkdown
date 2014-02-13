@@ -9,7 +9,7 @@ local in_notes = false
 
 -- Character escaping
 local function escape(s, in_attribute)
-  return s:gsub("[<>&\"']",
+  s = s:gsub("[<>&\"']",
     function(x)
       if x == '<' then
         return '&lt;'
@@ -25,6 +25,14 @@ local function escape(s, in_attribute)
         return x
       end
     end)
+
+  if smart then
+    s = s:gsub("%-%-%-", "&#8212;")
+    s = s:gsub("%-%-", "&#8211;")
+    s = s:gsub("%.%.%.", "&#8230;")
+  end
+
+  return s
 end
 
 -- Lua 5.1+ base64 v3.0 (c) 2009 by Alex Kloss <alexthkloss@web.de>
