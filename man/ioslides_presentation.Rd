@@ -84,8 +84,8 @@ R Markdown output format to pass to \code{\link{render}}
 \section{Slide Basics}{
 
 You can create a slide show broken up into sections by using the # and ##
-heading tags and standard markdown for the content of the slides. For
-example:
+heading tags (you can also create a new slide without a header using a
+horizontal rule (\code{----------}). For example here's a simple slide show:
 
 \preformatted{
 ---
@@ -113,6 +113,16 @@ output: ioslides_presentation
 
 - Eat spaghetti
 - Drink wine
+
+----------
+
+![picture of spaghetti](images/spaghetti.jpg)
+
+## Going to sleep
+
+- Get in bed
+- Count sheep
+
 }
 
 You can add a subtitle to a slide or section by including text after the

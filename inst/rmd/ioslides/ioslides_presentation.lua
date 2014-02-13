@@ -304,7 +304,7 @@ function BlockQuote(s)
 end
 
 function HorizontalRule()
-  return "<hr/>"
+  return Header(2, "", {})
 end
 
 function CodeBlock(s, attr)
