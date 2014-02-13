@@ -80,7 +80,8 @@ render <- function(input,
                          "/figure-", output_format$pandoc$to, "/",
                          sep = "")
     knitr::opts_chunk$set(fig.path=figures_dir)
-    knitr::opts_chunk$set(cache.path=paste(knitr_cache_dir(input), "/", sep=""))
+    cache_dir <- knitr_cache_dir(input)
+    knitr::opts_chunk$set(cache.path=paste(cache_dir, "/", sep=""))
 
     # merge user options and hooks
     if (!is.null(output_format$knitr)) {
@@ -98,10 +99,12 @@ render <- function(input,
 
     # clean the files_dir if we've either been asking to clean supporting
     # files or if we know the supporting files are going to get copied
-    # to an output directory
+    # to an output directory. however, don't ever clean the files_dir if
+    # the knitr cache is active
     if (output_format$clean_supporting ||
         (dirname(input) != dirname(output_file))) {
-       intermediates <- c(intermediates, files_dir)
+        if (!file.exists(cache_dir))
+          intermediates <- c(intermediates, files_dir)
     }
   }
 
