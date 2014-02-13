@@ -192,7 +192,9 @@ rmarkdown_format <- function(extensions = NULL) {
 #' @param encoding The encoding of the input file; see \code{\link{file}}
 #'
 #' @return A named list with a \code{name} value containing the format
-#'   name and an \code{options} value that is a list of rendering options.
+#'   name and an \code{options} value that is a list containing all the options
+#'   for the format and their values. An option's default value will be returned
+#'   if the option isn't set explicitly in the document.
 #'
 #' @details
 #'
@@ -202,8 +204,16 @@ rmarkdown_format <- function(extensions = NULL) {
 #'
 #' @export
 default_output_format <- function(input, encoding = getOption("encoding")) {
+  # parse the YAML and front matter and get the explicitly set options
   input_lines <- read_lines_utf8(input, encoding)
-  output_format_from_yaml_front_matter(input_lines)
+  format <- output_format_from_yaml_front_matter(input_lines)
+
+  # look up the formals of the output function to get the full option list and
+  # merge against the explicitly set list
+  format_function <- eval(parse(text = format$name))
+  format$options <- merge_output_options(as.list(formals(format_function)),
+                                         format$options)
+  format
 }
 
 
