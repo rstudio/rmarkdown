@@ -74,6 +74,10 @@ ioslides_presentation <- function(logo = NULL,
     # extra args
     args <- c()
 
+    # create the files dir if it doesn't exist
+    if (!file.exists(files_dir))
+      dir.create(files_dir)
+
     # logo
     if (!is.null(logo)) {
       logo_path <- logo
