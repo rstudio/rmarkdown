@@ -248,7 +248,7 @@ slides > slide {
   height: 700px;
   margin-left: -450px;
   margin-top: -350px;
-  padding: 30px 60px;
+  padding: 40px 60px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -334,7 +334,7 @@ slides > slide.backdrop:after, slides > slide.backdrop:before {
 }
 /* line 180, ../scss/default.scss */
 slides > slide > hgroup + article {
-  margin-top: 15px;
+  margin-top: 45px;
 }
 /* line 184, ../scss/default.scss */
 slides > slide > hgroup + article.flexbox.vcenter, slides > slide > hgroup + article.flexbox.vleft, slides > slide > hgroup + article.flexbox.vright {
