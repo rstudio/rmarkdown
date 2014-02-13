@@ -5,8 +5,8 @@
   Format for converting from R Markdown to an \href{https://code.google.com/p/io-2012-slides/}{ioslides} presentation.
 }
 \usage{
-ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 8,
-  fig_height = 5, fig_retina = 2, fig_caption = FALSE, smart = TRUE,
+ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
+  fig_height = 4.5, fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, widescreen = FALSE, smaller = FALSE,
   transition = "default", mathjax = "default", css = NULL, includes = NULL,
   data_dir = NULL, pandoc_args = NULL)

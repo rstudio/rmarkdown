@@ -113,8 +113,8 @@ ioslides_presentation <- function(logo = NULL,
     # setup args
     args <- c()
 
-    # check for an environment provided base64 encoding function
-    base64_encoder <- getOption("rmarkdown.base64encoder")
+    # see if we have a base64 image encoder
+    base64_encoder <- base64_image_encoder()
 
     # convert using our lua writer (write output to a temp file)
     lua_writer <- "ioslides_presentation.lua"
@@ -147,12 +147,12 @@ ioslides_presentation <- function(logo = NULL,
                    options = args,
                    verbose = verbose)
 
-    # call base64 encoding hook if there is one
-    if (self_contained && !is.null(base64_encoder))
-      base64_encoder(output_tmpfile)
-
     # read the slides
     slides_lines <- readLines(output_tmpfile, warn = FALSE, encoding = "UTF-8")
+
+    # base64 encode if needed
+    if (self_contained && !is.null(base64_encoder))
+      slides_lines <- base64_encoder(slides_lines)
 
     # read the output file
     output_lines <- readLines(output_file, warn = FALSE, encoding = "UTF-8")

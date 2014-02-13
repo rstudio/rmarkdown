@@ -14,5 +14,8 @@ Imports:
     utils,
     knitr,
     yaml (>= 2.1.5)
+Suggests:
+    caTools,
+    httpuv (>= 1.2.2)
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
 License: GPL-3
