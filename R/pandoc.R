@@ -247,14 +247,10 @@ pandoc_path_arg <- function(path) {
   path
 }
 
-reconcile_self_contained <- function(self_contained, mathjax) {
-  if (identical(mathjax, "local")) {
-    if (self_contained)
-      warning("Local MathJax isn't compatible with self_contained ",
-              "(setting self_contained to FALSE)", call. = FALSE)
-    self_contained <- FALSE
-  }
-  self_contained
+validate_self_contained <- function(mathjax) {
+  if (identical(mathjax, "local"))
+    stop("Local MathJax isn't compatible with self_contained\n",
+         "(you should set self_contained to FALSE)", call. = FALSE)
 }
 
 pandoc_mathjax_args <- function(mathjax,

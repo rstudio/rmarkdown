@@ -111,9 +111,6 @@ html_document <- function(toc = FALSE,
                           data_dir = NULL,
                           pandoc_args = NULL) {
 
-  # interplay between arguments
-  self_contained <- reconcile_self_contained(self_contained, mathjax)
-
   # build pandoc args
   args <- c("--standalone")
 
@@ -122,8 +119,10 @@ html_document <- function(toc = FALSE,
     args <- c(args, "--smart")
 
   # self contained document
-  if (self_contained)
+  if (self_contained) {
+    validate_self_contained(mathjax)
     args <- c(args, "--self-contained")
+  }
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))

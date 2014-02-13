@@ -85,10 +85,6 @@ revealjs_presentation <- function(incremental = FALSE,
                                   data_dir = NULL,
                                   pandoc_args = NULL) {
 
-
-  # interplay between arguments
-  self_contained <- reconcile_self_contained(self_contained, mathjax)
-
   # base pandoc options for all reveal.js output
   args <- c()
 
@@ -97,8 +93,10 @@ revealjs_presentation <- function(incremental = FALSE,
     args <- c(args, "--smart")
 
   # self contained document
-  if (self_contained)
+  if (self_contained) {
+    validate_self_contained(mathjax)
     args <- c(args, "--self-contained")
+  }
 
   # template path and assets
   if (identical(template, "default"))
