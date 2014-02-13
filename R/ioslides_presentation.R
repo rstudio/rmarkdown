@@ -25,7 +25,7 @@ ioslides_presentation <- function(logo = NULL,
 
   # smart quotes
   if (smart)
-    arggs <- c(args, "--smart")
+    args <- c(args, "--smart")
 
   # self contained document
   if (self_contained)
