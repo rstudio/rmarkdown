@@ -23,6 +23,10 @@ ioslides_presentation <- function(logo = NULL,
   # base pandoc options for all output
   args <- c()
 
+  # smart quotes
+  if (smart)
+    arggs <- c(args, "--smart")
+
   # self contained document
   if (self_contained)
     args <- c(args, "--self-contained")
@@ -103,12 +107,8 @@ ioslides_presentation <- function(logo = NULL,
   # renderer and then inserts it into the main file
   post_processor <- function(input_file, output_file, verbose) {
 
-    # smart, mathjax, etc.
+    # setup args
     args <- c()
-    if (smart)
-      args <- c(args, "--smart")
-    if (!is.null(mathjax))
-      args <- c(args, "--mathjax")
 
     # convert using our lua writer (write output to a temp file)
     lua_writer <- "ioslides_presentation.lua"
@@ -125,6 +125,7 @@ ioslides_presentation <- function(logo = NULL,
     add_setting("base64_images", self_contained)
     add_setting("smaller", smaller)
     add_setting("smart", smart)
+    add_setting("mathjax", !is.null(mathjax))
     writeLines(settings, lua_writer, useBytes = TRUE)
 
     # append main body of script

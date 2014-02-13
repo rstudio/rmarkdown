@@ -170,11 +170,21 @@ function Code(s, attr)
 end
 
 function InlineMath(s)
-  return "\\(" .. escape(s) .. "\\)"
+  s = escape(s)
+  if mathjax then
+    return "\\(" .. s .. "\\)"
+  else
+    return "$" .. s .. "$"
+  end
 end
 
 function DisplayMath(s)
-  return "\\[" .. escape(s) .. "\\]"
+  s = escape(s)
+  if mathjax then
+    return "\\[" .. s .. "\\]"
+  else
+    return "$$" .. s .. "$$"
+  end
 end
 
 function Note(s)
