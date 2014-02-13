@@ -71,18 +71,23 @@ function Blocksep()
   return "\n\n"
 end
 
+local function CompleteSlide()
+  if (in_slide) then
+    in_slide = false
+    return  "</article></slide>"
+  else
+    return ""
+  end
+end
+
+
 -- This function is called once for the whole document. Parameters:
 -- body is a string, metadata is a table, variables is a table.
 -- One could use some kind of templating
 -- system here; this just gives you a simple standalone HTML file.
 function Doc(body, metadata, variables)
-
   -- complete any active slide
-  local suffix = ""
-  if (in_slide) then
-    suffix = "</article></slide>"
-    in_slide = false
-  end
+  local suffix = CompleteSlide()
 
   return body .. suffix
 end
@@ -255,10 +260,9 @@ function Header(lev, s, attr)
   if lev == 2 then
 
     -- complete previous slide
-    local preface = ""
-    if in_slide then
-      preface = "</article></slide>"
-    end
+    local preface = CompleteSlide()
+
+    -- start a new slide
     in_slide = true
 
     -- update build flag (used by ol and ul)
