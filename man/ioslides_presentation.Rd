@@ -133,6 +133,7 @@ display modes:
 
 \itemize{
   \item{\code{'f'}      }{enable fullscreen mode}
+  \item{\code{'w'}      }{toggle widescreen mode}
   \item{\code{'o'}      }{enable overview mode}
   \item{\code{'h'}      }{enable code highlight mode}
   \item{\code{'p'}      }{show presenter notes}
