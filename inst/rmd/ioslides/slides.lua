@@ -120,6 +120,22 @@ function Strikeout(s)
   return '<del>' .. s .. '</del>'
 end
 
+function SingleQuoted(s)
+  if smart then
+    return '&lsquo;' .. s .. '&rsquo;'
+  else
+    return '"' .. s .. '"'
+  end
+end
+
+function DoubleQuoted(s)
+  if smart then
+    return '&ldquo;' .. s .. '&rdquo;'
+  else
+    return '"' .. s .. '"'
+  end
+end
+
 function Link(s, src, tit)
   return "<a href='" .. escape(src,true) .. "' title='" ..
          escape(tit,true) .. "'>" .. s .. "</a>"

@@ -23,10 +23,6 @@ ioslides_presentation <- function(logo = NULL,
   # base pandoc options for all output
   args <- c()
 
-  # smart quotes, etc.
-  if (smart)
-    args <- c(args, "--smart")
-
   # self contained document
   if (self_contained)
     args <- c(args, "--self-contained")
@@ -128,6 +124,7 @@ ioslides_presentation <- function(logo = NULL,
     add_setting("incremental", incremental)
     add_setting("base64_images", self_contained)
     add_setting("smaller", smaller)
+    add_setting("smart", smart)
     writeLines(settings, lua_writer, useBytes = TRUE)
 
     # append main body of script
