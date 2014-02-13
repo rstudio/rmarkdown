@@ -258,7 +258,7 @@ tables which are described in the \href{http://johnmacfarlane.net/pandoc/demo/ex
 
 \section{Advanced Layout}{
 
-You can vertically center content on a slide by adding the \code{.flexbox}
+You can center content on a slide by adding the \code{.flexbox}
 and \code{.vcenter} attributes to the slide title. For example:
 
 \preformatted{
