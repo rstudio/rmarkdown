@@ -511,7 +511,7 @@ ul ul {
 
 /* line 337, ../scss/default.scss */
 pre {
-  font-family: 'Source Code Pro', 'Courier New', monospace;
+  font-family: monospace;
   font-size: 20px;
   line-height: 28px;
   padding: 10px 0 10px 60px;
@@ -551,7 +551,7 @@ pre[data-lang="go"] {
 /* line 368, ../scss/default.scss */
 code {
   font-size: 95%;
-  font-family: 'Source Code Pro', 'Courier New', monospace;
+  font-family: monospace;
   color: black;
 }
 
