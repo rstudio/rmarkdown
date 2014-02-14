@@ -150,7 +150,8 @@ revealjs_presentation <- function(incremental = FALSE,
     revealjs_path <- rmarkdown_system_file("rmd/revealjs/reveal.js-2.6.1")
     if (!self_contained)
       revealjs_path <- render_supporting_files(revealjs_path, files_dir)
-    args <- c(args, "--variable", paste("revealjs-url=", revealjs_path, sep=""))
+    args <- c(args, "--variable", paste("revealjs-url=",
+                                        pandoc_path_arg(revealjs_path), sep=""))
 
     # highlight
     args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))

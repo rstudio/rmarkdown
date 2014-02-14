@@ -93,7 +93,9 @@ ioslides_presentation <- function(logo = NULL,
     ioslides_path <- rmarkdown_system_file("rmd/ioslides/ioslides-13.5.1")
     if (!self_contained)
       ioslides_path <- render_supporting_files(ioslides_path, files_dir)
-    args <- c(args, "--variable", paste("ioslides-url=", ioslides_path, sep=""))
+    args <- c(args, "--variable", paste("ioslides-url=",
+                                        pandoc_path_arg(ioslides_path),
+                                        sep=""))
 
     # mathjax
     args <- c(args, pandoc_mathjax_args(mathjax,
