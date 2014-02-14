@@ -66,6 +66,15 @@ $endif$
       transition: all $transition$s ease-in-out;
     }
 
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: $transition$s;
+      -moz-transition: opacity 0.6s ease-in $transition$s;
+      -o-transition: opacity 0.6s ease-in $transition$s;
+      transition: opacity 0.6s ease-in $transition$s;
+      opacity: 0;
+    }
+
 $if(logo)$
     slides > slide:not(.nobackground):before {
       font-size: 12pt;
