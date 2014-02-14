@@ -369,12 +369,16 @@ merge_output_options <- function(base_options, overlay_options) {
 
   # if either one of these is a character vector then normalize to a named list
   normalize_list <- function(target_list) {
-    if (is.character(target_list)) {
+    if (is.null(target_list))
+      list()
+    else if (is.character(target_list)) {
       new_list <- list()
       for (name in target_list)
         new_list[[name]] <- list()
       new_list
     } else {
+      # remove symbols (...) from list
+      target_list <- target_list[names(target_list) != "..."]
       target_list
     }
   }
