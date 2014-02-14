@@ -2,37 +2,37 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 300;
-  src: local('Open Sans Light'), local('OpenSans-Light'), url(fonts/OpenSansLight.woff) format('woff'), url(fonts/OpenSansLight.ttf) format('truetype');
+  src: url(fonts/OpenSansLight.woff) format('woff'), url(fonts/OpenSansLight.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(fonts/OpenSans.woff) format('woff'), url(fonts/OpenSans.ttf) format('truetype');
+  src: url(fonts/OpenSans.woff) format('woff'), url(fonts/OpenSans.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(fonts/OpenSansBold.woff) format('woff'), url(fonts/OpenSansBold.ttf) format('truetype');
+  src: url(fonts/OpenSansBold.woff) format('woff'), url(fonts/OpenSansBold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 300;
-  src: local('Open Sans Light Italic'), local('OpenSansLight-Italic'), url(fonts/OpenSansLightItalic.woff) format('woff'), url(fonts/OpenSansLightItalic.ttf) format('truetype');
+  src: url(fonts/OpenSansLightItalic.woff) format('woff'), url(fonts/OpenSansLightItalic.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 400;
-  src: local('Open Sans Italic'), local('OpenSans-Italic'), url(fonts/OpenSansItalic.woff) format('woff'), url(fonts/OpenSansItalic.ttf) format('truetype');
+  src: url(fonts/OpenSansItalic.woff) format('woff'), url(fonts/OpenSansItalic.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 700;
-  src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(fonts/OpenSansBoldItalic.woff) format('woff'), url(fonts/OpenSansBoldItalic.ttf) format('truetype');
+  src: url(fonts/OpenSansBoldItalic.woff) format('woff'), url(fonts/OpenSansBoldItalic.ttf) format('truetype');
 }
 
 
