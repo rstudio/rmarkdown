@@ -320,8 +320,8 @@ function CodeBlock(s, attr)
 
   -- substitute for code highlighting/emphasis
   local code = escape(s)
-  code_sub = code:gsub("\n[ \t]*[#/]+[ \t]+highlight%-begin", "<b>")
-  code = code_sub:gsub("\n[ \t]*[#/]+[ \t]+highlight%-end", "</b>")
+  code_sub = code:gsub("\n[ \t]*[#/]+[ \t]*&lt;b&gt;", "<b>")
+  code = code_sub:gsub("\n[ \t]*[#/]+[ \t]*&lt;/b&gt;", "</b>")
 
   return "<pre " .. class_attrib .. ">" .. code .. "</pre>"
 end

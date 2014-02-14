@@ -239,19 +239,19 @@ for example:
 
 \section{Code Highlighting}{
 
-Syntax highlighting in ioslides is doing using \href{https://code.google.com/p/google-code-prettify/}{Prettify}. It's also possible to select subsets of code
-for special emphasis by adding a special "highlight" comment around the code.
-For example:
+It's possible to select subsets of code for additional emphasis by adding a
+special "highlight" comment around the code. For example:
 
 \preformatted{
-### highlight-begin
+### <b>
 x <- 10
 y <- x * 2
-### highlight-end
+### </b>
 }
 
-When you press the \code{'h'} key the higlighted code will be brought
-to the foreground.
+The highlighted region will be displayed with a bold font. When you want to
+help the audience focus exclusively on the highlighted region press the
+\code{'h'} key and the rest of the code will fade away.
 
 }
 
