@@ -87,11 +87,11 @@ body {
   -moz-font-smoothing: antialiased;
   -ms-font-smoothing: antialiased;
   -o-font-smoothing: antialiased;
-  -webkit-transition: opacity 800ms ease-in;
+  -webkit-transition: opacity 250ms ease-in;
   -webkit-transition-delay: 100ms;
-  -moz-transition: opacity 800ms ease-in 100ms;
-  -o-transition: opacity 800ms ease-in 100ms;
-  transition: opacity 800ms ease-in 100ms;
+  -moz-transition: opacity 250ms ease-in 100ms;
+  -o-transition: opacity 250ms ease-in 100ms;
+  transition: opacity 250ms ease-in 100ms;
 }
 /* line 73, ../scss/_base.scss */
 body.loaded {
@@ -130,11 +130,11 @@ slides {
   -ms-transform-style: preserve-3d;
   -o-transform-style: preserve-3d;
   transform-style: preserve-3d;
-  -webkit-transition: opacity 800ms ease-in;
+  -webkit-transition: opacity 250ms ease-in;
   -webkit-transition-delay: 100ms;
-  -moz-transition: opacity 800ms ease-in 100ms;
-  -o-transition: opacity 800ms ease-in 100ms;
-  transition: opacity 800ms ease-in 100ms;
+  -moz-transition: opacity 250ms ease-in 100ms;
+  -o-transition: opacity 250ms ease-in 100ms;
+  transition: opacity 250ms ease-in 100ms;
 }
 
 /* line 98, ../scss/_base.scss */

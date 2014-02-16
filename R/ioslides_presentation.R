@@ -39,9 +39,9 @@ ioslides_presentation <- function(logo = NULL,
     transition <- as.character(transition)
   else if (transition %in% c("default", "faster", "slower"))
     transition <- switch(transition,
-                         "default" = "0.6",
+                         "default" = "0.4",
                          "faster" = "0.2",
-                         "slower" = "1.0")
+                         "slower" = "0.6")
   else
     stop('transition must be "default", "faster", "slower" or a ',
          'numeric value (representing seconds)', call. = FALSE)
