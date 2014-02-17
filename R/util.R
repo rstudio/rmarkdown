@@ -99,5 +99,31 @@ merge_lists <- function (base_list, overlay_list, recursive = TRUE) {
   }
 }
 
+strip_white <- function (x)
+{
+  if (!length(x))
+    return(x)
+  while (is_blank(x[1])) {
+    x = x[-1]
+    if (!length(x))
+      return(x)
+  }
+  while (is_blank(x[(n <- length(x))])) {
+    x = x[-n]
+    if (n < 2)
+      return(x)
+  }
+  x
+}
+
+is_blank <- function (x)
+{
+  if (length(x))
+    all(grepl("^\\s*$", x))
+  else TRUE
+}
+
+
+
 
 
