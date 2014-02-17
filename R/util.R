@@ -78,7 +78,7 @@ highlighters <- function() {
     "haddock")
 }
 
-merge_lists <- function (base_list, overlay_list) {
+merge_lists <- function (base_list, overlay_list, recursive = TRUE) {
   if (length(base_list) == 0)
     overlay_list
   else if (length(overlay_list) == 0)
@@ -90,7 +90,7 @@ merge_lists <- function (base_list, overlay_list) {
       overlay <- overlay_list[[name]]
       if (is.null(base))
         merged_list[[name]] <- overlay
-      else if (is.list(base) && is.list(overlay))
+      else if (is.list(base) && is.list(overlay) && recursive)
         merged_list[[name]] <- merge_lists(base, overlay)
       else if (!is.null(overlay))
         merged_list[[name]] <- overlay

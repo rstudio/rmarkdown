@@ -211,8 +211,9 @@ default_output_format <- function(input, encoding = getOption("encoding")) {
   # look up the formals of the output function to get the full option list and
   # merge against the explicitly set list
   format_function <- eval(parse(text = format$name))
-  format$options <- merge_output_options(as.list(formals(format_function)),
-                                         format$options)
+  format$options <- merge_lists(as.list(formals(format_function)),
+                                format$options,
+                                recursive = FALSE)
   format
 }
 
