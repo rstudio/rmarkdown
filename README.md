@@ -170,46 +170,6 @@ render("input.Rmd", beamer_presentation(incremental = TRUE))
 
 For more details on the options available for each format see their respective help topics.
 
-### Custom Formats
-
-You aren't limited to the built in output formats like `html_document` and `pdf_document`. You can also create custom output formats that utilize arbitrary knitr options, knitr hooks, and pandoc command line options.
-
-To create a custom format you write a function that returns an object of class "rmarkdown_output_format". The easiest way to do this is to call the `rmarkdown::output_format` function. For example, here's a very simple custom format that converts from R Markdown to HTML using the default pandoc HTML template:
-
-```
-custom_format <- function() {
-
-  knitr <- knitr_options(
-    opts_chunk = list(dev = 'png', fig.width = 7, fig.height = 5)
-  )
-
-  pandoc <- pandoc_options(
-    to = "html",
-    args = c("--smart", "--standalone")
-  )
-
-  rmarkdown::output_format(knitr, pandoc)
-}
-```
-
-Once you've created a custom format it can be used in the exact same fashion as the built-in formats. For example, assuming the format above was defined in a package named `pubtools` could you could specify it in Rmd metadata as follows:
-
-```
----
-title: "Sample Document"
-output: pubtools::custom_format
----
-```
-
-Alternatively you could use it in a call to `render`:
-
-```
-render("input.Rmd", pubtools::custom_format())
-```
-
-This custom format has no parameters however in practice you'll often want to provide options as function parameters to allow callers to customize the behavior of the format.
-
-
 ### License
 
 The **rmarkdown** package is licensed under the GPLv3 (http://www.gnu.org/licenses/gpl.html).
