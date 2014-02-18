@@ -3,4 +3,5 @@
 tools/
 README\.(md|html)
 CONTRIBUTING\.(md|html)
+PANDOC\.(md|html)
 ^\.travis\.yml$
