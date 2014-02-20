@@ -240,7 +240,7 @@ SlideDeck.prototype.onBodyKeyDown_ = function(e) {
        // Only respect 'f' on body. Don't want to capture keys from an <input>.
        // Also, ignore browser's fullscreen shortcut (cmd+shift+f) so we don't
        // get trapped in fullscreen!
-      if (e.target == document.body && !(e.shiftKey && e.metaKey)) {
+      if (document.cancelFullScreen !== undefined && e.target == document.body && !(e.shiftKey && e.metaKey)) {
         if (document.mozFullScreen !== undefined && !document.mozFullScreen) {
           document.body.mozRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
         } else if (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen) {
