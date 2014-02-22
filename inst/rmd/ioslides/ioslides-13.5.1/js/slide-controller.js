@@ -2,6 +2,17 @@
 
 var ORIGIN_ = location.protocol + '//' + location.host;
 
+// check for local storage
+var haveLocalStorage = (function() {
+  try {
+    localStorage.setItem(mod, mod);
+    localStorage.removeItem(mod);
+    return true;
+  } catch(e) {
+    return false;
+  }
+}());
+
 function SlideController() {
   this.popup = null;
   this.isPopup = window.opener;
@@ -34,7 +45,8 @@ SlideController.prototype.setupDone = function() {
   }
 
   if (presentMe !== null) {
-    localStorage.ENABLE_PRESENTOR_MODE = presentMe;
+    if (haveLocalStorage)
+      localStorage.ENABLE_PRESENTOR_MODE = presentMe;
     // TODO: use window.history.pushState to update URL instead of the redirect.
     if (window.history.replaceState) {
       window.history.replaceState({}, '', location.pathname);
@@ -44,7 +56,7 @@ SlideController.prototype.setupDone = function() {
     }
   }
 
-  var enablePresenterMode = localStorage.getItem('ENABLE_PRESENTOR_MODE');
+  var enablePresenterMode = haveLocalStorage && localStorage.getItem('ENABLE_PRESENTOR_MODE');
   if (enablePresenterMode && JSON.parse(enablePresenterMode)) {
     // Only open popup from main deck. Don't want recursive popup opening!
     if (!this.isPopup) {
