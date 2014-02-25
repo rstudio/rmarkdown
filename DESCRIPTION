@@ -8,7 +8,7 @@ Maintainer: JJ Allaire <jj@rstudio.com>
 Description: Convert R Markdown documents into a variety of formats
     including HTML, MS Word, PDF, and Beamer.
 Depends:
-    R (>= 3.0.0)
+    R (>= 2.14.1)
 Imports:
     tools,
     utils,
