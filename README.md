@@ -13,15 +13,16 @@ Note that creating PDF and Beamer output requires that LaTeX be installed.
 
 ### Installation
 
-To install the package and its dependencies:
+If you are working within RStudio then you can simply install the current [preview release](http://www.rstudio.com/ide/download/preview) of RStudio (both the rmarkdown package as well as pandoc are included).
+
+If you want to use the rmarkdown package outside of RStudio then you can install the package as follows:
 
 ```
-devtools::install_github("rmarkdown", "rstudio")
+install.packages("devtools")
+devtools::install_github("rstudio/rmarkdown")
 ```
 
-A recent version of pandoc (>= 1.12.3) is also required. Recent [daily builds](http://www.rstudio.org/download/daily) of RStudio include pandoc v1.12.3. If you only intend to use the **rmarkdown** package within RStudio you can rely on this version.
-
-If you are not running within RStudio then follow the [pandoc installation instructions](PANDOC.md) for your platform.
+A recent version of pandoc (>= 1.12.3) is also required. See the [pandoc installation instructions](PANDOC.md) for details on installing pandoc for your platform.
 
 ### Usage
 
