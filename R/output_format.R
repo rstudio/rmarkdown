@@ -341,9 +341,21 @@ parse_yaml_front_matter <- function(input_lines) {
 
 partition_yaml_front_matter <- function(input_lines) {
 
+  validate_front_matter <- function(delimeters) {
+    if (length(delimiters) >= 2 && (delimiters[2] - delimiters[1] > 1)) {
+      # verify that it's truly front matter (not preceded by other content)
+      if (delimeters[1] == 1)
+        TRUE
+      else
+        is_blank(input_lines[1:delimeters[1]-1])
+    } else {
+      FALSE
+    }
+  }
+
   # is there yaml front matter?
   delimiters <- grep("^---\\s*$", input_lines)
-  if (length(delimiters) >= 2 && (delimiters[2] - delimiters[1] > 1)) {
+  if (validate_front_matter(delimiters)) {
 
     front_matter <- input_lines[(delimiters[1]):(delimiters[2])]
 
