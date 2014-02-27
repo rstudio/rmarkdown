@@ -33,8 +33,8 @@
 #' }
 #'
 #' @export
-word_document <- function(fig_width = 6,
-                          fig_height = 4.5,
+word_document <- function(fig_width = 5,
+                          fig_height = 4,
                           fig_caption = FALSE,
                           highlight = "default",
                           reference_docx = "default",
@@ -44,7 +44,7 @@ word_document <- function(fig_width = 6,
   # knitr options and hooks
   knitr <- knitr_options(
     opts_chunk = list(dev = 'png',
-                      dpi = 300,
+                      dpi = 96,
                       fig.width = fig_width,
                       fig.height = fig_height)
   )

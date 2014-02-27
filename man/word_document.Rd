@@ -2,7 +2,7 @@
 \alias{word_document}
 \title{Convert to an MS Word document}
 \usage{
-word_document(fig_width = 6, fig_height = 4.5, fig_caption = FALSE,
+word_document(fig_width = 5, fig_height = 4, fig_caption = FALSE,
   highlight = "default", reference_docx = "default", data_dir = NULL,
   pandoc_args = NULL)
 }
