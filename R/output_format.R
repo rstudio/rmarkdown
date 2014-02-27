@@ -268,6 +268,11 @@ output_format_from_yaml_front_matter <- function(input_lines,
             output_format_options <- format[[output_format_name]]
         }
       }
+
+      # if the options are just "default" then that's the same as empty list
+      if (identical(output_format_options, "default"))
+        output_format_options <- list()
+
     # no named format passed so take the first element
     } else {
       if (is.list(output_format_yaml[[1]])) {
@@ -280,6 +285,10 @@ output_format_from_yaml_front_matter <- function(input_lines,
           output_format_name <- names(output_format_yaml[[1]])[[1]]
           output_format_options <- output_format_yaml[[1]][[output_format_name]]
         }
+      } else if (is.list(output_format_yaml) &&
+                 identical(output_format_yaml[[1]], "default")) {
+        output_format_name <- names(output_format_yaml)[[1]]
+
       } else {
         output_format_name <- output_format_yaml[[1]]
       }
