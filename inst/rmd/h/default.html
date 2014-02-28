@@ -24,27 +24,33 @@ $if(theme)$
 <link href="$theme$" rel="stylesheet">
 $endif$
 
-<style type="text/css">code{white-space: pre;}</style>
-
 $if(highlightjs)$
+<style type="text/css">code{white-space: pre;}</style>
 <link rel="stylesheet"
       href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css"
       $if(html5)$$else$type="text/css" $endif$/>
 <script src="$highlightjs$/highlight.js"></script>
-$endif$
-
-$if(highlighting-css)$
-<style type="text/css">
-$highlighting-css$
-</style>
-$endif$
-
 <!-- no matter what the highlighting style only shade R and C++ -->
 <style type="text/css">
   pre:not(.r):not(.cpp) {
     background-color: white;
   }
 </style>
+$endif$
+
+$if(highlighting-css)$
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+$highlighting-css$
+</style>
+<!-- no matter what the highlighting style only shade R and C++ -->
+<style type="text/css">
+  pre:not(.r):not(.cpp) {
+    background-color: white;
+  }
+</style>
+
+$endif$
 
 $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
