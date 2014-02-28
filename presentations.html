@@ -25,11 +25,11 @@
 <!-- syntax highlighting -->
 <style type="text/css">code{white-space: pre;}</style>
 <link rel="stylesheet"
-      href="libs/highlight/default.css"
+      href="libs/highlight/textmate.css"
       type="text/css" />
 <script src="libs/highlight/highlight.js"></script>
 <style type="text/css">
-  pre:not(.r):not(.cpp) {
+  pre:not(.r):not(.cpp):not(.yaml) {
     background-color: white;
   }
 </style>
@@ -46,8 +46,25 @@
 </div>
 
 
+<h2 id="overview">Overview</h2>
+<pre class="r"><code>summary(cars)</code></pre>
+<pre><code>##      speed           dist    
+##  Min.   : 4.0   Min.   :  2  
+##  1st Qu.:12.0   1st Qu.: 26  
+##  Median :15.0   Median : 36  
+##  Mean   :15.4   Mean   : 43  
+##  3rd Qu.:19.0   3rd Qu.: 56  
+##  Max.   :25.0   Max.   :120</code></pre>
+<pre class="yaml"><code>html_document:
+  self_contained: false
+  theme: null
+  highlight: null
+  includes:
+    in_header: include/in_header.html
+    before_body: include/before_body.html
+    after_body: include/after_body.html</code></pre>
 <div class="references">
-<h2>Overview</h2>
+
 </div>
 
 </div>
