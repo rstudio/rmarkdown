@@ -2,10 +2,19 @@
 HTML_FILES := $(patsubst %.Rmd, %.html ,$(wildcard *.Rmd)) \
               $(patsubst %.md, %.html ,$(wildcard *.md))
 
-all: $(HTML_FILES)
+all: html
+
+rebuild: clean all
+
+html: $(HTML_FILES)
 
 %.html: %.Rmd
 	R --vanilla --slave -e "rmarkdown::render('$<')"
 
 %.html: %.md
 	R --vanilla --slave -e "rmarkdown::render('$<')"
+
+.PHONY: clean
+clean:
+	$(RM) $(HTML_FILES)
+
