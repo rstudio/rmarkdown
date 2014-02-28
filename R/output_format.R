@@ -204,6 +204,12 @@ rmarkdown_format <- function(extensions = NULL) {
 #'
 #' @export
 default_output_format <- function(input, encoding = getOption("encoding")) {
+
+  # execute within the input file's directory (this emulates the way
+  # yaml front matter discovery is done within render)
+  oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
+  on.exit(setwd(oldwd), add = TRUE)
+
   # parse the YAML and front matter and get the explicitly set options
   input_lines <- read_lines_utf8(input, encoding)
   format <- output_format_from_yaml_front_matter(input_lines)
