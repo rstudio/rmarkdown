@@ -8,6 +8,8 @@
 
 <script>
 $(document).ready(function () {
-    $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
 });
 </script>

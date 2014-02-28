@@ -60,14 +60,12 @@ body {
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="presentations.html">Presentations</a></li>
-        <li><a href="#contact">Contact</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </div>
-
 
 <div class="container">
 
@@ -87,6 +85,14 @@ body {
 
 <script src="libs/jquery-1.10.2/jquery.min.js"></script>
 <script src="libs/bootstrap-3.0.3/js/bootstrap.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with --self-contained -->
