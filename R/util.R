@@ -85,15 +85,16 @@ merge_lists <- function (base_list, overlay_list, recursive = TRUE) {
     base_list
   else {
     merged_list <- base_list
-    for (name in unique(c(names(base_list), names(overlay_list)))) {
+    for (name in names(overlay_list)) {
       base <- base_list[[name]]
       overlay <- overlay_list[[name]]
-      if (is.null(base))
-        merged_list[[name]] <- overlay
-      else if (is.list(base) && is.list(overlay) && recursive)
+      if (is.list(base) && is.list(overlay) && recursive)
         merged_list[[name]] <- merge_lists(base, overlay)
-      else if (!is.null(overlay))
-        merged_list[[name]] <- overlay
+      else {
+        merged_list[[name]] <- NULL
+        merged_list <- append(merged_list,
+                              overlay_list[which(names(overlay_list) %in% name)])
+      }
     }
     merged_list
   }
