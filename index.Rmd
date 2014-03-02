@@ -1,5 +1,6 @@
 ---
 title: "R Markdown &mdash; Dynamic Documents for R"
+output: html_document
 ---
 
 ## Overview
@@ -8,7 +9,7 @@ R Markdown is an authoring format that enables easy authoring of dynamic documen
 
 With R Markdown you can author a single source file that can be used to generate output in many formats including HTML, PDF, and MS Word. R Markdown isn't limited to just plain documents either, extensive support for HTML5 and PDF (Beamer) presentations is also included.
 
-Under the hood R Markdown is implemented using the [knitr](http://yihui.name/knitr/) package (for executing embedded R code chunks) and [pandoc](http://johnmacfarlane.net/pandoc/) (for converting to various output formats). The [Authoring Guide](authoring_basics.html) includes a detailed review of supported features and syntax.
+Under the hood R Markdown is implemented using the [knitr](http://yihui.name/knitr/) package and [pandoc](http://johnmacfarlane.net/pandoc/). The [Authoring Guide](authoring_basics.html) includes a detailed review of supported features and syntax.
 
 #### Using R Markdown
 
