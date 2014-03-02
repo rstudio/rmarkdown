@@ -1,0 +1,16 @@
+---
+title: "R Markdown Basics"
+output:
+  html_document:
+    theme: journal
+    toc: yes
+---
+
+## First
+
+### A
+
+### B
+
+## Second
+
