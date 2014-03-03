@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>R Markdown — Dynamic Documents for R</title>
+
+
+
+
+
+
+<!-- bootstrap -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="libs/bootstrap-3.0.3/css/united.min.css" rel="stylesheet">
+
+
+<!-- syntax highlighting -->
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/textmate.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not(.r):not(.cpp):not(.yaml) {
+    background-color: white;
+  }
+</style>
+
+<!-- more style tweaks -->
+<style type="text/css">
+.dropdown-menu em {
+  padding-left: 10px;
+}
+</style>
+
+<!-- jquery and bootstrap css -->
+<script type="text/javascript" src="libs/jquery-1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="libs/bootstrap-3.0.3/js/bootstrap.min.js"></script>
+
+<!-- some polyfills -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+
+</head>
+
+<body>
+
+
+
+
+<div class="container">
+
+<div id="header">
+<h1 class="title">R Markdown — Dynamic Documents for R</h1>
+</div>
+
+
+<hr />
+<p>R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of markdown (an easy-to-write plain text format) with embedded R code chunks that are run so their output can be included in the final document. R Markdown documents are fully <em>reproducible</em> (they can be automatically regenerated whenever underlying R code or data changes).</p>
+<p>With R Markdown you can author a single source file that can be used to generate output in many formats including HTML, PDF, and MS Word. R Markdown isn’t limited to just plain documents either, extensive support for HTML5 and PDF (Beamer) presentations is also included.</p>
+<p>Under the hood R Markdown uses the <a href="http://yihui.name/knitr/">knitr</a> package for executing R code and dynamically generating output and <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> to convert markdown into an HTML, PDF, or Word document. A quick tour of the basics of R Markdown is included below.</p>
+<h4 id="using-r-markdown">Using R Markdown</h4>
+<p>You can use R Markdown either through the the integrated support for R Markdown within RStudio or via the <strong>rmarkdown</strong> package. To get started:</p>
+<ol style="list-style-type: decimal">
+<li><p>RStudio — Install the current <a href="http://www.rstudio.com/ide/download/preview">RStudio Preview Release</a>.</p></li>
+<li><p>Other envrionments — Install the <a href="https://github.com/rstudio/rmarkdown">rmarkdown package</a> from GitHub.</p></li>
+</ol>
+<h2 id="quick-tour">Quick tour</h2>
+<h3 id="markdown-basics">Markdown basics</h3>
+<p>Markdown is a simple formatting language designed to make authoring content easy for everyone. Rather than writing complex markup code (e.g. HTML or LaTeX), Markdown enables the use of a syntax much more like plain-text email. For example the file on the left shows basic Markdown and the resulting output on the right:</p>
+<p><img src="images/markdownOverview.png" alt="Markdown Overview" /></p>
+<h3 id="r-code-chunks">R code chunks</h3>
+<p>Within an R Markdown file, R Code Chunks can be embedded using the native Markdown syntax for fenced code regions. For example, the following code chunk computes a data summary and renders a plot as a PNG image:</p>
+<p><img src="images/markdownChunk.png" alt="Markdown Chunk" /></p>
+<h3 id="inline-r-code">Inline R code</h3>
+<p>You can also evaluate R expressions inline by enclosing the expression within a single back-tick qualified with ‘r’. For example, the following code:</p>
+<p><img src="images/markdownInline.png" alt="Markdown Inline" /></p>
+<p>Results in this output: “I counted 2 red trucks on the highway.”</p>
+<h3 id="embedding-equations">Embedding equations</h3>
+<p>You can embed LaTeX or MathML equations in R Markdown files using the following syntax:</p>
+<ul>
+<li><em><code>$equation$</code></em> for inline equations (note there must not be whitespace adjacent to the $ delimiters)</li>
+<li><em><code>$$ equation $$</code></em> for display equations</li>
+<li><em><code>&lt;math ...&gt; &lt;/math&gt;</code></em> for MathML equations.</li>
+</ul>
+<p>For example:</p>
+<p><img src="images/equations_inline.png" alt="Equation Inline" /></p>
+<h2 id="next-steps">Next steps</h2>
+<h3 id="learning-more">Learning more</h3>
+<p>With the basics described above you can get started with R Markdown right away. To learn more see:</p>
+<ul>
+<li>The website for the <a href="http://yihui.name/knitr/">knitr package</a>. Knitr is an extremely powerful tool for dynamic content generation and the website has a wealth of documentation and examples to help you utilize it to it’s full potential.</li>
+<li>The full specification of <a href="http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown">pandoc markdown</a>, which describes all of the markdown features and syntax available within R Markdown documents.</li>
+</ul>
+<h3 id="migrating-to-v2">Migrating to v2</h3>
+<p>The current implementation of R Markdown (v2) is an evolution of the original implementation, which was not based on pandoc but rather the <a href="https://github.com/rstudio/markdown">markdown</a> package. Moving to pandoc brings many new features to R Markdown however carries some minor incompatibiliites with the prevoius implementation, specifically:</p>
+<ol style="list-style-type: decimal">
+<li>The syntax for superscript now requires a closing ^ (e.g. <code>superscript^2^</code>).</li>
+<li>The WordPress-style LaTeX equation syntax (e.g. <code>$latex &lt;equation&gt;$</code>) is no longer supported.</li>
+<li>Markdown is rendered even if it’s contained within HTML tags.</li>
+</ol>
+<p>Note that if you are using RStudio you can force RStudio to render documents using R Markdown v1 by adding the following special comment to your source file:</p>
+<pre>&lt;!-- rmarkdown v1 --&gt;</pre>
+
+<p>For rendering R Markdown v1 documents outside of RStudio you can continue to use the <strong>markdown</strong> package.</p>
+<div class="references">
+
+</div>
+
+</div>
+
+
+<!-- dynamically load mathjax for compatibility with --self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
