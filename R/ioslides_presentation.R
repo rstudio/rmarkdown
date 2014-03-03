@@ -20,6 +20,9 @@ ioslides_presentation <- function(logo = NULL,
   # base pandoc options for all output
   args <- c()
 
+  # no email obfuscation
+  args <- c("--email-obfuscation", "none")
+
   # smart quotes
   if (smart)
     args <- c(args, "--smart")

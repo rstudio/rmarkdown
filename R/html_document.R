@@ -114,6 +114,9 @@ html_document <- function(toc = FALSE,
   # build pandoc args
   args <- c("--standalone")
 
+  # no email obfuscation
+  args <- c("--email-obfuscation", "none")
+
   # smart quotes, etc.
   if (smart)
     args <- c(args, "--smart")

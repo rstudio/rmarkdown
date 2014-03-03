@@ -88,6 +88,9 @@ revealjs_presentation <- function(incremental = FALSE,
   # base pandoc options for all reveal.js output
   args <- c()
 
+  # no email obfuscation
+  args <- c("--email-obfuscation", "none")
+
   # smart quotes, etc.
   if (smart)
     args <- c(args, "--smart")
