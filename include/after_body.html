@@ -3,13 +3,19 @@
 <!-- Bootstrap core JavaScript ========================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 
-<script src="libs/jquery-1.10.2/jquery.min.js"></script>
-<script src="libs/bootstrap-3.0.3/js/bootstrap.min.js"></script>
-
 <script>
 $(document).ready(function () {
     href = window.location.pathname
     href = href.substr(href.lastIndexOf('/') + 1)
     $('a[href="' + href + '"]').parent().addClass('active');
+
+    // menu headers
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('rmarkdown_v'))
+      $('a[href="' + 'more' + '"]').parent().addClass('active');
+
 });
 </script>

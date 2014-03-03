@@ -48,6 +48,13 @@ body {
 }
 </style>
 
+<!-- jquery and bootstrap css -->
+<script type="text/javascript" src="libs/jquery-1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="libs/bootstrap-3.0.3/js/bootstrap.min.js"></script>
+
+<!-- some polyfills -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+
 </head>
 
 <body>
@@ -69,32 +76,41 @@ body {
       <ul class="nav navbar-nav">
         <li><a href="index.html">Home</a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Authoring <b class="caret"></b></a>
+          <a href="authoring" class="dropdown-toggle" data-toggle="dropdown">Authoring <b class="caret"></b></a>
           <ul class="dropdown-menu">
-             <li><a href="authoring_basics.html">Basics</a></li>
-             <li class="divider"></li>
+             <li><em>Basics</em></li>
+             <li><a href="authoring_overview.html">Overview</a></li>
+             <li><a href="authoring_rcode.html">R Code Chunks</a></li>
+             <li><a href="authoring_headings.html">Headings</a></li>
              <li><a href="authoring_lists.html">Lists</a></li>
+             <li class="divider"></li>
+             <li><em>Advanced</em></li>
              <li><a href="authoring_tables.html">Tables</a></li>
              <li><a href="authoring_equations.html">Equations</a></li>
              <li><a href="authoring_citations.html">Citations</a></li>
-             <li class="divider"></li>
              <li><a href="authoring_presentations.html">Presentations</a></li>
-             <li class="divider"></li>
-             <li><a href="authoring_specification.html">Specification</a></li>
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Formats <b class="caret"></b></a>
+          <a href="formats" class="dropdown-toggle" data-toggle="dropdown">Formats <b class="caret"></b></a>
           <ul class="dropdown-menu">
              <li><em>Documents</em></li>
              <li><a href="html_document_format.html">HTML</a></li>
              <li><a href="pdf_document_format.html">PDF</a></li>
-             <li><a href="word_document_format.html">MS Word</a></li>
+             <li><a href="word_document_format.html">Word</a></li>
              <li class="divider"></li>
              <li><em>Presentations</em></li>
-             <li><a href="ioslides_format.html">ioslides</a></li>
-             <li><a href="revealjs_format.html">reveal.js</a></li>
-             <li><a href="beamer_format.html">Beamer</a></li>
+             <li><a href="ioslides_presentation_format.html">ioslides</a></li>
+             <li><a href="revealjs_presentation_format.html">reveal.js</a></li>
+             <li><a href="beamer_presentation_format.html">Beamer</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="more" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+             <li><a href="rmarkdown_v2_specification.html">R Markdown v2 Spec</a></li>
+             <li class="divider"></li>
+             <li><a href="rmarkdown_v1_migration.html">Migrating from v1</a></li>
           </ul>
         </li>
       </ul>
@@ -128,14 +144,20 @@ body {
 <!-- Bootstrap core JavaScript ========================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 
-<script src="libs/jquery-1.10.2/jquery.min.js"></script>
-<script src="libs/bootstrap-3.0.3/js/bootstrap.min.js"></script>
-
 <script>
 $(document).ready(function () {
     href = window.location.pathname
     href = href.substr(href.lastIndexOf('/') + 1)
     $('a[href="' + href + '"]').parent().addClass('active');
+
+    // menu headers
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('rmarkdown_v'))
+      $('a[href="' + 'more' + '"]').parent().addClass('active');
+
 });
 </script>
 
