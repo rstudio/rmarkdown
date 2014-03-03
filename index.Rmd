@@ -5,22 +5,85 @@ output: html_document
 
 ## Overview
 
-R Markdown is an authoring format that enables easy authoring of dynamic documents from R. It combines the core syntax of markdown (an easy-to-write plain text format) with embedded R code chunks that are run so their output can be included in the final document.
+R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of markdown (an easy-to-write plain text format) with embedded R code chunks that are run so their output can be included in the final document. R Markdown documents are fully *reproducible* (they can be automatically regenerated whenever underlying R code or data changes).
 
 With R Markdown you can author a single source file that can be used to generate output in many formats including HTML, PDF, and MS Word. R Markdown isn't limited to just plain documents either, extensive support for HTML5 and PDF (Beamer) presentations is also included.
 
-Under the hood R Markdown is implemented using the [knitr](http://yihui.name/knitr/) package and [pandoc](http://johnmacfarlane.net/pandoc/). The [Authoring Guide](authoring_basics.html) includes a detailed review of supported features and syntax.
+Under the hood, R Markdown is based on the [knitr](http://yihui.name/knitr/) package and [pandoc](http://johnmacfarlane.net/pandoc/) document conversion utility. A quick tour to introduce you to R Markdown is included below. If you are already familiar with R Markdown and want more in-depth details, see:
 
-#### Using R Markdown
-
-You can use R Markdown either through the **rmarkdown** package or via the integrated support for R Markdown within RStudio:
-
-1. To use R Markdown within RStudio you should download the current [RStudio Preview Release](http://www.rstudio.com/ide/download/preview).
-
-2. To use R Markdown in other envrionments you should install the [rmarkdown package](https://github.com/rstudio/rmarkdown) from GitHub.
+* The [authoring guide](authoring_overview.html) for a detailed review of supported features and syntax.
+* The documentation for the various supported output formats (e.g. [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html)).
+* The specifiation for [R Markdown v2](rmarkdown_v2_specification.html) and details on [migrating](rmarkdown_v1_migration.html) from R Markdown v1.
 
 ## Quick Tour
 
+### Prerequisites
+
+You can use R Markdown either through the the integrated support for R Markdown within RStudio or via the **rmarkdown** package. To get started:
+
+1. RStudio --- Install the current [RStudio Preview Release](http://www.rstudio.com/ide/download/preview).
+
+2. Other envrionments --- Install the [rmarkdown package](https://github.com/rstudio/rmarkdown) from GitHub.
+
+### Markdown Basics
+
+Markdown is a simple formatting language designed to make authoring content easy for everyone. Rather than writing complex markup code (e.g. HTML or LaTeX), Markdown enables the use of a syntax much more like plain-text email. For example the file on the left shows basic Markdown and the resulting output on the right:
+
+![Markdown Overview](images/markdownOverview.png)
+
+### R Code Chunks
+
+Within an R Markdown file, R Code Chunks can be embedded using the native Markdown syntax for fenced code regions. For example, the following code chunk computes a data summary and renders a plot as a PNG image:
+
+![Markdown Chunk](images/markdownChunk.png)
+
+
+### Inline R Code
+
+You can also evaluate R expressions inline by enclosing the expression within a single back-tick qualified with 'r'. For example, the following code:
+
+![Markdown Inline](images/markdownInline.png)
+
+Results in this output: "I counted 2 red trucks on the highway."
+
+### Embedding Equations
+
+You can embed LaTeX or MathML equations in R Markdown files using the following syntax:
+
+* *`$equation$`* for inline equations (note there must not be whitespace adjacent to the $ delimiters)
+* *`$$ equation $$`* for display equations
+* *`<math ...> </math>`* for MathML equations.
+
+For example:
+
+![Equation Inline](images/equations_inline.png)
+
+The article on [Equations in R Markdown](authoring_equations.html) includes more detailed information on embedded equations.
+
+### Learning More
+
+The following articles will help you learn about all of the supported features and syntax of R Markdown:
+
+* Authoring Basics
+    + [Overview](authoring_overview.html)
+    + [R Code Chunks](authoring_rcode.html)
+    + [Headings](authoring_headings.html)
+    + [Lists](authoring_lists.html)
+* Advanced Authoring
+    + [Tables](authoring_tables.html)
+    + [Equations](authoring_equations.html)
+    + [Citations](authoring_citations.html)
+    + [Presentations](authoring_presentations.html)
+* Document Formats
+    + [HTML](html_document_format.html)
+    + [PDF](pdf_document_format.html)
+    + [Word](word_document_format.html)
+* Presentation Formats
+    + [ioslides](ioslides_presentation_format.html)
+    + [reveal.js](revealjs_presentation_format.html)
+    + [Beamer](beamer_presentation_format.html)
+
+If there are additional features of R Markdown you want to see or you find problems with the existing features, please visit the [rmarkdown](https://github.com/rstudio/rmarkdown) repository on GitHub and let us know.
 
 
 
