@@ -68,6 +68,7 @@ The current implementation of R Markdown (v2) is an evolution of the original im
 
 1. The syntax for superscript now requires a closing ^ (e.g. `superscript^2^`).
 2. The WordPress-style LaTeX equation syntax (e.g. `$latex <equation>$`) is no longer supported.
+3. Markdown is rendered even if it's contained within HTML tags.
 
 Note that if you are using RStudio you can force RStudio to render documents using R Markdown v1 by adding the following special comment to your source file:
 
