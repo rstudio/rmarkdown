@@ -2,3 +2,174 @@
 title: "Tables"
 ---
 
+Four kinds of tables may be used. The first three kinds presuppose the use of
+a fixed-width font, such as Courier. The fourth kind can be used with
+proportionally spaced fonts, as it does not require lining up columns.
+
+## Simple tables
+
+Simple tables look like this:
+
+      Right     Left     Center     Default
+    -------     ------ ----------   -------
+         12     12        12            12
+        123     123       123          123
+          1     1          1             1
+
+    Table:  Demonstration of simple table syntax.
+
+The headers and table rows must each fit on one line.  Column
+alignments are determined by the position of the header text relative
+to the dashed line below it:[^4]
+
+  - If the dashed line is flush with the header text on the right side
+    but extends beyond it on the left, the column is right-aligned.
+  - If the dashed line is flush with the header text on the left side
+    but extends beyond it on the right, the column is left-aligned.
+  - If the dashed line extends beyond the header text on both sides,
+    the column is centered.
+  - If the dashed line is flush with the header text on both sides,
+    the default alignment is used (in most cases, this will be left).
+
+[^4]:  This scheme is due to Michel Fortin, who proposed it on the
+       [Markdown discussion list](http://six.pairlist.net/pipermail/markdown-discuss/2005-March/001097.html).
+
+The table must end with a blank line, or a line of dashes followed by
+a blank line.  A caption may optionally be provided (as illustrated in
+the example above). A caption is a paragraph beginning with the string
+`Table:` (or just `:`), which will be stripped off. It may appear either
+before or after the table.
+
+The column headers may be omitted, provided a dashed line is used
+to end the table. For example:
+
+    -------     ------ ----------   -------
+         12     12        12             12
+        123     123       123           123
+          1     1          1              1
+    -------     ------ ----------   -------
+
+When headers are omitted, column alignments are determined on the basis
+of the first line of the table body. So, in the tables above, the columns
+would be right, left, center, and right aligned, respectively.
+
+## Multiline tables
+
+Multiline tables allow headers and table rows to span multiple lines
+of text (but cells that span multiple columns or rows of the table are
+not supported).  Here is an example:
+
+    -------------------------------------------------------------
+     Centered   Default           Right Left
+      Header    Aligned         Aligned Aligned
+    ----------- ------- --------------- -------------------------
+       First    row                12.0 Example of a row that
+                                        spans multiple lines.
+
+      Second    row                 5.0 Here's another one. Note
+                                        the blank line between
+                                        rows.
+    -------------------------------------------------------------
+
+    Table: Here's the caption. It, too, may span
+    multiple lines.
+
+These work like simple tables, but with the following differences:
+
+  - They must begin with a row of dashes, before the header text
+    (unless the headers are omitted).
+  - They must end with a row of dashes, then a blank line.
+  - The rows must be separated by blank lines.
+
+In multiline tables, the table parser pays attention to the widths of
+the columns, and the writers try to reproduce these relative widths in
+the output. So, if you find that one of the columns is too narrow in the
+output, try widening it in the markdown source.
+
+Headers may be omitted in multiline tables as well as simple tables:
+
+    ----------- ------- --------------- -------------------------
+       First    row                12.0 Example of a row that
+                                        spans multiple lines.
+
+      Second    row                 5.0 Here's another one. Note
+                                        the blank line between
+                                        rows.
+    ----------- ------- --------------- -------------------------
+
+    : Here's a multiline table without headers.
+
+It is possible for a multiline table to have just one row, but the row
+should be followed by a blank line (and then the row of dashes that ends
+the table), or the table may be interpreted as a simple table.
+
+## Grid tables
+
+Grid tables look like this:
+
+    : Sample grid table.
+
+    +---------------+---------------+--------------------+
+    | Fruit         | Price         | Advantages         |
+    +===============+===============+====================+
+    | Bananas       | $1.34         | - built-in wrapper |
+    |               |               | - bright color     |
+    +---------------+---------------+--------------------+
+    | Oranges       | $2.10         | - cures scurvy     |
+    |               |               | - tasty            |
+    +---------------+---------------+--------------------+
+
+The row of `=`s separates the header from the table body, and can be
+omitted for a headerless table. The cells of grid tables may contain
+arbitrary block elements (multiple paragraphs, code blocks, lists,
+etc.). Alignments are not supported, nor are cells that span multiple
+columns or rows. Grid tables can be created easily using [Emacs table mode].
+
+  [Emacs table mode]: http://table.sourceforge.net/
+
+## Pipe tables
+
+Pipe tables look like this:
+
+    | Right | Left | Default | Center |
+    |------:|:-----|---------|:------:|
+    |   12  |  12  |    12   |    12  |
+    |  123  |  123 |   123   |   123  |
+    |    1  |    1 |     1   |     1  |
+
+      : Demonstration of simple table syntax.
+
+The syntax is [the same as in PHP markdown extra].  The beginning and
+ending pipe characters are optional, but pipes are required between all
+columns.  The colons indicate column alignment as shown.  The header
+can be omitted, but the horizontal line must still be included, as
+it defines column alignments.
+
+Since the pipes indicate column boundaries, columns need not be vertically
+aligned, as they are in the above example.  So, this is a perfectly
+legal (though ugly) pipe table:
+
+    fruit| price
+    -----|-----:
+    apple|2.05
+    pear|1.37
+    orange|3.09
+
+The cells of pipe tables cannot contain block elements like paragraphs
+and lists, and cannot span multiple lines.
+
+  [the same as in PHP markdown extra]:
+    http://michelf.ca/projects/php-markdown/extra/#table
+
+Note:  Pandoc also recognizes pipe tables of the following
+form, as can produced by Emacs' orgtbl-mode:
+
+    | One | Two   |
+    |-----+-------|
+    | my  | table |
+    | is  | nice  |
+
+The difference is that `+` is used instead of `|`. Other orgtbl features
+are not supported. In particular, to get non-default column alignment,
+you'll need to add colons as above.
+

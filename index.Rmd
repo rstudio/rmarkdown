@@ -15,7 +15,7 @@ Under the hood, R Markdown is based on the [knitr](http://yihui.name/knitr/) pac
 * The documentation for the various supported output formats (e.g. [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html)).
 * The specifiation for [R Markdown v2](rmarkdown_v2_specification.html) and details on [migrating](rmarkdown_v1_migration.html) from R Markdown v1.
 
-## Quick Tour
+## Quick tour
 
 ### Prerequisites
 
@@ -25,20 +25,20 @@ You can use R Markdown either through the the integrated support for R Markdown 
 
 2. Other envrionments --- Install the [rmarkdown package](https://github.com/rstudio/rmarkdown) from GitHub.
 
-### Markdown Basics
+### Markdown basics
 
 Markdown is a simple formatting language designed to make authoring content easy for everyone. Rather than writing complex markup code (e.g. HTML or LaTeX), Markdown enables the use of a syntax much more like plain-text email. For example the file on the left shows basic Markdown and the resulting output on the right:
 
 ![Markdown Overview](images/markdownOverview.png)
 
-### R Code Chunks
+### R code chunks
 
 Within an R Markdown file, R Code Chunks can be embedded using the native Markdown syntax for fenced code regions. For example, the following code chunk computes a data summary and renders a plot as a PNG image:
 
 ![Markdown Chunk](images/markdownChunk.png)
 
 
-### Inline R Code
+### Inline R code
 
 You can also evaluate R expressions inline by enclosing the expression within a single back-tick qualified with 'r'. For example, the following code:
 
@@ -46,7 +46,7 @@ You can also evaluate R expressions inline by enclosing the expression within a 
 
 Results in this output: "I counted 2 red trucks on the highway."
 
-### Embedding Equations
+### Embedding equations
 
 You can embed LaTeX or MathML equations in R Markdown files using the following syntax:
 
@@ -60,20 +60,21 @@ For example:
 
 The article on [Equations in R Markdown](authoring_equations.html) includes more detailed information on embedded equations.
 
-### Learning More
+### Learning more
 
 The following articles will help you learn about all of the supported features and syntax of R Markdown:
 
 * Authoring Basics
     + [Overview](authoring_overview.html)
-    + [R Code Chunks](authoring_rcode.html)
     + [Headings](authoring_headings.html)
     + [Lists](authoring_lists.html)
+    + [Links](authoring_links.html)
 * Advanced Authoring
     + [Tables](authoring_tables.html)
     + [Equations](authoring_equations.html)
     + [Citations](authoring_citations.html)
     + [Presentations](authoring_presentations.html)
+    + [HTML and LaTeX](authoring_raw_markup.html)
 * Document Formats
     + [HTML](html_document_format.html)
     + [PDF](pdf_document_format.html)
