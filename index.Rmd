@@ -11,7 +11,7 @@ With R Markdown you can author a single source file that can be used to generate
 
 Under the hood, R Markdown is based on the [knitr](http://yihui.name/knitr/) package and [pandoc](http://johnmacfarlane.net/pandoc/) document conversion utility. A quick tour to introduce you to R Markdown is included below. If you are already familiar with R Markdown and want more in-depth details, see:
 
-* The [authoring guide](authoring_overview.html) for a detailed review of supported features and syntax.
+* The [authoring guide](authoring_guide.html) for a detailed review of supported features and syntax.
 * The documentation for the various supported output formats (e.g. [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html)).
 * The specifiation for [R Markdown v2](rmarkdown_v2_specification.html) and details on [migrating](rmarkdown_v1_migration.html) from R Markdown v1.
 
@@ -58,31 +58,13 @@ For example:
 
 ![Equation Inline](images/equations_inline.png)
 
-The article on [Equations in R Markdown](authoring_equations.html) includes more detailed information on embedded equations.
-
 ### Learning more
 
-The following articles will help you learn about all of the supported features and syntax of R Markdown:
+With the basics described above you can get started creating R Markdown documents right away. To learn more see:
 
-* Authoring Basics
-    + [Overview](authoring_overview.html)
-    + [Headings](authoring_headings.html)
-    + [Lists](authoring_lists.html)
-    + [Links](authoring_links.html)
-* Advanced Authoring
-    + [Tables](authoring_tables.html)
-    + [Equations](authoring_equations.html)
-    + [Citations](authoring_citations.html)
-    + [Presentations](authoring_presentations.html)
-    + [HTML and LaTeX](authoring_raw_markup.html)
-* Document Formats
-    + [HTML](html_document_format.html)
-    + [PDF](pdf_document_format.html)
-    + [Word](word_document_format.html)
-* Presentation Formats
-    + [ioslides](ioslides_presentation_format.html)
-    + [reveal.js](revealjs_presentation_format.html)
-    + [Beamer](beamer_presentation_format.html)
+* The [authoring guide](authoring_guide.html) for a description of the most commonly used authoring features.
+* The website for the [knitr package](http://yihui.name/knitr/).
+* The full specification for [pandoc's markdown](http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown).
 
 If there are additional features of R Markdown you want to see or you find problems with the existing features, please visit the [rmarkdown](https://github.com/rstudio/rmarkdown) repository on GitHub and let us know.
 
