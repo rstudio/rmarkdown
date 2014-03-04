@@ -60,7 +60,7 @@ For example:
 
 ![Equation Inline](images/equations_inline.png)
 
-## Customizing Output
+### Customizing Output
 
 R Markdown documents can contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:
 
