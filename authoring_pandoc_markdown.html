@@ -36,7 +36,7 @@ body {
       type="text/css" />
 <script src="libs/highlight/highlight.js"></script>
 <style type="text/css">
-  pre:not(.r):not(.cpp):not(.yaml) {
+  pre:not(.r):not(.cpp):not(.yaml):not(.markdown) {
     background-color: white;
   }
 </style>
@@ -81,7 +81,7 @@ body {
              <li><a href="authoring_basics.html">Markdown Basics</a></li>
              <li><a href="authoring_rcodechunks.html">R Code Chunks</a></li>
              <li class="divider"></li>
-             <li><a href="authoring_pandoc_markdown.html">Pandoc Markdown Spec</a></li>
+             <li><a href="authoring_pandoc_markdown.html">Pandoc Markdown</a></li>
              <li class="divider"></li>
              <li><a href="authoring_migrating_from_v1.html">Migrating from v1</a></li>
           </ul>
@@ -111,6 +111,33 @@ body {
 <h1 class="title">Pandoc Markdown</h1>
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#philosophy">Philosophy</a></li>
+<li><a href="#paragraphs">Paragraphs</a></li>
+<li><a href="#headers">Headers</a></li>
+<li><a href="#block-quotations">Block quotations</a></li>
+<li><a href="#verbatim-code-blocks">Verbatim (code) blocks</a></li>
+<li><a href="#line-blocks">Line blocks</a></li>
+<li><a href="#lists">Lists</a></li>
+<li><a href="#horizontal-rules">Horizontal rules</a></li>
+<li><a href="#tables">Tables</a></li>
+<li><a href="#yaml-metadata-block">YAML metadata block</a></li>
+<li><a href="#backslash-escapes">Backslash escapes</a></li>
+<li><a href="#smart-punctuation">Smart punctuation</a></li>
+<li><a href="#inline-formatting">Inline formatting</a></li>
+<li><a href="#math">Math</a></li>
+<li><a href="#raw-html">Raw HTML</a></li>
+<li><a href="#raw-tex">Raw TeX</a></li>
+<li><a href="#latex-macros">LaTeX macros</a></li>
+<li><a href="#links">Links</a></li>
+<li><a href="#images">Images</a></li>
+<li><a href="#footnotes">Footnotes</a></li>
+<li><a href="#citations">Citations</a></li>
+<li><a href="#authors">Authors</a></li>
+</ul>
+</div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
