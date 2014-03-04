@@ -236,18 +236,14 @@ $(document).ready(function () {
       $('a[href="' + 'more' + '"]').parent().addClass('active');
 
 });
+
+$(window).on("load", function() {
+  $(window).resize();
+});
+
 </script>
 
 
-<!-- dynamically load mathjax for compatibility with --self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 
 </body>
 </html>

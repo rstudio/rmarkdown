@@ -2,6 +2,7 @@ html_document:
   self_contained: false
   theme: null
   highlight: null
+  mathjax: null
   includes:
     in_header: include/in_header.html
     before_body: include/before_body.html
