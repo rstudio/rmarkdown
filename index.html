@@ -22,6 +22,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="libs/bootstrap-3.0.3/css/united.min.css" rel="stylesheet">
 
+<!-- bootstrap navbar -->
+<style type="text/css">
+body {
+  padding-top: 50px;
+}
+</style>
 
 <!-- syntax highlighting -->
 <style type="text/css">code{white-space: pre;}</style>
@@ -55,6 +61,49 @@
 
 
 
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R Markdown</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown">
+          <a href="authoring" class="dropdown-toggle" data-toggle="dropdown">Authoring <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+             <li><a href="authoring_basics.html">Markdown Basics</a></li>
+             <li><a href="authoring_rcodechunks.html">R Code Chunks</a></li>
+             <li class="divider"></li>
+             <li><a href="authoring_pandoc_markdown.html">Pandoc Markdown Spec</a></li>
+             <li class="divider"></li>
+             <li><a href="authoring_migrating_from_v1.html">Migrating from v1</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="formats" class="dropdown-toggle" data-toggle="dropdown">Formats <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+             <li><em>Documents</em></li>
+             <li><a href="html_document_format.html">HTML</a></li>
+             <li><a href="pdf_document_format.html">PDF</a></li>
+             <li><a href="word_document_format.html">Word</a></li>
+             <li class="divider"></li>
+             <li><em>Presentations</em></li>
+             <li><a href="ioslides_presentation_format.html">ioslides</a></li>
+             <li><a href="revealjs_presentation_format.html">reveal.js</a></li>
+             <li><a href="beamer_presentation_format.html">Beamer</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
 
 <div class="container">
 
@@ -64,27 +113,44 @@
 
 
 <hr />
-<p>R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of markdown (an easy-to-write plain text format) with embedded R code chunks that are run so their output can be included in the final document. R Markdown documents are fully <em>reproducible</em> (they can be automatically regenerated whenever underlying R code or data changes).</p>
-<p>With R Markdown you can author a single source file that can be used to generate output in many formats including HTML, PDF, and MS Word. R Markdown isn’t limited to just plain documents either, extensive support for HTML5 and PDF (Beamer) presentations is also included.</p>
-<p>Under the hood R Markdown uses the <a href="http://yihui.name/knitr/">knitr</a> package for executing R code and dynamically generating output and <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> to convert markdown into an HTML, PDF, or Word document. A quick tour of the basics of R Markdown is included below.</p>
-<h4 id="using-r-markdown">Using R Markdown</h4>
+<p>R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of <a href="http://daringfireball.net/projects/markdown/basics">markdown</a> (an easy-to-write plain text format) with embedded R code chunks that are run so their output can be included in the final document. R Markdown documents are fully <em>reproducible</em> (they can be automatically regenerated whenever underlying R code or data changes).</p>
+<p>This website describes R Markdown v2, a next generation implementation of R Markdown based on <a href="http://yihui.name/knitr/">knitr</a> and <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>. This implementation brings many enhancements to R Markdown, including:</p>
+<ul>
+<li>Create HTML, PDF, and MS Word documents as well as <a href="https://bitbucket.org/rivanvx/beamer/wiki/Home">Beamer</a>, <a href="https://code.google.com/p/io-2012-slides/">ioslides</a> and <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a> presentations.</li>
+<li>New markdown syntax including expanded support for tables, definition lists, and bibliographies.</li>
+<li>A responsive (multi-device friendly) and themeable HTML template based on <a href="http://getbootstrap.com">Bootstrap 3</a>.</li>
+<li>Hooks for customizing HTML and PDF output (include CSS, headers, and footers).</li>
+<li>Include raw LaTeX within markdown for advanced customization of PDF output.</li>
+<li>Extensibility: easily define new formats for custom publishing requirements.</li>
+</ul>
+<div id="quick-tour" class="section level2">
+<h2>Quick Tour</h2>
+<div id="installing-r-markdown" class="section level3">
+<h3>Installing R Markdown</h3>
 <p>You can use R Markdown either through the the integrated support for R Markdown within RStudio or via the <strong>rmarkdown</strong> package. To get started:</p>
 <ol style="list-style-type: decimal">
 <li><p>RStudio — Install the current <a href="http://www.rstudio.com/ide/download/preview">RStudio Preview Release</a>.</p></li>
 <li><p>Other envrionments — Install the <a href="https://github.com/rstudio/rmarkdown">rmarkdown package</a> from GitHub.</p></li>
 </ol>
-<h2 id="quick-tour">Quick tour</h2>
-<h3 id="markdown-basics">Markdown basics</h3>
+</div>
+<div id="markdown-basics" class="section level3">
+<h3>Markdown Basics</h3>
 <p>Markdown is a simple formatting language designed to make authoring content easy for everyone. Rather than writing complex markup code (e.g. HTML or LaTeX), Markdown enables the use of a syntax much more like plain-text email. For example the file on the left shows basic Markdown and the resulting output on the right:</p>
 <p><img src="images/markdownOverview.png" alt="Markdown Overview" /></p>
-<h3 id="r-code-chunks">R code chunks</h3>
+</div>
+<div id="r-code-chunks" class="section level3">
+<h3>R Code Chunks</h3>
 <p>Within an R Markdown file, R Code Chunks can be embedded using the native Markdown syntax for fenced code regions. For example, the following code chunk computes a data summary and renders a plot as a PNG image:</p>
 <p><img src="images/markdownChunk.png" alt="Markdown Chunk" /></p>
-<h3 id="inline-r-code">Inline R code</h3>
+</div>
+<div id="inline-r-code" class="section level3">
+<h3>Inline R Code</h3>
 <p>You can also evaluate R expressions inline by enclosing the expression within a single back-tick qualified with ‘r’. For example, the following code:</p>
 <p><img src="images/markdownInline.png" alt="Markdown Inline" /></p>
 <p>Results in this output: “I counted 2 red trucks on the highway.”</p>
-<h3 id="embedding-equations">Embedding equations</h3>
+</div>
+<div id="embedding-equations" class="section level3">
+<h3>Embedding Equations</h3>
 <p>You can embed LaTeX or MathML equations in R Markdown files using the following syntax:</p>
 <ul>
 <li><em><code>$equation$</code></em> for inline equations (note there must not be whitespace adjacent to the $ delimiters)</li>
@@ -93,29 +159,84 @@
 </ul>
 <p>For example:</p>
 <p><img src="images/equations_inline.png" alt="Equation Inline" /></p>
-<h2 id="next-steps">Next steps</h2>
-<h3 id="learning-more">Learning more</h3>
+</div>
+</div>
+<div id="customizing-output" class="section level2">
+<h2>Customizing Output</h2>
+<p>R Markdown documents can contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:</p>
+<pre><code>---
+title: &quot;Sample Document&quot;
+output:
+  html_document:
+    toc: true
+    theme: united
+---</code></pre>
+<p>R Markdown has built in support for several output formats (HTML, PDF, and MS Word documents as well as Beamer presentations). These formats can also be specified in metadata, for example:</p>
+<pre><code>---
+title: &quot;Sample Document&quot;
+output:
+  pdf_document:
+    toc: true
+    highlight: zenburn
+---</code></pre>
+<p>If you aren’t specifying format options you can also just use a simple format name:</p>
+<pre><code>---
+title: &quot;Sample Document&quot;
+output: pdf_document
+---</code></pre>
+<p>Multiple formats can be specified in metadata:</p>
+<pre><code>---
+title: &quot;Sample Document&quot;
+output:
+  html_document:
+    toc: true
+    theme: united
+  pdf_document:
+    toc: true
+    highlight: zenburn
+---</code></pre>
+</div>
+<div id="learning-more" class="section level2">
+<h2>Learning More</h2>
 <p>With the basics described above you can get started with R Markdown right away. To learn more see:</p>
 <ul>
-<li>The website for the <a href="http://yihui.name/knitr/">knitr package</a>. Knitr is an extremely powerful tool for dynamic content generation and the website has a wealth of documentation and examples to help you utilize it to it’s full potential.</li>
-<li>The full specification of <a href="http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown">pandoc markdown</a>, which describes all of the markdown features and syntax available within R Markdown documents.</li>
+<li><p>The article on <a href="authoring_basics.html">Markdown Basics</a> which describes the most commonly used markdown constructs.</p></li>
+<li><p>The article on <a href="authoring_rcodechunks.html">R Code Chunks</a> which describes the basic operation of <strong>knitr</strong> code chunks.</p></li>
+<li><p>Document output formats: <a href="html_document_format.html">HTML</a>, <a href="pdf_document_format.html">PDF</a>, <a href="word_document_format.html">Word</a></p></li>
+<li><p>Presentation output formats: <a href="ioslides_presentation_format.html">ioslides</a>, <a href="revealjs_presentation_format.html">reveal.js</a>, <a href="beamer_presentation_format.html">Beamer</a></p></li>
 </ul>
-<h3 id="migrating-to-v2">Migrating to v2</h3>
-<p>The current implementation of R Markdown (v2) is an evolution of the original implementation, which was not based on pandoc but rather the <a href="https://github.com/rstudio/markdown">markdown</a> package. Moving to pandoc brings many new features to R Markdown however carries some minor incompatibiliites with the prevoius implementation, specifically:</p>
-<ol style="list-style-type: decimal">
-<li>The syntax for superscript now requires a closing ^ (e.g. <code>superscript^2^</code>).</li>
-<li>The WordPress-style LaTeX equation syntax (e.g. <code>$latex &lt;equation&gt;$</code>) is no longer supported.</li>
-<li>Markdown is rendered even if it’s contained within HTML tags.</li>
-</ol>
-<p>Note that if you are using RStudio you can force RStudio to render documents using R Markdown v1 by adding the following special comment to your source file:</p>
-<pre>&lt;!-- rmarkdown v1 --&gt;</pre>
-
-<p>For rendering R Markdown v1 documents outside of RStudio you can continue to use the <strong>markdown</strong> package.</p>
+<p>For even more in-depth information see:</p>
+<ul>
+<li><p>The website for the <a href="http://yihui.name/knitr/">knitr package</a>. Knitr is an extremely powerful tool for dynamic content generation and the website has a wealth of documentation and examples to help you utilize it to it’s full potential.</p></li>
+<li><p>The full specification of <a href="authoring_pandoc_markdown.html">Pandoc Markdown</a>, which describes all of the markdown features and syntax available within R Markdown documents.</p></li>
+</ul>
+<p>Finally, if you are migrating documents from R Markdown v1 or wish to continue using RMarkdown v1 see the article on <a href="authoring_migrating_from_v1.html">Migrating from R Markdown v1</a>.</p>
 <div class="references">
 
 </div>
+</div>
 
 </div>
+
+<!-- Bootstrap core JavaScript ========================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+<script>
+$(document).ready(function () {
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+
+    // menu headers
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('rmarkdown_v'))
+      $('a[href="' + 'more' + '"]').parent().addClass('active');
+
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with --self-contained -->

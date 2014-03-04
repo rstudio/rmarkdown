@@ -1,6 +1,0 @@
----
-title: "R Markdown Authoring Guide"
----
-
-
-

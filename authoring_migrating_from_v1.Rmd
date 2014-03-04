@@ -1,0 +1,20 @@
+---
+title: "Migrating from R Markdown v1"
+---
+
+## Changes in v2
+
+The current implementation of R Markdown (v2) is an evolution of the original implementation, which was not based on pandoc but rather the [markdown](https://github.com/rstudio/markdown) package. Moving to pandoc brings many new features to R Markdown however carries some minor incompatibiliites with the prevoius implementation, specifically:
+
+1. The syntax for superscript now requires a closing ^ (e.g. `superscript^2^`).
+2. The WordPress-style LaTeX equation syntax (e.g. `$latex <equation>$`) is no longer supported.
+3. Markdown is rendered even if it's contained within HTML tags.
+
+## Continuing to Use v1
+
+If you are using RStudio you can force RStudio to render documents using R Markdown v1 by adding the following special comment to your source file:
+
+<pre>&lt;!-- rmarkdown v1 --&gt;</pre>
+
+For rendering R Markdown v1 documents outside of RStudio you can continue to use the [markdown](https://github.com/rstudio/markdown) package.
+
