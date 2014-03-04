@@ -109,19 +109,17 @@ compute the sum of two numbers.
 LaTeX Equations
 ```
 
+#### LaTeX Equations
 
-#### Inline LaTeX Equation
-
+Inline equation:
 ```markdown
 $equation$
 ```
 
-#### Display LaTeX Equation
-
+Display equation:
 ```markdown
 $$ equation $$
 ```
-
 
 #### Horizontal Rule / Page Break
 
