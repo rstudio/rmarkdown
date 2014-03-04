@@ -11,7 +11,7 @@
 
 
 
-<title>R Markdown Basics</title>
+<title>Markdown Basics</title>
 
 
 
@@ -36,7 +36,7 @@ body {
       type="text/css" />
 <script src="libs/highlight/highlight.js"></script>
 <style type="text/css">
-  pre:not(.r):not(.cpp):not(.yaml) {
+  pre:not(.r):not(.cpp):not(.yaml):not(.markdown) {
     background-color: white;
   }
 </style>
@@ -81,7 +81,7 @@ body {
              <li><a href="authoring_basics.html">Markdown Basics</a></li>
              <li><a href="authoring_rcodechunks.html">R Code Chunks</a></li>
              <li class="divider"></li>
-             <li><a href="authoring_pandoc_markdown.html">Pandoc Markdown Spec</a></li>
+             <li><a href="authoring_pandoc_markdown.html">Pandoc Markdown</a></li>
              <li class="divider"></li>
              <li><a href="authoring_migrating_from_v1.html">Migrating from v1</a></li>
           </ul>
@@ -108,12 +108,140 @@ body {
 <div class="container">
 
 <div id="header">
-<h1 class="title">R Markdown Basics</h1>
+<h1 class="title">Markdown Basics</h1>
 </div>
 
 
+<p>This document provides quick references to the most commonly used R Markdown syntax. See the following articles for more in-depth treatment of all the capabilities of R Markdown:</p>
+<ul>
+<li><p><a href="authoring_rcodechunks.html">R Code Chunks</a></p></li>
+<li><p><a href="authoring_pandoc_markdown.html">Pandoc Markdown</a></p></li>
+</ul>
+<div id="emphasis" class="section level4">
+<h4>Emphasis</h4>
+<pre class="markdown"><code>*italic*   **bold**
+
+_italic_   __bold__</code></pre>
+</div>
+<div id="headers" class="section level4">
+<h4>Headers</h4>
+<pre class="markdown"><code># Header 1
+
+## Header 2
+
+### Header 3</code></pre>
+</div>
+<div id="lists" class="section level4">
+<h4>Lists</h4>
+<p>Unordered List:</p>
+<pre class="markdown"><code>* Item 1
+* Item 2
+    + Item 2a
+    + Item 2b</code></pre>
+<p>Ordered List:</p>
+<pre class="markdown"><code>1. Item 1
+2. Item 2
+3. Item 3
+    + Item 3a
+    + Item 3b</code></pre>
+</div>
+<div id="r-code-chunks" class="section level4">
+<h4>R Code Chunks</h4>
+<p>R code will be evaluated and printed</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
+summary(cars$dist)
+summary(cars$speed)
+&#96;&#96;&#96;
+</code></pre>
+
+</div>
+<div id="inline-r-code" class="section level4">
+<h4>Inline R Code</h4>
+<pre class="markdown"><code>There were `r nrow(cars)` cars studied</code></pre>
+</div>
+<div id="links" class="section level4">
+<h4>Links</h4>
+<p>Use a plain http address or add a link to a phrase:</p>
+<pre class="markdown"><code>http://example.com
+
+[linked phrase](http://example.com)</code></pre>
+</div>
+<div id="images" class="section level4">
+<h4>Images</h4>
+<p>Images on the web or local files in the same directory:</p>
+<pre class="markdown"><code>![alt text](http://example.com/logo.png)
+
+![alt text](figures/img.png)</code></pre>
+</div>
+<div id="blockquotes" class="section level4">
+<h4>Blockquotes</h4>
+<pre class="markdown"><code>A friend once said:
+
+&gt; It&#39;s always better to give
+&gt; than to receive.</code></pre>
+</div>
+<div id="plain-code-blocks" class="section level4">
+<h4>Plain Code Blocks</h4>
+<p>Plain code blocks are displayed in a fixed-width font but not evaulated</p>
+<pre class="markdown"><code>&#96;&#96;&#96;
+This text is displayed verbatim / preformatted
+&#96;&#96;&#96;
+</code></pre>
+
+</div>
+<div id="inline-code" class="section level4">
+<h4>Inline Code</h4>
+<pre class="markdown"><code>We defined the `add` function to
+compute the sum of two numbers.
+LaTeX Equations</code></pre>
+</div>
+<div id="inline-latex-equation" class="section level4">
+<h4>Inline LaTeX Equation</h4>
+<pre class="markdown"><code>$equation$</code></pre>
+</div>
+<div id="display-latex-equation" class="section level4">
+<h4>Display LaTeX Equation</h4>
+<pre class="markdown"><code>$$ equation $$</code></pre>
+</div>
+<div id="horizontal-rule-page-break" class="section level4">
+<h4>Horizontal Rule / Page Break</h4>
+<p>Three or more asterisks or dashes:</p>
+<pre class="markdown"><code>******
+
+------</code></pre>
+</div>
+<div id="tables" class="section level4">
+<h4>Tables</h4>
+<pre class="markdown"><code>First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
+Reference Style Links and Images</code></pre>
+</div>
+<div id="links-1" class="section level4">
+<h4>Links</h4>
+<pre class="markdown"><code>A [linked phrase][id].</code></pre>
+<p>At the bottom of the document:</p>
+<pre class="markdown"><code>[id]: http://example.com/ &quot;Title&quot;
+Images
+![alt text][id]</code></pre>
+<p>At the bottom of the document:</p>
+<pre class="markdown"><code>[id]: figures/img.png &quot;Title&quot;</code></pre>
+</div>
+<div id="manual-line-breaks" class="section level4">
+<h4>Manual Line Breaks</h4>
+<p>End a line with two or more spaces:</p>
+<pre class="markdown"><code>Roses are red,
+Violets are blue.</code></pre>
+</div>
+<div id="miscellaneous" class="section level4">
+<h4>Miscellaneous</h4>
+<pre class="markdown"><code>superscript^2^
+
+~~strikethrough~~</code></pre>
 <div class="references">
 
+</div>
 </div>
 
 </div>
