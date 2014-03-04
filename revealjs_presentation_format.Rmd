@@ -2,3 +2,90 @@
 title: "Presentations with reveal.js"
 ---
 
+### Slide Basics
+
+You can create a slide show broken up into sections by using the \# and
+\#\# heading tags (you can also create a new slide without a header
+using a horizontal rule (`----------`). For example here's a simple
+slide show:
+
+    ---
+    title: "Habits"
+    author: John Doe
+    date: March 22, 2005
+    output: ioslides_presentation
+    ---
+
+    # In the morning
+
+    ## Getting up
+
+    - Turn off alarm
+    - Get out of bed
+
+    ## Breakfast
+
+    - Eat eggs
+    - Drink coffee
+
+    # In the evening
+
+    ## Dinner
+
+    - Eat spaghetti
+    - Drink wine
+
+    ----------
+
+    ![picture of spaghetti](images/spaghetti.jpg)
+
+    ## Going to sleep
+
+    - Get in bed
+    - Count sheep
+
+### Display Modes
+
+The following single character keyboard shortcuts enable alternate
+display modes:
+
+-   `'f'` enable fullscreen mode
+
+-   `'o'` enable overview mode
+
+Pressing `Esc` exits all of these modes.
+
+### Incremental Bullets
+
+You can render bullets incrementally by adding the `incremental` option:
+
+    ---
+    output:
+      ioslides_presentation:
+        incremental: true
+    ---
+
+If you want to render bullets incrementally for some slides but not
+others you can use this syntax:
+
+    > - Eat eggs
+    > - Drink coffee
+
+### Themes and Transitions
+
+You can select from various themes using the `theme` option and select a transition style usign the `transition` option:
+
+    ---
+    output:
+      ioslides_presentation:
+        theme: sky
+        transition: fade
+    ---
+
+Available themes are `default`, `simple`, `sky`, `beige`, `serif`, or `solarized`; Available transitions are `default`, `cube`, `page`, `concave`, `zoom`, `linear`, `fade`, or `none`.
+
+
+
+
+
+
