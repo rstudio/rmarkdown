@@ -112,8 +112,8 @@ body {
 </div>
 
 
-<div id="slide-basics" class="section level3">
-<h3>Slide Basics</h3>
+<div id="slide-basics" class="section level2">
+<h2>Slide Basics</h2>
 <p>You can create a slide show broken up into sections by using the # and ## heading tags (you can also create a new slide without a header using a horizontal rule (<code>----------</code>). For example here’s a simple slide show:</p>
 <pre><code>---
 title: &quot;Habits&quot;
@@ -152,8 +152,8 @@ output: ioslides_presentation
 <p>You can add a subtitle to a slide or section by including text after the pipe (|) character. For example:</p>
 <pre><code>## Getting up | What I like to do first thing</code></pre>
 </div>
-<div id="display-modes" class="section level3">
-<h3>Display Modes</h3>
+<div id="display-modes" class="section level2">
+<h2>Display Modes</h2>
 <p>The following single character keyboard shortcuts enable alternate display modes:</p>
 <ul>
 <li><p><code>'f'</code> enable fullscreen mode</p></li>
@@ -164,8 +164,8 @@ output: ioslides_presentation
 </ul>
 <p>Pressing <code>Esc</code> exits all of these modes. See the sections below on <em>Code Highlighting</em> and <em>Presenter Mode</em> for additional detail on those modes.</p>
 </div>
-<div id="incremental-bullets" class="section level3">
-<h3>Incremental Bullets</h3>
+<div id="incremental-bullets" class="section level2">
+<h2>Incremental Bullets</h2>
 <p>You can render bullets incrementally by adding the <code>incremental</code> option:</p>
 <pre><code>---
 output:
@@ -175,7 +175,6 @@ output:
 <p>If you want to render bullets incrementally for some slides but not others you can use this syntax:</p>
 <pre><code>&gt; - Eat eggs
 &gt; - Drink coffee</code></pre>
-</div>
 <div id="presentation-size" class="section level3">
 <h3>Presentation Size</h3>
 <p>You can display the presentation using a wider form factor using the <code>widescreen</code> option. You can specify that smaller text be used with the <code>smaller</code> option. For example:</p>
@@ -188,8 +187,9 @@ output:
 <p>You can also enable the <code>smaller</code> option on a slide-by-slide basis by adding the <code>.smaller</code> attibute to the slide header:</p>
 <pre><code>## Getting up {.smaller}</code></pre>
 </div>
-<div id="adding-a-logo" class="section level3">
-<h3>Adding a Logo</h3>
+</div>
+<div id="adding-a-logo" class="section level2">
+<h2>Adding a Logo</h2>
 <p>You can add a logo to the presentation using the <code>logo</code> option (the logo should be square and at least 128x128). For example:</p>
 <pre><code>---
 output:
@@ -198,15 +198,15 @@ output:
 ---</code></pre>
 <p>A 128x128 version of the logo graphic will be added to the title slide and an icon version of the logo will be included in the bottom-left footer of each slide.</p>
 </div>
-<div id="build-slides" class="section level3">
-<h3>Build Slides</h3>
+<div id="build-slides" class="section level2">
+<h2>Build Slides</h2>
 <p>Slides can also have a <code>.build</code> attribute that indicate that their content should be displayed incrementally. For example:</p>
 <pre><code>## Getting up {.build}</code></pre>
 <p>Slide attributes can be combined if you need to specify more than one, for example:</p>
 <pre><code>## Getting up {.smaller .build}</code></pre>
 </div>
-<div id="code-highlighting" class="section level3">
-<h3>Code Highlighting</h3>
+<div id="code-highlighting" class="section level2">
+<h2>Code Highlighting</h2>
 <p>It’s possible to select subsets of code for additional emphasis by adding a special “highlight” comment around the code. For example:</p>
 <pre><code>### &lt;b&gt;
 x &lt;- 10
@@ -214,12 +214,12 @@ y &lt;- x * 2
 ### &lt;/b&gt;</code></pre>
 <p>The highlighted region will be displayed with a bold font. When you want to help the audience focus exclusively on the highlighted region press the <code>'h'</code> key and the rest of the code will fade away.</p>
 </div>
-<div id="tables" class="section level3">
-<h3>Tables</h3>
+<div id="tables" class="section level2">
+<h2>Tables</h2>
 <p>The ioslides template has an attractive default style for tables so you shouldn’t hestiate to add tables for presenting more complex sets of information. Pandoc markdown supports several syntaxes for defining tables which are described in the <a href="http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html">pandoc markdown specification</a>.</p>
 </div>
-<div id="advanced-layout" class="section level3">
-<h3>Advanced Layout</h3>
+<div id="advanced-layout" class="section level2">
+<h2>Advanced Layout</h2>
 <p>You can center content on a slide by adding the <code>.flexbox</code> and <code>.vcenter</code> attributes to the slide title. For example:</p>
 <pre><code>## Dinner {.flexbox .vcenter}</code></pre>
 <p>You can horizontally center content by enclosing it in a <code>div</code> tag with class <code>centered</code>. For example:</p>
@@ -236,15 +236,15 @@ This text is centered.
 &lt;/div&gt;</code></pre>
 <p>Note that content will flow accross the columns so if you want to have an image on one side and text on the other you should make sure that the image has sufficient height to force the text to the other side of the slide.</p>
 </div>
-<div id="text-color" class="section level3">
-<h3>Text Color</h3>
+<div id="text-color" class="section level2">
+<h2>Text Color</h2>
 <p>You can color content using base color classes red, blue, green, yellow, and gray (or variations of them e.g. red2, red3, blue2, blue3, etc.). For example:</p>
 <pre><code>&lt;div class=&quot;red2&quot;&gt;
 This text is red
 &lt;/div&gt;</code></pre>
 </div>
-<div id="presenter-mode" class="section level3">
-<h3>Presenter Mode</h3>
+<div id="presenter-mode" class="section level2">
+<h2>Presenter Mode</h2>
 <p>A separate presenter window can also be opened (ideal for when you are presenting on one screen but have another screen that’s private to you). The window stays in sync with the main presentation window and also shows presenter notes and a thumbnail of the next slide. To enable presenter mode add <code>?presentme=true</code> to the URL of the presentation, for example:</p>
 <pre><code>mypresentation.html?presentme=true</code></pre>
 <p>The presenter mode window will open and will always re-open with the presentation until it’s disabled with:</p>
@@ -256,8 +256,8 @@ This is my note.
 - like this list
 &lt;/div&gt;</code></pre>
 </div>
-<div id="printing-and-pdf-output" class="section level3">
-<h3>Printing and PDF Output</h3>
+<div id="printing-and-pdf-output" class="section level2">
+<h2>Printing and PDF Output</h2>
 <p>You can print an ioslides presentation from within browsers that have good support for print CSS (i.e. as of this writing Google Chrome has the best support). Printing maintains most of the visual styles of the HTML version of the presentation.</p>
 <p>To create a PDF version of a presentation you can use Print to PDF from Google Chrome.</p>
 <div class="references">

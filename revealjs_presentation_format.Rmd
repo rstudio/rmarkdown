@@ -2,7 +2,7 @@
 title: "Presentations with reveal.js"
 ---
 
-### Slide Basics
+## Slide Basics
 
 You can create a slide show broken up into sections by using the \# and
 \#\# heading tags (you can also create a new slide without a header
@@ -44,7 +44,7 @@ slide show:
     - Get in bed
     - Count sheep
 
-### Display Modes
+## Display Modes
 
 The following single character keyboard shortcuts enable alternate
 display modes:
@@ -55,7 +55,7 @@ display modes:
 
 Pressing `Esc` exits all of these modes.
 
-### Incremental Bullets
+## Incremental Bullets
 
 You can render bullets incrementally by adding the `incremental` option:
 
@@ -71,7 +71,7 @@ others you can use this syntax:
     > - Eat eggs
     > - Drink coffee
 
-### Themes and Transitions
+## Themes and Transitions
 
 You can select from various themes using the `theme` option and select a transition style usign the `transition` option:
 
