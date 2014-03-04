@@ -6,26 +6,31 @@ title: "R Code Chunks"
 
 R code chunks can be used as a means render R output into documents or to simply display code for illustration. Here is a simple R code chunk that will result in both the code and it's output being included:
 
-    ```{r}
-    summary(cars)
-    ```
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
+summary(cars)
+&#96;&#96;&#96;
+</code></pre>
 
 To display the output of a code chunk but not the underlying R code, you specify the `echo=FALSE` option:
 
-    ```{r, echo=FALSE}
-    summary(cars)
-    ```
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
+summary(cars)
+&#96;&#96;&#96;
+</code></pre>
 
 Note that R code chunks can also be used to render plots. To display a plot while omitting the code used to generate the plot you'd do this:
 
-    ```{r, echo=FALSE}
-    plot(cars)
-    ```
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
+plot(cars)
+&#96;&#96;&#96;
+</code></pre>
+
 To display R code without evaluating it, you specify the `eval=FALSE` chunk option:
 
-    ```{r, eval=FALSE}
-    summary(cars)
-    ```
+<pre class="markdown"><code>&#96;&#96;&#96;{r, eval=FALSE}
+summary(cars)
+&#96;&#96;&#96;
+</code></pre>
 
 ## Caching
 
@@ -33,9 +38,10 @@ If document rendering becomes time consuming due to long computations or plots t
 
 If you want to enable caching globally for a document you can include a code chunk like this at the top of the document:
 
-    ```{r setup, include=FALSE}
-    opts_chunk$set(cache=TRUE)
-    ```
+<pre class="markdown"><code>&#96;&#96;&#96;{r setup, include=FALSE}
+opts_chunk$set(cache=TRUE)
+&#96;&#96;&#96;
+</code></pre>
 
 If you run into problems with cached output you can always clear the knitr cache by removing the folder named with a `_cache` suffix within your document's directory.
 

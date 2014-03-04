@@ -115,29 +115,39 @@ body {
 <div id="basic-usage" class="section level2">
 <h2>Basic Usage</h2>
 <p>R code chunks can be used as a means render R output into documents or to simply display code for illustration. Here is a simple R code chunk that will result in both the code and it’s output being included:</p>
-<pre><code>```{r}
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
 summary(cars)
-```</code></pre>
+&#96;&#96;&#96;
+</code></pre>
+
 <p>To display the output of a code chunk but not the underlying R code, you specify the <code>echo=FALSE</code> option:</p>
-<pre><code>```{r, echo=FALSE}
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
 summary(cars)
-```</code></pre>
+&#96;&#96;&#96;
+</code></pre>
+
 <p>Note that R code chunks can also be used to render plots. To display a plot while omitting the code used to generate the plot you’d do this:</p>
-<pre><code>```{r, echo=FALSE}
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
 plot(cars)
-```</code></pre>
+&#96;&#96;&#96;
+</code></pre>
+
 <p>To display R code without evaluating it, you specify the <code>eval=FALSE</code> chunk option:</p>
-<pre><code>```{r, eval=FALSE}
+<pre class="markdown"><code>&#96;&#96;&#96;{r, eval=FALSE}
 summary(cars)
-```</code></pre>
+&#96;&#96;&#96;
+</code></pre>
+
 </div>
 <div id="caching" class="section level2">
 <h2>Caching</h2>
 <p>If document rendering becomes time consuming due to long computations or plots that are expensive to generate you can use knitr caching to improve performance. The documentation <a href="http://yihui.name/knitr/options">knitr chunk and package options</a> describe how caching works and the <a href="http://yihui.name/knitr/demo/cache/">cache examples</a> provide additional details.</p>
 <p>If you want to enable caching globally for a document you can include a code chunk like this at the top of the document:</p>
-<pre><code>```{r setup, include=FALSE}
+<pre class="markdown"><code>&#96;&#96;&#96;{r setup, include=FALSE}
 opts_chunk$set(cache=TRUE)
-```</code></pre>
+&#96;&#96;&#96;
+</code></pre>
+
 <p>If you run into problems with cached output you can always clear the knitr cache by removing the folder named with a <code>_cache</code> suffix within your document’s directory.</p>
 </div>
 <div id="learning-more" class="section level2">
