@@ -117,6 +117,9 @@ html_document <- function(toc = FALSE,
   # no email obfuscation
   args <- c("--email-obfuscation", "none")
 
+  # use section divs
+  args <- c("--section-divs")
+
   # smart quotes, etc.
   if (smart)
     args <- c(args, "--smart")
