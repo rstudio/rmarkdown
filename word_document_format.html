@@ -112,8 +112,57 @@ body {
 </div>
 
 
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>To create a Word document from R Markdown you specify the <code>word_document</code> output format in the front-matter of your document:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+author: John Doe
+date: March 22, 2005
+output: word_document
+---</code></pre>
+</div>
+<div id="figures" class="section level2">
+<h2>Figures</h2>
+<p>There are a number of additional options that can be used to control output of Word documents:</p>
+<ul>
+<li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (5x4 is used if not values are specified)</p></li>
+<li><p><code>fig_caption</code> controls whether figures are rendered with captions</p></li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  word_document:
+    fig_width: 5
+    fig_height: 5
+    fig_caption: true
+    highlight: &quot;tango&quot;
+---</code></pre>
+</div>
+<div id="syntax-highlighting" class="section level2">
+<h2>Syntax Highlighting</h2>
+<p>You can use the <code>highlight</code> option to control the syntax highlighting theme. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  word_document:
+    highlight: &quot;tango&quot;
+---</code></pre>
+<p>Supported styles include “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, and “haddock”. Pass <code>null</code> to prevent syntax highlighting.</p>
+</div>
+<div id="style-reference" class="section level2">
+<h2>Style Reference</h2>
+<p>You can also specify a document to be used as as a style reference in producing a docx file. For best results, the reference docx should be a modified version of a docx file produced using rmarkdown. Pass “default” to use the default styles. You can do this with the <code>reference_docx</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  word_document:
+    reference_docx: mystyles.docx
+---</code></pre>
 <div class="references">
 
+</div>
 </div>
 
 </div>
