@@ -13,7 +13,7 @@ slide show:
     title: "Habits"
     author: John Doe
     date: March 22, 2005
-    output: ioslides_presentation
+    output: revealjs_presentation
     ---
 
     # In the morning
@@ -61,7 +61,7 @@ You can render bullets incrementally by adding the `incremental` option:
 
     ---
     output:
-      ioslides_presentation:
+      revealjs_presentation:
         incremental: true
     ---
 
@@ -77,7 +77,7 @@ You can select from various themes using the `theme` option and select a transit
 
     ---
     output:
-      ioslides_presentation:
+      revealjs_presentation:
         theme: sky
         transition: fade
     ---
