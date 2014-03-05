@@ -9,8 +9,9 @@ The **rmarkdown** package is a next generation implementation of R Markdown base
 * Include raw LaTeX within markdown for advanced customization of PDF output.
 * Extensibility: easily define new formats for custom publishing requirements.
 
-See the [R Markdown documentation](http://rmarkdown.rstudio.com/) for full details.
+Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, the [MiKTeX](http://miktex.org/) distribution should be used rather than TeX Live.
 
+See the [R Markdown documentation](http://rmarkdown.rstudio.com/) for full details.
 
 ### Installation
 
