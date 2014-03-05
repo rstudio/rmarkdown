@@ -15,17 +15,15 @@ This website describes R Markdown v2, a next generation implementation of R Mark
 * Include raw LaTeX within markdown for advanced customization of PDF output.
 * Extensibility: easily define new formats for custom publishing requirements.
 
+#### Installing R Markdown
 
-## Quick Tour
-
-### Installing R Markdown
-
-You can use R Markdown either through the the integrated support for R Markdown within RStudio or via the **rmarkdown** package. To get started:
+You can use R Markdown either through the the integrated support for R Markdown within RStudio or via the rmarkdown package:
 
 1. RStudio --- Install the current [RStudio Preview Release](http://www.rstudio.com/ide/download/preview).
 
-2. Other environments --- Install the [rmarkdown package](https://github.com/rstudio/rmarkdown) from GitHub.
+2. Other environments --- Install the [rmarkdown package](https://github.com/rstudio/rmarkdown).
 
+## Quick Tour
 
 ### Markdown Basics
 
@@ -114,16 +112,16 @@ output:
 
 With the basics described above you can get started with R Markdown right away. To learn more see:
 
-* The article on [Markdown Basics](authoring_basics.html) which describes the most commonly used markdown constructs.
+* [Markdown Basics](authoring_basics.html), which describes the most commonly used markdown constructs.
 
-* The article on [R Code Chunks](authoring_rcodechunks.html) which describes the basic operation of **knitr** code chunks.
+* [R Code Chunks](authoring_rcodechunks.html), which goes into more depth on customizing the behavior of embedded R code.
 
 * Document output formats: [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html)
 
 * Presentation output formats: [ioslides](ioslides_presentation_format.html), [reveal.js](revealjs_presentation_format.html), [Beamer](beamer_presentation_format.html)
 
 
-For even more in-depth information see:
+For even more in-depth documentation see:
 
 * The website for the [knitr package](http://yihui.name/knitr/). Knitr is an extremely powerful tool for dynamic content generation and the website has a wealth of documentation and examples to help you utilize it to it's full potential.
 
