@@ -112,8 +112,123 @@ body {
 </div>
 
 
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>To create an HTML document from R Markdown you specify the <code>html_document</code> output format in the front-matter of your document:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+author: John Doe
+date: March 22, 2005
+output: html_document
+---</code></pre>
+</div>
+<div id="table-of-contents" class="section level2">
+<h2>Table of Contents</h2>
+<p>You can add a table of contents using the <code>toc</code> option and specify the depth of headers that it applies to using the <code>toc_depth</code> option. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+---</code></pre>
+<p>If the table of contents depth isn’t explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).</p>
+</div>
+<div id="visual-styles" class="section level2">
+<h2>Visual Styles</h2>
+<p>There are two options that control the visual style of HTML documents:</p>
+<ul>
+<li><p><code>theme</code> specifies the Bootstrap theme to use for the page (themes are drawn from the <a href="http://bootswatch.com/">Bootswatch</a> theme library). Valid themes include “default”, “cerulean”, “journal”, “flatly”, “readable”, “spacelab”, “united”, “yeti”, and “cosmo”. Pass null for no theme (in this case you can use the <code>css</code> parameter to add your own styles).</p></li>
+<li><p><code>highlight</code> specifies the syntax highlighting style. Supported styles include “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, “haddock”, and “textmate”. Pass null to prevent syntax highlighting.</p></li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    theme: &quot;united&quot;
+    highlight: &quot;tango&quot;
+---</code></pre>
+<p>You can also use CSS to modify or even replace entirely the built-in visual themes. See the <a href="#custom-css">Custom CSS</a> section below for details.</p>
+</div>
+<div id="figures" class="section level2">
+<h2>Figures</h2>
+<p>There are a number of options that affect the output of figures within HTML documents:</p>
+<ul>
+<li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (7x5is used if not values are specified)</p></li>
+<li><p><code>fig_retina</code> Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr &gt;= 1.5.21. Set to <code>null</code> to prevent retina scaling.</p></li>
+<li><p><code>fig_caption</code> controls whether figures are rendered with captions</p></li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+---</code></pre>
+</div>
+<div id="custom-css" class="section level2">
+<h2>Custom CSS</h2>
+<p>You can add your own CSS to an HTML document using the <code>css</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    css: styles.css
+---</code></pre>
+<p>If you want to provide all of the styles for the document from your own CSS you set the <code>theme</code> (and potentially <code>highlight</code>) to null:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    theme: null
+    highlight: null
+    css: styles.css
+---</code></pre>
+<p>You can also target specific sections of documents with custom CSS by adding ids or classes to section headers wihtin your document. For example the following section header:</p>
+<pre><code>## Next Steps {#nextsteps .emphasized}</code></pre>
+<p>Would enable you to apply CSS to all of it’s content using either of the following CSS selectors:</p>
+<pre><code>#nextsteps {
+   color: blue;
+}
+
+.emphasized {
+   font-size: 1.2em;
+}</code></pre>
+</div>
+<div id="mathjax" class="section level2">
+<h2>MathJax</h2>
+<p>By default <a href="http://www.mathjax.org/">MathJax</a> scripts are included in HTML documents for rendering LaTeX and MathML equations. You can use the <code>mathjax</code> option to control how MathJax is included:</p>
+<ul>
+<li><p>Specify “default” to use an https URL from the official MathJax CDN.</p></li>
+<li><p>Specify “local” to use a local version of MathJax (which is copied into the output directory). Note that when using “local” you also need to set the <code>self_contained</code> option to false.</p></li>
+<li><p>Specify an alternate URL to load MathJax from another location.</p></li>
+<li><p>Specify null to exclude MathJax entirely.</p></li>
+</ul>
+<p>For example, to use a local copy of MathJax:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  mathjax: &quot;local&quot;
+  self_contained: false
+---</code></pre>
+<p>To use a self-hsoted copy of MathJax:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  mathjax: &quot;http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;
+---</code></pre>
+<p>To exclude MathJax entirely:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  mathjax: null
+---</code></pre>
 <div class="references">
 
+</div>
 </div>
 
 </div>

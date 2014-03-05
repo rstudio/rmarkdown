@@ -2,3 +2,145 @@
 title: "HTML Documents"
 ---
 
+## Overview
+
+To create an HTML document from R Markdown you specify the `html_document` output format in the front-matter of your document:
+
+    ---
+    title: "Habits"
+    author: John Doe
+    date: March 22, 2005
+    output: html_document
+    ---
+
+## Table of Contents
+
+You can add a table of contents using the `toc` option and specify the depth of headers that it applies to using the `toc_depth` option. For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        toc: true
+        toc_depth: 2
+    ---
+
+If the table of contents depth isn't explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).
+
+
+## Visual Styles
+
+There are two options that control the visual style of HTML documents:
+
+* `theme` specifies the Bootstrap theme to use for the page (themes are drawn from the [Bootswatch](http://bootswatch.com/) theme library). Valid themes include "default", "cerulean", "journal", "flatly", "readable", "spacelab", "united", "yeti", and "cosmo". Pass null for no theme (in this case you can use the `css` parameter to add your own styles).
+
+* `highlight` specifies the syntax highlighting style. Supported styles include "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn", "haddock", and "textmate". Pass null to prevent syntax highlighting.
+
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        theme: "united"
+        highlight: "tango"
+    ---
+
+You can also use CSS to modify or even replace entirely the built-in visual themes. See the [Custom CSS] section below for details.
+
+## Figures
+
+There are a number of options that affect the output of figures within HTML documents:
+
+* `fig_width` and  `fig_height` can be used to control the default figure width and height (7x5is used if not values are specified)
+
+* `fig_retina` Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr >= 1.5.21. Set to `null` to prevent retina scaling.
+
+* `fig_caption` controls whether figures are rendered with captions
+
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        fig_width: 7
+        fig_height: 6
+        fig_caption: true
+    ---
+
+## Custom CSS
+
+You can add your own CSS to an HTML document using the `css` option:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        css: styles.css
+    ---
+
+If you want to provide all of the styles for the document from your own CSS you set the `theme` (and potentially `highlight`) to null:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        theme: null
+        highlight: null
+        css: styles.css
+    ---
+
+You can also target specific sections of documents with custom CSS by adding ids or classes to section headers wihtin your document. For example the following section
+header:
+
+    ## Next Steps {#nextsteps .emphasized}
+
+Would enable you to apply CSS to all of it's content using either of the following CSS selectors:
+
+    #nextsteps {
+       color: blue;
+    }
+
+    .emphasized {
+       font-size: 1.2em;
+    }
+
+
+## MathJax
+
+By default [MathJax](http://www.mathjax.org/) scripts are included in HTML documents for rendering LaTeX and MathML equations. You can use the `mathjax` option to control how MathJax is included:
+
+* Specify "default" to use an https URL from the official MathJax CDN.
+
+* Specify "local" to use a local version of MathJax (which is copied into the output directory). Note that when using "local" you also need to set the `self_contained` option to false.
+
+* Specify an alternate URL to load MathJax from another location.
+
+* Specify null to exclude MathJax entirely.
+
+For example, to use a local copy of MathJax:
+
+    ---
+    title: "Habits"
+    output:
+      mathjax: "local"
+      self_contained: false
+    ---
+
+To use a self-hsoted copy of MathJax:
+
+    ---
+    title: "Habits"
+    output:
+      mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    ---
+
+To exclude MathJax entirely:
+
+    ---
+    title: "Habits"
+    output:
+      mathjax: null
+    ---
+
