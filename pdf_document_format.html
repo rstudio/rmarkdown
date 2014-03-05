@@ -170,6 +170,35 @@ output:
   pdf_document:
     highlight: tango
 ---</code></pre>
+</div>
+<div id="advanced-customization" class="section level2">
+<h2>Advanced Customization</h2>
+<p>You can do more advanced customization of PDF output by including additional LaTeX directives and/or content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pdf_document:
+    includes:
+      in_header: header.tex
+      before_body: doc_prefix.tex
+      after_body: doc_suffix.tex
+---</code></pre>
+<p>You can also replace the underlying pandoc template using the <code>template</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pdf_document:
+    template: quarterly_report.tex
+---</code></pre>
+<p>Consult the documentation on <a href="http://johnmacfarlane.net/pandoc/demo/example9/templates.html">pandoc templates</a> for additional details on templates. You can also study the <a href="https://github.com/jgm/pandoc-templates/blob/master/default.latex">default LaTeX template</a> as an example.</p>
+<p>The <code>includes</code> and <code>template</code> options take relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don’t need to be copied to the document directory). You can do this using the <code>data_dir</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pdf_document:
+    data_dir: ~/templates/reports
+    template: quarterly_report.tex
+---</code></pre>
 <div class="references">
 
 </div>
