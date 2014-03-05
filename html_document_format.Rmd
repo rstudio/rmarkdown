@@ -42,8 +42,8 @@ For example:
     title: "Habits"
     output:
       html_document:
-        theme: "united"
-        highlight: "tango"
+        theme: united
+        highlight: tango
     ---
 
 You can also use CSS to modify or even replace entirely the built-in visual themes. See the [Custom CSS] section below for details.
@@ -124,7 +124,7 @@ For example, to use a local copy of MathJax:
     ---
     title: "Habits"
     output:
-      mathjax: "local"
+      mathjax: local
       self_contained: false
     ---
 

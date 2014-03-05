@@ -84,6 +84,43 @@ You can select from various themes using the `theme` option and select a transit
 
 Available themes are `default`, `simple`, `sky`, `beige`, `serif`, or `solarized`; Available transitions are `default`, `cube`, `page`, `concave`, `zoom`, `linear`, `fade`, or `none`.
 
+## MathJax
+
+By default [MathJax](http://www.mathjax.org/) scripts are included in HTML documents for rendering LaTeX and MathML equations. You can use the `mathjax` option to control how MathJax is included:
+
+* Specify "default" to use an https URL from the official MathJax CDN.
+
+* Specify "local" to use a local version of MathJax (which is copied into the output directory). Note that when using "local" you also need to set the `self_contained` option to false.
+
+* Specify an alternate URL to load MathJax from another location.
+
+* Specify null to exclude MathJax entirely.
+
+For example, to use a local copy of MathJax:
+
+    ---
+    title: "Habits"
+    output:
+      mathjax: "local"
+      self_contained: false
+    ---
+
+To use a self-hsoted copy of MathJax:
+
+    ---
+    title: "Habits"
+    output:
+      mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    ---
+
+To exclude MathJax entirely:
+
+    ---
+    title: "Habits"
+    output:
+      mathjax: null
+    ---
+
 
 
 
