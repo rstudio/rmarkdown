@@ -30,7 +30,6 @@ For example:
         fig_width: 5
         fig_height: 5
         fig_caption: true
-        highlight: "tango"
     ---
 
 ## Syntax Highlighting
