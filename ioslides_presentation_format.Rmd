@@ -242,8 +242,9 @@ For example, to use a local copy of MathJax:
     ---
     title: "Habits"
     output:
-      mathjax: "local"
-      self_contained: false
+      ioslides_presentation:
+        mathjax: local
+        self_contained: false
     ---
 
 To use a self-hsoted copy of MathJax:
@@ -251,7 +252,8 @@ To use a self-hsoted copy of MathJax:
     ---
     title: "Habits"
     output:
-      mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+      ioslides_presentation:
+        mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
     ---
 
 To exclude MathJax entirely:
@@ -259,6 +261,7 @@ To exclude MathJax entirely:
     ---
     title: "Habits"
     output:
-      mathjax: null
+      ioslides_presentation:
+        mathjax: null
     ---
 

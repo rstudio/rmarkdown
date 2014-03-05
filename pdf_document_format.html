@@ -112,8 +112,67 @@ body {
 </div>
 
 
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>To create a PDF document from R Markdown you specify the <code>pdf_document</code> output format in the front-matter of your document:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+author: John Doe
+date: March 22, 2005
+output: pdf_document
+---</code></pre>
+</div>
+<div id="table-of-contents" class="section level2">
+<h2>Table of Contents</h2>
+<p>You can add a table of contents using the <code>toc</code> option and specify the depth of headers that it applies to using the <code>toc_depth</code> option. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
+---</code></pre>
+<p>If the table of contents depth isn’t explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).</p>
+<p>You can add section numbering to headers using the <code>number_sections</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
+---</code></pre>
+</div>
+<div id="figures" class="section level2">
+<h2>Figures</h2>
+<p>There are a number of options that affect the output of figures within HTML documents:</p>
+<ul>
+<li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (6 x 4.5 is used by default)</p></li>
+<li><p><code>fig_crop</code> controls whether the the pdfcrop utility (if available) is automatically applied to pdf figures (this is true by default).</p></li>
+<li><p><code>fig_caption</code> controls whether figures are rendered with captions (this is true by default).</p></li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pdf_document:
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+---</code></pre>
+</div>
+<div id="syntax-higlighting" class="section level2">
+<h2>Syntax Higlighting</h2>
+<p>The <code>highlight</code> option specifies the syntax highlighting style. Supported styles include “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, “haddock”, and “textmate” (specify null to prevent syntax highlighting):</p>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pdf_document:
+    highlight: tango
+---</code></pre>
 <div class="references">
 
+</div>
 </div>
 
 </div>

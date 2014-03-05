@@ -27,6 +27,27 @@ You can add a table of contents using the `toc` option and specify the depth of 
 
 If the table of contents depth isn't explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).
 
+## Figures
+
+There are a number of options that affect the output of figures within HTML documents:
+
+* `fig_width` and  `fig_height` can be used to control the default figure width and height (7x5 is used by default)
+
+* `fig_retina` Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr >= 1.5.21. Set to `null` to prevent retina scaling.
+
+* `fig_caption` controls whether figures are rendered with captions
+
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        fig_width: 7
+        fig_height: 6
+        fig_caption: true
+    ---
+
 
 ## Visual Styles
 
@@ -44,29 +65,6 @@ For example:
       html_document:
         theme: united
         highlight: tango
-    ---
-
-You can also use CSS to modify or even replace entirely the built-in visual themes. See the [Custom CSS] section below for details.
-
-## Figures
-
-There are a number of options that affect the output of figures within HTML documents:
-
-* `fig_width` and  `fig_height` can be used to control the default figure width and height (7x5is used if not values are specified)
-
-* `fig_retina` Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr >= 1.5.21. Set to `null` to prevent retina scaling.
-
-* `fig_caption` controls whether figures are rendered with captions
-
-For example:
-
-    ---
-    title: "Habits"
-    output:
-      html_document:
-        fig_width: 7
-        fig_height: 6
-        fig_caption: true
     ---
 
 ## Custom CSS
@@ -124,8 +122,9 @@ For example, to use a local copy of MathJax:
     ---
     title: "Habits"
     output:
-      mathjax: local
-      self_contained: false
+      html_document:
+        mathjax: local
+        self_contained: false
     ---
 
 To use a self-hsoted copy of MathJax:
@@ -133,7 +132,8 @@ To use a self-hsoted copy of MathJax:
     ---
     title: "Habits"
     output:
-      mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+      html_document:
+        mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
     ---
 
 To exclude MathJax entirely:
@@ -141,6 +141,7 @@ To exclude MathJax entirely:
     ---
     title: "Habits"
     output:
-      mathjax: null
+      html_document:
+        mathjax: null
     ---
 
