@@ -10,7 +10,7 @@ This website describes R Markdown v2, a next generation implementation of R Mark
 
 * Create HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home), [ioslides](https://code.google.com/p/io-2012-slides/) and [reveal.js](http://lab.hakim.se/reveal-js/#/) presentations.
 * New markdown syntax including expanded support for tables, definition lists, and bibliographies.
-* A responsive (multi-device friendly) and themeable HTML template based on [Bootstrap 3](http://getbootstrap.com).
+* A responsive (multi-device friendly) and theme-able HTML template based on [Bootstrap 3](http://getbootstrap.com).
 * Hooks for customizing HTML and PDF output (include CSS, headers, and footers).
 * Include raw LaTeX within markdown for advanced customization of PDF output.
 * Extensibility: easily define new formats for custom publishing requirements.
@@ -24,7 +24,7 @@ You can use R Markdown either through the the integrated support for R Markdown 
 
 1. RStudio --- Install the current [RStudio Preview Release](http://www.rstudio.com/ide/download/preview).
 
-2. Other envrionments --- Install the [rmarkdown package](https://github.com/rstudio/rmarkdown) from GitHub.
+2. Other environments --- Install the [rmarkdown package](https://github.com/rstudio/rmarkdown) from GitHub.
 
 
 ### Markdown Basics
@@ -52,7 +52,7 @@ Results in this output: "I counted 2 red trucks on the highway."
 
 You can embed LaTeX or MathML equations in R Markdown files using the following syntax:
 
-* *`$equation$`* for inline equations (note there must not be whitespace adjacent to the $ delimiters)
+* *`$equation$`* for inline equations (note there must not be white space adjacent to the $ delimiters)
 * *`$$ equation $$`* for display equations
 * *`<math ...> </math>`* for MathML equations.
 

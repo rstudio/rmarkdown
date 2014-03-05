@@ -89,7 +89,7 @@ If you want to provide all of the styles for the document from your own CSS you 
         css: styles.css
     ---
 
-You can also target specific sections of documents with custom CSS by adding ids or classes to section headers wihtin your document. For example the following section
+You can also target specific sections of documents with custom CSS by adding ids or classes to section headers within your document. For example the following section
 header:
 
     ## Next Steps {#nextsteps .emphasized}
@@ -127,7 +127,7 @@ For example, to use a local copy of MathJax:
         self_contained: false
     ---
 
-To use a self-hsoted copy of MathJax:
+To use a self-hosted copy of MathJax:
 
     ---
     title: "Habits"

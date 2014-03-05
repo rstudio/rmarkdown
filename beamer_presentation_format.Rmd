@@ -74,7 +74,7 @@ You can specify Beamer themes using the `theme`, `colortheme`, and `fonttheme` o
 
 ## Slide Level
 
-The `slide_level` otion defines the heading level that defines individual slides.  By default this is the highest header level in the hierarchy that is followed immediately by content, and not another header, somewhere in the document. This default can be overridden by specifying an explicit `slide_level`:
+The `slide_level` option defines the heading level that defines individual slides.  By default this is the highest header level in the hierarchy that is followed immediately by content, and not another header, somewhere in the document. This default can be overridden by specifying an explicit `slide_level`:
 
     ---
     output:

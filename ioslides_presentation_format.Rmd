@@ -97,7 +97,7 @@ You can display the presentation using a wider form factor using the
     ---
 
 You can also enable the `smaller` option on a slide-by-slide basis by
-adding the `.smaller` attibute to the slide header:
+adding the `.smaller` attribute to the slide header:
 
     ## Getting up {.smaller}
 
@@ -145,7 +145,7 @@ the `'h'` key and the rest of the code will fade away.
 ## Tables
 
 The ioslides template has an attractive default style for tables so you
-shouldn't hestiate to add tables for presenting more complex sets of
+shouldn't hesitate to add tables for presenting more complex sets of
 information. Pandoc markdown supports several syntaxes for defining
 tables which are described in the [pandoc markdown
 specification](http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html).
@@ -174,7 +174,7 @@ You can do a two-column layout using the `columns-2` class. For example:
       - Bullet 3
     </div>
 
-Note that content will flow accross the columns so if you want to have
+Note that content will flow across the columns so if you want to have
 an image on one side and text on the other you should make sure that the
 image has sufficient height to force the text to the other side of the
 slide.
@@ -247,7 +247,7 @@ For example, to use a local copy of MathJax:
         self_contained: false
     ---
 
-To use a self-hsoted copy of MathJax:
+To use a self-hosted copy of MathJax:
 
     ---
     title: "Habits"

@@ -73,7 +73,7 @@ others you can use this syntax:
 
 ## Themes and Transitions
 
-You can select from various themes using the `theme` option and select a transition style usign the `transition` option:
+You can select from various themes using the `theme` option and select a transition style using the `transition` option:
 
     ---
     output:
@@ -106,7 +106,7 @@ For example, to use a local copy of MathJax:
         self_contained: false
     ---
 
-To use a self-hsoted copy of MathJax:
+To use a self-hosted copy of MathJax:
 
     ---
     title: "Habits"
