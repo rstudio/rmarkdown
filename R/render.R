@@ -16,10 +16,6 @@ render <- function(input,
          "is required and was not found.", call. = FALSE)
   }
 
-  # verify the input file doesn't have spaces in it's name
-  if (grepl(' ', basename(input), fixed=TRUE))
-    stop("The name of the input file must not contain spaces.")
-
   # setup a cleanup function for intermediate files
   intermediates <- c()
   on.exit(lapply(intermediates,
@@ -28,6 +24,15 @@ render <- function(input,
                      unlink(f, recursive = TRUE)
                  }),
           add = TRUE)
+
+  # if the input file has spaces in it's name then make a copy
+  # that doesn't have spaces
+  if (grepl(' ', basename(input), fixed=TRUE)) {
+    input_no_spaces <- file_name_without_spaces(input)
+    file.copy(input, input_no_spaces, overwrite = TRUE)
+    intermediates <- c(intermediates, input_no_spaces)
+    input <- input_no_spaces
+  }
 
   # execute within the input file's directory
   oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))

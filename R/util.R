@@ -53,6 +53,15 @@ read_lines_utf8 <- function(file, encoding) {
     lines
 }
 
+file_name_without_spaces <- function(file) {
+  name <- gsub(' ', '_', basename(file), fixed = TRUE)
+  dir <- dirname(file)
+  if (nzchar(dir) && !identical(dir, "."))
+    file.path(dir, name)
+  else
+    name
+}
+
 file_with_meta_ext <- function(file, meta_ext, ext = tools::file_ext(file)) {
   paste(tools::file_path_sans_ext(file),
         ".", meta_ext, ".", ext, sep = "")
