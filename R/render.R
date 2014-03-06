@@ -29,7 +29,12 @@ render <- function(input,
   # that doesn't have spaces
   if (grepl(' ', basename(input), fixed=TRUE)) {
     input_no_spaces <- file_name_without_spaces(input)
-    file.copy(input, input_no_spaces, overwrite = TRUE)
+    if (file.exists(input_no_spaces)) {
+      stop("The name of the input file cannot contain spaces (attempted to ",
+           "copy to a version without spaces '", input_no_spaces, "' ",
+           "however that file already exists)", call. = FALSE)
+    }
+    file.copy(input, input_no_spaces)
     intermediates <- c(intermediates, input_no_spaces)
     input <- input_no_spaces
   }
