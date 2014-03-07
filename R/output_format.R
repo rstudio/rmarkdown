@@ -111,6 +111,8 @@ knitr_options_pdf <- function(fig_width, fig_height, fig_crop) {
 #' @param to Pandoc format to convert to
 #' @param from Pandoc format to convert from
 #' @param args Character vector of command line arguments to pass to pandoc
+#' @param keep_tex Keep the intermediate tex file used in the conversion to PDF
+#'   (applies only to 'latex' and 'beamer' target formats)
 #'
 #' @return An list that can be passed as the \code{pandoc} argument of the
 #'   \code{\link{output_format}} function.
@@ -124,10 +126,12 @@ knitr_options_pdf <- function(fig_width, fig_height, fig_crop) {
 #' @export
 pandoc_options <- function(to,
                            from = rmarkdown_format(),
-                           args = NULL) {
+                           args = NULL,
+                           keep_tex = FALSE) {
   list(to = to,
        from = from,
-       args = args)
+       args = args,
+       keep_tex = keep_tex)
 }
 
 #' R Markdown input format definition

@@ -5,8 +5,8 @@
 beamer_presentation(toc = FALSE, slide_level = NULL, incremental = FALSE,
   fig_width = 10, fig_height = 7, fig_crop = TRUE, fig_caption = FALSE,
   theme = "default", colortheme = "default", fonttheme = "default",
-  highlight = "default", template = "default", includes = NULL,
-  data_dir = NULL, pandoc_args = NULL)
+  highlight = "default", template = "default", keep_tex = FALSE,
+  includes = NULL, data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -48,6 +48,9 @@ beamer_presentation(toc = FALSE, slide_level = NULL, incremental = FALSE,
   you've created.  See the documentation on
   \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
   templates} for more details.}
+
+  \item{keep_tex}{Keep the intermediate tex file used in
+  the conversion to PDF}
 
   \item{fig_width}{Default width (in inches) for figures}
 

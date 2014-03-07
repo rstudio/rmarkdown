@@ -73,7 +73,7 @@ word_document <- function(fig_width = 5,
   output_format(
     knitr = knitr,
     pandoc = pandoc_options(to = "docx",
-                            from_rmarkdown(fig_caption),
+                            from = from_rmarkdown(fig_caption),
                             args = args)
   )
 }

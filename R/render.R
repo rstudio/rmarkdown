@@ -139,7 +139,18 @@ render <- function(input,
     }
   }
 
-  # run the conversion
+  # run intermediate conversion if it's been specified
+  if (output_format$pandoc$keep_tex) {
+    pandoc_convert(utf8_input,
+                   output_format$pandoc$to,
+                   output_format$pandoc$from,
+                   file_with_ext(output_file, "tex"),
+                   TRUE,
+                   output_format$pandoc$args,
+                   !quiet)
+  }
+
+  # run the main conversion
   pandoc_convert(utf8_input,
                  output_format$pandoc$to,
                  output_format$pandoc$from,

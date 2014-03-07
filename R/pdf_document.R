@@ -10,6 +10,7 @@
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
 #'   "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.
+#' @param keep_tex Keep the intermediate tex file used in the conversion to PDF
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", and "xelatex".
 #' @param natbib Use natbib for citations in LaTeX output
@@ -81,6 +82,7 @@ pdf_document <- function(toc = FALSE,
                          fig_caption = TRUE,
                          highlight = "default",
                          template = "default",
+                         keep_tex = FALSE,
                          latex_engine = "pdflatex",
                          natbib = FALSE,
                          biblatex = FALSE,
@@ -143,7 +145,8 @@ pdf_document <- function(toc = FALSE,
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop),
     pandoc = pandoc_options(to = "latex",
                             from = from_rmarkdown(fig_caption),
-                            args = args),
+                            args = args,
+                            keep_tex = keep_tex),
     format_filter = format_filter
   )
 }

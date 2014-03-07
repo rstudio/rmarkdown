@@ -62,6 +62,11 @@ file_name_without_spaces <- function(file) {
     name
 }
 
+file_with_ext <- function(file, ext) {
+  paste(tools::file_path_sans_ext(file), ".", ext, sep = "")
+}
+
+
 file_with_meta_ext <- function(file, meta_ext, ext = tools::file_ext(file)) {
   paste(tools::file_path_sans_ext(file),
         ".", meta_ext, ".", ext, sep = "")

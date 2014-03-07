@@ -4,9 +4,9 @@
 \usage{
 pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   fig_width = 6, fig_height = 4.5, fig_crop = TRUE, fig_caption = TRUE,
-  highlight = "default", template = "default", latex_engine = "pdflatex",
-  natbib = FALSE, biblatex = FALSE, includes = NULL, data_dir = NULL,
-  pandoc_args = NULL)
+  highlight = "default", template = "default", keep_tex = FALSE,
+  latex_engine = "pdflatex", natbib = FALSE, biblatex = FALSE,
+  includes = NULL, data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{number_sections}{\code{TRUE} to number section
@@ -19,6 +19,9 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   styles include "default", "tango", "pygments", "kate",
   "monochrome", "espresso", "zenburn", and "haddock". Pass
   \code{NULL} to prevent syntax highlighting.}
+
+  \item{keep_tex}{Keep the intermediate tex file used in
+  the conversion to PDF}
 
   \item{latex_engine}{LaTeX engine for producing PDF
   output. Options are "pdflatex", "lualatex", and

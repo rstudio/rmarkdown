@@ -2,7 +2,8 @@
 \alias{pandoc_options}
 \title{Pandoc options for an output format}
 \usage{
-pandoc_options(to, from = rmarkdown_format(), args = NULL)
+pandoc_options(to, from = rmarkdown_format(), args = NULL,
+  keep_tex = FALSE)
 }
 \arguments{
   \item{to}{Pandoc format to convert to}
@@ -11,6 +12,10 @@ pandoc_options(to, from = rmarkdown_format(), args = NULL)
 
   \item{args}{Character vector of command line arguments to
   pass to pandoc}
+
+  \item{keep_tex}{Keep the intermediate tex file used in
+  the conversion to PDF (applies only to 'latex' and
+  'beamer' target formats)}
 }
 \value{
 An list that can be passed as the \code{pandoc} argument of

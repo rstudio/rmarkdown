@@ -61,6 +61,7 @@ beamer_presentation <- function(toc = FALSE,
                                 fonttheme = "default",
                                 highlight = "default",
                                 template = "default",
+                                keep_tex = FALSE,
                                 includes = NULL,
                                 data_dir = NULL,
                                 pandoc_args = NULL) {
@@ -114,8 +115,9 @@ beamer_presentation <- function(toc = FALSE,
   output_format(
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop),
     pandoc = pandoc_options(to = "beamer",
-                            from_rmarkdown(fig_caption),
-                            args = args)
+                            from = from_rmarkdown(fig_caption),
+                            args = args,
+                            keep_tex = keep_tex)
   )
 }
 
