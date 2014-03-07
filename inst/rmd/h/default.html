@@ -82,10 +82,10 @@ $for(author)$
 $if(author.name)$
 <h4 class="author"><em>$author.name$</em></h4>
 $if(author.affiliation)$
-<address>
+<address class="author_afil">
 $author.affiliation$<br>$endif$
 $if(author.email)$
-<a href="mailto:#">$author.email$</a>
+<a class="author_email" href="mailto:#">$author.email$</a>
 </address>
 $endif$
 $else$
