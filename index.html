@@ -161,8 +161,15 @@ body {
 <p>For example:</p>
 <p><img src="images/equations_inline.png" alt="Equation Inline" /></p>
 </div>
-<div id="customizing-output" class="section level3">
-<h3>Customizing Output</h3>
+<div id="rendering-output" class="section level3">
+<h3>Rendering Output</h3>
+<p>There are two ways to render an R Markdown document into it’s final output format. If you are using RStudio, then the “Knit” command (Ctrl+Shift+K) will render the document and display a preview of it.</p>
+<p>If you are not using RStudio then you simply need to call the <code>rmarkdown::render</code> function, for example:</p>
+<pre class="r"><code>rmarkdown::render(&quot;input.Rmd&quot;)</code></pre>
+<p>Note that in the case using the “Knit” button in RStudio the underlying mechanism is the same (RStudio calls the <code>rmarkdown::render</code> function under the hood).</p>
+</div>
+<div id="output-options" class="section level3">
+<h3>Output Options</h3>
 <p>R Markdown documents can contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:</p>
 <pre><code>---
 title: &quot;Sample Document&quot;

@@ -60,7 +60,19 @@ For example:
 
 ![Equation Inline](images/equations_inline.png)
 
-### Customizing Output
+### Rendering Output
+
+There are two ways to render an R Markdown document into it's final output format. If you are using RStudio, then the "Knit" command (Ctrl+Shift+K) will render the document and display a preview of it.
+
+If you are not using RStudio then you simply need to call the `rmarkdown::render` function, for example:
+
+```r
+rmarkdown::render("input.Rmd")
+```
+
+Note that in the case using the "Knit" button in RStudio the underlying mechanism is the same (RStudio calls the `rmarkdown::render` function under the hood).
+
+### Output Options
 
 R Markdown documents can contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:
 
