@@ -25,13 +25,6 @@ local function escape(s, in_attribute)
         return x
       end
     end)
-
-  if smart then
-    s = s:gsub("%-%-%-", "&#8212;")
-    s = s:gsub("%-%-", "&#8211;")
-    s = s:gsub("%.%.%.", "&#8230;")
-  end
-
   return s
 end
 
@@ -98,7 +91,13 @@ end
 -- Comments indicate the types of other variables.
 
 function Str(s)
-  return escape(s)
+  s = escape(s)
+  if smart then
+    s = s:gsub("%-%-%-", "&#8212;")
+    s = s:gsub("%-%-", "&#8211;")
+    s = s:gsub("%.%.%.", "&#8230;")
+  end
+  return s
 end
 
 function Space()
