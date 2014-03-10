@@ -101,6 +101,13 @@ $endfor$
 
 $if(theme)$
 </div>
+<script src="$jquery$/jquery.min.js"></script>
+<script src="$bootstrap$/js/bootstrap.min.js"></script>
+<script>
+$$(document).ready(function () {
+  $$('table:not([class])').addClass('table table-condensed');
+});
+</script>
 $endif$
 
 $if(mathjax-url)$

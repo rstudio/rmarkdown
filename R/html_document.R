@@ -168,9 +168,15 @@ html_document <- function(toc = FALSE,
       if (identical(theme, "default"))
         theme <- "bootstrap"
 
+      jquery_path <- rmarkdown_system_file("rmd/h/jquery-1.10.2")
+      if(!self_contained)
+        jquery_path <- render_supporting_files(jquery_path, files_dir)
+      args <- c(args, "--variable", paste("jquery:", jquery_path, sep = ""))
+
       bootstrap_path <- rmarkdown_system_file("rmd/h/bootstrap-3.0.3")
       if (!self_contained)
         bootstrap_path <- render_supporting_files(bootstrap_path, files_dir)
+      args <- c(args, "--variable", paste("bootstrap:",bootstrap_path,sep = ""))
 
       # form path to theme and add theme variable
       theme_path <- paste(bootstrap_path,
