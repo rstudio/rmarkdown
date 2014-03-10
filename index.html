@@ -100,6 +100,12 @@ body {
              <li><a href="beamer_presentation_format.html">Beamer</a></li>
           </ul>
         </li>
+         <li class="dropdown">
+          <a href="developer" class="dropdown-toggle" data-toggle="dropdown">Developer <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+             <li><a href="developer_formats.html">Custom Formats</a></li>
+          </ul>
+        </li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
@@ -166,7 +172,7 @@ body {
 <p>There are two ways to render an R Markdown document into it’s final output format. If you are using RStudio, then the “Knit” command (Ctrl+Shift+K) will render the document and display a preview of it.</p>
 <p>If you are not using RStudio then you simply need to call the <code>rmarkdown::render</code> function, for example:</p>
 <pre class="r"><code>rmarkdown::render(&quot;input.Rmd&quot;)</code></pre>
-<p>Note that in the case using the “Knit” button in RStudio the underlying mechanism is the same (RStudio calls the <code>rmarkdown::render</code> function under the hood).</p>
+<p>Note that in the case using the “Knit” button in RStudio the basic mechanism is the same (RStudio calls the <code>rmarkdown::render</code> function under the hood).</p>
 </div>
 <div id="output-options" class="section level3">
 <h3>Output Options</h3>
@@ -217,6 +223,7 @@ output:
 <ul>
 <li><p>The website for the <a href="http://yihui.name/knitr/">knitr package</a>. Knitr is an extremely powerful tool for dynamic content generation and the website has a wealth of documentation and examples to help you utilize it to it’s full potential.</p></li>
 <li><p>The full specification of <a href="authoring_pandoc_markdown.html">Pandoc Markdown</a>, which describes all of the markdown features and syntax available within R Markdown documents.</p></li>
+<li><p>The developer guide to creating <a href="developer_formats.html">Custom R Markdown Formats</a>.</p></li>
 </ul>
 <p>Finally, if you are migrating documents from R Markdown v1 or wish to continue using RMarkdown v1 see the article on <a href="authoring_migrating_from_v1.html">Migrating from R Markdown v1</a>.</p>
 <div class="references">
@@ -240,8 +247,8 @@ $(document).ready(function () {
       $('a[href="' + 'authoring' + '"]').parent().addClass('active');
     else if (href.endsWith('_format.html'))
       $('a[href="' + 'formats' + '"]').parent().addClass('active');
-    else if (href.startsWith('rmarkdown_v'))
-      $('a[href="' + 'more' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
 
 });
 

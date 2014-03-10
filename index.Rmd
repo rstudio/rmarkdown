@@ -70,7 +70,7 @@ If you are not using RStudio then you simply need to call the `rmarkdown::render
 rmarkdown::render("input.Rmd")
 ```
 
-Note that in the case using the "Knit" button in RStudio the underlying mechanism is the same (RStudio calls the `rmarkdown::render` function under the hood).
+Note that in the case using the "Knit" button in RStudio the basic mechanism is the same (RStudio calls the `rmarkdown::render` function under the hood).
 
 ### Output Options
 
@@ -140,6 +140,8 @@ For even more in-depth documentation see:
 * The website for the [knitr package](http://yihui.name/knitr/). Knitr is an extremely powerful tool for dynamic content generation and the website has a wealth of documentation and examples to help you utilize it to it's full potential.
 
 * The full specification of [Pandoc Markdown](authoring_pandoc_markdown.html), which describes all of the markdown features and syntax available within R Markdown documents.
+
+* The developer guide to creating [Custom R Markdown Formats](developer_formats.html).
 
 Finally, if you are migrating documents from R Markdown v1 or wish to continue using RMarkdown v1 see the article on [Migrating from R Markdown v1](authoring_migrating_from_v1.html).
 
