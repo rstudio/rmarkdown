@@ -105,7 +105,7 @@ $if(theme)$
 <script src="$bootstrap$/js/bootstrap.min.js"></script>
 <script>
 $$(document).ready(function () {
-  $$('table:not([class])').addClass('table table-condensed');
+  $$('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
 </script>
 $endif$
