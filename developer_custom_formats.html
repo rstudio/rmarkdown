@@ -11,7 +11,7 @@
 
 
 
-<title>Creating Custom R Markdown Formats</title>
+<title>Creating Custom Formats</title>
 
 
 
@@ -103,7 +103,7 @@ body {
          <li class="dropdown">
           <a href="developer" class="dropdown-toggle" data-toggle="dropdown">Developer <b class="caret"></b></a>
           <ul class="dropdown-menu">
-             <li><a href="developer_formats.html">Custom Formats</a></li>
+             <li><a href="developer_custom_formats.html">Custom Formats</a></li>
           </ul>
         </li>
       </ul>
@@ -114,7 +114,7 @@ body {
 <div class="container">
 
 <div id="header">
-<h1 class="title">Creating Custom R Markdown Formats</h1>
+<h1 class="title">Creating Custom Formats</h1>
 </div>
 
 
@@ -156,8 +156,8 @@ output:
 </ol>
 <p>Note that (3) and (4) are implemented using external files that are stored within the package that defines the custom format, so their locations need to be looked up using the <code>system.file</code> function.</p>
 </div>
-<div id="creating-fully-custom-formats" class="section level2">
-<h2>Creating Fully Custom Formats</h2>
+<div id="fully-custom-formats" class="section level2">
+<h2>Fully Custom Formats</h2>
 <p>At it’s core an R Markdown format consists of:</p>
 <ol style="list-style-type: decimal">
 <li><p>A set of knitr options that govern how Rmd is converted to markdown.</p></li>

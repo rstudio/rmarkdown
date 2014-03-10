@@ -141,7 +141,7 @@ For even more in-depth documentation see:
 
 * The full specification of [Pandoc Markdown](authoring_pandoc_markdown.html), which describes all of the markdown features and syntax available within R Markdown documents.
 
-* The developer guide to creating [Custom R Markdown Formats](developer_formats.html).
+* The developer guide to creating [Custom R Markdown Formats](developer_custom_formats.html).
 
 Finally, if you are migrating documents from R Markdown v1 or wish to continue using RMarkdown v1 see the article on [Migrating from R Markdown v1](authoring_migrating_from_v1.html).
 

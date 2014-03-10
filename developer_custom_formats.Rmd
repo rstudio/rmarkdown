@@ -1,5 +1,5 @@
 ---
-title: "Creating Custom R Markdown Formats"
+title: "Creating Custom Formats"
 ---
 
 ## Overview
@@ -50,7 +50,7 @@ This defines a new format with the following behavior:
 
 Note that (3) and (4) are implemented using external files that are stored within the package that defines the custom format, so their locations need to be looked up using the `system.file` function.
 
-## Creating Fully Custom Formats
+## Fully Custom Formats
 
 At it's core an R Markdown format consists of:
 
