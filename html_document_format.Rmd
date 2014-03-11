@@ -27,6 +27,16 @@ You can add a table of contents using the `toc` option and specify the depth of 
 
 If the table of contents depth isn't explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).
 
+You can add section numbering to headers using the `number_sections` option:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        toc: true
+        number_sections: true
+    ---
+
 ## Figures
 
 There are a number of options that affect the output of figures within HTML documents:
