@@ -137,7 +137,7 @@ With the basics described above you can get started with R Markdown right away. 
 
 For even more in-depth documentation see:
 
-* The website for the [knitr package](http://yihui.name/knitr/). Knitr is an extremely powerful tool for dynamic content generation and the website has a wealth of documentation and examples to help you utilize it to it's full potential.
+* The website for the [knitr package](http://yihui.name/knitr/). Knitr is an extremely powerful tool for dynamic content generation and the website has a wealth of documentation and examples to help you utilize it to its full potential.
 
 * The full specification of [Pandoc Markdown](authoring_pandoc_markdown.html), which describes all of the markdown features and syntax available within R Markdown documents.
 
