@@ -76,7 +76,7 @@
 pdf_document <- function(toc = FALSE,
                          toc_depth = 2,
                          number_sections = FALSE,
-                         fig_width = 6,
+                         fig_width = 6.5,
                          fig_height = 4.5,
                          fig_crop = TRUE,
                          fig_caption = FALSE,
