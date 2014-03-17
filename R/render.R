@@ -79,7 +79,20 @@ render <- function(input,
   }
 
   # knit if necessary
-  if (tolower(tools::file_ext(input)) %in% c("rmd", "rmarkdown")) {
+  if (tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")) {
+
+    # file to feed to knitr
+    knitr_input <- input
+
+    # if this is an R script then spin it first
+    if (identical(tolower(tools::file_ext(input)), "r")) {
+      spin_input <- file_with_meta_ext(input, "spin", "R")
+      file.copy(input, spin_input)
+      intermediates <- c(intermediates, spin_input)
+      spin_rmd <- knitr::spin(spin_input, knit = FALSE, format = "Rmd")
+      intermediates <- c(intermediates, spin_rmd)
+      knitr_input <- spin_rmd
+    }
 
     # default rendering and chunk options
     knitr::render_markdown()
@@ -109,7 +122,7 @@ render <- function(input,
     }
 
     # perform the knit
-    input <- knitr::knit(input,
+    input <- knitr::knit(knitr_input,
                          knit_output,
                          envir = envir,
                          quiet = quiet,

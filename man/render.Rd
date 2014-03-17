@@ -8,7 +8,9 @@ render(input, output_format = NULL,
        encoding = getOption("encoding"))
 }
 \arguments{
-  \item{input}{Input file (Rmd or plain markdown)}
+  \item{input}{Input file (R script, Rmd, or plain markdown). R scripts
+  are rendered by first converting them to Rmd using
+  \code{\link[knitr:spin]{knitr spin}}.}
 
   \item{output_format}{R Markdown output format to convert to. This can
   be a character vector with the name of a format; e.g. \code{"html_document"}.
