@@ -3,7 +3,7 @@
 \title{Convert to a PDF document}
 \usage{
 pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
-  fig_width = 6, fig_height = 4.5, fig_crop = TRUE, fig_caption = TRUE,
+  fig_width = 6, fig_height = 4.5, fig_crop = TRUE, fig_caption = FALSE,
   highlight = "default", template = "default", keep_tex = FALSE,
   latex_engine = "pdflatex", natbib = FALSE, biblatex = FALSE,
   includes = NULL, data_dir = NULL, pandoc_args = NULL)
