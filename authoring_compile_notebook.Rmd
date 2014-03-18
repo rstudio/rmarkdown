@@ -1,0 +1,48 @@
+---
+title: "Compiling Notebooks from R Scripts"
+---
+
+## Overview
+
+You don't necessary need to author an R Markdown document to create a dynamic report. In fact, you can take any R script and compile it into a notebook that includes commentary, source code, and script output. Notebooks can be compiled to any output format including HTML, PDF, and MS Word.
+
+To compile a notebook from an R script you simply pass the script to render. For example:
+
+```{r, eval=FALSE}
+rmarkdown::render("analysis.R")
+rmarkdown::render("analysis.R", "pdf_document")
+```
+
+The first call to render creates an HTML document, whereas the second creates a PDF document. By default the name of the script, username, and current date and time are included in the header of the notebook. You can override this default behavior by including explicit metadata in a specially formatted R comment:
+
+```{r, eval=FALSE}
+#' ---
+#' title: "Crop Analysis Q3 2013"
+#' author: "John Smith"
+#' date: "May 3rd, 2014"
+#' ---
+```
+
+## Including Markdown
+
+Note that the R comment used above to add a title, author, and date includes a single-quote as a special prefix character. This is a [roxygen2](http://cran.rstudio.com/web/packages/roxygen2/index.html) style comment, and it's actually possible to include many such comments in an R script, all of which will be converted to markdown content within the compiled notebook. For example:
+
+```{r, eval=FALSE}
+#' A script comment that includes **markdown** formatting.
+```
+
+Rather than displaying as an R comment in the compiled notebook any roxygen2 style comment will be treated as markdown and rendered accordingly.
+
+## knitr Spin
+
+Including markdown within R comments is possible because `rmarkdown::render` calls the [`knitr::spin`](http://yihui.name/knitr/demo/stitch/) function to convert the R script to an Rmd file. The spin function also enables you to add knitr chunk options with another special comment prefix (`#+`).
+
+For more information on using spin see:
+
+* Spin documentation: http://yihui.name/knitr/demo/stitch/
+
+* Spin example: https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R
+
+
+Note that when using `rmarkdown::render` the spin function is called automatically under the hood as part of rendering.
+

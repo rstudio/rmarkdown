@@ -11,7 +11,7 @@
 
 
 
-<title>Presentations with Beamer</title>
+<title>Compiling Notebooks from R Scripts</title>
 
 
 
@@ -115,79 +115,38 @@ body {
 <div class="container">
 
 <div id="header">
-<h1 class="title">Presentations with Beamer</h1>
+<h1 class="title">Compiling Notebooks from R Scripts</h1>
 </div>
 
 
-<div id="slide-basics" class="section level2">
-<h2>Slide Basics</h2>
-<p>You can create a slide show broken up into sections by using the # and ## heading tags (you can also create a new slide without a header using a horizontal rule (<code>----------</code>). For example here’s a simple slide show:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-author: John Doe
-date: March 22, 2005
-output: beamer_presentation
----
-
-# In the morning
-
-## Getting up
-
-- Turn off alarm
-- Get out of bed
-
-## Breakfast
-
-- Eat eggs
-- Drink coffee
-
-# In the evening
-
-## Dinner
-
-- Eat spaghetti
-- Drink wine
-
-----------
-
-![picture of spaghetti](images/spaghetti.jpg)
-
-## Going to sleep
-
-- Get in bed
-- Count sheep</code></pre>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>You don’t necessary need to author an R Markdown document to create a dynamic report. In fact, you can take any R script and compile it into a notebook that includes commentary, source code, and script output. Notebooks can be compiled to any output format including HTML, PDF, and MS Word.</p>
+<p>To compile a notebook from an R script you simply pass the script to render. For example:</p>
+<pre class="r"><code>rmarkdown::render(&quot;analysis.R&quot;)
+rmarkdown::render(&quot;analysis.R&quot;, &quot;pdf_document&quot;)</code></pre>
+<p>The first call to render creates an HTML document, whereas the second creates a PDF document. By default the name of the script, username, and current date and time are included in the header of the notebook. You can override this default behavior by including explicit metadata in a specially formatted R comment:</p>
+<pre class="r"><code>#&#39; ---
+#&#39; title: &quot;Crop Analysis Q3 2013&quot;
+#&#39; author: &quot;John Smith&quot;
+#&#39; date: &quot;May 3rd, 2014&quot;
+#&#39; ---</code></pre>
 </div>
-<div id="incremental-bullets" class="section level2">
-<h2>Incremental Bullets</h2>
-<p>You can render bullets incrementally by adding the <code>incremental</code> option:</p>
-<pre><code>---
-output:
-  beamer_presentation:
-    incremental: true
----</code></pre>
-<p>If you want to render bullets incrementally for some slides but not others you can use this syntax:</p>
-<pre><code>&gt; - Eat eggs
-&gt; - Drink coffee</code></pre>
+<div id="including-markdown" class="section level2">
+<h2>Including Markdown</h2>
+<p>Note that the R comment used above to add a title, author, and date includes a single-quote as a special prefix character. This is a <a href="http://cran.rstudio.com/web/packages/roxygen2/index.html">roxygen2</a> style comment, and it’s actually possible to include many such comments in an R script, all of which will be converted to markdown content within the compiled notebook. For example:</p>
+<pre class="r"><code>#&#39; A script comment that includes **markdown** formatting.</code></pre>
+<p>Rather than displaying as an R comment in the compiled notebook any roxygen2 style comment will be treated as markdown and rendered accordingly.</p>
 </div>
-<div id="themes" class="section level2">
-<h2>Themes</h2>
-<p>You can specify Beamer themes using the <code>theme</code>, <code>colortheme</code>, and <code>fonttheme</code> options:</p>
-<hr />
-<pre><code>output:
-  beamer_presentation:
-    theme: &quot;AnnArbor&quot;
-    colortheme: &quot;dolphin&quot;
-    fonttheme: &quot;structurebold&quot;
----</code></pre>
-</div>
-<div id="slide-level" class="section level2">
-<h2>Slide Level</h2>
-<p>The <code>slide_level</code> option defines the heading level that defines individual slides. By default this is the highest header level in the hierarchy that is followed immediately by content, and not another header, somewhere in the document. This default can be overridden by specifying an explicit <code>slide_level</code>:</p>
-<pre><code>---
-output:
-  beamer_presentation:
-    slide_level: 2
----</code></pre>
+<div id="knitr-spin" class="section level2">
+<h2>knitr Spin</h2>
+<p>Including markdown within R comments is possible because <code>rmarkdown::render</code> calls the <a href="http://yihui.name/knitr/demo/stitch/"><code>knitr::spin</code></a> function to convert the R script to an Rmd file. The spin function also enables you to add knitr chunk options with another special comment prefix (<code>#+</code>).</p>
+<p>For more information on using spin see:</p>
+<ul>
+<li><p>Spin documentation: <a href="http://yihui.name/knitr/demo/stitch/">http://yihui.name/knitr/demo/stitch/</a></p></li>
+<li><p>Spin example: <a href="https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R">https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R</a></p></li>
+</ul>
+<p>Note that when using <code>rmarkdown::render</code> the spin function is called automatically under the hood as part of rendering.</p>
 <div class="references">
 
 </div>
