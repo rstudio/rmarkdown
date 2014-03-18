@@ -86,6 +86,7 @@ knitr_options_pdf <- function(fig_width, fig_height, fig_crop) {
   # default options
   opts_knit <- NULL
   opts_chunk <- list(dev = 'pdf',
+                     dev.args = list(useDingbats = FALSE),
                      fig.width = fig_width,
                      fig.height = fig_height)
   knit_hooks <- NULL
