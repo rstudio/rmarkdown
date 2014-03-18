@@ -27,10 +27,9 @@ document based on a template.
 \details{
 The \code{draft} function creates new R Markdown documents
 based on templates that are either located on the
-filesystem or within an R package. A new directory bearing
-the same name as the R Markdown file is created then the
-template and any supporting files are copied into the
-directory.
+filesystem or within an R package.  The template and it's
+supporting files will be copied to the location specified
+by \code{file}.
 }
 \note{
 An R Markdown template consists of a directory that
@@ -51,10 +50,16 @@ following files within the
 \code{quarterly_report/skeleton/template.Rmd} \cr
 
 The \code{template.yaml} file should include the two fields
-\code{name} and \code{description}. The
-\code{skeleton/template.Rmd} file should include the
+\code{name} and \code{description}. If you want to ensure
+that a new directory is always created for a given
+template, then you can add the \code{create_dir} field to
+the \code{template.yaml} file. For example:
+
+\code{create_dir: true} \cr
+
+The \code{skeleton/template.Rmd} file should include the
 initial contents you want for files created from this
-template.  Additional files can be added to the
+template. Additional files can be added to the
 \code{skeleton} directory, for example:
 
 \code{skeleton/logo.png} \cr

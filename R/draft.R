@@ -13,11 +13,10 @@
 #'
 #' @return The file name of the new document (invisibly)
 #'
-#' @details The \code{draft} function creates new R Markdown documents based
-#'   on templates that are either located on the filesystem or within an R
-#'   package. A new directory bearing the same name as the R Markdown file is
-#'   created then the template and any supporting files are copied into the
-#'   directory.
+#' @details The \code{draft} function creates new R Markdown documents based on
+#'   templates that are either located on the filesystem or within an R package.
+#'   The template and it's supporting files will be copied to the location
+#'   specified by \code{file}.
 #'
 #' @note An R Markdown template consists of a directory that contains a
 #'   description of the template, a skeleton Rmd file used as the basis for new
@@ -34,10 +33,15 @@
 #'   \code{quarterly_report/skeleton/template.Rmd} \cr
 #'
 #'   The \code{template.yaml} file should include the two fields \code{name} and
-#'   \code{description}. The \code{skeleton/template.Rmd} file should include
-#'   the initial contents you want for files created from this template.
-#'   Additional files can be added to the \code{skeleton} directory, for
-#'   example:
+#'   \code{description}. If you want to ensure that a new directory is always
+#'   created for a given template, then you can add the \code{create_dir} field
+#'   to the \code{template.yaml} file. For example:
+#'
+#'   \code{create_dir: true} \cr
+#'
+#'   The \code{skeleton/template.Rmd} file should include the initial contents
+#'   you want for files created from this template. Additional files can be
+#'   added to the \code{skeleton} directory, for example:
 #'
 #'   \code{skeleton/logo.png} \cr
 #'
@@ -57,15 +61,6 @@
 #' @export
 draft <- function(file, template, package = NULL, edit = TRUE) {
 
-  # remove .Rmd extension and create a new directory with that name
-  file <- tools::file_path_sans_ext(file)
-  if (file.exists(file))
-    stop("The directory '", file, "' already exists.")
-  dir.create(file)
-
-  # reconstitute the file path within the directory and w/ the .Rmd extension
-  file <- file.path(file, paste(basename(file), "Rmd", sep="."))
-
   # resolve package file
   if (!is.null(package)) {
     template_path = system.file("rmarkdown", "templates", template,
@@ -83,18 +78,46 @@ draft <- function(file, template, package = NULL, edit = TRUE) {
   if (!file.exists(template_yaml)) {
     stop("No template.yaml file found for template '", template, "'")
   }
-
   template_meta <- yaml::yaml.load_file(template_yaml)
   if (is.null(template_meta$name) || is.null(template_meta$description)) {
     stop("template.yaml must contain name and description fields")
   }
 
+  # see if this template is asking to create a new directory
+  create_dir <- isTRUE(template_meta$create_dir)
+
+  # create a new directory if requested
+  if (create_dir) {
+
+    # remove .Rmd extension if necessary
+    file <- tools::file_path_sans_ext(file)
+
+    # create dir (new dir only)
+    if (file.exists(file))
+      stop("The directory '", file, "' already exists.")
+    dir.create(file)
+
+    # reconstitute the file path
+    file <- file.path(file, basename(file))
+  }
+
+  # Ensure we have an Rmd extension
+  if (!identical(tolower(tools::file_ext(file)), "rmd"))
+    file <- paste(file, ".Rmd", sep = "")
+
+  # Ensure the file doesn't already exist
+  if (file.exists(file))
+    stop("The file '", file, "' already exists.")
+
   # copy all of the files in the skeleton directory
   skeleton_files <- list.files(file.path(template_path, "skeleton"),
                                full.names = TRUE)
-  file.copy(from = skeleton_files,
-            to = dirname(file),
-            recursive = TRUE)
+  to <- dirname(file)
+  for (f in skeleton_files) {
+    if (file.exists(file.path(to, basename(f))))
+      stop("The file '", basename(f), "' already exists")
+    file.copy(from = f, to = to, overwrite = FALSE, recursive = TRUE)
+  }
 
   # rename the core template file
   file.rename(file.path(dirname(file), "template.Rmd"), file)
