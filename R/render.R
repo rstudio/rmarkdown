@@ -46,13 +46,24 @@ render <- function(input,
   # reset the name of the input file to be relative and calculate variations
   # on the filename for our various intermediate targets
   input <- basename(input)
+  knit_input <- input
   knit_output <- file_with_meta_ext(input, "knit", "md")
   intermediates <- c(intermediates, knit_output)
   utf8_input <- file_with_meta_ext(input, "utf8", "md")
   intermediates <- c(intermediates, utf8_input)
 
+  # if this is an R script then spin it first
+  if (identical(tolower(tools::file_ext(input)), "r")) {
+    spin_input <- file_with_meta_ext(input, "spin", "R")
+    file.copy(input, spin_input)
+    intermediates <- c(intermediates, spin_input)
+    spin_rmd <- knitr::spin(spin_input, knit = FALSE, format = "Rmd")
+    intermediates <- c(intermediates, spin_rmd)
+    knit_input <- spin_rmd
+  }
+
   # read the input file
-  input_lines <- read_lines_utf8(input, encoding)
+  input_lines <- read_lines_utf8(knit_input, encoding)
 
   # if we haven't been passed a fully formed output format then
   # resolve it by looking at the yaml
@@ -80,19 +91,6 @@ render <- function(input,
 
   # knit if necessary
   if (tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")) {
-
-    # file to feed to knitr
-    knitr_input <- input
-
-    # if this is an R script then spin it first
-    if (identical(tolower(tools::file_ext(input)), "r")) {
-      spin_input <- file_with_meta_ext(input, "spin", "R")
-      file.copy(input, spin_input)
-      intermediates <- c(intermediates, spin_input)
-      spin_rmd <- knitr::spin(spin_input, knit = FALSE, format = "Rmd")
-      intermediates <- c(intermediates, spin_rmd)
-      knitr_input <- spin_rmd
-    }
 
     # default rendering and chunk options
     knitr::render_markdown()
@@ -122,7 +120,7 @@ render <- function(input,
     }
 
     # perform the knit
-    input <- knitr::knit(knitr_input,
+    input <- knitr::knit(knit_input,
                          knit_output,
                          envir = envir,
                          quiet = quiet,
