@@ -9,7 +9,7 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   fig_height = 4.5, fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, widescreen = FALSE, smaller = FALSE,
   transition = "default", mathjax = "default", css = NULL, includes = NULL,
-  data_dir = NULL, pandoc_args = NULL)
+  lib_dir = NULL, data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{logo}{Path to file that includes a logo for use in
