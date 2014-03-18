@@ -1,8 +1,9 @@
 html_document:
   self_contained: false
-  theme: null
-  highlight: null
+  theme: united
+  highlight: textmate
   mathjax: null
+  lib_dir: libs
   includes:
     in_header: include/in_header.html
     before_body: include/before_body.html
