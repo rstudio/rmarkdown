@@ -13,52 +13,40 @@
 
 <title>Presentations with Beamer</title>
 
-
-
-
-
-
-<!-- bootstrap -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="libs/bootstrap-3.0.3/css/united.min.css" rel="stylesheet">
 
-<!-- bootstrap navbar -->
-<style type="text/css">
-body {
-  padding-top: 50px;
-}
-</style>
-
-<!-- syntax highlighting -->
 <style type="text/css">code{white-space: pre;}</style>
 <link rel="stylesheet"
       href="libs/highlight/textmate.css"
       type="text/css" />
 <script src="libs/highlight/highlight.js"></script>
+<!-- no matter what the highlighting style only shade R and C++ -->
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
 
-<!-- more style tweaks -->
+
+
+
 <style type="text/css">
+body {
+  padding-top: 50px;
+}
 .dropdown-menu em {
   padding-left: 10px;
 }
 </style>
 
-<!-- jquery and bootstrap css -->
-<script type="text/javascript" src="libs/jquery-1.10.2/jquery.min.js"></script>
-<script type="text/javascript" src="libs/bootstrap-3.0.3/js/bootstrap.min.js"></script>
-
-<!-- some polyfills -->
 <script type="text/javascript" src="libs/polyfill.js"></script>
 
 </head>
 
 <body>
 
+<div class="container">
 
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -219,6 +207,14 @@ $(window).on("load", function() {
 
 </script>
 
+</div>
+<script src="libs/jquery-1.10.2/jquery.min.js"></script>
+<script src="libs/bootstrap-3.0.3/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+</script>
 
 
 </body>
