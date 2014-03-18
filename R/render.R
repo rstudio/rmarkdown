@@ -34,7 +34,7 @@ render <- function(input,
            "copy to a version without spaces '", input_no_spaces, "' ",
            "however that file already exists)", call. = FALSE)
     }
-    file.copy(input, input_no_spaces)
+    file.copy(input, input_no_spaces, overwrite = TRUE)
     intermediates <- c(intermediates, input_no_spaces)
     input <- input_no_spaces
   }
@@ -56,7 +56,7 @@ render <- function(input,
   if (identical(tolower(tools::file_ext(input)), "r")) {
     # make a copy of the file to spin
     spin_input <- file_with_meta_ext(input, "spin", "R")
-    file.copy(input, spin_input)
+    file.copy(input, spin_input, overwrite = TRUE)
     intermediates <- c(intermediates, spin_input)
     # spin it
     spin_rmd <- knitr::spin(spin_input,
