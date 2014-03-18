@@ -54,12 +54,29 @@ render <- function(input,
 
   # if this is an R script then spin it first
   if (identical(tolower(tools::file_ext(input)), "r")) {
+    # make a copy of the file to spin
     spin_input <- file_with_meta_ext(input, "spin", "R")
     file.copy(input, spin_input)
     intermediates <- c(intermediates, spin_input)
-    spin_rmd <- knitr::spin(spin_input, knit = FALSE, format = "Rmd")
+    # spin it
+    spin_rmd <- knitr::spin(spin_input,
+                            knit = FALSE,
+                            envir = envir,
+                            format = "Rmd")
     intermediates <- c(intermediates, spin_rmd)
     knit_input <- spin_rmd
+    # append default metadata (this will be ignored if there is user
+    # metadata elsewhere in the file)
+    metadata <- paste('\n',
+      '---\n',
+      'title: "', input, '"\n',
+      'author: "', Sys.info()[["user"]], '"\n',
+      'date: "', date(), '"\n',
+      '---\n'
+    , sep = "")
+    if (!identical(encoding, "native.enc"))
+      metadata <- iconv(metadata, to = encoding)
+    cat(metadata, file = knit_input, append = TRUE)
   }
 
   # read the input file
