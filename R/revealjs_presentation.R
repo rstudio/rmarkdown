@@ -82,6 +82,7 @@ revealjs_presentation <- function(incremental = FALSE,
                                   mathjax = "default",
                                   template = "default",
                                   includes = NULL,
+                                  lib_dir = NULL,
                                   data_dir = NULL,
                                   pandoc_args = NULL) {
 
@@ -146,13 +147,17 @@ revealjs_presentation <- function(incremental = FALSE,
   # the input file (e.g. ones that need to copy supporting files)
   format_filter <- function(output_format, files_dir, input_lines) {
 
+    # use files_dir as lib_dir if not explicitly specified
+    if (is.null(lib_dir))
+      lib_dir <- files_dir
+
     # extra args
     args <- c()
 
     # reveal.js
     revealjs_path <- rmarkdown_system_file("rmd/revealjs/reveal.js-2.6.1")
     if (!self_contained)
-      revealjs_path <- render_supporting_files(revealjs_path, files_dir)
+      revealjs_path <- render_supporting_files(revealjs_path, lib_dir)
     args <- c(args, "--variable", paste("revealjs-url=",
                                         pandoc_path_arg(revealjs_path), sep=""))
 
@@ -163,7 +168,7 @@ revealjs_presentation <- function(incremental = FALSE,
     args <- c(args, pandoc_mathjax_args(mathjax,
                                         template,
                                         self_contained,
-                                        files_dir))
+                                        lib_dir))
 
     # return format with ammended args
     output_format$pandoc$args <- c(output_format$pandoc$args, args)

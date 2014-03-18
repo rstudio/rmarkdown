@@ -71,6 +71,10 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   include is specified then it will replace the standard
   title slide entirely.}
 
+  \item{lib_dir}{Directory to copy dependent HTML libraries
+  (e.g. jquery, bootstrap, etc.) into. By default this will be
+  the name of the document with \code{_files} appended to it.}
+
   \item{data_dir}{Additional directory to resolve relatives
   paths of templates and included content against (the
   directory of the input file is used by default).}

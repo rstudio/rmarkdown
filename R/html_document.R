@@ -40,6 +40,9 @@
 #' @param css One or more css files to include
 #' @param includes Named list of additional content to include within the
 #'   document (typically created using the \code{\link{includes}} function).
+#' @param lib_dir Directory to copy dependent HTML libraries (e.g. jquery,
+#'   bootstrap, etc.) into. By default this will be the name of the document
+#'   with \code{_files} appended to it.
 #' @param data_dir Additional directory to resolve relatives paths of templates
 #'   and included content against (the directory of the input file is used by
 #'   default).
@@ -108,6 +111,7 @@ html_document <- function(toc = FALSE,
                           template = "default",
                           css = NULL,
                           includes = NULL,
+                          lib_dir = NULL,
                           data_dir = NULL,
                           pandoc_args = NULL) {
 
@@ -158,6 +162,10 @@ html_document <- function(toc = FALSE,
   # the input file (e.g. ones that need to copy supporting files)
   format_filter <- function(output_format, files_dir, input_lines) {
 
+    # use files_dir as lib_dir if not explicitly specified
+    if (is.null(lib_dir))
+      lib_dir <- files_dir
+
     # extra args
     args <- c()
 
@@ -170,14 +178,14 @@ html_document <- function(toc = FALSE,
 
       jquery_path <- rmarkdown_system_file("rmd/h/jquery-1.10.2")
       if(!self_contained)
-        jquery_path <- render_supporting_files(jquery_path, files_dir)
+        jquery_path <- render_supporting_files(jquery_path, lib_dir)
       args <- c(args, "--variable", paste("jquery:",
                                           pandoc_path_arg(jquery_path),
                                           sep = ""))
 
       bootstrap_path <- rmarkdown_system_file("rmd/h/bootstrap-3.0.3")
       if (!self_contained)
-        bootstrap_path <- render_supporting_files(bootstrap_path, files_dir)
+        bootstrap_path <- render_supporting_files(bootstrap_path, lib_dir)
       args <- c(args, "--variable", paste("bootstrap:",
                                           pandoc_path_arg(bootstrap_path),
                                           sep = ""))
@@ -196,13 +204,13 @@ html_document <- function(toc = FALSE,
     args <- c(args, pandoc_html_highlight_args(highlight,
                                                template,
                                                self_contained,
-                                               files_dir))
+                                               lib_dir))
 
     # mathjax
     args <- c(args, pandoc_mathjax_args(mathjax,
                                         template,
                                         self_contained,
-                                        files_dir))
+                                        lib_dir))
 
     # return format with ammended args
     output_format$pandoc$args <- c(output_format$pandoc$args, args)

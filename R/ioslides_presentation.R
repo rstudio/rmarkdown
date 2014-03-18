@@ -14,6 +14,7 @@ ioslides_presentation <- function(logo = NULL,
                                   mathjax = "default",
                                   css = NULL,
                                   includes = NULL,
+                                  lib_dir = NULL,
                                   data_dir = NULL,
                                   pandoc_args = NULL) {
 
@@ -73,6 +74,10 @@ ioslides_presentation <- function(logo = NULL,
   # the input file (e.g. ones that need to copy supporting files)
   format_filter <- function(output_format, files_dir, input_lines) {
 
+    # use files_dir as lib_dir if not explicitly specified
+    if (is.null(lib_dir))
+      lib_dir <- files_dir
+
     # extra args
     args <- c()
 
@@ -95,7 +100,7 @@ ioslides_presentation <- function(logo = NULL,
     # ioslides
     ioslides_path <- rmarkdown_system_file("rmd/ioslides/ioslides-13.5.1")
     if (!self_contained)
-      ioslides_path <- render_supporting_files(ioslides_path, files_dir)
+      ioslides_path <- render_supporting_files(ioslides_path, lib_dir)
     args <- c(args, "--variable", paste("ioslides-url=",
                                         pandoc_path_arg(ioslides_path),
                                         sep=""))
@@ -104,7 +109,7 @@ ioslides_presentation <- function(logo = NULL,
     args <- c(args, pandoc_mathjax_args(mathjax,
                                         "default",
                                         self_contained,
-                                        files_dir))
+                                        lib_dir))
 
     # return format with ammended args
     output_format$pandoc$args <- c(output_format$pandoc$args, args)

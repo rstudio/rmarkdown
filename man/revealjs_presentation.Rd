@@ -6,7 +6,7 @@ revealjs_presentation(incremental = FALSE, center = FALSE, fig_width = 8,
   fig_height = 6, fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, theme = "default", transition = "default",
   highlight = "default", mathjax = "default", template = "default",
-  includes = NULL, data_dir = NULL, pandoc_args = NULL)
+  includes = NULL, lib_dir = NULL, data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{center}{\code{TRUE} to vertically center content on
@@ -78,6 +78,11 @@ revealjs_presentation(incremental = FALSE, center = FALSE, fig_width = 8,
   option uses a local version of MathJax (which is copied
   into the output directory). You can pass an alternate URL
   or pass \code{NULL} to exclude MathJax entirely.}
+
+  \item{lib_dir}{Directory to copy dependent HTML libraries
+  (e.g. jquery, bootstrap, etc.) into. By default this will
+  be the name of the document with \code{_files} appended
+  to it.}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

@@ -6,7 +6,7 @@ html_document(toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
   fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, theme = "default", highlight = "default",
   mathjax = "default", template = "default", css = NULL,
-  includes = NULL, data_dir = NULL, pandoc_args = NULL)
+  includes = NULL, lib_dir = NULL, data_dir = NULL, pandoc_args = NULL)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in
@@ -71,6 +71,11 @@ html_document(toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
   \item{includes}{Named list of additional content to
   include within the document (typically created using the
   \code{\link{includes}} function).}
+
+  \item{lib_dir}{Directory to copy dependent HTML libraries
+  (e.g. jquery, bootstrap, etc.) into. By default this will
+  be the name of the document with \code{_files} appended
+  to it.}
 
   \item{data_dir}{Additional directory to resolve relatives
   paths of templates and included content against (the
