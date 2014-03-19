@@ -39,6 +39,10 @@ body {
 .dropdown-menu em {
   padding-left: 10px;
 }
+.section {
+  padding-top: 50px;
+  margin-top: -50px;
+}
 </style>
 
 <script type="text/javascript" src="libs/polyfill.js"></script>
@@ -249,7 +253,7 @@ output:
 <h2>Advanced Customization</h2>
 <div id="includes" class="section level3">
 <h3>Includes</h3>
-<p>You can do more advanced customization of PDF output by including additional HTML content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>
+<p>You can do more advanced customization of output by including additional HTML content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 output:
