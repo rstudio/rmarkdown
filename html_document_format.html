@@ -146,12 +146,13 @@ output:
     fig_caption: true
 ---</code></pre>
 </div>
-<div id="visual-styles" class="section level2">
-<h2>Visual Styles</h2>
-<p>There are two options that control the visual style of HTML documents:</p>
+<div id="appearance-and-style" class="section level2">
+<h2>Appearance and Style</h2>
+<p>There are several options that control the appearance of HTML documents:</p>
 <ul>
 <li><p><code>theme</code> specifies the Bootstrap theme to use for the page (themes are drawn from the <a href="http://bootswatch.com/">Bootswatch</a> theme library). Valid themes include “default”, “cerulean”, “journal”, “flatly”, “readable”, “spacelab”, “united”, “yeti”, and “cosmo”. Pass null for no theme (in this case you can use the <code>css</code> parameter to add your own styles).</p></li>
 <li><p><code>highlight</code> specifies the syntax highlighting style. Supported styles include “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, “haddock”, and “textmate”. Pass null to prevent syntax highlighting.</p></li>
+<li><p><code>smart</code> indicates whether to produce typographically correct output, converting straight quotes to curly quotes, <code>---</code> to em-dashes, <code>--</code> to en-dashes, and <code>...</code> to ellipses. Note that <code>smart</code> is enabled by default.</p></li>
 </ul>
 <p>For example:</p>
 <pre><code>---
@@ -161,9 +162,8 @@ output:
     theme: united
     highlight: tango
 ---</code></pre>
-</div>
-<div id="custom-css" class="section level2">
-<h2>Custom CSS</h2>
+<div id="custom-css" class="section level3">
+<h3>Custom CSS</h3>
 <p>You can add your own CSS to an HTML document using the <code>css</code> option:</p>
 <pre><code>---
 title: &quot;Habits&quot;
@@ -191,8 +191,9 @@ output:
    font-size: 1.2em;
 }</code></pre>
 </div>
-<div id="mathjax" class="section level2">
-<h2>MathJax</h2>
+</div>
+<div id="mathjax-equations" class="section level2">
+<h2>MathJax Equations</h2>
 <p>By default <a href="http://www.mathjax.org/">MathJax</a> scripts are included in HTML documents for rendering LaTeX and MathML equations. You can use the <code>mathjax</code> option to control how MathJax is included:</p>
 <ul>
 <li><p>Specify “default” to use an https URL from the official MathJax CDN.</p></li>
@@ -223,8 +224,29 @@ output:
     mathjax: null
 ---</code></pre>
 </div>
+<div id="dependencies-and-self-contained-documents" class="section level2">
+<h2>Dependencies and Self Contained Documents</h2>
+<p>By default R Markdown produces standalone HTML files with no external dependencies, using data: URIs to incorporate the contents of linked scripts, stylesheets, images, and videos. This means you can share or publish the file just like you share Office documents or PDFs. If you’d rather have keep depenencies in external files you can specify <code>self_contained: false</code>. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    self_contained: false
+---</code></pre>
+<p>Note that even for self contained documents MathJax is still loaded externally (this is necessary because of it’s size). If you want to serve MathJax locally then you should specify <code>mathjax: local</code> and <code>self_contained: false</code>.</p>
+<p>One common reason keep dependencies external is for serving R Markdown documents from a website (external dependencies can be cached separately by browsers leading to faster page load times). In the case of serving multiple R Markdown documents you may also want to consolidate dependent library files (e.g. Bootstrap, MathJax, etc.) into a single directory shared by multiple documents. You can use the <code>lib_dir</code> option to do this, for example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    self_contained: false
+    lib_dir: libs
+---</code></pre>
+</div>
 <div id="advanced-customization" class="section level2">
 <h2>Advanced Customization</h2>
+<div id="includes" class="section level3">
+<h3>Includes</h3>
 <p>You can do more advanced customization of PDF output by including additional HTML content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>
 <pre><code>---
 title: &quot;Habits&quot;
@@ -235,6 +257,9 @@ output:
       before_body: doc_prefix.html
       after_body: doc_suffix.html
 ---</code></pre>
+</div>
+<div id="custom-templates" class="section level3">
+<h3>Custom Templates</h3>
 <p>You can also replace the underlying pandoc template using the <code>template</code> option:</p>
 <pre><code>---
 title: &quot;Habits&quot;
@@ -243,6 +268,9 @@ output:
     template: quarterly_report.html
 ---</code></pre>
 <p>Consult the documentation on <a href="http://johnmacfarlane.net/pandoc/demo/example9/templates.html">pandoc templates</a> for additional details on templates. You can also study the <a href="https://github.com/jgm/pandoc-templates/blob/master/default.html">default HTML template</a> as an example.</p>
+</div>
+<div id="specifying-a-data-directory" class="section level3">
+<h3>Specifying a Data Directory</h3>
 <p>The <code>includes</code> and <code>template</code> options take relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don’t need to be copied to the document directory). You can do this using the <code>data_dir</code> option:</p>
 <pre><code>---
 title: &quot;Habits&quot;
@@ -251,8 +279,22 @@ output:
     data_dir: ~/templates/reports
     template: quarterly_report.html
 ---</code></pre>
+</div>
+<div id="pandoc-arguments" class="section level3">
+<h3>Pandoc Arguments</h3>
+<p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pandoc_args: [
+    &quot;--title-prefix&quot;, &quot;Foo&quot;,
+    &quot;--id-prefix&quot;, &quot;Bar&quot;
+  ]
+---</code></pre>
+<p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
 <div class="references">
 
+</div>
 </div>
 </div>
 

@@ -49,13 +49,15 @@ For example:
     ---
 
 
-## Visual Styles
+## Appearance and Style
 
-There are two options that control the visual style of HTML documents:
+There are several options that control the appearance of HTML documents:
 
 * `theme` specifies the Bootstrap theme to use for the page (themes are drawn from the [Bootswatch](http://bootswatch.com/) theme library). Valid themes include "default", "cerulean", "journal", "flatly", "readable", "spacelab", "united", "yeti", and "cosmo". Pass null for no theme (in this case you can use the `css` parameter to add your own styles).
 
 * `highlight` specifies the syntax highlighting style. Supported styles include "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn", "haddock", and "textmate". Pass null to prevent syntax highlighting.
+
+* `smart` indicates whether to produce typographically correct output, converting straight quotes to curly quotes, `---` to em-dashes, `--` to en-dashes, and `...` to ellipses. Note that `smart` is enabled by default.
 
 For example:
 
@@ -67,7 +69,7 @@ For example:
         highlight: tango
     ---
 
-## Custom CSS
+### Custom CSS
 
 You can add your own CSS to an HTML document using the `css` option:
 
@@ -105,7 +107,7 @@ Would enable you to apply CSS to all of it's content using either of the followi
     }
 
 
-## MathJax
+## MathJax Equations
 
 By default [MathJax](http://www.mathjax.org/) scripts are included in HTML documents for rendering LaTeX and MathML equations. You can use the `mathjax` option to control how MathJax is included:
 
@@ -145,7 +147,32 @@ To exclude MathJax entirely:
         mathjax: null
     ---
 
+## Dependencies and Self Contained Documents
+
+By default R Markdown produces standalone HTML files with no external dependencies, using data: URIs to incorporate the contents of linked scripts, stylesheets, images, and videos. This means you can share or publish the file just like you share Office documents or PDFs. If you'd rather have keep depenencies in external files you can specify `self_contained: false`. For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        self_contained: false
+    ---
+
+Note that even for self contained documents MathJax is still loaded externally (this is necessary because of it's size). If you want to serve MathJax locally then you should specify `mathjax: local` and `self_contained: false`.
+
+One common reason keep dependencies external is for serving R Markdown documents from a website (external dependencies can be cached separately by browsers leading to faster page load times). In the case of serving multiple R Markdown documents you may also want to consolidate dependent library files (e.g. Bootstrap, MathJax, etc.) into a single directory shared by multiple documents. You can use the `lib_dir` option to do this, for example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        self_contained: false
+        lib_dir: libs
+    ---
+
 ## Advanced Customization
+
+### Includes
 
 You can do more advanced customization of PDF output by including additional HTML  content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the `includes` option as follows:
 
@@ -159,6 +186,8 @@ You can do more advanced customization of PDF output by including additional HTM
           after_body: doc_suffix.html
     ---
 
+### Custom Templates
+
 You can also replace the underlying pandoc template using the `template` option:
 
     ---
@@ -170,6 +199,8 @@ You can also replace the underlying pandoc template using the `template` option:
 
 Consult the documentation on [pandoc templates](http://johnmacfarlane.net/pandoc/demo/example9/templates.html) for additional details on templates. You can also study the [default HTML template](https://github.com/jgm/pandoc-templates/blob/master/default.html) as an example.
 
+### Specifying a Data Directory
+
 The `includes` and `template` options take relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don't need to be copied to the document directory). You can do this using the `data_dir` option:
 
     ---
@@ -180,7 +211,20 @@ The `includes` and `template` options take relative paths to files by default. H
         template: quarterly_report.html
     ---
 
+### Pandoc Arguments
 
+If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+
+    ---
+    title: "Habits"
+    output:
+      pandoc_args: [
+        "--title-prefix", "Foo",
+        "--id-prefix", "Bar"
+      ]
+    ---
+
+Documentation on all available pandoc arguments can be found in the [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html#options).
 
 
 

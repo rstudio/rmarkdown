@@ -124,6 +124,17 @@ To exclude MathJax entirely:
         mathjax: null
     ---
 
+* [MathJax Equations](html_document_format.html#mathjax-equations)
+
+* [Dependencies and Self-Contained Documents](html_document_format.html#dependencies-and-self-contained-documents)
+
+* [Advanced Customization](html_document_format.html#advanced-customization)
+
+
+
+
+
+
 
 
 
