@@ -182,38 +182,11 @@ output:
 ---</code></pre>
 <p>Available themes are <code>default</code>, <code>simple</code>, <code>sky</code>, <code>beige</code>, <code>serif</code>, or <code>solarized</code>; Available transitions are <code>default</code>, <code>cube</code>, <code>page</code>, <code>concave</code>, <code>zoom</code>, <code>linear</code>, <code>fade</code>, or <code>none</code>.</p>
 </div>
-<div id="mathjax" class="section level2">
-<h2>MathJax</h2>
-<p>By default <a href="http://www.mathjax.org/">MathJax</a> scripts are included in HTML documents for rendering LaTeX and MathML equations. You can use the <code>mathjax</code> option to control how MathJax is included:</p>
+<div id="more-options" class="section level2">
+<h2>More Options</h2>
+<p>The reveal.js format includes a number of other advanced options that are described in more detail within the article on HTML documents:</p>
 <ul>
-<li><p>Specify “default” to use an https URL from the official MathJax CDN.</p></li>
-<li><p>Specify “local” to use a local version of MathJax (which is copied into the output directory). Note that when using “local” you also need to set the <code>self_contained</code> option to false.</p></li>
-<li><p>Specify an alternate URL to load MathJax from another location.</p></li>
-<li><p>Specify null to exclude MathJax entirely.</p></li>
-</ul>
-<p>For example, to use a local copy of MathJax:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-output:
-  revealjs_presentation:
-    mathjax: local
-    self_contained: false
----</code></pre>
-<p>To use a self-hosted copy of MathJax:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-output:
-  revealjs_presentation:
-    mathjax: &quot;http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;
----</code></pre>
-<p>To exclude MathJax entirely:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-output:
-  revealjs_presentation:
-    mathjax: null
----</code></pre>
-<ul>
+<li><p><a href="html_document_format.html#figures">Figure Options</a></p></li>
 <li><p><a href="html_document_format.html#mathjax-equations">MathJax Equations</a></p></li>
 <li><p><a href="html_document_format.html#dependencies-and-self-contained-documents">Dependencies and Self-Contained Documents</a></p></li>
 <li><p><a href="html_document_format.html#advanced-customization">Advanced Customization</a></p></li>

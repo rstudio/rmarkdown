@@ -84,53 +84,17 @@ You can select from various themes using the `theme` option and select a transit
 
 Available themes are `default`, `simple`, `sky`, `beige`, `serif`, or `solarized`; Available transitions are `default`, `cube`, `page`, `concave`, `zoom`, `linear`, `fade`, or `none`.
 
-## MathJax
+## More Options
 
-By default [MathJax](http://www.mathjax.org/) scripts are included in HTML documents for rendering LaTeX and MathML equations. You can use the `mathjax` option to control how MathJax is included:
+The reveal.js format includes a number of other advanced options that are described in more detail within the article on HTML documents:
 
-* Specify "default" to use an https URL from the official MathJax CDN.
-
-* Specify "local" to use a local version of MathJax (which is copied into the output directory). Note that when using "local" you also need to set the `self_contained` option to false.
-
-* Specify an alternate URL to load MathJax from another location.
-
-* Specify null to exclude MathJax entirely.
-
-For example, to use a local copy of MathJax:
-
-    ---
-    title: "Habits"
-    output:
-      revealjs_presentation:
-        mathjax: local
-        self_contained: false
-    ---
-
-To use a self-hosted copy of MathJax:
-
-    ---
-    title: "Habits"
-    output:
-      revealjs_presentation:
-        mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-    ---
-
-To exclude MathJax entirely:
-
-    ---
-    title: "Habits"
-    output:
-      revealjs_presentation:
-        mathjax: null
-    ---
+* [Figure Options](html_document_format.html#figures)
 
 * [MathJax Equations](html_document_format.html#mathjax-equations)
 
 * [Dependencies and Self-Contained Documents](html_document_format.html#dependencies-and-self-contained-documents)
 
 * [Advanced Customization](html_document_format.html#advanced-customization)
-
-
 
 
 

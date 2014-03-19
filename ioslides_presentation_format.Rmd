@@ -228,6 +228,8 @@ Google Chrome.
 
 The ioslides format includes a number of other advanced options that are described in more detail within the article on HTML documents:
 
+* [Figure Options](html_document_format.html#figures)
+
 * [MathJax Equations](html_document_format.html#mathjax-equations)
 
 * [Dependencies and Self-Contained Documents](html_document_format.html#dependencies-and-self-contained-documents)

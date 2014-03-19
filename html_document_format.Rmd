@@ -27,27 +27,6 @@ You can add a table of contents using the `toc` option and specify the depth of 
 
 If the table of contents depth isn't explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).
 
-## Figures
-
-There are a number of options that affect the output of figures within HTML documents:
-
-* `fig_width` and  `fig_height` can be used to control the default figure width and height (7x5 is used by default)
-
-* `fig_retina` Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr >= 1.5.21. Set to `null` to prevent retina scaling.
-
-* `fig_caption` controls whether figures are rendered with captions
-
-For example:
-
-    ---
-    title: "Habits"
-    output:
-      html_document:
-        fig_width: 7
-        fig_height: 6
-        fig_caption: true
-    ---
-
 
 ## Appearance and Style
 
@@ -105,6 +84,28 @@ Would enable you to apply CSS to all of it's content using either of the followi
     .emphasized {
        font-size: 1.2em;
     }
+
+
+## Figure Options
+
+There are a number of options that affect the output of figures within HTML documents:
+
+* `fig_width` and  `fig_height` can be used to control the default figure width and height (7x5 is used by default)
+
+* `fig_retina` Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr >= 1.5.21. Set to `null` to prevent retina scaling.
+
+* `fig_caption` controls whether figures are rendered with captions
+
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        fig_width: 7
+        fig_height: 6
+        fig_caption: true
+    ---
 
 
 ## MathJax Equations

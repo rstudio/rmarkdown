@@ -134,24 +134,6 @@ output:
 ---</code></pre>
 <p>If the table of contents depth isn’t explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).</p>
 </div>
-<div id="figures" class="section level2">
-<h2>Figures</h2>
-<p>There are a number of options that affect the output of figures within HTML documents:</p>
-<ul>
-<li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (7x5 is used by default)</p></li>
-<li><p><code>fig_retina</code> Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr &gt;= 1.5.21. Set to <code>null</code> to prevent retina scaling.</p></li>
-<li><p><code>fig_caption</code> controls whether figures are rendered with captions</p></li>
-</ul>
-<p>For example:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-output:
-  html_document:
-    fig_width: 7
-    fig_height: 6
-    fig_caption: true
----</code></pre>
-</div>
 <div id="appearance-and-style" class="section level2">
 <h2>Appearance and Style</h2>
 <p>There are several options that control the appearance of HTML documents:</p>
@@ -197,6 +179,24 @@ output:
    font-size: 1.2em;
 }</code></pre>
 </div>
+</div>
+<div id="figure-options" class="section level2">
+<h2>Figure Options</h2>
+<p>There are a number of options that affect the output of figures within HTML documents:</p>
+<ul>
+<li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (7x5 is used by default)</p></li>
+<li><p><code>fig_retina</code> Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr &gt;= 1.5.21. Set to <code>null</code> to prevent retina scaling.</p></li>
+<li><p><code>fig_caption</code> controls whether figures are rendered with captions</p></li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+---</code></pre>
 </div>
 <div id="mathjax-equations" class="section level2">
 <h2>MathJax Equations</h2>
