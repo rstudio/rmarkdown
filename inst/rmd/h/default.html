@@ -22,6 +22,8 @@ $endif$
 $if(theme)$
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="$theme$" rel="stylesheet">
+<script src="$jquery$/jquery.min.js"></script>
+<script src="$bootstrap$/js/bootstrap.min.js"></script>
 $endif$
 
 $if(highlightjs)$
@@ -110,8 +112,7 @@ $endfor$
 
 $if(theme)$
 </div>
-<script src="$jquery$/jquery.min.js"></script>
-<script src="$bootstrap$/js/bootstrap.min.js"></script>
+
 <script>
 $$(document).ready(function () {
   $$('tr.header').parent('thead').parent('table').addClass('table table-condensed');
