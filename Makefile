@@ -2,10 +2,8 @@
 HTML_FILES := $(patsubst %.Rmd, %.html ,$(wildcard *.Rmd)) \
               $(patsubst %.md, %.html ,$(wildcard *.md))
 
-all: html
+all: clean html
 
-rebuild: clean
-	make all
 
 html: $(HTML_FILES)
 
