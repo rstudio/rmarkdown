@@ -174,7 +174,7 @@ One common reason keep dependencies external is for serving R Markdown documents
 
 ### Includes
 
-You can do more advanced customization of PDF output by including additional HTML  content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the `includes` option as follows:
+You can do more advanced customization of output by including additional HTML content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the `includes` option as follows:
 
     ---
     title: "Habits"
