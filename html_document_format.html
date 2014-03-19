@@ -292,10 +292,11 @@ output:
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  pandoc_args: [
-    &quot;--title-prefix&quot;, &quot;Foo&quot;,
-    &quot;--id-prefix&quot;, &quot;Bar&quot;
-  ]
+  html_document:
+    pandoc_args: [
+      &quot;--title-prefix&quot;, &quot;Foo&quot;,
+      &quot;--id-prefix&quot;, &quot;Bar&quot;
+    ]
 ---</code></pre>
 <p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
 <div class="references">

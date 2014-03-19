@@ -219,10 +219,11 @@ If there are pandoc features you want to use that lack equivilants in the YAML o
     ---
     title: "Habits"
     output:
-      pandoc_args: [
-        "--title-prefix", "Foo",
-        "--id-prefix", "Bar"
-      ]
+      html_document:
+        pandoc_args: [
+          "--title-prefix", "Foo",
+          "--id-prefix", "Bar"
+        ]
     ---
 
 Documentation on all available pandoc arguments can be found in the [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html#options).
