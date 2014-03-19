@@ -122,8 +122,8 @@ date: March 22, 2005
 output: word_document
 ---</code></pre>
 </div>
-<div id="figures" class="section level2">
-<h2>Figures</h2>
+<div id="figure-options" class="section level2">
+<h2>Figure Options</h2>
 <p>There are a number of options that affect the output of figures within Word documents:</p>
 <ul>
 <li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (5x4 is used if not values are specified)</p></li>
@@ -159,8 +159,28 @@ output:
   word_document:
     reference_docx: mystyles.docx
 ---</code></pre>
+<p>The <code>reference_docx</code> option takes a relative path by default. However, you may also want to specify that the file live in an alternate directory (so it doesn’t need to be copied to the document directory). You can do this using the <code>data_dir</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  word_document:
+    reference_docx: mystyles.docx
+    data_dir: ~/reports/styles
+---</code></pre>
+<div id="pandoc-arguments" class="section level3">
+<h3>Pandoc Arguments</h3>
+<p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pandoc_args: [
+    &quot;--csl&quot;, &quot;/var/csl/acs-nano.csl&quot;
+  ]
+---</code></pre>
+<p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
 <div class="references">
 
+</div>
 </div>
 </div>
 

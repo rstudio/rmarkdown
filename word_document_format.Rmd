@@ -13,7 +13,7 @@ To create a Word document from R Markdown you specify the `word_document` output
     output: word_document
     ---
 
-## Figures
+## Figure Options
 
 There are a number of options that affect the output of figures within Word documents:
 
@@ -57,3 +57,28 @@ You can also specify a document to be used as as a style reference in producing 
         reference_docx: mystyles.docx
     ---
 
+The `reference_docx` option takes a relative path by default. However, you may also want to specify that the file live in an alternate directory (so it doesn't need to be copied to the document directory). You can do this using the `data_dir` option:
+
+    ---
+    title: "Habits"
+    output:
+      word_document:
+        reference_docx: mystyles.docx
+        data_dir: ~/reports/styles
+    ---
+
+
+### Pandoc Arguments
+
+If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+
+    ---
+    title: "Habits"
+    output:
+      word_document:
+        pandoc_args: [
+          "--csl", "/var/csl/acs-nano.csl"
+        ]
+    ---
+
+Documentation on all available pandoc arguments can be found in the [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html#options).
