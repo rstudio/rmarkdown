@@ -6,8 +6,9 @@
 #'
 #' @param file File name for the draft
 #' @param template Template to use as the basis for the draft. This is either
-#'   the full path to a template directory or a reference to a template stored
-#'   within an R package (e.g. \code{pkgname::my_template}).
+#'   the full path to a template directory or the name of a template directory
+#'   within the \code{rmarkdown/templates} directory of a package.
+#' @param package (Optional) Name of package where the template is located.
 #' @param edit \code{TRUE} to edit the template immediately
 #'
 #' @return The file name of the new document (invisibly)
@@ -51,17 +52,17 @@
 #' @examples
 #' \dontrun{
 #'
-#' rmarkdown::draft("Q4Report.Rmd", template="pubtools::quarterly_report")
-#' rmarkdown::draft("Q4Report.Rmd", template="/templates/quarterly_report")
+#' rmarkdown::draft("Q4Report.Rmd",
+#'                  template="/opt/rmd/templates/quarterly_report")
+#'
+#' rmarkdown::draft("Q4Report.Rmd",
+#'                  template="quarterly_report", package="pubtools")
 #' }
 #' @export
-draft <- function(file, template, edit = TRUE) {
+draft <- function(file, template, package = NULL, edit = TRUE) {
 
-  # see if there is a package name embedded in the template
-  names <- strsplit(template, split = "::", fixed = TRUE)[[1]]
-  if (length(names) == 2) {
-    package <- names[[1]]
-    template <- names[[2]]
+  # resolve package file
+  if (!is.null(package)) {
     template_path = system.file("rmarkdown", "templates", template,
                                 package = package)
     if (!nzchar(template_path)) {
