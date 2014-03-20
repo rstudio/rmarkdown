@@ -115,12 +115,20 @@ body {
 
 <div id="changes-in-v2" class="section level2">
 <h2>Changes in v2</h2>
-<p>The current implementation of R Markdown (v2) is an evolution of the original implementation, which was not based on pandoc but rather the <a href="https://github.com/rstudio/markdown">markdown</a> package. Moving to pandoc brings many new features to R Markdown however carries some minor incompatibilities with the previous implementation, specifically:</p>
+<p>The current implementation of R Markdown (v2) is an evolution of the original implementation, which was not based on pandoc but rather the <a href="https://github.com/rstudio/markdown">markdown</a> package. Moving to pandoc brings many new features to R Markdown however carries some minor incompatibilities with the previous implementation that are described below.</p>
+<div id="markdown-syntax" class="section level3">
+<h3>Markdown Syntax</h3>
+<p>The following changes to markdown syntax were made in R Markdown v2:</p>
 <ol style="list-style-type: decimal">
 <li>The syntax for superscript now requires a closing ^ (e.g. <code>superscript^2^</code>).</li>
 <li>The WordPress-style LaTeX equation syntax (e.g. <code>$latex &lt;equation&gt;$</code>) is no longer supported.</li>
 <li>Markdown is rendered even if it’s contained within HTML tags.</li>
 </ol>
+</div>
+<div id="knitr-caching" class="section level3">
+<h3>Knitr Caching</h3>
+<p>One other important change relates to the use of the <a href="http://yihui.name/knitr/demo/cache/">knitr cache</a>. When R Markdown knits documents it explicitly configures the knitr cache to use a directory based on the name of the input file (e.g. <code>inputfile_cache</code>). If you are setting an explicit cache directory within your document (e.g. via <code>opts_chunk$set(cache.path = ...))</code>) you should remove this code and rely on R Markdown to set the cache directory.</p>
+</div>
 </div>
 <div id="continuing-to-use-v1" class="section level2">
 <h2>Continuing to Use v1</h2>
