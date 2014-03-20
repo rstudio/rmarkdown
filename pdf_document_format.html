@@ -171,8 +171,95 @@ output:
     highlight: tango
 ---</code></pre>
 </div>
+<div id="bibliography-options" class="section level2">
+<h2>Bibliography Options</h2>
+<p>You can specify the use of natbib or biblatex for citations in LaTeX output using the <code>natbib</code> and <code>biblatex</code> options. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pdf_document:
+    natbib: true
+---</code></pre>
+</div>
+<div id="latex-options" class="section level2">
+<h2>LaTeX Options</h2>
+<p>Many aspects of the LaTeX template used to create PDF documents can be customized using top-level YAML metadata (note that these options do not appear underneath the <code>output</code> section but rather appear at the top level along with title, author, etc.). For example:</p>
+<pre><code>---
+title: &quot;Crop Analysis Q3 2013&quot;
+output: pdf_document
+fontsize: 11pt
+geometry: margin=1in
+---</code></pre>
+<p>Available metadata variables include:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Variable</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">lang</td>
+<td align="left">Document language code</td>
+</tr>
+<tr class="even">
+<td align="left">fontsize</td>
+<td align="left">Font size (e.g. 10pt, 11pt, 12pt)</td>
+</tr>
+<tr class="odd">
+<td align="left">documentclass</td>
+<td align="left">LaTeX document class (e.g. article)</td>
+</tr>
+<tr class="even">
+<td align="left">classoption</td>
+<td align="left">Option for documentclass (e.g. oneside); may be repeated</td>
+</tr>
+<tr class="odd">
+<td align="left">geometry</td>
+<td align="left">Options for geometry class (e.g. margin=1in); may be repeated</td>
+</tr>
+<tr class="even">
+<td align="left">mainfont, sansfont, monofont, mathfont</td>
+<td align="left">Document fonts (works only with xelatex and lualatex, see the <code>latex_engine</code> option)</td>
+</tr>
+<tr class="odd">
+<td align="left">linkcolor, urlcolor, citecolor</td>
+<td align="left">Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)</td>
+</tr>
+<tr class="even">
+<td align="left">biblio-style</td>
+<td align="left">LaTeX bibliography style (used with <code>natbib</code> option)</td>
+</tr>
+<tr class="odd">
+<td align="left">biblio-files</td>
+<td align="left">Bibliography files to use in LaTeX (used with <code>natbib</code> or <code>biblatex</code> options)</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="advanced-customization" class="section level2">
 <h2>Advanced Customization</h2>
+<div id="latex-engine" class="section level3">
+<h3>LaTeX Engine</h3>
+<p>By default PDF documents are rendered using pdflatex. You can specify an alternate engine using the <code>latex_engine</code> option. Available engines are “pdflatex”, “xelatex”, and “lualatex”. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pdf_document:
+    latex_engine: xelatex
+---</code></pre>
+</div>
+<div id="keeping-intermediate-tex" class="section level3">
+<h3>Keeping Intermediate TeX</h3>
+<p>R Markdown documents are converted to PDF by first converting to a TeX file and then calling the LaTeX engine to convert to PDF. By default this TeX file is removed, however if you want to keep it (e.g. for an article submission) you can specify the <code>keep_tex</code> option. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  pdf_document:
+    keep_tex: true
+---</code></pre>
+</div>
 <div id="includes" class="section level3">
 <h3>Includes</h3>
 <p>You can do more advanced customization of PDF output by including additional LaTeX directives and/or content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>

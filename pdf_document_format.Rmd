@@ -72,7 +72,66 @@ For example:
         highlight: tango
     ---
 
+## Bibliography Options
+
+You can specify the use of natbib or biblatex for citations in LaTeX output using the `natbib` and `biblatex` options. For example:
+
+    ---
+    title: "Habits"
+    output:
+      pdf_document:
+        natbib: true
+    ---
+
+
+## LaTeX Options
+
+Many aspects of the LaTeX template used to create PDF documents can be customized using top-level YAML metadata (note that these options do not appear underneath the `output` section but rather appear at the top level along with title, author, etc.). For example:
+
+    ---
+    title: "Crop Analysis Q3 2013"
+    output: pdf_document
+    fontsize: 11pt
+    geometry: margin=1in
+    ---
+
+Available metadata variables include:
+
+Variable|Description
+--------|-----------
+lang|Document language code
+fontsize|Font size (e.g. 10pt, 11pt, 12pt)
+documentclass|LaTeX document class (e.g. article)
+classoption|Option for documentclass (e.g. oneside); may be repeated
+geometry|Options for geometry class (e.g. margin=1in); may be repeated
+mainfont, sansfont, monofont, mathfont|Document fonts (works only with xelatex and lualatex, see the `latex_engine` option)
+linkcolor, urlcolor, citecolor|Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)
+biblio-style|LaTeX bibliography style (used with `natbib` option)
+biblio-files|Bibliography files to use in LaTeX (used with `natbib` or `biblatex` options)
+
 ## Advanced Customization
+
+### LaTeX Engine
+
+By default PDF documents are rendered using pdflatex. You can specify an alternate engine using the `latex_engine` option. Available engines are "pdflatex", "xelatex", and "lualatex". For example:
+
+    ---
+    title: "Habits"
+    output:
+      pdf_document:
+        latex_engine: xelatex
+    ---
+
+### Keeping Intermediate TeX
+
+R Markdown documents are converted to PDF by first converting to a TeX file and then calling the LaTeX engine to convert to PDF. By default this TeX file is removed, however if you want to keep it (e.g. for an article submission) you can specify the `keep_tex` option. For example:
+
+    ---
+    title: "Habits"
+    output:
+      pdf_document:
+        keep_tex: true
+    ---
 
 ### Includes
 

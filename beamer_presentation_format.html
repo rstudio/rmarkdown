@@ -219,6 +219,16 @@ output:
 </div>
 <div id="advanced-customization" class="section level2">
 <h2>Advanced Customization</h2>
+<div id="keeping-intermediate-tex" class="section level3">
+<h3>Keeping Intermediate TeX</h3>
+<p>R Markdown documents are converted to PDF by first converting to a TeX file and then calling the LaTeX engine to convert to PDF. By default this TeX file is removed, however if you want to keep it (e.g. for an article submission) you can specify the <code>keep_tex</code> option. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  beamer_presentation:
+    keep_tex: true
+---</code></pre>
+</div>
 <div id="includes" class="section level3">
 <h3>Includes</h3>
 <p>You can do more advanced customization of PDF output by including additional LaTeX directives and/or content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>

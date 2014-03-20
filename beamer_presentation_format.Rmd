@@ -127,6 +127,17 @@ For example:
 
 ## Advanced Customization
 
+### Keeping Intermediate TeX
+
+R Markdown documents are converted to PDF by first converting to a TeX file and then calling the LaTeX engine to convert to PDF. By default this TeX file is removed, however if you want to keep it (e.g. for an article submission) you can specify the `keep_tex` option. For example:
+
+    ---
+    title: "Habits"
+    output:
+      beamer_presentation:
+        keep_tex: true
+    ---
+
 ### Includes
 
 You can do more advanced customization of PDF output by including additional LaTeX directives and/or content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the `includes` option as follows:
