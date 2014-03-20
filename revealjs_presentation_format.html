@@ -182,17 +182,128 @@ output:
 ---</code></pre>
 <p>Available themes are <code>default</code>, <code>simple</code>, <code>sky</code>, <code>beige</code>, <code>serif</code>, or <code>solarized</code>; Available transitions are <code>default</code>, <code>cube</code>, <code>page</code>, <code>concave</code>, <code>zoom</code>, <code>linear</code>, <code>fade</code>, or <code>none</code>.</p>
 </div>
-<div id="more-options" class="section level2">
-<h2>More Options</h2>
-<p>The reveal.js format includes a number of other advanced options that are described in more detail within the article on HTML documents:</p>
+<div id="figure-options" class="section level2">
+<h2>Figure Options</h2>
+<p>There are a number of options that affect the output of figures within reveal.js presentations:</p>
 <ul>
-<li><p><a href="html_document_format.html#figures">Figure Options</a></p></li>
-<li><p><a href="html_document_format.html#mathjax-equations">MathJax Equations</a></p></li>
-<li><p><a href="html_document_format.html#dependencies-and-self-contained-documents">Dependencies and Self-Contained Documents</a></p></li>
-<li><p><a href="html_document_format.html#advanced-customization">Advanced Customization</a></p></li>
+<li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (7x5 is used by default)</p></li>
+<li><p><code>fig_retina</code> Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr &gt;= 1.5.21. Set to <code>null</code> to prevent retina scaling.</p></li>
+<li><p><code>fig_caption</code> controls whether figures are rendered with captions</p></li>
 </ul>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs_presentation:
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+---</code></pre>
+</div>
+<div id="mathjax-equations" class="section level2">
+<h2>MathJax Equations</h2>
+<p>By default <a href="http://www.mathjax.org/">MathJax</a> scripts are included in reveal.js presentations for rendering LaTeX and MathML equations. You can use the <code>mathjax</code> option to control how MathJax is included:</p>
+<ul>
+<li><p>Specify “default” to use an https URL from the official MathJax CDN.</p></li>
+<li><p>Specify “local” to use a local version of MathJax (which is copied into the output directory). Note that when using “local” you also need to set the <code>self_contained</code> option to false.</p></li>
+<li><p>Specify an alternate URL to load MathJax from another location.</p></li>
+<li><p>Specify null to exclude MathJax entirely.</p></li>
+</ul>
+<p>For example, to use a local copy of MathJax:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs_presentation:
+    mathjax: local
+    self_contained: false
+---</code></pre>
+<p>To use a self-hosted copy of MathJax:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs_presentation:
+    mathjax: &quot;http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;
+---</code></pre>
+<p>To exclude MathJax entirely:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs_presentation:
+    mathjax: null
+---</code></pre>
+</div>
+<div id="dependencies-and-self-contained-documents" class="section level2">
+<h2>Dependencies and Self Contained Documents</h2>
+<p>By default R Markdown produces standalone HTML files with no external dependencies, using data: URIs to incorporate the contents of linked scripts, stylesheets, images, and videos. This means you can share or publish the file just like you share Office documents or PDFs. If you’d rather have keep depenencies in external files you can specify <code>self_contained: false</code>. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs_presentation:
+    self_contained: false
+---</code></pre>
+<p>Note that even for self contained documents MathJax is still loaded externally (this is necessary because of it’s size). If you want to serve MathJax locally then you should specify <code>mathjax: local</code> and <code>self_contained: false</code>.</p>
+<p>One common reason keep dependencies external is for serving R Markdown documents from a website (external dependencies can be cached separately by browsers leading to faster page load times). In the case of serving multiple R Markdown documents you may also want to consolidate dependent library files (e.g. Bootstrap, MathJax, etc.) into a single directory shared by multiple documents. You can use the <code>lib_dir</code> option to do this, for example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs_presentation:
+    self_contained: false
+    lib_dir: libs
+---</code></pre>
+</div>
+<div id="advanced-customization" class="section level2">
+<h2>Advanced Customization</h2>
+<div id="includes" class="section level3">
+<h3>Includes</h3>
+<p>You can do more advanced customization of output by including additional HTML content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs_presentation:
+    includes:
+      in_header: header.html
+      before_body: doc_prefix.html
+      after_body: doc_suffix.html
+---</code></pre>
+</div>
+<div id="custom-templates" class="section level3">
+<h3>Custom Templates</h3>
+<p>You can also replace the underlying pandoc template using the <code>template</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs_presentation:
+    template: quarterly_report.html
+---</code></pre>
+<p>Consult the documentation on <a href="http://johnmacfarlane.net/pandoc/demo/example9/templates.html">pandoc templates</a> for additional details on templates. You can also study the <a href="https://github.com/jgm/pandoc-templates/blob/master/default.html">default HTML template</a> as an example.</p>
+</div>
+<div id="specifying-a-data-directory" class="section level3">
+<h3>Specifying a Data Directory</h3>
+<p>The <code>includes</code> and <code>template</code> options take relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don’t need to be copied to the document directory). You can do this using the <code>data_dir</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs_presentation:
+    data_dir: ~/templates/reports
+    template: quarterly_report.html
+---</code></pre>
+</div>
+<div id="pandoc-arguments" class="section level3">
+<h3>Pandoc Arguments</h3>
+<p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs_presentation:
+    pandoc_args: [
+      &quot;--title-prefix&quot;, &quot;Foo&quot;,
+      &quot;--id-prefix&quot;, &quot;Bar&quot;
+    ]
+---</code></pre>
+<p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
 <div class="references">
 
+</div>
 </div>
 </div>
 

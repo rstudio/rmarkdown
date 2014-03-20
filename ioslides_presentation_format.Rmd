@@ -224,15 +224,151 @@ HTML version of the presentation.
 To create a PDF version of a presentation you can use Print to PDF from
 Google Chrome.
 
-## More Options
+## Figure Options
 
-The ioslides format includes a number of other advanced options that are described in more detail within the article on HTML documents:
+There are a number of options that affect the output of figures within ioslides presentations:
 
-* [Figure Options](html_document_format.html#figures)
+* `fig_width` and  `fig_height` can be used to control the default figure width and height (7x5 is used by default)
 
-* [MathJax Equations](html_document_format.html#mathjax-equations)
+* `fig_retina` Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr >= 1.5.21. Set to `null` to prevent retina scaling.
 
-* [Dependencies and Self-Contained Documents](html_document_format.html#dependencies-and-self-contained-documents)
+* `fig_caption` controls whether figures are rendered with captions
 
-* [Advanced Customization](html_document_format.html#advanced-customization)
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      ioslides_presentation:
+        fig_width: 7
+        fig_height: 6
+        fig_caption: true
+    ---
+
+
+## MathJax Equations
+
+By default [MathJax](http://www.mathjax.org/) scripts are included in ioslides presentations for rendering LaTeX and MathML equations. You can use the `mathjax` option to control how MathJax is included:
+
+* Specify "default" to use an https URL from the official MathJax CDN.
+
+* Specify "local" to use a local version of MathJax (which is copied into the output directory). Note that when using "local" you also need to set the `self_contained` option to false.
+
+* Specify an alternate URL to load MathJax from another location.
+
+* Specify null to exclude MathJax entirely.
+
+For example, to use a local copy of MathJax:
+
+    ---
+    title: "Habits"
+    output:
+      ioslides_presentation:
+        mathjax: local
+        self_contained: false
+    ---
+
+To use a self-hosted copy of MathJax:
+
+    ---
+    title: "Habits"
+    output:
+      ioslides_presentation:
+        mathjax: "http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    ---
+
+To exclude MathJax entirely:
+
+    ---
+    title: "Habits"
+    output:
+      ioslides_presentation:
+        mathjax: null
+    ---
+
+## Dependencies and Self Contained Documents
+
+By default R Markdown produces standalone HTML files with no external dependencies, using data: URIs to incorporate the contents of linked scripts, stylesheets, images, and videos. This means you can share or publish the file just like you share Office documents or PDFs. If you'd rather have keep depenencies in external files you can specify `self_contained: false`. For example:
+
+    ---
+    title: "Habits"
+    output:
+      ioslides_presentation:
+        self_contained: false
+    ---
+
+Note that even for self contained documents MathJax is still loaded externally (this is necessary because of it's size). If you want to serve MathJax locally then you should specify `mathjax: local` and `self_contained: false`.
+
+One common reason keep dependencies external is for serving R Markdown documents from a website (external dependencies can be cached separately by browsers leading to faster page load times). In the case of serving multiple R Markdown documents you may also want to consolidate dependent library files (e.g. Bootstrap, MathJax, etc.) into a single directory shared by multiple documents. You can use the `lib_dir` option to do this, for example:
+
+    ---
+    title: "Habits"
+    output:
+      ioslides_presentation:
+        self_contained: false
+        lib_dir: libs
+    ---
+
+## Advanced Customization
+
+### Includes
+
+You can do more advanced customization of output by including additional HTML content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the `includes` option as follows:
+
+    ---
+    title: "Habits"
+    output:
+      ioslides_presentation:
+        includes:
+          in_header: header.html
+          before_body: doc_prefix.html
+          after_body: doc_suffix.html
+    ---
+
+### Custom Templates
+
+You can also replace the underlying pandoc template using the `template` option:
+
+    ---
+    title: "Habits"
+    output:
+      ioslides_presentation:
+        template: quarterly_report.html
+    ---
+
+Consult the documentation on [pandoc templates](http://johnmacfarlane.net/pandoc/demo/example9/templates.html) for additional details on templates. You can also study the [default HTML template](https://github.com/jgm/pandoc-templates/blob/master/default.html) as an example.
+
+### Specifying a Data Directory
+
+The `includes` and `template` options take relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don't need to be copied to the document directory). You can do this using the `data_dir` option:
+
+    ---
+    title: "Habits"
+    output:
+      ioslides_presentation:
+        data_dir: ~/templates/reports
+        template: quarterly_report.html
+    ---
+
+### Pandoc Arguments
+
+If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+
+    ---
+    title: "Habits"
+    output:
+      ioslides_presentation:
+        pandoc_args: [
+          "--title-prefix", "Foo",
+          "--id-prefix", "Bar"
+        ]
+    ---
+
+Documentation on all available pandoc arguments can be found in the [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html#options).
+
+
+
+
+
+
 
