@@ -40,7 +40,7 @@ You can add section numbering to headers using the `number_sections` option:
 
 ## Figure Options
 
-There are a number of options that affect the output of figures within HTML documents:
+There are a number of options that affect the output of figures within PDF documents:
 
 * `fig_width` and `fig_height` can be used to control the default figure width and height (6 x 4.5 is used by default)
 

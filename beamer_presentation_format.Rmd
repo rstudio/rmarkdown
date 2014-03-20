@@ -82,9 +82,9 @@ The `slide_level` option defines the heading level that defines individual slide
         slide_level: 2
     ---
 
-## Figures
+## Figure Options
 
-There are a number of options that affect the output of figures within HTML documents:
+There are a number of options that affect the output of figures within Beamer presentations:
 
 * `fig_width` and `fig_height` can be used to control the default figure width and height (6 x 4.5 is used by default)
 
