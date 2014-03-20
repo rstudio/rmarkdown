@@ -40,7 +40,7 @@ You can add section numbering to headers using the `number_sections` option:
 
 ## Figure Options
 
-There are a number of options that affect the output of figures within PDF documents:
+There are a number of options that affect the output of figures within PD documents:
 
 * `fig_width` and `fig_height` can be used to control the default figure width and height (6 x 4.5 is used by default)
 
@@ -74,6 +74,8 @@ For example:
 
 ## Advanced Customization
 
+### Includes
+
 You can do more advanced customization of PDF output by including additional LaTeX directives and/or content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the `includes` option as follows:
 
     ---
@@ -86,6 +88,8 @@ You can do more advanced customization of PDF output by including additional LaT
           after_body: doc_suffix.tex
     ---
 
+### Custom Templates
+
 You can also replace the underlying pandoc template using the `template` option:
 
     ---
@@ -97,6 +101,8 @@ You can also replace the underlying pandoc template using the `template` option:
 
 Consult the documentation on [pandoc templates](http://johnmacfarlane.net/pandoc/demo/example9/templates.html) for additional details on templates. You can also study the [default LaTeX template](https://github.com/jgm/pandoc-templates/blob/master/default.latex) as an example.
 
+### Specifying a Data Directory
+
 The `includes` and `template` options take relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don't need to be copied to the document directory). You can do this using the `data_dir` option:
 
     ---
@@ -107,6 +113,20 @@ The `includes` and `template` options take relative paths to files by default. H
         template: quarterly_report.tex
     ---
 
+### Pandoc Arguments
+
+If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+
+    ---
+    title: "Habits"
+    output:
+      pdf_document:
+        pandoc_args: [
+          "--no-tex-ligatures"
+        ]
+    ---
+
+Documentation on all available pandoc arguments can be found in the [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html#options).
 
 
 

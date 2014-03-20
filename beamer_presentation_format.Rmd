@@ -102,3 +102,61 @@ For example:
         fig_height: 6
         fig_caption: true
     ---
+
+## Advanced Customization
+
+### Includes
+
+You can do more advanced customization of PDF output by including additional LaTeX directives and/or content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the `includes` option as follows:
+
+    ---
+    title: "Habits"
+    output:
+      beamer_presentation:
+        includes:
+          in_header: header.tex
+          before_body: doc_prefix.tex
+          after_body: doc_suffix.tex
+    ---
+
+### Custom Templates
+
+You can also replace the underlying pandoc template using the `template` option:
+
+    ---
+    title: "Habits"
+    output:
+      beamer_presentation:
+        template: quarterly_report.tex
+    ---
+
+Consult the documentation on [pandoc templates](http://johnmacfarlane.net/pandoc/demo/example9/templates.html) for additional details on templates. You can also study the [default Beamer template](https://github.com/jgm/pandoc-templates/blob/master/default.beamer) as an example.
+
+### Specifying a Data Directory
+
+The `includes` and `template` options take relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don't need to be copied to the document directory). You can do this using the `data_dir` option:
+
+    ---
+    title: "Habits"
+    output:
+      beamer_presentation:
+        data_dir: ~/templates/reports
+        template: quarterly_report.tex
+    ---
+
+### Pandoc Arguments
+
+If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+
+    ---
+    title: "Habits"
+    output:
+      beamer_presentation:
+        pandoc_args: [
+          "--no-tex-ligatures"
+        ]
+    ---
+
+Documentation on all available pandoc arguments can be found in the [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html#options).
+
+
