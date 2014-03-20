@@ -1,0 +1,125 @@
+---
+title: "Markdown Documents"
+---
+
+## Overview
+
+In some cases you might want to produce plain markdown output from R Markdown (e.g. to create a document for a system that accepts markdown input like [Stack Overflow](http://stackoverflow.com/editing-help) or [WordPress](http://en.support.wordpress.com/markdown/)).
+
+To create an markdown document from R Markdown you specify the `md_document` output format in the front-matter of your document:
+
+    ---
+    title: "Habits"
+    author: John Doe
+    date: March 22, 2005
+    output: md_document
+    ---
+
+## Markdown Variants
+
+By default the md_document format produces "strict" markdown (i.e. conforming to the original markdown specification with no extensions). You can generate a different flavor of markdown using the `variant` option. For example:
+
+    ---
+    title: "Habits"
+    output:
+      md_document:
+        variant: markdown_github
+    ---
+
+Valid values are "markdown_strict", "markdown_github", "markdown_mmd", markdown_phpextra", or even "markdown" (which produces full pandoc markdown). You can also compose custom markdown variants, for example:
+
+    ---
+    title: "Habits"
+    output:
+      md_document:
+        variant: markdown_strict+backtick_code_blocks+autolink_bare_uris
+    ---
+
+## Table of Contents
+
+You can add a table of contents using the `toc` option and specify the depth of headers that it applies to using the `toc_depth` option. For example:
+
+    ---
+    title: "Habits"
+    output:
+      md_document:
+        toc: true
+        toc_depth: 2
+    ---
+
+If the table of contents depth isn't explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).
+
+## Figure Options
+
+There are a number of options that affect the output of figures within HTML documents:
+
+* `fig_width` and  `fig_height` can be used to control the default figure width and height (7x5 is used by default)
+
+* `fig_retina` Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr >= 1.5.21. Set to `null` to prevent retina scaling.
+
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      md_document:
+        fig_width: 7
+        fig_height: 6
+    ---
+
+## Advanced Customization
+
+### Includes
+
+You can do more advanced customization of output by including additional content. To include content in the document header or before/after the document body you use the `includes` option as follows:
+
+    ---
+    title: "Habits"
+    output:
+      md_document:
+        includes:
+          in_header: header.md
+          before_body: doc_prefix.md
+          after_body: doc_suffix.md
+    ---
+
+### Specifying a Data Directory
+
+The `includes` option takes relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don't need to be copied to the document directory). You can do this using the `data_dir` option:
+
+    ---
+    title: "Habits"
+    output:
+      md_document:
+        data_dir: ~/templates/reports
+        includes:
+          in_header: header.md
+          before_body: doc_prefix.md
+          after_body: doc_suffix.md
+    ---
+
+### Pandoc Arguments
+
+If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+
+    ---
+    title: "Habits"
+    output:
+      md_document:
+        pandoc_args: [
+          "--csl", "/var/csl/acs-nano.csl"
+        ]
+    ---
+
+Documentation on all available pandoc arguments can be found in the [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html#options).
+
+
+
+
+
+
+
+
+
+
+

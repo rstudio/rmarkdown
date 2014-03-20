@@ -11,7 +11,7 @@
 
 
 
-<title>Creating Custom Formats</title>
+<title>Markdown Documents</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="libs/bootstrap-3.0.3/css/united.min.css" rel="stylesheet">
@@ -109,66 +109,110 @@ body {
 <div class="container">
 
 <div id="header">
-<h1 class="title">Creating Custom Formats</h1>
+<h1 class="title">Markdown Documents</h1>
 </div>
 
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>R Markdown includes several built-in document and presentation formats however you aren’t by any means limited to those. An R Markdown format is at it’s core just an R function. When you include an output format in the YAML front-matter of a document you are really just specifying the format function to call and the parameters to pass to it. For example, consider the following:</p>
+<p>In some cases you might want to produce plain markdown output from R Markdown (e.g. to create a document for a system that accepts markdown input like <a href="http://stackoverflow.com/editing-help">Stack Overflow</a> or <a href="http://en.support.wordpress.com/markdown/">WordPress</a>).</p>
+<p>To create an markdown document from R Markdown you specify the <code>md_document</code> output format in the front-matter of your document:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+author: John Doe
+date: March 22, 2005
+output: md_document
+---</code></pre>
+</div>
+<div id="markdown-variants" class="section level2">
+<h2>Markdown Variants</h2>
+<p>By default the md_document format produces “strict” markdown (i.e. conforming to the original markdown specification with no extensions). You can generate a different flavor of markdown using the <code>variant</code> option. For example:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  mypackage::quarterly_report
-    toc: true
+  md_document:
+    variant: markdown_github
 ---</code></pre>
-<p>This says to use the <code>quarterly_report</code> function defined in <code>mypackage</code> as the output format and to pass <code>toc = TRUE</code> as a parameter to the function.</p>
-<p>The easist way to create a new format is to write a function that calls one of the built-in formats (they are designed to be extensible enough to serve as the foundation of custom formats). Another lower-level approach is to define a format directly by explicitly specifying knitr options and pandoc command line arguments. Both of these techniques are described below.</p>
+<p>Valid values are “markdown_strict”, “markdown_github”, “markdown_mmd”, markdown_phpextra“, or even”markdown&quot; (which produces full pandoc markdown). You can also compose custom markdown variants, for example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  md_document:
+    variant: markdown_strict+backtick_code_blocks+autolink_bare_uris
+---</code></pre>
 </div>
-<div id="deriving-from-built-in-formats" class="section level2">
-<h2>Deriving from Built-In Formats</h2>
-<p>To create a new format based on a built-in one you simply define a new function that calls one of the existing format functions. For example:</p>
-<pre class="r"><code>quarterly_report &lt;- function(toc = TRUE) {
-
-  # get the locations of resource files located within the package
-  css &lt;- system.file(&quot;reports/styles.css&quot;, package = &quot;mypackage&quot;)
-  header &lt;- system.file(&quot;reports/quarterly/header.html&quot;, package = &quot;mypackage&quot;)
-
-  # call the base html_document function
-  rmarkdown::html_document(toc = toc,
-                           fig_width = 6.5,
-                           fig_height = 4,
-                           theme = NULL,
-                           css = css,
-                           includes = includes(before_body = header))
-}</code></pre>
-<p>This defines a new format with the following behavior:</p>
-<ol style="list-style-type: decimal">
-<li><p>Provides an option to determine whether there is a table of contents included in the document (implemented by passing <code>toc</code> through to the base format).</p></li>
-<li><p>Sets a custom default height and width for figures (note this isn’t user-customizable so as to encourage a standard for all reports of this type).</p></li>
-<li><p>Disables the default bootstrap theme and provides custom CSS in its place.</p></li>
-<li><p>Adds a standard header to every document.</p></li>
-</ol>
-<p>Note that (3) and (4) are implemented using external files that are stored within the package that defines the custom format, so their locations need to be looked up using the <code>system.file</code> function.</p>
+<div id="table-of-contents" class="section level2">
+<h2>Table of Contents</h2>
+<p>You can add a table of contents using the <code>toc</code> option and specify the depth of headers that it applies to using the <code>toc_depth</code> option. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  md_document:
+    toc: true
+    toc_depth: 2
+---</code></pre>
+<p>If the table of contents depth isn’t explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).</p>
 </div>
-<div id="fully-custom-formats" class="section level2">
-<h2>Fully Custom Formats</h2>
-<p>At it’s core an R Markdown format consists of:</p>
-<ol style="list-style-type: decimal">
-<li><p>A set of knitr options that govern how Rmd is converted to markdown.</p></li>
-<li><p>A set of pandoc options that govern how markdown is converted to the final output format (e.g. HTML).</p></li>
-<li><p>Some optional flags and filters (typically used to control handling of supporting files).</p></li>
-</ol>
-<p>You can create a new format using the <code>output_format</code> function. For example, here is the simpliest possible format defintion:</p>
-<pre class="r"><code>simple_html_format &lt;- function() {
-  require(rmarkdown)
-  output_format(knitr = knitr_options(opts_chunk = list(dev = &#39;png&#39;)),
-                pandoc = pandoc_options(to = &quot;html&quot;))
-}</code></pre>
-<p>Of course, knitr and pandoc options can get considerabiy more complicated (see the <code>knitr_options</code> and <code>pandoc_options</code> functions for details). If there are supporting files required for your format (e.g. HTML/CSS/JS) then you’ll also need to use the other arguments to <code>output_format</code> to ensure they are handled correctly.</p>
-<p>The best way to learn about creating fully custom formats is to study the code of the existing built-in formats (e.g. <code>html_document</code> and <code>pdf_document</code>). In some cases a custom format will define it’s own <a href="http://johnmacfarlane.net/pandoc/demo/example9/templates.html">pandoc template</a>. You can see the default pandoc templates used by the rmarkdown package by looking in the <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmd"><code>inst/rmd</code></a> directory of the package.</p>
+<div id="figure-options" class="section level2">
+<h2>Figure Options</h2>
+<p>There are a number of options that affect the output of figures within HTML documents:</p>
+<ul>
+<li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (7x5 is used by default)</p></li>
+<li><p><code>fig_retina</code> Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr &gt;= 1.5.21. Set to <code>null</code> to prevent retina scaling.</p></li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  md_document:
+    fig_width: 7
+    fig_height: 6
+---</code></pre>
+</div>
+<div id="advanced-customization" class="section level2">
+<h2>Advanced Customization</h2>
+<div id="includes" class="section level3">
+<h3>Includes</h3>
+<p>You can do more advanced customization of output by including additional content. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  md_document:
+    includes:
+      in_header: header.md
+      before_body: doc_prefix.md
+      after_body: doc_suffix.md
+---</code></pre>
+</div>
+<div id="specifying-a-data-directory" class="section level3">
+<h3>Specifying a Data Directory</h3>
+<p>The <code>includes</code> option takes relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don’t need to be copied to the document directory). You can do this using the <code>data_dir</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  md_document:
+    data_dir: ~/templates/reports
+    includes:
+      in_header: header.md
+      before_body: doc_prefix.md
+      after_body: doc_suffix.md
+---</code></pre>
+</div>
+<div id="pandoc-arguments" class="section level3">
+<h3>Pandoc Arguments</h3>
+<p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  md_document:
+    pandoc_args: [
+      &quot;--csl&quot;, &quot;/var/csl/acs-nano.csl&quot;
+    ]
+---</code></pre>
+<p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
 <div class="references">
 
+</div>
 </div>
 </div>
 
