@@ -2,18 +2,15 @@
 \alias{draft}
 \title{Create a new document based on a template}
 \usage{
-draft(file, template, package = NULL, edit = TRUE)
+draft(file, template, edit = TRUE)
 }
 \arguments{
   \item{file}{File name for the draft}
 
   \item{template}{Template to use as the basis for the
   draft. This is either the full path to a template
-  directory or the name of a template directory within the
-  \code{rmarkdown/templates} directory of a package.}
-
-  \item{package}{(Optional) Name of package where the
-  template is located.}
+  directory or a reference to a template stored within an R
+  package (e.g. \code{pkgname::my_template}).}
 
   \item{edit}{\code{TRUE} to edit the template immediately}
 }
@@ -70,11 +67,8 @@ containing the new R Markdown draft.
 \examples{
 \dontrun{
 
-rmarkdown::draft("Q4Report.Rmd",
-                 template="/opt/rmd/templates/quarterly_report")
-
-rmarkdown::draft("Q4Report.Rmd",
-                 template="quarterly_report", package="pubtools")
+rmarkdown::draft("Q4Report.Rmd", template="pubtools::quarterly_report")
+rmarkdown::draft("Q4Report.Rmd", template="/templates/quarterly_report")
 }
 }
 
