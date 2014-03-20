@@ -173,8 +173,14 @@ output:
     fonttheme: &quot;structurebold&quot;
 ---</code></pre>
 </div>
-<div id="slide-level" class="section level2">
-<h2>Slide Level</h2>
+<div id="table-of-contents-and-slide-level" class="section level2">
+<h2>Table of Contents and Slide Level</h2>
+<p>The <code>toc</code> option specifies that a table of contents should be included at the beginning of the presentation (only level 1 headers will be included in the table of contents). For example:</p>
+<pre><code>---
+output:
+  beamer_presentation:
+    toc: true
+---</code></pre>
 <p>The <code>slide_level</code> option defines the heading level that defines individual slides. By default this is the highest header level in the hierarchy that is followed immediately by content, and not another header, somewhere in the document. This default can be overridden by specifying an explicit <code>slide_level</code>:</p>
 <pre><code>---
 output:
@@ -198,6 +204,17 @@ output:
     fig_width: 7
     fig_height: 6
     fig_caption: true
+---</code></pre>
+</div>
+<div id="syntax-highlighting" class="section level2">
+<h2>Syntax Highlighting</h2>
+<p>The <code>highlight</code> option specifies the syntax highlighting style. Supported styles include “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, and “haddock” (specify null to prevent syntax highlighting):</p>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  beamer_presentation:
+    highlight: tango
 ---</code></pre>
 </div>
 <div id="advanced-customization" class="section level2">

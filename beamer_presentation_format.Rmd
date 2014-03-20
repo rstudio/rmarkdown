@@ -72,7 +72,15 @@ You can specify Beamer themes using the `theme`, `colortheme`, and `fonttheme` o
         fonttheme: "structurebold"
     ---
 
-## Slide Level
+## Table of Contents and Slide Level
+
+The `toc` option specifies that a table of contents should be included at the beginning of the presentation (only level 1 headers will be included in the table of contents). For example:
+
+    ---
+    output:
+      beamer_presentation:
+        toc: true
+    ---
 
 The `slide_level` option defines the heading level that defines individual slides.  By default this is the highest header level in the hierarchy that is followed immediately by content, and not another header, somewhere in the document. This default can be overridden by specifying an explicit `slide_level`:
 
@@ -102,6 +110,20 @@ For example:
         fig_height: 6
         fig_caption: true
     ---
+
+## Syntax Highlighting
+
+The `highlight` option specifies the syntax highlighting style. Supported styles include "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn", and "haddock" (specify null to prevent syntax highlighting):
+
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      beamer_presentation:
+        highlight: tango
+    ---
+
 
 ## Advanced Customization
 

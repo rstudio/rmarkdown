@@ -59,9 +59,9 @@ For example:
         fig_caption: true
     ---
 
-## Syntax Higlighting
+## Syntax Highlighting
 
-The `highlight` option specifies the syntax highlighting style. Supported styles include "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn", "haddock", and "textmate" (specify null to prevent syntax highlighting):
+The `highlight` option specifies the syntax highlighting style. Supported styles include "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn", and "haddock" (specify null to prevent syntax highlighting):
 
 For example:
 
