@@ -13,6 +13,7 @@ This website describes R Markdown v2, a next generation implementation of R Mark
 * A responsive (multi-device friendly) and theme-able HTML template based on [Bootstrap 3](http://getbootstrap.com).
 * Hooks for customizing HTML and PDF output (include CSS, headers, and footers).
 * Include raw LaTeX within markdown for advanced customization of PDF output.
+* Compile HTML, PDF, or MS Word notebooks from R scripts.
 * Extensibility: easily define new formats for custom publishing requirements.
 
 Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, the [MiKTeX](http://miktex.org/) distribution should be used rather than TeX Live.
@@ -129,6 +130,8 @@ With the basics described above you can get started with R Markdown right away. 
 * [Markdown Basics](authoring_basics.html), which describes the most commonly used markdown constructs.
 
 * [R Code Chunks](authoring_rcodechunks.html), which goes into more depth on customizing the behavior of embedded R code.
+
+* [Compiling Notebooks](authoring_compile_notebook.html), which describes how to compile HTML, PDF, or MS Word notebooks from R scripts.
 
 * Document output formats: [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html)
 
