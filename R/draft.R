@@ -9,6 +9,9 @@
 #'   the full path to a template directory or the name of a template directory
 #'   within the \code{rmarkdown/templates} directory of a package.
 #' @param package (Optional) Name of package where the template is located.
+#' @param create_dir \code{TRUE} to create a new directory for the document
+#'   (the "default" setting leaves this beahvior up to the creator of the
+#'   template).
 #' @param edit \code{TRUE} to edit the template immediately
 #'
 #' @return The file name of the new document (invisibly)
@@ -32,10 +35,10 @@
 #'   \code{quarterly_report/template.yaml} \cr
 #'   \code{quarterly_report/skeleton/template.Rmd} \cr
 #'
-#'   The \code{template.yaml} file should include the two fields \code{name} and
-#'   \code{description}. If you want to ensure that a new directory is always
-#'   created for a given template, then you can add the \code{create_dir} field
-#'   to the \code{template.yaml} file. For example:
+#'   The \code{template.yaml} file should include a \code{name} field. If you
+#'   want to ensure that a new directory is always created for a given template,
+#'   then you can add the \code{create_dir} field to the \code{template.yaml}
+#'   file. For example:
 #'
 #'   \code{create_dir: true} \cr
 #'
@@ -59,7 +62,11 @@
 #'                  template="quarterly_report", package="pubtools")
 #' }
 #' @export
-draft <- function(file, template, package = NULL, edit = TRUE) {
+draft <- function(file,
+                  template,
+                  package = NULL,
+                  create_dir = "default",
+                  edit = TRUE) {
 
   # resolve package file
   if (!is.null(package)) {
@@ -84,7 +91,8 @@ draft <- function(file, template, package = NULL, edit = TRUE) {
   }
 
   # see if this template is asking to create a new directory
-  create_dir <- isTRUE(template_meta$create_dir)
+  if (identical(create_dir, "default"))
+    create_dir <- isTRUE(template_meta$create_dir)
 
   # create a new directory if requested
   if (create_dir) {

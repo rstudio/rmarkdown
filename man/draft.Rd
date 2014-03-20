@@ -2,7 +2,7 @@
 \alias{draft}
 \title{Create a new document based on a template}
 \usage{
-draft(file, template, package = NULL, edit = TRUE)
+draft(file, template, package = NULL, create_dir = "default", edit = TRUE)
 }
 \arguments{
   \item{file}{File name for the draft}
@@ -14,6 +14,10 @@ draft(file, template, package = NULL, edit = TRUE)
 
   \item{package}{(Optional) Name of package where the
   template is located.}
+
+  \item{create_dir}{\code{TRUE} to create a new directory
+  for the document (the "default" setting leaves this
+  beahvior up to the creator of the template).}
 
   \item{edit}{\code{TRUE} to edit the template immediately}
 }
@@ -49,11 +53,11 @@ following files within the
 \code{quarterly_report/template.yaml} \cr
 \code{quarterly_report/skeleton/template.Rmd} \cr
 
-The \code{template.yaml} file should include the two fields
-\code{name} and \code{description}. If you want to ensure
-that a new directory is always created for a given
-template, then you can add the \code{create_dir} field to
-the \code{template.yaml} file. For example:
+The \code{template.yaml} file should include a \code{name}
+field. If you want to ensure that a new directory is always
+created for a given template, then you can add the
+\code{create_dir} field to the \code{template.yaml} file.
+For example:
 
 \code{create_dir: true} \cr
 
