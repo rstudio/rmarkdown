@@ -13,6 +13,8 @@ To create a PDF document from R Markdown you specify the `pdf_document` output f
     output: pdf_document
     ---
 
+Within R Markdown documents that generate PDF output you can use raw LaTeX and even define LaTeX macros. See the documentation on [Raw TeX](authoring_pandoc_markdown.html#raw-tex) for details.
+
 ## Table of Contents
 
 You can add a table of contents using the `toc` option and specify the depth of headers that it applies to using the `toc_depth` option. For example:

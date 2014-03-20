@@ -2,6 +2,17 @@
 title: "Presentations with reveal.js"
 ---
 
+## Overview
+
+To create a [reveal.js](http://lab.hakim.se/reveal-js/#/) presentation from R Markdown you specify the `revealjs_presentation` output format in the front-matter of your document:
+
+    ---
+    title: "Habits"
+    author: John Doe
+    date: March 22, 2005
+    output: revealjs_presentation
+    ---
+
 ## Slide Basics
 
 You can create a slide show broken up into sections by using the \# and

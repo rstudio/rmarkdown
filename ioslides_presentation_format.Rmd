@@ -2,6 +2,17 @@
 title: "Presentations with ioslides"
 ---
 
+## Overview
+
+To create an [ioslides](https://code.google.com/p/io-2012-slides/) presentation from R Markdown you specify the `ioslides_presentation` output format in the front-matter of your document:
+
+    ---
+    title: "Habits"
+    author: John Doe
+    date: March 22, 2005
+    output: ioslides_presentation
+    ---
+
 ## Slide Basics
 
 You can create a slide show broken up into sections by using the \# and
