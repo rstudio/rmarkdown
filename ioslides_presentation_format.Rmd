@@ -83,6 +83,8 @@ others you can use this syntax:
     > - Eat eggs
     > - Drink coffee
 
+## Visual Appearance
+
 ### Presentation Size
 
 You can display the presentation using a wider form factor using the
@@ -101,7 +103,29 @@ adding the `.smaller` attribute to the slide header:
 
     ## Getting up {.smaller}
 
-## Adding a Logo
+### Transition Speed
+
+You can customize the speed of slide transitions using `transition` option. This can be "default", "slower", "faster", or a numeric value with a number of seconds (e.g. 0.5) . For example:
+
+    ---
+    output:
+      ioslides_presentation:
+        transition: slower
+    ---
+
+### Build Slides
+
+Slides can also have a `.build` attribute that indicate that their
+content should be displayed incrementally. For example:
+
+    ## Getting up {.build}
+
+Slide attributes can be combined if you need to specify more than one,
+for example:
+
+    ## Getting up {.smaller .build}
+
+### Adding a Logo
 
 You can add a logo to the presentation using the `logo` option (the logo
 should be square and at least 128x128). For example:
@@ -116,17 +140,31 @@ A 128x128 version of the logo graphic will be added to the title slide
 and an icon version of the logo will be included in the bottom-left
 footer of each slide.
 
-## Build Slides
+### Custom CSS
 
-Slides can also have a `.build` attribute that indicate that their
-content should be displayed incrementally. For example:
+You can add your own CSS to an ioslides presentation using the `css` option:
 
-    ## Getting up {.build}
+    ---
+    output:
+      ioslides_presentation:
+        css: styles.css
+    ---
 
-Slide attributes can be combined if you need to specify more than one,
-for example:
+You can also target specific slides or classes of slice with custom CSS by adding ids or classes to the slides headers within your document. For example the following slide
+header:
 
-    ## Getting up {.smaller .build}
+    ## Next Steps {#nextsteps .emphasized}
+
+Would enable you to apply CSS to all of it's content using either of the following CSS selectors:
+
+    #nextsteps {
+       color: blue;
+    }
+
+    .emphasized {
+       font-size: 1.2em;
+    }
+
 
 ## Code Highlighting
 
@@ -148,7 +186,7 @@ The ioslides template has an attractive default style for tables so you
 shouldn't hesitate to add tables for presenting more complex sets of
 information. Pandoc markdown supports several syntaxes for defining
 tables which are described in the [pandoc markdown
-specification](http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html).
+specification](authoring_pandoc_markdown.html#tables).
 
 ## Advanced Layout
 

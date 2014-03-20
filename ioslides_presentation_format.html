@@ -175,6 +175,9 @@ output:
 <p>If you want to render bullets incrementally for some slides but not others you can use this syntax:</p>
 <pre><code>&gt; - Eat eggs
 &gt; - Drink coffee</code></pre>
+</div>
+<div id="visual-appearance" class="section level2">
+<h2>Visual Appearance</h2>
 <div id="presentation-size" class="section level3">
 <h3>Presentation Size</h3>
 <p>You can display the presentation using a wider form factor using the <code>widescreen</code> option. You can specify that smaller text be used with the <code>smaller</code> option. For example:</p>
@@ -187,9 +190,24 @@ output:
 <p>You can also enable the <code>smaller</code> option on a slide-by-slide basis by adding the <code>.smaller</code> attribute to the slide header:</p>
 <pre><code>## Getting up {.smaller}</code></pre>
 </div>
+<div id="transition-speed" class="section level3">
+<h3>Transition Speed</h3>
+<p>You can customize the speed of slide transitions using <code>transition</code> option. This can be “default”, “slower”, “faster”, or a numeric value with a number of seconds (e.g. 0.5) . For example:</p>
+<pre><code>---
+output:
+  ioslides_presentation:
+    transition: slower
+---</code></pre>
 </div>
-<div id="adding-a-logo" class="section level2">
-<h2>Adding a Logo</h2>
+<div id="build-slides" class="section level3">
+<h3>Build Slides</h3>
+<p>Slides can also have a <code>.build</code> attribute that indicate that their content should be displayed incrementally. For example:</p>
+<pre><code>## Getting up {.build}</code></pre>
+<p>Slide attributes can be combined if you need to specify more than one, for example:</p>
+<pre><code>## Getting up {.smaller .build}</code></pre>
+</div>
+<div id="adding-a-logo" class="section level3">
+<h3>Adding a Logo</h3>
 <p>You can add a logo to the presentation using the <code>logo</code> option (the logo should be square and at least 128x128). For example:</p>
 <pre><code>---
 output:
@@ -198,12 +216,25 @@ output:
 ---</code></pre>
 <p>A 128x128 version of the logo graphic will be added to the title slide and an icon version of the logo will be included in the bottom-left footer of each slide.</p>
 </div>
-<div id="build-slides" class="section level2">
-<h2>Build Slides</h2>
-<p>Slides can also have a <code>.build</code> attribute that indicate that their content should be displayed incrementally. For example:</p>
-<pre><code>## Getting up {.build}</code></pre>
-<p>Slide attributes can be combined if you need to specify more than one, for example:</p>
-<pre><code>## Getting up {.smaller .build}</code></pre>
+<div id="custom-css" class="section level3">
+<h3>Custom CSS</h3>
+<p>You can add your own CSS to an ioslides presentation using the <code>css</code> option:</p>
+<pre><code>---
+output:
+  ioslides_presentation:
+    css: styles.css
+---</code></pre>
+<p>You can also target specific slides or classes of slice with custom CSS by adding ids or classes to the slides headers within your document. For example the following slide header:</p>
+<pre><code>## Next Steps {#nextsteps .emphasized}</code></pre>
+<p>Would enable you to apply CSS to all of it’s content using either of the following CSS selectors:</p>
+<pre><code>#nextsteps {
+   color: blue;
+}
+
+.emphasized {
+   font-size: 1.2em;
+}</code></pre>
+</div>
 </div>
 <div id="code-highlighting" class="section level2">
 <h2>Code Highlighting</h2>
@@ -216,7 +247,7 @@ y &lt;- x * 2
 </div>
 <div id="tables" class="section level2">
 <h2>Tables</h2>
-<p>The ioslides template has an attractive default style for tables so you shouldn’t hesitate to add tables for presenting more complex sets of information. Pandoc markdown supports several syntaxes for defining tables which are described in the <a href="http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html">pandoc markdown specification</a>.</p>
+<p>The ioslides template has an attractive default style for tables so you shouldn’t hesitate to add tables for presenting more complex sets of information. Pandoc markdown supports several syntaxes for defining tables which are described in the <a href="authoring_pandoc_markdown.html#tables">pandoc markdown specification</a>.</p>
 </div>
 <div id="advanced-layout" class="section level2">
 <h2>Advanced Layout</h2>
