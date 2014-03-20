@@ -171,16 +171,25 @@ output:
 <pre><code>&gt; - Eat eggs
 &gt; - Drink coffee</code></pre>
 </div>
-<div id="themes-and-transitions" class="section level2">
-<h2>Themes and Transitions</h2>
-<p>You can select from various themes using the <code>theme</code> option and select a transition style using the <code>transition</code> option:</p>
+<div id="appearance-and-style" class="section level2">
+<h2>Appearance and Style</h2>
+<p>There are several options that control the appearance of revealjs presentations:</p>
+<ul>
+<li><p><code>theme</code> specifies the theme to use for the presentation (available themes are “default”, “simple”, “sky”, “beige”, “serif”, or “solarized”).</p></li>
+<li><p><code>transition</code> specifies the visual effect when moving between slides. Available transitions are “default”, “cube”, “page”, “concave”, “zoom”, “linear”, “fade”, or “none”.</p></li>
+<li><p><code>highlight</code> specifies the syntax highlighting style. Supported styles include “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, and “haddock”. Pass null to prevent syntax highlighting.</p></li>
+<li><p><code>center</code> specifies whether you want to vertically center content on slides (this defaults to false).</p></li>
+<li><p><code>smart</code> indicates whether to produce typographically correct output, converting straight quotes to curly quotes, <code>---</code> to em-dashes, <code>--</code> to en-dashes, and <code>...</code> to ellipses. Note that <code>smart</code> is enabled by default.</p></li>
+</ul>
+<p>For example:</p>
 <pre><code>---
 output:
   revealjs_presentation:
     theme: sky
     transition: fade
+    highlight: pygments
+    center: true
 ---</code></pre>
-<p>Available themes are <code>default</code>, <code>simple</code>, <code>sky</code>, <code>beige</code>, <code>serif</code>, or <code>solarized</code>; Available transitions are <code>default</code>, <code>cube</code>, <code>page</code>, <code>concave</code>, <code>zoom</code>, <code>linear</code>, <code>fade</code>, or <code>none</code>.</p>
 </div>
 <div id="figure-options" class="section level2">
 <h2>Figure Options</h2>
