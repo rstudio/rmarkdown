@@ -119,6 +119,7 @@ body {
 <li><a href="#syntax-highlighting">Syntax Highlighting</a></li>
 <li><a href="#style-reference">Style Reference</a></li>
 <li><a href="#pandoc-arguments">Pandoc Arguments</a></li>
+<li><a href="#shared-options">Shared Options</a></li>
 </ul>
 </div>
 
@@ -190,6 +191,16 @@ output:
     ]
 ---</code></pre>
 <p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
+</div>
+<div id="shared-options" class="section level2">
+<h2>Shared Options</h2>
+<p>If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named <code>output.yaml</code> within the directory. Note that no YAML delimeters or enclosing output object are used in this file. For example:</p>
+<p><strong>output.yaml</strong></p>
+<pre class="yaml"><code>word_document:
+  fig_width: 5
+  fig_height: 5
+  fig_caption: true</code></pre>
+<p>All documents located in the same directory as <code>output.yaml</code> will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.</p>
 <div class="references">
 
 </div>

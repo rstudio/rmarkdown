@@ -119,6 +119,7 @@ body {
 <li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#figure-options">Figure Options</a></li>
 <li><a href="#advanced-customization">Advanced Customization</a></li>
+<li><a href="#shared-options">Shared Options</a></li>
 </ul>
 </div>
 
@@ -257,9 +258,19 @@ output:
     ]
 ---</code></pre>
 <p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
+</div>
+</div>
+<div id="shared-options" class="section level2">
+<h2>Shared Options</h2>
+<p>If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named <code>output.yaml</code> within the directory. Note that no YAML delimeters or enclosing output object are used in this file. For example:</p>
+<p><strong>output.yaml</strong></p>
+<pre class="yaml"><code>md_document:
+  variant: markdown_phpextra
+  fig_width: 6
+  fig_height: 4.5</code></pre>
+<p>All documents located in the same directory as <code>output.yaml</code> will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.</p>
 <div class="references">
 
-</div>
 </div>
 </div>
 
