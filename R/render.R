@@ -109,6 +109,14 @@ render <- function(input,
   # knit if necessary
   if (tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")) {
 
+    # restore options and hooks after knit
+    optk <- knitr::opts_knit$get()
+    on.exit(knitr::opts_knit$restore(optk), add = TRUE)
+    optc <- knitr::opts_chunk$get()
+    on.exit(knitr::opts_chunk$restore(optc), add = TRUE)
+    hooks <- knitr::knit_hooks$get()
+    on.exit(knitr::knit_hooks$restore(hooks), add = TRUE)
+
     # default rendering and chunk options
     knitr::render_markdown()
     knitr::opts_chunk$set(tidy = FALSE, error = FALSE)
