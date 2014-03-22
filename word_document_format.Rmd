@@ -1,5 +1,8 @@
 ---
 title: "Word Documents"
+output:
+  html_document:
+    toc: true
 ---
 
 ## Overview
@@ -68,7 +71,7 @@ The `reference_docx` option takes a relative path by default. However, you may a
     ---
 
 
-### Pandoc Arguments
+## Pandoc Arguments
 
 If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
 

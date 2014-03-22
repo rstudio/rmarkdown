@@ -112,6 +112,15 @@ body {
 <h1 class="title">Word Documents</h1>
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#figure-options">Figure Options</a></li>
+<li><a href="#syntax-highlighting">Syntax Highlighting</a></li>
+<li><a href="#style-reference">Style Reference</a></li>
+<li><a href="#pandoc-arguments">Pandoc Arguments</a></li>
+</ul>
+</div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
@@ -168,8 +177,9 @@ output:
     reference_docx: mystyles.docx
     data_dir: ~/reports/styles
 ---</code></pre>
-<div id="pandoc-arguments" class="section level3">
-<h3>Pandoc Arguments</h3>
+</div>
+<div id="pandoc-arguments" class="section level2">
+<h2>Pandoc Arguments</h2>
 <p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
 <pre><code>---
 title: &quot;Habits&quot;
@@ -182,7 +192,6 @@ output:
 <p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
 <div class="references">
 
-</div>
 </div>
 </div>
 

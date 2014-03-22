@@ -1,25 +1,13 @@
 ---
 title: "Presentations with Beamer"
+output:
+  html_document:
+    toc: true
 ---
 
 ## Overview
 
-To create a Beamer presentation from R Markdown you specify the `beamer_presentation` output format in the front-matter of your document:
-
-    ---
-    title: "Habits"
-    author: John Doe
-    date: March 22, 2005
-    output: beamer_presentation
-    ---
-
-Within R Markdown documents that generate PDF output you can use raw LaTeX and even define LaTeX macros. See the documentation on [Raw TeX](authoring_pandoc_markdown.html#raw-tex) for details.
-
-## Slide Basics
-
-You can create a slide show broken up into sections by using the \# and
-\#\# heading tags (you can also create a new slide without a header
-using a horizontal rule (`----------`). For example here's a simple
+To create a Beamer presentation from R Markdown you specify the `beamer_presentation` output format in the front-matter of your document. You can create a slide show broken up into sections by using the `#` and `##` heading tags (you can also create a new slide without a header using a horizontal rule (`----`). For example here's a simple
 slide show:
 
     ---
@@ -48,7 +36,7 @@ slide show:
     - Eat spaghetti
     - Drink wine
 
-    ----------
+    ----
 
     ![picture of spaghetti](images/spaghetti.jpg)
 
@@ -56,6 +44,8 @@ slide show:
 
     - Get in bed
     - Count sheep
+
+Within R Markdown documents that generate PDF output you can use raw LaTeX and even define LaTeX macros. See the documentation on [Raw TeX](authoring_pandoc_markdown.html#raw-tex) for details.
 
 ## Incremental Bullets
 

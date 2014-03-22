@@ -1,5 +1,8 @@
 ---
 title: "PDF Documents"
+output:
+  html_document:
+    toc: true
 ---
 
 ## Overview

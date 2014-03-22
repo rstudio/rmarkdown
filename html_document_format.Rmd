@@ -1,5 +1,8 @@
 ---
 title: "HTML Documents"
+output:
+  html_document:
+    toc: true
 ---
 
 ## Overview
@@ -148,7 +151,7 @@ To exclude MathJax entirely:
         mathjax: null
     ---
 
-## Dependencies and Self Contained Documents
+## Document Dependencies
 
 By default R Markdown produces standalone HTML files with no external dependencies, using data: URIs to incorporate the contents of linked scripts, stylesheets, images, and videos. This means you can share or publish the file just like you share Office documents or PDFs. If you'd rather have keep depenencies in external files you can specify `self_contained: false`. For example:
 

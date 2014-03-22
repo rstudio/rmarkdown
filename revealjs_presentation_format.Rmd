@@ -1,23 +1,15 @@
 ---
 title: "Presentations with reveal.js"
+output:
+  html_document:
+    toc: true
 ---
 
 ## Overview
 
-To create a [reveal.js](http://lab.hakim.se/reveal-js/#/) presentation from R Markdown you specify the `revealjs_presentation` output format in the front-matter of your document:
-
-    ---
-    title: "Habits"
-    author: John Doe
-    date: March 22, 2005
-    output: revealjs_presentation
-    ---
-
-## Slide Basics
-
-You can create a slide show broken up into sections by using the \# and
-\#\# heading tags (you can also create a new slide without a header
-using a horizontal rule (`----------`). For example here's a simple
+To create a [reveal.js](http://lab.hakim.se/reveal-js/#/) presentation from R Markdown you specify the `revealjs_presentation` output format in the front-matter of your document. You can create a slide show broken up into sections by using the `#` and
+`##` heading tags (you can also create a new slide without a header
+using a horizontal rule (`----`). For example here's a simple
 slide show:
 
     ---
@@ -46,7 +38,7 @@ slide show:
     - Eat spaghetti
     - Drink wine
 
-    ----------
+    ----
 
     ![picture of spaghetti](images/spaghetti.jpg)
 
@@ -169,7 +161,7 @@ To exclude MathJax entirely:
         mathjax: null
     ---
 
-## Dependencies and Self Contained Documents
+## Document Dependencies
 
 By default R Markdown produces standalone HTML files with no external dependencies, using data: URIs to incorporate the contents of linked scripts, stylesheets, images, and videos. This means you can share or publish the file just like you share Office documents or PDFs. If you'd rather have keep depenencies in external files you can specify `self_contained: false`. For example:
 

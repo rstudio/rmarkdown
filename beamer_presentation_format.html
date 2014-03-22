@@ -112,21 +112,21 @@ body {
 <h1 class="title">Presentations with Beamer</h1>
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#incremental-bullets">Incremental Bullets</a></li>
+<li><a href="#themes">Themes</a></li>
+<li><a href="#table-of-contents-and-slide-level">Table of Contents and Slide Level</a></li>
+<li><a href="#figure-options">Figure Options</a></li>
+<li><a href="#syntax-highlighting">Syntax Highlighting</a></li>
+<li><a href="#advanced-customization">Advanced Customization</a></li>
+</ul>
+</div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>To create a Beamer presentation from R Markdown you specify the <code>beamer_presentation</code> output format in the front-matter of your document:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-author: John Doe
-date: March 22, 2005
-output: beamer_presentation
----</code></pre>
-<p>Within R Markdown documents that generate PDF output you can use raw LaTeX and even define LaTeX macros. See the documentation on <a href="authoring_pandoc_markdown.html#raw-tex">Raw TeX</a> for details.</p>
-</div>
-<div id="slide-basics" class="section level2">
-<h2>Slide Basics</h2>
-<p>You can create a slide show broken up into sections by using the # and ## heading tags (you can also create a new slide without a header using a horizontal rule (<code>----------</code>). For example here’s a simple slide show:</p>
+<p>To create a Beamer presentation from R Markdown you specify the <code>beamer_presentation</code> output format in the front-matter of your document. You can create a slide show broken up into sections by using the <code>#</code> and <code>##</code> heading tags (you can also create a new slide without a header using a horizontal rule (<code>----</code>). For example here’s a simple slide show:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 author: John Doe
@@ -153,7 +153,7 @@ output: beamer_presentation
 - Eat spaghetti
 - Drink wine
 
-----------
+----
 
 ![picture of spaghetti](images/spaghetti.jpg)
 
@@ -161,6 +161,7 @@ output: beamer_presentation
 
 - Get in bed
 - Count sheep</code></pre>
+<p>Within R Markdown documents that generate PDF output you can use raw LaTeX and even define LaTeX macros. See the documentation on <a href="authoring_pandoc_markdown.html#raw-tex">Raw TeX</a> for details.</p>
 </div>
 <div id="incremental-bullets" class="section level2">
 <h2>Incremental Bullets</h2>

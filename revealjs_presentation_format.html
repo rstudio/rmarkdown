@@ -112,20 +112,22 @@ body {
 <h1 class="title">Presentations with reveal.js</h1>
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#display-modes">Display Modes</a></li>
+<li><a href="#incremental-bullets">Incremental Bullets</a></li>
+<li><a href="#appearance-and-style">Appearance and Style</a></li>
+<li><a href="#figure-options">Figure Options</a></li>
+<li><a href="#mathjax-equations">MathJax Equations</a></li>
+<li><a href="#document-dependencies">Document Dependencies</a></li>
+<li><a href="#advanced-customization">Advanced Customization</a></li>
+</ul>
+</div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>To create a <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a> presentation from R Markdown you specify the <code>revealjs_presentation</code> output format in the front-matter of your document:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-author: John Doe
-date: March 22, 2005
-output: revealjs_presentation
----</code></pre>
-</div>
-<div id="slide-basics" class="section level2">
-<h2>Slide Basics</h2>
-<p>You can create a slide show broken up into sections by using the # and ## heading tags (you can also create a new slide without a header using a horizontal rule (<code>----------</code>). For example here’s a simple slide show:</p>
+<p>To create a <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a> presentation from R Markdown you specify the <code>revealjs_presentation</code> output format in the front-matter of your document. You can create a slide show broken up into sections by using the <code>#</code> and <code>##</code> heading tags (you can also create a new slide without a header using a horizontal rule (<code>----</code>). For example here’s a simple slide show:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 author: John Doe
@@ -152,7 +154,7 @@ output: revealjs_presentation
 - Eat spaghetti
 - Drink wine
 
-----------
+----
 
 ![picture of spaghetti](images/spaghetti.jpg)
 
@@ -252,8 +254,8 @@ output:
     mathjax: null
 ---</code></pre>
 </div>
-<div id="dependencies-and-self-contained-documents" class="section level2">
-<h2>Dependencies and Self Contained Documents</h2>
+<div id="document-dependencies" class="section level2">
+<h2>Document Dependencies</h2>
 <p>By default R Markdown produces standalone HTML files with no external dependencies, using data: URIs to incorporate the contents of linked scripts, stylesheets, images, and videos. This means you can share or publish the file just like you share Office documents or PDFs. If you’d rather have keep depenencies in external files you can specify <code>self_contained: false</code>. For example:</p>
 <pre><code>---
 title: &quot;Habits&quot;

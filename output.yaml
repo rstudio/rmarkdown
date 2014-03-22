@@ -3,6 +3,7 @@ html_document:
   theme: united
   highlight: textmate
   mathjax: null
+  toc_depth: 2
   lib_dir: libs
   includes:
     in_header: include/in_header.html
