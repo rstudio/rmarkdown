@@ -128,18 +128,55 @@ output: md_document
 <h2>Markdown Variants</h2>
 <p>By default the md_document format produces “strict” markdown (i.e. conforming to the original markdown specification with no extensions). You can generate a different flavor of markdown using the <code>variant</code> option. For example:</p>
 <pre><code>---
-title: &quot;Habits&quot;
 output:
   md_document:
     variant: markdown_github
 ---</code></pre>
-<p>Valid values are “markdown_strict”, “markdown_github”, “markdown_mmd”, markdown_phpextra“, or even”markdown&quot; (which produces full pandoc markdown). You can also compose custom markdown variants, for example:</p>
+<p>Valid values are:</p>
+<ul>
+<li><code>markdown</code> (Full pandoc markdown)</li>
+<li><code>markdown_strict</code> (Original markdown specification)</li>
+<li><code>markdown_github</code> (GitHub flavored markdown)</li>
+<li><code>markdown_mmd</code> (MultiMarkdown)</li>
+<li><code>markdown_phpextra</code> (PHP markdown extra)</li>
+</ul>
+<p>You can also compose custom markdown variants, for example:</p>
 <pre><code>---
-title: &quot;Habits&quot;
 output:
   md_document:
     variant: markdown_strict+backtick_code_blocks+autolink_bare_uris
 ---</code></pre>
+<p>The <a href="http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html">pandoc markdown specification</a> defines all of the markdown extensions and their name to be used in composing custom variants.</p>
+<div id="using-variants-for-publishing" class="section level3">
+<h3>Using Variants for Publishing</h3>
+<p>Many popular publishing systems now accept markdown as input. Here are the correct markdown variants to use for some popular systems:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">System</th>
+<th align="left">Markdown Variant</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">GitHub Wikis</td>
+<td align="left"><code>markdown_github</code></td>
+</tr>
+<tr class="even">
+<td align="left">Drupal</td>
+<td align="left"><code>markdown_phpextra</code></td>
+</tr>
+<tr class="odd">
+<td align="left">WordPress.com</td>
+<td align="left"><code>markdown_phpextra+backtick_code_blocks</code></td>
+</tr>
+<tr class="even">
+<td align="left">StackOverflow</td>
+<td align="left"><code>markdown_strict+autolink_bare_uris</code></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="table-of-contents" class="section level2">
 <h2>Table of Contents</h2>

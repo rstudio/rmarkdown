@@ -20,20 +20,41 @@ To create an markdown document from R Markdown you specify the `md_document` out
 By default the md_document format produces "strict" markdown (i.e. conforming to the original markdown specification with no extensions). You can generate a different flavor of markdown using the `variant` option. For example:
 
     ---
-    title: "Habits"
     output:
       md_document:
         variant: markdown_github
     ---
 
-Valid values are "markdown_strict", "markdown_github", "markdown_mmd", markdown_phpextra", or even "markdown" (which produces full pandoc markdown). You can also compose custom markdown variants, for example:
+
+Valid values are:
+
+ * `markdown` (Full pandoc markdown)
+ * `markdown_strict` (Original markdown specification)
+ * `markdown_github` (GitHub flavored markdown)
+ * `markdown_mmd` (MultiMarkdown)
+ * `markdown_phpextra` (PHP markdown extra)
+
+You can also compose custom markdown variants, for example:
 
     ---
-    title: "Habits"
     output:
       md_document:
         variant: markdown_strict+backtick_code_blocks+autolink_bare_uris
     ---
+
+The [pandoc markdown specification](http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html) defines all of the markdown extensions and their name to be used in composing custom variants.
+
+### Using Variants for Publishing
+
+Many popular publishing systems now accept markdown as input. Here are the correct markdown variants to use for some popular systems:
+
+System|Markdown Variant
+--------|-----------
+GitHub Wikis|`markdown_github`
+Drupal|`markdown_phpextra`
+WordPress.com|`markdown_phpextra+backtick_code_blocks`
+StackOverflow|`markdown_strict+autolink_bare_uris`
+
 
 ## Table of Contents
 
