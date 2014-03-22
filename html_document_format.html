@@ -33,18 +33,26 @@
 
 
 <style type="text/css">
+
+/* padding for bootstrap navbar */
 body {
   padding-top: 50px;
 }
-.dropdown-menu em {
-  padding-left: 10px;
-}
+
+/* offset scroll position for anchor links (for fixed navbar)  */
 .section {
   padding-top: 50px;
   margin-top: -50px;
 }
+
+/* improved alighnment for italic headers in menubar */
+.dropdown-menu em {
+  padding-left: 10px;
+}
+
 </style>
 
+<!-- some extra javascript for older browsers -->
 <script type="text/javascript" src="libs/polyfill.js"></script>
 
 </head>
@@ -357,12 +365,16 @@ title: &quot;Document Title&quot;
 </div>
 
 <script>
+
+// manage active state of menu based on current page
 $(document).ready(function () {
+
+    // active menu
     href = window.location.pathname
     href = href.substr(href.lastIndexOf('/') + 1)
     $('a[href="' + href + '"]').parent().addClass('active');
 
-    // menu headers
+    // manage active menu header
     if (href.startsWith('authoring_'))
       $('a[href="' + 'authoring' + '"]').parent().addClass('active');
     else if (href.endsWith('_format.html'))
@@ -372,6 +384,7 @@ $(document).ready(function () {
 
 });
 
+// workaround bootstrap paint bug that occurs on first load
 $(window).on("load", function() {
   $(window).resize();
 });

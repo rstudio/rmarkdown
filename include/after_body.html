@@ -1,12 +1,16 @@
 </div>
 
 <script>
+
+// manage active state of menu based on current page
 $(document).ready(function () {
+
+    // active menu
     href = window.location.pathname
     href = href.substr(href.lastIndexOf('/') + 1)
     $('a[href="' + href + '"]').parent().addClass('active');
 
-    // menu headers
+    // manage active menu header
     if (href.startsWith('authoring_'))
       $('a[href="' + 'authoring' + '"]').parent().addClass('active');
     else if (href.endsWith('_format.html'))
@@ -16,6 +20,7 @@ $(document).ready(function () {
 
 });
 
+// workaround bootstrap paint bug that occurs on first load
 $(window).on("load", function() {
   $(window).resize();
 });
