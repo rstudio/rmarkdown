@@ -39,7 +39,7 @@ If document rendering becomes time consuming due to long computations or plots t
 If you want to enable caching globally for a document you can include a code chunk like this at the top of the document:
 
 <pre class="markdown"><code>&#96;&#96;&#96;{r setup, include=FALSE}
-opts_chunk$set(cache=TRUE)
+knitr::opts_chunk$set(cache=TRUE)
 &#96;&#96;&#96;
 </code></pre>
 
