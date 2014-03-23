@@ -349,7 +349,7 @@ parse_yaml_front_matter <- function(input_lines) {
   if (!is.null(partitions$front_matter)) {
     front_matter <- partitions$front_matter
     if (length(front_matter) > 2) {
-      front_matter <- front_matter[2:length(front_matter)-1]
+      front_matter <- front_matter[2:(length(front_matter)-1)]
       yaml::yaml.load(paste(front_matter, collapse="\n"))
     }
     else
