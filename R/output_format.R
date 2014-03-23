@@ -350,7 +350,9 @@ parse_yaml_front_matter <- function(input_lines) {
     front_matter <- partitions$front_matter
     if (length(front_matter) > 2) {
       front_matter <- front_matter[2:(length(front_matter)-1)]
-      yaml::yaml.load(paste(front_matter, collapse="\n"))
+      front_matter <- paste(front_matter, collapse="\n")
+      validate_front_matter(front_matter)
+      yaml::yaml.load(front_matter)
     }
     else
       list()
@@ -358,6 +360,14 @@ parse_yaml_front_matter <- function(input_lines) {
   else
     list()
 }
+
+validate_front_matter <- function(front_matter) {
+  front_matter <- trim_trailing_ws(front_matter)
+  if (identical(substring(front_matter, nchar(front_matter)), ":"))
+    stop("Invalid YAML front matter (ends with ':')", call. = FALSE)
+}
+
+
 
 partition_yaml_front_matter <- function(input_lines) {
 

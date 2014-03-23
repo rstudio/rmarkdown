@@ -138,6 +138,10 @@ is_blank <- function (x)
   else TRUE
 }
 
+trim_trailing_ws <- function (x) {
+  sub("\\s+$", "", x)
+}
+
 
 
 
