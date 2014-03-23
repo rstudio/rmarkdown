@@ -150,7 +150,7 @@ summary(cars)
 <p>If document rendering becomes time consuming due to long computations or plots that are expensive to generate you can use knitr caching to improve performance. The documentation <a href="http://yihui.name/knitr/options">knitr chunk and package options</a> describe how caching works and the <a href="http://yihui.name/knitr/demo/cache/">cache examples</a> provide additional details.</p>
 <p>If you want to enable caching globally for a document you can include a code chunk like this at the top of the document:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r setup, include=FALSE}
-opts_chunk$set(cache=TRUE)
+knitr::opts_chunk$set(cache=TRUE)
 &#96;&#96;&#96;
 </code></pre>
 
