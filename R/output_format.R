@@ -343,6 +343,50 @@ is_output_format <- function(x) {
   inherits(x, "rmarkdown_output_format")
 }
 
+enumerate_output_formats <- function(input, envir, encoding) {
+
+  # read the input
+  input_lines <- read_lines_utf8(input, encoding)
+
+  # if this is an R file then spin it
+  if (identical(tolower(tools::file_ext(input)), "r"))
+    input_lines <- knitr::spin(text = input_lines, knit = FALSE, envir = envir)
+
+  # read the ymal front matter
+  yaml_front_matter <- parse_yaml_front_matter(input_lines)
+
+  # read any output.yaml
+  output_yaml <- file.path(dirname(input), "output.yaml")
+  if (file.exists(output_yaml))
+    common_output_format_yaml <- yaml::yaml.load_file(output_yaml)
+  else
+    common_output_format_yaml <- list()
+
+  # parse output formats from front-matter if we have it
+  if (length(common_output_format_yaml) > 0 ||
+      length(yaml_front_matter$output) > 0) {
+
+    # alias the output format yaml
+    output_format_yaml <- yaml_front_matter$output
+
+    # merge against common output.yaml
+    output_format_yaml <- merge_output_options(common_output_format_yaml,
+                                               output_format_yaml)
+  }
+  else {
+    output_format_yaml <- NULL
+  }
+
+  # return them by name
+  if (is.character(output_format_yaml)) {
+    output_format_yaml
+  } else if (is.list(output_format_yaml)) {
+    names(output_format_yaml)
+  } else {
+    "html_document"
+  }
+}
+
 parse_yaml_front_matter <- function(input_lines) {
 
   partitions <- partition_yaml_front_matter(input_lines)
