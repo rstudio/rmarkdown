@@ -9,6 +9,22 @@ render <- function(input,
                    quiet = FALSE,
                    encoding = getOption("encoding")) {
 
+  # check for "all" output formats
+  if (identical(output_format, "all"))
+    output_format <- enumerate_output_formats(input, envir, encoding)
+
+  # check for a list of output formats -- if there is more than one
+  # then recursively call this function with each format by name
+  if (is.character(output_format) && length(output_format) > 1) {
+    outputs <- character()
+    for (format in output_format) {
+      output <- render(input, format, NULL, output_options,
+                       clean, envir, quiet, encoding)
+      outputs <- c(outputs, output)
+    }
+    return(invisible(outputs))
+  }
+
   # check for required version of pandoc
   required_pandoc <- "1.12.3"
   if (!pandoc_available(required_pandoc)) {

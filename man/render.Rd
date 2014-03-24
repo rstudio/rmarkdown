@@ -10,12 +10,14 @@ render(input, output_format = NULL,
 \arguments{
   \item{input}{Input file (R script, Rmd, or plain markdown).}
 
-  \item{output_format}{R Markdown output format to convert to. This can
-  be a character vector with the name of a format; e.g. \code{"html_document"}.
-  Alternatively it can be an output format object; e.g. \code{html_document()}.
-  If \code{NULL} is passed then the output format is read from the YAML
-  metadata within the input file (defaulting to HTML if no format is specified
-  in metadata).}
+  \item{output_format}{R Markdown output format to convert to. Pass
+  \code{"all"} to render all formats defined within the file. Pass
+  the name of a format (e.g. \code{"html_document"}) to render a single
+  format or pass a vector of format names to render multiple formats.
+  Alternatively you can pass an output format object;
+  e.g. \code{html_document()}. If \code{NULL} is passed then the
+  output format is the first one defined in the YAML metadata of the
+  input file (defaulting to HTML if none is specified).}
 
   \item{output_options}{List of output options that can override the options
   specified in metadata (e.g. could be used to force \code{self_contained} or
@@ -104,5 +106,23 @@ If there is no format defined in the YAML then
 \seealso{
 \link[knitr:knit]{knit}, \link{output_format},
 \href{http://johnmacfarlane.net/pandoc}{pandoc}
+}
+\examples{
+\dontrun{
+
+library(rmarkdown)
+
+# render the default (first) format defined in the file
+render("input.Rmd")
+
+# render all formats defined in the file
+render("input.Rmd", "all")
+
+# render a single format
+render("input.Rmd", "html_document")
+
+# render multiple formats
+render("input.Rmd", c("html_document", "pdf_document"))
+}
 }
 

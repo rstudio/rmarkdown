@@ -98,6 +98,12 @@ render("input.Rmd", "pdf_document")
 
 If no explicit format name is passed to `render` then the first one defined will be used.
 
+You can also render all format defined in the file with:
+
+```S
+render("input.Rmd", "all")
+```
+
 #### Shared Output Formats
 
 You can also define output formats externally in a file named `output.yaml` located in the same directory as the R Markdown source file. For example:
