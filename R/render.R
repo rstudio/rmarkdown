@@ -122,12 +122,14 @@ render <- function(input,
     knitr::opts_chunk$set(tidy = FALSE, error = FALSE)
 
     # trim whitespace from around source code
-    local({
-      hook_source = knitr::knit_hooks$get('source')
-      knitr::knit_hooks$set(source = function(x, options) {
-        hook_source(strip_white(x), options)
+    if (packageVersion("knitr") < "1.5.23") {
+      local({
+        hook_source = knitr::knit_hooks$get('source')
+        knitr::knit_hooks$set(source = function(x, options) {
+          hook_source(strip_white(x), options)
+        })
       })
-    })
+    }
 
     # use filename based figure and cache directories
     figures_dir <- paste(files_dir,
