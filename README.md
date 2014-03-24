@@ -96,9 +96,7 @@ To select from the various formats defined you can pass a format name to `render
 render("input.Rmd", "pdf_document")
 ```
 
-If no explicit format name is passed to `render` then the first one defined will be used.
-
-You can also render all format defined in the file with:
+If no explicit format name is passed to `render` then the first one defined will be used. You can also render all formats defined in the file with:
 
 ```S
 render("input.Rmd", "all")
