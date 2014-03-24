@@ -123,6 +123,19 @@ output:
 ---
 ```
 
+If you are using `rmarkdown::render` then you can pass a format name to `render` to select from the available formats. For example:
+
+```r
+render("input.Rmd", "pdf_document")
+```
+
+You can also render all formats defined in an input file with:
+
+```r
+render("input.Rmd", "all")
+```
+
+
 ## Learning More
 
 With the basics described above you can get started with R Markdown right away. To learn more see:
