@@ -10,8 +10,11 @@ render <- function(input,
                    encoding = getOption("encoding")) {
 
   # check for "all" output formats
-  if (identical(output_format, "all"))
+  if (identical(output_format, "all")) {
     output_format <- enumerate_output_formats(input, envir, encoding)
+    if (is.null(output_format))
+      output_format <- "html_document"
+  }
 
   # check for a list of output formats -- if there is more than one
   # then recursively call this function with each format by name

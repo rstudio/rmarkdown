@@ -383,7 +383,7 @@ enumerate_output_formats <- function(input, envir, encoding) {
   } else if (is.list(output_format_yaml)) {
     names(output_format_yaml)
   } else {
-    "html_document"
+    NULL
   }
 }
 
