@@ -243,9 +243,9 @@ Documentation on all available pandoc arguments can be found in the [pandoc user
 
 ## Shared Options
 
-If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named `output.yaml` within the directory. Note that no YAML delimeters or enclosing output object are used in this file. For example:
+If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named `_output.yaml` within the directory. Note that no YAML delimeters or enclosing output object are used in this file. For example:
 
-**output.yaml**
+**\_output.yaml**
 
 ```yaml
 revealjs_presentation:
@@ -254,7 +254,7 @@ revealjs_presentation:
   highlight: pygments
 ```
 
-All documents located in the same directory as `output.yaml` will inherit it's options. Options defined explicitly within documents will override those specified in the shared options file.
+All documents located in the same directory as `_output.yaml` will inherit it's options. Options defined explicitly within documents will override those specified in the shared options file.
 
 
 
