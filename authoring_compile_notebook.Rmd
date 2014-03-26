@@ -4,7 +4,7 @@ title: "Compiling Notebooks from R Scripts"
 
 ## Overview
 
-You don't necessary need to author an R Markdown document to create a dynamic report. In fact, you can take any R script and compile it into a notebook that includes commentary, source code, and script output. Notebooks can be compiled to any output format including HTML, PDF, and MS Word.
+You don't necessary need to author an R Markdown document to create a dynamic report. In fact, you can take any R script and compile it into a notebook that includes commentary, source code, and script output. Notebooks can be compiled to any output format including HTML, PDF, MS Word, and Markdown.
 
 To compile a notebook from an R script you simply pass the script to render. For example:
 
@@ -13,7 +13,13 @@ rmarkdown::render("analysis.R")
 rmarkdown::render("analysis.R", "pdf_document")
 ```
 
-The first call to render creates an HTML document, whereas the second creates a PDF document. By default the name of the script, username, and current date and time are included in the header of the notebook. You can override this default behavior by including explicit metadata in a specially formatted R comment:
+The first call to render creates an HTML document, whereas the second creates a PDF document.
+
+If you are using RStudio then you can also create a notebook using the *Compile Notebook* command (Ctrl+Shift+K).
+
+## Metadata
+
+By default the name of the script, username, and current date and time are included in the header of the notebook. You can override this default behavior by including metadata in a specially formatted R comment:
 
 ```{r, eval=FALSE}
 #' ---
@@ -23,7 +29,16 @@ The first call to render creates an HTML document, whereas the second creates a 
 #' ---
 ```
 
-## Including Markdown
+You can also specify the output format within the metadata, for example:
+
+```{r, eval=FALSE}
+#' ---
+#' title: "Crop Analysis Q3 2013"
+#' output: pdf_document
+#' ---
+```
+
+## Markdown Formatting
 
 Note that the R comment used above to add a title, author, and date includes a single-quote as a special prefix character. This is a [roxygen2](http://cran.rstudio.com/web/packages/roxygen2/index.html) style comment, and it's actually possible to include many such comments in an R script, all of which will be converted to markdown content within the compiled notebook. For example:
 
@@ -35,7 +50,12 @@ Rather than displaying as an R comment in the compiled notebook any roxygen2 sty
 
 ## knitr Spin
 
-Including markdown within R comments is possible because `rmarkdown::render` calls the [`knitr::spin`](http://yihui.name/knitr/demo/stitch/) function to convert the R script to an Rmd file. The spin function also enables you to add knitr chunk options with another special comment prefix (`#+`).
+Including markdown within R comments is possible because `rmarkdown::render` calls the [`knitr::spin`](http://yihui.name/knitr/demo/stitch/) function to convert the R script to an Rmd file. The spin function also enables you to add knitr chunk options with another special comment prefix (`#+`). For example:
+
+```{r, eval=FALSE}
+#+ fig.width=5, fig.height=5
+plot(cars)
+```
 
 For more information on using spin see:
 

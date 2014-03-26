@@ -120,26 +120,38 @@ body {
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>You don’t necessary need to author an R Markdown document to create a dynamic report. In fact, you can take any R script and compile it into a notebook that includes commentary, source code, and script output. Notebooks can be compiled to any output format including HTML, PDF, and MS Word.</p>
+<p>You don’t necessary need to author an R Markdown document to create a dynamic report. In fact, you can take any R script and compile it into a notebook that includes commentary, source code, and script output. Notebooks can be compiled to any output format including HTML, PDF, MS Word, and Markdown.</p>
 <p>To compile a notebook from an R script you simply pass the script to render. For example:</p>
 <pre class="r"><code>rmarkdown::render(&quot;analysis.R&quot;)
 rmarkdown::render(&quot;analysis.R&quot;, &quot;pdf_document&quot;)</code></pre>
-<p>The first call to render creates an HTML document, whereas the second creates a PDF document. By default the name of the script, username, and current date and time are included in the header of the notebook. You can override this default behavior by including explicit metadata in a specially formatted R comment:</p>
+<p>The first call to render creates an HTML document, whereas the second creates a PDF document.</p>
+<p>If you are using RStudio then you can also create a notebook using the <em>Compile Notebook</em> command (Ctrl+Shift+K).</p>
+</div>
+<div id="metadata" class="section level2">
+<h2>Metadata</h2>
+<p>By default the name of the script, username, and current date and time are included in the header of the notebook. You can override this default behavior by including metadata in a specially formatted R comment:</p>
 <pre class="r"><code>#&#39; ---
 #&#39; title: &quot;Crop Analysis Q3 2013&quot;
 #&#39; author: &quot;John Smith&quot;
 #&#39; date: &quot;May 3rd, 2014&quot;
 #&#39; ---</code></pre>
+<p>You can also specify the output format within the metadata, for example:</p>
+<pre class="r"><code>#&#39; ---
+#&#39; title: &quot;Crop Analysis Q3 2013&quot;
+#&#39; output: pdf_document
+#&#39; ---</code></pre>
 </div>
-<div id="including-markdown" class="section level2">
-<h2>Including Markdown</h2>
+<div id="markdown-formatting" class="section level2">
+<h2>Markdown Formatting</h2>
 <p>Note that the R comment used above to add a title, author, and date includes a single-quote as a special prefix character. This is a <a href="http://cran.rstudio.com/web/packages/roxygen2/index.html">roxygen2</a> style comment, and it’s actually possible to include many such comments in an R script, all of which will be converted to markdown content within the compiled notebook. For example:</p>
 <pre class="r"><code>#&#39; A script comment that includes **markdown** formatting.</code></pre>
 <p>Rather than displaying as an R comment in the compiled notebook any roxygen2 style comment will be treated as markdown and rendered accordingly.</p>
 </div>
 <div id="knitr-spin" class="section level2">
 <h2>knitr Spin</h2>
-<p>Including markdown within R comments is possible because <code>rmarkdown::render</code> calls the <a href="http://yihui.name/knitr/demo/stitch/"><code>knitr::spin</code></a> function to convert the R script to an Rmd file. The spin function also enables you to add knitr chunk options with another special comment prefix (<code>#+</code>).</p>
+<p>Including markdown within R comments is possible because <code>rmarkdown::render</code> calls the <a href="http://yihui.name/knitr/demo/stitch/"><code>knitr::spin</code></a> function to convert the R script to an Rmd file. The spin function also enables you to add knitr chunk options with another special comment prefix (<code>#+</code>). For example:</p>
+<pre class="r"><code>#+ fig.width=5, fig.height=5
+plot(cars)</code></pre>
 <p>For more information on using spin see:</p>
 <ul>
 <li><p>Spin documentation: <a href="http://yihui.name/knitr/demo/stitch/">http://yihui.name/knitr/demo/stitch/</a></p></li>
