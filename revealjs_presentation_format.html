@@ -370,11 +370,6 @@ $(document).ready(function () {
 
 });
 
-// workaround bootstrap paint bug that occurs on first load
-$(window).on("load", function() {
-  $(window).resize();
-});
-
 </script>
 
 </div>
@@ -385,6 +380,12 @@ $(window).on("load", function() {
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
+// workaround bootstrap paint bug that occurs on first load
+$(window).on("load", function() {
+  $(window).resize();
+});
+
 </script>
 
 
