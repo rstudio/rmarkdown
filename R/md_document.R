@@ -12,6 +12,8 @@
 #'   \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc's
 #'    markdown} for details.
 #'
+#' @param preserve_yaml Preserve YAML front matter in final document.
+#'
 #' @param fig_retina Scaling to perform for retina displays. Defaults to
 #'   \code{NULL} which performs no scaling. A setting of 2 will work for all
 #'   widely used retina displays, but will also result in the output of
@@ -41,6 +43,7 @@
 #'
 #' @export
 md_document <- function(variant = "markdown_strict",
+                        preserve_yaml = FALSE,
                         toc = FALSE,
                         toc_depth = 3,
                         fig_width = 7,
@@ -66,11 +69,28 @@ md_document <- function(variant = "markdown_strict",
   # pandoc args
   args <- c(args, pandoc_args)
 
+  # add post_processor for yaml preservation
+  if (preserve_yaml) {
+    post_processor <- function(input_file, output_file, verbose) {
+      input_lines <- readLines(input_file, warn = FALSE)
+      partitioned <- partition_yaml_front_matter(input_lines)
+      if (!is.null(partitioned$front_matter)) {
+        output_lines <- c(partitioned$front_matter,
+                          "",
+                          readLines(output_file, warn = FALSE))
+        writeLines(output_lines, output_file, useBytes = TRUE)
+      }
+    }
+  } else {
+    post_processor <- NULL
+  }
+
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina),
     pandoc = pandoc_options(to = variant,
                             from = from_rmarkdown(),
-                            args = args)
+                            args = args),
+    post_processor = post_processor
   )
 }

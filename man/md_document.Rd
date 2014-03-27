@@ -2,9 +2,10 @@
 \alias{md_document}
 \title{Convert to a markdown document}
 \usage{
-md_document(variant = "markdown_strict", toc = FALSE, toc_depth = 3,
-  fig_width = 7, fig_height = 5, fig_retina = NULL, includes = NULL,
-  data_dir = NULL, pandoc_args = NULL)
+md_document(variant = "markdown_strict", preserve_yaml = FALSE,
+  toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
+  fig_retina = NULL, includes = NULL, data_dir = NULL,
+  pandoc_args = NULL)
 }
 \arguments{
   \item{variant}{Markdown variant to produce (defaults to
@@ -15,6 +16,9 @@ md_document(variant = "markdown_strict", toc = FALSE, toc_depth = 3,
   documentation on
   \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc's
   markdown} for details.}
+
+  \item{preserve_yaml}{Preserve YAML front matter in final
+  document.}
 
   \item{fig_retina}{Scaling to perform for retina displays.
   Defaults to \code{NULL} which performs no scaling. A
