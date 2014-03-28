@@ -76,7 +76,9 @@ pandoc_convert <- function(input,
     cat(command, "\n")
 
   # run the conversion
-  result <- system(command)
+  with_pandoc_safe_environment({
+    result <- system(command)
+  })
   if (result != 0)
     stop("pandoc document conversion failed", call. = FALSE)
 
@@ -374,12 +376,26 @@ find_pandoc <- function() {
 # Get an S3 numeric_version for the pandoc utility at the specified path
 get_pandoc_version <- function(pandoc_dir) {
   pandoc_path <- file.path(pandoc_dir, "pandoc")
-  version_info <- system(paste(shQuote(pandoc_path), "--version"), intern = TRUE)
+  with_pandoc_safe_environment({
+    version_info <- system(paste(shQuote(pandoc_path), "--version"),
+                           intern = TRUE)
+  })
   version <- strsplit(version_info, "\n")[[1]][1]
   version <- strsplit(version, " ")[[1]][2]
   numeric_version(version)
 }
 
+# wrap a system call to pandoc so that LC_ALL is not set
+# see: https://github.com/rstudio/rmarkdown/issues/31
+# see: https://ghc.haskell.org/trac/ghc/ticket/7344
+with_pandoc_safe_environment <- function(code) {
+  lc_all <- Sys.getenv("LC_ALL", unset = NA)
+  if (!is.na(lc_all)) {
+    Sys.unsetenv("LC_ALL")
+    on.exit(Sys.setenv(LC_ALL = lc_all), add = TRUE)
+  }
+  force(code)
+}
 
 # get the path to the pandoc binary
 pandoc <- function() {
