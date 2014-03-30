@@ -4,7 +4,7 @@ The **rmarkdown** package is a next generation implementation of R Markdown base
 
 * Create HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home) [ioslides](https://code.google.com/p/io-2012-slides/) and [reveal.js](http://lab.hakim.se/reveal-js/#/) presentations.
 * New markdown syntax including expanded support for tables, definition lists, and bibliographies.
-* A responsive (multi-device friendly) and themeable HTML template based on [Bootstrap 3](http://getbootstrap.com).
+* A responsive (multi-device friendly) and themeable HTML template based on [Bootstrap](http://getbootstrap.com/2.3.2/).
 * Hooks for customizing HTML and PDF output (include CSS, headers, and footers).
 * Include raw LaTeX within markdown for advanced customization of PDF output.
 * Extensibility: easily define new formats for custom publishing requirements.

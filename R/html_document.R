@@ -20,7 +20,7 @@
 #'   contained documents MathJax is still loaded externally (this is
 #'   necessary because of it's size).
 #' @param theme Visual theme ("default", "cerulean", "journal", "flatly",
-#'   "readable", "spacelab", "united", "yeti", or "cosmo"). Pass \code{NULL} for
+#'   "readable", "spacelab", "united", or "cosmo"). Pass \code{NULL} for
 #'   no theme (in this case you can use the \code{css} parameter to add your own
 #'   styles).
 #' @param highlight Syntax highlighting style. Supported styles include
@@ -176,14 +176,14 @@ html_document <- function(toc = FALSE,
       if (identical(theme, "default"))
         theme <- "bootstrap"
 
-      jquery_path <- rmarkdown_system_file("rmd/h/jquery-1.10.2")
+      jquery_path <- rmarkdown_system_file("rmd/h/jquery-1.11.0")
       if(!self_contained)
         jquery_path <- render_supporting_files(jquery_path, lib_dir)
       args <- c(args, "--variable", paste("jquery:",
                                           pandoc_path_arg(jquery_path),
                                           sep = ""))
 
-      bootstrap_path <- rmarkdown_system_file("rmd/h/bootstrap-3.0.3")
+      bootstrap_path <- rmarkdown_system_file("rmd/h/bootstrap-2.3.2")
       if (!self_contained)
         bootstrap_path <- render_supporting_files(bootstrap_path, lib_dir)
       args <- c(args, "--variable", paste("bootstrap:",
@@ -260,7 +260,6 @@ themes <- function() {
     "readable",
     "spacelab",
     "united",
-    "yeti",
     "cosmo")
 }
 

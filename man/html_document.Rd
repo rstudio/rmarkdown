@@ -40,10 +40,10 @@ html_document(toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
   because of it's size).}
 
   \item{theme}{Visual theme ("default", "cerulean",
-  "journal", "flatly", "readable", "spacelab", "united",
-  "yeti", or "cosmo"). Pass \code{NULL} for no theme (in
-  this case you can use the \code{css} parameter to add
-  your own styles).}
+  "journal", "flatly", "readable", "spacelab", "united", or
+  "cosmo"). Pass \code{NULL} for no theme (in this case you
+  can use the \code{css} parameter to add your own
+  styles).}
 
   \item{highlight}{Syntax highlighting style. Supported
   styles include "default", "tango", "pygments", "kate",

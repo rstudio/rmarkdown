@@ -21,9 +21,10 @@ $endif$
 
 $if(theme)$
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="$theme$" rel="stylesheet">
 <script src="$jquery$/jquery.min.js"></script>
+<link href="$theme$" rel="stylesheet">
 <script src="$bootstrap$/js/bootstrap.min.js"></script>
+<link href="$bootstrap$/css/bootstrap-responsive.min.css" rel="stylesheet">
 $endif$
 
 $if(highlightjs)$
@@ -118,11 +119,6 @@ $if(theme)$
 // add bootstrap table styles to pandoc tables
 $$(document).ready(function () {
   $$('tr.header').parent('thead').parent('table').addClass('table table-condensed');
-});
-
-// workaround bootstrap paint bug that occurs on first load
-$$(window).on("load", function() {
-  $$(window).resize();
 });
 
 </script>
