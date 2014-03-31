@@ -4,17 +4,30 @@
 /* padding for bootstrap navbar */
 body {
   padding-top: 50px;
+  padding-bottom: 40px;
+}
+@media (max-width: 979px) {
+  body {
+    padding-top: 0;
+  }
 }
 
 /* offset scroll position for anchor links (for fixed navbar)  */
-.section {
-  padding-top: 50px;
-  margin-top: -50px;
+@media (min-width: 980px) {
+  .section h2 {
+    padding-top: 52px;
+    margin-top: -52px;
+  }
+  .section h3 {
+    padding-top: 52px;
+    margin-top: -52px;
+  }
 }
 
-/* improved alighnment for italic headers in menubar */
-.dropdown-menu em {
-  padding-left: 10px;
+
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+  color: black;
 }
 
 </style>
