@@ -91,6 +91,7 @@ md_document <- function(variant = "markdown_strict",
     pandoc = pandoc_options(to = variant,
                             from = from_rmarkdown(),
                             args = args),
+    clean_supporting = FALSE,
     post_processor = post_processor
   )
 }
