@@ -136,9 +136,9 @@ pdf_document <- function(toc = FALSE,
 
   # use a geometry filter when we are using the "default" template
   if (identical(template, "default"))
-    format_filter <- filter_pdf
+    pre_processor <- pdf_pre_processor
   else
-    format_filter <- NULL
+    pre_processor <- NULL
 
   # return format
   output_format(
@@ -147,23 +147,24 @@ pdf_document <- function(toc = FALSE,
                             from = from_rmarkdown(fig_caption),
                             args = args,
                             keep_tex = keep_tex),
-    format_filter = format_filter
+    pre_processor = pre_processor
   )
 }
 
 
 # Use filter to set pdf geometry defaults (while making sure we don't override
 # any geometry settings already specified by the user)
-filter_pdf <- function(output_format, files_dir, input_lines) {
+pdf_pre_processor <- function(input_lines, files_dir) {
+
+  args <- c()
 
   # set the margin to 1 inch if not otherwise specified
   has_margin <- function(text) {
     length(grep("^geometry\\:[ \\t]*margin=\\d+(\\.?\\d+)?\\w+$", text)) > 0
   }
-  if (!has_margin(input_lines) && !has_margin(output_format$pandoc$args))
-    output_format$pandoc$args <- c(output_format$pandoc$args,
-                                   "--variable", "geometry:margin=1in")
+  if (!has_margin(input_lines))
+    args <- c(args, "--variable", "geometry:margin=1in")
 
-  output_format
+  args
 }
 

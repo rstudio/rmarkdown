@@ -158,9 +158,9 @@ html_document <- function(toc = FALSE,
   # pandoc args
   args <- c(args, pandoc_args)
 
-  # build a filter we'll use for arguments that may depend on the name of the
+  # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  format_filter <- function(output_format, files_dir, input_lines) {
+  pre_processor <- function(input_lines, files_dir) {
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
@@ -212,9 +212,8 @@ html_document <- function(toc = FALSE,
                                         self_contained,
                                         lib_dir))
 
-    # return format with ammended args
-    output_format$pandoc$args <- c(output_format$pandoc$args, args)
-    output_format
+    # return additional args
+    args
   }
 
   # return format
@@ -224,7 +223,7 @@ html_document <- function(toc = FALSE,
                             from = from_rmarkdown(fig_caption),
                             args = args),
     clean_supporting = self_contained,
-    format_filter = format_filter
+    pre_processor = pre_processor
   )
 }
 

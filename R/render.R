@@ -119,13 +119,6 @@ render <- function(input,
   # use output filename based files dir
   files_dir <- knitr_files_dir(basename(output_file))
 
-  # call any filter that's been specified
-  if (!is.null(output_format$format_filter)) {
-    output_format <- output_format$format_filter(output_format = output_format,
-                                                 files_dir = files_dir,
-                                                 input_lines = input_lines)
-  }
-
   # knit if necessary
   if (tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")) {
 
@@ -205,6 +198,12 @@ render <- function(input,
   # read the input text as UTF-8 then write it back out
   input_text <- read_lines_utf8(input, encoding)
   writeLines(input_text, utf8_input, useBytes = TRUE)
+
+  # call any pre_processor
+  if (!is.null(output_format$pre_processor)) {
+    extra_pandoc_args <- output_format$pre_processor(input_text, files_dir)
+    output_format$pandoc$args <- c(output_format$pandoc$args, extra_pandoc_args)
+  }
 
   # copy supporting files to the output directory if necessary
   if (!output_format$clean_supporting) {
