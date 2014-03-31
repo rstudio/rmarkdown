@@ -10,8 +10,8 @@
 #' @param clean_supporting Cleanup any supporting files after conversion
 #'   see \code{\link{render_supporting_files}}
 #' @param pre_processor An optional pre-processor function that receives
-#'   the \code{input_lines} and \code{files_dir} and can return
-#'   additional arguments to pass to pandoc.
+#'   the \code{input_lines}, \code{knit_meta}, and \code{files_dir} and
+#'   can return additional arguments to pass to pandoc.
 #' @param post_processor An optional post-processor function that
 #'   receives the \code{input_file}, \code{output_file}, and
 #'   \code{verbose} parmaeters.

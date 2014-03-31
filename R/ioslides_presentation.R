@@ -72,7 +72,7 @@ ioslides_presentation <- function(logo = NULL,
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(input_lines, files_dir) {
+  pre_processor <- function(input_lines, knit_meta, files_dir) {
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))

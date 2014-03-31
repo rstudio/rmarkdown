@@ -154,7 +154,7 @@ pdf_document <- function(toc = FALSE,
 
 # Use filter to set pdf geometry defaults (while making sure we don't override
 # any geometry settings already specified by the user)
-pdf_pre_processor <- function(input_lines, files_dir) {
+pdf_pre_processor <- function(input_lines, knit_meta, files_dir) {
 
   args <- c()
 
