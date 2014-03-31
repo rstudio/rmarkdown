@@ -5,6 +5,7 @@ render <- function(input,
                    output_file = NULL,
                    output_options = NULL,
                    clean = TRUE,
+                   params = NULL,
                    envir = parent.frame(),
                    quiet = FALSE,
                    encoding = getOption("encoding")) {
@@ -167,6 +168,20 @@ render <- function(input,
       knitr::opts_knit$set(as.list(output_format$knitr$opts_knit))
       knitr::opts_chunk$set(as.list(output_format$knitr$opts_chunk))
       knitr::knit_hooks$set(as.list(output_format$knitr$knit_hooks))
+    }
+
+    # if there isn't already an entity named "params" in the knit
+    # environment then merge any params passed to this function into the
+    # yaml front matter and make that available in the knit environment
+    # as "params" (then remove the value from the environment on exit)
+    if (!exists("params", envir = envir)) {
+      yaml_front_matter <- parse_yaml_front_matter(input_lines)
+      params <- merge_lists(yaml_front_matter, params)
+      assign("params", params, envir = envir)
+      on.exit(remove("params", envir = envir), add = TRUE)
+    } else {
+      warning("'params' value already exists in knit environment, not ",
+              "adding YAML params")
     }
 
     # perform the knit
