@@ -137,3 +137,23 @@ draft <- function(file,
   # return the name of the file created
   invisible(file)
 }
+
+# List the template directories that are available for consumption.
+list_template_dirs <- function() {
+
+  # check each installed package for templates
+  packages <- row.names(installed.packages())
+  for (pkg in packages) {
+
+    # check to see if the package includes a template folder
+    template_folder <- system.file("rmarkdown", "templates", package = pkg)
+    if (file.exists(template_folder)) {
+
+      # it does; list each template directory within the template folder
+      template_dirs <- list.dirs(path = template_folder, recursive = FALSE)
+      for (dir in template_dirs) {
+        cat(pkg, "|", dir, "\n", sep="")
+      }
+    }
+  }
+}
