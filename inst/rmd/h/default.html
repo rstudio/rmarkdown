@@ -19,13 +19,9 @@ $endif$
 
 <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
 
-$if(theme)$
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="$jquery$/jquery.min.js"></script>
-<link href="$theme$" rel="stylesheet">
-<script src="$bootstrap$/js/bootstrap.min.js"></script>
-<link href="$bootstrap$/css/bootstrap-responsive.min.css" rel="stylesheet">
-$endif$
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 $if(highlightjs)$
 <style type="text/css">code{white-space: pre;}</style>
@@ -55,10 +51,6 @@ $endif$
 
 $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
-$endfor$
-
-$for(header-includes)$
-$header-includes$
 $endfor$
 
 </head>

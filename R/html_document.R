@@ -148,9 +148,6 @@ html_document <- function(toc = FALSE,
   for (css_file in css)
     args <- c(args, "--css", pandoc_path_arg(css_file))
 
-  # content includes
-  args <- c(args, includes_to_pandoc_args(includes))
-
   # data dir
   if (!is.null(data_dir))
     args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
@@ -169,35 +166,53 @@ html_document <- function(toc = FALSE,
     # extra args
     args <- c()
 
-    # determine bootstrap path (copy supporting if not self contained)
+    # handle theme
     if (!is.null(theme)) {
-
       theme <- match.arg(theme, themes())
       if (identical(theme, "default"))
         theme <- "bootstrap"
+      args <- c(args, "--variable", paste("theme:", theme, sep=""))
+    }
 
-      jquery_path <- rmarkdown_system_file("rmd/h/jquery-1.11.0")
-      if(!self_contained)
-        jquery_path <- render_supporting_files(jquery_path, lib_dir)
-      args <- c(args, "--variable", paste("jquery:",
-                                          pandoc_path_arg(jquery_path),
-                                          sep = ""))
+    # resolve and include dependencies
+    dependencies_html <- c()
+    dependencies <- resolve_html_document_dependencies(theme, knit_meta)
+    for (dep in dependencies) {
 
-      bootstrap_path <- rmarkdown_system_file("rmd/h/bootstrap-2.3.2")
-      if (!self_contained)
-        bootstrap_path <- render_supporting_files(bootstrap_path, lib_dir)
-      args <- c(args, "--variable", paste("bootstrap:",
-                                          pandoc_path_arg(bootstrap_path),
-                                          sep = ""))
+      # copy library files if necessary
+      if (!self_contained) {
+        dep$path <- render_supporting_files(dep$path, lib_dir)
+      }
 
-      # form path to theme and add theme variable
-      theme_path <- paste(bootstrap_path,
-                          "/css/",
-                          theme,
-                          ".min.css",
-                          sep="")
-      theme_path <- pandoc_path_arg(theme_path)
-      args <- c(args, "--variable", paste("theme:", theme_path, sep=""))
+      # add meta content
+      for (name in names(dep$meta)) {
+        dependencies_html <- c(dependencies_html,
+          paste("<meta name=\"", name, "\" content=\"", dep$meta[[name]], "\" />", sep = ""))
+      }
+
+      # add stylesheets
+      for (stylesheet in dep$stylesheet) {
+        stylesheet <- file.path(dep$path, stylesheet)
+        dependencies_html <- c(dependencies_html,
+          paste("<link href=\"", stylesheet, "\" rel=\"stylesheet\" />", sep = ""))
+      }
+
+      # add scripts
+      for (script in dep$script) {
+        script <- file.path(dep$path, script)
+        dependencies_html <- c(dependencies_html,
+          paste("<script src=\"", script, "\"></script>", sep = ""))
+      }
+
+      # add raw head content
+      dependencies_html <- c(dependencies_html, dep$head)
+    }
+
+    # write to a temp file and include it in the document
+    if (length(dependencies_html) > 0) {
+      deps_file <- tempfile("rmarkdown-head", fileext = ".html")
+      writeLines(dependencies_html, deps_file)
+      args <- c(args, pandoc_include_args(in_header = deps_file))
     }
 
     # highlight
@@ -211,6 +226,10 @@ html_document <- function(toc = FALSE,
                                         template,
                                         self_contained,
                                         lib_dir))
+
+    # content includes (we do this here so that user include-in-header content
+    # goes after dependency generated content)
+    args <- c(args, includes_to_pandoc_args(includes))
 
     # return additional args
     args
