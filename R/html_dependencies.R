@@ -39,6 +39,25 @@ html_dependency_bootstrap <- function(theme) {
                                  "css/bootstrap-responsive.min.css"))
 }
 
+# copy the library directory of a dependency and return the path to
+# the directory which was copied to
+html_dependency_copy_lib <- function(dependency, lib_dir) {
+
+  # auto-create lib_dir
+  if (!file.exists(lib_dir))
+    dir.create(lib_dir)
+
+  # target directory is based on the dirname of the path
+  target_dir <- file.path(lib_dir, basename(dependency$path))
+
+  # copy the directory if it hasn't already been copied
+  if (!file.exists(target_dir))
+    file.copy(from = dependency$path, to = lib_dir, recursive = TRUE)
+
+  # return the target dir
+  target_dir
+}
+
 
 # resolve html dependencies (inclusive of a format's built-in dependencies)
 html_dependencies_for_document <- function(format_deps, knit_meta) {
@@ -93,7 +112,8 @@ html_dependencies_for_document <- function(format_deps, knit_meta) {
   dependencies
 }
 
-
+# return the html dependencies as an HTML string suitable for inclusion
+# in the head of a document
 html_dependencies_as_string <- function(dependencies, lib_dir) {
 
   dependencies_html <- c()
@@ -102,7 +122,7 @@ html_dependencies_as_string <- function(dependencies, lib_dir) {
 
     # copy library files if necessary
     if (!is.null(lib_dir)) {
-      dep$path <- render_supporting_files(dep$path, lib_dir)
+      dep$path <- html_dependency_copy_lib(dep, lib_dir)
     }
 
     # add meta content
@@ -132,6 +152,8 @@ html_dependencies_as_string <- function(dependencies, lib_dir) {
   dependencies_html
 }
 
+# return the html dependencies a tempfile which can be included
+# within the head of a document
 html_dependencies_as_tmpfile <- function(dependencies, lib_dir) {
 
   deps_tmpfile <- tempfile("rmarkdown-head", fileext = ".html")
@@ -142,6 +164,7 @@ html_dependencies_as_tmpfile <- function(dependencies, lib_dir) {
 }
 
 
+# check class of passed list for 'html_dependency'
 is_html_dependency <- function(list) {
   inherits(list, "html_dependency")
 }
