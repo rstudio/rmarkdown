@@ -97,11 +97,11 @@ ioslides_presentation <- function(logo = NULL,
                                           sep = ""))
     }
 
-    # resolve and inject html dependencies
-    dependencies <- resolve_html_dependencies(NULL, knit_meta)
-    args <- c(args, pandoc_html_dependencies_args(dependencies,
-                                                  self_contained,
-                                                  lib_dir))
+    # resolve and inject dynamic html dependencies
+    dependencies <- html_dependencies_for_document(NULL, knit_meta)
+    args <- c(args, html_dependencies_to_pandoc_args(dependencies,
+                                                     self_contained,
+                                                     lib_dir))
 
     # ioslides
     ioslides_path <- rmarkdown_system_file("rmd/ioslides/ioslides-13.5.1")

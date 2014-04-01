@@ -176,15 +176,16 @@ html_document <- function(toc = FALSE,
 
     # resolve dependencies
     if (!is.null(theme))
-      format_deps <- list(jquery_dependency(), bootstrap_dependency(theme))
+      format_deps <- list(html_dependency_jquery(),
+                          html_dependency_bootstrap(theme))
     else
       format_deps <- NULL
-    dependencies <- resolve_html_dependencies(format_deps, knit_meta)
+    dependencies <- html_dependencies_for_document(format_deps, knit_meta)
 
     # inject dependencies
-    args <- c(args, pandoc_html_dependencies_args(dependencies,
-                                                  self_contained,
-                                                  lib_dir))
+    args <- c(args, html_dependencies_to_pandoc_args(dependencies,
+                                                     self_contained,
+                                                     lib_dir))
 
     # highlight
     args <- c(args, pandoc_html_highlight_args(highlight,
