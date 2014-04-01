@@ -23,7 +23,7 @@ render <- function(input,
     outputs <- character()
     for (format in output_format) {
       output <- render(input, format, NULL, output_options,
-                       clean, envir, quiet, encoding)
+                       clean, params, envir, quiet, encoding)
       outputs <- c(outputs, output)
     }
     return(invisible(outputs))
