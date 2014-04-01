@@ -18,9 +18,9 @@ resolve_html_dependencies <- function(format_deps, knit_meta) {
 
   # list of dependencies to return (start with format_deps)
   if (!is.null(format_deps))
-    dependencies <- format_deps
+    all_dependencies <- format_deps
   else
-    dependencies <- list()
+    all_dependencies <- list()
 
   # knit_meta is a list of 'meta' attributes returned from custom knit_print
   # functions. since the 'meta' attribute could either be an html dependency or
@@ -28,21 +28,40 @@ resolve_html_dependencies <- function(format_deps, knit_meta) {
   for (dep in knit_meta) {
     if (is.null(names(dep))) {
       inner_dependencies <- collect_html_dependencies(theme, dep)
-      dependencies <- append(dependencies, inner_dependencies)
+      all_dependencies <- append(all_dependencies, inner_dependencies)
     }
     else if (is_html_dependency(dep)) {
       validate_html_dependency(dep)
-      dependencies[[length(dependencies) + 1]] <- dep
+      all_dependencies[[length(all_dependencies) + 1]] <- dep
     }
   }
 
-  #
-  # TODO: there can still be duplicate library names with different versions,
-  # pick one and then merge their stylesheet, script, and head entries
-  #
+  # consolidate dependencies (use latest versions and remove duplicates)
+  dependencies <- list()
+  for (dep in unique(all_dependencies)) {
+    # if we already have a library of this name then re-use it
+    if (!is.null(dependencies[[dep$name]])) {
+      # if this one is newer then use it's path/version
+      version <- dependencies[[dep$name]]$version
+      if (numeric_version(dep$version) > numeric_version(version)) {
+        dependencies[[dep$name]]$version <- dep$version
+        dependencies[[dep$name]]$path <- dep$path
+      }
+      # consolidate other fields
+      dependencies[[dep$name]]$script <-
+        unique(c(dependencies[[dep$name]]$script, dep$script))
+      dependencies[[dep$name]]$stylesheet <-
+        unique(c(dependencies[[dep$name]]$stylesheet, dep$stylesheet))
+      dependencies[[dep$name]]$head <-
+        unique(c(dependencies[[dep$name]]$head, dep$head))
+    # first instance of this library, just copy over all the fields
+    } else {
+      dependencies[[dep$name]] <- dep
+    }
+  }
 
-  # return the dependencies with duplicates removed
-  unique(dependencies)
+  # return the consolidated dependencies
+  dependencies
 }
 
 # create and validate an html_dependency from the passed arguments
