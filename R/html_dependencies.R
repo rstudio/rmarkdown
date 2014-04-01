@@ -93,19 +93,15 @@ html_dependencies_for_document <- function(format_deps, knit_meta) {
   dependencies
 }
 
-# convert a set of html dependencies to the pandoc args required to include
-# them (genereates html for the dependencies then injects it into the head
-# using the --include-in-header argument)
-html_dependencies_to_pandoc_args <- function(dependencies,
-                                             self_contained,
-                                             lib_dir) {
+
+html_dependencies_as_string <- function(dependencies, lib_dir) {
 
   dependencies_html <- c()
 
   for (dep in dependencies) {
 
     # copy library files if necessary
-    if (!self_contained) {
+    if (!is.null(lib_dir)) {
       dep$path <- render_supporting_files(dep$path, lib_dir)
     }
 
@@ -133,14 +129,16 @@ html_dependencies_to_pandoc_args <- function(dependencies,
     dependencies_html <- c(dependencies_html, dep$head)
   }
 
-  # write to a temp file and include it in the document
-  if (length(dependencies_html) > 0) {
-    deps_file <- tempfile("rmarkdown-head", fileext = ".html")
-    writeLines(dependencies_html, deps_file)
-    pandoc_include_args(in_header = deps_file)
-  } else {
-    NULL
-  }
+  dependencies_html
+}
+
+html_dependencies_as_tmpfile <- function(dependencies, lib_dir) {
+
+  deps_tmpfile <- tempfile("rmarkdown-head", fileext = ".html")
+  dependencies_html <- html_dependencies_as_string(dependencies, lib_dir)
+  writeLines(dependencies_html, deps_tmpfile)
+
+  deps_tmpfile
 }
 
 
@@ -177,6 +175,4 @@ validate_html_dependency <- function(list) {
 
   list
 }
-
-
 

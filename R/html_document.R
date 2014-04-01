@@ -183,9 +183,9 @@ html_document <- function(toc = FALSE,
     dependencies <- html_dependencies_for_document(format_deps, knit_meta)
 
     # inject dependencies
-    args <- c(args, html_dependencies_to_pandoc_args(dependencies,
-                                                     self_contained,
-                                                     lib_dir))
+    args <- c(args, pandoc_html_dependencies_args(dependencies,
+                                                  self_contained,
+                                                  lib_dir))
 
     # highlight
     args <- c(args, pandoc_html_highlight_args(highlight,

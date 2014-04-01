@@ -334,6 +334,26 @@ pandoc_html_highlight_args <- function(highlight,
   args
 }
 
+
+# convert a set of html dependencies to the pandoc args required to include
+# them (genereates html for the dependencies then injects it into the head
+# using the --include-in-header argument)
+pandoc_html_dependencies_args <- function(dependencies,
+                                          self_contained,
+                                          lib_dir) {
+  if (length(dependencies) > 0) {
+    if (self_contained)
+      deps_file <- html_dependencies_as_tmpfile(dependencies, NULL)
+    else
+      deps_file <- html_dependencies_as_tmpfile(dependencies, lib_dir)
+
+    pandoc_include_args(in_header = deps_file)
+  } else {
+    NULL
+  }
+}
+
+
 # Scan for a copy of pandoc and set the internal cache if it's found.
 find_pandoc <- function() {
 
