@@ -22,7 +22,7 @@ ioslides_presentation <- function(logo = NULL,
   args <- c()
 
   # no email obfuscation
-  args <- c("--email-obfuscation", "none")
+  args <- c(args, "--email-obfuscation", "none")
 
   # smart quotes
   if (smart)

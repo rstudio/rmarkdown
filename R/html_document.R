@@ -119,10 +119,10 @@ html_document <- function(toc = FALSE,
   args <- c("--standalone")
 
   # no email obfuscation
-  args <- c("--email-obfuscation", "none")
+  args <- c(args, "--email-obfuscation", "none")
 
   # use section divs
-  args <- c("--section-divs")
+  args <- c(args, "--section-divs")
 
   # smart quotes, etc.
   if (smart)

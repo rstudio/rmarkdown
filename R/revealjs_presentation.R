@@ -90,7 +90,7 @@ revealjs_presentation <- function(incremental = FALSE,
   args <- c()
 
   # no email obfuscation
-  args <- c("--email-obfuscation", "none")
+  args <- c(args, "--email-obfuscation", "none")
 
   # smart quotes, etc.
   if (smart)
