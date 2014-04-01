@@ -174,46 +174,17 @@ html_document <- function(toc = FALSE,
       args <- c(args, "--variable", paste("theme:", theme, sep=""))
     }
 
-    # resolve and include dependencies
-    dependencies_html <- c()
-    dependencies <- resolve_html_document_dependencies(theme, knit_meta)
-    for (dep in dependencies) {
+    # resolve dependencies
+    if (!is.null(theme))
+      format_deps <- list(jquery_dependency(), bootstrap_dependency(theme))
+    else
+      format_deps <- NULL
+    dependencies <- resolve_html_dependencies(format_deps, knit_meta)
 
-      # copy library files if necessary
-      if (!self_contained) {
-        dep$path <- render_supporting_files(dep$path, lib_dir)
-      }
-
-      # add meta content
-      for (name in names(dep$meta)) {
-        dependencies_html <- c(dependencies_html,
-          paste("<meta name=\"", name, "\" content=\"", dep$meta[[name]], "\" />", sep = ""))
-      }
-
-      # add stylesheets
-      for (stylesheet in dep$stylesheet) {
-        stylesheet <- file.path(dep$path, stylesheet)
-        dependencies_html <- c(dependencies_html,
-          paste("<link href=\"", stylesheet, "\" rel=\"stylesheet\" />", sep = ""))
-      }
-
-      # add scripts
-      for (script in dep$script) {
-        script <- file.path(dep$path, script)
-        dependencies_html <- c(dependencies_html,
-          paste("<script src=\"", script, "\"></script>", sep = ""))
-      }
-
-      # add raw head content
-      dependencies_html <- c(dependencies_html, dep$head)
-    }
-
-    # write to a temp file and include it in the document
-    if (length(dependencies_html) > 0) {
-      deps_file <- tempfile("rmarkdown-head", fileext = ".html")
-      writeLines(dependencies_html, deps_file)
-      args <- c(args, pandoc_include_args(in_header = deps_file))
-    }
+    # inject dependencies
+    args <- c(args, pandoc_html_dependencies_args(dependencies,
+                                                  self_contained,
+                                                  lib_dir))
 
     # highlight
     args <- c(args, pandoc_html_highlight_args(highlight,

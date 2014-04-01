@@ -1,16 +1,49 @@
 
+pandoc_html_dependencies_args <- function(dependencies, self_contained, lib_dir) {
 
+  dependencies_html <- c()
 
-# resolve dependencies for html_document
-resolve_html_document_dependencies <- function(theme, knit_meta) {
+  for (dep in dependencies) {
 
-  if (!is.null(theme))
-    format_deps <- list(jquery_dependency(), bootstrap_dependency(theme))
-  else
-    format_deps <- NULL
+    # copy library files if necessary
+    if (!self_contained) {
+      dep$path <- render_supporting_files(dep$path, lib_dir)
+    }
 
-  resolve_html_dependencies(format_deps, knit_meta)
+    # add meta content
+    for (name in names(dep$meta)) {
+      dependencies_html <- c(dependencies_html,
+        paste("<meta name=\"", name, "\" content=\"", dep$meta[[name]], "\" />", sep = ""))
+    }
+
+    # add stylesheets
+    for (stylesheet in dep$stylesheet) {
+      stylesheet <- file.path(dep$path, stylesheet)
+      dependencies_html <- c(dependencies_html,
+        paste("<link href=\"", stylesheet, "\" rel=\"stylesheet\" />", sep = ""))
+    }
+
+    # add scripts
+    for (script in dep$script) {
+      script <- file.path(dep$path, script)
+      dependencies_html <- c(dependencies_html,
+        paste("<script src=\"", script, "\"></script>", sep = ""))
+    }
+
+    # add raw head content
+    dependencies_html <- c(dependencies_html, dep$head)
+  }
+
+  # write to a temp file and include it in the document
+  if (length(dependencies_html) > 0) {
+    deps_file <- tempfile("rmarkdown-head", fileext = ".html")
+    writeLines(dependencies_html, deps_file)
+    pandoc_include_args(in_header = deps_file)
+  } else {
+    NULL
+  }
 }
+
 
 
 # resolve html dependencies (inclusive of a format's built-in dependencies)

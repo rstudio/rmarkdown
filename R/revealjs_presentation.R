@@ -154,6 +154,12 @@ revealjs_presentation <- function(incremental = FALSE,
     # extra args
     args <- c()
 
+    # resolve and inject dynamic html dependencies
+    dependencies <- resolve_html_dependencies(NULL, knit_meta)
+    args <- c(args, pandoc_html_dependencies_args(dependencies,
+                                                  self_contained,
+                                                  lib_dir))
+
     # reveal.js
     revealjs_path <- rmarkdown_system_file("rmd/revealjs/reveal.js-2.6.1")
     if (!self_contained)
