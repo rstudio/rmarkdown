@@ -73,7 +73,7 @@ html_dependencies_for_document <- function(format_deps, knit_meta) {
   # a list of dependencies we recurse on lists that aren't named
   for (dep in knit_meta) {
     if (is.null(names(dep))) {
-      inner_dependencies <- collect_html_dependencies(theme, dep)
+      inner_dependencies <- html_dependencies_for_document(NULL, dep)
       all_dependencies <- append(all_dependencies, inner_dependencies)
     }
     else if (is_html_dependency(dep)) {
