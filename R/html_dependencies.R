@@ -48,6 +48,8 @@ resolve_html_dependencies <- function(format_deps, knit_meta) {
         dependencies[[dep$name]]$path <- dep$path
       }
       # consolidate other fields
+      dependencies[[dep$name]]$meta <-
+        merge_lists(dependencies[[dep$name]]$meta, dep$meta)
       dependencies[[dep$name]]$script <-
         unique(c(dependencies[[dep$name]]$script, dep$script))
       dependencies[[dep$name]]$stylesheet <-
@@ -68,6 +70,7 @@ resolve_html_dependencies <- function(format_deps, knit_meta) {
 html_dependency <- function(name,
                             version,
                             path,
+                            meta = NULL,
                             script = NULL,
                             stylesheet = NULL,
                             head = NULL) {
@@ -75,6 +78,7 @@ html_dependency <- function(name,
   dep <- structure(list(name = name,
                         version = version,
                         path = path,
+                        meta = meta,
                         script = script,
                         stylesheet = stylesheet,
                         head = head),
@@ -96,6 +100,7 @@ bootstrap_dependency <- function(theme) {
   html_dependency(name = "bootstrap",
                   version = "2.3.2",
                   path = rmarkdown_system_file("rmd/h/bootstrap-2.3.2"),
+                  meta = list(viewport = "width=device-width, initial-scale=1.0"),
                   script = "js/bootstrap.min.js",
                   stylesheet = c(paste("css/", theme, ".min.css", sep=""),
                                  "css/bootstrap-responsive.min.css"))
@@ -125,7 +130,8 @@ validate_html_dependency <- function(list) {
   # validate that other fields are known
   fields <- names(list)
   invalid_fields <- fields[! fields %in%
-                             c("name", "version", "path", "script", "stylesheet", "head")]
+                             c("name", "version", "path", "meta",
+                               "script", "stylesheet", "head")]
   if (length(invalid_fields) > 0) {
     stop("unrecoginzed fields specified in html_dependency: ",
          paste(invalid_fields, sep = ", "), call. = FALSE)
