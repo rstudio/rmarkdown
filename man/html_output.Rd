@@ -17,7 +17,7 @@ knit_print.html_output(x)
 }
 \value{
 Object of class \code{html_output} that when printed will
-render in a browser (either in RStuido or extenally) and
+render in a browser (either in RStudio or extenally) and
 when printed from within an R Markdown document will render
 inline.
 }

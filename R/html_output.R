@@ -10,7 +10,7 @@
 #' @param x Object to print as HTML
 #'
 #' @return Object of class \code{html_output} that when printed will render in a
-#'   browser (either in RStuido or extenally) and when printed from within an R
+#'   browser (either in RStudio or extenally) and when printed from within an R
 #'   Markdown document will render inline.
 #'
 #' @details See the documentation on
