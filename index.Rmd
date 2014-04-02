@@ -9,14 +9,13 @@ R Markdown is an authoring format that enables easy creation of dynamic document
 This website describes R Markdown v2, a next generation implementation of R Markdown based on  [knitr](http://yihui.name/knitr/) and [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
 
 * Create HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home), [ioslides](https://code.google.com/p/io-2012-slides/) and [reveal.js](http://lab.hakim.se/reveal-js/#/) presentations.
-* New markdown syntax including expanded support for tables, definition lists, and bibliographies.
-* A responsive (multi-device friendly) and theme-able HTML template based on [Bootstrap 3](http://getbootstrap.com).
+* New markdown syntax including expanded support for tables and bibliographies.
 * Hooks for customizing HTML and PDF output (include CSS, headers, and footers).
 * Include raw LaTeX within markdown for advanced customization of PDF output.
 * Compile HTML, PDF, or MS Word notebooks from R scripts.
-* Extensibility: easily define new formats for custom publishing requirements.
+* Extensiblity: create custom templates and even entirely new output formats.
 
-Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, the [MiKTeX](http://miktex.org/) distribution should be used rather than TeX Live.
+Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, [MiKTeX](http://miktex.org/) should be used rather than TeX Live.
 
 #### Installing R Markdown
 
@@ -157,7 +156,16 @@ For even more in-depth documentation see:
 
 * The full specification of [Pandoc Markdown](authoring_pandoc_markdown.html), which describes all of the markdown features and syntax available within R Markdown documents.
 
-* The developer guide to creating [Custom R Markdown Formats](developer_custom_formats.html).
+* If you are migrating documents from R Markdown v1 or wish to continue using RMarkdown v1 see the article on [Migrating from R Markdown v1](authoring_migrating_from_v1.html).
 
-Finally, if you are migrating documents from R Markdown v1 or wish to continue using RMarkdown v1 see the article on [Migrating from R Markdown v1](authoring_migrating_from_v1.html).
+See also the R Markdown developer documentation including:
+
+* Creating re-usable [Document Templates](developer_document_templates.html)
+    
+* Guide to [Creating New Formats](developer_custom_formats.html) for R Markdown
+    
+* Producing [Custom HTML Output](developer_custom_html_output.html) (e.g. from Javascript libraries)
+    
+* Building [Paramaterized Reports](developer_paramaterized_reports.html) that are callable via an R function
+
 

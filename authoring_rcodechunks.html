@@ -114,7 +114,12 @@ body {
            <li class="dropdown">
             <a href="developer" class="dropdown-toggle" data-toggle="dropdown">Developer <b class="caret"></b></a>
             <ul class="dropdown-menu">
-               <li><a href="developer_custom_formats.html">Custom Formats</a></li>
+               <li><a href="developer_document_templates.html">Document Templates</a></li>
+               <li><a href="developer_custom_formats.html">Creating New Formats</a></li>
+               <li class="divider"></li>
+               <li><a href="developer_custom_html_output.html">Custom HTML Output</a></li>
+               <li class="divider"></li>
+               <li><a href="developer_paramaterized_reports.html">Parameterized Reports</a></li>
             </ul>
           </li>
         </ul>
@@ -156,6 +161,16 @@ summary(cars)
 &#96;&#96;&#96;
 </code></pre>
 
+</div>
+<div id="table-output" class="section level2">
+<h2>Table Output</h2>
+<p>By default data frames and matrixes are output as they would be in the R terminal (in a monospaced font). However, if you prefer that data be displayed with additional formatting you can use the <code>knitr::kable</code> function. For example:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, results='asis'}
+knitr::kable(mtcars)
+&#96;&#96;&#96;
+</code></pre>
+
+<p>Note the use of the <code>results='asis'</code> chunk option. This is required to ensure that the raw table output isn’t processed furthur by knitr. The <code>kable</code> function includes several options to control the maximum number of digits for numeric columns, alignment, etc (refer to the knitr package documentation for additional details).</p>
 </div>
 <div id="caching" class="section level2">
 <h2>Caching</h2>

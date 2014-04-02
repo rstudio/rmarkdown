@@ -32,6 +32,17 @@ summary(cars)
 &#96;&#96;&#96;
 </code></pre>
 
+## Table Output
+
+By default data frames and matrixes are output as they would be in the R terminal (in a monospaced font). However, if you prefer that data be displayed with additional formatting you can use the `knitr::kable` function. For example:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r, results='asis'}
+knitr::kable(mtcars)
+&#96;&#96;&#96;
+</code></pre>
+
+Note the use of the `results='asis'` chunk option. This is required to ensure that the raw table output isn't processed furthur by knitr. The `kable` function includes several options to control the maximum number of digits for numeric columns, alignment, etc (refer to the knitr package documentation for additional details).
+
 ## Caching
 
 If document rendering becomes time consuming due to long computations or plots that are expensive to generate you can use knitr caching to improve performance. The documentation [knitr chunk and package options](http://yihui.name/knitr/options) describe how caching works and the [cache examples](http://yihui.name/knitr/demo/cache/) provide additional details.

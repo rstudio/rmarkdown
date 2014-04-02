@@ -114,7 +114,12 @@ body {
            <li class="dropdown">
             <a href="developer" class="dropdown-toggle" data-toggle="dropdown">Developer <b class="caret"></b></a>
             <ul class="dropdown-menu">
-               <li><a href="developer_custom_formats.html">Custom Formats</a></li>
+               <li><a href="developer_document_templates.html">Document Templates</a></li>
+               <li><a href="developer_custom_formats.html">Creating New Formats</a></li>
+               <li class="divider"></li>
+               <li><a href="developer_custom_html_output.html">Custom HTML Output</a></li>
+               <li class="divider"></li>
+               <li><a href="developer_paramaterized_reports.html">Parameterized Reports</a></li>
             </ul>
           </li>
         </ul>
@@ -135,14 +140,13 @@ body {
 <p>This website describes R Markdown v2, a next generation implementation of R Markdown based on <a href="http://yihui.name/knitr/">knitr</a> and <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>. This implementation brings many enhancements to R Markdown, including:</p>
 <ul>
 <li>Create HTML, PDF, and MS Word documents as well as <a href="https://bitbucket.org/rivanvx/beamer/wiki/Home">Beamer</a>, <a href="https://code.google.com/p/io-2012-slides/">ioslides</a> and <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a> presentations.</li>
-<li>New markdown syntax including expanded support for tables, definition lists, and bibliographies.</li>
-<li>A responsive (multi-device friendly) and theme-able HTML template based on <a href="http://getbootstrap.com">Bootstrap 3</a>.</li>
+<li>New markdown syntax including expanded support for tables and bibliographies.</li>
 <li>Hooks for customizing HTML and PDF output (include CSS, headers, and footers).</li>
 <li>Include raw LaTeX within markdown for advanced customization of PDF output.</li>
 <li>Compile HTML, PDF, or MS Word notebooks from R scripts.</li>
-<li>Extensibility: easily define new formats for custom publishing requirements.</li>
+<li>Extensiblity: create custom templates and even entirely new output formats.</li>
 </ul>
-<p>Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, the <a href="http://miktex.org/">MiKTeX</a> distribution should be used rather than TeX Live.</p>
+<p>Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, <a href="http://miktex.org/">MiKTeX</a> should be used rather than TeX Live.</p>
 <div id="installing-r-markdown" class="section level4">
 <h4>Installing R Markdown</h4>
 <p>You can use R Markdown either through the the integrated support for R Markdown within RStudio or via the rmarkdown package:</p>
@@ -241,9 +245,15 @@ output:
 <ul>
 <li><p>The website for the <a href="http://yihui.name/knitr/">knitr package</a>. Knitr is an extremely powerful tool for dynamic content generation and the website has a wealth of documentation and examples to help you utilize it to its full potential.</p></li>
 <li><p>The full specification of <a href="authoring_pandoc_markdown.html">Pandoc Markdown</a>, which describes all of the markdown features and syntax available within R Markdown documents.</p></li>
-<li><p>The developer guide to creating <a href="developer_custom_formats.html">Custom R Markdown Formats</a>.</p></li>
+<li><p>If you are migrating documents from R Markdown v1 or wish to continue using RMarkdown v1 see the article on <a href="authoring_migrating_from_v1.html">Migrating from R Markdown v1</a>.</p></li>
 </ul>
-<p>Finally, if you are migrating documents from R Markdown v1 or wish to continue using RMarkdown v1 see the article on <a href="authoring_migrating_from_v1.html">Migrating from R Markdown v1</a>.</p>
+<p>See also the R Markdown developer documentation including:</p>
+<ul>
+<li><p>Creating re-usable <a href="developer_document_templates.html">Document Templates</a></p></li>
+<li><p>Guide to <a href="developer_custom_formats.html">Creating New Formats</a> for R Markdown</p></li>
+<li><p>Producing <a href="developer_custom_html_output.html">Custom HTML Output</a> (e.g. from Javascript libraries)</p></li>
+<li><p>Building <a href="developer_paramaterized_reports.html">Paramaterized Reports</a> that are callable via an R function</p></li>
+</ul>
 <div class="references">
 
 </div>
