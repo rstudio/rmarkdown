@@ -184,6 +184,10 @@ render <- function(input,
               "adding YAML params")
     }
 
+    # attach to search path during the knit (so that the knit_print
+    # S3 method in rmarkdown is discovered during knitting)
+    require(rmarkdown)
+
     # perform the knit
     input <- knitr::knit(knit_input,
                          knit_output,

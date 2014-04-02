@@ -4,8 +4,8 @@
 \usage{
 render(input, output_format = NULL,
        output_file = NULL, output_options = NULL,
-       clean = TRUE, envir = parent.frame(), quiet = FALSE,
-       encoding = getOption("encoding"))
+       clean = TRUE, params = NULL, envir = parent.frame(),
+       quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{Input file (R script, Rmd, or plain markdown).}
