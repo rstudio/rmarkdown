@@ -168,4 +168,3 @@ See also the R Markdown developer documentation including:
     
 * Building [Paramaterized Reports](developer_paramaterized_reports.html) that are callable via an R function
 
-
