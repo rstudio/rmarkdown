@@ -135,9 +135,143 @@ body {
 </div>
 
 
-<p><br/></p>
+<p>This article describes how to add new types of HTML output to R Markdown documents. You might want to do this to add a binding between R and a Javascript data visualization library like <a href="http://d3js.org">d3</a> or <a href="http://leafletjs.com">Leaflet</a>. Custom HTML output works both inside R Markdown documents as well as while executing code from the console (e.g. to display it the RStudio Viewer).</p>
+<div id="prerequisties" class="section level4">
+<h4>Prerequisties</h4>
+<p>Creating extensions that produce custom HTML output requires the development versions of both the <strong>knitr</strong> and <strong>htmltools</strong> packages. You can install them as follows:</p>
+<pre class="r"><code>devtools::install_github(c(&quot;yihui/knitr&quot;, &quot;rstudio/htmltools&quot;))</code></pre>
+</div>
+<div id="creating-an-output-function" class="section level2">
+<h2>Creating an Output Function</h2>
+<p>To define a new type of HTML output you need to create an HTML output function. Output functions perform the following tasks:</p>
+<ol style="list-style-type: decimal">
+<li><p>Dynamically generate HTML based on their input parameters;</p></li>
+<li><p>Define the dependencies (e.g. CSS and Javascript) required by that HTML;</p></li>
+<li><p>Return the HTML and dependencies as an object of class “html_output”</p></li>
+</ol>
+<p>When implementing an output function you use the <code>html_dependency</code> and <code>html_output</code> functions from the <strong>htmltools</strong> package. The basic skeleton of an output function looks like this:</p>
+<pre class="r"><code>snazzy_visualization &lt;- function(data, width, height) {
+  
+  # generate html for the visualization
+  html &lt;- generate_snazzy_html(data, width, height)
+  
+  # define dependencies
+  dependencies &lt;- list(
+    htmltools::html_dependency(...),
+    htmltools::html_dependency(...)
+  )
+  
+  # return output
+  htmltools::html_output(html, dependencies)  
+}</code></pre>
+<p>Dependencies are defined with a name, version, path and optional meta, script, and stylesheet elements to include within the document head (see below for examples). Multiple instances of a dependency with the same name (e.g. “jquery”) are merged into a single dependency and the most recent version specified is used.</p>
+<p>It’s important to note that dependencies must be local rather than remote (i.e. they must exist on the local filesystem). This requirement exists so that HTML documents created with R Markdown can be self contained and always work offline.</p>
+</div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<p>Here are two examples of custom HTML output functoins. These examples are from the <strong>rmdexamples</strong> package located at <a href="https://github.com/rstudio/rmdexamples">https://github.com/rstudio/rmdexamples</a>.</p>
+<div id="justgage" class="section level3">
+<h3>JustGage</h3>
+<p><a href="http://justgage.com/">JustGage</a> is Javascript library used to create numeric gauge visualizations. JustGage depends on both it’s on Javascript as well as the <a href="http://raphaeljs.com/">raphael.js</a> library. Here’s what an HTML output function for JustGage might look like:</p>
+<pre class="r"><code>justgage &lt;- function(title, value, min, max, 
+                     label = NULL, width = 200, height = 160) {
+  
+  # create random/unique id to bind the div and script
+  id &lt;- paste(&quot;justgage&quot;, as.integer(stats::runif(1, 1, 10000)), sep=&quot;-&quot;) 
+
+  # create a style attribute for the width and height
+  style &lt;- paste(&quot;width:&quot;, width, &quot;px;height:&quot;, height, &quot;px&quot;, sep = &quot;&quot;)
+  
+  # create a list representing the parameters to JustGage
+  options &lt;- list(id = id,
+                  title = title,
+                  value = value,
+                  min = min,
+                  max = max,
+                  label = label)
+
+  # generate html for the justgage
+  html &lt;- paste(
+    &quot;&lt;div id=\&quot;&quot;, id, &quot;\&quot; &quot;,  &quot;style=\&quot;&quot;, style, &quot;\&quot;&gt;&quot;, &quot;&lt;/div&gt;&quot;, 
+    &quot;&lt;script&gt;var g = new JustGage(&quot;, RJSONIO::toJSON(options), &quot;);&lt;/script&gt;&quot;,
+    sep = &quot;&quot;)
+  
+  # define html dependencies
+  dependencies &lt;- list(
+    htmltools::html_dependency(
+      name = &quot;raphael&quot;,
+      version = &quot;2.1.2&quot;,
+      path = system.file(&quot;www/libs/raphael-2.1.2&quot;, package = &quot;rmdexamples&quot;),
+      script = &quot;raphael.js&quot;
+    ),
+    htmltools::html_dependency(
+      name = &quot;justgage&quot;,
+      version = &quot;1.0.1&quot;,
+      path = system.file(&quot;www/libs/justgage-1.0.1&quot;, package = &quot;rmdexamples&quot;),
+      script = &quot;justgage.1.0.1.min.js&quot;
+    )
+  )
+  
+  # return html output
+  htmltools::html_output(html, dependencies)
+}</code></pre>
+<p>Note that the required Javascript libraries are contained within the function’s package (<a href="https://github.com/rstudio/rmdexamples">rmdexamples</a>) so are accessed using <code>system.file</code>.</p>
+</div>
+<div id="datatables" class="section level3">
+<h3>DataTables</h3>
+<p><a href="https://datatables.net/">DataTables</a> is a plug-in for the <a href="http://jquery.com/">jQuery</a> Javascript library that adds advanced interaction controls to any HTML table. Here’s what an HTML output function for DataTables might look like:</p>
+<pre class="r"><code>datatable &lt;- function(x, digits = getOption(&quot;digits&quot;), 
+                      row.names = NA, align = NULL, ...) {
+  
+  # create random/unique id for the table
+  id &lt;- paste(&quot;datatable&quot;, as.integer(stats::runif(1, 1, 10000)), sep=&quot;-&quot;) 
+  
+  # generate an html version of the table that includes the id
+  html &lt;- knitr::kable(
+    x, 
+    format = &quot;html&quot;, 
+    digits = digits,
+    row.names = NA,
+    align = align,
+    output = FALSE,
+    table.attr = paste(&quot;id=\&quot;&quot;, id, &quot;\&quot; &quot;, 
+                        &quot;class=\&quot;table table-bordered\&quot; &quot;,
+                        sep = &quot;&quot;),
+    ...)
+  
+  # create the script which binds the datatable
+  html &lt;- paste(html,
+    &quot;&lt;script&gt;&quot;,
+      &quot;$(document).ready(function() {&quot;,
+        &quot;$(&#39;#&quot;, id ,&quot;&#39;).dataTable();&quot;,
+      &quot;});&quot;,
+   &quot;&lt;/script&gt;&quot;, sep = &quot;&quot;)
+  
+  # define dependencies
+  dependencies &lt;- list(
+    htmltools::html_dependency(
+      name = &quot;jquery&quot;,
+      version = &quot;1.11.0&quot;,
+      path = system.file(&quot;www/libs/jquery-1.11.0&quot;, package = &quot;rmdexamples&quot;),
+      script = &quot;jquery.min.js&quot;
+    ),
+    htmltools::html_dependency(
+      name = &quot;datatables&quot;,
+      version = &quot;1.9.4&quot;,
+      path = system.file(&quot;www/libs/datatables-1.9.4&quot;, package = &quot;rmdexamples&quot;),
+      stylesheet = &quot;css/jquery.dataTables.css&quot;,
+      script = &quot;js/jquery.dataTables.min.js&quot;
+    )
+  )
+  
+  # return html output
+  htmltools::html_output(html, dependencies)
+}</code></pre>
+<p>Note that the <code>knitr::kable</code> function is used to generate the HTML table and that the paramters to the <code>datatable</code> function are passed through to it. Note also that the required Javascript libraries are contained within the function’s package (<a href="https://github.com/rstudio/rmdexamples">rmdexamples</a>) so are accessed using <code>system.file</code>.</p>
 <div class="references">
-<h2><em>Under Construction</em></h2>
+
+</div>
+</div>
 </div>
 
 </div>

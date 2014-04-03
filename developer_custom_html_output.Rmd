@@ -2,6 +2,160 @@
 title: "Custom HTML Output"
 ---
 
-<br/>
+This article describes how to add new types of HTML output to R Markdown documents. You might want to do this to add a binding between R and a Javascript data visualization library like [d3](http://d3js.org) or [Leaflet](http://leafletjs.com). Custom HTML output works both inside R Markdown documents as well as while executing code from the console (e.g. to display it the RStudio Viewer).
 
-## *Under Construction*
+#### Prerequisties
+
+Creating extensions that produce custom HTML output requires the development versions of both the **knitr** and **htmltools** packages. You can install them as follows:
+
+```{r, eval=FALSE}
+devtools::install_github(c("yihui/knitr", "rstudio/htmltools"))
+```
+
+## Creating an Output Function
+
+To define a new type of HTML output you need to create an HTML output function. Output functions perform the following tasks:
+
+1) Dynamically generate HTML based on their input parameters;
+
+2) Define the dependencies (e.g. CSS and Javascript) required by that HTML;
+
+3) Return the HTML and dependencies as an object of class "html_output"
+
+When implementing an output function you use the `html_dependency` and `html_output` functions from the **htmltools** package. The basic skeleton of an output function looks like this:
+
+```{r, eval=FALSE}
+snazzy_visualization <- function(data, width, height) {
+  
+  # generate html for the visualization
+  html <- generate_snazzy_html(data, width, height)
+  
+  # define dependencies
+  dependencies <- list(
+    htmltools::html_dependency(...),
+    htmltools::html_dependency(...)
+  )
+  
+  # return output
+  htmltools::html_output(html, dependencies)  
+}
+```
+
+Dependencies are defined with a name, version, path and optional meta, script, and stylesheet elements to include within the document head (see below for examples). Multiple instances of a dependency with the same name (e.g. "jquery") are merged into a single dependency and the most recent version specified is used.
+
+It's important to note that dependencies must be local rather than remote (i.e. they must exist on the local filesystem). This requirement exists so that HTML documents created with R Markdown can be self contained and always work offline.
+
+## Examples
+
+Here are two examples of custom HTML output functoins. These examples are from the **rmdexamples** package located at <https://github.com/rstudio/rmdexamples>.
+
+### JustGage
+
+[JustGage](http://justgage.com/) is Javascript library used to create numeric gauge visualizations. JustGage depends on both it's on Javascript as well as the [raphael.js](http://raphaeljs.com/) library. Here's what an HTML output function for JustGage might look like:
+
+```{r, eval=FALSE}
+justgage <- function(title, value, min, max, 
+                     label = NULL, width = 200, height = 160) {
+  
+  # create random/unique id to bind the div and script
+  id <- paste("justgage", as.integer(stats::runif(1, 1, 10000)), sep="-") 
+
+  # create a style attribute for the width and height
+  style <- paste("width:", width, "px;height:", height, "px", sep = "")
+  
+  # create a list representing the parameters to JustGage
+  options <- list(id = id,
+                  title = title,
+                  value = value,
+                  min = min,
+                  max = max,
+                  label = label)
+
+  # generate html for the justgage
+  html <- paste(
+    "<div id=\"", id, "\" ",  "style=\"", style, "\">", "</div>", 
+    "<script>var g = new JustGage(", RJSONIO::toJSON(options), ");</script>",
+    sep = "")
+  
+  # define html dependencies
+  dependencies <- list(
+    htmltools::html_dependency(
+      name = "raphael",
+      version = "2.1.2",
+      path = system.file("www/libs/raphael-2.1.2", package = "rmdexamples"),
+      script = "raphael.js"
+    ),
+    htmltools::html_dependency(
+      name = "justgage",
+      version = "1.0.1",
+      path = system.file("www/libs/justgage-1.0.1", package = "rmdexamples"),
+      script = "justgage.1.0.1.min.js"
+    )
+  )
+  
+  # return html output
+  htmltools::html_output(html, dependencies)
+}
+```
+
+Note that the required Javascript libraries are contained within the function's package ([rmdexamples](https://github.com/rstudio/rmdexamples)) so are accessed using `system.file`.
+
+### DataTables
+
+[DataTables](https://datatables.net/) is a plug-in for the [jQuery](http://jquery.com/) Javascript library that adds advanced interaction controls to any HTML table. Here's what an HTML output function for DataTables might look like:
+
+```{r, eval=FALSE}
+datatable <- function(x, digits = getOption("digits"), 
+                      row.names = NA, align = NULL, ...) {
+  
+  # create random/unique id for the table
+  id <- paste("datatable", as.integer(stats::runif(1, 1, 10000)), sep="-") 
+  
+  # generate an html version of the table that includes the id
+  html <- knitr::kable(
+    x, 
+    format = "html", 
+    digits = digits,
+    row.names = NA,
+    align = align,
+    output = FALSE,
+    table.attr = paste("id=\"", id, "\" ", 
+                        "class=\"table table-bordered\" ",
+                        sep = ""),
+    ...)
+  
+  # create the script which binds the datatable
+  html <- paste(html,
+    "<script>",
+      "$(document).ready(function() {",
+        "$('#", id ,"').dataTable();",
+      "});",
+   "</script>", sep = "")
+  
+  # define dependencies
+  dependencies <- list(
+    htmltools::html_dependency(
+      name = "jquery",
+      version = "1.11.0",
+      path = system.file("www/libs/jquery-1.11.0", package = "rmdexamples"),
+      script = "jquery.min.js"
+    ),
+    htmltools::html_dependency(
+      name = "datatables",
+      version = "1.9.4",
+      path = system.file("www/libs/datatables-1.9.4", package = "rmdexamples"),
+      stylesheet = "css/jquery.dataTables.css",
+      script = "js/jquery.dataTables.min.js"
+    )
+  )
+  
+  # return html output
+  htmltools::html_output(html, dependencies)
+}
+```
+
+Note that the `knitr::kable` function is used to generate the HTML table and that the paramters to the `datatable` function are passed through to it. Note also that the required Javascript libraries are contained within the function's package ([rmdexamples](https://github.com/rstudio/rmdexamples)) so are accessed using `system.file`.
+
+
+
+
