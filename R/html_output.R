@@ -19,10 +19,17 @@
 #'
 #' @export
 html_output <- function(html, dependencies) {
-  structure(class = "html_output", list(
-    html = html,
-    dependencies = dependencies
-  ))
+
+  # add flag indicating this is html (same as shiny does)
+  attr(html, "html") <- TRUE
+
+  # add dependencies
+  attr(html, "dependencies") <- dependencies
+
+  # add html_output and html classes (html is used by shiny)
+  class(html) <- c("html_output", "html", "character")
+
+  html
 }
 
 #' Define an HTML dependency
@@ -87,10 +94,10 @@ print.html_output <- function(x, ...) {
             "<html>",
             "<head>",
             "<meta charset=\"utf-8\"/>",
-            html_dependencies_as_string(x$dependencies, "lib"),
+            html_dependencies_as_string(attr(x, "dependencies"), "lib"),
             "</head>",
             "<body>",
-            x$html,
+            x,
             "</body>",
             "</html>")
 
@@ -112,7 +119,7 @@ print.html_output <- function(x, ...) {
 #' @export
 knit_print.html_output <- function(x) {
   structure(class = "knit_asis",
-    x$html,
-    knit_meta = x$dependencies
+    x,
+    knit_meta = attr(x, "dependencies")
   )
 }
