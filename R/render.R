@@ -170,18 +170,25 @@ render <- function(input,
       knitr::knit_hooks$set(as.list(output_format$knitr$knit_hooks))
     }
 
-    # if there isn't already an entity named "params" in the knit
-    # environment then merge any params passed to this function into the
-    # yaml front matter and make that available in the knit environment
-    # as "params" (then remove the value from the environment on exit)
+    # get the yaml front matter and merge custom params into it
+    yaml_front_matter <- parse_yaml_front_matter(input_lines)
+    yaml_front_matter$params <- merge_lists(yaml_front_matter$params, params)
+
+    # make the metadata and params available within the knit environment
+    # (unless they are already defined there in which case we emit a warning)
+    if (!exists("metadata", envir = envir)) {
+        assign("metadata", yaml_front_matter, envir = envir)
+        on.exit(remove("metadata", envir = envir), add = TRUE)
+    } else {
+        warning("'metadata' object already exists in knit environment ",
+                "so won't be accessible during knit", call. = FALSE)
+    }
     if (!exists("params", envir = envir)) {
-      yaml_front_matter <- parse_yaml_front_matter(input_lines)
-      params <- merge_lists(yaml_front_matter, params)
-      assign("params", params, envir = envir)
+      assign("params", yaml_front_matter$params, envir = envir)
       on.exit(remove("params", envir = envir), add = TRUE)
     } else {
-      warning("'params' value already exists in knit environment, not ",
-              "adding YAML params")
+      warning("'params' object already exists in knit environment ",
+              "so won't be accessible during knit", call. = FALSE)
     }
 
     # ensure that htmltools::knit_print.html_output is available on the
