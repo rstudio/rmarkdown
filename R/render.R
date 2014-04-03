@@ -184,9 +184,11 @@ render <- function(input,
               "adding YAML params")
     }
 
-    # attach to search path during the knit (so that the knit_print
-    # S3 method in rmarkdown is discovered during knitting)
-    require(rmarkdown)
+    # ensure that htmltools::knit_print.html_output is available on the
+    # search path if it exists. note that htmltools doesn't register
+    # this explicitly as an S3 method so that it doesn't need to depend
+    # on knitr via importFrom(knitr, knit_print)
+    suppressWarnings(require("htmltools", quietly = TRUE))
 
     # perform the knit
     input <- knitr::knit(knit_input,

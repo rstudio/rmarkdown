@@ -16,6 +16,7 @@ Imports:
     yaml (>= 2.1.5)
 Suggests:
     caTools,
+    htmltools,
     httpuv (>= 1.2.2)
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
 License: GPL-3
