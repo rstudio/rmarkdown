@@ -2,6 +2,21 @@
 title: "Paramaterized Reports"
 ---
 
-<br/>
+R Markdown documents can have arbitrary parameters that are varied across differnet renderings. This capability can be used to create parameterized reports driven by R functions that call `rmarkdown::render` under the hook.
 
-## *Under Construction*
+## Defining Parameters
+
+All of the fields included in the YAML front-matter of an R Markdown document are available as a `params` list within the execution environment of the document. For example:
+
+    ---
+    title: "My Document"
+    data: cars.csv
+    ---
+    
+<pre class="markdown"><code>---
+title: "My Document"
+
+&#96;&#96;&#96;{r}
+
+&#96;&#96;&#96;
+</code></pre>

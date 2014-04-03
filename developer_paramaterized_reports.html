@@ -129,17 +129,38 @@ body {
 </div>
 
 <div class="container">
+<div class="row">
+<div class="span10 offset1">
 
 <div id="header">
 <h1 class="title">Paramaterized Reports</h1>
 </div>
 
 
-<p><br/></p>
+<p>R Markdown documents can have arbitrary parameters that are varied across differnet renderings. This capability can be used to create parameterized reports driven by R functions that call <code>rmarkdown::render</code> under the hook.</p>
+<div id="defining-parameters" class="section level2">
+<h2>Defining Parameters</h2>
+<p>All of the fields included in the YAML front-matter of an R Markdown document are available as a <code>params</code> list within the execution environment of the document. For example:</p>
+<pre><code>---
+title: &quot;My Document&quot;
+data: cars.csv
+---</code></pre>
+<pre class="markdown"><code>---
+title: "My Document"
+
+&#96;&#96;&#96;{r}
+
+&#96;&#96;&#96;
+</code></pre>
+
+
 <div class="references">
-<h2><em>Under Construction</em></h2>
+
+</div>
 </div>
 
+</div>
+</div>
 </div>
 
 <!-- some extra javascript for older browsers -->
