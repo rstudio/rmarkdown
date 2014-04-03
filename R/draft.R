@@ -33,7 +33,7 @@
 #'   the \code{pubtools/inst/rmarkdown/templates} directory:
 #'
 #'   \code{quarterly_report/template.yaml} \cr
-#'   \code{quarterly_report/skeleton/template.Rmd} \cr
+#'   \code{quarterly_report/skeleton/skeleton.Rmd} \cr
 #'
 #'   The \code{template.yaml} file should include a \code{name} field. If you
 #'   want to ensure that a new directory is always created for a given template,
@@ -42,7 +42,7 @@
 #'
 #'   \code{create_dir: true} \cr
 #'
-#'   The \code{skeleton/template.Rmd} file should include the initial contents
+#'   The \code{skeleton/skeleton.Rmd} file should include the initial contents
 #'   you want for files created from this template. Additional files can be
 #'   added to the \code{skeleton} directory, for example:
 #'
@@ -128,7 +128,7 @@ draft <- function(file,
   }
 
   # rename the core template file
-  file.rename(file.path(dirname(file), "template.Rmd"), file)
+  file.rename(file.path(dirname(file), "skeleton.Rmd"), file)
 
   # invoke the editor if requested
   if (edit)
