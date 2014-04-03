@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: R Markdown Document Conversion
-Version: 0.1.62
+Version: 0.1.63
 Date: 2014-01-26
 Author: RStudio, Inc.
 Maintainer: JJ Allaire <jj@rstudio.com>
