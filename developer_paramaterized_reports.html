@@ -137,23 +137,71 @@ body {
 </div>
 
 
-<p>R Markdown documents can have arbitrary parameters that are varied across differnet renderings. This capability can be used to create parameterized reports driven by R functions that call <code>rmarkdown::render</code> under the hook.</p>
-<div id="defining-parameters" class="section level2">
-<h2>Defining Parameters</h2>
-<p>All of the fields included in the YAML front-matter of an R Markdown document are available as a <code>params</code> list within the execution environment of the document. For example:</p>
-<pre><code>---
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>R Markdown documents can define a set of parameters that are overrideable at the time that <code>rmarkdown::render</code> is called. For example:</p>
+<pre class="yaml"><code>---
 title: &quot;My Document&quot;
-data: cars.csv
+params:
+  dataset: cars.csv
 ---</code></pre>
+<p>These parameters can be accessed during rendering using the <code>params</code> variable. For example:</p>
+<pre class="r"><code>&#96;&#96;&#96;{r}
+data <- read.csv(params$dataset)
+summary(data)
+&#96;&#96;&#96;</code></pre>
+
+<p>The call to render can then provide alternative values for these parameters:</p>
+<pre class="r"><code>rmarkdown::render(&quot;report.Rmd&quot;, params = list(dataset = &quot;pressure.csv&quot;))</code></pre>
+</div>
+<div id="complete-example" class="section level2">
+<h2>Complete Example</h2>
+<p>Here’s a complete example of a parameterized report. The source code for this example is in the <strong>rmdexamples</strong> package located at <a href="https://github.com/rstudio/rmdexamples">https://github.com/rstudio/rmdexamples</a>. Packages are an excellent way to distribute reports since they can contain both a function that calls the report and the underlying R Markdown document used to render the report.</p>
+<p>First we define an R Markdown document that will be used as the basis for the report. Alongside the document we include a data file (mtcars.csv) that will be used as the default dataset during the preview/development of the report.</p>
 <pre class="markdown"><code>---
-title: "My Document"
+title: "Dataset View"
+output: html_document
+params: 
+  dataset: mtcars.csv
+---
 
-&#96;&#96;&#96;{r}
+#### &#96;r params$dataset&#96;
 
+## Summary
+
+&#96;&#96;&#96;{r, echo=FALSE, comment=NA}
+data <- read.csv(params$dataset)
+summary(data)
 &#96;&#96;&#96;
-</code></pre>
 
+## Browse Data
 
+&#96;&#96;&#96;{r, echo=FALSE, results='asis'}
+knitr::kable(data)
+&#96;&#96;&#96;</code></pre>
+
+<p>Note that the <code>params</code> are used both in creating a subtitle as well as in the call to <code>read.csv</code>.</p>
+<p>To invoke this report we define an R function that passes the custom parameters and also specifies the location of the output file:</p>
+<pre class="r"><code>dataset_view &lt;- function(csv, output_file) {
+  
+  # get the path to the report
+  report &lt;- system.file(&quot;reports/dataset-view/dataset-view.Rmd&quot;, 
+                        package = &quot;rmdexamples&quot;)
+  
+  # render to the output file using the specified csv
+  rmarkdown::render(input = report, 
+                    output_file = output_file,
+                    params = list(dataset = csv), 
+                    envir = new.env())
+} </code></pre>
+<p>Here’s an example of the code you would use to call the report:</p>
+<pre class="r"><code>dataset_view(csv = &quot;/var/data/cars.csv&quot;, output_file = &quot;cars.html&quot;)</code></pre>
+<p>A couple of additional things to note about this example:</p>
+<ol style="list-style-type: decimal">
+<li><p>The output file is explicitly specified (since the default of writing output alongside the Rmd file wouldn’t be desirable).</p></li>
+<li><p>The <code>envir</code> parameter is passed <code>new.env()</code> to ensure that the report runs in a fresh, empty environment.</p></li>
+</ol>
+<p>The full source code for this report can be found in the <strong>rmdexamples</strong> package located at <a href="https://github.com/rstudio/rmdexamples">https://github.com/rstudio/rmdexamples</a>.</p>
 <div class="references">
 
 </div>
