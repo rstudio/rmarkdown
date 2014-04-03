@@ -42,7 +42,7 @@ This defines a new format with the following behavior:
 
 1. Provides an option to determine whether there is a table of contents included in the document (implemented by passing `toc` through to the base format).
 
-2. Sets a custom default height and width for figures (note this isn't user-customizable so as to encourage a standard for all reports of this type).
+2. Sets a default height and width for figures (note this is purposely not user-customizable so as to encourage a standard for all reports of this type).
 
 3. Disables the default bootstrap theme and provides custom CSS in its place.
 
