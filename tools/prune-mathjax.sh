@@ -59,6 +59,15 @@ rm -rf $MATHJAX_DIR/jax/output/HTML-CSS/fonts/Latin-Modern
 rm -rf $MATHJAX_DIR/jax/output/HTML-CSS/fonts/Neo-Euler
 rm -rf $MATHJAX_DIR/jax/output/HTML-CSS/fonts/STIX-Web
 
+# The QtWebKit browser from Qt 4.8.x (used by e.g. RStudio) doesn't support
+# loading specific variants of a web font (bold, italic, etc.) using @font-face
+# (see https://bugs.webkit.org/show_bug.cgi?id=29433). Patch the HTML-CSS
+# renderer as follows: If Qt 4.8.x is rendering the page and the font requested
+# is a variant, always treat the font as successfully loaded even if its
+# character metrics don't match those expected.
+# 
+# Without this change, MathJax will wait a considerable time for the font to
+# load before timing out and rendering math without the font. 
 
-
+ sed -i -e "s/this.div.style.fontSize=r;return(q===s)/this.div.style.fontSize=r;if(window.navigator.userAgent.indexOf(' Qt\/4.8.')>0\&\&(m.weight||m.style)){return true}else{return(q===s)}/" $MATHJAX_DIR/jax/output/HTML-CSS/jax.js
 
