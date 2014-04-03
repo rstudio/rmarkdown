@@ -133,14 +133,14 @@ html_dependencies_as_string <- function(dependencies, lib_dir) {
 
     # add stylesheets
     for (stylesheet in dep$stylesheet) {
-      stylesheet <- file.path(dep$path, stylesheet)
+      stylesheet <- pandoc_path_arg(file.path(dep$path, stylesheet))
       dependencies_html <- c(dependencies_html,
         paste("<link href=\"", stylesheet, "\" rel=\"stylesheet\" />", sep = ""))
     }
 
     # add scripts
     for (script in dep$script) {
-      script <- file.path(dep$path, script)
+      script <- pandoc_path_arg(file.path(dep$path, script))
       dependencies_html <- c(dependencies_html,
         paste("<script src=\"", script, "\"></script>", sep = ""))
     }
