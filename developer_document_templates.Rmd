@@ -2,8 +2,149 @@
 title: "Document Templates"
 ---
 
-<br/>
+## Overview
 
-## *Under Construction*
+If there is a particular form of R Markdown document that you or those you work with create frequently, it may make sense to create a re-usable document template for it. R Markdown templates are typically re-distributed within R packages, and can be easily discovered from within RStudio using the **New R Markdown** dialog:
+
+![New R Markdown dialog](images/new_r_markdown.png)
+
+Note that if you are not using RStudio you can also create new documents based on templates using the `rmarkdown::draft` function:
+
+```{r, eval=FALSE}
+rmarkdown::draft("my_article.Rmd", template = "jss_article", package = "rticles")
+```
+
+## Template Basics
+
+R Markdown templates should be located within the `inst/rmarkdown/templates` directory of an R package. The minimum files required for a template are:
+
+```bash
+inst/rmarkdown/templates/my_template/template.yaml 
+inst/rmarkdown/templates/my_template/skeleton/skeleton.Rmd 
+```
+
+The contents of the two files might look like this:
+
+**template.yaml**
+
+```yaml
+name: My Template
+```
+
+**skeleton.Rmd**
+
+```markdown
+---
+title: "Untitled"
+output:
+  html_document:
+    toc: true
+    fig_caption: true
+---
+
+## Overview
+
+## Analysis
+
+```
+
+This is a trivial example that simply overrides a couple of the default parameters of `html_document`. You could of course also include additional document structure, logo elements, stylesheets, etc. 
+
+## Supporting Files
+
+If want to include supporting files with your template they should be placed in the `skeleton` directory. These files will be automatically copied alongside new documents. For example, if your template included a standard logo and stylesheet it contain the following:
+
+```bash
+inst/rmarkdown/templates/my_template/template.yaml 
+inst/rmarkdown/templates/my_template/skeleton/skeleton.Rmd 
+inst/rmarkdown/templates/my_template/skeleton/logo.png 
+inst/rmarkdown/templates/my_template/skeleton/styles.css 
+```
+
+**template.yaml**
+
+```yaml
+name: My Template
+create_dir: true
+```
+
+**skeleton.Rmd**
+
+```markdown
+---
+title: "Untitled"
+output:
+  html_document:
+    toc: true
+    fig_caption: true
+    css: styles.css
+---
+
+![Logo](logo.png)
+
+## Overview
+
+## Analysis
+
+```
+
+Note the use of the `create_dir` field in the template definition to indicate that a new directory should be created when documents are created from the template (this is a default that the user can override).
+
+## Templates and Custom Formats
+
+When creating a template it's also convenient to create a [custom format](developer_custom_format.html) that is used by the template. Custom formats are useful when you have lots of supporting files or want to constrain the output options to a set of invariants established by the format. 
+
+Here's an example of a custom format based on `html_document`:
+
+```{r}
+quarterly_report <- function(toc = TRUE) {
+
+  # get the locations of resource files located within the package
+  css <- system.file("reports/styles.css", package = "mypackage")
+  header <- system.file("reports/quarterly/header.html", package = "mypackage")
+
+  # call the base html_document function
+  rmarkdown::html_document(toc = toc,
+                           fig_width = 6.5,
+                           fig_height = 4,
+                           theme = NULL,
+                           css = css,
+                           includes = includes(before_body = header))
+}
+```
+
+This format could then be used in a template follows:
+
+```yaml
+---
+title: "Untitled"
+output: mypackage::quarterly_report
+```
+
+See the article on [Creating New Formats](developer_custom_formats.html) for additional details on custom formats.
+
+
+## Examples
+
+The [rticles](https://github.com/rstudio/rticles) package includes two examples of templates (both of which have an associated custom format):
+
+1) [JSS article](https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/jss_article)
+
+2) [useR abstract submission](https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/use_r_abstract)
+
+Both of these use custom LaTeX templates to produce output that conforms to the document standards of JSS and useR.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
