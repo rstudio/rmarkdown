@@ -174,6 +174,14 @@ render <- function(input,
     yaml_front_matter <- parse_yaml_front_matter(input_lines)
     yaml_front_matter$params <- merge_lists(yaml_front_matter$params, params)
 
+    # presume that we're rendering as a static document unless specified
+    # otherwise in the parameters
+    rmarkdown_runtime <- "static"
+    if (!is.null(yaml_front_matter$params$runtime)) {
+      rmarkdown_runtime <- yaml_front_matter$params$runtime
+    }
+    knitr::opts_knit$set(rmarkdown.runtime = rmarkdown_runtime)
+
     # make the metadata and params available within the knit environment
     # (unless they are already defined there in which case we emit a warning)
     if (!exists("metadata", envir = envir)) {
@@ -204,7 +212,13 @@ render <- function(input,
                          quiet = quiet,
                          encoding = encoding)
 
-    # collect knit_meta
+    # pull any R Markdown warnings from knit_meta and emit
+    rmd_warnings <- knitr::knit_meta(class = "rmd_warning", clean = TRUE)
+    for (rmd_warning in rmd_warnings) {
+      message("Warning: ", rmd_warning)
+    }
+
+    # collect remaining knit_meta
     knit_meta <- knit_meta_reset()
 
     # clean the files_dir if we've either been asking to clean supporting
