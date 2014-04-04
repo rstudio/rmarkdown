@@ -50,9 +50,11 @@ html_dependency_copy_lib <- function(dependency, lib_dir) {
   # target directory is based on the dirname of the path
   target_dir <- file.path(lib_dir, basename(dependency$path))
 
-  # copy the directory if it hasn't already been copied
-  if (!file.exists(target_dir))
-    file.copy(from = dependency$path, to = lib_dir, recursive = TRUE)
+  # copy the directory
+  file.copy(from = dependency$path,
+            to = lib_dir,
+            overwrite = TRUE,
+            recursive = TRUE)
 
   # return the target dir
   target_dir
