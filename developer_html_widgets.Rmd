@@ -1,28 +1,29 @@
 ---
-title: "Custom HTML Output"
+title: "HTML Widgets"
 ---
 
-This article describes how to add new types of HTML output to R Markdown documents. You might want to do this to add a binding between R and a Javascript data visualization library like [d3](http://d3js.org) or [Leaflet](http://leafletjs.com). Custom HTML output works both inside R Markdown documents as well as while executing code from the console (e.g. to display it the RStudio Viewer).
+HTML widgets enable you to add new types of HTML output to R Markdown documents. You might want to do this to add a binding between R and a Javascript data visualization library like [d3](http://d3js.org) or [Leaflet](http://leafletjs.com). HTML widgets create output that works both inside R Markdown documents as well as while executing code from the console (e.g. to display it the RStudio Viewer).
 
 #### Prerequisties
 
-Creating extensions that produce custom HTML output requires the development versions of both the **knitr** and **htmltools** packages. You can install them as follows:
+Creating HTML widgets requires the development versions of both the **knitr** and **htmltools** packages. You can install them as follows:
 
 ```{r, eval=FALSE}
 devtools::install_github(c("yihui/knitr", "rstudio/htmltools"))
 ```
 
-## Creating an Output Function
+## Creating an HTML Widget
 
-To define a new type of HTML output you need to create an HTML output function. Output functions perform the following tasks:
+To create an HTML widget you define an R function that does the following:
 
-1) Dynamically generate HTML based on their input parameters;
+1) Dynamically generates HTML based on it's input parameters;
 
-2) Define the dependencies (e.g. CSS and Javascript) required by that HTML;
+2) Enumerates the dependencies (e.g. CSS and Javascript) required by that HTML; and
 
-3) Return the HTML and dependencies as an object of class "html_output"
+3) Returns the HTML and dependencies as an object of class "html_output"
 
-When implementing an output function you use the `html_dependency` and `html_output` functions from the **htmltools** package. The basic skeleton of an output function looks like this:
+When implementing an HTML widget you use the `html_dependency` and `html_output` functions from the **htmltools** package. The basic skeleton of a function that defines a new widget looks like this:
+
 
 ```{r, eval=FALSE}
 snazzy_visualization <- function(data, width, height) {
@@ -47,11 +48,11 @@ It's important to note that dependencies must be local rather than remote (i.e. 
 
 ## Examples
 
-Here are two examples of custom HTML output functoins. These examples are from the **rmdexamples** package located at <https://github.com/rstudio/rmdexamples>.
+Here are two examples of HTML widgets. These examples are from the **rmdexamples** package located at <https://github.com/rstudio/rmdexamples>.
 
 ### JustGage
 
-[JustGage](http://justgage.com/) is Javascript library used to create numeric gauge visualizations. JustGage depends on both it's on Javascript as well as the [raphael.js](http://raphaeljs.com/) library. Here's what an HTML output function for JustGage might look like:
+[JustGage](http://justgage.com/) is Javascript library used to create numeric gauge visualizations. JustGage depends on both it's on Javascript as well as the [raphael.js](http://raphaeljs.com/) library. Here's what a function that defines a JustGage HTML widget might look like:
 
 ```{r, eval=FALSE}
 justgage <- function(title, value, min, max, 
@@ -102,7 +103,7 @@ Note that the required Javascript libraries are contained within the function's 
 
 ### DataTables
 
-[DataTables](https://datatables.net/) is a plug-in for the [jQuery](http://jquery.com/) Javascript library that adds advanced interaction controls to any HTML table. Here's what an HTML output function for DataTables might look like:
+[DataTables](https://datatables.net/) is a plug-in for the [jQuery](http://jquery.com/) Javascript library that adds advanced interaction controls to any HTML table. Here's what a function that defines a DataTables widget might look like:
 
 ```{r, eval=FALSE}
 datatable <- function(x, digits = getOption("digits"), 

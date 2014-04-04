@@ -11,7 +11,7 @@
 
 
 
-<title>Custom HTML Output</title>
+<title>HTML Widgets</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -114,7 +114,7 @@ body {
            <li class="dropdown">
             <a href="developer" class="dropdown-toggle" data-toggle="dropdown">Developer <b class="caret"></b></a>
             <ul class="dropdown-menu">
-               <li><a href="developer_custom_html_output.html">Custom HTML Output</a></li>
+               <li><a href="developer_html_widgets.html">HTML Widgets</a></li>
                <li class="divider"></li>
                <li><a href="developer_paramaterized_reports.html">Parameterized Reports</a></li>
                <li class="divider"></li>
@@ -135,25 +135,25 @@ body {
 <div class="span10 offset1">
 
 <div id="header">
-<h1 class="title">Custom HTML Output</h1>
+<h1 class="title">HTML Widgets</h1>
 </div>
 
 
-<p>This article describes how to add new types of HTML output to R Markdown documents. You might want to do this to add a binding between R and a Javascript data visualization library like <a href="http://d3js.org">d3</a> or <a href="http://leafletjs.com">Leaflet</a>. Custom HTML output works both inside R Markdown documents as well as while executing code from the console (e.g. to display it the RStudio Viewer).</p>
+<p>HTML widgets enable you to add new types of HTML output to R Markdown documents. You might want to do this to add a binding between R and a Javascript data visualization library like <a href="http://d3js.org">d3</a> or <a href="http://leafletjs.com">Leaflet</a>. HTML widgets create output that works both inside R Markdown documents as well as while executing code from the console (e.g. to display it the RStudio Viewer).</p>
 <div id="prerequisties" class="section level4">
 <h4>Prerequisties</h4>
-<p>Creating extensions that produce custom HTML output requires the development versions of both the <strong>knitr</strong> and <strong>htmltools</strong> packages. You can install them as follows:</p>
+<p>Creating HTML widgets requires the development versions of both the <strong>knitr</strong> and <strong>htmltools</strong> packages. You can install them as follows:</p>
 <pre class="r"><code>devtools::install_github(c(&quot;yihui/knitr&quot;, &quot;rstudio/htmltools&quot;))</code></pre>
 </div>
-<div id="creating-an-output-function" class="section level2">
-<h2>Creating an Output Function</h2>
-<p>To define a new type of HTML output you need to create an HTML output function. Output functions perform the following tasks:</p>
+<div id="creating-an-html-widget" class="section level2">
+<h2>Creating an HTML Widget</h2>
+<p>To create an HTML widget you define an R function that does the following:</p>
 <ol style="list-style-type: decimal">
-<li><p>Dynamically generate HTML based on their input parameters;</p></li>
-<li><p>Define the dependencies (e.g. CSS and Javascript) required by that HTML;</p></li>
-<li><p>Return the HTML and dependencies as an object of class “html_output”</p></li>
+<li><p>Dynamically generates HTML based on it’s input parameters;</p></li>
+<li><p>Enumerates the dependencies (e.g. CSS and Javascript) required by that HTML; and</p></li>
+<li><p>Returns the HTML and dependencies as an object of class “html_output”</p></li>
 </ol>
-<p>When implementing an output function you use the <code>html_dependency</code> and <code>html_output</code> functions from the <strong>htmltools</strong> package. The basic skeleton of an output function looks like this:</p>
+<p>When implementing an HTML widget you use the <code>html_dependency</code> and <code>html_output</code> functions from the <strong>htmltools</strong> package. The basic skeleton of a function that defines a new widget looks like this:</p>
 <pre class="r"><code>snazzy_visualization &lt;- function(data, width, height) {
   
   # generate html for the visualization
@@ -173,10 +173,10 @@ body {
 </div>
 <div id="examples" class="section level2">
 <h2>Examples</h2>
-<p>Here are two examples of custom HTML output functoins. These examples are from the <strong>rmdexamples</strong> package located at <a href="https://github.com/rstudio/rmdexamples">https://github.com/rstudio/rmdexamples</a>.</p>
+<p>Here are two examples of HTML widgets. These examples are from the <strong>rmdexamples</strong> package located at <a href="https://github.com/rstudio/rmdexamples">https://github.com/rstudio/rmdexamples</a>.</p>
 <div id="justgage" class="section level3">
 <h3>JustGage</h3>
-<p><a href="http://justgage.com/">JustGage</a> is Javascript library used to create numeric gauge visualizations. JustGage depends on both it’s on Javascript as well as the <a href="http://raphaeljs.com/">raphael.js</a> library. Here’s what an HTML output function for JustGage might look like:</p>
+<p><a href="http://justgage.com/">JustGage</a> is Javascript library used to create numeric gauge visualizations. JustGage depends on both it’s on Javascript as well as the <a href="http://raphaeljs.com/">raphael.js</a> library. Here’s what a function that defines a JustGage HTML widget might look like:</p>
 <pre class="r"><code>justgage &lt;- function(title, value, min, max, 
                      label = NULL, width = 200, height = 160) {
   
@@ -223,7 +223,7 @@ body {
 </div>
 <div id="datatables" class="section level3">
 <h3>DataTables</h3>
-<p><a href="https://datatables.net/">DataTables</a> is a plug-in for the <a href="http://jquery.com/">jQuery</a> Javascript library that adds advanced interaction controls to any HTML table. Here’s what an HTML output function for DataTables might look like:</p>
+<p><a href="https://datatables.net/">DataTables</a> is a plug-in for the <a href="http://jquery.com/">jQuery</a> Javascript library that adds advanced interaction controls to any HTML table. Here’s what a function that defines a DataTables widget might look like:</p>
 <pre class="r"><code>datatable &lt;- function(x, digits = getOption(&quot;digits&quot;), 
                       row.names = NA, align = NULL, ...) {
   
