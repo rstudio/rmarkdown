@@ -117,7 +117,8 @@ beamer_presentation <- function(toc = FALSE,
     pandoc = pandoc_options(to = "beamer",
                             from = from_rmarkdown(fig_caption),
                             args = args,
-                            keep_tex = keep_tex)
+                            keep_tex = keep_tex),
+    clean_supporting = !keep_tex
   )
 }
 
