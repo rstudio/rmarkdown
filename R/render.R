@@ -191,11 +191,10 @@ render <- function(input,
               "so won't be accessible during knit", call. = FALSE)
     }
 
-    # ensure that htmltools::knit_print.html_output is available on the
-    # search path if it exists. note that htmltools doesn't register
-    # this explicitly as an S3 method so that it doesn't need to depend
-    # on knitr via importFrom(knitr, knit_print)
-    suppressWarnings(require("htmltools", quietly = TRUE))
+    # attach S3 methods required by knit_print convenience functions
+    # like rmarkdown::html_output and shiny::shinyAppObj
+    attach_methods()
+    on.exit(detach_methods(), add = TRUE)
 
     # perform the knit
     input <- knitr::knit(knit_input,
@@ -318,6 +317,40 @@ knit_meta_reset <- function() {
   else
     NULL
 }
+
+
+# add/remove selected S3 methods to search path for knit
+attach_methods <- function() {
+  if (!methods_attached()) {
+    # attach a special namespace where we'll export S3 methods of
+    # general utility (i.e. ones relied on by packages that call
+    # convenience methods to create knit_print'able output)
+    methods <- attach(NULL, name="rmarkdown:methods");
+
+    # load methods from "htmltools" (for knit printing "html_output")
+    if (suppressWarnings(require("htmltools", quiet = TRUE))) {
+      methods$knit_print.html_output <- htmltools::knit_print.html_output
+    }
+
+    # load methods from "shiny" (for knitprinting "shiny.appobj")
+    if (suppressWarnings(require("shiny", quiet = TRUE))) {
+      # TODO: comment this in once this function is available in shiny
+      # methods$knit_print.shiny.appobj <- shiny::knit_print.html_output
+    }
+  }
+}
+
+detach_methods <- function() {
+  if (methods_attached())
+    detach("rmarkdown:methods", character.only = TRUE)
+}
+
+methods_attached <- function() {
+  "rmarkdown:methods" %in% search()
+}
+
+
+
 
 
 
