@@ -136,6 +136,18 @@ body {
 <h1 class="title">HTML Widgets</h1>
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#creating-an-html-widget">Creating an HTML Widget</a></li>
+<li><a href="#examples">Examples</a><ul>
+<li><a href="#justgage">JustGage</a></li>
+<li><a href="#datatables">DataTables</a></li>
+</ul></li>
+<li><a href="#widgets-for-existing-classes">Widgets for Existing Classes</a><ul>
+<li><a href="#datatables-example-revisited">DataTables Example Revisited</a></li>
+</ul></li>
+</ul>
+</div>
 
 <p>HTML widgets enable you to add new types of HTML output to R Markdown documents. You might want to do this to add a binding between R and a Javascript data visualization library like <a href="http://d3js.org">d3</a> or <a href="http://leafletjs.com">Leaflet</a>. HTML widgets create output that works both inside R Markdown documents as well as while executing code from the console (e.g. to display it the RStudio Viewer).</p>
 <div id="prerequisties" class="section level4">
@@ -270,6 +282,110 @@ body {
   htmltools::html_output(html, dependencies)
 }</code></pre>
 <p>Note that the <code>knitr::kable</code> function is used to generate the HTML table and that the paramters to the <code>datatable</code> function are passed through to it. Note also that the required Javascript libraries are contained within the function’s package (<a href="https://github.com/rstudio/rmdexamples">rmdexamples</a>) so are accessed using <code>system.file</code>.</p>
+</div>
+</div>
+<div id="widgets-for-existing-classes" class="section level2">
+<h2>Widgets for Existing Classes</h2>
+<p>Rather than creating a dedicated function to emit HTML output, it’s also possible to create custom HTML representations for existing classes (e.g. “data.frame”, “ts”, etc.). In this scenario, objects of the specified classes will be automatically printed as HTML whenever they are encountered in an R Markdown document.</p>
+<p>To do this you implement the <code>knit_print</code> S3 method for the class you want to create HTML output for and return an object of type “knit_asis” that includes the requisite HTML and it’s dependencies. Here’s the general outline of what this would look like for a data frame:</p>
+<pre class="r"><code>#&#39; @export
+#&#39; @importFrom knitr knit_print
+knit_print.data.frame &lt;- function(x) {
+  
+  # generate html for data.frame
+  html &lt;- dataframe_html()
+  
+  # define dependencies
+  dependencies &lt;- list(
+    htmltools::html_dependency(...),
+    htmltools::html_dependency(...)
+  )
+  
+  # return knit_asis
+  structure(class = &quot;knit_asis&quot;,
+    html,
+    knit_meta = dependencies
+  )
+}</code></pre>
+<p>To use this binding in an R Markdown document you need to ensure that the package defining it is on the search path, for example:</p>
+<pre class="r"><code>&#96;&#96;&#96;{r}
+# make sure our package is on the search path
+library(rmdexamples)
+
+# now all data frames will print as a DataTable!
+cars
+&#96;&#96;&#96;</code></pre>
+
+
+<div id="datatables-example-revisited" class="section level3">
+<h3>DataTables Example Revisited</h3>
+<p>If you wanted to both automatically use a DataTable for printing data frames as well as provide a dedicated function for more customized uses of DataTables you could re-write the DataTables binding as follows:</p>
+<pre class="r"><code>#&#39; @export
+#&#39; @importFrom knitr knit_print
+knit_print.data.frame &lt;- function(x) {  
+  structure(class = &quot;knit_asis&quot;,
+    datatables_html(x),
+    knit_meta = datatables_dependencies()
+  )
+}
+
+#&#39; @export
+datatable &lt;- function(x, digits = getOption(&quot;digits&quot;), 
+                      row.names = NA, align = NULL, ...) {
+  htmltools::html_output(
+    datatables_html(x, digits, row.names, align, ...),
+    datatables_dependencies()
+  )
+}
+
+datatables_html &lt;- function(x, digits = getOption(&quot;digits&quot;), 
+                           row.names = NA, align = NULL, ...) {
+  
+  # create random/unique id for the table
+  id &lt;- paste(&quot;datatable&quot;, as.integer(stats::runif(1, 1, 10000)), sep=&quot;-&quot;) 
+  
+  # generate an html version of the table that includes the id
+  html &lt;- knitr::kable(
+    x, 
+    format = &quot;html&quot;, 
+    digits = digits,
+    row.names = NA,
+    align = align,
+    output = FALSE,
+    table.attr = paste(&quot;id=\&quot;&quot;, id, &quot;\&quot; &quot;, 
+                       &quot;class=\&quot;table table-bordered\&quot; &quot;,
+                       sep = &quot;&quot;),
+    ...)
+  
+  # create the script which binds the datatable
+  html &lt;- paste(html,
+                &quot;&lt;script&gt;&quot;,
+                &quot;$(document).ready(function() {&quot;,
+                &quot;$(&#39;#&quot;, id ,&quot;&#39;).dataTable();&quot;,
+                &quot;});&quot;,
+                &quot;&lt;/script&gt;&quot;, sep = &quot;&quot;)
+  
+  html
+}
+
+datatables_dependencies &lt;- function() {
+  list(
+    htmltools::html_dependency(
+      name = &quot;jquery&quot;,
+      version = &quot;1.11.0&quot;,
+      path = system.file(&quot;www/libs/jquery-1.11.0&quot;, package = &quot;rmdexamples&quot;),
+      script = &quot;jquery.min.js&quot;
+    ),
+    htmltools::html_dependency(
+      name = &quot;datatables&quot;,
+      version = &quot;1.9.4&quot;,
+      path = system.file(&quot;www/libs/datatables-1.9.4&quot;, package = &quot;rmdexamples&quot;),
+      stylesheet = &quot;css/jquery.dataTables.css&quot;,
+      script = &quot;js/jquery.dataTables.min.js&quot;
+    )
+  )
+}</code></pre>
+<p>Note that in this implementation we define functions for generating HTML and depependencies and then call them from both the implementation <code>datatable</code> and the <code>knit_print.data.frame</code> generic.</p>
 <div class="references">
 
 </div>
