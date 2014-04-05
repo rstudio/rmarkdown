@@ -426,7 +426,9 @@ pandoc <- function() {
 # get the path to the pandoc-citeproc binary
 pandoc_citeproc <- function() {
   find_pandoc()
-  file.path(.pandoc$dir, "pandoc-citeproc")
+  citeproc_path = file.path(.pandoc$dir, "pandoc-citeproc")
+
+  if (file.exists(citeproc_path)) citeproc_path else "pandoc-citeproc"
 }
 
 # quote args if they need it
