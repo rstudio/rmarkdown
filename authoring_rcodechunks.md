@@ -56,6 +56,32 @@ knitr::opts_chunk$set(cache=TRUE)
 
 If you run into problems with cached output you can always clear the knitr cache by removing the folder named with a `_cache` suffix within your document's directory.
 
+## Rcpp Code Chunks
+
+You can also create code chunks that define functions in C++ using [Rcpp Attributes](http://cran.rstudio.com/web/packages/Rcpp/vignettes/Rcpp-attributes.pdf). This is accomplished using the `engine = 'Rcpp'` chunk option. For example:
+
+<pre class="cpp"><code>&#96;&#96;&#96;{r engine='Rcpp'}
+#include &lt;Rcpp.h&gt;
+
+// [[Rcpp::export]]
+int fibonacci(const int x) {
+    if (x == 0 || x == 1) return(x);
+    return (fibonacci(x - 1)) + fibonacci(x - 2);
+}
+&#96;&#96;&#96;
+</code></pre>
+
+Because `fibonacci` was defined with the `Rcpp::export` attribute it can now be called as a normal R function:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
+fibonacci(10L)
+fibonacci(20L)
+&#96;&#96;&#96;
+</code></pre>
+
+Note that caching should not be used with Rcpp code chunks (since the compiled C++ 
+function will not survive past the lifetime of the current R session).
+
 ## Learning More
 
 The knitr package is an extremely powerful tool for dynamic content generation and is worth studying in detail to understand all of it's features and capabilities. Good resources for learning more about knitr include:
