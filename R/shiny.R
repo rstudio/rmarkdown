@@ -31,6 +31,10 @@ run_document <- function(input, shiny_args = NULL, ...) {
   wwwdir <- file.path(appdir, "www")
   dir.create(wwwdir)
 
+  # load Shiny; needed to expose the Shiny knit output functions to widgets that
+  # use them
+  library(shiny)
+
   # render the document
   output <- file.path(wwwdir, "index.html")
   render(input, output_file = output, ...)
