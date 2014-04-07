@@ -5,7 +5,6 @@ render <- function(input,
                    output_file = NULL,
                    output_options = NULL,
                    clean = TRUE,
-                   params = NULL,
                    envir = parent.frame(),
                    quiet = FALSE,
                    encoding = getOption("encoding")) {
@@ -23,7 +22,7 @@ render <- function(input,
     outputs <- character()
     for (format in output_format) {
       output <- render(input, format, NULL, output_options,
-                       clean, params, envir, quiet, encoding)
+                       clean, envir, quiet, encoding)
       outputs <- c(outputs, output)
     }
     return(invisible(outputs))
@@ -168,27 +167,6 @@ render <- function(input,
       knitr::opts_knit$set(as.list(output_format$knitr$opts_knit))
       knitr::opts_chunk$set(as.list(output_format$knitr$opts_chunk))
       knitr::knit_hooks$set(as.list(output_format$knitr$knit_hooks))
-    }
-
-    # get the yaml front matter and merge custom params into it
-    yaml_front_matter <- parse_yaml_front_matter(input_lines)
-    yaml_front_matter$params <- merge_lists(yaml_front_matter$params, params)
-
-    # make the metadata and params available within the knit environment
-    # (unless they are already defined there in which case we emit a warning)
-    if (!exists("metadata", envir = envir)) {
-        assign("metadata", yaml_front_matter, envir = envir)
-        on.exit(remove("metadata", envir = envir), add = TRUE)
-    } else {
-        warning("'metadata' object already exists in knit environment ",
-                "so won't be accessible during knit", call. = FALSE)
-    }
-    if (!exists("params", envir = envir)) {
-      assign("params", yaml_front_matter$params, envir = envir)
-      on.exit(remove("params", envir = envir), add = TRUE)
-    } else {
-      warning("'params' object already exists in knit environment ",
-              "so won't be accessible during knit", call. = FALSE)
     }
 
     # perform the knit
