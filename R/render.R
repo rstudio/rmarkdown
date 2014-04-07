@@ -169,6 +169,18 @@ render <- function(input,
       knitr::knit_hooks$set(as.list(output_format$knitr$knit_hooks))
     }
 
+    # get the yaml front matter make it available as 'metadata' within the
+    # knit environment (unless it is already defined there in which case
+    # we emit a warning)
+    yaml_front_matter <- parse_yaml_front_matter(input_lines)
+    if (!exists("metadata", envir = envir)) {
+      assign("metadata", yaml_front_matter, envir = envir)
+      on.exit(remove("metadata", envir = envir), add = TRUE)
+    } else {
+      warning("'metadata' object already exists in knit environment ",
+              "so won't be accessible during knit", call. = FALSE)
+    }
+
     # perform the knit
     input <- knitr::knit(knit_input,
                          knit_output,
