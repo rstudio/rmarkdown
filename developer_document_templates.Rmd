@@ -18,9 +18,11 @@ rmarkdown::draft("my_article.Rmd", template = "jss_article", package = "rticles"
 
 R Markdown templates should be located within the `inst/rmarkdown/templates` directory of an R package. The minimum files required for a template are:
 
+**Directory:** `inst/rmarkdown/templates/my_template`
+
 ```bash
-inst/rmarkdown/templates/my_template/template.yaml 
-inst/rmarkdown/templates/my_template/skeleton/skeleton.Rmd 
+template.yaml 
+skeleton/skeleton.Rmd 
 ```
 
 The contents of the two files might look like this:
@@ -54,11 +56,13 @@ This is a trivial example that simply overrides a couple of the default paramete
 
 If want to include supporting files with your template they should be placed in the `skeleton` directory. These files will be automatically copied alongside new documents. For example, if your template included a standard logo and stylesheet it contain the following:
 
+**Directory:** `inst/rmarkdown/templates/my_template`
+
 ```bash
-inst/rmarkdown/templates/my_template/template.yaml 
-inst/rmarkdown/templates/my_template/skeleton/skeleton.Rmd 
-inst/rmarkdown/templates/my_template/skeleton/logo.png 
-inst/rmarkdown/templates/my_template/skeleton/styles.css 
+template.yaml 
+skeleton/skeleton.Rmd 
+skeleton/logo.png 
+skeleton/styles.css 
 ```
 
 **template.yaml**

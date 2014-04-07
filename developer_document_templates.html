@@ -145,8 +145,9 @@ body {
 <div id="template-basics" class="section level2">
 <h2>Template Basics</h2>
 <p>R Markdown templates should be located within the <code>inst/rmarkdown/templates</code> directory of an R package. The minimum files required for a template are:</p>
-<pre class="bash"><code>inst/rmarkdown/templates/my_template/template.yaml 
-inst/rmarkdown/templates/my_template/skeleton/skeleton.Rmd </code></pre>
+<p><strong>Directory:</strong> <code>inst/rmarkdown/templates/my_template</code></p>
+<pre class="bash"><code>template.yaml 
+skeleton/skeleton.Rmd </code></pre>
 <p>The contents of the two files might look like this:</p>
 <p><strong>template.yaml</strong></p>
 <pre class="yaml"><code>name: My Template</code></pre>
@@ -168,10 +169,11 @@ output:
 <div id="supporting-files" class="section level2">
 <h2>Supporting Files</h2>
 <p>If want to include supporting files with your template they should be placed in the <code>skeleton</code> directory. These files will be automatically copied alongside new documents. For example, if your template included a standard logo and stylesheet it contain the following:</p>
-<pre class="bash"><code>inst/rmarkdown/templates/my_template/template.yaml 
-inst/rmarkdown/templates/my_template/skeleton/skeleton.Rmd 
-inst/rmarkdown/templates/my_template/skeleton/logo.png 
-inst/rmarkdown/templates/my_template/skeleton/styles.css </code></pre>
+<p><strong>Directory:</strong> <code>inst/rmarkdown/templates/my_template</code></p>
+<pre class="bash"><code>template.yaml 
+skeleton/skeleton.Rmd 
+skeleton/logo.png 
+skeleton/styles.css </code></pre>
 <p><strong>template.yaml</strong></p>
 <pre class="yaml"><code>name: My Template
 create_dir: true</code></pre>
