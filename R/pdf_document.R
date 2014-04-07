@@ -147,6 +147,7 @@ pdf_document <- function(toc = FALSE,
                             from = from_rmarkdown(fig_caption),
                             args = args,
                             keep_tex = keep_tex),
+    clean_supporting = !keep_tex,
     pre_processor = pre_processor
   )
 }

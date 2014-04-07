@@ -5,10 +5,10 @@ render <- function(input,
                    output_file = NULL,
                    output_options = NULL,
                    clean = TRUE,
-                   params = NULL,
                    envir = parent.frame(),
                    quiet = FALSE,
-                   encoding = getOption("encoding")) {
+                   encoding = getOption("encoding"),
+                   runtime = c("auto", "static", "shiny")) {
 
   # check for "all" output formats
   if (identical(output_format, "all")) {
@@ -23,7 +23,7 @@ render <- function(input,
     outputs <- character()
     for (format in output_format) {
       output <- render(input, format, NULL, output_options,
-                       clean, params, envir, quiet, encoding)
+                       clean, envir, quiet, encoding)
       outputs <- c(outputs, output)
     }
     return(invisible(outputs))
@@ -170,40 +170,29 @@ render <- function(input,
       knitr::knit_hooks$set(as.list(output_format$knitr$knit_hooks))
     }
 
-    # get the yaml front matter and merge custom params into it
+    # get the yaml front matter make it available as 'metadata' within the
+    # knit environment (unless it is already defined there in which case
+    # we emit a warning)
     yaml_front_matter <- parse_yaml_front_matter(input_lines)
-    yaml_front_matter$params <- merge_lists(yaml_front_matter$params, params)
 
     # presume that we're rendering as a static document unless specified
     # otherwise in the parameters
-    rmarkdown_runtime <- "static"
-    if (!is.null(yaml_front_matter$params$runtime)) {
-      rmarkdown_runtime <- yaml_front_matter$params$runtime
+    rmarkdown_runtime <- match.arg(runtime)
+    if (identical(rmarkdown_runtime, "auto")) {
+      if (!is.null(yaml_front_matter$runtime))
+        rmarkdown_runtime <- yaml_front_matter$runtime
+      else
+        rmarkdown_runtime <- "static"
     }
     knitr::opts_knit$set(rmarkdown.runtime = rmarkdown_runtime)
 
-    # make the metadata and params available within the knit environment
-    # (unless they are already defined there in which case we emit a warning)
     if (!exists("metadata", envir = envir)) {
-        assign("metadata", yaml_front_matter, envir = envir)
-        on.exit(remove("metadata", envir = envir), add = TRUE)
+      assign("metadata", yaml_front_matter, envir = envir)
+      on.exit(remove("metadata", envir = envir), add = TRUE)
     } else {
-        warning("'metadata' object already exists in knit environment ",
-                "so won't be accessible during knit", call. = FALSE)
-    }
-    if (!exists("params", envir = envir)) {
-      assign("params", yaml_front_matter$params, envir = envir)
-      on.exit(remove("params", envir = envir), add = TRUE)
-    } else {
-      warning("'params' object already exists in knit environment ",
+      warning("'metadata' object already exists in knit environment ",
               "so won't be accessible during knit", call. = FALSE)
     }
-
-    # ensure that htmltools::knit_print.html_output is available on the
-    # search path if it exists. note that htmltools doesn't register
-    # this explicitly as an S3 method so that it doesn't need to depend
-    # on knitr via importFrom(knitr, knit_print)
-    suppressWarnings(require("htmltools", quietly = TRUE))
 
     # perform the knit
     input <- knitr::knit(knit_input,
@@ -220,6 +209,15 @@ render <- function(input,
 
     # collect remaining knit_meta
     knit_meta <- knit_meta_reset()
+
+    # if this isn't html and there are html dependencies then flag an error
+    if (!is_pandoc_to_html(output_format$pandoc)) {
+      if (has_html_dependencies(knit_meta)) {
+        stop("Functions that produce HTML output found in document targeting ",
+             output_format$pandoc$to, " output.\nPlease change the output type ",
+             "of this document to HTML.", call. = FALSE)
+      }
+    }
 
     # clean the files_dir if we've either been asking to clean supporting
     # files or if we know the supporting files are going to get copied
