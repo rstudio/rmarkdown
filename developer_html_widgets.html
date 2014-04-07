@@ -149,7 +149,28 @@ body {
 <li><p>Within R Markdown documents (where printing occurs inline within the document)</p></li>
 </ol>
 <p>To accomplish this, HTML widgets implement the <code>print</code> and <code>knit_print</code> S3 methods. Printing in both contexts includes not only the raw HTML but also the specification of dependencies (e.g. Javascript libraires).</p>
-<p>The <strong>htmltools</strong> package includes helper functions that make it straightforward to implement both of these print methods and share the underlying code used to generate HTML and specify dependencies.</p>
+<p>The <strong>htmltools</strong> package includes helper functions that make it straightforward to implement both of these print methods and share the underlying code used to generate HTML and specify dependencies (the two examples below illustrate the use of these functions).</p>
+<div id="generating-html" class="section level3">
+<h3>Generating HTML</h3>
+<p>A couple of important things to keep in mind when generating HTML for use in widgets:</p>
+<ol style="list-style-type: decimal">
+<li><p>Due to the way R Markdown processes text within HTML tags you should not use indendation in your generated HTML. This is because pandoc interprets any content indented 4 spaces as a code / preformatted block.</p></li>
+<li><p>Text included within attributes or the body of tags should be escaped. You can use the <code>htmltools::html_escape</code> function to do this (the DataTables example below illustrates this).</p></li>
+<li><p>Literals within JSON also needs to be escaped. The best way to do this (and to ensure your JSON is fully valid) is to create an R list and then use <code>RJSONIO::toJSON</code> to generate the JSON (the JustGage example below illustrates this).</p></li>
+</ol>
+</div>
+<div id="specifying-dependencies" class="section level3">
+<h3>Specifying Dependencies</h3>
+<p>HTML dependencies are defined using the <code>htmltools::html_dependency</code> function and include a name, version, path and optional meta, script, and stylesheet elements to include within the document head. For example:</p>
+<pre class="r"><code>htmltools::html_dependency(
+  name = &quot;jquery&quot;,
+  version = &quot;1.11.0&quot;,
+  path = system.file(&quot;www/libs/jquery-1.11.0&quot;, package = &quot;rmdexamples&quot;),
+  script = &quot;jquery.min.js&quot;
+)</code></pre>
+<p>Multiple instances of a dependency with the same name (e.g. “jquery”) are merged into a single dependency and the most recent version specified is used.</p>
+<p>It’s important to note that dependencies must be local rather than remote (i.e. they must exist on the local filesystem). This requirement exists so that HTML documents created with R Markdown can be self contained and always work offline.</p>
+</div>
 </div>
 <div id="examples" class="section level2">
 <h2>Examples</h2>
@@ -262,12 +283,13 @@ datatable_html &lt;- function(x) {
   html &lt;- paste(c(
     sprintf(&quot;&lt;table id = \&quot;%s\&quot;&gt;&quot;, id),
     c(&#39;&lt;thead&gt;&#39;, &#39;&lt;tr&gt;&#39;, 
-      sprintf(&#39;&lt;th&gt;%s&lt;/th&gt;&#39;, colnames(data)), 
+      sprintf(&#39;&lt;th&gt;%s&lt;/th&gt;&#39;, htmltools::html_escape(colnames(data))), 
       &#39;&lt;/tr&gt;&#39;, &#39;&lt;/thead&gt;&#39;),
     &#39;&lt;tbody&gt;&#39;,
     paste(
       &#39;&lt;tr&gt;&#39;,
       apply(data, 1, function(z) {
+        z = htmltools::html_escape(z)
         paste(sprintf(&#39;&lt;td%s&gt;%s&lt;/td&gt;&#39;, align, z), collapse = &#39;&#39;)
       }),
       &#39;&lt;/tr&gt;&#39;, sep = &#39;&#39;
@@ -307,14 +329,9 @@ datatable_dependencies &lt;- function() {
   )
 }</code></pre>
 <p>Note that the required Javascript libraries are contained within the function’s package (<a href="https://github.com/rstudio/rmdexamples">rmdexamples</a>) so are accessed using <code>system.file</code>.</p>
-</div>
-</div>
-<div id="more-on-dependencies" class="section level2">
-<h2>More on Dependencies</h2>
-<p>HTML dependencies are defined using the <code>htmltools::html_dependency</code> function and include a name, version, path and optional meta, script, and stylesheet elements to include within the document head. Multiple instances of a dependency with the same name (e.g. “jquery”) are merged into a single dependency and the most recent version specified is used.</p>
-<p>It’s important to note that dependencies must be local rather than remote (i.e. they must exist on the local filesystem). This requirement exists so that HTML documents created with R Markdown can be self contained and always work offline.</p>
 <div class="references">
 
+</div>
 </div>
 </div>
 
