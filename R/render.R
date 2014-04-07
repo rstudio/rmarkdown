@@ -191,12 +191,6 @@ render <- function(input,
               "so won't be accessible during knit", call. = FALSE)
     }
 
-    # ensure that htmltools::knit_print.html_output is available on the
-    # search path if it exists. note that htmltools doesn't register
-    # this explicitly as an S3 method so that it doesn't need to depend
-    # on knitr via importFrom(knitr, knit_print)
-    suppressWarnings(require("htmltools", quietly = TRUE))
-
     # perform the knit
     input <- knitr::knit(knit_input,
                          knit_output,
