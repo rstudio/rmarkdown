@@ -179,6 +179,15 @@ render <- function(input,
     # collect knit_meta
     knit_meta <- knit_meta_reset()
 
+    # if this isn't html and there are html dependencies then flag an error
+    if (!is_pandoc_to_html(output_format$pandoc)) {
+      if (has_html_dependencies(knit_meta)) {
+        stop("Functions that produce HTML output found in document targeting ",
+             output_format$pandoc$to, " output.\nPlease change the output type ",
+             "of this document to HTML.", call. = FALSE)
+      }
+    }
+
     # clean the files_dir if we've either been asking to clean supporting
     # files or if we know the supporting files are going to get copied
     # to an output directory. however, don't ever clean the files_dir if

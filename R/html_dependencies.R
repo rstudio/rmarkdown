@@ -199,3 +199,26 @@ validate_html_dependency <- function(list) {
   list
 }
 
+# check if the passed knit_meta has any html dependencies
+has_html_dependencies <- function(knit_meta) {
+
+  if (inherits(knit_meta, "html_dependency"))
+    return(TRUE)
+
+  else if (is.list(knit_meta)) {
+    for (dep in knit_meta) {
+      if (is.null(names(dep))) {
+        if (has_html_dependencies(dep))
+          return(TRUE)
+      } else {
+        if (inherits(dep, "html_dependency"))
+          return(TRUE)
+      }
+    }
+
+    FALSE
+  } else {
+    FALSE
+  }
+}
+
