@@ -23,32 +23,35 @@
 #'
 #' }
 #' @export
-run_document <- function(input, shiny_args = NULL, ...) {
-  # create a temporary folder to host the Shiny application
-  appdir <- tempfile()
-  dir.create(appdir)
-  on.exit(unlink(appdir, recursive = TRUE), add = TRUE)
-  wwwdir <- file.path(appdir, "www")
-  dir.create(wwwdir)
+run_document <- function(file, shiny_args = NULL, ...) {
 
-  # load Shiny; needed to expose the Shiny knit output functions to widgets that
-  # use them
-  library(shiny)
+  shinyPlot <- create_adapter(renderPlot, plotOutput)
+  shinyTable <- create_adapter(renderTable, tableOutput)
+  shinyPrint <- create_adapter(renderPrint, verbatimTextOutput)
 
-  # render the document
-  output <- file.path(wwwdir, "index.html")
-  render(input, output_file = output, ...)
-  if (!file.exists(output)) {
-    stop("R Markdown rendering failed; no Shiny application produced")
+  server <- function(input, output, session) {
+    output_dest <- tempfile()
+    on.exit(unlink(output_dest), add = TRUE)
+    output_dest <- render(file, output_file = output_dest, ...)
+    doc <- readLines(output_dest)
+    output$`__reactivedoc__` <- renderUI({
+      HTML(doc)
+    })
   }
-
-  # write a Shiny server stub
-  writeLines("shinyServer(function(input, output) NULL)",
-             file.path(appdir, "server.R"))
-
-  # run the application
-  args <- c(list(appdir), shiny_args)
+  args <- c(list(list(ui = shiny::fluidPage(uiOutput("__reactivedoc__")),
+                 server = server)),
+            shiny_args)
   do.call(shiny::runApp, args)
-
-  invisible(NULL)
 }
+
+create_adapter <- function(renderFunc, outputFunc) {
+  function(expr, env = parent.frame(), quoted=FALSE) {
+    installExprFunction(expr, "func", env, quoted)
+
+    id <- shiny:::createUniqueId(8)
+    o <- get("output", pos = env)
+    o[[id]] <- renderFunc(func())
+    outputFunc(id)
+  }
+}
+
