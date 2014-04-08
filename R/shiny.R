@@ -23,22 +23,28 @@
 #'
 #' }
 #' @export
-run_document <- function(file, shiny_args = NULL, ...) {
+run_document <- function(file, auto_reload = TRUE, shiny_args = NULL, ...) {
 
   shinyPlot <- create_adapter(renderPlot, plotOutput)
   shinyTable <- create_adapter(renderTable, tableOutput)
   shinyPrint <- create_adapter(renderPrint, verbatimTextOutput)
 
   server <- function(input, output, session) {
-    output_dest <- tempfile()
-    on.exit(unlink(output_dest), add = TRUE)
-    output_dest <- render(file, output_file = output_dest, ...)
-    doc <- readLines(output_dest)
+    reactive_file <- if (auto_reload)
+      shiny::reactiveFileReader(500, session, file, identity)
+    else
+      function () { file }
+    doc <- reactive({
+      output_dest <- tempfile()
+      on.exit(unlink(output_dest), add = TRUE)
+      output_dest <- render(reactive_file(), output_file = output_dest, ...)
+      paste(readLines(output_dest), collapse="\n")
+    })
     output$`__reactivedoc__` <- renderUI({
-      HTML(doc)
+      HTML(doc())
     })
   }
-  args <- c(list(list(ui = shiny::fluidPage(uiOutput("__reactivedoc__")),
+  args <- c(list(list(ui = shiny::fluidPage(shiny::uiOutput("__reactivedoc__")),
                  server = server)),
             shiny_args)
   do.call(shiny::runApp, args)
