@@ -4,7 +4,7 @@
 \usage{
 render(input, output_format = NULL,
        output_file = NULL, output_options = NULL,
-       clean = TRUE, envir = parent.frame(),
+       runtime = NULL, clean = TRUE, envir = parent.frame(),
        quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
@@ -23,10 +23,14 @@ render(input, output_format = NULL,
   specified in metadata (e.g. could be used to force \code{self_contained} or
   \code{mathjax = "local"}). Note that this is only valid when the output
   format is read from metadata (i.e. not a custom format object passed to
-  \code{output_format})}.
+  \code{output_format}).}
 
   \item{output_file}{Output file (if not specified then a
-  default based on the specified output format is chosen)}
+  default based on the specified output format is chosen).}
+
+  \item{runtime}{The runtime environment where the document will be
+  rendered. \code{NULL} means no runtime (a static document); "shiny"
+  means run the document as a shiny application.}
 
   \item{clean}{\code{TRUE} to clean intermediate files created
   during rendering.}
@@ -34,13 +38,13 @@ render(input, output_format = NULL,
   \item{envir}{The environment in which the code chunks are
   to be evaluated during knitting (can use
   \code{\link{new.env}()} to guarantee an empty new
-  environment)}
+  environment).}
 
   \item{quiet}{\code{TRUE} to supress printing of the
-  pandoc command line}
+  pandoc command line.}
 
-  \item{encoding}{the encoding of the input file; see
-  \code{\link{file}}}
+  \item{encoding}{The encoding of the input file; see
+  \code{\link{file}}.}
 }
 \value{
 The compiled document is written into the output file, and

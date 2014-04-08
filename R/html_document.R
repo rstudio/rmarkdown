@@ -157,7 +157,7 @@ html_document <- function(toc = FALSE,
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(input_lines, knit_meta, files_dir) {
+  pre_processor <- function(input_lines, runtime, knit_meta, files_dir) {
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
@@ -174,18 +174,14 @@ html_document <- function(toc = FALSE,
       args <- c(args, "--variable", paste("theme:", theme, sep=""))
     }
 
-    # resolve dependencies
+    # resolve and inject extras
     if (!is.null(theme))
       format_deps <- list(html_dependency_jquery(),
                           html_dependency_bootstrap(theme))
     else
       format_deps <- NULL
-    dependencies <- html_dependencies_for_document(format_deps, knit_meta)
-
-    # inject dependencies
-    args <- c(args, pandoc_html_dependencies_args(dependencies,
-                                                  self_contained,
-                                                  lib_dir))
+    extras <- html_extras_for_document(knit_meta, runtime, format_deps)
+    args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir))
 
     # highlight
     args <- c(args, pandoc_html_highlight_args(highlight,
