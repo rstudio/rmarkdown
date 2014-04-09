@@ -4,12 +4,11 @@ render <- function(input,
                    output_format = NULL,
                    output_file = NULL,
                    output_options = NULL,
-                   runtime = NULL,
+                   runtime = c("auto", "static", "shiny"),
                    clean = TRUE,
                    envir = parent.frame(),
                    quiet = FALSE,
-                   encoding = getOption("encoding"),
-                   runtime = c("auto", "static", "shiny")) {
+                   encoding = getOption("encoding")) {
 
   # check for "all" output formats
   if (identical(output_format, "all")) {

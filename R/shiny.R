@@ -31,22 +31,31 @@
 #' @export
 run_document <- function(file, auto_reload = TRUE, shiny_args = NULL, ...) {
 
+  # create the Shiny server function
   server <- function(input, output, session) {
+
+    # test for changes every half-second if requested
     reactive_file <- if (auto_reload)
       shiny::reactiveFileReader(500, session, file, identity)
     else
       function () { file }
-    doc <- reactive({
+
+    # when the file loads (or is changed), render to a temporary file, and
+    # read the contents into a reactive value
+    doc <- shiny::reactive({
       output_dest <- tempfile()
       on.exit(unlink(output_dest), add = TRUE)
       output_dest <- render(reactive_file(), output_file = output_dest,
                             runtime = "shiny", ...)
       paste(readLines(output_dest), collapse="\n")
     })
-    output$`__reactivedoc__` <- renderUI({
-      HTML(doc())
+    output$`__reactivedoc__` <- shiny::renderUI({
+      shiny::HTML(doc())
     })
   }
+
+  # combine the user-supplied list of Shiny arguments with our own and start
+  # the Shiny server
   args <- c(list(list(ui = shiny::fluidPage(shiny::uiOutput("__reactivedoc__")),
                  server = server)),
             shiny_args)

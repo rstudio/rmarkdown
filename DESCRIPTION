@@ -13,7 +13,8 @@ Imports:
     tools,
     utils,
     knitr (>= 1.2),
-    yaml (>= 2.1.5)
+    yaml (>= 2.1.5),
+    shiny (>= 0.9.1)
 Suggests:
     caTools,
     httpuv (>= 1.2.2)
