@@ -62,6 +62,17 @@ file_name_without_spaces <- function(file) {
     name
 }
 
+# return a string as a tempfile
+as_tmpfile <- function(str) {
+  if (length(str) > 0) {
+    str_tmpfile <- tempfile("rmarkdown-str", fileext = ".html")
+    writeLines(str, str_tmpfile)
+    str_tmpfile
+  } else {
+    NULL
+  }
+}
+
 file_with_ext <- function(file, ext) {
   paste(tools::file_path_sans_ext(file), ".", ext, sep = "")
 }

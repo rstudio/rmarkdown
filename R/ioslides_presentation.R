@@ -72,7 +72,7 @@ ioslides_presentation <- function(logo = NULL,
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(input_lines, knit_meta, files_dir) {
+  pre_processor <- function(input_lines, runtime, knit_meta, files_dir) {
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
@@ -97,11 +97,9 @@ ioslides_presentation <- function(logo = NULL,
                                           sep = ""))
     }
 
-    # resolve and inject dynamic html dependencies
-    dependencies <- html_dependencies_for_document(NULL, knit_meta)
-    args <- c(args, pandoc_html_dependencies_args(dependencies,
-                                                  self_contained,
-                                                  lib_dir))
+    # resolve and inject extras
+    extras <- html_extras_for_document(knit_meta, runtime)
+    args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir))
 
     # ioslides
     ioslides_path <- rmarkdown_system_file("rmd/ioslides/ioslides-13.5.1")

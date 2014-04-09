@@ -62,7 +62,7 @@ html_dependency_copy_lib <- function(dependency, lib_dir) {
 
 
 # resolve html dependencies (inclusive of a format's built-in dependencies)
-html_dependencies_for_document <- function(format_deps, knit_meta) {
+html_dependencies_for_document <- function(knit_meta, format_deps = NULL) {
 
   # list of dependencies to return (start with format_deps)
   if (!is.null(format_deps))
@@ -75,7 +75,7 @@ html_dependencies_for_document <- function(format_deps, knit_meta) {
   # a list of dependencies we recurse on lists that aren't named
   for (dep in knit_meta) {
     if (is.null(names(dep))) {
-      inner_dependencies <- html_dependencies_for_document(NULL, dep)
+      inner_dependencies <- html_dependencies_for_document(dep)
       all_dependencies <- append(all_dependencies, inner_dependencies)
     }
     else if (is_html_dependency(dep)) {
@@ -151,18 +151,6 @@ html_dependencies_as_string <- function(dependencies, lib_dir) {
 
   dependencies_html
 }
-
-# return the html dependencies a tempfile which can be included
-# within the head of a document
-html_dependencies_as_tmpfile <- function(dependencies, lib_dir) {
-
-  deps_tmpfile <- tempfile("rmarkdown-head", fileext = ".html")
-  dependencies_html <- html_dependencies_as_string(dependencies, lib_dir)
-  writeLines(dependencies_html, deps_tmpfile)
-
-  deps_tmpfile
-}
-
 
 # check class of passed list for 'html_dependency'
 is_html_dependency <- function(list) {

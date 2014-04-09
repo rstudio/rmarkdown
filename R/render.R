@@ -4,6 +4,7 @@ render <- function(input,
                    output_format = NULL,
                    output_file = NULL,
                    output_options = NULL,
+                   runtime = NULL,
                    clean = TRUE,
                    envir = parent.frame(),
                    quiet = FALSE,
@@ -23,7 +24,7 @@ render <- function(input,
     outputs <- character()
     for (format in output_format) {
       output <- render(input, format, NULL, output_options,
-                       clean, envir, quiet, encoding)
+                       runtime, clean, envir, quiet, encoding)
       outputs <- c(outputs, output)
     }
     return(invisible(outputs))
@@ -210,10 +211,19 @@ render <- function(input,
     # collect remaining knit_meta
     knit_meta <- knit_meta_reset()
 
+    # resolve the runtime
+    if (is.null(runtime))
+      runtime <- yaml_front_matter$runtime
+
     # if this isn't html and there are html dependencies then flag an error
     if (!is_pandoc_to_html(output_format$pandoc)) {
       if (has_html_dependencies(knit_meta)) {
         stop("Functions that produce HTML output found in document targeting ",
+             output_format$pandoc$to, " output.\nPlease change the output type ",
+             "of this document to HTML.", call. = FALSE)
+      }
+      if (!is.null(runtime)) {
+        stop("Runtime '", runtime, "' is not supported for ",
              output_format$pandoc$to, " output.\nPlease change the output type ",
              "of this document to HTML.", call. = FALSE)
       }
@@ -236,7 +246,10 @@ render <- function(input,
 
   # call any pre_processor
   if (!is.null(output_format$pre_processor)) {
-    extra_args <- output_format$pre_processor(input_text, knit_meta, files_dir)
+    extra_args <- output_format$pre_processor(input_text,
+                                              runtime,
+                                              knit_meta,
+                                              files_dir)
     output_format$pandoc$args <- c(output_format$pandoc$args, extra_args)
   }
 

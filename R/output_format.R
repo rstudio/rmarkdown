@@ -7,14 +7,13 @@
 #'   \code{\link{knitr_options}})
 #' @param pandoc Pandoc options for an output format (see
 #'   \code{\link{pandoc_options}})
-#' @param clean_supporting Cleanup any supporting files after conversion
-#'   see \code{\link{render_supporting_files}}
-#' @param pre_processor An optional pre-processor function that receives
-#'   the \code{input_lines}, \code{knit_meta}, and \code{files_dir} and
-#'   can return additional arguments to pass to pandoc.
-#' @param post_processor An optional post-processor function that
-#'   receives the \code{input_file}, \code{output_file}, and
-#'   \code{verbose} parmaeters.
+#' @param clean_supporting Cleanup any supporting files after conversion see
+#'   \code{\link{render_supporting_files}}
+#' @param pre_processor An optional pre-processor function that receives the
+#'   \code{input_lines}, \code{runtime}, \code{knit_meta}, and \code{files_dir}
+#'   and can return additional arguments to pass to pandoc.
+#' @param post_processor An optional post-processor function that receives the
+#'   \code{input_file}, \code{output_file}, and \code{verbose} parmaeters.
 #'
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
@@ -394,7 +393,11 @@ parse_yaml_front_matter <- function(input_lines) {
       front_matter <- front_matter[2:(length(front_matter)-1)]
       front_matter <- paste(front_matter, collapse="\n")
       validate_front_matter(front_matter)
-      yaml::yaml.load(front_matter)
+      parsed_yaml <- yaml::yaml.load(front_matter)
+      if (is.list(parsed_yaml))
+        parsed_yaml
+      else
+        list()
     }
     else
       list()
