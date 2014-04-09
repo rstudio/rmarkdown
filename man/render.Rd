@@ -2,10 +2,9 @@
 \alias{render}
 \title{Render R Markdown}
 \usage{
-render(input, output_format = NULL,
-       output_file = NULL, output_options = NULL,
-       runtime = NULL, clean = TRUE, envir = parent.frame(),
-       quiet = FALSE, encoding = getOption("encoding"))
+render(input, output_format = NULL, output_file = NULL, output_options = NULL,
+       runtime = c("auto", "static", "shiny"), clean = TRUE,
+       envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{Input file (R script, Rmd, or plain markdown).}
@@ -28,9 +27,11 @@ render(input, output_format = NULL,
   \item{output_file}{Output file (if not specified then a
   default based on the specified output format is chosen).}
 
-  \item{runtime}{The runtime environment where the document will be
-  rendered. \code{NULL} means no runtime (a static document); "shiny"
-  means run the document as a shiny application.}
+  \item{runtime}{The runtime target for rendering. \code{static} produces output
+  intended for static files; \code{shiny} produces output suitable for use in a
+  Shiny document (see \code{\link{run}}). The default, \code{auto},
+  allows the \code{runtime} target specified in the YAML metadata to take
+  precedence, and renders for a \code{static} runtime target otherwise.}
 
   \item{clean}{\code{TRUE} to clean intermediate files created
   during rendering.}

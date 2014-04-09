@@ -4,7 +4,7 @@ render <- function(input,
                    output_format = NULL,
                    output_file = NULL,
                    output_options = NULL,
-                   runtime = NULL,
+                   runtime = c("auto", "static", "shiny"),
                    clean = TRUE,
                    envir = parent.frame(),
                    quiet = FALSE,
@@ -174,6 +174,18 @@ render <- function(input,
     # knit environment (unless it is already defined there in which case
     # we emit a warning)
     yaml_front_matter <- parse_yaml_front_matter(input_lines)
+
+    # presume that we're rendering as a static document unless specified
+    # otherwise in the parameters
+    runtime <- match.arg(runtime)
+    if (identical(runtime, "auto")) {
+      if (!is.null(yaml_front_matter$runtime))
+        runtime <- yaml_front_matter$runtime
+      else
+        runtime <- "static"
+    }
+    knitr::opts_knit$set(rmarkdown.runtime = runtime)
+
     if (!exists("metadata", envir = envir)) {
       assign("metadata", yaml_front_matter, envir = envir)
       on.exit(remove("metadata", envir = envir), add = TRUE)
@@ -189,12 +201,14 @@ render <- function(input,
                          quiet = quiet,
                          encoding = encoding)
 
-    # collect knit_meta
-    knit_meta <- knit_meta_reset()
+    # pull any R Markdown warnings from knit_meta and emit
+    rmd_warnings <- knitr::knit_meta(class = "rmd_warning", clean = TRUE)
+    for (rmd_warning in rmd_warnings) {
+      message("Warning: ", rmd_warning)
+    }
 
-    # resolve the runtime
-    if (is.null(runtime))
-      runtime <- yaml_front_matter$runtime
+    # collect remaining knit_meta
+    knit_meta <- knit_meta_reset()
 
     # if this isn't html and there are html dependencies then flag an error
     if (!is_pandoc_to_html(output_format$pandoc)) {
@@ -203,7 +217,7 @@ render <- function(input,
              output_format$pandoc$to, " output.\nPlease change the output type ",
              "of this document to HTML.", call. = FALSE)
       }
-      if (!is.null(runtime)) {
+      if (!identical(runtime, "static")) {
         stop("Runtime '", runtime, "' is not supported for ",
              output_format$pandoc$to, " output.\nPlease change the output type ",
              "of this document to HTML.", call. = FALSE)
