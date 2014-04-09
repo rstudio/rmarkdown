@@ -177,14 +177,14 @@ render <- function(input,
 
     # presume that we're rendering as a static document unless specified
     # otherwise in the parameters
-    rmarkdown_runtime <- match.arg(runtime)
-    if (identical(rmarkdown_runtime, "auto")) {
+    runtime <- match.arg(runtime)
+    if (identical(runtime, "auto")) {
       if (!is.null(yaml_front_matter$runtime))
-        rmarkdown_runtime <- yaml_front_matter$runtime
+        runtime <- yaml_front_matter$runtime
       else
-        rmarkdown_runtime <- "static"
+        runtime <- "static"
     }
-    knitr::opts_knit$set(rmarkdown.runtime = rmarkdown_runtime)
+    knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
     if (!exists("metadata", envir = envir)) {
       assign("metadata", yaml_front_matter, envir = envir)
@@ -210,10 +210,6 @@ render <- function(input,
     # collect remaining knit_meta
     knit_meta <- knit_meta_reset()
 
-    # resolve the runtime
-    if (is.null(runtime))
-      runtime <- yaml_front_matter$runtime
-
     # if this isn't html and there are html dependencies then flag an error
     if (!is_pandoc_to_html(output_format$pandoc)) {
       if (has_html_dependencies(knit_meta)) {
@@ -221,7 +217,7 @@ render <- function(input,
              output_format$pandoc$to, " output.\nPlease change the output type ",
              "of this document to HTML.", call. = FALSE)
       }
-      if (!is.null(runtime)) {
+      if (!identical(runtime, "static")) {
         stop("Runtime '", runtime, "' is not supported for ",
              output_format$pandoc$to, " output.\nPlease change the output type ",
              "of this document to HTML.", call. = FALSE)

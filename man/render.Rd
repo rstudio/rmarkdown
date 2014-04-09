@@ -29,7 +29,7 @@ render(input, output_format = NULL, output_file = NULL, output_options = NULL,
 
   \item{runtime}{The runtime target for rendering. \code{static} produces output
   intended for static files; \code{shiny} produces output suitable for use in a
-  Shiny document (see \code{\link{run_document}}). The default, \code{auto},
+  Shiny document (see \code{\link{run}}). The default, \code{auto},
   allows the \code{runtime} target specified in the YAML metadata to take
   precedence, and renders for a \code{static} runtime target otherwise.}
 
