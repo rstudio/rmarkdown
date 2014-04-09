@@ -393,7 +393,11 @@ parse_yaml_front_matter <- function(input_lines) {
       front_matter <- front_matter[2:(length(front_matter)-1)]
       front_matter <- paste(front_matter, collapse="\n")
       validate_front_matter(front_matter)
-      yaml::yaml.load(front_matter)
+      parsed_yaml <- yaml::yaml.load(front_matter)
+      if (is.list(parsed_yaml))
+        parsed_yaml
+      else
+        list()
     }
     else
       list()
