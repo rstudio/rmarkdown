@@ -13,9 +13,9 @@ Imports:
     tools,
     utils,
     knitr (>= 1.2),
-    yaml (>= 2.1.5),
-    shiny (>= 0.9.1)
+    yaml (>= 2.1.5)
 Suggests:
+    shiny (>= 0.9.1),
     caTools,
     httpuv (>= 1.2.2)
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
