@@ -408,8 +408,10 @@ pandoc <- function() {
 pandoc_citeproc <- function() {
   find_pandoc()
   citeproc_path = file.path(.pandoc$dir, "pandoc-citeproc")
-
-  if (file.exists(citeproc_path)) citeproc_path else "pandoc-citeproc"
+  if (file.exists(citeproc_path))
+    citeproc_path
+  else
+    "pandoc-citeproc"
 }
 
 # quote args if they need it
