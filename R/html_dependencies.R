@@ -63,6 +63,8 @@ html_dependency_copy_lib <- function(dependency, lib_dir) {
 
 # resolve html dependencies (inclusive of a format's built-in dependencies)
 html_dependencies_for_document <- function(knit_meta, format_deps = NULL) {
+  # only consider HTML dependencies from knit_meta
+  knit_meta <- knit_meta[as.logical(sapply(knit_meta, is, "html_dependency"))]
 
   # list of dependencies to return (start with format_deps)
   if (!is.null(format_deps))

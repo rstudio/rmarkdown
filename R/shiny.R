@@ -52,13 +52,19 @@ run <- function(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
     # read the contents into a reactive value
     doc <- shiny::reactive({
       output_dest <- tempfile()
-      on.exit(unlink(output_dest), add = TRUE)
       args <- merge_lists(list(input = reactive_file(),
-                              output_file = output_dest,
-                              runtime = "shiny"),
-                         render_args)
-      output_dest <- do.call(render, args)
-      paste(readLines(output_dest), collapse="\n")
+                               output_file = output_dest,
+                               runtime = "shiny"),
+                          render_args)
+      result_path <- do.call(render, args)
+      resource_folder <- paste(output_dest, "_files", sep="")
+      addResourcePath(basename(resource_folder), resource_folder)
+      onReactiveDomainEnded(getDefaultReactiveDomain(), function() {
+        message("about to remove", result_path)
+        unlink(result_path)
+        unlink(resource_folder, recursive = TRUE)
+      })
+      paste(readLines(result_path), collapse="\n")
     })
     output$`__reactivedoc__` <- shiny::renderUI({
       shiny::HTML(doc())
@@ -68,7 +74,7 @@ run <- function(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
   # combine the user-supplied list of Shiny arguments with our own and start
   # the Shiny server
   args <- merge_lists(
-    list(list(ui = shiny::fluidPage(shiny::uiOutput("__reactivedoc__")),
+    list(list(ui = shiny::uiOutput("__reactivedoc__"),
               server = server)),
          shiny_args)
   do.call(shiny::runApp, args)
