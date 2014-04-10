@@ -58,7 +58,7 @@ run <- function(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
                               runtime = "shiny"),
                          render_args)
       output_dest <- do.call(render, args)
-      paste(readLines(output_dest), collapse="\n")
+      paste(readLines(output_dest), warn = FALSE, collapse="\n")
     })
     output$`__reactivedoc__` <- shiny::renderUI({
       shiny::HTML(doc())
