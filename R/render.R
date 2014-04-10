@@ -202,7 +202,7 @@ render <- function(input,
                          encoding = encoding)
 
     # pull any R Markdown warnings from knit_meta and emit
-    rmd_warnings <- knitr::knit_meta(class = "rmd_warning", clean = TRUE)
+    rmd_warnings <- knit_meta_reset(class = "rmd_warning")
     for (rmd_warning in rmd_warnings) {
       message("Warning: ", rmd_warning)
     }
@@ -331,10 +331,10 @@ render_supporting_files <- function(from, files_dir, rename_to = NULL) {
 }
 
 # reset knitr meta output (returns any meta output generated since the last
-# call to knit_meta_reset)
-knit_meta_reset <- function() {
+# call to knit_meta_reset), optionally scoped to a specific output class
+knit_meta_reset <- function(class = NULL) {
   if (packageVersion("knitr") >= "1.5.25")
-    knitr::knit_meta(clean = TRUE)
+    knitr::knit_meta(class, clean = TRUE)
   else
     NULL
 }
