@@ -5,14 +5,14 @@
 #' @param file Input file
 #' @param auto_reload If \code{TRUE} (the default), automatically reload the
 #'   Shiny application when the input file is changed.
-#' @param shiny_args Additional arguments to \code{\link{runApp}}.
+#' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
 #' @param render_args Additional arguments to \code{\link{render}}.
 #'
 #' @return Invisible NULL.
 #'
 #' @details The \code{run} function runs a Shiny document by starting a Shiny
 #'   server associated with the document. The \code{shiny_args} parameter can be
-#'   used to configure the server; see the \code{\link{runApp}} documentation
+#'   used to configure the server; see the \code{\link[shiny:runApp]{runApp}} documentation
 #'   for details.
 #'
 #'   Once the server is started, the document will be rendered using
@@ -26,7 +26,7 @@
 #'   a file on disk. To view the document, point a Web browser to the URL
 #'   displayed when the server starts. In most cases a Web browser will be
 #'   started automatically to view the document; see \code{launch.browser} in
-#'   the \code{\link{runApp}} documentation for details.
+#'   the \code{\link[shiny:runApp]{runApp}} documentation for details.
 #'
 #' @examples
 #' \dontrun{
