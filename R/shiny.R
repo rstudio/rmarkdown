@@ -60,7 +60,6 @@ run <- function(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
       resource_folder <- paste(output_dest, "_files", sep="")
       addResourcePath(basename(resource_folder), resource_folder)
       onReactiveDomainEnded(getDefaultReactiveDomain(), function() {
-        message("about to remove", result_path)
         unlink(result_path)
         unlink(resource_folder, recursive = TRUE)
       })
