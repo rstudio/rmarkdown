@@ -112,9 +112,18 @@ render <- function(input,
                                           output_format$options)
   }
 
-  # automatically create an output file name if necessary
+  # generate outpout file based on input filename
   if (is.null(output_file))
     output_file <- pandoc_output_file(input, output_format$pandoc$to)
+
+  # generate output_file as a tempfile
+  else if (identical(output_file, "tempfile")) {
+      output_dir <- tempfile("render-", fileext = ".dir")
+      dir.create(output_dir)
+      output_file <- file.path(
+        output_dir, pandoc_output_file(input, output_format$pandoc$to))
+  }
+
 
   # use output filename based files dir
   files_dir <- knitr_files_dir(basename(output_file))
