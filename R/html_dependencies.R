@@ -233,7 +233,8 @@ remove_satisfied_dependencies <-
         if (numeric_version(dep$version) >
               numeric_version(satisfied_dep$version)) {
           warning("Document wants ", dep$name, " ", dep$version, " but will ",
-                  "receive older version ", dep$name, " ", satisfied_dep$version)
+                  "receive older version ", dep$name, " ",
+                  satisfied_dep$version)
         }
       }
     }
