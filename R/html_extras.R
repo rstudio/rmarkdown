@@ -44,21 +44,7 @@ pandoc_html_extras_args <- function(extras, self_contained, lib_dir) {
 
 # return the html extras required to serve a document as a shiny app
 shiny_html_extras <- function(knit_meta) {
-
   heads <- as.logical(sapply(knit_meta, is, "shiny_head"))
-  extras <- list()
-
-  extras$dependencies <- list(
-    # html_dependency(...),
-    # html_dependency(...)
-  )
-
-  extras$in_header <- unlist(knit_meta[heads])
-
-  extras$before_body <- c()
-
-  extras$after_body <- c()
-
-  extras
+  list(in_header = unlist(knit_meta[heads]))
 }
 

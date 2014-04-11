@@ -46,6 +46,13 @@
 #' @param data_dir Additional directory to resolve relatives paths of templates
 #'   and included content against (the directory of the input file is used by
 #'   default).
+#' @param satisfied_dependencies A list of objects of class
+#'   \code{html_dependency} representing dependencies (such as JavaScript
+#'   libraries) that should be considered already satisfied. Satisfied
+#'   dependencies will not be emitted in the document, with a warning if the
+#'   document depends on a newer version than was used to satisfy the
+#'   dependency. Use this parameter when the document will be hosted in a page
+#'   that supplies these dependencines.
 #' @param pandoc_args Additional command line options to pass to pandoc
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
@@ -113,8 +120,8 @@ html_document <- function(toc = FALSE,
                           includes = NULL,
                           lib_dir = NULL,
                           data_dir = NULL,
-                          pandoc_args = NULL,
-                          satisfied_dependencies = NULL) {
+                          satisfied_dependencies = NULL,
+                          pandoc_args = NULL) {
 
   args <- c("--standalone")
 
