@@ -3,6 +3,7 @@
 render <- function(input,
                    output_format = NULL,
                    output_file = NULL,
+                   output_dir = NULL,
                    output_options = NULL,
                    runtime = c("auto", "static", "shiny"),
                    clean = TRUE,
@@ -116,14 +117,9 @@ render <- function(input,
   if (is.null(output_file))
     output_file <- pandoc_output_file(input, output_format$pandoc$to)
 
-  # generate output_file as a tempfile
-  else if (identical(output_file, "tempfile")) {
-      output_dir <- tempfile("render-", fileext = ".dir")
-      dir.create(output_dir)
-      output_file <- file.path(
-        output_dir, pandoc_output_file(input, output_format$pandoc$to))
-  }
-
+  # if an output_dir was specified then concatenate it with the output file
+  if (!is.null(output_dir))
+    output_file <- file.path(output_dir, basename(output_file))
 
   # use output filename based files dir
   files_dir <- knitr_files_dir(basename(output_file))
