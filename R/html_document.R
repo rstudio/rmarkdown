@@ -181,7 +181,6 @@ html_document <- function(toc = FALSE,
     else
       format_deps <- NULL
     extras <- html_extras_for_document(knit_meta, runtime, format_deps)
-
     args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir))
 
     # highlight

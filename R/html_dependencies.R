@@ -108,8 +108,8 @@ html_dependencies_for_document <- function(knit_meta, format_deps = NULL) {
 
       # if the dependency was externally satisfied with a version earlier than
       # the one requested, emit a warning
-      if (is_newer_version && isTRUE(dependencies[[dep$name]]$external) ||
-          is_older_version && isTRUE(dep$external)) {
+      if ((is_newer_version && isTRUE(dependencies[[dep$name]]$external)) ||
+          (is_older_version && isTRUE(dep$external))) {
         warning(dep$name, " replaced by externally supplied ",
                 "older version (", dep$version, ", ", version, ")")
       }
@@ -241,29 +241,4 @@ has_html_dependencies <- function(knit_meta) {
   } else {
     FALSE
   }
-}
-
-# given a list of dependencies and a list of dependencies that have been
-# satisfied, remove the satisfied dependencies from the list, emitting a warning
-# if the dependency being removed has a higher version than was used
-# to satisfy it
-remove_satisfied_dependencies <-
-  function (dependencies, satisfied_dependencies) {
-
-  # find indices of dependencies that need to be removed
-  removed_dependencies <- numeric()
-  for (i in seq_along(dependencies)) {
-    dep <- dependencies[[i]]
-    for (satisfied_dep in satisfied_dependencies) {
-      if (identical(dep$name, satisfied_dep$name)) {
-        # this dependency is in the list of those already satisfied; remove it
-        removed_dependencies <- c(removed_dependencies, i)
-
-      }
-    }
-  }
-
-  # remove satisfied dependencies and return the result
-  dependencies[removed_dependencies] <- NULL
-  dependencies
 }
