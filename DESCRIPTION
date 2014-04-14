@@ -17,6 +17,7 @@ Imports:
 Suggests:
     shiny (>= 0.9.1),
     caTools,
-    httpuv (>= 1.2.2)
+    httpuv (>= 1.2.2),
+    testthat
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
 License: GPL-3
