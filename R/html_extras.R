@@ -9,10 +9,11 @@ html_extras_for_document <- function(knit_meta, runtime, format_deps = NULL) {
   if (identical(runtime, "shiny"))
     extras <- shiny_html_extras(knit_meta)
 
-  # append other dependencies we detect from knit_meta
-  extras$dependencies <- append(extras$dependencies,
-    html_dependencies_for_document(knit_meta, format_deps)
-  )
+  # merge the dependencies discovered with the dependencies of this format and
+  # dependencies discovered in knit_meta
+  extras$dependencies <-
+    html_dependencies_for_document(knit_meta, c(format_deps,
+                                                extras$dependencies))
 
   # return extras
   extras
@@ -45,6 +46,11 @@ pandoc_html_extras_args <- function(extras, self_contained, lib_dir) {
 # return the html extras required to serve a document as a shiny app
 shiny_html_extras <- function(knit_meta) {
   heads <- as.logical(sapply(knit_meta, is, "shiny_head"))
-  list(in_header = unlist(knit_meta[heads]))
+
+  # get a list of the Shiny dependencies and mark them as external
+  shiny_dependencies <- lapply(shiny::getProvidedHtmlDependencies(),
+                               function(dep) { dep$external = TRUE; dep })
+  list(dependencies = shiny_dependencies,
+       in_header = unlist(knit_meta[heads]))
 }
 

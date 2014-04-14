@@ -91,14 +91,39 @@ html_dependencies_for_document <- function(knit_meta, format_deps = NULL) {
   for (dep in unique(all_dependencies)) {
     # if we already have a library of this name then re-use it
     if (!is.null(dependencies[[dep$name]])) {
-      # if this one is newer then use it's path/version
       version <- dependencies[[dep$name]]$version
-      if (numeric_version(dep$version) > numeric_version(version)) {
+      is_newer_version <-
+        numeric_version(dep$version) > numeric_version(version)
+      is_older_version <-
+        numeric_version(version) > numeric_version(dep$version)
+
+      # test for sanity: we can never resolve an external version conflict
+      if (isTRUE(dep$external) && isTRUE(dependencies[[dep$name]]$external) &&
+          !identical(dep$version, version)) {
+        stop(dep$name, " specified with conflicting external versions ",
+             dep$version, ", ", version)
+      }
+
+      # if the dependency was externally satisfied with a version earlier than
+      # the one requested, emit a warning
+      if (is_newer_version && isTRUE(dependencies[[dep$name]]$external) ||
+          is_older_version && isTRUE(dep$external)) {
+        warning(dep$name, " replaced by externally supplied ",
+                "older version (", dep$version, ", ", version, ")")
+      }
+
+      # an incoming external dependency always wins over an existing dependency;
+      # an incoming internal dependency wins if its version is newer than an
+      # existing internal dependency
+      if ((is_newer_version && !isTRUE(dependencies[[dep$name]]$external)) ||
+          isTRUE(dep$external)) {
         dependencies[[dep$name]]$version <- dep$version
         dependencies[[dep$name]]$path <- dep$path
         dependencies[[dep$name]]$script <- dep$script
         dependencies[[dep$name]]$stylesheet <- dep$stylesheet
+        dependencies[[dep$name]]$external <- dep$external
       }
+
       # consolidate other fields
       dependencies[[dep$name]]$meta <-
         merge_lists(dependencies[[dep$name]]$meta, dep$meta)
@@ -121,6 +146,10 @@ html_dependencies_as_string <- function(dependencies, lib_dir) {
   dependencies_html <- c()
 
   for (dep in dependencies) {
+
+    # if the dependency is externally satisfied, don't emit it
+    if (isTRUE(dep$external))
+      next
 
     # copy library files if necessary
     if (!is.null(lib_dir)) {
@@ -180,7 +209,7 @@ validate_html_dependency <- function(list) {
   fields <- names(list)
   invalid_fields <- fields[! fields %in%
                              c("name", "version", "path", "meta",
-                               "script", "stylesheet", "head")]
+                               "script", "stylesheet", "head", "external")]
   if (length(invalid_fields) > 0) {
     stop("unrecoginzed fields specified in html_dependency: ",
          paste(invalid_fields, sep = ", "), call. = FALSE)
@@ -228,14 +257,6 @@ remove_satisfied_dependencies <-
         # this dependency is in the list of those already satisfied; remove it
         removed_dependencies <- c(removed_dependencies, i)
 
-        # if the dependency was satisfied with a version earlier than the
-        # one requested, emit a warning
-        if (numeric_version(dep$version) >
-              numeric_version(satisfied_dep$version)) {
-          warning("Document wants ", dep$name, " ", dep$version, " but will ",
-                  "receive older version ", dep$name, " ",
-                  satisfied_dep$version)
-        }
       }
     }
   }

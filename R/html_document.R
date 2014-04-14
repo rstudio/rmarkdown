@@ -120,9 +120,9 @@ html_document <- function(toc = FALSE,
                           includes = NULL,
                           lib_dir = NULL,
                           data_dir = NULL,
-                          satisfied_dependencies = NULL,
                           pandoc_args = NULL) {
 
+  # build pandoc args
   args <- c("--standalone")
 
   # no email obfuscation
@@ -188,13 +188,6 @@ html_document <- function(toc = FALSE,
     else
       format_deps <- NULL
     extras <- html_extras_for_document(knit_meta, runtime, format_deps)
-
-    # remove any dependencies satisfied externally
-    if (length(satisfied_dependencies) > 0) {
-      extras$dependencies <-
-        remove_satisfied_dependencies(extras$dependencies,
-                                      satisfied_dependencies)
-    }
 
     args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir))
 

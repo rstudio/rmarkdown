@@ -52,13 +52,11 @@ run <- function(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
     # read the contents into a reactive value
     doc <- shiny::reactive({
       output_dest <- tempfile(fileext = ".html")
+      resource_folder <- knitr_files_dir(output_dest)
 
-      # ensure that the document is not rendered to one page, and pass along
-      # the HTML dependencies already satisfied by Shiny
+      # ensure that the document is not rendered to one page
       output_opts <- list(
-        self_contained = FALSE,
-        satisfied_dependencies =
-          shiny::getProvidedHtmlDependencies())
+         self_contained = FALSE)
 
       # merge our inputs with those supplied by the user and invoke render
       args <- merge_lists(list(input = reactive_file(),
@@ -70,7 +68,6 @@ run <- function(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
 
       # if we generated a folder of supporting files, map requests to those
       # files in the Shiny application
-      resource_folder <- knitr_files_dir(output_dest)
       if (file.exists(resource_folder))
         addResourcePath(basename(resource_folder), resource_folder)
 
