@@ -76,7 +76,7 @@ html_dependencies_for_document <- function(knit_meta, format_deps = NULL) {
   # functions. since the 'meta' attribute could either be an html dependency or
   # a list of dependencies we recurse on lists that aren't named
   for (dep in knit_meta) {
-    if (is.null(names(dep))) {
+    if (is.null(names(dep)) && is.list(dep)) {
       inner_dependencies <- html_dependencies_for_document(dep)
       all_dependencies <- append(all_dependencies, inner_dependencies)
     }
