@@ -6,7 +6,8 @@ html_dependency <- function(name,
                             meta = NULL,
                             script = NULL,
                             stylesheet = NULL,
-                            head = NULL) {
+                            head = NULL,
+                            external = NULL) {
 
   dep <- structure(list(name = name,
                         version = version,
@@ -14,7 +15,8 @@ html_dependency <- function(name,
                         meta = meta,
                         script = script,
                         stylesheet = stylesheet,
-                        head = head),
+                        head = head,
+                        external = external),
                    class = "html_dependency")
 
   validate_html_dependency(dep)
