@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: R Markdown Document Conversion
-Version: 0.1.73
+Version: 0.1.77
 Date: 2014-01-26
 Author: RStudio, Inc.
 Maintainer: JJ Allaire <jj@rstudio.com>
@@ -13,9 +13,9 @@ Imports:
     tools,
     utils,
     knitr (>= 1.2),
-    yaml (>= 2.1.5),
-    shiny (>= 0.9.1)
+    yaml (>= 2.1.5)
 Suggests:
+    shiny (>= 0.9.1),
     caTools,
     httpuv (>= 1.2.2)
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc

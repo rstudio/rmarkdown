@@ -11,17 +11,27 @@ $endif$
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\usepackage{lmodern}
 \ifxetex
   \usepackage{fontspec,xltxtra,xunicode}
   \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
 \else
   \ifluatex
     \usepackage{fontspec}
     \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+    \newcommand{\euro}{€}
   \else
+    \usepackage[T1]{fontenc}
     \usepackage[utf8]{inputenc}
+    $if(euro)$
+      \usepackage{eurosym}
+    $endif$
   \fi
 \fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
 $if(natbib)$
 \usepackage{natbib}
 \bibliographystyle{plainnat}
@@ -46,6 +56,7 @@ $if(verbatim-in-note)$
 $endif$
 $if(tables)$
 \usepackage{longtable,booktabs}
+\usepackage{caption}
 % These lines are needed to make table captions work with longtable:
 \makeatletter
 \def\fnum@table{\tablename~\thetable}
@@ -55,22 +66,16 @@ $if(url)$
 \usepackage{url}
 $endif$
 $if(graphics)$
-\usepackage{graphicx}
-% Redefine \includegraphics so that, unless explicit options are
-% given, the image width will not exceed the width of the page.
-% Images get their normal width if they fit onto the page, but
-% are scaled down if they would overflow the margins.
+\usepackage{letltxmacro}
 \makeatletter
-\def\ScaleIfNeeded{%
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight0.8\textheight\else\Gin@nat@height\fi}
 \makeatother
-\let\Oldincludegraphics\includegraphics
-\renewcommand{\includegraphics}[2][]{\Oldincludegraphics[width=\ScaleIfNeeded]{#2}}
+\AtBeginDocument{
+  \LetLtxMacro\Oldincludegraphics\includegraphics
+  \renewcommand{\includegraphics}[2][]{%
+    \Oldincludegraphics[#1,width=\maxwidth,height=\maxheight,keepaspectratio]{#2}}
+}
 $endif$
 
 % Comment these out if you don't want a slide with just the

@@ -12,42 +12,42 @@ run(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
   file is changed.}
 
   \item{shiny_args}{Additional arguments to
-  \code{\link{runApp}}.}
+  \code{\link[shiny:runApp]{runApp}}.}
 
   \item{render_args}{Additional arguments to
   \code{\link{render}}.}
 }
 \value{
-  Invisible NULL.
+Invisible NULL.
 }
 \description{
-  Start a Shiny server for the given document, and render
-  it for display.
+Start a Shiny server for the given document, and render it
+for display.
 }
 \details{
-  The \code{run} function runs a Shiny document by starting
-  a Shiny server associated with the document. The
-  \code{shiny_args} parameter can be used to configure the
-  server; see the \code{\link{runApp}} documentation for
-  details.
+The \code{run} function runs a Shiny document by starting a
+Shiny server associated with the document. The
+\code{shiny_args} parameter can be used to configure the
+server; see the \code{\link[shiny:runApp]{runApp}}
+documentation for details.
 
-  Once the server is started, the document will be rendered
-  using \code{\link{render}}. The server will initiate a
-  render of the document whenever necessary, so it is not
-  necessary to call \code{run} every time the document
-  changes: if \code{auto_reload} is \code{TRUE}, saving the
-  document will trigger a render. You can also manually
-  trigger a render by reloading the document in a Web
-  browser.
+Once the server is started, the document will be rendered
+using \code{\link{render}}. The server will initiate a
+render of the document whenever necessary, so it is not
+necessary to call \code{run} every time the document
+changes: if \code{auto_reload} is \code{TRUE}, saving the
+document will trigger a render. You can also manually
+trigger a render by reloading the document in a Web
+browser.
 }
 \note{
-  Unlike \code{\link{render}}, \code{run} does not render
-  the document to a file on disk. To view the document,
-  point a Web browser to the URL displayed when the server
-  starts. In most cases a Web browser will be started
-  automatically to view the document; see
-  \code{launch.browser} in the \code{\link{runApp}}
-  documentation for details.
+Unlike \code{\link{render}}, \code{run} does not render the
+document to a file on disk. To view the document, point a
+Web browser to the URL displayed when the server starts. In
+most cases a Web browser will be started automatically to
+view the document; see \code{launch.browser} in the
+\code{\link[shiny:runApp]{runApp}} documentation for
+details.
 }
 \examples{
 \dontrun{

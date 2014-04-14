@@ -2,9 +2,10 @@
 \alias{render}
 \title{Render R Markdown}
 \usage{
-render(input, output_format = NULL, output_file = NULL, output_options = NULL,
-       runtime = c("auto", "static", "shiny"), clean = TRUE,
-       envir = parent.frame(), quiet = FALSE, encoding = getOption("encoding"))
+render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
+       output_options = NULL, runtime = c("auto", "static", "shiny"),
+       clean = TRUE, envir = parent.frame(), quiet = FALSE,
+       encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{Input file (R script, Rmd, or plain markdown).}
@@ -24,8 +25,11 @@ render(input, output_format = NULL, output_file = NULL, output_options = NULL,
   format is read from metadata (i.e. not a custom format object passed to
   \code{output_format}).}
 
-  \item{output_file}{Output file (if not specified then a
-  default based on the specified output format is chosen).}
+  \item{output_file}{Output file. If \code{NULL} then a default based on
+  the name of the input file is chosen.}
+
+  \item{output_dir}{Output directory. An alternate directory to write
+  the output file to (defaults to the directory of the input file).}
 
   \item{runtime}{The runtime target for rendering. \code{static} produces output
   intended for static files; \code{shiny} produces output suitable for use in a
