@@ -4,9 +4,9 @@
 #'
 #' @param file Path to the input R Markdown document.
 #' @param dir The directory from which to to read input documents. If
-#'   \code{NULL}, the the parent directory of \code{file} is used.
+#'   \code{NULL}, then the parent directory of \code{file} is used.
 #' @param auto_reload If \code{TRUE} (the default), automatically reload the
-#'   Shiny application when the input file is changed.
+#'   Shiny application when the file currently being viewed is changed on disk.
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
 #' @param render_args Additional arguments to \code{\link{render}}.
 #'
@@ -35,10 +35,14 @@
 #'   environment.
 #'
 #' @note Unlike \code{\link{render}}, \code{run} does not render the document to
-#'   a file on disk. To view the document, point a Web browser to the URL
-#'   displayed when the server starts. In most cases a Web browser will be
-#'   started automatically to view the document; see \code{launch.browser} in
-#'   the \code{\link[shiny:runApp]{runApp}} documentation for details.
+#'   a file on disk. In most cases a Web browser will be started automatically
+#'   to view the document; see \code{launch.browser} in the
+#'   \code{\link[shiny:runApp]{runApp}} documentation for details.
+#'
+#'   When using an external web browser with the server, specify the name of the
+#'   R Markdown file to view in the URL (e.g.
+#'   \code{http://127.0.0.1:1234/foo.Rmd}). A URL without a filename will show
+#'   \code{index.Rmd}, if it exists in \code{dir}.
 #'
 #' @examples
 #' \dontrun{
@@ -173,6 +177,7 @@ run <- function(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
                                  launch.browser = launch_browser),
                             shiny_args)
   do.call(shiny::runApp, shiny_args)
+  invisible(NULL)
 }
 
 # resolve a path relative to a directory (from Shiny)
