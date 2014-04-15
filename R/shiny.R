@@ -78,7 +78,7 @@ run <- function(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
     path_info <- session$request$PATH_INFO
     path_info <- substr(path_info, 1, nchar(path_info) - 11)
     if (!nzchar(path_info)) {
-      path_info <- "/index.Rmd"
+      path_info <- "index.Rmd"
     }
 
     file <- resolve_relative(dir, path_info)
@@ -127,7 +127,7 @@ run <- function(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
     # map requests to / to requests for index.Rmd
     req_path <- req$PATH_INFO
     if (identical(req_path, "/")) {
-      req_path <- "/index.Rmd"
+      req_path <- "index.Rmd"
     }
 
     # request must be for an R Markdown document
@@ -137,7 +137,7 @@ run <- function(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
     }
 
     # document must exist
-    target_file <- resolve_relative(dir, req$PATH_INFO)
+    target_file <- resolve_relative(dir, req_path)
     if (!file.exists(target_file)) {
       return(NULL)
     }
@@ -153,9 +153,10 @@ run <- function(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
   }
 
   # combine the user-supplied list of Shiny arguments with our own and start
-  # the Shiny server
+  # the Shiny server; handle requests for the root (/) and any R markdown files
+  # within
   app <- shiny::shinyApp(ui = ui,
-                         uiPattern = "/.*.Rmd",
+                         uiPattern = "/|(/.*.Rmd)",
                          onStart = onStart,
                          server = server)
 
