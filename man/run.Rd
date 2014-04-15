@@ -2,15 +2,15 @@
 \alias{run}
 \title{Run a Shiny document}
 \usage{
-run(filename, dir = getwd(), auto_reload = TRUE, shiny_args = NULL,
+run(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
   render_args = NULL)
 }
 \arguments{
-  \item{filename}{Path to the input R Markdown document,
-  relative to \code{dir}.}
+  \item{file}{Path to the input R Markdown document.}
 
   \item{dir}{The directory from which to to read input
-  documents.}
+  documents. If \code{NULL}, the the parent directory of
+  \code{file} is used.}
 
   \item{auto_reload}{If \code{TRUE} (the default),
   automatically reload the Shiny application when the input
@@ -46,11 +46,15 @@ trigger a render by reloading the document in a Web
 browser.
 
 The server will render any R Markdown (\code{.Rmd})
-document in \code{dir}; the \code{filename} argument
-specifies only the initial document to be rendered and
-viewed. You can therefore link to other documents in the
-directory using standard Markdown syntax, e.g.
-\code{[Analysis Page 2](page2.Rmd)}.
+document in \code{dir}; the \code{file} argument specifies
+only the initial document to be rendered and viewed. You
+can therefore link to other documents in the directory
+using standard Markdown syntax, e.g.  \code{[Analysis Page
+2](page2.Rmd)}.
+
+If you wish to share R code between your documents, place
+it in a file named \code{global.R} in \code{dir}; it will
+be sourced into the global environment.
 }
 \note{
 Unlike \code{\link{render}}, \code{run} does not render the
