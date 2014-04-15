@@ -2,10 +2,15 @@
 \alias{run}
 \title{Run a Shiny document}
 \usage{
-run(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
+run(filename, dir = getwd(), auto_reload = TRUE, shiny_args = NULL,
+  render_args = NULL)
 }
 \arguments{
-  \item{file}{Input file}
+  \item{filename}{Path to the input R Markdown document,
+  relative to \code{dir}.}
+
+  \item{dir}{The directory from which to to read input
+  documents.}
 
   \item{auto_reload}{If \code{TRUE} (the default),
   automatically reload the Shiny application when the input
@@ -39,6 +44,13 @@ changes: if \code{auto_reload} is \code{TRUE}, saving the
 document will trigger a render. You can also manually
 trigger a render by reloading the document in a Web
 browser.
+
+The server will render any R Markdown (\code{.Rmd})
+document in \code{dir}; the \code{filename} argument
+specifies only the initial document to be rendered and
+viewed. You can therefore link to other documents in the
+directory using standard Markdown syntax, e.g.
+\code{[Analysis Page 2](page2.Rmd)}.
 }
 \note{
 Unlike \code{\link{render}}, \code{run} does not render the

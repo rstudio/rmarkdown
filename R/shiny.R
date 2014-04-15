@@ -2,7 +2,9 @@
 #'
 #' Start a Shiny server for the given document, and render it for display.
 #'
-#' @param file Input file
+#' @param filename Path to the input R Markdown document, relative to
+#'   \code{dir}.
+#' @param dir The directory from which to to read input documents.
 #' @param auto_reload If \code{TRUE} (the default), automatically reload the
 #'   Shiny application when the input file is changed.
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
@@ -12,8 +14,8 @@
 #'
 #' @details The \code{run} function runs a Shiny document by starting a Shiny
 #'   server associated with the document. The \code{shiny_args} parameter can be
-#'   used to configure the server; see the \code{\link[shiny:runApp]{runApp}} documentation
-#'   for details.
+#'   used to configure the server; see the \code{\link[shiny:runApp]{runApp}}
+#'   documentation for details.
 #'
 #'   Once the server is started, the document will be rendered using
 #'   \code{\link{render}}. The server will initiate a render of the document
@@ -21,6 +23,12 @@
 #'   the document changes: if \code{auto_reload} is \code{TRUE}, saving the
 #'   document will trigger a render. You can also manually trigger a render by
 #'   reloading the document in a Web browser.
+#'
+#'   The server will render any R Markdown (\code{.Rmd}) document in \code{dir};
+#'   the \code{filename} argument specifies only the initial document to be
+#'   rendered and viewed. You can therefore link to other documents in the
+#'   directory using standard Markdown syntax, e.g.
+#'   \code{[Analysis Page 2](page2.Rmd)}.
 #'
 #' @note Unlike \code{\link{render}}, \code{run} does not render the document to
 #'   a file on disk. To view the document, point a Web browser to the URL
@@ -37,12 +45,22 @@
 #'
 #' }
 #' @export
-run <- function(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL) {
+run <- function(filename, dir = getwd(), auto_reload = TRUE, shiny_args = NULL,
+                render_args = NULL) {
+
+  file <- file.path(dir, filename)
+  if (!file.exists(file))
+    stop(file, " does not exist")
 
   # create the Shiny server function
   server <- function(input, output, session) {
+    path_info <- session$request$PATH_INFO
+    path_info <- substr(path_info, 1, nchar(path_info) - 11)
+    if (!nzchar(path_info)) {
+      path_info <- "/index.Rmd"
+    }
 
-    # test for changes every half-second if requested
+    file <- file.path(dir, path_info)
     reactive_file <- if (auto_reload)
       shiny::reactiveFileReader(500, session, file, identity)
     else
@@ -84,12 +102,51 @@ run <- function(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
     })
   }
 
+  ui <- function(req) {
+    # map requests to / to requests for index.Rmd
+    req_path <- req$PATH_INFO
+    if (identical(req_path, "/")) {
+      req_path <- "/index.Rmd"
+    }
+
+    # request must be for an R Markdown document
+    if (!identical(substr(req_path, nchar(req_path) - 3, nchar(req_path)),
+                  ".Rmd")) {
+      return(NULL)
+    }
+
+    # document must exist
+    target_file <- file.path(dir, req$PATH_INFO)
+    if (!file.exists(target_file)) {
+      return(NULL)
+    }
+
+    shiny::uiOutput("__reactivedoc__")
+  }
+
   # combine the user-supplied list of Shiny arguments with our own and start
   # the Shiny server
-  args <- merge_lists(
-    list(list(ui = shiny::uiOutput("__reactivedoc__"),
-              server = server)),
-         shiny_args)
-  do.call(shiny::runApp, args)
+  app <- shiny::shinyApp(ui = ui,
+                         uiPattern = "/.*.Rmd",
+                         server = server)
+
+  # launch the app and open a browser to the requested page
+  launch_browser <- interactive()
+  if (isTRUE(launch_browser)) {
+    launch_browser <- function(url) {
+      url <- paste(url, filename, sep = "/")
+      browser <- getOption("shiny.launch.browser")
+      if (is.function(browser)) {
+        browser(url)
+      } else {
+        utils::browseURL(url)
+      }
+    }
+  }
+
+  shiny_args <- merge_lists(list(appDir = app,
+                                 launch.browser = launch_browser),
+                            shiny_args)
+  do.call(shiny::runApp, shiny_args)
 }
 
