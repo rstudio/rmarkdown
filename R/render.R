@@ -118,8 +118,11 @@ render <- function(input,
     output_file <- pandoc_output_file(input, output_format$pandoc$to)
 
   # if an output_dir was specified then concatenate it with the output file
-  if (!is.null(output_dir))
+  if (!is.null(output_dir)) {
+    if (!file.exists(output_dir))
+      dir.create(output_dir)
     output_file <- file.path(output_dir, basename(output_file))
+  }
 
   # use output filename based files dir
   files_dir <- knitr_files_dir(basename(output_file))
