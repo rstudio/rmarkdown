@@ -150,4 +150,57 @@ test_that("dependency merge is correct", {
         path = rmarkdown_system_file("rmd/h"),
         script = "foo.js",
         external = TRUE)))
-})
+
+  # support nested dependency lists
+  test_dep_merge(
+    # input
+    list(
+      html_dependency(
+        name = "bar",
+        version = "1.1.0",
+        path = rmarkdown_system_file("rmd/h"),
+        script = "foo.js"),
+      list(
+        html_dependency(
+          name = "baz",
+          version = "1.1.0",
+          path = rmarkdown_system_file("rmd/h"),
+          script = "baz.js"),
+        html_dependency(
+          name = "bar",
+          version = "1.2.0",
+          path = rmarkdown_system_file("rmd/h"),
+          script = "foo.js"))),
+    # output
+    list(
+      html_dependency(
+        name = "bar",
+        version = "1.2.0",
+        path = rmarkdown_system_file("rmd/h"),
+        script = "foo.js"),
+      html_dependency(
+        name = "baz",
+        version = "1.1.0",
+        path = rmarkdown_system_file("rmd/h"),
+        script = "baz.js")))
+
+  # ignore knit_meta information other than html_dependency
+  test_dep_merge(
+    # input
+    list(
+      structure(list(foo = "irrelevant"), class = "irrelevant"),
+      list(
+        html_dependency(
+          name = "baz",
+          version = "1.1.0",
+          path = rmarkdown_system_file("rmd/h"),
+          script = "baz.js"))),
+    # output
+    list(
+      html_dependency(
+        name = "baz",
+        version = "1.1.0",
+        path = rmarkdown_system_file("rmd/h"),
+        script = "baz.js")))
+
+  })
