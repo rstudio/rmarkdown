@@ -103,6 +103,9 @@ render <- function(input,
   # read the input file
   input_lines <- read_lines_utf8(knit_input, encoding)
 
+  # read the yaml front matter
+  yaml_front_matter <- parse_yaml_front_matter(input_lines)
+
   # if we haven't been passed a fully formed output format then
   # resolve it by looking at the yaml
   if (!is_output_format(output_format)) {
@@ -178,11 +181,6 @@ render <- function(input,
       knitr::knit_hooks$set(as.list(output_format$knitr$knit_hooks))
     }
 
-    # get the yaml front matter make it available as 'metadata' within the
-    # knit environment (unless it is already defined there in which case
-    # we emit a warning)
-    yaml_front_matter <- parse_yaml_front_matter(input_lines)
-
     # presume that we're rendering as a static document unless specified
     # otherwise in the parameters
     runtime <- match.arg(runtime)
@@ -194,6 +192,9 @@ render <- function(input,
     }
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
+    # make the yaml_front_matter available as 'metadata' within the
+    # knit environment (unless it is already defined there in which case
+    # we emit a warning)
     if (!exists("metadata", envir = envir)) {
       assign("metadata", yaml_front_matter, envir = envir)
       on.exit(remove("metadata", envir = envir), add = TRUE)
@@ -249,7 +250,8 @@ render <- function(input,
 
   # call any pre_processor
   if (!is.null(output_format$pre_processor)) {
-    extra_args <- output_format$pre_processor(input_text,
+    extra_args <- output_format$pre_processor(yaml_front_matter,
+                                              input_text,
                                               runtime,
                                               knit_meta,
                                               files_dir)
@@ -287,7 +289,10 @@ render <- function(input,
 
   # if there is a post-processor then call it
   if (!is.null(output_format$post_processor))
-    output_format$post_processor(utf8_input, output_file, !quiet)
+    output_file <- output_format$post_processor(yaml_front_matter,
+                                                utf8_input,
+                                                output_file,
+                                                !quiet)
 
   if (!quiet)
     message("\nOutput created: ", output_file)

@@ -72,7 +72,7 @@ ioslides_presentation <- function(logo = NULL,
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(input_lines, runtime, knit_meta, files_dir) {
+  pre_processor <- function(metadata, input_lines, runtime, knit_meta, files_dir) {
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
@@ -121,7 +121,7 @@ ioslides_presentation <- function(logo = NULL,
 
   # post processor that renders our markdown using out custom lua
   # renderer and then inserts it into the main file
-  post_processor <- function(input_file, output_file, verbose) {
+  post_processor <- function(metadata, input_file, output_file, verbose) {
 
     # setup args
     args <- c()
@@ -180,6 +180,8 @@ ioslides_presentation <- function(logo = NULL,
     } else {
       stop("Slides placeholder not found in slides HTML", call. = FALSE)
     }
+
+    output_file
   }
 
   # return format

@@ -17,13 +17,14 @@ output_format(knitr, pandoc, clean_supporting = TRUE, pre_processor = NULL,
   \code{\link{render_supporting_files}}}
 
   \item{pre_processor}{An optional pre-processor function
-  that receives the \code{input_lines}, \code{runtime},
-  \code{knit_meta}, and \code{files_dir} and can return
-  additional arguments to pass to pandoc.}
+  that receives the \code{metadata}, \code{input_lines},
+  \code{runtime}, \code{knit_meta}, and \code{files_dir}
+  and can return additional arguments to pass to pandoc.}
 
   \item{post_processor}{An optional post-processor function
-  that receives the \code{input_file}, \code{output_file},
-  and \code{verbose} parmaeters.}
+  that receives the \code{metadata}, \code{input_file},
+  \code{output_file}, and \code{verbose} parmaeters, and
+  can return an alternative \code{output_file}.}
 }
 \value{
 An R Markdown output format definition that can be passed

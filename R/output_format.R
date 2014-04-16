@@ -10,10 +10,11 @@
 #' @param clean_supporting Cleanup any supporting files after conversion see
 #'   \code{\link{render_supporting_files}}
 #' @param pre_processor An optional pre-processor function that receives the
-#'   \code{input_lines}, \code{runtime}, \code{knit_meta}, and \code{files_dir}
-#'   and can return additional arguments to pass to pandoc.
+#'   \code{metadata}, \code{input_lines}, \code{runtime}, \code{knit_meta},
+#'   and \code{files_dir} and can return additional arguments to pass to pandoc.
 #' @param post_processor An optional post-processor function that receives the
-#'   \code{input_file}, \code{output_file}, and \code{verbose} parmaeters.
+#'   \code{metadata}, \code{input_file}, \code{output_file}, and \code{verbose}
+#'   parmaeters, and can return an alternative \code{output_file}.
 #'
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
