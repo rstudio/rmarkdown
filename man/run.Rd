@@ -2,14 +2,19 @@
 \alias{run}
 \title{Run a Shiny document}
 \usage{
-run(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
+run(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
+  render_args = NULL)
 }
 \arguments{
-  \item{file}{Input file}
+  \item{file}{Path to the input R Markdown document.}
+
+  \item{dir}{The directory from which to to read input
+  documents. If \code{NULL}, then the parent directory of
+  \code{file} is used.}
 
   \item{auto_reload}{If \code{TRUE} (the default),
-  automatically reload the Shiny application when the input
-  file is changed.}
+  automatically reload the Shiny application when the file
+  currently being viewed is changed on disk.}
 
   \item{shiny_args}{Additional arguments to
   \code{\link[shiny:runApp]{runApp}}.}
@@ -39,15 +44,31 @@ changes: if \code{auto_reload} is \code{TRUE}, saving the
 document will trigger a render. You can also manually
 trigger a render by reloading the document in a Web
 browser.
+
+The server will render any R Markdown (\code{.Rmd})
+document in \code{dir}; the \code{file} argument specifies
+only the initial document to be rendered and viewed. You
+can therefore link to other documents in the directory
+using standard Markdown syntax, e.g.  \code{[Analysis Page
+2](page2.Rmd)}.
+
+If you wish to share R code between your documents, place
+it in a file named \code{global.R} in \code{dir}; it will
+be sourced into the global environment.
 }
 \note{
 Unlike \code{\link{render}}, \code{run} does not render the
-document to a file on disk. To view the document, point a
-Web browser to the URL displayed when the server starts. In
-most cases a Web browser will be started automatically to
-view the document; see \code{launch.browser} in the
+document to a file on disk. In most cases a Web browser
+will be started automatically to view the document; see
+\code{launch.browser} in the
 \code{\link[shiny:runApp]{runApp}} documentation for
 details.
+
+When using an external web browser with the server, specify
+the name of the R Markdown file to view in the URL (e.g.
+\code{http://127.0.0.1:1234/foo.Rmd}). A URL without a
+filename will show \code{index.Rmd}, if it exists in
+\code{dir}.
 }
 \examples{
 \dontrun{

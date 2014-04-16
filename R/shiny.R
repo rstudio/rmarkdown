@@ -2,9 +2,11 @@
 #'
 #' Start a Shiny server for the given document, and render it for display.
 #'
-#' @param file Input file
+#' @param file Path to the input R Markdown document.
+#' @param dir The directory from which to to read input documents. If
+#'   \code{NULL}, then the parent directory of \code{file} is used.
 #' @param auto_reload If \code{TRUE} (the default), automatically reload the
-#'   Shiny application when the input file is changed.
+#'   Shiny application when the file currently being viewed is changed on disk.
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
 #' @param render_args Additional arguments to \code{\link{render}}.
 #'
@@ -12,8 +14,8 @@
 #'
 #' @details The \code{run} function runs a Shiny document by starting a Shiny
 #'   server associated with the document. The \code{shiny_args} parameter can be
-#'   used to configure the server; see the \code{\link[shiny:runApp]{runApp}} documentation
-#'   for details.
+#'   used to configure the server; see the \code{\link[shiny:runApp]{runApp}}
+#'   documentation for details.
 #'
 #'   Once the server is started, the document will be rendered using
 #'   \code{\link{render}}. The server will initiate a render of the document
@@ -22,11 +24,25 @@
 #'   document will trigger a render. You can also manually trigger a render by
 #'   reloading the document in a Web browser.
 #'
+#'   The server will render any R Markdown (\code{.Rmd}) document in \code{dir};
+#'   the \code{file} argument specifies only the initial document to be
+#'   rendered and viewed. You can therefore link to other documents in the
+#'   directory using standard Markdown syntax, e.g.
+#'   \code{[Analysis Page 2](page2.Rmd)}.
+#'
+#'   If you wish to share R code between your documents, place it in a file
+#'   named \code{global.R} in \code{dir}; it will be sourced into the global
+#'   environment.
+#'
 #' @note Unlike \code{\link{render}}, \code{run} does not render the document to
-#'   a file on disk. To view the document, point a Web browser to the URL
-#'   displayed when the server starts. In most cases a Web browser will be
-#'   started automatically to view the document; see \code{launch.browser} in
-#'   the \code{\link[shiny:runApp]{runApp}} documentation for details.
+#'   a file on disk. In most cases a Web browser will be started automatically
+#'   to view the document; see \code{launch.browser} in the
+#'   \code{\link[shiny:runApp]{runApp}} documentation for details.
+#'
+#'   When using an external web browser with the server, specify the name of the
+#'   R Markdown file to view in the URL (e.g.
+#'   \code{http://127.0.0.1:1234/foo.Rmd}). A URL without a filename will show
+#'   \code{index.Rmd}, if it exists in \code{dir}.
 #'
 #' @examples
 #' \dontrun{
@@ -37,12 +53,35 @@
 #'
 #' }
 #' @export
-run <- function(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL) {
+run <- function(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
+                render_args = NULL) {
+
+  # form and test locations
+  file <- normalizePath(file)
+  if (!file.exists(file))
+    stop("The file '", file, "' does not exist")
+  if (is.null(dir))
+    dir <- dirname(file)
+  else
+    dir <- normalizePath(dir)
+  if (!file.exists(dir))
+    stop("The directory '", dir, " does not exist")
+
+  # compute file path relative to directory
+  file_rel <- substr(file, nchar(dir) + 2, nchar(file))
+  resolved <- resolve_relative(dir, file_rel)
+  if (is.null(resolved) || !file.exists(resolved))
+    stop("The file '", file, "' does not exist in the directory '", dir, "'")
 
   # create the Shiny server function
   server <- function(input, output, session) {
+    path_info <- session$request$PATH_INFO
+    path_info <- substr(path_info, 1, nchar(path_info) - 11)
+    if (!nzchar(path_info)) {
+      path_info <- "index.Rmd"
+    }
 
-    # test for changes every half-second if requested
+    file <- resolve_relative(dir, path_info)
     reactive_file <- if (auto_reload)
       shiny::reactiveFileReader(500, session, file, identity)
     else
@@ -84,12 +123,93 @@ run <- function(file, auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
     })
   }
 
+  ui <- function(req) {
+    # map requests to / to requests for index.Rmd
+    req_path <- req$PATH_INFO
+    if (identical(req_path, "/")) {
+      req_path <- "index.Rmd"
+    }
+
+    # request must be for an R Markdown document
+    if (!identical(substr(req_path, nchar(req_path) - 3, nchar(req_path)),
+                  ".Rmd")) {
+      return(NULL)
+    }
+
+    # document must exist
+    target_file <- resolve_relative(dir, req_path)
+    if (!file.exists(target_file)) {
+      return(NULL)
+    }
+
+    shiny::uiOutput("__reactivedoc__")
+  }
+
+  onStart <- function() {
+    global_r <- file.path.ci(dir, "global.R")
+    if (file.exists(global_r)) {
+      source(global_r, local = FALSE)
+    }
+  }
+
   # combine the user-supplied list of Shiny arguments with our own and start
-  # the Shiny server
-  args <- merge_lists(
-    list(list(ui = shiny::uiOutput("__reactivedoc__"),
-              server = server)),
-         shiny_args)
-  do.call(shiny::runApp, args)
+  # the Shiny server; handle requests for the root (/) and any R markdown files
+  # within
+  app <- shiny::shinyApp(ui = ui,
+                         uiPattern = "/|(/.*.Rmd)",
+                         onStart = onStart,
+                         server = server)
+
+  # launch the app and open a browser to the requested page
+  launch_browser <- interactive()
+  if (isTRUE(launch_browser)) {
+    launch_browser <- function(url) {
+      url <- paste(url, file_rel, sep = "/")
+      browser <- getOption("shiny.launch.browser")
+      if (is.function(browser)) {
+        browser(url)
+      } else {
+        utils::browseURL(url)
+      }
+    }
+  }
+
+  shiny_args <- merge_lists(list(appDir = app,
+                                 launch.browser = launch_browser),
+                            shiny_args)
+  do.call(shiny::runApp, shiny_args)
+  invisible(NULL)
 }
 
+# resolve a path relative to a directory (from Shiny)
+resolve_relative <- function(dir, relpath) {
+  abs.path <- file.path(dir, relpath)
+  if (!file.exists(abs.path))
+    return(NULL)
+  abs.path <- normalizePath(abs.path, winslash='/', mustWork=TRUE)
+  dir <- normalizePath(dir, winslash='/', mustWork=TRUE)
+  # trim the possible trailing slash under Windows
+  if (.Platform$OS.type == 'windows') dir <- sub('/$', '', dir)
+  if (nchar(abs.path) <= nchar(dir) + 1)
+    return(NULL)
+  if (substr(abs.path, 1, nchar(dir)) != dir ||
+        substr(abs.path, nchar(dir)+1, nchar(dir)+1) != '/') {
+    return(NULL)
+  }
+  return(abs.path)
+}
+
+# find 'name' in 'dir', without matching on case (from Shiny)
+file.path.ci <- function(dir, name) {
+  default <- file.path(dir, name)
+  if (file.exists(default))
+    return(default)
+  if (!file.exists(dir))
+    return(default)
+
+  matches <- list.files(dir, name, ignore.case=TRUE, full.names=TRUE,
+                        include.dirs=TRUE)
+  if (length(matches) == 0)
+    return(default)
+  return(matches[[1]])
+}
