@@ -118,7 +118,7 @@ render <- function(input,
 
   # generate outpout file based on input filename
   if (is.null(output_file))
-    output_file <- pandoc_output_file(input, output_format$pandoc$to)
+    output_file <- pandoc_output_file(input, output_format$pandoc)
 
   # if an output_dir was specified then concatenate it with the output file
   if (!is.null(output_dir)) {

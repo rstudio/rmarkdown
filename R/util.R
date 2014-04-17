@@ -5,8 +5,11 @@ is_windows <- function() {
 }
 
 # determine the output file for a pandoc conversion
-pandoc_output_file <- function(input, to) {
-  if (to %in% c("latex", "beamer"))
+pandoc_output_file <- function(input, pandoc_options) {
+  to <- pandoc_options$to
+  if (!is.null(pandoc_options$ext))
+    ext <- pandoc_options$ext
+  else if (to %in% c("latex", "beamer"))
     ext <- ".pdf"
   else if (to %in% c("html", "html5", "s5", "slidy",
                      "slideous", "dzslides", "revealjs"))

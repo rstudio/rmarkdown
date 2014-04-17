@@ -3,7 +3,7 @@
 \title{Pandoc options for an output format}
 \usage{
 pandoc_options(to, from = rmarkdown_format(), args = NULL,
-  keep_tex = FALSE)
+  keep_tex = FALSE, ext = NULL)
 }
 \arguments{
   \item{to}{Pandoc format to convert to}
@@ -16,6 +16,12 @@ pandoc_options(to, from = rmarkdown_format(), args = NULL,
   \item{keep_tex}{Keep the intermediate tex file used in
   the conversion to PDF (applies only to 'latex' and
   'beamer' target formats)}
+
+  \item{ext}{File extension (e.g. ".tex") for output file
+  (if \code{NULL} chooses default based on \code{to}). This
+  is typically used to force the final output of a latex or
+  beamer converstion to be \code{.tex} rather than
+  \code{.pdf}.}
 }
 \value{
 An list that can be passed as the \code{pandoc} argument of
