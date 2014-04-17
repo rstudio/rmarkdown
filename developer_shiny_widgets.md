@@ -1,6 +1,5 @@
 ---
 title: "Shiny Widgets"
-output: html_document
 ---
 
 Shiny widgets enable you to create re-usable Shiny components that are included within an R Markdown document using a single function call. Shiny widgets can also be invoked directly from the console (useful during authoring) and show their output within the RStudio Viewer pane or an external web browser.
