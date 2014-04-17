@@ -83,6 +83,8 @@ renderTable({
 &#96;&#96;&#96;
 </code></pre>
 
+![Shiny Cars Table](images/shiny-cars-table.gif)
+
 In this example the output code was wrapped in a call to `renderTable`. There are many other render functions in Shiny that can be used for plots, printed R output, and more. This example uses `renderPlot` to create dynamic plot output:
 
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
@@ -97,6 +99,8 @@ renderPlot({
 })
 &#96;&#96;&#96;
 </code></pre>
+
+![Shiny Hist Plot](images/shiny-hist-plot.gif)
 
 ## Embedded Shiny Applications
 
