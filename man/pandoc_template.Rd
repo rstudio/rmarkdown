@@ -1,0 +1,26 @@
+\name{pandoc_template}
+\alias{pandoc_template}
+\title{Render a pandoc template.}
+\usage{
+pandoc_template(metadata, template, output, verbose = FALSE)
+}
+\arguments{
+  \item{metadata}{A named list containing metadata to pass
+  to template.}
+
+  \item{template}{Path to a pandoc template.}
+
+  \item{output}{Path to save output.}
+
+  \item{verbose}{\code{TRUE} to show the pandoc command
+  line which was executed.}
+}
+\value{
+(Invisibly) The path of the generated file.
+}
+\description{
+Use the pandoc templating engine to render a text file.
+Substitutions are done using the \code{metadata} list
+passed to the function.
+}
+

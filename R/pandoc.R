@@ -249,6 +249,37 @@ pandoc_path_arg <- function(path) {
   path
 }
 
+
+#' Render a pandoc template.
+#'
+#' Use the pandoc templating engine to render a text file. Substitutions are
+#' done using the \code{metadata} list passed to the function.
+#'
+#' @param metadata A named list containing metadata to pass to template.
+#' @param template Path to a pandoc template.
+#' @param output Path to save output.
+#' @param verbose \code{TRUE} to show the pandoc command line which was
+#'   executed.
+#' @return (Invisibly) The path of the generated file.
+#'
+#' @export
+pandoc_template <- function(metadata, template, output, verbose = FALSE) {
+
+  tmp <- tempfile(fileext = ".md")
+  on.exit(unlink(tmp))
+
+  cat("---\n", file = tmp)
+  cat(yaml::as.yaml(metadata), file = tmp, append = TRUE)
+  cat("---\n", file = tmp, append = TRUE)
+  cat("\n", file = tmp, append = TRUE)
+
+  pandoc_convert(tmp, "markdown", output = output,
+                 options = paste0("--template=", template),
+                 verbose = verbose)
+
+  invisible(output)
+}
+
 validate_self_contained <- function(mathjax) {
   if (identical(mathjax, "local"))
     stop("Local MathJax isn't compatible with self_contained\n",
