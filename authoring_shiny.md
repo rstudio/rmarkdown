@@ -24,7 +24,9 @@ To try out using Shiny in R Markdown open the **New R Markdown** dialog in RStud
 
 ![New R Markdown Shiny Document](images/new-shiny-document.png)
 
-You can then run the document using the **Run Document** command on the editor toolbar:
+Note that if you haven't installed up to date versions of RStudio, knitr, and shiny as detailed above then the "Shiny Document" template won't appear in the list.
+
+You can run a document locally using the **Run Document** command on the editor toolbar:
 
 ![Shiny Run Document](images/shiny-run-document.png)
 
