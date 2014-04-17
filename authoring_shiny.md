@@ -66,8 +66,7 @@ runtime: shiny
 ---
 ```
 
-As described above, once you've added `runtime: shiny` to the document you can run it using either the **Run Document** command in RStudio or using the `rmarkdown::run` function.
-
+As described above, once you've added `runtime: shiny` to the document you can run it using either the **Run Document** command in RStudio or using the `rmarkdown::run` function. By default, documents are re-rendered on save, so once you've got a browser open with the document loaded, just save the R Markdown file to see your changes.
 
 ### Inputs and Outputs
 
@@ -174,5 +173,6 @@ You can link to other Shiny documents by using the Markdown link syntax and spec
 Currently, only one document can be active at a time, so documents can't easily share state (although some primitive global sharing is possible via `global.R`; see the help for `rmarkdown::run`). 
  
 By default it's only possible to link to R Markdown files in the same directory subtree as the file on which `rmarkdown::run` was invoked (i.e you can't link to `../foo.rmd`.) You can use the `dir` argument to `rmarkdown::run` to indicate the directory to treat as the root. 
- 
+
+
 
