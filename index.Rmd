@@ -167,7 +167,7 @@ See also the R Markdown developer documentation including:
     
 * Guide to [Creating New Formats](developer_custom_formats.html) for R Markdown
     
-* Adding new types of HTML output to R Markdown documents using [HTML Widgets](developer_html_widgets.html).
+* Adding new types of HTML output to R Markdown documents using [HTML Widgets](developer_html_widgets.html) and [Shiny Widgets](developer_shiny_widgets.html).
     
 * Building [Paramaterized Reports](developer_paramaterized_reports.html) that are callable via an R function
 

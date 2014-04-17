@@ -117,6 +117,7 @@ body {
             <a href="developer" class="dropdown-toggle" data-toggle="dropdown">Developer <b class="caret"></b></a>
             <ul class="dropdown-menu">
                <li><a href="developer_html_widgets.html">HTML Widgets</a></li>
+               <li><a href="developer_shiny_widgets.html">Shiny Widgets</a></li>
                <li class="divider"></li>
                <li><a href="developer_document_templates.html">Document Templates</a></li>
                <li><a href="developer_custom_formats.html">Creating New Formats</a></li>
@@ -137,17 +138,92 @@ body {
 </div>
 
 
-<div id="basic-usage" class="section level2">
-<h2>Basic Usage</h2>
-<p>R code chunks can be used as a means render R output into documents or to simply display code for illustration. Here is a simple R code chunk that will result in both the code and it’s output being included:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r}
-summary(cars)
+<p>Shiny widgets enable you to create re-usable Shiny components that are included within an R Markdown document using a single function call. Shiny widgets can also be invoked directly from the console (useful during authoring) and show their output within the RStudio Viewer pane or an external web browser.</p>
+<div id="prerequisties" class="section level4">
+<h4>Prerequisties</h4>
+<p>Creating Shiny widgets requires development versions of the <strong>knitr</strong>, <strong>shiny</strong>, and <strong>rmarkdown</strong> packages, which you can install as follows:</p>
+<pre class="r"><code>devtools::install_github(c(&quot;yihui/knitr&quot;, &quot;rstudio/shiny&quot;, &quot;rstudio/rmarkdown&quot;))</code></pre>
+</div>
+<div id="creating-a-shiny-widget" class="section level2">
+<h2>Creating a Shiny Widget</h2>
+<p>At their core Shiny widgets are mini-applications created using the <code>shinyApp</code> function. Rather than create a <code>ui.R</code> and <code>server.R</code> as you would for a typical Shiny application, you pass the ui and server definitions to the <code>shinyApp</code> function as arguments. For example:</p>
+<pre class="r"><code>shinyApp(
+  
+  ui = fluidPage(
+    selectInput(&quot;region&quot;, &quot;Region:&quot;, choices = colnames(WorldPhones)),
+    plotOutput(&quot;phonePlot&quot;)
+  ),
+  
+  server = function(input, output) {
+    output$phonePlot &lt;- renderPlot({
+      barplot(WorldPhones[,input$region]*1000, 
+              ylab = &quot;Number of Telephones&quot;, xlab = &quot;Year&quot;)
+    })
+  },
+  
+  options = list(height = 500)
+)</code></pre>
+<p>The simplest type of Shiny widget is just an R function that returns a <code>shinyApp</code>.</p>
+<div id="example" class="section level3">
+<h3>Example</h3>
+<p>The <a href="https://github.com/rstudio/rmdexamples"><strong>rmdexamples</strong></a> package includes an example of Shiny widget implemented in this fashion. The <a href="https://github.com/rstudio/rmdexamples/blob/master/R/kmeans_cluster.R"><code>kmeans_cluster</code></a> function takes a single “dataset” argument and returns a Shiny widget. You can use it within an R Markdown document like this:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+library(rmdexamples)
+kmeans_cluster(iris)
 &#96;&#96;&#96;
 </code></pre>
 
-
+<p>This is what the widget looks like inside a running document:</p>
+<p><img src="images/shiny-widget-kmeans.png" alt="Shiny Widget KMeans" /></p>
+<div id="source-code" class="section level4">
+<h4>Source Code</h4>
+<p>Here’s the source code for the <code>kmeans_cluster</code> function. Note the use of the <code>height</code> option to control the default height of the widget when rendered inside a document.</p>
+<pre class="r"><code>kmeans_cluster &lt;- function(dataset) { 
+  
+  require(shiny)  
+  
+  shinyApp(
+  
+    ui = fluidPage(
+      wellPanel(fluidRow(
+        column(4, selectInput(&#39;xcol&#39;, &#39;X Variable&#39;, names(dataset))),
+        column(4, selectInput(&#39;ycol&#39;, &#39;Y Variable&#39;, names(dataset),
+                              selected=names(dataset)[[2]])),
+        column(4, numericInput(&#39;clusters&#39;, &#39;Cluster count&#39;, 3,
+                               min = 1, max = 9))
+      )),
+      fluidRow(
+        plotOutput(&#39;kmeans&#39;)  
+      )
+    ),
+    
+    server = function(input, output, session) {
+      
+      # Combine the selected variables into a new data frame
+      selectedData &lt;- reactive({
+        dataset[, c(input$xcol, input$ycol)]
+      })
+      
+      clusters &lt;- reactive({
+        kmeans(selectedData(), input$clusters)
+      })
+      
+      output$kmeans &lt;- renderPlot({
+        par(mar = c(5.1, 4.1, 0, 1))
+        plot(selectedData(),
+             col = clusters()$cluster,
+             pch = 20, cex = 3)
+        points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
+      })
+    },
+    
+    options = list(height = 550)
+  )
+}</code></pre>
 <div class="references">
 
+</div>
+</div>
 </div>
 </div>
 
