@@ -274,6 +274,12 @@ renderPlot({
 </code></pre>
 
 <p>Note that reactive expressions can be used anywhere, including in the definition of inline Shiny applications using the <code>shinyApp</code> function. To learn more about reactive expressions, see the <a href="http://shiny.rstudio.com/articles/basics.html">Shiny Tutorial</a>.</p>
+</div>
+<div id="multiple-pages" class="section level2">
+<h2>Multiple Pages</h2>
+<p>You can link to other Shiny documents by using the Markdown link syntax and specifying the <em>relative</em> path to the document, e.g. <code>[Another Shiny Document](another.Rmd)</code>.</p>
+<p>Currently, only one document can be active at a time, so documents can’t easily share state (although some primitive global sharing is possible via <code>global.R</code>; see the help for <code>rmarkdown::run</code>).</p>
+<p>By default it’s only possible to link to R Markdown files in the same directory subtree as the file on which <code>rmarkdown::run</code> was invoked (i.e you can’t link to <code>../foo.rmd</code>.) You can use the <code>dir</code> argument to <code>rmarkdown::run</code> to indicate the directory to treat as the root.</p>
 <div class="references">
 
 </div>
