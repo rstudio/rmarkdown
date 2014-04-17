@@ -4,7 +4,7 @@ title: "Shiny in R Markdown"
 
 ## Overview
 
-[Shiny](http://shiny.rstudio.com) is a web application framework for R that makes it easy to create interactive web applications without knowledge of HTML, CSS, or JavaScript. Shiny can also be used to make R Markdown documents interactive, this article describes how.
+[Shiny](http://shiny.rstudio.com) is a web application framework for R that makes it easy to create interactive web applications without knowledge of HTML, CSS, or JavaScript. Shiny can also be used to make R Markdown documents interactive; this article describes how.
 
 **NOTE**: R Markdown documents that include Shiny components can currently only be run locally. Support for running them within Shiny Server will be available soon.
 
@@ -72,7 +72,7 @@ As described above, once you've added `runtime: shiny` to the document you can r
 
 ### Inputs and Outputs
 
-You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. In this example we create a `numericInput` with the name "rows" and then refer to it's value via `input$rows` when generating output:
+You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. In this example we create a `numericInput` with the name "rows" and then refer to its value via `input$rows` when generating output:
 
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
 numericInput("rows", "How many cars?", 5)

@@ -139,7 +139,7 @@ body {
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p><a href="http://shiny.rstudio.com">Shiny</a> is a web application framework for R that makes it easy to create interactive web applications without knowledge of HTML, CSS, or JavaScript. Shiny can also be used to make R Markdown documents interactive, this article describes how.</p>
+<p><a href="http://shiny.rstudio.com">Shiny</a> is a web application framework for R that makes it easy to create interactive web applications without knowledge of HTML, CSS, or JavaScript. Shiny can also be used to make R Markdown documents interactive; this article describes how.</p>
 <p><strong>NOTE</strong>: R Markdown documents that include Shiny components can currently only be run locally. Support for running them within Shiny Server will be available soon.</p>
 <div id="prerequisties" class="section level3">
 <h3>Prerequisties</h3>
@@ -184,7 +184,7 @@ runtime: shiny
 </div>
 <div id="inputs-and-outputs" class="section level3">
 <h3>Inputs and Outputs</h3>
-<p>You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. In this example we create a <code>numericInput</code> with the name “rows” and then refer to it’s value via <code>input$rows</code> when generating output:</p>
+<p>You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. In this example we create a <code>numericInput</code> with the name “rows” and then refer to its value via <code>input$rows</code> when generating output:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
 numericInput("rows", "How many cars?", 5)
 
