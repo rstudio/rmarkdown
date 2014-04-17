@@ -138,15 +138,142 @@ body {
 </div>
 
 
-<div id="basic-usage" class="section level2">
-<h2>Basic Usage</h2>
-<p>R code chunks can be used as a means render R output into documents or to simply display code for illustration. Here is a simple R code chunk that will result in both the code and it’s output being included:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r}
-summary(cars)
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p><a href="http://shiny.rstudio.com">Shiny</a> is a web application framework for R that makes it easy to create interactive web applications without knowledge of HTML, CSS, or JavaScript. Shiny can also be used to make R Markdown documents interactive, this article describes how.</p>
+<p><strong>NOTE</strong>: R Markdown documents that include Shiny components can currently only be run locally. Support for running them within Shiny Server will be available soon.</p>
+<div id="prerequisties" class="section level3">
+<h3>Prerequisties</h3>
+<p>Using Shiny with R Markdown requires an up to date version of the <a href="http://www.rstudio.com/ide/download/preview">RStudio Preview Release</a> (v0.98.787 or later) so be sure to update RStudio before trying out these features.</p>
+<p>You’ll also need the development versions of both the <strong>knitr</strong> and <strong>shiny</strong> packages, which you can install as follows:</p>
+<pre class="r"><code>devtools::install_github(c(&quot;yihui/knitr&quot;, &quot;rstudio/shiny&quot;))</code></pre>
+</div>
+<div id="quick-start" class="section level3">
+<h3>Quick Start</h3>
+<p>To try out using Shiny in R Markdown open the <strong>New R Markdown</strong> dialog in RStudio and choose to create a document with the “Shiny Document” template:</p>
+<p><img src="images/new-shiny-document.png" alt="New R Markdown Shiny Document" /></p>
+<p>You can then run the document using the <strong>Run Document</strong> command on the editor toolbar:</p>
+<p><img src="images/shiny-run-document.png" alt="Shiny Run Document" /></p>
+<p>You can also run the document from the console using the <code>rmarkdown::run</code> function:</p>
+<pre class="r"><code>rmarkdown::run(&quot;MyShinyDocument.Rmd&quot;)</code></pre>
+<p>If you aren’t familiar with Shiny some of the code will be unfamiliar to you. You can learn the basics in the <a href="http://shiny.rstudio.com/tutorial">Shiny Tutorial</a>.</p>
+</div>
+</div>
+<div id="shiny-basics" class="section level2">
+<h2>Shiny Basics</h2>
+<div id="runnable-documents" class="section level3">
+<h3>Runnable Documents</h3>
+<p>Any R Markdown output format that produces HTML can produce a Shiny document, too. To treat a document as a Shiny document:</p>
+<ul>
+<li><p>Add <code>runtime: shiny</code> to its YAML front matter.</p></li>
+<li><p>Render it with <code>rmarkdown::run</code> instead of <code>rmarkdown::render</code>.</p></li>
+</ul>
+<p>For example, here’s the front matter for a Shiny <a href="html_document_format.html">html_document</a>:</p>
+<pre class="yaml"><code>---
+title: &quot;My Document&quot;
+output: html_document
+runtime: shiny
+---</code></pre>
+<p>And here’s the front matter for a Shiny <a href="ioslides_presentation_format.html">ioslides_presentation</a>:</p>
+<pre class="yaml"><code>---
+title: &quot;My Document&quot;
+output: ioslides_presentation
+runtime: shiny
+---</code></pre>
+<p>As described above, once you’ve added <code>runtime: shiny</code> to the document you can run it using either the <strong>Run Document</strong> command in RStudio or using the <code>rmarkdown::run</code> function.</p>
+</div>
+<div id="inputs-and-outputs" class="section level3">
+<h3>Inputs and Outputs</h3>
+<p>You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. In this example we create a <code>numericInput</code> with the name “rows” and then refer to it’s value via <code>input$rows</code> when generating output:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+numericInput("rows", "How many cars?", 5)
+
+renderTable({
+  head(cars, input$rows)
+})
 &#96;&#96;&#96;
 </code></pre>
 
+<p>In this example the output code was wrapped in a call to <code>renderTable</code>. There are many other render functions in Shiny that can be used for plots, printed R output, and more. This example uses <code>renderPlot</code> to create dynamic plot output:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+sliderInput("bins", "Number of bins:", min = 1, max = 50, value = 30)
 
+renderPlot({
+  x <- faithful[, 2]  # Old Faithful Geyser data
+  bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+  # draw the histogram with the specified number of bins
+  hist(x, breaks = bins, col = 'darkgray', border = 'white')
+})
+&#96;&#96;&#96;
+</code></pre>
+
+</div>
+</div>
+<div id="embedded-shiny-applications" class="section level2">
+<h2>Embedded Shiny Applications</h2>
+<p>It’s also possible to embed an entire Shiny application within an R Markdown document. There are two syntaxes for this:</p>
+<ol style="list-style-type: decimal">
+<li><p>Defining the application inline using the <code>shinyApp</code> function; or</p></li>
+<li><p>Referring to an external application directory using the <code>shinyAppDir</code> function.</p></li>
+</ol>
+<p>This example uses an inline definition:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+shinyApp(
+  
+  ui = fluidPage(
+    selectInput("region", "Region:", 
+                choices = colnames(WorldPhones)),
+    plotOutput("phonePlot")
+  ),
+  
+  server = function(input, output) {
+    output$phonePlot <- renderPlot({
+      barplot(WorldPhones[,input$region]*1000, 
+              ylab = "Number of Telephones", xlab = "Year")
+    })
+  },
+  
+  options = list(height = 500)
+)
+&#96;&#96;&#96;
+</code></pre>
+
+<p>Note the use of the <code>height</code> parameter to determine how much vertical space the embedded application should occupy.</p>
+<p>This example embeds a Shiny application defined in another directory:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+shinyAppDir(
+  system.file("examples/06_tabsets", package="shiny"),
+  options=list(
+    width="100%", height=700
+  )
+)
+&#96;&#96;&#96;
+</code></pre>
+
+<p>Note that in all of R code chunks above the <code>echo = FALSE</code> attribute is used. This is to prevent the R code within the chunk from rendering in the document alongside the Shiny components.</p>
+</div>
+<div id="shiny-reactives" class="section level2">
+<h2>Shiny Reactives</h2>
+<p>Shiny documents can also contain reactive expressions (useful when a piece of dynamic data is used in several places). As in Shiny applications, these values respond to changes in their inputs.</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+selectInput("dataset", "Choose Dataset:", c("cars", "iris", "mtcars"))
+
+activeDataset <- reactive({
+  get(input$dataset, pos="package:datasets", inherits=FALSE)
+})
+
+renderTable({
+  head(activeDataset(), 5)
+})
+
+renderPlot({
+  plot(activeDataset())
+})
+&#96;&#96;&#96;
+</code></pre>
+
+<p>Note that reactive expressions can be used anywhere, including in the definition of inline Shiny applications using the <code>shinyApp</code> function. To learn more about reactive expressions, see the <a href="http://shiny.rstudio.com/articles/basics.html">Shiny Tutorial</a>.</p>
 <div class="references">
 
 </div>

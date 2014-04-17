@@ -14,6 +14,7 @@ This website describes R Markdown v2, a next generation implementation of R Mark
 * Include raw LaTeX within markdown for advanced customization of PDF output.
 * Compile HTML, PDF, or MS Word notebooks from R scripts.
 * Extensiblity: create custom templates and even entirely new output formats.
+* Use Shiny within R Markdown documents
 
 Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, [MiKTeX](http://miktex.org/) should be used rather than TeX Live.
 
@@ -142,6 +143,8 @@ With the basics described above you can get started with R Markdown right away. 
 * [Markdown Basics](authoring_basics.html), which describes the most commonly used markdown constructs.
 
 * [R Code Chunks](authoring_rcodechunks.html), which goes into more depth on customizing the behavior of embedded R code.
+
+* [Shiny in R Markdown](authoring_shiny.html), which describes how to include Shiny components within R Markdown documents.
 
 * [Compiling Notebooks](authoring_compile_notebook.html), which describes how to compile HTML, PDF, or MS Word notebooks from R scripts.
 
