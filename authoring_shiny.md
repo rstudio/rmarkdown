@@ -8,7 +8,7 @@ title: "Shiny in R Markdown"
 
 **NOTE**: R Markdown documents that include Shiny components can currently only be run locally. Support for running them within Shiny Server will be available soon.
 
-### Prerequisties
+### Prerequisites
 
 Using Shiny with R Markdown requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.787 or later) so be sure to update RStudio before trying out these features. 
 
