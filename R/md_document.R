@@ -71,7 +71,7 @@ md_document <- function(variant = "markdown_strict",
 
   # add post_processor for yaml preservation
   if (preserve_yaml) {
-    post_processor <- function(metadata, input_file, output_file, verbose) {
+    post_processor <- function(metadata, input_file, output_file, clean, verbose) {
       input_lines <- readLines(input_file, warn = FALSE)
       partitioned <- partition_yaml_front_matter(input_lines)
       if (!is.null(partitioned$front_matter)) {

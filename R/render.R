@@ -292,6 +292,7 @@ render <- function(input,
     output_file <- output_format$post_processor(yaml_front_matter,
                                                 utf8_input,
                                                 output_file,
+                                                clean,
                                                 !quiet)
 
   if (!quiet)

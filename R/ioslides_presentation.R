@@ -121,7 +121,7 @@ ioslides_presentation <- function(logo = NULL,
 
   # post processor that renders our markdown using out custom lua
   # renderer and then inserts it into the main file
-  post_processor <- function(metadata, input_file, output_file, verbose) {
+  post_processor <- function(metadata, input_file, output_file, clean, verbose) {
 
     # setup args
     args <- c()

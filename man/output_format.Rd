@@ -23,8 +23,9 @@ output_format(knitr, pandoc, clean_supporting = TRUE, pre_processor = NULL,
 
   \item{post_processor}{An optional post-processor function
   that receives the \code{metadata}, \code{input_file},
-  \code{output_file}, and \code{verbose} parmaeters, and
-  can return an alternative \code{output_file}.}
+  \code{output_file}, \code{clean}, and \code{verbose}
+  parmaeters, and can return an alternative
+  \code{output_file}.}
 }
 \value{
 An R Markdown output format definition that can be passed
