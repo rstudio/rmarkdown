@@ -16,23 +16,10 @@ ioslides_presentation <- function(logo = NULL,
                                   includes = NULL,
                                   lib_dir = NULL,
                                   data_dir = NULL,
-                                  pandoc_args = NULL) {
+                                  ...) {
 
   # base pandoc options for all output
   args <- c()
-
-  # no email obfuscation
-  args <- c(args, "--email-obfuscation", "none")
-
-  # smart quotes
-  if (smart)
-    args <- c(args, "--smart")
-
-  # self contained document
-  if (self_contained) {
-    validate_self_contained(mathjax)
-    args <- c(args, "--self-contained")
-  }
 
   # widescreen
   if (widescreen)
@@ -67,9 +54,6 @@ ioslides_presentation <- function(logo = NULL,
             "--template",
             pandoc_path_arg(rmarkdown_system_file("rmd/ioslides/default.html")))
 
-  # custom args
-  args <- c(args, pandoc_args)
-
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
   pre_processor <- function(metadata, input_lines, runtime, knit_meta, files_dir) {
@@ -97,10 +81,6 @@ ioslides_presentation <- function(logo = NULL,
                                           sep = ""))
     }
 
-    # resolve and inject extras
-    extras <- html_extras_for_document(knit_meta, runtime)
-    args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir))
-
     # ioslides
     ioslides_path <- rmarkdown_system_file("rmd/ioslides/ioslides-13.5.1")
     if (!self_contained)
@@ -109,17 +89,11 @@ ioslides_presentation <- function(logo = NULL,
                                         pandoc_path_arg(ioslides_path),
                                         sep=""))
 
-    # mathjax
-    args <- c(args, pandoc_mathjax_args(mathjax,
-                                        "default",
-                                        self_contained,
-                                        lib_dir))
-
     # return additional args
     args
   }
 
-  # post processor that renders our markdown using out custom lua
+  # post processor that renders our markdown using our custom lua
   # renderer and then inserts it into the main file
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
 
@@ -192,7 +166,9 @@ ioslides_presentation <- function(logo = NULL,
                             args = args),
     clean_supporting = self_contained,
     pre_processor = pre_processor,
-    post_processor = post_processor
-  )
+    post_processor = post_processor,
+    base_format = html_document_base(smart = smart, lib_dir = lib_dir,
+                                     self_contained = self_contained,
+                                     mathjax = mathjax, ...))
 }
 

@@ -84,23 +84,10 @@ revealjs_presentation <- function(incremental = FALSE,
                                   includes = NULL,
                                   lib_dir = NULL,
                                   data_dir = NULL,
-                                  pandoc_args = NULL) {
+                                  ...) {
 
   # base pandoc options for all reveal.js output
   args <- c()
-
-  # no email obfuscation
-  args <- c(args, "--email-obfuscation", "none")
-
-  # smart quotes, etc.
-  if (smart)
-    args <- c(args, "--smart")
-
-  # self contained document
-  if (self_contained) {
-    validate_self_contained(mathjax)
-    args <- c(args, "--self-contained")
-  }
 
   # template path and assets
   if (identical(template, "default"))
@@ -140,9 +127,6 @@ revealjs_presentation <- function(incremental = FALSE,
   if (!is.null(data_dir))
     args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
-  # custom args
-  args <- c(args, pandoc_args)
-
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
   pre_processor <- function(metadata, input_lines, runtime, knit_meta, files_dir) {
@@ -154,10 +138,6 @@ revealjs_presentation <- function(incremental = FALSE,
     # extra args
     args <- c()
 
-    # resolve and inject extras
-    extras <- html_extras_for_document(knit_meta, runtime)
-    args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir))
-
     # reveal.js
     revealjs_path <- rmarkdown_system_file("rmd/revealjs/reveal.js-2.6.1")
     if (!self_contained)
@@ -167,12 +147,6 @@ revealjs_presentation <- function(incremental = FALSE,
 
     # highlight
     args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))
-
-    # mathjax
-    args <- c(args, pandoc_mathjax_args(mathjax,
-                                        template,
-                                        self_contained,
-                                        lib_dir))
 
     # return additional args
     args
@@ -185,8 +159,10 @@ revealjs_presentation <- function(incremental = FALSE,
                             from = from_rmarkdown(fig_caption),
                             args = args),
     clean_supporting = self_contained,
-    pre_processor = pre_processor
-  )
+    pre_processor = pre_processor,
+    base_format = html_document_base(smart = smart, lib_dir = lib_dir,
+                                     self_contained = self_contained,
+                                     mathjax = mathjax, ...))
 }
 
 revealjs_themes <- function() {

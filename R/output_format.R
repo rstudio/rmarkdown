@@ -78,13 +78,13 @@ merge_output_formats <- function (base, overlay)  {
     pandoc = pandoc_options(
       to = merge_scalar(base$pandoc$to, overlay$pandoc$to),
       from = merge_scalar(base$pandoc$from, overlay$pandoc$from),
-      args = unique(base$pandoc$args, overlay$pandoc$args)),
+      args = c(base$pandoc$args, overlay$pandoc$args)),
     clean_supporting =
       merge_scalar(base$clean_supporting, overlay$clean_supporting),
     pre_processor =
-      merge_function_outputs(base$pre_processor, overlay$pre_processor, unique),
+      merge_function_outputs(base$pre_processor, overlay$pre_processor, c),
     post_processor =
-      merge_function_outputs(base$post_processor, overlay$post_processor, unique)
+      merge_function_outputs(base$post_processor, overlay$post_processor, c)
   ), class = "rmarkdown_output_format")
 }
 
