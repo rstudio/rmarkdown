@@ -77,7 +77,6 @@ flatten_html_dependencies <- function(knit_meta) {
       all_dependencies <- append(all_dependencies, inner_dependencies)
     }
     else if (is_html_dependency(dep)) {
-      validate_html_dependency(dep)
       all_dependencies[[length(all_dependencies) + 1]] <- dep
     }
   }
@@ -137,6 +136,9 @@ html_dependency_resolver <- function(all_dependencies) {
       dependencies[[dep$name]] <- dep
     }
   }
+
+  # validate each surviving dependency
+  lapply(dependencies, validate_html_dependency)
 
   # return the consolidated dependencies
   dependencies
