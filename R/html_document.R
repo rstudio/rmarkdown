@@ -47,6 +47,8 @@
 #'   and included content against (the directory of the input file is used by
 #'   default).
 #' @param pandoc_args Additional command line options to pass to pandoc
+#' @param ... Additional function arguments to pass to the base R Markdown HTML
+#'   output formatter
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'

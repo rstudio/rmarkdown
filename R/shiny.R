@@ -129,9 +129,9 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
         unlink(result_path)
         unlink(resource_folder, recursive = TRUE)
       })
-      shiny::attachDependencies(
+      shiny:::attach_dependency(
         shiny::HTML(paste(readLines(result_path, warn = FALSE), collapse="\n")),
-        dendencies)
+        dependencies)
     })
     output$`__reactivedoc__` <- shiny::renderUI({
       doc()

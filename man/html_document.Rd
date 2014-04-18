@@ -84,6 +84,9 @@ html_document(toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
 
   \item{pandoc_args}{Additional command line options to
   pass to pandoc}
+
+  \item{...}{Additional function arguments to pass to the
+  base R Markdown HTML output formatter}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

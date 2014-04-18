@@ -84,6 +84,9 @@ revealjs_presentation(incremental = FALSE, center = FALSE, fig_width = 8,
   (e.g. jquery, bootstrap, etc.) into. By default this will
   be the name of the document with \code{_files} appended
   to it.}
+
+  \item{...}{Additional function arguments to pass to the
+  base R Markdown HTML output formatter}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}
