@@ -33,13 +33,59 @@ output_format <- function(knitr,
                           pandoc,
                           clean_supporting = TRUE,
                           pre_processor = NULL,
-                          post_processor = NULL) {
-  structure(list(knitr = knitr,
+                          post_processor = NULL,
+                          base_format = NULL) {
+  format <- structure(list(knitr = knitr,
                  pandoc = pandoc,
                  clean_supporting = clean_supporting,
                  pre_processor = pre_processor,
                  post_processor = post_processor),
             class = "rmarkdown_output_format")
+
+  # if a base format was supplied, merge it with the format we just created
+  if (!is.null(base_format))
+    merge_output_formats(base_format, format)
+  else
+    format
+}
+
+# merges two scalar values; picks the overlay if non-NULL and then the base
+merge_scalar <- function (base, overlay) {
+  if (is.null(base) && is.null(overlay))
+    NULL
+  else if (is.null(overlay))
+    base
+  else
+    overlay
+}
+
+# merges two functions: if both are non-NULL, produces a new function that
+# invokes each and then uses the supplied operation to combine their outputs
+merge_function_outputs <- function (base, overlay, op) {
+  if (!is.null(base) && !is.null(overlay)) {
+    function (...) {
+      op(base(...), overlay(...))
+    }
+  } else {
+    merge_scalar(base, overlay)
+  }
+}
+
+# merges two output formats
+merge_output_formats <- function (base, overlay)  {
+  structure(list(
+    knitr = merge_lists(base$knitr, overlay$knitr),
+    pandoc = pandoc_options(
+      to = merge_scalar(base$pandoc$to, overlay$pandoc$to),
+      from = merge_scalar(base$pandoc$from, overlay$pandoc$from),
+      args = unique(base$pandoc$args, overlay$pandoc$args)),
+    clean_supporting =
+      merge_scalar(base$clean_supporting, overlay$clean_supporting),
+    pre_processor =
+      merge_function_outputs(base$pre_processor, overlay$pre_processor, unique),
+    post_processor =
+      merge_function_outputs(base$post_processor, overlay$post_processor, unique)
+  ), class = "rmarkdown_output_format")
 }
 
 #' Knitr options for an output format

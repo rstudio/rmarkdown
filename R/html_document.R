@@ -113,7 +113,8 @@ html_document <- function(toc = FALSE,
                           includes = NULL,
                           lib_dir = NULL,
                           data_dir = NULL,
-                          pandoc_args = NULL) {
+                          pandoc_args = NULL,
+                          ...) {
 
   # build pandoc args
   args <- c("--standalone")
@@ -123,10 +124,6 @@ html_document <- function(toc = FALSE,
 
   # use section divs
   args <- c(args, "--section-divs")
-
-  # smart quotes, etc.
-  if (smart)
-    args <- c(args, "--smart")
 
   # self contained document
   if (self_contained) {
@@ -210,7 +207,8 @@ html_document <- function(toc = FALSE,
                             from = from_rmarkdown(fig_caption),
                             args = args),
     clean_supporting = self_contained,
-    pre_processor = pre_processor
+    pre_processor = pre_processor,
+    base_format = html_document_base(smart = smart, ...)
   )
 }
 
