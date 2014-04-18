@@ -16,6 +16,7 @@ ioslides_presentation <- function(logo = NULL,
                                   includes = NULL,
                                   lib_dir = NULL,
                                   data_dir = NULL,
+                                  pandoc_args = NULL,
                                   ...) {
 
   # base pandoc options for all output
@@ -169,6 +170,7 @@ ioslides_presentation <- function(logo = NULL,
     post_processor = post_processor,
     base_format = html_document_base(smart = smart, lib_dir = lib_dir,
                                      self_contained = self_contained,
-                                     mathjax = mathjax, ...))
+                                     mathjax = mathjax,
+                                     pandoc_args = pandoc_args, ...))
 }
 

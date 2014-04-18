@@ -6,7 +6,8 @@ html_document(toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
   fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, theme = "default", highlight = "default",
   mathjax = "default", template = "default", css = NULL,
-  includes = NULL, lib_dir = NULL, data_dir = NULL, pandoc_args = NULL)
+  includes = NULL, lib_dir = NULL, data_dir = NULL, pandoc_args = NULL,
+  ...)
 }
 \arguments{
   \item{toc}{\code{TRUE} to include a table of contents in

@@ -84,6 +84,7 @@ revealjs_presentation <- function(incremental = FALSE,
                                   includes = NULL,
                                   lib_dir = NULL,
                                   data_dir = NULL,
+                                  pandoc_args = NULL,
                                   ...) {
 
   # base pandoc options for all reveal.js output
@@ -162,7 +163,8 @@ revealjs_presentation <- function(incremental = FALSE,
     pre_processor = pre_processor,
     base_format = html_document_base(smart = smart, lib_dir = lib_dir,
                                      self_contained = self_contained,
-                                     mathjax = mathjax, ...))
+                                     mathjax = mathjax,
+                                     pandoc_args = pandoc_args, ...))
 }
 
 revealjs_themes <- function() {

@@ -113,6 +113,7 @@ html_document <- function(toc = FALSE,
                           includes = NULL,
                           lib_dir = NULL,
                           data_dir = NULL,
+                          pandoc_args = NULL,
                           ...) {
 
   # build pandoc args
@@ -175,7 +176,8 @@ html_document <- function(toc = FALSE,
     base_format = html_document_base(smart = smart, theme = theme,
                                      self_contained = self_contained,
                                      lib_dir = lib_dir, mathjax = mathjax,
-                                     template = template,  ...)
+                                     template = template,
+                                     pandoc_args = pandoc_args, ...)
   )
 }
 

@@ -62,6 +62,8 @@ html_dependency_copy_lib <- function(dependency, lib_dir) {
   target_dir
 }
 
+# flattens an arbitrarily nested list and returns all of the html_dependency
+# objects it contains
 flatten_html_dependencies <- function(knit_meta) {
 
   all_dependencies <- list()
@@ -83,7 +85,9 @@ flatten_html_dependencies <- function(knit_meta) {
   all_dependencies
 }
 
-# consolidate dependencies (use latest versions and remove duplicates)
+# consolidate dependencies (use latest versions and remove duplicates). this
+# routine is the default implementation for version dependency resolution;
+# formats may specify their own.
 html_dependency_resolver <- function(all_dependencies) {
 
   dependencies <- list()

@@ -1,4 +1,4 @@
-# base for HTML-based output formats
+# base output format for HTML-based output formats
 html_document_base <- function(smart = TRUE,
                                theme = NULL,
                                self_contained = TRUE,

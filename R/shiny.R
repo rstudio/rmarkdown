@@ -49,8 +49,10 @@
 #' @examples
 #' \dontrun{
 #'
-#' # Run the Shiny document "shiny_doc.Rmd" on port 8241
+#' # Run the Shiny document "index.Rmd" in the current directory
+#' rmarkdown::run()
 #'
+#' # Run the Shiny document "shiny_doc.Rmd" on port 8241
 #' rmarkdown::run("shiny_doc.Rmd", shiny_args = list(port = 8241))
 #'
 #' }
@@ -95,6 +97,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       output_dest <- tempfile(fileext = ".html")
       resource_folder <- knitr_files_dir(output_dest)
 
+      # use a custom dependency resolver that just accumulates the dependencies
+      # (we'll pass these to Shiny in a moment)
       dependencies <- list()
       shiny_dependency_resolver <- function(deps) {
         dependencies <<- deps
@@ -125,10 +129,12 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
         unlink(result_path)
         unlink(resource_folder, recursive = TRUE)
       })
-      paste(readLines(result_path, warn = FALSE), collapse="\n")
+      shiny::attachDependencies(
+        shiny::HTML(paste(readLines(result_path, warn = FALSE), collapse="\n")),
+        dendencies)
     })
     output$`__reactivedoc__` <- shiny::renderUI({
-      shiny::HTML(doc())
+      doc()
     })
   }
 

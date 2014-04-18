@@ -6,7 +6,8 @@ revealjs_presentation(incremental = FALSE, center = FALSE, fig_width = 8,
   fig_height = 6, fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, theme = "default", transition = "default",
   highlight = "default", mathjax = "default", template = "default",
-  includes = NULL, lib_dir = NULL, data_dir = NULL, pandoc_args = NULL)
+  includes = NULL, lib_dir = NULL, data_dir = NULL, pandoc_args = NULL,
+  ...)
 }
 \arguments{
   \item{center}{\code{TRUE} to vertically center content on

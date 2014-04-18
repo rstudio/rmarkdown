@@ -2,15 +2,18 @@
 \alias{run}
 \title{Run a Shiny document}
 \usage{
-run(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
-  render_args = NULL)
+run(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
+  shiny_args = NULL, render_args = NULL)
 }
 \arguments{
-  \item{file}{Path to the input R Markdown document.}
+  \item{file}{Path to the R Markdown document to launch in
+  a web browser.  Defaults to \code{index.Rmd} in the
+  current working directory, but may be \code{NULL} to skip
+  launching a browser.}
 
   \item{dir}{The directory from which to to read input
-  documents. If \code{NULL}, then the parent directory of
-  \code{file} is used.}
+  documents. Defaults to the parent directory of
+  \code{file}.}
 
   \item{auto_reload}{If \code{TRUE} (the default),
   automatically reload the Shiny application when the file
@@ -73,8 +76,10 @@ filename will show \code{index.Rmd}, if it exists in
 \examples{
 \dontrun{
 
-# Run the Shiny document "shiny_doc.Rmd" on port 8241
+# Run the Shiny document "index.Rmd" in the current directory
+rmarkdown::run()
 
+# Run the Shiny document "shiny_doc.Rmd" on port 8241
 rmarkdown::run("shiny_doc.Rmd", shiny_args = list(port = 8241))
 
 }
