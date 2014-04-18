@@ -6,6 +6,7 @@ html_document_base <- function(smart = TRUE,
                                mathjax = "default",
                                pandoc_args = NULL,
                                template = "default",
+                               dependency_resolver = html_dependency_resolver,
                                ...) {
   args <- c()
 
@@ -48,7 +49,8 @@ html_document_base <- function(smart = TRUE,
                           html_dependency_bootstrap(theme))
     else
       format_deps <- NULL
-    extras <- html_extras_for_document(knit_meta, runtime, format_deps)
+    extras <- html_extras_for_document(knit_meta, runtime, dependency_resolver,
+                                       format_deps)
     args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir))
 
     # mathjax

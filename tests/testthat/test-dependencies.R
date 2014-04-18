@@ -11,8 +11,9 @@ test_that("dependency merge is correct", {
 
   # tests a dependency merge
   test_dep_merge <- function(input, output, doeswarn = FALSE) {
+    deps <- flatten_html_dependencies(input)
     expect_that(
-        result <- html_dependencies_for_document(input),
+        result <- html_dependency_resolver(deps),
         if (doeswarn) gives_warning() else not(gives_warning()))
     result <- prepare_list(result)
     output <- prepare_list(output)

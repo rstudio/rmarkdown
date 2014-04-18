@@ -2,9 +2,11 @@
 #'
 #' Start a Shiny server for the given document, and render it for display.
 #'
-#' @param file Path to the input R Markdown document.
-#' @param dir The directory from which to to read input documents. If
-#'   \code{NULL}, then the parent directory of \code{file} is used.
+#' @param file Path to the R Markdown document to launch in a web browser.
+#'   Defaults to \code{index.Rmd} in the current working directory, but may be
+#'   \code{NULL} to skip launching a browser.
+#' @param dir The directory from which to to read input documents. Defaults to
+#'   the parent directory of \code{file}.
 #' @param auto_reload If \code{TRUE} (the default), automatically reload the
 #'   Shiny application when the file currently being viewed is changed on disk.
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
@@ -53,25 +55,25 @@
 #'
 #' }
 #' @export
-run <- function(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
-                render_args = NULL) {
+run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
+                shiny_args = NULL, render_args = NULL) {
 
   # form and test locations
-  file <- normalizePath(file)
-  if (!file.exists(file))
-    stop("The file '", file, "' does not exist")
-  if (is.null(dir))
-    dir <- dirname(file)
-  else
-    dir <- normalizePath(dir)
+  dir <- normalizePath(dir)
   if (!file.exists(dir))
     stop("The directory '", dir, " does not exist")
 
-  # compute file path relative to directory
-  file_rel <- substr(file, nchar(dir) + 2, nchar(file))
-  resolved <- resolve_relative(dir, file_rel)
-  if (is.null(resolved) || !file.exists(resolved))
-    stop("The file '", file, "' does not exist in the directory '", dir, "'")
+  if (!is.null(file)) {
+    file <- normalizePath(file)
+    if (!file.exists(file))
+      stop("The file '", file, "' does not exist")
+
+    # compute file path relative to directory
+    file_rel <- substr(file, nchar(dir) + 2, nchar(file))
+    resolved <- resolve_relative(dir, file_rel)
+    if (is.null(resolved) || !file.exists(resolved))
+      stop("The file '", file, "' does not exist in the directory '", dir, "'")
+  }
 
   # create the Shiny server function
   server <- function(input, output, session) {
@@ -93,9 +95,16 @@ run <- function(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
       output_dest <- tempfile(fileext = ".html")
       resource_folder <- knitr_files_dir(output_dest)
 
+      dependencies <- list()
+      shiny_dependency_resolver <- function(deps) {
+        dependencies <<- deps
+        list()
+      }
+
       # ensure that the document is not rendered to one page
       output_opts <- list(
-         self_contained = FALSE)
+         self_contained = FALSE,
+         dependency_resolver = shiny_dependency_resolver)
 
       # merge our inputs with those supplied by the user and invoke render
       args <- merge_lists(list(input = reactive_file(),
@@ -160,8 +169,9 @@ run <- function(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
                          onStart = onStart,
                          server = server)
 
-  # launch the app and open a browser to the requested page
-  launch_browser <- interactive()
+  # launch the app and open a browser to the requested page, if one was
+  # specified
+  launch_browser <- (!is.null(file)) && interactive()
   if (isTRUE(launch_browser)) {
     launch_browser <- function(url) {
       url <- paste(url, file_rel, sep = "/")
@@ -213,3 +223,4 @@ file.path.ci <- function(dir, name) {
     return(default)
   return(matches[[1]])
 }
+
