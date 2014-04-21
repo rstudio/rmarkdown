@@ -1,5 +1,9 @@
 ---
 title: "HTML Widgets"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
 ---
 
 HTML widgets enable you to add new types of HTML output to R Markdown documents. You might want to do this to add a binding between R and a Javascript data visualization library like [d3](http://d3js.org) or [Leaflet](http://leafletjs.com). HTML widgets create output that works both inside R Markdown documents as well as while executing code from the console (e.g. to display within the RStudio Viewer).

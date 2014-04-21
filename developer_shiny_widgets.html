@@ -137,6 +137,15 @@ body {
 <h1 class="title">Shiny Widgets</h1>
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#creating-a-shiny-widget">Creating a Shiny Widget</a><ul>
+<li><a href="#the-shinyapp-function">The shinyApp Function</a></li>
+<li><a href="#example-k-means-cluster">Example: K Means Cluster</a></li>
+<li><a href="#widget-size-and-layout">Widget Size and Layout</a></li>
+</ul></li>
+</ul>
+</div>
 
 <p>Shiny widgets enable you to create re-usable Shiny components that are included within an R Markdown document using a single function call. Shiny widgets can also be invoked directly from the console (useful during authoring) and show their output within the RStudio Viewer pane or an external web browser.</p>
 <div id="prerequisties" class="section level4">
@@ -146,26 +155,26 @@ body {
 </div>
 <div id="creating-a-shiny-widget" class="section level2">
 <h2>Creating a Shiny Widget</h2>
+<div id="the-shinyapp-function" class="section level3">
+<h3>The shinyApp Function</h3>
 <p>At their core Shiny widgets are mini-applications created using the <code>shinyApp</code> function. Rather than create a <code>ui.R</code> and <code>server.R</code> as you would for a typical Shiny application, you pass the ui and server definitions to the <code>shinyApp</code> function as arguments. For example:</p>
 <pre class="r"><code>shinyApp(
-  
-  ui = fluidPage(
+  ui = fluidPage(responsive = FALSE,
     selectInput(&quot;region&quot;, &quot;Region:&quot;, choices = colnames(WorldPhones)),
     plotOutput(&quot;phonePlot&quot;)
   ),
-  
   server = function(input, output) {
     output$phonePlot &lt;- renderPlot({
       barplot(WorldPhones[,input$region]*1000, 
               ylab = &quot;Number of Telephones&quot;, xlab = &quot;Year&quot;)
     })
   },
-  
   options = list(height = 500)
 )</code></pre>
 <p>The simplest type of Shiny widget is just an R function that returns a <code>shinyApp</code>.</p>
-<div id="example" class="section level3">
-<h3>Example</h3>
+</div>
+<div id="example-k-means-cluster" class="section level3">
+<h3>Example: K Means Cluster</h3>
 <p>The <a href="https://github.com/rstudio/rmdexamples"><strong>rmdexamples</strong></a> package includes an example of Shiny widget implemented in this fashion. The <a href="https://github.com/rstudio/rmdexamples/blob/master/R/kmeans_cluster.R"><code>kmeans_cluster</code></a> function takes a single “dataset” argument and returns a Shiny widget. You can use it within an R Markdown document like this:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
 library(rmdexamples)
@@ -183,17 +192,16 @@ kmeans_cluster(iris)
   require(shiny)  
   
   shinyApp(
-  
-    ui = fluidPage(
-      wellPanel(fluidRow(
+    ui = fluidPage(responsive = FALSE,
+      fluidRow(style = &quot;padding-bottom: 20px;&quot;,
         column(4, selectInput(&#39;xcol&#39;, &#39;X Variable&#39;, names(dataset))),
         column(4, selectInput(&#39;ycol&#39;, &#39;Y Variable&#39;, names(dataset),
                               selected=names(dataset)[[2]])),
         column(4, numericInput(&#39;clusters&#39;, &#39;Cluster count&#39;, 3,
                                min = 1, max = 9))
-      )),
+      ),
       fluidRow(
-        plotOutput(&#39;kmeans&#39;)  
+        plotOutput(&#39;kmeans&#39;, height = &quot;400px&quot;)  
       )
     ),
     
@@ -208,7 +216,7 @@ kmeans_cluster(iris)
         kmeans(selectedData(), input$clusters)
       })
       
-      output$kmeans &lt;- renderPlot({
+      output$kmeans &lt;- renderPlot(height = 400, {
         par(mar = c(5.1, 4.1, 0, 1))
         plot(selectedData(),
              col = clusters()$cluster,
@@ -217,12 +225,22 @@ kmeans_cluster(iris)
       })
     },
     
-    options = list(height = 550)
+    options = list(height = 500)
   )
 }</code></pre>
+</div>
+</div>
+<div id="widget-size-and-layout" class="section level3">
+<h3>Widget Size and Layout</h3>
+<p>Shiny widgets may be embedded in various places including standard full width pages, smaller columns within pages, and even HTML5 presentations. The following guidelines will help ensure that widget size and layout works well in all of these contexts:</p>
+<ol style="list-style-type: decimal">
+<li><p>Use <code>fluidPage</code> with the <code>responsive = FALSE</code> parameter. This ensures that as the width of a widget gets smaller that elements within it scale smaller as well (and don’t wrap).</p></li>
+<li><p>Ensure that the total height of the widget is no larger than 500 pixels. This isn’t a hard and fast rule, but HTML5 slides can typically only display content &lt;= 500px so if you want your widget to be usable within presentations this is a good guideline to follow.</p></li>
+</ol>
+<p>The example above follows both of these guidelines, specifying a total height of 500px and a height of 400px for the plot (to leave room for the controls above it). Note that height should be specified both on the <code>plotOutput</code> call as well as the <code>renderPlot</code> call.</p>
+<p>Another approach would be to add an explicit height parameter to the function which creates the widget (default to 500 so it works well within slides).</p>
 <div class="references">
 
-</div>
 </div>
 </div>
 </div>
