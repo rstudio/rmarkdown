@@ -1,5 +1,9 @@
 ---
 title: "Shiny in R Markdown"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
 ---
 
 ## Overview
@@ -102,13 +106,15 @@ renderPlot({
 
 ![Shiny Hist Plot](images/shiny-hist-plot.gif)
 
-## Embedded Shiny Applications
+## Embedded Shiny Apps
 
 It's also possible to embed an entire Shiny application within an R Markdown document. There are two syntaxes for this: 
 
 1) Defining the application inline using the `shinyApp` function; or
 
 2) Referring to an external application directory using the `shinyAppDir` function.
+
+### Inline Applications
 
 This example uses an inline definition:
 
@@ -135,6 +141,8 @@ shinyApp(
 
 Note the use of the `height` parameter to determine how much vertical space the embedded application should occupy.
 
+### External Applications
+
 This example embeds a Shiny application defined in another directory:
 
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
@@ -149,7 +157,9 @@ shinyAppDir(
 
 Note that in all of R code chunks above the `echo = FALSE` attribute is used. This is to prevent the R code within the chunk from rendering in the document alongside the Shiny components.
 
-## Shiny Reactives
+## Advanced Topics
+
+### Shiny Reactives
 
 Shiny documents can also contain reactive expressions (useful when a piece of dynamic data is used in several places). As in Shiny applications, these values respond to changes in their inputs.
 
@@ -172,7 +182,7 @@ renderPlot({
 
 Note that reactive expressions can be used anywhere, including in the definition of inline Shiny applications using the `shinyApp` function. To learn more about reactive expressions, see the [Shiny Tutorial](http://shiny.rstudio.com/articles/basics.html).
 
-## Multiple Pages
+### Multiple Pages
  
 You can link to other Shiny documents by using the Markdown link syntax and specifying the *relative* path to the document, e.g. `[Another Shiny Document](another.Rmd)`.
  
@@ -180,5 +190,18 @@ Currently, only one document can be active at a time, so documents can't easily 
  
 By default it's only possible to link to R Markdown files in the same directory subtree as the file on which `rmarkdown::run` was invoked (i.e you can't link to `../foo.rmd`.) You can use the `dir` argument to `rmarkdown::run` to indicate the directory to treat as the root. 
 
+### Shiny Widgets
 
+It's also possible to create re-usable Shiny widgets that enable authors to embed a Shiny application within a page with a single function call. For example, the following code could be used to embed a K Means clustering application:
+
+```r
+kmeans_cluster(iris)
+```
+
+This is what the widget would look like inside a running document:
+
+![Shiny Widget KMeans](images/shiny-widget-kmeans.png)
+
+
+See the article on [Shiny Widgets](developer_shiny_widgets.html) for additional details.
 

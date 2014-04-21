@@ -137,6 +137,27 @@ body {
 <h1 class="title">Shiny in R Markdown</h1>
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#quick-start">Quick Start</a></li>
+</ul></li>
+<li><a href="#shiny-basics">Shiny Basics</a><ul>
+<li><a href="#runnable-documents">Runnable Documents</a></li>
+<li><a href="#inputs-and-outputs">Inputs and Outputs</a></li>
+</ul></li>
+<li><a href="#embedded-shiny-apps">Embedded Shiny Apps</a><ul>
+<li><a href="#inline-applications">Inline Applications</a></li>
+<li><a href="#external-applications">External Applications</a></li>
+</ul></li>
+<li><a href="#advanced-topics">Advanced Topics</a><ul>
+<li><a href="#shiny-reactives">Shiny Reactives</a></li>
+<li><a href="#multiple-pages">Multiple Pages</a></li>
+<li><a href="#shiny-widgets">Shiny Widgets</a></li>
+</ul></li>
+</ul>
+</div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
@@ -213,13 +234,15 @@ renderPlot({
 <p><img src="images/shiny-hist-plot.gif" alt="Shiny Hist Plot" /></p>
 </div>
 </div>
-<div id="embedded-shiny-applications" class="section level2">
-<h2>Embedded Shiny Applications</h2>
+<div id="embedded-shiny-apps" class="section level2">
+<h2>Embedded Shiny Apps</h2>
 <p>It’s also possible to embed an entire Shiny application within an R Markdown document. There are two syntaxes for this:</p>
 <ol style="list-style-type: decimal">
 <li><p>Defining the application inline using the <code>shinyApp</code> function; or</p></li>
 <li><p>Referring to an external application directory using the <code>shinyAppDir</code> function.</p></li>
 </ol>
+<div id="inline-applications" class="section level3">
+<h3>Inline Applications</h3>
 <p>This example uses an inline definition:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
 shinyApp(
@@ -243,6 +266,9 @@ shinyApp(
 </code></pre>
 
 <p>Note the use of the <code>height</code> parameter to determine how much vertical space the embedded application should occupy.</p>
+</div>
+<div id="external-applications" class="section level3">
+<h3>External Applications</h3>
 <p>This example embeds a Shiny application defined in another directory:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
 shinyAppDir(
@@ -256,8 +282,11 @@ shinyAppDir(
 
 <p>Note that in all of R code chunks above the <code>echo = FALSE</code> attribute is used. This is to prevent the R code within the chunk from rendering in the document alongside the Shiny components.</p>
 </div>
-<div id="shiny-reactives" class="section level2">
-<h2>Shiny Reactives</h2>
+</div>
+<div id="advanced-topics" class="section level2">
+<h2>Advanced Topics</h2>
+<div id="shiny-reactives" class="section level3">
+<h3>Shiny Reactives</h3>
 <p>Shiny documents can also contain reactive expressions (useful when a piece of dynamic data is used in several places). As in Shiny applications, these values respond to changes in their inputs.</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
 selectInput("dataset", "Choose Dataset:", c("cars", "iris", "mtcars"))
@@ -278,13 +307,22 @@ renderPlot({
 
 <p>Note that reactive expressions can be used anywhere, including in the definition of inline Shiny applications using the <code>shinyApp</code> function. To learn more about reactive expressions, see the <a href="http://shiny.rstudio.com/articles/basics.html">Shiny Tutorial</a>.</p>
 </div>
-<div id="multiple-pages" class="section level2">
-<h2>Multiple Pages</h2>
+<div id="multiple-pages" class="section level3">
+<h3>Multiple Pages</h3>
 <p>You can link to other Shiny documents by using the Markdown link syntax and specifying the <em>relative</em> path to the document, e.g. <code>[Another Shiny Document](another.Rmd)</code>.</p>
 <p>Currently, only one document can be active at a time, so documents can’t easily share state (although some primitive global sharing is possible via <code>global.R</code>; see the help for <code>rmarkdown::run</code>).</p>
 <p>By default it’s only possible to link to R Markdown files in the same directory subtree as the file on which <code>rmarkdown::run</code> was invoked (i.e you can’t link to <code>../foo.rmd</code>.) You can use the <code>dir</code> argument to <code>rmarkdown::run</code> to indicate the directory to treat as the root.</p>
+</div>
+<div id="shiny-widgets" class="section level3">
+<h3>Shiny Widgets</h3>
+<p>It’s also possible to create re-usable Shiny widgets that enable authors to embed a Shiny application within a page with a single function call. For example, the following code could be used to embed a K Means clustering application:</p>
+<pre class="r"><code>kmeans_cluster(iris)</code></pre>
+<p>This is what the widget would look like inside a running document:</p>
+<p><img src="images/shiny-widget-kmeans.png" alt="Shiny Widget KMeans" /></p>
+<p>See the article on <a href="developer_shiny_widgets.html">Shiny Widgets</a> for additional details.</p>
 <div class="references">
 
+</div>
 </div>
 </div>
 
