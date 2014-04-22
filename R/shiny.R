@@ -66,7 +66,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
     stop("The directory '", dir, " does not exist")
 
   if (!is.null(file)) {
-    file <- normalizePath(file)
+    file <- file.path(dir,normalizePath(file))
     if (!file.exists(file))
       stop("The file '", file, "' does not exist")
 
