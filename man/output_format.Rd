@@ -17,7 +17,7 @@ output_format(knitr, pandoc, clean_supporting = TRUE, pre_processor = NULL,
   \code{\link{render_supporting_files}}}
 
   \item{pre_processor}{An optional pre-processor function
-  that receives the \code{metadata}, \code{input_lines},
+  that receives the \code{metadata}, \code{input_file},
   \code{runtime}, \code{knit_meta}, and \code{files_dir}
   and can return additional arguments to pass to pandoc.}
 

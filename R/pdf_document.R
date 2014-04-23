@@ -155,7 +155,7 @@ pdf_document <- function(toc = FALSE,
 
 # Use filter to set pdf geometry defaults (while making sure we don't override
 # any geometry settings already specified by the user)
-pdf_pre_processor <- function(metadata, input_lines, runtime, knit_meta, files_dir) {
+pdf_pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir) {
 
   args <- c()
 
@@ -163,7 +163,7 @@ pdf_pre_processor <- function(metadata, input_lines, runtime, knit_meta, files_d
   has_margin <- function(text) {
     length(grep("^geometry\\:[ \\t]*margin=\\d+(\\.?\\d+)?\\w+$", text)) > 0
   }
-  if (!has_margin(input_lines))
+  if (!has_margin(readLines(input_lines, warn = FALSE)))
     args <- c(args, "--variable", "geometry:margin=1in")
 
   args
