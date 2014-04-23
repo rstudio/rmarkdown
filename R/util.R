@@ -1,4 +1,6 @@
-
+createUniqueId <- function(bytes) {
+  paste(as.hexmode(sample(256, bytes)-1), collapse="")
+}
 
 is_windows <- function() {
   identical(.Platform$OS.type, "windows")
