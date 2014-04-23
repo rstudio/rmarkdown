@@ -267,13 +267,16 @@ render <- function(input,
     }
   }
 
+  # determine whether we should run pandoc-citeproc
+  run_citeproc <- !is.null(yaml_front_matter$bibliography)
+
   # run intermediate conversion if it's been specified
   if (output_format$pandoc$keep_tex) {
     pandoc_convert(utf8_input,
                    output_format$pandoc$to,
                    output_format$pandoc$from,
                    file_with_ext(output_file, "tex"),
-                   TRUE,
+                   run_citeproc,
                    output_format$pandoc$args,
                    !quiet)
   }
@@ -283,7 +286,7 @@ render <- function(input,
                  output_format$pandoc$to,
                  output_format$pandoc$from,
                  output_file,
-                 TRUE,
+                 run_citeproc,
                  output_format$pandoc$args,
                  !quiet)
 
