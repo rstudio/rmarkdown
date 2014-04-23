@@ -163,7 +163,7 @@ pdf_pre_processor <- function(metadata, input_file, runtime, knit_meta, files_di
   has_margin <- function(text) {
     length(grep("^geometry\\:[ \\t]*margin=\\d+(\\.?\\d+)?\\w+$", text)) > 0
   }
-  if (!has_margin(readLines(input_lines, warn = FALSE)))
+  if (!has_margin(readLines(input_file, warn = FALSE)))
     args <- c(args, "--variable", "geometry:margin=1in")
 
   args
