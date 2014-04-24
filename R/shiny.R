@@ -116,7 +116,10 @@ run <- function(file, dir = NULL, auto_reload = TRUE, shiny_args = NULL,
         unlink(result_path)
         unlink(resource_folder, recursive = TRUE)
       })
-      paste(readLines(result_path, warn = FALSE), collapse="\n")
+      con <- file(result_path, encoding = "UTF-8")
+      on.exit(close(con), add = TRUE)
+
+      paste(readLines(con, warn = FALSE), collapse = "\n")
     })
     output$`__reactivedoc__` <- shiny::renderUI({
       shiny::HTML(doc())
