@@ -66,12 +66,11 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
     stop("The directory '", dir, " does not exist")
 
   if (!is.null(file)) {
-    file <- normalizePath(file)
-    if (!file.exists(file))
-      stop("The file '", file, "' does not exist")
+    file <- path.expand(file)
 
-    # compute file path relative to directory
-    file_rel <- substr(file, nchar(dir) + 2, nchar(file))
+    # compute file path relative to directory (remove common directory prefix
+    # if it exists)
+    file_rel <- sub(paste("^", dir, "/", sep = ""), "", file)
     resolved <- resolve_relative(dir, file_rel)
     if (is.null(resolved) || !file.exists(resolved))
       stop("The file '", file, "' does not exist in the directory '", dir, "'")
