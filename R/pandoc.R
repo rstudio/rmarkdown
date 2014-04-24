@@ -345,9 +345,10 @@ pandoc_html_highlight_args <- function(highlight,
     highlight <- match.arg(highlight, html_highlighters())
     if (highlight %in% c("default", "textmate")) {
       highlight_path <- rmarkdown_system_file("rmd/h/highlight")
-      if (!self_contained)
+      if (self_contained)
+        highlight_path <- pandoc_path_arg(highlight_path)
+      else
         highlight_path <- render_supporting_files(highlight_path, files_dir)
-      highlight_path <- pandoc_path_arg(highlight_path)
       args <- c(args, "--no-highlight")
       args <- c(args,
                 "--variable", paste("highlightjs=", highlight_path, sep=""))

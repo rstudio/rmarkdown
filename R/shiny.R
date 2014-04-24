@@ -79,7 +79,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
 
   # create the Shiny server function
   server <- function(input, output, session) {
-    path_info <- session$request$PATH_INFO
+    path_info <- utils::URLdecode(session$request$PATH_INFO)
     path_info <- substr(path_info, 1, nchar(path_info) - 11)
     if (!nzchar(path_info)) {
       path_info <- "index.Rmd"
@@ -140,7 +140,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
 
   ui <- function(req) {
     # map requests to / to requests for index.Rmd
-    req_path <- req$PATH_INFO
+    req_path <- utils::URLdecode(req$PATH_INFO)
     if (identical(req_path, "/")) {
       req_path <- "index.Rmd"
     }
