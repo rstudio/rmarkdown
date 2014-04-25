@@ -85,7 +85,7 @@ merge_output_formats <- function (base, overlay)  {
     pre_processor =
       merge_function_outputs(base$pre_processor, overlay$pre_processor, c),
     post_processor =
-      merge_function_outputs(base$post_processor, overlay$post_processor, c)
+      merge_function_outputs(base$post_processor, overlay$post_processor, merge_scalar)
   ), class = "rmarkdown_output_format")
 }
 
