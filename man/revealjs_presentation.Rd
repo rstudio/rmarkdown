@@ -6,7 +6,8 @@ revealjs_presentation(incremental = FALSE, center = FALSE, fig_width = 8,
   fig_height = 6, fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, theme = "default", transition = "default",
   highlight = "default", mathjax = "default", template = "default",
-  includes = NULL, lib_dir = NULL, data_dir = NULL, pandoc_args = NULL)
+  includes = NULL, lib_dir = NULL, data_dir = NULL, pandoc_args = NULL,
+  ...)
 }
 \arguments{
   \item{center}{\code{TRUE} to vertically center content on
@@ -83,6 +84,9 @@ revealjs_presentation(incremental = FALSE, center = FALSE, fig_width = 8,
   (e.g. jquery, bootstrap, etc.) into. By default this will
   be the name of the document with \code{_files} appended
   to it.}
+
+  \item{...}{Additional function arguments to pass to the
+  base R Markdown HTML output formatter}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

@@ -1,7 +1,8 @@
 
 # resolve the html extras for a document (dependencies and arbitrary html to
 # inject into the document)
-html_extras_for_document <- function(knit_meta, runtime, format_deps = NULL) {
+html_extras_for_document <- function(knit_meta, runtime, dependency_resolver,
+                                     format_deps = NULL) {
 
   extras <- list()
 
@@ -11,9 +12,9 @@ html_extras_for_document <- function(knit_meta, runtime, format_deps = NULL) {
 
   # merge the dependencies discovered with the dependencies of this format and
   # dependencies discovered in knit_meta
-  extras$dependencies <-
-    html_dependencies_for_document(knit_meta, c(format_deps,
-                                                extras$dependencies))
+  all_dependencies <- if (is.null(format_deps)) list() else format_deps
+  all_dependencies <- append(all_dependencies, flatten_html_dependencies(knit_meta))
+  extras$dependencies <- dependency_resolver(all_dependencies)
 
   # return extras
   extras

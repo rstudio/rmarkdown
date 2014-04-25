@@ -251,7 +251,7 @@ render <- function(input,
   # call any pre_processor
   if (!is.null(output_format$pre_processor)) {
     extra_args <- output_format$pre_processor(yaml_front_matter,
-                                              input_text,
+                                              utf8_input,
                                               runtime,
                                               knit_meta,
                                               files_dir)

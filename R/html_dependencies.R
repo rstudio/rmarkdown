@@ -62,31 +62,33 @@ html_dependency_copy_lib <- function(dependency, lib_dir) {
   target_dir
 }
 
+# flattens an arbitrarily nested list and returns all of the html_dependency
+# objects it contains
+flatten_html_dependencies <- function(knit_meta) {
 
-# resolve html dependencies (inclusive of a format's built-in dependencies)
-html_dependencies_for_document <- function(knit_meta, format_deps = NULL) {
-
-  # list of dependencies to return (start with format_deps)
-  if (!is.null(format_deps))
-    all_dependencies <- format_deps
-  else
-    all_dependencies <- list()
+  all_dependencies <- list()
 
   # knit_meta is a list of 'meta' attributes returned from custom knit_print
   # functions. since the 'meta' attribute could either be an html dependency or
   # a list of dependencies we recurse on lists that aren't named
   for (dep in knit_meta) {
     if (is.null(names(dep)) && is.list(dep)) {
-      inner_dependencies <- html_dependencies_for_document(dep)
+      inner_dependencies <- flatten_html_dependencies(dep)
       all_dependencies <- append(all_dependencies, inner_dependencies)
     }
     else if (is_html_dependency(dep)) {
-      validate_html_dependency(dep)
       all_dependencies[[length(all_dependencies) + 1]] <- dep
     }
   }
 
-  # consolidate dependencies (use latest versions and remove duplicates)
+  all_dependencies
+}
+
+# consolidate dependencies (use latest versions and remove duplicates). this
+# routine is the default implementation for version dependency resolution;
+# formats may specify their own.
+html_dependency_resolver <- function(all_dependencies) {
+
   dependencies <- list()
   for (dep in unique(all_dependencies)) {
     # if we already have a library of this name then re-use it
@@ -130,6 +132,9 @@ html_dependencies_for_document <- function(knit_meta, format_deps = NULL) {
       dependencies[[dep$name]] <- dep
     }
   }
+
+  # validate each surviving dependency
+  lapply(dependencies, validate_html_dependency)
 
   # return the consolidated dependencies
   dependencies

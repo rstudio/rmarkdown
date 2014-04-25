@@ -47,6 +47,8 @@
 #'   and included content against (the directory of the input file is used by
 #'   default).
 #' @param pandoc_args Additional command line options to pass to pandoc
+#' @param ... Additional function arguments to pass to the base R Markdown HTML
+#'   output formatter
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -113,26 +115,14 @@ html_document <- function(toc = FALSE,
                           includes = NULL,
                           lib_dir = NULL,
                           data_dir = NULL,
-                          pandoc_args = NULL) {
+                          pandoc_args = NULL,
+                          ...) {
 
   # build pandoc args
   args <- c("--standalone")
 
-  # no email obfuscation
-  args <- c(args, "--email-obfuscation", "none")
-
   # use section divs
   args <- c(args, "--section-divs")
-
-  # smart quotes, etc.
-  if (smart)
-    args <- c(args, "--smart")
-
-  # self contained document
-  if (self_contained) {
-    validate_self_contained(mathjax)
-    args <- c(args, "--self-contained")
-  }
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
@@ -152,12 +142,9 @@ html_document <- function(toc = FALSE,
   if (!is.null(data_dir))
     args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
-  # pandoc args
-  args <- c(args, pandoc_args)
-
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(metadata, input_lines, runtime, knit_meta, files_dir) {
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir) {
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
@@ -166,34 +153,11 @@ html_document <- function(toc = FALSE,
     # extra args
     args <- c()
 
-    # handle theme
-    if (!is.null(theme)) {
-      theme <- match.arg(theme, themes())
-      if (identical(theme, "default"))
-        theme <- "bootstrap"
-      args <- c(args, "--variable", paste("theme:", theme, sep=""))
-    }
-
-    # resolve and inject extras
-    if (!is.null(theme))
-      format_deps <- list(html_dependency_jquery(),
-                          html_dependency_bootstrap(theme))
-    else
-      format_deps <- NULL
-    extras <- html_extras_for_document(knit_meta, runtime, format_deps)
-    args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir))
-
     # highlight
     args <- c(args, pandoc_html_highlight_args(highlight,
                                                template,
                                                self_contained,
                                                lib_dir))
-
-    # mathjax
-    args <- c(args, pandoc_mathjax_args(mathjax,
-                                        template,
-                                        self_contained,
-                                        lib_dir))
 
     # content includes (we do this here so that user include-in-header content
     # goes after dependency generated content)
@@ -210,7 +174,12 @@ html_document <- function(toc = FALSE,
                             from = from_rmarkdown(fig_caption),
                             args = args),
     clean_supporting = self_contained,
-    pre_processor = pre_processor
+    pre_processor = pre_processor,
+    base_format = html_document_base(smart = smart, theme = theme,
+                                     self_contained = self_contained,
+                                     lib_dir = lib_dir, mathjax = mathjax,
+                                     template = template,
+                                     pandoc_args = pandoc_args, ...)
   )
 }
 
