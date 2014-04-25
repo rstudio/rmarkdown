@@ -156,7 +156,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
 
     # document must exist
     target_file <- resolve_relative(dir, req_path)
-    if (!file.exists(target_file)) {
+    if (is.null(target_file) || !file.exists(target_file)) {
       return(NULL)
     }
 
