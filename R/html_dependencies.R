@@ -121,15 +121,11 @@ html_dependencies_for_document <- function(knit_meta, format_deps = NULL) {
         dependencies[[dep$name]]$path <- dep$path
         dependencies[[dep$name]]$script <- dep$script
         dependencies[[dep$name]]$stylesheet <- dep$stylesheet
+        dependencies[[dep$name]]$meta <- dep$meta
+        dependencies[[dep$name]]$head <- dep$head
         dependencies[[dep$name]]$external <- dep$external
       }
-
-      # consolidate other fields
-      dependencies[[dep$name]]$meta <-
-        merge_lists(dependencies[[dep$name]]$meta, dep$meta)
-      dependencies[[dep$name]]$head <-
-        unique(c(dependencies[[dep$name]]$head, dep$head))
-      # first instance of this library, just copy over all the fields
+    # first instance of this library, just copy over all the fields
     } else {
       dependencies[[dep$name]] <- dep
     }
