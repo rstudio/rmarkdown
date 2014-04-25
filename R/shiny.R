@@ -128,8 +128,12 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
         unlink(result_path)
         unlink(resource_folder, recursive = TRUE)
       })
+      con <- file(result_path, encoding = "UTF-8")
+      on.exit(close(con), add = TRUE)
+
+      paste(readLines(con, warn = FALSE), collapse = "\n")
       structure(
-        shiny::HTML(paste(readLines(result_path, warn = FALSE), collapse="\n")),
+        shiny::HTML(paste(readLines(con, warn = FALSE), collapse="\n")),
         html_dependency = dependencies)
     })
     output$`__reactivedoc__` <- shiny::renderUI({
