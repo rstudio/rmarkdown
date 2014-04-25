@@ -72,6 +72,20 @@ merge_function_outputs <- function (base, overlay, op) {
   }
 }
 
+# merges two post-processors; if both are non-NULL, produces a new function that
+# calls the overlay post-processor and then the base post-processor.
+merge_post_processors <- function (base, overlay) {
+  if (!is.null(base) && !is.null(overlay)) {
+    function(metadata, input_file, output_file, ...) {
+      output_file <- overlay(metadata, input_file, output_file, ...)
+      base(metadata, input_file, output_file, ...)
+    }
+  }
+  else {
+    merge_scalar(base, overlay)
+  }
+}
+
 # merges two output formats
 merge_output_formats <- function (base, overlay)  {
   structure(list(
@@ -85,7 +99,7 @@ merge_output_formats <- function (base, overlay)  {
     pre_processor =
       merge_function_outputs(base$pre_processor, overlay$pre_processor, c),
     post_processor =
-      merge_function_outputs(base$post_processor, overlay$post_processor, merge_scalar)
+      merge_post_processors(base$post_processor, overlay$post_processor)
   ), class = "rmarkdown_output_format")
 }
 
