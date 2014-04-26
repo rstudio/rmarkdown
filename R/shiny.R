@@ -107,6 +107,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       # ensure that the document is not rendered to one page
       output_opts <- list(
          self_contained = FALSE,
+         copy_images = TRUE,
          dependency_resolver = shiny_dependency_resolver)
 
       # merge our inputs with those supplied by the user and invoke render
