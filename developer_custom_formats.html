@@ -121,6 +121,8 @@ body {
                <li class="divider"></li>
                <li><a href="developer_document_templates.html">Document Templates</a></li>
                <li><a href="developer_custom_formats.html">Creating New Formats</a></li>
+               <li class="divider"></li>
+               <li><a href="https://github.com/rstudio/rmarkdown">R Markdown on GitHub</a></li>
             </ul>
           </li>
         </ul>
@@ -192,9 +194,6 @@ output:
 }</code></pre>
 <p>Of course, knitr and pandoc options can get considerabiy more complicated (see the <code>knitr_options</code> and <code>pandoc_options</code> functions for details). If there are supporting files required for your format (e.g. HTML/CSS/JS) then you’ll also need to use the other arguments to <code>output_format</code> to ensure they are handled correctly.</p>
 <p>The best way to learn about creating fully custom formats is to study the code of the existing built-in formats (e.g. <code>html_document</code> and <code>pdf_document</code>). In some cases a custom format will define it’s own <a href="http://johnmacfarlane.net/pandoc/demo/example9/templates.html">pandoc template</a>. You can see the default pandoc templates used by the rmarkdown package by looking in the <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmd"><code>inst/rmd</code></a> directory of the package.</p>
-<div class="references">
-
-</div>
 </div>
 
 </div>

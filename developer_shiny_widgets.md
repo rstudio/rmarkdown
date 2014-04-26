@@ -18,6 +18,8 @@ devtools::install_github(c("yihui/knitr", "rstudio/shiny", "rstudio/rmarkdown"))
 
 ## Creating a Shiny Widget
 
+<script src="http://gist.github.com/10006611.js"></script>
+
 ### The shinyApp Function
 
 At their core Shiny widgets are mini-applications created using the `shinyApp` function. Rather than create a `ui.R` and `server.R` as you would for a typical Shiny application, you pass the ui and server definitions to the `shinyApp` function as arguments. For example:
