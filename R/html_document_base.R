@@ -88,12 +88,13 @@ html_document_base <- function(smart = TRUE,
       image_copier <- function(img_src, src) {
         in_file <- utils::URLdecode(src)
         if (length(in_file) && file.exists(in_file)) {
-          # create a unique image name in the library folder and copy the
-          # image there
-          target_img_file <- file.path(lib_dir, createUniqueId(16))
-          target_img_file <- paste(target_img_file, tools::file_ext(in_file),
-                                   sep = ".")
-          file.copy(in_file, target_img_file)
+
+          # create a unique image name in the library folder and copy the image
+          # there
+          target_img_file <- paste(file.path(lib_dir, createUniqueId(16)),
+                                   tools::file_ext(in_file), sep = ".")
+          file.copy(in_file, file.path(dirname(output_file), target_img_file))
+
           # replace the reference in the document
           img_src <- sub(src, target_img_file, img_src)
         }
