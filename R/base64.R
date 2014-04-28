@@ -131,8 +131,7 @@ base64_encode_images <- function(html, encoder) {
     }
     img_src
   }
-  html <- process_images(html, base64_encode_img)
-  strsplit(html, "\n", fixed = TRUE)[[1]]
+  process_images(html, base64_encode_img)
 }
 
 # See if we have a usable base64 image encoder (requires caTools or httpuv)

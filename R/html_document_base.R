@@ -74,16 +74,21 @@ html_document_base <- function(smart = TRUE,
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+    # if there are no preserved chunks to restore and no images to copy then no
+    # post-processing is necessary
     if (length(preserved_chunks) == 0 && !isTRUE(copy_images))
       return(output_file)
 
+    # read the output file
     output_str <- readLines(output_file, warn = FALSE, encoding = "bytes")
 
+    # if we preserved chunks, restore them
     if (length(preserved_chunks) > 0)
       output_str <- restore_preserve_chunks(output_str, preserved_chunks)
 
-    # if requested, move supporting images to library folder, and rewrite
-    # references
+    # The copy_images flag copies all the images referenced in the document to
+    # its supporting files directory, and rewrites the document to use the
+    # copies from that directory.
     if (copy_images) {
       image_copier <- function(img_src, src) {
         in_file <- utils::URLdecode(src)
