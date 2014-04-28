@@ -7,6 +7,7 @@ html_document_base <- function(smart = TRUE,
                                pandoc_args = NULL,
                                template = "default",
                                dependency_resolver = html_dependency_resolver,
+                               copy_images = FALSE,
                                ...) {
   args <- c()
 
@@ -19,6 +20,8 @@ html_document_base <- function(smart = TRUE,
 
   # self contained document
   if (self_contained) {
+    if (copy_images)
+      stop("Local image copying is incompatible with self-contained documents.")
     validate_self_contained(mathjax)
     args <- c(args, "--self-contained")
   }
@@ -35,7 +38,7 @@ html_document_base <- function(smart = TRUE,
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
-      lib_dir <- files_dir
+      lib_dir <<- files_dir
 
     # handle theme
     if (!is.null(theme)) {
@@ -71,11 +74,41 @@ html_document_base <- function(smart = TRUE,
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
-    if (length(preserved_chunks) > 0) {
-      output_str <- readLines(output_file, warn = FALSE, encoding = "bytes")
-      writeLines(restore_preserve_chunks(output_str, preserved_chunks),
-        output_file, useBytes = TRUE)
+    # if there are no preserved chunks to restore and no images to copy then no
+    # post-processing is necessary
+    if (length(preserved_chunks) == 0 && !isTRUE(copy_images))
+      return(output_file)
+
+    # read the output file
+    output_str <- readLines(output_file, warn = FALSE, encoding = "bytes")
+
+    # if we preserved chunks, restore them
+    if (length(preserved_chunks) > 0)
+      output_str <- restore_preserve_chunks(output_str, preserved_chunks)
+
+    # The copy_images flag copies all the images referenced in the document to
+    # its supporting files directory, and rewrites the document to use the
+    # copies from that directory.
+    if (copy_images) {
+      image_copier <- function(img_src, src) {
+        in_file <- utils::URLdecode(src)
+        if (length(in_file) && file.exists(in_file)) {
+
+          # create a unique image name in the library folder and copy the image
+          # there
+          target_img_file <- paste(file.path(lib_dir, createUniqueId(16)),
+                                   tools::file_ext(in_file), sep = ".")
+          file.copy(in_file, file.path(dirname(output_file), target_img_file))
+
+          # replace the reference in the document
+          img_src <- sub(src, target_img_file, img_src)
+        }
+        img_src
+      }
+      output_str <- process_images(output_str, image_copier)
     }
+
+    writeLines(output_str, output_file, useBytes = TRUE)
     output_file
   }
 

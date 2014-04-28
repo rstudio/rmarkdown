@@ -104,28 +104,34 @@ base64_encode_file <- function(in_file, encoder) {
          sep = '')
 }
 
-
-base64_encode_images <- function(html, encoder) {
-
+process_images <- function(html, processor) {
   html <- paste(html, collapse = "\n")
 
   reg <- "<\\s*[Ii][Mm][Gg]\\s+[Ss][Rr][Cc]\\s*=\\s*[\"']([^\"']+)[\"']"
   m <- gregexpr(reg, html, perl = TRUE)
   if (m[[1]][1] != -1) {
-    base64_encode_img_src <- function(img_src) {
+    process_img_src <- function(img_src) {
       src <- sub(reg, '\\1', img_src)
       in_file <- utils::URLdecode(src)
-      if (length(in_file) && file.exists(in_file))
-        img_src <- sub(src, base64_encode_file(in_file, encoder), img_src,
-                      fixed = TRUE)
-
-      img_src
+      processor(img_src, src)
     }
     regmatches(html, m) <- list(unlist(lapply(regmatches(html, m)[[1]],
-                                              base64_encode_img_src)))
+                                              process_img_src)))
   }
 
   strsplit(html, "\n", fixed = TRUE)[[1]]
+}
+
+base64_encode_images <- function(html, encoder) {
+  base64_encode_img <- function(img_src, src) {
+    in_file <- utils::URLdecode(src)
+    if (length(in_file) && file.exists(in_file)) {
+      img_src <- sub(src, base64_encode_file(in_file, encoder), img_src,
+                     fixed = TRUE)
+    }
+    img_src
+  }
+  process_images(html, base64_encode_img)
 }
 
 # See if we have a usable base64 image encoder (requires caTools or httpuv)
