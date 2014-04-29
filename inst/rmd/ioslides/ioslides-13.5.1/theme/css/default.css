@@ -715,7 +715,7 @@ button:not(:disabled):active {
 }
 
 /* line 472, ../scss/default.scss */
-table {
+table.rmdtable {
   width: 100%;
   border-collapse: -moz-initial;
   border-collapse: initial;
@@ -723,16 +723,16 @@ table {
   border-bottom: 1px solid #797979;
 }
 /* line 479, ../scss/default.scss */
-table tr > td:first-child, table th {
+table.rmdtable tr > td:first-child, table th {
   font-weight: 600;
   color: #515151;
 }
 /* line 484, ../scss/default.scss */
-table tr:nth-child(odd) {
+table.rmdtable tr:nth-child(odd) {
   background-color: #e6e6e6;
 }
 /* line 488, ../scss/default.scss */
-table th {
+table.rmdtable th {
   color: white;
   font-size: 18px;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(40%, #4387fd), color-stop(80%, #2a7cdf)) no-repeat;
@@ -742,12 +742,12 @@ table th {
   background: linear-gradient(top, #4387fd 40%, #2a7cdf 80%) no-repeat;
 }
 /* line 494, ../scss/default.scss */
-table td, table th {
+table.rmdtable td, table th {
   font-size: 18px;
   padding: 1em 0.5em;
 }
 /* line 499, ../scss/default.scss */
-table td.highlight {
+table.rmdtable td.highlight {
   color: #515151;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(40%, #ffd14d), color-stop(80%, #f6c000)) no-repeat;
   background: -webkit-linear-gradient(top, #ffd14d 40%, #f6c000 80%) no-repeat;
@@ -756,7 +756,7 @@ table td.highlight {
   background: linear-gradient(top, #ffd14d 40%, #f6c000 80%) no-repeat;
 }
 /* line 504, ../scss/default.scss */
-table.rows {
+table.rmdtable.rows {
   border-bottom: none;
   border-right: 1px solid #797979;
 }

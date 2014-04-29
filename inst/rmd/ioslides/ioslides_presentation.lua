@@ -386,7 +386,7 @@ function Table(caption, aligns, widths, headers, rows)
   local function add(s)
     table.insert(buffer, s)
   end
-  add("<table>")
+  add("<table class = 'rmdtable'>")
   if caption ~= "" then
     add("<caption>" .. caption .. "</caption>")
   end
