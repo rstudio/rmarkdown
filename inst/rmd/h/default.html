@@ -34,6 +34,13 @@ $if(highlightjs)$
     background-color: white;
   }
 </style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
 $endif$
 
 $if(highlighting-css)$
