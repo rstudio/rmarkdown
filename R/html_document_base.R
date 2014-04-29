@@ -8,6 +8,7 @@ html_document_base <- function(smart = TRUE,
                                template = "default",
                                dependency_resolver = html_dependency_resolver,
                                copy_images = FALSE,
+                               extra_dependencies = NULL,
                                ...) {
   args <- c()
 
@@ -48,12 +49,14 @@ html_document_base <- function(smart = TRUE,
       args <- c(args, "--variable", paste("theme:", theme, sep=""))
     }
 
-    # resolve and inject extras
+    # resolve and inject extras, including dependencies specified by the format
+    # and dependencies specified by the user (via extra_dependencies)
+    format_deps <- list()
+    format_deps <- append(format_deps, extra_dependencies)
     if (!is.null(theme))
-      format_deps <- list(html_dependency_jquery(),
-                          html_dependency_bootstrap(theme))
-    else
-      format_deps <- NULL
+      format_deps <- append(format_deps, list(html_dependency_jquery(),
+                                              html_dependency_bootstrap(theme)))
+
     extras <- html_extras_for_document(knit_meta, runtime, dependency_resolver,
                                        format_deps)
     args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir))
