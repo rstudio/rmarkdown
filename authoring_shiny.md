@@ -14,7 +14,7 @@ output:
 
 ### Prerequisites
 
-Using Shiny with R Markdown requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.787 or later) so be sure to update RStudio before trying out these features. 
+Using Shiny with R Markdown requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.810 or later) so be sure to update RStudio before trying out these features. 
 
 You'll also need the development versions of both the **knitr** and **shiny** packages, which you can install as follows:
 
