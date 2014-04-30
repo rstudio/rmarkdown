@@ -1,5 +1,5 @@
 ---
-title: "Shiny in R Markdown"
+title: "Using Shiny with R Markdown"
 output: 
   html_document:
     toc: true
