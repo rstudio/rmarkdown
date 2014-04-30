@@ -85,7 +85,7 @@ SlideController.prototype.onMessage_ = function(e) {
   // from file:// though.
   // TODO: It would be dope if FF implemented location.origin!
   if (e.origin != ORIGIN_ && ORIGIN_.indexOf('file://') != 0) {
-    alert('Someone tried to postMessage from an unknown origin');
+    // Ignore messages from unrecognized origins
     return;
   }
 
