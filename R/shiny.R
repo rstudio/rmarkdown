@@ -116,7 +116,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
                                output_options = output_opts,
                                runtime = "shiny"),
                           render_args)
-      result_path <- do.call(render, args)
+      result_path <- shiny::maskReactiveContext(do.call(render, args))
 
       # if we generated a folder of supporting files, map requests to those
       # files in the Shiny application
