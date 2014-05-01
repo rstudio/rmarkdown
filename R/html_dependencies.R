@@ -166,9 +166,6 @@ html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
       dep$path <- html_dependency_copy_lib(dep, lib_dir)
     }
 
-    # TODO: dep$path should be the path of lib_dir relative to the directory of
-    # the output file
-
     # add meta content
     for (name in names(dep$meta)) {
       dependencies_html <- c(dependencies_html,

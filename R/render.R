@@ -5,6 +5,7 @@ render <- function(input,
                    output_file = NULL,
                    output_dir = NULL,
                    output_options = NULL,
+                   intermediates_dir = NULL,
                    runtime = c("auto", "static", "shiny"),
                    clean = TRUE,
                    envir = parent.frame(),
@@ -49,7 +50,8 @@ render <- function(input,
   # if the input file has spaces in it's name then make a copy
   # that doesn't have spaces
   if (grepl(' ', basename(input), fixed=TRUE)) {
-    input_no_spaces <- file_name_without_spaces(input)
+    input_no_spaces <- file.path(intermediates_dir,
+                                 file_name_without_spaces(input))
     if (file.exists(input_no_spaces)) {
       stop("The name of the input file cannot contain spaces (attempted to ",
            "copy to a version without spaces '", input_no_spaces, "' ",
@@ -64,19 +66,27 @@ render <- function(input,
   oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
+  if (is.null(intermediates_dir)) {
+    intermediates_dir <- "."
+  }
+
   # reset the name of the input file to be relative and calculate variations
   # on the filename for our various intermediate targets
   input <- basename(input)
   knit_input <- input
-  knit_output <- file_with_meta_ext(input, "knit", "md")
+  knit_output <- file.path(intermediates_dir,
+                           file_with_meta_ext(input, "knit", "md"))
+
   intermediates <- c(intermediates, knit_output)
-  utf8_input <- file_with_meta_ext(input, "utf8", "md")
+  utf8_input <- file.path(intermediates_dir,
+                          file_with_meta_ext(input, "utf8", "md"))
   intermediates <- c(intermediates, utf8_input)
 
   # if this is an R script then spin it first
   if (identical(tolower(tools::file_ext(input)), "r")) {
     # make a copy of the file to spin
-    spin_input <- file_with_meta_ext(input, "spin", "R")
+    spin_input <- file.path(intermediates_dir,
+                            file_with_meta_ext(input, "spin", "R"))
     file.copy(input, spin_input, overwrite = TRUE)
     intermediates <- c(intermediates, spin_input)
     # spin it
@@ -233,12 +243,6 @@ render <- function(input,
              output_format$pandoc$to, " output.\nPlease change the output type ",
              "of this document to HTML.", call. = FALSE)
       }
-    }
-
-    # clean the files_dir if we've been asked to clean supporting files.
-    # however, don't ever clean the files_dir if the knitr cache is active
-    if (output_format$clean_supporting && !file.exists(cache_dir)) {
-        intermediates <- c(intermediates, files_dir)
     }
   }
 
