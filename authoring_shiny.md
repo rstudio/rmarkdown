@@ -1,5 +1,5 @@
 ---
-title: "Interactive Shiny Docs"
+title: "Interactive Documents with Shiny"
 output: 
   html_document:
     toc: true
@@ -25,7 +25,7 @@ renderPlot({
 
 ![Shiny Hist Plot](images/shiny-hist-plot.gif)
 
-The resulting Shiny Doc combines the expressiveness of R Markdown with the interactivity of Shiny. Note that Shiny Docs can currently only be run locally on the desktop. Support for publishing to Shiny Server will be available soon.
+The resulting "Shiny Doc"" combines the expressiveness of R Markdown with the interactivity of Shiny. Note that Shiny Docs can currently only be run locally on the desktop. Support for publishing to Shiny Server will be available soon.
 
 ## Getting Started
 
