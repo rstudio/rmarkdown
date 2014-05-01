@@ -108,7 +108,7 @@ ioslides_presentation <- function(logo = NULL,
     base64_encoder <- base64_image_encoder()
 
     # convert using our lua writer (write output to a temp file)
-    lua_writer <- "ioslides_presentation.lua"
+    lua_writer <- file.path(dirname(output_file), "ioslides_presentation.lua")
     on.exit(unlink(lua_writer), add = TRUE)
 
     # write settings to file

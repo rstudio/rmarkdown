@@ -246,6 +246,11 @@ render <- function(input,
     }
   }
 
+  # clean the files_dir if we've either been asking to clean supporting files or
+  # the knitr cache is active
+  if (output_format$clean_supporting&& !file.exists(cache_dir))
+      intermediates <- c(intermediates, files_dir)
+
   # read the input text as UTF-8 then write it back out
   input_text <- read_lines_utf8(input, encoding)
   writeLines(input_text, utf8_input, useBytes = TRUE)

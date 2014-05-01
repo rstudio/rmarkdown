@@ -80,7 +80,7 @@ pandoc_convert <- function(input,
     result <- system(command)
   })
   if (result != 0)
-    stop("pandoc document conversion failed", call. = FALSE)
+    stop("pandoc document conversion failed with error ", result, call. = FALSE)
 
   invisible(NULL)
 }
