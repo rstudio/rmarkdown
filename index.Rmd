@@ -144,7 +144,7 @@ With the basics described above you can get started with R Markdown right away. 
 
 * [R Code Chunks](authoring_rcodechunks.html), which goes into more depth on customizing the behavior of embedded R code.
 
-* [Using Shiny with R Markdown](authoring_shiny.html), which describes how to include Shiny components within R Markdown documents.
+* [Interactive Shiny Docs](authoring_shiny.html), which describes how to include Shiny components within R Markdown documents.
 
 * [Compiling Notebooks](authoring_compile_notebook.html), which describes how to compile HTML, PDF, or MS Word notebooks from R scripts.
 
@@ -168,6 +168,4 @@ See also the R Markdown developer documentation including:
 * Guide to [Creating New Formats](developer_custom_formats.html) for R Markdown
     
 * Adding new types of HTML output to R Markdown documents using [HTML Widgets](developer_html_widgets.html) and [Shiny Widgets](developer_shiny_widgets.html).
-    
-* Building [Paramaterized Reports](developer_paramaterized_reports.html) that are callable via an R function
 
