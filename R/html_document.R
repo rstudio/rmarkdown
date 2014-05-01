@@ -144,7 +144,8 @@ html_document <- function(toc = FALSE,
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir) {
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
+                            output_dir) {
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
@@ -157,7 +158,8 @@ html_document <- function(toc = FALSE,
     args <- c(args, pandoc_html_highlight_args(highlight,
                                                template,
                                                self_contained,
-                                               lib_dir))
+                                               lib_dir,
+                                               output_dir))
 
     # content includes (we do this here so that user include-in-header content
     # goes after dependency generated content)

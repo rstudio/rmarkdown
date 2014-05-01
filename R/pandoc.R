@@ -329,7 +329,8 @@ pandoc_mathjax_args <- function(mathjax,
 pandoc_html_highlight_args <- function(highlight,
                                        template,
                                        self_contained,
-                                       files_dir) {
+                                       files_dir,
+                                       output_dir) {
 
   args <- c()
 
@@ -348,7 +349,8 @@ pandoc_html_highlight_args <- function(highlight,
       if (self_contained)
         highlight_path <- pandoc_path_arg(highlight_path)
       else
-        highlight_path <- render_supporting_files(highlight_path, files_dir)
+        highlight_path <- relative_to(output_dir,
+          render_supporting_files(highlight_path, files_dir))
       args <- c(args, "--no-highlight")
       args <- c(args,
                 "--variable", paste("highlightjs=", highlight_path, sep=""))

@@ -33,13 +33,13 @@ html_document_base <- function(smart = TRUE,
   preserved_chunks <- character()
 
   pre_processor <- function (metadata, input_file, runtime, knit_meta,
-                             files_dir) {
+                             files_path, output_dir) {
 
     args <- c()
 
-    # use files_dir as lib_dir if not explicitly specified
+    # use files_path as lib_dir if not explicitly specified
     if (is.null(lib_dir))
-      lib_dir <<- files_dir
+      lib_dir <<- files_path
 
     # handle theme
     if (!is.null(theme)) {
@@ -59,7 +59,8 @@ html_document_base <- function(smart = TRUE,
 
     extras <- html_extras_for_document(knit_meta, runtime, dependency_resolver,
                                        format_deps)
-    args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir))
+    args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir,
+                                            output_dir))
 
     # mathjax
     args <- c(args, pandoc_mathjax_args(mathjax,

@@ -57,24 +57,25 @@ ioslides_presentation <- function(logo = NULL,
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir) {
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_path,
+                            output_dir) {
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
-      lib_dir <- files_dir
+      lib_dir <- files_path
 
     # extra args
     args <- c()
 
     # create the files dir if it doesn't exist
-    if (!file.exists(files_dir))
-      dir.create(files_dir)
+    if (!file.exists(files_path))
+      dir.create(files_path)
 
     # logo
     if (!is.null(logo)) {
       logo_path <- logo
       if (!self_contained) {
-        logo_path <- file.path(files_dir, "logo.png")
+        logo_path <- file.path(files_path, "logo.png")
         file.copy(from = logo, to = logo_path)
       }
       args <- c(args, "--variable", paste("logo=",

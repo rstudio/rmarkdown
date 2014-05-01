@@ -113,6 +113,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       # merge our inputs with those supplied by the user and invoke render
       args <- merge_lists(list(input = reactive_file(),
                                output_file = output_dest,
+                               output_dir = dirname(output_dest),
                                output_options = output_opts,
                                runtime = "shiny"),
                           render_args)

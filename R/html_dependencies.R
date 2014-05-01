@@ -140,9 +140,18 @@ html_dependency_resolver <- function(all_dependencies) {
   dependencies
 }
 
+html_reference_path <- function(item, dep, lib_dir, output_dir) {
+  path <- file.path(dep$path, item)
+  # write the full OS-specific path if no library
+  if (is.null(lib_dir))
+    pandoc_path_arg(path)
+  else
+    relative_to(output_dir, path)
+}
+
 # return the html dependencies as an HTML string suitable for inclusion
 # in the head of a document
-html_dependencies_as_string <- function(dependencies, lib_dir) {
+html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
 
   dependencies_html <- c()
 
@@ -157,6 +166,9 @@ html_dependencies_as_string <- function(dependencies, lib_dir) {
       dep$path <- html_dependency_copy_lib(dep, lib_dir)
     }
 
+    # TODO: dep$path should be the path of lib_dir relative to the directory of
+    # the output file
+
     # add meta content
     for (name in names(dep$meta)) {
       dependencies_html <- c(dependencies_html,
@@ -165,20 +177,14 @@ html_dependencies_as_string <- function(dependencies, lib_dir) {
 
     # add stylesheets
     for (stylesheet in dep$stylesheet) {
-      stylesheet <- file.path(dep$path, stylesheet)
-      # write the full OS-specific path if no library
-      if (is.null(lib_dir))
-        stylesheet <- pandoc_path_arg(stylesheet)
+      stylesheet <- html_reference_path(stylesheet, dep, lib_dir, output_dir)
       dependencies_html <- c(dependencies_html,
         paste("<link href=\"", stylesheet, "\" rel=\"stylesheet\" />", sep = ""))
     }
 
     # add scripts
     for (script in dep$script) {
-      script <- file.path(dep$path, script)
-      # write the full OS-specific path if no library
-      if (is.null(lib_dir))
-        script <- pandoc_path_arg(script)
+      script <- html_reference_path(script, dep, lib_dir, output_dir)
       dependencies_html <- c(dependencies_html,
         paste("<script src=\"", script, "\"></script>", sep = ""))
     }
