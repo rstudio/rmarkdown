@@ -1473,3 +1473,14 @@ aside.gdbar img {
     font-family: monospace !important;
   }
 }
+
+/* Additions for Shiny compatibility */
+label {
+  display: block;
+}
+label, input {
+  font-size: 16px;
+}
+input {
+  width: 220px;
+}
