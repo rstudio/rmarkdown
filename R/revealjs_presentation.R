@@ -130,12 +130,12 @@ revealjs_presentation <- function(incremental = FALSE,
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_path,
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
                             output_dir) {
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
-      lib_dir <- files_path
+      lib_dir <- files_dir
 
     # extra args
     args <- c()

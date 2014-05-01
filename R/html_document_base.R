@@ -35,13 +35,15 @@ html_document_base <- function(smart = TRUE,
   output_dir <- ""
 
   pre_processor <- function (metadata, input_file, runtime, knit_meta,
-                             files_path, output_dir) {
+                             files_dir, output_dir) {
 
     args <- c()
 
-    # use files_path as lib_dir if not explicitly specified
+    # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
-      lib_dir <<- files_path
+      lib_dir <<- files_dir
+
+    # copy supplied output_dir (for use in post-processor)
     output_dir <<- output_dir
 
     # handle theme
