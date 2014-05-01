@@ -47,6 +47,12 @@ render <- function(input,
                  }),
           add = TRUE)
 
+  # ensure we have a directory to store intermediates
+  if (is.null(intermediates_dir))
+    intermediates_dir <- "."
+  else if (!file.exists(intermediates_dir))
+    dir.create(intermediates_dir)
+
   # if the input file has spaces in it's name then make a copy
   # that doesn't have spaces
   if (grepl(' ', basename(input), fixed=TRUE)) {
@@ -65,10 +71,6 @@ render <- function(input,
   # execute within the input file's directory
   oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
   on.exit(setwd(oldwd), add = TRUE)
-
-  if (is.null(intermediates_dir)) {
-    intermediates_dir <- "."
-  }
 
   # reset the name of the input file to be relative and calculate variations
   # on the filename for our various intermediate targets

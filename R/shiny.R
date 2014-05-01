@@ -115,6 +115,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
                                output_file = output_dest,
                                output_dir = dirname(output_dest),
                                output_options = output_opts,
+                               intermediates_dir = tempdir(),
                                runtime = "shiny"),
                           render_args)
       result_path <- shiny::maskReactiveContext(do.call(render, args))
