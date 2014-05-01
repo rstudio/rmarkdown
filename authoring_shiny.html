@@ -11,7 +11,7 @@
 
 
 
-<title>Using Shiny with R Markdown</title>
+<title>Interactive Shiny Docs</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -96,11 +96,9 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
             <ul class="dropdown-menu">
                <li><a href="authoring_basics.html">Markdown Basics</a></li>
                <li><a href="authoring_pandoc_markdown.html">Pandoc Markdown</a></li>
-               <li class="divider"></li>
                <li><a href="authoring_rcodechunks.html">R Code Chunks</a></li>
-               <li><a href="authoring_shiny.html">Shiny in R Markdown</a></li>
                <li class="divider"></li>
-               <li><a href="authoring_compile_notebook.html">Compiling Notebooks</a></li>
+               <li><a href="authoring_shiny.html">Interactive Shiny Docs</a></li>
                <li class="divider"></li>
                <li><a href="authoring_migrating_from_v1.html">Migrating from v1</a></li>
             </ul>
@@ -118,6 +116,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
                <li><a href="ioslides_presentation_format.html">ioslides</a></li>
                <li><a href="revealjs_presentation_format.html">reveal.js</a></li>
                <li><a href="beamer_presentation_format.html">Beamer</a></li>
+               <li class="divider"></li>
+               <li><a href="r_notebook_format.html">R Notebooks</a></li>
             </ul>
           </li>
            <li class="dropdown">
@@ -143,17 +143,15 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div class="span10 offset1">
 
 <div id="header">
-<h1 class="title">Using Shiny with R Markdown</h1>
+<h1 class="title">Interactive Shiny Docs</h1>
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#overview">Overview</a><ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#getting-started">Getting Started</a><ul>
 <li><a href="#prerequisites">Prerequisites</a></li>
-<li><a href="#quick-start">Quick Start</a></li>
-</ul></li>
-<li><a href="#shiny-basics">Shiny Basics</a><ul>
-<li><a href="#runnable-documents">Runnable Documents</a></li>
+<li><a href="#creating-a-shiny-doc">Creating a Shiny Doc</a></li>
 <li><a href="#inputs-and-outputs">Inputs and Outputs</a></li>
 </ul></li>
 <li><a href="#embedded-shiny-apps">Embedded Shiny Apps</a><ul>
@@ -164,58 +162,52 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#shiny-reactives">Shiny Reactives</a></li>
 <li><a href="#multiple-pages">Multiple Pages</a></li>
 <li><a href="#shiny-widgets">Shiny Widgets</a></li>
+<li><a href="#converting-existing-documents">Converting Existing Documents</a></li>
 </ul></li>
 </ul>
 </div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p><a href="http://shiny.rstudio.com">Shiny</a> is a web application framework for R that makes it easy to create interactive web applications without knowledge of HTML, CSS, or JavaScript. Shiny can also be used to make R Markdown documents interactive; this article describes how.</p>
-<p><strong>NOTE</strong>: R Markdown documents that include Shiny components can currently only be run locally. Support for running them within Shiny Server will be available soon.</p>
+<p>You can use the <a href="http://shiny.rstudio.com">Shiny</a> web application framework to make your documents fully interative. For example, readers of your document could change the assumptions underlying a data visualization and see the results immediately. For example, here’s a code chunk that enables users to modify the number of bins displayed in a histogram:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+sliderInput("bins", "Number of bins:", min = 1, max = 50, value = 30)
+
+renderPlot({
+  x <- faithful[, 2]  # Old Faithful Geyser data
+  bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+  # draw the histogram with the specified number of bins
+  hist(x, breaks = bins, col = 'darkgray', border = 'white')
+})
+&#96;&#96;&#96;
+</code></pre>
+
+<p><img src="images/shiny-hist-plot.gif" alt="Shiny Hist Plot" /></p>
+<p>The resulting Shiny Doc combines the expressiveness of R Markdown with the interactivity of Shiny. Note that Shiny Docs can currently only be run locally on the desktop. Support for publishing to Shiny Server will be available soon.</p>
+</div>
+<div id="getting-started" class="section level2">
+<h2>Getting Started</h2>
 <div id="prerequisites" class="section level3">
 <h3>Prerequisites</h3>
-<p>Using Shiny with R Markdown requires an up to date version of the <a href="http://www.rstudio.com/ide/download/preview">RStudio Preview Release</a> (v0.98.810 or later) so be sure to update RStudio before trying out these features.</p>
+<p>Working with Shiny Docs requires an up to date version of the <a href="http://www.rstudio.com/ide/download/preview">RStudio Preview Release</a> (v0.98.811 or later) so be sure to update RStudio before trying out these features.</p>
 <p>You’ll also need the development versions of both the <strong>knitr</strong> and <strong>shiny</strong> packages, which you can install as follows:</p>
 <pre class="r"><code>devtools::install_github(c(&quot;yihui/knitr&quot;, &quot;rstudio/shiny&quot;))</code></pre>
 </div>
-<div id="quick-start" class="section level3">
-<h3>Quick Start</h3>
-<p>To try out using Shiny in R Markdown open the <strong>New R Markdown</strong> dialog in RStudio and choose to create a document with the “Shiny Document” template:</p>
+<div id="creating-a-shiny-doc" class="section level3">
+<h3>Creating a Shiny Doc</h3>
+<p>To create a new Shiny Doc open the <strong>New R Markdown</strong> dialog in RStudio and choose to create a document with the “Shiny Document” template:</p>
 <p><img src="images/new-shiny-document.png" alt="New R Markdown Shiny Document" /></p>
-<p>Note that if you haven’t installed up to date versions of RStudio, knitr, and shiny as detailed above then the “Shiny Document” template won’t appear in the list.</p>
+<p>Note that if you haven’t installed up to date versions of RStudio, knitr, and shiny as detailed above then the “Shiny” templates won’t appear in the list.</p>
 <p>You can run a document locally using the <strong>Run Document</strong> command on the editor toolbar:</p>
 <p><img src="images/shiny-run-document.png" alt="Shiny Run Document" /></p>
 <p>You can also run the document from the console using the <code>rmarkdown::run</code> function:</p>
 <pre class="r"><code>rmarkdown::run(&quot;MyShinyDocument.Rmd&quot;)</code></pre>
-<p>If you aren’t familiar with Shiny some of the code will be unfamiliar to you. You can learn the basics in the <a href="http://shiny.rstudio.com/tutorial">Shiny Tutorial</a>.</p>
-</div>
-</div>
-<div id="shiny-basics" class="section level2">
-<h2>Shiny Basics</h2>
-<div id="runnable-documents" class="section level3">
-<h3>Runnable Documents</h3>
-<p>Any R Markdown output format that produces HTML can produce a Shiny document, too. To treat a document as a Shiny document:</p>
-<ul>
-<li><p>Add <code>runtime: shiny</code> to its YAML front matter.</p></li>
-<li><p>Render it with <code>rmarkdown::run</code> instead of <code>rmarkdown::render</code>.</p></li>
-</ul>
-<p>For example, here’s the front matter for a Shiny <a href="html_document_format.html">html_document</a>:</p>
-<pre class="yaml"><code>---
-title: &quot;My Document&quot;
-output: html_document
-runtime: shiny
----</code></pre>
-<p>And here’s the front matter for a Shiny <a href="ioslides_presentation_format.html">ioslides_presentation</a>:</p>
-<pre class="yaml"><code>---
-title: &quot;My Document&quot;
-output: ioslides_presentation
-runtime: shiny
----</code></pre>
-<p>As described above, once you’ve added <code>runtime: shiny</code> to the document you can run it using either the <strong>Run Document</strong> command in RStudio or using the <code>rmarkdown::run</code> function. By default, documents are re-rendered on save, so once you’ve got a browser open with the document loaded, just save the R Markdown file to see your changes.</p>
+<p>If you haven’t used Shiny before some of the code will be unfamiliar to you. The <a href="http://shiny.rstudio.com/tutorial">Shiny Tutorial</a> is a good starting point for learning more.</p>
 </div>
 <div id="inputs-and-outputs" class="section level3">
 <h3>Inputs and Outputs</h3>
-<p>You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. In this example we create a <code>numericInput</code> with the name “rows” and then refer to its value via <code>input$rows</code> when generating output:</p>
+<p>You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. In this example we create a <code>numericInput</code> with the name “rows” and then refer to its value via <code>input$rows</code> when generating output: You can embed arbitrary Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. In this example we create a <code>numericInput</code> with the name “rows” and then refer to its value via <code>input$rows</code> when generating output:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
 numericInput("rows", "How many cars?", 5)
 
@@ -245,7 +237,7 @@ renderPlot({
 </div>
 <div id="embedded-shiny-apps" class="section level2">
 <h2>Embedded Shiny Apps</h2>
-<p>It’s also possible to embed an entire Shiny application within an R Markdown document. There are two syntaxes for this:</p>
+<p>It’s also possible to embed an entire Shiny application within a document. There are two syntaxes for this:</p>
 <ol style="list-style-type: decimal">
 <li><p>Defining the application inline using the <code>shinyApp</code> function; or</p></li>
 <li><p>Referring to an external application directory using the <code>shinyAppDir</code> function.</p></li>
@@ -296,7 +288,7 @@ shinyAppDir(
 <h2>Advanced Topics</h2>
 <div id="shiny-reactives" class="section level3">
 <h3>Shiny Reactives</h3>
-<p>Shiny documents can also contain reactive expressions (useful when a piece of dynamic data is used in several places). As in Shiny applications, these values respond to changes in their inputs.</p>
+<p>Shiny Docs can also contain reactive expressions (useful when a piece of dynamic data is used in several places). As in Shiny applications, these values respond to changes in their inputs.</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
 selectInput("dataset", "Choose Dataset:", c("cars", "iris", "mtcars"))
 
@@ -318,7 +310,7 @@ renderPlot({
 </div>
 <div id="multiple-pages" class="section level3">
 <h3>Multiple Pages</h3>
-<p>You can link to other Shiny documents by using the Markdown link syntax and specifying the <em>relative</em> path to the document, e.g. <code>[Another Shiny Document](another.Rmd)</code>.</p>
+<p>You can link to other Shiny Doc by using the markdown link syntax and specifying the <em>relative</em> path to the document, e.g. <code>[Another Shiny Document](another.Rmd)</code>.</p>
 <p>Currently, only one document can be active at a time, so documents can’t easily share state (although some primitive global sharing is possible via <code>global.R</code>; see the help for <code>rmarkdown::run</code>).</p>
 <p>By default it’s only possible to link to R Markdown files in the same directory subtree as the file on which <code>rmarkdown::run</code> was invoked (i.e you can’t link to <code>../foo.rmd</code>.) You can use the <code>dir</code> argument to <code>rmarkdown::run</code> to indicate the directory to treat as the root.</p>
 </div>
@@ -329,6 +321,27 @@ renderPlot({
 <p>This is what the widget would look like inside a running document:</p>
 <p><img src="images/shiny-widget-kmeans.png" alt="Shiny Widget KMeans" /></p>
 <p>See the article on <a href="developer_shiny_widgets.html">Shiny Widgets</a> for additional details.</p>
+</div>
+<div id="converting-existing-documents" class="section level3">
+<h3>Converting Existing Documents</h3>
+<p>The getting started example demonstrated creating a brand new Shiny Doc. However, any R Markdown output format that produces HTML can be converted into a Shiny Doc. To convert and existing document:</p>
+<ul>
+<li><p>Add <code>runtime: shiny</code> to its YAML front matter.</p></li>
+<li><p>Render it with <code>rmarkdown::run</code> instead of <code>rmarkdown::render</code>.</p></li>
+</ul>
+<p>For example, here’s the front matter for a Shiny <a href="html_document_format.html">html_document</a>:</p>
+<pre class="yaml"><code>---
+title: &quot;My Document&quot;
+output: html_document
+runtime: shiny
+---</code></pre>
+<p>And here’s the front matter for a Shiny <a href="ioslides_presentation_format.html">ioslides_presentation</a>:</p>
+<pre class="yaml"><code>---
+title: &quot;My Document&quot;
+output: ioslides_presentation
+runtime: shiny
+---</code></pre>
+<p>As described above, once you’ve added <code>runtime: shiny</code> to the document you can run it using either the <strong>Run Document</strong> command in RStudio or using the <code>rmarkdown::run</code> function. By default, documents are re-rendered on save, so once you’ve got a browser open with the document loaded, just save the R Markdown file to see your changes.</p>
 </div>
 </div>
 
