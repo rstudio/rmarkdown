@@ -57,7 +57,7 @@ render <- function(input,
   # that doesn't have spaces
   if (grepl(' ', basename(input), fixed=TRUE)) {
     input_no_spaces <- file.path(intermediates_dir,
-                                 file_name_without_spaces(input))
+                                 file_name_without_spaces(basename(input)))
     if (file.exists(input_no_spaces)) {
       stop("The name of the input file cannot contain spaces (attempted to ",
            "copy to a version without spaces '", input_no_spaces, "' ",
