@@ -32,14 +32,19 @@ html_document_base <- function(smart = TRUE,
 
   preserved_chunks <- character()
 
+  output_dir <- ""
+
   pre_processor <- function (metadata, input_file, runtime, knit_meta,
-                             files_dir) {
+                             files_dir, output_dir) {
 
     args <- c()
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
       lib_dir <<- files_dir
+
+    # copy supplied output_dir (for use in post-processor)
+    output_dir <<- output_dir
 
     # handle theme
     if (!is.null(theme)) {
@@ -59,7 +64,8 @@ html_document_base <- function(smart = TRUE,
 
     extras <- html_extras_for_document(knit_meta, runtime, dependency_resolver,
                                        format_deps)
-    args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir))
+    args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir,
+                                            output_dir))
 
     # mathjax
     args <- c(args, pandoc_mathjax_args(mathjax,
@@ -79,7 +85,7 @@ html_document_base <- function(smart = TRUE,
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
     # if there are no preserved chunks to restore and no images to copy then no
     # post-processing is necessary
-    if (length(preserved_chunks) == 0 && !isTRUE(copy_images))
+    if (length(preserved_chunks) == 0 && !isTRUE(copy_images) && self_contained)
       return(output_file)
 
     # read the output file
@@ -101,14 +107,26 @@ html_document_base <- function(smart = TRUE,
           # there
           target_img_file <- paste(file.path(lib_dir, createUniqueId(16)),
                                    tools::file_ext(in_file), sep = ".")
-          file.copy(in_file, file.path(dirname(output_file), target_img_file))
+          file.copy(in_file, target_img_file)
 
           # replace the reference in the document
-          img_src <- sub(src, target_img_file, img_src)
+          img_src <- sub(src, relative_to(output_dir, target_img_file), img_src)
         }
         img_src
       }
       output_str <- process_images(output_str, image_copier)
+    } else if (!self_contained) {
+      # if we're not self-contained, find absolute references to the output
+      # directory and replace them with relative ones
+      image_relative <- function(img_src, src) {
+        in_file <- utils::URLdecode(src)
+        if (length(in_file) && file.exists(in_file)) {
+          img_src <- sub(
+            src, utils::URLencode(relative_to(output_dir, in_file)), img_src)
+        }
+        img_src
+      }
+      output_str <- process_images(output_str, image_relative)
     }
 
     writeLines(output_str, output_file, useBytes = TRUE)

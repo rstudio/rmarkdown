@@ -57,7 +57,8 @@ ioslides_presentation <- function(logo = NULL,
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir) {
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
+                            output_dir) {
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
@@ -76,19 +77,21 @@ ioslides_presentation <- function(logo = NULL,
       if (!self_contained) {
         logo_path <- file.path(files_dir, "logo.png")
         file.copy(from = logo, to = logo_path)
+        logo_path <- relative_to(output_dir, logo_path)
+      } else {
+        logo_path <- pandoc_path_arg(logo_path)
       }
-      args <- c(args, "--variable", paste("logo=",
-                                          pandoc_path_arg(logo_path),
-                                          sep = ""))
+      args <- c(args, "--variable", paste("logo=", logo_path, sep = ""))
     }
 
     # ioslides
     ioslides_path <- rmarkdown_system_file("rmd/ioslides/ioslides-13.5.1")
     if (!self_contained)
-      ioslides_path <- render_supporting_files(ioslides_path, lib_dir)
-    args <- c(args, "--variable", paste("ioslides-url=",
-                                        pandoc_path_arg(ioslides_path),
-                                        sep=""))
+      ioslides_path <- relative_to(output_dir,
+        render_supporting_files(ioslides_path, lib_dir))
+    else
+      ioslides_path <- pandoc_path_arg(ioslides_path)
+    args <- c(args, "--variable", paste("ioslides-url=", ioslides_path, sep=""))
 
     # return additional args
     args
@@ -105,7 +108,7 @@ ioslides_presentation <- function(logo = NULL,
     base64_encoder <- base64_image_encoder()
 
     # convert using our lua writer (write output to a temp file)
-    lua_writer <- "ioslides_presentation.lua"
+    lua_writer <- file.path(dirname(output_file), "ioslides_presentation.lua")
     on.exit(unlink(lua_writer), add = TRUE)
 
     # write settings to file

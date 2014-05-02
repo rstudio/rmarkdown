@@ -3,7 +3,8 @@
 \title{Render R Markdown}
 \usage{
 render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
-       output_options = NULL, runtime = c("auto", "static", "shiny"),
+       output_options = NULL, intermediates_dir = NULL,
+       runtime = c("auto", "static", "shiny"),
        clean = TRUE, envir = parent.frame(), quiet = FALSE,
        encoding = getOption("encoding"))
 }
@@ -30,6 +31,10 @@ render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
 
   \item{output_dir}{Output directory. An alternate directory to write
   the output file to (defaults to the directory of the input file).}
+
+  \item{intermediates_dir}{Intermediate files directory. If \code{NULL},
+  intermediate files are written to the same directory as the input file;
+  otherwis.}
 
   \item{runtime}{The runtime target for rendering. \code{static} produces output
   intended for static files; \code{shiny} produces output suitable for use in a

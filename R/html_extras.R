@@ -21,7 +21,8 @@ html_extras_for_document <- function(knit_meta, runtime, dependency_resolver,
 }
 
 # convert html extras to the pandoc args required to include them
-pandoc_html_extras_args <- function(extras, self_contained, lib_dir) {
+pandoc_html_extras_args <- function(extras, self_contained, lib_dir,
+                                    output_dir) {
 
   args <- c()
 
@@ -29,9 +30,10 @@ pandoc_html_extras_args <- function(extras, self_contained, lib_dir) {
   dependencies <- extras$dependencies
   if (length(dependencies) > 0) {
     if (self_contained)
-      file <- as_tmpfile(html_dependencies_as_string(dependencies, NULL))
+      file <- as_tmpfile(html_dependencies_as_string(dependencies, NULL, NULL))
     else
-      file <- as_tmpfile(html_dependencies_as_string(dependencies, lib_dir))
+      file <- as_tmpfile(html_dependencies_as_string(dependencies, lib_dir,
+                                                     output_dir))
     args <- c(args, pandoc_include_args(in_header = file))
   }
 

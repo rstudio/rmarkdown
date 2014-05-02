@@ -130,7 +130,8 @@ revealjs_presentation <- function(incremental = FALSE,
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
-  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir) {
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
+                            output_dir) {
 
     # use files_dir as lib_dir if not explicitly specified
     if (is.null(lib_dir))
@@ -142,7 +143,8 @@ revealjs_presentation <- function(incremental = FALSE,
     # reveal.js
     revealjs_path <- rmarkdown_system_file("rmd/revealjs/reveal.js-2.6.1")
     if (!self_contained)
-      revealjs_path <- render_supporting_files(revealjs_path, lib_dir)
+      revealjs_path <- relative_to(
+        render_supporting_files(revealjs_path, lib_dir), output_dir)
     args <- c(args, "--variable", paste("revealjs-url=",
                                         pandoc_path_arg(revealjs_path), sep=""))
 
