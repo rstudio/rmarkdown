@@ -108,7 +108,9 @@ ioslides_presentation <- function(logo = NULL,
     base64_encoder <- base64_image_encoder()
 
     # convert using our lua writer (write output to a temp file)
-    lua_writer <- file.path(dirname(output_file), "ioslides_presentation.lua")
+    output_dir <- dirname(output_file)
+    args <- c(args, "--data-dir", pandoc_path_arg(output_dir))
+    lua_writer <- file.path(output_dir, "ioslides_presentation.lua")
     on.exit(unlink(lua_writer), add = TRUE)
 
     # write settings to file
@@ -132,7 +134,7 @@ ioslides_presentation <- function(logo = NULL,
     output_tmpfile <- tempfile("ioslides-output", fileext = ".html")
     on.exit(unlink(output_tmpfile), add = TRUE)
     pandoc_convert(input = input_file,
-                   to = pandoc_path_arg(lua_writer),
+                   to = basename(lua_writer),
                    from = from_rmarkdown(fig_caption),
                    output = output_tmpfile,
                    options = args,
