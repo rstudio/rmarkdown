@@ -22,3 +22,4 @@ Suggests:
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
 URL: http://rmarkdown.rstudio.com
 License: GPL-3
+Roxygen: list(wrap = FALSE)
