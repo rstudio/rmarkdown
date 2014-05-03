@@ -50,7 +50,6 @@ md_document <- function(variant = "markdown_strict",
                         fig_height = 5,
                         fig_retina = NULL,
                         includes = NULL,
-                        data_dir = NULL,
                         pandoc_args = NULL) {
 
   # base pandoc options for all markdown output
@@ -61,10 +60,6 @@ md_document <- function(variant = "markdown_strict",
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
-
-  # data dir
-  if (!is.null(data_dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # pandoc args
   args <- c(args, pandoc_args)

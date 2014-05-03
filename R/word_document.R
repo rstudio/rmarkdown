@@ -38,7 +38,6 @@ word_document <- function(fig_width = 5,
                           fig_caption = FALSE,
                           highlight = "default",
                           reference_docx = "default",
-                          data_dir = NULL,
                           pandoc_args = NULL) {
 
   # knitr options and hooks
@@ -61,10 +60,6 @@ word_document <- function(fig_width = 5,
   if (!is.null(reference_docx) && !identical(reference_docx, "default")) {
     args <- c(args, "--reference-docx", pandoc_path_arg(reference_docx))
   }
-
-  # data dir
-  if (!is.null(data_dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # pandoc args
   args <- c(args, pandoc_args)

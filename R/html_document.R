@@ -43,9 +43,6 @@
 #' @param lib_dir Directory to copy dependent HTML libraries (e.g. jquery,
 #'   bootstrap, etc.) into. By default this will be the name of the document
 #'   with \code{_files} appended to it.
-#' @param data_dir Additional directory to resolve relatives paths of templates
-#'   and included content against (the directory of the input file is used by
-#'   default).
 #' @param pandoc_args Additional command line options to pass to pandoc
 #' @param ... Additional function arguments to pass to the base R Markdown HTML
 #'   output formatter
@@ -114,7 +111,6 @@ html_document <- function(toc = FALSE,
                           css = NULL,
                           includes = NULL,
                           lib_dir = NULL,
-                          data_dir = NULL,
                           pandoc_args = NULL,
                           ...) {
 
@@ -137,10 +133,6 @@ html_document <- function(toc = FALSE,
   # additional css
   for (css_file in css)
     args <- c(args, "--css", pandoc_path_arg(css_file))
-
-  # data dir
-  if (!is.null(data_dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)

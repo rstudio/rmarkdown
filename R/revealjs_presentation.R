@@ -83,7 +83,6 @@ revealjs_presentation <- function(incremental = FALSE,
                                   template = "default",
                                   includes = NULL,
                                   lib_dir = NULL,
-                                  data_dir = NULL,
                                   pandoc_args = NULL,
                                   ...) {
 
@@ -123,10 +122,6 @@ revealjs_presentation <- function(incremental = FALSE,
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
-
-  # data dir
-  if (!is.null(data_dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)

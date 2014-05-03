@@ -63,7 +63,6 @@ beamer_presentation <- function(toc = FALSE,
                                 template = "default",
                                 keep_tex = FALSE,
                                 includes = NULL,
-                                data_dir = NULL,
                                 pandoc_args = NULL) {
 
   # base pandoc options for all beamer output
@@ -103,10 +102,6 @@ beamer_presentation <- function(toc = FALSE,
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
-
-  # data dir
-  if (!is.null(data_dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # custom args
   args <- c(args, pandoc_args)

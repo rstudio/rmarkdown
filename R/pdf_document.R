@@ -87,7 +87,6 @@ pdf_document <- function(toc = FALSE,
                          natbib = FALSE,
                          biblatex = FALSE,
                          includes = NULL,
-                         data_dir = NULL,
                          pandoc_args = NULL) {
 
   # base pandoc options for all PDF output
@@ -126,10 +125,6 @@ pdf_document <- function(toc = FALSE,
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
-
-  # data dir
-  if (!is.null(data_dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # args args
   args <- c(args, pandoc_args)

@@ -15,7 +15,6 @@ ioslides_presentation <- function(logo = NULL,
                                   css = NULL,
                                   includes = NULL,
                                   lib_dir = NULL,
-                                  data_dir = NULL,
                                   pandoc_args = NULL,
                                   ...) {
 
@@ -45,10 +44,6 @@ ioslides_presentation <- function(logo = NULL,
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
-
-  # data dir
-  if (!is.null(data_dir))
-    args <- c(args, "--data-dir", pandoc_path_arg(data_dir))
 
   # template path and assets
   args <- c(args,
