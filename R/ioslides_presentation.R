@@ -104,6 +104,9 @@ ioslides_presentation <- function(logo = NULL,
     # setup args
     args <- c()
 
+    # add any custom pandoc args
+    args <- c(args, pandoc_args)
+
     # see if we have a base64 image encoder
     base64_encoder <- base64_image_encoder()
 
