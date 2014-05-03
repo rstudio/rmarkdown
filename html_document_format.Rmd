@@ -203,18 +203,6 @@ You can also replace the underlying pandoc template using the `template` option:
 
 Consult the documentation on [pandoc templates](http://johnmacfarlane.net/pandoc/demo/example9/templates.html) for additional details on templates. You can also study the [default HTML template](https://github.com/jgm/pandoc-templates/blob/master/default.html) as an example.
 
-### Specifying a Data Directory
-
-The `includes` and `template` options take relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don't need to be copied to the document directory). You can do this using the `data_dir` option:
-
-    ---
-    title: "Habits"
-    output:
-      html_document:
-        data_dir: ~/templates/reports
-        template: quarterly_report.html
-    ---
-
 ### Pandoc Arguments
 
 If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:

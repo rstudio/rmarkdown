@@ -334,17 +334,6 @@ output:
 ---</code></pre>
 <p>Consult the documentation on <a href="http://johnmacfarlane.net/pandoc/demo/example9/templates.html">pandoc templates</a> for additional details on templates. You can also study the <a href="https://github.com/jgm/pandoc-templates/blob/master/default.html">default HTML template</a> as an example.</p>
 </div>
-<div id="specifying-a-data-directory" class="section level3">
-<h3>Specifying a Data Directory</h3>
-<p>The <code>includes</code> and <code>template</code> options take relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don’t need to be copied to the document directory). You can do this using the <code>data_dir</code> option:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-output:
-  revealjs_presentation:
-    data_dir: ~/templates/reports
-    template: quarterly_report.html
----</code></pre>
-</div>
 <div id="pandoc-arguments" class="section level3">
 <h3>Pandoc Arguments</h3>
 <p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>

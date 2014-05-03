@@ -266,20 +266,6 @@ output:
       after_body: doc_suffix.md
 ---</code></pre>
 </div>
-<div id="specifying-a-data-directory" class="section level3">
-<h3>Specifying a Data Directory</h3>
-<p>The <code>includes</code> option takes relative paths to files by default. However, you may also want to specify that the referenced files live in an alternate directory (so they don’t need to be copied to the document directory). You can do this using the <code>data_dir</code> option:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-output:
-  md_document:
-    data_dir: ~/templates/reports
-    includes:
-      in_header: header.md
-      before_body: doc_prefix.md
-      after_body: doc_suffix.md
----</code></pre>
-</div>
 <div id="pandoc-arguments" class="section level3">
 <h3>Pandoc Arguments</h3>
 <p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
