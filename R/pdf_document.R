@@ -4,7 +4,6 @@
 #'
 #' @inheritParams html_document
 #'
-#' @param number_sections \code{TRUE} to number section headings
 #' @param fig_crop \code{TRUE} to automatically apply the \code{pdfcrop}
 #' utility (if available) to pdf figures
 #' @param highlight Syntax highlighting style. Supported styles include

@@ -3,16 +3,18 @@
 \alias{html_document}
 \title{Convert to an HTML document}
 \usage{
-html_document(toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
-  fig_retina = 2, fig_caption = FALSE, smart = TRUE,
-  self_contained = TRUE, theme = "default", highlight = "default",
-  mathjax = "default", template = "default", css = NULL,
-  includes = NULL, lib_dir = NULL, pandoc_args = NULL, ...)
+html_document(toc = FALSE, toc_depth = 3, number_sections = FALSE,
+  fig_width = 7, fig_height = 5, fig_retina = 2, fig_caption = FALSE,
+  smart = TRUE, self_contained = TRUE, theme = "default",
+  highlight = "default", mathjax = "default", template = "default",
+  css = NULL, includes = NULL, lib_dir = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
 
 \item{toc_depth}{Depth of headers to include in table of contents}
+
+\item{number_sections}{\code{TRUE} to number section headings}
 
 \item{fig_width}{Default width (in inches) for figures}
 

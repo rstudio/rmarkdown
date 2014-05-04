@@ -10,8 +10,6 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   biblatex = FALSE, includes = NULL, pandoc_args = NULL)
 }
 \arguments{
-\item{number_sections}{\code{TRUE} to number section headings}
-
 \item{fig_crop}{\code{TRUE} to automatically apply the \code{pdfcrop}
 utility (if available) to pdf figures}
 
@@ -36,6 +34,8 @@ utility (if available) to pdf figures}
 \item{toc}{\code{TRUE} to include a table of contents in the output}
 
 \item{toc_depth}{Depth of headers to include in table of contents}
+
+\item{number_sections}{\code{TRUE} to number section headings}
 
 \item{fig_width}{Default width (in inches) for figures}
 

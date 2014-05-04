@@ -4,6 +4,7 @@
 #'
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc_depth Depth of headers to include in table of contents
+#' @param number_sections \code{TRUE} to number section headings
 #' @param fig_width Default width (in inches) for figures
 #' @param fig_height Default width (in inches) for figures
 #' @param fig_retina Scaling to perform for retina displays (defaults to 2,
@@ -98,6 +99,7 @@
 #' @export
 html_document <- function(toc = FALSE,
                           toc_depth = 3,
+                          number_sections = FALSE,
                           fig_width = 7,
                           fig_height = 5,
                           fig_retina = 2,
@@ -129,6 +131,10 @@ html_document <- function(toc = FALSE,
               pandoc_path_arg(rmarkdown_system_file("rmd/h/default.html")))
   else if (!is.null(template))
     args <- c(args, "--template", pandoc_path_arg(template))
+
+  # numbered sections
+  if (number_sections)
+    args <- c(args, "--number-sections")
 
   # additional css
   for (css_file in css)
