@@ -270,6 +270,15 @@ render <- function(input,
   # determine whether we should run pandoc-citeproc
   run_citeproc <- !is.null(yaml_front_matter$bibliography)
 
+  # if we are running citeproc then explicitly forward the bibliography
+  # on the command line (works around pandoc-citeproc issue whereby yaml
+  # strings that begin with numbers are interpreted as numbers)
+  if (run_citeproc) {
+    output_format$pandoc$args <- c(output_format$pandoc$args,
+                                   "--bibliography",
+                                   yaml_front_matter$bibliography)
+  }
+
   # run intermediate conversion if it's been specified
   if (output_format$pandoc$keep_tex) {
     pandoc_convert(utf8_input,
