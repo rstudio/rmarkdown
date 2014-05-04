@@ -275,8 +275,7 @@ render <- function(input,
   # strings that begin with numbers are interpreted as numbers)
   if (run_citeproc) {
     output_format$pandoc$args <- c(output_format$pandoc$args,
-                                   "--bibliography",
-                                   yaml_front_matter$bibliography)
+      "--bibliography", pandoc_path_arg(yaml_front_matter$bibliography))
   }
 
   # run intermediate conversion if it's been specified
