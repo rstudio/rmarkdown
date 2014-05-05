@@ -174,6 +174,7 @@ ioslides_presentation <- function(logo = NULL,
     base_format = html_document_base(smart = smart, lib_dir = lib_dir,
                                      self_contained = self_contained,
                                      mathjax = mathjax,
-                                     pandoc_args = pandoc_args, ...))
+                                     pandoc_args = pandoc_args,
+                                     bootstrap_compatible = TRUE, ...))
 }
 
