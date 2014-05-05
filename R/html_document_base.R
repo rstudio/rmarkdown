@@ -9,6 +9,7 @@ html_document_base <- function(smart = TRUE,
                                dependency_resolver = html_dependency_resolver,
                                copy_images = FALSE,
                                extra_dependencies = NULL,
+                               bootstrap_compatible = FALSE,
                                ...) {
   args <- c()
 
@@ -58,9 +59,15 @@ html_document_base <- function(smart = TRUE,
     # and dependencies specified by the user (via extra_dependencies)
     format_deps <- list()
     format_deps <- append(format_deps, extra_dependencies)
-    if (!is.null(theme))
+    if (!is.null(theme)) {
       format_deps <- append(format_deps, list(html_dependency_jquery(),
                                               html_dependency_bootstrap(theme)))
+    }
+    else if (isTRUE(bootstrap_compatible) && identical(runtime, "shiny")) {
+      # If we can add bootstrap for Shiny, do it
+      format_deps <- append(format_deps,
+                            list(html_dependency_bootstrap("bootstrap")))
+    }
 
     extras <- html_extras_for_document(knit_meta, runtime, dependency_resolver,
                                        format_deps)
