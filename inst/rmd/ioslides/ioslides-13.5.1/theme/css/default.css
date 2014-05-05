@@ -1477,10 +1477,15 @@ aside.gdbar img {
 /* Additions for Shiny compatibility */
 label {
   display: block;
+  margin-bottom: 4px;
 }
 label, input {
   font-size: 16px;
+  color: #333;
 }
 input {
   width: 220px;
+}
+.jslider {
+  margin-top: 8px;
 }
