@@ -110,6 +110,9 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
          copy_images = TRUE,
          dependency_resolver = shiny_dependency_resolver)
 
+      # remove console clutter from any previous renders
+      message("\f")
+
       # merge our inputs with those supplied by the user and invoke render
       args <- merge_lists(list(input = reactive_file(),
                                output_file = output_dest,
