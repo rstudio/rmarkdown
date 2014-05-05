@@ -4,6 +4,7 @@ var ORIGIN_ = location.protocol + '//' + location.host;
 
 // check for local storage
 var haveLocalStorage = (function() {
+  var mod = 'mod';
   try {
     localStorage.setItem(mod, mod);
     localStorage.removeItem(mod);
