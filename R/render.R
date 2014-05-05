@@ -48,16 +48,20 @@ render <- function(input,
           add = TRUE)
 
   # ensure we have a directory to store intermediates
-  if (is.null(intermediates_dir))
-    intermediates_dir <- "."
-  else if (!file.exists(intermediates_dir))
+  if (!is.null(intermediates_dir) && !file.exists(intermediates_dir))
     dir.create(intermediates_dir)
+  intermediates_loc <- function(file) {
+    if (is.null(intermediates_dir))
+      file
+    else
+      file.path(intermediates_dir, file)
+  }
 
   # if the input file has spaces in it's name then make a copy
   # that doesn't have spaces
   if (grepl(' ', basename(input), fixed=TRUE)) {
-    input_no_spaces <- file.path(intermediates_dir,
-                                 file_name_without_spaces(basename(input)))
+    input_no_spaces <- intermediates_loc(
+        file_name_without_spaces(basename(input)))
     if (file.exists(input_no_spaces)) {
       stop("The name of the input file cannot contain spaces (attempted to ",
            "copy to a version without spaces '", input_no_spaces, "' ",
@@ -76,19 +80,16 @@ render <- function(input,
   # on the filename for our various intermediate targets
   input <- basename(input)
   knit_input <- input
-  knit_output <- file.path(intermediates_dir,
-                           file_with_meta_ext(input, "knit", "md"))
+  knit_output <- intermediates_loc(file_with_meta_ext(input, "knit", "md"))
 
   intermediates <- c(intermediates, knit_output)
-  utf8_input <- file.path(intermediates_dir,
-                          file_with_meta_ext(input, "utf8", "md"))
+  utf8_input <- intermediates_loc(file_with_meta_ext(input, "utf8", "md"))
   intermediates <- c(intermediates, utf8_input)
 
   # if this is an R script then spin it first
   if (identical(tolower(tools::file_ext(input)), "r")) {
     # make a copy of the file to spin
-    spin_input <- file.path(intermediates_dir,
-                            file_with_meta_ext(input, "spin", "R"))
+    spin_input <- intermediates_loc(file_with_meta_ext(input, "spin", "R"))
     file.copy(input, spin_input, overwrite = TRUE)
     intermediates <- c(intermediates, spin_input)
     # spin it

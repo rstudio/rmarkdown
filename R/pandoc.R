@@ -240,6 +240,11 @@ pandoc_path_arg <- function(path) {
 
   path <- path.expand(path)
 
+  # remove redundant ./ prefix if present
+  if (identical(substring(path, 1, 2), "./")) {
+    path <- substring(path, 3, nchar(path))
+  }
+
   if (is_windows()) {
     if (grepl(' ', path, fixed=TRUE))
       path <- utils::shortPathName(path)
