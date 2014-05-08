@@ -41,7 +41,7 @@ The resulting "Shiny Doc"" combines the expressiveness of R Markdown with the in
 
 ### Prerequisites
 
-Working with Shiny Docs requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.828 or later) so be sure to update RStudio before trying out these features. 
+Working with Shiny Docs requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.829 or later) so be sure to update RStudio before trying out these features. 
 
 You'll also need the development versions of both the **knitr** and **shiny** packages, which you can install as follows:
 
