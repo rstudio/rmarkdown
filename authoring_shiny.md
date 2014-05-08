@@ -8,22 +8,32 @@ output:
 
 ## Overview
 
-You can use the [Shiny](http://shiny.rstudio.com) web application framework to make your documents fully interative. For example, readers of your document could change the assumptions underlying a data visualization and see the results immediately. For example, here's a code chunk that enables users to modify the number of bins displayed in a histogram:
+You can use the [Shiny](http://shiny.rstudio.com) web application framework to make your documents fully interative. For example, readers of your document could change the assumptions underlying a data visualization and see the results immediately. 
+
+This demonstrates how a standard R plot can be made interactive by wrapping it in the Shiny `renderPlot` function. The `selectInput` and `sliderInput` functions create the input widgets used to drive the plot.
 
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
-sliderInput("bins", "Number of bins:", min = 1, max = 50, value = 30)
+inputPanel(
+  selectInput("n_breaks", label = "Number of bins:",
+              choices = c(10, 20, 35, 50), selected = 20),
+  
+  sliderInput("bw_adjust", label = "Bandwidth adjustment:",
+              min = 0.2, max = 2, value = 1, step = 0.2)
+)
 
 renderPlot({
-  x <- faithful[, 2]  # Old Faithful Geyser data
-  bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-  # draw the histogram with the specified number of bins
-  hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
+       xlab = "Duration (minutes)", main = "Geyser eruption duration")
+  
+  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
+  lines(dens, col = "blue")
 })
 &#96;&#96;&#96;
 </code></pre>
 
-![Shiny Hist Plot](images/shiny-hist-plot.gif)
+This is what the interactive plot would look like rendered within the document:
+
+![Shiny Hist Plot](images/shiny-interactive-plot.png)
 
 The resulting "Shiny Doc"" combines the expressiveness of R Markdown with the interactivity of Shiny. Note that Shiny Docs can currently only be run locally on the desktop. Support for publishing to Shiny Server will be available soon.
 
@@ -31,7 +41,7 @@ The resulting "Shiny Doc"" combines the expressiveness of R Markdown with the in
 
 ### Prerequisites
 
-Working with Shiny Docs requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.811 or later) so be sure to update RStudio before trying out these features. 
+Working with Shiny Docs requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.828 or later) so be sure to update RStudio before trying out these features. 
 
 You'll also need the development versions of both the **knitr** and **shiny** packages, which you can install as follows:
 
@@ -62,7 +72,6 @@ If you haven't used Shiny before some of the code will be unfamiliar to you. The
 ### Inputs and Outputs
 
 You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. In this example we create a `numericInput` with the name "rows" and then refer to its value via `input$rows` when generating output:
-You can embed arbitrary Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change. In this example we create a `numericInput` with the name "rows" and then refer to its value via `input$rows` when generating output:
 
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
 numericInput("rows", "How many cars?", 5)
