@@ -80,7 +80,9 @@ html_document_base <- function(smart = TRUE,
                                         self_contained,
                                         lib_dir))
 
-    input_str <- readLines(input_file, warn = FALSE, encoding = "bytes")
+    # The input file is converted to UTF-8 from its native encoding prior
+    # to calling the preprocessor (see ::render)
+    input_str <- readLines(input_file, warn = FALSE, encoding = "UTF-8")
     preserve <- extract_preserve_chunks(input_str)
     if (!identical(preserve$value, input_str))
       writeLines(preserve$value, input_file, useBytes = TRUE)
@@ -96,7 +98,7 @@ html_document_base <- function(smart = TRUE,
       return(output_file)
 
     # read the output file
-    output_str <- readLines(output_file, warn = FALSE, encoding = "bytes")
+    output_str <- readLines(output_file, warn = FALSE, encoding = "UTF-8")
 
     # if we preserved chunks, restore them
     if (length(preserved_chunks) > 0)
@@ -181,7 +183,7 @@ extract_preserve_chunks <- function(strval) {
     strval <- paste(strval, collapse = "\n")
 
   # matches contains the index of all the start and end markers
-  matches <- gregexpr(pattern, strval, useBytes = TRUE)[[1]]
+  matches <- gregexpr(pattern, strval)[[1]]
   lengths <- attr(matches, "match.length")
 
   # No markers? Just return.
@@ -223,8 +225,7 @@ extract_preserve_chunks <- function(strval) {
     end_outer <- end_inner + endmarker_len
 
     id <- createUniqueId(16)
-    preserved[id] <- gsub(pattern, "",
-      substr(strval, start_inner, end_inner-1), useBytes = TRUE)
+    preserved[id] <- gsub(pattern, "", substr(strval, start_inner, end_inner-1))
 
     strval <- paste(
       substr(strval, 1, start_outer - 1),
