@@ -222,7 +222,7 @@ print.justgage &lt;- function(x, ...) {
 }
 
 #&#39; @export
-knit_print.justgage &lt;- function(x, options) {
+knit_print.justgage &lt;- function(x, ..., options) {
   htmltools::html_knit_print(
     justgage_html(x, options$out.width.px, options$out.height.px), 
     justgage_dependencies()
@@ -290,7 +290,7 @@ print.datatable &lt;- function(x, ...) {
 }
 
 #&#39; @export
-knit_print.datatable &lt;- function(x, options) {
+knit_print.datatable &lt;- function(x, ..., options) {
   htmltools::html_knit_print(datatable_html(x), datatable_dependencies())
 }
 
