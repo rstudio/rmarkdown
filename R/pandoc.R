@@ -2,8 +2,10 @@
 #'
 #' Convert documents to and from various formats using the pandoc utility.
 #'
-#' @param input Input file (must be UTF-8 encoded)
-#' @param to Format to convert to
+#' @param input Character vector containing paths to input files
+#'   (files must be UTF-8 encoded)
+#' @param to Format to convert to (if not specified, you must specify
+#'   \code{output})
 #' @param from Format to convert from (if not specified then the format is
 #'   determined based on the file extension of \code{input}).
 #' @param output Output file (if not specified then determined based on format
@@ -12,6 +14,8 @@
 #'   citations) as part of the conversion
 #' @param options Character vector of command line options to pass to pandoc.
 #' @param verbose \code{TRUE} to show the pandoc command line which was executed
+#' @param wd Working directory in which code will be executed. If not
+#'   supplied, defaults to the common base directory of \code{input}
 #'
 #' @details Supported input and output formats are described in the
 #'   \href{http://johnmacfarlane.net/pandoc/README.html}{pandoc user guide}.
@@ -37,23 +41,29 @@
 #'
 #' @export
 pandoc_convert <- function(input,
-                           to,
+                           to = NULL,
                            from = NULL,
                            output = NULL,
                            citeproc = FALSE,
                            options = NULL,
-                           verbose = FALSE) {
+                           verbose = FALSE,
+                           wd = NULL) {
 
   # ensure we've scanned for pandoc
   find_pandoc()
 
-  # execute within the input file's directory
-  oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
+  # execute in specified working directory
+  if (is.null(wd)) {
+    wd <- base_dir(input)
+  }
+  oldwd <- setwd(wd)
   on.exit(setwd(oldwd), add = TRUE)
+
 
   # input file and formats
   args <- c(input)
-  args <- c(args, "--to", to)
+  if (!is.null(to))
+    args <- c(args, "--to", to)
   if (!is.null(from))
     args <- c(args, "--from", from)
 
