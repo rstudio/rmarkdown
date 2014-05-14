@@ -4,10 +4,11 @@
 \title{Convert a document with pandoc}
 \usage{
 pandoc_convert(input, to, from = NULL, output = NULL, citeproc = FALSE,
-  options = NULL, verbose = FALSE)
+  options = NULL, verbose = FALSE, wd = NULL)
 }
 \arguments{
-\item{input}{Input file (must be UTF-8 encoded)}
+\item{input}{Character vector containing paths to input files
+(files must be UTF-8 encoded)}
 
 \item{to}{Format to convert to}
 
@@ -23,6 +24,9 @@ citations) as part of the conversion}
 \item{options}{Character vector of command line options to pass to pandoc.}
 
 \item{verbose}{\code{TRUE} to show the pandoc command line which was executed}
+
+\item{wd}{Working directory in which code will be executed. If not
+  supplied, defaults to the common base directory of \code{input}}
 }
 \description{
 Convert documents to and from various formats using the pandoc utility.
