@@ -4,7 +4,8 @@
 #'
 #' @param input Character vector containing paths to input files
 #'   (files must be UTF-8 encoded)
-#' @param to Format to convert to
+#' @param to Format to convert to (if not specified, you must specify
+#'   \code{output})
 #' @param from Format to convert from (if not specified then the format is
 #'   determined based on the file extension of \code{input}).
 #' @param output Output file (if not specified then determined based on format
@@ -40,7 +41,7 @@
 #'
 #' @export
 pandoc_convert <- function(input,
-                           to,
+                           to = NULL,
                            from = NULL,
                            output = NULL,
                            citeproc = FALSE,
@@ -61,7 +62,8 @@ pandoc_convert <- function(input,
 
   # input file and formats
   args <- c(input)
-  args <- c(args, "--to", to)
+  if (!is.null(to))
+    args <- c(args, "--to", to)
   if (!is.null(from))
     args <- c(args, "--from", from)
 
