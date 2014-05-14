@@ -77,18 +77,6 @@ For example:
         highlight: tango
     ---
 
-## Bibliography Options
-
-You can specify the use of natbib or biblatex for citations in LaTeX output using the `natbib` and `biblatex` options. For example:
-
-    ---
-    title: "Habits"
-    output:
-      pdf_document:
-        natbib: true
-    ---
-
-
 ## LaTeX Options
 
 Many aspects of the LaTeX template used to create PDF documents can be customized using top-level YAML metadata (note that these options do not appear underneath the `output` section but rather appear at the top level along with title, author, etc.). For example:
@@ -111,8 +99,6 @@ classoption|Option for documentclass (e.g. oneside); may be repeated
 geometry|Options for geometry class (e.g. margin=1in); may be repeated
 mainfont, sansfont, monofont, mathfont|Document fonts (works only with xelatex and lualatex, see the `latex_engine` option)
 linkcolor, urlcolor, citecolor|Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)
-biblio-style|LaTeX bibliography style (used with `natbib` option)
-biblio-files|Bibliography files to use in LaTeX (used with `natbib` or `biblatex` options)
 
 ## Advanced Customization
 

@@ -152,7 +152,6 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#figure-options">Figure Options</a></li>
 <li><a href="#syntax-highlighting">Syntax Highlighting</a></li>
-<li><a href="#bibliography-options">Bibliography Options</a></li>
 <li><a href="#latex-options">LaTeX Options</a></li>
 <li><a href="#advanced-customization">Advanced Customization</a></li>
 <li><a href="#shared-options">Shared Options</a></li>
@@ -219,16 +218,6 @@ output:
     highlight: tango
 ---</code></pre>
 </div>
-<div id="bibliography-options" class="section level2">
-<h2>Bibliography Options</h2>
-<p>You can specify the use of natbib or biblatex for citations in LaTeX output using the <code>natbib</code> and <code>biblatex</code> options. For example:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-output:
-  pdf_document:
-    natbib: true
----</code></pre>
-</div>
 <div id="latex-options" class="section level2">
 <h2>LaTeX Options</h2>
 <p>Many aspects of the LaTeX template used to create PDF documents can be customized using top-level YAML metadata (note that these options do not appear underneath the <code>output</code> section but rather appear at the top level along with title, author, etc.). For example:</p>
@@ -274,14 +263,6 @@ geometry: margin=1in
 <tr class="odd">
 <td align="left">linkcolor, urlcolor, citecolor</td>
 <td align="left">Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)</td>
-</tr>
-<tr class="even">
-<td align="left">biblio-style</td>
-<td align="left">LaTeX bibliography style (used with <code>natbib</code> option)</td>
-</tr>
-<tr class="odd">
-<td align="left">biblio-files</td>
-<td align="left">Bibliography files to use in LaTeX (used with <code>natbib</code> or <code>biblatex</code> options)</td>
 </tr>
 </tbody>
 </table>
