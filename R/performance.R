@@ -34,10 +34,24 @@ perf_timer_summary <- function() {
 
 perf_timers_as_json <- function() {
   summary <- perf_timer_summary()
-  json <- paste(lapply(row.names(summary),
-                       function(t) { paste(t, ":", as.integer(summary[t,])) } ),
+  json <- paste(lapply(row.names(summary), function(t) {
+                         paste("'", t, "' :", as.integer(summary[t,]), sep = "")
+                         }),
                 collapse=", ")
   json <- paste("{", json, "}")
   json
 }
 
+create_performance_dependency <- function(files_dir) {
+  performance_js <- rmarkdown_system_file("rmd/h/rmd_perf.js")
+  js_lines <- readLines(performance_js, warn = FALSE, encoding = "UTF-8")
+  js_lines <- gsub("RMARKDOWN_PERFORMANCE_TIMINGS", perf_timers_as_json(),
+                   js_lines, fixed = TRUE)
+  perf_js_file <- file.path(files_dir, "rmd_perf.js")
+  writeLines(js_lines, perf_js_file)
+  html_dependency(
+    name = "rmarkdown-performance",
+    version = "0.1",
+    path = files_dir,
+    script = "rmd_perf.js")
+}

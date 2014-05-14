@@ -126,6 +126,10 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       if (file.exists(resource_folder))
         addResourcePath(basename(resource_folder), resource_folder)
 
+      # emit performance information
+      dependencies <- append(dependencies, list(
+          create_performance_dependency(resource_folder)))
+
       # when the session ends, remove the rendered document and any supporting
       # files
       onReactiveDomainEnded(getDefaultReactiveDomain(), function() {
