@@ -210,7 +210,10 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
           unlink(resource_folder, recursive = TRUE)
         })
       }
-      shinyHTML_with_deps(result_path, dependencies)
+      attachDependency(
+        htmltools::HTML(paste(readLines(result_path, encoding = "UTF-8", warn = FALSE),
+                          collapse="\n")),
+        dependencies)
     })
     output$`__reactivedoc__` <- shiny::renderUI({
       doc()
