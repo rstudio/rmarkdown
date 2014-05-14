@@ -30,17 +30,19 @@ individual bullet you can preceded it with \code{>}. For example:
 
 \item{fonttheme}{Beamer font theme (e.g. "structurebold").}
 
-\item{fig_crop}{\code{TRUE} to automatically apply the \code{pdfcrop}
-utility (if available) to pdf figures}
+\item{fig_crop}{\code{TRUE} to automatically apply the \code{pdfcrop} utility
+(if available) to pdf figures}
 
 \item{highlight}{Syntax highlighting style. Supported styles include
 "default", "tango", "pygments", "kate", "monochrome", "espresso",
 "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.}
 
-\item{template}{Pandoc template to use for rendering. Pass "default"
-  to use the rmarkdown package default template; pass \code{NULL}
-  to use pandoc's built-in template; pass a path to use a custom template
-  that you've created.  See the documentation on \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc templates} for more details.}
+\item{template}{Pandoc template to use for rendering. Pass "default" to use
+  the rmarkdown package default template; pass \code{NULL} to use pandoc's
+  built-in template; pass a path to use a custom template that you've
+  created.  See the documentation on
+  \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
+  templates} for more details.}
 
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
 
@@ -69,10 +71,14 @@ For more information on markdown syntax for presentations see
 slide shows with pandoc}.
 
 R Markdown documents can have optional metadata that is used to generate a
-document header that includes the title, author, and date. Metadata can
-also be provided to enable the use of footnotes and bibliographies.
-For more details see the documentation on R Markdown
-\link[=rmd_metadata]{metadata} and \link[=rmd_citations]{citations}.
+document header that includes the title, author, and date. For more details
+see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
+
+R Markdown documents also support citations. You can find more information on
+the markdown syntax for citations within the pandoc documentation on
+\href{http://johnmacfarlane.net/pandoc/demo/example19/Citations.html}{citations}
+and
+\href{http://johnmacfarlane.net/pandoc/demo/example19/Footnotes.html}{footnotes}.
 }
 \examples{
 \dontrun{

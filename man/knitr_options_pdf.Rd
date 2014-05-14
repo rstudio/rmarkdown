@@ -10,8 +10,8 @@ knitr_options_pdf(fig_width, fig_height, fig_crop)
 
 \item{fig_height}{Default width (in inches) for figures}
 
-\item{fig_crop}{\code{TRUE} to automatically apply the \code{pdfcrop}
-utility (if available) to pdf figures}
+\item{fig_crop}{\code{TRUE} to automatically apply the \code{pdfcrop} utility
+(if available) to pdf figures}
 }
 \value{
 An list that can be passed as the \code{knitr} argument of the

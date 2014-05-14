@@ -4,20 +4,20 @@
 #'
 #' @inheritParams html_document
 #'
-#' @param fig_crop \code{TRUE} to automatically apply the \code{pdfcrop}
-#' utility (if available) to pdf figures
+#' @param fig_crop \code{TRUE} to automatically apply the \code{pdfcrop} utility
+#'   (if available) to pdf figures
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
 #'   "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.
 #' @param keep_tex Keep the intermediate tex file used in the conversion to PDF
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", and "xelatex".
-#' @param natbib Use natbib for citations in LaTeX output
-#' @param biblatex Use biblatex for citations in LaTeX output
-#' @param template Pandoc template to use for rendering. Pass "default"
-#'   to use the rmarkdown package default template; pass \code{NULL}
-#'   to use pandoc's built-in template; pass a path to use a custom template
-#'   that you've created.  See the documentation on \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc templates} for more details.
+#' @param template Pandoc template to use for rendering. Pass "default" to use
+#'   the rmarkdown package default template; pass \code{NULL} to use pandoc's
+#'   built-in template; pass a path to use a custom template that you've
+#'   created.  See the documentation on
+#'   \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
+#'   templates} for more details.
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -26,10 +26,14 @@
 #' Creating PDF output from R Markdown requires that LaTeX be installed.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
-#' document header that includes the title, author, and date. Metadata can
-#' also be provided to enable the use of footnotes and bibliographies.
-#' For more details see the documentation on R Markdown
-#' \link[=rmd_metadata]{metadata} and \link[=rmd_citations]{citations}.
+#' document header that includes the title, author, and date. For more details
+#' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
+#'
+#' R Markdown documents also support citations. You can find more information on
+#' the markdown syntax for citations within the pandoc documentation on
+#' \href{http://johnmacfarlane.net/pandoc/demo/example19/Citations.html}{citations}
+#' and
+#' \href{http://johnmacfarlane.net/pandoc/demo/example19/Footnotes.html}{footnotes}.
 #'
 #' Many aspects of the LaTeX template used to create PDF documents can be
 #' customized using metadata. For example:
@@ -52,8 +56,6 @@
 #'    \item{\code{geometry}}{Options for geometry class (e.g. margin=1in); may be repeated}
 #'    \item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{latex_engine} option)}
 #'    \item{\code{linkcolor, urlcolor, citecolor}}{Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)}
-#'    \item{\code{biblio-style}}{LaTeX bibliography style (used with \code{natbib} option)}
-#'    \item{\code{biblio-files}}{Bibliography files to use in LaTeX (used with \code{natbib} or \code{biblatex} options)}
 #' }
 #'
 #' @examples
@@ -83,8 +85,6 @@ pdf_document <- function(toc = FALSE,
                          template = "default",
                          keep_tex = FALSE,
                          latex_engine = "pdflatex",
-                         natbib = FALSE,
-                         biblatex = FALSE,
                          includes = NULL,
                          pandoc_args = NULL) {
 
@@ -113,14 +113,6 @@ pdf_document <- function(toc = FALSE,
   # latex engine
   latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
   args <- c(args, "--latex-engine", latex_engine)
-
-  # natbib
-  if (natbib)
-    args <- c(args, "--natbib")
-
-  # biblatex
-  if (biblatex)
-    args <- c(args, "--biblatex")
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))

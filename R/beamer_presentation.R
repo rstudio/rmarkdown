@@ -31,10 +31,14 @@
 #' slide shows with pandoc}.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
-#' document header that includes the title, author, and date. Metadata can
-#' also be provided to enable the use of footnotes and bibliographies.
-#' For more details see the documentation on R Markdown
-#' \link[=rmd_metadata]{metadata} and \link[=rmd_citations]{citations}.
+#' document header that includes the title, author, and date. For more details
+#' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
+#'
+#' R Markdown documents also support citations. You can find more information on
+#' the markdown syntax for citations within the pandoc documentation on
+#' \href{http://johnmacfarlane.net/pandoc/demo/example19/Citations.html}{citations}
+#' and
+#' \href{http://johnmacfarlane.net/pandoc/demo/example19/Footnotes.html}{footnotes}.
 #'
 #' @examples
 #' \dontrun{
