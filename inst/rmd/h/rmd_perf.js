@@ -1,40 +1,53 @@
 /*jshint browser:true, strict:false, curly:false, indent:3*/
 (function(){
-var timings = RMARKDOWN_PERFORMANCE_TIMINGS;
+try {
+   var timings = RMARKDOWN_PERFORMANCE_TIMINGS;
 
-var build_popup = function(popup) {
-   for (var key in timings) {
-      var perf_timing = document.createElement("div");
-      var key_span = document.createElement("span");
-      key_span.innerText = key + ": ";
-      perf_timing.appendChild(key_span);
-      var ms = document.createElement("strong");
-      ms.innerText = timings[key] + "ms";
-      perf_timing.appendChild(ms);
-      popup.appendChild(perf_timing);
-   }
-};
+   var build_popup = function(popup) {
 
-var perf_popup = document.createElement("div");
-perf_popup.setAttribute("style", 
-   "border: 1px solid black; " + 
-   "position: fixed;" +
-   "top: 20px;" +
-   "right: 20px;" + 
-   "background-color: #ffffff;" + 
-   "padding: 5px; " + 
-   "font-size: small;");
+      // sort the timings in descending order
+      timings.sort(function(t1, t2) {
+         return t2.elapsed - t1.elapsed;
+      });
+      
+      // emit each to the popup
+      for (var i = 0; i < timings.length; i++) {
+         var timing = timings[i];
+         var perf_timing = document.createElement("div");
 
-window.addEventListener("keydown", function(evt) {
-   if (evt.keyCode !== 82 || !evt.altKey) // if not alt+R, ignore
-      return;
-   if (perf_popup.parentElement === null) {
-      if (perf_popup.children.length === 0)
-         build_popup(perf_popup);
-      document.body.appendChild(perf_popup);
-   } else {
-      document.body.removeChild(perf_popup);
-   }
-}, false);
+         // show the name of the performance marker
+         var key_span = document.createElement("span");
+         key_span.innerText = timing.marker + ": ";
+         perf_timing.appendChild(key_span);
 
+         // show the time elapsesd in ms
+         var ms = document.createElement("strong");
+         ms.innerText = timing.elapsed + "ms";
+         perf_timing.appendChild(ms);
+
+         popup.appendChild(perf_timing);
+      }
+   };
+
+   var perf_popup = document.createElement("div");
+   perf_popup.setAttribute("class", "perf_popup");
+
+   window.addEventListener("keydown", function(evt) {
+      var toggle = evt.keyCode == 82 && evt.altKey;
+      var dismiss = evt.keyCode == 27;
+      if (!toggle && !dismiss)
+         return;
+      if (perf_popup.parentElement === null && toggle) {
+         if (perf_popup.children.length === 0)
+            build_popup(perf_popup);
+         document.body.appendChild(perf_popup);
+      } else {
+         document.body.removeChild(perf_popup);
+      }
+   }, false);
+}
+catch (e) {
+   // ignore failures here; performance timing information is nonessential
+   // to page render
+}
 })();
