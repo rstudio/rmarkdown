@@ -24,8 +24,19 @@ render <- function(input,
   if (is.character(output_format) && length(output_format) > 1) {
     outputs <- character()
     for (format in output_format) {
-      output <- render(input, format, NULL, output_options,
-                       runtime, clean, envir, quiet, encoding)
+      # the output_file argument is intentionally ignored (we can't give
+      # the same name to each rendered output); copy the rest by name
+      output <- render(input = input,
+                       output_format = format,
+                       output_file = NULL,
+                       output_dir = output_dir,
+                       output_options = output_options,
+                       intermediates_dir = intermediates_dir,
+                       runtime = runtime,
+                       clean = clean,
+                       envir = envir,
+                       quiet = quiet,
+                       encoding = encoding)
       outputs <- c(outputs, output)
     }
     return(invisible(outputs))
