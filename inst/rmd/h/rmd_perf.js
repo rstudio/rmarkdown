@@ -4,12 +4,13 @@ try {
    var timings = RMARKDOWN_PERFORMANCE_TIMINGS;
 
    var build_popup = function(popup) {
-
       // sort the timings in descending order
       timings.sort(function(t1, t2) {
          return t2.elapsed - t1.elapsed;
       });
       
+      var longest = timings[0].elapsed;
+
       // emit each to the popup
       for (var i = 0; i < timings.length; i++) {
          var timing = timings[i];
@@ -20,12 +21,19 @@ try {
          key_span.innerText = timing.marker + ": ";
          perf_timing.appendChild(key_span);
 
-         // show the time elapsesd in ms
+         // show the time elapsed in ms
          var ms = document.createElement("strong");
          ms.innerText = timing.elapsed + "ms";
          perf_timing.appendChild(ms);
 
          popup.appendChild(perf_timing);
+
+         // show a bar 
+         var databar = document.createElement("div");
+         databar.setAttribute("class", "perf_databar");
+         databar.style.width = 
+            Math.round((timing.elapsed / longest) * 100) + "%";
+         popup.appendChild(databar);
       }
    };
 

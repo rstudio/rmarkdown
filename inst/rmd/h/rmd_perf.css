@@ -11,3 +11,11 @@
    right: 20px;
    top: 20px;
 }
+
+.perf_databar
+{
+   height: 4px;
+   margin-top: 0px;
+   margin-bottom: 5px;
+   background-color: blue;
+}
