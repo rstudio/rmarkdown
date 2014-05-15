@@ -29,15 +29,18 @@ try {
       }
    };
 
+   // create the popup element (unattached unless shown)
    var perf_popup = document.createElement("div");
    perf_popup.setAttribute("class", "perf_popup");
 
+   // toggle the popup with Alt+R; if up, Esc dismisses
    window.addEventListener("keydown", function(evt) {
-      var toggle = evt.keyCode == 82 && evt.altKey;
-      var dismiss = evt.keyCode == 27;
+      var toggle = evt.keyCode == 82 && evt.altKey; // Alt+R
+      var dismiss = evt.keyCode == 27; // Esc
       if (!toggle && !dismiss)
          return;
       if (perf_popup.parentElement === null && toggle) {
+         // rebuild the popup if it's empty
          if (perf_popup.children.length === 0)
             build_popup(perf_popup);
          document.body.appendChild(perf_popup);

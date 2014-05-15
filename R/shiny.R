@@ -94,6 +94,9 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       output_dest <- tempfile(fileext = ".html")
       resource_folder <- knitr_files_dir(output_dest)
 
+      # clear out performance timings
+      perf_timer_reset_all()
+
       # use a custom dependency resolver that just accumulates the dependencies
       # (we'll pass these to Shiny in a moment)
       dependencies <- list()
@@ -126,7 +129,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       if (file.exists(resource_folder))
         addResourcePath(basename(resource_folder), resource_folder)
 
-      # emit performance information
+      # emit performance information collected during render
       dependencies <- append(dependencies, list(
           create_performance_dependency(resource_folder)))
 
