@@ -132,7 +132,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
         unlink(result_path)
         unlink(resource_folder, recursive = TRUE)
       })
-      attachDependency(
+      attachDependencies(
         htmltools::HTML(paste(readLines(result_path, encoding = "UTF-8", warn = FALSE),
                           collapse="\n")),
         dependencies)
