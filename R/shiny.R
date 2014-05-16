@@ -81,98 +81,6 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
     else
       render_args$encoding
 
-  # create the Shiny server function
-  server <- function(input, output, session) {
-    path_info <- utils::URLdecode(session$request$PATH_INFO)
-    path_info <- substr(path_info, 1, nchar(path_info) - 11)
-    if (!nzchar(path_info)) {
-      path_info <- "index.Rmd"
-    }
-
-    file <- resolve_relative(dir, path_info)
-    reactive_file <- if (auto_reload)
-      shiny::reactiveFileReader(500, session, file, identity)
-    else
-      function () { file }
-
-    # when the file loads (or is changed), render to a temporary file, and
-    # read the contents into a reactive value
-    doc <- shiny::reactive({
-      # check to see whether we have cached output for this file
-      out <- rmd_cached_output(file, encoding)
-      output_dest <- out$dest
-
-      # if output is cached, return it directly
-      if (out$cached)
-        return (output$shiny_html)
-
-      # ensure destination directory exists
-      if (!file.exists(dirname(output_dest))) {
-        dir.create(dirname(output_dest), recursive = TRUE, mode = "0700")
-      }
-
-      # check to see if the output already exists
-      resource_folder <- knitr_files_dir(output_dest)
-
-      # clear out performance timings
-      perf_timer_reset_all()
-
-      # use a custom dependency resolver that just accumulates the dependencies
-      # (we'll pass these to Shiny in a moment)
-      dependencies <- list()
-      shiny_dependency_resolver <- function(deps) {
-        dependencies <<- deps
-        list()
-      }
-
-      # ensure that the document is not rendered to one page
-      output_opts <- list(
-         self_contained = FALSE,
-         copy_images = TRUE,
-         dependency_resolver = shiny_dependency_resolver)
-
-      # remove console clutter from any previous renders
-      message("\f")
-
-      # merge our inputs with those supplied by the user and invoke render
-      args <- merge_lists(list(input = reactive_file(),
-                               output_file = output_dest,
-                               output_dir = dirname(output_dest),
-                               output_options = output_opts,
-                               intermediates_dir = tempdir(),
-                               runtime = "shiny"),
-                          render_args)
-      result_path <- shiny::maskReactiveContext(do.call(render, args))
-
-      # if we generated a folder of supporting files, map requests to those
-      # files in the Shiny application
-      if (file.exists(resource_folder))
-        addResourcePath(basename(resource_folder), resource_folder)
-
-      # emit performance information collected during render
-      dependencies <- append(dependencies, list(
-          create_performance_dependency(resource_folder)))
-
-      # save the structured dependency information
-      write_deps <- base::file(file.path(resource_folder, "shiny.dep"), open = "wb")
-      on.exit(close(write_deps), add = TRUE)
-      serialize(dependencies, write_deps, ascii = FALSE)
-
-      # when the session ends, remove the rendered document and any supporting
-      # files, if they're not cacheable
-      if (!isTRUE(out$cacheable)) {
-        onReactiveDomainEnded(getDefaultReactiveDomain(), function() {
-          unlink(result_path)
-          unlink(resource_folder, recursive = TRUE)
-        })
-      }
-      shinyHTML_with_deps(result_path, dependencies)
-    })
-    output$`__reactivedoc__` <- shiny::renderUI({
-      doc()
-    })
-  }
-
   onStart <- function() {
     global_r <- file.path.ci(dir, "global.R")
     if (file.exists(global_r)) {
@@ -187,7 +95,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
   app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir),
                          uiPattern = "/|(/.*.[Rr][Mm][Dd])",
                          onStart = onStart,
-                         server = server)
+                         server = rmarkdown_shiny_server(
+                           dir, encoding, auto_reload, render_args))
 
   # launch the app and open a browser to the requested page, if one was
   # specified
@@ -211,6 +120,102 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
   invisible(NULL)
 }
 
+# create the Shiny server function
+rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
+  function(input, output, session) {
+    path_info <- utils::URLdecode(session$request$PATH_INFO)
+    path_info <- substr(path_info, 1, nchar(path_info) - 11)
+    if (!nzchar(path_info)) {
+      path_info <- "index.Rmd"
+    }
+
+    file <- resolve_relative(dir, path_info)
+    reactive_file <- if (auto_reload)
+      shiny::reactiveFileReader(500, session, file, identity)
+    else
+      function () { file }
+
+    # when the file loads (or is changed), render to a temporary file, and
+    # read the contents into a reactive value
+    doc <- shiny::reactive({
+      # check to see whether we have cached output for this file
+      out <- rmd_cached_output(file, encoding)
+      output_dest <- out$dest
+
+      # if output is cached, return it directly
+      if (out$cached)
+        return (out$shiny_html)
+
+      # ensure destination directory exists
+      if (!file.exists(dirname(output_dest))) {
+        dir.create(dirname(output_dest), recursive = TRUE, mode = "0700")
+      }
+
+      # check to see if the output already exists
+      resource_folder <- knitr_files_dir(output_dest)
+
+      # clear out performance timings
+      perf_timer_reset_all()
+
+      # use a custom dependency resolver that just accumulates the dependencies
+      # (we'll pass these to Shiny in a moment)
+      dependencies <- list()
+      shiny_dependency_resolver <- function(deps) {
+        dependencies <<- deps
+        list()
+      }
+
+      # ensure that the document is not rendered to one page
+      output_opts <- list(
+        self_contained = FALSE,
+        copy_images = TRUE,
+        dependency_resolver = shiny_dependency_resolver)
+
+      # remove console clutter from any previous renders
+      message("\f")
+
+      # merge our inputs with those supplied by the user and invoke render
+      args <- merge_lists(list(input = reactive_file(),
+                               output_file = output_dest,
+                               output_dir = dirname(output_dest),
+                               output_options = output_opts,
+                               intermediates_dir = tempdir(),
+                               runtime = "shiny"),
+                          render_args)
+      result_path <- shiny::maskReactiveContext(do.call(render, args))
+
+      # if we generated a folder of supporting files, map requests to those
+      # files in the Shiny application
+      if (file.exists(resource_folder))
+        addResourcePath(basename(resource_folder), resource_folder)
+
+      # emit performance information collected during render
+      dependencies <- append(dependencies, list(
+        create_performance_dependency(resource_folder)))
+
+      # save the structured dependency information
+      write_deps <- base::file(file.path(resource_folder, "shiny.dep"),
+                               open = "wb")
+      on.exit(close(write_deps), add = TRUE)
+      serialize(dependencies, write_deps, ascii = FALSE)
+
+      # when the session ends, remove the rendered document and any supporting
+      # files, if they're not cacheable
+      if (!isTRUE(out$cacheable)) {
+        onReactiveDomainEnded(getDefaultReactiveDomain(), function() {
+          unlink(result_path)
+          unlink(resource_folder, recursive = TRUE)
+        })
+      }
+      shinyHTML_with_deps(result_path, dependencies)
+    })
+    output$`__reactivedoc__` <- shiny::renderUI({
+      doc()
+    })
+  }
+}
+
+# create the Shiny UI function
 rmarkdown_shiny_ui <- function(dir) {
   function(req) {
     # map requests to / to requests for index.Rmd
@@ -284,10 +289,11 @@ rmd_cached_output <- function (input, encoding) {
         on.exit(close(read_deps), add = TRUE)
         dependencies <- unserialize(read_deps)
       }
-      message("serving cached content ", output_dest)
+      message("Serving cached output from static file ", input)
       shiny_html <- shinyHTML_with_deps(output_dest, dependencies)
+      cached <- TRUE
     } else {
-      message("creating cache content ", output_dest)
+      message("Creating cached output from static file ", input)
     }
   } else {
     output_dest <- tempfile(fileext = ".html")
