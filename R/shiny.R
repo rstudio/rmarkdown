@@ -98,38 +98,13 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
     # when the file loads (or is changed), render to a temporary file, and
     # read the contents into a reactive value
     doc <- shiny::reactive({
-      static_doc <- FALSE
+      # check to see whether we have cached output for this file
+      out <- rmd_cached_output(file, encoding)
+      output_dest <- out$dest
 
-      # check to see if the file is a Shiny document
-      front_matter <- parse_yaml_front_matter(read_lines_utf8(file, encoding))
-      if (!identical(front_matter$runtime, "shiny")) {
-        static_doc <- TRUE
-        # If it's not a Shiny document, we can cache the work we're about to do.
-        # Hash the file with its modified date to get a cache key.
-        output_key <- digest::digest(paste(file, file.info(file)[4]),
-                                     algo = "md5", serialize = FALSE)
-        output_dest <- paste(file.path(dirname(tempdir()), "rmarkdown",
-                                       paste("rmd", output_key, sep = "_")),
-                             "html", sep = ".")
-        if (file.exists(output_dest)) {
-          deps_path <- file.path(knitr_files_dir(output_dest), "shiny.dep")
-          dependencies <- list()
-          if (file.exists(deps_path)) {
-            read_deps <- base::file(deps_path, open = "rb")
-            on.exit(close(read_deps), add = TRUE)
-            dependencies <- unserialize(read_deps)
-          }
-          message("serving cached content ", output_dest)
-          return(structure(
-            shiny::HTML(paste(readLines(output_dest, encoding = "UTF-8", warn = FALSE),
-                              collapse="\n")),
-            html_dependency = dependencies))
-        } else {
-          message("creating cache content ", output_dest)
-        }
-      } else {
-        output_dest <- tempfile(fileext = ".html")
-      }
+      # if output is cached, return it directly
+      if (out$cached)
+        return (output$shiny_html)
 
       # ensure destination directory exists
       if (!file.exists(dirname(output_dest))) {
@@ -157,7 +132,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
          dependency_resolver = shiny_dependency_resolver)
 
       # remove console clutter from any previous renders
-      # message("\f")
+      message("\f")
 
       # merge our inputs with those supplied by the user and invoke render
       args <- merge_lists(list(input = reactive_file(),
@@ -184,24 +159,60 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       serialize(dependencies, write_deps, ascii = FALSE)
 
       # when the session ends, remove the rendered document and any supporting
-      # files (if not static)
-      if (!isTRUE(static_doc)) {
+      # files, if they're not cacheable
+      if (!isTRUE(out$cacheable)) {
         onReactiveDomainEnded(getDefaultReactiveDomain(), function() {
           unlink(result_path)
           unlink(resource_folder, recursive = TRUE)
         })
       }
-      structure(
-        shiny::HTML(paste(readLines(result_path, encoding = "UTF-8", warn = FALSE),
-                          collapse="\n")),
-        html_dependency = dependencies)
+      shinyHTML_with_deps(result_path, dependencies)
     })
     output$`__reactivedoc__` <- shiny::renderUI({
       doc()
     })
   }
 
-  ui <- function(req) {
+  onStart <- function() {
+    global_r <- file.path.ci(dir, "global.R")
+    if (file.exists(global_r)) {
+      source(global_r, local = FALSE)
+    }
+    addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
+  }
+
+  # combine the user-supplied list of Shiny arguments with our own and start
+  # the Shiny server; handle requests for the root (/) and any R markdown files
+  # within
+  app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir),
+                         uiPattern = "/|(/.*.[Rr][Mm][Dd])",
+                         onStart = onStart,
+                         server = server)
+
+  # launch the app and open a browser to the requested page, if one was
+  # specified
+  launch_browser <- (!is.null(file)) && interactive()
+  if (isTRUE(launch_browser)) {
+    launch_browser <- function(url) {
+      url <- paste(url, file_rel, sep = "/")
+      browser <- getOption("shiny.launch.browser")
+      if (is.function(browser)) {
+        browser(url)
+      } else {
+        utils::browseURL(url)
+      }
+    }
+  }
+
+  shiny_args <- merge_lists(list(appDir = app,
+                                 launch.browser = launch_browser),
+                            shiny_args)
+  do.call(shiny::runApp, shiny_args)
+  invisible(NULL)
+}
+
+rmarkdown_shiny_ui <- function(dir) {
+  function(req) {
     # map requests to / to requests for index.Rmd
     req_path <- utils::URLdecode(req$PATH_INFO)
     if (identical(req_path, "/")) {
@@ -211,7 +222,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
     # request must be for an R Markdown document
     if (!identical(substr(tolower(req_path),
                           nchar(req_path) - 3, nchar(req_path)),
-                  ".rmd")) {
+                   ".rmd")) {
       return(NULL)
     }
 
@@ -240,43 +251,52 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       shiny::uiOutput("__reactivedoc__")
     )
   }
+}
 
-  onStart <- function() {
-    global_r <- file.path.ci(dir, "global.R")
-    if (file.exists(global_r)) {
-      source(global_r, local = FALSE)
-    }
-    addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
-  }
+shinyHTML_with_deps <- function (html_file, deps) {
+  structure(
+    shiny::HTML(paste(readLines(html_file, encoding = "UTF-8", warn = FALSE),
+                      collapse="\n")),
+    html_dependency = deps)
+}
 
-  # combine the user-supplied list of Shiny arguments with our own and start
-  # the Shiny server; handle requests for the root (/) and any R markdown files
-  # within
-  app <- shiny::shinyApp(ui = ui,
-                         uiPattern = "/|(/.*.[Rr][Mm][Dd])",
-                         onStart = onStart,
-                         server = server)
+rmd_cached_output <- function (input, encoding) {
+  cacheable <- FALSE
+  cached <- FALSE
+  shiny_html <- NULL
 
-  # launch the app and open a browser to the requested page, if one was
-  # specified
-  launch_browser <- (!is.null(file)) && interactive()
-  if (isTRUE(launch_browser)) {
-    launch_browser <- function(url) {
-      url <- paste(url, file_rel, sep = "/")
-      browser <- getOption("shiny.launch.browser")
-      if (is.function(browser)) {
-        browser(url)
-      } else {
-        utils::browseURL(url)
+  # check to see if the file is a Shiny document
+  front_matter <- parse_yaml_front_matter(read_lines_utf8(input, encoding))
+  if (!identical(front_matter$runtime, "shiny")) {
+    cacheable <- TRUE
+    # If it's not a Shiny document, we can cache the work we're about to do.
+    # Hash the file with its modified date to get a cache key.
+    output_key <- digest::digest(paste(input, file.info(input)[4]),
+                                 algo = "md5", serialize = FALSE)
+    output_dest <- paste(file.path(dirname(tempdir()), "rmarkdown",
+                                   paste("rmd", output_key, sep = "_")),
+                         "html", sep = ".")
+    if (file.exists(output_dest)) {
+      deps_path <- file.path(knitr_files_dir(output_dest), "shiny.dep")
+      dependencies <- list()
+      if (file.exists(deps_path)) {
+        read_deps <- base::file(deps_path, open = "rb")
+        on.exit(close(read_deps), add = TRUE)
+        dependencies <- unserialize(read_deps)
       }
+      message("serving cached content ", output_dest)
+      shiny_html <- shinyHTML_with_deps(output_dest, dependencies)
+    } else {
+      message("creating cache content ", output_dest)
     }
+  } else {
+    output_dest <- tempfile(fileext = ".html")
   }
-
-  shiny_args <- merge_lists(list(appDir = app,
-                                 launch.browser = launch_browser),
-                            shiny_args)
-  do.call(shiny::runApp, shiny_args)
-  invisible(NULL)
+  list (
+    cacheable = cacheable,
+    cached = cached,
+    dest = output_dest,
+    shiny_html = shiny_html)
 }
 
 # resolve a path relative to a directory (from Shiny)
