@@ -60,13 +60,13 @@ perf_timers_as_json <- function() {
 # supporting files to files_dir and return an HTML dependency object suitable
 # for inclusion in the document for which the timings were collected
 create_performance_dependency <- function(files_dir) {
-  performance_js <- rmarkdown_system_file("rmd/h/rmd_perf.js")
+  performance_js <- rmarkdown_system_file("rmd/h/rmarkdown/rmd_perf.js")
   js_lines <- readLines(performance_js, warn = FALSE, encoding = "UTF-8")
   js_lines <- gsub("RMARKDOWN_PERFORMANCE_TIMINGS", perf_timers_as_json(),
                    js_lines, fixed = TRUE)
   perf_js_file <- file.path(files_dir, "rmd_perf.js")
   writeLines(js_lines, perf_js_file)
-  file.copy(rmarkdown_system_file("rmd/h/rmd_perf.css"),
+  file.copy(rmarkdown_system_file("rmd/h/rmarkdown/rmd_perf.css"),
             file.path(files_dir, "rmd_perf.css"))
   html_dependency(
     name = "rmarkdown-performance",

@@ -157,8 +157,9 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
     }
 
     # request must be for an R Markdown document
-    if (!identical(substr(req_path, nchar(req_path) - 3, nchar(req_path)),
-                  ".Rmd")) {
+    if (!identical(substr(tolower(req_path),
+                          nchar(req_path) - 3, nchar(req_path)),
+                  ".rmd")) {
       return(NULL)
     }
 
@@ -168,7 +169,24 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       return(NULL)
     }
 
-    shiny::uiOutput("__reactivedoc__")
+    tags$div(
+      tags$head(
+        tags$script(src = "rmd_resources/rmd_loader.js"),
+        tags$link(href = "rmd_resources/rmd_loader.css", rel = "stylesheet")
+      ),
+
+      # Shiny shows the outer conditionalPanel as long as the document hasn't
+      # loaded; the inner rmd_loader is shown by rmd_loader.js as soon as
+      # we've been waiting a certain number of ms
+      conditionalPanel(
+        "!output.__reactivedoc__",
+        tags$div(
+          id = "rmd_loader_wrapper",
+          tags$div(id = "rmd_loader", style = "display: none",
+                   tags$img(src = "rmd_resources/rmd_loader.gif"),
+                   tags$p("Loading")))),
+      shiny::uiOutput("__reactivedoc__")
+    )
   }
 
   onStart <- function() {
@@ -176,13 +194,14 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
     if (file.exists(global_r)) {
       source(global_r, local = FALSE)
     }
+    addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
   }
 
   # combine the user-supplied list of Shiny arguments with our own and start
   # the Shiny server; handle requests for the root (/) and any R markdown files
   # within
   app <- shiny::shinyApp(ui = ui,
-                         uiPattern = "/|(/.*.Rmd)",
+                         uiPattern = "/|(/.*.[Rr][Mm][Dd])",
                          onStart = onStart,
                          server = server)
 
