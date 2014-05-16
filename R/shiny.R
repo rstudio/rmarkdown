@@ -74,6 +74,13 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       stop("The file '", file, "' does not exist in the directory '", dir, "'")
   }
 
+  # pick up encoding
+  encoding <-
+    if (is.null(render_args$encoding))
+      "UTF-8"
+    else
+      render_args$encoding
+
   # create the Shiny server function
   server <- function(input, output, session) {
     path_info <- utils::URLdecode(session$request$PATH_INFO)
@@ -91,7 +98,45 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
     # when the file loads (or is changed), render to a temporary file, and
     # read the contents into a reactive value
     doc <- shiny::reactive({
-      output_dest <- tempfile(fileext = ".html")
+      static_doc <- FALSE
+
+      # check to see if the file is a Shiny document
+      front_matter <- parse_yaml_front_matter(read_lines_utf8(file, encoding))
+      if (!identical(front_matter$runtime, "shiny")) {
+        static_doc <- TRUE
+        # If it's not a Shiny document, we can cache the work we're about to do.
+        # Hash the file with its modified date to get a cache key.
+        output_key <- digest::digest(paste(file, file.info(file)[4]),
+                                     algo = "md5", serialize = FALSE)
+        output_dest <- paste(file.path(dirname(tempdir()), "rmarkdown",
+                                       paste("rmd", output_key, sep = "_")),
+                             "html", sep = ".")
+        if (file.exists(output_dest)) {
+          deps_path <- file.path(knitr_files_dir(output_dest), "shiny.dep")
+          dependencies <- list()
+          if (file.exists(deps_path)) {
+            read_deps <- base::file(deps_path, open = "rb")
+            on.exit(close(read_deps), add = TRUE)
+            dependencies <- unserialize(read_deps)
+          }
+          message("serving cached content ", output_dest)
+          return(structure(
+            shiny::HTML(paste(readLines(output_dest, encoding = "UTF-8", warn = FALSE),
+                              collapse="\n")),
+            html_dependency = dependencies))
+        } else {
+          message("creating cache content ", output_dest)
+        }
+      } else {
+        output_dest <- tempfile(fileext = ".html")
+      }
+
+      # ensure destination directory exists
+      if (!file.exists(dirname(output_dest))) {
+        dir.create(dirname(output_dest), recursive = TRUE, mode = "0700")
+      }
+
+      # check to see if the output already exists
       resource_folder <- knitr_files_dir(output_dest)
 
       # clear out performance timings
@@ -112,7 +157,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
          dependency_resolver = shiny_dependency_resolver)
 
       # remove console clutter from any previous renders
-      message("\f")
+      # message("\f")
 
       # merge our inputs with those supplied by the user and invoke render
       args <- merge_lists(list(input = reactive_file(),
@@ -133,12 +178,19 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       dependencies <- append(dependencies, list(
           create_performance_dependency(resource_folder)))
 
+      # save the structured dependency information
+      write_deps <- base::file(file.path(resource_folder, "shiny.dep"), open = "wb")
+      on.exit(close(write_deps), add = TRUE)
+      serialize(dependencies, write_deps, ascii = FALSE)
+
       # when the session ends, remove the rendered document and any supporting
-      # files
-      onReactiveDomainEnded(getDefaultReactiveDomain(), function() {
-        unlink(result_path)
-        unlink(resource_folder, recursive = TRUE)
-      })
+      # files (if not static)
+      if (!isTRUE(static_doc)) {
+        onReactiveDomainEnded(getDefaultReactiveDomain(), function() {
+          unlink(result_path)
+          unlink(resource_folder, recursive = TRUE)
+        })
+      }
       structure(
         shiny::HTML(paste(readLines(result_path, encoding = "UTF-8", warn = FALSE),
                           collapse="\n")),
