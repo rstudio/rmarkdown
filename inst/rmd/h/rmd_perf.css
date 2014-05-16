@@ -1,0 +1,21 @@
+.perf_popup
+{
+   background-color: white;
+   border: 1px solid black;
+   color: black;
+   font-family: sans-serif;
+   font-size: small;
+   line-height: normal;
+   padding: 5px;
+   position: fixed;
+   right: 20px;
+   top: 20px;
+}
+
+.perf_databar
+{
+   height: 4px;
+   margin-top: 0px;
+   margin-bottom: 5px;
+   background-color: blue;
+}
