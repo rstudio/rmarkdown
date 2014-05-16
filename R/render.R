@@ -12,6 +12,8 @@ render <- function(input,
                    quiet = FALSE,
                    encoding = getOption("encoding")) {
 
+  perf_timer_start("render")
+
   # check for "all" output formats
   if (identical(output_format, "all")) {
     output_format <- enumerate_output_formats(input, envir, encoding)
@@ -24,8 +26,19 @@ render <- function(input,
   if (is.character(output_format) && length(output_format) > 1) {
     outputs <- character()
     for (format in output_format) {
-      output <- render(input, format, NULL, output_options,
-                       runtime, clean, envir, quiet, encoding)
+      # the output_file argument is intentionally ignored (we can't give
+      # the same name to each rendered output); copy the rest by name
+      output <- render(input = input,
+                       output_format = format,
+                       output_file = NULL,
+                       output_dir = output_dir,
+                       output_options = output_options,
+                       intermediates_dir = intermediates_dir,
+                       runtime = runtime,
+                       clean = clean,
+                       envir = envir,
+                       quiet = quiet,
+                       encoding = encoding)
       outputs <- c(outputs, output)
     }
     return(invisible(outputs))
@@ -218,12 +231,16 @@ render <- function(input,
               "so won't be accessible during knit", call. = FALSE)
     }
 
+    perf_timer_start("knitr")
+
     # perform the knit
     input <- knitr::knit(knit_input,
                          knit_output,
                          envir = envir,
                          quiet = quiet,
                          encoding = encoding)
+
+    perf_timer_stop("knitr")
 
     # pull any R Markdown warnings from knit_meta and emit
     rmd_warnings <- knit_meta_reset(class = "rmd_warning")
@@ -258,6 +275,8 @@ render <- function(input,
   input_text <- read_lines_utf8(input, encoding)
   writeLines(input_text, utf8_input, useBytes = TRUE)
 
+  perf_timer_start("pre-processor")
+
   # call any pre_processor
   if (!is.null(output_format$pre_processor)) {
     extra_args <- output_format$pre_processor(yaml_front_matter,
@@ -269,6 +288,8 @@ render <- function(input,
     output_format$pandoc$args <- c(output_format$pandoc$args, extra_args)
   }
 
+  perf_timer_stop("pre-processor")
+
   # determine whether we should run pandoc-citeproc
   run_citeproc <- !is.null(yaml_front_matter$bibliography)
 
@@ -279,6 +300,8 @@ render <- function(input,
     output_format$pandoc$args <- c(output_format$pandoc$args,
       "--bibliography", pandoc_path_arg(yaml_front_matter$bibliography))
   }
+
+  perf_timer_start("pandoc")
 
   # run intermediate conversion if it's been specified
   if (output_format$pandoc$keep_tex) {
@@ -300,6 +323,10 @@ render <- function(input,
                  output_format$pandoc$args,
                  !quiet)
 
+  perf_timer_stop("pandoc")
+
+  perf_timer_start("post-processor")
+
   # if there is a post-processor then call it
   if (!is.null(output_format$post_processor))
     output_file <- output_format$post_processor(yaml_front_matter,
@@ -310,6 +337,10 @@ render <- function(input,
 
   if (!quiet)
     message("\nOutput created: ", output_file)
+
+  perf_timer_stop("post-processor")
+
+  perf_timer_stop("render")
 
   # return the full path to the output file
   invisible(tools::file_path_as_absolute(output_file))
