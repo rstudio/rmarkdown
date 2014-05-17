@@ -14,7 +14,7 @@ Imports:
     utils,
     knitr (>= 1.2),
     yaml (>= 2.1.5),
-    htmltools (>= 0.2.1)
+    htmltools (>= 0.2.3)
 Suggests:
     shiny (>= 0.9.1),
     caTools,
