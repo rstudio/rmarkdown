@@ -267,6 +267,9 @@ shinyHTML_with_deps <- function (html_file, deps) {
     html_dependency = deps)
 }
 
+# given an input file and its encoding, return a list with values indicating
+# whether the input file's Shiny document can be cached and, if so, its cached
+# representation if available
 rmd_cached_output <- function (input, encoding) {
   # init return values
   cacheable <- FALSE
@@ -277,14 +280,17 @@ rmd_cached_output <- function (input, encoding) {
   # check to see if the file is a Shiny document
   front_matter <- parse_yaml_front_matter(read_lines_utf8(input, encoding))
   if (!identical(front_matter$runtime, "shiny")) {
-    cacheable <- TRUE
+
     # If it's not a Shiny document, then its output is cacheable. Hash the file
     # with its modified date to get a cache key.
+    cacheable <- TRUE
     output_key <- digest::digest(paste(input, file.info(input)[4]),
                                  algo = "md5", serialize = FALSE)
     output_dest <- paste(file.path(dirname(tempdir()), "rmarkdown",
                                    paste("rmd", output_key, sep = "_")),
                          "html", sep = ".")
+
+    # If the output is cacheable, it may also be already cached
     if (file.exists(output_dest)) {
       resource_folder <- knitr_files_dir(output_dest)
       deps_path <- file.path(resource_folder, "shiny.dep")
@@ -294,13 +300,12 @@ rmd_cached_output <- function (input, encoding) {
         on.exit(close(read_deps), add = TRUE)
         dependencies <- unserialize(read_deps)
       }
-      message("Serving cached output from static file ", input, " and folder ", deps_path)
       shiny_html <- shinyHTML_with_deps(output_dest, dependencies)
       cached <- TRUE
-    } else {
-      message("Creating cached output from static file ", input)
     }
   } else {
+    # It's not cacheable, and should be rendered to a session-specific temporary
+    # file
     output_dest <- tempfile(fileext = ".html")
   }
   list (
