@@ -227,9 +227,7 @@ rmarkdown_shiny_ui <- function(dir) {
     }
 
     # request must be for an R Markdown document
-    if (!identical(substr(tolower(req_path),
-                          nchar(req_path) - 3, nchar(req_path)),
-                   ".rmd")) {
+    if (!identical(tolower(tools::file_ext(req_path)), "rmd")) {
       return(NULL)
     }
 
