@@ -143,8 +143,10 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
       output_dest <- out$dest
 
       # if output is cached, return it directly
-      if (out$cached)
+      if (out$cached) {
+        addResourcePath(basename(out$resource_folder), out$resource_folder)
         return (out$shiny_html)
+      }
 
       # ensure destination directory exists
       if (!file.exists(dirname(output_dest))) {
@@ -266,30 +268,33 @@ shinyHTML_with_deps <- function (html_file, deps) {
 }
 
 rmd_cached_output <- function (input, encoding) {
+  # init return values
   cacheable <- FALSE
   cached <- FALSE
   shiny_html <- NULL
+  resource_folder <- ""
 
   # check to see if the file is a Shiny document
   front_matter <- parse_yaml_front_matter(read_lines_utf8(input, encoding))
   if (!identical(front_matter$runtime, "shiny")) {
     cacheable <- TRUE
-    # If it's not a Shiny document, we can cache the work we're about to do.
-    # Hash the file with its modified date to get a cache key.
+    # If it's not a Shiny document, then its output is cacheable. Hash the file
+    # with its modified date to get a cache key.
     output_key <- digest::digest(paste(input, file.info(input)[4]),
                                  algo = "md5", serialize = FALSE)
     output_dest <- paste(file.path(dirname(tempdir()), "rmarkdown",
                                    paste("rmd", output_key, sep = "_")),
                          "html", sep = ".")
     if (file.exists(output_dest)) {
-      deps_path <- file.path(knitr_files_dir(output_dest), "shiny.dep")
+      resource_folder <- knitr_files_dir(output_dest)
+      deps_path <- file.path(resource_folder, "shiny.dep")
       dependencies <- list()
       if (file.exists(deps_path)) {
         read_deps <- base::file(deps_path, open = "rb")
         on.exit(close(read_deps), add = TRUE)
         dependencies <- unserialize(read_deps)
       }
-      message("Serving cached output from static file ", input)
+      message("Serving cached output from static file ", input, " and folder ", deps_path)
       shiny_html <- shinyHTML_with_deps(output_dest, dependencies)
       cached <- TRUE
     } else {
@@ -302,7 +307,8 @@ rmd_cached_output <- function (input, encoding) {
     cacheable = cacheable,
     cached = cached,
     dest = output_dest,
-    shiny_html = shiny_html)
+    shiny_html = shiny_html,
+    resource_folder = resource_folder)
 }
 
 # resolve a path relative to a directory (from Shiny)
