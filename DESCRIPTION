@@ -18,7 +18,8 @@ Suggests:
     shiny (>= 0.9.1),
     caTools,
     httpuv (>= 1.2.2),
-    testthat
+    testthat,
+    digest
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
 URL: http://rmarkdown.rstudio.com
 License: GPL-3
