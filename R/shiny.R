@@ -347,3 +347,32 @@ file.path.ci <- function(dir, name) {
   return(matches[[1]])
 }
 
+#' @export
+knit_print.rmd_shiny_delayed <- function(x, options) {
+  # cache the chunk options and the expression to evaluate into the environment
+  assign("chunk_options", options, x$env)
+  assign("orig_expr", x$expr, x$env)
+
+  # evaluate the expression in the snapshotted environment
+  knitr::knit_print(shiny::renderUI(quote({
+    knitr::opts_knit$set(rmarkdown.runtime = "shiny")
+    shiny::HTML(knitr::knit_print(orig_expr, chunk_options))
+  }),
+  env = x$env,
+  quoted = TRUE))
+}
+
+render_delayed <- function(expr) {
+  # take a snapshot of the environment
+  env <- environment()
+  env_snapshot <- new.env(parent = parent.env(environment()))
+  for (var in ls(env, all.names = TRUE))
+    assign(var, get(var, env), env_snapshot)
+
+  # return an object containing the expression and the environment in which
+  # to evaluate it
+  structure(
+    list(expr = expr,
+         env = env),
+    class = "rmd_shiny_delayed")
+}
