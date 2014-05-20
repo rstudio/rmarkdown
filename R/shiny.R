@@ -356,23 +356,63 @@ knit_print.rmd_shiny_delayed <- function(x, options) {
   # evaluate the expression in the snapshotted environment
   knitr::knit_print(shiny::renderUI(quote({
     knitr::opts_knit$set(rmarkdown.runtime = "shiny")
-    shiny::HTML(knitr::knit_print(orig_expr, chunk_options))
+    shiny::HTML(knitr::knit_print(eval(orig_expr), chunk_options))
   }),
   env = x$env,
   quoted = TRUE))
 }
 
+#' Delay Rendering for an Expression
+#'
+#' In a Shiny document, evaluate the given expression after the document has
+#' finished rendering, instead of during render.
+#'
+#' @param expr The expression to evaluate.
+#'
+#' @return An object representing the expression.
+#'
+#' @details This function is useful inside Shiny documents. It delays the
+#'   evaluation of its argument until the document has finished its initial
+#'   render, so that the document can be viewed before the calculation is
+#'   finished.
+#'
+#'   Any expression that returns HTML can be wrapped in \code{render_delayed}.
+#'
+#' @note \code{expr} is evaluated in a copy of the environment in which the
+#'   \code{render_delayed} call appears. Consequently, no side effects created
+#'   by \expr{expr} are visible in succeeding expressions, nor are changes to
+#'   the environment after the call to \code{render_delayed} visible to
+#'   \code{expr}.
+#'
+#'   \code{expr} must be an expression that produces HTML.
+#'
+#' @examples
+#' \dontrun{
+#'
+#' # Add the following code to an R Markdown document
+#'
+#' div(Sys.time())
+#'
+#' render_delayed({
+#'  Sys.sleep(3)      # simulate an expensive computation
+#'  div(Sys.time())
+#' })
+#'
+#' div(Sys.time())
+#' }
+#'
+#' @export
 render_delayed <- function(expr) {
-  # take a snapshot of the environment
-  env <- environment()
-  env_snapshot <- new.env(parent = parent.env(environment()))
+  # take a snapshot of the environment in which the expr should be rendered
+  env <- parent.frame()
+  env_snapshot <- new.env(parent = parent.env(env))
   for (var in ls(env, all.names = TRUE))
-    assign(var, get(var, env), env_snapshot)
+      assign(var, get(var, env), env_snapshot)
 
   # return an object containing the expression and the environment in which
   # to evaluate it
   structure(
-    list(expr = expr,
-         env = env),
+    list(expr = substitute(expr),
+         env = env_snapshot),
     class = "rmd_shiny_delayed")
 }
