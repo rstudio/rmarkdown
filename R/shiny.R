@@ -347,21 +347,6 @@ file.path.ci <- function(dir, name) {
   return(matches[[1]])
 }
 
-#' @export
-knit_print.rmd_shiny_delayed <- function(x, options) {
-  # cache the chunk options and the expression to evaluate into the environment
-  assign("chunk_options", options, x$env)
-  assign("orig_expr", x$expr, x$env)
-
-  # evaluate the expression in the snapshotted environment
-  knitr::knit_print(shiny::renderUI(quote({
-    knitr::opts_knit$set(rmarkdown.runtime = "shiny")
-    shiny::HTML(knitr::knit_print(eval(orig_expr), chunk_options))
-  }),
-  env = x$env,
-  quoted = TRUE))
-}
-
 #' Delay Rendering for an Expression
 #'
 #' In a Shiny document, evaluate the given expression after the document has
@@ -409,10 +394,19 @@ render_delayed <- function(expr) {
   for (var in ls(env, all.names = TRUE))
       assign(var, get(var, env), env_snapshot)
 
-  # return an object containing the expression and the environment in which
-  # to evaluate it
-  structure(
-    list(expr = substitute(expr),
-         env = env_snapshot),
-    class = "rmd_shiny_delayed")
+  # take a snapshot of the current knitr and chunk options and the
+  # expression to be evaluated
+  assign("knitr_cached_chunk_opts", knitr::opts_current$get(), env_snapshot)
+  assign("knitr_cached_knit_opts", knitr::opts_knit$get(), env_snapshot)
+  assign("knitr_orig_expr", substitute(expr), env_snapshot)
+
+  # evaluate the expression at runtime
+  shiny::renderUI(quote({
+    knitr::opts_current$restore(knitr_cached_chunk_opts)
+    knitr::opts_knit$restore(knitr_cached_knit_opts)
+    shiny::HTML(knitr::knit_print(eval(knitr_orig_expr),
+                                  knitr::opts_current$get()))
+  }),
+  env = env_snapshot,
+  quoted = TRUE)
 }
