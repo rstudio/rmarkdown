@@ -347,3 +347,66 @@ file.path.ci <- function(dir, name) {
   return(matches[[1]])
 }
 
+#' Delay Rendering for an Expression
+#'
+#' In a Shiny document, evaluate the given expression after the document has
+#' finished rendering, instead of during render.
+#'
+#' @param expr The expression to evaluate.
+#'
+#' @return An object representing the expression.
+#'
+#' @details This function is useful inside Shiny documents. It delays the
+#'   evaluation of its argument until the document has finished its initial
+#'   render, so that the document can be viewed before the calculation is
+#'   finished.
+#'
+#'   Any expression that returns HTML can be wrapped in \code{render_delayed}.
+#'
+#' @note \code{expr} is evaluated in a \strong{copy} of the environment in which
+#'   the \code{render_delayed} call appears. Consequently, no side effects
+#'   created by \code{expr} are visible in succeeding expressions, nor are
+#'   changes to the environment after the call to \code{render_delayed} visible
+#'   to \code{expr}.
+#'
+#'   \code{expr} must be an expression that produces HTML.
+#'
+#' @examples
+#' \dontrun{
+#'
+#' # Add the following code to an R Markdown document
+#'
+#' div(Sys.time())
+#'
+#' render_delayed({
+#'  Sys.sleep(3)      # simulate an expensive computation
+#'  div(Sys.time())
+#' })
+#'
+#' div(Sys.time())
+#' }
+#'
+#' @export
+render_delayed <- function(expr) {
+  # take a snapshot of the environment in which the expr should be rendered
+  env <- parent.frame()
+  env_snapshot <- new.env(parent = parent.env(env))
+  for (var in ls(env, all.names = TRUE))
+      assign(var, get(var, env), env_snapshot)
+
+  # take a snapshot of the current knitr and chunk options and the
+  # expression to be evaluated
+  assign("knitr_cached_chunk_opts", knitr::opts_current$get(), env_snapshot)
+  assign("knitr_cached_knit_opts", knitr::opts_knit$get(), env_snapshot)
+  assign("knitr_orig_expr", substitute(expr), env_snapshot)
+
+  # evaluate the expression at runtime
+  shiny::renderUI(quote({
+    knitr::opts_current$restore(knitr_cached_chunk_opts)
+    knitr::opts_knit$restore(knitr_cached_knit_opts)
+    shiny::HTML(knitr::knit_print(eval(knitr_orig_expr),
+                                  knitr::opts_current$get()))
+  }),
+  env = env_snapshot,
+  quoted = TRUE)
+}
