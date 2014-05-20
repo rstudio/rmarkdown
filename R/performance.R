@@ -68,10 +68,10 @@ create_performance_dependency <- function(files_dir) {
   writeLines(js_lines, perf_js_file)
   file.copy(rmarkdown_system_file("rmd/h/rmarkdown/rmd_perf.css"),
             file.path(files_dir, "rmd_perf.css"))
-  html_dependency(
+  htmlDependency(
     name = "rmarkdown-performance",
     version = "0.1",
-    path = files_dir,
+    src = files_dir,
     script = "rmd_perf.js",
     stylesheet = "rmd_perf.css")
 }
