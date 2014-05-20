@@ -378,11 +378,11 @@ knit_print.rmd_shiny_delayed <- function(x, options) {
 #'
 #'   Any expression that returns HTML can be wrapped in \code{render_delayed}.
 #'
-#' @note \code{expr} is evaluated in a copy of the environment in which the
-#'   \code{render_delayed} call appears. Consequently, no side effects created
-#'   by \expr{expr} are visible in succeeding expressions, nor are changes to
-#'   the environment after the call to \code{render_delayed} visible to
-#'   \code{expr}.
+#' @note \code{expr} is evaluated in a \strong{copy} of the environment in which
+#'   the \code{render_delayed} call appears. Consequently, no side effects
+#'   created by \code{expr} are visible in succeeding expressions, nor are
+#'   changes to the environment after the call to \code{render_delayed} visible
+#'   to \code{expr}.
 #'
 #'   \code{expr} must be an expression that produces HTML.
 #'
