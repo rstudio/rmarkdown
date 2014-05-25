@@ -141,6 +141,7 @@ render <- function(input,
     output_format <- create_output_format(output_format$name,
                                           output_format$options)
   }
+  pandoc_to <- output_format$pandoc$to
 
   # generate outpout file based on input filename
   if (is.null(output_file))
@@ -181,7 +182,7 @@ render <- function(input,
     knitr::opts_chunk$set(tidy = FALSE, error = FALSE)
 
     # enable knitr hooks to have knowledge of the final output format
-    knitr::opts_knit$set(rmarkdown.pandoc.to = output_format$pandoc$to)
+    knitr::opts_knit$set(rmarkdown.pandoc.to = pandoc_to)
     knitr::opts_knit$set(rmarkdown.version = 2)
 
     # trim whitespace from around source code
@@ -195,12 +196,10 @@ render <- function(input,
     }
 
     # use filename based figure and cache directories
-    figures_dir <- paste(files_dir,
-                         "/figure-", output_format$pandoc$to, "/",
-                         sep = "")
+    figures_dir <- paste(files_dir, "/figure-", pandoc_to, "/", sep = "")
     knitr::opts_chunk$set(fig.path=figures_dir)
-    cache_dir <- knitr_cache_dir(input)
-    knitr::opts_chunk$set(cache.path=paste(cache_dir, "/", sep=""))
+    cache_dir <-knitr_cache_dir(input, pandoc_to)
+    knitr::opts_chunk$set(cache.path=cache_dir)
 
     # merge user options and hooks
     if (!is.null(output_format$knitr)) {
@@ -255,12 +254,12 @@ render <- function(input,
     if (!is_pandoc_to_html(output_format$pandoc)) {
       if (has_html_dependencies(knit_meta)) {
         stop("Functions that produce HTML output found in document targeting ",
-             output_format$pandoc$to, " output.\nPlease change the output type ",
+             pandoc_to, " output.\nPlease change the output type ",
              "of this document to HTML.", call. = FALSE)
       }
       if (!identical(runtime, "static")) {
         stop("Runtime '", runtime, "' is not supported for ",
-             output_format$pandoc$to, " output.\nPlease change the output type ",
+             pandoc_to, " output.\nPlease change the output type ",
              "of this document to HTML.", call. = FALSE)
       }
     }
@@ -306,7 +305,7 @@ render <- function(input,
   # run intermediate conversion if it's been specified
   if (output_format$pandoc$keep_tex) {
     pandoc_convert(utf8_input,
-                   output_format$pandoc$to,
+                   pandoc_to,
                    output_format$pandoc$from,
                    file_with_ext(output_file, "tex"),
                    run_citeproc,
@@ -316,7 +315,7 @@ render <- function(input,
 
   # run the main conversion
   pandoc_convert(utf8_input,
-                 output_format$pandoc$to,
+                 pandoc_to,
                  output_format$pandoc$from,
                  output_file,
                  run_citeproc,
