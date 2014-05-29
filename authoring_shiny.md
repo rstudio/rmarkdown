@@ -1,5 +1,5 @@
 ---
-title: "Interactive Documents with Shiny"
+title: "Interactive Documents"
 output: 
   html_document:
     toc: true
