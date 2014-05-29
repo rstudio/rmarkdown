@@ -11,7 +11,7 @@
 
 
 
-<title>R Code Chunks</title>
+<title>Shiny Docs: Advanced Topics</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -144,90 +144,66 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div class="span10 offset1">
 
 <div id="header">
-<h1 class="title">R Code Chunks</h1>
+<h1 class="title">Shiny Docs: Advanced Topics</h1>
 </div>
 
 
-<div id="basic-usage" class="section level2">
-<h2>Basic Usage</h2>
-<p>R code chunks can be used as a means render R output into documents or to simply display code for illustration. Here is a simple R code chunk that will result in both the code and it’s output being included:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r}
-summary(cars)
+<div id="shiny-reactives" class="section level2">
+<h2>Shiny Reactives</h2>
+<p>Shiny Docs can also contain reactive expressions (useful when a piece of dynamic data is used in several places). As in Shiny applications, these values respond to changes in their inputs.</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+selectInput("dataset", "Choose Dataset:", c("cars", "iris", "mtcars"))
+
+activeDataset <- reactive({
+  get(input$dataset, pos="package:datasets", inherits=FALSE)
+})
+
+renderTable({
+  head(activeDataset(), 5)
+})
+
+renderPlot({
+  plot(activeDataset())
+})
 &#96;&#96;&#96;
 </code></pre>
 
-<p>To display the output of a code chunk but not the underlying R code, you specify the <code>echo=FALSE</code> option:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
-summary(cars)
-&#96;&#96;&#96;
-</code></pre>
-
-<p>Note that R code chunks can also be used to render plots. To display a plot while omitting the code used to generate the plot you’d do this:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
-plot(cars)
-&#96;&#96;&#96;
-</code></pre>
-
-<p>To display R code without evaluating it, you specify the <code>eval=FALSE</code> chunk option:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r, eval=FALSE}
-summary(cars)
-&#96;&#96;&#96;
-</code></pre>
-
+<p>Note that reactive expressions can be used anywhere, including in the definition of inline Shiny applications using the <code>shinyApp</code> function. To learn more about reactive expressions, see the <a href="http://shiny.rstudio.com/articles/basics.html">Shiny Tutorial</a>.</p>
 </div>
-<div id="table-output" class="section level2">
-<h2>Table Output</h2>
-<p>By default data frames and matrixes are output as they would be in the R terminal (in a monospaced font). However, if you prefer that data be displayed with additional formatting you can use the <code>knitr::kable</code> function. For example:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r, results='asis'}
-knitr::kable(mtcars)
-&#96;&#96;&#96;
-</code></pre>
-
-<p>Note the use of the <code>results='asis'</code> chunk option. This is required to ensure that the raw table output isn’t processed furthur by knitr. The <code>kable</code> function includes several options to control the maximum number of digits for numeric columns, alignment, etc (refer to the knitr package documentation for additional details).</p>
+<div id="multiple-pages" class="section level2">
+<h2>Multiple Pages</h2>
+<p>You can link to other Shiny Doc by using the markdown link syntax and specifying the <em>relative</em> path to the document, e.g. <code>[Another Shiny Document](another.Rmd)</code>.</p>
+<p>Currently, only one document can be active at a time, so documents can’t easily share state (although some primitive global sharing is possible via <code>global.R</code>; see the help for <code>rmarkdown::run</code>).</p>
+<p>By default it’s only possible to link to R Markdown files in the same directory subtree as the file on which <code>rmarkdown::run</code> was invoked (i.e you can’t link to <code>../foo.rmd</code>.) You can use the <code>dir</code> argument to <code>rmarkdown::run</code> to indicate the directory to treat as the root.</p>
 </div>
-<div id="caching" class="section level2">
-<h2>Caching</h2>
-<p>If document rendering becomes time consuming due to long computations or plots that are expensive to generate you can use knitr caching to improve performance. The documentation <a href="http://yihui.name/knitr/options">knitr chunk and package options</a> describe how caching works and the <a href="http://yihui.name/knitr/demo/cache/">cache examples</a> provide additional details.</p>
-<p>If you want to enable caching globally for a document you can include a code chunk like this at the top of the document:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r setup, include=FALSE}
-knitr::opts_chunk$set(cache=TRUE)
-&#96;&#96;&#96;
-</code></pre>
-
-<p>If you run into problems with cached output you can always clear the knitr cache by removing the folder named with a <code>_cache</code> suffix within your document’s directory.</p>
+<div id="shiny-widgets" class="section level2">
+<h2>Shiny Widgets</h2>
+<p>It’s also possible to create re-usable Shiny widgets that enable authors to embed a Shiny application within a page with a single function call. For example, the following code could be used to embed a K Means clustering application:</p>
+<pre class="r"><code>kmeans_cluster(iris)</code></pre>
+<p>This is what the widget would look like inside a running document:</p>
+<p><img src="images/shiny-widget-kmeans.png" alt="Shiny Widget KMeans" /></p>
+<p>See the article on <a href="authoring_shiny_widgets.html">Shiny Widgets</a> for additional details.</p>
 </div>
-<div id="rcpp-code-chunks" class="section level2">
-<h2>Rcpp Code Chunks</h2>
-<p>You can also create code chunks that define functions in C++ using <a href="http://cran.rstudio.com/web/packages/Rcpp/vignettes/Rcpp-attributes.pdf">Rcpp Attributes</a>. This is accomplished using the <code>engine = 'Rcpp'</code> chunk option. For example:</p>
-<pre class="cpp"><code>&#96;&#96;&#96;{r engine='Rcpp'}
-#include &lt;Rcpp.h&gt;
-
-// [[Rcpp::export]]
-int fibonacci(const int x) {
-    if (x == 0 || x == 1) return(x);
-    return (fibonacci(x - 1)) + fibonacci(x - 2);
-}
-&#96;&#96;&#96;
-</code></pre>
-
-<p>Because <code>fibonacci</code> was defined with the <code>Rcpp::export</code> attribute it can now be called as a normal R function:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r}
-fibonacci(10L)
-fibonacci(20L)
-&#96;&#96;&#96;
-</code></pre>
-
-<p>Note that caching should not be used with Rcpp code chunks (since the compiled C++ function will not survive past the lifetime of the current R session).</p>
-</div>
-<div id="learning-more" class="section level2">
-<h2>Learning More</h2>
-<p>The knitr package is an extremely powerful tool for dynamic content generation and is worth studying in detail to understand all of it’s features and capabilities. Good resources for learning more about knitr include:</p>
+<div id="converting-existing-documents" class="section level2">
+<h2>Converting Existing Documents</h2>
+<p>The getting started example demonstrated creating a brand new Shiny Doc. However, any R Markdown output format that produces HTML can be converted into a Shiny Doc. To convert and existing document:</p>
 <ul>
-<li>The <a href="http://yihui.name/knitr/">knitr website</a></li>
-<li>The <a href="http://bit.ly/117OLVl">knitr manual</a> and <a href="http://bit.ly/114GNdP">knitr graphics manual</a></li>
-<li>The galleries of <a href="http://yihui.name/knitr/demos">demos</a> and <a href="https://github.com/yihui/knitr-examples">examples</a></li>
-<li>The book <a href="http://www.amazon.com/dp/1482203537/ref=cm_sw_su_dp">Dynamic Documents with R and knitr</a> (written by the creator of knitr, <a href="http://yihui.name">Yihui Xie</a>)</li>
+<li><p>Add <code>runtime: shiny</code> to its YAML front matter.</p></li>
+<li><p>Render it with <code>rmarkdown::run</code> instead of <code>rmarkdown::render</code>.</p></li>
 </ul>
+<p>For example, here’s the front matter for a Shiny <a href="html_document_format.html">html_document</a>:</p>
+<pre class="yaml"><code>---
+title: &quot;My Document&quot;
+output: html_document
+runtime: shiny
+---</code></pre>
+<p>And here’s the front matter for a Shiny <a href="ioslides_presentation_format.html">ioslides_presentation</a>:</p>
+<pre class="yaml"><code>---
+title: &quot;My Document&quot;
+output: ioslides_presentation
+runtime: shiny
+---</code></pre>
+<p>As described above, once you’ve added <code>runtime: shiny</code> to the document you can run it using either the <strong>Run Document</strong> command in RStudio or using the <code>rmarkdown::run</code> function. By default, documents are re-rendered on save, so once you’ve got a browser open with the document loaded, just save the R Markdown file to see your changes.</p>
 </div>
 
 </div>

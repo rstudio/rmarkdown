@@ -144,7 +144,7 @@ With the basics described above you can get started with R Markdown right away. 
 
 * [R Code Chunks](authoring_rcodechunks.html), which goes into more depth on customizing the behavior of embedded R code.
 
-* [Interactive Documents](authoring_shiny.html), which describes how to make R Markdown documents interactive using [Shiny](http://shiny.rstudio.com).
+* [Interactive Documents with Shiny](authoring_shiny.html), which describes how to make R Markdown documents interactive using [Shiny](http://shiny.rstudio.com).
 
 * [Compiling Notebooks](authoring_compile_notebook.html), which describes how to compile HTML, PDF, or MS Word notebooks from R scripts.
 
@@ -167,5 +167,5 @@ See also the R Markdown developer documentation including:
     
 * Guide to [Creating New Formats](developer_custom_formats.html) for R Markdown
     
-* Adding interactive components to R Markdown documents using [Shiny Widgets](developer_shiny_widgets.html).
+* Adding interactive components to R Markdown documents using [Shiny Widgets](authoring_shiny_widgets.html).
 

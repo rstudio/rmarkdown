@@ -87,20 +87,24 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="brand" href="index.html">R Markdown</a>
+      <a class="brand" href="index.html">R Markdown v2</a>
       <div class="nav-collapse collapse">
         <ul class="nav">
           <li><a href="index.html">Home</a></li>
           <li class="dropdown">
             <a href="authoring" class="dropdown-toggle" data-toggle="dropdown">Authoring <b class="caret"></b></a>
             <ul class="dropdown-menu">
+               <li class="nav-header">R Markdown</li>
                <li><a href="authoring_basics.html">Markdown Basics</a></li>
                <li><a href="authoring_pandoc_markdown.html">Pandoc Markdown</a></li>
                <li><a href="authoring_rcodechunks.html">R Code Chunks</a></li>
-               <li class="divider"></li>
-               <li><a href="authoring_shiny.html">Interactive Documents</a></li>
-               <li class="divider"></li>
                <li><a href="authoring_migrating_from_v1.html">Migrating from v1</a></li>
+               <li class="divider"></li>
+               <li class="nav-header">Shiny Docs</li>
+               <li><a href="authoring_shiny.html">Interactive Documents</a></li>
+               <li><a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a></li>
+               <li><a href="authoring_shiny_widgets.html">Creating Shiny Widgets</a></li>
+               <li><a href="authoring_shiny_advanced.html">Advanced Topics</a></li>
             </ul>
           </li>
           <li class="dropdown">
@@ -123,8 +127,6 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
            <li class="dropdown">
             <a href="developer" class="dropdown-toggle" data-toggle="dropdown">Developer <b class="caret"></b></a>
             <ul class="dropdown-menu">
-               <li><a href="developer_shiny_widgets.html">Shiny Widgets</a></li>
-               <li class="divider"></li>
                <li><a href="developer_document_templates.html">Document Templates</a></li>
                <li><a href="developer_custom_formats.html">Creating New Formats</a></li>
                <li class="divider"></li>
@@ -249,7 +251,7 @@ output:
 <ul>
 <li><p><a href="authoring_basics.html">Markdown Basics</a>, which describes the most commonly used markdown constructs.</p></li>
 <li><p><a href="authoring_rcodechunks.html">R Code Chunks</a>, which goes into more depth on customizing the behavior of embedded R code.</p></li>
-<li><p><a href="authoring_shiny.html">Interactive Documents</a>, which describes how to make R Markdown documents interactive using <a href="http://shiny.rstudio.com">Shiny</a>.</p></li>
+<li><p><a href="authoring_shiny.html">Interactive Documents with Shiny</a>, which describes how to make R Markdown documents interactive using <a href="http://shiny.rstudio.com">Shiny</a>.</p></li>
 <li><p><a href="authoring_compile_notebook.html">Compiling Notebooks</a>, which describes how to compile HTML, PDF, or MS Word notebooks from R scripts.</p></li>
 <li><p>Document output formats: <a href="html_document_format.html">HTML</a>, <a href="pdf_document_format.html">PDF</a>, <a href="word_document_format.html">Word</a></p></li>
 <li><p>Presentation output formats: <a href="ioslides_presentation_format.html">ioslides</a>, <a href="revealjs_presentation_format.html">reveal.js</a>, <a href="beamer_presentation_format.html">Beamer</a></p></li>
@@ -264,7 +266,7 @@ output:
 <ul>
 <li><p>Creating re-usable <a href="developer_document_templates.html">Document Templates</a></p></li>
 <li><p>Guide to <a href="developer_custom_formats.html">Creating New Formats</a> for R Markdown</p></li>
-<li><p>Adding interactive components to R Markdown documents using <a href="developer_shiny_widgets.html">Shiny Widgets</a>.</p></li>
+<li><p>Adding interactive components to R Markdown documents using <a href="authoring_shiny_widgets.html">Shiny Widgets</a>.</p></li>
 </ul>
 </div>
 

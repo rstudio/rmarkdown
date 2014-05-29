@@ -1,5 +1,5 @@
 ---
-title: "Shiny Widgets"
+title: "Creating Shiny Widgets"
 output: 
   html_document:
     toc: true
@@ -10,10 +10,10 @@ Shiny widgets enable you to create re-usable Shiny components that are included 
 
 #### Prerequisties
 
-Creating Shiny widgets requires development versions of the **knitr**, **shiny**, and **rmarkdown** packages, which you can install as follows:
+Creating Shiny widgets requires development versions of the **shiny** and **rmarkdown** packages, which you can install as follows:
 
 ```r
-devtools::install_github(c("yihui/knitr", "rstudio/shiny", "rstudio/rmarkdown"))
+devtools::install_github(c("rstudio/shiny", "rstudio/rmarkdown"))
 ```
 
 ## Creating a Shiny Widget

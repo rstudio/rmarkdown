@@ -11,7 +11,7 @@
 
 
 
-<title>R Code Chunks</title>
+<title>Embedded Shiny Apps</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -144,90 +144,55 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div class="span10 offset1">
 
 <div id="header">
-<h1 class="title">R Code Chunks</h1>
+<h1 class="title">Embedded Shiny Apps</h1>
 </div>
 
 
-<div id="basic-usage" class="section level2">
-<h2>Basic Usage</h2>
-<p>R code chunks can be used as a means render R output into documents or to simply display code for illustration. Here is a simple R code chunk that will result in both the code and it’s output being included:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r}
-summary(cars)
+<p>It’s also possible to embed an entire Shiny application within a document. There are two syntaxes for this:</p>
+<ol style="list-style-type: decimal">
+<li><p>Defining the application inline using the <code>shinyApp</code> function; or</p></li>
+<li><p>Referring to an external application directory using the <code>shinyAppDir</code> function.</p></li>
+</ol>
+<div id="inline-applications" class="section level2">
+<h2>Inline Applications</h2>
+<p>This example uses an inline definition:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+shinyApp(
+  
+  ui = fluidPage(
+    selectInput("region", "Region:", 
+                choices = colnames(WorldPhones)),
+    plotOutput("phonePlot")
+  ),
+  
+  server = function(input, output) {
+    output$phonePlot <- renderPlot({
+      barplot(WorldPhones[,input$region]*1000, 
+              ylab = "Number of Telephones", xlab = "Year")
+    })
+  },
+  
+  options = list(height = 500)
+)
 &#96;&#96;&#96;
 </code></pre>
 
-<p>To display the output of a code chunk but not the underlying R code, you specify the <code>echo=FALSE</code> option:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
-summary(cars)
-&#96;&#96;&#96;
-</code></pre>
-
-<p>Note that R code chunks can also be used to render plots. To display a plot while omitting the code used to generate the plot you’d do this:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
-plot(cars)
-&#96;&#96;&#96;
-</code></pre>
-
-<p>To display R code without evaluating it, you specify the <code>eval=FALSE</code> chunk option:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r, eval=FALSE}
-summary(cars)
-&#96;&#96;&#96;
-</code></pre>
-
+<p>Note the use of the <code>height</code> parameter to determine how much vertical space the embedded application should occupy.</p>
 </div>
-<div id="table-output" class="section level2">
-<h2>Table Output</h2>
-<p>By default data frames and matrixes are output as they would be in the R terminal (in a monospaced font). However, if you prefer that data be displayed with additional formatting you can use the <code>knitr::kable</code> function. For example:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r, results='asis'}
-knitr::kable(mtcars)
+<div id="external-applications" class="section level2">
+<h2>External Applications</h2>
+<p>This example embeds a Shiny application defined in another directory:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+shinyAppDir(
+  system.file("examples/06_tabsets", package="shiny"),
+  options=list(
+    width="100%", height=700
+  )
+)
 &#96;&#96;&#96;
 </code></pre>
 
-<p>Note the use of the <code>results='asis'</code> chunk option. This is required to ensure that the raw table output isn’t processed furthur by knitr. The <code>kable</code> function includes several options to control the maximum number of digits for numeric columns, alignment, etc (refer to the knitr package documentation for additional details).</p>
-</div>
-<div id="caching" class="section level2">
-<h2>Caching</h2>
-<p>If document rendering becomes time consuming due to long computations or plots that are expensive to generate you can use knitr caching to improve performance. The documentation <a href="http://yihui.name/knitr/options">knitr chunk and package options</a> describe how caching works and the <a href="http://yihui.name/knitr/demo/cache/">cache examples</a> provide additional details.</p>
-<p>If you want to enable caching globally for a document you can include a code chunk like this at the top of the document:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r setup, include=FALSE}
-knitr::opts_chunk$set(cache=TRUE)
-&#96;&#96;&#96;
-</code></pre>
-
-<p>If you run into problems with cached output you can always clear the knitr cache by removing the folder named with a <code>_cache</code> suffix within your document’s directory.</p>
-</div>
-<div id="rcpp-code-chunks" class="section level2">
-<h2>Rcpp Code Chunks</h2>
-<p>You can also create code chunks that define functions in C++ using <a href="http://cran.rstudio.com/web/packages/Rcpp/vignettes/Rcpp-attributes.pdf">Rcpp Attributes</a>. This is accomplished using the <code>engine = 'Rcpp'</code> chunk option. For example:</p>
-<pre class="cpp"><code>&#96;&#96;&#96;{r engine='Rcpp'}
-#include &lt;Rcpp.h&gt;
-
-// [[Rcpp::export]]
-int fibonacci(const int x) {
-    if (x == 0 || x == 1) return(x);
-    return (fibonacci(x - 1)) + fibonacci(x - 2);
-}
-&#96;&#96;&#96;
-</code></pre>
-
-<p>Because <code>fibonacci</code> was defined with the <code>Rcpp::export</code> attribute it can now be called as a normal R function:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r}
-fibonacci(10L)
-fibonacci(20L)
-&#96;&#96;&#96;
-</code></pre>
-
-<p>Note that caching should not be used with Rcpp code chunks (since the compiled C++ function will not survive past the lifetime of the current R session).</p>
-</div>
-<div id="learning-more" class="section level2">
-<h2>Learning More</h2>
-<p>The knitr package is an extremely powerful tool for dynamic content generation and is worth studying in detail to understand all of it’s features and capabilities. Good resources for learning more about knitr include:</p>
-<ul>
-<li>The <a href="http://yihui.name/knitr/">knitr website</a></li>
-<li>The <a href="http://bit.ly/117OLVl">knitr manual</a> and <a href="http://bit.ly/114GNdP">knitr graphics manual</a></li>
-<li>The galleries of <a href="http://yihui.name/knitr/demos">demos</a> and <a href="https://github.com/yihui/knitr-examples">examples</a></li>
-<li>The book <a href="http://www.amazon.com/dp/1482203537/ref=cm_sw_su_dp">Dynamic Documents with R and knitr</a> (written by the creator of knitr, <a href="http://yihui.name">Yihui Xie</a>)</li>
-</ul>
+<p>Note that in all of R code chunks above the <code>echo = FALSE</code> attribute is used. This is to prevent the R code within the chunk from rendering in the document alongside the Shiny components.</p>
 </div>
 
 </div>
