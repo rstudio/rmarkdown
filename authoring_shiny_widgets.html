@@ -196,7 +196,7 @@ kmeans_cluster(iris)
 <p><img src="images/shiny-widget-kmeans.png" alt="Shiny Widget KMeans" /></p>
 <div id="source-code" class="section level4">
 <h4>Source Code</h4>
-<p>Here’s the source code for the <code>kmeans_cluster</code> function. Note the use of the <code>height</code> option to control the default height of the widget when rendered inside a document.</p>
+<p>Here’s the source code for the <code>kmeans_cluster</code> function. Note the use of use of <code>options = list(height = 500)</code> in the call to <code>shinyApp</code> to control the default height of the widget when rendered inside a document.</p>
 <pre class="r"><code>kmeans_cluster &lt;- function(dataset) { 
   
   require(shiny)  
