@@ -24,7 +24,7 @@ Shiny Docs aren't limited to longer form HTML documents, you can also embed Shin
 
 ![Shiny Presentation](images/shiny-run-presentation.png)
 
-Shiny Docs combine the expressiveness of R Markdown with the interactivity of Shiny. These documents can be run locally on the desktop or be deployed to [Shiny Server v1.2](http://www.rstudio.com/shiny/server/) or [ShinyApps](http://www.rstudio.com/shiny/hosted/) (see the [Deployment] section below for more details).
+Shiny Docs combine the expressiveness of R Markdown with the interactivity of Shiny. These documents can be run locally on the desktop or be deployed to [ShinyApps](http://www.rstudio.com/shiny/hosted/) or Shiny Server v1.2 (see the [Deployment] section below for more details).
 
 ## Getting Started
 
@@ -88,18 +88,6 @@ If you haven’t used Shiny before some of the above code will be unfamiliar to 
 
 ## Deployment
 
-### Shiny Server
-
-[Shiny Server v1.2](http://www.rstudio.com/shiny/server/) or higher supports deployment of Shiny Docs. To deploy one or more Shiny Docs you simply make them available within a directory hosted by Shiny Server and address them by filename. For example:
-
-http://example.com/reports/analysis.Rmd 
-
-Note that in order to serve Shiny Docs you need to install the latest versions of both the **rmarkdown** and **shiny** packages on your server as follows:
-
-```r
-devtools::install_github(c("rstudio/rmarkdown", "rstudio/shiny"))
-```
-
 ### ShinyApps
 
 You can publish Shiny Docs to the [ShinyApps](http://www.rstudio.com/shiny/hosted/) hosted service. To do this you should ensure that you have:
@@ -121,6 +109,11 @@ shinyapps::deployApp()
 If you are using RStudio you can also use the **Deploy** button available when working with a Shiny Doc:
 
 ![Shinyapps Deploy](images/shinyapps-deploy.png)
+
+### Shiny Server
+
+Deploying Shiny Docs is not yet supported by [Shiny Server]((http://www.rstudio.com/shiny/server/)). However, support is forthcoming in Shiny Server v1.2 which is scheduled for release in mid-June.
+
 
 ## Learning More
 

@@ -76,7 +76,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <body>
 
-<div class="container">
+<div class="container-fluid">
 
 
 <div class="navbar navbar-default navbar-fixed-top">
@@ -156,8 +156,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#inputs-and-outputs">Inputs and Outputs</a></li>
 </ul></li>
 <li><a href="#deployment">Deployment</a><ul>
-<li><a href="#shiny-server">Shiny Server</a></li>
 <li><a href="#shinyapps">ShinyApps</a></li>
+<li><a href="#shiny-server">Shiny Server</a></li>
 </ul></li>
 <li><a href="#learning-more">Learning More</a></li>
 </ul>
@@ -173,7 +173,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <p><img src="images/shiny-code.png" alt="Shiny Code" /></p>
 <p>Shiny Docs aren’t limited to longer form HTML documents, you can also embed Shiny components directly within HTML presentations:</p>
 <p><img src="images/shiny-run-presentation.png" alt="Shiny Presentation" /></p>
-<p>Shiny Docs combine the expressiveness of R Markdown with the interactivity of Shiny. These documents can be run locally on the desktop or be deployed to <a href="http://www.rstudio.com/shiny/server/">Shiny Server v1.2</a> or <a href="http://www.rstudio.com/shiny/hosted/">ShinyApps</a> (see the <a href="#deployment">Deployment</a> section below for more details).</p>
+<p>Shiny Docs combine the expressiveness of R Markdown with the interactivity of Shiny. These documents can be run locally on the desktop or be deployed to <a href="http://www.rstudio.com/shiny/hosted/">ShinyApps</a> or Shiny Server v1.2 (see the <a href="#deployment">Deployment</a> section below for more details).</p>
 </div>
 <div id="getting-started" class="section level2">
 <h2>Getting Started</h2>
@@ -225,13 +225,6 @@ renderPlot({
 </div>
 <div id="deployment" class="section level2">
 <h2>Deployment</h2>
-<div id="shiny-server" class="section level3">
-<h3>Shiny Server</h3>
-<p><a href="http://www.rstudio.com/shiny/server/">Shiny Server v1.2</a> or higher supports deployment of Shiny Docs. To deploy one or more Shiny Docs you simply make them available within a directory hosted by Shiny Server and address them by filename. For example:</p>
-<p><a href="http://example.com/reports/analysis.Rmd">http://example.com/reports/analysis.Rmd</a></p>
-<p>Note that in order to serve Shiny Docs you need to install the latest versions of both the <strong>rmarkdown</strong> and <strong>shiny</strong> packages on your server as follows:</p>
-<pre class="r"><code>devtools::install_github(c(&quot;rstudio/rmarkdown&quot;, &quot;rstudio/shiny&quot;))</code></pre>
-</div>
 <div id="shinyapps" class="section level3">
 <h3>ShinyApps</h3>
 <p>You can publish Shiny Docs to the <a href="http://www.rstudio.com/shiny/hosted/">ShinyApps</a> hosted service. To do this you should ensure that you have:</p>
@@ -244,6 +237,10 @@ renderPlot({
 <pre class="r"><code>shinyapps::deployApp()</code></pre>
 <p>If you are using RStudio you can also use the <strong>Deploy</strong> button available when working with a Shiny Doc:</p>
 <p><img src="images/shinyapps-deploy.png" alt="Shinyapps Deploy" /></p>
+</div>
+<div id="shiny-server" class="section level3">
+<h3>Shiny Server</h3>
+<p>Deploying Shiny Docs is not yet supported by <a href="(http://www.rstudio.com/shiny/server/)">Shiny Server</a>. However, support is forthcoming in Shiny Server v1.2 which is scheduled for release in mid-June.</p>
 </div>
 </div>
 <div id="learning-more" class="section level2">
