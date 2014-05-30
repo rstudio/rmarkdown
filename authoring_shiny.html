@@ -11,7 +11,7 @@
 
 
 
-<title>Interactive Documents with Shiny</title>
+<title>Interactive Documents (Shiny Docs)</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -144,37 +144,53 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <div class="span10 offset1">
 
 <div id="header">
-<h1 class="title">Interactive Documents with Shiny</h1>
+<h1 class="title">Interactive Documents (Shiny Docs)</h1>
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#getting-started">Getting Started</a><ul>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#creating-a-shiny-doc">Creating a Shiny Doc</a></li>
+<li><a href="#inputs-and-outputs">Inputs and Outputs</a></li>
+</ul></li>
+<li><a href="#deployment">Deployment</a><ul>
+<li><a href="#shiny-server">Shiny Server</a></li>
+<li><a href="#shinyapps">ShinyApps</a></li>
+</ul></li>
+<li><a href="#learning-more">Learning More</a></li>
+</ul>
+</div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>You can use the <a href="http://shiny.rstudio.com">Shiny</a> web application framework to make your R Markdown documents fully interative. For example, readers of your document could change the assumptions underlying a data visualization and see the results immediately.</p>
-<p>Here’s an example of a simple R Markdown document that contains an interactive plot:</p>
+<p>R Markdown has been extended to support fully interactive documents. Unlike the more traditional workflow of creating static output of your analysis, you can now create documents that allow your readers to change the assumptions underlying your analysis and see the results immediately.</p>
+<p>R Markdown leverages <a href="http://shiny.rstudio.com">Shiny</a> at it’s core to make this possible. Here is a simple example of an R Markdown document with an interactive plot:</p>
 <p><img src="images/shiny-interactive-plot.png" alt="Shiny Hist Plot" /></p>
-<p>Users can manipulate the number of bins and bandwidth adjustment and the plot automatically updates to reflect the changes. Adding an interactive plot to a document is straightfoward: simply wrap the code used to generate the plot in the <code>renderPlot</code> function and specify the user inputs (e.g. the <code>selectInput</code> and <code>sliderInput</code> in the code below).</p>
-<p>For example, here’s what the code used to generate the document above looks like:</p>
+<p>Note that the reader of this document is able to manipulate the number of bins and bandwidth adjustment which in turn automatically updates the plot to reflect the changes.</p>
+<p>Adding an interactive plot to a document is straightfoward: simply wrap the code used to generate the plot in the <code>renderPlot</code> function and define the user inputs required to make the plot dynamic. For example, here’s what the code used to generate the document above looks like:</p>
 <p><img src="images/shiny-code.png" alt="Shiny Code" /></p>
-<p>The resulting “Shiny Doc” combines the expressiveness of R Markdown with the interactivity of Shiny. These documents are run just like Shiny applications: they can be run locally or be deployed to <a href="http://www.rstudio.com/shiny/server/">Shiny Server v1.2</a> or <a href="http://www.rstudio.com/shiny/hosted/">ShinyApps</a> (see the <a href="#deployment">Deployment</a> section below for more details).</p>
+<p>Shiny Docs aren’t limited to longer form HTML documents, you can also embed Shiny components directly within HTML presentations:</p>
+<p><img src="images/shiny-run-presentation.png" alt="Shiny Presentation" /></p>
+<p>Shiny Docs combine the expressiveness of R Markdown with the interactivity of Shiny. These documents can be run locally on the desktop or be deployed to <a href="http://www.rstudio.com/shiny/server/">Shiny Server v1.2</a> or <a href="http://www.rstudio.com/shiny/hosted/">ShinyApps</a> (see the <a href="#deployment">Deployment</a> section below for more details).</p>
 </div>
 <div id="getting-started" class="section level2">
 <h2>Getting Started</h2>
 <div id="prerequisites" class="section level3">
 <h3>Prerequisites</h3>
 <p>Working with Shiny Docs requires an up to date version of the <a href="http://www.rstudio.com/ide/download/preview">RStudio Preview Release</a> (v0.98.872 or later) so be sure to update RStudio before trying out these features.</p>
-<p>The <a href="http://www.rstudio.com/ide/download/preview">RStudio Preview Release</a> includes everything you need to create Shiny documents (including the latest development version of the Shiny package). If you are not using RStudio you can also install the required version of Shiny as follows:</p>
-<pre class="r"><code>devtools::install_github(&quot;rstudio/shiny&quot;)</code></pre>
+<p>The <a href="http://www.rstudio.com/ide/download/preview">RStudio Preview Release</a> includes everything you need to create Shiny documents (including the latest development version of the Shiny package). If you are not using RStudio you can also install the required versions of <strong>rmarkdown</strong> and <strong>shiny</strong> as follows:</p>
+<pre class="r"><code>devtools::install_github(c(&quot;rstudio/rmarkdown&quot;, rstudio/shiny&quot;))</code></pre>
 </div>
 <div id="creating-a-shiny-doc" class="section level3">
 <h3>Creating a Shiny Doc</h3>
 <p>To create a new Shiny Doc open the <strong>New R Markdown</strong> dialog in RStudio and choose to create a document with the “Shiny Document” template:</p>
 <p><img src="images/new-shiny-document.png" alt="New R Markdown Shiny Document" /></p>
-<p>You can run a document locally using the <strong>Run Document</strong> command on the editor toolbar:</p>
+<p>You can run a document locally using the <strong>Run Document</strong> command on the editor toolbar, or use the keyboard shortcut Ctrl+Shift+K (Cmd+Shift+K on Mac):</p>
 <p><img src="images/shiny-run-document.png" alt="Shiny Run Document" /></p>
-<p>You can also run the document from the console using the <code>rmarkdown::run</code> function:</p>
-<pre class="r"><code>rmarkdown::run(&quot;MyShinyDocument.Rmd&quot;)</code></pre>
-<p>If you haven’t used Shiny before some of the code will be unfamiliar to you (the basics are explained below). In addition, the <a href="http://shiny.rstudio.com/tutorial">Shiny Tutorial</a> is a good place to learn more.</p>
+<p>Note that this command runs the document in a separate R process, so you can continue to use the R console while the document is running. You can see any R console output from this separate process in the R Markdown console tab in RStudio.</p>
+<p>If you’re not using RStudio, or want to run the document in-process for troubleshooting, you can also run the document from the console using the <code>rmarkdown::run</code> function.</p>
 </div>
 <div id="inputs-and-outputs" class="section level3">
 <h3>Inputs and Outputs</h3>
@@ -204,6 +220,7 @@ renderPlot({
 </code></pre>
 
 <p><img src="images/shiny-hist-plot.gif" alt="Shiny Hist Plot" /></p>
+<p>If you haven’t used Shiny before some of the above code will be unfamiliar to you. The <a href="http://shiny.rstudio.com/tutorial">Shiny Tutorial</a> is a good place to learn more.</p>
 </div>
 </div>
 <div id="deployment" class="section level2">

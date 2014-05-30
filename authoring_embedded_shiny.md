@@ -1,8 +1,11 @@
 ---
 title: "Embedded Shiny Apps"
+output:
+  html_document:
+    toc: true
 ---
 
-It's also possible to embed an entire Shiny application within a document. There are two syntaxes for this: 
+It's possible to embed an entire Shiny application within a document. There are two syntaxes for this: 
 
 1) Defining the application inline using the `shinyApp` function; or
 

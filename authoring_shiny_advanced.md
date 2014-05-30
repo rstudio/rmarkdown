@@ -1,5 +1,8 @@
 ---
 title: "Shiny Docs: Advanced Topics"
+output:
+  html_document:
+    toc: true
 ---
 
 ## Shiny Reactives
@@ -27,26 +30,31 @@ Note that reactive expressions can be used anywhere, including in the definition
 
 ## Multiple Pages
  
-You can link to other Shiny Doc by using the markdown link syntax and specifying the *relative* path to the document, e.g. `[Another Shiny Document](another.Rmd)`.
+You can link to other Shiny Docs by using the markdown link syntax and specifying the *relative* path to the document, e.g. `[Another Shiny Document](another.Rmd)`.
  
 Currently, only one document can be active at a time, so documents can't easily share state (although some primitive global sharing is possible via `global.R`; see the help for `rmarkdown::run`). 
  
 By default it's only possible to link to R Markdown files in the same directory subtree as the file on which `rmarkdown::run` was invoked (i.e you can't link to `../foo.rmd`.) You can use the `dir` argument to `rmarkdown::run` to indicate the directory to treat as the root. 
 
-## Shiny Widgets
 
-It's also possible to create re-usable Shiny widgets that enable authors to embed a Shiny application within a page with a single function call. For example, the following code could be used to embed a K Means clustering application:
+## Performance and Delayed Rendering
 
-```r
-kmeans_cluster(iris)
-```
+A Shiny doc is generally rendered every time it is shown, and is not shown to the user until render is complete. Consequently, a document that is large or contains expensive computations may take some time to load. 
 
-This is what the widget would look like inside a running document:
+If your document contains interactive Shiny components that don't need to be rendered right away, you can wrap Shiny code in the `rmarkdown::render_delayed` function. This function saves its argument until the document is done rendering and has been shown to the user, then evaluates it and injects it into the document when the computation is finished.
 
-![Shiny Widget KMeans](images/shiny-widget-kmeans.png)
+Here's an example that demonstrates how `render_delayed` works---the code enclosed within the `render_delayed` call will execute only after the document has been loaded and displayed to the user:
 
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+rmarkdown::render_delayed({
+  numericInput("rows", "How many cars?", 5)
 
-See the article on [Shiny Widgets](authoring_shiny_widgets.html) for additional details.
+  renderTable({
+    head(cars, input$rows)
+  })
+})
+&#96;&#96;&#96;
+</code></pre>
 
 ## Converting Existing Documents 
 
