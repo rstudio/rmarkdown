@@ -12,8 +12,9 @@ Depends:
 Imports:
     tools,
     utils,
-    knitr (>= 1.2),
-    yaml (>= 2.1.5)
+    knitr (>= 1.6),
+    yaml (>= 2.1.5),
+    htmltools (>= 0.2.4)
 Suggests:
     shiny (>= 0.9.1),
     caTools,
