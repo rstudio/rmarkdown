@@ -16,7 +16,7 @@ Imports:
     yaml (>= 2.1.5),
     htmltools (>= 0.2.4)
 Suggests:
-    shiny (>= 0.9.1),
+    shiny (>= 0.9.1.9009),
     caTools,
     httpuv (>= 1.2.2),
     testthat,
