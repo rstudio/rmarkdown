@@ -70,6 +70,7 @@ html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
 
   if (!is.null(lib_dir)) {
     dependencies <- lapply(dependencies, copyDependencyToDir, lib_dir)
+    dependencies <- lapply(dependencies, makeDependencyRelative, output_dir)
   }
   return(renderDependencies(dependencies, "file", encodeFunc = identity,
     hrefFilter = function(path) {
