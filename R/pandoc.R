@@ -451,7 +451,7 @@ with_pandoc_safe_environment <- function(code) {
   if (Sys.info()['sysname'] == "Linux" &&
         is.na(Sys.getenv("LANG", unset = NA))) {
     # fill in a the LANG environment variable if it doesn't exist
-    Sys.setenv(LANG="en_US.UTF-8")
+    Sys.setenv(LANG="C.UTF-8")
     on.exit(Sys.unsetenv("LANG"), add = TRUE)
   }
   force(code)
