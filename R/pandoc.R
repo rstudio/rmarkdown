@@ -467,7 +467,9 @@ detect_generic_lang <- function() {
 
   if (nzchar(locale_util)) {
     locales <- system(paste(locale_util, "-a"), intern = TRUE)
-    locales <- strsplit(locales, split = "\n", fixed = TRUE)
+    locales <- suppressWarnings(
+        strsplit(locales, split = "\n", fixed = TRUE)
+    )
     if ("C.UTF-8" %in% locales)
       return ("C.UTF-8")
   }
