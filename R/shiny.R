@@ -187,10 +187,10 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
                           render_args)
       result_path <- shiny::maskReactiveContext(do.call(render, args))
 
-      # if we generated a folder of supporting files, map requests to those
-      # files in the Shiny application
-      if (file.exists(resource_folder))
-        addResourcePath(basename(resource_folder), resource_folder)
+      # ensure the resource folder exists, and map requests to it in Shiny
+      if (!file.exists(resource_folder))
+        dir.create(resource_folder, recursive = TRUE)
+      addResourcePath(basename(resource_folder), resource_folder)
 
       # emit performance information collected during render
       dependencies <- append(dependencies, list(
