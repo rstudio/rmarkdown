@@ -451,11 +451,32 @@ with_pandoc_safe_environment <- function(code) {
   if (Sys.info()['sysname'] == "Linux" &&
         is.na(Sys.getenv("LANG", unset = NA))) {
     # fill in a the LANG environment variable if it doesn't exist
-    Sys.setenv(LANG="C.UTF-8")
+    Sys.setenv(LANG=detect_generic_lang())
     on.exit(Sys.unsetenv("LANG"), add = TRUE)
   }
   force(code)
 }
+
+# if there is no LANG environment variable set pandoc is going to hang so
+# we need to specify a "generic" lang setting. With glibc >= 2.13 you can
+# specify C.UTF-8 so we prefer that. If we can't find that then we fall back
+# to en_US.UTF-8.
+detect_generic_lang <- function() {
+
+  locale_util <- Sys.which("locale")
+
+  if (nzchar(locale_util)) {
+    locales <- system(paste(locale_util, "-a"), intern = TRUE)
+    locales <- strsplit(locales, split = "\n", fixed = TRUE)
+    if ("C.UTF-8" %in% locales)
+      return ("C.UTF-8")
+  }
+
+  # default to en_US.UTF-8
+  "en_US.UTF-8"
+}
+
+
 
 # get the path to the pandoc binary
 pandoc <- function() {
