@@ -24,7 +24,7 @@ Shiny Docs aren't limited to longer form HTML documents, you can also embed Shin
 
 ![Shiny Presentation](images/shiny-run-presentation.png)
 
-Shiny Docs combine the expressiveness of R Markdown with the interactivity of Shiny. These documents can be run locally on the desktop or be deployed to [ShinyApps](http://www.rstudio.com/shiny/hosted/) or Shiny Server v1.2 (see the [Deployment] section below for more details).
+Shiny Docs combine the expressiveness of R Markdown with the interactivity of Shiny. These documents can be run locally on the desktop or be deployed to [ShinyApps](http://shinyapps.io) or Shiny Server v1.2 (see the [Deployment] section below for more details).
 
 ## Getting Started
 
@@ -90,9 +90,9 @@ If you haven’t used Shiny before some of the above code will be unfamiliar to 
 
 ### ShinyApps
 
-You can publish Shiny Docs to the [ShinyApps](http://www.rstudio.com/shiny/hosted/) hosted service. To do this you should ensure that you have:
+You can publish Shiny Docs to the [ShinyApps](http://shinyapps.io) hosted service. To do this you should ensure that you have:
 
-1. An account on ShinyApps (use the [signup form](http://www.shinyapps.io/signup.html) to request an account).
+1. An account on ShinyApps (use the [signup form](http://shinyapps.io) to request an account).
 
 2. The very latest version of the **shinyapps** R package. You can install this as follows:
 
