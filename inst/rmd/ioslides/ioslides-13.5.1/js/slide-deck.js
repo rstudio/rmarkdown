@@ -167,11 +167,15 @@ SlideDeck.prototype.onPopState_ = function(e) {
  */
 SlideDeck.prototype.onBodyKeyDown_ = function(e) {
 
-  // skip inputs and text areas (but only skip selectize if it
-  // currently has the 'input-active' class)
+  // Don't handle keys if an input or text area is active. Do special handling
+  // for selectize because it keeps focus within an offscreen textbox even
+  // when just the select control is showing -- for selectize we refrain from
+  // handling keys only when the text input is active or when the up or down
+  // arrow key is pressed (which is used to open the list from the keyboard)
   var parentClassList = e.target.parentNode.classList;
   if (parentClassList.contains('selectize-input')) {
-    if (parentClassList.contains('input-active'))
+    if (parentClassList.contains('input-active') ||  // text input is active
+       (e.keyCode == 38) || (e.keyCode == 40))       // up or down arrow
       return;
   } else if (/^(input|textarea)$/i.test(e.target.nodeName) ||
       e.target.isContentEditable) {
