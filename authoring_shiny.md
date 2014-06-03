@@ -30,7 +30,7 @@ Shiny Docs combine the expressiveness of R Markdown with the interactivity of Sh
 
 ### Prerequisites
 
-Working with Shiny Docs requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.888 or later) so be sure to update RStudio before trying out these features. 
+Working with Shiny Docs requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.891 or later) so be sure to update RStudio before trying out these features. 
 
 The [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) includes everything you need to create Shiny documents (including the latest development version of the Shiny package). If you are not using RStudio you can also install the required versions of **rmarkdown** and **shiny** as follows:
 
