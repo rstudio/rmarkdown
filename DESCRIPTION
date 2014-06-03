@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 0.2.41
+Version: 0.2.42
 Date: 2014-05-31
 Author: RStudio Inc.
 Maintainer: JJ Allaire <jj@rstudio.com>
