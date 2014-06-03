@@ -118,7 +118,7 @@ SlideDeck.prototype.onDomLoaded_ = function(e) {
  * @private
  */
 SlideDeck.prototype.addEventListeners_ = function() {
-  document.addEventListener('keydown', this.onBodyKeyDown_.bind(this), false);
+  document.addEventListener('keydown', this.onBodyKeyDown_.bind(this), true);
   window.addEventListener('popstate', this.onPopState_.bind(this), false);
 
   // var transEndEventNames = {
@@ -166,7 +166,14 @@ SlideDeck.prototype.onPopState_ = function(e) {
  * @param {Event} e
  */
 SlideDeck.prototype.onBodyKeyDown_ = function(e) {
-  if (/^(input|textarea)$/i.test(e.target.nodeName) ||
+
+  // skip inputs and text areas (but only skip selectize if it
+  // currently has the 'input-active' class)
+  var parentClassList = e.target.parentNode.classList;
+  if (parentClassList.contains('selectize-input')) {
+    if (parentClassList.contains('input-active'))
+      return;
+  } else if (/^(input|textarea)$/i.test(e.target.nodeName) ||
       e.target.isContentEditable) {
     return;
   }
