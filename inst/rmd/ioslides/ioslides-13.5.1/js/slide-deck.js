@@ -702,11 +702,13 @@ SlideDeck.prototype.makeBuildLists_ = function () {
 SlideDeck.prototype.updateHash_ = function(dontPush) {
   if (!dontPush) {
     var slideNo = this.curSlide_ + 1;
+    // Add everything except the hash.
+    var loc = location.protocol+'//'+location.host+location.pathname+(location.search?location.search:"");
     var hash = '#' + slideNo;
     if (window.history.pushState) {
-      window.history.pushState(this.curSlide_, 'Slide ' + slideNo, hash);
+      window.history.pushState(this.curSlide_, 'Slide ' + slideNo, loc + hash);
     } else {
-      window.location.replace(hash);
+      window.location.replace(loc + hash);
     }
 
     // Record GA hit on this slide.
