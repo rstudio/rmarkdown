@@ -35,7 +35,7 @@ Working with Shiny Docs requires an up to date version of the [RStudio Preview R
 The [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) includes everything you need to create Shiny documents (including the latest development version of the Shiny package). If you are not using RStudio you can also install the required versions of **rmarkdown** and **shiny** as follows:
 
 ```r
-devtools::install_github(c("rstudio/rmarkdown", rstudio/shiny"))
+devtools::install_github(c("rstudio/rmarkdown", "rstudio/shiny"))
 ```
 
 ### Creating a Shiny Doc
