@@ -60,6 +60,12 @@
 run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
                 shiny_args = NULL, render_args = NULL) {
 
+  # ensure LANG
+  if (requires_lang_env_var()) {
+    Sys.setenv(LANG=detect_generic_lang())
+    on.exit(Sys.unsetenv("LANG"), add = TRUE)
+  }
+
   # form and test locations
   dir <- normalizePath(dir, winslash="/")
   if (!file.exists(dir))

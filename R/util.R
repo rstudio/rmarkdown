@@ -190,3 +190,30 @@ base_dir <- function(x) {
 
   base
 }
+
+requires_lang_env_var <- function() {
+  Sys.info()['sysname'] == "Linux" && is.na(Sys.getenv("LANG", unset = NA))
+}
+
+# if there is no LANG environment variable set pandoc is going to hang so
+# we need to specify a "generic" lang setting. With glibc >= 2.13 you can
+# specify C.UTF-8 so we prefer that. If we can't find that then we fall back
+# to en_US.UTF-8.
+detect_generic_lang <- function() {
+
+  locale_util <- Sys.which("locale")
+
+  if (nzchar(locale_util)) {
+    locales <- system(paste(locale_util, "-a"), intern = TRUE)
+    locales <- suppressWarnings(
+      strsplit(locales, split = "\n", fixed = TRUE)
+    )
+    if ("C.UTF-8" %in% locales)
+      return ("C.UTF-8")
+  }
+
+  # default to en_US.UTF-8
+  "en_US.UTF-8"
+}
+
+

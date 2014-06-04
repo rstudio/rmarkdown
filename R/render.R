@@ -12,6 +12,12 @@ render <- function(input,
                    quiet = FALSE,
                    encoding = getOption("encoding")) {
 
+  # ensure LANG
+  if (requires_lang_env_var()) {
+    Sys.setenv(LANG=detect_generic_lang())
+    on.exit(Sys.unsetenv("LANG"), add = TRUE)
+  }
+
   perf_timer_start("render")
 
   # check for "all" output formats
