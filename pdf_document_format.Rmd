@@ -51,7 +51,7 @@ There are a number of options that affect the output of figures within PD docume
 
 * `fig_crop` controls whether the the pdfcrop utility (if available) is automatically applied to pdf figures (this is true by default).
 
-* `fig_caption` controls whether figures are rendered with captions (this is true by default).
+* `fig_caption` controls whether figures are rendered with captions (this is false by default).
 
 For example:
 
