@@ -65,7 +65,14 @@ $endfor$
 <body>
 
 $if(theme)$
-<div class="container-fluid">
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="container-fluid main-container">
 $endif$
 
 $for(include-before)$
