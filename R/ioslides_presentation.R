@@ -1,6 +1,15 @@
 
+
+
+#' Convert to a ioslides html presentation
+#'
+#' Note: All slides contain an additional css class "levelX", where
+#' X is the header level. This can be used for css customization.
+#' 
+#' @inheritParams beamer_presentation
 #' @export
 ioslides_presentation <- function(logo = NULL,
+																	slide_level = 2,
                                   incremental = FALSE,
                                   fig_width = 7.5,
                                   fig_height = 4.5,
@@ -123,9 +132,14 @@ ioslides_presentation <- function(logo = NULL,
     add_setting("smaller", smaller)
     add_setting("smart", smart)
     add_setting("mathjax", !is.null(mathjax))
-    writeLines(settings, lua_writer, useBytes = TRUE)
-
-    # append main body of script
+		
+		# Set level of slide header (used by ioslides_presentation.lua)
+		settings <- c(settings, sprintf("local slide_level = %s", slide_level))
+		writeLines(settings, lua_writer, useBytes = TRUE)
+		# For consistency add as pandoc argument
+		args <- c(args, "--slide-level", as.character(slide_level))
+		
+		# append main body of script
     file.append(lua_writer,
                 rmarkdown_system_file("rmd/ioslides/ioslides_presentation.lua"))
 
