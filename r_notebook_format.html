@@ -76,7 +76,14 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <body>
 
-<div class="container-fluid">
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="container-fluid main-container">
 
 
 <div class="navbar navbar-default navbar-fixed-top">
@@ -139,10 +146,6 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
   </div>
 </div>
 
-<div class="container">
-<div class="row">
-<div class="span10 offset1">
-
 <div id="header">
 <h1 class="title">Compiling Notebooks from R Scripts</h1>
 </div>
@@ -190,9 +193,6 @@ plot(cars)</code></pre>
 <p>Note that when using <code>rmarkdown::render</code> the spin function is called automatically under the hood as part of rendering.</p>
 </div>
 
-</div>
-</div>
-</div>
 
 <!-- some extra javascript for older browsers -->
 <script type="text/javascript" src="libs/polyfill.js"></script>
