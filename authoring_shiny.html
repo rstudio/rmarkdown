@@ -157,6 +157,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#prerequisites">Prerequisites</a></li>
 <li><a href="#creating-a-shiny-doc">Creating a Shiny Doc</a></li>
 <li><a href="#inputs-and-outputs">Inputs and Outputs</a></li>
+<li><a href="#embedded-applications">Embedded Applications</a></li>
 </ul></li>
 <li><a href="#deployment">Deployment</a><ul>
 <li><a href="#shinyapps">ShinyApps</a></li>
@@ -182,9 +183,9 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h2>Getting Started</h2>
 <div id="prerequisites" class="section level3">
 <h3>Prerequisites</h3>
-<p>Working with Shiny Docs requires an up to date version of the <a href="http://www.rstudio.com/ide/download/preview">RStudio Preview Release</a> (v0.98.894 or later) so be sure to update RStudio before trying out these features.</p>
+<p>Working with Shiny Docs requires an up to date version of the <a href="http://www.rstudio.com/ide/download/preview">RStudio Preview Release</a> (v0.98.922 or later) so be sure to update RStudio before trying out these features.</p>
 <p>The <a href="http://www.rstudio.com/ide/download/preview">RStudio Preview Release</a> includes everything you need to create Shiny documents (including the latest development version of the Shiny package). If you are not using RStudio you can also install the required versions of <strong>rmarkdown</strong> and <strong>shiny</strong> as follows:</p>
-<pre class="r"><code>devtools::install_github(c(&quot;rstudio/rmarkdown&quot;, &quot;rstudio/shiny&quot;))</code></pre>
+<pre class="r"><code>devtools::install_github(c(&quot;rstudio/shiny&quot;, &quot;rstudio/rmarkdown&quot;))</code></pre>
 </div>
 <div id="creating-a-shiny-doc" class="section level3">
 <h3>Creating a Shiny Doc</h3>
@@ -224,6 +225,19 @@ renderPlot({
 
 <p><img src="images/shiny-hist-plot.gif" alt="Shiny Hist Plot" /></p>
 <p>If you haven’t used Shiny before some of the above code will be unfamiliar to you. The <a href="http://shiny.rstudio.com/tutorial">Shiny Tutorial</a> is a good place to learn more.</p>
+</div>
+<div id="embedded-applications" class="section level3">
+<h3>Embedded Applications</h3>
+<p>The examples above illustrate adding Shiny code to an R Markdown code chunk. It’s also possible to embed a full Shiny application within a document using the <code>shinyApp</code> function.</p>
+<p>The <code>shinyApp</code> function can be used directly or by higher level R functions that return Shiny applications. Here’s an example—the <a href="https://github.com/rstudio/rmdexamples/blob/master/R/kmeans_cluster.R"><code>kmeans_cluster</code></a> function returns an interactive k-means clustering application for any dataset that is passed to it. You would use it within an R Markdown document like this:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+kmeans_cluster(iris)
+&#96;&#96;&#96;
+</code></pre>
+
+<p>Which would result in the following inside the running document:</p>
+<p><img src="images/shiny-widget-kmeans.png" alt="Shiny Widget KMeans" /></p>
+<p>To better understand how this works check out the <a href="https://github.com/rstudio/rmdexamples/blob/master/R/kmeans_cluster.R">source code</a> for the <code>kmeans_cluster</code> function. The articles on <a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a> and <a href="authoring_shiny_widgets.html">Shiny Widgets</a> also cover using the <code>shinyApp</code> function in more depth.</p>
 </div>
 </div>
 <div id="deployment" class="section level2">

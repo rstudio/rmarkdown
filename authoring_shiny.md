@@ -30,12 +30,12 @@ Shiny Docs combine the expressiveness of R Markdown with the interactivity of Sh
 
 ### Prerequisites
 
-Working with Shiny Docs requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.894 or later) so be sure to update RStudio before trying out these features. 
+Working with Shiny Docs requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.922 or later) so be sure to update RStudio before trying out these features. 
 
 The [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) includes everything you need to create Shiny documents (including the latest development version of the Shiny package). If you are not using RStudio you can also install the required versions of **rmarkdown** and **shiny** as follows:
 
 ```r
-devtools::install_github(c("rstudio/rmarkdown", "rstudio/shiny"))
+devtools::install_github(c("rstudio/shiny", "rstudio/rmarkdown"))
 ```
 
 ### Creating a Shiny Doc
@@ -85,6 +85,23 @@ renderPlot({
 ![Shiny Hist Plot](images/shiny-hist-plot.gif)
 
 If you haven’t used Shiny before some of the above code will be unfamiliar to you. The [Shiny Tutorial](http://shiny.rstudio.com/tutorial) is a good place to learn more.
+
+### Embedded Applications
+
+The examples above illustrate adding Shiny code to an R Markdown code chunk. It's also possible to embed a full Shiny application within a document using the `shinyApp` function. 
+
+The `shinyApp` function can be used directly or by higher level R functions that return Shiny applications. Here's an example---the [`kmeans_cluster`](https://github.com/rstudio/rmdexamples/blob/master/R/kmeans_cluster.R) function returns an interactive k-means clustering application for any dataset that is passed to it. You would use it within an R Markdown document like this:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+kmeans_cluster(iris)
+&#96;&#96;&#96;
+</code></pre>
+
+Which would result in the following inside the running document:
+
+![Shiny Widget KMeans](images/shiny-widget-kmeans.png)
+
+To better understand how this works check out the [source code](https://github.com/rstudio/rmdexamples/blob/master/R/kmeans_cluster.R) for the `kmeans_cluster` function. The articles on [Embedded Shiny Apps](authoring_embedded_shiny.html) and [Shiny Widgets](authoring_shiny_widgets.html) also cover using the `shinyApp` function in more depth.
 
 ## Deployment
 
