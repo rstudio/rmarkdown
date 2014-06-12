@@ -1,5 +1,5 @@
 ---
-title: "Shiny Docs: Advanced Topics"
+title: "Interactive Documents: Advanced Topics"
 output:
   html_document:
     toc: true
@@ -7,7 +7,7 @@ output:
 
 ## Shiny Reactives
 
-Shiny Docs can also contain reactive expressions (useful when a piece of dynamic data is used in several places). As in Shiny applications, these values respond to changes in their inputs.
+Interactive documents can also contain reactive expressions (useful when a piece of dynamic data is used in several places). As in Shiny applications, these values respond to changes in their inputs.
 
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
 selectInput("dataset", "Choose Dataset:", c("cars", "iris", "mtcars"))
@@ -30,7 +30,7 @@ Note that reactive expressions can be used anywhere, including in the definition
 
 ## Multiple Pages
  
-You can link to other Shiny Docs by using the markdown link syntax and specifying the *relative* path to the document, e.g. `[Another Shiny Document](another.Rmd)`.
+You can link to other interactive documents by using the markdown link syntax and specifying the *relative* path to the document, e.g. `[Another Shiny Document](another.Rmd)`.
  
 Currently, only one document can be active at a time, so documents can't easily share state (although some primitive global sharing is possible via `global.R`; see the help for `rmarkdown::run`). 
  
@@ -39,7 +39,7 @@ By default it's only possible to link to R Markdown files in the same directory 
 
 ## Performance and Delayed Rendering
 
-A Shiny doc is generally rendered every time it is shown, and is not shown to the user until render is complete. Consequently, a document that is large or contains expensive computations may take some time to load. 
+An interactive document is generally rendered every time it is shown, and is not shown to the user until render is complete. Consequently, a document that is large or contains expensive computations may take some time to load. 
 
 If your document contains interactive Shiny components that don't need to be rendered right away, you can wrap Shiny code in the `rmarkdown::render_delayed` function. This function saves its argument until the document is done rendering and has been shown to the user, then evaluates it and injects it into the document when the computation is finished.
 
@@ -58,7 +58,7 @@ rmarkdown::render_delayed({
 
 ## Converting Existing Documents 
 
-The getting started example demonstrated creating a brand new Shiny Doc. However, any R Markdown output format that produces HTML can be converted into a Shiny Doc. To convert and existing document:
+The getting started example demonstrated creating a brand new interative document. However, any R Markdown output format that produces HTML can be converted into an interacitve document. To convert an existing document:
  
 - Add `runtime: shiny` to its YAML front matter. 
 
