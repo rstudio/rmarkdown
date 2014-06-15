@@ -129,8 +129,7 @@ If you are using RStudio you can also use the **Deploy** button available when w
 
 ### Shiny Server
 
-Deploying interactive documents is not yet supported by [Shiny Server]((http://www.rstudio.com/shiny/server/)). However, support is forthcoming in Shiny Server v1.2 which is scheduled for release in mid-June.
-
+Deploying interactive documents is not yet supported by [Shiny Server](http://www.rstudio.com/shiny/server/). However, support is forthcoming in Shiny Server v1.2 which is scheduled for release in mid-June.
 
 ## Learning More
 
