@@ -14,15 +14,15 @@ This website describes R Markdown v2, a next generation implementation of R Mark
 * Include raw LaTeX within markdown for advanced customization of PDF output.
 * Compile HTML, PDF, or MS Word notebooks from R scripts.
 * Extensiblity: create custom templates and even entirely new output formats.
-* Use Shiny within R Markdown documents
+* Create interactive R Markdown documents using Shiny
 
 Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, [MiKTeX](http://miktex.org/) should be used rather than TeX Live.
 
 #### Installing R Markdown
 
-You can use R Markdown either through the the integrated support for R Markdown within RStudio or via the rmarkdown package:
+You can use R Markdown either through the integrated support provided by RStudio or by directly using the **rmarkdown** package:
 
-1. RStudio --- Install the current [RStudio Preview Release](http://www.rstudio.com/ide/download/preview).
+1. RStudio --- Install the [latest version of RStudio](http://www.rstudio.com/ide/download/preview) (v0.98.932).
 
 2. Other environments --- Install the [rmarkdown package](https://github.com/rstudio/rmarkdown).
 

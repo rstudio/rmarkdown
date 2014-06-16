@@ -30,9 +30,7 @@ These documents combine the expressiveness of R Markdown with the interactivity 
 
 ### Prerequisites
 
-Working with interactive documents requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.922 or later) so be sure to update RStudio before trying out these features. 
-
-If you are not using RStudio then you should be sure to install the latest version of Shiny from CRAN (v0.10.0) as well as install the R Markdown package from GitHub as detailed [here](https://github.com/rstudio/rmarkdown#installation).
+R Markdown interactive documents require the most recent version of RStudio (v0.98.932) so be sure to [update RStudio](http://www.rstudio.com/ide/download/preview) before trying out these features.  If you are not using RStudio then you should install the latest version of Shiny from CRAN (v0.10.0) as well as install the R Markdown package from GitHub as detailed [here](https://github.com/rstudio/rmarkdown#installation).
 
 ### Creating an Interactive Document
 

@@ -21,7 +21,7 @@ One other important change relates to the use of the [knitr cache](http://yihui.
 
 ## Continuing to Use v1
 
-If you are using RStudio you can force RStudio to render documents using R Markdown v1 by adding the following special comment to your source file:
+If you are using RStudio you can force RStudio to render documents using R Markdown v1 by adding a special comment to your source file:
 
 <pre>&lt;!-- rmarkdown v1 --&gt;</pre>
 
