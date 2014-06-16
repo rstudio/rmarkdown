@@ -32,11 +32,7 @@ These documents combine the expressiveness of R Markdown with the interactivity 
 
 Working with interactive documents requires an up to date version of the [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) (v0.98.922 or later) so be sure to update RStudio before trying out these features. 
 
-The [RStudio Preview Release](http://www.rstudio.com/ide/download/preview) includes everything you need to create interactive documents (including the latest development version of the Shiny package). If you are not using RStudio you can also install the required versions of **rmarkdown** and **shiny** as follows:
-
-```r
-devtools::install_github(c("rstudio/shiny", "rstudio/rmarkdown"))
-```
+If you are not using RStudio then you should be sure to install the latest version of Shiny from CRAN (v0.10.0) as well as install the R Markdown package from GitHub as detailed [here](https://github.com/rstudio/rmarkdown#installation).
 
 ### Creating an Interactive Document
 
@@ -129,7 +125,7 @@ If you are using RStudio you can also use the **Deploy** button available when w
 
 ### Shiny Server
 
-Deploying interactive documents is not yet supported by [Shiny Server](http://www.rstudio.com/shiny/server/). However, support is forthcoming in Shiny Server v1.2 which is scheduled for release in mid-June.
+Deploying interactive documents is not yet supported by [Shiny Server](http://www.rstudio.com/shiny/server/). However, support is forthcoming in Shiny Server v1.2 which is scheduled for release by the end of June.
 
 ## Learning More
 
