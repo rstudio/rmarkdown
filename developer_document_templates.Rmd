@@ -123,6 +123,7 @@ This format could then be used in a template follows:
 ---
 title: "Untitled"
 output: mypackage::quarterly_report
+---
 ```
 
 See the article on [Creating New Formats](developer_custom_formats.html) for additional details on custom formats.
