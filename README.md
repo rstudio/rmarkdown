@@ -2,12 +2,13 @@
 
 The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
 
-* Create HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home) [ioslides](https://code.google.com/p/io-2012-slides/) and [reveal.js](http://lab.hakim.se/reveal-js/#/) presentations.
+* Create HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home), [ioslides](https://code.google.com/p/io-2012-slides/), and [reveal.js](http://lab.hakim.se/reveal-js/#/) presentations.
 * New markdown syntax including expanded support for tables, definition lists, and bibliographies.
-* A responsive (multi-device friendly) and themeable HTML template based on [Bootstrap](http://getbootstrap.com/2.3.2/).
 * Hooks for customizing HTML and PDF output (include CSS, headers, and footers).
 * Include raw LaTeX within markdown for advanced customization of PDF output.
+* Compile HTML, PDF, or MS Word notebooks from R scripts.
 * Extensibility: easily define new formats for custom publishing requirements.
+* Create interactive R Markdown documents using Shiny.
 
 Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, the [MiKTeX](http://miktex.org/) distribution should be used rather than TeX Live.
 
@@ -15,12 +16,11 @@ See the [R Markdown documentation](http://rmarkdown.rstudio.com/) for full detai
 
 ### Installation
 
-If you are working within RStudio then you can simply install the current [preview release](http://www.rstudio.com/ide/download/preview) of RStudio (both the rmarkdown package as well as pandoc are included).
+If you are working within RStudio then you can simply install the [current release](http://www.rstudio.com/ide/download/preview) of RStudio (both the rmarkdown package and pandoc are included).
 
 If you want to use the rmarkdown package outside of RStudio then you can install the package as follows:
 
 ```S
-install.packages("devtools")
 devtools::install_github("rstudio/rmarkdown")
 ```
 
