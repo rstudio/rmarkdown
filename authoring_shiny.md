@@ -99,6 +99,10 @@ To better understand how this works check out the [source code](https://github.c
 
 ## Deployment
 
+### Shiny Server
+
+Deploying interactive documents is not yet supported by [Shiny Server](http://www.rstudio.com/shiny/server/). However, support is forthcoming in Shiny Server v1.2 which is scheduled for release by the end of June.
+
 ### ShinyApps
 
 You can publish interactive documents to the [ShinyApps](http://shinyapps.io) hosted service. To do this you should ensure that you have:
@@ -121,9 +125,6 @@ If you are using RStudio you can also use the **Deploy** button available when w
 
 ![Shinyapps Deploy](images/shinyapps-deploy.png)
 
-### Shiny Server
-
-Deploying interactive documents is not yet supported by [Shiny Server](http://www.rstudio.com/shiny/server/). However, support is forthcoming in Shiny Server v1.2 which is scheduled for release by the end of June.
 
 ## Learning More
 

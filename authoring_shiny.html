@@ -165,8 +165,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#embedded-applications">Embedded Applications</a></li>
 </ul></li>
 <li><a href="#deployment">Deployment</a><ul>
-<li><a href="#shinyapps">ShinyApps</a></li>
 <li><a href="#shiny-server">Shiny Server</a></li>
+<li><a href="#shinyapps">ShinyApps</a></li>
 </ul></li>
 <li><a href="#learning-more">Learning More</a></li>
 </ul>
@@ -245,6 +245,10 @@ kmeans_cluster(iris)
 </div>
 <div id="deployment" class="section level2">
 <h2>Deployment</h2>
+<div id="shiny-server" class="section level3">
+<h3>Shiny Server</h3>
+<p>Deploying interactive documents is not yet supported by <a href="http://www.rstudio.com/shiny/server/">Shiny Server</a>. However, support is forthcoming in Shiny Server v1.2 which is scheduled for release by the end of June.</p>
+</div>
 <div id="shinyapps" class="section level3">
 <h3>ShinyApps</h3>
 <p>You can publish interactive documents to the <a href="http://shinyapps.io">ShinyApps</a> hosted service. To do this you should ensure that you have:</p>
@@ -257,10 +261,6 @@ kmeans_cluster(iris)
 <pre class="r"><code>shinyapps::deployApp()</code></pre>
 <p>If you are using RStudio you can also use the <strong>Deploy</strong> button available when working with an interactive document:</p>
 <p><img src="images/shinyapps-deploy.png" alt="Shinyapps Deploy" /></p>
-</div>
-<div id="shiny-server" class="section level3">
-<h3>Shiny Server</h3>
-<p>Deploying interactive documents is not yet supported by <a href="http://www.rstudio.com/shiny/server/">Shiny Server</a>. However, support is forthcoming in Shiny Server v1.2 which is scheduled for release by the end of June.</p>
 </div>
 </div>
 <div id="learning-more" class="section level2">
