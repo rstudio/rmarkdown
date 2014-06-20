@@ -183,6 +183,7 @@ render <- function(input,
 
     # enable knitr hooks to have knowledge of the final output format
     knitr::opts_knit$set(rmarkdown.pandoc.to = pandoc_to)
+    knitr::opts_knit$set(rmarkdown.keep_md = output_format$keep_md)
     knitr::opts_knit$set(rmarkdown.version = 2)
 
     # trim whitespace from around source code
