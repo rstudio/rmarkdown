@@ -171,7 +171,7 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
       # ensure that the document is not rendered to one page
       output_opts <- list(
         self_contained = FALSE,
-        copy_images = TRUE,
+        copy_resources = TRUE,
         dependency_resolver = shiny_dependency_resolver)
 
       # remove console clutter from any previous renders

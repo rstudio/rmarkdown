@@ -7,7 +7,7 @@ html_document_base <- function(smart = TRUE,
                                pandoc_args = NULL,
                                template = "default",
                                dependency_resolver = html_dependency_resolver,
-                               copy_images = FALSE,
+                               copy_resources = FALSE,
                                extra_dependencies = NULL,
                                bootstrap_compatible = FALSE,
                                ...) {
@@ -22,8 +22,8 @@ html_document_base <- function(smart = TRUE,
 
   # self contained document
   if (self_contained) {
-    if (copy_images)
-      stop("Local image copying is incompatible with self-contained documents.")
+    if (copy_resources)
+      stop("Local resource copying is incompatible with self-contained documents.")
     validate_self_contained(mathjax)
     args <- c(args, "--self-contained")
   }
@@ -92,9 +92,9 @@ html_document_base <- function(smart = TRUE,
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
-    # if there are no preserved chunks to restore and no images to copy then no
+    # if there are no preserved chunks to restore and no resource to copy then no
     # post-processing is necessary
-    if (length(preserved_chunks) == 0 && !isTRUE(copy_images) && self_contained)
+    if (length(preserved_chunks) == 0 && !isTRUE(copy_resources) && self_contained)
       return(output_file)
 
     # read the output file
@@ -104,26 +104,27 @@ html_document_base <- function(smart = TRUE,
     if (length(preserved_chunks) > 0)
       output_str <- restorePreserveChunks(output_str, preserved_chunks)
 
-    # The copy_images flag copies all the images referenced in the document to
-    # its supporting files directory, and rewrites the document to use the
-    # copies from that directory.
-    if (copy_images) {
-      image_copier <- function(img_src, src) {
+    # The copy_resources flag copies all the resources referenced in the
+    # document to its supporting files directory, and rewrites the document to
+    # use the copies from that directory.
+    if (copy_resources) {
+      resource_copier <- function(res_src, src) {
         in_file <- utils::URLdecode(src)
         if (length(in_file) && file.exists(in_file)) {
 
           # create a unique image name in the library folder and copy the image
           # there
-          target_img_file <- paste(file.path(lib_dir, createUniqueId(16)),
+          target_res_file <- paste(file.path(lib_dir, createUniqueId(16)),
                                    tools::file_ext(in_file), sep = ".")
-          file.copy(in_file, target_img_file)
+          file.copy(in_file, target_res_file)
 
           # replace the reference in the document
-          img_src <- sub(src, relative_to(output_dir, target_img_file), img_src)
+          res_src <- sub(src, relative_to(output_dir, target_res_file), res_src)
         }
-        img_src
+        res_src
       }
-      output_str <- process_images(output_str, image_copier)
+      output_str <- process_images(output_str, resource_copier)
+      output_str <- process_css(output_str, resource_copier)
     } else if (!self_contained) {
       # if we're not self-contained, find absolute references to the output
       # directory and replace them with relative ones
