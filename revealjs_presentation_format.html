@@ -319,6 +319,16 @@ output:
 </div>
 <div id="advanced-customization" class="section level2">
 <h2>Advanced Customization</h2>
+<div id="keeping-markdown" class="section level3">
+<h3>Keeping Markdown</h3>
+<p>When knitr processes an R Markdown input file it creates a markdown (md) file which is subsequently tranformed into HTML by pandoc. If you want to keep a copy of the markdown file after rendering you can do so using the <code>keep_md</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs_presentation:
+    keep_md: true
+---</code></pre>
+</div>
 <div id="includes" class="section level3">
 <h3>Includes</h3>
 <p>You can do more advanced customization of output by including additional HTML content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>

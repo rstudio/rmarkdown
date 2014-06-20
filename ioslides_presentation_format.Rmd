@@ -352,6 +352,17 @@ One common reason keep dependencies external is for serving R Markdown documents
 
 ## Advanced Customization
 
+### Keeping Markdown
+
+When knitr processes an R Markdown input file it creates a markdown (md) file which is subsequently tranformed into HTML by pandoc. If you want to keep a copy of the markdown file after rendering you can do so using the `keep_md` option:
+
+    ---
+    title: "Habits"
+    output:
+      ioslides_presentation:
+        keep_md: true
+    ---
+
 ### Includes
 
 You can do more advanced customization of output by including additional HTML content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the `includes` option as follows:
