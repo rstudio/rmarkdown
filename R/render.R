@@ -412,7 +412,7 @@ md_header_from_front_matter <- function(front_matter) {
   if (!is.null(front_matter$title))
     md <- c(md, paste("# ", front_matter$title, sep = ""))
 
-  if (!is.null(front_matter$author)) {
+  if (is.character(front_matter$author)) {
     authors <- paste(front_matter$author, "  ", sep = "")
     md <- c(md, authors)
   }
