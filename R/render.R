@@ -99,6 +99,9 @@ render <- function(input,
   utf8_input <- intermediates_loc(file_with_meta_ext(input, "utf8", "md"))
   intermediates <- c(intermediates, utf8_input)
 
+  # track whether this was straight markdown input (to prevent keep_md later)
+  md_input <- identical(tolower(tools::file_ext(input)), "md")
+
   # if this is an R script then spin it first
   if (identical(tolower(tools::file_ext(input)), "r")) {
     # make a copy of the file to spin
@@ -343,7 +346,7 @@ render <- function(input,
   perf_timer_stop("render")
 
   # write markdown output if requested
-  if (output_format$keep_md) {
+  if (output_format$keep_md && !md_input) {
 
     md <- c(md_header_from_front_matter(yaml_front_matter),
             partition_yaml_front_matter(input_text)$body)
