@@ -26,10 +26,12 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   \item{fig_height}{Default width (in inches) for figures}
 
   \item{fig_retina}{Scaling to perform for retina displays
-  (defaults to 2, which currently works for all widely used
-  retina displays). Note that this only takes effect if you
-  are using knitr >= 1.5.21. Set to \code{NULL} to prevent
-  retina scaling.}
+  (defaults to 2,which currently works for all widely used
+  retina displays). Set to\code{NULL} to prevent retina
+  scaling. Note that this will always be\code{NULL} when
+  \code{keep_md} is specified (this is because
+  \code{fig_retina} relies on outputting HTML directly
+  into the markdowndocument).}
 
   \item{fig_caption}{\code{TRUE} to render figures with
   captions}

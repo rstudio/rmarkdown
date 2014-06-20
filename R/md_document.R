@@ -18,8 +18,7 @@
 #'   \code{NULL} which performs no scaling. A setting of 2 will work for all
 #'   widely used retina displays, but will also result in the output of
 #'   \code{<img>} tags rather than markdown images due to the need to set the
-#'   width of the image explicitly. Note that this only takes effect if you are
-#'   using knitr >= 1.5.21.
+#'   width of the image explicitly.
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -87,7 +86,7 @@ md_document <- function(variant = "markdown_strict",
 
   # return format
   output_format(
-    knitr = knitr_options_html(fig_width, fig_height, fig_retina),
+    knitr = knitr_options_html(fig_width, fig_height, fig_retina, FALSE),
     pandoc = pandoc_options(to = variant,
                             from = from_rmarkdown(),
                             args = args),

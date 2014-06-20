@@ -21,8 +21,7 @@ md_document(variant = "markdown_strict", preserve_yaml = FALSE,
   \code{NULL} which performs no scaling. A setting of 2 will work for all
   widely used retina displays, but will also result in the output of
   \code{<img>} tags rather than markdown images due to the need to set the
-  width of the image explicitly. Note that this only takes effect if you are
-  using knitr >= 1.5.21.}
+  width of the image explicitly.}
 
 \item{toc}{\code{TRUE} to include a table of contents in the output}
 

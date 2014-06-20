@@ -341,6 +341,15 @@ render <- function(input,
 
   perf_timer_stop("render")
 
+  # write markdown output if requested
+  if (output_format$keep_md) {
+
+    md <- c(md_header_from_front_matter(yaml_front_matter),
+            partition_yaml_front_matter(input_text)$body)
+
+    writeLines(md, file_with_ext(output_file, "md"), useBytes = TRUE)
+  }
+
   # return the full path to the output file
   invisible(tools::file_path_as_absolute(output_file))
 }
@@ -395,6 +404,25 @@ knit_meta_reset <- function(class = NULL) {
   else
     NULL
 }
+
+md_header_from_front_matter <- function(front_matter) {
+
+  md <- c()
+
+  if (!is.null(front_matter$title))
+    md <- c(md, paste("# ", front_matter$title, sep = ""))
+
+  if (!is.null(front_matter$author)) {
+    authors <- paste(front_matter$author, "  ", sep = "")
+    md <- c(md, authors)
+  }
+
+  if (!is.null(front_matter$date))
+    md <- c(md, paste(front_matter$date, "  ", sep = ""))
+
+  md
+}
+
 
 
 
