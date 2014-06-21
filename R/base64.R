@@ -132,7 +132,7 @@ process_images <- function(html, processor) {
 process_css <- function(html, processor) {
   process_html_res(
     html,
-    "<\\s*[Ll][Ii][Nn][Kk]\\s+[Rr][Ee][Ll]\\s*=\\s*\"stylesheet\"\\s+[Hh][Rr][Ee][Ff]\\s*=\\s*[\"']([^\"']+)[\"']*",
+    "<\\s*[Ll][Ii][Nn][Kk]\\s+[Rr][Ee][Ll]\\s*=\\s*\"stylesheet\"\\s+[Hh][Rr][Ee][Ff]\\s*=\\s*[\"']([^\"']+)[\"']",
     processor)
 }
 
