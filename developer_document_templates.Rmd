@@ -33,7 +33,7 @@ The contents of the two files might look like this:
 name: My Template
 ```
 
-**skeleton.Rmd**
+**skeleton/skeleton.Rmd**
 
 ```markdown
 ---
