@@ -172,6 +172,15 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h3>Knitr Caching</h3>
 <p>One other important change relates to the use of the <a href="http://yihui.name/knitr/demo/cache/">knitr cache</a>. When R Markdown knits documents it explicitly configures the knitr cache to use a directory based on the name of the input file (e.g. <code>inputfile_cache</code>). If you are setting an explicit cache directory within your document (e.g. via <code>opts_chunk$set(cache.path = ...))</code>) you should remove this code and rely on R Markdown to set the cache directory.</p>
 </div>
+<div id="other-knitr-options" class="section level3">
+<h3>Other knitr Options</h3>
+<p>Besides the <code>cache.path</code> option, the rmarkdown package has also modifies a few other default <a href="http://yihui.name/knitr/options">chunk options</a> in knitr when calling <code>rmarkdown::render()</code>, including</p>
+<ul>
+<li><code>fig.path</code>: the default value in knitr is <code>figure/</code>, and it has been changed to <code>inputfile_files/figure-format/</code>, where <code>format</code> is the output format, such as <code>html</code>;</li>
+<li><code>error</code>: it was changed from <code>TRUE</code> to <code>FALSE</code>, meaning that knitr will stop on error by default;</li>
+</ul>
+<p>There are some other subtle changes, such as <code>fig.retina</code> (from <code>NULL</code> to <code>2</code> for the HTML output), <code>fig.width</code> and <code>fig.height</code> (depending on the document output format). You can print <code>knitr::opts_chunk$get()</code> in an R Markdown document to see the default chunk options configured by rmarkdown.</p>
+</div>
 </div>
 <div id="continuing-to-use-v1" class="section level2">
 <h2>Continuing to Use v1</h2>

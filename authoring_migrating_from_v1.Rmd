@@ -18,6 +18,14 @@ The following changes to markdown syntax were made in R Markdown v2:
 
 One other important change relates to the use of the [knitr cache](http://yihui.name/knitr/demo/cache/). When R Markdown knits documents it explicitly configures the knitr cache to use a directory based on the name of the input file (e.g. `inputfile_cache`). If you are setting an explicit cache directory within your document (e.g. via `opts_chunk$set(cache.path = ...))`) you should remove this code and rely on R Markdown to set the cache directory.
 
+### Other knitr Options
+
+Besides the `cache.path` option, the rmarkdown package has also modifies a few other default [chunk options](http://yihui.name/knitr/options) in knitr when calling `rmarkdown::render()`, including
+
+- `fig.path`: the default value in knitr is `figure/`, and it has been changed to `inputfile_files/figure-format/`, where `format` is the output format, such as `html`;
+- `error`: it was changed from `TRUE` to `FALSE`, meaning that knitr will stop on error by default;
+
+There are some other subtle changes, such as `fig.retina` (from `NULL` to `2` for the HTML output), `fig.width` and `fig.height` (depending on the document output format). You can print `knitr::opts_chunk$get()` in an R Markdown document to see the default chunk options configured by rmarkdown.
 
 ## Continuing to Use v1
 
