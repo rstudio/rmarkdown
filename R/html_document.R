@@ -7,12 +7,12 @@
 #' @param number_sections \code{TRUE} to number section headings
 #' @param fig_width Default width (in inches) for figures
 #' @param fig_height Default width (in inches) for figures
-#' @param fig_retina Scaling to perform for retina displays (defaults to 2,
-#'   which currently works for all widely used retina displays). Set to
-#'   \code{NULL} to prevent retina scaling. Note that this will always be
-#'   \code{NULL} when \code{keep_md} is specified (this is because
-#'   \code{fig_retina} relies on outputting HTML directly into the markdown
-#'   document).
+#' @param fig_retina Scaling to perform for retina displays (defaults to 2 when
+#'   \code{fig_caption} is \code{FALSE}, which currently works for all widely
+#'   used retina displays). Set to \code{NULL} to prevent retina scaling. Note
+#'   that this will always be \code{NULL} when \code{keep_md} is specified (this
+#'   is because \code{fig_retina} relies on outputting HTML directly into the
+#'   markdown document).
 #' @param fig_caption \code{TRUE} to render figures with captions
 #' @param smart Produce typographically correct output, converting straight
 #'   quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
@@ -109,7 +109,7 @@ html_document <- function(toc = FALSE,
                           number_sections = FALSE,
                           fig_width = 7,
                           fig_height = 5,
-                          fig_retina = 2,
+                          fig_retina = if (!fig_caption) 2,
                           fig_caption = FALSE,
                           smart = TRUE,
                           self_contained = TRUE,
