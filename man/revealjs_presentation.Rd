@@ -4,11 +4,11 @@
 \title{Convert to a reveal.js presentation}
 \usage{
 revealjs_presentation(incremental = FALSE, center = FALSE, fig_width = 8,
-  fig_height = 6, fig_retina = 2, fig_caption = FALSE, smart = TRUE,
-  self_contained = TRUE, theme = "default", transition = "default",
-  highlight = "default", mathjax = "default", template = "default",
-  includes = NULL, keep_md = FALSE, lib_dir = NULL, pandoc_args = NULL,
-  ...)
+  fig_height = 6, fig_retina = if (!fig_caption) 2, fig_caption = FALSE,
+  smart = TRUE, self_contained = TRUE, theme = "default",
+  transition = "default", highlight = "default", mathjax = "default",
+  template = "default", includes = NULL, keep_md = FALSE,
+  lib_dir = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
 \item{center}{\code{TRUE} to vertically center content on slides}
@@ -46,12 +46,12 @@ document (typically created using the \code{\link{includes}} function).}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
-\item{fig_retina}{Scaling to perform for retina displays (defaults to 2,
-which currently works for all widely used retina displays). Set to
-\code{NULL} to prevent retina scaling. Note that this will always be
-\code{NULL} when \code{keep_md} is specified (this is because
-\code{fig_retina} relies on outputting HTML directly into the markdown
-document).}
+\item{fig_retina}{Scaling to perform for retina displays (defaults to 2 when
+\code{fig_caption} is \code{FALSE}, which currently works for all widely
+used retina displays). Set to \code{NULL} to prevent retina scaling. Note
+that this will always be \code{NULL} when \code{keep_md} is specified (this
+is because \code{fig_retina} relies on outputting HTML directly into the
+markdown document).}
 
 \item{smart}{Produce typographically correct output, converting straight
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
