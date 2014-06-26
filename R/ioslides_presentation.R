@@ -71,7 +71,11 @@ ioslides_presentation <- function(logo = NULL,
     if (!is.null(logo)) {
       logo_path <- logo
       if (!self_contained) {
-        logo_path <- file.path(files_dir, "logo.png")
+        # use same extension as specified logo (default is png if unspecified)
+        logo_ext <- tools::file_ext(logo)
+        if (nchar(logo_ext) < 1)
+          logo_ext <- "png"
+        logo_path <- file.path(files_dir, paste("logo", logo_ext, sep = "."))
         file.copy(from = logo, to = logo_path)
         logo_path <- relative_to(output_dir, logo_path)
       } else {
