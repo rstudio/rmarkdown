@@ -247,7 +247,8 @@ kmeans_cluster(iris)
 <h2>Deployment</h2>
 <div id="shiny-server" class="section level3">
 <h3>Shiny Server</h3>
-<p>Deploying interactive documents is not yet supported by <a href="http://www.rstudio.com/shiny/server/">Shiny Server</a>. However, support is forthcoming in Shiny Server v1.2 which is scheduled for release by the end of June.</p>
+<p>You can deploy interactive documents using version 1.2 or later of <a href="http://www.rstudio.com/products/shiny/shiny-server/">Shiny Server</a>.</p>
+<p>Interactive documents are deployed the same way that Shiny applications are, except rather than deploying ui.R and server.R files you deploy one or more Rmd files. If there is a file named index.Rmd it a directory it will be served as the default document for that directory (otherwise an explicit path to the Rmd should be specified in the URL).</p>
 </div>
 <div id="shinyapps" class="section level3">
 <h3>ShinyApps</h3>

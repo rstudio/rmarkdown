@@ -101,7 +101,9 @@ To better understand how this works check out the [source code](https://github.c
 
 ### Shiny Server
 
-Deploying interactive documents is not yet supported by [Shiny Server](http://www.rstudio.com/shiny/server/). However, support is forthcoming in Shiny Server v1.2 which is scheduled for release by the end of June.
+You can deploy interactive documents using version 1.2 or later of [Shiny Server](http://www.rstudio.com/products/shiny/shiny-server/). 
+
+Interactive documents are deployed the same way that Shiny applications are, except rather than deploying ui.R and server.R files you deploy one or more Rmd files. If there is a file named index.Rmd it a directory it will be served as the default document for that directory (otherwise an explicit path to the Rmd should be specified in the URL).
 
 ### ShinyApps
 
