@@ -16,7 +16,7 @@ The following changes to markdown syntax were made in R Markdown v2:
 
 ### The knitr Package
 
-R Markdown v2 no longer attaches the **knitr** package by default, i.e. it does not do `library(knitr)` before an R Markdown document is compiled (whereas v1 does), and **knitr** is only _loaded_ but not _attached_. As a result, you may see an error message like `object 'opts_chunk' not found` (or other objects in **knitr** not found). Not attaching a package makes the work space cleaner. If you only need to use a smaller number of objects in a package occasionally, you are recommended to use the `::` operator, e.g. `knitr::opts_chunk`. However, sometimes we may need to a lot of objects in a package, and it will be cumbersome to type `package::` again and again. In this case, you can attach the package to the current R session explicitly, e.g. `library(knitr)`.
+R Markdown v2 no longer attaches the **knitr** package by default, i.e. it does not do `library(knitr)` before an R Markdown document is compiled (whereas v1 does), and **knitr** is only _loaded_ but not _attached_. As a result, you may see an error message like `object 'opts_chunk' not found` (or other objects in **knitr** not found). Not attaching a package makes the work space cleaner. If you only need to use a small number of objects in a package occasionally, you are recommended to use the `::` operator, e.g. `knitr::opts_chunk`. However, sometimes we may need to a lot of objects in a package, and it will be cumbersome to type `package::` again and again. In this case, you can attach the package to the current R session explicitly, e.g. `library(knitr)`.
 
 ### Knitr Caching
 
