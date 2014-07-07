@@ -251,14 +251,13 @@ pandoc_path_arg <- function(path) {
   path <- path.expand(path)
 
   # remove redundant ./ prefix if present
-  if (identical(substring(path, 1, 2), "./")) {
-    path <- substring(path, 3, nchar(path))
-  }
+  path <- sub('^[.]/', '', path)
 
   if (is_windows()) {
-    if (grepl(' ', path, fixed=TRUE))
-      path <- utils::shortPathName(path)
-    path <- gsub("/", "\\\\", path)
+    i <- grep(' ', path)
+    if (length(i))
+      path[i] <- utils::shortPathName(path[i])
+    path <- gsub('/', '\\\\', path)
   }
 
   path
