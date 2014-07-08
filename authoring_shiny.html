@@ -248,11 +248,12 @@ kmeans_cluster(iris)
 <div id="shiny-server" class="section level3">
 <h3>Shiny Server</h3>
 <p>You can deploy interactive documents using version 1.2 or later of <a href="http://www.rstudio.com/products/shiny/shiny-server/">Shiny Server</a>.</p>
-<p>Interactive documents are deployed the same way that Shiny applications are, except rather than deploying ui.R and server.R files you deploy one or more Rmd files. If there is a file named index.Rmd it a directory it will be served as the default document for that directory (otherwise an explicit path to the Rmd should be specified in the URL).</p>
+<p>Interactive documents are deployed the same way that Shiny applications are, except rather than deploying ui.R and server.R files you deploy one or more Rmd files. If there is a file named <strong>index.Rmd</strong> in a directory it will be served as the default document for that directory (otherwise an explicit path to the Rmd should be specified in the URL).</p>
+<p>See the Shiny Server <a href="http://rstudio.github.io/shiny-server/latest/#r-markdown">documentation</a> for more details on deploying interactive documents.</p>
 </div>
 <div id="shinyapps" class="section level3">
 <h3>ShinyApps</h3>
-<p>You can publish interactive documents to the <a href="http://shinyapps.io">ShinyApps</a> hosted service. To do this you should ensure that you have:</p>
+<p>You can also publish interactive documents to the <a href="http://shinyapps.io">ShinyApps</a> hosted service. To do this you should ensure that you have:</p>
 <ol style="list-style-type: decimal">
 <li><p>An account on ShinyApps (use the <a href="http://shinyapps.io">signup form</a> to request an account).</p></li>
 <li><p>The very latest version of the <strong>shinyapps</strong> R package. You can install this as follows:</p></li>
