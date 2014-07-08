@@ -14,6 +14,10 @@ The following changes to markdown syntax were made in R Markdown v2:
 2. The WordPress-style LaTeX equation syntax (e.g. `$latex <equation>$`) is no longer supported.
 3. Markdown is rendered even if it's contained within HTML tags.
 
+### The knitr Package
+
+R Markdown v2 no longer attaches the **knitr** package by default, i.e. it does not do `library(knitr)` before an R Markdown document is compiled (whereas v1 does), and **knitr** is only _loaded_ but not _attached_. As a result, you may see an error message like `object 'opts_chunk' not found` (or other objects in **knitr** not found). Not attaching a package makes the work space cleaner. If you only need to use a small number of objects in a package occasionally, you are recommended to use the `::` operator, e.g. `knitr::opts_chunk`. However, sometimes we may need to a lot of objects in a package, and it will be cumbersome to type `package::` again and again. In this case, you can attach the package to the current R session explicitly, e.g. `library(knitr)`.
+
 ### Knitr Caching
 
 One other important change relates to the use of the [knitr cache](http://yihui.name/knitr/demo/cache/). When R Markdown knits documents it explicitly configures the knitr cache to use a directory based on the name of the input file (e.g. `inputfile_cache`). If you are setting an explicit cache directory within your document (e.g. via `opts_chunk$set(cache.path = ...))`) you should remove this code and rely on R Markdown to set the cache directory.
