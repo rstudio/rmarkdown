@@ -27,7 +27,7 @@ html {
 }
 
 /* line 24, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-ol, ul {
+ul {
   list-style: none;
 }
 
@@ -465,12 +465,18 @@ h3 {
 }
 
 /* line 295, ../scss/default.scss */
-ul {
+ol, ul {
   margin-left: 1.2em;
   margin-bottom: 1em;
   position: relative;
 }
+
+ol {
+  margin-left: 1.4em;
+}
+
 /* line 300, ../scss/default.scss */
+ol li,
 ul li {
   margin-bottom: 0.5em;
 }
@@ -492,7 +498,13 @@ ul > li:before {
   font-weight: 600;
 }
 /* line 321, ../scss/default.scss */
-ul ul {
+ul ul,
+ol ul {
+  margin-top: .5em;
+}
+
+ol ul,
+ol ol {
   margin-top: .5em;
 }
 
