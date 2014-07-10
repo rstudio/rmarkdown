@@ -807,7 +807,7 @@ slide.fill {
 
 /* Size variants */
 /* line 535, ../scss/default.scss */
-article.smaller p, article.smaller ul {
+article.smaller p, article.smaller ul, article.smaller ol {
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0;
