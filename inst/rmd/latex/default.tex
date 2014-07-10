@@ -144,18 +144,22 @@ $endfor$
 
 \begin{document}
 
-\begin{center}
 $if(title)$
+\begin{center}
 \huge $title$ \\[0.2cm]
+\end{center}
 $endif$
 $if(author)$
+\begin{center}
 \large \emph{$for(author)$$author$$sep$ \and $endfor$}\\[0.1cm]
+\end{center}
 $endif$
 $if(date)$
+\begin{center}
 \large \emph{$date$} \\
+\end{center}
 $endif$
 \normalsize
-\end{center}
 
 $if(abstract)$
 \begin{abstract}
