@@ -11,7 +11,7 @@
 
 
 
-<title>Markdown Basics</title>
+<title>Bibliographies and Citations</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -153,136 +153,158 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 
 <div id="header">
-<h1 class="title">Markdown Basics</h1>
+<h1 class="title">Bibliographies and Citations</h1>
 </div>
 
-
-<p>This document provides quick references to the most commonly used R Markdown syntax. See the following articles for more in-depth treatment of all the capabilities of R Markdown:</p>
+<div id="TOC">
 <ul>
-<li><p><a href="authoring_rcodechunks.html">R Code Chunks</a></p></li>
-<li><p><a href="authoring_pandoc_markdown.html">Pandoc Markdown</a></p></li>
+<li><a href="#bibliographies">Bibliographies</a><ul>
+<li><a href="#specifying-a-bibliography">Specifying a Bibliography</a></li>
+<li><a href="#inline-references">Inline References</a></li>
+<li><a href="#bibliography-placement">Bibliography Placement</a></li>
+</ul></li>
+<li><a href="#citations">Citations</a><ul>
+<li><a href="#citation-syntax">Citation Syntax</a></li>
+<li><a href="#unused-references-nocite">Unused References (nocite)</a></li>
+<li><a href="#citation-and-reference-styles">Citation and Reference Styles</a></li>
+</ul></li>
 </ul>
-<div id="emphasis" class="section level4">
-<h4>Emphasis</h4>
-<pre class="markdown"><code>*italic*   **bold**
+</div>
 
-_italic_   __bold__</code></pre>
+<div id="bibliographies" class="section level2">
+<h2>Bibliographies</h2>
+<div id="specifying-a-bibliography" class="section level3">
+<h3>Specifying a Bibliography</h3>
+<p>Pandoc can automatically generate citations and a bibliography in a number of styles. In order to use this feature, you will need to specify a bibliography file using the <code>bibliography</code> metadata field in a YAML metadata section. For example:</p>
+<pre><code>---
+title: &quot;Sample Document&quot;
+output: html_document:
+bibliography: bibliography.bib
+---</code></pre>
+<p>The bibliography may have any of these formats:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Format</th>
+<th align="left">File extension</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">MODS</td>
+<td align="left">.mods</td>
+</tr>
+<tr class="even">
+<td align="left">BibLaTeX</td>
+<td align="left">.bib</td>
+</tr>
+<tr class="odd">
+<td align="left">BibTeX</td>
+<td align="left">.bibtex</td>
+</tr>
+<tr class="even">
+<td align="left">RIS</td>
+<td align="left">.ris</td>
+</tr>
+<tr class="odd">
+<td align="left">EndNote</td>
+<td align="left">.enl</td>
+</tr>
+<tr class="even">
+<td align="left">EndNote XML</td>
+<td align="left">.xml</td>
+</tr>
+<tr class="odd">
+<td align="left">ISI</td>
+<td align="left">.wos</td>
+</tr>
+<tr class="even">
+<td align="left">MEDLINE</td>
+<td align="left">.medline</td>
+</tr>
+<tr class="odd">
+<td align="left">Copac</td>
+<td align="left">.copac</td>
+</tr>
+<tr class="even">
+<td align="left">JSON citeproc</td>
+<td align="left">.json</td>
+</tr>
+</tbody>
+</table>
+<p>Note that <code>.bib</code> can generally be used with both BibTeX and BibLaTeX files, but you can use <code>.bibtex</code> to force BibTeX.</p>
 </div>
-<div id="headers" class="section level4">
-<h4>Headers</h4>
-<pre class="markdown"><code># Header 1
+<div id="inline-references" class="section level3">
+<h3>Inline References</h3>
+<p>Alternatively you can use a <code>references</code> field in the document’s YAML metadata. This should include an array of YAML-encoded references, for example:</p>
+<pre><code>---
+references:
+- id: fenner2012a
+  title: One-click science marketing
+  author:
+  - family: Fenner
+    given: Martin
+  container-title: Nature Materials
+  volume: 11
+  URL: &#39;http://dx.doi.org/10.1038/nmat3283&#39;
+  DOI: 10.1038/nmat3283
+  issue: 4
+  publisher: Nature Publishing Group
+  page: 261-263
+  type: article-journal
+  issued:
+    year: 2012
+    month: 3
+---</code></pre>
+</div>
+<div id="bibliography-placement" class="section level3">
+<h3>Bibliography Placement</h3>
+<p>Bibliographies will be placed at the end of the document. Normally, you will want to end your document with an appropriate header:</p>
+<pre><code>last paragraph...
 
-## Header 2
+# References</code></pre>
+<p>The bibliography will be inserted after this header.</p>
+</div>
+</div>
+<div id="citations" class="section level2">
+<h2>Citations</h2>
+<div id="citation-syntax" class="section level3">
+<h3>Citation Syntax</h3>
+<p>Citations go inside square brackets and are separated by semicolons. Each citation must have a key, composed of ‘@’ + the citation identifier from the database, and may optionally have a prefix, a locator, and a suffix. Here are some examples:</p>
+<pre><code>Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].
 
-### Header 3</code></pre>
-</div>
-<div id="lists" class="section level4">
-<h4>Lists</h4>
-<p>Unordered List:</p>
-<pre class="markdown"><code>* Item 1
-* Item 2
-    + Item 2a
-    + Item 2b</code></pre>
-<p>Ordered List:</p>
-<pre class="markdown"><code>1. Item 1
-2. Item 2
-3. Item 3
-    + Item 3a
-    + Item 3b</code></pre>
-</div>
-<div id="r-code-chunks" class="section level4">
-<h4>R Code Chunks</h4>
-<p>R code will be evaluated and printed</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r}
-summary(cars$dist)
-summary(cars$speed)
-&#96;&#96;&#96;
-</code></pre>
+Blah blah [@doe99, pp. 33-35, 38-39 and *passim*].
 
-</div>
-<div id="inline-r-code" class="section level4">
-<h4>Inline R Code</h4>
-<pre class="markdown"><code>There were `r nrow(cars)` cars studied</code></pre>
-</div>
-<div id="links" class="section level4">
-<h4>Links</h4>
-<p>Use a plain http address or add a link to a phrase:</p>
-<pre class="markdown"><code>http://example.com
+Blah blah [@smith04; @doe99].</code></pre>
+<p>A minus sign (<code>-</code>) before the <code>@</code> will suppress mention of the author in the citation. This can be useful when the author is already mentioned in the text:</p>
+<pre><code>Smith says blah [-@smith04].</code></pre>
+<p>You can also write an in-text citation, as follows:</p>
+<pre><code>@smith04 says blah.
 
-[linked phrase](http://example.com)</code></pre>
+@smith04 [p. 33] says blah.</code></pre>
 </div>
-<div id="images" class="section level4">
-<h4>Images</h4>
-<p>Images on the web or local files in the same directory:</p>
-<pre class="markdown"><code>![alt text](http://example.com/logo.png)
+<div id="unused-references-nocite" class="section level3">
+<h3>Unused References (nocite)</h3>
+<p>If you want to include items in the bibliography without actually citing them in the body text, you can define a dummy <code>nocite</code> metadata field and put the citations there:</p>
+<pre><code>---
+nocite:
+ | @item1, @item2
+...
 
-![alt text](figures/img.png)</code></pre>
+@item3</code></pre>
+<p>In this example, the document will contain a citation for <code>item3</code> only, but the bibliography will contain entries for <code>item1</code>, <code>item2</code>, and <code>item3</code>.</p>
 </div>
-<div id="blockquotes" class="section level4">
-<h4>Blockquotes</h4>
-<pre class="markdown"><code>A friend once said:
-
-&gt; It&#39;s always better to give
-&gt; than to receive.</code></pre>
+<div id="citation-and-reference-styles" class="section level3">
+<h3>Citation and Reference Styles</h3>
+<p>By default, pandoc will use a Chicago author-date format for citations and references. To use another style, you will need to specify a CSL 1.0 style file in the <code>csl</code> metadata field. For example:</p>
+<pre><code>---
+title: &quot;Sample Document&quot;
+output: html_document:
+bibliography: bibliography.bib
+csl: biomed-central.csl
+---</code></pre>
+<p>A primer on creating and modifying CSL styles can be found at <a href="http://citationstyles.org/downloads/primer.html">http://citationstyles.org/downloads/primer.html</a>. A repository of CSL styles can be found at <a href="https://github.com/citation-style-language/styles">https://github.com/citation-style-language/styles</a>. See also <a href="http://zotero.org/styles">http://zotero.org/styles</a> for easy browsing.</p>
 </div>
-<div id="plain-code-blocks" class="section level4">
-<h4>Plain Code Blocks</h4>
-<p>Plain code blocks are displayed in a fixed-width font but not evaulated</p>
-<pre class="markdown"><code>&#96;&#96;&#96;
-This text is displayed verbatim / preformatted
-&#96;&#96;&#96;
-</code></pre>
-
-</div>
-<div id="inline-code" class="section level4">
-<h4>Inline Code</h4>
-<pre class="markdown"><code>We defined the `add` function to
-compute the sum of two numbers.
-LaTeX Equations</code></pre>
-</div>
-<div id="latex-equations" class="section level4">
-<h4>LaTeX Equations</h4>
-<p>Inline equation:</p>
-<pre class="markdown"><code>$equation$</code></pre>
-<p>Display equation:</p>
-<pre class="markdown"><code>$$ equation $$</code></pre>
-</div>
-<div id="horizontal-rule-page-break" class="section level4">
-<h4>Horizontal Rule / Page Break</h4>
-<p>Three or more asterisks or dashes:</p>
-<pre class="markdown"><code>******
-
-------</code></pre>
-</div>
-<div id="tables" class="section level4">
-<h4>Tables</h4>
-<pre class="markdown"><code>First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell
-Reference Style Links and Images</code></pre>
-</div>
-<div id="links-1" class="section level4">
-<h4>Links</h4>
-<pre class="markdown"><code>A [linked phrase][id].</code></pre>
-<p>At the bottom of the document:</p>
-<pre class="markdown"><code>[id]: http://example.com/ &quot;Title&quot;
-Images
-![alt text][id]</code></pre>
-<p>At the bottom of the document:</p>
-<pre class="markdown"><code>[id]: figures/img.png &quot;Title&quot;</code></pre>
-</div>
-<div id="manual-line-breaks" class="section level4">
-<h4>Manual Line Breaks</h4>
-<p>End a line with two or more spaces:</p>
-<pre class="markdown"><code>Roses are red,
-Violets are blue.</code></pre>
-</div>
-<div id="miscellaneous" class="section level4">
-<h4>Miscellaneous</h4>
-<pre class="markdown"><code>superscript^2^
-
-~~strikethrough~~</code></pre>
 </div>
 
 
