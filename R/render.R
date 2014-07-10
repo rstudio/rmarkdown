@@ -148,9 +148,7 @@ render <- function(input,
 
   # determine whether we need to run citeproc (based on whether we
   # have references in the input)
-  run_citeproc <- !is.null(yaml_front_matter$bibliography) ||
-                  !is.null(yaml_front_matter$references) ||
-                  length(grep("^references\\:\\s*$", input_lines)) > 0
+  run_citeproc <- citeproc_required(yaml_front_matter, input_lines)
 
   # generate outpout file based on input filename
   if (is.null(output_file))

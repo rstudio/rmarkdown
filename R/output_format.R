@@ -560,3 +560,8 @@ is_pandoc_to_html <- function(options) {
   identical(options$to, "html") || identical(options$to, "html5")
 }
 
+citeproc_required <- function(yaml_front_matter, input_lines = NULL) {
+  !is.null(yaml_front_matter$bibliography) ||
+  !is.null(yaml_front_matter$references) ||
+  length(grep("^references\\:\\s*$", input_lines)) > 0
+}

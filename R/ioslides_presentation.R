@@ -116,6 +116,10 @@ ioslides_presentation <- function(logo = NULL,
     lua_writer <- file.path(output_dir, "ioslides_presentation.lua")
     on.exit(unlink(lua_writer), add = TRUE)
 
+    # determine whether we need to run citeproc
+    input_lines <- readLines(input_file, warn = FALSE)
+    run_citeproc <- citeproc_required(metadata, input_lines)
+
     # write settings to file
     settings <- c()
     add_setting <- function(name, value) {
@@ -141,6 +145,7 @@ ioslides_presentation <- function(logo = NULL,
                    from = from_rmarkdown(fig_caption),
                    output = output_tmpfile,
                    options = args,
+                   citeproc = run_citeproc,
                    verbose = verbose)
 
     # read the slides
