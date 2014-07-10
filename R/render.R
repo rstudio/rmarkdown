@@ -146,6 +146,12 @@ render <- function(input,
   }
   pandoc_to <- output_format$pandoc$to
 
+  # determine whether we need to run citeproc (based on whether we
+  # have references in the input)
+  run_citeproc <- !is.null(yaml_front_matter$bibliography) ||
+                  !is.null(yaml_front_matter$references) ||
+                  length(grep("^references\\:\\s*$", input_lines)) > 0
+
   # generate outpout file based on input filename
   if (is.null(output_file))
     output_file <- pandoc_output_file(input, output_format$pandoc)
@@ -293,14 +299,10 @@ render <- function(input,
 
   perf_timer_stop("pre-processor")
 
-  # determine whether we should run pandoc-citeproc
-  run_citeproc <- !is.null(yaml_front_matter$bibliography) ||
-                  !is.null(yaml_front_matter$references)
-
   # if we are running citeproc then explicitly forward the bibliography
   # on the command line (works around pandoc-citeproc issue whereby yaml
   # strings that begin with numbers are interpreted as numbers)
-  if (run_citeproc && !is.null(yaml_front_matter$bibliography)) {
+  if (!is.null(yaml_front_matter$bibliography)) {
     output_format$pandoc$args <- c(output_format$pandoc$args,
       rbind("--bibliography", pandoc_path_arg(yaml_front_matter$bibliography)))
   }
