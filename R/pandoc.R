@@ -443,6 +443,11 @@ with_pandoc_safe_environment <- function(code) {
     Sys.unsetenv("LC_ALL")
     on.exit(Sys.setenv(LC_ALL = lc_all), add = TRUE)
   }
+  lc_ctype <- Sys.getenv("LC_CTYPE", unset = NA)
+  if (!is.na(lc_ctype)) {
+    Sys.unsetenv("LC_CTYPE")
+    on.exit(Sys.setenv(LC_CTYPE = lc_ctype), add = TRUE)
+  }
   if (Sys.info()['sysname'] == "Linux" &&
         is.na(Sys.getenv("HOME", unset = NA))) {
     stop("The 'HOME' environment variable must be set before running Pandoc.")
