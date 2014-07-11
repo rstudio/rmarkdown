@@ -319,7 +319,6 @@ pandoc_mathjax_args <- function(mathjax,
       mathjax_path <- render_supporting_files(mathjax_path,
                                               files_dir,
                                               "mathjax-2.3.0")
-      mathjax_path <- pandoc_path_arg(mathjax_path)
       mathjax <- paste(mathjax_path, "/", mathjax_config(), sep = "")
     }
 
