@@ -173,7 +173,7 @@ SlideDeck.prototype.onBodyKeyDown_ = function(e) {
   // handling keys only when the text input is active or when the up or down
   // arrow key is pressed (which is used to open the list from the keyboard)
   var parentNode = e.target.parentNode || e.target; // handle no parent
-  if (parentNode.classList.contains('selectize-input')) {
+  if (parentNode.classList && parentNode.classList.contains('selectize-input')) {
     if (parentNode.classList.contains('input-active') ||  // text input is active
        (e.keyCode == 38) || (e.keyCode == 40))            // up or down arrow
       return;
