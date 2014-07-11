@@ -347,9 +347,11 @@ To add presenter notes to a slide you include it within a "notes"
 
 \preformatted{
 <div class="notes">
-This is my note.
+This is my *note*.
+
 - It can contain markdown
 - like this list
+
 </div>
 }
 
