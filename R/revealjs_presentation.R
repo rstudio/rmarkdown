@@ -140,7 +140,7 @@ revealjs_presentation <- function(incremental = FALSE,
     revealjs_path <- rmarkdown_system_file("rmd/revealjs/reveal.js-2.6.1")
     if (!self_contained)
       revealjs_path <- relative_to(
-        render_supporting_files(revealjs_path, lib_dir), output_dir)
+        output_dir, render_supporting_files(revealjs_path, lib_dir))
     args <- c(args, "--variable", paste("revealjs-url=",
                                         pandoc_path_arg(revealjs_path), sep=""))
 
