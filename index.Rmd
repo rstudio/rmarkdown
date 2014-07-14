@@ -148,7 +148,7 @@ With the basics described above you can get started with R Markdown right away. 
 
 * [Interactive Documents with Shiny](authoring_shiny.html), which describes how to make R Markdown documents interactive using [Shiny](http://shiny.rstudio.com).
 
-* [Compiling Notebooks](authoring_compile_notebook.html), which describes how to compile HTML, PDF, or MS Word notebooks from R scripts.
+* [Compiling Notebooks](r_notebook_format.html), which describes how to compile HTML, PDF, or MS Word notebooks from R scripts.
 
 * Document output formats: [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html)
 
