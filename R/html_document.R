@@ -168,8 +168,14 @@ html_document <- function(toc = FALSE,
                                                output_dir))
 
     # content includes (we do this here so that user include-in-header content
-    # goes after dependency generated content)
-    args <- c(args, includes_to_pandoc_args(includes))
+    # goes after dependency generated content). make the paths absolute if
+    # making a Shiny document so we can resolve them even if rendering
+    # elsewhere.
+    args <- c(args, includes_to_pandoc_args(includes,
+                      filter = if (identical(runtime, "shiny"))
+                        normalize_path
+                      else
+                        identity))
 
     # return additional args
     args
