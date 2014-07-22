@@ -184,7 +184,7 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
                                output_file = output_dest,
                                output_dir = dirname(output_dest),
                                output_options = output_opts,
-                               intermediates_dir = tempdir(),
+                               intermediates_dir = dirname(output_dest),
                                runtime = "shiny"),
                           render_args)
       result_path <- shiny::maskReactiveContext(do.call(render, args))
@@ -290,7 +290,7 @@ rmd_cached_output <- function (input, encoding) {
     cacheable <- TRUE
     output_key <- digest::digest(paste(input, file.info(input)[4]),
                                  algo = "md5", serialize = FALSE)
-    output_dest <- paste(file.path(dirname(tempdir()), "rmarkdown",
+    output_dest <- paste(file.path(dirname(tempdir()), "rmarkdown", output_key,
                                    paste("rmd", output_key, sep = "_")),
                          "html", sep = ".")
 
