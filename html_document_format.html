@@ -174,6 +174,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#document-dependencies">Document Dependencies</a></li>
 <li><a href="#advanced-customization">Advanced Customization</a></li>
 <li><a href="#shared-options">Shared Options</a></li>
+<li><a href="#html-fragments">HTML Fragments</a></li>
 <li><a href="#creating-a-website">Creating a Website</a></li>
 </ul>
 </div>
@@ -383,6 +384,15 @@ output:
   theme: united
   highlight: textmate</code></pre>
 <p>All documents located in the same directory as <code>_output.yaml</code> will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.</p>
+</div>
+<div id="html-fragments" class="section level2">
+<h2>HTML Fragments</h2>
+<p>If want to create an HTML fragment rather than a full HTML document you can use the <a href="html_fragment_format.html"><code>html_fragment</code></a> format. For example:</p>
+<pre><code>---
+output: html_fragment
+---</code></pre>
+<p>Note that there is no title or author because fragments don’t contain the standard header content that HTML documents do. HTML fragments are typically used for including snippets of HTML within larger web sites (e.g. blogs).</p>
+<p>For additional information see the article on <a href="html_fragment_format.html">HTML Fragments</a>. Note that another good option for generating content to be included in larger websites is the <a href="markdown_document_format.html"><code>md_document</code></a> format, which generates markdown. For more information on this format see the article on <a href="markdown_document_format.html">Markdown Documents</a>.</p>
 </div>
 <div id="creating-a-website" class="section level2">
 <h2>Creating a Website</h2>

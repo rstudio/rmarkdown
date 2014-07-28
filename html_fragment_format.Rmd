@@ -1,0 +1,86 @@
+---
+title: "HTML Fragment"
+output:
+  html_document:
+    toc: true
+---
+
+## Overview
+
+To create an HTML fragment from R Markdown you specify the `html_fragment` output format in the front-matter of your document:
+
+    ---
+    output: html_fragment
+    ---
+
+Note that HTML fragments are not complete HTML documents. Rather, they are intended for inclusion within other web pages or content management systems (like blogs). As such, they don't support features like embedded images, themes, or code highlighting (it's expected that the environment they are ultimately published within handles these things).
+
+## Figure Options
+
+There are a number of options that affect the output of figures within HTML documents:
+
+* `fig_width` and  `fig_height` can be used to control the default figure width and height (7x5 is used by default)
+
+* `fig_retina` Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr >= 1.5.21. Set to `null` to prevent retina scaling.
+
+* `fig_caption` controls whether figures are rendered with captions
+
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_fragment:
+        fig_width: 7
+        fig_height: 6
+        fig_caption: true
+    ---
+
+## Additional Options
+
+There are several other options that can be used to customized HTML fragment generation:
+
+* You can add section numbering to headers using the `number_sections` option. 
+
+* You can specify `smart` to produce typographically correct output, converting straight quotes to curly quotes, `---` to em-dashes, `--` to en-dashes, and `...` to ellipses (note that `smart` is enabled by default).
+
+* If you want to keep a copy of the markdown file after rendering you can do so using the `keep_md` option.
+
+For example:
+
+    ---
+    output:
+      html_fragment:
+        number_sections: true
+        smart: true
+        keep_md: true
+    ---
+
+## Pandoc Arguments
+
+If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        pandoc_args: [
+          "--title-prefix", "Foo",
+          "--id-prefix", "Bar"
+        ]
+    ---
+
+Documentation on all available pandoc arguments can be found in the [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html#options).
+
+
+
+
+
+
+
+
+
+
+
+
+

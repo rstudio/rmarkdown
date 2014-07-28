@@ -11,7 +11,7 @@
 
 
 
-<title>Document Templates</title>
+<title>HTML Fragment</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -161,103 +161,74 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 
 <div id="header">
-<h1 class="title">Document Templates</h1>
+<h1 class="title">HTML Fragment</h1>
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#figure-options">Figure Options</a></li>
+<li><a href="#additional-options">Additional Options</a></li>
+<li><a href="#pandoc-arguments">Pandoc Arguments</a></li>
+</ul>
+</div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>If there is a particular form of R Markdown document that you or those you work with create frequently, it may make sense to create a re-usable document template for it. R Markdown templates are typically re-distributed within R packages, and can be easily discovered from within RStudio using the <strong>New R Markdown</strong> dialog:</p>
-<p><img src="images/new_r_markdown.png" alt="New R Markdown dialog" /></p>
-<p>Note that if you are not using RStudio you can also create new documents based on templates using the <code>rmarkdown::draft</code> function:</p>
-<pre class="r"><code>rmarkdown::draft(&quot;my_article.Rmd&quot;, template = &quot;jss_article&quot;, package = &quot;rticles&quot;)</code></pre>
-</div>
-<div id="template-basics" class="section level2">
-<h2>Template Basics</h2>
-<p>R Markdown templates should be located within the <code>inst/rmarkdown/templates</code> directory of an R package. The minimum files required for a template are:</p>
-<p><strong>Directory:</strong> <code>inst/rmarkdown/templates/my_template</code></p>
-<pre class="bash"><code>template.yaml 
-skeleton/skeleton.Rmd </code></pre>
-<p>The contents of the two files might look like this:</p>
-<p><strong>template.yaml</strong></p>
-<pre class="yaml"><code>name: My Template</code></pre>
-<p><strong>skeleton/skeleton.Rmd</strong></p>
-<pre class="markdown"><code>---
-title: &quot;Untitled&quot;
-output:
-  html_document:
-    toc: true
-    fig_caption: true
----
-
-## Overview
-
-## Analysis
-</code></pre>
-<p>This is a trivial example that simply overrides a couple of the default parameters of <code>html_document</code>. You could of course also include additional document structure, logo elements, stylesheets, etc.</p>
-</div>
-<div id="supporting-files" class="section level2">
-<h2>Supporting Files</h2>
-<p>If want to include supporting files with your template they should be placed in the <code>skeleton</code> directory. These files will be automatically copied alongside new documents. For example, if your template included a standard logo and stylesheet it contain the following:</p>
-<p><strong>Directory:</strong> <code>inst/rmarkdown/templates/my_template</code></p>
-<pre class="bash"><code>template.yaml 
-skeleton/skeleton.Rmd 
-skeleton/logo.png 
-skeleton/styles.css </code></pre>
-<p><strong>template.yaml</strong></p>
-<pre class="yaml"><code>name: My Template
-create_dir: true</code></pre>
-<p><strong>skeleton.Rmd</strong></p>
-<pre class="markdown"><code>---
-title: &quot;Untitled&quot;
-output:
-  html_document:
-    toc: true
-    fig_caption: true
-    css: styles.css
----
-
-![Logo](logo.png)
-
-## Overview
-
-## Analysis
-</code></pre>
-<p>Note the use of the <code>create_dir</code> field in the template definition to indicate that a new directory should be created when documents are created from the template (this is a default that the user can override).</p>
-</div>
-<div id="templates-and-custom-formats" class="section level2">
-<h2>Templates and Custom Formats</h2>
-<p>When creating a template it’s also convenient to create a <a href="developer_custom_formats.html">custom format</a> that is used by the template. Custom formats are useful when you have lots of supporting files or want to constrain the output options to a set of invariants established by the format.</p>
-<p>Here’s an example of a custom format based on <code>html_document</code>:</p>
-<pre class="r"><code>quarterly_report &lt;- function(toc = TRUE) {
-
-  # get the locations of resource files located within the package
-  css &lt;- system.file(&quot;reports/styles.css&quot;, package = &quot;mypackage&quot;)
-  header &lt;- system.file(&quot;reports/quarterly/header.html&quot;, package = &quot;mypackage&quot;)
-
-  # call the base html_document function
-  rmarkdown::html_document(toc = toc,
-                           fig_width = 6.5,
-                           fig_height = 4,
-                           theme = NULL,
-                           css = css,
-                           includes = includes(before_body = header))
-}</code></pre>
-<p>This format could then be used in a template follows:</p>
-<pre class="yaml"><code>---
-title: &quot;Untitled&quot;
-output: mypackage::quarterly_report
+<p>To create an HTML fragment from R Markdown you specify the <code>html_fragment</code> output format in the front-matter of your document:</p>
+<pre><code>---
+output: html_fragment
 ---</code></pre>
-<p>See the article on <a href="developer_custom_formats.html">Creating New Formats</a> for additional details on custom formats.</p>
+<p>Note that HTML fragments are not complete HTML documents. Rather, they are intended for inclusion within other web pages or content management systems (like blogs). As such, they don’t support features like embedded images, themes, or code highlighting (it’s expected that the environment they are ultimately published within handles these things).</p>
 </div>
-<div id="examples" class="section level2">
-<h2>Examples</h2>
-<p>The <a href="https://github.com/rstudio/rticles">rticles</a> package includes two examples of templates (both of which have an associated custom format):</p>
-<ol style="list-style-type: decimal">
-<li><p><a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/jss_article">JSS article</a></p></li>
-<li><p><a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/use_r_abstract">useR abstract submission</a></p></li>
-</ol>
-<p>Both of these use custom LaTeX templates to produce output that conforms to the document standards of JSS and useR.</p>
+<div id="figure-options" class="section level2">
+<h2>Figure Options</h2>
+<p>There are a number of options that affect the output of figures within HTML documents:</p>
+<ul>
+<li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (7x5 is used by default)</p></li>
+<li><p><code>fig_retina</code> Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr &gt;= 1.5.21. Set to <code>null</code> to prevent retina scaling.</p></li>
+<li><p><code>fig_caption</code> controls whether figures are rendered with captions</p></li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_fragment:
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+---</code></pre>
+</div>
+<div id="additional-options" class="section level2">
+<h2>Additional Options</h2>
+<p>There are several other options that can be used to customized HTML fragment generation:</p>
+<ul>
+<li><p>You can add section numbering to headers using the <code>number_sections</code> option.</p></li>
+<li><p>You can specify <code>smart</code> to produce typographically correct output, converting straight quotes to curly quotes, <code>---</code> to em-dashes, <code>--</code> to en-dashes, and <code>...</code> to ellipses (note that <code>smart</code> is enabled by default).</p></li>
+<li><p>If you want to keep a copy of the markdown file after rendering you can do so using the <code>keep_md</code> option.</p></li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+output:
+  html_fragment:
+    number_sections: true
+    smart: true
+    keep_md: true
+---</code></pre>
+</div>
+<div id="pandoc-arguments" class="section level2">
+<h2>Pandoc Arguments</h2>
+<p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    pandoc_args: [
+      &quot;--title-prefix&quot;, &quot;Foo&quot;,
+      &quot;--id-prefix&quot;, &quot;Bar&quot;
+    ]
+---</code></pre>
+<p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
 </div>
 
 
