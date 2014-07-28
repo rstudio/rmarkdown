@@ -294,6 +294,48 @@ pandoc_template <- function(metadata, template, output, verbose = FALSE) {
   invisible(output)
 }
 
+#' Create a self-contained HTML document using pandoc.
+#'
+#' Create a self-contained HTML document by base64 encoding images,
+#' scripts, and stylesheets referended by the input document.
+#'
+#' @param input Input html file to create self-contained version of.
+#' @param output Path to save output.
+#'
+#' @return (Invisibly) The path of the generated file.
+#'
+#' @export
+pandoc_self_contained_html <- function(input, output) {
+
+  # make input file path absolute
+  input <- normalizePath(input)
+
+  # ensure output file exists and make it's path absolute
+  if (!file.exists(output))
+    file.create(output)
+  output <- normalizePath(output)
+
+  # create a simple body-only template
+  template <- tempfile(fileext = ".html")
+  writeLines("$body$", template)
+
+  # call pandoc with from format of "markdown_strict" to
+  # get as close as possible to html -> html conversion
+  rmarkdown::pandoc_convert(
+    input = input,
+    from = "markdown_strict",
+    output = output,
+    options = c(
+      "--self-contained",
+      "--template", template
+    )
+  )
+
+  invisible(output)
+}
+
+
+
 validate_self_contained <- function(mathjax) {
   if (identical(mathjax, "local"))
     stop("Local MathJax isn't compatible with self_contained\n",
