@@ -23,6 +23,6 @@ html_fragment <- function(number_sections = FALSE,
     fig_height = fig_height, fig_retina = fig_retina, fig_caption = fig_caption,
     smart = smart, keep_md = keep_md, pandoc_args = pandoc_args,
     mathjax = NULL, highlight = NULL, theme = NULL, ...,
-    template = system.file("templates/fragment.html", package = "rmarkdown")
+    template = rmarkdown_system_file("rmd/fragment/default.html")
   )
 }
