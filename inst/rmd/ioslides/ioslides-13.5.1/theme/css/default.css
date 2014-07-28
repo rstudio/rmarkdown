@@ -23,7 +23,7 @@ time, mark, audio, video {
 
 /* line 22, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
-  line-height: 1;
+  line-height: 1.2;
 }
 
 /* line 24, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
@@ -449,7 +449,7 @@ h1, h2, h3 {
 /* line 280, ../scss/default.scss */
 h2 {
   font-size: 45px;
-  line-height: 45px;
+  line-height: 65px;
   letter-spacing: -2px;
   color: #515151;
 }
