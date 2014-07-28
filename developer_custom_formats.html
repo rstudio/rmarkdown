@@ -215,9 +215,11 @@ output:
 <pre class="r"><code>simple_html_format &lt;- function() {
   require(rmarkdown)
   output_format(knitr = knitr_options(opts_chunk = list(dev = &#39;png&#39;)),
-                pandoc = pandoc_options(to = &quot;html&quot;))
+                pandoc = pandoc_options(to = &quot;html&quot;),
+                clean_supporting = FALSE)
 }</code></pre>
-<p>Of course, knitr and pandoc options can get considerabiy more complicated (see the <code>knitr_options</code> and <code>pandoc_options</code> functions for details). If there are supporting files required for your format (e.g. HTML/CSS/JS) then you’ll also need to use the other arguments to <code>output_format</code> to ensure they are handled correctly.</p>
+<p>Of course, knitr and pandoc options can get considerabiy more complicated (see the <code>knitr_options</code> and <code>pandoc_options</code> functions for details). The <code>clean_supporting</code> option indicates that you aren’t creating self contained output (like a PDF or HTML document with base64 encoded resources) and therefore want to preserve supporting files like plot images generated during knitting.</p>
+<p>If there are supporting files required for your format (e.g. HTML/CSS/JS) then you’ll also need to use the other arguments to <code>output_format</code> to ensure they are handled correctly (e.g. copying them into place alongside the generated document).</p>
 <p>The best way to learn about creating fully custom formats is to study the code of the existing built-in formats (e.g. <code>html_document</code> and <code>pdf_document</code>). In some cases a custom format will define it’s own <a href="http://johnmacfarlane.net/pandoc/demo/example9/templates.html">pandoc template</a>. You can see the default pandoc templates used by the rmarkdown package by looking in the <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmd"><code>inst/rmd</code></a> directory of the package.</p>
 </div>
 

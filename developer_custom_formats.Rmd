@@ -66,11 +66,14 @@ You can create a new format using the `output_format` function. For example, her
 simple_html_format <- function() {
   require(rmarkdown)
   output_format(knitr = knitr_options(opts_chunk = list(dev = 'png')),
-                pandoc = pandoc_options(to = "html"))
+                pandoc = pandoc_options(to = "html"),
+                clean_supporting = FALSE)
 }
 ```
 
-Of course, knitr and pandoc options can get considerabiy more complicated (see the `knitr_options` and `pandoc_options` functions for details). If there are supporting files required for your format (e.g. HTML/CSS/JS) then you'll also need to use the other arguments to `output_format` to ensure they are handled correctly.
+Of course, knitr and pandoc options can get considerabiy more complicated (see the `knitr_options` and `pandoc_options` functions for details). The `clean_supporting` option indicates that you aren't creating self contained output (like a PDF or HTML document with base64 encoded resources) and therefore want to preserve supporting files like plot images generated during knitting.
+
+If there are supporting files required for your format (e.g. HTML/CSS/JS) then you'll also need to use the other arguments to `output_format` to ensure they are handled correctly (e.g. copying them into place alongside the generated document).
 
 The best way to learn about creating fully custom formats is to study the code of the existing built-in formats (e.g. `html_document` and `pdf_document`). In some cases a custom format will define it's own [pandoc template](http://johnmacfarlane.net/pandoc/demo/example9/templates.html). You can see the default pandoc templates used by the rmarkdown package by looking in the [`inst/rmd`](https://github.com/rstudio/rmarkdown/tree/master/inst/rmd) directory of the package.
 
