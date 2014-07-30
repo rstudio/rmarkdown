@@ -9,7 +9,7 @@ R Markdown includes several built-in document and presentation formats however y
     ---
     title: "Habits"
     output:
-      mypackage::quarterly_report
+      mypackage::quarterly_report:
         toc: true
     ---
 
