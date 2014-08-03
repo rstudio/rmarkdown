@@ -192,6 +192,7 @@ render <- function(input,
     knitr::opts_knit$set(rmarkdown.pandoc.to = pandoc_to)
     knitr::opts_knit$set(rmarkdown.keep_md = output_format$keep_md)
     knitr::opts_knit$set(rmarkdown.version = 2)
+    knitr::opts_knit$set(rmarkdown.output = output_format)
 
     # trim whitespace from around source code
     if (packageVersion("knitr") < "1.5.23") {
