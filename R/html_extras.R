@@ -6,10 +6,6 @@ html_extras_for_document <- function(knit_meta, runtime, dependency_resolver,
 
   extras <- list()
 
-  # if this is a shiny document then start with shiny extras
-  if (identical(runtime, "shiny"))
-    extras <- shiny_html_extras(knit_meta)
-
   # merge the dependencies discovered with the dependencies of this format and
   # dependencies discovered in knit_meta
   all_dependencies <- if (is.null(format_deps)) list() else format_deps
@@ -45,15 +41,3 @@ pandoc_html_extras_args <- function(extras, self_contained, lib_dir,
 
   args
 }
-
-# return the html extras required to serve a document as a shiny app
-shiny_html_extras <- function(knit_meta) {
-  heads <- as.logical(sapply(knit_meta, is, "shiny_head"))
-
-  # get a list of the Shiny dependencies and mark them as external
-  shiny_dependencies <- lapply(shiny::getProvidedHtmlDependencies(),
-                               function(dep) { dep$external = TRUE; dep })
-  list(dependencies = shiny_dependencies,
-       in_header = unlist(knit_meta[heads]))
-}
-

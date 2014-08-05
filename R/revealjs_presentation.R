@@ -72,7 +72,7 @@ revealjs_presentation <- function(incremental = FALSE,
                                   center = FALSE,
                                   fig_width = 8,
                                   fig_height = 6,
-                                  fig_retina = 2,
+                                  fig_retina = if (!fig_caption) 2,
                                   fig_caption = FALSE,
                                   smart = TRUE,
                                   self_contained = TRUE,
@@ -82,6 +82,7 @@ revealjs_presentation <- function(incremental = FALSE,
                                   mathjax = "default",
                                   template = "default",
                                   includes = NULL,
+                                  keep_md = FALSE,
                                   lib_dir = NULL,
                                   pandoc_args = NULL,
                                   ...) {
@@ -139,7 +140,7 @@ revealjs_presentation <- function(incremental = FALSE,
     revealjs_path <- rmarkdown_system_file("rmd/revealjs/reveal.js-2.6.1")
     if (!self_contained)
       revealjs_path <- relative_to(
-        render_supporting_files(revealjs_path, lib_dir), output_dir)
+        output_dir, render_supporting_files(revealjs_path, lib_dir))
     args <- c(args, "--variable", paste("revealjs-url=",
                                         pandoc_path_arg(revealjs_path), sep=""))
 
@@ -152,10 +153,11 @@ revealjs_presentation <- function(incremental = FALSE,
 
   # return format
   output_format(
-    knitr = knitr_options_html(fig_width, fig_height, fig_retina),
+    knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md),
     pandoc = pandoc_options(to = "revealjs",
                             from = from_rmarkdown(fig_caption),
                             args = args),
+    keep_md = keep_md,
     clean_supporting = self_contained,
     pre_processor = pre_processor,
     base_format = html_document_base(smart = smart, lib_dir = lib_dir,

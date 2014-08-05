@@ -118,7 +118,7 @@ SlideDeck.prototype.onDomLoaded_ = function(e) {
  * @private
  */
 SlideDeck.prototype.addEventListeners_ = function() {
-  document.addEventListener('keydown', this.onBodyKeyDown_.bind(this), false);
+  document.addEventListener('keydown', this.onBodyKeyDown_.bind(this), true);
   window.addEventListener('popstate', this.onPopState_.bind(this), false);
 
   // var transEndEventNames = {
@@ -166,7 +166,18 @@ SlideDeck.prototype.onPopState_ = function(e) {
  * @param {Event} e
  */
 SlideDeck.prototype.onBodyKeyDown_ = function(e) {
-  if (/^(input|textarea)$/i.test(e.target.nodeName) ||
+
+  // Don't handle keys if an input or text area is active. Do special handling
+  // for selectize because it keeps focus within an offscreen textbox even
+  // when just the select control is showing -- for selectize we refrain from
+  // handling keys only when the text input is active or when the up or down
+  // arrow key is pressed (which is used to open the list from the keyboard)
+  var parentNode = e.target.parentNode || e.target; // handle no parent
+  if (parentNode.classList && parentNode.classList.contains('selectize-input')) {
+    if (parentNode.classList.contains('input-active') ||  // text input is active
+       (e.keyCode == 38) || (e.keyCode == 40))            // up or down arrow
+      return;
+  } else if (/^(input|textarea)$/i.test(e.target.nodeName) ||
       e.target.isContentEditable) {
     return;
   }
@@ -702,11 +713,13 @@ SlideDeck.prototype.makeBuildLists_ = function () {
 SlideDeck.prototype.updateHash_ = function(dontPush) {
   if (!dontPush) {
     var slideNo = this.curSlide_ + 1;
+    // Add everything except the hash.
+    var loc = location.protocol+'//'+location.host+location.pathname+(location.search?location.search:"");
     var hash = '#' + slideNo;
     if (window.history.pushState) {
-      window.history.pushState(this.curSlide_, 'Slide ' + slideNo, hash);
+      window.history.pushState(this.curSlide_, 'Slide ' + slideNo, loc + hash);
     } else {
-      window.location.replace(hash);
+      window.location.replace(loc + hash);
     }
 
     // Record GA hit on this slide.

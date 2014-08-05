@@ -70,7 +70,7 @@ pandoc. If the input requires knitting then
 For additional details on rendering R scripts see
 \link[=compile_notebook]{Compiling R scripts to a notebook}.
 
-If no \code{output_format} parmaeter is specified then the output
+If no \code{output_format} parameter is specified then the output
 format is read from the YAML front-matter of the input
 file. For example, the following YAML would yield a PDF
 document:

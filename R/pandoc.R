@@ -251,14 +251,13 @@ pandoc_path_arg <- function(path) {
   path <- path.expand(path)
 
   # remove redundant ./ prefix if present
-  if (identical(substring(path, 1, 2), "./")) {
-    path <- substring(path, 3, nchar(path))
-  }
+  path <- sub('^[.]/', '', path)
 
   if (is_windows()) {
-    if (grepl(' ', path, fixed=TRUE))
-      path <- utils::shortPathName(path)
-    path <- gsub("/", "\\\\", path)
+    i <- grep(' ', path)
+    if (length(i))
+      path[i] <- utils::shortPathName(path[i])
+    path <- gsub('/', '\\\\', path)
   }
 
   path
@@ -295,6 +294,48 @@ pandoc_template <- function(metadata, template, output, verbose = FALSE) {
   invisible(output)
 }
 
+#' Create a self-contained HTML document using pandoc.
+#'
+#' Create a self-contained HTML document by base64 encoding images,
+#' scripts, and stylesheets referended by the input document.
+#'
+#' @param input Input html file to create self-contained version of.
+#' @param output Path to save output.
+#'
+#' @return (Invisibly) The path of the generated file.
+#'
+#' @export
+pandoc_self_contained_html <- function(input, output) {
+
+  # make input file path absolute
+  input <- normalizePath(input)
+
+  # ensure output file exists and make it's path absolute
+  if (!file.exists(output))
+    file.create(output)
+  output <- normalizePath(output)
+
+  # create a simple body-only template
+  template <- tempfile(fileext = ".html")
+  writeLines("$body$", template)
+
+  # call pandoc with from format of "markdown_strict" to
+  # get as close as possible to html -> html conversion
+  rmarkdown::pandoc_convert(
+    input = input,
+    from = "markdown_strict",
+    output = output,
+    options = c(
+      "--self-contained",
+      "--template", template
+    )
+  )
+
+  invisible(output)
+}
+
+
+
 validate_self_contained <- function(mathjax) {
   if (identical(mathjax, "local"))
     stop("Local MathJax isn't compatible with self_contained\n",
@@ -304,7 +345,8 @@ validate_self_contained <- function(mathjax) {
 pandoc_mathjax_args <- function(mathjax,
                                 template,
                                 self_contained,
-                                files_dir) {
+                                files_dir,
+                                output_dir) {
   args <- c()
 
   if (!is.null(mathjax)) {
@@ -320,8 +362,8 @@ pandoc_mathjax_args <- function(mathjax,
       mathjax_path <- render_supporting_files(mathjax_path,
                                               files_dir,
                                               "mathjax-2.3.0")
-      mathjax_path <- pandoc_path_arg(mathjax_path)
-      mathjax <- paste(mathjax_path, "/", mathjax_config(), sep = "")
+      mathjax <- paste(relative_to(output_dir, mathjax_path), "/",
+                       mathjax_config(), sep = "")
     }
 
     if (identical(template, "default")) {
@@ -444,6 +486,11 @@ with_pandoc_safe_environment <- function(code) {
     Sys.unsetenv("LC_ALL")
     on.exit(Sys.setenv(LC_ALL = lc_all), add = TRUE)
   }
+  lc_ctype <- Sys.getenv("LC_CTYPE", unset = NA)
+  if (!is.na(lc_ctype)) {
+    Sys.unsetenv("LC_CTYPE")
+    on.exit(Sys.setenv(LC_CTYPE = lc_ctype), add = TRUE)
+  }
   if (Sys.info()['sysname'] == "Linux" &&
         is.na(Sys.getenv("HOME", unset = NA))) {
     stop("The 'HOME' environment variable must be set before running Pandoc.")
@@ -451,11 +498,34 @@ with_pandoc_safe_environment <- function(code) {
   if (Sys.info()['sysname'] == "Linux" &&
         is.na(Sys.getenv("LANG", unset = NA))) {
     # fill in a the LANG environment variable if it doesn't exist
-    Sys.setenv(LANG="en_US.UTF-8")
+    Sys.setenv(LANG=detect_generic_lang())
     on.exit(Sys.unsetenv("LANG"), add = TRUE)
   }
   force(code)
 }
+
+# if there is no LANG environment variable set pandoc is going to hang so
+# we need to specify a "generic" lang setting. With glibc >= 2.13 you can
+# specify C.UTF-8 so we prefer that. If we can't find that then we fall back
+# to en_US.UTF-8.
+detect_generic_lang <- function() {
+
+  locale_util <- Sys.which("locale")
+
+  if (nzchar(locale_util)) {
+    locales <- system(paste(locale_util, "-a"), intern = TRUE)
+    locales <- suppressWarnings(
+        strsplit(locales, split = "\n", fixed = TRUE)
+    )
+    if ("C.UTF-8" %in% locales)
+      return ("C.UTF-8")
+  }
+
+  # default to en_US.UTF-8
+  "en_US.UTF-8"
+}
+
+
 
 # get the path to the pandoc binary
 pandoc <- function() {

@@ -35,12 +35,20 @@ includes <- function(in_header = NULL,
        after_body = after_body)
 }
 
+# simple wrapper over normalizePath that preserves NULLs and applies pandoc-
+# friendly defaults
+normalize_path <- function(path) {
+  if (is.null(path))
+    NULL
+  else
+    normalizePath(path, winslash="/", mustWork = FALSE)
+}
 
-includes_to_pandoc_args <- function(includes) {
+includes_to_pandoc_args <- function(includes, filter = identity) {
   if (!is.null(includes))
-    pandoc_include_args(in_header = includes$in_header,
-                        before_body = includes$before_body,
-                        after_body = includes$after_body)
+    pandoc_include_args(in_header = filter(includes$in_header),
+                        before_body = filter(includes$before_body),
+                        after_body = filter(includes$after_body))
   else
     NULL
 }

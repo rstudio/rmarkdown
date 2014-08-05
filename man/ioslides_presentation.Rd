@@ -9,7 +9,7 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   fig_height = 4.5, fig_retina = 2, fig_caption = FALSE, smart = TRUE,
   self_contained = TRUE, widescreen = FALSE, smaller = FALSE,
   transition = "default", mathjax = "default", css = NULL, includes = NULL,
-  lib_dir = NULL, data_dir = NULL, pandoc_args = NULL, ...)
+  lib_dir = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
   \item{logo}{Path to file that includes a logo for use in
@@ -26,10 +26,12 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   \item{fig_height}{Default width (in inches) for figures}
 
   \item{fig_retina}{Scaling to perform for retina displays
-  (defaults to 2, which currently works for all widely used
-  retina displays). Note that this only takes effect if you
-  are using knitr >= 1.5.21. Set to \code{NULL} to prevent
-  retina scaling.}
+  (defaults to 2,which currently works for all widely used
+  retina displays). Set to\code{NULL} to prevent retina
+  scaling. Note that this will always be\code{NULL} when
+  \code{keep_md} is specified (this is because
+  \code{fig_retina} relies on outputting HTML directly
+  into the markdowndocument).}
 
   \item{fig_caption}{\code{TRUE} to render figures with
   captions}
@@ -74,10 +76,6 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   \item{lib_dir}{Directory to copy dependent HTML libraries
   (e.g. jquery, bootstrap, etc.) into. By default this will be
   the name of the document with \code{_files} appended to it.}
-
-  \item{data_dir}{Additional directory to resolve relatives
-  paths of templates and included content against (the
-  directory of the input file is used by default).}
 
   \item{pandoc_args}{Additional command line options to
   pass to pandoc}
@@ -349,9 +347,11 @@ To add presenter notes to a slide you include it within a "notes"
 
 \preformatted{
 <div class="notes">
-This is my note.
+This is my *note*.
+
 - It can contain markdown
 - like this list
+
 </div>
 }
 

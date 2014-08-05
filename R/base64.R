@@ -104,10 +104,10 @@ base64_encode_file <- function(in_file, encoder) {
          sep = '')
 }
 
-process_images <- function(html, processor) {
+# processes an HTML resource, given a regular expression that locates
+# instances of that resource
+process_html_res <- function(html, reg, processor) {
   html <- paste(html, collapse = "\n")
-
-  reg <- "<\\s*[Ii][Mm][Gg]\\s+[Ss][Rr][Cc]\\s*=\\s*[\"']([^\"']+)[\"']"
   m <- gregexpr(reg, html, perl = TRUE)
   if (m[[1]][1] != -1) {
     process_img_src <- function(img_src) {
@@ -120,6 +120,20 @@ process_images <- function(html, processor) {
   }
 
   strsplit(html, "\n", fixed = TRUE)[[1]]
+}
+
+process_images <- function(html, processor) {
+  process_html_res(
+    html,
+    "<\\s*[Ii][Mm][Gg]\\s+[Ss][Rr][Cc]\\s*=\\s*[\"']([^\"']+)[\"']",
+    processor)
+}
+
+process_css <- function(html, processor) {
+  process_html_res(
+    html,
+    "<\\s*[Ll][Ii][Nn][Kk]\\s+[Rr][Ee][Ll]\\s*=\\s*\"stylesheet\"\\s+[Hh][Rr][Ee][Ff]\\s*=\\s*[\"']([^\"']+)[\"']",
+    processor)
 }
 
 base64_encode_images <- function(html, encoder) {

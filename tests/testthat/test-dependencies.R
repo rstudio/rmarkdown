@@ -24,165 +24,114 @@ test_that("dependency merge is correct", {
   test_dep_merge(
     # input
     list(
-      html_dependency(
+      htmlDependency(
         name = "foo",
         version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "foo.js")),
     # output
     list(
-      html_dependency(
+      htmlDependency(
         name = "foo",
         version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "foo.js")))
 
   # don't replace a higher version with a lower one
   test_dep_merge(
     # input
     list(
-      html_dependency(
+      htmlDependency(
         name = "foo",
         version = "1.2.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "foo.js"),
-      html_dependency(
+      htmlDependency(
         name = "foo",
         version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "foo.js")),
     # output
     list(
-      html_dependency(
+      htmlDependency(
         name = "foo",
         version = "1.2.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "foo.js")))
 
   # preserve dependency order on replacement
   test_dep_merge(
     # input
     list(
-      html_dependency(
+      htmlDependency(
         name = "foo",
         version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "foo.js"),
-      html_dependency(
+      htmlDependency(
         name = "bar",
         version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "foo.js"),
-      html_dependency(
+      htmlDependency(
         name = "baz",
         version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "baz.js"),
-      html_dependency(
+      htmlDependency(
         name = "bar",
         version = "1.2.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "foo.js")),
     # output
     list(
-    html_dependency(
+    htmlDependency(
       name = "foo",
       version = "1.1.0",
-      path = rmarkdown_system_file("rmd/h"),
+      src = rmarkdown_system_file("rmd/h"),
       script = "foo.js"),
-    html_dependency(
+    htmlDependency(
       name = "bar",
       version = "1.2.0",
-      path = rmarkdown_system_file("rmd/h"),
+      src = rmarkdown_system_file("rmd/h"),
       script = "foo.js"),
-    html_dependency(
+    htmlDependency(
       name = "baz",
       version = "1.1.0",
-      path = rmarkdown_system_file("rmd/h"),
+      src = rmarkdown_system_file("rmd/h"),
       script = "baz.js")))
-
-  # external libraries win even when older, should emit a warning
-  test_dep_merge(
-    # input
-    list(
-      html_dependency(
-        name = "foo",
-        version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
-        script = "foo.js",
-        external = TRUE),
-      html_dependency(
-        name = "foo",
-        version = "1.2.0",
-        path = rmarkdown_system_file("rmd/h"),
-        script = "foo.js")),
-    # output
-    list(
-      html_dependency(
-        name = "foo",
-        version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
-        script = "foo.js",
-        external = TRUE)),
-    # emits a warning
-    TRUE)
-
-  # external libraries win over older dependencies (and we should use the
-  # external version)
-  test_dep_merge(
-    # input
-    list(
-      html_dependency(
-        name = "foo",
-        version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
-        script = "foo.js"),
-      html_dependency(
-        name = "foo",
-        version = "1.2.0",
-        path = rmarkdown_system_file("rmd/h"),
-        script = "foo.js",
-        external = TRUE)),
-    # output
-    list(
-      html_dependency(
-        name = "foo",
-        version = "1.2.0",
-        path = rmarkdown_system_file("rmd/h"),
-        script = "foo.js",
-        external = TRUE)))
 
   # support nested dependency lists
   test_dep_merge(
     # input
     list(
-      html_dependency(
+      htmlDependency(
         name = "bar",
         version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "foo.js"),
       list(
-        html_dependency(
+        htmlDependency(
           name = "baz",
           version = "1.1.0",
-          path = rmarkdown_system_file("rmd/h"),
+          src = rmarkdown_system_file("rmd/h"),
           script = "baz.js"),
-        html_dependency(
+        htmlDependency(
           name = "bar",
           version = "1.2.0",
-          path = rmarkdown_system_file("rmd/h"),
+          src = rmarkdown_system_file("rmd/h"),
           script = "foo.js"))),
     # output
     list(
-      html_dependency(
+      htmlDependency(
         name = "bar",
         version = "1.2.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "foo.js"),
-      html_dependency(
+      htmlDependency(
         name = "baz",
         version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "baz.js")))
 
   # ignore knit_meta information other than html_dependency
@@ -191,17 +140,17 @@ test_that("dependency merge is correct", {
     list(
       structure(list(foo = "irrelevant"), class = "irrelevant"),
       list(
-        html_dependency(
+        htmlDependency(
           name = "baz",
           version = "1.1.0",
-          path = rmarkdown_system_file("rmd/h"),
+          src = rmarkdown_system_file("rmd/h"),
           script = "baz.js"))),
     # output
     list(
-      html_dependency(
+      htmlDependency(
         name = "baz",
         version = "1.1.0",
-        path = rmarkdown_system_file("rmd/h"),
+        src = rmarkdown_system_file("rmd/h"),
         script = "baz.js")))
 
   })

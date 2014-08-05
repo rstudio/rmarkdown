@@ -4,7 +4,7 @@ html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
+small, strike, strong, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
@@ -23,11 +23,11 @@ time, mark, audio, video {
 
 /* line 22, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
-  line-height: 1;
+  line-height: 1.2;
 }
 
 /* line 24, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-ol, ul {
+ul {
   list-style: none;
 }
 
@@ -39,7 +39,6 @@ table {
 
 /* line 28, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
-  text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
@@ -450,7 +449,7 @@ h1, h2, h3 {
 /* line 280, ../scss/default.scss */
 h2 {
   font-size: 45px;
-  line-height: 45px;
+  line-height: 65px;
   letter-spacing: -2px;
   color: #515151;
 }
@@ -465,12 +464,18 @@ h3 {
 }
 
 /* line 295, ../scss/default.scss */
-ul {
+ol, ul {
   margin-left: 1.2em;
   margin-bottom: 1em;
   position: relative;
 }
+
+ol {
+  margin-left: 1.4em;
+}
+
 /* line 300, ../scss/default.scss */
+ol li,
 ul li {
   margin-bottom: 0.5em;
 }
@@ -492,7 +497,13 @@ ul > li:before {
   font-weight: 600;
 }
 /* line 321, ../scss/default.scss */
-ul ul {
+ul ul,
+ol ul {
+  margin-top: .5em;
+}
+
+ol ul,
+ol ol {
   margin-top: .5em;
 }
 
@@ -795,7 +806,7 @@ slide.fill {
 
 /* Size variants */
 /* line 535, ../scss/default.scss */
-article.smaller p, article.smaller ul {
+article.smaller p, article.smaller ul, article.smaller ol {
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0;

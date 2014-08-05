@@ -4,7 +4,7 @@ ioslides_presentation <- function(logo = NULL,
                                   incremental = FALSE,
                                   fig_width = 7.5,
                                   fig_height = 4.5,
-                                  fig_retina = 2,
+                                  fig_retina = if (!fig_caption) 2,
                                   fig_caption = FALSE,
                                   smart = TRUE,
                                   self_contained = TRUE,
@@ -14,6 +14,7 @@ ioslides_presentation <- function(logo = NULL,
                                   mathjax = "default",
                                   css = NULL,
                                   includes = NULL,
+                                  keep_md = FALSE,
                                   lib_dir = NULL,
                                   pandoc_args = NULL,
                                   ...) {
@@ -70,7 +71,11 @@ ioslides_presentation <- function(logo = NULL,
     if (!is.null(logo)) {
       logo_path <- logo
       if (!self_contained) {
-        logo_path <- file.path(files_dir, "logo.png")
+        # use same extension as specified logo (default is png if unspecified)
+        logo_ext <- tools::file_ext(logo)
+        if (nchar(logo_ext) < 1)
+          logo_ext <- "png"
+        logo_path <- file.path(files_dir, paste("logo", logo_ext, sep = "."))
         file.copy(from = logo, to = logo_path)
         logo_path <- relative_to(output_dir, logo_path)
       } else {
@@ -111,6 +116,10 @@ ioslides_presentation <- function(logo = NULL,
     lua_writer <- file.path(output_dir, "ioslides_presentation.lua")
     on.exit(unlink(lua_writer), add = TRUE)
 
+    # determine whether we need to run citeproc
+    input_lines <- readLines(input_file, warn = FALSE)
+    run_citeproc <- citeproc_required(metadata, input_lines)
+
     # write settings to file
     settings <- c()
     add_setting <- function(name, value) {
@@ -136,6 +145,7 @@ ioslides_presentation <- function(logo = NULL,
                    from = from_rmarkdown(fig_caption),
                    output = output_tmpfile,
                    options = args,
+                   citeproc = run_citeproc,
                    verbose = verbose)
 
     # read the slides
@@ -164,10 +174,11 @@ ioslides_presentation <- function(logo = NULL,
 
   # return format
   output_format(
-    knitr = knitr_options_html(fig_width, fig_height, fig_retina),
+    knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md),
     pandoc = pandoc_options(to = "html",
                             from = from_rmarkdown(fig_caption),
                             args = args),
+    keep_md = keep_md,
     clean_supporting = self_contained,
     pre_processor = pre_processor,
     post_processor = post_processor,

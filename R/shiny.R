@@ -68,8 +68,10 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
   if (!is.null(file)) {
     # compute file path relative to directory (remove common directory prefix
     # if it exists)
-    file_rel <- sub(paste("^", dir, "/", sep = ""), "",
-                    normalizePath(file, winslash="/"))
+    file_rel <- normalizePath(file, winslash = "/")
+    if (identical(substr(file_rel, 1, nchar(dir)), dir))
+      file_rel <- substr(file_rel, nchar(dir) + 2, nchar(file_rel))
+
     resolved <- resolve_relative(dir, file_rel)
     if (is.null(resolved) || !file.exists(resolved))
       stop("The file '", file, "' does not exist in the directory '", dir, "'")
@@ -171,7 +173,7 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
       # ensure that the document is not rendered to one page
       output_opts <- list(
         self_contained = FALSE,
-        copy_images = TRUE,
+        copy_resources = TRUE,
         dependency_resolver = shiny_dependency_resolver)
 
       # remove console clutter from any previous renders
@@ -182,15 +184,15 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
                                output_file = output_dest,
                                output_dir = dirname(output_dest),
                                output_options = output_opts,
-                               intermediates_dir = tempdir(),
+                               intermediates_dir = dirname(output_dest),
                                runtime = "shiny"),
                           render_args)
       result_path <- shiny::maskReactiveContext(do.call(render, args))
 
-      # if we generated a folder of supporting files, map requests to those
-      # files in the Shiny application
-      if (file.exists(resource_folder))
-        addResourcePath(basename(resource_folder), resource_folder)
+      # ensure the resource folder exists, and map requests to it in Shiny
+      if (!file.exists(resource_folder))
+        dir.create(resource_folder, recursive = TRUE)
+      addResourcePath(basename(resource_folder), resource_folder)
 
       # emit performance information collected during render
       dependencies <- append(dependencies, list(
@@ -210,7 +212,10 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
           unlink(resource_folder, recursive = TRUE)
         })
       }
-      shinyHTML_with_deps(result_path, dependencies)
+      attachDependencies(
+        htmltools::HTML(paste(readLines(result_path, encoding = "UTF-8", warn = FALSE),
+                          collapse="\n")),
+        dependencies)
     })
     output$`__reactivedoc__` <- shiny::renderUI({
       doc()
@@ -285,7 +290,7 @@ rmd_cached_output <- function (input, encoding) {
     cacheable <- TRUE
     output_key <- digest::digest(paste(input, file.info(input)[4]),
                                  algo = "md5", serialize = FALSE)
-    output_dest <- paste(file.path(dirname(tempdir()), "rmarkdown",
+    output_dest <- paste(file.path(dirname(tempdir()), "rmarkdown", output_key,
                                    paste("rmd", output_key, sep = "_")),
                          "html", sep = ".")
 

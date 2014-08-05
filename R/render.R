@@ -99,6 +99,9 @@ render <- function(input,
   utf8_input <- intermediates_loc(file_with_meta_ext(input, "utf8", "md"))
   intermediates <- c(intermediates, utf8_input)
 
+  # track whether this was straight markdown input (to prevent keep_md later)
+  md_input <- identical(tolower(tools::file_ext(input)), "md")
+
   # if this is an R script then spin it first
   if (identical(tolower(tools::file_ext(input)), "r")) {
     # make a copy of the file to spin
@@ -143,6 +146,10 @@ render <- function(input,
   }
   pandoc_to <- output_format$pandoc$to
 
+  # determine whether we need to run citeproc (based on whether we
+  # have references in the input)
+  run_citeproc <- citeproc_required(yaml_front_matter, input_lines)
+
   # generate outpout file based on input filename
   if (is.null(output_file))
     output_file <- pandoc_output_file(input, output_format$pandoc)
@@ -183,6 +190,7 @@ render <- function(input,
 
     # enable knitr hooks to have knowledge of the final output format
     knitr::opts_knit$set(rmarkdown.pandoc.to = pandoc_to)
+    knitr::opts_knit$set(rmarkdown.keep_md = output_format$keep_md)
     knitr::opts_knit$set(rmarkdown.version = 2)
 
     # trim whitespace from around source code
@@ -289,13 +297,10 @@ render <- function(input,
 
   perf_timer_stop("pre-processor")
 
-  # determine whether we should run pandoc-citeproc
-  run_citeproc <- !is.null(yaml_front_matter$bibliography)
-
   # if we are running citeproc then explicitly forward the bibliography
   # on the command line (works around pandoc-citeproc issue whereby yaml
   # strings that begin with numbers are interpreted as numbers)
-  if (run_citeproc) {
+  if (!is.null(yaml_front_matter$bibliography)) {
     output_format$pandoc$args <- c(output_format$pandoc$args,
       rbind("--bibliography", pandoc_path_arg(yaml_front_matter$bibliography)))
   }
@@ -340,6 +345,15 @@ render <- function(input,
   perf_timer_stop("post-processor")
 
   perf_timer_stop("render")
+
+  # write markdown output if requested
+  if (output_format$keep_md && !md_input) {
+
+    md <- c(md_header_from_front_matter(yaml_front_matter),
+            partition_yaml_front_matter(input_text)$body)
+
+    writeLines(md, file_with_ext(output_file, "md"), useBytes = TRUE)
+  }
 
   # return the full path to the output file
   invisible(tools::file_path_as_absolute(output_file))
@@ -395,6 +409,25 @@ knit_meta_reset <- function(class = NULL) {
   else
     NULL
 }
+
+md_header_from_front_matter <- function(front_matter) {
+
+  md <- c()
+
+  if (!is.null(front_matter$title))
+    md <- c(md, paste("# ", front_matter$title, sep = ""))
+
+  if (is.character(front_matter$author)) {
+    authors <- paste(front_matter$author, "  ", sep = "")
+    md <- c(md, authors)
+  }
+
+  if (!is.null(front_matter$date))
+    md <- c(md, paste(front_matter$date, "  ", sep = ""))
+
+  md
+}
+
 
 
 

@@ -1,65 +1,23 @@
-
-# create and validate an html_dependency from the passed arguments
-html_dependency <- function(name,
-                            version,
-                            path,
-                            meta = NULL,
-                            script = NULL,
-                            stylesheet = NULL,
-                            head = NULL,
-                            external = NULL) {
-
-  dep <- structure(list(name = name,
-                        version = version,
-                        path = path,
-                        meta = meta,
-                        script = script,
-                        stylesheet = stylesheet,
-                        head = head,
-                        external = external),
-                   class = "html_dependency")
-
-  validate_html_dependency(dep)
-}
+#' @import htmltools
+NULL
 
 # create an html dependency for our embedded jquery
 html_dependency_jquery <- function()  {
-  html_dependency(name = "jquery",
-                  version = "1.11.0",
-                  path = rmarkdown_system_file("rmd/h/jquery-1.11.0"),
-                  script = "jquery.min.js")
+  htmlDependency(name = "jquery",
+                 version = "1.11.0",
+                 src = rmarkdown_system_file("rmd/h/jquery-1.11.0"),
+                 script = "jquery.min.js")
 }
 
 # create an html dependency for our embedded bootstrap
 html_dependency_bootstrap <- function(theme) {
-  html_dependency(name = "bootstrap",
-                  version = "2.3.2",
-                  path = rmarkdown_system_file("rmd/h/bootstrap-2.3.2"),
-                  meta = list(viewport = "width=device-width, initial-scale=1.0"),
-                  script = "js/bootstrap.min.js",
-                  stylesheet = c(paste("css/", theme, ".min.css", sep=""),
+  htmlDependency(name = "bootstrap",
+                 version = "2.3.2",
+                 src = rmarkdown_system_file("rmd/h/bootstrap-2.3.2"),
+                 meta = list(viewport = "width=device-width, initial-scale=1.0"),
+                 script = "js/bootstrap.min.js",
+                 stylesheet = c(paste("css/", theme, ".min.css", sep=""),
                                  "css/bootstrap-responsive.min.css"))
-}
-
-# copy the library directory of a dependency and return the path to
-# the directory which was copied to
-html_dependency_copy_lib <- function(dependency, lib_dir) {
-
-  # auto-create lib_dir
-  if (!file.exists(lib_dir))
-    dir.create(lib_dir)
-
-  # target directory is based on the dirname of the path
-  target_dir <- file.path(lib_dir, basename(dependency$path))
-
-  # copy the directory
-  file.copy(from = dependency$path,
-            to = lib_dir,
-            overwrite = TRUE,
-            recursive = TRUE)
-
-  # return the target dir
-  target_dir
 }
 
 # flattens an arbitrarily nested list and returns all of the html_dependency
@@ -89,49 +47,7 @@ flatten_html_dependencies <- function(knit_meta) {
 # formats may specify their own.
 html_dependency_resolver <- function(all_dependencies) {
 
-  dependencies <- list()
-  for (dep in unique(all_dependencies)) {
-    # if we already have a library of this name then re-use it
-    if (!is.null(dependencies[[dep$name]])) {
-      version <- dependencies[[dep$name]]$version
-      is_newer_version <-
-        numeric_version(dep$version) > numeric_version(version)
-      is_older_version <-
-        numeric_version(version) > numeric_version(dep$version)
-
-      # test for sanity: we can never resolve an external version conflict
-      if (isTRUE(dep$external) && isTRUE(dependencies[[dep$name]]$external) &&
-          !identical(dep$version, version)) {
-        stop(dep$name, " specified with conflicting external versions ",
-             dep$version, ", ", version)
-      }
-
-      # if the dependency was externally satisfied with a version earlier than
-      # the one requested, emit a warning
-      if ((is_newer_version && isTRUE(dependencies[[dep$name]]$external)) ||
-          (is_older_version && isTRUE(dep$external))) {
-        warning(dep$name, " replaced by externally supplied ",
-                "older version (", dep$version, ", ", version, ")")
-      }
-
-      # an incoming external dependency always wins over an existing dependency;
-      # an incoming internal dependency wins if its version is newer than an
-      # existing internal dependency
-      if ((is_newer_version && !isTRUE(dependencies[[dep$name]]$external)) ||
-          isTRUE(dep$external)) {
-        dependencies[[dep$name]]$version <- dep$version
-        dependencies[[dep$name]]$path <- dep$path
-        dependencies[[dep$name]]$script <- dep$script
-        dependencies[[dep$name]]$stylesheet <- dep$stylesheet
-        dependencies[[dep$name]]$meta <- dep$meta
-        dependencies[[dep$name]]$head <- dep$head
-        dependencies[[dep$name]]$external <- dep$external
-      }
-    # first instance of this library, just copy over all the fields
-    } else {
-      dependencies[[dep$name]] <- dep
-    }
-  }
+  dependencies <- htmltools::resolveDependencies(all_dependencies)
 
   # validate each surviving dependency
   lapply(dependencies, validate_html_dependency)
@@ -140,8 +56,7 @@ html_dependency_resolver <- function(all_dependencies) {
   dependencies
 }
 
-html_reference_path <- function(item, dep, lib_dir, output_dir) {
-  path <- file.path(dep$path, item)
+html_reference_path <- function(path, lib_dir, output_dir) {
   # write the full OS-specific path if no library
   if (is.null(lib_dir))
     pandoc_path_arg(path)
@@ -153,44 +68,15 @@ html_reference_path <- function(item, dep, lib_dir, output_dir) {
 # in the head of a document
 html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
 
-  dependencies_html <- c()
-
-  for (dep in dependencies) {
-
-    # if the dependency is externally satisfied, don't emit it
-    if (isTRUE(dep$external))
-      next
-
-    # copy library files if necessary
-    if (!is.null(lib_dir)) {
-      dep$path <- html_dependency_copy_lib(dep, lib_dir)
-    }
-
-    # add meta content
-    for (name in names(dep$meta)) {
-      dependencies_html <- c(dependencies_html,
-        paste("<meta name=\"", name, "\" content=\"", dep$meta[[name]], "\" />", sep = ""))
-    }
-
-    # add stylesheets
-    for (stylesheet in dep$stylesheet) {
-      stylesheet <- html_reference_path(stylesheet, dep, lib_dir, output_dir)
-      dependencies_html <- c(dependencies_html,
-        paste("<link href=\"", stylesheet, "\" rel=\"stylesheet\" />", sep = ""))
-    }
-
-    # add scripts
-    for (script in dep$script) {
-      script <- html_reference_path(script, dep, lib_dir, output_dir)
-      dependencies_html <- c(dependencies_html,
-        paste("<script src=\"", script, "\"></script>", sep = ""))
-    }
-
-    # add raw head content
-    dependencies_html <- c(dependencies_html, dep$head)
+  if (!is.null(lib_dir)) {
+    dependencies <- lapply(dependencies, copyDependencyToDir, lib_dir)
+    dependencies <- lapply(dependencies, makeDependencyRelative, output_dir)
   }
-
-  dependencies_html
+  return(renderDependencies(dependencies, "file", encodeFunc = identity,
+    hrefFilter = function(path) {
+      html_reference_path(path, lib_dir, output_dir)
+    })
+  )
 }
 
 # check class of passed list for 'html_dependency'
@@ -210,18 +96,18 @@ validate_html_dependency <- function(list) {
     stop("name for html_dependency not provided", call. = FALSE)
   if (is.null(list$version))
     stop("version for html_dependency not provided", call. = FALSE)
-  if (is.null(list$path))
+  if (is.null(list$src$file))
     stop("path for html_dependency not provided", call. = FALSE)
-  if (!file.exists(list$path))
-    stop("path for html_dependency not found: ", list$path, call. = FALSE)
+  if (!file.exists(list$src$file))
+    stop("path for html_dependency not found: ", list$src$file, call. = FALSE)
 
   # validate that other fields are known
   fields <- names(list)
   invalid_fields <- fields[! fields %in%
-                             c("name", "version", "path", "meta",
+                             c("name", "version", "src", "meta",
                                "script", "stylesheet", "head", "external")]
   if (length(invalid_fields) > 0) {
-    stop("unrecoginzed fields specified in html_dependency: ",
+    stop("unrecognized fields specified in html_dependency: ",
          paste(invalid_fields, sep = ", "), call. = FALSE)
   }
 

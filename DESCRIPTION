@@ -1,21 +1,22 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 0.2.15
-Date: 2014-01-26
+Version: 0.2.55
+Date: 2014-05-31
 Author: RStudio Inc.
 Maintainer: JJ Allaire <jj@rstudio.com>
 Description: Convert R Markdown documents into a variety of formats
     including HTML, MS Word, PDF, and Beamer.
 Depends:
-    R (>= 2.14.1)
+    R (>= 3.0)
 Imports:
     tools,
     utils,
-    knitr (>= 1.2),
-    yaml (>= 2.1.5)
+    knitr (>= 1.6),
+    yaml (>= 2.1.5),
+    htmltools (>= 0.2.4)
 Suggests:
-    shiny (>= 0.9.1),
+    shiny (>= 0.9.1.9009),
     caTools,
     httpuv (>= 1.2.2),
     testthat,
