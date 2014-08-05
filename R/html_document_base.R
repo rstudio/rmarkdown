@@ -78,7 +78,8 @@ html_document_base <- function(smart = TRUE,
     args <- c(args, pandoc_mathjax_args(mathjax,
                                         template,
                                         self_contained,
-                                        lib_dir))
+                                        lib_dir,
+                                        output_dir))
 
     # The input file is converted to UTF-8 from its native encoding prior
     # to calling the preprocessor (see ::render)
