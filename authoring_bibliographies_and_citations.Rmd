@@ -15,7 +15,7 @@ using the `bibliography` metadata field in a YAML metadata section. For example:
 
     ---
     title: "Sample Document"
-    output: html_document:
+    output: html_document
     bibliography: bibliography.bib
     ---
 
@@ -125,7 +125,7 @@ a CSL 1.0 style file in the `csl` metadata field. For example:
 
     ---
     title: "Sample Document"
-    output: html_document:
+    output: html_document
     bibliography: bibliography.bib
     csl: biomed-central.csl
     ---

@@ -186,7 +186,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <p>Pandoc can automatically generate citations and a bibliography in a number of styles. In order to use this feature, you will need to specify a bibliography file using the <code>bibliography</code> metadata field in a YAML metadata section. For example:</p>
 <pre><code>---
 title: &quot;Sample Document&quot;
-output: html_document:
+output: html_document
 bibliography: bibliography.bib
 ---</code></pre>
 <p>The bibliography may have any of these formats:</p>
@@ -307,7 +307,7 @@ nocite:
 <p>By default, pandoc will use a Chicago author-date format for citations and references. To use another style, you will need to specify a CSL 1.0 style file in the <code>csl</code> metadata field. For example:</p>
 <pre><code>---
 title: &quot;Sample Document&quot;
-output: html_document:
+output: html_document
 bibliography: bibliography.bib
 csl: biomed-central.csl
 ---</code></pre>
