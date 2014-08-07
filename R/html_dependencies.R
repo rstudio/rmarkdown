@@ -104,7 +104,7 @@ validate_html_dependency <- function(list) {
   # validate that other fields are known
   fields <- names(list)
   invalid_fields <- fields[! fields %in%
-                             c("name", "version", "src", "meta",
+                             c("name", "version", "src", "meta", "includeSrcDir",
                                "script", "stylesheet", "head", "external")]
   if (length(invalid_fields) > 0) {
     stop("unrecognized fields specified in html_dependency: ",
