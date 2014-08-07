@@ -345,7 +345,8 @@ validate_self_contained <- function(mathjax) {
 pandoc_mathjax_args <- function(mathjax,
                                 template,
                                 self_contained,
-                                files_dir) {
+                                files_dir,
+                                output_dir) {
   args <- c()
 
   if (!is.null(mathjax)) {
@@ -361,7 +362,8 @@ pandoc_mathjax_args <- function(mathjax,
       mathjax_path <- render_supporting_files(mathjax_path,
                                               files_dir,
                                               "mathjax-2.3.0")
-      mathjax <- paste(mathjax_path, "/", mathjax_config(), sep = "")
+      mathjax <- paste(relative_to(output_dir, mathjax_path), "/",
+                       mathjax_config(), sep = "")
     }
 
     if (identical(template, "default")) {
