@@ -152,7 +152,7 @@ With the basics described above you can get started with R Markdown right away. 
 
 * Document output formats: [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html)
 
-* Presentation output formats: [ioslides](ioslides_presentation_format.html), [reveal.js](revealjs_presentation_format.html), [Beamer](beamer_presentation_format.html)
+* Presentation output formats: [ioslides](ioslides_presentation_format.html), [reveal.js](revealjs_presentation_format.html), [Slidy](slidy_presentation_format.html), [Beamer](beamer_presentation_format.html)
 
 
 For even more in-depth documentation see:
