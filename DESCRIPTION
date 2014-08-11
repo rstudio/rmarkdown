@@ -18,7 +18,7 @@ Imports:
 Suggests:
     shiny (>= 0.9.1.9009),
     caTools,
-    base64enc,
+    base64enc (>= 0.1-2),
     httpuv (>= 1.2.2),
     testthat,
     digest
