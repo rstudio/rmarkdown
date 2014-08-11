@@ -14,12 +14,10 @@ Imports:
     utils,
     knitr (>= 1.6),
     yaml (>= 2.1.5),
-    htmltools (>= 0.2.4)
+    htmltools (>= 0.2.4),
+    caTools
 Suggests:
     shiny (>= 0.9.1.9009),
-    caTools,
-    base64enc (>= 0.1-2),
-    httpuv (>= 1.2.2),
     testthat,
     digest
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc

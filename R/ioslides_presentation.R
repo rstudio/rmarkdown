@@ -107,9 +107,6 @@ ioslides_presentation <- function(logo = NULL,
     # add any custom pandoc args
     args <- c(args, pandoc_args)
 
-    # see if we have a base64 image encoder
-    base64_encoder <- base64_image_encoder()
-
     # convert using our lua writer (write output to a temp file)
     output_dir <- dirname(output_file)
     args <- c(args, "--data-dir", pandoc_path_arg(output_dir))
@@ -128,7 +125,6 @@ ioslides_presentation <- function(logo = NULL,
     }
     add_setting("fig_caption", fig_caption)
     add_setting("incremental", incremental)
-    add_setting("base64_images", self_contained && is.null(base64_encoder))
     add_setting("smaller", smaller)
     add_setting("smart", smart)
     add_setting("mathjax", !is.null(mathjax))
@@ -152,8 +148,10 @@ ioslides_presentation <- function(logo = NULL,
     slides_lines <- readLines(output_tmpfile, warn = FALSE, encoding = "UTF-8")
 
     # base64 encode if needed
-    if (self_contained && !is.null(base64_encoder))
+    if (self_contained) {
+      base64_encoder <- base64_image_encoder()
       slides_lines <- base64_encoder(slides_lines)
+    }
 
     # read the output file
     output_lines <- readLines(output_file, warn = FALSE, encoding = "UTF-8")
