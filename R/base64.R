@@ -148,7 +148,7 @@ base64_encode_images <- function(html, encoder) {
   process_images(html, base64_encode_img)
 }
 
-# See if we have a usable base64 image encoder (requires caTools or httpuv)
+# get a base64 image encoder (requires caTools, httpuv, or base64enc)
 base64_image_encoder <- function() {
   if (suppressMessages(requireNamespace("caTools", quietly = TRUE))) {
     function(data) base64_encode_images(data, caTools::base64encode)
@@ -156,6 +156,9 @@ base64_image_encoder <- function() {
   else if (suppressMessages(requireNamespace("httpuv", quietly = TRUE)) &&
            utils::packageVersion("httpuv") >= "1.2.2") {
     function(data) base64_encode_images(data, httpuv::rawToBase64)
+  }
+  else if (suppressMessages(requireNamespace("base64enc", quietly = TRUE))) {
+    function(data) base64_encode_images(data, base64enc::base64encode)
   }
   else {
     NULL
