@@ -1,4 +1,18 @@
-# base output format for HTML-based output formats
+#' Base output format for HTML-based output formats
+#' 
+#' Creates an HTML base output format suitable for passing as the 
+#' \code{base_format} argument of the \code{\link{output_format}} function.
+#' 
+#' @inheritParams html_document
+#' 
+#' @param dependency_resolver A dependency resolver
+#' @param copy_resources Copy resources
+#' @param extra_dependencies Extra dependencies
+#' @param bootstrap_compatible Bootstrap compatible
+#' 
+#' @return HTML base output format.
+#' 
+#' @export
 html_document_base <- function(smart = TRUE,
                                theme = NULL,
                                self_contained = TRUE,
@@ -6,11 +20,16 @@ html_document_base <- function(smart = TRUE,
                                mathjax = "default",
                                pandoc_args = NULL,
                                template = "default",
-                               dependency_resolver = html_dependency_resolver,
+                               dependency_resolver = NULL,
                                copy_resources = FALSE,
                                extra_dependencies = NULL,
                                bootstrap_compatible = FALSE,
                                ...) {
+  
+  # default for dependency_resovler
+  if (is.null(dependency_resolver))
+    dependency_resolver <- html_dependency_resolver
+  
   args <- c()
 
   # smart quotes, etc.
