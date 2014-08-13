@@ -51,11 +51,12 @@ The following single character keyboard shortcuts enable alternate
 display modes:
 
 -   `'C'` Show table of contents
--   `'F11'` Go full screen and back
 -   `'F'` Toggles the display of the footer
 -   `'A'` Toggles display of current vs all slides (useful for printing handouts)
 -   `'S'` Make fonts smaller
 -   `'B'` Make fonts larger 
+
+
 
 ## Incremental Bullets
 
@@ -81,13 +82,45 @@ There are several options that control the appearance of Slidy presentations:
 
 * `smart` indicates whether to produce typographically correct output, converting straight quotes to curly quotes, `---` to em-dashes, `--` to en-dashes, and `...` to ellipses. Note that `smart` is enabled by default.
 
+* `font_adjustment`  Increase or decrease the default font size (e.g. -1 or +1). You can also manually adjust the font size during the presentation using the 'S' (smaller) and 'B' (bigger) keys.
+
 For example:
 
     ---
     output:
       slidy_presentation:
         highlight: pygments
+        font_adjustment: -1
     ---
+
+## Footer Elements
+
+You can add a countdown timer to the footer of your slides using the `duration` option (duration is specified in minutes). For example:
+
+    ---
+    output:
+      slidy_presentation:
+        duration: 45
+    ---
+
+You can also add custom footer text (e.g. organization name and/or copyright) using the `footer` option. For example:
+
+    ---
+    output:
+      slidy_presentation:
+        footer: "Copyright (c) 2014, RStudio"
+    ---
+
+
+## Printing and PDF Output
+
+You can print a Slidy presentation from within browsers that have
+good support for print CSS (i.e. as of this writing Google Chrome has
+the best support). Printing maintains most of the visual styles of the
+HTML version of the presentation.
+
+To create a PDF version of a presentation you can use Print to PDF from
+Google Chrome.
 
 ## Figure Options
 

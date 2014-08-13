@@ -170,6 +170,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#display-modes">Display Modes</a></li>
 <li><a href="#incremental-bullets">Incremental Bullets</a></li>
 <li><a href="#appearance-and-style">Appearance and Style</a></li>
+<li><a href="#footer-elements">Footer Elements</a></li>
+<li><a href="#printing-and-pdf-output">Printing and PDF Output</a></li>
 <li><a href="#figure-options">Figure Options</a></li>
 <li><a href="#mathjax-equations">MathJax Equations</a></li>
 <li><a href="#document-dependencies">Document Dependencies</a></li>
@@ -221,7 +223,6 @@ output: slidy_presentation
 <p>The following single character keyboard shortcuts enable alternate display modes:</p>
 <ul>
 <li><code>'C'</code> Show table of contents</li>
-<li><code>'F11'</code> Go full screen and back</li>
 <li><code>'F'</code> Toggles the display of the footer</li>
 <li><code>'A'</code> Toggles display of current vs all slides (useful for printing handouts)</li>
 <li><code>'S'</code> Make fonts smaller</li>
@@ -246,13 +247,35 @@ output:
 <ul>
 <li><p><code>highlight</code> specifies the syntax highlighting style. Supported styles include “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, and “haddock”. Pass null to prevent syntax highlighting.</p></li>
 <li><p><code>smart</code> indicates whether to produce typographically correct output, converting straight quotes to curly quotes, <code>---</code> to em-dashes, <code>--</code> to en-dashes, and <code>...</code> to ellipses. Note that <code>smart</code> is enabled by default.</p></li>
+<li><p><code>font_adjustment</code> Increase or decrease the default font size (e.g. -1 or +1). You can also manually adjust the font size during the presentation using the ‘S’ (smaller) and ‘B’ (bigger) keys.</p></li>
 </ul>
 <p>For example:</p>
 <pre><code>---
 output:
   slidy_presentation:
     highlight: pygments
+    font_adjustment: -1
 ---</code></pre>
+</div>
+<div id="footer-elements" class="section level2">
+<h2>Footer Elements</h2>
+<p>You can add a countdown timer to the footer of your slides using the <code>duration</code> option (duration is specified in minutes). For example:</p>
+<pre><code>---
+output:
+  slidy_presentation:
+    duration: 45
+---</code></pre>
+<p>You can also add custom footer text (e.g. organization name and/or copyright) using the <code>footer</code> option. For example:</p>
+<pre><code>---
+output:
+  slidy_presentation:
+    footer: &quot;Copyright (c) 2014, RStudio&quot;
+---</code></pre>
+</div>
+<div id="printing-and-pdf-output" class="section level2">
+<h2>Printing and PDF Output</h2>
+<p>You can print a Slidy presentation from within browsers that have good support for print CSS (i.e. as of this writing Google Chrome has the best support). Printing maintains most of the visual styles of the HTML version of the presentation.</p>
+<p>To create a PDF version of a presentation you can use Print to PDF from Google Chrome.</p>
 </div>
 <div id="figure-options" class="section level2">
 <h2>Figure Options</h2>
