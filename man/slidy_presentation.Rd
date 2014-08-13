@@ -4,17 +4,21 @@
 \title{Convert to a slidy presentation}
 \usage{
 slidy_presentation(incremental = FALSE, duration = NULL, footer = NULL,
-  fig_width = 8, fig_height = 6, fig_retina = if (!fig_caption) 2,
-  fig_caption = FALSE, smart = TRUE, self_contained = TRUE,
-  highlight = "default", mathjax = "default", template = "default",
-  css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  pandoc_args = NULL, ...)
+  font_adjustment = 0, fig_width = 8, fig_height = 6, fig_retina = if
+  (!fig_caption) 2, fig_caption = FALSE, smart = TRUE,
+  self_contained = TRUE, highlight = "default", mathjax = "default",
+  template = "default", css = NULL, includes = NULL, keep_md = FALSE,
+  lib_dir = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
 \item{duration}{Duration (in minutes) of the slide deck. This value is used
 to add a countdown timer to the slide footer.}
 
 \item{footer}{Footer text (e.g. organization name and/or copyright)}
+
+\item{font_adjustment}{Increase or decrease the default font size
+ (e.g. -1 or +1). You can also manually adjust the font size during the
+ presentation using the 'S' (smaller) and 'B' (bigger) keys.}
 
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note
 that if you want to reverse the default incremental behavior for an

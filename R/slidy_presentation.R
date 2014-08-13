@@ -10,6 +10,9 @@
 #' @param duration Duration (in minutes) of the slide deck. This value is used
 #'   to add a countdown timer to the slide footer.  
 #' @param footer Footer text (e.g. organization name and/or copyright)
+#' @param font_adjustment Increase or decrease the default font size
+#'  (e.g. -1 or +1). You can also manually adjust the font size during the
+#'  presentation using the 'S' (smaller) and 'B' (bigger) keys.
 #' 
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'   
@@ -35,6 +38,7 @@
 slidy_presentation <- function(incremental = FALSE,
                                duration = NULL,
                                footer = NULL,
+                               font_adjustment = 0,
                                fig_width = 8,
                                fig_height = 6,
                                fig_retina = if (!fig_caption) 2,
@@ -74,6 +78,11 @@ slidy_presentation <- function(incremental = FALSE,
   if (!is.null(footer))
     args <- c(args, pandoc_variable_arg("footer", footer))
 
+  # font size adjustment
+  if (font_adjustment != 0)
+    args <- c(args, pandoc_variable_arg("font-size-adjustment", 
+                                        font_adjustment))
+  
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
 
