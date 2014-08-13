@@ -899,6 +899,7 @@ var w3c_slidy = {
        help.setAttribute("title", this.localize(this.help_text));
        help.innerHTML = this.localize("help?");
        left.appendChild(help);
+       help.style.display="none"; 
        this.help_anchor = help;  // save for focus hack
 
        var gap1 = document.createTextNode(" ");
@@ -907,7 +908,7 @@ var w3c_slidy = {
        var contents = this.create_element("a");
        contents.setAttribute("href", "javascript:w3c_slidy.toggle_table_of_contents()");
        contents.setAttribute("title", this.localize("table of contents"));
-       contents.innerHTML = this.localize("contents?");
+       contents.innerHTML = this.localize("Contents");
        left.appendChild(contents);
 
        var gap2 = document.createTextNode(" ");
