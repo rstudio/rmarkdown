@@ -26,13 +26,13 @@ div.toolbar {
   padding-left: 1em;
   padding-right: 1em; 
   font-size: 60%;
-  color: red;
+  color: DimGray;
   background-color: rgb(240,240,240);
   border-top: solid 1px rgb(180,180,180);
 }
 
 div.toolbar span.copyright {
-  color: black;
+  color: DimGray;
   margin-left: 0.5em;
 }
 
