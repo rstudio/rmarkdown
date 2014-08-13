@@ -96,7 +96,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
   # the Shiny server; handle requests for the root (/) and any R markdown files
   # within
   app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir),
-                         uiPattern = "/|(/.*.[Rr][Mm][Dd])",
+                         uiPattern = "^/$|^(/.*\\.[Rr][Mm][Dd])$",
                          onStart = onStart,
                          server = rmarkdown_shiny_server(
                            dir, encoding, auto_reload, render_args))

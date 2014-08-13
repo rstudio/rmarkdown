@@ -259,7 +259,8 @@ render <- function(input,
     knit_meta <- knit_meta_reset()
 
     # if this isn't html and there are html dependencies then flag an error
-    if (!is_pandoc_to_html(output_format$pandoc)) {
+    if (!(is_pandoc_to_html(output_format$pandoc) ||
+          identical(tolower(tools::file_ext(output_file)), "html")))  {
       if (has_html_dependencies(knit_meta)) {
         stop("Functions that produce HTML output found in document targeting ",
              pandoc_to, " output.\nPlease change the output type ",
