@@ -170,6 +170,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li><a href="#display-modes">Display Modes</a></li>
 <li><a href="#incremental-bullets">Incremental Bullets</a></li>
 <li><a href="#appearance-and-style">Appearance and Style</a></li>
+<li><a href="#text-size">Text Size</a></li>
+<li><a href="#custom-css">Custom CSS</a></li>
 <li><a href="#footer-elements">Footer Elements</a></li>
 <li><a href="#printing-and-pdf-output">Printing and PDF Output</a></li>
 <li><a href="#figure-options">Figure Options</a></li>
@@ -247,15 +249,46 @@ output:
 <ul>
 <li><p><code>highlight</code> specifies the syntax highlighting style. Supported styles include “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, and “haddock”. Pass null to prevent syntax highlighting.</p></li>
 <li><p><code>smart</code> indicates whether to produce typographically correct output, converting straight quotes to curly quotes, <code>---</code> to em-dashes, <code>--</code> to en-dashes, and <code>...</code> to ellipses. Note that <code>smart</code> is enabled by default.</p></li>
-<li><p><code>font_adjustment</code> Increase or decrease the default font size (e.g. -1 or +1). You can also manually adjust the font size during the presentation using the ‘S’ (smaller) and ‘B’ (bigger) keys.</p></li>
 </ul>
 <p>For example:</p>
 <pre><code>---
 output:
   slidy_presentation:
     highlight: pygments
+---</code></pre>
+</div>
+<div id="text-size" class="section level2">
+<h2>Text Size</h2>
+<p>You can use the <code>font_adjustment</code> option to increase or decrease the default font size (e.g. -1 or +1) for the entire presentation. For example:</p>
+<pre><code>---
+output:
+  slidy_presentation:
     font_adjustment: -1
 ---</code></pre>
+<p>If you want to decrease the text size on an individual slide you can use the <code>.smaller</code> slide attribute. For example:</p>
+<pre><code>## Getting up {.smaller}</code></pre>
+<p>If you want to increase the text size on an indvidual slide you can use the <code>.bigger</code> slide attribute. For example:</p>
+<pre><code>## Getting up {.bigger}</code></pre>
+<p>You can also manually adjust the font size during the presentation using the ‘S’ (smaller) and ‘B’ (bigger) keys.</p>
+</div>
+<div id="custom-css" class="section level2">
+<h2>Custom CSS</h2>
+<p>You can add your own CSS to a Slidy presentation using the <code>css</code> option:</p>
+<pre><code>---
+output:
+  slidy_presentation:
+    css: styles.css
+---</code></pre>
+<p>You can also target specific slides or classes of slice with custom CSS by adding ids or classes to the slides headers within your document. For example the following slide header:</p>
+<pre><code>## Next Steps {#nextsteps .emphasized}</code></pre>
+<p>Would enable you to apply CSS to all of it’s content using either of the following CSS selectors:</p>
+<pre><code>#nextsteps {
+   color: blue;
+}
+
+.emphasized {
+   font-size: 1.2em;
+}</code></pre>
 </div>
 <div id="footer-elements" class="section level2">
 <h2>Footer Elements</h2>

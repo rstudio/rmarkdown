@@ -82,16 +82,61 @@ There are several options that control the appearance of Slidy presentations:
 
 * `smart` indicates whether to produce typographically correct output, converting straight quotes to curly quotes, `---` to em-dashes, `--` to en-dashes, and `...` to ellipses. Note that `smart` is enabled by default.
 
-* `font_adjustment`  Increase or decrease the default font size (e.g. -1 or +1). You can also manually adjust the font size during the presentation using the 'S' (smaller) and 'B' (bigger) keys.
-
 For example:
 
     ---
     output:
       slidy_presentation:
         highlight: pygments
+    ---
+
+
+## Text Size
+
+You can use the `font_adjustment` option to increase or decrease the default font size (e.g. -1 or +1) for the entire presentation. For example:
+
+    ---
+    output:
+      slidy_presentation:
         font_adjustment: -1
     ---
+
+If you want to decrease the text size on an individual slide you can use the `.smaller` slide attribute. For example:
+
+    ## Getting up {.smaller}
+
+If you want to increase the text size on an indvidual slide you can use the `.bigger` slide attribute. For example:
+
+    ## Getting up {.bigger}
+
+You can also manually adjust the font size during the presentation using the 'S' (smaller) and 'B' (bigger) keys.
+
+## Custom CSS
+
+You can add your own CSS to a Slidy presentation using the `css` option:
+
+    ---
+    output:
+      slidy_presentation:
+        css: styles.css
+    ---
+
+You can also target specific slides or classes of slice with custom CSS by adding ids or classes to the slides headers within your document. For example the following slide
+header:
+
+    ## Next Steps {#nextsteps .emphasized}
+
+Would enable you to apply CSS to all of it's content using either of the following CSS selectors:
+
+    #nextsteps {
+       color: blue;
+    }
+
+    .emphasized {
+       font-size: 1.2em;
+    }
+
+
 
 ## Footer Elements
 
