@@ -1,34 +1,40 @@
 
 #' Convert to a slidy presentation
-#'
+#' 
 #' Format for converting from R Markdown to a slidy presentation.
-#'
+#' 
 #' @inheritParams beamer_presentation
 #' @inheritParams pdf_document
 #' @inheritParams html_document
-#'
+#'   
+#' @param duration Duration (in minutes) of the slide deck. This value is used
+#'   to add a countdown timer to the slide footer.  
+#' @param footer Footer text (e.g. organization name and/or copyright)
+#' 
 #' @return R Markdown output format to pass to \code{\link{render}}
-#'
+#'   
 #' @details
-#'
-#' For more information on markdown syntax for presentations see
+#' 
+#' For more information on markdown syntax for presentations see 
 #' \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing
 #' slide shows with pandoc}.
-#'
+#' 
 #' @examples
 #' \dontrun{
-#'
+#' 
 #' library(rmarkdown)
-#'
+#' 
 #' # simple invocation
 #' render("pres.Rmd", slidy_presentation())
-#'
+#' 
 #' # specify an option for incremental rendering
 #' render("pres.Rmd", slidy_presentation(incremental = TRUE))
 #' }
-#'
+#' 
 #' @export
 slidy_presentation <- function(incremental = FALSE,
+                               duration = NULL,
+                               footer = NULL,
                                fig_width = 8,
                                fig_height = 6,
                                fig_retina = if (!fig_caption) 2,
@@ -59,6 +65,14 @@ slidy_presentation <- function(incremental = FALSE,
   # incremental
   if (incremental)
     args <- c(args, "--incremental")
+  
+  # duration
+  if (!is.null(duration))
+    args <- c(args, pandoc_variable_arg("duration", duration))
+  
+  # footer
+  if (!is.null(footer))
+    args <- c(args, pandoc_variable_arg("footer", footer))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
