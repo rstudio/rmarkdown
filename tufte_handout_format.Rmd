@@ -29,15 +29,19 @@ Tufte Handout is also intended as an example of creating a LaTeX based custom fo
 
 ## Getting Started
 
-You can create a new Tufte Handout from within the RStudio **New R Markdown** dialog:
+You can create a new Tufte Handout from within the RStudio **New R Markdown** dialog. Note that this requires the [very latest version](http://www.rstudio.com/products/rstudio/) of RStudio (v0.98.1027) so be sure to update before trying this.
 
 ![New Tufte Handout](images/new-tufte-handout.png)
+
+<br/>
 
 If you are not using RStudio then you can use the `rmarkdown::draft` function as follows:
 
 ```{r, eval=FALSE}
 rmarkdown::draft("my_handout.Rmd", template = "tufte_handout", package = "rmarkdown")
 ```
+
+Note that the `tufte_handout` format is available only in the [very latest version](https://github.com/rstudio/rmarkdown) of the **rmarkdown** package so be sure to update before trying this.
 
 The newly created document will have an output type of `rmarkdown::tufte_handout` as shown here:
 

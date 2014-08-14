@@ -194,10 +194,12 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 <div id="getting-started" class="section level2">
 <h2>Getting Started</h2>
-<p>You can create a new Tufte Handout from within the RStudio <strong>New R Markdown</strong> dialog:</p>
+<p>You can create a new Tufte Handout from within the RStudio <strong>New R Markdown</strong> dialog. Note that this requires the <a href="http://www.rstudio.com/products/rstudio/">very latest version</a> of RStudio (v0.98.1027) so be sure to update before trying this.</p>
 <p><img src="images/new-tufte-handout.png" alt="New Tufte Handout" /></p>
+<p><br/></p>
 <p>If you are not using RStudio then you can use the <code>rmarkdown::draft</code> function as follows:</p>
 <pre class="r"><code>rmarkdown::draft(&quot;my_handout.Rmd&quot;, template = &quot;tufte_handout&quot;, package = &quot;rmarkdown&quot;)</code></pre>
+<p>Note that the <code>tufte_handout</code> format is available only in the <a href="https://github.com/rstudio/rmarkdown">very latest version</a> of the <strong>rmarkdown</strong> package so be sure to update before trying this.</p>
 <p>The newly created document will have an output type of <code>rmarkdown::tufte_handout</code> as shown here:</p>
 <pre><code>---
 title: &quot;Tufte Handout&quot;
