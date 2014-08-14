@@ -136,6 +136,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
                <li><a href="revealjs_presentation_format.html">reveal.js</a></li>
                <li><a href="beamer_presentation_format.html">Beamer</a></li>
                <li class="divider"></li>
+               <li><a href="tufte_handout_format.html">Tufte Handout</a></li>
+               <li class="divider"></li>
                <li><a href="r_notebook_format.html">R Notebooks</a></li>
             </ul>
           </li>
@@ -202,6 +204,10 @@ output:
 <li><p>Adds a standard header to every document.</p></li>
 </ol>
 <p>Note that (3) and (4) are implemented using external files that are stored within the package that defines the custom format, so their locations need to be looked up using the <code>system.file</code> function.</p>
+<div id="tufte-handout-example" class="section level3">
+<h3>Tufte Handout Example</h3>
+<p>The <a href="tufte_handout_format.html">Tufte Handout</a> format provides an example of deriving from the <code>pdf_document</code> format and using a custom LaTeX template. The source code for the Tufte Handout <a href="https://github.com/rstudio/rmarkdown/blob/master/R/tufte_handout.R">format</a> and <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/tufte_handout">custom template</a> are a good starting point for creating your own LaTeX based formats.</p>
+</div>
 </div>
 <div id="fully-custom-formats" class="section level2">
 <h2>Fully Custom Formats</h2>

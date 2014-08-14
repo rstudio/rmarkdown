@@ -13,7 +13,7 @@ This website describes R Markdown v2, a next generation implementation of R Mark
 * Hooks for customizing HTML and PDF output (include CSS, headers, and footers).
 * Include raw LaTeX within markdown for advanced customization of PDF output.
 * Compile HTML, PDF, or MS Word notebooks from R scripts.
-* Extensiblity: create custom templates and even entirely new output formats.
+* Extensiblity: create custom templates and even entirely new output formats (for example, see the [Tufte Handout](tufte_handout_format.html) format).
 * Create interactive R Markdown documents using Shiny
 
 Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, [MiKTeX](http://miktex.org/) should be used rather than TeX Live.
@@ -22,7 +22,7 @@ Note that PDF output (including Beamer slides) requires an installation of TeX. 
 
 You can use R Markdown either through the integrated support provided by RStudio or by directly using the **rmarkdown** package:
 
-1. RStudio --- Install the [latest version of RStudio](http://www.rstudio.com/ide/download/preview) (v0.98.932).
+1. RStudio --- Install the [latest version of RStudio](http://www.rstudio.com/products/rstudio/).
 
 2. Other environments --- Install the [rmarkdown package](https://github.com/rstudio/rmarkdown).
 
@@ -150,7 +150,7 @@ With the basics described above you can get started with R Markdown right away. 
 
 * [Compiling Notebooks](r_notebook_format.html), which describes how to compile HTML, PDF, or MS Word notebooks from R scripts.
 
-* Document output formats: [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html)
+* Document output formats: [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html), [Markdown](markdown_document_format.html), and [Tufte Handout](tufte_handout_format.html).
 
 * Presentation output formats: [ioslides](ioslides_presentation_format.html), [reveal.js](revealjs_presentation_format.html), [Slidy](slidy_presentation_format.html), [Beamer](beamer_presentation_format.html)
 

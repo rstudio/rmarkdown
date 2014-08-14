@@ -131,6 +131,13 @@ See the article on [Creating New Formats](developer_custom_formats.html) for add
 
 ## Examples
 
+### Tufte Handout
+
+The [Tufte Handout](tufte_handout_format.html) format provides an example of deriving from the `pdf_document` format and using a custom LaTeX template. The source code for the Tufte Handout [format](https://github.com/rstudio/rmarkdown/blob/master/R/tufte_handout.R) and [custom template](https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/tufte_handout) are a good starting point for creating your own LaTeX based formats.
+
+
+### rticles Package
+
 The [rticles](https://github.com/rstudio/rticles) package includes two examples of templates (both of which have an associated custom format):
 
 1) [JSS article](https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/jss_article)
