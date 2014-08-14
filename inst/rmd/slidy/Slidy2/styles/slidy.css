@@ -401,3 +401,31 @@ div.initial_prompt { display: none; visibility: hidden }
   div.slide.first-slide { page-break-before: avoid }
 }
 
+/* the below rules increase compatibility with Shiny and Bootstrap */
+
+/* remove margins that misalign sliders */
+.jslider table {
+   margin-left: 0em;
+   margin-right: 0em;
+}
+
+/* don't use very large fonts in datatables */
+table.dataTable, .shiny-datatable-output div {
+   font-size: 14pt;
+}
+
+/* allow R chunks to render in a large font */
+pre.sourceCode, code.sourceCode {
+   font-size: 80%;
+}
+
+/* increase the input font size set by Bootstrap */
+label, button, input, select, textarea {
+   font-size: 14pt;
+}
+
+/* eliminate bullets in Bootstrap navigation lists */
+ul.nav, ul.nav li {
+   list-style-type: none;
+}
+
