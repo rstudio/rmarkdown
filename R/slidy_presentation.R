@@ -129,5 +129,6 @@ slidy_presentation <- function(incremental = FALSE,
     base_format = html_document_base(smart = smart, lib_dir = lib_dir,
                                      self_contained = self_contained,
                                      mathjax = mathjax,
+                                     bootstrap_compatible = TRUE, 
                                      pandoc_args = pandoc_args, ...))
 }
