@@ -9,6 +9,8 @@ used by these components are included below):
 - Google Web Fonts
 - MathJax
 - reveal.js
+- Slidy
+- tufte-latex
 
 jQuery License
 ----------------------------------------------------------------------
@@ -36,7 +38,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-Bootstrap, Bootswatch, and OpenSans Web Font License
+Bootstrap, Bootswatch, tufte latex, and OpenSans Web Font License
 ----------------------------------------------------------------------
 
                                  Apache License
@@ -535,5 +537,4 @@ COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.
 COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT,
 SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THE
 SOFTWARE OR DOCUMENTATION.
-
 
