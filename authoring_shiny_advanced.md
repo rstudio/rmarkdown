@@ -58,7 +58,7 @@ rmarkdown::render_delayed({
 
 ## Converting Existing Documents 
 
-The getting started example demonstrated creating a brand new interative document. However, any R Markdown output format that produces HTML can be converted into an interacitve document. To convert an existing document:
+The getting started example demonstrated creating a brand new interactive document. However, any R Markdown output format that produces HTML can be converted into an interacitve document. To convert an existing document:
  
 - Add `runtime: shiny` to its YAML front matter. 
 
