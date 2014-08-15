@@ -181,6 +181,26 @@ html_document <- function(toc = FALSE,
     args
   }
 
+
+  # handle theme
+  if (!is.null(theme)) {
+    theme <- match.arg(theme, themes())
+    if (identical(theme, "default"))
+      theme <- "bootstrap"
+    args <- c(args, "--variable", paste("theme:", theme, sep=""))
+  }
+
+  format_deps <- list()
+  if (!is.null(theme)) {
+    format_deps <- append(format_deps, list(html_dependency_jquery(),
+                                            html_dependency_bootstrap(theme)))
+  }
+  else if (isTRUE(bootstrap_compatible) && identical(runtime, "shiny")) {
+    # If we can add bootstrap for Shiny, do it
+    format_deps <- append(format_deps,
+                          list(html_dependency_bootstrap("bootstrap")))
+  }
+
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md),
@@ -190,11 +210,12 @@ html_document <- function(toc = FALSE,
     keep_md = keep_md,
     clean_supporting = self_contained,
     pre_processor = pre_processor,
-    base_format = html_document_base(smart = smart, theme = theme,
+    base_format = html_document_base(smart = smart,
                                      self_contained = self_contained,
                                      lib_dir = lib_dir, mathjax = mathjax,
                                      template = template,
-                                     pandoc_args = pandoc_args, ...)
+                                     pandoc_args = pandoc_args,
+                                     extra_dependencies = format_deps, ...)
   )
 }
 
