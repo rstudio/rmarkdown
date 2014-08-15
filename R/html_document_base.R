@@ -8,13 +8,11 @@
 #' @param dependency_resolver A dependency resolver
 #' @param copy_resources Copy resources
 #' @param extra_dependencies Extra dependencies
-#' @param bootstrap_compatible Bootstrap compatible
 #' 
 #' @return HTML base output format.
 #' 
 #' @export
 html_document_base <- function(smart = TRUE,
-                               theme = NULL,
                                self_contained = TRUE,
                                lib_dir = NULL,
                                mathjax = "default",
@@ -23,7 +21,6 @@ html_document_base <- function(smart = TRUE,
                                dependency_resolver = NULL,
                                copy_resources = FALSE,
                                extra_dependencies = NULL,
-                               bootstrap_compatible = FALSE,
                                ...) {
   
   # default for dependency_resovler
@@ -66,27 +63,10 @@ html_document_base <- function(smart = TRUE,
     # copy supplied output_dir (for use in post-processor)
     output_dir <<- output_dir
 
-    # handle theme
-    if (!is.null(theme)) {
-      theme <- match.arg(theme, themes())
-      if (identical(theme, "default"))
-        theme <- "bootstrap"
-      args <- c(args, "--variable", paste("theme:", theme, sep=""))
-    }
-
     # resolve and inject extras, including dependencies specified by the format
     # and dependencies specified by the user (via extra_dependencies)
     format_deps <- list()
     format_deps <- append(format_deps, extra_dependencies)
-    if (!is.null(theme)) {
-      format_deps <- append(format_deps, list(html_dependency_jquery(),
-                                              html_dependency_bootstrap(theme)))
-    }
-    else if (isTRUE(bootstrap_compatible) && identical(runtime, "shiny")) {
-      # If we can add bootstrap for Shiny, do it
-      format_deps <- append(format_deps,
-                            list(html_dependency_bootstrap("bootstrap")))
-    }
 
     extras <- html_extras_for_document(knit_meta, runtime, dependency_resolver,
                                        format_deps)
