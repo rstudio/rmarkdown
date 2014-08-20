@@ -83,6 +83,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
       "UTF-8"
     else
       render_args$encoding
+  # default environmnet to compile Rmd
+  if (is.null(render_args$envir)) render_args$envir <- parent.frame()
 
   onStart <- function() {
     global_r <- file.path.ci(dir, "global.R")
