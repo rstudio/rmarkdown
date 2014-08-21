@@ -4,6 +4,7 @@
 #' document as a list, which you may use in the R code chunks, e.g. 
 #' \code{metadata$title} (the title of the document), \code{metadata$author},
 #' and \code{metadata$foo} (if you have a YAML field named \code{foo}), etc.
+#' @export
 metadata <- list()
 
 #' @export
