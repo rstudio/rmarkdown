@@ -1,3 +1,10 @@
+#' The YAML metadata of the current R Markdown document
+#' 
+#' The object \code{metadata} stores the YAML metadata of the current R Markdown
+#' document as a list, which you may use in the R code chunks, e.g. 
+#' \code{metadata$title} (the title of the document), \code{metadata$author},
+#' and \code{metadata$foo} (if you have a YAML field named \code{foo}), etc.
+metadata <- list()
 
 #' @export
 render <- function(input,
@@ -230,13 +237,13 @@ render <- function(input,
     # make the yaml_front_matter available as 'metadata' within the
     # knit environment (unless it is already defined there in which case
     # we emit a warning)
-    if (!exists("metadata", envir = envir)) {
-      assign("metadata", yaml_front_matter, envir = envir)
-      on.exit(remove("metadata", envir = envir), add = TRUE)
-    } else {
-      warning("'metadata' object already exists in knit environment ",
-              "so won't be accessible during knit", call. = FALSE)
-    }
+    env <- environment(render)
+    unlockBinding("metadata", env)
+    on.exit({
+      env$metadata <- list()
+      lockBinding("metadata", env)
+    }, add = TRUE)
+    env$metadata <- yaml_front_matter
 
     perf_timer_start("knitr")
 
