@@ -373,7 +373,8 @@ output_format_from_yaml_front_matter <- function(input_lines,
           output_format_options <- output_format_yaml[[1]][[output_format_name]]
         }
       } else if (is.list(output_format_yaml) &&
-                 identical(output_format_yaml[[1]], "default")) {
+                   (is.null(output_format_yaml[[1]]) ||
+                      identical(output_format_yaml[[1]], "default"))) {
         output_format_name <- names(output_format_yaml)[[1]]
 
       } else {
@@ -401,6 +402,8 @@ output_format_from_yaml_front_matter <- function(input_lines,
 
 create_output_format <- function(name, options) {
 
+  if (is.null(name))
+    stop("The output format name must not be NULL", call. = FALSE)
   # lookup the function
   output_format_func <- eval(parse(text = name))
   if (!is.function(output_format_func))
