@@ -138,7 +138,7 @@ revealjs_presentation <- function(incremental = FALSE,
 
     # reveal.js
     revealjs_path <- rmarkdown_system_file("rmd/revealjs/reveal.js-2.6.1")
-    if (!self_contained)
+    if (!self_contained || is_windows())
       revealjs_path <- relative_to(
         output_dir, render_supporting_files(revealjs_path, lib_dir))
     args <- c(args, "--variable", paste("revealjs-url=",
