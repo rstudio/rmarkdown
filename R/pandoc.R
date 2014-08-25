@@ -545,8 +545,11 @@ pandoc_citeproc <- function() {
 
 # quote args if they need it
 quoted <- function(args) {
-  spaces <- grepl(' ', args, fixed=TRUE)
-  args[spaces] <- shQuote(args[spaces])
+  # some characters are legal in filenames but without quoting are likely to be
+  # interpreted by the shell (e.g. redirection, wildcard expansion, etc.) --
+  # wrap arguments containing these characters in quotes. 
+  shell_chars <- grepl(.shell_chars_regex, args)
+  args[shell_chars] <- shQuote(args[shell_chars])
   args
 }
 
