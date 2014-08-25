@@ -80,6 +80,7 @@ render <- function(input,
 
   # if the input file has shell characters in its name then make a copy that
   # doesn't have shell characters
+  original_input <- input
   if (grepl(.shell_chars_regex, basename(input))) {
     input_no_shell_chars <- intermediates_loc(
         file_name_without_shell_chars(basename(input)))
@@ -159,9 +160,12 @@ render <- function(input,
   # have references in the input)
   run_citeproc <- citeproc_required(yaml_front_matter, input_lines)
 
-  # generate outpout file based on input filename
-  if (is.null(output_file))
+  # generate output file based on input filename, if the user didn't supply one
+  auto_output_file <- FALSE
+  if (is.null(output_file)) {
     output_file <- pandoc_output_file(input, output_format$pandoc)
+    auto_output_file <- TRUE
+  }
 
   # if an output_dir was specified then concatenate it with the output file
   if (!is.null(output_dir)) {
@@ -348,6 +352,15 @@ render <- function(input,
                                                 output_file,
                                                 clean,
                                                 !quiet)
+  
+  # if we used an automatically generated output filename, change it to what
+  # it would have been if pandoc could handle shell characters in paths
+  if (auto_output_file && !identical(input, original_input)) {
+    original_output_file <- pandoc_output_file(original_input, 
+                                               output_format$pandoc)
+    file.rename(output_file, original_output_file)
+    output_file <- original_output_file
+  }
 
   if (!quiet)
     message("\nOutput created: ", output_file)
