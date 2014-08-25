@@ -545,7 +545,7 @@ pandoc_citeproc <- function() {
 
 # quote args if they need it
 quoted <- function(args) {
-  spaces <- grepl(' ', args, fixed=TRUE)
+  spaces <- grepl('[ >]', args)
   args[spaces] <- shQuote(args[spaces])
   args
 }
