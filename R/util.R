@@ -58,8 +58,8 @@ read_lines_utf8 <- function(file, encoding) {
     lines
 }
 
-file_name_without_spaces <- function(file) {
-  name <- gsub(' ', '_', basename(file), fixed = TRUE)
+file_name_without_shell_chars <- function(file) {
+  name <- gsub(.shell_chars_regex, '_', basename(file))
   dir <- dirname(file)
   if (nzchar(dir) && !identical(dir, "."))
     file.path(dir, name)
@@ -190,3 +190,8 @@ base_dir <- function(x) {
 
   base
 }
+
+# Regular expression representing characters likely to be considered special by
+# the shell (require quoting/escaping)
+.shell_chars_regex <- '[ <>()|\\:&;#?*]'
+

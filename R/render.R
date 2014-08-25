@@ -78,19 +78,20 @@ render <- function(input,
       file.path(intermediates_dir, file)
   }
 
-  # if the input file has spaces in it's name then make a copy
-  # that doesn't have spaces
-  if (grepl(' ', basename(input), fixed=TRUE)) {
-    input_no_spaces <- intermediates_loc(
-        file_name_without_spaces(basename(input)))
-    if (file.exists(input_no_spaces)) {
-      stop("The name of the input file cannot contain spaces (attempted to ",
-           "copy to a version without spaces '", input_no_spaces, "' ",
+  # if the input file has shell characters in its name then make a copy that
+  # doesn't have shell characters
+  if (grepl(.shell_chars_regex, basename(input))) {
+    input_no_shell_chars <- intermediates_loc(
+        file_name_without_shell_chars(basename(input)))
+    if (file.exists(input_no_shell_chars)) {
+      stop("The name of the input file cannot contain the special shell ",
+           "characters: ", .shell_chars_regex, " (attempted to copy to a ", 
+           "version without those characters '", input_no_shell_chars, "' ",
            "however that file already exists)", call. = FALSE)
     }
-    file.copy(input, input_no_spaces, overwrite = TRUE)
-    intermediates <- c(intermediates, input_no_spaces)
-    input <- input_no_spaces
+    file.copy(input, input_no_shell_chars, overwrite = TRUE)
+    intermediates <- c(intermediates, input_no_shell_chars)
+    input <- input_no_shell_chars
   }
 
   # execute within the input file's directory
