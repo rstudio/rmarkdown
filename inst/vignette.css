@@ -1,44 +1,9 @@
 body {
   background-color: #fff;
-  margin: 0 auto;
-  max-width: 800px;
+  margin: 1em auto;
+  max-width: 700px;
   float: center;
-  margin-left: auto;
-  margin-right: auto;
   overflow: visible;
-}
-  body #header {
-    clear: both;
-    margin-bottom: 8px;
-    border-bottom: 2px solid #999;
-    font-size: 20px;
-    padding: 2px 10px 2px 25px;
-  }
-  body #content {
-    background-color: white;
-    clear: both;
-    float: left;
-    overflow: visible;
-    padding: 10px;
-    border: 1px solid #BBBBBB;
-    border-radius: 5px;
-    width: 780px;
-  }
-  body #footer {
-    background-color: #99BBDD;
-    clear: both;
-    float: left;
-    margin: 8px 0;
-    border: 1px solid #6688AA;
-    border-radius: 5px;
-    padding: 0 10px;
-    width: 780px;
-  }
-body .clear {
-  clear: both;
-  border-width: 0;
-  margin: 0;
-  visibility: hidden;
 }
 
 #TOC {
@@ -97,8 +62,7 @@ table td {
 }
 
 p {
-  margin-left: 15px;
-  margin-bottom: 5px;
+  margin: 0.5em 0;
 }
 
 blockquote {
@@ -132,38 +96,31 @@ ul {
     margin-bottom: 0;
   }
 
-code {
-  font-family: Consolas, Monaco, 'Courier New', monospace;
-  color: #000;
-  padding: 0px;
-}
-
-p > code, li > code {
-  color: #333;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  background-color: #f8f8f8;
-  font-size: 80%;
-  padding: 0px 2px;
-}
-
 /*pre > code {
   font-size: 12px;
   line-height: 16px;
 }*/
 
-pre {
-  font-size: 12px;
-  line-height: 16px;
-  white-space: pre-wrap;    /* Wrap long lines */
+pre, code {
+  background-color: #f7f7f7;
+  border-radius: 3px;
+  color: #333;
 }
 
-pre.r {
-  background-color: #F3F5F7;
-  padding: 4px 10px;
-  border: 1px solid #AEBDCC;
-  border-radius: 5px;
-  margin: 5px 5px 10px 20px;
+pre {
+  white-space: pre-wrap;    /* Wrap long lines */
+  border-radius: 3px;
+  margin: 5px 0px 10px 0px;
+  padding: 10px;
+}
+
+code {
+  font-family: Consolas, Monaco, 'Courier New', monospace;
+  font-size: 85%;
+}
+
+p > code, li > code {
+  padding: 2px 0px;
 }
 
 img {
@@ -192,30 +149,26 @@ h1 {
 }
 
 h2 {
-  border-bottom: 2px solid #ccc;
-  width: 85%;
+  border-bottom: 4px solid #f7f7f7;
   padding-top: 10px;
+  padding-bottom: 2px;
   font-size: 22px;
 }
 
 h3 {
-  border-bottom: 2px solid #ccc;
-  width: 75%;
+  border-bottom: 2px solid #f7f7f7;
   padding-top: 10px;
   font-size: 18px;
 }
 
 h4 {
-  border-bottom: 1px solid #ccc;
-  width: 60%;
+  border-bottom: 1px solid #f7f7f7;
   margin-left: 8px;
   font-size: 16px;
 }
 
 h5, h6 {
   border-bottom: 1px solid #ccc;
-  width: 60%;
-  margin-left: 15px;
   font-size: 16px;
 }
 
@@ -236,36 +189,4 @@ a {
 
 dl dt {
   font-weight: bold;
-}
-
-
-pre .operator,
-pre .paren {
-  color: #888;
-}
-
-pre .literal {
- color: #990073;
-}
-
-pre .number {
- color: #0080C0;
-}
-
-pre .comment {
- color: #008000;
- font-style: italic
-}
-
-pre .keyword {
- color: #900;
- font-weight: bold
-}
-
-pre .identifier {
- color: #000;
-}
-
-pre .string {
- color: #b44;
 }

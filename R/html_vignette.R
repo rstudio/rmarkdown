@@ -28,5 +28,7 @@ html_vignette <- function(fig_width = 3.9,
                 fig_height = fig_height, 
                 fig_retina = FALSE,
                 css = css, 
+                theme = NULL,
+                highlight = "pygments",
                 ...)
 }
