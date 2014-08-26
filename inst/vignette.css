@@ -1,0 +1,271 @@
+body {
+  background-color: #fff;
+  margin: 0 auto;
+  max-width: 800px;
+  float: center;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: visible;
+}
+  body #header {
+    clear: both;
+    margin-bottom: 8px;
+    border-bottom: 2px solid #999;
+    font-size: 20px;
+    padding: 2px 10px 2px 25px;
+  }
+  body #content {
+    background-color: white;
+    clear: both;
+    float: left;
+    overflow: visible;
+    padding: 10px;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
+    width: 780px;
+  }
+  body #footer {
+    background-color: #99BBDD;
+    clear: both;
+    float: left;
+    margin: 8px 0;
+    border: 1px solid #6688AA;
+    border-radius: 5px;
+    padding: 0 10px;
+    width: 780px;
+  }
+body .clear {
+  clear: both;
+  border-width: 0;
+  margin: 0;
+  visibility: hidden;
+}
+
+#TOC {
+  clear: both;
+  margin: 0 0 10px 10px;
+  padding: 4px;
+  width: 400px;
+  border: 1px solid #CCCCCC;
+  border-radius: 5px;
+
+  background-color: #f6f6f6;
+  font-size: 13px;
+  line-height: 16px;
+}
+  #TOC .toctitle {
+    font-weight: bold;
+    font-size: 15px;
+    margin-left: 5px;
+  }
+
+  #TOC ul {
+    padding-left: 40px;
+    margin-left: -1.5em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  #TOC ul ul {
+    margin-left: -2em;
+  }
+  #TOC li {
+    line-height: 16px;
+  }
+
+table {
+  margin-left: 25px;
+  border-width: 1px;
+  border-spacing: 0px;
+  border-style: outset;
+  border-color: gray;
+  border-collapse: collapse;
+}
+table th {
+  border-width: 1px;
+  padding: 5px;
+  border-style: inset;
+  border-color: #DDDDDD;
+  background-color: white;
+}
+table td {
+  border-width: 1px;
+  border-style: inset;
+  border-color: #DDDDDD;
+  background-color: white;
+  line-height: 18px;
+  padding: 2px 5px;
+}
+
+p {
+  margin-left: 15px;
+  margin-bottom: 5px;
+}
+
+blockquote {
+  background-color: #f6f6f6;
+  padding: 13px;
+  padding-bottom: 1px;
+}
+
+hr {
+  border-style: solid;
+  border: none;
+  border-top: 1px solid #777;
+  margin: 28px 0;
+}
+
+dl {
+  margin-left: 0;
+}
+  dl dd {
+    margin-bottom: 13px;
+    margin-left: 13px;
+  }
+
+ul {
+  margin-top: 0;
+}
+  ul li {
+    list-style: circle outside;
+  }
+  ul ul {
+    margin-bottom: 0;
+  }
+
+code {
+  font-family: Consolas, Monaco, 'Courier New', monospace;
+  color: #000;
+  padding: 0px;
+}
+
+p > code, li > code {
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: #f8f8f8;
+  font-size: 80%;
+  padding: 0px 2px;
+}
+
+/*pre > code {
+  font-size: 12px;
+  line-height: 16px;
+}*/
+
+pre {
+  font-size: 12px;
+  line-height: 16px;
+  white-space: pre-wrap;    /* Wrap long lines */
+}
+
+pre.r {
+  background-color: #F3F5F7;
+  padding: 4px 10px;
+  border: 1px solid #AEBDCC;
+  border-radius: 5px;
+  margin: 5px 5px 10px 20px;
+}
+
+img {
+  background-color: #FFFFFF;
+  padding: 2px;
+  border: 1px solid #DDDDDD;
+  border-radius: 3px;
+  border: 1px solid #CCCCCC;
+  box-shadow: 2px 2px 12px -5px #999999;
+  margin: 0 5px;
+}
+
+body {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 22px;
+}
+  body #header {
+  }
+
+
+h1 {
+  margin-top: 0;
+  font-size: 35px;
+  line-height: 40px;
+}
+
+h2 {
+  border-bottom: 2px solid #ccc;
+  width: 85%;
+  padding-top: 10px;
+  font-size: 22px;
+}
+
+h3 {
+  border-bottom: 2px solid #ccc;
+  width: 75%;
+  padding-top: 10px;
+  font-size: 18px;
+}
+
+h4 {
+  border-bottom: 1px solid #ccc;
+  width: 60%;
+  margin-left: 8px;
+  font-size: 16px;
+}
+
+h5, h6 {
+  border-bottom: 1px solid #ccc;
+  width: 60%;
+  margin-left: 15px;
+  font-size: 16px;
+}
+
+a {
+  color: #0033dd;
+  text-decoration: none;
+}
+  a:hover {
+    color: #6666ff; }
+  a:visited {
+    color: #800080; }
+  a:visited:hover {
+    color: #BB00BB; }
+  a[href^="http:"] {
+    text-decoration: underline; }
+  a[href^="https:"] {
+    text-decoration: underline; }
+
+dl dt {
+  font-weight: bold;
+}
+
+
+pre .operator,
+pre .paren {
+  color: #888;
+}
+
+pre .literal {
+ color: #990073;
+}
+
+pre .number {
+ color: #0080C0;
+}
+
+pre .comment {
+ color: #008000;
+ font-style: italic
+}
+
+pre .keyword {
+ color: #900;
+ font-weight: bold
+}
+
+pre .identifier {
+ color: #000;
+}
+
+pre .string {
+ color: #b44;
+}
