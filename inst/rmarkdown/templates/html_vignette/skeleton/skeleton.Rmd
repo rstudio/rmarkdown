@@ -1,0 +1,31 @@
+---
+title: "Vignette title"
+output: rmarkdown::html_vignette
+metadata: >
+  \VignetteEngine{knitr::knitr}
+  \VignetteIndexEntry{Vignette title}
+  \usepackage[utf8]{inputenc}
+---
+
+# Introduction
+
+Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible.
+
+## Metadata
+
+Note that all Rmarkdown vignettes need to include the following code somewhere in the document:
+
+    \VignetteEngine{knitr::knitr}
+    \VignetteIndexEntry{Vignette title}
+    \usepackage[utf8]{inputenc}
+
+(Yes, they look like latex commands, even though this is an Rmarkdown document.) I recommend putting keeping them in the yaml metadata, as in this template.
+
+## Figures
+
+The figure sizes have been customised so that you can easily put two images side-by-side. 
+
+```{r, echo = FALSE}
+plot(1:10)
+plot(10:1)
+```

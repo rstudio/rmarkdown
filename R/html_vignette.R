@@ -16,19 +16,21 @@
 #' @inheritParams html_document
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @export
-html_vignette <- function(fig_width = 3.9,
-                          fig_height = 3.5,
+html_vignette <- function(fig_width = 3,
+                          fig_height = 3,
                           css = NULL,
                           mathjax = NULL,
                           ...) {
   
   if (is.null(css)) {
-    css <- system.file("vignette.css", package = "rmarkdown")
+    css <- system.file("rmarkdown", "templates", "html_vignette" ,"resources", 
+      "vignette.css", package = "rmarkdown")
   }
   
   html_document(fig_width = fig_width, 
                 fig_height = fig_height, 
                 fig_retina = FALSE,
+                mathjax = mathjax,
                 css = css, 
                 theme = NULL,
                 highlight = "pygments",
