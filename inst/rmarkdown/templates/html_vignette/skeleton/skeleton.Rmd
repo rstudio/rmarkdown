@@ -1,7 +1,7 @@
 ---
 title: "Vignette title"
 output: rmarkdown::html_vignette
-metadata: >
+vignette: >
   \VignetteEngine{knitr::knitr}
   \VignetteIndexEntry{Vignette title}
   \usepackage[utf8]{inputenc}
