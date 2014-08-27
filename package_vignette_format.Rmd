@@ -1,0 +1,57 @@
+---
+title: "Package Vignette (HTML)"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    fig_width: 3.9
+    fig_height: 3.5
+---
+
+## Overview
+
+The `html_vignette` format provides a lightweight alternative to `html_document` suitable for inclusion in packages to be released to CRAN. It reduces the size of a basic vignette from 100k to around 10k. The format differs from a conventional HTML document as follows:
+
+- Never uses retina figures
+- Has a smaller default figure size
+- Uses a custom CSS stylesheet
+- Disables mathjax by default (for offline readability)
+
+### Usage
+
+To use `html_vignette` you specify it as the output format and add some additional vignette related macros:
+
+    ---
+    title: "Vignette Title"
+    output: rmarkdown::html_vignette
+    vignette: >
+      \VignetteEngine{knitr::knitr}
+      \VignetteIndexEntry{Vignette Title}
+      \usepackage[utf8]{inputenc}
+    ---
+
+Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your Vignette.
+
+All options support for `html_document` also work for `html_vignette`. See the [article on the html_document format](html_document_format.html) for additional details.
+
+## Appearance and Style
+
+### Custom CSS
+
+The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+
+    output: 
+      rmarkdown::html_vignette:
+        css: mystyles.css
+
+### Figure Sizes
+
+The figure sizes have been customised so that you can easily put two images side-by-side: 
+
+```{r, echo = FALSE}
+plot(1:10)
+plot(10:1)
+```
+
+If you want larger figure sizes you can change the `fig_width` and `fig_height` in the document output options or alternatively override the default options on a per-chunk basis.
+

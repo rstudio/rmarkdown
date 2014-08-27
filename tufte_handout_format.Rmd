@@ -1,5 +1,5 @@
 ---
-title: "Tufte Handouts"
+title: "Tufte Handout (PDF)"
 output:
   html_document:
     toc: true
