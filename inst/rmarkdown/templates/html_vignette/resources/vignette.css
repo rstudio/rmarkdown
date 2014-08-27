@@ -1,9 +1,13 @@
 body {
   background-color: #fff;
-  margin: 1em auto;
+  margin: 1em 2em;
   max-width: 700px;
   float: center;
   overflow: visible;
+
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 #TOC {
@@ -85,6 +89,9 @@ dl {
     margin-bottom: 13px;
     margin-left: 13px;
   }
+  dl dt {
+    font-weight: bold;
+  }
 
 ul {
   margin-top: 0;
@@ -96,29 +103,21 @@ ul {
     margin-bottom: 0;
   }
 
-/*pre > code {
-  font-size: 12px;
-  line-height: 16px;
-}*/
-
 pre, code {
   background-color: #f7f7f7;
   border-radius: 3px;
   color: #333;
 }
-
 pre {
   white-space: pre-wrap;    /* Wrap long lines */
   border-radius: 3px;
   margin: 5px 0px 10px 0px;
   padding: 10px;
 }
-
 code {
   font-family: Consolas, Monaco, 'Courier New', monospace;
   font-size: 85%;
 }
-
 p > code, li > code {
   padding: 2px 0px;
 }
@@ -129,18 +128,8 @@ img {
   border: 1px solid #DDDDDD;
   border-radius: 3px;
   border: 1px solid #CCCCCC;
-  box-shadow: 2px 2px 12px -5px #999999;
   margin: 0 5px;
 }
-
-body {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  line-height: 22px;
-}
-  body #header {
-  }
-
 
 h1 {
   margin-top: 0;
@@ -152,24 +141,24 @@ h2 {
   border-bottom: 4px solid #f7f7f7;
   padding-top: 10px;
   padding-bottom: 2px;
-  font-size: 22px;
+  font-size: 145%;
 }
 
 h3 {
   border-bottom: 2px solid #f7f7f7;
   padding-top: 10px;
-  font-size: 18px;
+  font-size: 120%;
 }
 
 h4 {
   border-bottom: 1px solid #f7f7f7;
   margin-left: 8px;
-  font-size: 16px;
+  font-size: 105%;
 }
 
 h5, h6 {
   border-bottom: 1px solid #ccc;
-  font-size: 16px;
+  font-size: 105%;
 }
 
 a {
@@ -186,7 +175,3 @@ a {
     text-decoration: underline; }
   a[href^="https:"] {
     text-decoration: underline; }
-
-dl dt {
-  font-weight: bold;
-}

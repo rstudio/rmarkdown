@@ -7,8 +7,6 @@ metadata: >
   \usepackage[utf8]{inputenc}
 ---
 
-# Introduction
-
 Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible.
 
 ## Metadata
