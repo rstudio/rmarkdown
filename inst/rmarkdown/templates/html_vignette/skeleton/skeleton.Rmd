@@ -12,7 +12,6 @@ Vignettes are long form documentation commonly included in packages. Because the
 - Never uses retina figures
 - Has a smaller default figure size
 - Uses a custom CSS stylesheet
-- Disables mathjax by default (for offline readability)
 
 ## Vignette Info
 
