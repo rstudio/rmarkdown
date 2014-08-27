@@ -1,13 +1,16 @@
 body {
   background-color: #fff;
-  margin: 1em 2em;
+  margin: 1em auto;
   max-width: 700px;
-  float: center;
   overflow: visible;
 
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.35;
+}
+
+#header {
+  text-align: center;
 }
 
 #TOC {
@@ -42,7 +45,7 @@ body {
   }
 
 table {
-  margin-left: 25px;
+  margin: auto;
   border-width: 1px;
   border-spacing: 0px;
   border-style: outset;
@@ -122,6 +125,9 @@ p > code, li > code {
   padding: 2px 0px;
 }
 
+div.figure {
+  text-align: center;
+}
 img {
   background-color: #FFFFFF;
   padding: 2px;
