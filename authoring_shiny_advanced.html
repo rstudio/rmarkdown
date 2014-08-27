@@ -136,6 +136,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
                <li><a href="revealjs_presentation_format.html">reveal.js</a></li>
                <li><a href="beamer_presentation_format.html">Beamer</a></li>
                <li class="divider"></li>
+               <li class="nav-header">Other</li>
+               <li><a href="package_vignette_format.html">Package Vignette</a></li>
                <li><a href="tufte_handout_format.html">Tufte Handout</a></li>
                <li class="divider"></li>
                <li><a href="r_notebook_format.html">R Notebooks</a></li>
@@ -222,7 +224,7 @@ rmarkdown::render_delayed({
 </div>
 <div id="converting-existing-documents" class="section level2">
 <h2>Converting Existing Documents</h2>
-<p>The getting started example demonstrated creating a brand new interative document. However, any R Markdown output format that produces HTML can be converted into an interacitve document. To convert an existing document:</p>
+<p>The getting started example demonstrated creating a brand new interactive document. However, any R Markdown output format that produces HTML can be converted into an interacitve document. To convert an existing document:</p>
 <ul>
 <li><p>Add <code>runtime: shiny</code> to its YAML front matter.</p></li>
 <li><p>Render it with <code>rmarkdown::run</code> instead of <code>rmarkdown::render</code>.</p></li>
