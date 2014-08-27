@@ -31,7 +31,7 @@ The `html_vignette` template includes a basic CSS theme. To override this theme 
 
 The figure sizes have been customised so that you can easily put two images side-by-side. 
 
-```{r, echo = FALSE}
+```{r, fig.show='hold'}
 plot(1:10)
 plot(10:1)
 ```
