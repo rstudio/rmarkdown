@@ -4,7 +4,7 @@ author: "`r Sys.getenv('USER')`"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  \VignetteEngine{knitr::knitr}
+  \VignetteEngine{knitr::rmarkdown}
   \VignetteIndexEntry{Vignette Title}
   \usepackage[utf8]{inputenc}
 ---
