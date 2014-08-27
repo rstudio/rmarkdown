@@ -13,7 +13,7 @@ Vignettes are long form documentation commonly included in packages. Because the
 
 - Never uses retina figures
 - Has a smaller default figure size
-- Uses a custom CSS stylesheet
+- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
 
 ## Vignette Info
 
