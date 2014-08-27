@@ -47,25 +47,27 @@ body {
 table {
   margin: auto;
   border-width: 1px;
-  border-spacing: 0px;
+  border-color: #DDDDDD;
   border-style: outset;
-  border-color: gray;
   border-collapse: collapse;
 }
 table th {
   border-width: 2px;
   padding: 5px;
   border-style: inset;
-  border-color: #DDDDDD;
-  background-color: white;
 }
 table td {
   border-width: 1px;
   border-style: inset;
-  border-color: #DDDDDD;
-  background-color: white;
   line-height: 18px;
   padding: 2px 5px;
+}
+table, table th, table td {
+  border-left-style: none;
+  border-right-style: none;
+}
+table thead, table tr.even {
+  background-color: #f7f7f7;
 }
 
 p {
