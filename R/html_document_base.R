@@ -91,7 +91,7 @@ html_document_base <- function(smart = TRUE,
     extras <- html_extras_for_document(knit_meta, runtime, dependency_resolver,
                                        format_deps)
     args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir,
-                                            output_dir))
+                                            dirname(input_file), output_dir))
 
     # mathjax
     args <- c(args, pandoc_mathjax_args(mathjax,

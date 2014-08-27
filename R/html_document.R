@@ -165,6 +165,7 @@ html_document <- function(toc = FALSE,
                                                template,
                                                self_contained,
                                                lib_dir,
+                                               dirname(input_file),
                                                output_dir))
 
     # content includes (we do this here so that user include-in-header content

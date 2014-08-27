@@ -388,6 +388,7 @@ pandoc_html_highlight_args <- function(highlight,
                                        template,
                                        self_contained,
                                        files_dir,
+                                       input_dir,
                                        output_dir) {
 
   args <- c()
@@ -404,7 +405,10 @@ pandoc_html_highlight_args <- function(highlight,
     highlight <- match.arg(highlight, html_highlighters())
     if (highlight %in% c("default", "textmate")) {
       highlight_path <- rmarkdown_system_file("rmd/h/highlight")
-      if (self_contained && !is_windows())
+      if (self_contained && is_windows())
+        highlight_path <- relative_to(input_dir,
+                                      render_supporting_files(highlight_path, input_dir))
+      else if (self_contained)
         highlight_path <- pandoc_path_arg(highlight_path)
       else
         highlight_path <- relative_to(output_dir,

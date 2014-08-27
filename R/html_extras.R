@@ -18,26 +18,26 @@ html_extras_for_document <- function(knit_meta, runtime, dependency_resolver,
 
 # convert html extras to the pandoc args required to include them
 pandoc_html_extras_args <- function(extras, self_contained, lib_dir,
-                                    output_dir) {
+                                    input_dir, output_dir) {
 
   args <- c()
 
   # dependencies
   dependencies <- extras$dependencies
   if (length(dependencies) > 0) {
-    # On Windows, pandoc (after 1.13) doesn't parse paths of the form 
-    # D:\foo\bar when fetching content to build self-contained documents, so
-    # this content must be copied to the temporary lib_dir in order to 
-    # guarantee that it can be represented in the document with a relative
-    # path. 
-    if (self_contained && !is_windows()) 
+    # On Windows, pandoc (after 1.13) doesn't parse paths of the form D:\foo\bar
+    # when fetching content to build self-contained documents, so this content
+    # must be copied to a folder in the same directory as the document in order
+    # to guarantee that it can be represented in the document with a relative 
+    # path.
+    if (self_contained && is_windows())
+      file <- as_tmpfile(html_dependencies_as_string(dependencies, input_dir,
+                                                     input_dir))
+    else if (self_contained) 
       file <- as_tmpfile(html_dependencies_as_string(dependencies, NULL, NULL))
     else {
       file <- as_tmpfile(html_dependencies_as_string(dependencies, lib_dir,
                                                      output_dir))
-      # resolve against output directory if self contained 
-      if (self_contained)
-        args <- c(args, "--data-dir", pandoc_path_arg(output_dir))
     }
     args <- c(args, pandoc_include_args(in_header = file))
   }
