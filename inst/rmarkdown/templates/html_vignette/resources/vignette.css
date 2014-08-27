@@ -175,3 +175,20 @@ a {
     text-decoration: underline; }
   a[href^="https:"] {
     text-decoration: underline; }
+
+/* Class described in https://benjeffrey.com/posts/pandoc-syntax-highlighting-css
+   Colours from https://gist.github.com/robsimmons/1172277 */
+
+code > span.kw { color: #555; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal (decimal values) */
+code > span.bn { color: #d14; } /* BaseN */
+code > span.fl { color: #d14; } /* Float */
+code > span.ch { color: #d14; } /* Char */
+code > span.st { color: #d14; } /* String */
+code > span.co { color: #888888; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* OtherToken */
+code > span.al { color: #ff0000; font-weight: bold; } /* AlertToken */
+code > span.fu { color: #900; font-weight: bold; } /* Function calls */ 
+code > span.er { color: #a61717; background-color: #e3d2d2; } /* ErrorTok */
+
