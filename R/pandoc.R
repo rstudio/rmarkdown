@@ -235,16 +235,17 @@ pandoc_toc_args <- function(toc, toc_depth = 3) {
 
 
 #' Transform path for passing to pandoc
-#'
-#' Transform a path for passing to pandoc on the command line. Calls
-#' \code{\link[base:path.expand]{path.expand}} on all platforms. On Windows,
-#' transform it to a short path name if it contains spaces, and then convert
-#' backslashes to forward slashes
-#'
+#' 
+#' Transform a path for passing to pandoc on the command line. Calls 
+#' \code{\link[base:path.expand]{path.expand}} on all platforms. On Windows, 
+#' transform it to a short path name if it contains spaces, and then convert 
+#' forward slashes to back slashes (as required by pandoc for some path
+#' references)
+#' 
 #' @param path Path to transform
-#'
+#'   
 #' @return Transformed path that can be passed to pandoc on the command line
-#'
+#'   
 #' @export
 pandoc_path_arg <- function(path) {
 
