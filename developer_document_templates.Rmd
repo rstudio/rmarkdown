@@ -1,5 +1,9 @@
 ---
 title: "Document Templates"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
 ---
 
 ## Overview
@@ -131,6 +135,10 @@ See the article on [Creating New Formats](developer_custom_formats.html) for add
 
 ## Examples
 
+### Package Vignette
+
+The [Package Vignette](package_vignette_format.html) format provides an example of a format that customizes the base [`html_document`](html_document_format.html) format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette [format](https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R) and [custom template](https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette) are a good starting point for creating your own HTML based formats.
+
 ### Tufte Handout
 
 The [Tufte Handout](tufte_handout_format.html) format provides an example of deriving from the `pdf_document` format and using a custom LaTeX template. The source code for the Tufte Handout [format](https://github.com/rstudio/rmarkdown/blob/master/R/tufte_handout.R) and [custom template](https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/tufte_handout) are a good starting point for creating your own LaTeX based formats.
@@ -138,11 +146,13 @@ The [Tufte Handout](tufte_handout_format.html) format provides an example of der
 
 ### rticles Package
 
-The [rticles](https://github.com/rstudio/rticles) package includes two examples of templates (both of which have an associated custom format):
+The [rticles](https://github.com/rstudio/rticles) package includes three examples of templates (all of which have an associated custom format):
 
 1) [JSS article](https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/jss_article)
 
-2) [useR abstract submission](https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/use_r_abstract)
+2) [R Journal article](https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/rjournal_article)
+
+3) [useR abstract](https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/use_r_abstract)
 
 Both of these use custom LaTeX templates to produce output that conforms to the document standards of JSS and useR.
 

@@ -168,6 +168,16 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h1 class="title">Creating New Formats</h1>
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#deriving-from-built-in-formats">Deriving from Built-In Formats</a><ul>
+<li><a href="#package-vignette-example">Package Vignette Example</a></li>
+<li><a href="#tufte-handout-example">Tufte Handout Example</a></li>
+</ul></li>
+<li><a href="#fully-custom-formats">Fully Custom Formats</a></li>
+</ul>
+</div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
@@ -206,6 +216,10 @@ output:
 <li><p>Adds a standard header to every document.</p></li>
 </ol>
 <p>Note that (3) and (4) are implemented using external files that are stored within the package that defines the custom format, so their locations need to be looked up using the <code>system.file</code> function.</p>
+<div id="package-vignette-example" class="section level3">
+<h3>Package Vignette Example</h3>
+<p>The <a href="package_vignette_format.html">Package Vignette</a> format provides an example of a format that customizes the base <a href="html_document_format.html"><code>html_document</code></a> format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette <a href="https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R">format</a> and <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette">custom template</a> are a good starting point for creating your own HTML based formats.</p>
+</div>
 <div id="tufte-handout-example" class="section level3">
 <h3>Tufte Handout Example</h3>
 <p>The <a href="tufte_handout_format.html">Tufte Handout</a> format provides an example of deriving from the <code>pdf_document</code> format and using a custom LaTeX template. The source code for the Tufte Handout <a href="https://github.com/rstudio/rmarkdown/blob/master/R/tufte_handout.R">format</a> and <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/tufte_handout">custom template</a> are a good starting point for creating your own LaTeX based formats.</p>

@@ -168,6 +168,19 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <h1 class="title">Document Templates</h1>
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#template-basics">Template Basics</a></li>
+<li><a href="#supporting-files">Supporting Files</a></li>
+<li><a href="#templates-and-custom-formats">Templates and Custom Formats</a></li>
+<li><a href="#examples">Examples</a><ul>
+<li><a href="#package-vignette">Package Vignette</a></li>
+<li><a href="#tufte-handout">Tufte Handout</a></li>
+<li><a href="#rticles-package">rticles Package</a></li>
+</ul></li>
+</ul>
+</div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
@@ -256,16 +269,21 @@ output: mypackage::quarterly_report
 </div>
 <div id="examples" class="section level2">
 <h2>Examples</h2>
+<div id="package-vignette" class="section level3">
+<h3>Package Vignette</h3>
+<p>The <a href="package_vignette_format.html">Package Vignette</a> format provides an example of a format that customizes the base <a href="html_document_format.html"><code>html_document</code></a> format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette <a href="https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R">format</a> and <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette">custom template</a> are a good starting point for creating your own HTML based formats.</p>
+</div>
 <div id="tufte-handout" class="section level3">
 <h3>Tufte Handout</h3>
 <p>The <a href="tufte_handout_format.html">Tufte Handout</a> format provides an example of deriving from the <code>pdf_document</code> format and using a custom LaTeX template. The source code for the Tufte Handout <a href="https://github.com/rstudio/rmarkdown/blob/master/R/tufte_handout.R">format</a> and <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/tufte_handout">custom template</a> are a good starting point for creating your own LaTeX based formats.</p>
 </div>
 <div id="rticles-package" class="section level3">
 <h3>rticles Package</h3>
-<p>The <a href="https://github.com/rstudio/rticles">rticles</a> package includes two examples of templates (both of which have an associated custom format):</p>
+<p>The <a href="https://github.com/rstudio/rticles">rticles</a> package includes three examples of templates (all of which have an associated custom format):</p>
 <ol style="list-style-type: decimal">
 <li><p><a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/jss_article">JSS article</a></p></li>
-<li><p><a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/use_r_abstract">useR abstract submission</a></p></li>
+<li><p><a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/rjournal_article">R Journal article</a></p></li>
+<li><p><a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/use_r_abstract">useR abstract</a></p></li>
 </ol>
 <p>Both of these use custom LaTeX templates to produce output that conforms to the document standards of JSS and useR.</p>
 </div>

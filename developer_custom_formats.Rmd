@@ -1,5 +1,9 @@
 ---
 title: "Creating New Formats"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
 ---
 
 ## Overview
@@ -49,6 +53,10 @@ This defines a new format with the following behavior:
 4. Adds a standard header to every document.
 
 Note that (3) and (4) are implemented using external files that are stored within the package that defines the custom format, so their locations need to be looked up using the `system.file` function.
+
+### Package Vignette Example
+
+The [Package Vignette](package_vignette_format.html) format provides an example of a format that customizes the base [`html_document`](html_document_format.html) format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette [format](https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R) and [custom template](https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette) are a good starting point for creating your own HTML based formats.
 
 ### Tufte Handout Example
 
