@@ -1,13 +1,17 @@
 body {
   background-color: #fff;
-  margin: 1em 2em;
+  margin: 1em auto;
   max-width: 700px;
-  float: center;
   overflow: visible;
-
+  padding-left: 2em;
+  padding-right: 2em;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.35;
+}
+
+#header {
+  text-align: center;
 }
 
 #TOC {
@@ -42,27 +46,29 @@ body {
   }
 
 table {
-  margin-left: 25px;
+  margin: auto;
   border-width: 1px;
-  border-spacing: 0px;
+  border-color: #DDDDDD;
   border-style: outset;
-  border-color: gray;
   border-collapse: collapse;
 }
 table th {
-  border-width: 1px;
+  border-width: 2px;
   padding: 5px;
   border-style: inset;
-  border-color: #DDDDDD;
-  background-color: white;
 }
 table td {
   border-width: 1px;
   border-style: inset;
-  border-color: #DDDDDD;
-  background-color: white;
   line-height: 18px;
-  padding: 2px 5px;
+  padding: 5px 5px;
+}
+table, table th, table td {
+  border-left-style: none;
+  border-right-style: none;
+}
+table thead, table tr.even {
+  background-color: #f7f7f7;
 }
 
 p {
@@ -122,6 +128,9 @@ p > code, li > code {
   padding: 2px 0px;
 }
 
+div.figure {
+  text-align: center;
+}
 img {
   background-color: #FFFFFF;
   padding: 2px;

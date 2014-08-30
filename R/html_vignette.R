@@ -10,7 +10,6 @@
 #'   \item never uses retina figures
 #'   \item has a smaller default figure size
 #'   \item uses a custom css stylesheet
-#'   \item mathjax is disabled by default
 #'  }
 #'
 #' @inheritParams html_document
@@ -19,7 +18,6 @@
 html_vignette <- function(fig_width = 3,
                           fig_height = 3,
                           css = NULL,
-                          mathjax = NULL,
                           ...) {
   
   if (is.null(css)) {
@@ -30,7 +28,6 @@ html_vignette <- function(fig_width = 3,
   html_document(fig_width = fig_width, 
                 fig_height = fig_height, 
                 fig_retina = FALSE,
-                mathjax = mathjax,
                 css = css, 
                 theme = NULL,
                 highlight = "pygments",
