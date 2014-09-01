@@ -3,8 +3,7 @@
 \alias{html_vignette}
 \title{Convert to an HTML vignette.}
 \usage{
-html_vignette(fig_width = 3.9, fig_height = 3.5, css = NULL,
-  mathjax = NULL, ...)
+html_vignette(fig_width = 3, fig_height = 3, css = NULL, ...)
 }
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}
@@ -12,11 +11,6 @@ html_vignette(fig_width = 3.9, fig_height = 3.5, css = NULL,
 \item{fig_height}{Default width (in inches) for figures}
 
 \item{css}{One or more css files to include}
-
-\item{mathjax}{Include mathjax. The "default" option uses an https URL from
-the official MathJax CDN. The "local" option uses a local version of
-MathJax (which is copied into the output directory). You can pass an
-alternate URL or pass \code{NULL} to exclude MathJax entirely.}
 
 \item{...}{Additional function arguments to pass to the base R Markdown HTML
   output formatter}
@@ -36,7 +30,6 @@ Compared to \code{html_document}, it:
   \item never uses retina figures
   \item has a smaller default figure size
   \item uses a custom css stylesheet
-  \item mathjax is disabled by default
  }
 }
 
