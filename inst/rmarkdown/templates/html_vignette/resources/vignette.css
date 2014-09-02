@@ -119,6 +119,10 @@ pre {
   margin: 5px 0px 10px 0px;
   padding: 10px;
 }
+pre:not([class]) {
+  background-color: #f7f7f7;
+}
+
 code {
   font-family: Consolas, Monaco, 'Courier New', monospace;
   font-size: 85%;
