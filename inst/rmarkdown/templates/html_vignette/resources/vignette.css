@@ -46,7 +46,7 @@ body {
   }
 
 table {
-  margin: auto;
+  margin: 1em auto;
   border-width: 1px;
   border-color: #DDDDDD;
   border-style: outset;
