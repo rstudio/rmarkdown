@@ -77,8 +77,7 @@ p {
 
 blockquote {
   background-color: #f6f6f6;
-  padding: 13px;
-  padding-bottom: 1px;
+  padding: 0.25em 0.75em;
 }
 
 hr {
