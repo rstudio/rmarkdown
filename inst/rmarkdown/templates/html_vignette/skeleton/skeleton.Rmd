@@ -1,11 +1,11 @@
 ---
 title: "Vignette Title"
-author: "`r Sys.getenv('USER')`"
+author: "Vignette author"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
 
