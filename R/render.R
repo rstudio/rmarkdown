@@ -240,7 +240,7 @@ render <- function(input,
     # knit environment (unless it is already defined there in which case
     # we emit a warning)
     env <- environment(render)
-    unlockBinding("metadata", env)
+    do.call("unlockBinding", list("metadata", env))
     on.exit({
       env$metadata <- list()
       lockBinding("metadata", env)
