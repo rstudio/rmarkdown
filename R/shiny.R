@@ -89,7 +89,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
     if (file.exists(global_r)) {
       source(global_r, local = FALSE)
     }
-    addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
+    shiny::addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
   }
 
   # combine the user-supplied list of Shiny arguments with our own and start
@@ -147,7 +147,7 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
 
       # if output is cached, return it directly
       if (out$cached) {
-        addResourcePath(basename(out$resource_folder), out$resource_folder)
+        shiny::addResourcePath(basename(out$resource_folder), out$resource_folder)
         return (out$shiny_html)
       }
 
@@ -192,7 +192,7 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
       # ensure the resource folder exists, and map requests to it in Shiny
       if (!file.exists(resource_folder))
         dir.create(resource_folder, recursive = TRUE)
-      addResourcePath(basename(resource_folder), resource_folder)
+      shiny::addResourcePath(basename(resource_folder), resource_folder)
 
       # emit performance information collected during render
       dependencies <- append(dependencies, list(
@@ -207,7 +207,7 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
       # when the session ends, remove the rendered document and any supporting
       # files, if they're not cacheable
       if (!isTRUE(out$cacheable)) {
-        onReactiveDomainEnded(getDefaultReactiveDomain(), function() {
+        shiny::onReactiveDomainEnded(shiny::getDefaultReactiveDomain(), function() {
           unlink(result_path)
           unlink(resource_folder, recursive = TRUE)
         })
@@ -252,7 +252,7 @@ rmarkdown_shiny_ui <- function(dir) {
       # Shiny shows the outer conditionalPanel as long as the document hasn't
       # loaded; the inner rmd_loader is shown by rmd_loader.js as soon as
       # we've been waiting a certain number of ms
-      conditionalPanel(
+      shiny::conditionalPanel(
         "!output.__reactivedoc__",
         tags$div(
           id = "rmd_loader_wrapper",
