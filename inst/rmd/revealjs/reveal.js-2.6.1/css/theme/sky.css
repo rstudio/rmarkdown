@@ -2,37 +2,37 @@
   font-family: 'Quicksand';
   font-style: normal;
   font-weight: 400;
-  src: url(fonts/Quicksand.woff) format('woff'), url(fonts/Quicksand.ttf) format('truetype');
+  src: url(fonts/Quicksand.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Quicksand';
   font-style: normal;
   font-weight: 700;
-  src: url(fonts/QuicksandBold.woff) format('woff'), url(fonts/QuicksandBold.ttf) format('truetype');
+  src: url(fonts/QuicksandBold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: url(fonts/OpenSans.woff) format('woff'), url(fonts/OpenSans.ttf) format('truetype');
+  src: url(fonts/OpenSans.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 700;
-  src: url(fonts/OpenSansBold.woff) format('woff'), url(fonts/OpenSansBold.ttf) format('truetype');
+  src: url(fonts/OpenSansBold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 400;
-  src: url(fonts/OpenSansItalic.woff) format('woff'), url(fonts/OpenSansItalic.ttf) format('truetype');
+  src: url(fonts/OpenSansItalic.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 700;
-  src: url(fonts/OpenSansBoldItalic.woff) format('woff'), url(fonts/OpenSansBoldItalic.ttf) format('truetype');
+  src: url(fonts/OpenSansBoldItalic.ttf) format('truetype');
 }
 
 /**

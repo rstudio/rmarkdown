@@ -2,29 +2,29 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: url(OpenSans.woff) format('woff'), url(OpenSans.ttf) format('truetype');
+  src: url(OpenSans.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 600;
-  src: url(OpenSansSemibold.woff) format('woff') , url(OpenSansSemibold.ttf) format('truetype');
+  src: url(OpenSansSemibold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 400;
-  src: url(OpenSansItalic.woff) format('woff') , url(OpenSansItalic.ttf) format('truetype');
+  src: url(OpenSansItalic.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Open Sans';
   font-style: italic;
   font-weight: 600;
-  src: url(OpenSansSemiboldItalic.woff) format('woff') , url(OpenSansSemiboldItalic.ttf) format('truetype');
+  src: url(OpenSansSemiboldItalic.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Source Code Pro';
   font-style: normal;
   font-weight: 400;
-  src:  url(SourceCodePro.woff) format('woff'), url(SourceCodePro.ttf) format('truetype');
+  src: url(SourceCodePro.ttf) format('truetype');
 }

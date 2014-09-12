@@ -2,13 +2,13 @@
   font-family: 'News Cycle';
   font-style: normal;
   font-weight: 400;
-  src: url(fonts/NewsCycle.woff) format('woff'), url(fonts/NewsCycle.ttf) format('truetype');
+  src: url(fonts/NewsCycle.ttf) format('truetype');
 }
 @font-face {
   font-family: 'News Cycle';
   font-style: normal;
   font-weight: 700;
-  src: url(fonts/NewsCycleBold.woff) format('woff'), url(fonts/NewsCycleBold.ttf) format('truetype');
+  src: url(fonts/NewsCycleBold.ttf) format('truetype');
 }
 
 /*!

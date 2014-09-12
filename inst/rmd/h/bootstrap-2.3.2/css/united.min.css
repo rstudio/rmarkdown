@@ -2,7 +2,7 @@
   font-family: 'Ubuntu';
   font-style: normal;
   font-weight: 400;
-  src: url(fonts/Ubuntu.woff) format('woff'), url(fonts/Ubuntu.ttf) format('truetype');
+  src: url(fonts/Ubuntu.ttf) format('truetype');
 }
 
 /*!

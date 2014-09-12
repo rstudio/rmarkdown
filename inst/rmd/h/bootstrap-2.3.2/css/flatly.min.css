@@ -2,25 +2,25 @@
   font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
-  src: url(fonts/Lato.woff) format('woff'), url(fonts/Lato.ttf) format('truetype');
+  src: url(fonts/Lato.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
-  src: url(fonts/LatoBold.woff) format('woff'), url(fonts/LatoBold.ttf) format('truetype');
+  src: url(fonts/LatoBold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: normal;
   font-weight: 900;
-  src: url(fonts/LatoBlack.woff) format('woff'), url(fonts/LatoBlack.ttf) format('truetype');
+  src: url(fonts/LatoBlack.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lato';
   font-style: italic;
   font-weight: 400;
-  src: url(fonts/LatoItalic.woff) format('woff'), url(fonts/LatoItalic.ttf) format('truetype');
+  src: url(fonts/LatoItalic.ttf) format('truetype');
 }
 
 /*!

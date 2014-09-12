@@ -2,25 +2,25 @@
   font-family: 'Lora';
   font-style: normal;
   font-weight: 400;
-  src: url(fonts/Lora.woff) format('woff'), url(fonts/Lora.ttf) format('truetype');
+  src: url(fonts/Lora.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lora';
   font-style: normal;
   font-weight: 700;
-  src: url(fonts/LoraBold.woff) format('woff'), url(fonts/LoraBold.ttf) format('truetype');
+  src: url(fonts/LoraBold.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lora';
   font-style: italic;
   font-weight: 400;
-  src: url(fonts/LoraItalic.woff) format('woff'), url(fonts/LoraItalic.ttf) format('truetype');
+  src: url(fonts/LoraItalic.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Lora';
   font-style: italic;
   font-weight: 700;
-  src: url(fonts/LoraBoldItalic.woff) format('woff'), url(fonts/LoraBoldItalic.ttf) format('truetype');
+  src: url(fonts/LoraBoldItalic.ttf) format('truetype');
 }
 
 /*!

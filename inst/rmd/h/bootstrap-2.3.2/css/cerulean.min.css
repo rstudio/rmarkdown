@@ -3,7 +3,7 @@
   font-family: 'Telex';
   font-style: normal;
   font-weight: 400;
-  src: url(fonts/Telex.woff) format('woff'), url(fonts/Telex.ttf) format('truetype');;
+  src: url(fonts/Telex.ttf) format('truetype');
 }
 
 /*!
