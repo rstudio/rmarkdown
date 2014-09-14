@@ -130,6 +130,16 @@ $if(lang)$
 \fi
 $endif$
 
+%%% Change title format to be more compact
+\usepackage{titling}
+\setlength{\droptitle}{-2em}
+\pretitle{\vspace{\droptitle}\centering\huge}
+\posttitle{\par}
+\preauthor{\centering\large\emph}
+\postauthor{\par}
+\predate{\centering\large\emph}
+\postdate{\par}
+
 $if(title)$
 \title{$title$}
 $endif$
@@ -142,24 +152,10 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
+
 \begin{document}
 
-$if(title)$
-\begin{center}
-\huge $title$ \\[0.2cm]
-\end{center}
-$endif$
-$if(author)$
-\begin{center}
-\large \emph{$for(author)$$author$$sep$ \and $endfor$}\\[0.1cm]
-\end{center}
-$endif$
-$if(date)$
-\begin{center}
-\large \emph{$date$} \\
-\end{center}
-$endif$
-\normalsize
+\maketitle
 
 $if(abstract)$
 \begin{abstract}
