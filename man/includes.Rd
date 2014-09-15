@@ -19,6 +19,8 @@ the document body.}
 document body.}
 
 \item{includes}{Includes to convert to pandoc ars}
+
+\item{filter}{Filter to pre-process includes with}
 }
 \value{
 Includes list or pandoc args
