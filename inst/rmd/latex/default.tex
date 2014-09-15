@@ -130,36 +130,47 @@ $if(lang)$
 \fi
 $endif$
 
+%%% Change title format to be more compact
+\usepackage{titling}
+\setlength{\droptitle}{-2em}
 $if(title)$
-\title{$title$}
+  \title{$title$}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+$else$
+  \title{}
+  \pretitle{\vspace{\droptitle}}
+  \posttitle{}
 $endif$
+$if(author)$
+  \author{$for(author)$$author$$sep$ \and $endfor$}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+$else$
+  \author{}
+  \preauthor{}\postauthor{}
+$endif$
+$if(date)$
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{$date$}
+$else$
+  \date{}
+  \predate{}\postdate{}
+$endif$
+
 $if(subtitle)$
 \subtitle{$subtitle$}
 $endif$
-\author{$for(author)$$author$$sep$ \and $endfor$}
-\date{$date$}
+
 $for(header-includes)$
 $header-includes$
 $endfor$
 
+
 \begin{document}
 
-$if(title)$
-\begin{center}
-\huge $title$ \\[0.2cm]
-\end{center}
-$endif$
-$if(author)$
-\begin{center}
-\large \emph{$for(author)$$author$$sep$ \and $endfor$}\\[0.1cm]
-\end{center}
-$endif$
-$if(date)$
-\begin{center}
-\large \emph{$date$} \\
-\end{center}
-$endif$
-\normalsize
+\maketitle
 
 $if(abstract)$
 \begin{abstract}
