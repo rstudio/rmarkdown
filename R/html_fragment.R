@@ -7,6 +7,15 @@
 #'
 #' @inheritParams html_document
 #' @return R Markdown output format to pass to \code{\link{render}}
+#' @examples
+#' \dontrun{
+#'
+#' library(rmarkdown)
+#'
+#' # simple invocation
+#' render("fragment.Rmd", html_fragment())
+#' }
+#'
 #' @export
 html_fragment <- function(number_sections = FALSE,
                           fig_width = 7,
