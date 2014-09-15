@@ -28,7 +28,7 @@ header of the document.}
 the document body.}
 
 \item{after_body}{One or more files with content to be included after the
-  document body.}
+document body.}
 
 \item{highlight}{The name of a pandoc syntax highlighting theme.}
 

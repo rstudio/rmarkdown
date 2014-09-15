@@ -8,8 +8,9 @@
 #'   the document body.
 #' @param after_body One or more files with content to be included after the
 #'   document body.
+#' @param includes Includes to convert to pandoc ars
 #'
-#' @return A list with content to be included in output.
+#' @return Includes list or pandoc args
 #'
 #' @details Non-absolute paths for resources referenced from the
 #'   \code{in_header}, \code{before_body}, and \code{after_body}
@@ -35,6 +36,20 @@ includes <- function(in_header = NULL,
        after_body = after_body)
 }
 
+
+#' @rdname includes
+#' @export
+includes_to_pandoc_args <- function(includes, filter = identity) {
+  if (!is.null(includes))
+    pandoc_include_args(in_header = filter(includes$in_header),
+                        before_body = filter(includes$before_body),
+                        after_body = filter(includes$after_body))
+  else
+    NULL
+}
+
+
+
 # simple wrapper over normalizePath that preserves NULLs and applies pandoc-
 # friendly defaults
 normalize_path <- function(path) {
@@ -44,12 +59,4 @@ normalize_path <- function(path) {
     normalizePath(path, winslash="/", mustWork = FALSE)
 }
 
-includes_to_pandoc_args <- function(includes, filter = identity) {
-  if (!is.null(includes))
-    pandoc_include_args(in_header = filter(includes$in_header),
-                        before_body = filter(includes$before_body),
-                        after_body = filter(includes$after_body))
-  else
-    NULL
-}
 
