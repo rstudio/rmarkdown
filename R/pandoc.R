@@ -359,10 +359,10 @@ pandoc_mathjax_args <- function(mathjax,
         mathjax <- NULL
     }
     else if (identical(mathjax, "local")) {
-      mathjax_path <- rmarkdown_system_file("rmd/h/m")
+      mathjax_path <- pandoc_mathjax_local_path()
       mathjax_path <- render_supporting_files(mathjax_path,
                                               files_dir,
-                                              "mathjax-2.3.0")
+                                              "mathjax-local")
       mathjax <- paste(relative_to(output_dir, mathjax_path), "/",
                        mathjax_config(), sep = "")
     }
@@ -382,6 +382,14 @@ pandoc_mathjax_args <- function(mathjax,
   }
 
   args
+}
+
+pandoc_mathjax_local_path <- function() {
+  local_path <- Sys.getenv("RMARKDOWN_MATHJAX_PATH", unset = NA)
+  if (is.na(local_path))
+    stop("For mathjax = \"local\", please set the RMARKDOWN_MATHJAX_PATH ",
+         "environment variable to the location of MathJax.")
+  local_path
 }
 
 pandoc_html_highlight_args <- function(highlight,
