@@ -133,21 +133,36 @@ $endif$
 %%% Change title format to be more compact
 \usepackage{titling}
 \setlength{\droptitle}{-2em}
-\pretitle{\vspace{\droptitle}\centering\huge}
-\posttitle{\par}
-\preauthor{\centering\large\emph}
-\postauthor{\par}
-\predate{\centering\large\emph}
-\postdate{\par}
-
 $if(title)$
-\title{$title$}
+  \title{$title$}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+$else$
+  \title{}
+  \pretitle{\vspace{\droptitle}}
+  \posttitle{}
 $endif$
+$if(author)$
+  \author{$for(author)$$author$$sep$ \and $endfor$}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+$else$
+  \author{}
+  \preauthor{}\postauthor{}
+$endif$
+$if(date)$
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{$date$}
+$else$
+  \date{}
+  \predate{}\postdate{}
+$endif$
+
 $if(subtitle)$
 \subtitle{$subtitle$}
 $endif$
-\author{$for(author)$$author$$sep$ \and $endfor$}
-\date{$date$}
+
 $for(header-includes)$
 $header-includes$
 $endfor$
