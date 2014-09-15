@@ -186,7 +186,6 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li>Never uses retina figures</li>
 <li>Has a smaller default figure size</li>
 <li>Uses a custom CSS stylesheet</li>
-<li>Disables mathjax by default (for offline readability)</li>
 </ul>
 <div id="usage" class="section level3">
 <h3>Usage</h3>
@@ -195,9 +194,9 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 title: &quot;Vignette Title&quot;
 output: rmarkdown::html_vignette
 vignette: &gt;
-  \VignetteEngine{knitr::knitr}
-  \VignetteIndexEntry{Vignette Title}
-  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Vignette Title}
+  %\usepackage[utf8]{inputenc}
 ---</code></pre>
 <p>Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your Vignette.</p>
 <p>All options support for <code>html_document</code> also work for <code>html_vignette</code>. See the <a href="html_document_format.html">article on the html_document format</a> for additional details.</p>
@@ -215,6 +214,8 @@ vignette: &gt;
 <div id="figure-sizes" class="section level3">
 <h3>Figure Sizes</h3>
 <p>The figure sizes have been customised so that you can easily put two images side-by-side:</p>
+<pre class="r"><code>plot(1:10)
+plot(10:1)</code></pre>
 <p><img src="package_vignette_format_files/figure-html/unnamed-chunk-11.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" width="374.4" /><img src="package_vignette_format_files/figure-html/unnamed-chunk-12.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" width="374.4" /></p>
 <p>If you want larger figure sizes you can change the <code>fig_width</code> and <code>fig_height</code> in the document output options or alternatively override the default options on a per-chunk basis.</p>
 </div>

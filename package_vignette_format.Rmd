@@ -15,7 +15,6 @@ The `html_vignette` format provides a lightweight alternative to `html_document`
 - Never uses retina figures
 - Has a smaller default figure size
 - Uses a custom CSS stylesheet
-- Disables mathjax by default (for offline readability)
 
 ### Usage
 
@@ -25,9 +24,9 @@ To use `html_vignette` you specify it as the output format and add some addition
     title: "Vignette Title"
     output: rmarkdown::html_vignette
     vignette: >
-      \VignetteEngine{knitr::knitr}
-      \VignetteIndexEntry{Vignette Title}
-      \usepackage[utf8]{inputenc}
+      %\VignetteEngine{knitr::rmarkdown}
+      %\VignetteIndexEntry{Vignette Title}
+      %\usepackage[utf8]{inputenc}
     ---
 
 Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your Vignette.
@@ -48,7 +47,7 @@ The `html_vignette` template includes a basic CSS theme. To override this theme 
 
 The figure sizes have been customised so that you can easily put two images side-by-side: 
 
-```{r, echo = FALSE}
+```{r, fig.show='hold'}
 plot(1:10)
 plot(10:1)
 ```
