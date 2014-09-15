@@ -402,8 +402,13 @@ output_format_from_yaml_front_matter <- function(input_lines,
 
 create_output_format <- function(name, options) {
 
+  # validate the name
   if (is.null(name))
     stop("The output format name must not be NULL", call. = FALSE)
+  if (name == "revealjs_presentation")
+    stop("reveal.js presentations are now located in a separate package: ",
+         "https://github.com/jjallaire/revealjs")
+  
   # lookup the function
   output_format_func <- eval(parse(text = name))
   if (!is.function(output_format_func))
