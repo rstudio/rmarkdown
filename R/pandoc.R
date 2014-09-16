@@ -384,13 +384,39 @@ pandoc_mathjax_args <- function(mathjax,
   args
 }
 
+
 pandoc_mathjax_local_path <- function() {
+  
   local_path <- Sys.getenv("RMARKDOWN_MATHJAX_PATH", unset = NA)
-  if (is.na(local_path))
-    stop("For mathjax = \"local\", please set the RMARKDOWN_MATHJAX_PATH ",
-         "environment variable to the location of MathJax.")
-  local_path
+  if (is.na(local_path)) {
+    local_path <- unix_mathjax_path()
+    if (is.na(local_path)) {
+      stop("For mathjax = \"local\", please set the RMARKDOWN_MATHJAX_PATH ",
+           "environment variable to the location of MathJax. ",
+           "On Linux systems you can also install MathJax using your ",
+           "system package manager.")
+    } else {
+      local_path
+    }
+  } else {
+    local_path
+  }
 }
+
+
+unix_mathjax_path <- function() {
+  if (identical(.Platform$OS.type, "unix")) {
+    mathjax_path <- "/usr/share/javascript/mathjax"
+    if (file.exists(file.path(mathjax_path, "MathJax.js")))
+      mathjax_path
+    else
+      NA
+  } else {
+    NA
+  }
+}
+
+
 
 pandoc_html_highlight_args <- function(highlight,
                                        template,
