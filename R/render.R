@@ -215,8 +215,10 @@ render <- function(input,
     # use filename based figure and cache directories
     figures_dir <- paste(files_dir, "/figure-", pandoc_to, "/", sep = "")
     knitr::opts_chunk$set(fig.path=figures_dir)
-    cache_dir <-knitr_cache_dir(input, pandoc_to)
-    knitr::opts_chunk$set(cache.path=cache_dir)
+    if (is.null(knitr::opts_chunk$get('cache.path'))) {
+      knitr::opts_chunk$set(cache.path=knitr_cache_dir(input, pandoc_to))
+    }
+    cache_dir <- knitr::opts_chunk$get('cache.path')
 
     # merge user options and hooks
     if (!is.null(output_format$knitr)) {
