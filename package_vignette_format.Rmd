@@ -26,7 +26,7 @@ To use `html_vignette` you specify it as the output format and add some addition
     vignette: >
       %\VignetteEngine{knitr::rmarkdown}
       %\VignetteIndexEntry{Vignette Title}
-      %\usepackage[utf8]{inputenc}
+      \usepackage[utf8]{inputenc}
     ---
 
 Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your Vignette.
