@@ -495,7 +495,7 @@ parse_yaml_front_matter <- function(input_lines) {
 
 validate_front_matter <- function(front_matter) {
   front_matter <- trim_trailing_ws(front_matter)
-  if (identical(substring(front_matter, nchar(front_matter)), ":"))
+  if (grepl(":$", front_matter))
     stop("Invalid YAML front matter (ends with ':')", call. = FALSE)
 }
 
