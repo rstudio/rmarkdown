@@ -127,7 +127,11 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
 rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
   function(input, output, session) {
     path_info <- utils::URLdecode(session$request$PATH_INFO)
-    path_info <- substr(path_info, 1, nchar(path_info) - 11)
+    # strip /websocket/ from the end of the request path if present
+    if (identical(substr(path_info, nchar(path_info) - 10, nchar(path_info)),
+                  "/websocket/")) {
+      path_info <- substr(path_info, 1, nchar(path_info) - 11)
+    }
     if (!nzchar(path_info)) {
       path_info <- "index.Rmd"
     }
