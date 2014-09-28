@@ -18,10 +18,10 @@ See the [R Markdown documentation](http://rmarkdown.rstudio.com/) for full detai
 
 If you are working within RStudio then you can simply install the [current release](http://www.rstudio.com/ide/download/preview) of RStudio (both the rmarkdown package and pandoc are included).
 
-If you want to use the rmarkdown package outside of RStudio then you can install the package as follows:
+If you want to use the rmarkdown package outside of RStudio then you can install the package from CRAN as follows:
 
 ```S
-devtools::install_github("rstudio/rmarkdown")
+install.packages("rmarkdown")
 ```
 
 A recent version of pandoc (>= 1.12.3) is also required. See the [pandoc installation instructions](PANDOC.md) for details on installing pandoc for your platform.
