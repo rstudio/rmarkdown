@@ -5,7 +5,8 @@
 #' \code{rmarkdown::metadata$title} (the title of the document),
 #' \code{rmarkdown::metadata$author}, and \code{rmarkdown::metadata$foo} (if you
 #' have a YAML field named \code{foo}), etc.
-#' @usage rmarkdown::metadata
+#' @usage NULL
+#' @examples rmarkdown::metadata
 #' @export
 metadata <- list()
 
