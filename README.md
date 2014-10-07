@@ -10,7 +10,7 @@ The **rmarkdown** package is a next generation implementation of R Markdown base
 * Extensibility: easily define new formats for custom publishing requirements.
 * Create interactive R Markdown documents using Shiny.
 
-Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, the [MiKTeX](http://miktex.org/) distribution should be used rather than TeX Live.
+Note that PDF output (including Beamer slides) requires an installation of TeX.
 
 See the [R Markdown documentation](http://rmarkdown.rstudio.com/) for full details.
 
