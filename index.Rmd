@@ -16,7 +16,7 @@ This website describes R Markdown v2, a next generation implementation of R Mark
 * Extensiblity: create custom templates and even entirely new output formats (for example, see the [Tufte Handout](tufte_handout_format.html) format).
 * Create interactive R Markdown documents using Shiny
 
-Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, [MiKTeX](http://miktex.org/) should be used rather than TeX Live.
+Note that PDF output (including Beamer slides) requires an installation of TeX.
 
 #### Installing R Markdown
 
