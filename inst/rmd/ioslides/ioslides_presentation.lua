@@ -293,6 +293,7 @@ function CodeBlock(s, attr)
   local code = escape(s)
   code_sub = code:gsub("[ \t]*[#/]+[ \t]*&lt;b&gt;[ \t]*\n", "<b>")
   code = code_sub:gsub("[ \t]*[#/]+[ \t]*&lt;/b&gt;[ \t]*\n", "</b>")
+  code = code:gsub("[ \t]*[#/]+[ \t]*&lt;/b&gt;[ \t]*$", "</b>")
 
   return "<pre " .. class_attrib .. ">" .. code .. "</pre>"
 end
