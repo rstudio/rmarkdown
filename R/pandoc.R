@@ -233,7 +233,9 @@ pandoc_latex_engine_args <- function(latex_engine) {
   if (Sys.info()["sysname"] == "Darwin") {
     # resolve path if it's not already an absolute path
     if (!grepl("/", latex_engine, fixed = TRUE))
-      latex_engine <- find_program(latex_engine)  
+      program_path <- find_program(latex_engine)
+      if (nzchar(program_path))
+        latex_engine <- program_path  
   }
   
   c("--latex-engine", latex_engine)
