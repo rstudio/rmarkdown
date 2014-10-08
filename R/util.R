@@ -181,9 +181,15 @@ base_dir <- function(x) {
 # the PATH from the environment of child processes
 find_program <- function(program) {
   if (Sys.info()["sysname"] == "Darwin") {
-    system2("/usr/bin/which", program,
-            stdout=TRUE,
-            env = paste("PATH=", Sys.getenv("PATH"), sep=""))
+    res <- suppressWarnings({
+      system(paste("PATH=", Sys.getenv("PATH"), " /usr/bin/which ",
+                   program, sep=""),
+             intern = TRUE)
+    })
+    if (length(res) == 0)
+      ""
+    else
+      res
   } else {
     Sys.which(program)
   }
