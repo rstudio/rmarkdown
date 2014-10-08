@@ -151,6 +151,8 @@ pandoc_available <- function(version = NULL) {
 #' @param toc \code{TRUE} to include a table of contents in the output.
 #' @param toc_depth Depth of headers to include in table of contents.
 #' @param highlight The name of a pandoc syntax highlighting theme.
+#' @param latex_engine LaTeX engine for producing PDF output. Options are
+#'   "pdflatex", "lualatex", and "xelatex".
 #' @param default The highlighting theme to use if "default"
 #'   is specified.
 #'
@@ -169,6 +171,8 @@ pandoc_available <- function(version = NULL) {
 #' pandoc_include_args(before_body = "header.tex")
 #'
 #' pancoc_highlight_args("kate")
+#' 
+#' pandoc_latex_engine_args("pdflatex")
 #'
 #' pandoc_toc_args(toc = TRUE, toc_depth = 2)
 #'
@@ -217,6 +221,22 @@ pandoc_highlight_args <- function(highlight, default = "tango") {
   }
 
   args
+}
+
+#' @rdname pandoc_args
+#' @export
+pandoc_latex_engine_args <- function(latex_engine) {
+  
+  # use a full path to the latex engine on OSX since the stripping
+  # of the PATH environment variable by OSX 10.10 Yosemite prevents
+  # pandoc from finding the engine in e.g. /usr/texbin
+  if (Sys.info()["sysname"] == "Darwin") {
+    # resolve path if it's not already an absolute path
+    if (!grepl("/", latex_engine, fixed = TRUE))
+      latex_engine <- find_program(latex_engine)  
+  }
+  
+  c("--latex-engine", latex_engine)
 }
 
 #' @rdname pandoc_args
@@ -467,7 +487,7 @@ find_pandoc <- function() {
   if (is.null(.pandoc$dir)) {
 
     # define potential sources
-    sys_pandoc <- Sys.which("pandoc")
+    sys_pandoc <- find_program("pandoc")
     sources <- c(Sys.getenv("RSTUDIO_PANDOC"),
                  ifelse(nzchar(sys_pandoc), dirname(sys_pandoc), ""))
     if (!is_windows())

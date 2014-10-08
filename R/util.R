@@ -176,3 +176,20 @@ base_dir <- function(x) {
 # the shell (require quoting/escaping)
 .shell_chars_regex <- '[ <>()|\\:&;#?*]'
 
+# Find a program within the PATH. On OSX we need to do a manual PATH search
+# because OSX 10.10 Yosemite strips the PATH and so /usr/bin/which doesn't 
+# inherit the PATH of the R session
+find_program <- function(program) {
+  if (Sys.info()["sysname"] == "Darwin") {
+    paths <- strsplit(Sys.getenv("PATH"), split = ":", fixed = TRUE)[[1]]
+    for (path in paths) {
+      program_path <- file.path(path, program)
+      if (file.exists(program_path))
+        return(program_path)
+    }
+    ""
+  } else {
+    Sys.which(program)
+  }
+}
+

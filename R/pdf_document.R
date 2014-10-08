@@ -112,7 +112,7 @@ pdf_document <- function(toc = FALSE,
 
   # latex engine
   latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
-  args <- c(args, "--latex-engine", latex_engine)
+  args <- c(args, pandoc_latex_engine_args(latex_engine))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
