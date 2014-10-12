@@ -135,10 +135,7 @@ $if(mathjax-url)$
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "$mathjax-url$";
-    if (location.protocol === 'file:' && src.substr(0, 2) === '//')
-      src = 'http:' + src;
-    script.src  = src;
+    script.src  = "$mathjax-url$";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
