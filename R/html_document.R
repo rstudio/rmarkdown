@@ -242,7 +242,7 @@ html_highlighters <- function() {
 }
 
 default_mathjax <- function() {
-  paste("https://cdn.mathjax.org/mathjax/latest/",
+  paste("//cdn.mathjax.org/mathjax/latest/",
         mathjax_config(), sep="")
 }
 
