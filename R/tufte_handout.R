@@ -57,7 +57,7 @@ tufte_handout <- function(fig_width = 4,
                       paste("\\caption{", options$fig.cap, "}\n", sep = ""))
     
     # determine path to plot
-    file <- paste0(options$fig.path, options$label)
+    file <- knitr::fig_path(options = options)
     
     # determine figure type
     if (isTRUE(options$fig.margin)) 
