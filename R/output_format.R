@@ -120,6 +120,7 @@ merge_output_formats <- function (base, overlay)  {
 #'   \code{\link[knitr:opts_chunk]{opts_chunk}})
 #' @param knit_hooks List of hooks for R code chunks, inline R code, and output
 #'   (see \code{\link[knitr:knit_hooks]{knit_hooks}})
+#' @param opts_template List of templates for check level knitr options (see \code{\link[knitr:opts_template]{opts_template}})
 #'
 #' @return An list that can be passed as the \code{knitr} argument of the
 #'   \code{\link{output_format}} function.
@@ -129,10 +130,12 @@ merge_output_formats <- function (base, overlay)  {
 #' @export
 knitr_options <- function(opts_knit = NULL,
                           opts_chunk = NULL,
-                          knit_hooks = NULL) {
+                          knit_hooks = NULL,
+                          opts_template = NULL) {
   list(opts_knit = opts_knit,
        opts_chunk = opts_chunk,
-       knit_hooks = knit_hooks)
+       knit_hooks = knit_hooks,
+       opts_template = opts_template)
 }
 
 #' Knitr options for a PDF output format
