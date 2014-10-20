@@ -104,7 +104,7 @@ slidy_presentation <- function(incremental = FALSE,
 
     # slidy
     slidy_path <- rmarkdown_system_file("rmd/slidy/Slidy2")
-    if (!self_contained || is_windows())
+    if (!self_contained)
       slidy_path <- relative_to(
         output_dir, render_supporting_files(slidy_path, lib_dir))
     args <- c(args, "--variable", paste("slidy-url=",

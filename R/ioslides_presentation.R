@@ -86,7 +86,7 @@ ioslides_presentation <- function(logo = NULL,
 
     # ioslides
     ioslides_path <- rmarkdown_system_file("rmd/ioslides/ioslides-13.5.1")
-    if (!self_contained || is_windows())
+    if (!self_contained)
       ioslides_path <- relative_to(output_dir,
         render_supporting_files(ioslides_path, lib_dir))
     else

@@ -25,12 +25,7 @@ pandoc_html_extras_args <- function(extras, self_contained, lib_dir,
   # dependencies
   dependencies <- extras$dependencies
   if (length(dependencies) > 0) {
-    # On Windows, pandoc (after 1.13) doesn't parse paths of the form 
-    # D:\foo\bar when fetching content to build self-contained documents, so
-    # this content must be copied to the temporary lib_dir in order to 
-    # guarantee that it can be represented in the document with a relative
-    # path. 
-    if (self_contained && !is_windows()) 
+    if (self_contained)
       file <- as_tmpfile(html_dependencies_as_string(dependencies, NULL, NULL))
     else
       file <- as_tmpfile(html_dependencies_as_string(dependencies, lib_dir,
