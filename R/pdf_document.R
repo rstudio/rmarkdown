@@ -56,6 +56,7 @@
 #'    \item{\code{geometry}}{Options for geometry class (e.g. margin=1in); may be repeated}
 #'    \item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{latex_engine} option)}
 #'    \item{\code{linkcolor, urlcolor, citecolor}}{Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)}
+#'    \item{\code{setspace}}{Options for line spacing (e.g. one­half­s­pac­ing, dou­blespac­ing)}
 #' }
 #'
 #' @examples
@@ -155,4 +156,3 @@ pdf_pre_processor <- function(metadata, input_file, runtime, knit_meta, files_di
 
   args
 }
-
