@@ -182,7 +182,7 @@ base_dir <- function(x) {
 find_program <- function(program) {
   if (Sys.info()["sysname"] == "Darwin") {
     res <- suppressWarnings({
-      system(paste("PATH=", Sys.getenv("PATH"), " /usr/bin/which ",
+      system(paste("PATH=\"", Sys.getenv("PATH"), "\" /usr/bin/which ",
                    program, sep=""),
              intern = TRUE)
     })
