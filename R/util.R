@@ -182,8 +182,11 @@ base_dir <- function(x) {
 find_program <- function(program) {
   if (Sys.info()["sysname"] == "Darwin") {
     res <- suppressWarnings({
-      system(paste("PATH=", Sys.getenv("PATH"), " /usr/bin/which ",
-                   program, sep=""),
+      # Quote the path (so it can contain spaces, etc.) and escape any quotes 
+      # and escapes in the path itself
+      sanitized_path <- gsub("\\", "\\\\", Sys.getenv("PATH"), fixed = TRUE)      
+      sanitized_path <- gsub("\"", "\\\"", sanitized_path, fixed = TRUE)
+      system(paste("PATH=\"", sanitized_path, "\" /usr/bin/which ", program, sep=""),
              intern = TRUE)
     })
     if (length(res) == 0)
