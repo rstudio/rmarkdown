@@ -60,6 +60,14 @@
 run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
                 shiny_args = NULL, render_args = NULL) {
 
+  # if there's just one file in the directory, serve it
+  if (identical(file, "index.Rmd")) {
+    allRmds <- list.files(path = dir, pattern = "^.*\\.[Rr][Mm][Dd]$")
+    if (length(allRmds) == 1) {
+      file <- allRmds
+    }
+  }
+  
   # form and test locations
   dir <- normalizePath(dir, winslash="/")
   if (!file.exists(dir))
@@ -95,11 +103,11 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
   # combine the user-supplied list of Shiny arguments with our own and start
   # the Shiny server; handle requests for the root (/) and any R markdown files
   # within
-  app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir),
+  app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir, file),
                          uiPattern = "^/$|^(/.*\\.[Rr][Mm][Dd])$",
                          onStart = onStart,
                          server = rmarkdown_shiny_server(
-                           dir, encoding, auto_reload, render_args))
+                           dir, file, encoding, auto_reload, render_args))
 
   # launch the app and open a browser to the requested page, if one was
   # specified
@@ -124,7 +132,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
 }
 
 # create the Shiny server function
-rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
+rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args) {
   function(input, output, session) {
     path_info <- utils::URLdecode(session$request$PATH_INFO)
     # strip /websocket/ from the end of the request path if present
@@ -133,7 +141,7 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
       path_info <- substr(path_info, 1, nchar(path_info) - 11)
     }
     if (!nzchar(path_info)) {
-      path_info <- "index.Rmd"
+      path_info <- file
     }
 
     file <- resolve_relative(dir, path_info)
@@ -228,12 +236,13 @@ rmarkdown_shiny_server <- function(dir, encoding, auto_reload, render_args) {
 }
 
 # create the Shiny UI function
-rmarkdown_shiny_ui <- function(dir) {
+rmarkdown_shiny_ui <- function(dir, file) {
   function(req) {
-    # map requests to / to requests for index.Rmd
+    # map requests to / to requests for the default--index.Rmd, or another if
+    # specified
     req_path <- utils::URLdecode(req$PATH_INFO)
     if (identical(req_path, "/")) {
-      req_path <- "index.Rmd"
+      req_path <- file
     }
 
     # request must be for an R Markdown document
