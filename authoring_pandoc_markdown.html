@@ -114,6 +114,9 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
                <li><a href="authoring_bibliographies_and_citations.html">Bibliographies &amp; Citations</a></li>
                <li><a href="authoring_migrating_from_v1.html">Migrating from v1</a></li>
                <li class="divider"></li>
+               <li><a href="RMarkdownCheatSheet.pdf">Cheat Sheet [PDF]</a></li>
+               <li><a href="RMarkdownReferenceGuide.pdf">Reference Guide [PDF]</a></li>
+               <li class="divider"></li>
                <li class="nav-header">Shiny</li>
                <li><a href="authoring_shiny.html">Interactive Documents</a></li>
                <li><a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a></li>
@@ -821,9 +824,7 @@ Age &amp; Frequency \\ \hline
 <h2>LaTeX macros</h2>
 <p><strong>Extension: <code>latex_macros</code></strong></p>
 <p>For output formats other than LaTeX, pandoc will parse LaTeX <code>\newcommand</code> and <code>\renewcommand</code> definitions and apply the resulting macros to all LaTeX math. So, for example, the following will work in all output formats, not just LaTeX:</p>
-<pre><code>\newcommand{\tuple}[1]{\langle #1 \rangle}
-
-$\tuple{a, b, c}$</code></pre>
+<p><span class="math">⟨<em>a</em>, <em>b</em>, <em>c</em>⟩</span></p>
 <p>In LaTeX output, the <code>\newcommand</code> definition will simply be passed unchanged to the output.</p>
 </div>
 <div id="links" class="section level2">
@@ -1002,7 +1003,7 @@ references:
     year: 2012
     month: 3
 ...</code></pre>
-<p>By default, pandoc will use a Chicago author-date format for citations and references. To use another style, you will need to specify a [CSL] 1.0 style file in the <code>csl</code> metadata field. A primer on creating and modifying CSL styles can be found at <a href="http://citationstyles.org/downloads/primer.html">http://citationstyles.org/downloads/primer.html</a>. A repository of CSL styles can be found at <a href="https://github.com/citation-style-language/styles">https://github.com/citation-style-language/styles</a>. See also <a href="http://zotero.org/styles">http://zotero.org/styles</a> for easy browsing.</p>
+<p>By default, pandoc will use a Chicago author-date format for citations and references. To use another style, you will need to specify a [CSL] 1.0 style file in the <code>csl</code> metadata field. A primer on creating and modifying CSL styles can be found at <a href="http://citationstyles.org/downloads/primer.html" class="uri">http://citationstyles.org/downloads/primer.html</a>. A repository of CSL styles can be found at <a href="https://github.com/citation-style-language/styles" class="uri">https://github.com/citation-style-language/styles</a>. See also <a href="http://zotero.org/styles" class="uri">http://zotero.org/styles</a> for easy browsing.</p>
 <p>Citations go inside square brackets and are separated by semicolons. Each citation must have a key, composed of ‘@’ + the citation identifier from the database, and may optionally have a prefix, a locator, and a suffix. Here are some examples:</p>
 <pre><code>Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].
 

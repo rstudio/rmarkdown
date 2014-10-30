@@ -114,6 +114,9 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
                <li><a href="authoring_bibliographies_and_citations.html">Bibliographies &amp; Citations</a></li>
                <li><a href="authoring_migrating_from_v1.html">Migrating from v1</a></li>
                <li class="divider"></li>
+               <li><a href="RMarkdownCheatSheet.pdf">Cheat Sheet [PDF]</a></li>
+               <li><a href="RMarkdownReferenceGuide.pdf">Reference Guide [PDF]</a></li>
+               <li class="divider"></li>
                <li class="nav-header">Shiny</li>
                <li><a href="authoring_shiny.html">Interactive Documents</a></li>
                <li><a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a></li>
@@ -222,7 +225,6 @@ renderTable({
 })
 &#96;&#96;&#96;
 </code></pre>
-
 <p><img src="images/shiny-cars-table.gif" alt="Shiny Cars Table" /></p>
 <p>In this example the output code was wrapped in a call to <code>renderTable</code>. There are many other render functions in Shiny that can be used for plots, printed R output, and more. This example uses <code>renderPlot</code> to create dynamic plot output:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
@@ -237,7 +239,6 @@ renderPlot({
 })
 &#96;&#96;&#96;
 </code></pre>
-
 <p><img src="images/shiny-hist-plot.gif" alt="Shiny Hist Plot" /></p>
 <p>If you haven’t used Shiny before some of the above code will be unfamiliar to you. The <a href="http://shiny.rstudio.com/tutorial">Shiny Tutorial</a> is a good place to learn more.</p>
 </div>
@@ -249,7 +250,6 @@ renderPlot({
 kmeans_cluster(iris)
 &#96;&#96;&#96;
 </code></pre>
-
 <p>Which would result in the following inside the running document:</p>
 <p><img src="images/shiny-widget-kmeans.png" alt="Shiny Widget KMeans" /></p>
 <p>To better understand how this works check out the <a href="https://github.com/rstudio/rmdexamples/blob/master/R/kmeans_cluster.R">source code</a> for the <code>kmeans_cluster</code> function. The articles on <a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a> and <a href="authoring_shiny_widgets.html">Shiny Widgets</a> also cover using the <code>shinyApp</code> function in more depth.</p>
