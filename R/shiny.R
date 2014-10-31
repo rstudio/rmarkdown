@@ -71,7 +71,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
   # form and test locations
   dir <- normalizePath(dir, winslash="/")
   if (!file.exists(dir))
-    stop("The directory '", dir, " does not exist")
+    stop("The directory '", dir, "' does not exist")
 
   if (!is.null(file)) {
     # compute file path relative to directory (remove common directory prefix
