@@ -3,8 +3,8 @@
 \alias{run}
 \title{Run a Shiny document}
 \usage{
-run(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
-  shiny_args = NULL, render_args = NULL)
+run(file = "index.Rmd", dir = dirname(file), default_file = NULL,
+  auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
 }
 \arguments{
 \item{file}{Path to the R Markdown document to launch in a web browser.
@@ -13,6 +13,9 @@ Defaults to \code{index.Rmd} in the current working directory, but may be
 
 \item{dir}{The directory from which to to read input documents. Defaults to
 the parent directory of \code{file}.}
+
+\item{default_file}{The file to serve at the Shiny server's root URL. If
+\code{NULL} (the default), a sensible default is chosen (see Details)}
 
 \item{auto_reload}{If \code{TRUE} (the default), automatically reload the
 Shiny application when the file currently being viewed is changed on disk.}
@@ -46,6 +49,15 @@ The \code{run} function runs a Shiny document by starting a Shiny
   directory using standard Markdown syntax, e.g.
   \code{[Analysis Page 2](page2.Rmd)}.
 
+  If \code{default_file} is not specified, nor is a file specified on the
+  URL, then the default document to serve at \code{/} is chosen from (in
+  order of preference):
+  \itemize{
+    \item{If \code{dir} contains only one \code{Rmd}, that \code{Rmd}.}
+    \item{The file \code{index.Rmd}, if it exists in \code{dir}}
+    \item{The file \code{index.html}, if it exists in \code{dir}}
+  }
+
   If you wish to share R code between your documents, place it in a file
   named \code{global.R} in \code{dir}; it will be sourced into the global
   environment.
@@ -59,7 +71,7 @@ Unlike \code{\link{render}}, \code{run} does not render the document to
   When using an external web browser with the server, specify the name of the
   R Markdown file to view in the URL (e.g.
   \code{http://127.0.0.1:1234/foo.Rmd}). A URL without a filename will show
-  \code{index.Rmd}, if it exists in \code{dir}.
+  the \code{default_file} as described above.
 }
 \examples{
 \dontrun{

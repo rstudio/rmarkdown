@@ -7,6 +7,8 @@
 #'   \code{NULL} to skip launching a browser.
 #' @param dir The directory from which to to read input documents. Defaults to
 #'   the parent directory of \code{file}.
+#' @param default_file The file to serve at the Shiny server's root URL. If
+#'   \code{NULL} (the default), a sensible default is chosen (see Details)
 #' @param auto_reload If \code{TRUE} (the default), automatically reload the
 #'   Shiny application when the file currently being viewed is changed on disk.
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
@@ -31,6 +33,15 @@
 #'   rendered and viewed. You can therefore link to other documents in the
 #'   directory using standard Markdown syntax, e.g.
 #'   \code{[Analysis Page 2](page2.Rmd)}.
+#'   
+#'   If \code{default_file} is not specified, nor is a file specified on the
+#'   URL, then the default document to serve at \code{/} is chosen from (in
+#'   order of preference):
+#'   \itemize{
+#'     \item{If \code{dir} contains only one \code{Rmd}, that \code{Rmd}.}
+#'     \item{The file \code{index.Rmd}, if it exists in \code{dir}}
+#'     \item{The file \code{index.html}, if it exists in \code{dir}}
+#'   }
 #'
 #'   If you wish to share R code between your documents, place it in a file
 #'   named \code{global.R} in \code{dir}; it will be sourced into the global
@@ -44,7 +55,7 @@
 #'   When using an external web browser with the server, specify the name of the
 #'   R Markdown file to view in the URL (e.g.
 #'   \code{http://127.0.0.1:1234/foo.Rmd}). A URL without a filename will show
-#'   \code{index.Rmd}, if it exists in \code{dir}.
+#'   the \code{default_file} as described above.
 #'
 #' @examples
 #' \dontrun{
@@ -57,14 +68,30 @@
 #'
 #' }
 #' @export
-run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
-                shiny_args = NULL, render_args = NULL) {
+run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL, 
+                auto_reload = TRUE, shiny_args = NULL, render_args = NULL) {
 
-  # if there's just one file in the directory, serve it
-  if (identical(file, "index.Rmd")) {
+  # select the document to serve at the root URL if not user-specified
+  if (is.null(default_file)) {
     allRmds <- list.files(path = dir, pattern = "^.*\\.[Rr][Mm][Dd]$")
     if (length(allRmds) == 1) {
-      file <- allRmds
+      # just one R Markdown document
+      default_file <- allRmds
+    } else {
+      # more than one: look for an index
+      index <- which(tolower(allRmds) == "index.rmd")
+      if (length(index) > 0) {
+        default_file <- allRmds[index[1]]
+      }
+    }
+  }
+  
+  if (is.null(default_file)) {
+    # no R Markdown default found; how about an HTML?
+    indexHtml <- list.files(path = dir, pattern = "index.html?", 
+                            ignore.case = TRUE)
+    if (length(indexHtml) > 0) {
+      default_file <- indexHtml[1]
     }
   }
   
@@ -80,9 +107,13 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
     if (identical(substr(file_rel, 1, nchar(dir)), dir))
       file_rel <- substr(file_rel, nchar(dir) + 2, nchar(file_rel))
 
-    resolved <- resolve_relative(dir, file_rel)
-    if (is.null(resolved) || !file.exists(resolved))
-      stop("The file '", file, "' does not exist in the directory '", dir, "'")
+    # if we don't have a default to launch, make sure the user-specified file 
+    # exists
+    if (is.null(default_file)) {
+      resolved <- resolve_relative(dir, file_rel)
+      if (is.null(resolved) || !file.exists(resolved))
+        stop("The file '", file, "' does not exist in the directory '", dir, "'")
+    }
   }
 
   # pick up encoding
@@ -103,11 +134,11 @@ run <- function(file = "index.Rmd", dir = dirname(file), auto_reload = TRUE,
   # combine the user-supplied list of Shiny arguments with our own and start
   # the Shiny server; handle requests for the root (/) and any R markdown files
   # within
-  app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir, file),
-                         uiPattern = "^/$|^(/.*\\.[Rr][Mm][Dd])$",
+  app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir, default_file),
+                         uiPattern = "^/$|^/index\\.html?$|^(/.*\\.[Rr][Mm][Dd])$",
                          onStart = onStart,
                          server = rmarkdown_shiny_server(
-                           dir, file, encoding, auto_reload, render_args))
+                           dir, default_file, encoding, auto_reload, render_args))
 
   # launch the app and open a browser to the requested page, if one was
   # specified
@@ -143,7 +174,7 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
     if (!nzchar(path_info)) {
       path_info <- file
     }
-
+    
     file <- resolve_relative(dir, path_info)
     reactive_file <- if (auto_reload)
       shiny::reactiveFileReader(500, session, file, identity)
@@ -159,7 +190,10 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
 
       # if output is cached, return it directly
       if (out$cached) {
-        shiny::addResourcePath(basename(out$resource_folder), out$resource_folder)
+        if (nchar(out$resource_folder) > 0) {
+          shiny::addResourcePath(basename(out$resource_folder), 
+                                 out$resource_folder)
+        }
         return (out$shiny_html)
       }
 
@@ -244,9 +278,12 @@ rmarkdown_shiny_ui <- function(dir, file) {
     if (identical(req_path, "/")) {
       req_path <- file
     }
-
-    # request must be for an R Markdown document
-    if (!identical(tolower(tools::file_ext(req_path)), "rmd")) {
+    
+    # request must be for an R Markdown or HTML document
+    ext <- tolower(tools::file_ext(req_path))
+    if (!identical(ext, "rmd") &&
+        !identical(ext, "htm") && 
+        !identical(ext, "html")) {
       return(NULL)
     }
 
@@ -294,6 +331,17 @@ rmd_cached_output <- function (input, encoding) {
   shiny_html <- NULL
   resource_folder <- ""
 
+  # if the file is raw HTML, return it directly
+  if (identical(tolower(tools::file_ext(input)), "htm") || 
+      identical(tolower(tools::file_ext(input)), "html")) {
+    return(list(
+      cacheable = TRUE,
+      cached = TRUE,
+      dest = "",
+      shiny_html = shinyHTML_with_deps(input, NULL),
+      resource_folder = ""))
+  }
+  
   # check to see if the file is a Shiny document
   front_matter <- parse_yaml_front_matter(read_lines_utf8(input, encoding))
   if (!identical(front_matter$runtime, "shiny")) {
