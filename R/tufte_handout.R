@@ -56,9 +56,6 @@ tufte_handout <- function(fig_width = 4,
                       "",
                       paste("\\caption{", options$fig.cap, "}\n", sep = ""))
     
-    # determine path to plot
-    file <- knitr::fig_path(options = options)
-    
     # determine figure type
     if (isTRUE(options$fig.margin)) 
       figtype <- "marginfigure"
@@ -69,7 +66,7 @@ tufte_handout <- function(fig_width = 4,
     
     # return the latex
     paste(sprintf('\\begin{%s}\n \\includegraphics{%s}\n%s\\end{%s}\n',
-                  figtype, file, caption, figtype))
+                  figtype, x, caption, figtype))
   }
   
   # override the knitr settings of the base format and return the format
