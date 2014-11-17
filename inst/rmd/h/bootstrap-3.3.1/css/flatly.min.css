@@ -1,4 +1,23 @@
-@import url("//fonts.googleapis.com/css?family=Lato:400,700,400italic");/*!
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/Lato.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: url(fonts/LatoBold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 400;
+  src: url(fonts/LatoItalic.ttf) format('truetype');
+}
+
+/*!
  * bootswatch v3.3.1+1
  * Homepage: http://bootswatch.com
  * Copyright 2012-2014 Thomas Park

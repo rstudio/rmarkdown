@@ -1,4 +1,17 @@
-@import url("//fonts.googleapis.com/css?family=Raleway:400,700");/*!
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/Raleway.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 700;
+  src: url(fonts/RalewayBold.ttf) format('truetype');
+}
+
+/*!
  * bootswatch v3.3.1+1
  * Homepage: http://bootswatch.com
  * Copyright 2012-2014 Thomas Park
