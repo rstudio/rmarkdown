@@ -12,12 +12,17 @@ html_dependency_jquery <- function()  {
 # create an html dependency for our embedded bootstrap
 html_dependency_bootstrap <- function(theme) {
   htmlDependency(name = "bootstrap",
-                 version = "2.3.2",
-                 src = rmarkdown_system_file("rmd/h/bootstrap-2.3.2"),
-                 meta = list(viewport = "width=device-width, initial-scale=1.0"),
-                 script = "js/bootstrap.min.js",
-                 stylesheet = c(paste("css/", theme, ".min.css", sep=""),
-                                 "css/bootstrap-responsive.min.css"))
+                 version = "3.3.1",
+                 rmarkdown_system_file("rmd/h/bootstrap-3.3.1"),
+                 meta = list(viewport = "width=device-width, initial-scale=1"),
+                 script = c(
+                   "js/bootstrap.min.js",
+                   # These shims are necessary for IE 8 compatibility
+                   "shim/html5shiv.min.js",
+                   "shim/respond.min.js"
+                 ),
+                 stylesheet = paste("css/", theme, ".min.css", sep="")
+  )
 }
 
 # flattens an arbitrarily nested list and returns all of the html_dependency
