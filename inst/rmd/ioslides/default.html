@@ -47,7 +47,12 @@ $endif$
       presenters: [
       $for(author)$
       {
-        name: '$author$'
+        name: $if(author.name)$ '$author.name$' $else$ '$author$' $endif$,
+        company: '$author.company$',
+        gplus: '$author.gplus$',
+        twitter: '$author.twitter$',
+        www: '$author.www$',
+        github: '$author.github$'
       },
       $endfor$
       ]
