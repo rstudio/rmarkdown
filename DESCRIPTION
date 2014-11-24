@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 0.3.12
+Version: 0.3.13
 Date: 2014-09-08
 Author: JJ Allaire, Jonathan McPherson, Yihui Xie, Hadley Wickham, Joe Cheng,
     Jeff Allen
@@ -18,7 +18,7 @@ Imports:
     htmltools (>= 0.2.4),
     caTools
 Suggests:
-    shiny (>= 0.10.1),
+    shiny (>= 0.10.2.9004),
     testthat,
     digest
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc

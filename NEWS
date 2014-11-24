@@ -1,0 +1,5 @@
+rmarkdown 0.3.13
+--------------------------------------------------------------------------------
+
+* Switched from the Bootstrap 2 web framework to Bootstrap 3. This is designed
+  to work with Shiny >= 0.10.2.9004, which has made the same switch.
