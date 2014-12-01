@@ -725,6 +725,11 @@ button:not(:disabled):active {
   column-count: 2;
 }
 
+/* workaround for Safari 8 render bug with lists in columns */
+.columns-2 ul, .columns-2 ol {
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
 /* line 472, ../scss/default.scss */
 table.rmdtable {
   width: 100%;
