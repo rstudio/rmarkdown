@@ -8,10 +8,10 @@ all: clean html
 html: $(HTML_FILES)
 
 %.html: %.Rmd
-	R --vanilla --slave -e "rmarkdown::render('$<')"
+	R --slave -e "rmarkdown::render('$<')"
 
 %.html: %.md
-	R --vanilla --slave -e "rmarkdown::render('$<')"
+	R --slave -e "rmarkdown::render('$<')"
 
 .PHONY: clean
 clean:
