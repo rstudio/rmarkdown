@@ -1,5 +1,22 @@
-rmarkdown 0.3.13
+rmarkdown 0.4.1
 --------------------------------------------------------------------------------
+
+* Sync to the latest LaTeX and Beamer templates from pandoc-templates
 
 * Switched from the Bootstrap 2 web framework to Bootstrap 3. This is designed
   to work with Shiny >= 0.10.2.9004, which has made the same switch.
+
+* Use a more subtle treatment for inline code in Bootstrap themed documents
+
+* Improved support for multiple authors in ioslides
+
+* Workaround for poor rendering of ioslides multi-columns lists in Safari 8 
+
+* Serve index.html as fallback default file for rmarkdown::run
+
+
+rmarkdown 0.3.11
+--------------------------------------------------------------------------------
+
+Initial release to CRAN
+
