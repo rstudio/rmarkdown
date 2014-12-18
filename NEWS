@@ -1,10 +1,12 @@
-rmarkdown 0.4.1
+rmarkdown 0.4.2
 --------------------------------------------------------------------------------
 
 * Sync to the latest LaTeX and Beamer templates from pandoc-templates
 
 * Switched from the Bootstrap 2 web framework to Bootstrap 3. This is designed
-  to work with Shiny >= 0.10.2.9004, which has made the same switch.
+  to work with Shiny >= 0.10.3, which has made the same switch
+
+* Add CSS to restore responsive image behavior from Bootstrap 2
 
 * Use a more subtle treatment for inline code in Bootstrap themed documents
 
