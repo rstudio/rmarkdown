@@ -148,6 +148,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
            <li class="dropdown">
             <a href="developer" class="dropdown-toggle" data-toggle="dropdown">Developer <b class="caret"></b></a>
             <ul class="dropdown-menu">
+               <li><a href="developer_html_widgets.html">HTML Widgets</a></li>
+               <li class="divider"></li>
                <li><a href="developer_document_templates.html">Document Templates</a></li>
                <li><a href="developer_custom_formats.html">Creating New Formats</a></li>
                <li class="divider"></li>
@@ -175,25 +177,23 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <p>R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of <a href="http://daringfireball.net/projects/markdown/basics">markdown</a> (an easy-to-write plain text format) with embedded R code chunks that are run so their output can be included in the final document. R Markdown documents are fully <em>reproducible</em> (they can be automatically regenerated whenever underlying R code or data changes).</p>
 <p>This website describes R Markdown v2, a next generation implementation of R Markdown based on <a href="http://yihui.name/knitr/">knitr</a> and <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>. This implementation brings many enhancements to R Markdown, including:</p>
 <ul>
-<li>Create HTML, PDF, and MS Word documents as well as <a href="https://bitbucket.org/rivanvx/beamer/wiki/Home">Beamer</a>, <a href="https://code.google.com/p/io-2012-slides/">ioslides</a> and <a href="http://www.w3.org/Talks/Tools/Slidy2/">Slidy</a> presentations.</li>
+<li>Many available output formats including HTML, PDF, and MS Word.</li>
+<li>Support for creating Beamer, ioslides, and Slidy presentations.</li>
 <li>New markdown syntax including expanded support for tables and bibliographies.</li>
 <li>Hooks for customizing HTML and PDF output (include CSS, headers, and footers).</li>
 <li>Include raw LaTeX within markdown for advanced customization of PDF output.</li>
 <li>Compile HTML, PDF, or MS Word notebooks from R scripts.</li>
-<li>Extensiblity: create custom templates and even entirely new output formats (for example, see the <a href="tufte_handout_format.html">Tufte Handout</a> format).</li>
-<li>Create interactive R Markdown documents using Shiny</li>
+<li>Extensiblity: create custom templates and even entirely new output formats.</li>
+<li>Create interactive R Markdown documents using Shiny.</li>
 </ul>
 <p>Note that PDF output (including Beamer slides) requires an installation of TeX.</p>
-<div id="installing-r-markdown" class="section level4">
-<h4>Installing R Markdown</h4>
-<p>You can use R Markdown either through the integrated support provided by RStudio or by directly using the <strong>rmarkdown</strong> package:</p>
-<ol style="list-style-type: decimal">
-<li><p>RStudio — Install the <a href="http://www.rstudio.com/products/rstudio/">latest version of RStudio</a>.</p></li>
-<li><p>Other environments — Install the <a href="https://github.com/rstudio/rmarkdown">rmarkdown package</a>.</p></li>
-</ol>
-</div>
 <div id="quick-tour" class="section level2">
 <h2>Quick Tour</h2>
+<div id="installation" class="section level3">
+<h3>Installation</h3>
+<p>You can install the R Markdown package from CRAN as follows:</p>
+<pre class="r"><code>install.packages(&quot;rmarkdown&quot;)</code></pre>
+</div>
 <div id="markdown-basics" class="section level3">
 <h3>Markdown Basics</h3>
 <p>Markdown is a simple formatting language designed to make authoring content easy for everyone. Rather than writing complex markup code (e.g. HTML or LaTeX), Markdown enables the use of a syntax much more like plain-text email. For example the file on the left shows basic Markdown and the resulting output on the right:</p>
@@ -292,7 +292,7 @@ output:
 <ul>
 <li><p>Creating re-usable <a href="developer_document_templates.html">Document Templates</a></p></li>
 <li><p>Guide to <a href="developer_custom_formats.html">Creating New Formats</a> for R Markdown</p></li>
-<li><p>Adding interactive components to R Markdown documents using <a href="authoring_shiny_widgets.html">Shiny Widgets</a>.</p></li>
+<li><p>Adding interactive components to R Markdown documents using <a href="developer_html_widgets.html">HTML Widgets</a> and <a href="authoring_shiny_widgets.html">Shiny Widgets</a>.</p></li>
 </ul>
 </div>
 

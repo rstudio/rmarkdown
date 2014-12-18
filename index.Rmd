@@ -8,25 +8,27 @@ R Markdown is an authoring format that enables easy creation of dynamic document
 
 This website describes R Markdown v2, a next generation implementation of R Markdown based on  [knitr](http://yihui.name/knitr/) and [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
 
-* Create HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home), [ioslides](https://code.google.com/p/io-2012-slides/) and [Slidy](http://www.w3.org/Talks/Tools/Slidy2/) presentations.
+* Many available output formats including HTML, PDF, and MS Word.
+* Support for creating Beamer, ioslides, and Slidy presentations.
 * New markdown syntax including expanded support for tables and bibliographies.
 * Hooks for customizing HTML and PDF output (include CSS, headers, and footers).
 * Include raw LaTeX within markdown for advanced customization of PDF output.
 * Compile HTML, PDF, or MS Word notebooks from R scripts.
-* Extensiblity: create custom templates and even entirely new output formats (for example, see the [Tufte Handout](tufte_handout_format.html) format).
-* Create interactive R Markdown documents using Shiny
+* Extensiblity: create custom templates and even entirely new output formats.
+* Create interactive R Markdown documents using Shiny.
 
 Note that PDF output (including Beamer slides) requires an installation of TeX.
 
-#### Installing R Markdown
-
-You can use R Markdown either through the integrated support provided by RStudio or by directly using the **rmarkdown** package:
-
-1. RStudio --- Install the [latest version of RStudio](http://www.rstudio.com/products/rstudio/).
-
-2. Other environments --- Install the [rmarkdown package](https://github.com/rstudio/rmarkdown).
-
 ## Quick Tour
+
+### Installation
+
+You can install the R Markdown package from CRAN as follows:
+
+```r
+install.packages("rmarkdown")
+```
+
 
 ### Markdown Basics
 
@@ -173,5 +175,5 @@ See also the R Markdown developer documentation including:
     
 * Guide to [Creating New Formats](developer_custom_formats.html) for R Markdown
     
-* Adding interactive components to R Markdown documents using [Shiny Widgets](authoring_shiny_widgets.html).
+* Adding interactive components to R Markdown documents using [HTML Widgets](developer_html_widgets.html) and [Shiny Widgets](authoring_shiny_widgets.html).
 

@@ -1,0 +1,41 @@
+---
+title: "HTML Widgets"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+---
+
+HTML widgets enable you to add new types of HTML output to R Markdown documents. You might want to do this to add a binding between R and a Javascript data visualization library like [d3](http://d3js.org) or [Leaflet](http://leafletjs.com). HTML widgets create output that works both inside R Markdown documents as well as while executing code from the console (e.g. to display within the RStudio Viewer).
+
+### Examples
+
+Here are a few of the HTML widgets that have been built so far:
+
+* [leaflet](http://www.htmlwidgets.org/showcase_leaflet.html), a library for creating dynamic maps that support panning and zooming, with various annotations like markers, polygons, and popups.
+
+* [dygraphs](http://www.htmlwidgets.org/showcase_dygraphs.html), which provides rich facilities for charting time-series data and includes support for many interactive features including series/point highlighting, zooming, and panning.
+
+* [networkD3](http://www.htmlwidgets.org/showcase_networkD3.html), a library for creating D3 network graphs including force directed networks, Sankey diagrams, and Reingold-Tilford tree networks.
+
+* [DataTables](http://www.htmlwidgets.org/showcase_datatables.html), which displays R matrices or data frames as interactive HTML tables that support filtering, pagination, and sorting.
+
+* [rthreejs](http://www.htmlwidgets.org/showcase_threejs.html), which features 3D scatterplots and globes based on WebGL.
+
+### Creating Widgets
+
+To create your own widgets, first install the **htmlwdigets** package from CRAN:
+
+```r
+install.packages("htmlwidgets")
+```
+
+Then, check out the developer documentation on the htmlwidgets website:
+
+* [Creating a widget](http://www.htmlwidgets.org/develop_intro.html) describes the components of an htmlwidget in detail and walks throug building a simple example.
+
+* [Widget sizing](http://www.htmlwidgets.org/develop_sizing.html) explains custom sizing policies and when you might need to use them and describes implementing a resize method within JavaScript bindings.
+
+* [Advanced topics](http://www.htmlwidgets.org/develop_advanced.html) describes  framework features that support per-widget instance data, data transformations (e.g. converting a data frame into a d3 dataset), and providing widget options that are live JavaScript objects (e.g. function definitions).
+
+
