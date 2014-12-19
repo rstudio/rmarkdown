@@ -3,6 +3,17 @@ PackratVersion: 0.4.2
 RVersion: 3.1.2
 Repos: CRAN=http://cran.rstudio.com
 
+Package: R6
+Source: CRAN
+Version: 2.0.1
+Hash: 9a3ac4e5fd8059af0fc5156bcb019bbc
+
+Package: RCurl
+Source: CRAN
+Version: 1.95-4.5
+Hash: 1187c1ea73013abf25f362a7e6da1046
+Requires: bitops
+
 Package: bitops
 Source: CRAN
 Version: 1.0-6
@@ -13,6 +24,13 @@ Source: CRAN
 Version: 1.17
 Hash: e350bf43b27772012b530ccdf2e34f4d
 Requires: bitops
+
+Package: devtools
+Source: CRAN
+Version: 1.6.1
+Hash: e3096b832604a7a36ff0a6455e5cdddc
+Requires: RCurl, digest, evaluate, httr, jsonlite, memoise, rstudioapi,
+    whisker
 
 Package: digest
 Source: CRAN
@@ -41,6 +59,17 @@ Version: 0.2.6
 Hash: 2c87108d130de261ac3c468d3316ae42
 Requires: digest
 
+Package: httr
+Source: CRAN
+Version: 0.6.0
+Hash: 77f2efe4b285e090d11c53067ffd1c15
+Requires: R6, RCurl, digest, jsonlite, mime, stringr
+
+Package: jsonlite
+Source: CRAN
+Version: 0.9.14
+Hash: 1e949c7f0f926734e2ff498eddb2309a
+
 Package: knitr
 Source: CRAN
 Version: 1.8
@@ -52,6 +81,12 @@ Source: CRAN
 Version: 0.7.4
 Hash: 01d7f71ed6e3d9b1c17ba51cff91be72
 Requires: mime
+
+Package: memoise
+Source: CRAN
+Version: 0.2.1
+Hash: fc52fa39dfd216c44d64812ff31b1c67
+Requires: digest
 
 Package: mime
 Source: CRAN
@@ -73,10 +108,20 @@ Version: 0.3.3
 Hash: fe7b370d7022b58c2b71469681c0431f
 Requires: caTools, htmltools, knitr, yaml
 
+Package: rstudioapi
+Source: CRAN
+Version: 0.1
+Hash: 5bd4449a873ec652a05c932312dcf04b
+
 Package: stringr
 Source: CRAN
 Version: 0.6.2
 Hash: cdde0cfa0f52cffeaca23a11a3899779
+
+Package: whisker
+Source: CRAN
+Version: 0.3-2
+Hash: 186ab2937fec1694c8a63009a2389c4e
 
 Package: yaml
 Source: CRAN
