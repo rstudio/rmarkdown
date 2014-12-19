@@ -13,10 +13,11 @@
 <title>Compiling Notebooks from R Scripts</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="libs/bootstrap-2.3.2/css/united.min.css" rel="stylesheet" />
-<link href="libs/bootstrap-2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet" />
-<script src="libs/bootstrap-2.3.2/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/united.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
 
 <style type="text/css">
 
@@ -25,23 +26,18 @@ body {
   padding-top: 50px;
   padding-bottom: 40px;
 }
-@media (max-width: 979px) {
-  body {
-    padding-top: 0;
-  }
-}
+
 
 /* offset scroll position for anchor links (for fixed navbar)  */
-@media (min-width: 980px) {
-  .section h2 {
-    padding-top: 52px;
-    margin-top: -52px;
-  }
-  .section h3 {
-    padding-top: 52px;
-    margin-top: -52px;
-  }
+.section h2 {
+  padding-top: 55px;
+  margin-top: -55px;
 }
+.section h3 {
+  padding-top: 55px;
+  margin-top: -55px;
+}
+
 
 
 /* don't use link color in navbar */
@@ -88,85 +84,87 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
   margin-left: auto;
   margin-right: auto;
 }
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
 </style>
 <div class="container-fluid main-container">
 
 
-<div class="navbar navbar-default navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="brand" href="/">R Markdown v2</a>
-      <div class="nav-collapse collapse">
-        <ul class="nav">
-          <li><a href="/">Home</a></li>
-          <li class="dropdown">
-            <a href="authoring" class="dropdown-toggle" data-toggle="dropdown">Authoring <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-               <li class="nav-header">R Markdown</li>
-               <li><a href="authoring_basics.html">Markdown Basics</a></li>
-               <li><a href="authoring_pandoc_markdown.html">Pandoc Markdown</a></li>
-               <li><a href="authoring_rcodechunks.html">R Code Chunks</a></li>
-               <li><a href="authoring_bibliographies_and_citations.html">Bibliographies &amp; Citations</a></li>
-               <li><a href="authoring_migrating_from_v1.html">Migrating from v1</a></li>
-               <li class="divider"></li>
-               <li><a href="RMarkdownCheatSheet.pdf">Cheat Sheet [PDF]</a></li>
-               <li><a href="RMarkdownReferenceGuide.pdf">Reference Guide [PDF]</a></li>
-               <li class="divider"></li>
-               <li class="nav-header">Shiny</li>
-               <li><a href="authoring_shiny.html">Interactive Documents</a></li>
-               <li><a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a></li>
-               <li><a href="authoring_shiny_widgets.html">Creating Shiny Widgets</a></li>
-               <li><a href="authoring_shiny_advanced.html">Advanced Topics</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="formats" class="dropdown-toggle" data-toggle="dropdown">Formats <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-               <li class="nav-header">Documents</li>
-               <li><a href="html_document_format.html">HTML</a></li>
-               <li><a href="pdf_document_format.html">PDF</a></li>
-               <li><a href="word_document_format.html">Word</a></li>
-               <li><a href="markdown_document_format.html">Markdown</a></li>
-               <li class="divider"></li>
-               <li class="nav-header">Presentations</li>
-               <li><a href="ioslides_presentation_format.html">ioslides</a></li>
-               <li><a href="slidy_presentation_format.html">Slidy</a></li>
-               <li><a href="beamer_presentation_format.html">Beamer</a></li>
-               <li class="divider"></li>
-               <li class="nav-header">Other</li>
-               <li><a href="package_vignette_format.html">Package Vignette</a></li>
-               <li><a href="tufte_handout_format.html">Tufte Handout</a></li>
-               <li class="divider"></li>
-               <li><a href="r_notebook_format.html">R Notebooks</a></li>
-            </ul>
-          </li>
-           <li class="dropdown">
-            <a href="developer" class="dropdown-toggle" data-toggle="dropdown">Developer <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-               <li><a href="developer_html_widgets.html">HTML Widgets</a></li>
-               <li class="divider"></li>
-               <li><a href="developer_document_templates.html">Document Templates</a></li>
-               <li><a href="developer_custom_formats.html">Creating New Formats</a></li>
-               <li class="divider"></li>
-               <li><a href="https://github.com/rstudio/rmarkdown">R Markdown on GitHub</a></li>
-            </ul>
-          </li>
-        </ul>
-        <ul class="nav pull-right">
-          <a class="btn btn-primary" href="https://github.com/rstudio/rmarkdown">
-            <i class="fa fa-github fa-lg"></i>
-            GitHub
-          </a>
-        </ul>
-      </div><!--/.nav-collapse -->
+      <a class="navbar-brand" href="/">R Markdown v2</a>
     </div>
-  </div>
-</div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li class="dropdown">
+          <a href="authoring" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Authoring <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+             <li class="dropdown-header">R Markdown</li>
+             <li><a href="authoring_basics.html">Markdown Basics</a></li>
+             <li><a href="authoring_pandoc_markdown.html">Pandoc Markdown</a></li>
+             <li><a href="authoring_rcodechunks.html">R Code Chunks</a></li>
+             <li><a href="authoring_bibliographies_and_citations.html">Bibliographies &amp; Citations</a></li>
+             <li><a href="authoring_migrating_from_v1.html">Migrating from v1</a></li>
+             <li class="divider"></li>
+             <li><a href="RMarkdownCheatSheet.pdf">Cheat Sheet [PDF]</a></li>
+             <li><a href="RMarkdownReferenceGuide.pdf">Reference Guide [PDF]</a></li>
+             <li class="divider"></li>
+             <li class="dropdown-header">Shiny</li>
+             <li><a href="authoring_shiny.html">Interactive Documents</a></li>
+             <li><a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a></li>
+             <li><a href="authoring_shiny_widgets.html">Creating Shiny Widgets</a></li>
+             <li><a href="authoring_shiny_advanced.html">Advanced Topics</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="formats" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Formats <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+             <li class="dropdown-header">Documents</li>
+             <li><a href="html_document_format.html">HTML</a></li>
+             <li><a href="pdf_document_format.html">PDF</a></li>
+             <li><a href="word_document_format.html">Word</a></li>
+             <li><a href="markdown_document_format.html">Markdown</a></li>
+             <li class="divider"></li>
+             <li class="dropdown-header">Presentations</li>
+             <li><a href="ioslides_presentation_format.html">ioslides</a></li>
+             <li><a href="slidy_presentation_format.html">Slidy</a></li>
+             <li><a href="beamer_presentation_format.html">Beamer</a></li>
+             <li class="divider"></li>
+             <li class="dropdown-header">Other</li>
+             <li><a href="package_vignette_format.html">Package Vignette</a></li>
+             <li><a href="tufte_handout_format.html">Tufte Handout</a></li>
+             <li class="divider"></li>
+             <li><a href="r_notebook_format.html">R Notebooks</a></li>
+          </ul>
+        </li>
+         <li class="dropdown">
+          <a href="developer" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Developer <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+             <li><a href="developer_html_widgets.html">HTML Widgets</a></li>
+             <li class="divider"></li>
+             <li><a href="developer_document_templates.html">Document Templates</a></li>
+             <li><a href="developer_custom_formats.html">Creating New Formats</a></li>
+             <li class="divider"></li>
+             <li><a href="https://github.com/rstudio/rmarkdown">R Markdown on GitHub</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
 
 <div id="header">
 <h1 class="title">Compiling Notebooks from R Scripts</h1>

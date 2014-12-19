@@ -103,10 +103,14 @@ GithubRef: master
 GithubSha1: 63b6c33c68a4e1b024ad0b50b55638c464a920d3
 
 Package: rmarkdown
-Source: CRAN
-Version: 0.3.3
-Hash: fe7b370d7022b58c2b71469681c0431f
+Source: github
+Version: 0.4.2
+Hash: 762002194bd6e90c218044475ec06699537e7c4f
 Requires: caTools, htmltools, knitr, yaml
+GithubRepo: rmarkdown
+GithubUsername: rstudio
+GithubRef: master
+GithubSha1: 762002194bd6e90c218044475ec06699537e7c4f
 
 Package: rstudioapi
 Source: CRAN
