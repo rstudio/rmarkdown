@@ -1,5 +1,5 @@
 PackratFormat: 1.4
-PackratVersion: 0.4.2
+PackratVersion: 0.4.2.6
 RVersion: 3.1.2
 Repos: CRAN=http://cran.rstudio.com
 
@@ -95,12 +95,12 @@ Hash: 9179db921fcb2e5be44e217042ed06bc
 
 Package: packrat
 Source: github
-Version: 0.4.2
-Hash: 63b6c33c68a4e1b024ad0b50b55638c464a920d3
+Version: 0.4.2-6
+Hash: 914b3c5aeed71f06f286bb7055ace26609f395a1
 GithubRepo: packrat
 GithubUsername: rstudio
 GithubRef: master
-GithubSha1: 63b6c33c68a4e1b024ad0b50b55638c464a920d3
+GithubSha1: 914b3c5aeed71f06f286bb7055ace26609f395a1
 
 Package: rmarkdown
 Source: github
