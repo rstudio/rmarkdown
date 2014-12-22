@@ -18,7 +18,7 @@ Imports:
     htmltools (>= 0.2.4),
     caTools
 Suggests:
-    shiny (>= 0.10.2.9004),
+    shiny,
     testthat,
     digest
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
