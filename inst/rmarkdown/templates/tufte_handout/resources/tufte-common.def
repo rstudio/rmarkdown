@@ -1,8 +1,8 @@
 %%
-%% This file contains the code that's common to the Tufte-LaTeX document classes.
+%% This file contains the code that is common to the Tufte-LaTeX document classes.
 %%
 
-\ProvidesFile{tufte-common.def}[2009/12/11 v3.5.0 Common code for the Tufte-LaTeX styles]
+\ProvidesFile{tufte-common.def}[2011/06/18 v3.5.2 Common code for the Tufte-LaTeX styles]
 
 %%
 % The `xkeyval' package simplifies the user interface for the document class options
@@ -14,14 +14,10 @@
 
 %%
 % Define some shortcut macros for error/warning/info logging.
-
-\newcommand{\TufteWarning}[1]{\ClassWarning{\@tufte@pkgname}{#1}}
-\newcommand{\TufteWarningNL}[1]{\ClassWarningNoLine{\@tufte@pkgname}{#1}}
-\newcommand{\TufteInfo}[1]{\ClassInfo{\@tufte@pkgname}{#1}}
-\newcommand{\TufteInfoNL}[1]{\ClassInfo{\@tufte@pkgname}{#1\@gobble}}
-\newcommand{\TufteDebugInfo}[1]{\ifthenelse{\boolean{@tufte@debug}}{\TufteInfo{#1}}{}}
-\newcommand{\TufteDebugInfoNL}[1]{\ifthenelse{\boolean{@tufte@debug}}{\TufteInfoNL{#1}}{}}
-\newcommand{\TufteError}[2]{\ClassError{\@tufte@pkgname}{#1}{#2}}
+\RequirePackage{hardwrap}
+\GenerateClassLogMacros[@tufte]{\@tufte@pkgname}
+\newcommand{\@tufte@debug@info}[1]{\ifthenelse{\boolean{@tufte@debug}}{\@tufte@info{#1}}{}}
+\newcommand{\@tufte@debug@info@noline}[1]{\ifthenelse{\boolean{@tufte@debug}}{\@tufte@info@noline{#1}}{}}
 
 %%
 % `debug' option -- provides more information in the .log file for use in
@@ -42,6 +38,11 @@
 \newboolean{@tufte@letterspace}\setboolean{@tufte@letterspace}{true}
 \DeclareOptionX[tufte]<common>{ls}{\setboolean{@tufte@letterspace}{true}}
 \DeclareOptionX[tufte]<common>{nols}{\setboolean{@tufte@letterspace}{false}}
+
+%%
+% `nobib' option -- doesn't load natbib or adjust the \cite command
+\newboolean{@tufte@loadnatbib}\setboolean{@tufte@loadnatbib}{true}
+\DeclareOptionX[tufte]<common>{nobib}{\setboolean{@tufte@loadnatbib}{false}}
 
 %%
 % `titlepage' option -- creates a full title page with \maketitle
@@ -75,7 +76,7 @@
 \newboolean{@tufte@symmetric}
 \DeclareOptionX[tufte]<common>{symmetric}{
   \setboolean{@tufte@symmetric}{true}
-  \TufteInfoNL{The `symmetric' option implies `twoside'}
+  \@tufte@info@noline{The `symmetric' option implies `twoside'}
   \ExecuteOptionsX[tufte]<common>{twoside}
 }
 
@@ -85,7 +86,7 @@
 \newboolean{@tufte@twoside}
 \DeclareOptionX[tufte]<common>{twoside}{%
   \setboolean{@tufte@twoside}{true}
-  \TufteInfoNL{Passing the `twoside' option to the `\@tufte@class' class}
+  \@tufte@info@noline{Passing the `twoside' option to the `\@tufte@class' class}
   \PassOptionsToClass{twoside}{\@tufte@class}
 }
 
@@ -137,7 +138,7 @@
     \renewcommand*{\@tufte@sidenote@justification}{\@tufte@justification@autodetect}% autodetects best justification mode based on all class options
   \fi
 }{%
-  \TufteWarningNL{Invalid option `#1' for sidenote key.\MessageBreak Must be one of: justified, raggedleft,\MessageBreak raggedright, raggedouter, auto}
+  \@tufte@warning@noline{Invalid option `#1' for sidenote key. Must be one of: justified, raggedleft, raggedright, raggedouter, auto}
   \renewcommand*{\@tufte@sidenote@justification}{\@tufte@justification@autodetect}% autodetects best justification mode based on all class options
 }
 
@@ -155,7 +156,7 @@
     \renewcommand*{\@tufte@marginnote@justification}{\@tufte@justification@autodetect}% autodetects best justification mode based on all class options
   \fi
 }{%
-  \TufteWarningNL{Invalid option `#1' for marginnote key.\MessageBreak Must be one of: justified, raggedleft,\MessageBreak raggedright, raggedouter, auto}
+  \@tufte@warning@noline{Invalid option `#1' for marginnote key. Must be one of: justified, raggedleft, raggedright, raggedouter, auto}
   \renewcommand*{\@tufte@marginnote@justification}{\@tufte@justification@autodetect}% autodetects best justification mode based on all class options
 }
 
@@ -173,7 +174,7 @@
     \renewcommand*{\@tufte@caption@justification}{\@tufte@justification@autodetect}% autodetects best justification mode based on all class options
   \fi
 }{%
-  \TufteWarningNL{Invalid option `#1' for caption key.\MessageBreak Must be one of: justified, raggedleft,\MessageBreak raggedright, raggedouter, auto}
+  \@tufte@warning@noline{Invalid option `#1' for caption key. Must be one of: justified, raggedleft, raggedright, raggedouter, auto}
   \renewcommand*{\@tufte@caption@justification}{\@tufte@justification@autodetect}% autodetects best justification mode based on all class options
 }
 
@@ -191,7 +192,7 @@
     \renewcommand*{\@tufte@citation@justification}{\@tufte@justification@autodetect}% autodetects best justification mode based on all class options
   \fi
 }{%
-  \TufteWarningNL{Invalid option `#1' for citation key.\MessageBreak Must be one of: justified, raggedleft,\MessageBreak raggedright, raggedouter, auto}
+  \@tufte@warning@noline{Invalid option `#1' for citation key. Must be one of: justified, raggedleft, raggedright, raggedouter, auto}
   \renewcommand*{\@tufte@citation@justification}{\@tufte@justification@autodetect}% autodetects best justification mode based on all class options
 }
 
@@ -209,7 +210,7 @@
     \ExecuteOptionsX[tufte]<common>{citation=auto,sidenote=auto,caption=auto,marginnote=auto}% autodetects best justification mode based on all class options
   \fi
 }{%
-  \TufteWarningNL{Invalid option `#1' for marginals key.\MessageBreak Must be one of: justified, raggedleft,\MessageBreak raggedright, raggedouter, auto}
+  \@tufte@warning@noline{Invalid option `#1' for marginals key. Must be one of: justified, raggedleft, raggedright, raggedouter, auto}
   \ExecuteOptionsX[tufte]<common>{citation=auto,sidenote=auto,caption=auto,marginnote=auto}% autodetects best justification mode based on all class options
 }
 
@@ -217,7 +218,7 @@
 %%
 % Unsupported options
 
-\newcommand{\@tufte@unsupported@option}[1]{\TufteWarningNL{Option `#1' is not supported -- \MessageBreak ignoring option}\OptionNotUsed}
+\newcommand{\@tufte@unsupported@option}[1]{\@tufte@warning@noline{Option `#1' is not supported -- ignoring option}\OptionNotUsed}
 
 \DeclareOptionX[tufte]<common>{10pt}{\@tufte@unsupported@option{\CurrentOption}}
 \DeclareOptionX[tufte]<common>{11pt}{\@tufte@unsupported@option{\CurrentOption}}
@@ -238,14 +239,14 @@
 
 
 \DeclareOptionX*{%
-  \TufteInfoNL{Passing \CurrentOption\space to the `\@tufte@class' class.}%
+  \@tufte@info@noline{Passing \CurrentOption\space to the `\@tufte@class' class.}%
   \PassOptionsToClass{\CurrentOption}{\@tufte@class}%
 }
 \ProcessOptionsX*[tufte]<common>\relax
 
 %%
 % Load the appropriate base class
-\TufteInfoNL{Loading the base class `\@tufte@class'}
+\@tufte@info@noline{Loading the base class `\@tufte@class'}
 \LoadClass{\@tufte@class}
 
 %%
@@ -283,6 +284,31 @@
 }{% not using xelatex
   \setboolean{@tufte@xetex}{false}
 }
+
+\ifthenelse{\boolean{@tufte@xetex}}{%
+  \RequirePackage{xltxtra}% xltxtra loads xunicode and fontspec; must be loaded before bidi
+}{}
+
+%%
+% Detect if we're using LuaTeX
+
+\newboolean{@tufte@luatex}
+\IfFileExists{ifluatex.sty}{%
+  \RequirePackage{ifluatex}
+  \ifthenelse{\boolean{luatex}}
+    {\setboolean{@tufte@luatex}{true}}
+    {\setboolean{@tufte@luatex}{false}}
+}{% not using luatex
+  \setboolean{@tufte@luatex}{false}
+}
+
+\ifthenelse{\boolean{@tufte@luatex}}{%
+  \RequirePackage{fontspec}
+  \RequirePackage[osf,sc]{mathpazo}
+  \setmainfont[Renderer=Basic, Numbers=OldStyle, Scale = 1.0]{TeX Gyre Pagella}
+  \setsansfont[Renderer=Basic, Scale=0.90]{TeX Gyre Heros}
+  \setmonofont[Renderer=Basic]{TeX Gyre Cursor}
+}{}
 
 %%
 % Globally sets the length
@@ -324,7 +350,6 @@
     bookmarksdepth = section,
     citecolor = DarkGreen,
     linkcolor = DarkBlue,
-    pagecolor = DarkBlue,
     urlcolor = DarkGreen,
   }%
 }
@@ -392,13 +417,15 @@
 %%
 % \RaggedRight allows hyphenation
 
+\setlength{\parindent}{1.0pc}%
+\setlength{\parskip}{0pt}%
 \RequirePackage{ragged2e}
 \setlength{\RaggedRightRightskip}{\z@ plus 0.08\hsize}
-\setlength{\RaggedRightParindent}{1pc}
 
 % Paragraph indentation and separation for normal text
 \newcommand{\@tufte@reset@par}{%
   \setlength{\RaggedRightParindent}{1.0pc}%
+  \setlength{\JustifyingParindent}{1.0pc}%
   \setlength{\parindent}{1pc}%
   \setlength{\parskip}{0pt}%
 }
@@ -407,6 +434,7 @@
 % Paragraph indentation and separation for marginal text
 \newcommand{\@tufte@margin@par}{%
   \setlength{\RaggedRightParindent}{0.5pc}%
+  \setlength{\JustifyingParindent}{0.5pc}%
   \setlength{\parindent}{0.5pc}%
   \setlength{\parskip}{0pt}%
 }
@@ -477,11 +505,11 @@
 
 \newboolean{@tufte@changepage}
 \IfFileExists{changepage.sty}{%
-  \TufteDebugInfoNL{Found changepage.sty}
+  \@tufte@debug@info@noline{Found changepage.sty}
   \RequirePackage[strict]{changepage}
   \setboolean{@tufte@changepage}{true}
 }{%
-  \TufteDebugInfoNL{Found chngpage.sty}
+  \@tufte@debug@info@noline{Found chngpage.sty}
   \RequirePackage[strict]{chngpage}
   \setboolean{@tufte@changepage}{false}
 }
@@ -556,24 +584,28 @@
   \ifthenelse{\isempty{#1}}%
     {\renewcommand{\plaintitle}{\thanklesstitle}}% use thankless title
     {\renewcommand{\plaintitle}{#1}}% use provided plain-text title
-  \@ifpackageloaded{hyperref}{\hypersetup{pdftitle={\plaintitle}}}{}% set the PDF metadata title
+  \ifthenelse{\isundefined{\hypersetup}}%
+    {}% hyperref is not loaded; do nothing
+    {\hypersetup{pdftitle={\plaintitle}}}% set the PDF metadata title
 }
 
-\def\@author{}% default author is empty (suppresses LaTeX's ``no author'' warning)
-\renewcommand*{\author}[2][]{%
-  \gdef\@author{#2}%
+\let\@author\@empty% suppress default latex.ltx ``no author'' warning
+\renewcommand{\author}[2][]{%
+  \ifthenelse{\isempty{#2}}{}{\gdef\@author{#2}}%
   \begingroup%
     % TODO store contents of \thanks command
     \renewcommand{\thanks}[1]{}% swallow \thanks contents
     \protected@xdef\thanklessauthor{#2}%
   \endgroup%
-  \ifthenelse{\isempty{#1}}
+  \ifthenelse{\isempty{#1}}%
     {\renewcommand{\plainauthor}{\thanklessauthor}}% use thankless author
     {\renewcommand{\plainauthor}{#1}}% use provided plain-text author
-  \@ifpackageloaded{hyperref}{\hypersetup{pdfauthor={\plainauthor}}}{}% set the PDF metadata author
+  \ifthenelse{\isundefined{\hypersetup}}%
+    {}% hyperref is not loaded; do nothing
+    {\hypersetup{pdfauthor={\plainauthor}}}% set the PDF metadata author
 }
 
-\renewcommand*{\date}[1]{%
+\renewcommand{\date}[1]{%
   \gdef\@date{#1}%
   \begingroup%
     % TODO store contents of \thanks command
@@ -618,30 +650,30 @@
 %%
 % Improved letterspacing of small caps and all-caps text.
 %
-% First, try to use the `microtype' package, if it's available. 
+% First, try to use the `microtype' package, if it's available.
 % Failing that, try to use the `soul' package, if it's available.
 % Failing that, well, I give up.
 
 \DeclareTextFontCommand{\textsmallcaps}{\scshape}
 
 \RequirePackage{textcase} % provides \MakeTextUppercase and \MakeTextLowercase
-\def\allcapsspacing{\TufteWarning{Proper spacing of ALL-CAPS letters has not been set up.}}
-\def\smallcapsspacing{\TufteWarning{Proper spacing of small-caps letters has not been set up.}}
+\def\allcapsspacing{\@tufte@warning{Proper spacing of ALL-CAPS letters has not been set up.}}
+\def\smallcapsspacing{\@tufte@warning{Proper spacing of small-caps letters has not been set up.}}
 \newcommand{\allcaps}[1]{\allcapsspacing{\MakeTextUppercase{#1}}}
 \newcommand{\smallcaps}[1]{\smallcapsspacing{\MakeTextLowercase{#1}}}
 
-% If we're using pdfLaTeX v1.40+, use the letterspace package. 
+% If we're using pdfLaTeX v1.40+, use the letterspace package.
 % If we're using pdfLaTex < v1.40, use the soul package.
 % If we're using XeLaTeX, use XeLaTeX letterspacing options.
 % Otherwise fall back on the soul package.
 
 \ifthenelse{\boolean{@tufte@pdf}}
-  {\TufteDebugInfoNL{ifpdf = true}}
-  {\TufteDebugInfoNL{ifpdf = false}}
+  {\@tufte@debug@info@noline{ifpdf = true}}
+  {\@tufte@debug@info@noline{ifpdf = false}}
 
 \ifthenelse{\boolean{@tufte@xetex}}
-  {\TufteDebugInfoNL{ifxetex = true}}
-  {\TufteDebugInfoNL{ifxetex = false}}
+  {\@tufte@debug@info@noline{ifxetex = true}}
+  {\@tufte@debug@info@noline{ifxetex = false}}
 
 % Check pdfLaTeX version
 \def\@tufte@pdftexversion{0}
@@ -666,32 +698,40 @@
 \fi
 
 
+\newcommand{\@tufte@letterspacing@soul}{%
+  \RequirePackage{soul}%
+  \sodef\allcapsspacing{}{0.15em}{0.65em}{0.6em}%
+  \sodef\smallcapsspacing{}{0.075em}{0.5em}{0.6em}%
+  \sodef\sotextsc{\scshape}{0.075em}{0.5em}{0.6em}%
+  \renewcommand{\allcaps}[1]{\allcapsspacing{\MakeTextUppercase{##1}}}%
+  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{##1}}}%
+  \renewcommand{\textsc}[1]{\sotextsc{##1}}%
+}
+
+\newcommand{\@tufte@letterspacing@letterspace}{%
+  \@tufte@debug@info@noline{Modern version of pdfTeX detected. Using `letterspace' package}%
+  \RequirePackage{letterspace}%
+  % Set up letterspacing (using microtype package) -- requires pdfTeX v1.40+
+  \renewcommand{\allcapsspacing}[1]{\textls[200]{##1}}%
+  \renewcommand{\smallcapsspacing}[1]{\textls[50]{##1}}%
+  \renewcommand{\allcaps}[1]{\allcapsspacing{\MakeTextUppercase{##1}}}%
+  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{##1}}}%
+  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{##1}}}%
+}
+
 \ifthenelse{\boolean{@tufte@letterspace}}{%
   \ifthenelse{\boolean{@tufte@pdf}\AND\boolean{@tufte@letterspace@pkg@prereqs}\AND\NOT\boolean{@tufte@xetex}}{%
     % load letterspace pkg
     \IfFileExists{letterspace.sty}{%
-      \TufteDebugInfoNL{Modern version of pdfTeX detected. \MessageBreak Using `letterspace' package}
-      \RequirePackage{letterspace}
-      % Set up letterspacing (using microtype package) -- requires pdfTeX v1.40+
-      \renewcommand{\allcapsspacing}[1]{\textls[200]{##1}}
-      \renewcommand{\smallcapsspacing}[1]{\textls[50]{##1}}
-      \renewcommand{\allcaps}[1]{\textls[200]{\MakeTextUppercase{##1}}}
-      \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{##1}}}
-      \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{##1}}}
+      \@tufte@letterspacing@letterspace
     }{}%
   }{}%
   % load soul pkg
   \@ifpackageloaded{letterspace}{}{%
     \IfFileExists{soul.sty}{%
-      \RequirePackage{soul}
-      \sodef\allcapsspacing{}{0.15em}{0.65em}{0.6em}
-      \sodef\smallcapsspacing{}{0.075em}{0.5em}{0.6em}
-      \sodef\sotextsc{\scshape}{0.075em}{0.5em}{0.6em}
-      \renewcommand{\allcaps}[1]{\allcapsspacing{\MakeTextUppercase{##1}}}
-      \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{##1}}}
-      \renewcommand{\textsc}[1]{\sotextsc{##1}}
-    }{
-      \TufteWarningNL{Couldn't locate `soul' package}
+      \@tufte@letterspacing@soul
+    }{%
+      \@tufte@warning@noline{Couldn't locate `soul' package}%
     }% soul not installed... giving up.
   }%
 }{}
@@ -702,16 +742,16 @@
       %% pdfLaTeX version is too old or not using pdfLaTeX
       %\ifthenelse{\boolean{@tufte@xetex}}{%
         %% TODO use xetex letterspacing
-        %\TufteDebugInfoNL{XeTeX detected. \MessageBreak Reverting to `soul' package for letterspacing}%
+        %\@tufte@debug@info@noline{XeTeX detected. Reverting to `soul' package for letterspacing}%
         %\@tufte@loadsoul%
       %}{%
         %% use `soul' package for letterspacing
-        %\TufteDebugInfoNL{Old version of pdfTeX detected. \MessageBreak Reverting to `soul' package for letterspacing}%
+        %\@tufte@debug@info@noline{Old version of pdfTeX detected. Reverting to `soul' package for letterspacing}%
         %\@tufte@loadsoul%
       %}
     %}{%
       %\IfFileExists{letterspace.sty}{%
-        %\TufteDebugInfoNL{Modern version of pdfTeX detected. \MessageBreak Using `letterspace' package}
+        %\@tufte@debug@info@noline{Modern version of pdfTeX detected. Using `letterspace' package}
         %\RequirePackage{letterspace}
         %% Set up letterspacing (using microtype package) -- requires pdfTeX v1.40+
         %\renewcommand{\allcapsspacing}[1]{\textls[200]{##1}}
@@ -720,12 +760,12 @@
         %\renewcommand{\smallcaps}[1]{\smallcapsspacing{\MakeTextLowercase{##1}}}
         %\renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{##1}}}
       %}{% microtype failed, check for soul
-        %\TufteDebugInfoNL{Modern version of pdfTeX detected, but `letterspace' \MessageBreak package not installed.  \MessageBreak Reverting to  `soul' package for letterspacing}
+        %\@tufte@debug@info@noline{Modern version of pdfTeX detected, but `letterspace' package not installed.  Reverting to  `soul' package for letterspacing}
         %\@tufte@loadsoul
       %}%
     %}%
   %}{%
-    %\TufteDebugInfoNL{Plain LaTeX detected. \MessageBreak Using `soul' package for letterspacing}
+    %\@tufte@debug@info@noline{Plain LaTeX detected. Using `soul' package for letterspacing}
     %\@tufte@loadsoul
   %}
 %}{%
@@ -737,7 +777,7 @@
 % An environment for paragraph-style section
 
 \providecommand\newthought[1]{%
-   \addvspace{1.0\baselineskip plus 0.5ex minus 0.2ex}%
+   \tuftebreak
    \noindent\textsc{#1}%
 }
 
@@ -780,10 +820,19 @@
 \RequirePackage{setspace}
 
 %%
+% Color
+\RequirePackage[usenames,dvipsnames,svgnames]{xcolor}% load before bidi
+
+%%
 % Load the bidi package if instructed to do so.  This package must be loaded
 % prior to our redefining the \footnote and \cite commands.
 
-\ifthenelse{\boolean{@tufte@loadbidi}}{\RequirePackage{bidi}}{}
+\ifthenelse{\boolean{@tufte@loadbidi}}{%
+  \AtBeginDocument{%
+    \RequirePackage{bidi}
+    \@tufte@pkghook@post@bidi%
+  }%
+}{}
 
 
 %%
@@ -797,7 +846,7 @@
   % Use grouping to emulate a multi-token afterassignment queue
   \begingroup%
   % Put `\toks 0 {' into the afterassignment queue
-  \aftergroup\toks\aftergroup0\aftergroup{% 
+  \aftergroup\toks\aftergroup0\aftergroup{%
   % Apply \trimb to the replacement text of #1, adding a leading
   % \noexpand to prevent brace stripping and to serve another purpose
   % later.
@@ -821,17 +870,19 @@
 %%
 % Citations should go in the margin as sidenotes
 
-\RequirePackage{natbib}
-\RequirePackage{bibentry}        % allows bibitems to be typeset outside thebibliography environment
-% Redefine the \BR@b@bibitem command to fix a bug with bibentry+chicago style
-\renewcommand\BR@b@bibitem[2][]{%
-  \ifthenelse{\isempty{#1}}%
-    {\BR@bibitem{#2}}%
-    {\BR@bibitem[#1]{#2}}%
-  \BR@c@bibitem{#2}%
-}
-\nobibliography*                % pre-loads the bibliography keys
-\providecommand{\doi}[1]{\textsc{doi:} #1}% pre-defining this so it may be used before the \bibliography command it issued
+\ifthenelse{\boolean{@tufte@loadnatbib}}{%
+  \RequirePackage{natbib}%
+  \RequirePackage{bibentry}% allows bibitems to be typeset outside thebibliography environment
+  % Redefine the \BR@b@bibitem command to fix a bug with bibentry+chicago style
+  \renewcommand\BR@b@bibitem[2][]{%
+    \ifthenelse{\isempty{#1}}%
+      {\BR@bibitem{#2}}%
+      {\BR@bibitem[#1]{#2}}%
+    \BR@c@bibitem{#2}%
+  }%
+  \nobibliography*% pre-loads the bibliography keys
+  \providecommand{\doi}[1]{\textsc{doi:} #1}% pre-defining this so it may be used before the \bibliography command it issued
+}{}
 
 %%
 % Normal \cite behavior
@@ -889,7 +940,6 @@
          \bibentry{\@temp@bibkeyx};\ }%
       \stepcounter{@tufte@num@bibkeys}%
     }%
-    \@tufte@reset@par% use parindent and parskip settings for body text
   }%
 }
 
@@ -904,7 +954,9 @@
 %%
 % Set the default \cite style.  This is set and reset by the \sidenote command.
 
-\let\cite\@tufte@normal@cite
+\ifthenelse{\boolean{@tufte@loadnatbib}}{%
+  \let\cite\@tufte@normal@cite
+}{}
 
 %%
 % Transform existing \footnotes into \sidenotes
@@ -912,7 +964,7 @@
 
 \RequirePackage{optparams}% for our new sidenote commands -- provides multiple optional arguments for commands
 
-\providecommand*{\footnotelayout}{\@tufte@sidenote@font\@tufte@sidenote@justification}
+\providecommand{\footnotelayout}{\@tufte@sidenote@font\@tufte@sidenote@justification}
 \renewcommand{\footnotelayout}{\@tufte@sidenote@font\@tufte@sidenote@justification}
 
 % Override footmisc's definition to set the sidenote marks (numbers) inside the
@@ -925,7 +977,7 @@
 \providecommand*{\multiplefootnotemarker}{3sp}
 \providecommand*{\multfootsep}{,}
 
-\renewcommand*\@footnotemark{%
+\renewcommand{\@footnotemark}{%
   \leavevmode%
   \ifhmode%
     \edef\@x@sf{\the\spacefactor}%
@@ -950,7 +1002,6 @@
   \marginpar{%
     \hbox{}\vspace*{#1}%
     \def\baselinestretch {\setspace@singlespace}%
-    \ifthenelse{\boolean{@tufte@loadbidi}}{\if@rl@footnote\@rltrue\else\@rlfalse\fi}{}%
     \reset@font\footnotesize%
     \@tufte@margin@par% use parindent and parskip settings for marginal text
     \vspace*{-1\baselineskip}\noindent%
@@ -963,7 +1014,29 @@
        }%
     \color@endgroup%
   }%
-  \@tufte@reset@par% use parindent and parskip settings for body text
+}%
+
+% Ensure this is run after the bidi package has been loaded
+\def\@tufte@pkghook@post@bidi{}%
+\g@addto@macro{\@tufte@pkghook@post@bidi}{%
+  \renewcommand\@footnotetext[2][0pt]{%
+    \marginpar{%
+      \hbox{}\vspace*{#1}%
+      \def\baselinestretch {\setspace@singlespace}%
+      \if@rl@footnote\@rltrue\else\@rlfalse\fi%
+      \reset@font\footnotesize%
+      \@tufte@margin@par% use parindent and parskip settings for marginal text
+      \vspace*{-1\baselineskip}\noindent%
+      \protected@edef\@currentlabel{%
+         \csname p@footnote\endcsname\@thefnmark%
+      }%
+      \color@begingroup%
+         \@makefntext{%
+           \ignorespaces#2%
+         }%
+      \color@endgroup%
+    }%
+  }%
 }%
 
 %
@@ -974,7 +1047,9 @@
 
 % #1 = footnote num, #2 = vertical offset, #3 = footnote text
 \long\def\@tufte@sidenote[#1][#2]#3{%
-  \let\cite\@tufte@infootnote@cite%   use the in-sidenote \cite command
+  \ifthenelse{\boolean{@tufte@loadnatbib}}{%
+    \let\cite\@tufte@infootnote@cite%   use the in-sidenote \cite command
+  }{}%
   \gdef\@tufte@citations{}%           clear out any old citations
   \ifthenelse{\NOT\isempty{#2}}{%
     \gsetlength{\@tufte@sidenote@vertical@offset}{#2}%
@@ -995,26 +1070,30 @@
     \@footnotemark\@footnotetext[\@tufte@sidenote@vertical@offset]{#3}%
   }%
   \@tufte@print@citations%            print any citations
-  \let\cite\@tufte@normal@cite%       go back to using normal in-text \cite command
+  \ifthenelse{\boolean{@tufte@loadnatbib}}{%
+    \let\cite\@tufte@normal@cite%       go back to using normal in-text \cite command
+  }{}%
   \unskip\ignorespaces%               remove extra white space
   \kern-\multiplefootnotemarker%      remove \kern left behind by sidenote
   \kern\multiplefootnotemarker\relax% add new \kern here to replace the one we yanked
 }
 
-\newcommand*{\sidenote}{\optparams{\@tufte@sidenote}{[][0pt]}}
-\renewcommand*{\footnote}{\optparams{\@tufte@sidenote}{[][0pt]}}
+\newcommand{\sidenote}{\optparams{\@tufte@sidenote}{[][0pt]}}
+\renewcommand{\footnote}{\optparams{\@tufte@sidenote}{[][0pt]}}
 
 %%
 % Sidenote without the footnote mark
 
 \newcommand\marginnote[2][0pt]{%
-  \let\cite\@tufte@infootnote@cite%   use the in-sidenote \cite command
+  \ifthenelse{\boolean{@tufte@loadnatbib}}{%
+    \let\cite\@tufte@infootnote@cite%   use the in-sidenote \cite command
+  }{}%
   \gdef\@tufte@citations{}%           clear out any old citations
-  \@tufte@margin@par%                 use parindent and parskip settings for marginal text
-  \marginpar{\hbox{}\vspace*{#1}\@tufte@marginnote@font\@tufte@marginnote@justification\vspace*{-1\baselineskip}\noindent #2}%
-  \@tufte@reset@par%                  use parindent and parskip settings for body text
+  \marginpar{\hbox{}\vspace*{#1}\@tufte@marginnote@font\@tufte@marginnote@justification\@tufte@margin@par\vspace*{-1\baselineskip}\noindent #2}%
   \@tufte@print@citations%            print any citations
-  \let\cite\@tufte@normal@cite%       go back to using normal in-text \cite command
+  \ifthenelse{\boolean{@tufte@loadnatbib}}{%
+    \let\cite\@tufte@normal@cite%       go back to using normal in-text \cite command
+  }{}%
 }
 
 
@@ -1042,7 +1121,6 @@
   {\end{minipage}%
   \end{lrbox}%
   \marginpar{\usebox{\@tufte@margin@floatbox}}%
-  \@tufte@reset@par%
   }
 
 
@@ -1098,9 +1176,9 @@
 
 \newcommand{\@tufte@float@debug@info}{}% contains debug info generated as the float is processed
 \newcommand{\@tufte@float@debug}[1]{% adds debug info to the queue for output
-\ifthenelse{\equal{\@tufte@float@debug@info}{}}%
+  \ifthenelse{\equal{\@tufte@float@debug@info}{}}%
     {\def\@tufte@float@debug@info{#1}}%
-    {\g@addto@macro\@tufte@float@debug@info{\MessageBreak#1}}
+    {\g@addto@macro\@tufte@float@debug@info{\MessageBreak#1}}%
 }
 
 \newcommand{\floatalignment}{x}% holds the current float alignment (t, b, h, p)
@@ -1159,7 +1237,7 @@
       {\gsetboolean{@tufte@float@recto}{false}\@tufte@float@debug{Detected page: [verso/even]}}%
     % If the float placement specifier is 'b' and only 'b', then bottom-align the mini-pages, otherwise top-align them.
     \renewcommand{\@tufte@fps}{#1}%
-    \@tufte@float@debug{Allowed positions: [#1]}
+    \@tufte@float@debug{Allowed positions: [#1]}%
     \ifthenelse{\equal{#1}{b}\OR\equal{#1}{B}}%
       {\renewcommand{\floatalignment}{b}\@tufte@float@debug{Presumed position: [bottom]}}%
       {\renewcommand{\floatalignment}{t}\@tufte@float@debug{Presumed position: [top]}}%
@@ -1262,8 +1340,8 @@
 %%
 % Redefine the figure environment to place the captions in the margin space
 
-\renewenvironment{figure}[1][htbp]
-  {\begin{@tufte@float}[#1]{figure}{}}
+\renewenvironment{figure}[1][htbp]%
+  {\ifvmode\else\unskip\fi\begin{@tufte@float}[#1]{figure}{}}
   {\end{@tufte@float}}
 
 
@@ -1271,7 +1349,7 @@
 % Redefine the table environment to place the captions in the margin space
 
 \renewenvironment{table}[1][htbp]
-  {\begin{@tufte@float}[#1]{table}{}}
+  {\ifvmode\else\unskip\fi\begin{@tufte@float}[#1]{table}{}}
   {\end{@tufte@float}}
 
 
@@ -1279,7 +1357,7 @@
 % Full-width figure
 
 \renewenvironment{figure*}[1][htbp]%
-  {\begin{@tufte@float}[#1]{figure}{star}}
+  {\ifvmode\else\unskip\fi\begin{@tufte@float}[#1]{figure}{star}}
   {\end{@tufte@float}}
 
 
@@ -1287,7 +1365,7 @@
 % Full-width table
 
 \renewenvironment{table*}[1][htbp]%
-  {\begin{@tufte@float}[#1]{table}{star}}
+  {\ifvmode\else\unskip\fi\begin{@tufte@float}[#1]{table}{star}}
   {\end{@tufte@float}}
 
 
@@ -1326,7 +1404,7 @@
 % we should load the Palatino, Helvetica, and Bera Mono fonts (if they are
 % installed.)
 
-\ifthenelse{\boolean{@tufte@loadfonts}\AND\NOT\boolean{@tufte@xetex}}{%
+\ifthenelse{\boolean{@tufte@loadfonts}\AND\NOT\boolean{@tufte@xetex}\AND\NOT\boolean{@tufte@luatex}}{%
   \IfFileExists{mathpazo.sty}{\RequirePackage[osf,sc]{mathpazo}}{}
   \IfFileExists{helvet.sty}{\RequirePackage[scaled=0.90]{helvet}}{}
   \IfFileExists{beramono.sty}{\RequirePackage[scaled=0.85]{beramono}}{}
@@ -1445,11 +1523,17 @@
   \typeout{----------------------------------------------------}
 }
 
-
-
 %%
-% Color
-\RequirePackage[usenames,dvipsnames,svgnames]{xcolor}
+% Amount of space to skip before \newthought or after title block
+
+\newskip\tufteskipamount
+\tufteskipamount=1.0\baselineskip plus 0.5ex minus 0.2ex
+
+\newcommand{\tuftebreak}{\par\ifdim\lastskip<\tufteskipamount
+  \removelastskip\penalty-100\tufteskip\fi}
+
+\newcommand{\tufteskip}{\vspace\tufteskipamount}
+
 
 %%
 % Produces a full title page
@@ -1477,24 +1561,27 @@
   \newpage
   \global\@topnum\z@% prevent floats from being placed at the top of the page
   \begingroup
-  \setlength{\parindent}{0pt}
-  \setlength{\parskip}{4pt}
-  \ifthenelse{\boolean{@tufte@sfsidenotes}}
-    {\begingroup
-      % FIXME fails with \thanks
-      \sffamily
-      \par{\LARGE\allcaps{\@title}}
-      \ifthenelse{\equal{\@author}{}}{}{\par{\Large\allcaps{\@author}}}
-      \ifthenelse{\equal{\@date}{}}{}{\par{\Large\allcaps{\@date}}}
-    \endgroup}
-    {\begingroup
-      \par{\LARGE\textit{\@title}}
-      \ifthenelse{\equal{\@author}{}}{}{\par{\Large\textit{\@author}}}
-      \ifthenelse{\equal{\@date}{}}{}{\par{\Large\textit{\@date}}}
-    \endgroup}
-  \par
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{4pt}%
+    \let\@@title\@empty
+    \let\@@author\@empty
+    \let\@@date\@empty
+    \ifthenelse{\boolean{@tufte@sfsidenotes}}{%
+      \gdef\@@title{\sffamily\LARGE\allcaps{\@title}\par}%
+      \gdef\@@author{\sffamily\Large\allcaps{\@author}\par}%
+      \gdef\@@date{\sffamily\Large\allcaps{\@date}\par}%
+    }{%
+      \gdef\@@title{\LARGE\itshape\@title\par}%
+      \gdef\@@author{\Large\itshape\@author\par}%
+      \gdef\@@date{\Large\itshape\@date\par}%
+    }%
+    \@@title
+    \@@author
+    \@@date
   \endgroup
   \thispagestyle{plain}% suppress the running head
+  \tuftebreak% add some space before the text begins
+  \@afterindentfalse\@afterheading% suppress indentation of the next paragraph
 }
 
 
@@ -1558,27 +1645,27 @@
 \titlespacing*{\chapter}{0pt}{50pt}{40pt}
 \titlespacing*{\section}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
 \titlespacing*{\subsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus.2ex}
-  
+
 % Subsubsection and following section headings shouldn't be used.
 % See Bringhurst's _The Elements of Typography_, section 4.2.2.
 \renewcommand\subsubsection{%
-  \TufteError{\noexpand\subsubsection is undefined by this class.%
-    \MessageBreak See Robert Bringhurst's _The Elements of 
-    \MessageBreak Typographic Style_, section 4.2.2.
-    \MessageBreak \noexpand\subsubsection was used}
-    {From Bringhurst's _The Elements of Typographic Style_, section 4.2.2: Use as 
-    \MessageBreak many levels of headings as you need, no more and no fewer.  Also see the many 
-    \MessageBreak related threads on Ask E.T. at http://www.edwardtufte.com/.}
+  \@tufte@error{\string\subsubsection is undefined by this class.
+    See Robert Bringhurst's _The Elements of
+    Typographic Style_, section 4.2.2.
+    \string\subsubsection was used}
+    {From Bringhurst's _The Elements of Typographic Style_, section 4.2.2: Use as
+    many levels of headings as you need, no more and no fewer.  Also see the many
+    related threads on Ask E.T. at http://www.edwardtufte.com/.}
 }
 
 \renewcommand\subparagraph{%
-  \TufteError{\noexpand\subparagraph is undefined by this class.%
-    \MessageBreak See Robert Bringhurst's _The Elements of 
-    \MessageBreak Typographic Style_, section 4.2.2.
-    \MessageBreak \noexpand\subparagraph was used}
-    {From Bringhurst's _The Elements of Typographic Style_, section 4.2.2: Use as 
-    \MessageBreak many levels of headings as you need, no more and no fewer.  Also see the many 
-    \MessageBreak related threads on Ask E.T. at http://www.edwardtufte.com/.}
+  \@tufte@error{\string\subparagraph is undefined by this class.%
+    See Robert Bringhurst's _The Elements of
+    Typographic Style_, section 4.2.2.
+    \string\subparagraph was used}
+    {From Bringhurst's _The Elements of Typographic Style_, section 4.2.2: Use as
+    many levels of headings as you need, no more and no fewer.  Also see the many
+    related threads on Ask E.T. at http://www.edwardtufte.com/.}
 }
 
 
@@ -1668,60 +1755,48 @@
 % A handy command to disable hyphenation for short bits of text.
 % Borrowed from Peter Wilson's `hyphenat' package.
 
-\newlanguage\langwohyphens% define a language without hyphenation rules
-\newcommand{\nohyphens}[1]{{\language\langwohyphens #1}}% used for short bits of text
-\newcommand{\nohyphenation}{\language\langwohyphens}% can be used inside environments for longer text
+\AtBeginDocument{%
+  \@ifpackageloaded{hyphenat}{}{%
+    \newlanguage\langwohyphens% define a language without hyphenation rules
+    \providecommand{\nohyphens}[1]{{\language\langwohyphens #1}}% used for short bits of text
+    \providecommand{\nohyphenation}{\language\langwohyphens}% can be used inside environments for longer text
+  }%
+}
 
 %%
-% The bibliography environment
+% Redefine \bibsection to not mark the running heads.
+% (Code modified from natbib.sty.)
 
-\setlength\bibindent{1.5em}
-\renewenvironment{thebibliography}[1]
-  {%
-    \ifthenelse{\equal{\@tufte@class}{book}}%
-      {\chapter{\bibname}}%
-      {\section*{\refname}}%
-%   \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
-    \list{\@biblabel{\@arabic\c@enumiv}}%
-         {\settowidth\labelwidth{\@biblabel{#1}}%
-          \leftmargin\labelwidth
-          \advance\leftmargin\labelsep
-          \@openbib@code
-          \usecounter{enumiv}%
-          \let\p@enumiv\@empty
-          \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-    \sloppy
-    \clubpenalty4000
-    \@clubpenalty \clubpenalty
-    \widowpenalty4000%
-    \sfcode`\.\@m%
-  }
-  {%
-    \def\@noitemerr
-    {\@latex@warning{Empty `thebibliography' environment}}%
-    \endlist%
-  }
-\renewcommand\newblock{\hskip .11em\@plus.33em\@minus.07em}
-
+\ifthenelse{\boolean{@tufte@loadnatbib}}{%
+  \@ifundefined{chapter}{%
+    \renewcommand\bibsection{\section*{\refname}}%
+  }{%
+    \@ifundefined{NAT@sectionbib}{%
+      \renewcommand\bibsection{\chapter{\bibname}}%
+    }{%
+      \renewcommand\bibsection{\section*{\bibname}}%
+    }%
+  }%
+}
 
 %%
 % An index environment to mimic Tufte's indexes
 
 \RequirePackage{multicol}
-\renewenvironment{theindex}
-  {\begin{fullwidth}%
-    \small%
-    \ifthenelse{\equal{\@tufte@class}{book}}%
-      {\chapter{\indexname}}%
-      {\section*{\indexname}}%
-    \parskip0pt%
-    \parindent0pt%
-    \let\item\@idxitem%
-    \begin{multicols}{3}%
-  }
-  {\end{multicols}%
-    \end{fullwidth}%
-  }
+\renewenvironment{theindex}{%
+  \ifthenelse{\equal{\@tufte@class}{book}}%
+    {\chapter{\indexname}}%
+    {\section*{\indexname}}%
+  \begin{fullwidth}%
+  \small%
+  \parskip0pt%
+  \parindent0pt%
+  \let\item\@idxitem%
+  \begin{multicols}{3}%
+}{%
+  \end{multicols}%
+  \end{fullwidth}%
+}
 \renewcommand\@idxitem{\par\hangindent 2em}
 \renewcommand\subitem{\par\hangindent 3em\hspace*{1em}}
 \renewcommand\subsubitem{\par\hangindent 4em\hspace*{2em}}
@@ -1734,7 +1809,7 @@
 
 \def\morefloats{% provides a total of 52 floats
   \ifthenelse{\isundefined{\bx@S}}{%
-    \TufteDebugInfoNL{Adding 34 more float slots.}
+    \@tufte@debug@info@noline{Adding 34 more float slots.}
     \newinsert\bx@S
     \newinsert\bx@T
     \newinsert\bx@U
@@ -1783,7 +1858,7 @@
                     \@elt\bx@w\@elt\bx@x\@elt\bx@y\@elt\bx@z}%
   }{% we've already added another 34 floats, so we'll add 26 more, but that's it!
     \ifthenelse{\isundefined{\bx@AA}}{%
-      \TufteDebugInfoNL{Adding 26 more float slots.}
+      \@tufte@debug@info@noline{Adding 26 more float slots.}
       \newinsert\bx@AA
       \newinsert\bx@BB
       \newinsert\bx@CC
@@ -1829,8 +1904,8 @@
                       \@elt\bx@SS\@elt\bx@TT\@elt\bx@UU\@elt\bx@VV
                       \@elt\bx@WW\@elt\bx@XX\@elt\bx@YY\@elt\bx@ZZ}%
     }{%
-      \TufteError{You may only call \string\morefloats\space twice. See the\MessageBreak Tufte-LaTeX documentation for other workarounds}
-        {There are already 78 float slots allocated. Try using \string\FloatBarrier\space or\MessageBreak \string\clearpage\space to place some floats before creating more.}
+      \@tufte@error{You may only call \string\morefloats\space twice. See the Tufte-LaTeX documentation for other workarounds}
+        {There are already 78 float slots allocated. Try using \string\FloatBarrier\space or \string\clearpage\space to place some floats before creating more.}
     }%
   }%
 }
@@ -1849,6 +1924,85 @@
 
 
 %%
+% Detect of the float package has been loaded
+
+\AtBeginDocument{%
+  \@ifpackageloaded{float}{%
+    % Save the redefined float environment (instead of the LaTeX float environment)
+    \let\@tufte@orig@float\@float
+    \let\@tufte@orig@endfloat\end@float
+
+    % Define Tuftian float styles (with the caption in the margin)
+    \newcommand{\floatc@tufteplain}[2]{%
+      \begin{lrbox}{\@tufte@caption@box}%
+        \begin{minipage}[\floatalignment]{\marginparwidth}\hbox{}%
+          \@tufte@caption@font{\@fs@cfont #1:} #2\par%
+        \end{minipage}%
+      \end{lrbox}%
+      \smash{\hspace{\@tufte@caption@fill}\usebox{\@tufte@caption@box}}%
+    }
+    \newcommand{\fs@tufteplain}{%
+      \def\@fs@cfont{\@tufte@caption@font}%
+      \let\@fs@capt\floatc@tufteplain%
+      \def\@fs@pre{}%
+      \def\@fs@post{}%
+      \def\@fs@mid{}%
+      \let\@fs@iftopcapt\iftrue%
+    }
+    \let\fs@tufteplaintop=\fs@tufteplain
+    \let\floatc@tufteplaintop=\floatc@tufteplain
+    \newcommand\floatc@tufteruled[2]{%
+      {\@fs@cfont #1} #2\par%
+    }
+    \newcommand\fs@tufteruled{%
+      \def\@fs@cfont{\@tufte@caption@font}%
+      \let\@fs@capt\floatc@tufteplain%
+      \def\@fs@pre{\hrule height.8pt depth0pt width\textwidth \kern2pt}%
+      \def\@fs@post{\kern2pt\hrule width\textwidth\relax}%
+      \def\@fs@mid{}%
+      \let\@fs@iftopcapt\iftrue%
+    }
+    \newcommand\fs@tufteboxed{%
+      \def\@fs@cfont{}%
+      \let\@fs@capt\floatc@tufteplain%
+      \def\@fs@pre{%
+        \setbox\@currbox\vbox{\hbadness10000
+        \moveleft3.4pt\vbox{\advance\hsize by6.8pt
+          \hrule \hbox to\hsize{\vrule\kern3pt
+            \vbox{\kern3pt\box\@currbox\kern3pt}\kern3pt\vrule}\hrule}}
+      }%
+      \def\@fs@mid{\kern2pt}%
+      \def\@fs@post{}%
+      \let\@fs@iftopcapt\iftrue%
+    }
+  }{%
+    % Nothing to do
+  }
+}
+
+\AtBeginDocument{%
+  \@ifpackageloaded{algorithm}{%
+    % Set the float style to the Tuftian version
+    \ifthenelse{\equal{\ALG@floatstyle}{plain}\OR\equal{\ALG@floatstyle}{ruled}\OR\equal{\ALG@floatstyle}{boxed}}{%
+      \@tufte@info@noline{Switching algorithm float style from \ALG@floatstyle\space to tufte\ALG@floatstyle}%
+      \floatstyle{tufte\ALG@floatstyle}%
+      \restylefloat{algorithm}%
+    }{}%
+  }{%
+    % Nothing to do
+  }
+}
+
+
+%%
+% For compatibility with the subfig package, we'll set captions=false so that
+% it doesn't load the caption package (which modifies our own caption
+% formatting).
+
+\PassOptionsToPackage{caption=false}{subfig}
+
+
+%%
 % If debugging is enabled, print the Tufte-LaTeX options and the list of
 % files.
 
@@ -1862,11 +2016,10 @@
 
 \IfFileExists{tufte-common-local.tex}
   {\input{tufte-common-local.tex}%
-   \TufteInfoNL{Loading tufte-common-local.tex}}
+   \@tufte@info@noline{Loading tufte-common-local.tex}}
   {}
 
 
 %%
 % End of file
 \endinput
-
