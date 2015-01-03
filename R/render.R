@@ -222,6 +222,10 @@ render <- function(input,
     cache_dir <-knitr_cache_dir(input, pandoc_to)
     knitr::opts_chunk$set(cache.path=cache_dir)
 
+    # strip the trailing slash from cache_dir so that file.exists
+    # check on it later works on windows
+    cache_dir <- gsub("/$", "", cache_dir)
+
     # merge user options and hooks
     if (!is.null(output_format$knitr)) {
       knitr::opts_knit$set(as.list(output_format$knitr$opts_knit))
