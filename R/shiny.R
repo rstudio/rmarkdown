@@ -97,7 +97,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   
   # form and test locations
   dir <- normalizePath(dir, winslash="/")
-  if (!file.exists(dir))
+  if (!dir_exists(dir))
     stop("The directory '", dir, "' does not exist")
 
   if (!is.null(file)) {
@@ -236,7 +236,7 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
       result_path <- shiny::maskReactiveContext(do.call(render, args))
 
       # ensure the resource folder exists, and map requests to it in Shiny
-      if (!file.exists(resource_folder))
+      if (!dir_exists(resource_folder))
         dir.create(resource_folder, recursive = TRUE)
       shiny::addResourcePath(basename(resource_folder), resource_folder)
 
@@ -404,7 +404,7 @@ file.path.ci <- function(dir, name) {
   default <- file.path(dir, name)
   if (file.exists(default))
     return(default)
-  if (!file.exists(dir))
+  if (!dir_exists(dir))
     return(default)
 
   matches <- list.files(dir, name, ignore.case=TRUE, full.names=TRUE,

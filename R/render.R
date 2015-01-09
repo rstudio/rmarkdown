@@ -64,15 +64,10 @@ render <- function(input,
 
   # setup a cleanup function for intermediate files
   intermediates <- c()
-  on.exit(lapply(intermediates,
-                 function(f) {
-                   if (clean && file.exists(f))
-                     unlink(f, recursive = TRUE)
-                 }),
-          add = TRUE)
+  on.exit(if (clean) unlink(intermediates, recursive = TRUE), add = TRUE)
 
   # ensure we have a directory to store intermediates
-  if (!is.null(intermediates_dir) && !file.exists(intermediates_dir))
+  if (!is.null(intermediates_dir) && !dir_exists(intermediates_dir))
     dir.create(intermediates_dir)
   intermediates_loc <- function(file) {
     if (is.null(intermediates_dir))
@@ -168,7 +163,7 @@ render <- function(input,
 
   # if an output_dir was specified then concatenate it with the output file
   if (!is.null(output_dir)) {
-    if (!file.exists(output_dir))
+    if (!dir_exists(output_dir))
       dir.create(output_dir)
     output_file <- file.path(output_dir, basename(output_file))
   }
@@ -222,7 +217,7 @@ render <- function(input,
     cache_dir <-knitr_cache_dir(input, pandoc_to)
     knitr::opts_chunk$set(cache.path=cache_dir)
 
-    # strip the trailing slash from cache_dir so that file.exists
+    # strip the trailing slash from cache_dir so that file.exists() and unlink()
     # check on it later works on windows
     cache_dir <- gsub("/$", "", cache_dir)
 
@@ -293,7 +288,7 @@ render <- function(input,
 
   # clean the files_dir if we've either been asking to clean supporting files or
   # the knitr cache is active
-  if (output_format$clean_supporting && (is.null(cache_dir) || !file.exists(cache_dir)))
+  if (output_format$clean_supporting && (is.null(cache_dir) || !dir_exists(cache_dir)))
       intermediates <- c(intermediates, files_dir)
 
   # read the input text as UTF-8 then write it back out
@@ -394,7 +389,7 @@ render <- function(input,
 render_supporting_files <- function(from, files_dir, rename_to = NULL) {
 
   # auto-create directory for supporting files
-  if (!file.exists(files_dir))
+  if (!dir_exists(files_dir))
     dir.create(files_dir)
 
   # target directory is based on the dirname of the path or the rename_to
@@ -405,7 +400,7 @@ render_supporting_files <- function(from, files_dir, rename_to = NULL) {
                                      rename_to))
 
   # copy the directory if it hasn't already been copied
-  if (!file.exists(target_dir) && !file.exists(target_stage_dir)) {
+  if (!dir_exists(target_dir) && !dir_exists(target_stage_dir)) {
     file.copy(from = from,
               to = files_dir,
               recursive = TRUE)

@@ -78,6 +78,10 @@ as_tmpfile <- function(str) {
   }
 }
 
+dir_exists <- function(x) {
+  file_test('-d', x)
+}
+
 file_with_ext <- function(file, ext) {
   paste(tools::file_path_sans_ext(file), ".", ext, sep = "")
 }
