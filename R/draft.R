@@ -101,7 +101,7 @@ draft <- function(file,
     file <- tools::file_path_sans_ext(file)
 
     # create dir (new dir only)
-    if (file.exists(file))
+    if (dir_exists(file))
       stop("The directory '", file, "' already exists.")
     dir.create(file)
 
@@ -147,7 +147,7 @@ list_template_dirs <- function() {
 
     # check to see if the package includes a template folder
     template_folder <- system.file("rmarkdown", "templates", package = pkg)
-    if (file.exists(template_folder)) {
+    if (dir_exists(template_folder)) {
 
       # it does; list each template directory within the template folder
       template_dirs <- list.dirs(path = template_folder, recursive = FALSE)
