@@ -67,9 +67,9 @@ pandoc. If the input requires knitting then
 }
 \details{
 
-Note that the knitr \code{error} option is set to \code{TRUE} 
-during rendering (which is different from the knitr default
-value of \code{FALSE}).
+Note that the \pkg{knitr} \code{error} option is set to \code{FALSE}
+during rendering (which is different from the \pkg{knitr} default
+value of \code{TRUE}).
 
 For additional details on rendering R scripts see
 \link[=compile_notebook]{Compiling R scripts to a notebook}.
