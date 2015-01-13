@@ -385,7 +385,7 @@ pandoc_mathjax_args <- function(mathjax,
       mathjax_path <- render_supporting_files(mathjax_path,
                                               files_dir,
                                               "mathjax-local")
-      mathjax <- paste(relative_to(output_dir, mathjax_path), "/",
+      mathjax <- paste(normalized_relative_to(output_dir, mathjax_path), "/",
                        mathjax_config(), sep = "")
     }
 
@@ -463,8 +463,10 @@ pandoc_html_highlight_args <- function(highlight,
       if (self_contained)
         highlight_path <- pandoc_path_arg(highlight_path)
       else
-        highlight_path <- relative_to(output_dir,
+      {
+        highlight_path <- normalized_relative_to(output_dir,
           render_supporting_files(highlight_path, files_dir))
+      }
       args <- c(args, "--no-highlight")
       args <- c(args,
                 "--variable", paste("highlightjs=", highlight_path, sep=""))
