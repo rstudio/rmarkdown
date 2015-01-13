@@ -49,7 +49,6 @@ rm -rf $MATHJAX_DIR/fonts/HTML-CSS/STIX-Web
 rm -rf $MATHJAX_DIR/fonts/HTML-CSS/TeX/svg
 rm -rf $MATHJAX_DIR/fonts/HTML-CSS/TeX/png
 rm -rf $MATHJAX_DIR/fonts/HTML-CSS/TeX/eot
-rm -rf $MATHJAX_DIR/fonts/HTML-CSS/TeX/woff
 
 rm -rf $MATHJAX_DIR/jax/output/svg
 rm -rf $MATHJAX_DIR/jax/output/HTML-CSS/fonts/Asana-Math
