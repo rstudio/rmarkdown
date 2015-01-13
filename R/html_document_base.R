@@ -139,7 +139,8 @@ html_document_base <- function(smart = TRUE,
           file.copy(in_file, target_res_file)
 
           # replace the reference in the document
-          res_src <- sub(src, relative_to(output_dir, target_res_file), res_src)
+          res_src <- sub(src, normalized_relative_to(
+            output_dir, target_res_file), res_src)
         }
         res_src
       }
