@@ -385,8 +385,12 @@ pandoc_mathjax_args <- function(mathjax,
       mathjax_path <- render_supporting_files(mathjax_path,
                                               files_dir,
                                               "mathjax-local")
-      mathjax <- paste(relative_to(output_dir, mathjax_path), "/",
-                       mathjax_config(), sep = "")
+      mathjax <- paste(relative_to(
+                       normalizePath(
+                         output_dir, winslash = "/", mustWork = FALSE),
+                       normalizePath(
+                         mathjax_path, winslash = "/", mustWork = FALSE)), 
+                       "/", mathjax_config(), sep = "")
     }
 
     if (identical(template, "default")) {
