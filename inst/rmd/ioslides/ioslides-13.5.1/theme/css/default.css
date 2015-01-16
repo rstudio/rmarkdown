@@ -1505,3 +1505,10 @@ input {
 .jslider {
   margin-top: 8px;
 }
+
+/* Additions for DT package */
+
+.dataTables_info, .dataTables_paginate {
+  font-size: 14px;
+}
+
