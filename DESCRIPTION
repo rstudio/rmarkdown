@@ -52,7 +52,7 @@ Imports:
     htmltools (>= 0.2.4),
     caTools
 Suggests:
-    shiny,
+    shiny (>= 0.11),
     testthat,
     digest
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
