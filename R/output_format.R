@@ -148,11 +148,11 @@ knitr_options <- function(opts_knit = NULL,
 #' @seealso \link{knitr_options}, \link{output_format}
 #'
 #' @export
-knitr_options_pdf <- function(fig_width, fig_height, fig_crop) {
+knitr_options_pdf <- function(fig_width, fig_height, fig_crop, dev = 'pdf') {
 
   # default options
   opts_knit <- NULL
-  opts_chunk <- list(dev = 'pdf',
+  opts_chunk <- list(dev = dev,
                      fig.width = fig_width,
                      fig.height = fig_height)
   # set the dingbats option for the pdf device

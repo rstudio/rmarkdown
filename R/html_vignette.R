@@ -17,6 +17,7 @@
 #' @export
 html_vignette <- function(fig_width = 3,
                           fig_height = 3,
+                          dev = 'png',
                           css = NULL,
                           ...) {
   
@@ -27,6 +28,7 @@ html_vignette <- function(fig_width = 3,
   
   html_document(fig_width = fig_width, 
                 fig_height = fig_height, 
+                dev = dev,
                 fig_retina = FALSE,
                 css = css, 
                 theme = NULL,

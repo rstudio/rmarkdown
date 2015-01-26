@@ -6,7 +6,7 @@
 \usage{
 slidy_presentation(incremental = FALSE, duration = NULL, footer = NULL,
   font_adjustment = 0, fig_width = 8, fig_height = 6, fig_retina = if
-  (!fig_caption) 2, fig_caption = FALSE, smart = TRUE,
+  (!fig_caption) 2, fig_caption = FALSE, dev = "png", smart = TRUE,
   self_contained = TRUE, highlight = "default", mathjax = "default",
   template = "default", css = NULL, includes = NULL, keep_md = FALSE,
   lib_dir = NULL, pandoc_args = NULL, ...)
@@ -38,6 +38,8 @@ is because \code{fig_retina} relies on outputting HTML directly into the
 markdown document).}
 
 \item{fig_caption}{\code{TRUE} to render figures with captions}
+
+\item{dev}{Graphics device to use for figure output (defaults to pdf)}
 
 \item{smart}{Produce typographically correct output, converting straight
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to

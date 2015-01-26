@@ -6,6 +6,7 @@
 #'
 #' @param fig_crop \code{TRUE} to automatically apply the \code{pdfcrop} utility
 #'   (if available) to pdf figures
+#' @param dev Graphics device to use for figure output (defaults to pdf)
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
 #'   "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.
@@ -82,6 +83,7 @@ pdf_document <- function(toc = FALSE,
                          fig_height = 4.5,
                          fig_crop = TRUE,
                          fig_caption = FALSE,
+                         dev = 'pdf',
                          highlight = "default",
                          template = "default",
                          keep_tex = FALSE,
@@ -129,7 +131,7 @@ pdf_document <- function(toc = FALSE,
 
   # return format
   output_format(
-    knitr = knitr_options_pdf(fig_width, fig_height, fig_crop),
+    knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
     pandoc = pandoc_options(to = "latex",
                             from = from_rmarkdown(fig_caption),
                             args = args,

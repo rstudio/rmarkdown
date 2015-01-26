@@ -60,6 +60,7 @@ beamer_presentation <- function(toc = FALSE,
                                 fig_height = 7,
                                 fig_crop = TRUE,
                                 fig_caption = FALSE,
+                                dev = 'pdf',
                                 theme = "default",
                                 colortheme = "default",
                                 fonttheme = "default",
@@ -112,7 +113,7 @@ beamer_presentation <- function(toc = FALSE,
 
   # return format
   output_format(
-    knitr = knitr_options_pdf(fig_width, fig_height, fig_crop),
+    knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
     pandoc = pandoc_options(to = "beamer",
                             from = from_rmarkdown(fig_caption),
                             args = args,

@@ -4,7 +4,7 @@
 \alias{knitr_options_pdf}
 \title{Knitr options for a PDF output format}
 \usage{
-knitr_options_pdf(fig_width, fig_height, fig_crop)
+knitr_options_pdf(fig_width, fig_height, fig_crop, dev = "pdf")
 }
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}
@@ -13,6 +13,8 @@ knitr_options_pdf(fig_width, fig_height, fig_crop)
 
 \item{fig_crop}{\code{TRUE} to automatically apply the \code{pdfcrop} utility
 (if available) to pdf figures}
+
+\item{dev}{Graphics device to use for figure output (defaults to png)}
 }
 \value{
 An list that can be passed as the \code{knitr} argument of the

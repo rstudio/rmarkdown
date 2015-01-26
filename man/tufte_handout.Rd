@@ -5,7 +5,7 @@
 \title{Tufte handout format (PDF)}
 \usage{
 tufte_handout(fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
-  highlight = "default", keep_tex = FALSE, includes = NULL,
+  dev = "pdf", highlight = "default", keep_tex = FALSE, includes = NULL,
   pandoc_args = NULL)
 }
 \arguments{
@@ -15,6 +15,8 @@ tufte_handout(fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
 
 \item{fig_crop}{\code{TRUE} to automatically apply the \code{pdfcrop} utility
 (if available) to pdf figures}
+
+\item{dev}{Graphics device to use for figure output (defaults to pdf)}
 
 \item{highlight}{Syntax highlighting style. Supported styles include
 "default", "tango", "pygments", "kate", "monochrome", "espresso",

@@ -6,7 +6,7 @@
 \usage{
 md_document(variant = "markdown_strict", preserve_yaml = FALSE,
   toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
-  fig_retina = NULL, includes = NULL, pandoc_args = NULL)
+  fig_retina = NULL, dev = "png", includes = NULL, pandoc_args = NULL)
 }
 \arguments{
 \item{variant}{Markdown variant to produce (defaults to "markdown_strict").
@@ -31,6 +31,8 @@ md_document(variant = "markdown_strict", preserve_yaml = FALSE,
   widely used retina displays, but will also result in the output of
   \code{<img>} tags rather than markdown images due to the need to set the
   width of the image explicitly.}
+
+\item{dev}{Graphics device to use for figure output (defaults to png)}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}

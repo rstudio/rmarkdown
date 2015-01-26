@@ -10,6 +10,7 @@
 tufte_handout <- function(fig_width = 4,
                           fig_height = 2.5,
                           fig_crop = TRUE,
+                          dev = 'pdf',
                           highlight = "default",
                           keep_tex = FALSE,
                           includes = NULL,
@@ -29,6 +30,7 @@ tufte_handout <- function(fig_width = 4,
   format <- rmarkdown::pdf_document(fig_width = fig_width,
                                     fig_height = fig_height,
                                     fig_crop = fig_crop,
+                                    dev = dev,
                                     highlight = "pygments",
                                     template = template,
                                     keep_tex = keep_tex,
@@ -38,7 +40,7 @@ tufte_handout <- function(fig_width = 4,
                         
   
   # create knitr options (ensure opts and hooks are non-null)
-  knitr_options <- knitr_options_pdf(fig_width, fig_height, fig_crop)
+  knitr_options <- knitr_options_pdf(fig_width, fig_height, fig_crop, dev)
   if (is.null(knitr_options$opts_knit))
     knitr_options$opts_knit <- list()
   if (is.null(knitr_options$knit_hooks))

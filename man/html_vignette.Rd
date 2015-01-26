@@ -4,12 +4,15 @@
 \alias{html_vignette}
 \title{Convert to an HTML vignette.}
 \usage{
-html_vignette(fig_width = 3, fig_height = 3, css = NULL, ...)
+html_vignette(fig_width = 3, fig_height = 3, dev = "png", css = NULL,
+  ...)
 }
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}
 
 \item{fig_height}{Default width (in inches) for figures}
+
+\item{dev}{Graphics device to use for figure output (defaults to png)}
 
 \item{css}{One or more css files to include}
 

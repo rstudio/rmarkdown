@@ -7,9 +7,9 @@
 \usage{
 ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   fig_height = 4.5, fig_retina = if (!fig_caption) 2, fig_caption = FALSE,
-  smart = TRUE, self_contained = TRUE, widescreen = FALSE, smaller = FALSE,
-  transition = "default", mathjax = "default", css = NULL, includes = NULL,
-  keep_md = FALSE, lib_dir = NULL, pandoc_args = NULL, ...)
+  dev = "png", smart = TRUE, self_contained = TRUE, widescreen = FALSE, 
+  smaller = FALSE, transition = "default", mathjax = "default", css = NULL, 
+  includes = NULL, keep_md = FALSE, lib_dir = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
   \item{logo}{Path to file that includes a logo for use in
@@ -35,6 +35,8 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
 
   \item{fig_caption}{\code{TRUE} to render figures with
   captions}
+  
+  \item{dev}{Default graphics device to use for figure output}
 
   \item{smart}{Produce typographically correct output,
   converting straight quotes to curly quotes, --- to

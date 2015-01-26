@@ -6,9 +6,9 @@
 \usage{
 beamer_presentation(toc = FALSE, slide_level = NULL, incremental = FALSE,
   fig_width = 10, fig_height = 7, fig_crop = TRUE, fig_caption = FALSE,
-  theme = "default", colortheme = "default", fonttheme = "default",
-  highlight = "default", template = "default", keep_tex = FALSE,
-  includes = NULL, pandoc_args = NULL)
+  dev = "pdf", theme = "default", colortheme = "default",
+  fonttheme = "default", highlight = "default", template = "default",
+  keep_tex = FALSE, includes = NULL, pandoc_args = NULL)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output (only
@@ -33,6 +33,8 @@ individual bullet you can preceded it with \code{>}. For example:
 (if available) to pdf figures}
 
 \item{fig_caption}{\code{TRUE} to render figures with captions}
+
+\item{dev}{Graphics device to use for figure output (defaults to pdf)}
 
 \item{theme}{Beamer theme (e.g. "AnnArbor").}
 

@@ -5,8 +5,8 @@
 \title{Convert to an HTML fragment.}
 \usage{
 html_fragment(number_sections = FALSE, fig_width = 7, fig_height = 5,
-  fig_retina = if (!fig_caption) 2, fig_caption = FALSE, smart = TRUE,
-  keep_md = FALSE, pandoc_args = NULL, ...)
+  fig_retina = if (!fig_caption) 2, fig_caption = FALSE, dev = "png",
+  smart = TRUE, keep_md = FALSE, pandoc_args = NULL, ...)
 }
 \arguments{
 \item{number_sections}{\code{TRUE} to number section headings}
@@ -23,6 +23,8 @@ is because \code{fig_retina} relies on outputting HTML directly into the
 markdown document).}
 
 \item{fig_caption}{\code{TRUE} to render figures with captions}
+
+\item{dev}{Graphics device to use for figure output (defaults to png)}
 
 \item{smart}{Produce typographically correct output, converting straight
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to

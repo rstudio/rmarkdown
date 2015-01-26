@@ -52,6 +52,7 @@ md_document <- function(variant = "markdown_strict",
                         fig_width = 7,
                         fig_height = 5,
                         fig_retina = NULL,
+                        dev = 'png',
                         includes = NULL,
                         pandoc_args = NULL) {
 
@@ -86,7 +87,7 @@ md_document <- function(variant = "markdown_strict",
 
   # return format
   output_format(
-    knitr = knitr_options_html(fig_width, fig_height, fig_retina, FALSE),
+    knitr = knitr_options_html(fig_width, fig_height, fig_retina, FALSE, dev),
     pandoc = pandoc_options(to = variant,
                             from = from_rmarkdown(),
                             args = args),

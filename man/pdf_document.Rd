@@ -6,9 +6,9 @@
 \usage{
 pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   fig_width = 6.5, fig_height = 4.5, fig_crop = TRUE,
-  fig_caption = FALSE, highlight = "default", template = "default",
-  keep_tex = FALSE, latex_engine = "pdflatex", includes = NULL,
-  pandoc_args = NULL)
+  fig_caption = FALSE, dev = "pdf", highlight = "default",
+  template = "default", keep_tex = FALSE, latex_engine = "pdflatex",
+  includes = NULL, pandoc_args = NULL)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -25,6 +25,8 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
 (if available) to pdf figures}
 
 \item{fig_caption}{\code{TRUE} to render figures with captions}
+
+\item{dev}{Graphics device to use for figure output (defaults to pdf)}
 
 \item{highlight}{Syntax highlighting style. Supported styles include
 "default", "tango", "pygments", "kate", "monochrome", "espresso",
