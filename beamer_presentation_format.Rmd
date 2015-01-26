@@ -103,6 +103,8 @@ There are a number of options that affect the output of figures within Beamer pr
 
 * `fig_caption` controls whether figures are rendered with captions (this is true by default).
 
+* `dev` controls the graphics device used to render figures (defaults to pdf)
+
 For example:
 
     ---

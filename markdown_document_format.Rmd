@@ -82,6 +82,8 @@ There are a number of options that affect the output of figures within HTML docu
 
 * `fig_retina` Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr >= 1.5.21. Set to `null` to prevent retina scaling.
 
+* `dev` controls the graphics device used to render figures (defaults to png)
+
 For example:
 
     ---
