@@ -1,3 +1,13 @@
+rmarkdown 0.5.1
+--------------------------------------------------------------------------------
+
+* Add 'dev' option to output formats to specify output device for figures
+
+* Enable use of footnotes in titles of LaTeX documents
+
+* Various improvements related to directory detection/handling on Windows
+
+
 rmarkdown 0.4.2
 --------------------------------------------------------------------------------
 
