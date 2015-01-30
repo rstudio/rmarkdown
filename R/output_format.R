@@ -155,10 +155,14 @@ knitr_options_pdf <- function(fig_width, fig_height, fig_crop, dev = 'pdf') {
   opts_chunk <- list(dev = dev,
                      fig.width = fig_width,
                      fig.height = fig_height)
-  # set the dingbats option for the pdf device
-  if (packageVersion("knitr") >= "1.5.31") {
-    opts_chunk$dev.args <- list(pdf = list(useDingbats = FALSE))
-  } else pdf.options(useDingbats = FALSE)
+  
+  # set the dingbats option for the pdf device if requried
+  if (dev == 'pdf') {
+    if (packageVersion("knitr") >= "1.5.31") {
+      opts_chunk$dev.args <- list(pdf = list(useDingbats = FALSE))
+    } else pdf.options(useDingbats = FALSE)
+  }
+  
   knit_hooks <- NULL
 
   # apply cropping if requested and we have pdfcrop
