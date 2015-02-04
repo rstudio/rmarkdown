@@ -78,7 +78,7 @@ ioslides_presentation <- function(logo = NULL,
           logo_ext <- "png"
         logo_path <- file.path(files_dir, paste("logo", logo_ext, sep = "."))
         file.copy(from = logo, to = logo_path)
-        logo_path <- relative_to(output_dir, logo_path)
+        logo_path <- normalized_relative_to(output_dir, logo_path)
       } else {
         logo_path <- pandoc_path_arg(logo_path)
       }
@@ -88,7 +88,7 @@ ioslides_presentation <- function(logo = NULL,
     # ioslides
     ioslides_path <- rmarkdown_system_file("rmd/ioslides/ioslides-13.5.1")
     if (!self_contained)
-      ioslides_path <- relative_to(output_dir,
+      ioslides_path <- normalized_relative_to(output_dir,
         render_supporting_files(ioslides_path, lib_dir))
     else
       ioslides_path <- pandoc_path_arg(ioslides_path)
