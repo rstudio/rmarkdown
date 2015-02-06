@@ -202,6 +202,8 @@ render <- function(input,
     on.exit(knitr::opts_chunk$restore(optc), add = TRUE)
     hooks <- knitr::knit_hooks$get()
     on.exit(knitr::knit_hooks$restore(hooks), add = TRUE)
+    templates <- knitr::opts_template$get()
+    on.exit(knitr::opts_template$restore(templates), add = TRUE)
 
     # reset knit_meta (and ensure it's always reset before exiting render)
     knit_meta_reset()
@@ -240,6 +242,7 @@ render <- function(input,
     if (!is.null(output_format$knitr)) {
       knitr::opts_knit$set(as.list(output_format$knitr$opts_knit))
       knitr::opts_chunk$set(as.list(output_format$knitr$opts_chunk))
+      knitr::opts_template$set(as.list(output_format$knitr$opts_template))
       knitr::knit_hooks$set(as.list(output_format$knitr$knit_hooks))
     }
 
