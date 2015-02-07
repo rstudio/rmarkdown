@@ -5,7 +5,7 @@ date: "August 13th, 2014"
 bibliography: "knitcitations.bib"
 output: 
   tufte_book:
-    latex_engine: pdflatex
+    latex_engine: lualatex
     toc: true
     toc_depth: 3
 ---
