@@ -1,4 +1,4 @@
-\documentclass[nols]{tufte-book}
+\documentclass[oneside]{tuftish-ebook}
 
 \hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
 
@@ -7,9 +7,17 @@
 
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0\fi % if pdftex
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
+\else
+  % work around bug with interaction between a package and luatex/xetex, without using the NOLS option above
+  \renewcommand{\allcapsspacing}[1]{{\addfontfeature{LetterSpace=20.0}#1}}
+  \renewcommand{\smallcapsspacing}[1]{{\addfontfeature{LetterSpace=5.0}#1}}
+  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
+  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
+\fi
 
 % utf8 encoding
 \usepackage[utf8]{inputenc}
@@ -141,7 +149,7 @@ $include-before$
 $endfor$
 
 $if(toc)$
-\hypersetup{linkcolor=black}
+\hypersetup{linkcolor=blue}
 \setcounter{tocdepth}{$toc-depth$}
 \tableofcontents
 $endif$

@@ -1,5 +1,5 @@
-name: Tufte Book (PDF)
+name: Tuftish e-Book (PDF)
 description: >
   Template for creating a book according to the style of 
   Edward R. Tufte and Richard Feynman.
-create_dir: false
+create_dir: true

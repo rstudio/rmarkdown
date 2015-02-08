@@ -1,10 +1,10 @@
 ---
-title: "Tuftish Book"
+title: "Tuftish e-Book"
 author: "John Smith"
 date: "August 13th, 2014"
 bibliography: "knitcitations.bib"
 output: 
-  tufte_book:
+  tuftish_ebook:
     latex_engine: lualatex
     toc: true
     toc_depth: 3
@@ -61,11 +61,6 @@ This "Tuftish" template is adapted from the Tufte-book class.  It has modificati
 
 This skeleton presents an overview of the key Tuftish-book capabilities, and examples of some of R packages that can be used with the template for pretty printing.  
 
-# Things that aren't quite working yet:
-
-* Headers are in lowercase because of the [nols] setting, which enabled compiling with xetex and luatex.
-* subsubsections
-
 \part{The party of the first part}
 
 Books can have more than one Part.
@@ -76,15 +71,19 @@ And many chapters
 
 # This is a section heading
 
-This style provides a-, b- and d-heads (that is, `#`, `##` and `####`).
+This style provides a-, b-, c- and d-heads (that is, `#`, `##`, `###`, and `####`).
 
 ## This is a subsection heading
 
 Isn't that pretty?
 
+### This is a subsubsection heading
+
+Some people feel these are unnecessary. 
+
 #### This is a paragraph heading
 
-Not ugly
+Paragraph headings don't appear in the table of contents.
 
 \newthought{In his later books}, Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, use the `\newthought` command as demonstrated at the beginning of this paragraph.[^books_be]
 
@@ -223,6 +222,19 @@ I could have made that first column of text flow into this one, but instead I us
 \begin{fullwidth}
 
 Its easy to get a portion of the text to use the full width of a page.  \LaTeX\ can be touchy though.  I couldn't use the `\#` markdown for the section heading above. Or put the `pander` table in fullwidth. 
+
+In fact, backtics don't work at all.
+
+xtable will print full-width though.
+
+\vspace{10mm}
+
+```{r fullwidthxtable}
+mtcar2 <- cbind(mtcars, mtcars)
+print(xtable(mtcar2[1:6,1:11]))
+```
+
+If you try to include a caption it will print over part of the table.  Let me know if you find a way to fix that.
 
 \clearpage
 

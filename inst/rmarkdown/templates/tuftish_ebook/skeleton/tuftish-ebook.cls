@@ -1,11 +1,11 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 
-\ProvidesClass{tufte-book}[2010/03/28 v3.5.1 Tufte-book class]
+\ProvidesClass{tuftish-ebook}[2010/03/28 v3.5.1 Tufte-book class]
 
 %%
 % Declare we're tufte-book
 \newcommand{\@tufte@class}{book}% the base LaTeX class (defaults to the article/handout style)
-\newcommand{\@tufte@pkgname}{tufte-book}% the name of the package (defaults to tufte-handout)
+\newcommand{\@tufte@pkgname}{tuftish-ebook}% the name of the package (defaults to tufte-handout)
 
 %%
 % Load the common style elements
@@ -21,7 +21,7 @@
 % contain only the (arabic) page number in the outside corner.
 %\newif\if@mainmatter \@mainmattertrue
 \renewcommand\frontmatter{%
-  \cleardoublepage%
+  \clearpage%
   \@mainmatterfalse%
   \pagenumbering{arabic}%
   %\pagestyle{plain}%
@@ -36,7 +36,7 @@
 % The main matter in Tufte's /Beautiful Evidence/ doesn't restart the page
 % numbering---it continues where it left off in the front matter.
 \renewcommand\mainmatter{%
-  \cleardoublepage%
+  \clearpage%
   \@mainmattertrue%
   \fancyhf{}%
   \ifthenelse{\boolean{@tufte@twoside}}%
@@ -55,11 +55,7 @@
 % The back matter contains appendices, indices, glossaries, endnotes,
 % biliographies, list of contributors, illustration credits, etc.
 \renewcommand\backmatter{%
-  \if@openright%
-    \cleardoublepage%
-  \else%
     \clearpage%
-  \fi%
   \@mainmatterfalse%
 }
 

@@ -1,13 +1,13 @@
 
-#' Tufte book format (PDF)
+#' Tuftish e-Book format (PDF)
 #' 
-#' Template for creating a book according to the style of 
+#' Template for creating an e-book based on the style of 
 #' Edward R. Tufte and Richard Feynman. 
 #' 
 #' @inheritParams pdf_document
 #' 
 #' @export
-tufte_book <- function(fig_width = 4,
+tuftish_ebook <- function(fig_width = 4,
                           fig_height = 2.5,
                           fig_crop = TRUE,
                           highlight = "default",
@@ -16,7 +16,7 @@ tufte_book <- function(fig_width = 4,
                           pandoc_args = NULL,
                           toc = TRUE,
                           toc_depth = 3,
-                          latex_engine = "xelatex",
+                          latex_engine = "lualatex",
                           number_sections = TRUE,
                           ...
                           ) {
@@ -27,7 +27,7 @@ tufte_book <- function(fig_width = 4,
   
   # get the tufte handlout template
   template <-  system.file(
-    "rmarkdown/templates/tufte_book/resources/tufte-book.tex", 
+    "rmarkdown/templates/tuftish_ebook/resources/tuftish-ebook.tex", 
     package = "rmarkdown"
   )
   

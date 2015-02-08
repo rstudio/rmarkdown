@@ -233,7 +233,7 @@
 %%
 % Default `book' and `handout' options
 
-\ifthenelse{\equal{\@tufte@pkgname}{tufte-book}}
+\ifthenelse{\equal{\@tufte@pkgname}{tuftish-ebook}}
   {\ExecuteOptionsX[tufte]<common>{titlepage}}
   {\ExecuteOptionsX[tufte]<common>{notitlepage}}
 
@@ -1539,7 +1539,7 @@
 % Produces a full title page
 
 \newcommand{\maketitlepage}[0]{%
-  \cleardoublepage%
+  \clearpage%
   {%
   \sffamily%
   \begin{fullwidth}%
@@ -1653,7 +1653,7 @@
 \titlespacing*{\chapter}{0pt}{50pt}{40pt}
 \titlespacing*{\section}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
 \titlespacing*{\subsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus.2ex}
-
+\titlespacing*{\subsubsection}{0pt}{3ex plus 1ex minus .2ex}{1.2ex plus.2ex}
 
 % Formatting for main TOC (printed in front matter)
 % {section} [left] {above} {before w/label} {before w/o label} {filler + page} [after]
