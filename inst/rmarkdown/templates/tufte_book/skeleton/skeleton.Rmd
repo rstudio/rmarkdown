@@ -17,6 +17,7 @@ library(knitr)
 library(xtable)
 library(ggplot2)
 library(papeR)
+library(pander)
 cite_options(citation_format = "pandoc",
   					 cite.style= "authortitle",
 						 style="citation",
@@ -56,21 +57,20 @@ options(xtable.booktabs = TRUE)
 
 The Tufte-\LaTeX\ document classes define a style similar to the style Edward Tufte uses in his books and handouts. Tufte’s style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography.[^tufte_latex]  
 
-This "Tuftish" template is adapted from the Tufte-book class.  It has modifications intended to make it both more flexible and more consistent with expectations from **rmarkdown**.  Some of those modifications are inconsistent with Tufte's style, in that the template will allow you to make documents more visually complex than Tufte would probably advise. 
+This "Tuftish" template is adapted from the Tufte-book class.  It has modifications intended to make it both more flexible and more consistent with expectations from `rmarkdown`.  Some of those modifications are inconsistent with Tufte's style, in that the template will allow you to make documents more visually complex than Tufte would probably advise. 
 
+This skeleton presents an overview of the key Tuftish-book capabilities, and examples of some of R packages that can be used with the template for pretty printing.  
 
 # Things that aren't quite working yet:
 
-* luatex and xetex
-  + This is important because tikzDevice with pdflatex can easily run out of memory
+* Headers are in lowercase because of the [nols] setting, which enabled compiling with xetex and luatex.
 * subsubsections
-* The TOC should have page numbers right-justified
 
-\part{''The party of the first part''}
+\part{The party of the first part}
 
 Books can have more than one Part.
 
-\chapter{''A chapter about headings''}
+\chapter{A chapter about headings}
 
 And many chapters
 
@@ -88,7 +88,7 @@ Not ugly
 
 \newthought{In his later books}, Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, use the `\newthought` command as demonstrated at the beginning of this paragraph.[^books_be]
 
-\chapter{''A chapter about figures, equations, and tables''}
+\chapter{A chapter about figures, equations, and tables}
 
 
 # Figures
@@ -145,15 +145,19 @@ Note also that the two footnote references (`tufte_latex` and `books_be`, both d
 
 # Tables
 
-You can use the **xtable** package to format \LaTeX\ tables that integrate well with the rest of the Tufte handout style. Note that it's important to set the `xtable.comment` and `xtable.booktabs` options to ensure the table is formatted correctly for inclusion in the document.
+## xtable
+
+You can use the **xtable** package to format \LaTeX\ tables that integrate well with the rest of the document. Note that it's important to set the `xtable.comment` and `xtable.booktabs` options to ensure the table is formatted correctly for inclusion in the document.
 
 ```{r, results='asis'}
-xtable(head(mtcars[,1:6]), caption = "First rows of mtcars")
+xtable(head(mtcars[,1:6]), caption = "xtable, first rows of mtcars")
 ```
 
 ## Margin Tables
 
-You can also create margin tables using the **xtable** package together with the **kable** function in the **knitr** package.  Margin tables are extra-sensitive to errors - its probably best to create your tables in main text while drafting, and only move them to the margin at the end.
+You can also create margin tables using the **xtable** package together with the **kable** function in the **knitr** package.  
+
+Margin tables, like some of the other formatting elements discussed below, can be very picky about their contents.  If you see errors when you try to compile \TeX\ to pdf, margin tables are a likely culprit.
 
 \begin{margintable}
 ```{r amargintable,results='latex'}
@@ -163,21 +167,42 @@ kable(xtable(table(frm)), format = "latex")
 \caption{Margin tables captions are defined in latex, not in arguments to the table-making function}
 \end{margintable}
 
-## Pretty Tables
+## papeR
 
-This is also a good time to point out the virtues of the **papeR** package for printing output from statistical functions.^[`r citep(citation("papeR"))`]
+Another package with pretty printing features is **papeR**, which has methods for `anova`, `summary`, and a number of other R classes.^[`r citep(citation("papeR"))`]
 
 ```{r papeRdemo}
 fit <- lm(mpg ~ hp + wt, data = mtcars)
 tab <- prettify(anova(fit))
-xtable(tab)
+xtable(tab, caption = "papeR ANOVA Output")
 ```
 
-\chapter{''A Chapter About Columns, Full Width Text, and Landscape Mode.''}
+## pander
+
+`pander` is another pretty printing package. `pander` has functions creating a variety of `rmarkdown`-compatible markup.^[`r citep(citation("pander"))`]
+
+Pander's pretty printing functions let you emphasize cells, rows, and columns with italic and bold type.
+
+```{r pandocDemo2}
+emphasize.rows(2)
+emphasize.strong.cols(3)
+pander(head(mtcars[,1:5]),caption="pander, first rows of mtcars")
+```
+
+
+## kable
+
+`knitr` itself has a `kable` function. Like `xtable`, `kable` will escape special \LaTeX\ characters.  `kable` also lets you give tables labels for cross-referencing.^[`r citep(citation("xtable"))`; `r citep(citation("knitr"))`] 
+
+```{r kable}
+kable(head(mtcars[,1:5]), caption = "kable, first rows of mtcars")
+```
+
+\chapter{A Chapter About Columns, Full Width Text, and Landscape Mode.}
 
 # Columns
 
-Columns are sometimes useful.  There are many ways to make columns.  The one built into the Tufte-Book class is called `multicol`.^[`r citep("http://ctan.mirrorcatalogs.com/macros/latex/required/tools/multicol.pdf")`.  For other ways to make columns see http://wiki.contextgarden.net/Columns.]  
+There are many ways to make columns.  The one built into the Tufte-Book class is called `multicol`.^[`r citep("http://ctan.mirrorcatalogs.com/macros/latex/required/tools/multicol.pdf")`.  For other ways to make columns see http://wiki.contextgarden.net/Columns.]  
 
 \begin{multicols}{2}
 
@@ -193,13 +218,11 @@ I could have made that first column of text flow into this one, but instead I us
 
 
 
-\section{''Fullwidth and Landscape''}
+\section{Fullwidth and Landscape}
 
 \begin{fullwidth}
 
-Its easy to get a portion of the text to use the full width of a page.  \LaTeX\ can be touchy though.  I couldn't use the `\#` markdown for the section heading above.  But it isn't hard to put in a section heading manually.
-
-Anyway, fullwidth text can be useful when you have wide tables.
+Its easy to get a portion of the text to use the full width of a page.  \LaTeX\ can be touchy though.  I couldn't use the `\#` markdown for the section heading above. Or put the `pander` table in fullwidth. 
 
 \clearpage
 
@@ -221,7 +244,7 @@ Part of a document can also be in landscape.  This can also be useful for wide t
 
 You can insert lists of tables and figures in your document.
 
-All of the indicies, bibliography, and footnotes get hyperlinked together automagically.  Try it!
+All of the indicies, bibliography, and footnotes get hyperlinked together automagically.
 
 \listoffigures
 
@@ -233,13 +256,9 @@ All of the indicies, bibliography, and footnotes get hyperlinked together automa
  
 Including a bibliography is a 3-step process.  *First*, using the **RefManageR** and **knitcitations** packages, liberally sprinkle your text with inline R calls to knitcitation's `citep()` or `citet()` functions.  `r citep(citation("knitcitations"))`; `r citep(citation("RefManageR"))`.  *Second*, at the end of your document, include an R block that calls the function  `write.bibtex()`.  `r write.bibtex(file="knitcitations.bib", append=FALSE,biblatex=TRUE)`  That will write a bibtex file containing your citations to disk.  *Third*, in the yaml header, include a `bibliography` line pointing to the `.bib` file produced by `write.bibtex()`.
 
-Use the `\vspace` command to insert blank verticle spaces. 
+Use the `\vspace` command to insert blank vertical spaces, like the one separating this line from the bibliography. 
 
 \vspace{10mm}
-
-
-
-
 
 
 
