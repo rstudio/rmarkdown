@@ -10,17 +10,23 @@
 
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
 \else
-  % work around bug with interaction between a package and luatex/xetex, without using the NOLS option above
-  \renewcommand{\allcapsspacing}[1]{{\addfontfeature{LetterSpace=20.0}#1}}
-  \renewcommand{\smallcapsspacing}[1]{{\addfontfeature{LetterSpace=5.0}#1}}
-  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
-  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
+  \usepackage{fontspec}
 \fi
 
 % utf8 encoding
 \usepackage[utf8]{inputenc}
+
+% multi-language settings
+$if(lang)$
+\ifxetex
+  \usepackage{polyglossia}
+  \setmainlanguage{$mainlang$}
+\else
+  \usepackage[shorthands=off,$lang$]{babel}
+\fi
+$endif$
+
 
 % graphix
 \usepackage{graphicx}
@@ -128,6 +134,17 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+%
+\else
+% work around bug with interaction between a package and luatex/xetex, without using the NOLS option above
+  \renewcommand{\allcapsspacing}[1]{{\addfontfeature{LetterSpace=20.0}#1}}
+  \renewcommand{\smallcapsspacing}[1]{{\addfontfeature{LetterSpace=5.0}#1}}
+  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
+  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
+\fi
+
+
 % Generates the index
 \usepackage{makeidx}
 \makeindex
@@ -156,18 +173,22 @@ $endif$
 
 $body$
 
-$for(include-after)$
-$include-after$
-$endfor$
-
 \backmatter
-$if(listoffigures)$
+$if(lof)$
 \listoffigures
 $endif$
-$if(listoftables)$
+$if(lot)$
 \listoftables
 $endif$
 
+\begin{fullwidth}
+\begin{multicols}{2}
 \printindex
+\end{multicols}
+\end{fullwidth}
+
+$for(include-after)$
+$include-after$
+$endfor$
 
 \end{document}

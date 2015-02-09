@@ -1,11 +1,11 @@
 ---
 title: "Tuftish e-Book"
 author: "John Smith"
-date: "August 13th, 2014"
+date: "February 8, 2015"
 bibliography: "knitcitations.bib"
 output: 
   tuftish_ebook:
-    latex_engine: lualatex
+    latex_engine: xelatex
     toc: true
     toc_depth: 3
 ---
@@ -19,47 +19,43 @@ library(ggplot2)
 library(papeR)
 library(pander)
 cite_options(citation_format = "pandoc",
-  					 cite.style= "authortitle",
 						 style="citation",
 						 hyperlink="to.doc",
 						 check.entries=FALSE)
 
-opts_chunk$set(   echo = FALSE,
-  								warning=FALSE,
-							 		error=TRUE,
-									message=FALSE,
-									tidy=TRUE,
-									cache=TRUE,
-							 		fig.keep = 'high',
-							 		dev = "tikz",
-							 		crop = TRUE,
-							 		results='asis',
-							 		comment=NA,
-							 		sanitize=TRUE,
-									highlight = TRUE,
-									background='#C1CDCD',
-                  externalize=TRUE,
-                  concordance=TRUE
-							 )
-knit_hooks$set(crop = hook_pdfcrop)
 options(xtable.comment = FALSE)
 options(xtable.booktabs = TRUE)
 
 # This is also a good place to setup any ggplot2 themes for the document using ggplot2::theme_set()
-
 ```
 
 \clearpage
 
 \openepigraph{Sometimes epigraphs look cool.}{-Apocryphal}
 
-# Introduction
+\phantomsection % Tells LaTeX to put a placeholder here that can be linked-to with internal references
+\section*{Introduction} % Insert a section heading without numbering, and don't put it in the table of contents
+\addcontentsline{toc}{section}{Introduction} % Add an entry to the table of contents, formatted as a section
 
 The Tufte-\LaTeX\ document classes define a style similar to the style Edward Tufte uses in his books and handouts. Tufte’s style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography.[^tufte_latex]  
 
 This "Tuftish" template is adapted from the Tufte-book class.  It has modifications intended to make it both more flexible and more consistent with expectations from `rmarkdown`.  Some of those modifications are inconsistent with Tufte's style, in that the template will allow you to make documents more visually complex than Tufte would probably advise. 
 
 This skeleton presents an overview of the key Tuftish-book capabilities, and examples of some of R packages that can be used with the template for pretty printing.  
+
+\phantomsection
+\section*{Known Bug}
+\addcontentsline{toc}{section}{Known Bug}
+
+If you choose LuaTeX as your TeX engine, character spacing will be wrong on the title page and page headers.  This is related to a known-bug in a LaTeX package that has existed for at least four years.  We workaround that bug for XeTeX, but have not found a solution for LuaTeX.  Please don't report this to Rstudio or on the git as a bug.  Feel free to discuss it here, though: https://code.google.com/p/tufte-latex/issues/detail?id=45.   And do feel free to make a pull request if you have a workaround. 
+
+For most uses, pdfTeX is fine anyway, and XeTeX better.  If tikZ is running out of memory, then consider switching to LuaTeX.  
+
+\phantomsection
+\section*{Getting Help}
+\addcontentsline{toc}{section}{Getting Help}
+
+The Tufte \LaTeX\ classes produce sophisticated \LaTeX\. If you see errors compiling the \LaTeX\, try using the `keep_tex:` option and examining the result. Because these are \TeX\ issues and not R or rmarkdown issues, you will probably find an answer more quickly by seeking help from the \TeX\ message boards.  
 
 \part{The party of the first part}
 
@@ -81,24 +77,23 @@ Isn't that pretty?
 
 Some people feel these are unnecessary. 
 
-#### This is a paragraph heading
+#### This is a paragraph heading. 
 
-Paragraph headings don't appear in the table of contents.
+Don't look bad, do they?
 
 \newthought{In his later books}, Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, use the `\newthought` command as demonstrated at the beginning of this paragraph.[^books_be]
 
 \chapter{A chapter about figures, equations, and tables}
 
-
 # Figures
 
-All of the figures in this book were made using the **tikzDevice** R package.  It automagically matches the font styles in the figure with those in the rest of the document.  The plots themselves tend to be slightly more elegant.  `CairoPDF` and, on Mac OS X, `QuartzPDF`, are good alterntives if you can't use tikz for some reason.  
+None of the figures in this book were made using the **tikzDevice** R package, which would automagically match the font styles in the figures with those in the rest of the document.  The plots themselves tend to be slightly more elegant.  `CairoPDF` and, on Mac OS X, `QuartzPDF`, are good alterntives if you can't use tikz for some reason.  
 
 ## Margin Figures
 
 Images and graphics play an integral role in Tufte's work. To place figures or tables in the margin you can use the `fig.margin` knitr chunk option. For example:
 
-```{r, fig.margin = TRUE, fig.cap = "Sepal length vs. petal length, colored by species",dev='tikz'}
+```{r, fig.margin = TRUE, fig.cap = "Sepal length vs. petal length, colored by species"}
 library(ggplot2)
 qplot(Sepal.Length, Petal.Length, data = iris, color = Species)
 ```
@@ -120,7 +115,7 @@ Note the use of the `\caption` command to add additional text below the equation
 
 You can arrange for figures to span across the entire page by using the `fig.fullwidth` chunk option. 
 
-```{r, fig.width = 10, fig.height = 2, fig.fullwidth = TRUE, fig.cap = "Full width figure",dev='tikz'}
+```{r, fig.width = 10, fig.height = 2, fig.fullwidth = TRUE, fig.cap = "Full width figure"}
 qplot(wt, mpg, data=mtcars, colour=factor(cyl))
 ```
 
@@ -130,7 +125,7 @@ Note the use of the `fig.width` and `fig.height` chunk options to establish the 
 
 Besides margin and full width figures, you can of course also include figures constrained to the main column.
 
-```{r, fig.cap = "Another figure",dev='tikz'}
+```{r, fig.cap = "Another figure"}
 qplot(factor(cyl), mpg, data = mtcars, geom = "boxplot")
 ```
 
@@ -170,7 +165,7 @@ kable(xtable(table(frm)), format = "latex")
 
 Another package with pretty printing features is **papeR**, which has methods for `anova`, `summary`, and a number of other R classes.^[`r citep(citation("papeR"))`]
 
-```{r papeRdemo}
+```{r papeRdemo,results='asis'}
 fit <- lm(mpg ~ hp + wt, data = mtcars)
 tab <- prettify(anova(fit))
 xtable(tab, caption = "papeR ANOVA Output")
@@ -182,7 +177,7 @@ xtable(tab, caption = "papeR ANOVA Output")
 
 Pander's pretty printing functions let you emphasize cells, rows, and columns with italic and bold type.
 
-```{r pandocDemo2}
+```{r pandocDemo2,results='asis'}
 emphasize.rows(2)
 emphasize.strong.cols(3)
 pander(head(mtcars[,1:5]),caption="pander, first rows of mtcars")
@@ -193,7 +188,7 @@ pander(head(mtcars[,1:5]),caption="pander, first rows of mtcars")
 
 `knitr` itself has a `kable` function. Like `xtable`, `kable` will escape special \LaTeX\ characters.  `kable` also lets you give tables labels for cross-referencing.^[`r citep(citation("xtable"))`; `r citep(citation("knitr"))`] 
 
-```{r kable}
+```{r kable,results='asis'}
 kable(head(mtcars[,1:5]), caption = "kable, first rows of mtcars")
 ```
 
@@ -229,7 +224,7 @@ xtable will print full-width though.
 
 \vspace{10mm}
 
-```{r fullwidthxtable}
+```{r fullwidthxtable,results='asis'}
 mtcar2 <- cbind(mtcars, mtcars)
 print(xtable(mtcar2[1:6,1:11]))
 ```
@@ -256,15 +251,20 @@ Part of a document can also be in landscape.  This can also be useful for wide t
 
 You can insert lists of tables and figures in your document.
 
-All of the indicies, bibliography, and footnotes get hyperlinked together automagically.
+All of the indicies, bibliography, and footnotes get hyperlinked together automagically.  If you look in the source, you'll see how these were added to the toc.
 
+\phantomsection
+\addcontentsline{toc}{section}{List of Figures}
 \listoffigures
 
+\phantomsection
+\addcontentsline{toc}{section}{List of Tables}
 \listoftables
 
 \clearpage
 
-# Bibliography
+\phantomsection
+\addcontentsline{toc}{section}{Bibliography}
  
 Including a bibliography is a 3-step process.  *First*, using the **RefManageR** and **knitcitations** packages, liberally sprinkle your text with inline R calls to knitcitation's `citep()` or `citet()` functions.  `r citep(citation("knitcitations"))`; `r citep(citation("RefManageR"))`.  *Second*, at the end of your document, include an R block that calls the function  `write.bibtex()`.  `r write.bibtex(file="knitcitations.bib", append=FALSE,biblatex=TRUE)`  That will write a bibtex file containing your citations to disk.  *Third*, in the yaml header, include a `bibliography` line pointing to the `.bib` file produced by `write.bibtex()`.
 
