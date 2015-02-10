@@ -4,12 +4,18 @@
 \alias{tuftish_ebook}
 \title{Tuftish e-Book format (PDF)}
 \usage{
-tuftish_ebook(fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
+tuftish_ebook(toc = TRUE, toc_depth = 3, number_sections = TRUE,
+  fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
   highlight = "default", keep_tex = FALSE, latex_engine = "xelatex",
-  toc = TRUE, toc_depth = 3, number_sections = TRUE, includes = NULL,
-  pandoc_args = NULL, ...)
+  includes = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
+\item{toc}{\code{TRUE} to include a table of contents in the output}
+
+\item{toc_depth}{Depth of headers to include in table of contents}
+
+\item{number_sections}{\code{TRUE} to number section headings}
+
 \item{fig_width}{Default width (in inches) for figures}
 
 \item{fig_height}{Default width (in inches) for figures}
@@ -27,12 +33,6 @@ tuftish_ebook(fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
   "pdflatex", "lualatex", and "xelatex".  Note that lualatex may have
   problems with text spacing, and that pdflatex may have memory issues
   when using tikzDevice.}
-
-\item{toc}{\code{TRUE} to include a table of contents in the output}
-
-\item{toc_depth}{Depth of headers to include in table of contents}
-
-\item{number_sections}{\code{TRUE} to number section headings}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}

@@ -5,7 +5,6 @@ date: "February 8, 2015"
 bibliography: "knitcitations.bib"
 output: 
   tuftish_ebook:
-    latex_engine: xelatex
     toc: true
     toc_depth: 3
 ---
@@ -18,10 +17,10 @@ library(xtable)
 library(ggplot2)
 library(papeR)
 library(pander)
-cite_options(citation_format = "pandoc",
-						 style="citation",
-						 hyperlink="to.doc",
-						 check.entries=FALSE)
+cite_options(
+              citation_format = "pandoc",
+						 style="citation"
+             )
 
 options(xtable.comment = FALSE)
 options(xtable.booktabs = TRUE)
@@ -49,7 +48,7 @@ This skeleton presents an overview of the key Tuftish-book capabilities, and exa
 
 If you choose LuaTeX as your TeX engine, character spacing will be wrong on the title page and page headers.  This is related to a known-bug in a LaTeX package that has existed for at least four years.  We workaround that bug for XeTeX, but have not found a solution for LuaTeX.  Please don't report this to Rstudio or on the git as a bug.  Feel free to discuss it here, though: https://code.google.com/p/tufte-latex/issues/detail?id=45.   And do feel free to make a pull request if you have a workaround. 
 
-For most uses, pdfTeX is fine anyway, and XeTeX better.  If tikZ is running out of memory, then consider switching to LuaTeX.  
+For most uses, pdfTeX is fine anyway, and XeTeX better.  If tikZ is running out of memory, then consider switching to LuaTeX.  The default engine for this template is XeTeX.
 
 \phantomsection
 \section*{Getting Help}
@@ -75,11 +74,12 @@ Isn't that pretty?
 
 ### This is a subsubsection heading
 
-Some people feel these are unnecessary. 
+Some people feel these are ~~unnecessary, but some of those are the same people who don't like struck-out text~~. 
 
 #### This is a paragraph heading. 
 
 Don't look bad, do they?
+
 
 \newthought{In his later books}, Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, use the `\newthought` command as demonstrated at the beginning of this paragraph.[^books_be]
 
@@ -144,7 +144,8 @@ Note also that the two footnote references (`tufte_latex` and `books_be`, both d
 You can use the **xtable** package to format \LaTeX\ tables that integrate well with the rest of the document. Note that it's important to set the `xtable.comment` and `xtable.booktabs` options to ensure the table is formatted correctly for inclusion in the document.
 
 ```{r, results='asis'}
-xtable(head(mtcars[,1:6]), caption = "xtable, first rows of mtcars")
+xtable(head(mtcars[,1:6]), 
+       caption = "xtable, first rows of mtcars")
 ```
 
 ## Margin Tables
@@ -154,9 +155,11 @@ You can also create margin tables using the **xtable** package together with the
 Margin tables, like some of the other formatting elements discussed below, can be very picky about their contents.  If you see errors when you try to compile \TeX\ to pdf, margin tables are a likely culprit.
 
 \begin{margintable}
-```{r amargintable,results='latex'}
-frm <- data.frame(a = c(1,2,3), b = c("a","b", "c"))
-kable(xtable(table(frm)), format = "latex")
+```{r amargintable,results='latex',echo=FALSE}
+frm <- data.frame(a = c(1,2,3), 
+                  b = c("a","b", "c"))
+kable(xtable(table(frm)), 
+      format = "latex")
 ```
 \caption{Margin tables captions are defined in latex, not in arguments to the table-making function}
 \end{margintable}
@@ -180,7 +183,8 @@ Pander's pretty printing functions let you emphasize cells, rows, and columns wi
 ```{r pandocDemo2,results='asis'}
 emphasize.rows(2)
 emphasize.strong.cols(3)
-pander(head(mtcars[,1:5]),caption="pander, first rows of mtcars")
+pander(head(mtcars[,1:5]),
+       caption="pander, first rows of mtcars")
 ```
 
 
@@ -189,7 +193,8 @@ pander(head(mtcars[,1:5]),caption="pander, first rows of mtcars")
 `knitr` itself has a `kable` function. Like `xtable`, `kable` will escape special \LaTeX\ characters.  `kable` also lets you give tables labels for cross-referencing.^[`r citep(citation("xtable"))`; `r citep(citation("knitr"))`] 
 
 ```{r kable,results='asis'}
-kable(head(mtcars[,1:5]), caption = "kable, first rows of mtcars")
+kable(head(mtcars[,1:5]), 
+      caption = "kable, first rows of mtcars")
 ```
 
 \chapter{A Chapter About Columns, Full Width Text, and Landscape Mode.}
@@ -224,7 +229,7 @@ xtable will print full-width though.
 
 \vspace{10mm}
 
-```{r fullwidthxtable,results='asis'}
+```{r fullwidthxtable,results='asis',echo=FALSE}
 mtcar2 <- cbind(mtcars, mtcars)
 print(xtable(mtcar2[1:6,1:11]))
 ```

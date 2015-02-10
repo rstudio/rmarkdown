@@ -12,15 +12,15 @@
 #'   when using tikzDevice.
 #'   
 #' @export
-tuftish_ebook <- function(fig_width = 4,
+tuftish_ebook <- function(toc = TRUE,
+                          toc_depth = 3,
+                          number_sections = TRUE,
+                          fig_width = 4,
                           fig_height = 2.5,
                           fig_crop = TRUE,
                           highlight = "default",
                           keep_tex = FALSE,
                           latex_engine = "xelatex",
-                          toc = TRUE,
-                          toc_depth = 3,
-                          number_sections = TRUE,
                           includes = NULL,
                           pandoc_args = NULL,
                           ...

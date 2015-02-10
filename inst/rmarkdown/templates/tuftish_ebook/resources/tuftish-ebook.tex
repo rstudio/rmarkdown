@@ -15,9 +15,6 @@
   \usepackage{fontspec}
 \fi
 
-% utf8 encoding
-% 
-
 % multi-language settings
 $if(lang)$
 \ifxetex
@@ -63,6 +60,12 @@ $endif$
 
 % lipsum
 \usepackage{lipsum}
+
+% strikeout
+\usepackage[normalem]{ulem}
+
+% morefloats
+\usepackage{morefloats}
 
 \usepackage{fancyvrb} % extended verbatim environments
 \fvset{fontsize=\normalsize}% default font size for fancy-verbatim environments
