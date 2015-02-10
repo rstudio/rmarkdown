@@ -33,9 +33,9 @@ options(xtable.booktabs = TRUE)
 
 \openepigraph{Sometimes epigraphs look cool.}{-Apocryphal}
 
-\phantomsection % Tells LaTeX to put a placeholder here that can be linked-to with internal references
-\section*{Introduction} % Insert a section heading without numbering, and don't put it in the table of contents
-\addcontentsline{toc}{section}{Introduction} % Add an entry to the table of contents, formatted as a section
+\phantomsection 
+\section*{Introduction} 
+\addcontentsline{toc}{section}{Introduction} 
 
 The Tufte-\LaTeX\ document classes define a style similar to the style Edward Tufte uses in his books and handouts. Tufte’s style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography.[^tufte_latex]  
 
