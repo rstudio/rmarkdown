@@ -111,6 +111,10 @@ html_document_base <- function(smart = TRUE,
     args
   }
 
+  json_filter <- function(json) {
+    NULL 
+  }
+
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
     # if there are no preserved chunks to restore and no resource to copy then no
     # post-processing is necessary
@@ -163,13 +167,14 @@ html_document_base <- function(smart = TRUE,
     writeLines(output_str, output_file, useBytes = TRUE)
     output_file
   }
-
+  
   output_format(
     knitr = NULL,
     pandoc = pandoc_options(to = "html", from = NULL, args = args),
     keep_md = FALSE,
     clean_supporting = FALSE,
     pre_processor = pre_processor,
+    json_filter = json_filter,
     post_processor = post_processor
   )
 }

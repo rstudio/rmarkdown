@@ -5,7 +5,8 @@
 \title{Define an R Markdown output format}
 \usage{
 output_format(knitr, pandoc, keep_md = FALSE, clean_supporting = TRUE,
-  pre_processor = NULL, post_processor = NULL, base_format = NULL)
+  pre_processor = NULL, json_filter = NULL, post_processor = NULL,
+  base_format = NULL)
 }
 \arguments{
 \item{knitr}{Knitr options for an output format (see

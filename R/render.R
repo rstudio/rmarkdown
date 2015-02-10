@@ -294,6 +294,9 @@ render <- function(input,
   # read the input text as UTF-8 then write it back out
   input_text <- read_lines_utf8(input, encoding)
   writeLines(input_text, utf8_input, useBytes = TRUE)
+  
+  input_file <- utf8_input
+  input_file_format <- output_format$pandoc$from
 
   perf_timer_start("pre-processor")
 
@@ -317,14 +320,50 @@ render <- function(input,
     output_format$pandoc$args <- c(output_format$pandoc$args,
       rbind("--bibliography", pandoc_path_arg(yaml_front_matter$bibliography)))
   }
+  
+  perf_timer_start("json filter")
+  
+  # see if output format wants to filter the AST representation 
+  if (!is.null(output_format$json_filter)) {
+    
+    # create a temporary file for pandoc to write the AST to 
+    json_ast_file <- intermediates_loc(file_with_meta_ext(input, "ast", "json"))
+    intermediates <- c(intermediates, json_ast_file)
+    
+    # have pandoc parse the input and write the AST, then parse the result as 
+    # JSON
+    pandoc_convert(utf8_input,
+                   "json",
+                   output_format$pandoc$from,
+                   json_ast_file,
+                   FALSE,
+                   output_format$pandoc$args,
+                   !quiet)
+    json_ast <- jsonlite::fromJSON(readLines(json_ast_file, warn = FALSE,
+                                   encoding = "UTF-8"))
+    
+    # let the output format perform its magic on the AST
+    filtered_json_ast <- output_format$json_filter(json_ast)
+    
+    # if the output format mutated the AST, write it back out to the file
+    if (!is.null(json_ast) && !identical(filtered_json_ast, json_ast)) {
+      writeLines(jsonlite::toJSON(filtered_json_ast), json_ast_file)
+    }
+    
+    # now that we have the AST, use it as input to the next Pandoc step
+    input_file <- json_ast_file 
+    input_file_format <- "json"
+  }
+  
+  perf_timer_stop("json filter")
 
   perf_timer_start("pandoc")
 
   # run intermediate conversion if it's been specified
   if (output_format$pandoc$keep_tex) {
-    pandoc_convert(utf8_input,
+    pandoc_convert(input_file,
                    pandoc_to,
-                   output_format$pandoc$from,
+                   input_file_format,
                    file_with_ext(output_file, "tex"),
                    run_citeproc,
                    output_format$pandoc$args,
@@ -332,9 +371,9 @@ render <- function(input,
   }
 
   # run the main conversion
-  pandoc_convert(utf8_input,
+  pandoc_convert(input_file,
                  pandoc_to,
-                 output_format$pandoc$from,
+                 input_file_format,
                  output_file,
                  run_citeproc,
                  output_format$pandoc$args,

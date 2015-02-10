@@ -38,6 +38,7 @@ output_format <- function(knitr,
                           keep_md = FALSE,
                           clean_supporting = TRUE,
                           pre_processor = NULL,
+                          json_filter = NULL,
                           post_processor = NULL,
                           base_format = NULL) {
   format <- structure(list(knitr = knitr,
@@ -45,6 +46,7 @@ output_format <- function(knitr,
                  keep_md = keep_md,
                  clean_supporting = clean_supporting && !keep_md,
                  pre_processor = pre_processor,
+                 json_filter = json_filter,
                  post_processor = post_processor),
             class = "rmarkdown_output_format")
 
@@ -91,6 +93,24 @@ merge_post_processors <- function (base, overlay) {
   }
 }
 
+# merges to JSON filters
+merge_json_filters <- function (base, overlay) {
+  function (json) {
+    # call the base filter first and take its value if it returns one
+    if (!is.null(base)) {
+      result <- base(json)
+      if (!is.null(result)) {
+        json <- result
+      }
+    }
+    # call the overlay filter
+    if (!is.null(overlay)) {
+      json <- overlay(json)
+    }
+    json
+  }
+}
+
 # merges two output formats
 merge_output_formats <- function (base, overlay)  {
   structure(list(
@@ -105,6 +125,8 @@ merge_output_formats <- function (base, overlay)  {
       merge_scalar(base$clean_supporting, overlay$clean_supporting),
     pre_processor =
       merge_function_outputs(base$pre_processor, overlay$pre_processor, c),
+    json_filter = 
+      merge_json_filters(base$json_filter, overlay$json_filter),
     post_processor =
       merge_post_processors(base$post_processor, overlay$post_processor)
   ), class = "rmarkdown_output_format")
