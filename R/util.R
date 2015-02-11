@@ -202,3 +202,12 @@ find_program <- function(program) {
   }
 }
 
+# given a string, escape the regex metacharacters it contains:
+# regex metas are these,
+#   . \ | ( ) [ { ^ $ * + ?
+# as defined here:
+#   http://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html
+escape_regex_metas <- function(in_str) {
+  gsub("([.\\|()[{^$+?])", "\\\\\\1", in_str)
+}
+

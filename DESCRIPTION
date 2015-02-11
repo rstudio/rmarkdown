@@ -50,7 +50,8 @@ Imports:
     knitr (>= 1.6),
     yaml (>= 2.1.5),
     htmltools (>= 0.2.4),
-    caTools
+    caTools,
+    XML
 Suggests:
     shiny (>= 0.11),
     testthat,

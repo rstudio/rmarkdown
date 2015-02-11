@@ -128,24 +128,66 @@ html_document_base <- function(smart = TRUE,
     # document to its supporting files directory, and rewrites the document to
     # use the copies from that directory.
     if (copy_resources) {
-      resource_copier <- function(res_src, src) {
-        in_file <- utils::URLdecode(src)
-        if (length(in_file) && file.exists(in_file)) {
-
-          # create a unique image name in the library folder and copy the image
-          # there
-          target_res_file <- paste(file.path(lib_dir, createUniqueId(16)),
-                                   tools::file_ext(in_file), sep = ".")
-          file.copy(in_file, target_res_file)
-
-          # replace the reference in the document
-          res_src <- sub(src, normalized_relative_to(
-            output_dir, target_res_file), res_src)
+      relative_lib <- normalized_relative_to(output_dir, lib_dir)
+      resource_copier <- function(node, att) {
+        # get the resource referenced, and skip this node if it doesn't 
+        # reference a resource
+        src <- node$attributes[att]
+        if (is.null(src) || is.na(src)) {
+          return(node)
         }
-        res_src
+        in_file <- utils::URLdecode(src)
+        
+        # only process the file if (a) it isn't already in the library, and (b)
+        # it exists on the local file system (this also excludes external
+        # resources such as "http://foo/bar.png")
+        if (length(in_file) &&
+            substr(src, 1, nchar(lib_dir) + 1) != file.path(relative_lib, "") &&
+            file.exists(in_file)) {
+
+          # check to see if it's already in the library (by absolute path)
+          res_src <- normalized_relative_to(lib_dir, in_file) 
+          if (identical(res_src, normalizePath(in_file, winslash = "/"))) {
+            # not inside the library, copy it there
+            target_dir <- if (dirname(in_file) == ".")  
+              lib_dir 
+            else 
+              file.path(lib_dir, dirname(in_file))
+            dir.create(target_dir, recursive = TRUE, showWarnings = FALSE)
+            target_res_file <- file.path(target_dir, basename(in_file))
+            
+            # copy the file to the library
+            if (!file.exists(target_res_file)) {
+              file.copy(in_file, target_res_file)
+            }
+            
+            res_src <- file.path(relative_lib, src)
+          } else {
+            # inside the library, fix up the URL
+            res_src <- file.path(relative_lib, res_src)
+          }
+          
+          # replace the reference in the document
+          output_str <<- sub(paste("(\\s+", att, "\\s*=\\s*['\"])", 
+                                  escape_regex_metas(src), "(['\"])", 
+                                  sep = ""),
+                             paste("\\1", res_src, "\\2", sep = ""), 
+                             output_str)
+        }
+        node
       }
-      output_str <- process_images(output_str, resource_copier)
-      output_str <- process_css(output_str, resource_copier)
+      
+      XML::htmlTreeParse(file = output_str, asText = TRUE, handlers = list(
+          img    = function(node)  { resource_copier(node, "src")  },
+          link   = function(node)  { resource_copier(node, "href") },
+          iframe = function(node)  { resource_copier(node, "src")  },
+          object = function(node)  { resource_copier(node, "data") },
+          script = function(node)  { resource_copier(node, "src")  },
+          audio  = function(node)  { resource_copier(node, "src")  },
+          video  = function(node)  { resource_copier(node, "src")  },
+          embed  = function(node)  { resource_copier(node, "src")  }
+        ))
+
     } else if (!self_contained) {
       # if we're not self-contained, find absolute references to the output
       # directory and replace them with relative ones
@@ -173,3 +215,4 @@ html_document_base <- function(smart = TRUE,
     post_processor = post_processor
   )
 }
+
