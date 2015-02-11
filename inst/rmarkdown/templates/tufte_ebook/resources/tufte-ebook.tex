@@ -1,6 +1,10 @@
-\documentclass[oneside]{tuftish-ebook}
+\documentclass[$if(lang)$$lang$,$endif$$if(citecolor)$$citecolor$,$endif$$if(urlcolor)$$urlcolor$,$endif$$if(linkcolor)$$linkcolor$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{tufte-ebook}
 
-\hypersetup{colorlinks}% uncomment this line if you prefer colored hyperlinks (e.g., for onscreen viewing)
+\hypersetup{colorlinks,
+    citecolor=$if(citecolor)$$citecolor$$else$DarkGreen$endif$,
+    urlcolor=$if(urlcolor)$$urlcolor$$else$DarkGreen$endif$,
+    linkcolor=$if(linkcolor)$$linkcolor$$else$DarkBlue$endif$,
+}
 
 % ams
 \usepackage{amssymb,amsmath}
@@ -170,12 +174,16 @@ $include-before$
 $endfor$
 
 $if(toc)$
-\hypersetup{linkcolor=blue}
 \setcounter{tocdepth}{$toc-depth$}
 \tableofcontents
 $endif$
 
 $body$
+
+
+
+\begin{fullwidth}
+\begin{multicols}{2}
 
 \backmatter
 $if(lof)$
@@ -185,9 +193,8 @@ $if(lot)$
 \listoftables
 $endif$
 
-\begin{fullwidth}
-\begin{multicols}{2}
 \printindex
+
 \end{multicols}
 \end{fullwidth}
 

@@ -1,12 +1,14 @@
 ---
-title: "Tuftish e-Book"
+title: "Tufte e-Book"
 author: "John Smith"
 date: "February 8, 2015"
 bibliography: "knitcitations.bib"
+classoption: oneside
 output: 
-  tuftish_ebook:
+  tufte_ebook:
     toc: true
     toc_depth: 3
+    number_sections: true
 ---
 
 ```{r setup,echo=FALSE,message=FALSE,cache=FALSE,include=TRUE}
@@ -38,9 +40,9 @@ options(xtable.booktabs = TRUE)
 
 The Tufte-\LaTeX\ document classes define a style similar to the style Edward Tufte uses in his books and handouts. Tufte’s style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography.[^tufte_latex]  
 
-This "Tuftish" template is adapted from the Tufte-book class.  It has modifications intended to make it both more flexible and more consistent with expectations from `rmarkdown`.  Some of those modifications are inconsistent with Tufte's style, in that the template will allow you to make documents more visually complex than Tufte would probably advise. 
+This template is adapted from the Tufte-book class.  It has modifications intended to make it both more flexible and more consistent with expectations from `rmarkdown`.  Some of those modifications are inconsistent with Tufte's style, in that the template will allow you to make documents more visually complex than Tufte would probably advise. 
 
-This skeleton presents an overview of the key Tuftish-book capabilities, and examples of some of R packages that can be used with the template for pretty printing.  
+This skeleton presents an overview of the key Tufte e-Book capabilities, and examples of some of R packages that can be used with the template for pretty printing.  
 
 \phantomsection
 \section*{Known Bug}
@@ -60,7 +62,7 @@ The Tufte \LaTeX\ classes produce sophisticated \LaTeX\. If you see errors compi
 
 Books can have more than one Part.
 
-\chapter{A chapter about headings}
+\chapter{A Chapter About Headings}
 
 And many chapters
 
@@ -83,7 +85,25 @@ Don't look bad, do they?
 
 \newthought{In his later books}, Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, use the `\newthought` command as demonstrated at the beginning of this paragraph.[^books_be]
 
-\chapter{A chapter about figures, equations, and tables}
+\chapter{A Chapter About Class Options, Figures, Equations, and Tables}
+
+# Options and Class Options
+
+The Tufte e-Book template supports a number of `classoptions` that can be set in the `rmarkdown` `YAML` header.  (See [http://rmarkdown.rstudio.com/pdf_document_format.html#latex-options].)  These include:
+
+* `twoside`/`oneside`:  Whether to alternate the running header.
+* `symmetric`: Place margin notes and figures on the left side for left pages.
+* `a4paper`/`b5paper`: Self-explanatory.
+* `titlepage`/`notitlepage`: Self-explanatory.
+* `sfsidenotes`: Sans-serif font for margin notes and captions.
+* `justified`: Fully justify text.
+* `fonts`/`nofonts`: Whether to load fonts.
+* `ls`/`nols`: Whether to configure letterspacing. 
+* `nobib`: Don't load natbib.
+* `notoc`: Use a normal, rather than Tufte-style, table of contents.
+* `bidi`: Load the bidi package for bi-directional text.
+
+Tufte e-Book also supports the `citecolor`, `urlcolor`, and `linkcolor` options.
 
 # Figures
 
@@ -252,7 +272,9 @@ Part of a document can also be in landscape.  This can also be useful for wide t
 [^tufte_latex]: https://code.google.com/p/tufte-latex/
 [^books_be]: http://www.edwardtufte.com/tufte/books_be
 
-# Indices
+\phantomsection
+\addcontentsline{toc}{chapter}{Indices}
+\chapter*{Indices}
 
 You can insert lists of tables and figures in your document.
 
@@ -270,6 +292,7 @@ All of the indicies, bibliography, and footnotes get hyperlinked together automa
 
 \phantomsection
 \addcontentsline{toc}{section}{Bibliography}
+\section*{Bibliography}
  
 Including a bibliography is a 3-step process.  *First*, using the **RefManageR** and **knitcitations** packages, liberally sprinkle your text with inline R calls to knitcitation's `citep()` or `citet()` functions.  `r citep(citation("knitcitations"))`; `r citep(citation("RefManageR"))`.  *Second*, at the end of your document, include an R block that calls the function  `write.bibtex()`.  `r write.bibtex(file="knitcitations.bib", append=FALSE,biblatex=TRUE)`  That will write a bibtex file containing your citations to disk.  *Third*, in the yaml header, include a `bibliography` line pointing to the `.bib` file produced by `write.bibtex()`.
 

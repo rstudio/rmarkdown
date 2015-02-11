@@ -1,5 +1,5 @@
 
-#' Tuftish e-Book format (PDF)
+#' Tufte e-Book format (PDF)
 #'
 #' Template for creating an e-book based on the style of
 #' Edward R. Tufte and Richard Feynman.
@@ -12,7 +12,7 @@
 #'   when using tikzDevice.
 #'   
 #' @export
-tuftish_ebook <- function(toc = TRUE,
+tufte_ebook <- function(  toc = TRUE,
                           toc_depth = 3,
                           number_sections = TRUE,
                           fig_width = 4,
@@ -32,23 +32,23 @@ tuftish_ebook <- function(toc = TRUE,
 
   # get the tufte handout template
   template <-  system.file(
-    "rmarkdown/templates/tuftish_ebook/resources/tuftish-ebook.tex",
+    "rmarkdown/templates/tufte_ebook/resources/tufte-ebook.tex",
     package = "rmarkdown"
   )
 
   # call the base pdf_document format with the appropriate options
-  format <- rmarkdown::pdf_document(fig_width = fig_width,
+  format <- pdf_document(fig_width = fig_width,
                                     fig_height = fig_height,
                                     fig_crop = fig_crop,
                                     highlight = highlight,
-                                    template = template,
                                     keep_tex = keep_tex,
                                     latex_engine = latex_engine,
                                     includes = includes,
                                     pandoc_args = pandoc_args,
                                     toc = toc,
                                     toc_depth = toc_depth,
-                                    number_sections = TRUE,
+                                    template = template,
+                                    number_sections = number_sections,
                                     ...
                                     )
 

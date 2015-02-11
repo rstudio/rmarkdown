@@ -338,6 +338,10 @@
 
 \RequirePackage{titlesec,titletoc}
 
+%%
+% Color - load before hypersetup
+\RequirePackage[usenames,dvipsnames,svgnames]{xcolor}% load before bidi
+
 %%%
 %% Loads the hyperref package and sets some default options.
 
@@ -348,9 +352,6 @@
   \hypersetup{%
     pdfborder = {0 0 0},
     bookmarksdepth = section,
-    citecolor = DarkGreen,
-    linkcolor = DarkBlue,
-    urlcolor = DarkGreen,
   }%
 }
 
@@ -818,10 +819,6 @@
 % Used for doublespacing, and other linespacing
 
 \RequirePackage{setspace}
-
-%%
-% Color
-\RequirePackage[usenames,dvipsnames,svgnames]{xcolor}% load before bidi
 
 %%
 % Load the bidi package if instructed to do so.  This package must be loaded

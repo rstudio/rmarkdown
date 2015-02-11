@@ -1,11 +1,11 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 
-\ProvidesClass{tuftish-ebook}[2010/03/28 v3.5.1 Tufte-book class]
+\ProvidesClass{tufte-ebook}[2015/02/08 v3.5.1 Tufte-book class]
 
 %%
 % Declare we're tufte-book
 \newcommand{\@tufte@class}{book}% the base LaTeX class (defaults to the article/handout style)
-\newcommand{\@tufte@pkgname}{tuftish-ebook}% the name of the package (defaults to tufte-handout)
+\newcommand{\@tufte@pkgname}{tufte-ebook}% the name of the package (defaults to tufte-handout)
 
 %%
 % Load the common style elements
