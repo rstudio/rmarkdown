@@ -3,6 +3,7 @@
 export(beamer_presentation)
 export(default_output_format)
 export(draft)
+export(find_external_resources)
 export(html_document)
 export(html_document_base)
 export(html_fragment)

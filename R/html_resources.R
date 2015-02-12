@@ -30,10 +30,35 @@ call_resource_attrs <- function(html, callback) {
   invisible(NULL)
 }
 
-find_resources <- function(rmd_file) {
-  # assert that this is rmarkdown 
+#' Find External Resource References
+#'
+#' Given an R Markdown document, attempt to determine the set of additional
+#' files needed in order to render and display the document.
+#' 
+#' @param rmd_file Path to the R Markdown document to process
+#' 
+#' @details This routine applies heuristics in order to scan a document for
+#'   possible resource references. 
+#'   
+#'   It looks for references to files expressed in Markdown (e.g.
+#'   \code{![alt](img.png)}), in the document's YAML header, in raw HTML chunks,
+#'   and as quoted strings in R code chunks (e.g. \code{read.csv("data.csv")}).
+#'   
+#'   Only resources contained in the document's directory (or a child thereof)
+#'   are returned.
+#'   
+#' @return A character vector containing the paths of the additional files. The
+#'   paths appear as expressed in the document and are relative to the directory
+#'   in which the document resides.
+#'
+#' @export
+find_external_resources <- function(rmd_file) {
+  # ensure we're working with valid input
   if (!identical(tolower(tools::file_ext(rmd_file)), "rmd")) {
     stop("Resource discovery is only supported for R Markdown files.")
+  }
+  if (!file.exists(rmd_file)) {
+    stop("The input file file '", rmd_file, "' does not exist.")
   }
   
   # copy to a temporary folder
@@ -67,8 +92,9 @@ find_resources <- function(rmd_file) {
   on.exit(unlink(r_file), add = TRUE)
   r_lines <- readLines(r_file, warn = FALSE, encoding = "UTF-8") 
   
-  # TODO: clean comments from r_lines if necessary
-  
+  # clean comments from the R code (simply; consider: # inside strings)
+  r_lines <- sub("#.*$", "", r_lines)
+    
   # find quoted strings in the code and attempt to ascertain whether they are
   # files on disk
   r_lines <- paste(r_lines, collapse = "\n")
