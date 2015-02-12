@@ -52,6 +52,7 @@ find_external_resources <- function(rmd_file,
     path = character(0),
     explicit = logical(0),
     web = logical(0))
+  input_dir <- dirname(normalizePath(rmd_file, winslash = "/"))
   
   # create a UTF-8 encoded Markdown file to serve as the resource discovery 
   # source
@@ -65,7 +66,7 @@ find_external_resources <- function(rmd_file,
     readLines(md_file, warn = FALSE, encoding = "UTF-8"))
   if (!is.null(front_matter$resource_files)) {
     resources <- lapply(front_matter$resource_files, function(res) {
-      if (is.character(res)) {
+      explicit_res <- if (is.character(res)) {
         # character vector--use as-is
         list(path = res, explicit = TRUE, web = is_web_file(res))
       } else if (is.list(res) && length(names(res)) > 0) {
@@ -76,6 +77,14 @@ find_external_resources <- function(rmd_file,
       } else  {
         # no idea what this is, skip it
         NULL
+      }
+      
+      # check the extracted filename to see if it exists
+      if (!is.null(explicit_res) && 
+          !file.exists(file.path(input_dir, explicit_res))) {
+        NULL
+      } else {
+        explicit_res
       }
     })
     discovered_resources <- do.call(rbind.data.frame, resources)
@@ -124,7 +133,6 @@ find_external_resources <- function(rmd_file,
   
   # consider any quoted string containing a valid relative path to a file that 
   # exists on disk to be a reference
-  input_dir <- dirname(normalizePath(rmd_file, winslash = "/"))
   for (quoted_str in quoted_strs) {
     if (file.exists(file.path(input_dir, quoted_str))) {
       discovered_resources <- rbind(discovered_resources, data.frame(
