@@ -129,13 +129,7 @@ html_document_base <- function(smart = TRUE,
     # use the copies from that directory.
     if (copy_resources) {
       relative_lib <- normalized_relative_to(output_dir, lib_dir)
-      resource_copier <- function(node, att) {
-        # get the resource referenced, and skip this node if it doesn't 
-        # reference a resource
-        src <- node$attributes[att]
-        if (is.null(src) || is.na(src)) {
-          return(node)
-        }
+      resource_copier <- function(node, att, src) {
         in_file <- utils::URLdecode(src)
         
         # only process the file if (a) it isn't already in the library, and (b)
@@ -177,17 +171,9 @@ html_document_base <- function(smart = TRUE,
         node
       }
       
-      XML::htmlTreeParse(file = output_str, asText = TRUE, handlers = list(
-          img    = function(node)  { resource_copier(node, "src")  },
-          link   = function(node)  { resource_copier(node, "href") },
-          iframe = function(node)  { resource_copier(node, "src")  },
-          object = function(node)  { resource_copier(node, "data") },
-          script = function(node)  { resource_copier(node, "src")  },
-          audio  = function(node)  { resource_copier(node, "src")  },
-          video  = function(node)  { resource_copier(node, "src")  },
-          embed  = function(node)  { resource_copier(node, "src")  }
-        ))
-
+      # parse the HTML and copy the resources found
+      call_resource_attrs(output_str, resource_copier)
+      
     } else if (!self_contained) {
       # if we're not self-contained, find absolute references to the output
       # directory and replace them with relative ones
