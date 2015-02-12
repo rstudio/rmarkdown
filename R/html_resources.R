@@ -30,6 +30,19 @@ call_resource_attrs <- function(html, callback) {
   invisible(NULL)
 }
 
+# given a filename, return true if the file appears to be a web file
+is_web_file <- function(filename) {
+  tolower(tools::file_ext(filename)) %in% c(
+    "css",
+    "gif",
+    "htm",
+    "html",
+    "jpeg",
+    "jpg",
+    "js",
+    "png")
+}
+
 #' Find External Resource References
 #'
 #' Given an R Markdown document, attempt to determine the set of additional
@@ -41,21 +54,38 @@ call_resource_attrs <- function(html, callback) {
 #' @details This routine applies heuristics in order to scan a document for
 #'   possible resource references. 
 #'   
-#'   It looks for references to files expressed in Markdown (e.g.
+#'   It looks for references to files implicitly referenced in Markdown (e.g.
 #'   \code{![alt](img.png)}), in the document's YAML header, in raw HTML chunks,
 #'   and as quoted strings in R code chunks (e.g. \code{read.csv("data.csv")}).
+#'   
+#'   Resources specified explicitly in the document's YAML header are also 
+#'   returned. To specify resources in YAML, use the \code{resource_files} key:
+#'   
+#'   \preformatted{---
+#'title: My Document
+#'author: My Name
+#'resource_files:
+#'  - data/mydata.csv
+#'  - images/figure.png
+#'---}
 #'   
 #'   Only resources that exist on disk and are contained in the document's
 #'   directory (or a child thereof) are returned.
 #'   
-#' @return A character vector containing the paths of the additional files. The
-#'   paths appear as expressed in the document and are relative to the directory
-#'   in which the document resides.
+#' @return A data frame with the following columns:
+#'   \describe{
+#'    \item{path}{The relative path from the document to the resource}
+#'    \item{explicit}{Whether the resource was specified explicitly 
+#'      (\code{TRUE}) or discovered implicitly (\code{FALSE})}
+#'    \item{web}{Whether the resource is needed to display a Web page rendered
+#'      from the document}
+#'   }
+#'     
+#'
 #'
 #' @export
 find_external_resources <- function(rmd_file, 
                                     encoding = getOption("encoding")) {
-  
   # ensure we're working with valid input
   if (!identical(tolower(tools::file_ext(rmd_file)), "rmd")) {
     stop("Resource discovery is only supported for R Markdown files.")
@@ -64,6 +94,12 @@ find_external_resources <- function(rmd_file,
     stop("The input file file '", rmd_file, "' does not exist.")
   }
   
+  # set up the frame we'll use to report results
+  discovered_resources <- data.frame(
+    path = character(0),
+    explicit = logical(0),
+    web = logical(0))
+  
   # create a UTF-8 encoded Markdown file to serve as the resource discovery 
   # source
   md_file <- tempfile(fileext = "md")
@@ -71,21 +107,38 @@ find_external_resources <- function(rmd_file,
   rmd_content <- read_lines_utf8(rmd_file, encoding)
   writeLines(rmd_content, md_file, useBytes = TRUE)
   
-  # parse the YAML front matter 
-  front_matter <- parse_yaml_front_matter(readLines(md_file, warn = FALSE))
+  # parse the YAML front matter to discover explicit resources
+  front_matter <- parse_yaml_front_matter(
+    readLines(md_file, warn = FALSE, encoding = "UTF-8"))
+  if (!is.null(front_matter$resource_files)) {
+    resources <- lapply(front_matter$resource_files, function(res) {
+      if (is.character(res)) 
+        list(path = res, explicit = TRUE, web = is_web_file(res))
+      else if (is.list(res))
+        list(path = names(res)[[1]], 
+             explicit = TRUE,
+             web = if (is.null(res$web)) is_web_file(res) else res$web)
+      else 
+        NULL
+    })
+    discovered_resources <- do.call(rbind.data.frame, resources)
+  }
  
   # render "raw" markdown to HTML
   html_file <- tempfile(fileext = "html")
   render(input = md_file, output_file = html_file, 
-         output_options = list(self_contained = FALSE), quiet = TRUE)
+         output_options = list(self_contained = FALSE), quiet = TRUE,
+         encoding = "UTF-8")
   on.exit(unlink(html_file), add = TRUE)
   
   # resource accumulator
-  discovered_resources <- c()
   discover_resource <- function(node, att, val) {
     res_file <- utils::URLdecode(val)
     if (file.exists(res_file)) {
-      discovered_resources <<- c(discovered_resources, res_file)
+      discovered_resources <<- rbind(discovered_resources, data.frame(
+        path = val, 
+        explicit = FALSE, 
+        web = TRUE))
     }
     node
   }
@@ -117,7 +170,10 @@ find_external_resources <- function(rmd_file,
   input_dir <- dirname(normalizePath(rmd_file, winslash = "/"))
   for (quoted_str in quoted_strs) {
     if (file.exists(file.path(input_dir, quoted_str))) {
-      discovered_resources <- c(discovered_resources, quoted_str)
+      discovered_resources <- rbind(discovered_resources, data.frame(
+        path = quoted_str, 
+        explicit = FALSE,
+        web = FALSE))
     }
   }
   

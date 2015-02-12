@@ -12,9 +12,14 @@ find_external_resources(rmd_file, encoding = getOption("encoding"))
 \item{encoding}{the encoding of the R Markdown document}
 }
 \value{
-A character vector containing the paths of the additional files. The
-  paths appear as expressed in the document and are relative to the directory
-  in which the document resides.
+A data frame with the following columns:
+  \describe{
+   \item{path}{The relative path from the document to the resource}
+   \item{explicit}{Whether the resource was specified explicitly
+     (\code{TRUE}) or discovered implicitly (\code{FALSE})}
+   \item{web}{Whether the resource is needed to display a Web page rendered
+     from the document}
+  }
 }
 \description{
 Given an R Markdown document, attempt to determine the set of additional
@@ -27,6 +32,17 @@ This routine applies heuristics in order to scan a document for
   It looks for references to files expressed in Markdown (e.g.
   \code{![alt](img.png)}), in the document's YAML header, in raw HTML chunks,
   and as quoted strings in R code chunks (e.g. \code{read.csv("data.csv")}).
+
+  Resources specified explicitly in the document's YAML header are also
+  returned. To specify resources in YAML, use the \code{resource_files} key:
+
+  \preformatted{---
+title: My Document
+author: My Name
+resource_files:
+ - data/mydata.csv
+ - images/figure.png
+---}
 
   Only resources that exist on disk and are contained in the document's
   directory (or a child thereof) are returned.
