@@ -35,7 +35,8 @@ call_resource_attrs <- function(html, callback) {
 #' Given an R Markdown document, attempt to determine the set of additional
 #' files needed in order to render and display the document.
 #' 
-#' @param rmd_file Path to the R Markdown document to process
+#' @param rmd_file path to the R Markdown document to process
+#' @param encoding the encoding of the R Markdown document
 #' 
 #' @details This routine applies heuristics in order to scan a document for
 #'   possible resource references. 
@@ -44,15 +45,17 @@ call_resource_attrs <- function(html, callback) {
 #'   \code{![alt](img.png)}), in the document's YAML header, in raw HTML chunks,
 #'   and as quoted strings in R code chunks (e.g. \code{read.csv("data.csv")}).
 #'   
-#'   Only resources contained in the document's directory (or a child thereof)
-#'   are returned.
+#'   Only resources that exist on disk and are contained in the document's
+#'   directory (or a child thereof) are returned.
 #'   
 #' @return A character vector containing the paths of the additional files. The
 #'   paths appear as expressed in the document and are relative to the directory
 #'   in which the document resides.
 #'
 #' @export
-find_external_resources <- function(rmd_file) {
+find_external_resources <- function(rmd_file, 
+                                    encoding = getOption("encoding")) {
+  
   # ensure we're working with valid input
   if (!identical(tolower(tools::file_ext(rmd_file)), "rmd")) {
     stop("Resource discovery is only supported for R Markdown files.")
@@ -61,11 +64,16 @@ find_external_resources <- function(rmd_file) {
     stop("The input file file '", rmd_file, "' does not exist.")
   }
   
-  # copy to a temporary folder
+  # create a UTF-8 encoded Markdown file to serve as the resource discovery 
+  # source
   md_file <- tempfile(fileext = "md")
-  file.copy(rmd_file, md_file)
   on.exit(unlink(md_file), add = TRUE)
+  rmd_content <- read_lines_utf8(rmd_file, encoding)
+  writeLines(rmd_content, md_file, useBytes = TRUE)
   
+  # parse the YAML front matter 
+  front_matter <- parse_yaml_front_matter(readLines(md_file, warn = FALSE))
+ 
   # render "raw" markdown to HTML
   html_file <- tempfile(fileext = "html")
   render(input = md_file, output_file = html_file, 
@@ -88,7 +96,8 @@ find_external_resources <- function(rmd_file) {
   
   # purl the file to extract just the R code 
   r_file <- tempfile(fileext = "R")
-  knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0)
+  knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0,
+              encoding = "UTF-8")
   on.exit(unlink(r_file), add = TRUE)
   r_lines <- readLines(r_file, warn = FALSE, encoding = "UTF-8") 
   

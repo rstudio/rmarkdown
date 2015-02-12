@@ -4,10 +4,12 @@
 \alias{find_external_resources}
 \title{Find External Resource References}
 \usage{
-find_external_resources(rmd_file)
+find_external_resources(rmd_file, encoding = getOption("encoding"))
 }
 \arguments{
-\item{rmd_file}{Path to the R Markdown document to process}
+\item{rmd_file}{path to the R Markdown document to process}
+
+\item{encoding}{the encoding of the R Markdown document}
 }
 \value{
 A character vector containing the paths of the additional files. The
@@ -26,7 +28,7 @@ This routine applies heuristics in order to scan a document for
   \code{![alt](img.png)}), in the document's YAML header, in raw HTML chunks,
   and as quoted strings in R code chunks (e.g. \code{read.csv("data.csv")}).
 
-  Only resources contained in the document's directory (or a child thereof)
-  are returned.
+  Only resources that exist on disk and are contained in the document's
+  directory (or a child thereof) are returned.
 }
 
