@@ -100,7 +100,7 @@ find_external_resources <- function(rmd_file,
   # resource accumulator
   discover_resource <- function(node, att, val) {
     res_file <- utils::URLdecode(val)
-    if (file.exists(res_file)) {
+    if (file.exists(file.path(input_dir, res_file))) {
       discovered_resources <<- rbind(discovered_resources, data.frame(
         path = val, 
         explicit = FALSE, 
