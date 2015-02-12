@@ -44,7 +44,7 @@ find_resources <- function(rmd_file) {
   # render "raw" markdown to HTML
   html_file <- tempfile(fileext = "html")
   render(input = md_file, output_file = html_file, 
-         output_options = list(self_contained = FALSE))
+         output_options = list(self_contained = FALSE), quiet = TRUE)
   on.exit(unlink(html_file), add = TRUE)
   
   # resource accumulator
@@ -61,6 +61,30 @@ find_resources <- function(rmd_file) {
   call_resource_attrs(readLines(html_file, warn = FALSE, encoding = "UTF-8"),
     discover_resource)
   
-  # TODO: look for paths in R chunks
+  # purl the file to extract just the R code 
+  r_file <- tempfile(fileext = "R")
+  knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0)
+  on.exit(unlink(r_file), add = TRUE)
+  r_lines <- readLines(r_file, warn = FALSE, encoding = "UTF-8") 
+  
+  # TODO: clean comments from r_lines if necessary
+  
+  # find quoted strings in the code and attempt to ascertain whether they are
+  # files on disk
+  r_lines <- paste(r_lines, collapse = "\n")
+  quoted_strs <- Reduce(c, lapply(c("\"[^\"]+\"", "'[^']+'"), function(pat) {
+    matches <- unlist(regmatches(r_lines, gregexpr(pat, r_lines)))
+    substr(matches, 2, nchar(matches) - 1)
+  }))
+  
+  # consider any quoted string containing a valid relative path to a file that 
+  # exists on disk to be a reference
+  input_dir <- dirname(normalizePath(rmd_file, winslash = "/"))
+  for (quoted_str in quoted_strs) {
+    if (file.exists(file.path(input_dir, quoted_str))) {
+      discovered_resources <- c(discovered_resources, quoted_str)
+    }
+  }
+  
   discovered_resources 
 }
