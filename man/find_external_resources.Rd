@@ -29,7 +29,7 @@ files needed in order to render and display the document.
 This routine applies heuristics in order to scan a document for
   possible resource references.
 
-  It looks for references to files expressed in Markdown (e.g.
+  It looks for references to files implicitly referenced in Markdown (e.g.
   \code{![alt](img.png)}), in the document's YAML header, in raw HTML chunks,
   and as quoted strings in R code chunks (e.g. \code{read.csv("data.csv")}).
 

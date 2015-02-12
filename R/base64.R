@@ -129,13 +129,6 @@ process_images <- function(html, processor) {
     processor)
 }
 
-process_css <- function(html, processor) {
-  process_html_res(
-    html,
-    "<\\s*[Ll][Ii][Nn][Kk]\\s+[Rr][Ee][Ll]\\s*=\\s*\"stylesheet\"\\s+[Hh][Rr][Ee][Ff]\\s*=\\s*[\"']([^\"']+)[\"']",
-    processor)
-}
-
 base64_encode_images <- function(html, encoder) {
   base64_encode_img <- function(img_src, src) {
     in_file <- utils::URLdecode(src)
