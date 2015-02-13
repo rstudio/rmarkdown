@@ -145,6 +145,9 @@ find_external_resources <- function(rmd_file,
   # clean row names (they're not meaningful)
   rownames(discovered_resources) <- NULL
   
+  # convert paths from factors if necssary
+  discovered_resources$path <- as.character(discovered_resources$path)
+  
   discovered_resources 
 }
 
