@@ -138,6 +138,14 @@ $endif$
 
 %%% Change title format to be more compact
 \usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
 \setlength{\droptitle}{-2em}
 $if(title)$
   \title{$title$}
@@ -147,6 +155,9 @@ $else$
   \title{}
   \pretitle{\vspace{\droptitle}}
   \posttitle{}
+$endif$
+$if(subtitle)$
+\subtitle{$subtitle$}
 $endif$
 $if(author)$
   \author{$for(author)$$author$$sep$ \\ $endfor$}
@@ -163,10 +174,6 @@ $if(date)$
 $else$
   \date{}
   \predate{}\postdate{}
-$endif$
-
-$if(subtitle)$
-\subtitle{$subtitle$}
 $endif$
 
 $for(header-includes)$
