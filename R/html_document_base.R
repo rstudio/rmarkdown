@@ -128,7 +128,11 @@ html_document_base <- function(smart = TRUE,
     # document to its supporting files directory, and rewrites the document to
     # use the copies from that directory.
     if (copy_resources) {
+      
+      # ensure the lib directory exists
+      dir.create(lib_dir, recursive = TRUE, showWarnings = FALSE)
       relative_lib <- normalized_relative_to(output_dir, lib_dir)
+      
       resource_copier <- function(node, att, src) {
         in_file <- utils::URLdecode(src)
         
