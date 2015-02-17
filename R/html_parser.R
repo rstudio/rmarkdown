@@ -81,53 +81,25 @@ html_extract_values <- function(html, callback = NULL, show_parse = FALSE) {
     html <- paste(html, collapse = "\n")
   }
   
+  # iterating over characters using substr is extremely slow; creating a vector 
+  # of individual characters dramatically improves speed since we can access 
+  # the characters directly
+  htmlchars <- unlist(strsplit(html, "", fixed = TRUE))
+  
   # state information (rewritten as we go)
   idx <- 1
-  end <- nchar(html)
+  end <- length(htmlchars)
   state <- get("TEXT", envir = .parse_states)
-  contents <- ""
   contents_idx <- idx
   cur_tag <- ""
   cur_attr <- ""
   current_state <- ""
-  transition <- FALSE
-  
-  # function to transition to a new state
-  do_transition <- function(new_state) {
-    if (current_state == new_state) {
-      return(state)
-    }
-    if (current_state == "TAG")
-      cur_tag <<- contents
-    else if (current_state == "ATTR")
-      cur_attr <<- contents
-    else if (!is.null(callback) && 
-        (current_state == "DOUBLE_ATTR" || 
-         current_state == "SINGLE_ATTR" ||
-         current_state == "UNQUOTED_ATTR")) {
-      # if the attribute is unquoted then it's already begun
-      callback(cur_tag, cur_attr, contents, 
-               if (current_state == "UNQUOTED_ATTR")
-                 contents_idx - 1 
-               else
-                 contents_idx)    
-    }
-    if (show_parse) {
-      print(contents)
-      print(new_state)
-    }
-    contents <<- ""
-    transition <<- TRUE
-    current_state <<- new_state
-    contents_idx <<- idx + 1
-    get(new_state, envir = .parse_states, inherits = FALSE)
-  }
+  consume <- FALSE
   
   # loop over the contents of the HTML string
   while (idx <= end) {
     # get the character to examine and set up state
-    ch <- substr(html, idx, idx)
-    transition <- FALSE
+    ch <- htmlchars[[idx]]
     
     # check each rule
     for (rule_idx in seq_along(state)) {
@@ -135,40 +107,65 @@ html_extract_values <- function(html, callback = NULL, show_parse = FALSE) {
       # extract the pattern to test against
       pat <- names(state)[[rule_idx]]
       
-      if (identical(pat, "alpha")) {
+      if (pat == "alpha") {
         # alphabetic character
         chRaw <- charToRaw(ch)
         if ((chRaw >= charToRaw("a") && chRaw <= charToRaw("z")) ||
             (chRaw >= charToRaw("A") && chRaw <= charToRaw("Z"))) {
-          state <- do_transition(state[[rule_idx]])
+          new_state <- state[[rule_idx]]
           break
         }
-      } else if (identical(pat, "white") && 
+      } else if (pat == "white" && 
                  (ch == " "  || ch == "\n" || ch == "\t" || ch == "\v")) {
-        # whitespace character--consume it
-        state <- do_transition(state[[rule_idx]])
+        # whitespace character
+        new_state <- state[[rule_idx]]
         break
-      } else if (identical(pat, "any")) {
+      } else if (pat == "any") {
         # any character
-        state <- do_transition(state[[rule_idx]])
+        new_state <- state[[rule_idx]]
         break
-      } else if (identical(pat, ch)) {
+      } else if (pat == ch) {
         # specific character--consume it
-        state <- do_transition(state[[rule_idx]])
-        idx = idx + 1
+        new_state <- state[[rule_idx]]
+        consume <- TRUE
         break
       }
     }
-    # if we didn't transition to a new state, eat the character and move on
-    if (!transition) {
-      # to save time, only accumulate the contents for states that we're going
-      # to report back to the caller
-      if (show_parse ||
-          current_state %in% c("TAG", "ATTR", "SINGLE_ATTR", "DOUBLE_ATTR", 
-                               "UNQUOTED_ATTR")) {
-        contents <- paste(contents, ch, sep = "")
+    
+    # did we change states above?
+    if (current_state != new_state) {
+      if (current_state == "TAG")
+        cur_tag <- substr(html, contents_idx - 1, idx - 1)
+      else if (current_state == "ATTR")
+        cur_attr <- substr(html, contents_idx - 1, idx - 1)
+      else if (!is.null(callback) && 
+          (current_state == "DOUBLE_ATTR" || 
+           current_state == "SINGLE_ATTR" ||
+           current_state == "UNQUOTED_ATTR")) {
+        # if the attribute is unquoted then it's already begun
+        callback(cur_tag, cur_attr, 
+                 substr(html, 
+                        if (current_state == "UNQUOTED_ATTR") 
+                          contents_idx - 1
+                        else
+                          contents_idx, idx - 1), 
+                 if (current_state == "UNQUOTED_ATTR")
+                   contents_idx - 1 
+                 else
+                   contents_idx)    
       }
-      idx = idx + 1
+      if (show_parse) {
+        print(substr(html, contents_idx - 1, idx - 1))
+        print(new_state)
+      }
+      current_state <- new_state
+      contents_idx <- idx + 1
+      state <- get(new_state, envir = .parse_states)
+      if (consume)
+        idx <- idx + 1
+      consume <- FALSE
+    } else {
+      idx <- idx + 1
     }
   }
 }
