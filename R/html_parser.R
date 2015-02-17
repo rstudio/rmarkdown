@@ -135,27 +135,27 @@ html_extract_values <- function(html, callback = NULL, show_parse = FALSE) {
     # did we change states above?
     if (current_state != new_state) {
       if (current_state == "TAG")
-        cur_tag <- substr(html, contents_idx - 1, idx - 1)
+        cur_tag <- paste0(htmlchars[(contents_idx - 1):(idx - 1)], collapse = "")
       else if (current_state == "ATTR")
-        cur_attr <- substr(html, contents_idx - 1, idx - 1)
+        cur_attr <- paste0(htmlchars[(contents_idx - 1):(idx - 1)], collapse = "")
       else if (!is.null(callback) && 
           (current_state == "DOUBLE_ATTR" || 
            current_state == "SINGLE_ATTR" ||
            current_state == "UNQUOTED_ATTR")) {
         # if the attribute is unquoted then it's already begun
         callback(cur_tag, cur_attr, 
-                 substr(html, 
-                        if (current_state == "UNQUOTED_ATTR") 
+                 paste0(htmlchars[
+                        (if (current_state == "UNQUOTED_ATTR") 
                           contents_idx - 1
                         else
-                          contents_idx, idx - 1), 
+                          contents_idx):(idx - 1)], collapse = ""), 
                  if (current_state == "UNQUOTED_ATTR")
                    contents_idx - 1 
                  else
                    contents_idx)    
       }
       if (show_parse) {
-        print(substr(html, contents_idx - 1, idx - 1))
+        print(paste0(htmlchars[(contents_idx - 1):(idx - 1)], collapse = ""))
         print(new_state)
       }
       current_state <- new_state
