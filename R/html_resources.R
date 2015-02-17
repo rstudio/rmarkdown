@@ -98,7 +98,7 @@ find_external_resources <- function(rmd_file,
   on.exit(unlink(html_file), add = TRUE)
   
   # resource accumulator
-  discover_resource <- function(node, att, val) {
+  discover_resource <- function(node, att, val, idx) {
     res_file <- utils::URLdecode(val)
     if (file.exists(file.path(input_dir, res_file))) {
       discovered_resources <<- rbind(discovered_resources, data.frame(
@@ -106,7 +106,6 @@ find_external_resources <- function(rmd_file,
         explicit = FALSE, 
         web = TRUE))
     }
-    node
   }
  
   # parse the HTML and invoke our resource discovery callbacks
@@ -155,29 +154,23 @@ find_external_resources <- function(rmd_file,
 # HTML that looks like it might point to a resource.
 call_resource_attrs <- function(html, callback) {
   
-  attr_handler <- function(node, attr_name) {
-    # check to see if the node has a value for the given attribute
-    val <- node$attributes[attr_name]
-    if (is.null(val) || is.na(val)) {
-      # no value, continue
-      node
-    } else
+  attr_handler <- function(tag, attr_name, attr_value, attr_idx) {
+    if ((tag == "img"    && attr_name == "src")  ||
+        (tag == "link"   && attr_name == "href") ||
+        (tag == "object" && attr_name == "data") || 
+        (tag == "script" && attr_name == "src")  ||
+        (tag == "audio"  && attr_name == "src")  ||
+        (tag == "video"  && attr_name == "src")  ||
+        (tag == "embed"  && attr_name == "src"))
+    {
       # value found, invoke callbcak
-      callback(node, attr_name, val)
+      callback(node, attr_name, attr_value, attr_idx)
+    }
   }
   
   # parse the HTML and invoke handlers on all elements that look like they might
   # refer to external resources
-  XML::htmlTreeParse(file = html, asText = TRUE, handlers = list(
-      img    = function(node) { attr_handler(node, "src")  },
-      link   = function(node) { attr_handler(node, "href") },
-      iframe = function(node) { attr_handler(node, "src")  },
-      object = function(node) { attr_handler(node, "data") },
-      script = function(node) { attr_handler(node, "src")  },
-      audio  = function(node) { attr_handler(node, "src")  },
-      video  = function(node) { attr_handler(node, "src")  },
-      embed  = function(node) { attr_handler(node, "src")  }
-    ))
+  html_extract_values(html, attr_handler)
   
   invisible(NULL)
 }
