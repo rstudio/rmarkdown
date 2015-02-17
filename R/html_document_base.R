@@ -182,28 +182,30 @@ html_document_base <- function(smart = TRUE,
       call_resource_attrs(output_str, resource_copier)
       
       # rewrite the HTML to refer to the copied resources
-      ch_pos <- 1
-      new_output_str <- ""
-      for (res_rep in seq_along(res_replacements)) {
-        rep <- res_replacements[[res_rep]]
-        
-        # the text from the last replacement to the current one
-        before <- substr(output_str, ch_pos, rep$pos - 1)
-        ch_pos <- rep$pos + rep$len
-        
-        # the text from the current replacement to the end of the output,
-        # if applicable
-        after <- if (res_rep == length(res_replacements))
-          substr(output_str, ch_pos, nchar(output_str))
-        else 
-          ""
-        
-        # compose the next segment of the output from the text between
-        # replacements and the current replacement text
-        new_output_str <- paste(new_output_str, before, rep$text, after,
-                                sep = "")
+      if (length(res_replacements) > 0) {
+        ch_pos <- 1
+        new_output_str <- ""
+        for (res_rep in seq_along(res_replacements)) {
+          rep <- res_replacements[[res_rep]]
+          
+          # the text from the last replacement to the current one
+          before <- substr(output_str, ch_pos, rep$pos - 1)
+          ch_pos <- rep$pos + rep$len
+          
+          # the text from the current replacement to the end of the output,
+          # if applicable
+          after <- if (res_rep == length(res_replacements))
+            substr(output_str, ch_pos, nchar(output_str))
+          else 
+            ""
+          
+          # compose the next segment of the output from the text between
+          # replacements and the current replacement text
+          new_output_str <- paste(new_output_str, before, rep$text, after,
+                                  sep = "")
+        }
+        output_str <- new_output_str
       }
-      output_str <- new_output_str
       
     } else if (!self_contained) {
       # if we're not self-contained, find absolute references to the output

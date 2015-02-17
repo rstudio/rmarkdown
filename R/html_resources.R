@@ -56,7 +56,7 @@ find_external_resources <- function(rmd_file,
   
   # create a UTF-8 encoded Markdown file to serve as the resource discovery 
   # source
-  md_file <- tempfile(fileext = "md")
+  md_file <- tempfile(fileext = ".md")
   on.exit(unlink(md_file), add = TRUE)
   rmd_content <- read_lines_utf8(rmd_file, encoding)
   writeLines(rmd_content, md_file, useBytes = TRUE)
@@ -91,7 +91,7 @@ find_external_resources <- function(rmd_file,
   }
  
   # render "raw" markdown to HTML
-  html_file <- tempfile(fileext = "html")
+  html_file <- tempfile(fileext = ".html")
   render(input = md_file, output_file = html_file, 
          output_options = list(self_contained = FALSE), quiet = TRUE,
          encoding = "UTF-8")
@@ -113,7 +113,7 @@ find_external_resources <- function(rmd_file,
     discover_resource)
   
   # purl the file to extract just the R code 
-  r_file <- tempfile(fileext = "R")
+  r_file <- tempfile(fileext = ".R")
   knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0,
               encoding = "UTF-8")
   on.exit(unlink(r_file), add = TRUE)
@@ -164,7 +164,7 @@ call_resource_attrs <- function(html, callback) {
         (tag == "embed"  && attr_name == "src"))
     {
       # value found, invoke callbcak
-      callback(node, attr_name, attr_value, attr_idx)
+      callback(tag, attr_name, attr_value, attr_idx)
     }
   }
   
