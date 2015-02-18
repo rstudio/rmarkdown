@@ -44,6 +44,16 @@ resource_files:
  - images/figure.png
 ---}
 
+  Each item in the \code{resource_files} list can refer to:
+  \enumerate{
+  \item A single file, such as \code{images/figure.png}, or
+  \item A directory, such as \code{resources/data}, in which case all of the
+    directory's content will be recursively included, or
+  \item A wildcard pattern, such as \code{data/*.csv}, in which case all of
+    the files matching the pattern will be included. No recursion is done in
+    this case.
+  }
+
   Only resources that exist on disk and are contained in the document's
   directory (or a child thereof) are returned.
 }

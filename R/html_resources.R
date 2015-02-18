@@ -23,6 +23,16 @@
 #'  - data/mydata.csv
 #'  - images/figure.png
 #'---}
+#'
+#'   Each item in the \code{resource_files} list can refer to: 
+#'   \enumerate{
+#'   \item A single file, such as \code{images/figure.png}, or
+#'   \item A directory, such as \code{resources/data}, in which case all of the
+#'     directory's content will be recursively included, or
+#'   \item A wildcard pattern, such as \code{data/*.csv}, in which case all of
+#'     the files matching the pattern will be included. No recursion is done in
+#'     this case.
+#'   }
 #'   
 #'   Only resources that exist on disk and are contained in the document's
 #'   directory (or a child thereof) are returned.
@@ -67,7 +77,6 @@ find_external_resources <- function(rmd_file,
   if (!is.null(front_matter$resource_files)) {
     resources <- lapply(front_matter$resource_files, function(res) {
       explicit_res <- if (is.character(res)) {
-        # character vector--use as-is
         list(path = res, explicit = TRUE, web = is_web_file(res))
       } else if (is.list(res) && length(names(res)) > 0) {
         # list--happens when web flag is specified explicitly in YAML.
@@ -80,14 +89,47 @@ find_external_resources <- function(rmd_file,
       }
       
       # check the extracted filename to see if it exists
-      if (!is.null(explicit_res) && 
-          !file.exists(file.path(input_dir, explicit_res))) {
-        NULL
+      if (!is.null(explicit_res)) {
+        if (grepl("*", explicit_res$path, fixed = TRUE)) {
+          # if the resource file spec includes a wildcard, list the files 
+          # that match the pattern
+          files <- list.files(
+            path = file.path(input_dir, dirname(explicit_res$path)), 
+            pattern = glob2rx(basename(explicit_res$path)),
+            recursive = FALSE,
+            include.dirs = FALSE)
+          lapply(files, function(f) {
+            list(path = file.path(dirname(explicit_res$path), f), 
+                 explicit = TRUE,
+                 web = is_web_file(f)) })
+        } else {
+          # no wildcard, see whether this resource refers to a directory or to
+          # an individual file
+          info <- file.info(file.path(input_dir, explicit_res$path))
+          if (is.na(info$isdir)) {
+            # implies that the file doesn't exist (should we warn here?)
+            NULL
+          } else if (isTRUE(info$isdir)) {
+            # if the resource file spec is a directory, include all the files in
+            # the directory, recursively
+            files <- list.files(
+              path = file.path(input_dir, explicit_res$path),
+              recursive = TRUE,
+              include.dirs = FALSE)
+            lapply(files, function(f) {
+              list(path = file.path(explicit_res$path, f), 
+                   explicit = TRUE,
+                   web = is_web_file(f)) })
+          } else {
+            # isdir is false--this is an individual file; return it
+            list(explicit_res)
+          }
+        }
       } else {
-        explicit_res
+        list(explicit_res)
       }
     })
-    discovered_resources <- do.call(rbind.data.frame, resources)
+    discovered_resources <- do.call(rbind.data.frame, do.call(c, resources))
   }
  
   # render "raw" markdown to HTML
@@ -144,9 +186,12 @@ find_external_resources <- function(rmd_file,
   # clean row names (they're not meaningful)
   rownames(discovered_resources) <- NULL
   
-  # convert paths from factors if necssary
+  # convert paths from factors if necssary, and clean any redundant ./ leaders
   discovered_resources$path <- as.character(discovered_resources$path)
-  
+  has_prefix <- grepl("^\\./", discovered_resources$path) 
+  discovered_resources$path[has_prefix] <- substring(
+    discovered_resources$path[has_prefix], 3)
+    
   discovered_resources 
 }
 
