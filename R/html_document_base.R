@@ -133,7 +133,9 @@ html_document_base <- function(smart = TRUE,
       dir.create(lib_dir, recursive = TRUE, showWarnings = FALSE)
       relative_lib <- normalized_relative_to(output_dir, lib_dir)
       
-      resource_copier <- function(node, att, src) {
+      res_replacements <- c()
+      
+      resource_copier <- function(node, att, src, idx) {
         in_file <- utils::URLdecode(src)
         
         # only process the file if (a) it isn't already in the library, and (b)
@@ -165,18 +167,45 @@ html_document_base <- function(smart = TRUE,
             res_src <- file.path(relative_lib, res_src)
           }
           
-          # replace the reference in the document
-          output_str <<- sub(paste("(\\s+", att, "\\s*=\\s*['\"])", 
-                                  escape_regex_metas(src), "(['\"])", 
-                                  sep = ""),
-                             paste("\\1", res_src, "\\2", sep = ""), 
-                             output_str)
+          # replace the reference in the document and adjust the offset
+          if (!identical(src, res_src)) {
+            res_replacements <<- c(res_replacements, list(list(
+              pos = idx,
+              len = nchar(src),
+              text = res_src)))
+          }
         }
-        node
       }
       
       # parse the HTML and copy the resources found
+      output_str <- paste(output_str, collapse = "\n")
       call_resource_attrs(output_str, resource_copier)
+      
+      # rewrite the HTML to refer to the copied resources
+      if (length(res_replacements) > 0) {
+        ch_pos <- 1
+        new_output_str <- ""
+        for (res_rep in seq_along(res_replacements)) {
+          rep <- res_replacements[[res_rep]]
+          
+          # the text from the last replacement to the current one
+          before <- substr(output_str, ch_pos, rep$pos - 1)
+          ch_pos <- rep$pos + rep$len
+          
+          # the text from the current replacement to the end of the output,
+          # if applicable
+          after <- if (res_rep == length(res_replacements))
+            substr(output_str, ch_pos, nchar(output_str))
+          else 
+            ""
+          
+          # compose the next segment of the output from the text between
+          # replacements and the current replacement text
+          new_output_str <- paste(new_output_str, before, rep$text, after,
+                                  sep = "")
+        }
+        output_str <- new_output_str
+      }
       
     } else if (!self_contained) {
       # if we're not self-contained, find absolute references to the output
