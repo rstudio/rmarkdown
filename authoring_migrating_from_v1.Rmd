@@ -14,6 +14,27 @@ The following changes to markdown syntax were made in R Markdown v2:
 2. The WordPress-style LaTeX equation syntax (e.g. `$latex <equation>$`) is no longer supported.
 3. Markdown is rendered even if it's contained within HTML tags.
 
+### Preserving Generated HTML
+
+The change to render markdown within HTML tags has consequences for R functions that generate HTML for inclusion in a markdown document. The markdown processor considers any text that is indented 4 spaces to be preformatted text. This means that if you indent generated HTML tags 4 spaces they will be output as preformatted (i.e. within a `<pre>` tag). 
+
+If you are creating an R function that generates HTML there are a number of ways to avoid this behavior:
+
+1. Enclose the HTML in a special comment that indicates that no markdown processing should occur:
+
+<pre>
+    &lt;!--html_preserve--&gt;
+        &lt;strong&gt;This will render as HTML not preformatted text&lt;/strong&gt;
+    &lt;!--/html_preserve--&gt;
+</pre>
+
+2. Generate HTML that does not indent tags at the beginning of lines.
+
+3. A varation of \#2, use the [**htmltools**](http://cran.r-project.org/web/packages/htmltools/index.html) package to generate HTML (which
+will print it's output by default without indentation).
+
+If you are a user of an R package that is generating HTML that includes indentation you can temporarily workaround the problem by rendering your documnent with rmarkdown v1 (see section below on [Continuing to Use v1]).
+
 ### The knitr Package
 
 R Markdown v2 no longer attaches the **knitr** package by default, i.e. it does not do `library(knitr)` before an R Markdown document is compiled (whereas v1 does), and **knitr** is only _loaded_ but not _attached_. As a result, you may see an error message like `object 'opts_chunk' not found` (or other objects in **knitr** not found). Not attaching a package makes the work space cleaner. If you only need to use a small number of objects in a package occasionally, you are recommended to use the `::` operator, e.g. `knitr::opts_chunk`. However, sometimes we may need to a lot of objects in a package, and it will be cumbersome to type `package::` again and again. In this case, you can attach the package to the current R session explicitly, e.g. `library(knitr)`.

@@ -183,6 +183,24 @@ img {
 <li>Markdown is rendered even if it’s contained within HTML tags.</li>
 </ol>
 </div>
+<div id="preserving-generated-html" class="section level3">
+<h3>Preserving Generated HTML</h3>
+<p>The change to render markdown within HTML tags has consequences for R functions that generate HTML for inclusion in a markdown document. The markdown processor considers any text that is indented 4 spaces to be preformmated text. This means that if you indent generated HTML tags 4 spaces they will be output as preformatted (i.e. within a <code>&lt;pre&gt;</code> tag).</p>
+<p>If you are creating an R function that generates HTML there are a number of ways to avoid this behavior:</p>
+<ol style="list-style-type: decimal">
+<li>Enclose the HTML in a special comment that indicates that no markdown processing should occur:</li>
+</ol>
+<pre>
+    &lt;!--html_preserve--&gt;
+        &lt;strong&gt;This will render as HTML not preformatted text&lt;/strong&gt;
+    &lt;!--/html_preserve--&gt;
+</pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Generate HTML that does not indent tags at the beginning of lines.</p></li>
+<li><p>A varation of #2, use the <a href="http://cran.r-project.org/web/packages/htmltools/index.html"><strong>htmltools</strong></a> package to generate HTML (which will print it’s output by default without indentation).</p></li>
+</ol>
+<p>If you are a user of an R package that is generating HTML that includes indentation you can temporarily workaround the problem by rendering your documnent with rmarkdown v1 (see section below on <a href="#continuing-to-use-v1">Continuing to Use v1</a>).</p>
+</div>
 <div id="the-knitr-package" class="section level3">
 <h3>The knitr Package</h3>
 <p>R Markdown v2 no longer attaches the <strong>knitr</strong> package by default, i.e. it does not do <code>library(knitr)</code> before an R Markdown document is compiled (whereas v1 does), and <strong>knitr</strong> is only <em>loaded</em> but not <em>attached</em>. As a result, you may see an error message like <code>object 'opts_chunk' not found</code> (or other objects in <strong>knitr</strong> not found). Not attaching a package makes the work space cleaner. If you only need to use a small number of objects in a package occasionally, you are recommended to use the <code>::</code> operator, e.g. <code>knitr::opts_chunk</code>. However, sometimes we may need to a lot of objects in a package, and it will be cumbersome to type <code>package::</code> again and again. In this case, you can attach the package to the current R session explicitly, e.g. <code>library(knitr)</code>.</p>
