@@ -41,7 +41,7 @@
 #'
 #' render("input.Rmd", md_document())
 #'
-#' render("input.Rmd", md_document(variant = "github_flavored_markdown"))
+#' render("input.Rmd", md_document(variant = "markdown_github"))
 #' }
 #'
 #' @export
