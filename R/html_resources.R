@@ -195,31 +195,6 @@ find_external_resources <- function(rmd_file,
   discovered_resources 
 }
 
-# given HTML input and a callback, invokes the callback on everything in the 
-# HTML that looks like it might point to a resource.
-call_resource_attrs <- function(html, callback) {
-  
-  attr_handler <- function(tag, attr_name, attr_value, attr_idx) {
-    if ((tag == "img"    && attr_name == "src")  ||
-        (tag == "link"   && attr_name == "href") ||
-        (tag == "object" && attr_name == "data") || 
-        (tag == "script" && attr_name == "src")  ||
-        (tag == "audio"  && attr_name == "src")  ||
-        (tag == "video"  && attr_name == "src")  ||
-        (tag == "embed"  && attr_name == "src"))
-    {
-      # value found, invoke callbcak
-      callback(tag, attr_name, attr_value, attr_idx)
-    }
-  }
-  
-  # parse the HTML and invoke handlers on all elements that look like they might
-  # refer to external resources
-  html_extract_values(html, attr_handler)
-  
-  invisible(NULL)
-}
-
 # given a filename, return true if the file appears to be a web file
 is_web_file <- function(filename) {
   tolower(tools::file_ext(filename)) %in% c(

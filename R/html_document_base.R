@@ -185,6 +185,13 @@ html_document_base <- function(smart = TRUE,
       if (length(res_replacements) > 0) {
         ch_pos <- 1
         new_output_str <- ""
+        
+        # we do all replacements in bytes for performance reasons--mark the 
+        # output with byte encoding temporarily 
+        prev_encoding <- Encoding(output_str)
+        Encoding(output_str) <- "bytes"
+        Encoding(new_output_str) <- "bytes"
+        
         for (res_rep in seq_along(res_replacements)) {
           rep <- res_replacements[[res_rep]]
           
@@ -195,7 +202,7 @@ html_document_base <- function(smart = TRUE,
           # the text from the current replacement to the end of the output,
           # if applicable
           after <- if (res_rep == length(res_replacements))
-            substr(output_str, ch_pos, nchar(output_str))
+            substring(output_str, ch_pos)
           else 
             ""
           
@@ -205,6 +212,7 @@ html_document_base <- function(smart = TRUE,
                                   sep = "")
         }
         output_str <- new_output_str
+        Encoding(output_str) <- prev_encoding
       }
       
     } else if (!self_contained) {
