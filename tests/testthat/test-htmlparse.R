@@ -15,48 +15,33 @@ html_accumulator <- function(tag, att, val, idx) {
 }
 
 test_that("different attribute quoting styles are supported", {
-  html_extract_values(paste(
-    "<h1 align='center'></h1>",
-    "<h2 align=\"left\"></h2>",
-    "<h3 align=right></h3>"), html_accumulator)
+  call_resource_attrs(paste(
+    "<img src='123'/>",
+    "<img src=\"456\"/>"), html_accumulator)
   expect_equal(accumulated, data.frame(
-    tag = c("h1", "h2", "h3"),
-    attribute = c("align", "align", "align"),
-    value = c("center", "left", "right"),
+    tag = c("img", "img"),
+    attribute = c("src", "src"),
+    value = c("123", "456"),
     stringsAsFactors = FALSE))
   reset_accumulator()
 })
 
 test_that("irrelevant white space is ignored", {
-  html_extract_values(paste(
-    "<  input type =   \n",
-    "        \t 'text'\n",
+  call_resource_attrs(paste(
+    "<  img src =   \n",
+    "        \t '123'\n",
     "        \t value ='abc'  />",
-    "<button></button>"), html_accumulator)
+    "<link href=    '456'>"), html_accumulator)
   expect_equal(accumulated, data.frame(
-    tag = c("input", "input"),
-    attribute = c("type", "value"),
-    value = c("text", "abc"),
-    stringsAsFactors = FALSE))
-  reset_accumulator()
-})
-
-test_that("comments are ignored", {
-  html_extract_values(paste(
-    "<!--img src='foo.png'-->\n",
-    "<img src='bar.png'>\n",
-    "<!-- <img src='baz.png'> -->\n",
-    "<img src='quux.png'>\n"), html_accumulator)
-  expect_equal(accumulated, data.frame(
-    tag = c("img", "img"),
-    attribute = c("src", "src"),
-    value = c("bar.png", "quux.png"),
+    tag = c("img", "link"),
+    attribute = c("src", "href"),
+    value = c("123", "456"),
     stringsAsFactors = FALSE))
   reset_accumulator()
 })
 
 test_that("common resource types are found in a simple document", {
-  html_extract_values(paste(
+  call_resource_attrs(paste(
     "<!DOCTYPE html>\n",
     "<HTML>\n",
     "<HEAD>\n",
@@ -65,12 +50,13 @@ test_that("common resource types are found in a simple document", {
     "</HEAD>\n",
     "<BODY>\n",
     "  <IMG SRC=\"baz.png\"/>\n",
+    "  <IFRAME SRC=\"quux.html\"/>\n",
     "</BODY>\n",
     "</HTML>\n"), html_accumulator)
   expect_equal(accumulated, data.frame(
-    tag = c("SCRIPT", "LINK", "LINK", "IMG"),
-    attribute = c("SRC", "REL", "HREF", "SRC"),
-    value = c("foo.js", "stylesheet", "bar.css", "baz.png"),
+    tag = c("script", "link", "img", "iframe"),
+    attribute = c("src", "href", "src", "src"),
+    value = c("foo.js", "bar.css", "baz.png", "quux.html"),
     stringsAsFactors = FALSE))
   reset_accumulator()
 })
