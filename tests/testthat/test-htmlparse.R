@@ -50,12 +50,13 @@ test_that("common resource types are found in a simple document", {
     "</HEAD>\n",
     "<BODY>\n",
     "  <IMG SRC=\"baz.png\"/>\n",
+    "  <IFRAME SRC=\"quux.html\"/>\n",
     "</BODY>\n",
     "</HTML>\n"), html_accumulator)
   expect_equal(accumulated, data.frame(
-    tag = c("script", "link", "img"),
-    attribute = c("src", "href", "src"),
-    value = c("foo.js", "bar.css", "baz.png"),
+    tag = c("script", "link", "img", "iframe"),
+    attribute = c("src", "href", "src", "src"),
+    value = c("foo.js", "bar.css", "baz.png", "quux.html"),
     stringsAsFactors = FALSE))
   reset_accumulator()
 })

@@ -16,7 +16,7 @@ call_resource_attrs <- function(html, callback = NULL)  {
   # use the fastest defaults we can here--PCRE, bytes (RE and input both UTF-8)
   # as the HTML can be quite large
   tags <- gregexpr(
-    "<\\s*(img|link|object|script|audio|video|embed)\\s+([^>]+)>", html, 
+    "<\\s*(img|link|object|script|audio|video|embed|iframe)\\s+([^>]+)>", html, 
     perl = TRUE, useBytes = TRUE, ignore.case = TRUE)[[1]]
   
   for (pos in seq_along(tags)) {
@@ -35,7 +35,8 @@ call_resource_attrs <- function(html, callback = NULL)  {
                       script = "src",
                       audio  = "src",
                       video  = "src",
-                      embed  = "src")
+                      embed  = "src",
+                      iframe = "src")
     
     # extract the tags
     attrstart <- attr(tags, "capture.start", exact = TRUE)[pos,2]
