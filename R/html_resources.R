@@ -151,7 +151,8 @@ find_external_resources <- function(rmd_file,
   }
  
   # parse the HTML and invoke our resource discovery callbacks
-  call_resource_attrs(readLines(html_file, warn = FALSE, encoding = "UTF-8"),
+  call_resource_attrs(paste(
+      readLines(html_file, warn = FALSE, encoding = "UTF-8"), collapse = "\n"),
     discover_resource)
   
   # purl the file to extract just the R code 
