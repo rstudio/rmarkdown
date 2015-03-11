@@ -206,6 +206,9 @@ is_web_file <- function(filename) {
     "jpeg",
     "jpg",
     "js",
-    "png")
+    "mp3",
+    "mp4",
+    "png",
+    "wav")
 }
 
