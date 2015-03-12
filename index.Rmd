@@ -146,9 +146,9 @@ With the basics described above you can get started with R Markdown right away. 
 
 * [R Code Chunks](authoring_rcodechunks.html), which goes into more depth on customizing the behavior of embedded R code.
 
-* [R Markdown Cheat Sheet (PDF)](RMarkdownCheatSheet.pdf), a quick guide to the most commonly used markdown syntax, knitr options, and output formats.
+* [R Markdown Cheat Sheet (PDF)](http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf), a quick guide to the most commonly used markdown syntax, knitr options, and output formats.
 
-* [R Markdown Reference Guide (PDF)](RMarkdownReferenceGuide.pdf), a more comprehensive reference guide to markdown, knitr, and output format options.
+* [R Markdown Reference Guide (PDF)](http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf), a more comprehensive reference guide to markdown, knitr, and output format options.
 
 * [Bibliographies and Citations](authoring_bibliographies_and_citations.html), which describes how to include references in R Markdown documents.
 
