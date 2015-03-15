@@ -7,7 +7,7 @@ output: rmarkdown::tufte_handout
 
 # Introduction
 
-The Tufte-\LaTeX\ [^tufte_latex] document classes define a style similar to the style Edward Tufte uses in his books and handouts. Tufte’s style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography. 
+The Tufte-\LaTeX\ [^tufte_latex] document classes define a style similar to the style Edward Tufte uses in his books and handouts. Tufte's style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography. 
 
 # Headings
 
