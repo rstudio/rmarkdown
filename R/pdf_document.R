@@ -31,12 +31,11 @@
 #' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 #'
 #' R Markdown documents also support citations. You can find more information on
-#' the markdown syntax for citations within the pandoc documentation on
-#' \href{http://johnmacfarlane.net/pandoc/demo/example19/Citations.html}{citations}
-#' and
-#' \href{http://johnmacfarlane.net/pandoc/demo/example19/Footnotes.html}{footnotes}.
-#'
-#' Many aspects of the LaTeX template used to create PDF documents can be
+#' the markdown syntax for citations in the
+#' \href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' and Citations} article in the online documentation.
+#' 
+#' Many aspects of the LaTeX template used to create PDF documents can be 
 #' customized using metadata. For example:
 #'
 #' \tabular{l}{
