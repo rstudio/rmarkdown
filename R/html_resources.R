@@ -67,13 +67,77 @@ find_external_resources <- function(rmd_file,
   # create a UTF-8 encoded Markdown file to serve as the resource discovery 
   # source
   md_file <- tempfile(fileext = ".md")
-  on.exit(unlink(md_file), add = TRUE)
+  output_dir <- dirname(md_file)
   rmd_content <- read_lines_utf8(rmd_file, encoding)
   writeLines(rmd_content, md_file, useBytes = TRUE)
   
-  # parse the YAML front matter to discover explicit resources
+  # create a vector of temporary files; anything in here will be cleaned up on
+  # exit 
+  temp_files <- md_file
+  on.exit(unlink(temp_files, recursive = TRUE), add = TRUE)
+  
+  # discover a single resource--tests a string to see if it corresponds to a 
+  # resource on disk; if so, adds it to the list of known resources and returns
+  # TRUE
+  discover_single_resource <- function(path, explicit, web) {
+    if (is.character(path) && 
+        length(path) == 1 && 
+        file.exists(file.path(input_dir, path))) {
+      discovered_resources <<- rbind(discovered_resources, data.frame(
+        path = path, 
+        explicit = explicit, 
+        web = web,
+        stringsAsFactors = FALSE))
+      TRUE
+    } else {
+      FALSE
+    }
+  }
+  
+  # discovers render-time resources; if any are found, adds them to the list of
+  # discovered resources and copies them alongside the input document.
+  discover_render_resource <- function(output_render_file) {
+    if (discover_single_resource(output_render_file, FALSE, FALSE)) {
+      # mirror original directory structure so we don't need to mutate input
+      # prior to render
+      output_target_file <- file.path(output_dir, output_render_file)
+      if (!file.exists(dirname(output_target_file))) {
+        dir.create(dirname(output_target_file), showWarnings = FALSE,
+                   recursive = TRUE)
+      }
+      
+      # copy the original resource to the temporary render folder
+      file.copy(file.path(input_dir, output_render_file),
+                output_target_file)
+      
+      # clean up this file when we're done
+      temp_files <<- c(temp_files, output_target_file)
+    }
+  }
+  
+  # parse the YAML front matter to discover resources named there
   front_matter <- parse_yaml_front_matter(
     readLines(md_file, warn = FALSE, encoding = "UTF-8"))
+  
+  # Check for content referred to by output format calls to the includes 
+  # function (for generating headers/footers/etc. at render time), and for 
+  # references to files in pandoc arguments. 
+  # 
+  # These will be needed to produce even a vanilla Markdown variant of the input
+  # document, so copy them to the temporary folder in preparation for rendering
+  # (in addition to marking them as required resources).
+  output_formats <- front_matter$output
+  if (is.list(output_formats)) {
+    for (output_format in output_formats) {
+      output_render_files <- c(output_format$includes, 
+                               output_format$pandoc_args)
+      for (output_render_file in output_render_files) {
+        discover_render_resource(output_render_file)
+      }
+    }
+  }
+  
+  # check for explicitly named resources
   if (!is.null(front_matter$resource_files)) {
     resources <- lapply(front_matter$resource_files, function(res) {
       explicit_res <- if (is.character(res)) {
@@ -131,23 +195,44 @@ find_external_resources <- function(rmd_file,
     })
     discovered_resources <- do.call(rbind.data.frame, do.call(c, resources))
   }
+  
+  # check for knitr child documents
+  chunk_lines <- gregexpr(knitr::all_patterns$md$chunk.begin, rmd_content,
+                          perl = TRUE) 
+  for (idx in seq_along(chunk_lines)) {
+    chunk_line <- chunk_lines[idx][[1]]
+    if (chunk_line < 0)
+      next
+    chunk_start <- attr(chunk_line, "capture.start", exact = TRUE) + 1
+    chunk_text <- substr(rmd_content[idx], chunk_start,
+                         chunk_start + attr(chunk_line, "capture.length", 
+                                            exact = TRUE) - 2)
+    for (child_expr in c("\\bchild\\s*=\\s*'([^']+)'", 
+                         "\\bchild\\s*=\\s*\"([^\"]+)\"")) {
+      child_match <- gregexpr(child_expr, chunk_text, perl = TRUE)[[1]]
+      if (child_match > 0) {
+        child_start <- attr(child_match, "capture.start", exact = TRUE)
+        child_text <- substr(chunk_text, child_start, 
+                             child_start + attr(child_match, "capture.length", 
+                                                exact = TRUE) - 1)
+        discover_render_resource(child_text)
+      }
+    }
+  }
  
   # render "raw" markdown to HTML
   html_file <- tempfile(fileext = ".html")
   render(input = md_file, output_file = html_file, 
          output_options = list(self_contained = FALSE), quiet = TRUE,
          encoding = "UTF-8")
-  on.exit(unlink(html_file), add = TRUE)
+  
+  # clean up output file and its supporting files directory
+  temp_files <- c(temp_files, html_file, knitr_files_dir(md_file))
   
   # resource accumulator
   discover_resource <- function(node, att, val, idx) {
     res_file <- utils::URLdecode(val)
-    if (file.exists(file.path(input_dir, res_file))) {
-      discovered_resources <<- rbind(discovered_resources, data.frame(
-        path = val, 
-        explicit = FALSE, 
-        web = TRUE))
-    }
+    discover_single_resource(res_file, true, is_web_file(res_file))
   }
  
   # parse the HTML and invoke our resource discovery callbacks
@@ -159,7 +244,7 @@ find_external_resources <- function(rmd_file,
   r_file <- tempfile(fileext = ".R")
   knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0,
               encoding = "UTF-8")
-  on.exit(unlink(r_file), add = TRUE)
+  temp_files <- c(temp_files, r_file)
   r_lines <- readLines(r_file, warn = FALSE, encoding = "UTF-8") 
   
   # clean comments from the R code (simply; consider: # inside strings)
@@ -180,7 +265,8 @@ find_external_resources <- function(rmd_file,
       discovered_resources <- rbind(discovered_resources, data.frame(
         path = quoted_str, 
         explicit = FALSE,
-        web = FALSE))
+        web = FALSE,
+        stringsAsFactors = FALSE))
     }
   }
   
