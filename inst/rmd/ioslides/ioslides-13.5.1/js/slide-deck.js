@@ -450,7 +450,7 @@ SlideDeck.prototype.buildNextItem_ = function() {
   var current = slide.querySelector('.build-current');
 
   if (current) {
-  	if (!current.parentElement.classList.contains('ggress') || //Don't go off end for progressive graphs
+  	if (!current.parentElement.classList.contains('gginc') || //Don't go off end for progressive graphs
   			toBuild) {
 	    current.classList.remove('build-current');
 	    current.classList.add('build-past');

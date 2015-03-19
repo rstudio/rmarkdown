@@ -1,19 +1,40 @@
 
+#' Incremental graphs 
+#' 
+#' Use this function to "wrap" a ggplot graph which will appear in incremental
+#' stages in your presentation.
+#' 
+#' Usually, you want to begin the presentation with:
+#' output: 
+#'   ioslides_presentation:
+#'     incremental: true
+#'     self_contained: false
+#'     
+#' ... and the block with:
+#' \`\`\`\{r, results='asis', error=FALSE, message=FALSE, warning=FALSE, echo=FALSE\}
+#' 
+#' @param loopVec vector of names or numbers for the incremental stages of the 
+#'    graph. Usually, this will just be 1:n, where n is the number of stages.
+#' @param expr the graphing command. Usually, but not necessarily, a (composite) 
+#'    ggplot command.
+#' 
 #' @export
-ggr = function(loopVec, expr) {
-  cat("<ul class='build ggress'>\n")
-  #print(substitute(expr))
-  #print(eval(substitute(expr)))
-  for (iggr__ in loopVec) {
+#' 
+#' @examples
+#' \donttest{
+#' gginc(1:2, ggplot(mtcars,aes(y=mpg,x=wt)) + geom_point() + stages(geom_blank(),s2=geom_smooth()))
+#' }
+#' 
+gginc = function(loopVec, expr, print.expr=TRUE) {
+  cat("<ul class='build gginc'>\n")
+  for (igginc__ in loopVec) {
     cat("  <li>\n")
-    #cat(iggr__,"\n")
-    l = list(ggr__ = iggr__)
-    print(eval(substitute(expr),l))
-    cat(" blah\n")
-    cat("  <br/><b>hi</b>\n")
-    cat("  <\\li>\n")
+    l = list(gginc__ = igginc__)
+    output = eval(substitute(expr),l)
+    if (print.expr) {
+      print(output)
+    }
   }
-  cat("<\\ul>\n")
 }
 
 dputToString = function (obj) {
@@ -24,41 +45,51 @@ dputToString = function (obj) {
 }
 
 
+#' Variable portion within incremental graphs 
+#' 
+#' Use this function for the portions which change inside a gginc expression.
+#' 
+#' @param [positional_parameters] correct output for each stage, in sequential order.
+#' @param [named_parameters_beginning_with_s] For instance, s5=0 says that beginning with
+#'    stage 5 (and until otherwise specified), the output should be 0.
+#' @param [named_parameters_beginning_with_o] For instance, o5=0 says that for stage 5
+#'    only, the output should be 0.
+#'    
+#' 
 #' @export
+#' 
+#' @examples
+#' \donttest{
+#' #4-stage plot: first points only, then add loess, then try linear fit, then return to loess.
+#' gginc(1:4, ggplot(mtcars,aes(y=mpg,x=wt)) + geom_point() + stages(geom_blank(),s2=geom_smooth(),o3=geom_smooth(method="lm")))
+#' 
+#' }
+#' 
 stages = function(...) {
   stageList = list(...)
   stageNames = names(stageList)
-  ggr_ = get("ggr__", parent.frame())
-  #cat("ggr_:",ggr_,"\n")
+  gginc_ = get("gginc__", parent.frame())
   
   #first, check "o3" format
-  onlyName = paste("o",ggr_,sep="")
+  onlyName = paste("o",gginc_,sep="")
   if (onlyName %in% stageNames) {
     return(stageList[[onlyName]])
   }
   
   #now, "s4" format
   l = length(stageNames)
-  #cat("l:",dputToString(l),"\n")
-  #cat("   stageList:",dputToString(stageList),"\n")
-  #cat("stageNames:",dputToString(stageNames),"\n")
-  #cat("sStages:",dputToString(sStages),"\n")
   if (l>0) {
     sStages = as.integer(sub("^(s([0-9]*))|.*","\\2",stageNames))
     
-    #cat("sStages:",dputToString(sStages),"\n")
-    
     loc = val = -1
     for (i in 1:l) {
-      #cat("sStages[i]:",dputToString(sStages[i]),"\n")
-      if (!is.na(sStages[i]) & val < sStages[i] & sStages[i] <= ggr_) {
+      if (!is.na(sStages[i]) & val < sStages[i] & sStages[i] <= gginc_) {
         loc = i
         val = sStages[i]
       }
     }
       
     if (loc > -1) {
-      #cat("loc:",dputToString(loc),"\n")
       return(stageList[[loc]])
     }
   }
@@ -70,18 +101,16 @@ stages = function(...) {
   } else {
     numBare = length(stageList)
   }
-  if (numBare >= ggr_) {
-    #cat("bare1")
-    return(stageList[[ggr_]])
+  if (numBare >= gginc_) {
+    return(stageList[[gginc_]])
   } else if (numBare == 0) {
-    #cat("bare2",stageNames)
     return(NULL)
   }
-  #cat("bare3")
   return(stageList[[numBare]])
 }
 
 #ggnull = annotate("text")
 
-#ggr(1:2, ggplot(mtcars,aes(y=mpg,x=wt)) + geom_point() + stages(ggnull,s2=geom_smooth()))
+#gginc(1:2, ggplot(mtcars,aes(y=mpg,x=wt)) + geom_point() + stages(ggnull,s2=geom_smooth(method="lm")))
+
 

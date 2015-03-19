@@ -846,17 +846,17 @@ article.smaller q:before, article.smaller q:after {
   opacity: 1;
 }
 
-/* Progressive graphs */
+/* Incremental graphs */
 /* line 593, ../scss/default.scss */
-.ggress {
+.gginc {
   position: relative;
 }
 /* line 596, ../scss/default.scss */
-.ggress > * {
+.gginc > * {
   position: absolute;
 }
 /* line 600, ../scss/default.scss */
-.ggress .build-past {
+.gginc .build-past {
   opacity: 0;
 }
 
