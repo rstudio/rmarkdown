@@ -447,12 +447,16 @@ SlideDeck.prototype.addFonts_ = function(fonts) {
 SlideDeck.prototype.buildNextItem_ = function() {
   var slide = this.slides[this.curSlide_];
   var toBuild = slide.querySelector('.to-build');
-  var built = slide.querySelector('.build-current');
+  var current = slide.querySelector('.build-current');
 
-  if (built) {
-    built.classList.remove('build-current');
-    if (built.classList.contains('fade')) {
-      built.classList.add('build-fade');
+  if (current) {
+  	if (!current.parentElement.classList.contains('ggress') || //Don't go off end for progressive graphs
+  			toBuild) {
+	    current.classList.remove('build-current');
+	    current.classList.add('build-past');
+	    if (current.classList.contains('fade')) {
+	      current.classList.add('build-fade');
+	    }
     }
   }
 
