@@ -5,4 +5,6 @@
 README.html
 CONTRIBUTING.html
 PANDOC.html
-
+*.scssc
+test*
+.project
