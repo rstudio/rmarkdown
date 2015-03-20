@@ -1,3 +1,42 @@
+deepsub = function(e,l){
+  out = e
+  #print(e)
+  if (is.expression(e) | is.call(e)) {
+    for (i in 1:length(e)) {
+      
+      #print("fun")
+      if (is.null(e[[i]])) {
+        #pass
+      } else if (is.symbol(e[[i]])) {
+        subber = l[[toString(e[[i]]) ]]
+        if (!is.null(subber)) {
+          if (i == 1 & is.function(subber)) {
+            out=subber(e)
+            #print("break")
+            break
+            #print("broke")
+          } else {
+            #print("subsym")
+            if (typeof(subber) == "character") {
+              out[[i]] = as.symbol(subber)
+            } else {
+              out[[i]] = subber
+            }
+            
+          }
+        } else {
+          #print("unbroken2")
+        }
+        
+      } else {
+        #cat("i:",i," l:",length(e),length(out),deparse(e),"\n")
+        out[[i]] = deepsub(e[[i]],l)
+        #cat("i:",i," l:",length(e),length(out),deparse(e),"\n")
+      }
+    }
+  }
+  out
+}
 
 #' Incremental graphs 
 #' 
@@ -29,8 +68,25 @@ gginc = function(loopVec, expr, print.expr=TRUE) {
   cat("<ul class='build gginc'>\n")
   for (igginc__ in loopVec) {
     cat("  <li>\n")
-    l = list(gginc__ = igginc__)
-    output = eval(substitute(expr),l)
+    restages = function(e){
+      newe=bquote(dot(.(e)))
+      #print(newe)
+      newe2 = deepsub(newe,list(stages=quote((stageof(igginc__))), dot="."))
+      #print(newe2)
+      return(newe2)
+    }
+    output = (
+      eval(
+        eval(
+          eval(
+            bquote(
+              deepsub(quote(.(enquote(substitute(expr)))),
+                      list(quote=quote(bquote),stages=restages))
+              )
+            )
+          )
+        )
+    )
     if (print.expr) {
       print(output)
     }
@@ -65,10 +121,13 @@ dputToString = function (obj) {
 #' 
 #' }
 #' 
-stages = function(...) {
+stages = function(...,gginc_=NULL) {
   stageList = list(...)
   stageNames = names(stageList)
-  gginc_ = get("gginc__", parent.frame())
+  if (is.null(gginc_)) {
+    gginc_ = tryCatch(get("gginc__", parent.frame()),
+                       error=function(e){999})
+  }
   
   #first, check "o3" format
   onlyName = paste("o",gginc_,sep="")
@@ -108,6 +167,8 @@ stages = function(...) {
   }
   return(stageList[[numBare]])
 }
+
+stageof = function(x){function(...){stages(...,gginc_=x)}}
 
 #ggnull = annotate("text")
 
