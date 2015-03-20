@@ -1,3 +1,6 @@
+
+#This is basically like "substitute", except that you can give
+#it functions to wrap things in extra parentheses.
 deepsub = function(e,l){
   out = e
   #print(e)
@@ -68,6 +71,8 @@ gginc = function(loopVec, expr, print.expr=TRUE) {
   cat("<ul class='build gginc'>\n")
   for (igginc__ in loopVec) {
     cat("  <li>\n")
+    #this is the function that deepsub uses to change "a + stages(x,y,z) + b" 
+    #into "a + .((stageof(igginc__))(x,y,z)) + b"
     restages = function(e){
       newe=bquote(dot(.(e)))
       #print(newe)
@@ -75,6 +80,10 @@ gginc = function(loopVec, expr, print.expr=TRUE) {
       #print(newe2)
       return(newe2)
     }
+    
+    #This abomination could be avoided by making deepsub actually be more of
+    # a lisp macro type thing.
+    #But R is to lisp as morse code is to speech. Blech.
     output = (
       eval(
         eval(
