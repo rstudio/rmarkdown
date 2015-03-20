@@ -1,7 +1,13 @@
 
-#This is basically like "substitute", except that you can give
-#it functions to wrap things in extra parentheses.
-deepsub = function(e,l){
+#This is a function to recursively walk a syntax tree.
+#Give it a list, and whenever it hits something that matches a key in the list,
+#it will do something, depending on the type of the corresponding value:
+#  -if it's a string or symbol or call, this acts like "substitute"
+#  -if it's a function, it applys it, then puts the result in the slot of the syntax tree.
+#
+#You can use it like substitute, or like a customizable bquote, or to do other local
+#transformations to the syntax tree, such as wrapping certain function calls in extra parentheses.
+asTweak = function(e,l){
   out = e
   #print(e)
   if (is.expression(e) | is.call(e)) {
@@ -14,7 +20,9 @@ deepsub = function(e,l){
         subber = l[[toString(e[[i]]) ]]
         if (!is.null(subber)) {
           if (i == 1 & is.function(subber)) {
-            out=subber(e)
+            print(e)
+            out=subber(e,l)
+            print(out)
             #print("break")
             break
             #print("broke")
@@ -33,7 +41,7 @@ deepsub = function(e,l){
         
       } else {
         #cat("i:",i," l:",length(e),length(out),deparse(e),"\n")
-        out[[i]] = deepsub(e[[i]],l)
+        out[[i]] = asTweak(e[[i]],l)
         #cat("i:",i," l:",length(e),length(out),deparse(e),"\n")
       }
     }
@@ -69,33 +77,16 @@ deepsub = function(e,l){
 #' 
 gginc = function(loopVec, expr, print.expr=TRUE) {
   cat("<ul class='build gginc'>\n")
-  for (igginc__ in loopVec) {
+  for (curStage in loopVec) {
     cat("  <li>\n")
     #this is the function that deepsub uses to change "a + stages(x,y,z) + b" 
     #into "a + .((stageof(igginc__))(x,y,z)) + b"
-    restages = function(e){
-      newe=bquote(dot(.(e)))
-      #print(newe)
-      newe2 = deepsub(newe,list(stages=quote((stageof(igginc__))), dot="."))
-      #print(newe2)
-      return(newe2)
+    stageSubber = function(e,l){
+      e[["curStage"]] = curStage
+      return(eval(e))
     }
     
-    #This abomination could be avoided by making deepsub actually be more of
-    # a lisp macro type thing.
-    #But R is to lisp as morse code is to speech. Blech.
-    output = (
-      eval(
-        eval(
-          eval(
-            bquote(
-              deepsub(quote(.(enquote(substitute(expr)))),
-                      list(quote=quote(bquote),stages=restages))
-              )
-            )
-          )
-        )
-    )
+    output = eval(asTweak(substitute(expr),list(stages=stageSubber)))
     if (print.expr) {
       print(output)
     }
@@ -130,16 +121,15 @@ dputToString = function (obj) {
 #' 
 #' }
 #' 
-stages = function(...,gginc_=NULL) {
+stages = function(...,curStage=NULL) {
   stageList = list(...)
   stageNames = names(stageList)
-  if (is.null(gginc_)) {
-    gginc_ = tryCatch(get("gginc__", parent.frame()),
-                       error=function(e){999})
+  if (is.null(curStage)) {
+    stop("`stages` called outside `gginc`.")
   }
   
   #first, check "o3" format
-  onlyName = paste("o",gginc_,sep="")
+  onlyName = paste("o",curStage,sep="")
   if (onlyName %in% stageNames) {
     return(stageList[[onlyName]])
   }
@@ -151,7 +141,7 @@ stages = function(...,gginc_=NULL) {
     
     loc = val = -1
     for (i in 1:l) {
-      if (!is.na(sStages[i]) & val < sStages[i] & sStages[i] <= gginc_) {
+      if (!is.na(sStages[i]) & val < sStages[i] & sStages[i] <= curStage) {
         loc = i
         val = sStages[i]
       }
@@ -169,18 +159,10 @@ stages = function(...,gginc_=NULL) {
   } else {
     numBare = length(stageList)
   }
-  if (numBare >= gginc_) {
-    return(stageList[[gginc_]])
+  if (numBare >= curStage) {
+    return(stageList[[curStage]])
   } else if (numBare == 0) {
     return(NULL)
   }
   return(stageList[[numBare]])
 }
-
-stageof = function(x){function(...){stages(...,gginc_=x)}}
-
-#ggnull = annotate("text")
-
-#gginc(1:2, ggplot(mtcars,aes(y=mpg,x=wt)) + geom_point() + stages(ggnull,s2=geom_smooth(method="lm")))
-
-
