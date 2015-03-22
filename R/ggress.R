@@ -20,9 +20,8 @@ asTweak = function(e,l){
         subber = l[[toString(e[[i]]) ]]
         if (!is.null(subber)) {
           if (i == 1 & is.function(subber)) {
-            print(e)
+            #print(e)
             out=subber(e,l)
-            print(out)
             #print("break")
             break
             #print("broke")
@@ -75,18 +74,23 @@ asTweak = function(e,l){
 #' gginc(1:2, ggplot(mtcars,aes(y=mpg,x=wt)) + geom_point() + stages(geom_blank(),s2=geom_smooth()))
 #' }
 #' 
-gginc = function(loopVec, expr, print.expr=TRUE) {
+gginc = function(loopVec, expr, print.expr=TRUE, debug=FALSE) {
   cat("<ul class='build gginc'>\n")
   for (curStage in loopVec) {
     cat("  <li>\n")
     #this is the function that deepsub uses to change "a + stages(x,y,z) + b" 
     #into "a + .((stageof(igginc__))(x,y,z)) + b"
     stageSubber = function(e,l){
+      for (i in 2:length(e)) {e[[i]] = enquote(e[[i]])}
       e[["curStage"]] = curStage
       return(eval(e))
     }
     
-    output = eval(asTweak(substitute(expr),list(stages=stageSubber)))
+    subbed = asTweak(substitute(expr),list(stages=stageSubber))
+    if (debug) {
+      print(subbed)
+    }
+    output = eval(subbed)
     if (print.expr) {
       print(output)
     }
@@ -131,7 +135,7 @@ stages = function(...,curStage=NULL) {
   #first, check "o3" format
   onlyName = paste("o",curStage,sep="")
   if (onlyName %in% stageNames) {
-    return(stageList[[onlyName]])
+    return(eval(stageList[[onlyName]]))
   }
   
   #now, "s4" format
@@ -148,7 +152,7 @@ stages = function(...,curStage=NULL) {
     }
       
     if (loc > -1) {
-      return(stageList[[loc]])
+      return(eval(stageList[[loc]]))
     }
   }
   
@@ -160,9 +164,9 @@ stages = function(...,curStage=NULL) {
     numBare = length(stageList)
   }
   if (numBare >= curStage) {
-    return(stageList[[curStage]])
+    return(eval(stageList[[curStage]]))
   } else if (numBare == 0) {
     return(NULL)
   }
-  return(stageList[[numBare]])
+  return(eval(stageList[[numBare]]))
 }
