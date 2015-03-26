@@ -163,6 +163,7 @@ discover_rmd_resources <- function(rmd_file, encoding,
   # create a UTF-8 encoded Markdown file to serve as the resource discovery 
   # source
   md_file <- tempfile(fileext = ".md")
+  input_dir <- dirname(normalizePath(rmd_file, winslash = "/"))
   output_dir <- dirname(md_file)
   rmd_content <- read_lines_utf8(rmd_file, encoding)
   writeLines(rmd_content, md_file, useBytes = TRUE)
