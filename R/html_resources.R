@@ -1,20 +1,22 @@
 #' Find External Resource References
 #'
-#' Given an R Markdown document, attempt to determine the set of additional
-#' files needed in order to render and display the document.
+#' Given an R Markdown document or HTML file, attempt to determine the set of
+#' additional files needed in order to render and display the document.
 #' 
-#' @param rmd_file path to the R Markdown document to process
-#' @param encoding the encoding of the R Markdown document
+#' @param input_file path to the R Markdown document or HTML file to process
+#' @param encoding the encoding of the document
 #' 
 #' @details This routine applies heuristics in order to scan a document for
 #'   possible resource references. 
 #'   
-#'   It looks for references to files implicitly referenced in Markdown (e.g.
-#'   \code{![alt](img.png)}), in the document's YAML header, in raw HTML chunks,
-#'   and as quoted strings in R code chunks (e.g. \code{read.csv("data.csv")}).
+#'   In R Markdown documents, it looks for references to files implicitly
+#'   referenced in Markdown (e.g. \code{![alt](img.png)}), in the document's
+#'   YAML header, in raw HTML chunks, and as quoted strings in R code chunks
+#'   (e.g. \code{read.csv("data.csv")}).
 #'   
-#'   Resources specified explicitly in the document's YAML header are also 
-#'   returned. To specify resources in YAML, use the \code{resource_files} key:
+#'   Resources specified explicitly in the YAML header for R Markdown documents
+#'   are also returned. To specify resources in YAML, use the
+#'   \code{resource_files} key:
 #'   
 #'   \preformatted{---
 #'title: My Document
@@ -34,8 +36,12 @@
 #'     this case.
 #'   }
 #'   
-#'   Only resources that exist on disk and are contained in the document's
-#'   directory (or a child thereof) are returned.
+#'   In HTML files (and raw HTML chunks in R Markdown documents), this routine
+#'   searches for resources specified in common tag attributes, such as
+#'   \code{<img src="...">}, \code{<link href="...">}, etc.
+#'   
+#'   In all cases, only resources that exist on disk and are contained in the
+#'   document's directory (or a child thereof) are returned.
 #'   
 #' @return A data frame with the following columns:
 #'   \describe{
@@ -47,14 +53,15 @@
 #'   }
 #'     
 #' @export
-find_external_resources <- function(rmd_file, 
+find_external_resources <- function(input_file, 
                                     encoding = getOption("encoding")) {
   # ensure we're working with valid input
-  if (!identical(tolower(tools::file_ext(rmd_file)), "rmd")) {
+  ext <- tolower(tools::file_ext(input_file))
+  if (!(ext %in% c("rmd", "html"))) {
     stop("Resource discovery is only supported for R Markdown files.")
   }
-  if (!file.exists(rmd_file)) {
-    stop("The input file file '", rmd_file, "' does not exist.")
+  if (!file.exists(input_file)) {
+    stop("The input file file '", input_file, "' does not exist.")
   }
   
   # set up the frame we'll use to report results
@@ -62,19 +69,7 @@ find_external_resources <- function(rmd_file,
     path = character(0),
     explicit = logical(0),
     web = logical(0))
-  input_dir <- dirname(normalizePath(rmd_file, winslash = "/"))
-  
-  # create a UTF-8 encoded Markdown file to serve as the resource discovery 
-  # source
-  md_file <- tempfile(fileext = ".md")
-  output_dir <- dirname(md_file)
-  rmd_content <- read_lines_utf8(rmd_file, encoding)
-  writeLines(rmd_content, md_file, useBytes = TRUE)
-  
-  # create a vector of temporary files; anything in here will be cleaned up on
-  # exit 
-  temp_files <- md_file
-  on.exit(unlink(temp_files, recursive = TRUE), add = TRUE)
+  input_dir <- dirname(normalizePath(input_file, winslash = "/"))
   
   # discover a single resource--tests a string to see if it corresponds to a 
   # resource on disk; if so, adds it to the list of known resources and returns
@@ -93,6 +88,62 @@ find_external_resources <- function(rmd_file,
       FALSE
     }
   }
+  
+  # run the main resource discovery appropriate to the file type
+  if (ext == "rmd")
+    discover_rmd_resources(input_file, encoding, discover_single_resource)
+  else if (ext == "html")
+    discover_html_resources(input_file, encoding, discover_single_resource)
+  
+  # clean row names (they're not meaningful)
+  rownames(discovered_resources) <- NULL
+  
+  # convert paths from factors if necssary, and clean any redundant ./ leaders
+  discovered_resources$path <- as.character(discovered_resources$path)
+  has_prefix <- grepl("^\\./", discovered_resources$path) 
+  discovered_resources$path[has_prefix] <- substring(
+    discovered_resources$path[has_prefix], 3)
+    
+  discovered_resources 
+}
+
+# discovers resources in a single HTML file with the given encoding
+discover_html_resources <- function(html_file, encoding, 
+                                    discover_single_resource) {
+  # resource accumulator
+  discover_resource <- function(node, att, val, idx) {
+    res_file <- utils::URLdecode(val)
+    discover_single_resource(res_file, FALSE, TRUE)
+  }
+  
+  # create a single string with all of the lines in the document
+  html_lines <- paste(
+      readLines(html_file, warn = FALSE, encoding = encoding), collapse = "\n")
+  
+  # if the lines aren't encoded in UTF-8, re-encode them to UTF-8; this is 
+  # necessary since we presume the encoding when parsing the HTML
+  if (encoding != "UTF-8") {
+    html_lines <- enc2utf8(html_lines)
+  }
+  
+  # parse the HTML and invoke our resource discovery callbacks
+  call_resource_attrs(html_lines, discover_resource)
+}
+
+# discovers resources in a single R Markdown document
+discover_rmd_resources <- function(rmd_file, encoding, 
+                                   discover_single_resource) {
+  # create a UTF-8 encoded Markdown file to serve as the resource discovery 
+  # source
+  md_file <- tempfile(fileext = ".md")
+  output_dir <- dirname(md_file)
+  rmd_content <- read_lines_utf8(input_file, encoding)
+  writeLines(rmd_content, md_file, useBytes = TRUE)
+  
+  # create a vector of temporary files; anything in here will be cleaned up on
+  # exit 
+  temp_files <- md_file
+  on.exit(unlink(temp_files, recursive = TRUE), add = TRUE)
   
   # discovers render-time resources; if any are found, adds them to the list of
   # discovered resources and copies them alongside the input document.
@@ -229,16 +280,8 @@ find_external_resources <- function(rmd_file,
   # clean up output file and its supporting files directory
   temp_files <- c(temp_files, html_file, knitr_files_dir(md_file))
   
-  # resource accumulator
-  discover_resource <- function(node, att, val, idx) {
-    res_file <- utils::URLdecode(val)
-    discover_single_resource(res_file, true, is_web_file(res_file))
-  }
- 
-  # parse the HTML and invoke our resource discovery callbacks
-  call_resource_attrs(paste(
-      readLines(html_file, warn = FALSE, encoding = "UTF-8"), collapse = "\n"),
-    discover_resource)
+  # run the HTML resource discovery mechanism on the rendered output
+  discover_html_resources(html_file, "UTF-8", discover_single_resource)  
   
   # purl the file to extract just the R code 
   r_file <- tempfile(fileext = ".R")
@@ -269,17 +312,6 @@ find_external_resources <- function(rmd_file,
         stringsAsFactors = FALSE))
     }
   }
-  
-  # clean row names (they're not meaningful)
-  rownames(discovered_resources) <- NULL
-  
-  # convert paths from factors if necssary, and clean any redundant ./ leaders
-  discovered_resources$path <- as.character(discovered_resources$path)
-  has_prefix <- grepl("^\\./", discovered_resources$path) 
-  discovered_resources$path[has_prefix] <- substring(
-    discovered_resources$path[has_prefix], 3)
-    
-  discovered_resources 
 }
 
 # given a filename, return true if the file appears to be a web file
