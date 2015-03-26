@@ -90,10 +90,36 @@ find_external_resources <- function(input_file,
   }
   
   # run the main resource discovery appropriate to the file type
-  if (ext == "rmd")
+  if (ext == "rmd") {
+    # discover R Markdown doc resources--scans the document itself as described
+    # in comments above, renders as Markdown, and invokes HTML discovery 
+    # on the result
     discover_rmd_resources(input_file, encoding, discover_single_resource)
-  else if (ext == "html")
+  } else if (ext == "html") {
+    # discover HTML resources
     discover_html_resources(input_file, encoding, discover_single_resource)
+    
+    # if the HTML file represents a rendered R Markdown document, it may have a 
+    # sidecar _files folder; include that if it's present
+    sidecar_files_dir <- knitr_files_dir(input_file)
+    files_dir_info <- file.info(sidecar_files_dir)
+    if (isTRUE(files_dir_info$isdir)) {
+      # get a list of the files in the folder
+      knitr_files <- list.files(path = sidecar_files_dir, 
+                                recursive = TRUE, include.dirs = FALSE)
+      
+      # remove those we already discovered via heuristics
+      knitr_files <- file.path(basename(sidecar_files_dir), knitr_files)
+      knitr_files <- setdiff(knitr_files, discovered_resources$path)
+      
+      # add the unique files discovered in the _files folder
+      discovered_resources <- rbind(discovered_resources, data.frame(
+        path = knitr_files, 
+        explicit = FALSE, 
+        web = TRUE,
+        stringsAsFactors = FALSE))
+    }
+  }
   
   # clean row names (they're not meaningful)
   rownames(discovered_resources) <- NULL
