@@ -51,8 +51,20 @@ call_resource_attrs <- function(html, callback = NULL)  {
     if (attrmatch >= 0) {
       matchstart <- attrstart + 
         attr(attrmatch, "capture.start", exact = TRUE) - 1
-      resource <- substr(html, matchstart + 1, 
-        matchstart + attr(attrmatch, "capture.length", exact = TRUE) - 2)
+      matchlength <- attr(attrmatch, "capture.length", exact = TRUE)
+      
+      # before we attempt to extract the entire attribute value, check to see
+      # if it's a large data blob; if it is, skip it. note that substr() is
+      # very expensive on long strings so this is cheaper than just doing a
+      # prefix check immediately.
+      if (matchlength > 256) {
+        if (substr(html, matchstart + 1, matchstart + 5) == "data:") {
+          next
+        }
+      }
+      
+      # extract the matching bytes, re-apply encoding, and invoke the callback
+      resource <- substr(html, matchstart + 1, matchstart + matchlength - 2)
       Encoding(resource) <- html_encoding
       callback(tag, tagattr, resource, matchstart + 1)
     }
