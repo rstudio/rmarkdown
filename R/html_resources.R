@@ -58,7 +58,8 @@ find_external_resources <- function(input_file,
   # ensure we're working with valid input
   ext <- tolower(tools::file_ext(input_file))
   if (!(ext %in% c("rmd", "html"))) {
-    stop("Resource discovery is only supported for R Markdown files.")
+    stop("Resource discovery is only supported for R Markdown files or HTML ",
+         "files.")
   }
   if (!file.exists(input_file)) {
     stop("The input file file '", input_file, "' does not exist.")
@@ -163,7 +164,7 @@ discover_rmd_resources <- function(rmd_file, encoding,
   # source
   md_file <- tempfile(fileext = ".md")
   output_dir <- dirname(md_file)
-  rmd_content <- read_lines_utf8(input_file, encoding)
+  rmd_content <- read_lines_utf8(rmd_file, encoding)
   writeLines(rmd_content, md_file, useBytes = TRUE)
   
   # create a vector of temporary files; anything in here will be cleaned up on
