@@ -1,3 +1,11 @@
+rmarkdown 0.6 (under development)
+--------------------------------------------------------------------------------
+
+* Automatically discover and include dependent resources (e.g. images, css, etc.)
+  for interactive documents.
+
+* Various improvements to tufte_handout format
+
 rmarkdown 0.5.1
 --------------------------------------------------------------------------------
 
