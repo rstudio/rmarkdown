@@ -9,7 +9,7 @@ html_document(toc = FALSE, toc_depth = 3, number_sections = FALSE,
   fig_caption = FALSE, dev = "png", smart = TRUE, self_contained = TRUE,
   theme = "default", highlight = "default", mathjax = "default",
   template = "default", css = NULL, includes = NULL, keep_md = FALSE,
-  lib_dir = NULL, pandoc_args = NULL, ...)
+  lib_dir = NULL, md_extensions = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -75,6 +75,10 @@ document (typically created using the \code{\link{includes}} function).}
 \item{lib_dir}{Directory to copy dependent HTML libraries (e.g. jquery,
 bootstrap, etc.) into. By default this will be the name of the document
 with \code{_files} appended to it.}
+
+\item{md_extensions}{Markdown extensions to be added or removed from the
+default definition or R Markdown. See the \code{\link{rmarkdown_format}}
+for additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 

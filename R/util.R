@@ -34,8 +34,17 @@ rmarkdown_system_file <- function(file) {
   system.file(file, package = "rmarkdown")
 }
 
-from_rmarkdown <- function(implicit_figures = TRUE) {
-  rmarkdown_format(ifelse(implicit_figures, "", "-implicit_figures"))
+from_rmarkdown <- function(implicit_figures = TRUE, extensions = NULL) {
+
+  # paste extensions together and remove whitespace
+  extensions <- paste0(extensions, collapse = "")
+  extensions <- gsub(" ", "", extensions)
+  
+  # exclude implicit figures unless the user has added them back
+  if (!implicit_figures && !grepl("implicit_figures", extensions))
+    extensions <- paste0("-implicit_figures", extensions)
+    
+  rmarkdown_format(extensions)
 }
 
 is_null_or_string <- function(text) {

@@ -81,6 +81,10 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   (e.g. jquery, bootstrap, etc.) into. By default this will be
   the name of the document with \code{_files} appended to it.}
 
+  \item{md_extensions}{Markdown extensions to be added or 
+  removed from the default definition or R Markdown. See the
+  \code{\link{rmarkdown_format}} for additional details.}
+
   \item{pandoc_args}{Additional command line options to
   pass to pandoc}
 

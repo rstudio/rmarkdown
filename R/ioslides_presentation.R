@@ -17,6 +17,7 @@ ioslides_presentation <- function(logo = NULL,
                                   includes = NULL,
                                   keep_md = FALSE,
                                   lib_dir = NULL,
+                                  md_extensions = NULL,
                                   pandoc_args = NULL,
                                   ...) {
 
@@ -184,7 +185,7 @@ ioslides_presentation <- function(logo = NULL,
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
     pandoc = pandoc_options(to = "html",
-                            from = from_rmarkdown(fig_caption),
+                            from = from_rmarkdown(fig_caption, md_extensions),
                             args = args),
     keep_md = keep_md,
     clean_supporting = self_contained,
