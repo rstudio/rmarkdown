@@ -67,6 +67,7 @@ beamer_presentation <- function(toc = FALSE,
                                 template = "default",
                                 keep_tex = FALSE,
                                 includes = NULL,
+                                md_extensions = NULL,
                                 pandoc_args = NULL) {
 
   # base pandoc options for all beamer output
@@ -114,7 +115,7 @@ beamer_presentation <- function(toc = FALSE,
   output_format(
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
     pandoc = pandoc_options(to = "beamer",
-                            from = from_rmarkdown(fig_caption),
+                            from = from_rmarkdown(fig_caption, md_extensions),
                             args = args,
                             keep_tex = keep_tex),
     clean_supporting = !keep_tex

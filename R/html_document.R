@@ -48,6 +48,9 @@
 #' @param lib_dir Directory to copy dependent HTML libraries (e.g. jquery,
 #'   bootstrap, etc.) into. By default this will be the name of the document
 #'   with \code{_files} appended to it.
+#' @param md_extensions Markdown extensions to be added or removed from the
+#'   default definition or R Markdown. See the \code{\link{rmarkdown_format}}
+#'   for additional details.
 #' @param pandoc_args Additional command line options to pass to pandoc
 #' @param ... Additional function arguments to pass to the base R Markdown HTML
 #'   output formatter
@@ -122,6 +125,7 @@ html_document <- function(toc = FALSE,
                           includes = NULL,
                           keep_md = FALSE,
                           lib_dir = NULL,
+                          md_extensions = NULL,
                           pandoc_args = NULL,
                           ...) {
 
@@ -186,7 +190,7 @@ html_document <- function(toc = FALSE,
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
     pandoc = pandoc_options(to = "html",
-                            from = from_rmarkdown(fig_caption),
+                            from = from_rmarkdown(fig_caption, md_extensions),
                             args = args),
     keep_md = keep_md,
     clean_supporting = self_contained,

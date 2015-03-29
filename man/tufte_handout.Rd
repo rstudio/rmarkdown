@@ -6,7 +6,7 @@
 \usage{
 tufte_handout(fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
   dev = "pdf", highlight = "default", keep_tex = FALSE, includes = NULL,
-  pandoc_args = NULL)
+  md_extensions = NULL, pandoc_args = NULL)
 }
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}
@@ -26,6 +26,10 @@ tufte_handout(fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
+
+\item{md_extensions}{Markdown extensions to be added or removed from the
+default definition or R Markdown. See the \code{\link{rmarkdown_format}}
+for additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 }
