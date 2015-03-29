@@ -6,7 +6,8 @@
 \usage{
 md_document(variant = "markdown_strict", preserve_yaml = FALSE,
   toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
-  fig_retina = NULL, dev = "png", includes = NULL, pandoc_args = NULL)
+  fig_retina = NULL, dev = "png", includes = NULL, md_extensions = NULL,
+  pandoc_args = NULL)
 }
 \arguments{
 \item{variant}{Markdown variant to produce (defaults to "markdown_strict").
@@ -36,6 +37,10 @@ md_document(variant = "markdown_strict", preserve_yaml = FALSE,
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
+
+\item{md_extensions}{Markdown extensions to be added or removed from the
+default definition or R Markdown. See the \code{\link{rmarkdown_format}}
+for additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 }

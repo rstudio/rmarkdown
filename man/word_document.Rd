@@ -5,7 +5,8 @@
 \title{Convert to an MS Word document}
 \usage{
 word_document(fig_width = 5, fig_height = 4, fig_caption = FALSE,
-  highlight = "default", reference_docx = "default", pandoc_args = NULL)
+  highlight = "default", reference_docx = "default", md_extensions = NULL,
+  pandoc_args = NULL)
 }
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}
@@ -22,6 +23,10 @@ word_document(fig_width = 5, fig_height = 4, fig_caption = FALSE,
   producing a docx file. For best results, the reference docx should be a
   modified version of a docx file produced using pandoc. Pass "default"
   to use the rmarkdown default styles.}
+
+\item{md_extensions}{Markdown extensions to be added or removed from the
+default definition or R Markdown. See the \code{\link{rmarkdown_format}}
+for additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 }

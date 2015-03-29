@@ -1,6 +1,8 @@
 rmarkdown 0.6 (under development)
 --------------------------------------------------------------------------------
 
+* 'md_extensions' option to enable/disable markdown extensions for input files
+
 * Automatically discover and include dependent resources (e.g. images, css, etc.)
   for interactive documents.
 

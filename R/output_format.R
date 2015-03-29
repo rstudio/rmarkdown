@@ -250,21 +250,22 @@ pandoc_options <- function(to,
 #' @export
 rmarkdown_format <- function(extensions = NULL) {
 
-  paste(c(
+  format <- c("markdown")
 
-    # core pandoc markdown (all extensions enabled)
-    "markdown",
-
-    # additional github flavored markdown extensions for
-    # compatibility with the markdown package
-    "+autolink_bare_uris",
-    "+ascii_identifiers",
-    "+tex_math_single_backslash",
-
-    # caller additions or subtractions to the format
-    extensions
-
-  ), collapse = "")
+  # only add extensions if the user hasn't already specified
+  # a manual override for them
+  addExtension <- function(extension) {
+    if (!grepl(extension, extensions))
+      format <<- c(format, paste0("+", extension))
+  }
+  
+  addExtension("autolink_bare_uris")
+  addExtension("ascii_identifiers")
+  addExtension("tex_math_single_backslash")
+  
+  format <- c(format, extensions, recursive = TRUE)
+  
+  paste(format, collapse = "")
 }
 
 #' Determine the default output format for an R Markdown document

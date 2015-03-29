@@ -41,6 +41,7 @@ word_document <- function(fig_width = 5,
                           fig_caption = FALSE,
                           highlight = "default",
                           reference_docx = "default",
+                          md_extensions = NULL,
                           pandoc_args = NULL) {
 
   # knitr options and hooks
@@ -71,7 +72,7 @@ word_document <- function(fig_width = 5,
   output_format(
     knitr = knitr,
     pandoc = pandoc_options(to = "docx",
-                            from = from_rmarkdown(fig_caption),
+                            from = from_rmarkdown(fig_caption, md_extensions),
                             args = args)
   )
 }
