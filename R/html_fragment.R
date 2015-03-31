@@ -1,6 +1,6 @@
 #' Convert to an HTML fragment.
 #'
-#' An html fragment is suitable for inclusion into an external html paage.
+#' An html fragment suitable for inclusion in an external html paage.
 #' See \code{\link{html_document}} for full details - this is a minor variation
 #' that assumes you will include the output into an existing document (e.g.
 #' a blog post).
@@ -12,6 +12,20 @@
 #' 
 #' @inheritParams html_document
 #' @return R Markdown output format to pass to \code{\link{render}}
+#' @examples
+#' \dontrun{
+#'
+#' library(rmarkdown)
+#'
+#' # simple invocation
+#' render("fragment.Rmd", html_fragment())
+#'
+#' # or specify via YAML frontmatter like so:
+#' #---
+#' #output: html_fragment
+#' #---
+#' }
+#'
 #' @export
 html_fragment <- function(number_sections = FALSE,
                           fig_width = 7,
