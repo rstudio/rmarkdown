@@ -32,7 +32,7 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   scaling. Note that this will always be\code{NULL} when
   \code{keep_md} is specified (this is because
   \code{fig_retina} relies on outputting HTML directly
-  into the markdowndocument).}
+  into the markdown document).}
 
   \item{fig_caption}{\code{TRUE} to render figures with
   captions}
