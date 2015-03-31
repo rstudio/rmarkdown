@@ -37,6 +37,9 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to an MS Word document.
 }
 \details{
+See the \href{http://rmarkdown.rstudio.com/word_document_format.html}{online
+documentation} for additional details on using the \code{word_document} format.
+
 R Markdown documents can have optional metadata that is used to generate a
 document header that includes the title, author, and date. For more details
 see the documentation on R Markdown \link[=rmd_metadata]{metadata}.

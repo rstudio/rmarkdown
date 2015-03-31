@@ -5,6 +5,11 @@
 #' that assumes you will include the output into an existing document (e.g.
 #' a blog post).
 #'
+#' @details
+#'
+#' See the \href{http://rmarkdown.rstudio.com/html_document_format.html}{online
+#' documentation} for additional details on using the \code{html_fragment} format.
+#' 
 #' @inheritParams html_document
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @export

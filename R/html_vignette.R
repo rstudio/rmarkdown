@@ -12,6 +12,11 @@
 #'   \item uses a custom css stylesheet
 #'  }
 #'
+#' @details
+#'
+#' See the \href{http://rmarkdown.rstudio.com/package_vignette_format.html}{online
+#' documentation} for additional details on using the \code{html_vignette} format.
+#' 
 #' @inheritParams html_document
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @export

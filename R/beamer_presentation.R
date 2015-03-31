@@ -24,6 +24,9 @@
 #'
 #' @details
 #'
+#' See the \href{http://rmarkdown.rstudio.com/beamer_presentation_format.html}{online
+#' documentation} for additional details on using the \code{beamer_presentation} format.
+#'
 #' Creating Beamer output from R Markdown requires that LaTeX be installed.
 #'
 #' For more information on markdown syntax for presentations see

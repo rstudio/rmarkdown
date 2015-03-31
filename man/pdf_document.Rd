@@ -60,6 +60,9 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to a PDF document.
 }
 \details{
+See the \href{http://rmarkdown.rstudio.com/pdf_document_format.html}{online
+documentation} for additional details on using the \code{pdf_document} format.
+
 Creating PDF output from R Markdown requires that LaTeX be installed.
 
 R Markdown documents can have optional metadata that is used to generate a

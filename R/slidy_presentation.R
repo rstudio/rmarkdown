@@ -15,8 +15,11 @@
 #'  presentation using the 'S' (smaller) and 'B' (bigger) keys.
 #' 
 #' @return R Markdown output format to pass to \code{\link{render}}
-#'   
+#' 
 #' @details
+#'
+#' See the \href{http://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
+#' documentation} for additional details on using the \code{slidy_presentation} format.
 #' 
 #' For more information on markdown syntax for presentations see 
 #' \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing
