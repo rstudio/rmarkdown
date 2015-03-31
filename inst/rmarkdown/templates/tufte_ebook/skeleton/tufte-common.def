@@ -233,7 +233,7 @@
 %%
 % Default `book' and `handout' options
 
-\ifthenelse{\equal{\@tufte@pkgname}{tufte-book}}
+\ifthenelse{\equal{\@tufte@pkgname}{tuftish-ebook}}
   {\ExecuteOptionsX[tufte]<common>{titlepage}}
   {\ExecuteOptionsX[tufte]<common>{notitlepage}}
 
@@ -338,6 +338,10 @@
 
 \RequirePackage{titlesec,titletoc}
 
+%%
+% Color - load before hypersetup
+\RequirePackage[usenames,dvipsnames,svgnames]{xcolor}% load before bidi
+
 %%%
 %% Loads the hyperref package and sets some default options.
 
@@ -348,9 +352,6 @@
   \hypersetup{%
     pdfborder = {0 0 0},
     bookmarksdepth = section,
-    citecolor = DarkGreen,
-    linkcolor = DarkBlue,
-    urlcolor = DarkGreen,
   }%
 }
 
@@ -818,10 +819,6 @@
 % Used for doublespacing, and other linespacing
 
 \RequirePackage{setspace}
-
-%%
-% Color
-\RequirePackage[usenames,dvipsnames,svgnames]{xcolor}% load before bidi
 
 %%
 % Load the bidi package if instructed to do so.  This package must be loaded
@@ -1539,7 +1536,7 @@
 % Produces a full title page
 
 \newcommand{\maketitlepage}[0]{%
-  \cleardoublepage%
+  \clearpage%
   {%
   \sffamily%
   \begin{fullwidth}%
@@ -1634,6 +1631,14 @@
   {}% before the title body
   []% after the title body
 
+\titleformat{\subsubsection}%
+  [hang]% shape
+  {\normalfont\large\itshape}% format applied to label+text
+  {\thesubsubsection}% label
+  {2em}% horizontal separation between label and title body
+  {}% before the title body
+  []% after the title body
+
 \titleformat{\paragraph}%
   [runin]% shape
   {\normalfont\itshape}% format applied to label+text
@@ -1645,29 +1650,7 @@
 \titlespacing*{\chapter}{0pt}{50pt}{40pt}
 \titlespacing*{\section}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
 \titlespacing*{\subsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus.2ex}
-
-% Subsubsection and following section headings shouldn't be used.
-% See Bringhurst's _The Elements of Typography_, section 4.2.2.
-\renewcommand\subsubsection{%
-  \@tufte@error{\string\subsubsection is undefined by this class.
-    See Robert Bringhurst's _The Elements of
-    Typographic Style_, section 4.2.2.
-    \string\subsubsection was used}
-    {From Bringhurst's _The Elements of Typographic Style_, section 4.2.2: Use as
-    many levels of headings as you need, no more and no fewer.  Also see the many
-    related threads on Ask E.T. at http://www.edwardtufte.com/.}
-}
-
-\renewcommand\subparagraph{%
-  \@tufte@error{\string\subparagraph is undefined by this class.%
-    See Robert Bringhurst's _The Elements of
-    Typographic Style_, section 4.2.2.
-    \string\subparagraph was used}
-    {From Bringhurst's _The Elements of Typographic Style_, section 4.2.2: Use as
-    many levels of headings as you need, no more and no fewer.  Also see the many
-    related threads on Ask E.T. at http://www.edwardtufte.com/.}
-}
-
+\titlespacing*{\subsubsection}{0pt}{3ex plus 1ex minus .2ex}{1.2ex plus.2ex}
 
 % Formatting for main TOC (printed in front matter)
 % {section} [left] {above} {before w/label} {before w/o label} {filler + page} [after]
@@ -1700,8 +1683,15 @@
     {\hspace*{4em}} % before w/o label
     {\rmfamily\upshape\qquad\thecontentspage} % filler + page (leaders and page num)
     [\end{fullwidth}] % after
+  \titlecontents{subsubsection}% FIXME
+    [2em] % distance from left margin
+    {\vspace{0\baselineskip}\begin{fullwidth}\large\rmfamily\itshape} % above (global formatting of entry)
+    {\hspace*{6em}\contentslabel{6em}} % before w/label (label = ``2.6.1.3'')
+    {\hspace*{6em}} % before w/o label
+    {\rmfamily\upshape\qquad\thecontentspage} % filler + page (leaders and page num)
+    [\end{fullwidth}] % after
   \titlecontents{paragraph}% FIXME
-    [0em] % distance from left margin
+    [4em] % distance from left margin
     {\vspace{0\baselineskip}\begin{fullwidth}\normalsize\rmfamily\itshape} % above (global formatting of entry)
     {\hspace*{6em}\contentslabel{2em}} % before w/label (label = ``2.6.0.0.1'')
     {\hspace*{6em}} % before w/o label

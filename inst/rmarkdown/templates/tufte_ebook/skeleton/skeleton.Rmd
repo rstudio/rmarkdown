@@ -1,0 +1,304 @@
+---
+title: "Tufte e-Book"
+author: "John Smith"
+date: "February 8, 2015"
+bibliography: "knitcitations.bib"
+classoption: oneside
+output: 
+  tufte_ebook:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+---
+
+```{r setup,echo=FALSE,message=FALSE,cache=FALSE,include=TRUE}
+# Its a good idea to start any rmarkdown document with a block like this one to set knit defaults, setup the bibliography, and so forth.
+library(knitcitations)
+library(knitr)
+library(xtable)
+library(ggplot2)
+library(papeR)
+library(pander)
+cite_options(
+              citation_format = "pandoc",
+						 style="citation"
+             )
+
+options(xtable.comment = FALSE)
+options(xtable.booktabs = TRUE)
+
+# This is also a good place to setup any ggplot2 themes for the document using ggplot2::theme_set()
+```
+
+\clearpage
+
+\openepigraph{Sometimes epigraphs look cool.}{-Apocryphal}
+
+\phantomsection 
+\section*{Introduction} 
+\addcontentsline{toc}{section}{Introduction} 
+
+The Tufte-\LaTeX\ document classes define a style similar to the style Edward Tufte uses in his books and handouts. Tufte’s style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography.[^tufte_latex]  
+
+This template is adapted from the Tufte-book class.  It has modifications intended to make it both more flexible and more consistent with expectations from `rmarkdown`.  Some of those modifications are inconsistent with Tufte's style, in that the template will allow you to make documents more visually complex than Tufte would probably advise. 
+
+This skeleton presents an overview of the key Tufte e-Book capabilities, and examples of some of R packages that can be used with the template for pretty printing.  
+
+\phantomsection
+\section*{Known Bug}
+\addcontentsline{toc}{section}{Known Bug}
+
+If you choose LuaTeX as your TeX engine, character spacing will be wrong on the title page and page headers.  This is related to a known-bug in a LaTeX package that has existed for at least four years.  We workaround that bug for XeTeX, but have not found a solution for LuaTeX.  Please don't report this to Rstudio or on the git as a bug.  Feel free to discuss it here, though: https://code.google.com/p/tufte-latex/issues/detail?id=45.   And do feel free to make a pull request if you have a workaround. 
+
+For most uses, pdfTeX is fine anyway, and XeTeX better.  If tikZ is running out of memory, then consider switching to LuaTeX.  The default engine for this template is XeTeX.
+
+\phantomsection
+\section*{Getting Help}
+\addcontentsline{toc}{section}{Getting Help}
+
+The Tufte \LaTeX\ classes produce sophisticated \LaTeX\. If you see errors compiling the \LaTeX\, try using the `keep_tex:` option and examining the result. Because these are \TeX\ issues and not R or rmarkdown issues, you will probably find an answer more quickly by seeking help from the \TeX\ message boards.  
+
+\part{The party of the first part}
+
+Books can have more than one Part.
+
+\chapter{A Chapter About Headings}
+
+And many chapters
+
+# This is a section heading
+
+This style provides a-, b-, c- and d-heads (that is, `#`, `##`, `###`, and `####`).
+
+## This is a subsection heading
+
+Isn't that pretty?
+
+### This is a subsubsection heading
+
+Some people feel these are ~~unnecessary, but some of those are the same people who don't like struck-out text~~. 
+
+#### This is a paragraph heading. 
+
+Don't look bad, do they?
+
+
+\newthought{In his later books}, Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, use the `\newthought` command as demonstrated at the beginning of this paragraph.[^books_be]
+
+\chapter{A Chapter About Class Options, Figures, Equations, and Tables}
+
+# Options and Class Options
+
+The Tufte e-Book template supports a number of `classoptions` that can be set in the `rmarkdown` `YAML` header.  (See [http://rmarkdown.rstudio.com/pdf_document_format.html#latex-options].)  These include:
+
+* `twoside`/`oneside`:  Whether to alternate the running header.
+* `symmetric`: Place margin notes and figures on the left side for left pages.
+* `a4paper`/`b5paper`: Self-explanatory.
+* `titlepage`/`notitlepage`: Self-explanatory.
+* `sfsidenotes`: Sans-serif font for margin notes and captions.
+* `justified`: Fully justify text.
+* `fonts`/`nofonts`: Whether to load fonts.
+* `ls`/`nols`: Whether to configure letterspacing. 
+* `nobib`: Don't load natbib.
+* `notoc`: Use a normal, rather than Tufte-style, table of contents.
+* `bidi`: Load the bidi package for bi-directional text.
+
+Tufte e-Book also supports the `citecolor`, `urlcolor`, and `linkcolor` options.
+
+# Figures
+
+None of the figures in this book were made using the **tikzDevice** R package, which would automagically match the font styles in the figures with those in the rest of the document.  The plots themselves tend to be slightly more elegant.  `CairoPDF` and, on Mac OS X, `QuartzPDF`, are good alterntives if you can't use tikz for some reason.  
+
+## Margin Figures
+
+Images and graphics play an integral role in Tufte's work. To place figures or tables in the margin you can use the `fig.margin` knitr chunk option. For example:
+
+```{r, fig.margin = TRUE, fig.cap = "Sepal length vs. petal length, colored by species"}
+library(ggplot2)
+qplot(Sepal.Length, Petal.Length, data = iris, color = Species)
+```
+
+Note the use of the `fig.cap` chunk option to provide a figure caption. You can adjust the proportions of figures using the `fig.width` and `fig.height` chunk options. These are specified in inches, and will be automatically scaled down to fit within the handout margin.
+
+## Equations
+
+You can also include \LaTeX\ equations in the margin by explicitly invoking the `marginfigure` environment.
+
+\begin{marginfigure}
+$$\frac{d}{dx}\left( \int_{0}^{x} f(u)\,du\right)=f(x).$$
+\caption{An equation}
+\end{marginfigure}
+
+Note the use of the `\caption` command to add additional text below the equation.
+
+## Full Width Figures
+
+You can arrange for figures to span across the entire page by using the `fig.fullwidth` chunk option. 
+
+```{r, fig.width = 10, fig.height = 2, fig.fullwidth = TRUE, fig.cap = "Full width figure"}
+qplot(wt, mpg, data=mtcars, colour=factor(cyl))
+```
+
+Note the use of the `fig.width` and `fig.height` chunk options to establish the proportions of the figure. Full width figures look much better if their height is minimized.
+
+## Main Column Figures
+
+Besides margin and full width figures, you can of course also include figures constrained to the main column.
+
+```{r, fig.cap = "Another figure"}
+qplot(factor(cyl), mpg, data = mtcars, geom = "boxplot")
+```
+
+# Sidenotes
+
+One of the most prominent and distinctive features of this style is the extensive use of sidenotes. There is a wide margin to provide ample room for sidenotes and small figures. Any use of a footnote will automatically be converted to a sidenote. ^[This is a sidenote that was entered using a footnote.] 
+
+If you'd like to place ancillary information in the margin without the sidenote mark (the superscript number), you can use the `\marginnote` command. \marginnote{This is a margin note.  Notice that there isn't a number preceding the note.}
+
+Note also that the two footnote references (`tufte_latex` and `books_be`, both defined below) were also included in the margin on the first page of this document.  Another way of doing things, which will be explained below, is to use a citation management package to keep track of citations.
+
+# Tables
+
+## xtable
+
+You can use the **xtable** package to format \LaTeX\ tables that integrate well with the rest of the document. Note that it's important to set the `xtable.comment` and `xtable.booktabs` options to ensure the table is formatted correctly for inclusion in the document.
+
+```{r, results='asis'}
+xtable(head(mtcars[,1:6]), 
+       caption = "xtable, first rows of mtcars")
+```
+
+## Margin Tables
+
+You can also create margin tables using the **xtable** package together with the **kable** function in the **knitr** package.  
+
+Margin tables, like some of the other formatting elements discussed below, can be very picky about their contents.  If you see errors when you try to compile \TeX\ to pdf, margin tables are a likely culprit.
+
+\begin{margintable}
+```{r amargintable,results='latex',echo=FALSE}
+frm <- data.frame(a = c(1,2,3), 
+                  b = c("a","b", "c"))
+kable(xtable(table(frm)), 
+      format = "latex")
+```
+\caption{Margin tables captions are defined in latex, not in arguments to the table-making function}
+\end{margintable}
+
+## papeR
+
+Another package with pretty printing features is **papeR**, which has methods for `anova`, `summary`, and a number of other R classes.^[`r citep(citation("papeR"))`]
+
+```{r papeRdemo,results='asis'}
+fit <- lm(mpg ~ hp + wt, data = mtcars)
+tab <- prettify(anova(fit))
+xtable(tab, caption = "papeR ANOVA Output")
+```
+
+## pander
+
+`pander` is another pretty printing package. `pander` has functions creating a variety of `rmarkdown`-compatible markup.^[`r citep(citation("pander"))`]
+
+Pander's pretty printing functions let you emphasize cells, rows, and columns with italic and bold type.
+
+```{r pandocDemo2,results='asis'}
+emphasize.rows(2)
+emphasize.strong.cols(3)
+pander(head(mtcars[,1:5]),
+       caption="pander, first rows of mtcars")
+```
+
+
+## kable
+
+`knitr` itself has a `kable` function. Like `xtable`, `kable` will escape special \LaTeX\ characters.  `kable` also lets you give tables labels for cross-referencing.^[`r citep(citation("xtable"))`; `r citep(citation("knitr"))`] 
+
+```{r kable,results='asis'}
+kable(head(mtcars[,1:5]), 
+      caption = "kable, first rows of mtcars")
+```
+
+\chapter{A Chapter About Columns, Full Width Text, and Landscape Mode.}
+
+# Columns
+
+There are many ways to make columns.  The one built into the Tufte-Book class is called `multicol`.^[`r citep("http://ctan.mirrorcatalogs.com/macros/latex/required/tools/multicol.pdf")`.  For other ways to make columns see http://wiki.contextgarden.net/Columns.]  
+
+\begin{multicols}{2}
+
+Some things don't work inside of columns, or other environments like margin notes and margin tables.  That's why the citations are in the main text and not in columns.  
+
+\columnbreak
+
+I could have made that first column of text flow into this one, but instead I used a column break.
+
+\end{multicols}
+
+\clearpage
+
+
+
+\section{Fullwidth and Landscape}
+
+\begin{fullwidth}
+
+Its easy to get a portion of the text to use the full width of a page.  \LaTeX\ can be touchy though.  I couldn't use the `\#` markdown for the section heading above. Or put the `pander` table in fullwidth. 
+
+In fact, backtics don't work at all.
+
+xtable will print full-width though.
+
+\vspace{10mm}
+
+```{r fullwidthxtable,results='asis',echo=FALSE}
+mtcar2 <- cbind(mtcars, mtcars)
+print(xtable(mtcar2[1:6,1:11]))
+```
+
+If you try to include a caption it will print over part of the table.  Let me know if you find a way to fix that.
+
+\clearpage
+
+
+\begin{landscape}
+
+Part of a document can also be in landscape.  This can also be useful for wide tables.
+
+\end{landscape}
+\end{fullwidth}
+
+
+\clearpage
+
+[^tufte_latex]: https://code.google.com/p/tufte-latex/
+[^books_be]: http://www.edwardtufte.com/tufte/books_be
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Indices}
+\chapter*{Indices}
+
+You can insert lists of tables and figures in your document.
+
+All of the indicies, bibliography, and footnotes get hyperlinked together automagically.  If you look in the source, you'll see how these were added to the toc.
+
+\phantomsection
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+
+\phantomsection
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+
+\clearpage
+
+\phantomsection
+\addcontentsline{toc}{section}{Bibliography}
+\section*{Bibliography}
+ 
+Including a bibliography is a 3-step process.  *First*, using the **RefManageR** and **knitcitations** packages, liberally sprinkle your text with inline R calls to knitcitation's `citep()` or `citet()` functions.  `r citep(citation("knitcitations"))`; `r citep(citation("RefManageR"))`.  *Second*, at the end of your document, include an R block that calls the function  `write.bibtex()`.  `r write.bibtex(file="knitcitations.bib", append=FALSE,biblatex=TRUE)`  That will write a bibtex file containing your citations to disk.  *Third*, in the yaml header, include a `bibliography` line pointing to the `.bib` file produced by `write.bibtex()`.
+
+Use the `\vspace` command to insert blank vertical spaces, like the one separating this line from the bibliography. 
+
+\vspace{10mm}
+
+
+
