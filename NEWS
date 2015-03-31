@@ -5,6 +5,8 @@ rmarkdown 0.6 (under development)
 
 * Automatically discover and include dependent resources (e.g. images, css, etc.)
   for interactive documents.
+  
+* Use VignetteEncoding directive in html_vignette format
 
 * Various improvements to tufte_handout format
 
