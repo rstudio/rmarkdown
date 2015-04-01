@@ -267,14 +267,15 @@ discover_rmd_resources <- function(rmd_file, encoding,
                    web = is_web_file(f)) })
           } else {
             # isdir is false--this is an individual file; return it
-            list(explicit_res)
+            discover_single_resource(explicit_res$path, explicit_res$explicit,
+                                     explicit_res$web)
           }
         }
       } else {
-        list(explicit_res)
+        discover_single_resource(explicit_res$path, explicit_res$explicit,
+                                 explicit_res$web)
       }
     })
-    discovered_resources <- do.call(rbind.data.frame, do.call(c, resources))
   }
   
   # check for knitr child documents in R Markdown documents
