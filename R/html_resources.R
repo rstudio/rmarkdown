@@ -57,7 +57,7 @@ find_external_resources <- function(input_file,
                                     encoding = getOption("encoding")) {
   # ensure we're working with valid input
   ext <- tolower(tools::file_ext(input_file))
-  if (!(ext %in% c("rmd", "html"))) {
+  if (!(ext %in% c("md", "rmd", "html"))) {
     stop("Resource discovery is only supported for R Markdown files or HTML ",
          "files.")
   }
@@ -91,7 +91,7 @@ find_external_resources <- function(input_file,
   }
   
   # run the main resource discovery appropriate to the file type
-  if (ext == "rmd") {
+  if (ext %in% c("md", "rmd")) {
     # discover R Markdown doc resources--scans the document itself as described
     # in comments above, renders as Markdown, and invokes HTML discovery 
     # on the result
@@ -208,10 +208,12 @@ discover_rmd_resources <- function(rmd_file, encoding,
   output_formats <- front_matter$output
   if (is.list(output_formats)) {
     for (output_format in output_formats) {
-      output_render_files <- c(output_format$includes, 
-                               output_format$pandoc_args)
-      for (output_render_file in output_render_files) {
-        discover_render_resource(output_render_file)
+      if (is.list(output_format)) {
+        output_render_files <- c(output_format$includes, 
+                                 output_format$pandoc_args)
+        for (output_render_file in output_render_files) {
+          discover_render_resource(output_render_file)
+        }
       }
     }
   }
