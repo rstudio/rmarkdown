@@ -1,0 +1,37 @@
+---
+title: "Untitled"
+author: "RStudio"
+output: 
+  html_document:
+    css: empty.css
+    includes:
+      before_body: empty.md
+    pandoc_args: [
+      "--title-prefix", "empty.png"
+    ]
+resource_files:
+- empty.tsv
+---
+
+This document tests R Markdown resource discovery for the following content
+types:
+
+- Body includes
+- Pandoc arguments
+- Rendered/raw HTML
+- knitr child documents
+- Markdown file references
+- Manually specified resources
+
+![One pixel](empty.jpg)
+
+<iframe src="empty.html" />
+
+
+```{r, child = "empty.Rmd"}
+```
+
+```{r, echo=FALSE}
+read.csv(file = "empty.csv")
+```
+

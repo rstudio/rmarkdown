@@ -57,7 +57,7 @@ find_external_resources <- function(input_file,
                                     encoding = getOption("encoding")) {
   # ensure we're working with valid input
   ext <- tolower(tools::file_ext(input_file))
-  if (!(ext %in% c("rmd", "html"))) {
+  if (!(ext %in% c("md", "rmd", "html"))) {
     stop("Resource discovery is only supported for R Markdown files or HTML ",
          "files.")
   }
@@ -91,7 +91,7 @@ find_external_resources <- function(input_file,
   }
   
   # run the main resource discovery appropriate to the file type
-  if (ext == "rmd") {
+  if (ext %in% c("md", "rmd")) {
     # discover R Markdown doc resources--scans the document itself as described
     # in comments above, renders as Markdown, and invokes HTML discovery 
     # on the result
@@ -208,10 +208,12 @@ discover_rmd_resources <- function(rmd_file, encoding,
   output_formats <- front_matter$output
   if (is.list(output_formats)) {
     for (output_format in output_formats) {
-      output_render_files <- c(output_format$includes, 
-                               output_format$pandoc_args)
-      for (output_render_file in output_render_files) {
-        discover_render_resource(output_render_file)
+      if (is.list(output_format)) {
+        output_render_files <- c(output_format$includes, 
+                                 output_format$pandoc_args)
+        for (output_render_file in output_render_files) {
+          discover_render_resource(output_render_file)
+        }
       }
     }
   }
@@ -265,36 +267,39 @@ discover_rmd_resources <- function(rmd_file, encoding,
                    web = is_web_file(f)) })
           } else {
             # isdir is false--this is an individual file; return it
-            list(explicit_res)
+            discover_single_resource(explicit_res$path, explicit_res$explicit,
+                                     explicit_res$web)
           }
         }
       } else {
-        list(explicit_res)
+        discover_single_resource(explicit_res$path, explicit_res$explicit,
+                                 explicit_res$web)
       }
     })
-    discovered_resources <- do.call(rbind.data.frame, do.call(c, resources))
   }
   
-  # check for knitr child documents
-  chunk_lines <- gregexpr(knitr::all_patterns$md$chunk.begin, rmd_content,
-                          perl = TRUE) 
-  for (idx in seq_along(chunk_lines)) {
-    chunk_line <- chunk_lines[idx][[1]]
-    if (chunk_line < 0)
-      next
-    chunk_start <- attr(chunk_line, "capture.start", exact = TRUE) + 1
-    chunk_text <- substr(rmd_content[idx], chunk_start,
-                         chunk_start + attr(chunk_line, "capture.length", 
-                                            exact = TRUE) - 2)
-    for (child_expr in c("\\bchild\\s*=\\s*'([^']+)'", 
-                         "\\bchild\\s*=\\s*\"([^\"]+)\"")) {
-      child_match <- gregexpr(child_expr, chunk_text, perl = TRUE)[[1]]
-      if (child_match > 0) {
-        child_start <- attr(child_match, "capture.start", exact = TRUE)
-        child_text <- substr(chunk_text, child_start, 
-                             child_start + attr(child_match, "capture.length", 
-                                                exact = TRUE) - 1)
-        discover_render_resource(child_text)
+  # check for knitr child documents in R Markdown documents
+  if (tolower(tools::file_ext(rmd_file)) == "rmd") {
+    chunk_lines <- gregexpr(knitr::all_patterns$md$chunk.begin, rmd_content,
+                            perl = TRUE) 
+    for (idx in seq_along(chunk_lines)) {
+      chunk_line <- chunk_lines[idx][[1]]
+      if (chunk_line < 0)
+        next
+      chunk_start <- attr(chunk_line, "capture.start", exact = TRUE) + 1
+      chunk_text <- substr(rmd_content[idx], chunk_start,
+                           chunk_start + attr(chunk_line, "capture.length", 
+                                              exact = TRUE) - 2)
+      for (child_expr in c("\\bchild\\s*=\\s*'([^']+)'", 
+                           "\\bchild\\s*=\\s*\"([^\"]+)\"")) {
+        child_match <- gregexpr(child_expr, chunk_text, perl = TRUE)[[1]]
+        if (child_match > 0) {
+          child_start <- attr(child_match, "capture.start", exact = TRUE)
+          child_text <- substr(chunk_text, child_start, 
+                               child_start + attr(child_match, "capture.length", 
+                                                  exact = TRUE) - 1)
+          discover_render_resource(child_text)
+        }
       }
     }
   }
@@ -311,33 +316,29 @@ discover_rmd_resources <- function(rmd_file, encoding,
   # run the HTML resource discovery mechanism on the rendered output
   discover_html_resources(html_file, "UTF-8", discover_single_resource)  
   
-  # purl the file to extract just the R code 
-  r_file <- tempfile(fileext = ".R")
-  knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0,
-              encoding = "UTF-8")
-  temp_files <- c(temp_files, r_file)
-  r_lines <- readLines(r_file, warn = FALSE, encoding = "UTF-8") 
-  
-  # clean comments from the R code (simply; consider: # inside strings)
-  r_lines <- sub("#.*$", "", r_lines)
+  # if this is an R Markdown file, purl the file to extract just the R code 
+  if (tolower(tools::file_ext(rmd_file)) == "rmd") {
+    r_file <- tempfile(fileext = ".R")
+    knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0,
+                encoding = "UTF-8")
+    temp_files <- c(temp_files, r_file)
+    r_lines <- readLines(r_file, warn = FALSE, encoding = "UTF-8") 
     
-  # find quoted strings in the code and attempt to ascertain whether they are
-  # files on disk
-  r_lines <- paste(r_lines, collapse = "\n")
-  quoted_strs <- Reduce(c, lapply(c("\"[^\"]+\"", "'[^']+'"), function(pat) {
-    matches <- unlist(regmatches(r_lines, gregexpr(pat, r_lines)))
-    substr(matches, 2, nchar(matches) - 1)
-  }))
-  
-  # consider any quoted string containing a valid relative path to a file that 
-  # exists on disk to be a reference
-  for (quoted_str in quoted_strs) {
-    if (file.exists(file.path(input_dir, quoted_str))) {
-      discovered_resources <- rbind(discovered_resources, data.frame(
-        path = quoted_str, 
-        explicit = FALSE,
-        web = FALSE,
-        stringsAsFactors = FALSE))
+    # clean comments from the R code (simply; consider: # inside strings)
+    r_lines <- sub("#.*$", "", r_lines)
+      
+    # find quoted strings in the code and attempt to ascertain whether they are
+    # files on disk
+    r_lines <- paste(r_lines, collapse = "\n")
+    quoted_strs <- Reduce(c, lapply(c("\"[^\"]+\"", "'[^']+'"), function(pat) {
+      matches <- unlist(regmatches(r_lines, gregexpr(pat, r_lines)))
+      substr(matches, 2, nchar(matches) - 1)
+    }))
+    
+    # consider any quoted string containing a valid relative path to a file that 
+    # exists on disk to be a reference
+    for (quoted_str in quoted_strs) {
+      discover_single_resource(quoted_str, FALSE, is_web_file(quoted_str))
     }
   }
 }
