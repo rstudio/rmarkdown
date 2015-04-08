@@ -57,7 +57,7 @@ find_external_resources <- function(input_file,
                                     encoding = getOption("encoding")) {
   # ensure we're working with valid input
   ext <- tolower(tools::file_ext(input_file))
-  if (!(ext %in% c("md", "rmd", "html"))) {
+  if (!(ext %in% c("md", "rmd", "html", "htm"))) {
     stop("Resource discovery is only supported for R Markdown files or HTML ",
          "files.")
   }
@@ -96,7 +96,7 @@ find_external_resources <- function(input_file,
     # in comments above, renders as Markdown, and invokes HTML discovery 
     # on the result
     discover_rmd_resources(input_file, encoding, discover_single_resource)
-  } else if (ext == "html") {
+  } else if (ext %in% c("htm", "html")) {
     # discover HTML resources
     discover_html_resources(input_file, encoding, discover_single_resource)
     
