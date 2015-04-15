@@ -508,13 +508,13 @@ validate_front_matter <- function(front_matter) {
 
 partition_yaml_front_matter <- function(input_lines) {
 
-  validate_front_matter <- function(delimeters) {
+  validate_front_matter <- function(delimiters) {
     if (length(delimiters) >= 2 && (delimiters[2] - delimiters[1] > 1)) {
       # verify that it's truly front matter (not preceded by other content)
-      if (delimeters[1] == 1)
+      if (delimiters[1] == 1)
         TRUE
       else
-        is_blank(input_lines[1:delimeters[1]-1])
+        is_blank(input_lines[1:delimiters[1]-1])
     } else {
       FALSE
     }
