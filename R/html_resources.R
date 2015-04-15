@@ -105,17 +105,17 @@ find_external_resources <- function(input_file,
     sidecar_files_dir <- knitr_files_dir(input_file)
     files_dir_info <- file.info(sidecar_files_dir)
     if (isTRUE(files_dir_info$isdir)) {
-      # get a list of the files in the folder
-      knitr_files <- list.files(path = sidecar_files_dir, 
-                                recursive = TRUE, include.dirs = FALSE)
+      # we probably auto-discovered some resources from _files--exclude those
+      # since they'll be covered by the directory
+      files_dir_prefix <- file.path(basename(sidecar_files_dir), "")
+      files_dir_matches <- substr(discovered_resources$path, 1, 
+                                  nchar(files_dir_prefix)) == files_dir_prefix
+      discovered_resources <- discovered_resources[!files_dir_matches, , 
+                                                   drop = FALSE]
       
-      # remove those we already discovered via heuristics
-      knitr_files <- file.path(basename(sidecar_files_dir), knitr_files)
-      knitr_files <- setdiff(knitr_files, discovered_resources$path)
-      
-      # add the unique files discovered in the _files folder
+      # add the directory itself
       discovered_resources <- rbind(discovered_resources, data.frame(
-        path = knitr_files, 
+        path = files_dir_prefix, 
         explicit = FALSE, 
         web = TRUE,
         stringsAsFactors = FALSE))
