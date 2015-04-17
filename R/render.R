@@ -19,6 +19,7 @@ render <- function(input,
                    intermediates_dir = NULL,
                    runtime = c("auto", "static", "shiny"),
                    clean = TRUE,
+                   params = NULL,
                    envir = parent.frame(),
                    quiet = FALSE,
                    encoding = getOption("encoding")) {
@@ -47,6 +48,7 @@ render <- function(input,
                        intermediates_dir = intermediates_dir,
                        runtime = runtime,
                        clean = clean,
+                       params = params,
                        envir = envir,
                        quiet = quiet,
                        encoding = encoding)
@@ -239,6 +241,48 @@ render <- function(input,
     }
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
+    # make the params available within the knit environment
+    # (only do this if there are parameters in the front matter
+    # so we don't require recent knitr for all users)
+    if (!is.null(yaml_front_matter$params)) {
+      
+      # check for recent enough knitr
+      if (packageVersion("knitr") < "1.9.18")
+        stop("knitr >= 1.9.18 required to use rmarkdown params")
+      
+      # read the default parameters and extract them into a named list
+      knit_params <- knitr::knit_params(input_lines)
+      default_params <- list()
+      for (param in knit_params)
+        default_params[[param$name]] <- param$value
+      
+      # validate params passed to render
+      if (!is.null(params)) {
+        
+        # verify they are a list
+        if (!is.list(params) || (length(names(params)) != length(params)))
+          stop("render params argument must be a named list")
+        
+        # verify that all parameters passed are also in the yaml
+        invalid_params <- setdiff(names(params), names(default_params))
+        if (length(invalid_params) > 0)
+          stop("render params not declared in yaml: ",
+               paste(invalid_params, sep = ", "))
+      }
+      
+      # merge explicitly provided params with defaults
+      params <- merge_lists(default_params, params)
+     
+      # make the params available in the knit environment
+      if (!exists("params", envir = envir)) {
+        assign("params", params, envir = envir)
+        on.exit(remove("params", envir = envir), add = TRUE)
+      } else {
+        stop("params object already exists in knit environment ",
+             "so can't be overwritten by render params", call. = FALSE)
+      }
+    }
+    
     # make the yaml_front_matter available as 'metadata' within the
     # knit environment (unless it is already defined there in which case
     # we emit a warning)

@@ -44,6 +44,10 @@ render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
 
   \item{clean}{\code{TRUE} to clean intermediate files created
   during rendering.}
+  
+  \item{params}{List of named parameters that override custom params
+  specified within the YAML front-matter (e.g. specifying a dataset to
+  read or a date range to confine output to).}
 
   \item{envir}{The environment in which the code chunks are
   to be evaluated during knitting (can use
