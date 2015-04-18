@@ -274,7 +274,7 @@ render <- function(input,
       params <- merge_lists(default_params, params)
      
       # make the params available in the knit environment
-      if (!exists("params", envir = envir)) {
+      if (!exists("params", envir = envir, inherits = FALSE)) {
         assign("params", params, envir = envir)
         on.exit(remove("params", envir = envir), add = TRUE)
       } else {
