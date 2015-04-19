@@ -1,6 +1,10 @@
 rmarkdown 0.6 (under development)
 --------------------------------------------------------------------------------
 
+* Support for parameterized reports. Parameter names and default values are 
+  defined in YAML and can be specified via the 'params' argument to the
+  render function
+
 * 'md_extensions' option to enable/disable markdown extensions for input files
 
 * Automatically discover and include dependent resources (e.g. images, css, etc.)
@@ -9,6 +13,7 @@ rmarkdown 0.6 (under development)
 * Use VignetteEncoding directive in html_vignette format
 
 * Various improvements to tufte_handout format
+
 
 rmarkdown 0.5.1
 --------------------------------------------------------------------------------
