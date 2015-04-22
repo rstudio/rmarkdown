@@ -44,7 +44,7 @@ asTweak = function(e,l){
         if (!is.null(result)) {
           out[[i]] = result
         } else {
-          print("isnull")
+          #print("isnull")
           out[i] = list(NULL)
         }
         #cat("i:",i," l:",length(e),length(out),deparse(e),"\n")
