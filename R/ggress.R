@@ -143,7 +143,7 @@ stages = function(...,curStage=NULL) {
   #first, check "o3" format
   onlyName = paste("o",curStage,sep="")
   if (onlyName %in% stageNames) {
-    return(eval(stageList[[onlyName]]))
+    return(stageList[[onlyName]])
   }
   
   #now, "s4" format
@@ -160,7 +160,7 @@ stages = function(...,curStage=NULL) {
     }
       
     if (loc > -1) {
-      return(eval(stageList[[loc]]))
+      return(stageList[[loc]])
     }
   }
   
@@ -172,9 +172,9 @@ stages = function(...,curStage=NULL) {
     numBare = length(stageList)
   }
   if (numBare >= curStage) {
-    return(eval(stageList[[curStage]]))
+    return(stageList[[curStage]])
   } else if (numBare == 0) {
     return(NULL)
   }
-  return(eval(stageList[[numBare]]))
+  return(stageList[[numBare]])
 }
