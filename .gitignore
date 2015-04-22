@@ -8,3 +8,5 @@ PANDOC.html
 *.scssc
 test*
 .project
+phone.css
+.Rapp.history

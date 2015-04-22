@@ -23,8 +23,8 @@ asTweak = function(e,l){
             #print(e)
             out=subber(e,l)
             #print("break")
+            #print(out)
             break
-            #print("broke")
           } else {
             #print("subsym")
             if (typeof(subber) == "character") {
@@ -40,7 +40,13 @@ asTweak = function(e,l){
         
       } else {
         #cat("i:",i," l:",length(e),length(out),deparse(e),"\n")
-        out[[i]] = asTweak(e[[i]],l)
+        result = asTweak(e[[i]],l)
+        if (!is.null(result)) {
+          out[[i]] = result
+        } else {
+          print("isnull")
+          out[i] = list(NULL)
+        }
         #cat("i:",i," l:",length(e),length(out),deparse(e),"\n")
       }
     }
@@ -81,14 +87,16 @@ gginc = function(loopVec, expr, print.expr=TRUE, debug=FALSE) {
     #this is the function that deepsub uses to change "a + stages(x,y,z) + b" 
     #into "a + .((stageof(igginc__))(x,y,z)) + b"
     stageSubber = function(e,l){
+      if (debug) print(e)
       for (i in 2:length(e)) {e[[i]] = enquote(e[[i]])}
       e[["curStage"]] = curStage
+      if (debug) print(eval(e))
       return(eval(e))
     }
     
     subbed = asTweak(substitute(expr),list(stages=stageSubber))
     if (debug) {
-      print(subbed)
+      #print(subbed)
     }
     output = eval(subbed)
     if (print.expr) {
