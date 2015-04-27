@@ -88,7 +88,7 @@ renderMyDocument <- function(region, start) {
 
 ## Parameter Types
 
-All of the standard R types that can be parsed by the `yaml::yaml.load` function are supported. These types are used implicitly based on the value provided so no special type designater is required. Built-in types include `character`, `integer`, `numeric`, and `logical`.
+All of the standard R types that can be parsed by the `yaml::yaml.load` function are supported. These types are used implicitly based on the value provided so no special type designator is required. Built-in types include `character`, `integer`, `numeric`, and `logical`.
 
 In addition there are a number of custom types used to represent dates and times as well as to note that character values have special semantics (e.g. are the name of a file). These types are specified by prefacing the YAML value with *`!typename`*, for example:
 
