@@ -175,7 +175,10 @@ img {
 <div id="TOC">
 <ul>
 <li><a href="#overview">Overview</a></li>
-<li><a href="#declaring-parameters">Declaring Parameters</a></li>
+<li><a href="#using-parameters">Using Parameters</a><ul>
+<li><a href="#declaration">Declaration</a></li>
+<li><a href="#accessing-from-r">Accessing from R</a></li>
+</ul></li>
 <li><a href="#passing-parameters">Passing Parameters</a></li>
 <li><a href="#parameter-types">Parameter Types</a></li>
 </ul>
@@ -190,14 +193,32 @@ img {
 <li><p>Running multiple versions of a report for distinct sets of core assumptions.</p></li>
 </ol>
 <p>R Markdown parameter names, types, and default values are declared in the YAML section at the top of the document. To change these values for a given rendering you use the <code>params</code> argument to the <code>rmarkdown::render</code> function.</p>
-<p>Note that parameterized reports are a new feature of R Markdown and currently require the latest version of the <strong>knitr</strong> package and the <strong>development version</strong> of the R Markdown package. To ensure you have the required versions:</p>
+<p>Note that parameterized reports are a new feature of R Markdown and currently require the latest version of the <strong>knitr</strong> package and the <strong>development version</strong> of the R Markdown package. You can install the required versions with the following commands:</p>
 <pre class="r"><code>install.packages(&quot;knitr&quot;)
 devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
 <p>A version of R Markdown that supports parameterized reports will be released to CRAN soon.</p>
 </div>
-<div id="declaring-parameters" class="section level2">
-<h2>Declaring Parameters</h2>
+<div id="using-parameters" class="section level2">
+<h2>Using Parameters</h2>
+<div id="declaration" class="section level3">
+<h3>Declaration</h3>
 <p>Parameters are declared using the <code>params</code> field within the YAML section at the top of the document, for example:</p>
+<pre class="yaml"><code>---
+title: My Document
+output: html_document
+params:
+   region: east
+---</code></pre>
+<p>Parameter values can be provided inline as illustrated above or can be included in a value sub-key. For example:</p>
+<pre class="yaml"><code>---
+title: My Document
+output: html_document
+params:
+  region:
+    value: east
+---</code></pre>
+<p>This second form is useful when you need to provide additional details about the parameter (e.g. a label field for use by front ends that want to allow users to vary parameter values).</p>
+<p>Parameter types are deduced implicitly based on the value provided. However in some cases additional type information is required (for example when a character vector needs to be interpreted as a date or as a file path). In these cases a special type designater precedes the value. For example:</p>
 <pre class="yaml"><code>---
 title: My Document
 output: html_document
@@ -205,11 +226,15 @@ params:
    region: east
    start: !date 2015-01-01
 ---</code></pre>
-<p>Note that the <code>start</code> parameter includes a special <code>!date</code> annotation. This is explained further in the <a href="#parameter-types">Parameter Types</a> section below.</p>
+<p>See below for additional discussion of <a href="#parameter-types">Parameter Types</a>.</p>
+</div>
+<div id="accessing-from-r" class="section level3">
+<h3>Accessing from R</h3>
 <p>The declared parameters are automatically made available within the knit environment as components of a list named <code>params</code>. For example, the values of the above two parameters can be accessed with the following R code:</p>
 <pre class="r"><code>params$region
 params$start</code></pre>
 <p>When you preview the document in RStudio (or otherwise call the <code>rmarkdown::render</code> function with no arguments) the default parameter values listed in the YAML will be used.</p>
+</div>
 </div>
 <div id="passing-parameters" class="section level2">
 <h2>Passing Parameters</h2>

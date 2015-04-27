@@ -18,7 +18,7 @@ R Markdown documents can optionally include one or more parameters. Parameters a
 
 R Markdown parameter names, types, and default values are declared in the YAML section at the top of the document. To change these values for a given rendering you use the `params` argument to the `rmarkdown::render` function.
 
-Note that parameterized reports are a new feature of R Markdown and currently require the latest version of the **knitr** package and the **development version** of the R Markdown package. To ensure you have the required versions:
+Note that parameterized reports are a new feature of R Markdown and currently require the latest version of the **knitr** package and the **development version** of the R Markdown package. You can install the required versions with the following commands:
 
 ```r
 install.packages("knitr")
@@ -27,9 +27,36 @@ devtools::install_github("rstudio/rmarkdown")
 
 A version of R Markdown that supports parameterized reports will be released to CRAN soon.
 
-## Declaring Parameters
+## Using Parameters
+
+### Declaration
 
 Parameters are declared using the `params` field within the YAML section at the top of the document, for example:
+
+```yaml
+---
+title: My Document
+output: html_document
+params:
+   region: east
+---
+```
+
+Parameter values can be provided inline as illustrated above or can be included in a value sub-key. For example:
+
+```yaml
+---
+title: My Document
+output: html_document
+params:
+  region:
+    value: east
+---
+```
+
+This second form is useful when you need to provide additional details about the parameter (e.g. a label field for use by front ends that want to allow users to vary parameter values). 
+
+Parameter types are deduced implicitly based on the value provided. However in some cases additional type information is required (for example when a character vector needs to be interpreted as a date or as a file path). In these cases a special type designater precedes the value. For example:
 
 ```yaml
 ---
@@ -41,7 +68,9 @@ params:
 ---
 ```
 
-Note that the `start` parameter includes a special `!date` annotation. This is explained further in the [Parameter Types] section below.
+See below for additional discussion of [Parameter Types].
+
+### Accessing from R
 
 The declared parameters are automatically made available within the knit environment as components of a list named `params`. For example, the values of the above two parameters can be accessed with the following R code:
 
@@ -116,8 +145,6 @@ Supported custom types include:
 **file**
 
 :    A character value representing the name of a file. This type is useful as a hint to front-end environments that the user should provided with file picker for specifying the value of the parameter.
-
-
 
 
 
