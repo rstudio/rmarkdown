@@ -177,3 +177,5 @@ See also the R Markdown developer documentation including:
     
 * Adding interactive components to R Markdown documents using [HTML Widgets](developer_html_widgets.html) and [Shiny Widgets](authoring_shiny_widgets.html).
 
+* Creating [Parameterized Reports](developer_parameterized_reports.html) to re-render the same document with distinct values for various key inputs.
+

@@ -10,7 +10,7 @@
 
 
 
-<title>Creating Shiny Widgets</title>
+<title>Parameterized Reports</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -169,106 +169,92 @@ img {
 </div><!--/.navbar -->
 
 <div id="header">
-<h1 class="title">Creating Shiny Widgets</h1>
+<h1 class="title">Parameterized Reports</h1>
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#creating-a-shiny-widget">Creating a Shiny Widget</a><ul>
-<li><a href="#the-shinyapp-function">The shinyApp Function</a></li>
-<li><a href="#example-k-means-cluster">Example: K Means Cluster</a></li>
-<li><a href="#widget-size-and-layout">Widget Size and Layout</a></li>
-</ul></li>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#declaring-parameters">Declaring Parameters</a></li>
+<li><a href="#passing-parameters">Passing Parameters</a></li>
+<li><a href="#parameter-types">Parameter Types</a></li>
 </ul>
 </div>
 
-<p>Shiny widgets enable you to create re-usable Shiny components that are included within an R Markdown document using a single function call. Shiny widgets can also be invoked directly from the console (useful during authoring) and show their output within the RStudio Viewer pane or an external web browser.</p>
-<div id="creating-a-shiny-widget" class="section level2">
-<h2>Creating a Shiny Widget</h2>
-<div id="the-shinyapp-function" class="section level3">
-<h3>The shinyApp Function</h3>
-<p>At their core Shiny widgets are mini-applications created using the <code>shinyApp</code> function. Rather than create a <code>ui.R</code> and <code>server.R</code> as you would for a typical Shiny application, you pass the ui and server definitions to the <code>shinyApp</code> function as arguments. For example:</p>
-<pre class="r"><code>shinyApp(
-  ui = fluidPage(responsive = FALSE,
-    selectInput(&quot;region&quot;, &quot;Region:&quot;, choices = colnames(WorldPhones)),
-    plotOutput(&quot;phonePlot&quot;)
-  ),
-  server = function(input, output) {
-    output$phonePlot &lt;- renderPlot({
-      barplot(WorldPhones[,input$region]*1000, 
-              ylab = &quot;Number of Telephones&quot;, xlab = &quot;Year&quot;)
-    })
-  },
-  options = list(height = 500)
-)</code></pre>
-<p>The simplest type of Shiny widget is just an R function that returns a <code>shinyApp</code>.</p>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>R Markdown documents can optionally include one or more parameters. Parameters are useful when you want to re-render the same report with distinct values for various key inputs, for example:</p>
+<ol style="list-style-type: decimal">
+<li><p>Running a report specific to a department or geographic region.</p></li>
+<li><p>Running a report that covers a specific period in time.</p></li>
+<li><p>Running multiple versions of a report for distinct sets of core assumptions.</p></li>
+</ol>
+<p>R Markdown parameter names, types, and default values are declared in the YAML section at the top of the document. To change these values for a given rendering you use the <code>params</code> argument to the <code>rmarkdown::render</code> function.</p>
+<p>Note that parameterized reports are a new feature of R Markdown and currently require the latest version of the <strong>knitr</strong> package and the <strong>development version</strong> of the R Markdown package. To ensure you have the required versions:</p>
+<pre class="r"><code>install.packages(&quot;knitr&quot;)
+devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
+<p>A version of R Markdown that supports parameterized reports will be released to CRAN soon.</p>
 </div>
-<div id="example-k-means-cluster" class="section level3">
-<h3>Example: K Means Cluster</h3>
-<p>The <a href="https://github.com/rstudio/rmdexamples"><strong>rmdexamples</strong></a> package includes an example of Shiny widget implemented in this fashion. The <a href="https://github.com/rstudio/rmdexamples/blob/master/R/kmeans_cluster.R"><code>kmeans_cluster</code></a> function takes a single “dataset” argument and returns a Shiny widget. You can use it within an R Markdown document like this:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
-library(rmdexamples)
-kmeans_cluster(iris)
-&#96;&#96;&#96;
-</code></pre>
-<p>This is what the widget looks like inside a running document:</p>
-<p><img src="images/shiny-widget-kmeans.png" alt="Shiny Widget KMeans" /></p>
-<div id="source-code" class="section level4">
-<h4>Source Code</h4>
-<p>Here’s the source code for the <code>kmeans_cluster</code> function. Note the use of use of <code>options = list(height = 500)</code> in the call to <code>shinyApp</code> to control the default height of the widget when rendered inside a document.</p>
-<pre class="r"><code>kmeans_cluster &lt;- function(dataset) { 
-  
-  require(shiny)  
-  
-  shinyApp(
-    ui = fluidPage(responsive = FALSE,
-      fluidRow(style = &quot;padding-bottom: 20px;&quot;,
-        column(4, selectInput(&#39;xcol&#39;, &#39;X Variable&#39;, names(dataset))),
-        column(4, selectInput(&#39;ycol&#39;, &#39;Y Variable&#39;, names(dataset),
-                              selected=names(dataset)[[2]])),
-        column(4, numericInput(&#39;clusters&#39;, &#39;Cluster count&#39;, 3,
-                               min = 1, max = 9))
-      ),
-      fluidRow(
-        plotOutput(&#39;kmeans&#39;, height = &quot;400px&quot;)  
-      )
-    ),
-    
-    server = function(input, output, session) {
-      
-      # Combine the selected variables into a new data frame
-      selectedData &lt;- reactive({
-        dataset[, c(input$xcol, input$ycol)]
-      })
-      
-      clusters &lt;- reactive({
-        kmeans(selectedData(), input$clusters)
-      })
-      
-      output$kmeans &lt;- renderPlot(height = 400, {
-        par(mar = c(5.1, 4.1, 0, 1))
-        plot(selectedData(),
-             col = clusters()$cluster,
-             pch = 20, cex = 3)
-        points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
-      })
-    },
-    
-    options = list(height = 500)
-  )
+<div id="declaring-parameters" class="section level2">
+<h2>Declaring Parameters</h2>
+<p>Parameters are declared using the <code>params</code> field within the YAML section at the top of the document, for example:</p>
+<pre class="yaml"><code>---
+title: My Document
+output: html_document
+params:
+   region: east
+   start: !date 2015-01-01
+---</code></pre>
+<p>Note that the <code>start</code> parameter includes a special <code>!date</code> annotation. This is explained further in the <a href="#parameter-types">Parameter Types</a> section below.</p>
+<p>The declared parameters are automatically made available within the knit environment as components of a list named <code>params</code>. For example, the values of the above two parameters can be accessed with the following R code:</p>
+<pre class="r"><code>params$region
+params$start</code></pre>
+<p>When you preview the document in RStudio (or otherwise call the <code>rmarkdown::render</code> function with no arguments) the default parameter values listed in the YAML will be used.</p>
+</div>
+<div id="passing-parameters" class="section level2">
+<h2>Passing Parameters</h2>
+<p>To vary the parameters of an R Markdown document from the defaults you use the <code>params</code> argument of the <code>rmarkdown::render</code> function. For example:</p>
+<pre class="r"><code>rmarkdown::render(&quot;MyDocument.Rmd&quot;, params = list(
+  region = &quot;west&quot;,
+  start = as.Date(&quot;2015-02-01&quot;)
+))</code></pre>
+<p>You can of course specify only a subset of the available parameters in your call to render. For example:</p>
+<pre class="r"><code>rmarkdown::render(&quot;MyDocument.Rmd&quot;, params = list(
+  region = &quot;west&quot;
+))</code></pre>
+<p>In this case the default values are used for any parameters not explicitly provided.</p>
+<p>You might also find it convenient to wrap the call to render in an R function, for example:</p>
+<pre class="r"><code>renderMyDocument &lt;- function(region, start) {
+  rmarkdown::render(&quot;MyDocument.Rmd&quot;, params = list(
+    region = region,
+    start = start
+  ))
 }</code></pre>
 </div>
-</div>
-<div id="widget-size-and-layout" class="section level3">
-<h3>Widget Size and Layout</h3>
-<p>Shiny widgets may be embedded in various places including standard full width pages, smaller columns within pages, and even HTML5 presentations. The following guidelines will help ensure that widget size and layout works well in all of these contexts:</p>
-<ol style="list-style-type: decimal">
-<li><p>Use <code>fluidPage</code> with the <code>responsive = FALSE</code> parameter. This ensures that as the width of a widget gets smaller that elements within it scale smaller as well (and don’t wrap).</p></li>
-<li><p>Ensure that the total height of the widget is no larger than 500 pixels. This isn’t a hard and fast rule, but HTML5 slides can typically only display content &lt;= 500px so if you want your widget to be usable within presentations this is a good guideline to follow.</p></li>
-</ol>
-<p>The example above follows both of these guidelines, specifying a total height of 500px and a height of 400px for the plot (to leave room for the controls above it). Note that height should be specified both on the <code>plotOutput</code> call as well as the <code>renderPlot</code> call.</p>
-<p>Another approach would be to add an explicit height parameter to the function which creates the widget (default to 500 so it works well within slides).</p>
-</div>
+<div id="parameter-types" class="section level2">
+<h2>Parameter Types</h2>
+<p>All of the standard R types that can be parsed by the <code>yaml::yaml.load</code> function are supported. These types are used implicitly based on the value provided so no special type designater is required. Built-in types include <code>character</code>, <code>integer</code>, <code>numeric</code>, and <code>logical</code>.</p>
+<p>In addition there are a number of custom types used to represent dates and times as well as to note that character values have special semantics (e.g. are the name of a file). These types are specified by prefacing the YAML value with <em><code>!typename</code></em>, for example:</p>
+<pre class="yaml"><code>---
+title: My Document
+output: html_document
+params:
+  start: !date 2015-01-01
+  snapshot: !datetime 2015-01-01 12:30:00
+  data: !file data.csv
+---</code></pre>
+<p>Supported custom types include:</p>
+<dl>
+<dt><strong>date</strong></dt>
+<dd><p>A character value representing a date. The underlying date value is parsed from the character value using the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/as.Date.html">as.Date</a> function.</p>
+</dd>
+<dt><strong>datetime</strong></dt>
+<dd><p>A character value representing a date and time. The underlying datetime value is parsed from the character value using the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/as.POSIXlt.html">as.POSIXct</a> function. Note that these values should always specified using UTC (Universal Time, Coordinated).</p>
+</dd>
+<dt><strong>file</strong></dt>
+<dd><p>A character value representing the name of a file. This type is useful as a hint to front-end environments that the user should provided with file picker for specifying the value of the parameter.</p>
+</dd>
+</dl>
 </div>
 
 
