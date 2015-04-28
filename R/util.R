@@ -79,12 +79,12 @@ mark_utf8 <- function(x) {
 }
 
 # TODO: remove this when fixed upstream https://github.com/viking/r-yaml/issues/6
-yaml_load_utf8 <- function(...) {
-  mark_utf8(yaml::yaml.load(...))
+yaml_load_utf8 <- function(string, ...) {
+  mark_utf8(yaml::yaml.load(enc2utf8(string), ...))
 }
 
-yaml_load_file_utf8 <- function(...) {
-  mark_utf8(yaml::yaml.load_file(...))
+yaml_load_file_utf8 <- function(input, ...) {
+  yaml_load_utf8(readLines(input, encoding = 'UTF-8'), ...)
 }
 
 file_name_without_shell_chars <- function(file) {
