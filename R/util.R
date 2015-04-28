@@ -80,6 +80,7 @@ mark_utf8 <- function(x) {
 
 # TODO: remove this when fixed upstream https://github.com/viking/r-yaml/issues/6
 yaml_load_utf8 <- function(string, ...) {
+  string <- paste(string, collapse = '\n')
   mark_utf8(yaml::yaml.load(enc2utf8(string), ...))
 }
 
