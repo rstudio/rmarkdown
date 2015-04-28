@@ -64,7 +64,7 @@ read_lines_utf8 <- function(file, encoding) {
   if (!identical(encoding, "UTF-8"))
     iconv(lines, from = encoding, to = "UTF-8")
   else
-    lines
+    mark_utf8(lines)
 }
 
 # mark the encoding of character vectors as UTF-8
