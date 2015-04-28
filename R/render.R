@@ -251,7 +251,7 @@ render <- function(input,
         stop("knitr >= 1.10 required to use rmarkdown params")
       
       # read the default parameters and extract them into a named list
-      knit_params <- knitr::knit_params(input_lines)
+      knit_params <- mark_utf8(knitr::knit_params(input_lines))
       default_params <- list()
       for (param in knit_params)
         default_params[[param$name]] <- param$value
