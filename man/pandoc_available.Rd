@@ -2,19 +2,25 @@
 % Please edit documentation in R/pandoc.R
 \name{pandoc_available}
 \alias{pandoc_available}
-\title{Check whether pandoc is available}
+\alias{pandoc_version}
+\title{Check pandoc availabilty and version}
 \usage{
 pandoc_available(version = NULL)
+
+pandoc_version()
 }
 \arguments{
 \item{version}{Required version of pandoc}
 }
 \value{
-Logical indicating whether a version of pandoc is available
+\code{pandoc_available} returns a logical indicating whether the
+  required version of pandoc is available. \code{pandoc_version} returns a
+  \code{\link[base]{numeric_version}} with the version of pandoc found.
 }
 \description{
-Determine whether pandoc is currently available on the system, optionally
-checking for a specific version or greater.
+Determine whether pandoc is currently available on the system (optionally
+checking for a specific version or greater). Determine the specific version
+of pandoc available.
 }
 \details{
 The system path as well as the version of pandoc shipped with RStudio (if
@@ -26,8 +32,7 @@ available is used.
 library(rmarkdown)
 
 if (pandoc_available())
-
-  cat("pandoc is available!\\n")
+  cat("pandoc", as.character(pandoc_version()), "is available!\\n")
 
 if (pandoc_available("1.12.3"))
   cat("requried version of pandoc is available!\\n")

@@ -95,19 +95,22 @@ pandoc_convert <- function(input,
   invisible(NULL)
 }
 
-#' Check whether pandoc is available
-#'
-#' Determine whether pandoc is currently available on the system, optionally
-#' checking for a specific version or greater.
-#'
+#' Check pandoc availabilty and version
+#' 
+#' Determine whether pandoc is currently available on the system (optionally 
+#' checking for a specific version or greater). Determine the specific version 
+#' of pandoc available.
+#' 
 #' @param version Required version of pandoc
-#'
-#' @return Logical indicating whether a version of pandoc is available
-#'
+#'   
+#' @return \code{pandoc_available} returns a logical indicating whether the 
+#'   required version of pandoc is available. \code{pandoc_version} returns a 
+#'   \code{\link[base]{numeric_version}} with the version of pandoc found.
+#'   
 #' @details
-#'
-#' The system path as well as the version of pandoc shipped with RStudio (if
-#' running under RStudio) are scanned for pandoc and the highest version
+#' 
+#' The system path as well as the version of pandoc shipped with RStudio (if 
+#' running under RStudio) are scanned for pandoc and the highest version 
 #' available is used.
 #'
 #' @examples
@@ -115,8 +118,7 @@ pandoc_convert <- function(input,
 #' library(rmarkdown)
 #'
 #' if (pandoc_available())
-#'
-#'   cat("pandoc is available!\n")
+#'   cat("pandoc", as.character(pandoc_version()), "is available!\n")
 #'
 #' if (pandoc_available("1.12.3"))
 #'   cat("requried version of pandoc is available!\n")
@@ -137,6 +139,13 @@ pandoc_available <- function(version = NULL) {
     FALSE
 }
 
+
+#' @rdname pandoc_available
+#' @export
+pandoc_version <- function() {
+  find_pandoc()
+  .pandoc$version
+}
 
 #' Functions for generating pandoc command line arguments
 #'
