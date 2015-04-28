@@ -247,8 +247,8 @@ render <- function(input,
     if (!is.null(yaml_front_matter$params)) {
       
       # check for recent enough knitr
-      if (packageVersion("knitr") < "1.9.18")
-        stop("knitr >= 1.9.18 required to use rmarkdown params")
+      if (packageVersion("knitr") < "1.10")
+        stop("knitr >= 1.10 required to use rmarkdown params")
       
       # read the default parameters and extract them into a named list
       knit_params <- knitr::knit_params(input_lines)
