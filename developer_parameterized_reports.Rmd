@@ -72,7 +72,7 @@ See below for additional discussion of [Parameter Types].
 
 ### Accessing from R
 
-The declared parameters are automatically made available within the knit environment as components of a list named `params`. For example, the values of the above two parameters can be accessed with the following R code:
+The declared parameters are automatically made available within the knit environment as components of a read-only list named `params`. For example, the values of the above two parameters can be accessed with the following R code:
 
 ```r
 params$region

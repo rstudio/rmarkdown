@@ -230,7 +230,7 @@ params:
 </div>
 <div id="accessing-from-r" class="section level3">
 <h3>Accessing from R</h3>
-<p>The declared parameters are automatically made available within the knit environment as components of a list named <code>params</code>. For example, the values of the above two parameters can be accessed with the following R code:</p>
+<p>The declared parameters are automatically made available within the knit environment as components of a read-only list named <code>params</code>. For example, the values of the above two parameters can be accessed with the following R code:</p>
 <pre class="r"><code>params$region
 params$start</code></pre>
 <p>When you preview the document in RStudio (or otherwise call the <code>rmarkdown::render</code> function with no arguments) the default parameter values listed in the YAML will be used.</p>
