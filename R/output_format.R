@@ -329,7 +329,7 @@ output_format_from_yaml_front_matter <- function(input_lines,
 
   # parse common _output.yaml if we have it
   if (file.exists("_output.yaml"))
-    common_output_format_yaml <- yaml::yaml.load_file("_output.yaml")
+    common_output_format_yaml <- yaml_load_file_utf8("_output.yaml")
   else
     common_output_format_yaml <- list()
 
@@ -447,7 +447,7 @@ enumerate_output_formats <- function(input, envir, encoding) {
   # read any _output.yaml
   output_yaml <- file.path(dirname(input), "_output.yaml")
   if (file.exists(output_yaml))
-    common_output_format_yaml <- yaml::yaml.load_file(output_yaml)
+    common_output_format_yaml <- yaml_load_file_utf8(output_yaml)
   else
     common_output_format_yaml <- list()
 
@@ -485,7 +485,7 @@ parse_yaml_front_matter <- function(input_lines) {
       front_matter <- front_matter[2:(length(front_matter)-1)]
       front_matter <- paste(front_matter, collapse="\n")
       validate_front_matter(front_matter)
-      parsed_yaml <- yaml::yaml.load(front_matter)
+      parsed_yaml <- yaml_load_utf8(front_matter)
       if (is.list(parsed_yaml))
         parsed_yaml
       else

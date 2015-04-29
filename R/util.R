@@ -64,7 +64,28 @@ read_lines_utf8 <- function(file, encoding) {
   if (!identical(encoding, "UTF-8"))
     iconv(lines, from = encoding, to = "UTF-8")
   else
-    lines
+    mark_utf8(lines)
+}
+
+# mark the encoding of character vectors as UTF-8
+mark_utf8 <- function(x) {
+  if (is.character(x)) {
+    Encoding(x) <- 'UTF-8'
+    return(x)
+  }
+  if (is.list(x)) {
+    lapply(x, mark_utf8)
+  } else x
+}
+
+# TODO: remove this when fixed upstream https://github.com/viking/r-yaml/issues/6
+yaml_load_utf8 <- function(string, ...) {
+  string <- paste(string, collapse = '\n')
+  mark_utf8(yaml::yaml.load(enc2utf8(string), ...))
+}
+
+yaml_load_file_utf8 <- function(input, ...) {
+  yaml_load_utf8(readLines(input, encoding = 'UTF-8'), ...)
 }
 
 file_name_without_shell_chars <- function(file) {

@@ -16,6 +16,10 @@ rmarkdown 0.6 (under development)
 
 * Fix issues related to use of non-ASCII characters in ioslides_presentation
 
+* Non-ASCII characters in the YAML data are not marked with the UTF-8 encoding
+  when they are read into R, so character strings in `rmarkdown::metadata` may
+  be displayed incorrectly (#420)
+
 * Various improvements to tufte_handout format
 
 
