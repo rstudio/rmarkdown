@@ -276,7 +276,11 @@ render <- function(input,
       # make the params available in the knit environment
       if (!exists("params", envir = envir, inherits = FALSE)) {
         assign("params", params, envir = envir)
-        on.exit(remove("params", envir = envir), add = TRUE)
+        lockBinding("params", envir)
+        on.exit({
+          do.call("unlockBinding", list("params", envir))
+          remove("params", envir = envir)
+        }, add = TRUE)
       } else {
         stop("params object already exists in knit environment ",
              "so can't be overwritten by render params", call. = FALSE)
