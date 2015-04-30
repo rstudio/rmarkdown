@@ -73,9 +73,11 @@ mark_utf8 <- function(x) {
     Encoding(x) <- 'UTF-8'
     return(x)
   }
-  if (is.list(x)) {
-    lapply(x, mark_utf8)
-  } else x
+  if (!is.list(x)) return(x)
+  attrs <- attributes(x)
+  res <- lapply(x, mark_utf8)
+  attributes(res) <- attrs
+  res
 }
 
 # TODO: remove this when fixed upstream https://github.com/viking/r-yaml/issues/6
