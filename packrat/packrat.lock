@@ -1,6 +1,6 @@
 PackratFormat: 1.4
 PackratVersion: 0.4.2.6
-RVersion: 3.1.2
+RVersion: 3.2.0
 Repos: CRAN=http://cran.rstudio.com
 
 Package: R6
@@ -10,14 +10,24 @@ Hash: 9a3ac4e5fd8059af0fc5156bcb019bbc
 
 Package: RCurl
 Source: CRAN
-Version: 1.95-4.5
-Hash: 1187c1ea73013abf25f362a7e6da1046
+Version: 1.95-4.6
+Hash: a4d86df231587d1eae56f29c278bad0d
 Requires: bitops
+
+Package: Rcpp
+Source: CRAN
+Version: 0.11.6
+Hash: 004f4ffa4d0f4a3d177f2090799225e8
 
 Package: bitops
 Source: CRAN
 Version: 1.0-6
 Hash: cb26464a8321628636b547518994c931
+
+Package: brew
+Source: CRAN
+Version: 1.0-6
+Hash: 9d92cc5ac60123fdb7b0daa3ae83bf99
 
 Package: caTools
 Source: CRAN
@@ -27,10 +37,10 @@ Requires: bitops
 
 Package: devtools
 Source: CRAN
-Version: 1.6.1
-Hash: e3096b832604a7a36ff0a6455e5cdddc
-Requires: RCurl, digest, evaluate, httr, jsonlite, memoise, rstudioapi,
-    whisker
+Version: 1.7.0
+Hash: 56919e22e0d3f7131e93bda1a869730e
+Requires: RCurl, digest, evaluate, httr, jsonlite, memoise, roxygen2,
+    rstudioapi, whisker
 
 Package: digest
 Source: CRAN
@@ -61,20 +71,25 @@ Requires: digest
 
 Package: httr
 Source: CRAN
-Version: 0.6.0
-Hash: 77f2efe4b285e090d11c53067ffd1c15
+Version: 0.6.1
+Hash: 3b082465d75a7a0c3d09ad06a0905aff
 Requires: R6, RCurl, digest, jsonlite, mime, stringr
 
 Package: jsonlite
 Source: CRAN
-Version: 0.9.14
-Hash: 1e949c7f0f926734e2ff498eddb2309a
+Version: 0.9.16
+Hash: d96313db22c1ea2028538db1fc96fe5a
 
 Package: knitr
 Source: CRAN
 Version: 1.8
 Hash: d00d7b314ca4c34f8a56ceacefb31b4f
 Requires: digest, evaluate, formatR, highr, markdown, stringr
+
+Package: magrittr
+Source: CRAN
+Version: 1.5
+Hash: 38d492cf072bc9f3c73bda2aee3d0e23
 
 Package: markdown
 Source: CRAN
@@ -109,13 +124,24 @@ Hash: 762002194bd6e90c218044475ec06699537e7c4f
 Requires: caTools, htmltools, knitr, yaml
 GithubRepo: rmarkdown
 GithubUsername: rstudio
-GithubRef: master
+GithubRef: 762002194bd6e90c218044475ec06699537e7c4f
 GithubSha1: 762002194bd6e90c218044475ec06699537e7c4f
+
+Package: roxygen2
+Source: CRAN
+Version: 4.1.1
+Hash: bf0325183fa7f6e9cdd9f82b8e6c50b4
+Requires: Rcpp, brew, digest, stringr
 
 Package: rstudioapi
 Source: CRAN
-Version: 0.1
-Hash: 5bd4449a873ec652a05c932312dcf04b
+Version: 0.3.1
+Hash: ee415a4fe305c6222630d8e5572781e7
+
+Package: stringi
+Source: CRAN
+Version: 0.4-1
+Hash: 955e96fc5961bf9f7b3ca916f9b1e606
 
 Package: stringr
 Source: CRAN
