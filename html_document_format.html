@@ -369,6 +369,22 @@ output:
 ---</code></pre>
 <p>Consult the documentation on <a href="http://johnmacfarlane.net/pandoc/demo/example9/templates.html">pandoc templates</a> for additional details on templates. You can also study the <a href="https://github.com/jgm/pandoc-templates/blob/master/default.html">default HTML template</a> as an example.</p>
 </div>
+<div id="markdown-extensions" class="section level3">
+<h3>Markdown Extensions</h3>
+<p>By default R Markdown is defined as all pandoc markdown extensions with the following tweaks for backward compatibility with the markdown package:</p>
+<pre><code>+autolink_bare_uris
++ascii_identifier
++tex_math_single_backslash</code></pre>
+<p>You can enable or disable markdown extensions using the <code>md_extensions</code> option (you preface an option with <code>-</code> to disable and <code>+</code> to enable it). For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    md_extensions: -autolink_bare_uris+hard_line_breaks
+---</code></pre>
+<p>The above would disable the <code>autolink_bare_uris</code> extension and enable the <code>hard_line_breaks</code> extension.</p>
+<p>For more on available markdown extensions see the <a href="http://pandoc.org/README.html#pandocs-markdown">pandoc markdown specification</a>.</p>
+</div>
 <div id="pandoc-arguments" class="section level3">
 <h3>Pandoc Arguments</h3>
 <p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>

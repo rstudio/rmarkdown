@@ -178,6 +178,7 @@ img {
 <li><a href="#figure-options">Figure Options</a></li>
 <li><a href="#syntax-highlighting">Syntax Highlighting</a></li>
 <li><a href="#style-reference">Style Reference</a></li>
+<li><a href="#markdown-extensions">Markdown Extensions</a></li>
 <li><a href="#pandoc-arguments">Pandoc Arguments</a></li>
 <li><a href="#shared-options">Shared Options</a></li>
 </ul>
@@ -230,6 +231,22 @@ output:
   word_document:
     reference_docx: mystyles.docx
 ---</code></pre>
+</div>
+<div id="markdown-extensions" class="section level2">
+<h2>Markdown Extensions</h2>
+<p>By default R Markdown is defined as all pandoc markdown extensions with the following tweaks for backward compatibility with the markdown package:</p>
+<pre><code>+autolink_bare_uris
++ascii_identifier
++tex_math_single_backslash</code></pre>
+<p>You can enable or disable markdown extensions using the <code>md_extensions</code> option (you preface an option with <code>-</code> to disable and <code>+</code> to enable it). For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    md_extensions: -autolink_bare_uris+hard_line_breaks
+---</code></pre>
+<p>The above would disable the <code>autolink_bare_uris</code> extension and enable the <code>hard_line_breaks</code> extension.</p>
+<p>For more on available markdown extensions see the <a href="http://pandoc.org/README.html#pandocs-markdown">pandoc markdown specification</a>.</p>
 </div>
 <div id="pandoc-arguments" class="section level2">
 <h2>Pandoc Arguments</h2>

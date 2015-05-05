@@ -60,6 +60,30 @@ You can also specify a document to be used as as a style reference in producing 
         reference_docx: mystyles.docx
     ---
 
+## Markdown Extensions
+
+By default R Markdown is defined as all pandoc markdown extensions with the following tweaks for backward compatibility with the markdown package:
+
+```
++autolink_bare_uris
++ascii_identifier
++tex_math_single_backslash
+```
+
+You can enable or disable markdown extensions using the `md_extensions` option (you preface an option with `-` to disable and `+` to enable it). For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        md_extensions: -autolink_bare_uris+hard_line_breaks
+    ---
+
+The above would disable the `autolink_bare_uris` extension and enable the `hard_line_breaks` extension. 
+
+For more on available markdown extensions see the [pandoc markdown specification](http://pandoc.org/README.html#pandocs-markdown).
+
+
 ## Pandoc Arguments
 
 If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
