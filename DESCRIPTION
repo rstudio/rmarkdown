@@ -1,13 +1,12 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 0.5.3.6
+Version: 0.5.3.7
 Date: 2014-09-08
 Author: JJ Allaire, Jonathan McPherson, Yihui Xie, Hadley Wickham, Joe Cheng,
     Jeff Allen
 Maintainer: JJ Allaire <jj@rstudio.com>
-Description: Convert R Markdown documents into a variety of formats
-    including HTML, MS Word, PDF, and Beamer.
+Description: Convert R Markdown documents into a variety of formats.
 Depends:
     R (>= 3.0)
 Imports:
