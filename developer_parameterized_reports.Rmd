@@ -1,0 +1,151 @@
+---
+title: "Parameterized Reports"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+---
+
+## Overview
+
+R Markdown documents can optionally include one or more parameters. Parameters are useful when you want to re-render the same report with distinct values for various key inputs, for example:
+
+1. Running a report specific to a department or geographic region.
+
+2. Running a report that covers a specific period in time.
+
+3. Running multiple versions of a report for distinct sets of core assumptions.
+
+R Markdown parameter names, types, and default values are declared in the YAML section at the top of the document. To change these values for a given rendering you use the `params` argument to the `rmarkdown::render` function.
+
+Note that parameterized reports are a new feature of R Markdown and currently require the latest version of the **knitr** package and the **development version** of the R Markdown package. You can install the required versions with the following commands:
+
+```r
+install.packages("knitr")
+devtools::install_github("rstudio/rmarkdown")
+```
+
+A version of R Markdown that supports parameterized reports will be released to CRAN soon.
+
+## Using Parameters
+
+### Declaration
+
+Parameters are declared using the `params` field within the YAML section at the top of the document, for example:
+
+```yaml
+---
+title: My Document
+output: html_document
+params:
+   region: east
+---
+```
+
+Parameter values can be provided inline as illustrated above or can be included in a value sub-key. For example:
+
+```yaml
+---
+title: My Document
+output: html_document
+params:
+  region:
+    value: east
+---
+```
+
+This second form is useful when you need to provide additional details about the parameter (e.g. a label field for use by front ends that want to allow users to vary parameter values). 
+
+Parameter types are deduced implicitly based on the value provided. However in some cases additional type information is required (for example when a character vector needs to be interpreted as a date or as a file path). In these cases a special type designater precedes the value. For example:
+
+```yaml
+---
+title: My Document
+output: html_document
+params:
+   region: east
+   start: !date 2015-01-01
+---
+```
+
+See below for additional discussion of [Parameter Types].
+
+### Accessing from R
+
+The declared parameters are automatically made available within the knit environment as components of a read-only list named `params`. For example, the values of the above two parameters can be accessed with the following R code:
+
+```r
+params$region
+params$start
+```
+
+When you preview the document in RStudio (or otherwise call the `rmarkdown::render` function with no arguments) the default parameter values listed in the YAML will be used.
+
+
+## Passing Parameters
+
+To vary the parameters of an R Markdown document from the defaults you use the `params` argument of the `rmarkdown::render` function. For example:
+
+```r
+rmarkdown::render("MyDocument.Rmd", params = list(
+  region = "west",
+  start = as.Date("2015-02-01")
+))
+```
+
+You can of course specify only a subset of the available parameters in your call to render. For example:
+
+```r
+rmarkdown::render("MyDocument.Rmd", params = list(
+  region = "west"
+))
+```
+
+In this case the default values are used for any parameters not explicitly provided.
+
+
+You might also find it convenient to wrap the call to render in an R function, for example:
+
+```r
+renderMyDocument <- function(region, start) {
+  rmarkdown::render("MyDocument.Rmd", params = list(
+    region = region,
+    start = start
+  ))
+}
+```
+
+## Parameter Types
+
+All of the standard R types that can be parsed by the `yaml::yaml.load` function are supported. These types are used implicitly based on the value provided so no special type designator is required. Built-in types include `character`, `integer`, `numeric`, and `logical`.
+
+In addition there are a number of custom types used to represent dates and times as well as to note that character values have special semantics (e.g. are the name of a file). These types are specified by prefacing the YAML value with *`!typename`*, for example:
+
+```yaml
+---
+title: My Document
+output: html_document
+params:
+  start: !date 2015-01-01
+  snapshot: !datetime 2015-01-01 12:30:00
+  data: !file data.csv
+---
+```
+
+Supported custom types include:
+
+**date**
+
+:    A character value representing a date. The underlying date value is parsed from the character value using the [as.Date](https://stat.ethz.ch/R-manual/R-devel/library/base/html/as.Date.html) function.
+
+**datetime**
+
+:    A character value representing a date and time. The underlying datetime value is parsed from the character value using the [as.POSIXct](https://stat.ethz.ch/R-manual/R-devel/library/base/html/as.POSIXlt.html) function. Note that these values should always specified using UTC (Universal Time, Coordinated).
+
+**file**
+
+:    A character value representing the name of a file. This type is useful as a hint to front-end environments that the user should provided with file picker for specifying the value of the parameter.
+
+
+
+
