@@ -258,10 +258,7 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
           unlink(resource_folder, recursive = TRUE)
         })
       }
-      attachDependencies(
-        htmltools::HTML(paste(readLines(result_path, encoding = "UTF-8", warn = FALSE),
-                          collapse="\n")),
-        dependencies)
+      shinyHTML_with_deps(result_path, dependencies)
     })
     output$`__reactivedoc__` <- shiny::renderUI({
       doc()
@@ -314,11 +311,11 @@ rmarkdown_shiny_ui <- function(dir, file) {
   }
 }
 
-shinyHTML_with_deps <- function (html_file, deps) {
-  structure(
-    shiny::HTML(paste(readLines(html_file, encoding = "UTF-8", warn = FALSE),
-                      collapse="\n")),
-    html_dependency = deps)
+shinyHTML_with_deps <- function(html_file, deps) {
+  htmltools::attachDependencies(
+    htmltools::HTML(paste(readLines(html_file, encoding = "UTF-8", warn = FALSE),
+                          collapse = "\n")),
+    deps)
 }
 
 # given an input file and its encoding, return a list with values indicating
