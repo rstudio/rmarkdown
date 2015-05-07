@@ -255,7 +255,7 @@ rmarkdown_format <- function(extensions = NULL) {
   # only add extensions if the user hasn't already specified
   # a manual override for them
   addExtension <- function(extension) {
-    if (!grepl(extension, extensions))
+    if (length(grep(extension, extensions)) == 0)
       format <<- c(format, paste0("+", extension))
   }
   
