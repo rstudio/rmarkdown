@@ -1,7 +1,7 @@
 context("resource discovery")
 
 test_that("R Markdown resource discovery finds expected resources", {
-  resources <- find_external_resources("resources/rmarkdown.rmd")
+  resources <- find_external_resources("resources/rmarkdown.Rmd")
   expected <- data.frame(
     path = c("empty.md", "empty.png", "empty.tsv", "empty.Rmd", "empty.css",
              "empty.jpg", "empty.html", "empty.csv"),
