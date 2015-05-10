@@ -1,6 +1,6 @@
 PackratFormat: 1.4
 PackratVersion: 0.4.2.6
-RVersion: 3.2.0
+RVersion: 3.1.3
 Repos: CRAN=http://cran.rstudio.com
 
 Package: R6
@@ -118,14 +118,10 @@ GithubRef: master
 GithubSha1: 914b3c5aeed71f06f286bb7055ace26609f395a1
 
 Package: rmarkdown
-Source: github
-Version: 0.4.2
-Hash: 762002194bd6e90c218044475ec06699537e7c4f
+Source: CRAN
+Version: 0.6.1
+Hash: 28aee1f631ae3ba9a2858e737f6db66b
 Requires: caTools, htmltools, knitr, yaml
-GithubRepo: rmarkdown
-GithubUsername: rstudio
-GithubRef: 762002194bd6e90c218044475ec06699537e7c4f
-GithubSha1: 762002194bd6e90c218044475ec06699537e7c4f
 
 Package: roxygen2
 Source: CRAN
