@@ -569,6 +569,11 @@ with_pandoc_safe_environment <- function(code) {
     Sys.setenv(LANG=detect_generic_lang())
     on.exit(Sys.unsetenv("LANG"), add = TRUE)
   }
+  if (Sys.info()['sysname'] == "Linux" &&
+    identical(Sys.getenv("LANG"), "en_US")) {
+    Sys.setenv(LANG="en_US.UTF-8")
+    on.exit(Sys.setenv(LANG="en_US"), add = TRUE)
+  }
   force(code)
 }
 
