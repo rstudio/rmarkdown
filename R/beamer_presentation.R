@@ -69,6 +69,7 @@ beamer_presentation <- function(toc = FALSE,
                                 highlight = "default",
                                 template = "default",
                                 keep_tex = FALSE,
+                                latex_engine = "pdflatex",                              
                                 includes = NULL,
                                 md_extensions = NULL,
                                 pandoc_args = NULL) {
@@ -108,6 +109,10 @@ beamer_presentation <- function(toc = FALSE,
     highlight <- match.arg(highlight, highlighters())
   args <- c(args, pandoc_highlight_args(highlight))
 
+  # latex engine
+  latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
+  args <- c(args, pandoc_latex_engine_args(latex_engine))
+  
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
 
