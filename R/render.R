@@ -77,6 +77,10 @@ render <- function(input,
     else
       file.path(intermediates_dir, file)
   }
+  
+  # remember the name of the original input document (we overwrite 'input' once
+  # we've knitted)
+  original_input <- input
 
   # if the input file has shell characters in its name then make a copy that
   # doesn't have shell characters
@@ -354,6 +358,14 @@ render <- function(input,
                                               files_dir,
                                               output_dir)
     output_format$pandoc$args <- c(output_format$pandoc$args, extra_args)
+  }
+  
+  # call any intermediate files generator
+  if (!is.null(output_format$intermediates_generator)) {
+    intermediates <- c(intermediates, 
+                       output_format$intermediates_generator(original_input, 
+                                                             encoding, 
+                                                             intermediates_dir))
   }
 
   perf_timer_stop("pre-processor")
