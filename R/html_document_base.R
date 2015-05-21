@@ -131,8 +131,8 @@ html_document_base <- function(smart = TRUE,
     # we explicitly render with self-contained = FALSE while discovering
     # resources
     resources <- find_external_resources(original_input, encoding)
-    dest_dir <- normalizePath(intermediates_dir)
-    source_dir <- dirname(normalizePath(original_input))
+    dest_dir <- normalizePath(intermediates_dir, winslash = "/")
+    source_dir <- dirname(normalizePath(original_input, winslash = "/"))
     by(resources, seq_len(nrow(resources)), function(res) {
       # compute the new path to this file in the intermediates folder, and 
       # create the hosting folder if it doesn't exist

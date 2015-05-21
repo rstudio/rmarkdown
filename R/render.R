@@ -69,8 +69,11 @@ render <- function(input,
   on.exit(if (clean) unlink(intermediates, recursive = TRUE), add = TRUE)
 
   # ensure we have a directory to store intermediates
-  if (!is.null(intermediates_dir) && !dir_exists(intermediates_dir))
-    dir.create(intermediates_dir)
+  if (!is.null(intermediates_dir)) {
+    if (!dir_exists(intermediates_dir))
+      dir.create(intermediates_dir, recursive = TRUE)
+    intermediates_dir <- normalizePath(intermediates_dir, winslash = "/")
+  } 
   intermediates_loc <- function(file) {
     if (is.null(intermediates_dir))
       file
