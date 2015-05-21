@@ -110,6 +110,44 @@ html_document_base <- function(smart = TRUE,
 
     args
   }
+  
+  intermediates_generator <- function(original_input, encoding, 
+                                      intermediates_dir) {
+    intermediates <- c()
+    
+    # we only need to generate resources into the intermediates folder if we're 
+    # rendering a self-contained document (so pandoc needs access to the
+    # resources during render) and the document's being rendered in an
+    # intermediate folder (so those resources will not be alongside the input
+    # document)
+    if (!self_contained || missing(intermediates_dir) || 
+        is.null(intermediates_dir) || intermediates_dir == ".")
+    {
+      return(intermediates)
+    }
+    
+    # extract all the resources used by the input file; note that this actually 
+    # runs another (non-knitting) render, and that recursion is avoided because 
+    # we explicitly render with self-contained = FALSE while discovering
+    # resources
+    resources <- find_external_resources(original_input, encoding)
+    dest_dir <- normalizePath(intermediates_dir, winslash = "/")
+    source_dir <- dirname(normalizePath(original_input, winslash = "/"))
+    by(resources, seq_len(nrow(resources)), function(res) {
+      # compute the new path to this file in the intermediates folder, and 
+      # create the hosting folder if it doesn't exist
+      dest <- file.path(dest_dir, res$path)
+      if (!file.exists(dirname(dest))) 
+        dir.create(dirname(dest), recursive = TRUE)
+      
+      # copy and remember to clean up this file later
+      file.copy(file.path(source_dir, res$path), dest)
+      intermediates <<- c(intermediates, dest)
+    })
+    
+    # return the list of files we generated
+    intermediates
+  }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
     # if there are no preserved chunks to restore and no resource to copy then no
@@ -239,6 +277,7 @@ html_document_base <- function(smart = TRUE,
     keep_md = FALSE,
     clean_supporting = FALSE,
     pre_processor = pre_processor,
+    intermediates_generator = intermediates_generator,
     post_processor = post_processor
   )
 }

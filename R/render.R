@@ -69,14 +69,29 @@ render <- function(input,
   on.exit(if (clean) unlink(intermediates, recursive = TRUE), add = TRUE)
 
   # ensure we have a directory to store intermediates
-  if (!is.null(intermediates_dir) && !dir_exists(intermediates_dir))
-    dir.create(intermediates_dir)
+  if (!is.null(intermediates_dir)) {
+    if (!dir_exists(intermediates_dir))
+      dir.create(intermediates_dir, recursive = TRUE)
+    intermediates_dir <- normalizePath(intermediates_dir, winslash = "/")
+  } 
   intermediates_loc <- function(file) {
     if (is.null(intermediates_dir))
       file
     else
       file.path(intermediates_dir, file)
   }
+  
+  # resolve output directory before we change the working directory in 
+  # preparation for rendering the document
+  if (!is.null(output_dir)) {
+    if (!dir_exists(output_dir))
+      dir.create(output_dir, recursive = TRUE)
+    output_dir <- normalizePath(output_dir, winslash = "/")
+  }
+  
+  # remember the name of the original input document (we overwrite 'input' once
+  # we've knitted)
+  original_input <- normalizePath(input, winslash = "/")
 
   # if the input file has shell characters in its name then make a copy that
   # doesn't have shell characters
@@ -165,8 +180,6 @@ render <- function(input,
 
   # if an output_dir was specified then concatenate it with the output file
   if (!is.null(output_dir)) {
-    if (!dir_exists(output_dir))
-      dir.create(output_dir)
     output_file <- file.path(output_dir, basename(output_file))
   }
   output_dir <- dirname(output_file)
@@ -355,6 +368,14 @@ render <- function(input,
                                               output_dir)
     output_format$pandoc$args <- c(output_format$pandoc$args, extra_args)
   }
+  
+  # call any intermediate files generator
+  if (!is.null(output_format$intermediates_generator)) {
+    intermediates <- c(intermediates, 
+                       output_format$intermediates_generator(original_input, 
+                                                             encoding, 
+                                                             intermediates_dir))
+  }
 
   perf_timer_stop("pre-processor")
 
@@ -387,6 +408,15 @@ render <- function(input,
                  run_citeproc,
                  output_format$pandoc$args,
                  !quiet)
+  
+  # pandoc writes the output alongside the input, so if we rendered from an 
+  # intermediate directory, move the output file
+  if (!is.null(intermediates_dir)) {
+    intermediate_output <- file.path(intermediates_dir, basename(output_file))
+    if (file.exists(intermediate_output)) {
+      file.rename(intermediate_output, output_file)
+    }
+  }
 
   perf_timer_stop("pandoc")
 
@@ -400,8 +430,9 @@ render <- function(input,
                                                 clean,
                                                 !quiet)
 
-  if (!quiet)
-    message("\nOutput created: ", output_file)
+  if (!quiet) {
+    message("\nOutput created: ", relative_to(oldwd, output_file))
+  }
 
   perf_timer_stop("post-processor")
 
