@@ -399,6 +399,15 @@ render <- function(input,
                  run_citeproc,
                  output_format$pandoc$args,
                  !quiet)
+  
+  # pandoc writes the output alongside the input, so if we rendered from an 
+  # intermediate directory, move the output file
+  if (!is.null(intermediates_dir)) {
+    intermediate_output <- file.path(intermediates_dir, basename(output_file))
+    if (file.exists(intermediate_output)) {
+      file.rename(intermediate_output, output_file)
+    }
+  }
 
   perf_timer_stop("pandoc")
 

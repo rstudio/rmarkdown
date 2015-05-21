@@ -141,7 +141,7 @@ html_document_base <- function(smart = TRUE,
         dir.create(dirname(dest), recursive = TRUE)
       
       # copy and remember to clean up this file later
-      file.copy(file.path(source_dir), dest)
+      file.copy(file.path(source_dir, res$path), dest)
       intermediates <<- c(intermediates, dest)
     })
     
