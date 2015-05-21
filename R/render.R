@@ -81,9 +81,17 @@ render <- function(input,
       file.path(intermediates_dir, file)
   }
   
+  # resolve output directory before we change the working directory in 
+  # preparation for rendering the document
+  if (!is.null(output_dir)) {
+    if (!dir_exists(output_dir))
+      dir.create(output_dir, recursive = TRUE)
+    output_dir <- normalizePath(output_dir, winslash = "/")
+  }
+  
   # remember the name of the original input document (we overwrite 'input' once
   # we've knitted)
-  original_input <- input
+  original_input <- normalizePath(input, winslash = "/")
 
   # if the input file has shell characters in its name then make a copy that
   # doesn't have shell characters
@@ -172,8 +180,6 @@ render <- function(input,
 
   # if an output_dir was specified then concatenate it with the output file
   if (!is.null(output_dir)) {
-    if (!dir_exists(output_dir))
-      dir.create(output_dir)
     output_file <- file.path(output_dir, basename(output_file))
   }
   output_dir <- dirname(output_file)
@@ -424,8 +430,9 @@ render <- function(input,
                                                 clean,
                                                 !quiet)
 
-  if (!quiet)
-    message("\nOutput created: ", output_file)
+  if (!quiet) {
+    message("\nOutput created: ", relative_to(oldwd, output_file))
+  }
 
   perf_timer_stop("post-processor")
 
