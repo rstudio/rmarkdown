@@ -21,7 +21,7 @@ R Markdown parameter names, types, and default values are declared in the YAML s
 Note that parameterized reports are a new feature of R Markdown and therefore require very recent versions of the **knitr** (v1.10.5) and **rmarkdown** (v0.6.1) packages. You can install the most up to date versions with the following command:
 
 ```r
-install.packages(c("knitr" "rmarkdown"))
+install.packages(c("knitr", "rmarkdown"))
 ```
 
 If you are using RStudio you should also download the [preview version](http://www.rstudio.com/products/rstudio/download/preview/) of RStudio v0.99 (as it has some additional changes required to support parameterized reports).
