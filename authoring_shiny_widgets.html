@@ -189,7 +189,7 @@ img {
 <h3>The shinyApp Function</h3>
 <p>At their core Shiny widgets are mini-applications created using the <code>shinyApp</code> function. Rather than create a <code>ui.R</code> and <code>server.R</code> as you would for a typical Shiny application, you pass the ui and server definitions to the <code>shinyApp</code> function as arguments. For example:</p>
 <pre class="r"><code>shinyApp(
-  ui = fluidPage(responsive = FALSE,
+  ui = fluidPage(
     selectInput(&quot;region&quot;, &quot;Region:&quot;, choices = colnames(WorldPhones)),
     plotOutput(&quot;phonePlot&quot;)
   ),
@@ -221,7 +221,7 @@ kmeans_cluster(iris)
   require(shiny)  
   
   shinyApp(
-    ui = fluidPage(responsive = FALSE,
+    ui = fluidPage(
       fluidRow(style = &quot;padding-bottom: 20px;&quot;,
         column(4, selectInput(&#39;xcol&#39;, &#39;X Variable&#39;, names(dataset))),
         column(4, selectInput(&#39;ycol&#39;, &#39;Y Variable&#39;, names(dataset),

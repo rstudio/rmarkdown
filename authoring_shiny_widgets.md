@@ -16,7 +16,7 @@ At their core Shiny widgets are mini-applications created using the `shinyApp` f
 
 ```r
 shinyApp(
-  ui = fluidPage(responsive = FALSE,
+  ui = fluidPage(
     selectInput("region", "Region:", choices = colnames(WorldPhones)),
     plotOutput("phonePlot")
   ),
@@ -56,7 +56,7 @@ kmeans_cluster <- function(dataset) {
   require(shiny)  
   
   shinyApp(
-    ui = fluidPage(responsive = FALSE,
+    ui = fluidPage(
       fluidRow(style = "padding-bottom: 20px;",
         column(4, selectInput('xcol', 'X Variable', names(dataset))),
         column(4, selectInput('ycol', 'Y Variable', names(dataset),
