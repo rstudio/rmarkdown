@@ -5,7 +5,8 @@
 \title{Define an R Markdown output format}
 \usage{
 output_format(knitr, pandoc, keep_md = FALSE, clean_supporting = TRUE,
-  pre_processor = NULL, post_processor = NULL, base_format = NULL)
+  pre_processor = NULL, intermediates_generator = NULL,
+  post_processor = NULL, base_format = NULL)
 }
 \arguments{
 \item{knitr}{Knitr options for an output format (see
@@ -23,7 +24,14 @@ if this is \code{TRUE} then \code{clean_supporting} will always be
 
 \item{pre_processor}{An optional pre-processor function that receives the
 \code{metadata}, \code{input_file}, \code{runtime}, \code{knit_meta},
-and \code{files_dir} and can return additional arguments to pass to pandoc.}
+\code{files_dir}, and \code{output_dir} and can return additional arguments
+to pass to pandoc.}
+
+\item{intermediates_generator}{An optional function that receives the
+original \code{input_file}, its \code{encoding}, and the intermediates
+directory (i.e. the \code{intermediates_dir} argument to
+\code{\link{render}}). The function should generate and return the names of
+any intermediate files required to render the \code{input_file}.}
 
 \item{post_processor}{An optional post-processor function that receives the
 \code{metadata}, \code{input_file}, \code{output_file}, \code{clean},

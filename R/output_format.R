@@ -14,7 +14,13 @@
 #'   \code{\link{render_supporting_files}}
 #' @param pre_processor An optional pre-processor function that receives the
 #'   \code{metadata}, \code{input_file}, \code{runtime}, \code{knit_meta},
-#'   and \code{files_dir} and can return additional arguments to pass to pandoc.
+#'   \code{files_dir}, and \code{output_dir} and can return additional arguments 
+#'   to pass to pandoc.
+#' @param intermediates_generator An optional function that receives the 
+#'   original \code{input_file}, its \code{encoding}, and the intermediates
+#'   directory (i.e. the \code{intermediates_dir} argument to
+#'   \code{\link{render}}). The function should generate and return the names of
+#'   any intermediate files required to render the \code{input_file}.
 #' @param post_processor An optional post-processor function that receives the
 #'   \code{metadata}, \code{input_file}, \code{output_file}, \code{clean},
 #'   and \code{verbose} parmaeters, and can return an alternative
@@ -38,6 +44,7 @@ output_format <- function(knitr,
                           keep_md = FALSE,
                           clean_supporting = TRUE,
                           pre_processor = NULL,
+                          intermediates_generator = NULL,
                           post_processor = NULL,
                           base_format = NULL) {
   format <- structure(list(knitr = knitr,
@@ -45,6 +52,7 @@ output_format <- function(knitr,
                  keep_md = keep_md,
                  clean_supporting = clean_supporting && !keep_md,
                  pre_processor = pre_processor,
+                 intermediates_generator = intermediates_generator,
                  post_processor = post_processor),
             class = "rmarkdown_output_format")
 
@@ -92,7 +100,7 @@ merge_post_processors <- function (base, overlay) {
 }
 
 # merges two output formats
-merge_output_formats <- function (base, overlay)  {
+merge_output_formats <- function(base, overlay)  {
   structure(list(
     knitr = merge_lists(base$knitr, overlay$knitr),
     pandoc = pandoc_options(
@@ -105,6 +113,9 @@ merge_output_formats <- function (base, overlay)  {
       merge_scalar(base$clean_supporting, overlay$clean_supporting),
     pre_processor =
       merge_function_outputs(base$pre_processor, overlay$pre_processor, c),
+    intermediates_generator = 
+      merge_function_outputs(base$intermediates_generator, 
+                             overlay$intermediates_generator, c),
     post_processor =
       merge_post_processors(base$post_processor, overlay$post_processor)
   ), class = "rmarkdown_output_format")
