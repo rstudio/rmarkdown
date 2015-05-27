@@ -5,6 +5,8 @@ rmarkdown 0.7 (unreleased)
 
 * Ensure that when LANG=en_US pandoc receives en_US.UTF-8 (prevent hang)
 
+* Generate MathJax compatible output when using html_fragment format. 
+
 
 rmarkdown 0.6
 --------------------------------------------------------------------------------
