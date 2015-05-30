@@ -7,6 +7,8 @@ rmarkdown 0.7 (unreleased)
 
 * Generate MathJax compatible output when using html_fragment format. 
 
+* Use built-in templates for LaTeX and Beamer if pandoc >= 1.14
+
 
 rmarkdown 0.6
 --------------------------------------------------------------------------------
