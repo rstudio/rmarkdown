@@ -1,6 +1,9 @@
 context("resource discovery")
 
 test_that("R Markdown resource discovery finds expected resources", {
+  
+  skip_on_cran()
+  
   resources <- find_external_resources("resources/rmarkdown.Rmd")
   expected <- data.frame(
     path = c("empty.md", "empty.png", "empty.tsv", "empty.Rmd", "empty.css",
@@ -19,6 +22,9 @@ test_that("R Markdown resource discovery finds expected resources", {
 
 
 test_that("HTML resource discovery finds expected resources", {
+  
+  skip_on_cran()
+  
   resources <- find_external_resources("resources/html.html")
   expected <- data.frame(
     path = c("empty.js", "empty.css", "empty.png"),
@@ -32,6 +38,9 @@ test_that("HTML resource discovery finds expected resources", {
 })
 
 test_that("Vanilla Markdown resource discovery finds expected resources", {
+  
+  skip_on_cran()
+  
   resources <- find_external_resources("resources/markdown.md")
   expected <- data.frame(
     path = c("empty.png", "empty.jpg"),
