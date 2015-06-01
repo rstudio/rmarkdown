@@ -279,6 +279,13 @@ discover_rmd_resources <- function(rmd_file, encoding,
     })
   }
   
+  # check for bibliography and csl files at the top level 
+  for (bibfile in c("bibliography", "csl")) {
+    if (!is.null(front_matter[[bibfile]])) {
+      discover_render_resource(front_matter[[bibfile]])  
+    }
+  }
+  
   # check for knitr child documents in R Markdown documents
   if (tolower(tools::file_ext(rmd_file)) == "rmd") {
     chunk_lines <- gregexpr(knitr::all_patterns$md$chunk.begin, rmd_content,
