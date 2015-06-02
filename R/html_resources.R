@@ -279,6 +279,13 @@ discover_rmd_resources <- function(rmd_file, encoding,
     })
   }
   
+  # check for bibliography and csl files at the top level 
+  for (bibfile in c("bibliography", "csl")) {
+    if (!is.null(front_matter[[bibfile]])) {
+      discover_render_resource(front_matter[[bibfile]])  
+    }
+  }
+  
   # check for knitr child documents in R Markdown documents
   if (tolower(tools::file_ext(rmd_file)) == "rmd") {
     chunk_lines <- gregexpr(knitr::all_patterns$md$chunk.begin, rmd_content,
@@ -307,7 +314,19 @@ discover_rmd_resources <- function(rmd_file, encoding,
  
   # render "raw" markdown to HTML
   html_file <- tempfile(fileext = ".html")
+  
+  # check to see what format this document is going to render as; if it's a 
+  # format that produces HTML, let it render as-is, but if it isn't, render as
+  # html_document to pick up dependencies
+  output_format <- output_format_from_yaml_front_matter(rmd_content)
+  output_format_function <- eval(parse(text = output_format$name))
+  override_output_format <- if (output_format_function()$pandoc$to == "html")
+                              NULL
+                            else
+                              "html_document"
+
   render(input = md_file, output_file = html_file, 
+         output_format = override_output_format,
          output_options = list(self_contained = FALSE), quiet = TRUE,
          encoding = "UTF-8")
   
