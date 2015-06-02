@@ -154,7 +154,7 @@ pdf_document <- function(toc = FALSE,
 
     # we need figures from the supporting files dir to be available during
     # render as well; if we have a files directory, copy its contents
-    if (!is.null(saved_files_dir) && dir.exists(saved_files_dir)) {
+    if (!is.null(saved_files_dir) && file.exists(saved_files_dir)) {
       file.copy(saved_files_dir, intermediates_dir, recursive = TRUE)
       intermediates <- c(intermediates, list.files(
         path = file.path(intermediates_dir, basename(saved_files_dir)),
