@@ -369,8 +369,9 @@ render <- function(input,
     output_format$pandoc$args <- c(output_format$pandoc$args, extra_args)
   }
   
-  # call any intermediate files generator
-  if (!is.null(output_format$intermediates_generator)) {
+  # call any intermediate files generator, if we have an intermediates directory
+  if (!is.null(intermediates_dir) &&
+      !is.null(output_format$intermediates_generator)) {
     intermediates <- c(intermediates, 
                        output_format$intermediates_generator(original_input, 
                                                              encoding, 
@@ -386,7 +387,7 @@ render <- function(input,
     output_format$pandoc$args <- c(output_format$pandoc$args,
       rbind("--bibliography", pandoc_path_arg(yaml_front_matter$bibliography)))
   }
-
+  
   perf_timer_start("pandoc")
 
   # run intermediate conversion if it's been specified

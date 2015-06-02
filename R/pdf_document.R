@@ -131,11 +131,38 @@ pdf_document <- function(toc = FALSE,
   # args args
   args <- c(args, pandoc_args)
 
-  # use a geometry filter when we are using the "default" template
-  if (identical(template, "default"))
-    pre_processor <- pdf_pre_processor
-  else
-    pre_processor <- NULL
+  saved_files_dir <- NULL
+  
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, 
+                                files_dir, output_dir) {
+    # save files dir (for generating intermediates)
+    saved_files_dir <<- files_dir
+    
+    # use a geometry filter when we are using the "default" template
+    if (identical(template, "default"))
+      pdf_pre_processor(metadata, input_file, runtime, knit_meta, files_dir, 
+                        output_dir)
+    else
+      invisible(NULL)
+  }
+
+  intermediates_generator <- function(original_input, encoding, 
+                                      intermediates_dir) {
+    # copy all intermediates (pandoc will need to bundle them in the PDF)
+    intermediates <- copy_render_intermediates(original_input, encoding, 
+                                               intermediates_dir, FALSE)
+
+    # we need figures from the supporting files dir to be available during
+    # render as well; if we have a files directory, copy its contents
+    if (!is.null(saved_files_dir) && dir.exists(saved_files_dir)) {
+      file.copy(saved_files_dir, intermediates_dir, recursive = TRUE)
+      intermediates <- c(intermediates, list.files(
+        path = file.path(intermediates_dir, basename(saved_files_dir)),
+        all.files = TRUE, recursive = TRUE, full.names = TRUE))
+    }
+    
+    intermediates 
+  }
 
   # return format
   output_format(
@@ -145,7 +172,8 @@ pdf_document <- function(toc = FALSE,
                             args = args,
                             keep_tex = keep_tex),
     clean_supporting = !keep_tex,
-    pre_processor = pre_processor
+    pre_processor = pre_processor,
+    intermediates_generator = intermediates_generator
   )
 }
 

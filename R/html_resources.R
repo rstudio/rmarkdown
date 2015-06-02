@@ -363,6 +363,43 @@ discover_rmd_resources <- function(rmd_file, encoding,
   }
 }
 
+# copies the external resources needed to render original_input into 
+# intermediates_dir; with skip_web, skips web resources. returns a character
+# vector containing paths to all resources copied.
+copy_render_intermediates <- function(original_input, encoding, 
+                                      intermediates_dir, skip_web) {
+  # start with an empty set of intermediates
+  intermediates <- c()
+  
+  # extract all the resources used by the input file; note that this actually 
+  # runs another (non-knitting) render, and that recursion is avoided because 
+  # we explicitly render with self-contained = FALSE while discovering
+  # resources
+  resources <- find_external_resources(original_input, encoding)
+  dest_dir <- normalizePath(intermediates_dir, winslash = "/")
+  source_dir <- dirname(normalizePath(original_input, winslash = "/"))
+  
+  # process each returned reosurce
+  by(resources, seq_len(nrow(resources)), function(res) {
+    # skip web resources if requested
+    if (skip_web && res$web)
+      return
+    
+    # compute the new path to this file in the intermediates folder, and 
+    # create the hosting folder if it doesn't exist
+    dest <- file.path(dest_dir, res$path)
+    if (!file.exists(dirname(dest))) 
+      dir.create(dirname(dest), recursive = TRUE)
+    
+    # copy and remember to clean up this file later
+    file.copy(file.path(source_dir, res$path), dest)
+    intermediates <<- c(intermediates, dest)
+  })
+  
+  # return the list of files we generated
+  intermediates
+}
+
 # given a filename, return true if the file appears to be a web file
 is_web_file <- function(filename) {
   tolower(tools::file_ext(filename)) %in% c(
