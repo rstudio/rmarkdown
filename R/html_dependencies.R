@@ -11,6 +11,16 @@ html_dependency_jquery <- function()  {
 
 # create an html dependency for our embedded bootstrap
 html_dependency_bootstrap <- function(theme) {
+  
+  # inline bootstrap theme b/c pandoc 1.14 base64 encoding 
+  # somehow borks up bootstrap.min.css 
+  theme_css <- rmarkdown_system_file(paste0("rmd/h/bootstrap-3.3.1/css/", 
+                                            theme, ".min.css"))
+  theme_style_tag <- paste(c('<style type="text/css">',
+                           readLines(theme_css),
+                           '</style>'),
+                           sep = "\n")
+  
   htmlDependency(name = "bootstrap",
                  version = "3.3.1",
                  rmarkdown_system_file("rmd/h/bootstrap-3.3.1"),
@@ -21,7 +31,7 @@ html_dependency_bootstrap <- function(theme) {
                    "shim/html5shiv.min.js",
                    "shim/respond.min.js"
                  ),
-                 stylesheet = paste("css/", theme, ".min.css", sep="")
+                 head = theme_style_tag
   )
 }
 

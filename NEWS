@@ -11,6 +11,8 @@ rmarkdown 0.7 (unreleased)
 
 * Use pandoc 1.14 compatible LaTeX template when pandoc >= 1.14
 
+* Inline bootstrap.min.css to workaround pandoc 1.14 base64 encoding issue
+
 * Add support for discovering references to external resources when the 
   document output format is PDF
 
