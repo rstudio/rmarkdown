@@ -14,6 +14,7 @@ html_dependency_bootstrap <- function(theme) {
   
   # inline bootstrap theme b/c pandoc 1.14 base64 encoding 
   # somehow borks up bootstrap.min.css 
+  # see pandoc bug filed here: https://github.com/jgm/pandoc/issues/2224
   theme_css <- rmarkdown_system_file(paste0("rmd/h/bootstrap-3.3.1/css/", 
                                             theme, ".min.css"))
   theme_style_tag <- paste(c('<style type="text/css">',
