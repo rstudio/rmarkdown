@@ -18,7 +18,7 @@ html_dependency_bootstrap <- function(theme) {
   theme_css <- rmarkdown_system_file(paste0("rmd/h/bootstrap-3.3.1/css/", 
                                             theme, ".min.css"))
   theme_style_tag <- paste(c('<style type="text/css">',
-                           readLines(theme_css),
+                           readLines(theme_css, warn = FALSE),
                            '</style>'),
                            sep = "\n")
   
