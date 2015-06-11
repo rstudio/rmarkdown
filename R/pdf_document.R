@@ -102,13 +102,18 @@ pdf_document <- function(toc = FALSE,
 
   # template path and assets
   if (identical(template, "default")) {
-    # beginning with pandoc 1.14 the "default" template is the one built in
-    # with pandoc (this is because pandoc emits some new LaTeX and variables
-    # starting with v1.14 that our current template doesn't suport)
-    if (!pandoc_available("1.14")) {
-      args <- c(args, "--template",
-                pandoc_path_arg(rmarkdown_system_file("rmd/latex/default.tex")))
-    }
+    
+    # choose the right template    
+    if (!pandoc_available("1.14"))
+      latex_template <- "default.tex"
+    else
+      latex_template <- "default-1.14.tex"
+      
+    # add to args
+    args <- c(args, "--template",
+              pandoc_path_arg(rmarkdown_system_file(paste0("rmd/latex/", 
+                                                           latex_template))))
+    
   } else if (!is.null(template)) {
     args <- c(args, "--template", pandoc_path_arg(template))
   }

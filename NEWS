@@ -9,13 +9,14 @@ rmarkdown 0.7 (unreleased)
 
 * Use pandoc built-in template for Beamer
 
-* Use pandoc built-in template for LaTeX if pandoc >= 1.14
+* Use pandoc 1.14 compatible LaTeX template when pandoc >= 1.14
 
 * Add support for discovering references to external resources when the 
   document output format is PDF
 
 * Fix several issues causing pandoc errors when an intermediates directory is 
   used, including during render for Shiny documents
+
 
 rmarkdown 0.6
 --------------------------------------------------------------------------------
