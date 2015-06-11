@@ -78,6 +78,7 @@ find_external_resources <- function(input_file,
   discover_single_resource <- function(path, explicit, web) {
     if (is.character(path) && 
         length(path) == 1 && 
+        path != "." && path != ".." && 
         file.exists(file.path(input_dir, path))) {
       discovered_resources <<- rbind(discovered_resources, data.frame(
         path = path, 

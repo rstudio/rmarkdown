@@ -71,3 +71,9 @@ test_that("PDF-specific resources are discovered", {
 })
 
 
+test_that("bare relative directory references are ignored", {
+  skip_on_cran()
+  
+  resources <- find_external_resources("resources/period.Rmd")
+  expect_equal(nrow(resources), 0)
+})

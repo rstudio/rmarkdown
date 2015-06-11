@@ -1,0 +1,10 @@
+---
+output: html_document
+---
+
+<a href=".">this dir</a>
+
+```{r}
+'.', '..'
+```
+
