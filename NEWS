@@ -1,4 +1,4 @@
-rmarkdown 0.7 (unreleased)
+rmarkdown 0.7
 --------------------------------------------------------------------------------
 
 * Add latex_engine option to beamer_presentation format

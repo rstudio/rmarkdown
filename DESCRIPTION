@@ -1,8 +1,8 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 0.6.2.6
-Date: 2015-05-07
+Version: 0.7
+Date: 2015-06-13
 Author: JJ Allaire, Jonathan McPherson, Yihui Xie, Hadley Wickham, Joe Cheng,
     Jeff Allen
 Maintainer: JJ Allaire <jj@rstudio.com>
