@@ -21,25 +21,40 @@ html_dependency_bootstrap <- function(theme) {
   #
   # see pandoc bug filed here: https://github.com/jgm/pandoc/issues/2224
   
-  theme_css <- rmarkdown_system_file(paste0("rmd/h/bootstrap-3.3.1/css/", 
-                                            theme, ".min.css"))
-  theme_style_tag <- paste(c('<style type="text/css">',
-                           readLines(theme_css, warn = FALSE),
-                           '</style>'),
-                           sep = "\n")
-  
-  htmlDependency(name = "bootstrap",
-                 version = "3.3.1",
-                 rmarkdown_system_file("rmd/h/bootstrap-3.3.1"),
-                 meta = list(viewport = "width=device-width, initial-scale=1"),
-                 script = c(
-                   "js/bootstrap.min.js",
-                   # These shims are necessary for IE 8 compatibility
-                   "shim/html5shiv.min.js",
-                   "shim/respond.min.js"
-                 ),
-                 head = theme_style_tag
-  )
+  if (pandoc_available("1.14")) {
+    theme_css <- rmarkdown_system_file(paste0("rmd/h/bootstrap-3.3.1/css/", 
+                                              theme, ".min.css"))
+    theme_style_tag <- paste(c('<style type="text/css">',
+                             readLines(theme_css, warn = FALSE),
+                             '</style>'),
+                             sep = "\n")
+    
+    htmlDependency(name = "bootstrap",
+                   version = "3.3.1",
+                   rmarkdown_system_file("rmd/h/bootstrap-3.3.1"),
+                   meta = list(viewport = "width=device-width, initial-scale=1"),
+                   script = c(
+                     "js/bootstrap.min.js",
+                     # These shims are necessary for IE 8 compatibility
+                     "shim/html5shiv.min.js",
+                     "shim/respond.min.js"
+                   ),
+                   head = theme_style_tag
+    )
+  } else {
+    htmlDependency(name = "bootstrap",
+                   version = "3.3.1",
+                   rmarkdown_system_file("rmd/h/bootstrap-3.3.1"),
+                   meta = list(viewport = "width=device-width, initial-scale=1"),
+                   script = c(
+                     "js/bootstrap.min.js",
+                     # These shims are necessary for IE 8 compatibility
+                     "shim/html5shiv.min.js",
+                     "shim/respond.min.js"
+                   ),
+                   stylesheet = paste("css/", theme, ".min.css", sep="")
+    )
+  }
 }
 
 # flattens an arbitrarily nested list and returns all of the html_dependency
