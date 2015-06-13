@@ -5,7 +5,7 @@
 #' assumes you will include the output into an existing document (e.g. a blog
 #' post).
 #' 
-#' @param mathjx \code{TRUE} to convert $ and $$ math blocks into MathJax 
+#' @param mathjax \code{TRUE} to convert $ and $$ math blocks into MathJax 
 #'   compatible output. Note that you'll still need to ensure that the page
 #'   where the fragment is included loads the required MathJax scripts.
 #'   
