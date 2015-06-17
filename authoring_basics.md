@@ -147,7 +147,7 @@ Reference Style Links and Images
 A [linked phrase][id].
 ```
 
-At the bottom of the document:
+At the bottom:
 
 ```markdown
 [id]: http://example.com/ "Title"
@@ -155,7 +155,7 @@ Images
 ![alt text][id]
 ```
 
-At the bottom of the document:
+At the bottom:
 
 ```markdown
 [id]: figures/img.png "Title"
