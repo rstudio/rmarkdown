@@ -58,7 +58,7 @@ If you run into problems with cached output you can always clear the knitr cache
 
 ## Rcpp Code Chunks
 
-You can also create code chunks that define functions in C++ using [Rcpp Attributes](http://cran.rstudio.com/web/packages/Rcpp/vignettes/Rcpp-attributes.pdf). This is accomplished using the `engine = 'Rcpp'` chunk option. For example:
+You can also create code chunks that define functions in C++ using [Rcpp Attributes](https://cran.rstudio.com/web/packages/Rcpp/vignettes/Rcpp-attributes.pdf). This is accomplished using the `engine = 'Rcpp'` chunk option. For example:
 
 <pre class="cpp"><code>&#96;&#96;&#96;{r engine='Rcpp'}
 #include &lt;Rcpp.h&gt;
