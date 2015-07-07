@@ -2,10 +2,7 @@
 % Please edit documentation in R/relative_to.R
 \name{relative_to}
 \alias{relative_to}
-\title{Relative path utility function
-Given a directory and a file, return a relative path from the directory to
-the file, or the unmodified file path if the file does not appear to be in
-the directory.}
+\title{Relative path utility function}
 \usage{
 relative_to(dir, file)
 }
@@ -19,7 +16,6 @@ Relative path from the directory to the file (or the unmodified file
   path if the file does not appear to be in the directory).
 }
 \description{
-Relative path utility function
 Given a directory and a file, return a relative path from the directory to
 the file, or the unmodified file path if the file does not appear to be in
 the directory.
