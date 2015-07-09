@@ -6,6 +6,8 @@ rmarkdown 0.7.1 (unreleased)
 * Increase pandoc stack size to 512M (often required for base64 encoding 
   e.g. larger embedded leaflet maps). Stack size can also be controlled
   by the pandoc.stack.size option.
+  
+* Bugfix: don't merge render params recursively with knit_params
 
 
 rmarkdown 0.7
