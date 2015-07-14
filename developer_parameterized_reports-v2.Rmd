@@ -28,6 +28,8 @@ If you are using RStudio you should also download the [most recent version](http
 
 ## Declararing Parameters
 
+### YAML Params Field
+
 Parameters are declared using the `params` field within the YAML section at the top of the document, for example:
 
 ```yaml
@@ -53,7 +55,29 @@ params:
 
 This second form is useful when you need to provide additional details about the parameter (e.g. information about how parameters should be presented to end-users). 
 
-## Accessing Parameters from R
+### Parameter Types
+
+All of the standard R types that can be parsed by the `yaml::yaml.load` function are supported including `character`, `integer`, `numeric`, and `logical`. In addition, you can use arbitrary other R object types by specifying the value using an R expression. For example, to specify a date, date-time, or data frame you could use this code:
+
+```yaml
+---
+title: My Document
+output: html_document
+params:
+  start: !r as.Date("2015-01-01")
+  snapshot: !r as.POSIXct("2015-01-01 12:30:00")
+  data: !r datasets::mtcars
+---
+```
+
+The key is to preface the value with `!r`, which indicates that the value is an R expression rather than a literal value.
+
+Sometimes the default value for a parameter is more naturally expressed as empty or missing. For example, a `maxrows` parameter might be available but when not specified results in all rows being utilized. See the [Empty Default Values] section below for details on specifying empty values.
+
+
+## Using Parameters
+
+### Accessing from R
 
 The declared parameters are automatically made available within the knit environment as components of a read-only list named `params`. For example, the values of the above two parameters can be accessed with the following R code:
 
@@ -65,7 +89,7 @@ params$start
 When you preview the document in RStudio (or otherwise call the `rmarkdown::render` function with no arguments) the default parameter values listed in the YAML will be used.
 
 
-## Passing Parameters
+### Passing Parameters
 
 To vary the parameters of an R Markdown document from the defaults you use the `params` argument of the `rmarkdown::render` function. For example:
 
@@ -98,26 +122,7 @@ renderMyDocument <- function(region, start) {
 }
 ```
 
-## Parameter Types
-
-All of the standard R types that can be parsed by the `yaml::yaml.load` function are supported including `character`, `integer`, `numeric`, and `logical`. In addition, you can use arbitrary other R object types by specifying the value using an R expression. For example, to specify a date, date-time, or data frame you could use this code:
-
-```yaml
----
-title: My Document
-output: html_document
-params:
-  start: !r as.Date("2015-01-01")
-  snapshot: !r as.POSIXct("2015-01-01 12:30:00")
-  data: !r datasets::mtcars
----
-```
-
-The key is to preface the value with `!r`, which indicates that the value is an R expression rather than a literal value.
-
-## Specifying Empty Values
-
-Sometimes the default value for a parameter is more naturally expressed as empty or missing. For example, a `maxrows` parameter might be available but when not specified results in all rows being utilized.
+## Empty Default Values
 
 The most obvious and natural way to specify an empty value is with `null`. However, this won't work without some additional context because the underlying R object type of all parameters must be discoverable using only what is contained in the `params` declaration (this is so that front-ends can present an appropriate user-interface for customizing parameters). 
 

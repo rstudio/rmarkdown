@@ -175,11 +175,15 @@ img {
 <div id="TOC">
 <ul>
 <li><a href="#overview">Overview</a></li>
-<li><a href="#declararing-parameters">Declararing Parameters</a></li>
-<li><a href="#accessing-parameters-from-r">Accessing Parameters from R</a></li>
-<li><a href="#passing-parameters">Passing Parameters</a></li>
+<li><a href="#declararing-parameters">Declararing Parameters</a><ul>
+<li><a href="#yaml-params-field">YAML Params Field</a></li>
 <li><a href="#parameter-types">Parameter Types</a></li>
-<li><a href="#specifying-empty-values">Specifying Empty Values</a></li>
+</ul></li>
+<li><a href="#using-parameters">Using Parameters</a><ul>
+<li><a href="#accessing-from-r">Accessing from R</a></li>
+<li><a href="#passing-parameters">Passing Parameters</a></li>
+</ul></li>
+<li><a href="#empty-default-values">Empty Default Values</a></li>
 </ul>
 </div>
 
@@ -198,6 +202,8 @@ img {
 </div>
 <div id="declararing-parameters" class="section level2">
 <h2>Declararing Parameters</h2>
+<div id="yaml-params-field" class="section level3">
+<h3>YAML Params Field</h3>
 <p>Parameters are declared using the <code>params</code> field within the YAML section at the top of the document, for example:</p>
 <pre class="yaml"><code>---
 title: My Document
@@ -215,15 +221,32 @@ params:
 ---</code></pre>
 <p>This second form is useful when you need to provide additional details about the parameter (e.g. information about how parameters should be presented to end-users).</p>
 </div>
-<div id="accessing-parameters-from-r" class="section level2">
-<h2>Accessing Parameters from R</h2>
+<div id="parameter-types" class="section level3">
+<h3>Parameter Types</h3>
+<p>All of the standard R types that can be parsed by the <code>yaml::yaml.load</code> function are supported including <code>character</code>, <code>integer</code>, <code>numeric</code>, and <code>logical</code>. In addition, you can use arbitrary other R object types by specifying the value using an R expression. For example, to specify a date, date-time, or data frame you could use this code:</p>
+<pre class="yaml"><code>---
+title: My Document
+output: html_document
+params:
+  start: !r as.Date(&quot;2015-01-01&quot;)
+  snapshot: !r as.POSIXct(&quot;2015-01-01 12:30:00&quot;)
+  data: !r datasets::mtcars
+---</code></pre>
+<p>The key is to preface the value with <code>!r</code>, which indicates that the value is an R expression rather than a literal value.</p>
+<p>Sometimes the default value for a parameter is more naturally expressed as empty or missing. For example, a <code>maxrows</code> parameter might be available but when not specified results in all rows being utilized. See the <a href="#empty-default-values">Empty Default Values</a> section below for details on specifying empty values.</p>
+</div>
+</div>
+<div id="using-parameters" class="section level2">
+<h2>Using Parameters</h2>
+<div id="accessing-from-r" class="section level3">
+<h3>Accessing from R</h3>
 <p>The declared parameters are automatically made available within the knit environment as components of a read-only list named <code>params</code>. For example, the values of the above two parameters can be accessed with the following R code:</p>
 <pre class="r"><code>params$region
 params$start</code></pre>
 <p>When you preview the document in RStudio (or otherwise call the <code>rmarkdown::render</code> function with no arguments) the default parameter values listed in the YAML will be used.</p>
 </div>
-<div id="passing-parameters" class="section level2">
-<h2>Passing Parameters</h2>
+<div id="passing-parameters" class="section level3">
+<h3>Passing Parameters</h3>
 <p>To vary the parameters of an R Markdown document from the defaults you use the <code>params</code> argument of the <code>rmarkdown::render</code> function. For example:</p>
 <pre class="r"><code>rmarkdown::render(&quot;MyDocument.Rmd&quot;, params = list(
   region = &quot;west&quot;,
@@ -242,22 +265,9 @@ params$start</code></pre>
   ))
 }</code></pre>
 </div>
-<div id="parameter-types" class="section level2">
-<h2>Parameter Types</h2>
-<p>All of the standard R types that can be parsed by the <code>yaml::yaml.load</code> function are supported including <code>character</code>, <code>integer</code>, <code>numeric</code>, and <code>logical</code>. In addition, you can use arbitrary other R object types by specifying the value using an R expression. For example, to specify a date, date-time, or data frame you could use this code:</p>
-<pre class="yaml"><code>---
-title: My Document
-output: html_document
-params:
-  start: !r as.Date(&quot;2015-01-01&quot;)
-  snapshot: !r as.POSIXct(&quot;2015-01-01 12:30:00&quot;)
-  data: !r datasets::mtcars
----</code></pre>
-<p>The key is to preface the value with <code>!r</code>, which indicates that the value is an R expression rather than a literal value.</p>
 </div>
-<div id="specifying-empty-values" class="section level2">
-<h2>Specifying Empty Values</h2>
-<p>Sometimes the default value for a parameter is more naturally expressed as empty or missing. For example, a <code>maxrows</code> parameter might be available but when not specified results in all rows being utilized.</p>
+<div id="empty-default-values" class="section level2">
+<h2>Empty Default Values</h2>
 <p>The most obvious and natural way to specify an empty value is with <code>null</code>. However, this won’t work without some additional context because the underlying R object type of all parameters must be discoverable using only what is contained in the <code>params</code> declaration (this is so that front-ends can present an appropriate user-interface for customizing parameters).</p>
 <p>There are several syntactic options for specifying empty values. First, you can explicitly designate the R object class via the <code>class</code> field:</p>
 <pre class="yaml"><code>---
