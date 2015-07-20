@@ -38,22 +38,22 @@ params_controls <- list()
 params_controls$integer <- params_controls$numeric <- function(param) {
   ## If min/max are specified, use a slider.
   if (is.null(param$min) || is.null(param$max)) {
-    numericInput
+    shiny::numericInput
   } else {
-    sliderInput
+    shiny::sliderInput
   }
 }
 
-params_controls$logical <- function(param) { checkboxInput }
+params_controls$logical <- function(param) { shiny::checkboxInput }
 ## BUG: dateInput does not allow the user to not specify a value.
 ##     https://github.com/rstudio/shiny/issues/896
-params_controls$Date <- function(param) { dateInput }
+params_controls$Date <- function(param) { shiny::dateInput }
 ## BUG: shiny does not support datetime selectors
 ##     https://github.com/rstudio/shiny/issues/897
 ##     we ask for string input for now.
-params_controls$POSIXct <- function(param) { textInput }
-params_controls$character <- function(param) { textInput }
-params_controls$data.frame <- function(param) { fileInput }
+params_controls$POSIXct <- function(param) { shiny::textInput }
+params_controls$character <- function(param) { shiny::textInput }
+params_controls$data.frame <- function(param) { shiny::fileInput }
 params_get_control <- function(param) {
   ## A value might have multiple classes. Try: class(Sys.time())
   ## Try to find first class listed with a named control.
@@ -122,10 +122,10 @@ knit_params_ask <- function(file = "index.Rmd", params = NULL, shiny_args = NULL
       if (!is.null(param$choices)) {
         ## radio buttons for a small number of choices, select otherwise.
         if (length(param$choices) <= 4) {
-          inputControlFn <- radioButtons
+          inputControlFn <- shiny::radioButtons
           arguments$choices <- param$choices
         } else {
-          inputControlFn <- selectInput
+          inputControlFn <- shiny::selectInput
           arguments$choices <- param$choices
         }
       } else {
@@ -163,9 +163,9 @@ knit_params_ask <- function(file = "index.Rmd", params = NULL, shiny_args = NULL
           choices <- list()
           choices[[paste0("now (",param$value,")")]] <- "default"
           choices[[2]] <- "Use a custom time"
-          selectControl <- selectInput(inputId = inputId,
-                                       label = label,
-                                       choices = choices)
+          selectControl <- shiny::selectInput(inputId = inputId,
+                                              label = label,
+                                              choices = choices)
         }
       } else if ("Date" %in% param$class) {
         if (identical("Sys.Date()", param$expr)) {
@@ -176,14 +176,14 @@ knit_params_ask <- function(file = "index.Rmd", params = NULL, shiny_args = NULL
           choices <- list()
           choices[[paste0("today (",param$value,")")]] <- "default"
           choices[[2]] <- "Use a custom date"
-          selectControl <- selectInput(inputId = inputId,
-                                       label = label,
-                                       choices = choices)
+          selectControl <- shiny::selectInput(inputId = inputId,
+                                              label = label,
+                                              choices = choices)
           
         }
       }
       
-      output[[paste0("ui_", param$name)]] <- renderUI({
+      output[[paste0("ui_", param$name)]] <- shiny::renderUI({
         if (useSelectControl(input[[param$name]])) {
           selectControl
         } else {
@@ -196,7 +196,7 @@ knit_params_ask <- function(file = "index.Rmd", params = NULL, shiny_args = NULL
       param.ui(param)
     })
     
-    values <- eventReactive(input$save, {
+    values <- shiny::eventReactive(input$save, {
       values <- list()
       lapply(configurable, function(param) {
         default <- uidefaults[[param$name]]
@@ -211,29 +211,29 @@ knit_params_ask <- function(file = "index.Rmd", params = NULL, shiny_args = NULL
       values
     })
 
-    observe({
+    shiny::observe({
       shiny::stopApp(values())
     })
 
-    observeEvent(input$cancel, {
+    shiny::observeEvent(input$cancel, {
       shiny::stopApp(NULL)
     })
   }
 
   contents <- shiny::tagList(
-      fluidRow(column(12,h1("Configure Report Parameters"))),
-      fluidRow(column(12, lapply(configurable, function(param) {
-        uiOutput(paste0("ui_", param$name))
+      shiny::fluidRow(shiny::column(12,shiny::tags$h1("Configure Report Parameters"))),
+      shiny::fluidRow(shiny::column(12, lapply(configurable, function(param) {
+        shiny::uiOutput(paste0("ui_", param$name))
       }))),
-      fluidRow(column(12,actionButton("cancel","Cancel"), actionButton("save", "Save", class="btn-primary"))))
+      shiny::fluidRow(shiny::column(12,shiny::actionButton("cancel","Cancel"), shiny::actionButton("save", "Save", class="btn-primary"))))
   
   if (length(unconfigurable) > 0) {
     contents <- shiny::tagAppendChildren(contents, 
-                                   fluidRow(column(12,h2("Parameters that cannot be configured"))),
-                                   fluidRow(column(12,tags$ul(lapply(unconfigurable, function(param) { tags$li(param$name) })))))
+                                         shiny::fluidRow(shiny::column(12,h2("Parameters that cannot be configured"))),
+                                         shiny::fluidRow(shiny::column(12,shiny::tags$ul(lapply(unconfigurable, function(param) { shiny::tags$li(param$name) })))))
   }
-  contents <- shiny::tagAppendChild(contents, fluidRow(column(12,textOutput("values"))))
-  ui <- fluidPage(contents)
+  contents <- shiny::tagAppendChild(contents, shiny::fluidRow(shiny::column(12,shiny::textOutput("values"))))
+  ui <- shiny::fluidPage(contents)
 
   shiny_app <- shiny::shinyApp(ui = ui, server = server)
   shiny_args <- merge_lists(list(appDir = shiny_app), shiny_args)
