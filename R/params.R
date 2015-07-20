@@ -1,3 +1,37 @@
+
+knit_params_get <- function(input_lines, params) {
+  # check for recent enough knitr
+  if (packageVersion("knitr") < "1.10") {
+    stop("knitr >= 1.10 required to use rmarkdown params")
+  }
+  
+  # read the default parameters and extract them into a named list
+  knit_params <- mark_utf8(knitr::knit_params(input_lines))
+  default_params <- list()
+  for (param in knit_params) {
+    default_params[[param$name]] <- param$value
+  }
+  
+  # validate params passed to render
+  if (!is.null(params)) {
+    
+    # verify they are a list
+    if (!is.list(params) || (length(names(params)) != length(params))) {
+      stop("render params argument must be a named list")
+    }
+    
+    # verify that all parameters passed are also in the yaml
+    invalid_params <- setdiff(names(params), names(default_params))
+    if (length(invalid_params) > 0) {
+      stop("render params not declared in YAML: ",
+           paste(invalid_params, sep = ", "))
+    }
+  }
+  
+  # merge explicitly provided params with defaults
+  merge_lists(default_params, params, recursive = FALSE)
+}
+
 params_converters <- list(
     logical = function(value) {
       as.logical(value)
@@ -83,20 +117,36 @@ knit_params_ask <- function(file = "index.Rmd", params = NULL, shiny_args = NULL
   if (packageVersion("knitr") < "1.10.17") {
     stop("knitr >= 1.10.17 required to use rmarkdown::knit_params_ask")
   }
- 
-  knit_params <- knitr::knit_params(readLines(file))
+
+  knit_params <- knitr::knit_params(readLines(file, warn = FALSE, encoding = "UTF-8"))
   configurable <- Filter(params_configurable, knit_params)
   unconfigurable <- Filter(Negate(params_configurable), knit_params)
 
+  ## Input validation on params (checks shared with render)
+  if (!is.null(params)) {
+    ## Must be a named list
+    if (!is.list(params) || (length(names(params)) != length(params))) {
+      stop("knit_params_ask params argument must be a named list")
+    }
+
+    ## Verify that all passed parameters are also in the yaml
+    invalid_params <- setdiff(names(params), names(knit_params))
+    if (length(invalid_params) > 0) {
+      stop("knit_params_ask params not declared in YAML: ",
+           paste(invalid_params, sep = ", "))
+    }
+  }
+  
   ## Return the current value for a given parameter, which is either `params`
   ## when overridden by our caller or `param$value` otherwise.
   current_value <- function(param) {
-    override <- params[[param$name]]
-    if (is.null(override)) {
-      param$value
-    } else {
-      override
+    if (!is.null(params)) {
+      override <- params[[param$name]]
+      if (!is.null(override)) {
+        return(override)
+      }
     }
+    return(param$value)
   }
 
   ## The default values given to the UI. Lets us detect if the user has

@@ -258,33 +258,8 @@ render <- function(input,
     # (only do this if there are parameters in the front matter
     # so we don't require recent knitr for all users)
     if (!is.null(yaml_front_matter$params)) {
-      
-      # check for recent enough knitr
-      if (packageVersion("knitr") < "1.10")
-        stop("knitr >= 1.10 required to use rmarkdown params")
-      
-      # read the default parameters and extract them into a named list
-      knit_params <- mark_utf8(knitr::knit_params(input_lines))
-      default_params <- list()
-      for (param in knit_params)
-        default_params[[param$name]] <- param$value
-      
-      # validate params passed to render
-      if (!is.null(params)) {
-        
-        # verify they are a list
-        if (!is.list(params) || (length(names(params)) != length(params)))
-          stop("render params argument must be a named list")
-        
-        # verify that all parameters passed are also in the yaml
-        invalid_params <- setdiff(names(params), names(default_params))
-        if (length(invalid_params) > 0)
-          stop("render params not declared in yaml: ",
-               paste(invalid_params, sep = ", "))
-      }
-      
-      # merge explicitly provided params with defaults
-      params <- merge_lists(default_params, params, recursive = FALSE)
+
+      params <- knit_params_get(input_lines, params)
      
       # make the params available in the knit environment
       if (!exists("params", envir = envir, inherits = FALSE)) {
