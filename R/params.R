@@ -113,12 +113,15 @@ params_configurable <- function(param) {
 #' @return named list with overridden parameter names and value.
 #' 
 #' @export
-knit_params_ask <- function(file = "index.Rmd", params = NULL, shiny_args = NULL) {
+knit_params_ask <- function(file = "index.Rmd",
+                            params = NULL,
+                            shiny_args = NULL,
+                            encoding = getOption("encoding")) {
   if (packageVersion("knitr") < "1.10.17") {
     stop("knitr >= 1.10.17 required to use rmarkdown::knit_params_ask")
   }
 
-  knit_params <- knitr::knit_params(readLines(file, warn = FALSE, encoding = "UTF-8"))
+  knit_params <- mark_utf8(knitr::knit_params(read_lines_utf8(file, encoding)))
   configurable <- Filter(params_configurable, knit_params)
   unconfigurable <- Filter(Negate(params_configurable), knit_params)
 
