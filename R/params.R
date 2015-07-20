@@ -14,6 +14,17 @@ knit_params_get <- function(input_lines, params) {
   
   # validate params passed to render
   if (!is.null(params)) {
+
+    if (identical(params, "ask")) {
+      if (!interactive()) {
+        stop("render parameter configuration only allowed in an interactive environment")
+      }
+      
+      params <- knit_params_ask(input_lines = input_lines)
+      if (is.null(params)) {
+        stop("render parameter configuration canceled")
+      }
+    }
     
     # verify they are a list
     if (!is.list(params) || (length(names(params)) != length(params))) {
@@ -107,6 +118,7 @@ params_configurable <- function(param) {
 #' Run a shiny application asking for parameter configuration for the given document.
 #'
 #' @param file Path to the R Markdown document with configurable parameters.
+#' @param input_lines Content of the R Markdown document. If \code{NULL}, the contents of \code{file} will be read.
 #' @param params A named list of optional parameter overrides used in place of the document defaults.
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
 #'
@@ -114,6 +126,7 @@ params_configurable <- function(param) {
 #' 
 #' @export
 knit_params_ask <- function(file = "index.Rmd",
+                            input_lines = NULL,
                             params = NULL,
                             shiny_args = NULL,
                             encoding = getOption("encoding")) {
@@ -121,7 +134,11 @@ knit_params_ask <- function(file = "index.Rmd",
     stop("knitr >= 1.10.17 required to use rmarkdown::knit_params_ask")
   }
 
-  knit_params <- mark_utf8(knitr::knit_params(read_lines_utf8(file, encoding)))
+  if (is.null(input_lines)) {
+    input_lines <- read_lines_utf8(file, encoding)
+  }
+  
+  knit_params <- mark_utf8(knitr::knit_params(input_lines))
   configurable <- Filter(params_configurable, knit_params)
   unconfigurable <- Filter(Negate(params_configurable), knit_params)
 
