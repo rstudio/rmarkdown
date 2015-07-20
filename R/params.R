@@ -80,6 +80,9 @@ params_configurable <- function(param) {
 #' 
 #' @export
 knit_params_ask <- function(file = "index.Rmd", params = NULL, shiny_args = NULL) {
+  if (packageVersion("knitr") < "1.10.17") {
+    stop("knitr >= 1.10.17 required to use rmarkdown::knit_params_ask")
+  }
  
   knit_params <- knitr::knit_params(readLines(file))
   configurable <- Filter(params_configurable, knit_params)
