@@ -319,7 +319,9 @@ knit_params_ask <- function(file = "index.Rmd",
                                          shiny::fluidRow(shiny::column(12,shiny::tags$ul(lapply(unconfigurable, function(param) { shiny::tags$li(param$name) })))))
   }
   contents <- shiny::tagAppendChild(contents, shiny::fluidRow(shiny::column(12,shiny::textOutput("values"))))
-  ui <- shiny::fluidPage(contents)
+  ui <- shiny::fluidPage(
+      shiny::tags$head(shiny::tags$style(".container-fluid .shiny-input-container { width: auto; }")),
+      contents)
 
   shiny_app <- shiny::shinyApp(ui = ui, server = server)
   shiny_args <- merge_lists(list(appDir = shiny_app), shiny_args)
