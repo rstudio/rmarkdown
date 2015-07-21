@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Garrett Grolemund" />
+
+
+<title>Introduction to interactive documents</title>
+
+<script src="libs/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.1/css/united.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.1/shim/respond.min.js"></script>
+
+<style type="text/css">
+
+/* padding for bootstrap navbar */
+body {
+  padding-top: 50px;
+  padding-bottom: 40px;
+}
+
+
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h2 {
+  padding-top: 55px;
+  margin-top: -55px;
+}
+.section h3 {
+  padding-top: 55px;
+  margin-top: -55px;
+}
+
+
+
+/* don't use link color in navbar */
+.dropdown-menu>li>a {
+  color: black;
+}
+
+/* some padding for disqus */
+#disqus_thread {
+  margin-top: 45px;
+}
+
+</style>
+
+<link rel="stylesheet" href="libs/font-awesome-4.1.0/css/font-awesome.min.css"/>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="libs/highlight/textmate.css"
+      type="text/css" />
+<script src="libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">R Markdown v2</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li class="dropdown">
+          <a href="authoring" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Authoring <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+             <li class="dropdown-header">R Markdown</li>
+             <li><a href="authoring_basics.html">Markdown Basics</a></li>
+             <li><a href="authoring_pandoc_markdown.html">Pandoc Markdown</a></li>
+             <li><a href="authoring_rcodechunks.html">R Code Chunks</a></li>
+             <li><a href="authoring_bibliographies_and_citations.html">Bibliographies &amp; Citations</a></li>
+             <li><a href="authoring_migrating_from_v1.html">Migrating from v1</a></li>
+             <li class="divider"></li>
+             <li><a href="http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">Cheat Sheet [PDF]</a></li>
+             <li><a href="http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">Reference Guide [PDF]</a></li>
+             <li class="divider"></li>
+             <li class="dropdown-header">Shiny</li>
+             <li><a href="authoring_shiny.html">Interactive Documents</a></li>
+             <li><a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a></li>
+             <li><a href="authoring_shiny_widgets.html">Creating Shiny Widgets</a></li>
+             <li><a href="authoring_shiny_advanced.html">Advanced Topics</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="formats" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Formats <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+             <li class="dropdown-header">Documents</li>
+             <li><a href="html_document_format.html">HTML</a></li>
+             <li><a href="pdf_document_format.html">PDF</a></li>
+             <li><a href="word_document_format.html">Word</a></li>
+             <li><a href="markdown_document_format.html">Markdown</a></li>
+             <li class="divider"></li>
+             <li class="dropdown-header">Presentations</li>
+             <li><a href="ioslides_presentation_format.html">ioslides</a></li>
+             <li><a href="slidy_presentation_format.html">Slidy</a></li>
+             <li><a href="beamer_presentation_format.html">Beamer</a></li>
+             <li class="divider"></li>
+             <li class="dropdown-header">Other</li>
+             <li><a href="package_vignette_format.html">Package Vignette</a></li>
+             <li><a href="tufte_handout_format.html">Tufte Handout</a></li>
+             <li class="divider"></li>
+             <li><a href="r_notebook_format.html">R Notebooks</a></li>
+          </ul>
+        </li>
+         <li class="dropdown">
+          <a href="developer" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Developer <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+             <li><a href="developer_html_widgets.html">HTML Widgets</a></li>
+             <li class="divider"></li>
+             <li><a href="developer_parameterized_reports.html">Parameterized Reports</a></li>
+             <li class="divider"></li>
+             <li><a href="developer_document_templates.html">Document Templates</a></li>
+             <li><a href="developer_custom_formats.html">Creating New Formats</a></li>
+             <li class="divider"></li>
+             <li><a href="https://github.com/rstudio/rmarkdown">R Markdown on GitHub</a></li>
+          </ul>
+        </li>
+        <li><a href="articles">Articles</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+<h1 class="title">Introduction to interactive documents</h1>
+<h4 class="author"><em>Garrett Grolemund</em></h4>
+<h4 class="date"><em>July 9, 2014</em></h4>
+</div>
+
+
+<p>Interactive documents are a new way to build Shiny apps. An interactive document is an <a href="http://rmarkdown.rstudio.com">R Markdown</a> file that contains Shiny widgets and outputs. You write the report in <a href="http://daringfireball.net/projects/markdown/basics">markdown</a>, and then launch it as an app with the click of a button.</p>
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<p>The previous article, <a href="rmarkdown.html">Introduction to R Markdown</a>, described how to write R Markdown files. R Markdown files are useful because</p>
+<ul>
+<li>They are quick and easy to write.</li>
+<li>You can embed executable R code into your file, which saves manual labor and creates a reproducible report.</li>
+<li>You can convert R Markdown files into HTML, PDF, and Word documents with the click of a button.</li>
+<li>You can convert R Markdown files into ioslides and beamer slideshows with the click of a button.</li>
+</ul>
+<p>In fact, R Markdown files are the ultimate R reporting tool.</p>
+<p>This article will show you one more thing that R Markdown files can do: you can embed Shiny components in an R Markdown file to create an interactive report or slideshow.</p>
+<p>Your report will be a complete Shiny app. In fact, R Markdown provides the easiest way to build light-weight Shiny apps. I will refer to apps that combine Shiny with R Markdown as <em>interactive documents</em>.</p>
+</div>
+<div id="interactive-documents" class="section level2">
+<h2>Interactive documents</h2>
+<p>You can make an R Markdown document interactive in two steps:</p>
+<ol style="list-style-type: decimal">
+<li>add <code>runtime: shiny</code> to the document’s YAML header.</li>
+<li>add Shiny widgets and Shiny render functions to the file’s R code chunks</li>
+</ol>
+<p>The <code>rmarkdown</code> package will compile your document into a reactive Shiny app. The document will look just as it would otherwise, but it will include reactive components.</p>
+<div id="runtime-shiny" class="section level3">
+<h3>runtime: shiny</h3>
+<p>Notify <code>rmarkdown</code> that your file contains Shiny components by adding <code>runtime: shiny</code> to the file’s YAML header. RStudio will change its “Knit” icon to a “Run Document” icon when you save this change.</p>
+<p><img src="articles/images/rmd-run.png" /></p>
+<p>“Run Document” is a cue that <code>rmarkdown</code> will no longer compile your document into a static file. Instead it will “run” the document as a live Shiny app.</p>
+<p>Since the document is a Shiny app, you must render it into an HTML format. Do this by selecting either <code>html_document</code> or <code>ioslides_presentation</code> for your final output.</p>
+</div>
+<div id="widgets" class="section level3">
+<h3>Widgets</h3>
+<p>To add a widget to your document, call a Shiny widget function in an R code chunk. R Markdown will add the widget to the code chunk’s output.</p>
+<p>For example, the file below creates an HTML document with two widgets.</p>
+<pre class="r"><code>
+---
+runtime: shiny
+output: html_document
+---
+
+### Here are two Shiny widgets
+
+&#96``{r echo = FALSE}
+selectInput("n_breaks", label = "Number of bins:",
+              choices = c(10, 20, 35, 50), selected = 20)
+  
+sliderInput("bw_adjust", label = "Bandwidth adjustment:",
+              min = 0.2, max = 2, value = 1, step = 0.2)
+&#96``
+</code></pre>
+<p>The document looks like this when rendered. (<em>This is a static image of the output, the actual widgets are “live”; you can manipulate them</em>).</p>
+<p><img src="articles/images/rmd-widget.png" /></p>
+</div>
+<div id="rendered-output" class="section level3">
+<h3>Rendered output</h3>
+<p>To add reactive output to your document, call one of the <code>render*</code> functions below in an R code chunk.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">render function</th>
+<th align="left">creates</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>renderImage</code></td>
+<td align="left">images (saved as a link to a source file)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>renderPlot</code></td>
+<td align="left">plots</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>renderPrint</code></td>
+<td align="left">any printed output</td>
+</tr>
+<tr class="even">
+<td align="left"><code>renderTable</code></td>
+<td align="left">data frame, matrix, other table like structures</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>renderText</code></td>
+<td align="left">character strings</td>
+</tr>
+<tr class="even">
+<td align="left"><code>renderUI</code></td>
+<td align="left">a Shiny tag object or HTML</td>
+</tr>
+</tbody>
+</table>
+<p><br> R Markdown will include the rendered output in the result of the code chunk.</p>
+<p>This output will behave like rendered output in a standard Shiny app. The output will automatically update whenever you change a widget value or a reactive expression that it depends on.</p>
+<p>The file below uses <code>renderPlot</code> to insert a histogram that reacts to the two widgets.</p>
+<pre class="r"><code>
+---
+runtime: shiny
+output: html_document
+---
+
+### Here are two Shiny widgets
+
+&#96``{r echo = FALSE}
+selectInput("n_breaks", label = "Number of bins:",
+              choices = c(10, 20, 35, 50), selected = 20)
+  
+sliderInput("bw_adjust", label = "Bandwidth adjustment:",
+              min = 0.2, max = 2, value = 1, step = 0.2)
+&#96``
+
+### ...that build a histogram.
+
+&#96``{r echo = FALSE}
+renderPlot({
+  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
+       xlab = "Duration (minutes)", main = "Geyser eruption duration")
+  
+  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
+  lines(dens, col = "blue")
+})
+&#96``
+</code></pre>
+<p>The document creates the app below when you click “Run Document.”</p>
+<p><img src="articles/images/rmd-outputs.png" /></p>
+</div>
+<div id="the-structure-of-an-interactive-document" class="section level3">
+<h3>The structure of an interactive document</h3>
+<p>When you run an interactive document, <code>rmarkdown</code> extracts the code in your code chunks and places them into a pseudo server.R file. R Markdown uses the html output of the markdown file as an <a href="html-ui.html">index.html</a> file to place the reactive elements into.</p>
+<p><img src="articles/images/rmd-structure.png" /></p>
+<p>As a result, outputs in one code chunk can use widgets and reactive expressions that occur in other code chunks.</p>
+<p>Since the R Markdown document provides a layout for the app, you do not need to write a ui.R file.</p>
+</div>
+</div>
+<div id="sharing-interactive-documents" class="section level2">
+<h2>Sharing interactive documents</h2>
+<p>Interactive documents are a type of Shiny app, which means that you can share them in the same way that you share other Shiny apps. You can</p>
+<ol style="list-style-type: decimal">
+<li>Email a .Rmd file to a colleague. He or she can run the file locally by opening the file and clicking “Run Document”</li>
+<li>Host the document with <a href="http://www.rstudio.com/products/shiny/shiny-server/">Shiny Server</a> or <a href="http://www.rstudio.com/products/shiny/shiny-server/">Shiny Server Pro</a></li>
+<li>Host the document at <a href="http://www.shinyapps.io">ShinyApps.io</a></li>
+</ol>
+<p><em>Note: If you are familiar with R Markdown, you might expect RStudio to save an HTML version of an interactive document in your working directory. However, this only works with static HTML documents. Each interactive document must be served by a computer that manages the document. As a result, interactive documents cannot be shared as a standalone HTML file.</em></p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Interactive documents provide a new and easy way to make Shiny apps.</p>
+<p>Interactive documents will not replace standard Shiny apps since they cannot provide the design options that come with a ui.R or index.html file. However, interactive documents do create some easy wins:</p>
+<ul>
+<li><p>The R Markdown workflow makes it easy to build light-weight apps. You do not need to worry about laying out your app or building an HTML user interface for the app.</p></li>
+<li><p>You can use R Markdown to create interactive slideshows, something that is difficult to do with Shiny alone. To create a slideshow, change <code>output: html_document</code> to <code>output: ioslides_presentation</code> in the YAML front matter of your .Rmd file. R Markdown will divide your document into slides when you click “Run Document.” A new slide will begin whenever a header or horizontal rule (<code>***</code>) appears.</p></li>
+<li><p>Interactive documents enhance the existing R Markdown workflow. R Markdown makes it easy to write literate programs and reproducible reports. You can make these reports even more effective by adding Shiny to the mix.</p></li>
+</ul>
+<p>To learn more about R Markdown and interactive documents, please visit <a href="http://rmarkdown.rstudio.com">rmarkdown.rstudio.com</a>.</p>
+</div>
+
+
+<!-- some extra javascript for older browsers -->
+<script type="text/javascript" src="libs/polyfill.js"></script>
+
+<script>
+
+// manage active state of menu based on current page
+$(document).ready(function () {
+
+    // active menu
+    href = window.location.pathname
+    href = href.substr(href.lastIndexOf('/') + 1)
+    $('a[href="' + href + '"]').parent().addClass('active');
+
+    // manage active menu header
+    if (href.startsWith('authoring_'))
+      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
+    else if (href.endsWith('_format.html'))
+      $('a[href="' + 'formats' + '"]').parent().addClass('active');
+    else if (href.startsWith('developer_'))
+      $('a[href="' + 'developer' + '"]').parent().addClass('active');
+
+});
+
+</script>
+
+<!-- disqus -->
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

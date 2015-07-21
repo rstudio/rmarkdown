@@ -8,9 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
+<meta name="author" content="Jenny Bryan" />
 
 
-<title>Package Vignette (HTML)</title>
+<title>Get verbatim R chunks into R Markdown</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -170,62 +171,51 @@ img {
 </div><!--/.navbar -->
 
 <div id="header">
-<h1 class="title">Package Vignette (HTML)</h1>
+<h1 class="title">Get verbatim R chunks into R Markdown</h1>
+<h4 class="author"><em>Jenny Bryan</em></h4>
+<h4 class="date"><em>18 September, 2014</em></h4>
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#overview">Overview</a><ul>
-<li><a href="#usage">Usage</a></li>
-</ul></li>
-<li><a href="#appearance-and-style">Appearance and Style</a><ul>
-<li><a href="#custom-css">Custom CSS</a></li>
-<li><a href="#figure-sizes">Figure Sizes</a></li>
-</ul></li>
-</ul>
-</div>
 
-<div id="overview" class="section level2">
-<h2>Overview</h2>
-<p>The <code>html_vignette</code> format provides a lightweight alternative to <code>html_document</code> suitable for inclusion in packages to be released to CRAN. It reduces the size of a basic vignette from 100k to around 10k. The format differs from a conventional HTML document as follows:</p>
-<ul>
-<li>Never uses retina figures</li>
-<li>Has a smaller default figure size</li>
-<li>Uses a custom CSS stylesheet</li>
-</ul>
-<div id="usage" class="section level3">
-<h3>Usage</h3>
-<p>To use <code>html_vignette</code> you specify it as the output format and add some additional vignette related macros:</p>
-<pre><code>---
-title: &quot;Vignette Title&quot;
-output: rmarkdown::html_vignette
-vignette: &gt;
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Vignette Title}
-  \usepackage[utf8]{inputenc}
----</code></pre>
-<p>Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your Vignette.</p>
-<p>All options support for <code>html_document</code> also work for <code>html_vignette</code>. See the <a href="html_document_format.html">article on the html_document format</a> for additional details.</p>
-</div>
-</div>
-<div id="appearance-and-style" class="section level2">
-<h2>Appearance and Style</h2>
-<div id="custom-css" class="section level3">
-<h3>Custom CSS</h3>
-<p>The <code>html_vignette</code> template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:</p>
-<pre><code>output: 
-  rmarkdown::html_vignette:
-    css: mystyles.css</code></pre>
-</div>
-<div id="figure-sizes" class="section level3">
-<h3>Figure Sizes</h3>
-<p>The figure sizes have been customised so that you can easily put two images side-by-side:</p>
-<pre class="r"><code>plot(1:10)
-plot(10:1)</code></pre>
-<p><img src="package_vignette_format_files/figure-html/unnamed-chunk-1-1.png" title="" alt="" width="374.4" /><img src="package_vignette_format_files/figure-html/unnamed-chunk-1-2.png" title="" alt="" width="374.4" /></p>
-<p>If you want larger figure sizes you can change the <code>fig_width</code> and <code>fig_height</code> in the document output options or alternatively override the default options on a per-chunk basis.</p>
-</div>
-</div>
+<p><em>This article is reposted from a <a href="https://gist.github.com/jennybc/8add4496cbef43324c59">gist</a> with the kind permission of Jenny Bryan.</em></p>
+<p>My periodic revisitation of “how can I include a verbatim R chunk in <code>.rmd</code>”? This time I am writing it down! Various proposed solutions:</p>
+<p>From the <a href="https://github.com/yihui/knitr/blob/master/FAQ.md"><code>knitr</code> FAQ</a>:</p>
+<pre class="r"><code>&#96r &#39;&#39;` ```{r label, what=ever}</code></pre>
+<pre><code> ```{r label, what=ever}</code></pre>
+<p>From <a href="https://github.com/yihui/knitr/issues/443">issue 443</a></p>
+<pre class="r"><code>&#96r &#39;&#39;````{r foo}
+print(&#39;hello world!&#39;)
+```</code></pre>
+<pre><code>```{r foo}
+print(&#39;hello world!&#39;)
+```</code></pre>
+<p>From <a href="https://github.com/yihui/knitr-examples/blob/master/065-rmd-chunk.Rmd"><code>knitr</code> example 065</a>, involving inline R code:</p>
+<pre class="r"><code>```{r eval=TRUE}&#96r &#39;&#39;`
+n = 10
+rnorm(x)
+```</code></pre>
+<pre><code>```{r eval=TRUE}
+n = 10
+rnorm(x)
+```</code></pre>
+<p>Also from <a href="https://github.com/yihui/knitr-examples/blob/master/065-rmd-chunk.Rmd"><code>knitr</code> example 065</a>, involving a zero-width space (copy and paste the input code into the RStudio editor to see the zero-width space after the first back tick):</p>
+<pre class="r"><code>```{r eval=TRUE}
+n = 10
+rnorm(n)
+```</code></pre>
+<pre><code>```{r eval=TRUE}
+n = 10
+rnorm(n)
+```</code></pre>
+<p>From <a href="https://gist.github.com/kbroman/ca560b967b0b7a08a3b2">Karl Broman</a>, involving <code>&lt;pre&gt;</code> and <code>&lt;code&gt;</code> tags:</p>
+<pre class="r"><code>&lt;pre>&lt;code>```{r whatever}
+data(cars)
+summary(cars)
+```&lt;/code>&lt;/pre></code></pre>
+<pre><code>```{r whatever}
+data(cars)
+summary(cars)
+```</code></pre>
 
 
 <!-- some extra javascript for older browsers -->

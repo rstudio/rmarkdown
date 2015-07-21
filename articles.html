@@ -10,7 +10,7 @@
 
 
 
-<title>Package Vignette (HTML)</title>
+<title>R Markdown Articles</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -170,61 +170,29 @@ img {
 </div><!--/.navbar -->
 
 <div id="header">
-<h1 class="title">Package Vignette (HTML)</h1>
+<h1 class="title">R Markdown Articles</h1>
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#overview">Overview</a><ul>
-<li><a href="#usage">Usage</a></li>
-</ul></li>
-<li><a href="#appearance-and-style">Appearance and Style</a><ul>
-<li><a href="#custom-css">Custom CSS</a></li>
-<li><a href="#figure-sizes">Figure Sizes</a></li>
-</ul></li>
-</ul>
-</div>
 
-<div id="overview" class="section level2">
-<h2>Overview</h2>
-<p>The <code>html_vignette</code> format provides a lightweight alternative to <code>html_document</code> suitable for inclusion in packages to be released to CRAN. It reduces the size of a basic vignette from 100k to around 10k. The format differs from a conventional HTML document as follows:</p>
+<div id="basics" class="section level2">
+<h2>Basics</h2>
 <ul>
-<li>Never uses retina figures</li>
-<li>Has a smaller default figure size</li>
-<li>Uses a custom CSS stylesheet</li>
+<li><a href="articles_introduction.html">Introduction to R Markdown</a></li>
+<li><a href="articles_interactive.html">Introduction to interactive documents</a></li>
+<li><a href="articles_integration.html">R Markdown integration in the RStudio IDE</a></li>
 </ul>
-<div id="usage" class="section level3">
-<h3>Usage</h3>
-<p>To use <code>html_vignette</code> you specify it as the output format and add some additional vignette related macros:</p>
-<pre><code>---
-title: &quot;Vignette Title&quot;
-output: rmarkdown::html_vignette
-vignette: &gt;
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Vignette Title}
-  \usepackage[utf8]{inputenc}
----</code></pre>
-<p>Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your Vignette.</p>
-<p>All options support for <code>html_document</code> also work for <code>html_vignette</code>. See the <a href="html_document_format.html">article on the html_document format</a> for additional details.</p>
 </div>
+<div id="embedding-code" class="section level2">
+<h2>Embedding Code</h2>
+<ul>
+<li><a href="articles_verbatim.html">Get verbatim R chunks into R Markdown</a></li>
+</ul>
 </div>
-<div id="appearance-and-style" class="section level2">
-<h2>Appearance and Style</h2>
-<div id="custom-css" class="section level3">
-<h3>Custom CSS</h3>
-<p>The <code>html_vignette</code> template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:</p>
-<pre><code>output: 
-  rmarkdown::html_vignette:
-    css: mystyles.css</code></pre>
-</div>
-<div id="figure-sizes" class="section level3">
-<h3>Figure Sizes</h3>
-<p>The figure sizes have been customised so that you can easily put two images side-by-side:</p>
-<pre class="r"><code>plot(1:10)
-plot(10:1)</code></pre>
-<p><img src="package_vignette_format_files/figure-html/unnamed-chunk-1-1.png" title="" alt="" width="374.4" /><img src="package_vignette_format_files/figure-html/unnamed-chunk-1-2.png" title="" alt="" width="374.4" /></p>
-<p>If you want larger figure sizes you can change the <code>fig_width</code> and <code>fig_height</code> in the document output options or alternatively override the default options on a per-chunk basis.</p>
-</div>
+<div id="rendering-files" class="section level2">
+<h2>Rendering Files</h2>
+<ul>
+<li><a href="articles_docx.html">Happy collaboration with Rmd to docx</a></li>
+</ul>
 </div>
 
 
