@@ -129,6 +129,7 @@ knit_params_ask <- function(file = NULL,
                             input_lines = NULL,
                             params = NULL,
                             shiny_args = NULL,
+                            save_caption = "Save",
                             encoding = getOption("encoding")) {
   if (packageVersion("knitr") < "1.10.17") {
     stop("knitr >= 1.10.17 required to use rmarkdown::knit_params_ask")
@@ -317,20 +318,23 @@ knit_params_ask <- function(file = NULL,
   }
 
   contents <- shiny::tagList(
-      shiny::fluidRow(shiny::column(12,shiny::tags$h2("Configure Report Parameters"))),
       shiny::fluidRow(shiny::column(12, lapply(configurable, function(param) {
         shiny::uiOutput(paste0("ui_", param$name))
       }))),
-      shiny::fluidRow(shiny::column(12,shiny::actionButton("cancel","Cancel"), shiny::actionButton("save", "Save", class="btn-primary"))))
+      shiny::fluidRow(shiny::column(12,
+                                    shiny::actionButton("save", save_caption, class="btn-primary rmd-action pull-right"),
+                                    shiny::actionButton("cancel","Cancel", class="rmd-action pull-right")
+                                    )))
   
   if (length(unconfigurable) > 0) {
     contents <- shiny::tagAppendChildren(contents, 
-                                         shiny::fluidRow(shiny::column(12,h3("Parameters that cannot be configured"))),
+                                         shiny::fluidRow(shiny::column(12,h4("Parameters that cannot be configured"))),
                                          shiny::fluidRow(shiny::column(12,shiny::tags$ul(lapply(unconfigurable, function(param) { shiny::tags$li(param$name) })))))
   }
   contents <- shiny::tagAppendChild(contents, shiny::fluidRow(shiny::column(12,shiny::textOutput("values"))))
   ui <- shiny::fluidPage(
-      shiny::tags$head(shiny::tags$style(".container-fluid .shiny-input-container { width: auto; }")),
+      shiny::tags$head(shiny::tags$style(".container-fluid .shiny-input-container { width: auto; }",
+                                         "button.rmd-action { margin-left: 10px; }")),
       contents)
 
   shiny_app <- shiny::shinyApp(ui = ui, server = server)
