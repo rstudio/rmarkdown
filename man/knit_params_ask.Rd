@@ -4,10 +4,13 @@
 \alias{knit_params_ask}
 \title{Run a shiny application asking for parameter configuration for the given document.}
 \usage{
-knit_params_ask(file = "index.Rmd", params = NULL, shiny_args = NULL)
+knit_params_ask(file = NULL, input_lines = NULL, params = NULL,
+  shiny_args = NULL, encoding = getOption("encoding"))
 }
 \arguments{
 \item{file}{Path to the R Markdown document with configurable parameters.}
+
+\item{input_lines}{Content of the R Markdown document. If \code{NULL}, the contents of \code{file} will be read.}
 
 \item{params}{A named list of optional parameter overrides used in place of the document defaults.}
 

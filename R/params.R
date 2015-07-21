@@ -125,7 +125,7 @@ params_configurable <- function(param) {
 #' @return named list with overridden parameter names and value.
 #' 
 #' @export
-knit_params_ask <- function(file = "index.Rmd",
+knit_params_ask <- function(file = NULL,
                             input_lines = NULL,
                             params = NULL,
                             shiny_args = NULL,
@@ -135,6 +135,9 @@ knit_params_ask <- function(file = "index.Rmd",
   }
 
   if (is.null(input_lines)) {
+    if (is.null(file)) {
+      stop("knit_params_ask must have a non-NULL file or input_lines parameter")
+    }
     input_lines <- read_lines_utf8(file, encoding)
   }
   
