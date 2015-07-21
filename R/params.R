@@ -188,7 +188,7 @@ knit_params_ask <- function(file = NULL,
 
   server <- function(input, output) {
     param.ui <- function(param) {
-      inputId <- paste0(param$name)
+      inputId <- param$name
       label <- ifelse(is.null(param$label), param$name, param$label)
       
       arguments = list(
