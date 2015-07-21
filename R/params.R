@@ -139,8 +139,6 @@ knit_params_ask <- function(file = "index.Rmd",
   }
   
   knit_params <- mark_utf8(knitr::knit_params(input_lines))
-  configurable <- Filter(params_configurable, knit_params)
-  unconfigurable <- Filter(Negate(params_configurable), knit_params)
 
   ## Input validation on params (checks shared with render)
   if (!is.null(params)) {
@@ -156,7 +154,16 @@ knit_params_ask <- function(file = "index.Rmd",
            paste(invalid_params, sep = ", "))
     }
   }
+
+  ## If we happen to not have any knit_params, just return an empty list and
+  ## don't fire up the Shiny app.
+  if (length(knit_params) == 0) {
+    return(list())
+  }
   
+  configurable <- Filter(params_configurable, knit_params)
+  unconfigurable <- Filter(Negate(params_configurable), knit_params)
+
   ## Return the current value for a given parameter, which is either `params`
   ## when overridden by our caller or `param$value` otherwise.
   current_value <- function(param) {
