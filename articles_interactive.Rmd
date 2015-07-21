@@ -1,6 +1,7 @@
 ---
 title: Introduction to interactive documents
 author: Garrett Grolemund
+date: "July 9, 2014"
 ---
 
 Interactive documents are a new way to build Shiny apps. An interactive document is an [R Markdown](http://rmarkdown.rstudio.com) file that contains Shiny widgets and outputs. You write the report in [markdown](http://daringfireball.net/projects/markdown/basics), and then launch it as an app with the click of a button.
@@ -33,7 +34,7 @@ The `rmarkdown` package will compile your document into a reactive Shiny app. Th
 
 Notify `rmarkdown` that your file contains Shiny components by adding `runtime: shiny` to the file's YAML header. RStudio will change its "Knit" icon to a "Run Document" icon when you save this change.
 
-![](/images/rmd-run.png)
+![](articles/images/rmd-run.png)
 
 "Run Document" is a cue that `rmarkdown` will no longer compile your document into a static file. Instead it will "run" the document as a live Shiny app.
 
@@ -45,7 +46,7 @@ To add a widget to your document, call a Shiny widget function in an R code chun
 
 For example, the file below creates an HTML document with two widgets.
 
-{% highlight console %}
+<pre class="r"><code>
 ---
 runtime: shiny
 output: html_document
@@ -53,18 +54,18 @@ output: html_document
 
 ### Here are two Shiny widgets
 
-```{r echo = FALSE}
+&#96``{r echo = FALSE}
 selectInput("n_breaks", label = "Number of bins:",
               choices = c(10, 20, 35, 50), selected = 20)
   
 sliderInput("bw_adjust", label = "Bandwidth adjustment:",
               min = 0.2, max = 2, value = 1, step = 0.2)
-```
-{% endhighlight %}
+&#96``
+</code></pre>
 
 The document looks like this when rendered. (_This is a static image of the output, the actual widgets are "live"; you can manipulate them_).
 
-![](/images/rmd-widget.png)
+![](articles/images/rmd-widget.png)
 
 ### Rendered output
 
@@ -86,7 +87,7 @@ This output will behave like rendered output in a standard Shiny app. The output
 
 The file below uses `renderPlot` to insert a histogram that reacts to the two widgets.
 
-{% highlight console %}
+<pre class="r"><code>
 ---
 runtime: shiny
 output: html_document
@@ -94,17 +95,17 @@ output: html_document
 
 ### Here are two Shiny widgets
 
-```{r echo = FALSE}
+&#96``{r echo = FALSE}
 selectInput("n_breaks", label = "Number of bins:",
               choices = c(10, 20, 35, 50), selected = 20)
   
 sliderInput("bw_adjust", label = "Bandwidth adjustment:",
               min = 0.2, max = 2, value = 1, step = 0.2)
-```
+&#96``
 
 ### ...that build a histogram.
 
-```{r echo = FALSE}
+&#96``{r echo = FALSE}
 renderPlot({
   hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
        xlab = "Duration (minutes)", main = "Geyser eruption duration")
@@ -112,18 +113,18 @@ renderPlot({
   dens <- density(faithful$eruptions, adjust = input$bw_adjust)
   lines(dens, col = "blue")
 })
-```
-{% endhighlight %}
+&#96``
+</code></pre>
 
 The document creates the app below when you click "Run Document."
 
-![](/images/rmd-outputs.png)
+![](articles/images/rmd-outputs.png)
 
 ### The structure of an interactive document
 
 When you run an interactive document, `rmarkdown` extracts the code in your code chunks and places them into a pseudo server.R file. R Markdown uses the html output of the markdown file as an [index.html](html-ui.html) file to place the reactive elements into.
 
-![](/images/rmd-structure.png)
+![](articles/images/rmd-structure.png)
 
 As a result, outputs in one code chunk can use widgets and reactive expressions that occur in other code chunks.
 

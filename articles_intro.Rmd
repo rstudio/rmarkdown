@@ -1,6 +1,7 @@
 ---
 title: Introduction to R Markdown
 author: Garrett Grolemund
+date: "July 16, 2014"
 ---
 
 Interactive documents are a new way to build Shiny apps. An interactive document is an [R Markdown](http://rmarkdown.rstudio.com) file that contains Shiny widgets and outputs. You write the report in [markdown](http://daringfireball.net/projects/markdown/basics), and then launch it as an app with the click of a button.
@@ -14,8 +15,7 @@ The companion article, [Introduction to interactive documents](interactive-docs.
 
 R Markdown is a file format for making dynamic documents with R. An R Markdown document is written in markdown (an easy-to-write plain text format) and contains chunks of embedded R code, like the document below. 
 
-{% highlight console %}
----
+<pre><code>---
 output: html_document
 ---
 
@@ -23,25 +23,21 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r}
+&#96``{r}
 summary(cars)
-```
+&#96``
 
 You can also embed plots, for example:
 
-```{r, echo=FALSE}
+&#96``{r, echo=FALSE}
 plot(cars)
-```
+&#96``
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-{% endhighlight %}
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.</code></pre>
 
 R Markdown files are designed to be used with the `rmarkdown` package. `rmarkdown` comes installed with the RStudio IDE, but you can acquire your own copy of `rmarkdown` from [github](www.github.com) with the command
 
-{% highlight r %}
-devtools:install_github("rmarkdown", "rstudio")
-{% endhighlight %}
+<pre class="r"><code>devtools:install_github("rmarkdown", "rstudio")</code></pre>
 
 R Markdown files are the source code for rich, reproducible documents. You can transform an R Markdown file in two ways.
 
@@ -59,7 +55,7 @@ In practice, authors almost always knit and convert their documents at the same 
 
 You can manually render an R Markdown file with `rmarkdown::render()`. This is what the above document looks like when rendered as a HTML file.
 
-![](/images/rmd-temp.png)
+![](articles/images/rmd-temp.png)
 
 In practice, you do not need to call `rmarkdown::render()`. You can use a button in the RStudio IDE to render your reprt. R Markdown is heavily [integrated into the RStudio IDE](../articles/rmd-integration.html).
 
@@ -67,11 +63,11 @@ In practice, you do not need to call `rmarkdown::render()`. You can use a button
 
 To create an R Markdown report, open a plain text file and save it with the extension _.Rmd_. You can open a plain text file in your scripts editor by clicking File > New File > Text File in the RStudio toolbar.
 
-![](/images/rmd-file.png)
+![](articles/images/rmd-file.png)
 
 Be sure to save the file with the extension _.Rmd_. The RStudio IDE enables several helpful buttons when you save the file with the .Rmd extension. You can save your file by clicking File > Save in the RStudio toolbar.
 
-![](/images/rmd-save.png)
+![](articles/images/rmd-save.png)
 
 R Markdown reports rely on three frameworks
 
@@ -93,7 +89,7 @@ The sections below describe each framework.
 
 The conventions of markdown are very unobtrusive, which make Markdown files easy to read. The file below uses several of the most useful markdown conventions.
 
-{% highlight console %}
+<pre class="r"><code>
 # Say Hello to markdown
 
 Markdown is an **easy to use** format for writing reports. It resembles what you naturally write every time you compose an email. In fact, you may have already used markdown *without realizing it*. These websites all rely on markdown formatting
@@ -102,7 +98,7 @@ Markdown is an **easy to use** format for writing reports. It resembles what you
 * [StackOverflow](www.stackoverflow.com)
 * [Reddit](www.reddit.com)
 
-{% endhighlight %}
+</code></pre>
 
 The file demonstrates how to use markdown to indicate:
 
@@ -122,13 +118,13 @@ You can learn about more of markdown's conventions in the _Markdown Quick Refere
 
 To access the guide, open a _.md_ or _.Rmd_ file in RStudio. Then click the question mark that appears at the top of the scripts pane. Next, select "Markdown Quick Reference". RStudio will open the _Markdown Quick Reference_ guide in the Help pane.
 
-![](/images/rmd-ref.png)
+![](articles/images/rmd-ref.png)
 
 ### Rendering
 
 To transform your markdown file into an HTML, PDF, or Word document, click the "Knit" icon that appears above your file in the scripts editor. A drop down menu will let you select the type of output that you want.
 
-![](/images/rmd-dropdown.png)
+![](articles/images/rmd-dropdown.png)
 
 When you click the button, `rmarkdown` will duplicate your text in the new file format. `rmarkdown` will use the formatting instructions that you provided with markdown syntax. 
 
@@ -136,7 +132,7 @@ Once the file is rendered, RStudio will show you a preview of the new output and
 
 Here is how the markdown script above would look in each output format.
 
-![](/images/rmd-types.png)
+![](articles/images/rmd-types.png)
 
 _Note: RStudio does not build PDF and Word documents from scratch. You will need to have a distribution of Latex installed on your computer to make PDFs and Microsoft Word (or a similar program) installed to make Word files._
 
@@ -148,30 +144,30 @@ When you render the report, `knitr` will run the code and add the results to the
 
 To embed a chunk of R code into your report, surround the code with two lines that each contain three backticks. After the first set of backticks, include `{r}`, which alerts `knitr` that you have included a chunk of R code. The result will look like this
 
-{% highlight console %}
+<pre class="r"><code>
 Here’s some code
 ```{r}
 dim(iris)
 ```
-{% endhighlight %}
+</code></pre>
 
 When you render your document, `knitr` will run the code and append the results to the code chunk. `knitr` will provide formatting and syntax highlighting to both the code and its results (where appropriate).
 
 As a result, the markdown snippet above will look like this when rendered (to HTML).
 
-![](/images/rmd-code.png)
+![](articles/images/rmd-code.png)
 
 To omit the _results_ from your final report (and not run the code) add the argument `eval = FALSE` inside the brackets and after `r`. This will place a copy of your code into the report.
 
-![](/images/rmd-eval.png)
+![](articles/images/rmd-eval.png)
 
 To omit the _code_ from the final report (while including the results) add the argument `echo = FALSE`. This will place a copy of the results into your report.
 
-![](/images/rmd-echo.png)
+![](articles/images/rmd-echo.png)
 
 `echo = FALSE` is very handy for adding plots to a report, since you usually do not want to see the code that generates the plot.
 
-![](/images/rmd-echo2.png)
+![](articles/images/rmd-echo2.png)
 
 `echo` and `eval` are not the only arguments that you can use to customize code chunks. You can learn more about formatting the output of code chunks at the [rmarkdown](http://rmarkdown.rstudio.com/authoring_rcodechunks.html) and [knitr](http://yihui.name/knitr/options) websites.
 
@@ -179,19 +175,19 @@ To omit the _code_ from the final report (while including the results) add the a
 
 To embed R code in a line of text, surround the code with a pair of backticks and the letter `r`, like this.
 
-{% highlight console %}
+<pre class="r"><code>
 Two plus two equals `r 2 + 2`.
-{% endhighlight %}
+</code></pre>
 
 `knitr` will replace the inline code with its result in your final document (inline code is _always_ replaced by its result). The result will appear as if it were part of the original text. For example, the snippet above will appear like this:
 
-![](/images/rmd-inline.png)
+![](articles/images/rmd-inline.png)
 
 ## YAML for render parameters
 
 You can use a YAML header to control how `rmarkdown` renders your .Rmd file. A YAML header is a section of `key: value` pairs surrounded by `---` marks, like below
 
-{% highlight console %}
+<pre class="r"><code>
 ---
 title: "Untitled"
 author: "Garrett"
@@ -200,7 +196,7 @@ output: html_document
 ---
 
 Some inline R code, `r 2 + 2`.
-{% endhighlight %}
+</code></pre>
 
 The `output:` value determines what type of output to convert the file into when you call `rmarkdown::render()`. _Note: you do not need to specify `output:` if you render your file with the RStudio IDE knit button._
 
