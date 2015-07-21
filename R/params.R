@@ -317,7 +317,7 @@ knit_params_ask <- function(file = NULL,
   }
 
   contents <- shiny::tagList(
-      shiny::fluidRow(shiny::column(12,shiny::tags$h1("Configure Report Parameters"))),
+      shiny::fluidRow(shiny::column(12,shiny::tags$h2("Configure Report Parameters"))),
       shiny::fluidRow(shiny::column(12, lapply(configurable, function(param) {
         shiny::uiOutput(paste0("ui_", param$name))
       }))),
@@ -325,7 +325,7 @@ knit_params_ask <- function(file = NULL,
   
   if (length(unconfigurable) > 0) {
     contents <- shiny::tagAppendChildren(contents, 
-                                         shiny::fluidRow(shiny::column(12,h2("Parameters that cannot be configured"))),
+                                         shiny::fluidRow(shiny::column(12,h3("Parameters that cannot be configured"))),
                                          shiny::fluidRow(shiny::column(12,shiny::tags$ul(lapply(unconfigurable, function(param) { shiny::tags$li(param$name) })))))
   }
   contents <- shiny::tagAppendChild(contents, shiny::fluidRow(shiny::column(12,shiny::textOutput("values"))))
