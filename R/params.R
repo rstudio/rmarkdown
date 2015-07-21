@@ -150,13 +150,9 @@ knit_params_ask <- function(file = NULL,
     if (!is.list(params) || (length(names(params)) != length(params))) {
       stop("knit_params_ask params argument must be a named list")
     }
-
-    ## Verify that all passed parameters are also in the yaml
-    invalid_params <- setdiff(names(params), names(knit_params))
-    if (length(invalid_params) > 0) {
-      stop("knit_params_ask params not declared in YAML: ",
-           paste(invalid_params, sep = ", "))
-    }
+    ## We do not validate names(params) because the document may have changed
+    ## but we're loading parameters that were configured with an older
+    ## version.
   }
 
   ## If we happen to not have any knit_params, just return an empty list and
