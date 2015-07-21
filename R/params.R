@@ -332,9 +332,16 @@ knit_params_ask <- function(file = NULL,
                                          shiny::fluidRow(shiny::column(12,shiny::tags$ul(lapply(unconfigurable, function(param) { shiny::tags$li(param$name) })))))
   }
   contents <- shiny::tagAppendChild(contents, shiny::fluidRow(shiny::column(12,shiny::textOutput("values"))))
+
   ui <- shiny::fluidPage(
       shiny::tags$head(shiny::tags$style(".container-fluid .shiny-input-container { width: auto; }",
-                                         "button.rmd-action { margin-left: 10px; }")),
+                                         "button.rmd-action { margin-left: 10px; }"),
+                       ## Escape is "cancel" and Enter is "save".
+                       shiny::tags$script(shiny::HTML("$(document).keyup(function(e) {\n",
+                                                      "if (e.which == 13) { $('#save').click(); } // enter\n",
+                                                      "if (e.which == 27) { $('#cancel').click(); } // esc\n",
+                                                      "});"
+                                                      ))),
       contents)
 
   shiny_app <- shiny::shinyApp(ui = ui, server = server)
