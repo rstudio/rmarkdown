@@ -1,0 +1,62 @@
+---
+title: "Get verbatim R chunks into R Markdown"
+author: "Jenny Bryan"
+date: "18 September, 2014"
+output: html_document
+---
+
+_This article is reposted from a [gist](https://gist.github.com/jennybc/8add4496cbef43324c59) with the kind permission of Jenny Bryan._
+
+My periodic revisitation of "how can I include a verbatim R chunk in `.rmd`"? This time I am writing it down! Various proposed solutions:
+
+From the [`knitr` FAQ](https://github.com/yihui/knitr/blob/master/FAQ.md):
+
+<pre class="r"><code>&#96r &#39;&#39;` ```{r label, what=ever}</code></pre>
+
+    `r ''` ```{r label, what=ever}
+
+From [issue 443](https://github.com/yihui/knitr/issues/443)
+
+<pre class="r"><code>&#96r &#39;&#39;````{r foo}
+print(&#39;hello world!&#39;)
+```</code></pre>
+
+    `r ''````{r foo}
+    print('hello world!')
+    ```
+
+From [`knitr` example 065](https://github.com/yihui/knitr-examples/blob/master/065-rmd-chunk.Rmd), involving inline R code:
+
+<pre class="r"><code>```{r eval=TRUE}&#96r &#39;&#39;`
+n = 10
+rnorm(x)
+```</code></pre>
+    
+    ```{r eval=TRUE}`r ''`
+    n = 10
+    rnorm(x)
+    ```
+    
+Also from [`knitr` example 065](https://github.com/yihui/knitr-examples/blob/master/065-rmd-chunk.Rmd), involving a zero-width space (copy and paste the input code into the RStudio editor to see the zero-width space after the first back tick):
+
+<pre class="r"><code>```{r eval=TRUE}
+n = 10
+rnorm(n)
+```</code></pre>
+
+    ```{r eval=TRUE}
+    n = 10
+    rnorm(n)
+    ```
+
+From [Karl Broman](https://gist.github.com/kbroman/ca560b967b0b7a08a3b2), involving `<pre>` and `<code>` tags:
+
+<pre class="r"><code>&lt;pre>&lt;code>```{r whatever}
+data(cars)
+summary(cars)
+```&lt;/code>&lt;/pre></code></pre>
+
+<pre><code>```{r whatever}
+data(cars)
+summary(cars)
+```</code></pre>
