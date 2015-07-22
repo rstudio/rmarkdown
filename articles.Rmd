@@ -2,16 +2,16 @@
 title: "R Markdown Articles"
 ---
 
-## Basics
+### Basics
 
 * [Introduction to R Markdown](articles_intro.html)
 * [Introduction to interactive documents](articles_interactive.html)
 * [R Markdown integration in the RStudio IDE](articles_integration.html)
 
-## Embedding Code
+### Embedding Code
 
 * [Get verbatim R chunks into R Markdown](articles_verbatim.html)
 
-## Rendering Files
+### Output Formats
 
 * [Happy collaboration with Rmd to docx](articles_docx.html)
