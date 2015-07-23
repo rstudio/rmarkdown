@@ -331,33 +331,44 @@ knit_params_ask <- function(file = NULL,
     })
   }
 
-  contents <- shiny::tagList(
+  contents <- shiny::tags$div(
       shiny::fluidRow(shiny::column(12, lapply(configurable, function(param) {
         shiny::uiOutput(paste0("ui_", param$name))
-      }))),
-      shiny::fluidRow(shiny::column(12,
-                                    shiny::actionButton("save", save_caption, class="btn-primary rmd-action pull-right"),
-                                    shiny::actionButton("cancel","Cancel", class="rmd-action pull-right")
-                                    )))
+      }))), class = "container-fluid")
   
   if (length(unconfigurable) > 0) {
-    contents <- shiny::tagAppendChildren(contents, 
-                                         shiny::fluidRow(shiny::column(12,shiny::tags$div(shiny::tags$strong("Note:"),
-                                                                                          "The following parameters cannot be customized:",
-                                                                                          paste(lapply(unconfigurable, function(param) { param$name }), collapse = ", ")))))
+    skipped <- shiny::fluidRow(shiny::column(12,shiny::tags$div(shiny::tags$strong("Note:"),
+                                                                "The following parameters cannot be customized:",
+                                                                paste(lapply(unconfigurable, function(param) { param$name }), collapse = ", "))))
+    contents <- shiny::tagAppendChildren(contents, skipped)
   }
-  contents <- shiny::tagAppendChild(contents, shiny::fluidRow(shiny::column(12,shiny::textOutput("values"))))
+  footer <- shiny::tags$div(
+      shiny::tags$div(
+          shiny::fluidRow(shiny::column(12,
+                                        shiny::actionButton("save", save_caption, class = "btn-primary navbar-btn pull-right"),
+                                        shiny::actionButton("cancel","Cancel", class = "navbar-btn pull-right"))),
+          class = "container-fluid"),
+      class = "navbar navbar-default navbar-fixed-bottom")
 
-  ui <- shiny::fluidPage(
-      shiny::tags$head(shiny::tags$style(".container-fluid .shiny-input-container { width: auto; }",
-                                         "button.rmd-action { margin-left: 10px; }"),
-                       ## Escape is "cancel" and Enter is "save".
-                       shiny::tags$script(shiny::HTML("$(document).keyup(function(e) {\n",
-                                                      "if (e.which == 13) { $('#save').click(); } // enter\n",
-                                                      "if (e.which == 27) { $('#cancel').click(); } // esc\n",
-                                                      "});"
-                                                      ))),
-      contents)
+  style <- shiny::tags$style(
+      # Our controls are wiiiiide.
+      ".container-fluid .shiny-input-container { width: auto; }",
+      # Prevent the save/cancel buttons from squashing together.
+      ".navbar button { margin-left: 10px; }",
+      # Style for the navbar footer.
+      # http://getbootstrap.com/components/#navbar-fixed-bottom
+      "body { padding-bottom: 70px; }"
+                             )
+  ## Escape is "cancel" and Enter is "save".
+  script <- shiny::tags$script(shiny::HTML("$(document).keyup(function(e) {\n",
+                                           "if (e.which == 13) { $('#save').click(); } // enter\n",
+                                           "if (e.which == 27) { $('#cancel').click(); } // esc\n",
+                                           "});"
+                                           ))
+  ui <- shiny::bootstrapPage(
+      shiny::tags$head(style, script),
+      contents,
+      footer)
 
   shiny_app <- shiny::shinyApp(ui = ui, server = server)
   shiny_args <- merge_lists(list(appDir = shiny_app), shiny_args)
