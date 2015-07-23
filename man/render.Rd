@@ -47,7 +47,8 @@ render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
   
   \item{params}{List of named parameters that override custom params
   specified within the YAML front-matter (e.g. specifying a dataset to
-  read or a date range to confine output to).}
+  read or a date range to confine output to). Pass \code{"ask"} to start
+  an application that helps guide parameter configuration.}
 
   \item{envir}{The environment in which the code chunks are
   to be evaluated during knitting (can use
