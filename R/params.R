@@ -43,76 +43,109 @@ knit_params_get <- function(input_lines, params) {
   merge_lists(default_params, params, recursive = FALSE)
 }
 
-params_converters <- list(
-    logical = function(value) {
-      as.logical(value)
-    },
-    Date = function(value) {
-      as.Date(value)
-    },
-    POSIXct = function(value) {
-      ## FIXME: This is how knitr does datetime conversion, but maybe we should use the local tz.
-      as.POSIXct(value, tz="GMT")
-    },
-    integer = function(value) {
-      as.integer(value)
-    },
-    numeric = function(value) {
-      as.numeric(value)
-    },
-    character = function(value) {
-      as.character(value)
-    },
-    data.frame = function(value) {
-      read.csv(value$datapath)
-    }
-    )
-
-params_get_converter <- function(param) {
-  for (c in param$class) {
-    converter <- params_converters[[c]]
-    if (!is.null(converter)) {
-      return(converter)
-    }
-  }
-  ## FIXME: this probably should be an error, as it is an unsupported type.
-  return(function(value){ value })
-}
-
-params_controls <- list()
-params_controls$integer <- params_controls$numeric <- function(param) {
-  ## If min/max are specified, use a slider.
-  if (is.null(param$min) || is.null(param$max)) {
-    shiny::numericInput
+params_convert_to_ui <- function(inputControlFn, value) {
+  ## TODO: if long input, maybe truncate textInput values for display
+  if (identical(inputControlFn, shiny::fileInput)) {
+    NULL
+  } else if (identical(inputControlFn, shiny::textInput) &&
+             "POSIXct" %in% class(value)) {
+    ## FIXME: find the right conversion fn.
+    format(value)
   } else {
-    shiny::sliderInput
+    ## A type/control that doesn't need special handling; just emit the value.
+    value
   }
 }
 
-params_controls$logical <- function(param) { shiny::checkboxInput }
-## BUG: dateInput does not allow the user to not specify a value.
-##     https://github.com/rstudio/shiny/issues/896
-params_controls$Date <- function(param) { shiny::dateInput }
-## BUG: shiny does not support datetime selectors
-##     https://github.com/rstudio/shiny/issues/897
-##     we ask for string input for now.
-params_controls$POSIXct <- function(param) { shiny::textInput }
-params_controls$character <- function(param) { shiny::textInput }
-params_controls$data.frame <- function(param) { shiny::fileInput }
-params_get_control <- function(param) {
-  ## A value might have multiple classes. Try: class(Sys.time())
-  ## Try to find first class listed with a named control.
-  for (c in param$class) {
-    control <- params_controls[[c]]
-    if (!is.null(control)) {
-      return(control(param))
+params_convert_from_ui <- function(inputControlFn, value, uivalue) {
+  if (identical(inputControlFn, shiny::fileInput)) {
+    uivalue$datapath
+  } else if (identical(inputControlFn, shiny::textInput) &&
+             "POSIXct" %in% class(value)) {
+    ## FIXME: This is how knitr does datetime conversion, but maybe we should use the local tz.
+    as.POSIXct(uivalue, tz="GMT")
+  } else {
+    ## A type/control that doesn't need special handling; just emit the value.
+    uivalue
+  }
+}
+
+params_get_input <- function(param) {
+  # Maps between value types and input: XXX
+  default_inputs <- list(
+      logical = "checkbox",
+      ## BUG: dateInput does not allow the user to not specify a value.
+      ##     https://github.com/rstudio/shiny/issues/896
+      Date = "date",
+      ## BUG: shiny does not support datetime selectors
+      ##     https://github.com/rstudio/shiny/issues/897
+      ##     we ask for string input for now.
+      POSIXct = "datetime",
+      character = "text"
+      )
+  default_inputs$integer <- default_inputs$numeric <-  {
+    ## If min/max are specified, use a slider.
+    if (is.null(param$min) || is.null(param$max)) {
+      "numeric"
+    } else {
+      "slider"
     }
   }
-  return(NULL)
+
+  input <- param$input
+  if (is.null(input)) {
+    if (!is.null(param$choices)) {
+      ## radio buttons for a small number of choices, select otherwise.
+      if (length(param$choices) <= 4) {
+        input <- "radio"
+      } else {
+        input <- "select"
+      }
+    } else {
+      ## Not choices. Look at the value type to find what input control we
+      ## should use.
+      
+      ## A value might have multiple classes. Try: class(Sys.time())
+      ## Try to find first class listed with a named control.
+      for (c in class(param$value)) {
+        default_input <- default_inputs[[c]]
+        if (!is.null(default_input)) {
+          input <- default_input
+          break
+        }
+      }
+    }
+  }
+  input
+}
+
+params_get_control <- function(param) {
+  input <- params_get_input(param)
+  if (is.null(input)) {
+    return(NULL)
+  }
+
+  # Maps between input: XXX and the various Shiny input controls
+  input_controls <- list(
+      checkbox = shiny::checkboxInput,
+      numeric  = shiny::numericInput,
+      slider   = shiny::sliderInput,
+      date     = shiny::dateInput,
+      datetime = shiny::textInput, # placeholder for future datetime picker
+      text     = shiny::textInput,
+      file     = shiny::fileInput,
+      radio    = shiny::radioButtons,
+      select   = shiny::selectInput
+      )
+  control <- input_controls[[input]]
+  if (is.null(control)) {
+    stop(paste("could not determine what control to use for parameter", param$name, "with input:", input))
+  }
+  control
 }
 
 params_configurable <- function(param) {
-  (!is.null(params_get_control(param))) && ( length(param$value) == 1 || "data.frame" %in% param$class )
+  length(param$value) == 1 && !is.null(params_get_control(param))
 }
 
 #' Run a shiny application asking for parameter configuration for the given document.
@@ -131,8 +164,8 @@ knit_params_ask <- function(file = NULL,
                             shiny_args = NULL,
                             save_caption = "Save",
                             encoding = getOption("encoding")) {
-  if (packageVersion("knitr") < "1.10.17") {
-    stop("knitr >= 1.10.17 required to use rmarkdown::knit_params_ask")
+  if (packageVersion("knitr") < "1.10.18") {
+    stop("knitr >= 1.10.18 required to use rmarkdown::knit_params_ask")
   }
 
   if (is.null(input_lines)) {
@@ -164,27 +197,16 @@ knit_params_ask <- function(file = NULL,
   configurable <- Filter(params_configurable, knit_params)
   unconfigurable <- Filter(Negate(params_configurable), knit_params)
 
-  ## Return the current value for a given parameter, which is either `params`
-  ## when overridden by our caller or `param$value` otherwise.
-  current_value <- function(param) {
-    if (!is.null(params)) {
-      override <- params[[param$name]]
-      if (!is.null(override)) {
-        return(override)
-      }
-    }
-    return(param$value)
-  }
-
-  ## The default values given to the UI. Lets us detect if the user has
-  ## specified an override value or is letting it float to whatever default is
-  ## generated by the YAML (most useful for R expressions).
-  ##
-  ## Only items in `configurable` will be present here.
-  uidefaults <- list()
+  ## This set of published values is the raw set that came from the user.
+  ## It does not include those values that cannot be configured or are
+  ## left to use the default.
+  values <- list()
 
   server <- function(input, output) {
     param.ui <- function(param) {
+      inputControlFn <- params_get_control(param)
+      inputControlFnFormals <- names(formals(inputControlFn))
+
       inputId <- param$name
       label <- ifelse(is.null(param$label), param$name, param$label)
       
@@ -192,95 +214,96 @@ knit_params_ask <- function(file = NULL,
           inputId = inputId,
           label = label
           )
-      
-      ## A number of controls support min/max (numeric, slider, date).
-      ## Blindly support a bunch of options and assume that the user knows
-      ## what options are used by what controle.
-      if (!is.null(param$min)) {
-        arguments$min <- param$min
-      }
-      if (!is.null(param$max)) {
-        arguments$max <- param$max
-      }
-      if (!is.null(param$step)) {
-        arguments$step <- param$step
-      }
-      
-      ## TODO: if long input, truncate for display
-      
-      inputControlFn <- params_get_control(param)
+      lapply(names(param), function(name) {
+        if (name %in% c("name", "input", "expr")) {
+        } else if (name == "label") {
+          arguments$label <<- label
+        } else if (name == "value") {
 
-      if (!is.null(param$choices)) {
-        ## radio buttons for a small number of choices, select otherwise.
-        if (length(param$choices) <= 4) {
-          inputControlFn <- shiny::radioButtons
-          arguments$choices <- param$choices
-        } else {
-          inputControlFn <- shiny::selectInput
-          arguments$choices <- param$choices
-        }
-      } else {
-        ## Not choices.
-        
-      }
+          ## The current value for this parameter is either `params` when
+          ## overridden by our caller or `param$value` otherwise.
+          current_value <- param$value
+          if (!is.null(params)) {
+            override <- params[[param$name]]
+            if (!is.null(override)) {
+              current_value <- override
+            }
+          }
+          # Now, transform into something that the input control can handle.
+          current_value <- params_convert_to_ui(inputControlFn,current_value)
 
-      inputControlFnFormals <- names(formals(inputControlFn))
-      if ("value" %in% inputControlFnFormals) {
-        arguments$value <- current_value(param)
-      } else if ("selected" %in% inputControlFnFormals) {
-        ## BUG: What if the value is not in the choices?
-        arguments$selected <- current_value(param)
-      }
-      uidefaults[[param$name]] <<- {
-        ## data.frame uses a file dialog which gives a NULL value when no file
-        ## is provided.
-        if ("data.frame" %in% param$class) {
-          NULL
+          # value maps to either "value" or "selected" depending on the control.
+          if ("value" %in% inputControlFnFormals) {
+            arguments$value <<- current_value
+          } else if ("selected" %in% inputControlFnFormals) {
+            arguments$selected <<- current_value
+          }
         } else {
-          ## This is not current_value(param) because we want to understand
-          ## deviation from the report default, not the call-time override.
-          param$value
+          ## Not a special field. Blindly promote to the input control.
+          arguments[[name]] <<- param[[name]]
         }
+      })
+
+      ## This is based on param$value not current_value because we want to
+      ## understand deviation from the report default, not any (optional)
+      ## call-time override.
+      uidefault <- params_convert_to_ui(inputControlFn,param$value)
+      hasDefaultValue <- function(value) {
+        identical(uidefault, value)
       }
       
       inputControl <- do.call(inputControlFn, arguments)
-      useSelectControl <- function(current) { FALSE }
+
+      showSelectControl <- NULL
       selectControl <- NULL
+      selectInputId <- paste0("select_", param$name)
 
       ## Dates and times with expressions that mean "now" or "today" are first
       ## materialized as selects. If the user chooses to customize the field,
       ## we then show the type-specific picker.
       if (is.null(params[[param$name]])) { # prior value; implicit customization
-        if ("POSIXct" %in% param$class && identical("Sys.time()", param$expr)) {
-          useSelectControl <- function(current) {
+        if (identical("Sys.time()", param$expr)) {
+          showSelectControl <- function(current) {
             (is.null(current) || identical(current, "default"))
           }
-          uidefaults[[param$name]] <<- "default"
+          hasDefaultValue <- function(value) { FALSE }
           choices <- list()
           choices[[paste0("now (",param$value,")")]] <- "default"
           choices[["Use a custom time"]] <- "custom"
-          selectControl <- shiny::selectInput(inputId = inputId,
+          selectControl <- shiny::selectInput(inputId = selectInputId,
                                               label = label,
                                               choices = choices)
-        } else if ("Date" %in% param$class && identical("Sys.Date()", param$expr)) {
-          useSelectControl <- function(current) {
+        } else if (identical("Sys.Date()", param$expr)) {
+          showSelectControl <- function(current) {
             (is.null(current) || identical(current, "default"))
           }
-          uidefaults[[param$name]] <<- "default"
+          hasDefaultValue <- function(value) { FALSE }
           choices <- list()
           choices[[paste0("today (",param$value,")")]] <- "default"
           choices[["Use a custom date"]] <- "custom"
-          selectControl <- shiny::selectInput(inputId = inputId,
+          selectControl <- shiny::selectInput(inputId = selectInputId,
                                               label = label,
                                               choices = choices)
         }
       }
       
       output[[paste0("ui_", param$name)]] <- shiny::renderUI({
-        if (useSelectControl(input[[param$name]])) {
+        # For most parameters, the selectInputId input will be NULL.
+        if (!is.null(showSelectControl) && showSelectControl(input[[selectInputId]])) {
           selectControl
         } else {
           inputControl
+        }
+      })
+      
+      observe({
+        uivalue <- input[[param$name]]
+        if (is.null(uivalue)) {
+          # ignore startup NULLs
+        } else if (hasDefaultValue(uivalue)) {
+          values[[param$name]] <<- NULL
+        } else {
+          values[[param$name]] <<- params_convert_from_ui(inputControlFn, param$value, uivalue)
         }
       })
     }
@@ -289,23 +312,8 @@ knit_params_ask <- function(file = NULL,
       param.ui(param)
     })
     
-    values <- shiny::eventReactive(input$save, {
-      values <- list()
-      lapply(configurable, function(param) {
-        default <- uidefaults[[param$name]]
-        value <- input[[param$name]]
-        if (!identical(value, default)) {
-          values[[param$name]] <<- params_get_converter(param)(value)
-        }
-      })
-      ## This set of published values is the raw set that came from the user.
-      ## It does not include those values that cannot be configured or are
-      ## left to use the default.
-      values
-    })
-
-    shiny::observe({
-      shiny::stopApp(values())
+    shiny::observeEvent(input$save, {
+      shiny::stopApp(values)
     })
 
     shiny::observeEvent(input$cancel, {
@@ -324,8 +332,9 @@ knit_params_ask <- function(file = NULL,
   
   if (length(unconfigurable) > 0) {
     contents <- shiny::tagAppendChildren(contents, 
-                                         shiny::fluidRow(shiny::column(12,h4("Parameters that cannot be configured"))),
-                                         shiny::fluidRow(shiny::column(12,shiny::tags$ul(lapply(unconfigurable, function(param) { shiny::tags$li(param$name) })))))
+                                         shiny::fluidRow(shiny::column(12,shiny::tags$div(shiny::tags$strong("Note:"),
+                                                                                          "The following parameters cannot be customized:",
+                                                                                          paste(lapply(unconfigurable, function(param) { param$name }), collapse = ", ")))))
   }
   contents <- shiny::tagAppendChild(contents, shiny::fluidRow(shiny::column(12,shiny::textOutput("values"))))
 
