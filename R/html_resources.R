@@ -293,7 +293,7 @@ discover_rmd_resources <- function(rmd_file, encoding,
     # processing performed. See `knitr:::resolve_params`.
     lapply(front_matter$params, function(param) {
       if (is.list(param)) {
-        if (!is.null(param$input)) {
+        if (identical(param$input, "file")) {
           if (!is.null(param$value)) {
             # We treat param filenames as non-web resources.
             discover_single_resource(param$value, TRUE, FALSE)
