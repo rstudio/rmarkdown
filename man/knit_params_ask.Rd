@@ -5,7 +5,8 @@
 \title{Run a shiny application asking for parameter configuration for the given document.}
 \usage{
 knit_params_ask(file = NULL, input_lines = NULL, params = NULL,
-  shiny_args = NULL, encoding = getOption("encoding"))
+  shiny_args = NULL, save_caption = "Save",
+  encoding = getOption("encoding"))
 }
 \arguments{
 \item{file}{Path to the R Markdown document with configurable parameters.}
@@ -15,6 +16,10 @@ knit_params_ask(file = NULL, input_lines = NULL, params = NULL,
 \item{params}{A named list of optional parameter overrides used in place of the document defaults.}
 
 \item{shiny_args}{Additional arguments to \code{\link[shiny:runApp]{runApp}}.}
+
+\item{save_caption}{Caption to use use for button that saves/confirms parameters.}
+
+\item{encoding}{The encoding of the input file; see \code{\link{file}}.}
 }
 \value{
 named list with overridden parameter names and value.

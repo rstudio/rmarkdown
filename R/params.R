@@ -175,6 +175,8 @@ params_configurable <- function(param) {
 #' @param input_lines Content of the R Markdown document. If \code{NULL}, the contents of \code{file} will be read.
 #' @param params A named list of optional parameter overrides used in place of the document defaults.
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
+#' @param save_caption Caption to use use for button that saves/confirms parameters.
+#' @param encoding The encoding of the input file; see \code{\link{file}}.
 #'
 #' @return named list with overridden parameter names and value.
 #' 
@@ -317,7 +319,7 @@ knit_params_ask <- function(file = NULL,
         }
       })
       
-      observe({
+      shiny::observe({
         uivalue <- input[[param$name]]
         if (is.null(uivalue)) {
           # ignore startup NULLs
