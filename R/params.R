@@ -47,10 +47,15 @@ params_convert_to_ui <- function(inputControlFn, value) {
   ## TODO: if long input, maybe truncate textInput values for display
   if (identical(inputControlFn, shiny::fileInput)) {
     NULL
-  } else if (identical(inputControlFn, shiny::textInput) &&
-             "POSIXct" %in% class(value)) {
-    ## FIXME: find the right conversion fn.
-    format(value)
+  } else if (identical(inputControlFn, shiny::textInput)) {
+    classes <- class(value)
+    if ("POSIXct" %in% classes) {
+      as.character(value)
+    } else if ("POSIXlt" %in% classes) {
+      as.character(value)
+    } else {
+      value
+    }
   } else {
     ## A type/control that doesn't need special handling; just emit the value.
     value
@@ -60,10 +65,15 @@ params_convert_to_ui <- function(inputControlFn, value) {
 params_convert_from_ui <- function(inputControlFn, value, uivalue) {
   if (identical(inputControlFn, shiny::fileInput)) {
     uivalue$datapath
-  } else if (identical(inputControlFn, shiny::textInput) &&
-             "POSIXct" %in% class(value)) {
-    ## FIXME: This is how knitr does datetime conversion, but maybe we should use the local tz.
-    as.POSIXct(uivalue, tz="GMT")
+  } else if (identical(inputControlFn, shiny::textInput)) {
+    classes <- class(value)
+    if ("POSIXct" %in% classes) {
+      as.POSIXct(uivalue)
+    } else if ("POSIXlt" %in% classes) {
+      as.POSIXlt(uivalue)
+    } else {
+      uivalue
+    }
   } else {
     ## A type/control that doesn't need special handling; just emit the value.
     uivalue
