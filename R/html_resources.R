@@ -286,6 +286,22 @@ discover_rmd_resources <- function(rmd_file, encoding,
       discover_render_resource(front_matter[[bibfile]])  
     }
   }
+
+  # check for parameter values that look like files.
+  if (!is.null(front_matter$params)) {
+    # This is the raw parameter information and has not had any YAML tag
+    # processing performed. See `knitr:::resolve_params`.
+    lapply(front_matter$params, function(param) {
+      if (is.list(param)) {
+        if (!is.null(param$input)) {
+          if (!is.null(param$value)) {
+            # We treat param filenames as non-web resources.
+            discover_single_resource(param$value, TRUE, FALSE)
+          }
+        }
+      }
+    })
+  }
   
   # check for knitr child documents in R Markdown documents
   if (tolower(tools::file_ext(rmd_file)) == "rmd") {
