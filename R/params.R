@@ -43,11 +43,22 @@ knit_params_get <- function(input_lines, params) {
   merge_lists(default_params, params, recursive = FALSE)
 }
 
-params_convert_to_ui <- function(inputControlFn, value) {
-  ## TODO: if long input, maybe truncate textInput values for display
+params_label <- function(inputControlFn, param) {
+  label <- ifelse(is.null(param$label), param$name, param$label)
+  if (identical(inputControlFn, shiny::fileInput)) {
+    if (is.character(param$value)) {
+      label <- paste0(label, " (default: ", param$value, ")")
+    }
+  }
+  label
+}
+
+params_value_to_ui <- function(inputControlFn, value) {
   if (identical(inputControlFn, shiny::fileInput)) {
     NULL
   } else if (identical(inputControlFn, shiny::textInput)) {
+    ## TODO: if long input, maybe truncate textInput values for display
+
     classes <- class(value)
     if ("POSIXct" %in% classes) {
       as.character(value)
@@ -62,7 +73,7 @@ params_convert_to_ui <- function(inputControlFn, value) {
   }
 }
 
-params_convert_from_ui <- function(inputControlFn, value, uivalue) {
+params_value_from_ui <- function(inputControlFn, value, uivalue) {
   if (identical(inputControlFn, shiny::fileInput)) {
     uivalue$datapath
   } else if (identical(inputControlFn, shiny::textInput)) {
@@ -218,7 +229,7 @@ knit_params_ask <- function(file = NULL,
       inputControlFnFormals <- names(formals(inputControlFn))
 
       inputId <- param$name
-      label <- ifelse(is.null(param$label), param$name, param$label)
+      label <- params_label(inputControlFn, param)
       
       arguments = list(
           inputId = inputId,
@@ -240,7 +251,7 @@ knit_params_ask <- function(file = NULL,
             }
           }
           # Now, transform into something that the input control can handle.
-          current_value <- params_convert_to_ui(inputControlFn,current_value)
+          current_value <- params_value_to_ui(inputControlFn, current_value)
 
           # value maps to either "value" or "selected" depending on the control.
           if ("value" %in% inputControlFnFormals) {
@@ -257,7 +268,7 @@ knit_params_ask <- function(file = NULL,
       ## This is based on param$value not current_value because we want to
       ## understand deviation from the report default, not any (optional)
       ## call-time override.
-      uidefault <- params_convert_to_ui(inputControlFn,param$value)
+      uidefault <- params_value_to_ui(inputControlFn, param$value)
       hasDefaultValue <- function(value) {
         identical(uidefault, value)
       }
@@ -278,7 +289,7 @@ knit_params_ask <- function(file = NULL,
           }
           hasDefaultValue <- function(value) { FALSE }
           choices <- list()
-          choices[[paste0("now (",param$value,")")]] <- "default"
+          choices[[paste0("now (", param$value, ")")]] <- "default"
           choices[["Use a custom time"]] <- "custom"
           selectControl <- shiny::selectInput(inputId = selectInputId,
                                               label = label,
@@ -289,7 +300,7 @@ knit_params_ask <- function(file = NULL,
           }
           hasDefaultValue <- function(value) { FALSE }
           choices <- list()
-          choices[[paste0("today (",param$value,")")]] <- "default"
+          choices[[paste0("today (", param$value, ")")]] <- "default"
           choices[["Use a custom date"]] <- "custom"
           selectControl <- shiny::selectInput(inputId = selectInputId,
                                               label = label,
@@ -313,7 +324,7 @@ knit_params_ask <- function(file = NULL,
         } else if (hasDefaultValue(uivalue)) {
           values[[param$name]] <<- NULL
         } else {
-          values[[param$name]] <<- params_convert_from_ui(inputControlFn, param$value, uivalue)
+          values[[param$name]] <<- params_value_from_ui(inputControlFn, param$value, uivalue)
         }
       })
     }
@@ -337,10 +348,10 @@ knit_params_ask <- function(file = NULL,
       }))), class = "container-fluid")
   
   if (length(unconfigurable) > 0) {
-    skipped <- shiny::fluidRow(shiny::column(12,shiny::tags$div(shiny::tags$strong("Note:"),
-                                                                "The following parameters cannot be customized:",
-                                                                paste(lapply(unconfigurable, function(param) { param$name }), collapse = ", "))))
-    contents <- shiny::tagAppendChildren(contents, skipped)
+    skipped <- shiny::tags$div(shiny::tags$strong("Note:"),
+                            "The following parameters cannot be customized:",
+                            paste(lapply(unconfigurable, function(param) { param$name }), collapse = ", "))
+    contents <- shiny::tagAppendChildren(contents, shiny::fluidRow(shiny::column(12, skipped)))
   }
   footer <- shiny::tags$div(
       shiny::tags$div(
