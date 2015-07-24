@@ -62,8 +62,6 @@ params_value_to_ui <- function(inputControlFn, value) {
     classes <- class(value)
     if ("POSIXct" %in% classes) {
       as.character(value)
-    } else if ("POSIXlt" %in% classes) {
-      as.character(value)
     } else {
       value
     }
@@ -90,8 +88,6 @@ params_value_from_ui <- function(inputControlFn, value, uivalue) {
     classes <- class(value)
     if ("POSIXct" %in% classes) {
       as.POSIXct(uivalue)
-    } else if ("POSIXlt" %in% classes) {
-      as.POSIXlt(uivalue)
     } else {
       uivalue
     }
