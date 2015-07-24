@@ -166,7 +166,7 @@ params_get_control <- function(param) {
 }
 
 params_configurable <- function(param) {
-  length(param$value) == 1 && !is.null(params_get_control(param))
+  length(param$value) <= 1 && !is.null(params_get_control(param))
 }
 
 #' Run a shiny application asking for parameter configuration for the given document.
