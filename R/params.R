@@ -67,6 +67,16 @@ params_value_to_ui <- function(inputControlFn, value) {
     } else {
       value
     }
+  } else if (is.null(value)) {
+    numerics <- c(shiny::numericInput,
+                  shiny::sliderInput)
+    # The numerics can't deal with a NULL value, but everything else is fine.
+    if (identical(inputControlFn, shiny::numericInput) ||
+        identical(inputControlFn, shiny::sliderInput)) {
+      0
+    } else {
+      value
+    }
   } else {
     ## A type/control that doesn't need special handling; just emit the value.
     value
@@ -237,7 +247,11 @@ knit_params_ask <- function(file = NULL,
           inputId = inputId,
           label = label
           )
-      lapply(names(param), function(name) {
+
+      # We MUST process the "value" name even if it is not present (due to
+      # NULL values).
+      attrib_names <- unique(c(names(param), "value"))
+      lapply(attrib_names, function(name) {
         if (name %in% c("name", "input", "expr")) {
         } else if (name == "label") {
           arguments$label <<- label
@@ -281,32 +295,38 @@ knit_params_ask <- function(file = NULL,
       selectControl <- NULL
       selectInputId <- paste0("select_", param$name)
 
-      ## Dates and times with expressions that mean "now" or "today" are first
-      ## materialized as selects. If the user chooses to customize the field,
-      ## we then show the type-specific picker.
+      ## Helper to materialize a "default/customize" control.
+      makeSelectControl <- function(default_name, custom_name) {
+        showSelectControl <<- function(current) {
+          (is.null(current) || identical(current, "default"))
+        }
+        hasDefaultValue <<- function(value) { FALSE }
+        choices <- list()
+        choices[[default_name]] <- "default"
+        choices[[custom_name]] <- "custom"
+        selectControl <<- shiny::selectInput(inputId = selectInputId,
+                                             label = label,
+                                             choices = choices)
+      }
+
       if (is.null(params[[param$name]])) { # prior value; implicit customization
+        ## Dates and times with expressions that mean "now" or "today" are first
+        ## materialized as selects. If the user chooses to customize the field,
+        ## we then show the type-specific picker.
         if (identical("Sys.time()", param$expr)) {
-          showSelectControl <- function(current) {
-            (is.null(current) || identical(current, "default"))
-          }
-          hasDefaultValue <- function(value) { FALSE }
-          choices <- list()
-          choices[[paste0("now (", param$value, ")")]] <- "default"
-          choices[["Use a custom time"]] <- "custom"
-          selectControl <- shiny::selectInput(inputId = selectInputId,
-                                              label = label,
-                                              choices = choices)
+          makeSelectControl(paste0("now (", param$value, ")"),
+                            "Use a custom time")
         } else if (identical("Sys.Date()", param$expr)) {
-          showSelectControl <- function(current) {
-            (is.null(current) || identical(current, "default"))
+          makeSelectControl(paste0("today (", param$value, ")"),
+                            "Use a custom date")
+        } else if (is.null(param$value)) {
+          # fileInput defaults to null, but for other null values, ask the
+          # user to explicitly choose to override (ie. we cannot use value
+          # comparison).
+          if (!identical(inputControlFn, shiny::fileInput)) {
+            makeSelectControl("Unspecified (NULL)",
+                              "Use a custom value")
           }
-          hasDefaultValue <- function(value) { FALSE }
-          choices <- list()
-          choices[[paste0("today (", param$value, ")")]] <- "default"
-          choices[["Use a custom date"]] <- "custom"
-          selectControl <- shiny::selectInput(inputId = selectInputId,
-                                              label = label,
-                                              choices = choices)
         }
       }
       
@@ -320,6 +340,10 @@ knit_params_ask <- function(file = NULL,
       })
       
       shiny::observe({
+        # A little reactive magic to keep in mind. If you're in one of the
+        # "default/custom" selector scenarios, this will never fire until the
+        # user selects "custom" because hte value-producing input control is
+        # not rendered until that point.
         uivalue <- input[[param$name]]
         if (is.null(uivalue)) {
           # ignore startup NULLs
