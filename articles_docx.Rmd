@@ -26,7 +26,7 @@ _This article is reposted from [graphdoctor.com](http://www.graphdoctor.com/arch
 
 But R Markdown (v2) has given me  collaboration superpowers!  
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/pow-flikr-macentee.jpg" alt="" style="width: 50px;"/> 
+<img src="articles/images/pow-flikr-macentee.jpg" alt="" style="width: 50px;"/> 
 
 I can do reproducible work in R (making me happy) and format the output report in Word (making my collaborators happy). This post is about how you can learn to do that too (making you happy).  
 
@@ -58,11 +58,11 @@ I can do reproducible work in R (making me happy) and format the output report i
  
 In RStudio, open a new R Markdown file.
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/new-file-screenshot.png" alt="" style="width: 400px;"/>
+<img src="articles/images/new-file-screenshot.png" alt="" style="width: 400px;"/>
 
 In the dialog box that appears, set the output format to Word. Title and Author are unimportant at this point. 
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/new-r-markdown-box.png" alt="" style="width: 400px;"/>
+<img src="articles/images/new-r-markdown-box.png" alt="" style="width: 400px;"/>
 
 An Rmd file appears with front matter and some sample text. 
 
@@ -82,15 +82,15 @@ Save this Rmd file to a convenient directory using a descriptive name. I called 
 
 In RStudio, click the *Knit Word* button. 
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/knit-word-strip.png" alt="" style="width: 300px;"/>
+<img src="articles/images/knit-word-strip.png" alt="" style="width: 300px;"/>
 
 A Word document should appear.
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/first-word-view-02.png" alt="" style="width: 650px;"/>
+<img src="articles/images/first-word-view-02.png" alt="" style="width: 650px;"/>
 
 Save this Word file under a new name (for example, *word-styles-reference-01.docx*) in the same directory as the R Markdown file.
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/word-save-as.png" alt="" style="width: 600px;"/>
+<img src="articles/images/word-save-as.png" alt="" style="width: 600px;"/>
 
 This Word document is the first draft of your styles reference docx file. Its textual content is irrelevant---its Style settings are what you will be using. 
 
@@ -102,15 +102,15 @@ This Word document is the first draft of your styles reference docx file. Its te
 
 Continue to work with the *word-styles-reference-01.docx* file.  Select the Home ribbon tab and in the Styles group click the Styles window launcher (in the lower right corner of the group). 
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/styles-bar-02.png" alt="" style="height: 120px;"/>
+<img src="articles/images/styles-bar-02.png" alt="" style="height: 120px;"/>
 
 Suppose I want to change the format of the main title. I select the title in the Word document. Then in the Styles window, I scroll down until I find the style  **already assigned** to the text I selected. In this case, the assigned style is *Title*.
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/edit-title-format.png" alt="" style="width: 400px;"/>
+<img src="articles/images/edit-title-format.png" alt="" style="width: 400px;"/>
 
 In the Word document, I reformat the title in Palatino Linotype, italic, not bold, and change the color to black (though you may assign any settings you like). In the Styles window, click on the Title style drop-down menu and select *Update Title to match selection*. 
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/edit-title-format-02.png" alt="" style="width: 400px;"/>
+<img src="articles/images/edit-title-format-02.png" alt="" style="width: 400px;"/>
 
 Save *word-styles-reference-01.docx*. 
 
@@ -134,7 +134,7 @@ Delete all the text after the header and add a new sentence, "My report starts h
 
 *Save* and *Knit Word*.
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/test-report-01.png" alt="" style="width: 650px;"/>
+<img src="articles/images/test-report-01.png" alt="" style="width: 650px;"/>
 
 In the Rmd front matter, add new output arguments to format the report using the styles reference document.  
 
@@ -155,7 +155,7 @@ My report starts here.
 
 A new Word document should appear, with the title correctly formatted. 
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/test-report-02.png" alt="" style="width: 650px;"/>
+<img src="articles/images/test-report-02.png" alt="" style="width: 650px;"/>
 
 
 
@@ -181,23 +181,23 @@ And I have this next subsection.
 
 *Save* and *Knit Word*.
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/test-report-03.png" alt="" style="width: 650px;"/>
+<img src="articles/images/test-report-03.png" alt="" style="width: 650px;"/>
 
 Open the Word Styles dialog box. You'll find that the styles in use are Title (a style we edited earlier), Author, Date, Heading 1, Heading 2, and Normal.   
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/test-report-04.png" alt="" style="width: 650px;"/>
+<img src="articles/images/test-report-04.png" alt="" style="width: 650px;"/>
 
 For practice, edit these styles. Try changing the font type, font size, line spacing, space before and after paragraphs, etc., until the formatting meets your needs.  
 
 Return to the Rmd file. If needed, edit the front matter to include the correct *reference_docx:*, then *Knit Word*. The draft report should be correctly formatted. My styles changes are shown here. 
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/test-report-05.png" alt="" style="width: 650px;"/>
+<img src="articles/images/test-report-05.png" alt="" style="width: 650px;"/>
 
 That's pretty much all there is to basic management of Word Styles from an R Markdown script.
 
 Congratulations! You now have Rmd-to-docx superpowers. 
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/pow-flikr-macentee.jpg" alt="" style="width: 50px;"/> 
+<img src="articles/images/pow-flikr-macentee.jpg" alt="" style="width: 50px;"/> 
 
 
 
@@ -234,7 +234,7 @@ Open the *test-report.Rmd*, click *Knit Word*, and the new report should have th
 
 If making your work reproducible is important to you (and it should be!), you are probably organizing your directories and files in some systematic way. My current approach is to assign the project working directory to the project top-level directory by using the RStudio project feature and then create the following sub-directories.
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/min-proj-directory.png" alt="" style="width: 120px;"/>
+<img src="articles/images/min-proj-directory.png" alt="" style="width: 120px;"/>
 
 The two directories I want to discuss here are *common* and *reports*.  The common directory is for document elements I re-use from project to project, e.g., business logo, LaTeX preambles, bibliography files, etc. I save my styles reference files in this directory. The reports directory is for Rnw or Rmd markup scripts that produce reproducible reports. 
 
@@ -290,25 +290,25 @@ kable(df)
 
 The document output includes:
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/make-a-table-01.png" alt="" style="width: 650px;"/>
+<img src="articles/images/make-a-table-01.png" alt="" style="width: 650px;"/>
 
 The first thing I notice is that I need some white space to separate text from the code chunks and from the table. We can use the HTML line break tag &lt;br&gt; on its own line to create the extra white space. ([Markdown](http://daringfireball.net/projects/markdown/) began, after all, as a "text-to-HTML conversion tool for web writers.") Note too the *message=FALSE* option in the first code chunk and the *echo=FALSE* option in the second code chunk. 
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/adding-linebreaks.png" alt="" style="width: 400px;"/>
+<img src="articles/images/adding-linebreaks.png" alt="" style="width: 400px;"/>
 
 *Save* and *Knit Word*.  
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/make-a-table-02.png" alt="" style="width: 650px;"/>
+<img src="articles/images/make-a-table-02.png" alt="" style="width: 650px;"/>
 
 To edit style of the table entries, select one entry, reduce the font size and change the typeface to a sans serif font, find the style in the Styles menu (Compact), and *Update Compact to match selection*. 
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/table-01.png" alt="" style="width: 400px;"/>
+<img src="articles/images/table-01.png" alt="" style="width: 400px;"/>
 
 *Save As* and overwrite *word-styles-reference-01.docx*. 
 
 Return to *test-report.Rmd* and *Knit Word*. All the table entries should match your new style. 
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/make-a-table-03.png" alt="" style="width: 200px;"/>
+<img src="articles/images/make-a-table-03.png" alt="" style="width: 200px;"/>
 
 
 
@@ -342,7 +342,7 @@ pander(df)
 
 *Save* and *Knit Word* produces this table:
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/make-a-table-04.png" alt="" style="width: 250px;"/>
+<img src="articles/images/make-a-table-04.png" alt="" style="width: 250px;"/>
 
 The style of the table entries using *pander()*  is the same (Compact) as the style in the earlier table made with *kable()*.   As specified in the *pander* options, numeric values are right-aligned, character values are left-aligned, and the thousands separator (big mark) is a comma. 
 
@@ -419,7 +419,7 @@ obstacles to effective collaboration.
 
 *Save* and *Knit Word*.
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/bibliography-01.png" alt="" style="width: 650px;"/>
+<img src="articles/images/bibliography-01.png" alt="" style="width: 650px;"/>
 
 
 
@@ -427,11 +427,11 @@ obstacles to effective collaboration.
 
 *Format the bibliography style.*  In the Word report document, select the reference. Select the Home ribbon tab, and in the Paragraph group, click the Paragraph settings window launcher. 
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/paragraph-bar-02.png" alt="" style="height: 120px;"/>
+<img src="articles/images/paragraph-bar-02.png" alt="" style="height: 120px;"/>
 
 In the Paragraph settings window, change the indent to *Hanging*. Click *OK*.
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/bib-style-01a.png" alt="" style="width: 300px;"/>
+<img src="articles/images/bib-style-01a.png" alt="" style="width: 300px;"/>
 
 In the Home ribbon tab, in the Font group, change the font size to 9. 
 
@@ -439,7 +439,7 @@ In the Home ribbon tab, in the Styles group, launch the styles window. Find that
 
 *Save* and *Knit Word*.
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/bibliography-02.png" alt="" style="width: 650px;"/>
+<img src="articles/images/bibliography-02.png" alt="" style="width: 650px;"/>
 
 *Save As* and overwrite *word-styles-reference-01.docx*. 
 
@@ -447,7 +447,7 @@ Return to *test-report.Rmd* and *Knit Word*. The format of the reference should 
 
 More collaboration superpowers!
 
-<img src="https://dl.dropboxusercontent.com/u/36189294/wp/pow-flikr-macentee.jpg" alt="" style="width: 50px;"/> 
+<img src="articles/images/pow-flikr-macentee.jpg" alt="" style="width: 50px;"/> 
 
 
 
