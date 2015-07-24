@@ -8,9 +8,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
+<meta name="author" content="Richard Morey" />
 
+<meta name="date" content="2014-09-12" />
 
-<title>R Markdown Articles</title>
+<title>Embedding RData files in R Markdown files for more reproducible analyses</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -170,34 +172,46 @@ img {
 </div><!--/.navbar -->
 
 <div id="header">
-<h1 class="title">R Markdown Articles</h1>
+<h1 class="title">Embedding RData files in R Markdown files for more reproducible analyses</h1>
+<h4 class="author"><em>Richard Morey</em></h4>
+<h4 class="date"><em>September 12, 2014</em></h4>
 </div>
 
 
-<div id="basics" class="section level3">
-<h3>Basics</h3>
-<ul>
-<li><a href="articles_intro.html">Introduction to R Markdown</a></li>
-<li><a href="articles_interactive.html">Introduction to interactive documents</a></li>
-<li><a href="articles_integration.html">R Markdown integration in the RStudio IDE</a></li>
-<li><a href="articles_mail_merge.html">Mail merge with R Markdown</a> (Automation Demo)</li>
-</ul>
-</div>
-<div id="embedding-code" class="section level3">
-<h3>Embedding Code</h3>
-<ul>
-<li><a href="articles_verbatim.html">Get verbatim R chunks into R Markdown</a></li>
-<li><a href="articles_verbatim2.html">Verbatim Chunks in R Markdown</a> (Alternate method)</li>
-<li><a href="articles_rdata.html">Embedding RData files in Rmarkdown files for more reproducible analyses</a></li>
-</ul>
-</div>
-<div id="output-formats" class="section level3">
-<h3>Output Formats</h3>
-<ul>
-<li><a href="articles_docx.html">Happy collaboration with Rmd to docx</a></li>
-<li><a href="articles_beamer.html">Moving from Beamer to R Markdown</a></li>
-</ul>
-</div>
+<p><em>This article is reposted from <a href="http://bayesfactor.blogspot.com/2014/09/embedding-rdata-files-in-rmarkdown.html">bayesfactor.blogspot.com</a> with the kind permission of Richard Morley.</em></p>
+<p>For those of us interested in reproducible analysis, Rmarkdown is a great way of communicating our code to other researchers. RStudio, in particular, makes it very easy to create attractive HTML document containing text, code, and figures, which can then be sent to colleagues or put on the internet for anyone to see. If you aren’t using Rmarkdown for your statistical analyses, I recommend you start; you’ll never go back to simple script files again (and your colleagues won’t want you to).</p>
+<p>In this post, I describe how to improve your Rmarkdown by embedding data that can be downloaded by anyone viewing the document in a modern browser with javascript enabled. For a quick look, see the example Rmd file and resulting HTML file.</p>
+<p>One of the drawbacks of Rmakdown, from a reproducible analysis perspective, is that the data is not a part of the document itself. Typically, an Rmarkdown file will use R code to load a file from your disk, and when you send the resulting HTML file to a colleague, or put it on the internet, that file is separate. It must be sent in an email or placed on a server to be downloaded.</p>
+<p>This raises the possibility that the data could get separated from the code, and I think this is a terrible thing for reproducible analysis. In my mind, the data and the document and data should travel together as a single document. What we would like is a method of encoding R data into the HTML file such that any user who has access to the HTML file can download it, without even having access to the internet.</p>
+<p>As it turns out, files can be encoded in an HTML document via the <a href="http://en.wikipedia.org/wiki/Data_URI_scheme">URI data scheme</a>. All we need is an R function that encodes the data, and produces a link to enable downloading the data.</p>
+<pre class="r"><code>setDownloadURI = function(list, filename = stop(&quot;&#39;filename&#39; must be specified&quot;), textHTML = &quot;Click here to download the data.&quot;, fileext = &quot;RData&quot;, envir = parent.frame()){
+  require(base64enc,quietly = TRUE)
+  divname = paste(sample(LETTERS),collapse=&quot;&quot;)
+  tf = tempfile(pattern=filename, fileext = fileext)
+  save(list = list, file = tf, envir = envir)
+  filenameWithExt = paste(filename,fileext,sep=&quot;.&quot;)
+ 
+  uri = dataURI(file = tf, mime = &quot;application/octet-stream&quot;, encoding = &quot;base64&quot;)
+  cat(&quot;&lt;a style=&#39;text-decoration: none&#39; id=&#39;&quot;,divname,&quot;&#39;&gt;&lt;/a&gt;
+    &lt;script&gt;
+    var a = document.createElement(&#39;a&#39;);
+    var div = document.getElementById(&#39;&quot;,divname,&quot;&#39;);
+    div.appendChild(a);
+    a.setAttribute(&#39;href&#39;, &#39;&quot;,uri,&quot;&#39;);
+    a.innerHTML = &#39;&quot;,textHTML,&quot;&#39; + &#39; (&quot;,filenameWithExt,&quot;)&#39;;
+    if (typeof a.download != &#39;undefined&#39;) {
+      a.setAttribute(&#39;download&#39;, &#39;&quot;,filenameWithExt,&quot;&#39;);
+    }else{
+      a.setAttribute(&#39;onclick&#39;, &#39;confirm(\&quot;Your browser does not support the download HTML5 attribute. You must rename the file to &quot;,filenameWithExt,&quot; after downloading it (or use Chrome/Firefox/Opera). \&quot;)&#39;);
+    }
+    &lt;/script&gt;&quot;,
+    sep=&quot;&quot;)
+}</code></pre>
+<p>The first argument of the function, list, is a character vector containing names of variables to save in the RData file.</p>
+<p>Once this function is declared, all we need to do is call it in our Rmd file. If we use the argument results = ‘asis’ in our R code block, it will inject the appropriate HTML code into our compiled HTML document to allow a download of the embedded data as an RData file, and anyone with the HTML file can download it.</p>
+<p>Unfortunately, blogger will not allow me to embed the data into a post; therefore, a complete, self-contained example Rmd file can be found here, and the resulting HTML file can be found here.</p>
+<p>Keep in mind, however, that the data file is actually embedded in the HTML file. This means that the resulting HTML file can be very large, if your data file is large. Also consider that data are encoded in base64, which increases the size of the file by about a third over the equivalent RData binary file. For very large data sets, one might consider hosting them outside of the HTML file; but for many purposes, the technique I describe will improve the ease with which you can share reproducible analyses.</p>
+<p><em>Note: Richard has included a slightly cleaned up version of this functionality as <code>createDownloadURI()</code> in the <a href="https://github.com/richarddmorey/BayesFactorExtras/">BayesFactorExtras</a> package, which can be installed on github.</em></p>
 
 
 <!-- some extra javascript for older browsers -->

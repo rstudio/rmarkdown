@@ -7,11 +7,16 @@ title: "R Markdown Articles"
 * [Introduction to R Markdown](articles_intro.html)
 * [Introduction to interactive documents](articles_interactive.html)
 * [R Markdown integration in the RStudio IDE](articles_integration.html)
+* [Mail merge with R Markdown](articles_mail_merge.html) (Automation Demo)
 
 ### Embedding Code
 
 * [Get verbatim R chunks into R Markdown](articles_verbatim.html)
+* [Verbatim Chunks in R Markdown](articles_verbatim2.html) (Alternate method)
+* [Embedding RData files in Rmarkdown files for more reproducible analyses](articles_rdata.html)
 
 ### Output Formats
 
 * [Happy collaboration with Rmd to docx](articles_docx.html)
+* [Moving from Beamer to R Markdown](articles_beamer.html)
+

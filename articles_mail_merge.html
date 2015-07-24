@@ -8,9 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
+<meta name="author" content="Mine Çetinkaya-Rundel" />
 
 
-<title>R Markdown Articles</title>
+<title>Mail merge with RMarkdown</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -170,33 +171,102 @@ img {
 </div><!--/.navbar -->
 
 <div id="header">
-<h1 class="title">R Markdown Articles</h1>
+<h1 class="title">Mail merge with RMarkdown</h1>
+<h4 class="author"><em>Mine Çetinkaya-Rundel</em></h4>
+<h4 class="date"><em>June 1, 2015</em></h4>
 </div>
 
 
-<div id="basics" class="section level3">
-<h3>Basics</h3>
-<ul>
-<li><a href="articles_intro.html">Introduction to R Markdown</a></li>
-<li><a href="articles_interactive.html">Introduction to interactive documents</a></li>
-<li><a href="articles_integration.html">R Markdown integration in the RStudio IDE</a></li>
-<li><a href="articles_mail_merge.html">Mail merge with R Markdown</a> (Automation Demo)</li>
-</ul>
+<p><em>This article is reposted from <a href="http://citizen-statistician.org/2015/06/01/mail-merge-with-rmarkdown/">citizen-statistician.org</a> with the kind permission of Mine Çetinkaya-Rundel.</em><br /> The term “mail merge” might not be familiar to those who have not worked in an office setting, but here is the Wikipedia definition:</p>
+<blockquote>
+<p>Mail merge is a software operation describing the production of multiple (and potentially large numbers of) documents from a single template form and a structured data source. The letter may be sent out to many “recipients” with small changes, such as a change of address or a change in the greeting line.</p>
+<p>Source: <a href="http://en.wikipedia.org/wiki/Mail_merge" class="uri">http://en.wikipedia.org/wiki/Mail_merge</a></p>
+</blockquote>
+<p>The other day I was working on creating personalized handouts for a workshop. That is, each handout contained some standard text (including some R code) and some fields that were personalized for each participant (login information for our RStudio server). I wanted to do this in RMarkdown so that the R code on the handout could be formatted nicely. Googling “rmarkdown mail merge” didn’t yield much (that’s why I’m posting this), but I finally came across <a href="http://reed.edu/data-at-reed/software/R/markdown_multiple_reports.html">this tutorial</a> which called the process “iterative reporting”.</p>
+<p>Turns our this is a pretty straightforward task. Below is a very simple minimum working example. You can obviously make your markdown document a lot more complicated. I’m thinking holiday cards made in R…</p>
+<p>All relevant files for this example can also be found <a href="https://github.com/mine-cetinkaya-rundel/mail_merge">here</a>.</p>
+<div id="input-data-meeting_times.csv" class="section level4">
+<h4>Input data: meeting_times.csv</h4>
+<p>This is a 20 x 2 csv file, an excerpt is shown below. I got the names from here.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">meeting_time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Peggy Kallas</td>
+<td align="left">9:00 AM</td>
+</tr>
+<tr class="even">
+<td align="left">Ezra Zanders</td>
+<td align="left">9:15 AM</td>
+</tr>
+<tr class="odd">
+<td align="left">Hope Mogan</td>
+<td align="left">9:30 AM</td>
+</tr>
+<tr class="even">
+<td align="left">Nathanael Scully</td>
+<td align="left">9:45 AM</td>
+</tr>
+<tr class="odd">
+<td align="left">Mayra Cowley</td>
+<td align="left">10:00 AM</td>
+</tr>
+<tr class="even">
+<td align="left">Ethelene Oglesbee</td>
+<td align="left">10:15 AM</td>
+</tr>
+<tr class="odd">
+<td align="left">…</td>
+<td align="left">…</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="embedding-code" class="section level3">
-<h3>Embedding Code</h3>
-<ul>
-<li><a href="articles_verbatim.html">Get verbatim R chunks into R Markdown</a></li>
-<li><a href="articles_verbatim2.html">Verbatim Chunks in R Markdown</a> (Alternate method)</li>
-<li><a href="articles_rdata.html">Embedding RData files in Rmarkdown files for more reproducible analyses</a></li>
-</ul>
+<div id="r-script-mail_merge_script.r" class="section level4">
+<h4>R script: mail_merge_script.R</h4>
+<pre class="r"><code>## Packages
+library(knitr)
+library(rmarkdown)
+ 
+## Data
+personalized_info &lt;- read.csv(file = &quot;meeting_times.csv&quot;)
+ 
+## Loop
+for (i in 1:nrow(personalized_info)){
+ rmarkdown::render(input = &quot;mail_merge_handout.Rmd&quot;,
+ output_format = &quot;pdf_document&quot;,
+ output_file = paste(&quot;handout_&quot;, i, &quot;.pdf&quot;, sep=&#39;&#39;),
+ output_dir = &quot;handouts/&quot;)
+}</code></pre>
 </div>
-<div id="output-formats" class="section level3">
-<h3>Output Formats</h3>
-<ul>
-<li><a href="articles_docx.html">Happy collaboration with Rmd to docx</a></li>
-<li><a href="articles_beamer.html">Moving from Beamer to R Markdown</a></li>
-</ul>
+<div id="rmarkdown-mail_merge_handout.rmd" class="section level4">
+<h4>RMarkdown: mail_merge_handout.Rmd</h4>
+<pre class = "r"><code>
+---
+output: pdf_document
+---
+ 
+&#96``{r echo=FALSE}
+personalized_info <- read.csv("meeting_times.csv", stringsAsFactors = FALSE)
+name <- personalized_info$name[i]
+time <- personalized_info$meeting_time[i]
+&#96``
+ 
+Dear &#96r name`,
+ 
+Your meeting time is &#96r time`.
+ 
+See you then!
+</code></pre>
+<p>Save the Rmd file and the R script in the same folder (or specify the path to the Rmd file accordingly in the R script), and then run the R script. This will call the Rmd file within the loop and output 20 PDF files to the handouts directory. Each of these files look something like this</p>
+<p><img src="http://citizen-statistician.org/wp-content/uploads/2015/06/mail_merge_sample1.png" /></p>
+<p>with the name and date field being different in each one.</p>
+<p>If you prefer HTML or Word output, you can specify this in the output_format argument in the R script.</p>
 </div>
 
 
