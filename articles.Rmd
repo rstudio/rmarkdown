@@ -11,8 +11,10 @@ title: "R Markdown Articles"
 ### Embedding Code
 
 * [Get verbatim R chunks into R Markdown](articles_verbatim.html)
+* [Embedding RData files in Rmarkdown files for more reproducible analyses](articles_rdata.html)
 
 ### Output Formats
 
 * [Happy collaboration with Rmd to docx](articles_docx.html)
 * [Moving from Beamer to R Markdown](articles_beamer.html)
+
