@@ -154,9 +154,9 @@ Finally, `after_body` is an optional command that will include whatever you want
 
 ## Compiling Your Markdown Document
 
-If you’re using [Rstudio](http://rstudio.com/), compiling the R Markdown document is as simple as clicking a few buttons in the script window.
+If you’re using [RStudio](http://rstudio.com/), compiling the R Markdown document is as simple as clicking a few buttons in the script window.
 
-However, I tend to not like using GUIs, even if Rstudio is quite useful. I do love automated scripts, though, especially R scripts in which I don’t have to specify a working directory. Toward that end, I wrote a simple script that you can treat as executable (assuming you’re on a Linux or Mac machine) to automatically compile your Markdown documents.
+However, I tend to not like using GUIs, even if RStudio is quite useful. I do love automated scripts, though, especially R scripts in which I don’t have to specify a working directory. Toward that end, I wrote a simple script that you can treat as executable (assuming you’re on a Linux or Mac machine) to automatically compile your Markdown documents.
 
 ```{r eval=FALSE}
 #! /usr/bin/Rscript --vanilla --default-packages=base,stats,utils
@@ -274,7 +274,7 @@ One big disadvantage to Markdown: compiling.
 
 \bigskip Nobody got time for that.
 
-### One Alternative: Rstudio
+### One Alternative: RStudio
 
 \begin{center}
   \includegraphics[width=1.00\textwidth]{knit-rstudio.png}
