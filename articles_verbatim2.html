@@ -8,9 +8,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
+<meta name="author" content="Ramnath Vaidyanathan" />
 
+<meta name="date" content="2014-03-12" />
 
-<title>R Markdown Articles</title>
+<title>Verbatim Chunks in R Markdown</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -170,34 +172,62 @@ img {
 </div><!--/.navbar -->
 
 <div id="header">
-<h1 class="title">R Markdown Articles</h1>
+<h1 class="title">Verbatim Chunks in R Markdown</h1>
+<h4 class="author"><em>Ramnath Vaidyanathan</em></h4>
+<h4 class="date"><em>March 12, 2014</em></h4>
 </div>
 
 
-<div id="basics" class="section level3">
-<h3>Basics</h3>
-<ul>
-<li><a href="articles_intro.html">Introduction to R Markdown</a></li>
-<li><a href="articles_interactive.html">Introduction to interactive documents</a></li>
-<li><a href="articles_integration.html">R Markdown integration in the RStudio IDE</a></li>
-<li><a href="articles_mail_merge.html">Mail merge with R Markdown</a> (Automation Demo)</li>
-</ul>
-</div>
-<div id="embedding-code" class="section level3">
-<h3>Embedding Code</h3>
-<ul>
-<li><a href="articles_verbatim.html">Get verbatim R chunks into R Markdown</a></li>
-<li><a href="articles_verbatim2.html">Verbatim Chunks in R Markdown</a> (Alternate method)</li>
-<li><a href="articles_rdata.html">Embedding RData files in Rmarkdown files for more reproducible analyses</a></li>
-</ul>
-</div>
-<div id="output-formats" class="section level3">
-<h3>Output Formats</h3>
-<ul>
-<li><a href="articles_docx.html">Happy collaboration with Rmd to docx</a></li>
-<li><a href="articles_beamer.html">Moving from Beamer to R Markdown</a></li>
-</ul>
-</div>
+<p><em>This article is reposted from <a href="https://ramnathv.github.io/posts/verbatim-chunks-knitr/">Addicted to R</a> with the kind permission of Ramnath Vaidyanathan.</em></p>
+<p><a href="https://www.rstudio.com/ide/docs/r_markdown">RMarkdown</a> has truly revolutinized the way I write. The simplicity of <a href="http://daringfireball.net/projects/markdown/">markdown</a> and the extreme flexibility of <a href="http://github.com/yihui/knitr">knitr</a> allows me to combine text and code in ways I would never have been able to do before.</p>
+<p>One of the things I have always wanted to do is to be able to print code chunks verbatim, along with the chunk markup. This is especially useful while writing tutorials, where I want the user to see the code chunk “asis”.</p>
+<p>Initially, I thought that I could achieve this by indenting the code chunk, thereby “fooling” <a href="http://github.com/yihui/knitr">knitr</a> into believing that it is not a code chunk, and thereby printing it verbatim in a <code>&lt;code&gt;</code> block. But I was terribly mistaken. Apparently, <code>knitr</code> is too smart to be fooled, and no matter how deep you tuck away or indent the chunk, <code>knitr</code> always finds it and executes it!</p>
+<p>Digging a little deeper, I found an example from the author in his <a href="https://github.com/yihui/knitr-examples/blob/master/062-chunk-wrapper.Rmd">knitr-examples</a> repo. The basic idea was to write a <a href="yihui.name/knitr/hooks">chunk hook</a> that wraps the source code with the markup. It makes use of the option <code>params.src</code> that contains the chunk options that are set locally.</p>
+<pre class="r"><code>knitr::knit_hooks$set(wrapper = function(before, options, envir) {
+  if (before) {
+    sprintf(&#39;    ```{r %s}\n&#39;, options$params.src)
+  } else &#39;    ```\n&#39;
+})</code></pre>
+<p>Let us test it out by adding <code>wrapper = TRUE</code> to a code chunk.</p>
+<pre><code>```{r test_label, wrapper=TRUE, eval=FALSE}</code></pre>
+<pre class="r"><code>1+1
+plot(1)</code></pre>
+<pre><code>```</code></pre>
+<p>It works! Well, it almost works. I say almost, because I don’t like how it splits the code and the chunk markup into different blocks. I am sure that I can clean this up using some regex-fu, but I wanted to explore a cleaner solution using hooks.</p>
+<p>After a lot of experimentation, I ended up with the following hook. Note that my implementation involves a source hook and not a chunk hook, like the one proposed by <a href="http://yihui.name">Yihui</a>. It is customized for <code>Rmd</code> documents, but is easy to extend for other formats like <code>Rnw</code>.</p>
+<pre class="r"><code>knitr::knit_hooks$set(source = function(x, options){
+  if (!is.null(options$verbatim) &amp;&amp; options$verbatim){
+    opts = gsub(&quot;,\\s*verbatim\\s*=\\s*TRUE\\s*&quot;, &quot;&quot;, options$params.src)
+    bef = sprintf(&#39;\n\n    ```{r %s}\n&#39;, opts, &quot;\n&quot;)
+    stringr::str_c(
+      bef, 
+      knitr:::indent_block(paste(x, collapse = &#39;\n&#39;), &quot;    &quot;), 
+      &quot;\n    ```\n&quot;
+    )
+  } else {
+    stringr::str_c(&quot;\n\n```&quot;, tolower(options$engine), &quot;\n&quot;, 
+      paste(x, collapse = &#39;\n&#39;), &quot;\n```\n\n&quot;
+    )
+  }
+})</code></pre>
+<p>Let us now test how this hook performs.</p>
+<pre><code>```{r qplot, fig.width = 5, fig.height = 5, fig.align = &quot;center&quot;}
+library(ggplot2)
+qplot(wt, am, color = vs, data = mtcars)
+```</code></pre>
+<p><img src="articles_verbatim2_files/figure-html/qplot-1.png" title="" alt="" width="480" style="display: block; margin: auto;" /></p>
+<p>Yeyy! It works exactly like how I wanted it to. As always, this post is fully reproducible, and you can find the code <a href="index.Rmd">here</a>.</p>
+<style>
+pre {
+  padding: 0;
+}
+pre code {
+  padding: 1rem;
+}
+p {
+  text-align: justify;
+}
+</style>
 
 
 <!-- some extra javascript for older browsers -->
