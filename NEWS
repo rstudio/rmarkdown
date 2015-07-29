@@ -7,6 +7,8 @@ rmarkdown 0.7.1 (unreleased)
   e.g. larger embedded leaflet maps). Stack size can also be controlled
   by the pandoc.stack.size option.
   
+* Allow YAML front matter to be terminated with ...  
+  
 * Bugfix: don't merge render params recursively with knit_params
 
 
