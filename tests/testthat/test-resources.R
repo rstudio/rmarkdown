@@ -77,3 +77,19 @@ test_that("bare relative directory references are ignored", {
   resources <- find_external_resources("resources/period.Rmd")
   expect_equal(nrow(resources), 0)
 })
+
+
+test_that("dependencies in .R files are recursively discovered", {
+  skip_on_cran()
+  
+  resources <- find_external_resources("resources/readcsv.Rmd")
+  expected <- data.frame(
+    path = c("empty.csv", "readcsv.R", "readcsv-source.R"),
+    explicit = c(FALSE, FALSE, FALSE),
+    web      = c(FALSE, FALSE, FALSE),
+    stringsAsFactors = FALSE)
+  
+  resources <- as.data.frame(resources[order(resources[[1]]), , drop = FALSE])
+  expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
+  expect_equal(resources, expected)
+})
