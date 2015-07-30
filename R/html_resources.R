@@ -80,6 +80,11 @@ find_external_resources <- function(input_file,
         length(path) == 1 && 
         path != "." && path != ".." && 
         file.exists(file.path(input_dir, path))) {
+      if (tolower(tools::file_ext(file.path(input_dir, path))) == "r") {
+        # if this is a .R script, look for resources it contains, too
+        discover_r_resources(file.path(input_dir, path), 
+                             discover_single_resource)
+      }
       discovered_resources <<- rbind(discovered_resources, data.frame(
         path = path, 
         explicit = explicit, 
@@ -359,24 +364,29 @@ discover_rmd_resources <- function(rmd_file, encoding,
     knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0,
                 encoding = "UTF-8")
     temp_files <- c(temp_files, r_file)
-    r_lines <- readLines(r_file, warn = FALSE, encoding = "UTF-8") 
+    discover_r_resources(r_file, discover_single_resource)
+  }
+}
+
+discover_r_resources <- function(r_file, discover_single_resource) {
+  # read the lines from the R file 
+  r_lines <- readLines(r_file, warn = FALSE, encoding = "UTF-8") 
+  
+  # clean comments from the R code (simply; consider: # inside strings)
+  r_lines <- sub("#.*$", "", r_lines)
     
-    # clean comments from the R code (simply; consider: # inside strings)
-    r_lines <- sub("#.*$", "", r_lines)
-      
-    # find quoted strings in the code and attempt to ascertain whether they are
-    # files on disk
-    r_lines <- paste(r_lines, collapse = "\n")
-    quoted_strs <- Reduce(c, lapply(c("\"[^\"]+\"", "'[^']+'"), function(pat) {
-      matches <- unlist(regmatches(r_lines, gregexpr(pat, r_lines)))
-      substr(matches, 2, nchar(matches) - 1)
-    }))
-    
-    # consider any quoted string containing a valid relative path to a file that 
-    # exists on disk to be a reference
-    for (quoted_str in quoted_strs) {
-      discover_single_resource(quoted_str, FALSE, is_web_file(quoted_str))
-    }
+  # find quoted strings in the code and attempt to ascertain whether they are
+  # files on disk
+  r_lines <- paste(r_lines, collapse = "\n")
+  quoted_strs <- Reduce(c, lapply(c("\"[^\"]+\"", "'[^']+'"), function(pat) {
+    matches <- unlist(regmatches(r_lines, gregexpr(pat, r_lines)))
+    substr(matches, 2, nchar(matches) - 1)
+  }))
+  
+  # consider any quoted string containing a valid relative path to a file that 
+  # exists on disk to be a reference
+  for (quoted_str in quoted_strs) {
+    discover_single_resource(quoted_str, FALSE, is_web_file(quoted_str))
   }
 }
 

@@ -1,0 +1,2 @@
+
+read.csv("empty.csv")
