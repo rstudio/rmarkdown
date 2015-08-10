@@ -64,7 +64,7 @@ library(ggplot2)
 qplot(wt, am, color = vs, data = mtcars)
 ```
 
-Yeyy! It works exactly like how I wanted it to. As always, this post is fully reproducible, and you can find the code [here](index.Rmd).
+Yeyy! It works exactly like how I wanted it to. As always, this post is fully reproducible, and you can find the code [here](https://ramnathv.github.io/posts/verbatim-chunks-knitr/index.Rmd).
 
 
 <style>
