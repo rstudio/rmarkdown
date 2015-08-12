@@ -175,6 +175,13 @@ params_configurable <- function(param) {
   length(param$value) <= 1 && !is.null(params_get_control(param))
 }
 
+# Returns a new empty named list.
+params_namedList <- function() {
+  empty <- list()
+  names(empty) <- character()
+  empty
+}
+
 #' Run a shiny application asking for parameter configuration for the given document.
 #'
 #' @param file Path to the R Markdown document with configurable parameters.
@@ -217,10 +224,10 @@ knit_params_ask <- function(file = NULL,
     ## version.
   }
 
-  ## If we happen to not have any knit_params, just return an empty list and
-  ## don't fire up the Shiny app.
+  ## If we happen to not have any knit_params, just return an empty named list
+  ## and don't fire up the Shiny app.
   if (length(knit_params) == 0) {
-    return(list())
+    return(params_namedList())
   }
   
   configurable <- Filter(params_configurable, knit_params)
@@ -229,7 +236,7 @@ knit_params_ask <- function(file = NULL,
   ## This set of published values is the raw set that came from the user.
   ## It does not include those values that cannot be configured or are
   ## left to use the default.
-  values <- list()
+  values <- params_namedList()
 
   server <- function(input, output) {
     param.ui <- function(param) {
