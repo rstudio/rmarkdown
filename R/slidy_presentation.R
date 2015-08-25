@@ -109,11 +109,13 @@ slidy_presentation <- function(incremental = FALSE,
 
     # slidy
     slidy_path <- rmarkdown_system_file("rmd/slidy/Slidy2")
-    if (!self_contained)
-      slidy_path <- normalized_relative_to(
+    slidy_path <- if (self_contained) {
+      pandoc_path_arg(slidy_path)
+    } else {
+      normalized_relative_to(
         output_dir, render_supporting_files(slidy_path, lib_dir))
-    args <- c(args, "--variable", paste("slidy-url=",
-                                        pandoc_path_arg(slidy_path), sep=""))
+    }
+    args <- c(args, "--variable", paste("slidy-url=", slidy_path, sep=""))
 
     # highlight
     args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))
