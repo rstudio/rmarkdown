@@ -194,6 +194,7 @@ img {
 <li><a href="#figure-options">Figure Options</a></li>
 <li><a href="#syntax-highlighting">Syntax Highlighting</a></li>
 <li><a href="#style-reference">Style Reference</a></li>
+<li><a href="#keeping-markdown">Keeping Markdown</a></li>
 <li><a href="#markdown-extensions">Markdown Extensions</a></li>
 <li><a href="#pandoc-arguments">Pandoc Arguments</a></li>
 <li><a href="#shared-options">Shared Options</a></li>
@@ -246,6 +247,16 @@ title: &quot;Habits&quot;
 output:
   word_document:
     reference_docx: mystyles.docx
+---</code></pre>
+</div>
+<div id="keeping-markdown" class="section level2">
+<h2>Keeping Markdown</h2>
+<p>When knitr processes an R Markdown input file it creates a markdown (md) file which is subsequently tranformed into a Word document by pandoc. If you want to keep a copy of the markdown file after rendering you can do so using the <code>keep_md</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  word_document:
+    keep_md: true
 ---</code></pre>
 </div>
 <div id="markdown-extensions" class="section level2">
