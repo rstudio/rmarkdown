@@ -1,7 +1,7 @@
 
 knit_params_get <- function(input_lines, params) {
   # check for recent enough knitr
-  if (packageVersion("knitr") < "1.10") {
+  if (utils::packageVersion("knitr") < "1.10") {
     stop("knitr >= 1.10 required to use rmarkdown params")
   }
   
@@ -200,7 +200,7 @@ knit_params_ask <- function(file = NULL,
                             shiny_args = NULL,
                             save_caption = "Save",
                             encoding = getOption("encoding")) {
-  if (packageVersion("knitr") < "1.10.18") {
+  if (utils::packageVersion("knitr") < "1.10.18") {
     stop("knitr >= 1.10.18 required to use rmarkdown::knit_params_ask")
   }
 

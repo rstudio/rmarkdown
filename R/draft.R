@@ -132,7 +132,7 @@ draft <- function(file,
 
   # invoke the editor if requested
   if (edit)
-    file.edit(normalizePath(file))
+    utils::file.edit(normalizePath(file))
 
   # return the name of the file created
   invisible(file)
@@ -142,7 +142,7 @@ draft <- function(file,
 list_template_dirs <- function() {
 
   # check each installed package for templates
-  packages <- row.names(installed.packages())
+  packages <- row.names(utils::installed.packages())
   for (pkg in packages) {
 
     # check to see if the package includes a template folder

@@ -247,7 +247,7 @@ discover_rmd_resources <- function(rmd_file, encoding,
           # that match the pattern
           files <- list.files(
             path = file.path(input_dir, dirname(explicit_res$path)), 
-            pattern = glob2rx(basename(explicit_res$path)),
+            pattern = utils::glob2rx(basename(explicit_res$path)),
             recursive = FALSE,
             include.dirs = FALSE)
           lapply(files, function(f) {

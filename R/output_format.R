@@ -169,9 +169,9 @@ knitr_options_pdf <- function(fig_width, fig_height, fig_crop, dev = 'pdf') {
   
   # set the dingbats option for the pdf device if requried
   if (dev == 'pdf') {
-    if (packageVersion("knitr") >= "1.5.31") {
+    if (utils::packageVersion("knitr") >= "1.5.31") {
       opts_chunk$dev.args <- list(pdf = list(useDingbats = FALSE))
-    } else pdf.options(useDingbats = FALSE)
+    } else grDevices::pdf.options(useDingbats = FALSE)
   }
   
   knit_hooks <- NULL

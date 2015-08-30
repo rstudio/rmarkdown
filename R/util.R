@@ -111,7 +111,7 @@ as_tmpfile <- function(str) {
 }
 
 dir_exists <- function(x) {
-  file_test('-d', x)
+  utils::file_test('-d', x)
 }
 
 file_with_ext <- function(file, ext) {

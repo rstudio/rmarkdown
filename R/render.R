@@ -217,7 +217,7 @@ render <- function(input,
     knitr::opts_knit$set(rmarkdown.version = 2)
 
     # trim whitespace from around source code
-    if (packageVersion("knitr") < "1.5.23") {
+    if (utils::packageVersion("knitr") < "1.5.23") {
       local({
         hook_source = knitr::knit_hooks$get('source')
         knitr::knit_hooks$set(source = function(x, options) {
@@ -472,7 +472,7 @@ render_supporting_files <- function(from, files_dir, rename_to = NULL) {
 # reset knitr meta output (returns any meta output generated since the last
 # call to knit_meta_reset), optionally scoped to a specific output class
 knit_meta_reset <- function(class = NULL) {
-  if (packageVersion("knitr") >= "1.5.26")
+  if (utils::packageVersion("knitr") >= "1.5.26")
     knitr::knit_meta(class, clean = TRUE)
   else
     NULL
