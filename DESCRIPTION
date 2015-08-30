@@ -12,7 +12,7 @@ Depends:
 Imports:
     tools,
     utils,
-    knitr (>= 1.6),
+    knitr (>= 1.11),
     yaml (>= 2.1.5),
     htmltools (>= 0.2.4),
     caTools
