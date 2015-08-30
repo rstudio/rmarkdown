@@ -321,12 +321,6 @@ the code block:
     qsort [] = []
     ```
 
-This is equivalent to:
-
-    ``` {.haskell}
-    qsort [] = []
-    ```
-
 Line blocks
 -----------
 
