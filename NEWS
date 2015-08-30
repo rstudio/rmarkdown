@@ -9,9 +9,15 @@ rmarkdown 0.7.1 (unreleased)
   
 * Allow YAML front matter to be terminated with ...  
   
+* Automatically generate a user-interface (via a Shiny application) for 
+  user specification of values in parameterized reports.
+  
 * Add tightlist macro for compatibility with pandoc >= 1.14  
   
-* Bugfix: don't merge render params recursively with knit_params
+* Bugfix: Don't merge render params recursively with knit_params
+
+* Bugfix: Handle slashes correctly on Windows for slidy_presentation 
+  when self_contained = FALSE 
 
 
 rmarkdown 0.7
