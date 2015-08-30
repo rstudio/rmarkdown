@@ -98,7 +98,7 @@ header:
 
     ## Next Steps {#nextsteps .emphasized}
 
-Would enable you to apply CSS to all of it's content using either of the following CSS selectors:
+Would enable you to apply CSS to all of its content using either of the following CSS selectors:
 
     #nextsteps {
        color: blue;
