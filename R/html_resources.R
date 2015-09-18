@@ -87,10 +87,8 @@ find_external_resources <- function(input_file,
       }
       # if this is an implicitly discovered resource, it needs to refer to 
       # a file rather than a directory 
-      if (!explicit) {
-        path_info <- file.info(file.path(input_dir, path))
-        if (isTRUE(path_info$isdir)) 
-          return(FALSE)
+      if (!explicit && dir_exists(file.path(input_dir, path))) { 
+        return(FALSE) 
       }
       # this looks valid; remember it
       discovered_resources <<- rbind(discovered_resources, data.frame(
