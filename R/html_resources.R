@@ -257,9 +257,9 @@ discover_rmd_resources <- function(rmd_file, encoding,
             recursive = FALSE,
             include.dirs = FALSE)
           lapply(files, function(f) {
-            list(path = file.path(dirname(explicit_res$path), f), 
-                 explicit = TRUE,
-                 web = is_web_file(f)) })
+            discover_single_resource(file.path(dirname(explicit_res$path), f), 
+                                     TRUE, web = is_web_file(f)) 
+           })
         } else {
           # no wildcard, see whether this resource refers to a directory or to
           # an individual file
@@ -276,7 +276,8 @@ discover_rmd_resources <- function(rmd_file, encoding,
               include.dirs = FALSE)
             lapply(files, function(f) {
               discover_single_resource(file.path(explicit_res$path, f), TRUE,
-                   web = is_web_file(f)) })
+                   web = is_web_file(f)) 
+            })
           } else {
             # isdir is false--this is an individual file; return it
             discover_single_resource(explicit_res$path, explicit_res$explicit,
