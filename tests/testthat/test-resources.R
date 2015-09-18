@@ -93,3 +93,33 @@ test_that("dependencies in .R files are recursively discovered", {
   expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
   expect_equal(resources, expected)
 })
+
+test_that("implicitly discovered directories are ignored", {
+  skip_on_cran()
+  
+  resources <- find_external_resources("resources/directory-refs.Rmd")
+  expected <- data.frame(
+    path = c("nonempty/empty.csv", "nonempty/empty.jpg"),
+    explicit = c(TRUE, TRUE),
+    web      = c(FALSE, TRUE),
+    stringsAsFactors = FALSE)
+  
+  resources <- as.data.frame(resources[order(resources[[1]]), , drop = FALSE])
+  expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
+  expect_equal(resources, expected)
+})
+
+test_that("resource_files use cases all work", {
+  skip_on_cran()
+  
+  resources <- find_external_resources("resources/resource-files.Rmd")
+  expected <- data.frame(
+    path = c("nonempty/empty.csv", "csvs/csv1.csv", "csvs/csv2.csv", "csvs/other/csv3.csv", "empty.bib"),
+    explicit = c(TRUE, TRUE, TRUE, TRUE, TRUE),
+    web      = c(FALSE, FALSE, FALSE, FALSE, FALSE),
+    stringsAsFactors = FALSE)
+  
+  resources <- as.data.frame(resources[order(resources[[1]]), , drop = FALSE])
+  expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
+  expect_equal(resources, expected)
+})

@@ -1,0 +1,13 @@
+---
+title: "Untitled"
+author: "RStudio"
+output: html_document
+resource_files:
+- nonempty
+---
+
+```{r, echo=FALSE}
+# reference empty directory
+print("./empty")
+```
+
