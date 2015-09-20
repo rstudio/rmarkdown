@@ -1,6 +1,8 @@
 rmarkdown 0.8
 --------------------------------------------------------------------------------
 
+* Add support for table of contents in word_document
+
 * Add support for keep_md to word_document
 
 * Increase pandoc stack size to 512M (often required for base64 encoding 
