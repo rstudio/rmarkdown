@@ -13,6 +13,9 @@
 #'    markdown} for details.
 #'
 #' @param preserve_yaml Preserve YAML front matter in final document.
+#' 
+#' @param allow_html_dependencies Allow html dependencies (e.g. those generated 
+#'   htmlwidgets) to be included in this format's output.
 #'
 #' @param fig_retina Scaling to perform for retina displays. Defaults to
 #'   \code{NULL} which performs no scaling. A setting of 2 will work for all
@@ -49,6 +52,7 @@
 #' @export
 md_document <- function(variant = "markdown_strict",
                         preserve_yaml = FALSE,
+                        allow_html_dependencies = FALSE,
                         toc = FALSE,
                         toc_depth = 3,
                         fig_width = 7,
@@ -94,6 +98,7 @@ md_document <- function(variant = "markdown_strict",
     pandoc = pandoc_options(to = variant,
                             from = from_rmarkdown(extensions = md_extensions),
                             args = args),
+    allow_html_dependencies = allow_html_dependencies,
     clean_supporting = FALSE,
     post_processor = post_processor
   )

@@ -312,10 +312,19 @@ render <- function(input,
     # if this isn't html and there are html dependencies then flag an error
     if (!(is_pandoc_to_html(output_format$pandoc) ||
           identical(tolower(tools::file_ext(output_file)), "html")))  {
-      if (has_html_dependencies(knit_meta)) {
-        stop("Functions that produce HTML output found in document targeting ",
-             pandoc_to, " output.\nPlease change the output type ",
-             "of this document to HTML.", call. = FALSE)
+      if (!output_format$allow_html_dependencies && has_html_dependencies(knit_meta)) {
+        if (is_pandoc_to_markdown(output_format$pandoc)) 
+          stop("Functions that produce HTML output with complex dependencies (e.g. ",
+               "scripts and stylesheets) found in document targeting markdown output. ",
+               "You can add the allow_html_dependencies option to prevent this error, ",
+               "however in that case you should be sure to arrange for the inclusion of the ",
+               "required scripts and/or stylesheets when deploying your document. ",
+               "Alternatively, you should change the output format of your document to HTML.", 
+               call. = FALSE)
+        else
+          stop("Functions that produce HTML output found in document targeting ",
+               pandoc_to, " output.\nPlease change the output type ",
+               "of this document to HTML.", call. = FALSE)
       }
       if (!identical(runtime, "static")) {
         stop("Runtime '", runtime, "' is not supported for ",

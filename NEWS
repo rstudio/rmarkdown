@@ -1,3 +1,10 @@
+rmarkdown 0.8.1 (unreleased)
+--------------------------------------------------------------------------------
+
+* Add allow_html_dependencies option to md_document format to allow inclusion
+  of e.g. htmlwidget dependencies in markdown output.
+
+
 rmarkdown 0.8
 --------------------------------------------------------------------------------
 
