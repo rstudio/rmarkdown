@@ -1,3 +1,11 @@
+rmarkdown 0.8.1 (unreleased)
+--------------------------------------------------------------------------------
+
+* Support for opts_template in knitr options 
+
+* Don't implicitly discover directories when scanning for dependent resources
+
+
 rmarkdown 0.8
 --------------------------------------------------------------------------------
 
