@@ -716,7 +716,7 @@ SlideDeck.prototype.updateHash_ = function(dontPush) {
     // Add everything except the hash.
     var loc = location.protocol+'//'+location.host+location.pathname+(location.search?location.search:"");
     var hash = '#' + slideNo;
-    if (window.history.pushState) {
+    if (window.history.pushState && (location.protocol !== "file:")) {
       window.history.pushState(this.curSlide_, 'Slide ' + slideNo, loc + hash);
     } else {
       window.location.replace(loc + hash);

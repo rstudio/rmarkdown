@@ -5,6 +5,9 @@ rmarkdown 0.8.1 (unreleased)
 
 * Don't implicitly discover directories when scanning for dependent resources
 
+* Fix for slide numbers not showing up in ioslides when served from 
+  the filesystem (don't call pushState for file:// urls)
+
 
 rmarkdown 0.8
 --------------------------------------------------------------------------------
