@@ -39,7 +39,9 @@
 #' }
 #'
 #' @export
-word_document <- function(fig_width = 5,
+word_document <- function(toc = FALSE,
+                          toc_depth = 3,
+                          fig_width = 5,
                           fig_height = 4,
                           fig_caption = FALSE,
                           highlight = "default",
@@ -58,7 +60,13 @@ word_document <- function(fig_width = 5,
 
   # base pandoc options for all docx output
   args <- c()
-
+  
+  # table of contents
+  if (pandoc_available("1.14"))
+    args <- c(args, pandoc_toc_args(toc, toc_depth))
+  else
+    warning("table of contents for word_document requires pandoc >= 1.14")
+  
   # highlighting
   if (!is.null(highlight))
     highlight <- match.arg(highlight, highlighters())
