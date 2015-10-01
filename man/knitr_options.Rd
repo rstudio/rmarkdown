@@ -8,18 +8,16 @@ knitr_options(opts_knit = NULL, opts_chunk = NULL, knit_hooks = NULL,
   opts_template = NULL)
 }
 \arguments{
-  \item{opts_knit}{List of package level knitr options (see
-  \code{\link[knitr:opts_knit]{opts_knit}})}
+\item{opts_knit}{List of package level knitr options (see
+\code{\link[knitr:opts_knit]{opts_knit}})}
 
-  \item{opts_chunk}{List of chunk level knitr options (see
-  \code{\link[knitr:opts_chunk]{opts_chunk}})}
+\item{opts_chunk}{List of chunk level knitr options (see
+\code{\link[knitr:opts_chunk]{opts_chunk}})}
 
-  \item{knit_hooks}{List of hooks for R code chunks, inline
-  R code, and output (see
-  \code{\link[knitr:knit_hooks]{knit_hooks}})}
+\item{knit_hooks}{List of hooks for R code chunks, inline R code, and output
+(see \code{\link[knitr:knit_hooks]{knit_hooks}})}
 
-  \item{opts_template}{List of templates for check level
-  knitr options (see
+\item{opts_template}{List of templates for chunk level knitr options (see
   \code{\link[knitr:opts_template]{opts_template}})}
 }
 \value{
