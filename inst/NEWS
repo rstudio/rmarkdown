@@ -1,5 +1,7 @@
-rmarkdown 0.8.1 (unreleased)
+rmarkdown 0.8.1
 --------------------------------------------------------------------------------
+
+* Support for table of contents in word_document (requires pandoc >= 1.14)
 
 * Support for opts_template in knitr options 
 
