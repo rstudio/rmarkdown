@@ -10,7 +10,7 @@ html_dependency_jquery <- function()  {
 }
 
 # create an html dependency for our embedded bootstrap
-html_dependency_bootstrap <- function(theme) {
+html_dependency_bootstrap <- function(theme, self_contained) {
   
   # inline bootstrap theme b/c pandoc 1.14 base64 encoding 
   # somehow borks up reading bootstrap.min.css. it also borks
@@ -21,7 +21,7 @@ html_dependency_bootstrap <- function(theme) {
   #
   # see pandoc bug filed here: https://github.com/jgm/pandoc/issues/2224
   
-  if (pandoc_available("1.14")) {
+  if (self_contained && pandoc_available("1.14")) {
     theme_css <- rmarkdown_system_file(paste0("rmd/h/bootstrap-3.3.1/css/", 
                                               theme, ".min.css"))
     theme_style_tag <- paste(c('<style type="text/css">',

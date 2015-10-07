@@ -80,12 +80,12 @@ html_document_base <- function(smart = TRUE,
     format_deps <- append(format_deps, extra_dependencies)
     if (!is.null(theme)) {
       format_deps <- append(format_deps, list(html_dependency_jquery(),
-                                              html_dependency_bootstrap(theme)))
+                                              html_dependency_bootstrap(theme, self_contained)))
     }
     else if (isTRUE(bootstrap_compatible) && identical(runtime, "shiny")) {
       # If we can add bootstrap for Shiny, do it
       format_deps <- append(format_deps,
-                            list(html_dependency_bootstrap("bootstrap")))
+                            list(html_dependency_bootstrap("bootstrap", self_contained)))
     }
 
     extras <- html_extras_for_document(knit_meta, runtime, dependency_resolver,
