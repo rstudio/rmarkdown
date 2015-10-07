@@ -9,6 +9,8 @@ rmarkdown 0.8.1
 
 * Fix for slide numbers not showing up in ioslides when served from 
   the filesystem (don't call pushState for file:// urls)
+  
+* Remove inlining of bootstrap CSS (was workaround for bug now fixed in pandoc)
 
 
 rmarkdown 0.8
