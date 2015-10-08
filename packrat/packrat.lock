@@ -8,6 +8,10 @@ Source: CRAN
 Version: 2.0.1
 Hash: 9a3ac4e5fd8059af0fc5156bcb019bbc
 
+Package: RColorBrewer
+Source: CRAN
+Version: 1.1-2
+
 Package: RCurl
 Source: CRAN
 Version: 1.95-4.6
@@ -35,12 +39,20 @@ Version: 1.17
 Hash: e350bf43b27772012b530ccdf2e34f4d
 Requires: bitops
 
+Package: colorspace
+Source: CRAN
+Version: 1.2-6
+
 Package: devtools
 Source: CRAN
 Version: 1.7.0
 Hash: 56919e22e0d3f7131e93bda1a869730e
 Requires: RCurl, digest, evaluate, httr, jsonlite, memoise, roxygen2,
     rstudioapi, whisker
+
+Package: dichromat
+Source: CRAN
+Version: 2.0-0
 
 Package: digest
 Source: CRAN
@@ -57,6 +69,15 @@ Package: formatR
 Source: CRAN
 Version: 1.0
 Hash: a90c211d7df7e61a72b8ab6c99c2e848
+
+Package: ggplot2
+Source: CRAN
+Version: 1.0.1
+Requires: digest, gtable, plyr, proto, reshape2, scales
+
+Package: gtable
+Source: CRAN
+Version: 0.1.2
 
 Package: highr
 Source: CRAN
@@ -86,6 +107,10 @@ Version: 1.8
 Hash: d00d7b314ca4c34f8a56ceacefb31b4f
 Requires: digest, evaluate, formatR, highr, markdown, stringr
 
+Package: labeling
+Source: CRAN
+Version: 0.3
+
 Package: magrittr
 Source: CRAN
 Version: 1.5
@@ -108,6 +133,11 @@ Source: CRAN
 Version: 0.2
 Hash: 9179db921fcb2e5be44e217042ed06bc
 
+Package: munsell
+Source: CRAN
+Version: 0.4.2
+Requires: colorspace
+
 Package: packrat
 Source: github
 Version: 0.4.2-6
@@ -116,6 +146,20 @@ GithubRepo: packrat
 GithubUsername: rstudio
 GithubRef: master
 GithubSha1: 914b3c5aeed71f06f286bb7055ace26609f395a1
+
+Package: plyr
+Source: CRAN
+Version: 1.8.3
+Requires: Rcpp
+
+Package: proto
+Source: CRAN
+Version: 0.3-10
+
+Package: reshape2
+Source: CRAN
+Version: 1.4.1
+Requires: Rcpp, stringr, plyr
 
 Package: rmarkdown
 Source: CRAN
@@ -133,6 +177,11 @@ Package: rstudioapi
 Source: CRAN
 Version: 0.3.1
 Hash: ee415a4fe305c6222630d8e5572781e7
+
+Package: scales
+Source: CRAN
+Version: 0.3.0
+Requires: Rcpp, RColorBrewer, dichromat, labeling, munsell, plyr
 
 Package: stringi
 Source: CRAN
