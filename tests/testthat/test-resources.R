@@ -123,3 +123,18 @@ test_that("resource_files use cases all work", {
   expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
   expect_equal(resources, expected)
 })
+
+test_that("dependencies can be discovered on .R files directly", {
+  skip_on_cran()
+  
+  resources <- find_external_resources("resources/readcsv-source.R")
+  expected <- data.frame(
+    path = c("empty.csv", "readcsv.R"),
+    explicit = c(FALSE, FALSE),
+    web      = c(FALSE, FALSE),
+    stringsAsFactors = FALSE)
+  
+  resources <- as.data.frame(resources[order(resources[[1]]), , drop = FALSE])
+  expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
+  expect_equal(resources, expected)
+})
