@@ -12,6 +12,8 @@ rmarkdown 0.8.1
   
 * Remove inlining of bootstrap CSS (was workaround for bug now fixed in pandoc)
 
+* Allow specifying an R file in calls to find_all_resources
+
 
 rmarkdown 0.8
 --------------------------------------------------------------------------------
