@@ -4,7 +4,7 @@
 \usage{
 render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
        output_options = NULL, intermediates_dir = NULL,
-       runtime = c("auto", "static", "shiny"),
+       byproducts_dir = NULL, runtime = c("auto", "static", "shiny"),
        clean = TRUE, params = NULL, envir = parent.frame(), 
        quiet = FALSE, encoding = getOption("encoding"))
 }
@@ -34,7 +34,11 @@ render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
 
   \item{intermediates_dir}{Intermediate files directory. If \code{NULL},
   intermediate files are written to the same directory as the input file;
-  otherwis.}
+  otherwise, they are written in the specified directory.}
+
+  \item{byproducts_dir}{Byproduct files directory. If \code{NULL}, the
+  cache and figures folders will be written in the \code{output_dir}
+  directory; otherwise, they are written in the specified directory.}
 
   \item{runtime}{The runtime target for rendering. \code{static} produces output
   intended for static files; \code{shiny} produces output suitable for use in a

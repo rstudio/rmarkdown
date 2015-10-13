@@ -243,3 +243,6 @@ escape_regex_metas <- function(in_str) {
   gsub("([.\\|()[{^$+?])", "\\\\\\1", in_str)
 }
 
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
