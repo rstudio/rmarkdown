@@ -1,3 +1,10 @@
+rmarkdown 0.8.2
+--------------------------------------------------------------------------------
+
+* Fix for JS exception in slidy_presentation when served from the filesystem 
+  (don't call pushState for file:// urls)
+
+
 rmarkdown 0.8.1
 --------------------------------------------------------------------------------
 

@@ -1270,7 +1270,7 @@ var w3c_slidy = {
      if (w3c_slidy.slide_number >= 0)
        uri = uri + hash;
 
-     if (typeof(history.pushState) != "undefined")
+     if (typeof(history.pushState) != "undefined" && location.protocol !== "file:")
      {
        document.title = w3c_slidy.title + " (" + (w3c_slidy.slide_number+1) + ")";
        history.pushState(0, document.title, hash);
