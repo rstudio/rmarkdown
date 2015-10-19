@@ -210,7 +210,7 @@ base_dir <- function(x) {
 
 # Regular expression representing characters likely to be considered special by
 # the shell (require quoting/escaping)
-.shell_chars_regex <- '[ <>()|\\:&;#?*]'
+.shell_chars_regex <- '[ <>()|\\:&;#?*\']'
 
 # Find a program within the PATH. On OSX we need to explictly call
 # /usr/bin/which with a forwarded PATH since OSX Yosemite strips
