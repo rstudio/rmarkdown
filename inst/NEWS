@@ -3,6 +3,8 @@ rmarkdown 0.8.2
 
 * Fix for JS exception in slidy_presentation when served from the filesystem 
   (don't call pushState for file:// urls)
+  
+* Escape single quotes in file paths
 
 
 rmarkdown 0.8.1
