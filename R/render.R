@@ -385,16 +385,16 @@ render <- function(input,
                    run_citeproc,
                    output_format$pandoc$args,
                    !quiet)
+  } else if (!grepl('[.]tex$', output_file)) {
+    # run the main conversion if the output file is not .tex
+    pandoc_convert(utf8_input,
+                   pandoc_to,
+                   output_format$pandoc$from,
+                   output_file,
+                   run_citeproc,
+                   output_format$pandoc$args,
+                   !quiet)
   }
-
-  # run the main conversion
-  pandoc_convert(utf8_input,
-                 pandoc_to,
-                 output_format$pandoc$from,
-                 output_file,
-                 run_citeproc,
-                 output_format$pandoc$args,
-                 !quiet)
   
   # pandoc writes the output alongside the input, so if we rendered from an 
   # intermediate directory, move the output file
