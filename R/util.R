@@ -6,6 +6,10 @@ is_windows <- function() {
   identical(.Platform$OS.type, "windows")
 }
 
+is_osx <- function() {
+  Sys.info()["sysname"] == "Darwin"
+}
+
 # determine the output file for a pandoc conversion
 pandoc_output_file <- function(input, pandoc_options) {
   to <- pandoc_options$to
@@ -216,7 +220,7 @@ base_dir <- function(x) {
 # /usr/bin/which with a forwarded PATH since OSX Yosemite strips
 # the PATH from the environment of child processes
 find_program <- function(program) {
-  if (Sys.info()["sysname"] == "Darwin") {
+  if (is_osx()) {
     res <- suppressWarnings({
       # Quote the path (so it can contain spaces, etc.) and escape any quotes 
       # and escapes in the path itself

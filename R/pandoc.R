@@ -243,7 +243,7 @@ pandoc_latex_engine_args <- function(latex_engine) {
   # use a full path to the latex engine on OSX since the stripping
   # of the PATH environment variable by OSX 10.10 Yosemite prevents
   # pandoc from finding the engine in e.g. /usr/texbin
-  if (Sys.info()["sysname"] == "Darwin") {
+  if (is_osx()) {
     # resolve path if it's not already an absolute path
     if (!grepl("/", latex_engine, fixed = TRUE))
       program_path <- find_program(latex_engine)
