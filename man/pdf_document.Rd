@@ -8,7 +8,8 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   fig_width = 6.5, fig_height = 4.5, fig_crop = TRUE,
   fig_caption = FALSE, dev = "pdf", highlight = "default",
   template = "default", keep_tex = FALSE, latex_engine = "pdflatex",
-  includes = NULL, md_extensions = NULL, pandoc_args = NULL)
+  citation_package = c("natbib", "biblatex"), includes = NULL,
+  md_extensions = NULL, pandoc_args = NULL)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -43,6 +44,9 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
 
 \item{latex_engine}{LaTeX engine for producing PDF output. Options are
 "pdflatex", "lualatex", and "xelatex".}
+
+\item{citation_package}{The LaTeX package to process citations, \code{natbib}
+or \code{biblatex}.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
