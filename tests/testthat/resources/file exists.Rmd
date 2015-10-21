@@ -1,0 +1,6 @@
+
+```{r}
+if (!file.exists("empty.csv"))
+   stop("empty.csv expected in ", getwd())
+```
+
