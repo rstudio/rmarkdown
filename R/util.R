@@ -247,3 +247,68 @@ escape_regex_metas <- function(in_str) {
   gsub("([.\\|()[{^$+?])", "\\\\\\1", in_str)
 }
 
+# call latexmk to compile tex to PDF; if not available, use a simple emulation
+latexmk <- function(file, engine) {
+  if (!grepl('[.]tex$', file))
+    stop("The input file '", file, "' does not appear to be a LaTeX document")
+  engine <- find_latex_engine(engine)
+  latexmk_path <- find_program('latexmk')
+  if (latexmk_path == '') {
+    # latexmk not found
+    latexmk_emu(file, engine)
+  } else if (find_program('perl') != '') {
+    system2(latexmk_path, c(
+      '-quiet -c -pdf -interaction=batchmode',
+      paste0('-pdflatex=', shQuote(engine)), shQuote(file)
+    ))
+  } else {
+    warning("Perl must be installed and put on PATH for latexmk to work")
+    latexmk_emu(file, engine)
+  }
+}
+
+# a quick and dirty version of latexmk (should work reasonably well unless the
+# LaTeX document is extremely complicated)
+latexmk_emu <- function(file, engine) {
+  file_with_same_base <- function(file) {
+    owd <- setwd(dirname(file))
+    on.exit(setwd(owd), add = TRUE)
+    files <- list.files()
+    files <- files[file_test('-f', files)]
+    base <- tools::file_path_sans_ext(basename(file))
+    normalizePath(files[tools::file_path_sans_ext(files) == base])
+  }
+  # clean up aux files from LaTeX compilation
+  files1 <- file_with_same_base(file)
+  keep_log <- FALSE
+  on.exit(add = TRUE, {
+    files2 <- file_with_same_base(file)
+    files3 <- setdiff(files2, files1)
+    aux <- c('aux', 'log', 'bbl', 'blg', 'fls', 'out', 'lof', 'lot', 'idx', 'toc')
+    if (keep_log) aux <- setdiff(aux, 'log')
+    unlink(files3[tools::file_ext(files3) %in% aux])
+  })
+
+  fileq <- shQuote(file)
+  run_engine <- function() {
+    res <- system2(engine, c('-interaction=batchmode', fileq), stdout = FALSE)
+    if (res != 0) {
+      warning('Failed to compile ', file, '. Please check ', file_with_ext(file, 'log'))
+      keep_log <<- TRUE
+    }
+    invisible(res)
+  }
+  run_engine()
+  # generate index
+  idx <- sub('[.]tex$', '.idx', file)
+  if (file.exists(idx)) {
+    system2(find_latex_engine('makeindex'), shQuote(idx), stdout = FALSE)
+  }
+  # generate bibliography
+  aux <- sub('[.]tex$', '.aux', file)
+  if (file.exists(aux)) {
+    system2(find_latex_engine('bibtex'), shQuote(aux), stdout = FALSE)
+  }
+  run_engine()
+  run_engine()
+}

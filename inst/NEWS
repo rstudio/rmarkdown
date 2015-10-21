@@ -8,6 +8,10 @@ rmarkdown 0.8.2
 
 * Fix for missing resources when rendering a filename with shell characters
 
+* For PDF/LaTeX output, citations are processed via natbib or biblatex instead
+  of pandoc-citeproc when the option keep_tex is true. The ciation package natbib
+  or biblatex can be chosen using the argument `citation_package` in
+  `pdf_document()`, `beamer_presentation()`, `tufte_handout()`.
 
 rmarkdown 0.8.1
 --------------------------------------------------------------------------------
@@ -24,7 +28,6 @@ rmarkdown 0.8.1
 * Remove inlining of bootstrap CSS (was workaround for bug now fixed in pandoc)
 
 * Allow specifying an R file in calls to find_all_resources
-
 
 rmarkdown 0.8
 --------------------------------------------------------------------------------
