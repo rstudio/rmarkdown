@@ -239,7 +239,10 @@ pandoc_highlight_args <- function(highlight, default = "tango") {
 #' @rdname pandoc_args
 #' @export
 pandoc_latex_engine_args <- function(latex_engine) {
-  
+  c("--latex-engine", find_latex_engine(latex_engine))
+}
+
+find_latex_engine <- function(latex_engine) {
   # use a full path to the latex engine on OSX since the stripping
   # of the PATH environment variable by OSX 10.10 Yosemite prevents
   # pandoc from finding the engine in e.g. /usr/texbin
@@ -247,11 +250,10 @@ pandoc_latex_engine_args <- function(latex_engine) {
     # resolve path if it's not already an absolute path
     if (!grepl("/", latex_engine, fixed = TRUE))
       program_path <- find_program(latex_engine)
-      if (nzchar(program_path))
-        latex_engine <- program_path  
+    if (nzchar(program_path))
+      latex_engine <- program_path
   }
-  
-  c("--latex-engine", latex_engine)
+  latex_engine
 }
 
 #' @rdname pandoc_args
