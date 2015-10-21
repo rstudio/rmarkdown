@@ -382,7 +382,7 @@ render <- function(input,
                    pandoc_to,
                    output_format$pandoc$from,
                    file_with_ext(output_file, "tex"),
-                   run_citeproc,
+                   FALSE,
                    output_format$pandoc$args,
                    !quiet)
   } else if (!grepl('[.]tex$', output_file)) {
