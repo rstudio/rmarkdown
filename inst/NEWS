@@ -6,6 +6,8 @@ rmarkdown 0.8.2
   
 * Escape single quotes in file paths
 
+* Fix for missing resources when rendering a filename with shell characters
+
 
 rmarkdown 0.8.1
 --------------------------------------------------------------------------------
