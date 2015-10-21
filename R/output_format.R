@@ -203,6 +203,8 @@ knitr_options_pdf <- function(fig_width, fig_height, fig_crop, dev = 'pdf') {
 #' @param args Character vector of command line arguments to pass to pandoc
 #' @param keep_tex Keep the intermediate tex file used in the conversion to PDF
 #'   (applies only to 'latex' and 'beamer' target formats)
+#' @param latex_engine LaTeX engine to producing PDF output (applies only to
+#'   'latex' and 'beamer' target formats)
 #' @param ext File extension (e.g. ".tex") for output file (if \code{NULL}
 #'   chooses default based on \code{to}). This is typically used to force
 #'   the final output of a latex or beamer converstion to be \code{.tex}
@@ -222,11 +224,13 @@ pandoc_options <- function(to,
                            from = rmarkdown_format(),
                            args = NULL,
                            keep_tex = FALSE,
+                           latex_engine = c("pdflatex", "lualatex", "xelatex"),
                            ext = NULL) {
   list(to = to,
        from = from,
        args = args,
        keep_tex = keep_tex,
+       latex_engine = match.arg(latex_engine),
        ext = ext)
 }
 
