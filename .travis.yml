@@ -1,38 +1,32 @@
 language: c
 
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
-install:
-  # Install binary pandoc from Rstudio
-  - mkdir -p $HOME/opt/pandoc
-  - curl -O https://s3.amazonaws.com/rstudio-buildtools/pandoc-1.12.3.zip
-  - unzip -j pandoc-1.12.3.zip pandoc-1.12.3/linux/debian/x86_64/pandoc
-      -d $HOME/opt/pandoc
-  - chmod +x $HOME/opt/pandoc/pandoc*
-  - rm pandoc-1.12.3.zip
-  - $HOME/opt/pandoc/pandoc --version
-
-  - ./travis-tool.sh r_binary_install knitr
-  - ./travis-tool.sh r_binary_install yaml
-  - ./travis-tool.sh install_deps
-
-script: ./travis-tool.sh run_tests
-
-on_failure:
-  - ./travis-tool.sh dump_logs
+sudo: false
 
 env:
-  - global:
-    - WARNINGS_ARE_ERRORS=1
+  global:
+    - R_PKG="$(basename $TRAVIS_REPO_SLUG)" PATH=$HOME/bin:$PATH
 
-branches:
-  except:
-  - /-expt$/
+addons:
+  apt:
+    sources:
+    - r-packages-precise
+    packages:
+    - r-base-dev
+    - r-recommended
 
-notifications:
-  email:
-    on_success: change
-    on_failure: change
+install:
+  - "[ ! -d ~/bin ] && mkdir ~/bin || true"
+  - "wget -q -O - https://github.com/yihui/crandalf/raw/master/inst/scripts/install-pandoc | bash"
+  - "wget -q -O - http://yihui.name/xran/r-config | bash"
+  - Rscript -e "if (!require('devtools')) install.packages('devtools')"
+  - Rscript -e "devtools::install_deps(dep = TRUE)"
 
+cache:
+  directories:
+  - $HOME/R
+  - $HOME/bin
+
+script:
+  - cd ..; rm -f *.tar.gz; R CMD build $R_PKG
+  - R CMD check ${R_PKG}_*.tar.gz --no-manual
+  - cd $R_PKG
