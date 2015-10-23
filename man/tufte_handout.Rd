@@ -5,7 +5,8 @@
 \title{Tufte handout format (PDF)}
 \usage{
 tufte_handout(fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
-  dev = "pdf", highlight = "default", keep_tex = FALSE, includes = NULL,
+  dev = "pdf", highlight = "default", keep_tex = FALSE,
+  citation_package = c("natbib", "biblatex"), includes = NULL,
   md_extensions = NULL, pandoc_args = NULL)
 }
 \arguments{
@@ -23,6 +24,9 @@ tufte_handout(fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
 "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.}
 
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
+
+\item{citation_package}{The LaTeX package to process citations, \code{natbib}
+or \code{biblatex}.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}

@@ -70,6 +70,7 @@ beamer_presentation <- function(toc = FALSE,
                                 template = "default",
                                 keep_tex = FALSE,
                                 latex_engine = "pdflatex",                              
+                                citation_package = c("natbib", "biblatex"),
                                 includes = NULL,
                                 md_extensions = NULL,
                                 pandoc_args = NULL) {
@@ -110,6 +111,10 @@ beamer_presentation <- function(toc = FALSE,
   latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
   args <- c(args, pandoc_latex_engine_args(latex_engine))
   
+  # citation package
+  citation_package <- match.arg(citation_package)
+  args <- c(args, paste0("--", citation_package))
+
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
 
@@ -122,6 +127,7 @@ beamer_presentation <- function(toc = FALSE,
     pandoc = pandoc_options(to = "beamer",
                             from = from_rmarkdown(fig_caption, md_extensions),
                             args = args,
+                            latex_engine = latex_engine,
                             keep_tex = keep_tex),
     clean_supporting = !keep_tex
   )

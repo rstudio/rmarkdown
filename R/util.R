@@ -6,6 +6,10 @@ is_windows <- function() {
   identical(.Platform$OS.type, "windows")
 }
 
+is_osx <- function() {
+  Sys.info()["sysname"] == "Darwin"
+}
+
 # determine the output file for a pandoc conversion
 pandoc_output_file <- function(input, pandoc_options) {
   to <- pandoc_options$to
@@ -216,7 +220,7 @@ base_dir <- function(x) {
 # /usr/bin/which with a forwarded PATH since OSX Yosemite strips
 # the PATH from the environment of child processes
 find_program <- function(program) {
-  if (Sys.info()["sysname"] == "Darwin") {
+  if (is_osx()) {
     res <- suppressWarnings({
       # Quote the path (so it can contain spaces, etc.) and escape any quotes 
       # and escapes in the path itself
@@ -243,3 +247,100 @@ escape_regex_metas <- function(in_str) {
   gsub("([.\\|()[{^$+?])", "\\\\\\1", in_str)
 }
 
+# call latexmk to compile tex to PDF; if not available, use a simple emulation
+latexmk <- function(file, engine) {
+  if (!grepl('[.]tex$', file))
+    stop("The input file '", file, "' does not appear to be a LaTeX document")
+  engine <- find_latex_engine(engine)
+  latexmk_path <- find_program('latexmk')
+  if (latexmk_path == '') {
+    # latexmk not found
+    latexmk_emu(file, engine)
+  } else if (find_program('perl') != '') {
+    system2_quiet(latexmk_path, c(
+      '-pdf -latexoption=-halt-on-error -interaction=batchmode',
+      paste0('-pdflatex=', shQuote(engine)), shQuote(file)
+    ), error = show_latex_error(file))
+    system2(latexmk_path, '-c', stdout = FALSE)  # clean up nonessential files
+  } else {
+    warning("Perl must be installed and put on PATH for latexmk to work")
+    latexmk_emu(file, engine)
+  }
+}
+
+# a quick and dirty version of latexmk (should work reasonably well unless the
+# LaTeX document is extremely complicated)
+latexmk_emu <- function(file, engine) {
+  file_with_same_base <- function(file) {
+    owd <- setwd(dirname(file))
+    on.exit(setwd(owd), add = TRUE)
+    files <- list.files()
+    files <- files[file_test('-f', files)]
+    base <- tools::file_path_sans_ext(basename(file))
+    normalizePath(files[tools::file_path_sans_ext(files) == base])
+  }
+  # clean up aux files from LaTeX compilation
+  files1 <- file_with_same_base(file)
+  keep_log <- FALSE
+  on.exit(add = TRUE, {
+    files2 <- file_with_same_base(file)
+    files3 <- setdiff(files2, files1)
+    aux <- c('aux', 'log', 'bbl', 'blg', 'fls', 'out', 'lof', 'lot', 'idx', 'toc')
+    if (keep_log) aux <- setdiff(aux, 'log')
+    unlink(files3[tools::file_ext(files3) %in% aux])
+  })
+
+  fileq <- shQuote(file)
+  run_engine <- function() {
+    res <- system2(
+      engine, c('-halt-on-error -interaction=batchmode', fileq), stdout = FALSE
+    )
+    if (res != 0) {
+      keep_log <<- TRUE
+      show_latex_error(file)
+    }
+    invisible(res)
+  }
+  run_engine()
+  # generate index
+  idx <- sub('[.]tex$', '.idx', file)
+  if (file.exists(idx)) {
+    system2_quiet(find_latex_engine('makeindex'), shQuote(idx))
+  }
+  # generate bibliography
+  aux <- sub('[.]tex$', '.aux', file)
+  if (file.exists(aux)) {
+    system2_quiet(find_latex_engine('bibtex'), shQuote(aux))
+  }
+  run_engine()
+  run_engine()
+}
+
+system2_quiet <- function(..., error = NULL) {
+  # run the command quietly
+  res <- system2(..., stdout = FALSE, stderr = FALSE)
+  # if failed, run the error callback
+  if (res != 0) error  # lazy evaluation
+  invisible(res)
+}
+
+# parse the LaTeX log and show error messages
+show_latex_error <- function(file) {
+  logfile <- file_with_ext(file, 'log')
+  e <- c('Failed to compile ', file, '.')
+  if (!file.exists(logfile)) stop(e, call. = FALSE)
+  x <- readLines(logfile, warn = FALSE)
+  b <- grep('^\\s*$', x)  # blank lines
+  m <- NULL
+  for (i in grep('^! ', x)) {
+    # ignore the last error message about the fatal error
+    if (grepl('==> Fatal error occurred', x[i], fixed = TRUE)) next
+    n <- b[b > i]
+    n <- if (length(n) == 0) i else min(n) - 1L
+    m <- c(m, x[i:n], '')
+  }
+  if (length(m)) {
+    message(paste(m, collapse = '\n'))
+    stop(e, ' See ', logfile, ' for more info.', call. = FALSE)
+  }
+}
