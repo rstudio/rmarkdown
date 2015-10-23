@@ -258,7 +258,7 @@ latexmk <- function(file, engine) {
     latexmk_emu(file, engine)
   } else if (find_program('perl') != '') {
     system2_quiet(latexmk_path, c(
-      '-pdf -latexoption=-halt-on-error',
+      '-pdf -latexoption=-halt-on-error -interaction=batchmode',
       paste0('-pdflatex=', shQuote(engine)), shQuote(file)
     ), error = show_latex_error(file))
     system2(latexmk_path, '-c', stdout = FALSE)  # clean up nonessential files
@@ -292,7 +292,9 @@ latexmk_emu <- function(file, engine) {
 
   fileq <- shQuote(file)
   run_engine <- function() {
-    res <- system2(engine, c('-halt-on-error', fileq), stdout = FALSE)
+    res <- system2(
+      engine, c('-halt-on-error -interaction=batchmode', fileq), stdout = FALSE
+    )
     if (res != 0) {
       keep_log <<- TRUE
       show_latex_error(file)
