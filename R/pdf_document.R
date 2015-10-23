@@ -136,7 +136,7 @@ pdf_document <- function(toc = FALSE,
 
   # citation package
   citation_package <- match.arg(citation_package)
-  if (keep_tex) args <- c(args, paste0("--", citation_package))
+  args <- c(args, paste0("--", citation_package))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))

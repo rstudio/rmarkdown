@@ -9,9 +9,13 @@ rmarkdown 0.8.2
 * Fix for missing resources when rendering a filename with shell characters
 
 * For PDF/LaTeX output, citations are processed via natbib or biblatex instead
-  of pandoc-citeproc when the option keep_tex is true. The ciation package natbib
-  or biblatex can be chosen using the argument `citation_package` in
-  `pdf_document()`, `beamer_presentation()`, `tufte_handout()`.
+  of pandoc-citeproc. The ciation package natbib or biblatex can be chosen using
+  the argument `citation_package` in `pdf_document()`, `beamer_presentation()`,
+  and `tufte_handout()`. LaTeX is compiled to PDF via latexmk
+  (https://www.ctan.org/pkg/latexmk/); if it is not installed, a simple
+  emulation will be used (run pdflatex/xelatex/lualatex, bibtex, and makeindex
+  a few times). You are recommended to install latexmk, and please note latexmk
+  requires a Perl installation (this is important especially for Windows users).
 
 rmarkdown 0.8.1
 --------------------------------------------------------------------------------

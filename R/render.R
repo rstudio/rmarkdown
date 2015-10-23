@@ -376,8 +376,7 @@ render <- function(input,
   
   perf_timer_start("pandoc")
 
-  # run intermediate conversion if it's been specified
-  if (output_format$pandoc$keep_tex) {
+  if (grepl('[.](pdf|tex)$', output_file)) {
     texfile <- file_with_ext(output_file, "tex")
     pandoc_convert(utf8_input,
                    pandoc_to,
@@ -391,7 +390,10 @@ render <- function(input,
       latexmk(texfile, output_format$pandoc$latex_engine)
       file.rename(file_with_ext(texfile, "pdf"), output_file)
     }
-  } else if (!grepl('[.]tex$', output_file)) {
+    # clean up the tex file if necessary
+    if ((texfile != output_file) && !output_format$pandoc$keep_tex)
+      unlink(texfile)
+  } else {
     # run the main conversion if the output file is not .tex
     pandoc_convert(utf8_input,
                    pandoc_to,
