@@ -258,9 +258,10 @@ latexmk <- function(file, engine) {
     latexmk_emu(file, engine)
   } else if (find_program('perl') != '') {
     system2_quiet(latexmk_path, c(
-      '-c -pdf -interaction=batchmode',
+      '-pdf -latexoption=-halt-on-error',
       paste0('-pdflatex=', shQuote(engine)), shQuote(file)
-    ))
+    ), error = show_latex_error(file))
+    system2(latexmk_path, '-c', stdout = FALSE)  # clean up nonessential files
   } else {
     warning("Perl must be installed and put on PATH for latexmk to work")
     latexmk_emu(file, engine)
@@ -291,10 +292,10 @@ latexmk_emu <- function(file, engine) {
 
   fileq <- shQuote(file)
   run_engine <- function() {
-    res <- system2(engine, c('-interaction=batchmode', fileq), stdout = FALSE)
+    res <- system2(engine, c('-halt-on-error', fileq), stdout = FALSE)
     if (res != 0) {
       keep_log <<- TRUE
-      stop('Failed to compile ', file, '. Please check ', file_with_ext(file, 'log'))
+      show_latex_error(file)
     }
     invisible(res)
   }
@@ -313,13 +314,31 @@ latexmk_emu <- function(file, engine) {
   run_engine()
 }
 
-system2_quiet <- function(command, ...) {
+system2_quiet <- function(..., error = NULL) {
   # run the command quietly
-  res <- system2(command, ..., stdout = FALSE)
-  # if failed, run the command again with output to console
-  if (res != 0) {
-    system2(command, ..., stdout = '')
-    stop('Failed to execute the command ', command)
-  }
+  res <- system2(..., stdout = FALSE, stderr = FALSE)
+  # if failed, run the error callback
+  if (res != 0) error  # lazy evaluation
   invisible(res)
+}
+
+# parse the LaTeX log and show error messages
+show_latex_error <- function(file) {
+  logfile <- file_with_ext(file, 'log')
+  e <- c('Failed to compile ', file, '.')
+  if (!file.exists(logfile)) stop(e, call. = FALSE)
+  x <- readLines(logfile, warn = FALSE)
+  b <- grep('^\\s*$', x)  # blank lines
+  m <- NULL
+  for (i in grep('^! ', x)) {
+    # ignore the last error message about the fatal error
+    if (grepl('==> Fatal error occurred', x[i], fixed = TRUE)) next
+    n <- b[b > i]
+    n <- if (length(n) == 0) i else min(n) - 1L
+    m <- c(m, x[i:n], '')
+  }
+  if (length(m)) {
+    message(paste(m, collapse = '\n'))
+    stop(e, ' See ', logfile, ' for more info.', call. = FALSE)
+  }
 }
