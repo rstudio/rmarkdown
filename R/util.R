@@ -257,8 +257,8 @@ latexmk <- function(file, engine) {
     # latexmk not found
     latexmk_emu(file, engine)
   } else if (find_program('perl') != '') {
-    system2(latexmk_path, c(
-      '-quiet -c -pdf -interaction=batchmode',
+    system2_quiet(latexmk_path, c(
+      '-c -pdf -interaction=batchmode',
       paste0('-pdflatex=', shQuote(engine)), shQuote(file)
     ))
   } else {
@@ -293,8 +293,8 @@ latexmk_emu <- function(file, engine) {
   run_engine <- function() {
     res <- system2(engine, c('-interaction=batchmode', fileq), stdout = FALSE)
     if (res != 0) {
-      warning('Failed to compile ', file, '. Please check ', file_with_ext(file, 'log'))
       keep_log <<- TRUE
+      stop('Failed to compile ', file, '. Please check ', file_with_ext(file, 'log'))
     }
     invisible(res)
   }
@@ -302,13 +302,24 @@ latexmk_emu <- function(file, engine) {
   # generate index
   idx <- sub('[.]tex$', '.idx', file)
   if (file.exists(idx)) {
-    system2(find_latex_engine('makeindex'), shQuote(idx), stdout = FALSE)
+    system2_quiet(find_latex_engine('makeindex'), shQuote(idx))
   }
   # generate bibliography
   aux <- sub('[.]tex$', '.aux', file)
   if (file.exists(aux)) {
-    system2(find_latex_engine('bibtex'), shQuote(aux), stdout = FALSE)
+    system2_quiet(find_latex_engine('bibtex'), shQuote(aux))
   }
   run_engine()
   run_engine()
+}
+
+system2_quiet <- function(command, ...) {
+  # run the command quietly
+  res <- system2(command, ..., stdout = FALSE)
+  # if failed, run the command again with output to console
+  if (res != 0) {
+    system2(command, ..., stdout = '')
+    stop('Failed to execute the command ', command)
+  }
+  invisible(res)
 }
