@@ -118,6 +118,9 @@ beamer_presentation <- function(toc = FALSE,
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
 
+  # make sure the graphics package is always loaded
+  if (identical(template, "default")) args <- c(args, "--variable", "graphics=yes")
+
   # custom args
   args <- c(args, pandoc_args)
 
