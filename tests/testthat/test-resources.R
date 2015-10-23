@@ -146,8 +146,10 @@ test_that("filenames with shell characters can use relative resource paths", {
   oldwd <- getwd()
   on.exit(setwd(oldwd), add = TRUE)
   
+  file.rename("resources/file-exists.Rmd", "resources/file exists.Rmd")
   # render the file (contains an expression that stops if its resource is not 
   # present)
   capture.output(output_file <- render("resources/file exists.Rmd"))
   on.exit(unlink(output_file), add = TRUE)
+  file.rename("resources/file exists.Rmd", "resources/file-exists.Rmd")
 })
