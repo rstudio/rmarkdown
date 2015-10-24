@@ -1,4 +1,4 @@
-rmarkdown 0.8.2
+rmarkdown 0.8.3 (unreleased)
 --------------------------------------------------------------------------------
 
 * Fix for JS exception in slidy_presentation when served from the filesystem 
@@ -16,6 +16,8 @@ rmarkdown 0.8.2
   emulation will be used (run pdflatex/xelatex/lualatex, bibtex, and makeindex
   a few times). You are recommended to install latexmk, and please note latexmk
   requires a Perl installation (this is important especially for Windows users).
+  
+* Always use the graphics package for PDF output
 
 rmarkdown 0.8.1
 --------------------------------------------------------------------------------
