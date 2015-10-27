@@ -72,8 +72,12 @@ pandoc_convert <- function(input,
     args <- c(args, "--output", output)
 
   # citeproc filter if requested
-  if (citeproc)
+  if (citeproc) {
     args <- c(args, "--filter", pandoc_citeproc())
+    # --natbib/--biblatex conflicts with '--filter pandoc-citeproc'
+    i <- na.omit(match(c("--natbib", "--biblatex"), options))
+    if (length(i)) options <- options[-i]
+  }
 
   # set pandoc stack size
   stack_size <- getOption("pandoc.stack.size", default = "512m")
