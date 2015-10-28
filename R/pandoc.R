@@ -36,7 +36,7 @@
 #' pandoc_convert("input.md", to = "html", citeproc = TRUE)
 #'
 #' # add some pandoc options
-#' pandoc_convert("input.md", to="pdf, options = c("--listings"))
+#' pandoc_convert("input.md", to="pdf", options = c("--listings"))
 #' }
 #'
 #' @export
