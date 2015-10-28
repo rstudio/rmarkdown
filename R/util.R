@@ -285,7 +285,10 @@ latexmk_emu <- function(file, engine) {
   on.exit(add = TRUE, {
     files2 <- file_with_same_base(file)
     files3 <- setdiff(files2, files1)
-    aux <- c('aux', 'log', 'bbl', 'blg', 'fls', 'out', 'lof', 'lot', 'idx', 'toc')
+    aux <- c(
+      'aux', 'log', 'bbl', 'blg', 'fls', 'out', 'lof', 'lot', 'idx', 'toc',
+      'nav', 'snm', 'vrb'
+    )
     if (keep_log) aux <- setdiff(aux, 'log')
     unlink(files3[tools::file_ext(files3) %in% aux])
   })
