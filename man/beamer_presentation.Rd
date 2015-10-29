@@ -20,7 +20,7 @@ level 1 headers will be included in the table of contents).}
 default this is the highest header level in the hierarchy that is followed
 immediately by content, and not another header, somewhere in the document.
 This default can be overridden by specifying an explicit
-\code{slide.level}.}
+\code{slide_level}.}
 
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note
 that if you want to reverse the default incremental behavior for an
