@@ -79,8 +79,10 @@ beamer_presentation <- function(toc = FALSE,
   args <- c()
 
   # template path and assets
-  if (!is.null(template) && !identical(template, "default"))
+  if (!is.null(template)) {
+    if (identical(template, "default")) template <- patch_beamer_template()
     args <- c(args, "--template", pandoc_path_arg(template))
+  }
 
   # table of contents
   if (toc)
@@ -136,5 +138,24 @@ beamer_presentation <- function(toc = FALSE,
   )
 }
 
-
-
+patch_beamer_template <- function() {
+  find_pandoc()
+  command <- paste(quoted(pandoc()), paste(quoted(c("-D", "beamer")), collapse = " "))
+  with_pandoc_safe_environment({
+    tpl <- system(command, intern = TRUE)
+  })
+  patch <- c(
+    "% Comment these out if you don't want a slide with just the", 
+    "% part/section/subsection/subsubsection title:", "\\AtBeginPart{", 
+    "  \\let\\insertpartnumber\\relax", "  \\let\\partname\\relax", 
+    "  \\frame{\\partpage}", "}", "\\AtBeginSection{", 
+    "  \\let\\insertsectionnumber\\relax", "  \\let\\sectionname\\relax",
+    "  \\frame{\\sectionpage}", "}", "\\AtBeginSubsection{",
+    "  \\let\\insertsubsectionnumber\\relax", "  \\let\\subsectionname\\relax",
+    "  \\frame{\\subsectionpage}", "}"
+  )
+  tpl <- sub(paste(patch, collapse = '\n'), '', paste(tpl, collapse = '\n'), fixed = TRUE)
+  f <- tempfile(fileext = '.tex')
+  writeLines(tpl, f)
+  f
+}
