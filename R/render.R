@@ -394,7 +394,7 @@ render <- function(input,
     }
     # clean up the tex file if necessary
     if ((texfile != output_file) && !output_format$pandoc$keep_tex)
-      unlink(texfile)
+      on.exit(unlink(texfile), add = TRUE)
   } else {
     # run the main conversion if the output file is not .tex
     pandoc_convert(utf8_input,
