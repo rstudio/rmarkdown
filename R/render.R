@@ -299,9 +299,13 @@ render <- function(input,
     # knit environment (unless it is already defined there in which case
     # we emit a warning)
     env <- environment(render)
+    metadata_this <- env$metadata
     do.call("unlockBinding", list("metadata", env))
     on.exit({
-      env$metadata <- list()
+      if (bindingIsLocked("metadata", env)) {
+        do.call("unlockBinding", list("metadata", env))
+      }
+      env$metadata <- metadata_this
       lockBinding("metadata", env)
     }, add = TRUE)
     env$metadata <- yaml_front_matter

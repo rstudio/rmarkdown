@@ -19,6 +19,9 @@ rmarkdown 0.8.3 (unreleased)
   
 * Always use the graphics package for PDF output
 
+* Fix for the error "cannot change value of locked binding for 'metadata'" when
+  one call of rmarkdown::render() is nested in another one (#248)
+
 rmarkdown 0.8.1
 --------------------------------------------------------------------------------
 
