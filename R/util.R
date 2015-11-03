@@ -271,12 +271,15 @@ latexmk <- function(file, engine) {
 # a quick and dirty version of latexmk (should work reasonably well unless the
 # LaTeX document is extremely complicated)
 latexmk_emu <- function(file, engine) {
+  owd <- setwd(dirname(file))
+  on.exit(setwd(owd), add = TRUE)
+  # only use basename because bibtex may not work with full path
+  file <- basename(file)
+
   file_with_same_base <- function(file) {
-    owd <- setwd(dirname(file))
-    on.exit(setwd(owd), add = TRUE)
     files <- list.files()
     files <- files[file_test('-f', files)]
-    base <- tools::file_path_sans_ext(basename(file))
+    base <- tools::file_path_sans_ext(file)
     normalizePath(files[tools::file_path_sans_ext(files) == base])
   }
   # clean up aux files from LaTeX compilation
