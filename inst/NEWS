@@ -22,6 +22,10 @@ rmarkdown 0.8.3 (unreleased)
 * Fix for the error "cannot change value of locked binding for 'metadata'" when
   one call of rmarkdown::render() is nested in another one (#248)
 
+* Fix for an issue causing image paths to be rendered incorrectly in Windows
+  when rendering an `html_document` with `self_contained: false` and a path is
+  passed in argument `output_dir`. (#551)
+
 rmarkdown 0.8.1
 --------------------------------------------------------------------------------
 
