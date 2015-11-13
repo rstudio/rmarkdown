@@ -230,7 +230,8 @@ html_document_base <- function(smart = TRUE,
         in_file <- utils::URLdecode(src)
         if (length(in_file) && file.exists(in_file)) {
           img_src <- sub(
-            src, utils::URLencode(relative_to(output_dir, in_file)), img_src)
+            src, utils::URLencode(normalized_relative_to(output_dir, in_file)),
+            img_src, fixed = TRUE)
         }
         img_src
       }
