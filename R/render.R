@@ -230,10 +230,13 @@ render <- function(input,
     knitr::render_markdown()
     knitr::opts_chunk$set(tidy = FALSE, error = FALSE)
 
-    # enable knitr hooks to have knowledge of the final output format
-    knitr::opts_knit$set(rmarkdown.pandoc.to = pandoc_to)
-    knitr::opts_knit$set(rmarkdown.keep_md = output_format$keep_md)
-    knitr::opts_knit$set(rmarkdown.version = 2)
+    # store info about the final output format in opts_knit
+    knitr::opts_knit$set(
+      rmarkdown.pandoc.from = output_format$pandoc$from,
+      rmarkdown.pandoc.to = pandoc_to,
+      rmarkdown.keep_md = output_format$keep_md,
+      rmarkdown.version = 2
+    )
 
     # trim whitespace from around source code
     if (utils::packageVersion("knitr") < "1.5.23") {
