@@ -291,8 +291,19 @@ knit_params_ask <- function(file = NULL,
       hasDefaultValue <- function(value) {
         identical(uidefault, value)
       }
-      
-      inputControl <- do.call(inputControlFn, arguments)
+
+      inputControl <- NULL
+      unsupported <- setdiff(names(arguments), inputControlFnFormals)
+      if (length(unsupported) > 0) {
+        inputControl <- shiny::div(class = "form-group",
+                                   tags$label(class="control-label",param$name), 
+                                   shiny::div(paste('Cannot customize the parameter "', param$name, '" ',
+                                                    'because the "', params_get_input(param), '" ',
+                                                    'Shiny control does not support: ', 
+                                                    paste(unsupported, collapse = ', '), sep = '')))
+      } else {
+        inputControl <- do.call(inputControlFn, arguments)
+      }
 
       showSelectControl <- NULL
       selectControl <- NULL
