@@ -340,10 +340,11 @@ render <- function(input,
         if (!isTRUE(yaml_front_matter$always_allow_html)) {
           stop("Functions that produce HTML output found in document targeting ",
                pandoc_to, " output.\nPlease change the output type ",
-               "of this document to HTML.\nAlternatively, allow HTML output by ",
-               "adding the option\n\n",
-               "always_allow_html: yes\n\n",
-               "to the yaml front matter of your rmarkdown file.",
+               "of this document to HTML. Alternatively, you can allow\n", 
+               "HTML output in non-HTML formats by adding this option to the YAML front",
+               "-matter of\nyour rmarkdown file:\n\n",
+               "  always_allow_html: yes\n\n",
+               "Note however that the HTML output will not be visible in non-HTML formats.\n\n",
                call. = FALSE)
         }
       }
