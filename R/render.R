@@ -337,9 +337,15 @@ render <- function(input,
     if (!(is_pandoc_to_html(output_format$pandoc) ||
           identical(tolower(tools::file_ext(output_file)), "html")))  {
       if (has_html_dependencies(knit_meta)) {
-        stop("Functions that produce HTML output found in document targeting ",
-             pandoc_to, " output.\nPlease change the output type ",
-             "of this document to HTML.", call. = FALSE)
+        if (!isTRUE(yaml_front_matter$always_allow_html)) {
+          stop("Functions that produce HTML output found in document targeting ",
+               pandoc_to, " output.\nPlease change the output type ",
+               "of this document to HTML.\nAlternatively, allow HTML output by ",
+               "adding the option\n\n",
+               "always_allow_html: yes\n\n",
+               "to the yaml front matter of your rmarkdown file.",
+               call. = FALSE)
+        }
       }
       if (!identical(runtime, "static")) {
         stop("Runtime '", runtime, "' is not supported for ",
