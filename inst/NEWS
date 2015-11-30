@@ -25,6 +25,10 @@ rmarkdown 0.8.3 (unreleased)
 * Fix for an issue causing image paths to be rendered incorrectly in Windows
   when rendering an `html_document` with `self_contained: false` and a path is
   passed in argument `output_dir`. (#551)
+  
+* Add always_allow_html option for preventing errors when html_dependencies are
+  rendered in non-HTML formats (e.g. pdf_document or word_document). 
+
 
 rmarkdown 0.8.1
 --------------------------------------------------------------------------------
