@@ -179,7 +179,7 @@ the logo will be displayed in a 85x85 pixel square). For example:
         logo: logo.png
     ---
 
-A 85x85 version of the logo graphic will be rescaled if necessary and
+The logo graphic will be rescaled to 85x85 (if necessary) and
 added to the title slide. A smaller icon version of the logo will be
 included in the bottom-left footer of each slide.
 
@@ -461,7 +461,7 @@ ioslides_presentation:
   smaller: true
 ```
 
-All documents located in the same directory as `_output.yaml` will inherit it's options. Options defined explicitly within documents will override those specified in the shared options file.
+All documents located in the same directory as `_output.yaml` will inherit its options. Options defined explicitly within documents will override those specified in the shared options file.
 
 
 
