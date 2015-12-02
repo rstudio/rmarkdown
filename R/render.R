@@ -391,8 +391,10 @@ render <- function(input,
   perf_timer_start("pandoc")
 
   # compile Rmd to tex when we need to generate --bibliography
-  if (grepl('[.](pdf|tex)$', output_file) &&
-      ('--bibliography' %in% output_format$pandoc$args)) {
+  # or when keep_tex is TRUE
+  if ( (grepl('[.](pdf|tex)$', output_file) &&
+        ('--bibliography' %in% output_format$pandoc$args)) ||
+       output_format$pandoc$keep_tex ) {
     texfile <- file_with_ext(output_file, "tex")
     pandoc_convert(utf8_input,
                    pandoc_to,
