@@ -187,8 +187,8 @@ The logo on the title page and the rectangular element containing it can
 be customised with CSS. For example:
 
     .gdbar img {
-      width: 353px !important;
-      height: 152px !important;
+      width: 300px !important;
+      height: 150px !important;
       margin: 8px 8px;
     }
     
@@ -197,7 +197,18 @@ be customised with CSS. For example:
       height: 170px !important;
     }
 
-These statements are to be placed in the CSS text file.
+These selectors are to be placed in the CSS text file.
+
+Similarly, the logo in the footer of each slide can be resized
+to any desired size. For example:
+
+    slides > slide:not(.nobackground):before {
+      width: 150px;
+      height: 75px;
+      background-size: 150px 75px;
+    }
+    
+This will make the footer logo 150 by 75 pixels in size.
 
 ## Tables
 
