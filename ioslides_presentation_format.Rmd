@@ -128,21 +128,6 @@ for example:
 
     ## Getting up {.smaller .build}
 
-### Adding a Logo
-
-You can add a logo to the presentation using the `logo` option (the logo
-should be square and at least 128x128). For example:
-
-    ---
-    output:
-      ioslides_presentation:
-        logo: logo.png
-    ---
-
-A 128x128 version of the logo graphic will be added to the title slide
-and an icon version of the logo will be included in the bottom-left
-footer of each slide.
-
 ### Custom CSS
 
 You can add your own CSS to an ioslides presentation using the `css` option:
@@ -182,6 +167,37 @@ adding a special "highlight" comment around the code. For example:
 The highlighted region will be displayed with a bold font. When you want
 to help the audience focus exclusively on the highlighted region press
 the `'h'` key and the rest of the code will fade away.
+
+### Adding a Logo
+
+You can add a logo to the presentation using the `logo` option (by default,
+the logo will be displayed in a 85x85 pixel square). For example:
+
+    ---
+    output:
+      ioslides_presentation:
+        logo: logo.png
+    ---
+
+The logo graphic will be rescaled to 85x85 (if necessary) and
+added to the title slide. A smaller icon version of the logo will be
+included in the bottom-left footer of each slide.
+
+The logo on the title page and the rectangular element containing it can
+be customised with CSS. For example:
+
+    .gdbar img {
+      width: 353px !important;
+      height: 152px !important;
+      margin: 8px 8px;
+    }
+    
+    .gdbar {
+      width: 400px !important;
+      height: 170px !important;
+    }
+
+These statements are to be placed in the CSS text file.
 
 ## Tables
 
@@ -445,7 +461,7 @@ ioslides_presentation:
   smaller: true
 ```
 
-All documents located in the same directory as `_output.yaml` will inherit it's options. Options defined explicitly within documents will override those specified in the shared options file.
+All documents located in the same directory as `_output.yaml` will inherit its options. Options defined explicitly within documents will override those specified in the shared options file.
 
 
 
