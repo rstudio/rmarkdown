@@ -394,19 +394,17 @@ render <- function(input,
   
   perf_timer_start("pandoc")
 
+  convert <- function(output, citeproc = FALSE) {
+    pandoc_convert(
+      utf8_input, pandoc_to, output_format$pandoc$from, output, citeproc,
+      output_format$pandoc$args, !quiet
+    )
+  }
+  texfile <- file_with_ext(output_file, "tex")
   # compile Rmd to tex when we need to generate --bibliography
-  # or when keep_tex is TRUE
-  if ( (grepl('[.](pdf|tex)$', output_file) &&
-        ('--bibliography' %in% output_format$pandoc$args)) ||
-       output_format$pandoc$keep_tex ) {
-    texfile <- file_with_ext(output_file, "tex")
-    pandoc_convert(utf8_input,
-                   pandoc_to,
-                   output_format$pandoc$from,
-                   texfile,
-                   FALSE,
-                   output_format$pandoc$args,
-                   !quiet)
+  if (grepl('[.](pdf|tex)$', output_file) &&
+      ('--bibliography' %in% output_format$pandoc$args)) {
+    convert(texfile)
     # manually compile tex if PDF output is expected
     if (grepl('[.]pdf$', output_file)) {
       latexmk(texfile, output_format$pandoc$latex_engine)
@@ -417,13 +415,9 @@ render <- function(input,
       on.exit(unlink(texfile), add = TRUE)
   } else {
     # run the main conversion if the output file is not .tex
-    pandoc_convert(utf8_input,
-                   pandoc_to,
-                   output_format$pandoc$from,
-                   output_file,
-                   run_citeproc,
-                   output_format$pandoc$args,
-                   !quiet)
+    convert(output_file, run_citeproc)
+    # run conversion again to .tex if we want to keep the tex source
+    if (output_format$pandoc$keep_tex) convert(texfile, run_citeproc)
   }
   
   # pandoc writes the output alongside the input, so if we rendered from an 

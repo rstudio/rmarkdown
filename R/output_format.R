@@ -103,13 +103,7 @@ merge_post_processors <- function (base, overlay) {
 merge_output_formats <- function(base, overlay)  {
   structure(list(
     knitr = merge_lists(base$knitr, overlay$knitr),
-    pandoc = pandoc_options(
-      to = merge_scalar(base$pandoc$to, overlay$pandoc$to),
-      from = merge_scalar(base$pandoc$from, overlay$pandoc$from),
-      args = c(base$pandoc$args, overlay$pandoc$args),
-      keep_tex = merge_scalar(base$pandoc$keep_tex, overlay$pandoc$keep_tex),
-      latex_engine = merge_scalar(base$pandoc$latex_engine, overlay$pandoc$latex_engine),
-      ext = merge_scalar(base$pandoc$ext, overlay$pandoc$ext)),
+    pandoc = merge_pandoc_options(base$pandoc, overlay$pandoc),
     keep_md =
       merge_scalar(base$keep_md, overlay$keep_md),
     clean_supporting =
@@ -122,6 +116,12 @@ merge_output_formats <- function(base, overlay)  {
     post_processor =
       merge_post_processors(base$post_processor, overlay$post_processor)
   ), class = "rmarkdown_output_format")
+}
+
+merge_pandoc_options <- function(base, overlay) {
+  res <- merge_lists(base, overlay, recursive = FALSE)
+  res$args <- c(base$args, overlay$args)
+  res
 }
 
 #' Knitr options for an output format
