@@ -103,7 +103,10 @@ merge_post_processors <- function (base, overlay) {
 merge_output_formats <- function(base, overlay)  {
   structure(list(
     knitr = merge_lists(base$knitr, overlay$knitr),
-    pandoc = merge_lists(base$pandoc, overlay$pandoc),
+    pandoc = pandoc_options(
+      to = merge_scalar(base$pandoc$to, overlay$pandoc$to),
+      from = merge_scalar(base$pandoc$from, overlay$pandoc$from),
+      args = c(base$pandoc$args, overlay$pandoc$args)),
     keep_md =
       merge_scalar(base$keep_md, overlay$keep_md),
     clean_supporting =
