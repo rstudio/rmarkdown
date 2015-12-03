@@ -54,6 +54,10 @@ render <- function(input,
                        encoding = encoding)
       outputs <- c(outputs, output)
     }
+    if (length(output_file) > 1) {
+      file.rename(outputs, output_file)
+      outputs <- output_file
+    }
     return(invisible(outputs))
   }
 
