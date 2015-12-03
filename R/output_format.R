@@ -106,7 +106,10 @@ merge_output_formats <- function(base, overlay)  {
     pandoc = pandoc_options(
       to = merge_scalar(base$pandoc$to, overlay$pandoc$to),
       from = merge_scalar(base$pandoc$from, overlay$pandoc$from),
-      args = c(base$pandoc$args, overlay$pandoc$args)),
+      args = c(base$pandoc$args, overlay$pandoc$args),
+      keep_tex = merge_scalar(base$pandoc$keep_tex, overlay$pandoc$keep_tex),
+      latex_engine = merge_scalar(base$pandoc$latex_engine, overlay$pandoc$latex_engine),
+      ext = merge_scalar(base$pandoc$ext, overlay$pandoc$ext)),
     keep_md =
       merge_scalar(base$keep_md, overlay$keep_md),
     clean_supporting =
