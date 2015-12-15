@@ -386,7 +386,7 @@ discover_r_resources <- function(r_file, discover_single_resource) {
   # find quoted strings in the code and attempt to ascertain whether they are
   # files on disk
   r_lines <- paste(r_lines, collapse = "\n")
-  quoted_strs <- Reduce(c, lapply(c("\"[^\"]+\"", "'[^']+'"), function(pat) {
+  quoted_strs <- Reduce(c, lapply(c("\"[^\"\n]*\"", "'[^'\n]*'"), function(pat) {
     matches <- unlist(regmatches(r_lines, gregexpr(pat, r_lines)))
     substr(matches, 2, nchar(matches) - 1)
   }))
@@ -394,7 +394,8 @@ discover_r_resources <- function(r_file, discover_single_resource) {
   # consider any quoted string containing a valid relative path to a file that 
   # exists on disk to be a reference
   for (quoted_str in quoted_strs) {
-    discover_single_resource(quoted_str, FALSE, is_web_file(quoted_str))
+    if (nchar(quoted_str) > 0)
+       discover_single_resource(quoted_str, FALSE, is_web_file(quoted_str))
   }
 }
 

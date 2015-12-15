@@ -153,3 +153,18 @@ test_that("filenames with shell characters can use relative resource paths", {
   on.exit(unlink(output_file), add = TRUE)
   file.rename("resources/file exists.Rmd", "resources/file-exists.Rmd")
 })
+
+test_that("empty quoted strings don't confuse resource discovery", {
+  skip_on_cran()
+  
+  resources <- find_external_resources("resources/quotes.Rmd")
+  expected <- data.frame(
+    path = c("empty.csv", "empty.tsv"),
+    explicit = c(FALSE, FALSE),
+    web      = c(FALSE, FALSE),
+    stringsAsFactors = FALSE)
+  
+  resources <- as.data.frame(resources[order(resources[[1]]), , drop = FALSE])
+  expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
+  expect_equal(resources, expected)
+})
