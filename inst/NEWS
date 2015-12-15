@@ -29,6 +29,9 @@ rmarkdown 0.8.3 (unreleased)
 * Add always_allow_html option for preventing errors when html_dependencies are
   rendered in non-HTML formats (e.g. pdf_document or word_document). 
 
+* Fix for an issue causing resources not to be discovered in some documents 
+  containing an empty quoted string (`""`) in an R chunk.
+
 
 rmarkdown 0.8.1
 --------------------------------------------------------------------------------
