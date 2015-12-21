@@ -1,4 +1,4 @@
-rmarkdown 0.8.3 (unreleased)
+rmarkdown 0.9
 --------------------------------------------------------------------------------
 
 * Fix for JS exception in slidy_presentation when served from the filesystem 
