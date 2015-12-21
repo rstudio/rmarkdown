@@ -64,8 +64,8 @@ alternate URL or pass \code{NULL} to exclude MathJax entirely.}
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
 built-in template; pass a path to use a custom template that you've
 created.  See the documentation on
-\href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
-templates} for more details.}
+\href{http://pandoc.org/README.html}{pandoc online documentation}
+for details on creating custom templates.}
 
 \item{css}{One or more css files to include}
 
@@ -97,9 +97,8 @@ Format for converting from R Markdown to a slidy presentation.
 See the \href{http://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
 documentation} for additional details on using the \code{slidy_presentation} format.
 
-For more information on markdown syntax for presentations see 
-\href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing
-slide shows with pandoc}.
+For more information on markdown syntax for presentations see the
+\href{http://pandoc.org/README.html}{pandoc online documentation}.
 }
 \examples{
 \dontrun{

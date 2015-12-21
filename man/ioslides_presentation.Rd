@@ -282,7 +282,7 @@ help the audience focus exclusively on the highlighted region press the
 The ioslides template has an attractive default style for tables so you
 shouldn't hestiate to add tables for presenting more complex sets of
 information. Pandoc markdown supports several syntaxes for defining
-tables which are described in the \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc markdown specification}.
+tables which are described in the \href{http://pandoc.org/README.html}{pandoc online documentation}.
 
 }
 

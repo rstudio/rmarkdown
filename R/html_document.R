@@ -75,9 +75,9 @@
 #' @section Templates:
 #'
 #' You can provide a custom HTML template to be used for rendering. The syntax
-#' for templates is described in the documentation on
-#' \href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
-#' templates}. You can also use the basic pandoc template by passing
+#' for templates is described in the 
+#' \href{http://pandoc.org/README.html}{pandoc
+#' documentation}. You can also use the basic pandoc template by passing
 #' \code{template = NULL}.
 #'
 #' Note however that if you choose not to use the "default" HTML template

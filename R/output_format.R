@@ -260,7 +260,7 @@ pandoc_options <- function(to,
 #' }
 #'
 #'
-#' For more on pandoc markdown see the \href{http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html}{pandoc markdown specification}.
+#' For more on pandoc markdown see the \href{http://pandoc.org/README.html}{pandoc online documentation}.
 #'
 #' @examples
 #' \dontrun{

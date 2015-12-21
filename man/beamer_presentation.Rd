@@ -52,8 +52,8 @@ individual bullet you can preceded it with \code{>}. For example:
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
 built-in template; pass a path to use a custom template that you've
 created.  See the documentation on
-\href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
-templates} for more details.}
+\href{http://pandoc.org/README.html}{pandoc online documentation}
+for details on creating custom templates.}
 
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
 
@@ -83,10 +83,6 @@ See the \href{http://rmarkdown.rstudio.com/beamer_presentation_format.html}{onli
 documentation} for additional details on using the \code{beamer_presentation} format.
 
 Creating Beamer output from R Markdown requires that LaTeX be installed.
-
-For more information on markdown syntax for presentations see
-\href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing
-slide shows with pandoc}.
 
 R Markdown documents can have optional metadata that is used to generate a
 document header that includes the title, author, and date. For more details

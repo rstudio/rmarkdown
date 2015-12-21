@@ -37,8 +37,8 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
 built-in template; pass a path to use a custom template that you've
 created.  See the documentation on
-\href{http://johnmacfarlane.net/pandoc/demo/example9/templates.html}{pandoc
-templates} for more details.}
+\href{http://pandoc.org/README.html}{pandoc online documentation}
+for details on creating custom templates.}
 
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
 

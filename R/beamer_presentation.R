@@ -29,10 +29,6 @@
 #'
 #' Creating Beamer output from R Markdown requires that LaTeX be installed.
 #'
-#' For more information on markdown syntax for presentations see
-#' \href{http://johnmacfarlane.net/pandoc/demo/example9/producing-slide-shows-with-pandoc.html}{producing
-#' slide shows with pandoc}.
-#'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. For more details
 #' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
