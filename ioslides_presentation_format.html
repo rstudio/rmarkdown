@@ -287,16 +287,6 @@ output:
 <p>Slide attributes can be combined if you need to specify more than one, for example:</p>
 <pre><code>## Getting up {.smaller .build}</code></pre>
 </div>
-<div id="adding-a-logo" class="section level3">
-<h3>Adding a Logo</h3>
-<p>You can add a logo to the presentation using the <code>logo</code> option (the logo should be square and at least 128x128). For example:</p>
-<pre><code>---
-output:
-  ioslides_presentation:
-    logo: logo.png
----</code></pre>
-<p>A 128x128 version of the logo graphic will be added to the title slide and an icon version of the logo will be included in the bottom-left footer of each slide.</p>
-</div>
 <div id="custom-css" class="section level3">
 <h3>Custom CSS</h3>
 <p>You can add your own CSS to an ioslides presentation using the <code>css</code> option:</p>
@@ -325,6 +315,35 @@ x &lt;- 10
 y &lt;- x * 2
 ### &lt;/b&gt;</code></pre>
 <p>The highlighted region will be displayed with a bold font. When you want to help the audience focus exclusively on the highlighted region press the <code>'h'</code> key and the rest of the code will fade away.</p>
+<div id="adding-a-logo" class="section level3">
+<h3>Adding a Logo</h3>
+<p>You can add a logo to the presentation using the <code>logo</code> option (by default, the logo will be displayed in a 85x85 pixel square). For example:</p>
+<pre><code>---
+output:
+  ioslides_presentation:
+    logo: logo.png
+---</code></pre>
+<p>The logo graphic will be rescaled to 85x85 (if necessary) and added to the title slide. A smaller icon version of the logo will be included in the bottom-left footer of each slide.</p>
+<p>The logo on the title page and the rectangular element containing it can be customised with CSS. For example:</p>
+<pre><code>.gdbar img {
+  width: 300px !important;
+  height: 150px !important;
+  margin: 8px 8px;
+}
+
+.gdbar {
+  width: 400px !important;
+  height: 170px !important;
+}</code></pre>
+<p>These selectors are to be placed in the CSS text file.</p>
+<p>Similarly, the logo in the footer of each slide can be resized to any desired size. For example:</p>
+<pre><code>slides &gt; slide:not(.nobackground):before {
+  width: 150px;
+  height: 75px;
+  background-size: 150px 75px;
+}</code></pre>
+<p>This will make the footer logo 150 by 75 pixels in size.</p>
+</div>
 </div>
 <div id="tables" class="section level2">
 <h2>Tables</h2>
@@ -479,7 +498,7 @@ output:
   ioslides_presentation:
     template: quarterly_report.html
 ---</code></pre>
-<p>Consult the documentation on <a href="http://johnmacfarlane.net/pandoc/demo/example9/templates.html">pandoc templates</a> for additional details on templates. You can also study the <a href="https://github.com/jgm/pandoc-templates/blob/master/default.html">default HTML template</a> as an example.</p>
+<p>Consult the documentation on <a href="http://pandoc.org/README.html#templates">pandoc templates</a> for additional details on templates. You can also study the <a href="https://github.com/jgm/pandoc-templates/blob/master/default.html">default HTML template</a> as an example.</p>
 </div>
 <div id="markdown-extensions" class="section level3">
 <h3>Markdown Extensions</h3>
@@ -519,7 +538,7 @@ output:
 <pre class="yaml"><code>ioslides_presentation:
   widescreen: true
   smaller: true</code></pre>
-<p>All documents located in the same directory as <code>_output.yaml</code> will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.</p>
+<p>All documents located in the same directory as <code>_output.yaml</code> will inherit its options. Options defined explicitly within documents will override those specified in the shared options file.</p>
 </div>
 
 

@@ -45,7 +45,7 @@ You can also compose custom markdown variants, for example:
         variant: markdown_strict+backtick_code_blocks+autolink_bare_uris
     ---
 
-The [pandoc markdown specification](http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html) defines all of the markdown extensions and their name to be used in composing custom variants.
+The [pandoc markdown specification](http://pandoc.org/README.html#pandocs-markdown) defines all of the markdown extensions and their name to be used in composing custom variants.
 
 ### Using Variants for Publishing
 

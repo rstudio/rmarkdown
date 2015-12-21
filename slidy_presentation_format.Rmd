@@ -292,7 +292,7 @@ You can also replace the underlying pandoc template using the `template` option:
         template: quarterly_report.html
     ---
 
-Consult the documentation on [pandoc templates](http://johnmacfarlane.net/pandoc/demo/example9/templates.html) for additional details on templates. You can also study the [default HTML template](https://github.com/jgm/pandoc-templates/blob/master/default.html) as an example.
+Consult the documentation on [pandoc templates](http://pandoc.org/README.html#templates) for additional details on templates. You can also study the [default HTML template](https://github.com/jgm/pandoc-templates/blob/master/default.html) as an example.
 
 ### Markdown Extensions
 
