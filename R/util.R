@@ -278,7 +278,7 @@ latexmk_emu <- function(file, engine) {
 
   file_with_same_base <- function(file) {
     files <- list.files()
-    files <- files[file_test('-f', files)]
+    files <- files[utils::file_test('-f', files)]
     base <- tools::file_path_sans_ext(file)
     normalizePath(files[tools::file_path_sans_ext(files) == base])
   }
