@@ -66,7 +66,7 @@ beamer_presentation <- function(toc = FALSE,
                                 template = "default",
                                 keep_tex = FALSE,
                                 latex_engine = "pdflatex",                              
-                                citation_package = c("natbib", "biblatex"),
+                                citation_package = c("none", "natbib", "biblatex"),
                                 includes = NULL,
                                 md_extensions = NULL,
                                 pandoc_args = NULL) {
@@ -111,7 +111,7 @@ beamer_presentation <- function(toc = FALSE,
   
   # citation package
   citation_package <- match.arg(citation_package)
-  args <- c(args, paste0("--", citation_package))
+  if (citation_package != "none") args <- c(args, paste0("--", citation_package))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))

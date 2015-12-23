@@ -9,7 +9,7 @@ beamer_presentation(toc = FALSE, slide_level = NULL, incremental = FALSE,
   dev = "pdf", theme = "default", colortheme = "default",
   fonttheme = "default", highlight = "default", template = "default",
   keep_tex = FALSE, latex_engine = "pdflatex",
-  citation_package = c("natbib", "biblatex"), includes = NULL,
+  citation_package = c("none", "natbib", "biblatex"), includes = NULL,
   md_extensions = NULL, pandoc_args = NULL)
 }
 \arguments{
@@ -61,7 +61,7 @@ for details on creating custom templates.}
 "pdflatex", "lualatex", and "xelatex".}
 
 \item{citation_package}{The LaTeX package to process citations, \code{natbib}
-or \code{biblatex}.}
+or \code{biblatex}. Use \code{none} if neither package is to be used.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}

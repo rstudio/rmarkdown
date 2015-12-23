@@ -401,9 +401,9 @@ render <- function(input,
     )
   }
   texfile <- file_with_ext(output_file, "tex")
-  # compile Rmd to tex when we need to generate --bibliography
+  # compile Rmd to tex when we need to generate bibliography with natbib/biblatex
   if (grepl('[.](pdf|tex)$', output_file) &&
-      ('--bibliography' %in% output_format$pandoc$args)) {
+      any(c('--natbib', '--biblatex') %in% output_format$pandoc$args)) {
     convert(texfile)
     # manually compile tex if PDF output is expected
     if (grepl('[.]pdf$', output_file)) {

@@ -8,7 +8,7 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   fig_width = 6.5, fig_height = 4.5, fig_crop = TRUE,
   fig_caption = FALSE, dev = "pdf", highlight = "default",
   template = "default", keep_tex = FALSE, latex_engine = "pdflatex",
-  citation_package = c("natbib", "biblatex"), includes = NULL,
+  citation_package = c("none", "natbib", "biblatex"), includes = NULL,
   md_extensions = NULL, pandoc_args = NULL)
 }
 \arguments{
@@ -46,7 +46,7 @@ for details on creating custom templates.}
 "pdflatex", "lualatex", and "xelatex".}
 
 \item{citation_package}{The LaTeX package to process citations, \code{natbib}
-or \code{biblatex}.}
+or \code{biblatex}. Use \code{none} if neither package is to be used.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
