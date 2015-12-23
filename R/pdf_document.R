@@ -14,7 +14,7 @@
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", and "xelatex".
 #' @param citation_package The LaTeX package to process citations, \code{natbib}
-#'   or \code{biblatex}.
+#'   or \code{biblatex}. Use \code{none} if neither package is to be used.
 #' @param template Pandoc template to use for rendering. Pass "default" to use
 #'   the rmarkdown package default template; pass \code{NULL} to use pandoc's
 #'   built-in template; pass a path to use a custom template that you've
@@ -92,7 +92,7 @@ pdf_document <- function(toc = FALSE,
                          template = "default",
                          keep_tex = FALSE,
                          latex_engine = "pdflatex",
-                         citation_package = c("natbib", "biblatex"),
+                         citation_package = c("none", "natbib", "biblatex"),
                          includes = NULL,
                          md_extensions = NULL,
                          pandoc_args = NULL) {
@@ -136,7 +136,7 @@ pdf_document <- function(toc = FALSE,
 
   # citation package
   citation_package <- match.arg(citation_package)
-  args <- c(args, paste0("--", citation_package))
+  if (citation_package != "none") args <- c(args, paste0("--", citation_package))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
