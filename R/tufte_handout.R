@@ -56,23 +56,14 @@ tufte_handout <- function(fig_width = 4,
   
   # set hooks for special plot output
   knitr_options$knit_hooks$plot <- function(x, options) {
-    
-    # determine caption (if any)
-    caption <- ifelse(is.null(options$fig.cap), 
-                      "",
-                      paste("\\caption{", options$fig.cap, "}\n", sep = ""))
-    
+
     # determine figure type
     if (isTRUE(options$fig.margin)) 
-      figtype <- "marginfigure"
+      options$fig.env <- "marginfigure"
     else if (isTRUE(options$fig.fullwidth))
-      figtype <- "figure*"
-    else
-      figtype <- "figure"
-    
-    # return the latex
-    paste(sprintf('\\begin{%s}\n \\includegraphics{%s}\n%s\\end{%s}\n',
-                  figtype, x, caption, figtype))
+      options$fig.env <- "figure*"
+
+    knitr::hook_plot_tex(x, options)
   }
   
   # override the knitr settings of the base format and return the format
