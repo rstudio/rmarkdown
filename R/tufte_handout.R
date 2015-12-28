@@ -70,3 +70,21 @@ tufte_handout <- function(fig_width = 4,
   format$knitr <- knitr_options
   format
 }
+
+#' Tufte handout format (HTML)
+#' 
+#' Similar to \code{\link{tufte_handout}}, but for HTML output. It uses the CSS 
+#' from \url{https://edwardtufte.github.io/tufte-css/}.
+#' @param css One or more CSS files to include, and the Tufte CSS will always be
+#'   included in this list
+#' @param ... Other arguments to be passed to \code{\link{html_document}} (note
+#'   you cannot use the \code{theme} argument, which has been set to \code{NULL}
+#'   internally)
+#' @export
+tufte_html <- function(css = NULL, ...) {
+  tufte_css <- rmarkdown_system_file(
+    'rmarkdown', 'templates', 'tufte_html', 'resources', 'tufte.css'
+  )
+  css <- c(tufte_css, css)
+  html_document(css = css, theme = NULL, ...)
+}
