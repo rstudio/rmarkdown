@@ -34,8 +34,8 @@ pandoc_output_file <- function(input, pandoc_options) {
 }
 
 
-rmarkdown_system_file <- function(file) {
-  system.file(file, package = "rmarkdown")
+rmarkdown_system_file <- function(...) {
+  system.file(..., package = "rmarkdown")
 }
 
 from_rmarkdown <- function(implicit_figures = TRUE, extensions = NULL) {
