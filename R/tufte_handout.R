@@ -1,11 +1,17 @@
 
-#' Tufte handout format (PDF)
+#' Tufte handout formats (PDF and HTML)
 #' 
-#' Template for creating a handout according to the style of 
-#' Edward R. Tufte and Richard Feynman. 
+#' Templates for creating handouts according to the style of Edward R. Tufte and
+#' Richard Feynman.
 #' 
+#' \code{tufte_handout()} provides the PDF format based on the Tufte-LaTeX 
+#' class: \url{https://tufte-latex.github.io/tufte-latex/}.
 #' @inheritParams pdf_document
-#' 
+#' @param ... Other arguments to be passed to \code{\link{pdf_document}} or 
+#'   \code{\link{html_document}} (note you cannot use the \code{template} 
+#'   argument in \code{tufte_handout} or the \code{theme} argument in 
+#'   \code{tufte_html()}; these arguments have been set internally)
+#'   
 #' @export
 tufte_handout <- function(
   fig_width = 4, fig_height = 2.5, fig_crop = TRUE, dev = "pdf",
@@ -55,15 +61,11 @@ tufte_handout <- function(
   format
 }
 
-#' Tufte handout format (HTML)
-#' 
-#' Similar to \code{\link{tufte_handout}}, but for HTML output. It uses the CSS 
-#' from \url{https://edwardtufte.github.io/tufte-css/}.
+#' @details \code{tufte_html()} provides the HTML format based on the Tufte CSS:
+#'   \url{https://edwardtufte.github.io/tufte-css/}.
 #' @param css One or more CSS files to include, and the Tufte CSS will always be
 #'   included in this list
-#' @param ... Other arguments to be passed to \code{\link{html_document}} (note
-#'   you cannot use the \code{theme} argument, which has been set to \code{NULL}
-#'   internally)
+#' @rdname tufte_handout
 #' @export
 tufte_html <- function(css = NULL, ...) {
   tufte_css <- rmarkdown_system_file(
