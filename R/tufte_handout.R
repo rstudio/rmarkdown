@@ -7,42 +7,26 @@
 #' @inheritParams pdf_document
 #' 
 #' @export
-tufte_handout <- function(fig_width = 4,
-                          fig_height = 2.5,
-                          fig_crop = TRUE,
-                          dev = 'pdf',
-                          highlight = "default",
-                          keep_tex = FALSE,
-                          citation_package = c("none", "natbib", "biblatex"),
-                          includes = NULL,
-                          md_extensions = NULL,
-                          pandoc_args = NULL) {
+tufte_handout <- function(
+  fig_width = 4, fig_height = 2.5, fig_crop = TRUE, dev = "pdf",
+  highlight = "default", ...
+) {
   
   # resolve default highlight
   if (identical(highlight, "default"))
     highlight <- "pygments"
   
   # get the tufte handlout template
-  template <-  system.file(
-    "rmarkdown/templates/tufte_handout/resources/tufte-handout.tex", 
-    package = "rmarkdown"
+  template <-  rmarkdown_system_file(
+    "rmarkdown", "templates", "tufte_handout", "resources", "tufte-handout.tex"
   )
   
   # call the base pdf_document format with the appropriate options
-  format <- rmarkdown::pdf_document(fig_width = fig_width,
-                                    fig_height = fig_height,
-                                    fig_crop = fig_crop,
-                                    dev = dev,
-                                    highlight = highlight,
-                                    template = template,
-                                    keep_tex = keep_tex,
-                                    citation_package = citation_package,
-                                    latex_engine = "pdflatex",
-                                    includes = includes,
-                                    md_extensions = md_extensions,
-                                    pandoc_args = pandoc_args)
-                        
-  
+  format <- rmarkdown::pdf_document(
+    fig_width = fig_width, fig_height = fig_height, fig_crop = fig_crop,
+    dev = dev, highlight = highlight, template = template, ...
+  )
+
   # create knitr options (ensure opts and hooks are non-null)
   knitr_options <- knitr_options_pdf(fig_width, fig_height, fig_crop, dev)
   if (is.null(knitr_options$opts_knit))
