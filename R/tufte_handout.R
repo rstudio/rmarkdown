@@ -74,3 +74,22 @@ tufte_html <- function(css = NULL, ...) {
   css <- c(tufte_css, css)
   html_document(css = css, theme = NULL, ...)
 }
+
+#' @details \code{newthought()} can be used in inline R expressions in R
+#'   Markdown (e.g. \samp{`r newthought(Some text)`}), and it works for both
+#'   HTML (\samp{<span class="newthought">text</span>}) and PDF
+#'   (\samp{\\newthought{text}}) output.
+#' @param text A character string to be presented as a \dQuote{new thought}
+#'   (using small caps)
+#' @rdname tufte_handout
+#' @export
+newthought <- function(text) {
+  if (is_html_output()) {
+    sprintf('<span class="newthought">%s</span>', text)
+  } else if (is_latex_output()) {
+    sprintf('\\newthought{%s}', text)
+  } else {
+    warning('newthought() only works for HTML and LaTeX output')
+    text
+  }
+}
