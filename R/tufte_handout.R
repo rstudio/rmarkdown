@@ -72,7 +72,34 @@ tufte_html <- function(css = character(0), ...) {
     'rmarkdown', 'templates', 'tufte_html', 'resources', 'tufte.css'
   )
   css <- c(tufte_css, css)
-  html_document(css = css, theme = NULL, ...)
+  config <- html_document(css = css, theme = NULL, ...)
+  config$post_processor <- function(metadata, input, output, clean, verbose) {
+    x <- read_lines_utf8(output, 'UTF-8')
+    notes <- parse_footnotes(x)
+    for (i in seq_along(notes)) {
+      num <- sprintf(
+        '<a href="#fn%d" class="footnoteRef" id="fnref%d"><sup>%d</sup></a>',
+        i, i, i
+      )
+      con <- sprintf(paste0(
+        '<label for="tufte-sn-%d" class="margin-toggle sidenote-number">%d</label>',
+        '<input type="checkbox" id="tufte-sn-%d" class="margin-toggle">',
+        '<span class="sidenote"><span class="sidenote-number">%d</span> %s</span>'
+      ), i, i, i, i, notes[i])
+      x <- sub(num, con, x, fixed = TRUE)
+    }
+    writeLines(enc2utf8(x), output, useBytes = TRUE)
+    output
+  }
+  config
+}
+
+parse_footnotes <- function(x) {
+  i <- which(x == '<div class="footnotes">')
+  if (length(i) == 0) return(character())
+  n <- length(x)
+  r <- '<li id="fn([0-9]+)"><p>(.+)<a href="#fnref\\1">.</a></p></li>'
+  gsub(r, '\\2', grep(r, x[i:n], value = TRUE))
 }
 
 #' @details \code{newthought()} can be used in inline R expressions in R
