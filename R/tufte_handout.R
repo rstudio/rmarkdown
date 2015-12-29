@@ -67,7 +67,7 @@ tufte_handout <- function(
 #'   included in this list
 #' @rdname tufte_handout
 #' @export
-tufte_html <- function(css = NULL, ...) {
+tufte_html <- function(css = character(0), ...) {
   tufte_css <- rmarkdown_system_file(
     'rmarkdown', 'templates', 'tufte_html', 'resources', 'tufte.css'
   )
@@ -89,7 +89,7 @@ newthought <- function(text) {
   } else if (is_latex_output()) {
     sprintf('\\newthought{%s}', text)
   } else {
-    warning('newthought() only works for HTML and LaTeX output')
+    warning('newthought() only works for HTML and LaTeX output', call. = FALSE)
     text
   }
 }
