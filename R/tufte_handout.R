@@ -63,16 +63,13 @@ tufte_handout <- function(
 
 #' @details \code{tufte_html()} provides the HTML format based on the Tufte CSS:
 #'   \url{https://edwardtufte.github.io/tufte-css/}.
-#' @param css One or more CSS files to include, and the Tufte CSS will always be
-#'   included in this list
 #' @rdname tufte_handout
 #' @export
-tufte_html <- function(css = character(0), ...) {
+tufte_html <- function(...) {
   tufte_css <- rmarkdown_system_file(
     'rmarkdown', 'templates', 'tufte_html', 'resources', 'tufte.css'
   )
-  css <- c(tufte_css, css)
-  config <- html_document(css = css, theme = NULL, ...)
+  config <- html_document(theme = NULL, ..., extra_dependencies = tufte_html_dependency())
   config$post_processor <- function(metadata, input, output, clean, verbose) {
     x <- read_lines_utf8(output, 'UTF-8')
     notes <- parse_footnotes(x)
@@ -92,6 +89,14 @@ tufte_html <- function(css = character(0), ...) {
     output
   }
   config
+}
+
+tufte_html_dependency <- function() {
+  list(htmlDependency(
+    'tufte-css', '2015.12.29',
+    src = rmarkdown_system_file('rmarkdown', 'templates', 'tufte_html', 'resources'),
+    stylesheet = 'tufte.css'
+  ))
 }
 
 parse_footnotes <- function(x) {
