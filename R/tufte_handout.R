@@ -107,7 +107,7 @@ parse_footnotes <- function(x) {
 #'   HTML (\samp{<span class="newthought">text</span>}) and PDF
 #'   (\samp{\\newthought{text}}) output.
 #' @param text A character string to be presented as a \dQuote{new thought}
-#'   (using small caps)
+#'   (using small caps), or a margin note
 #' @rdname tufte_handout
 #' @export
 newthought <- function(text) {
@@ -120,3 +120,24 @@ newthought <- function(text) {
     text
   }
 }
+
+#' @param icon A character string to indicate there is a hidden margin note when
+#'   the page width is too narrow (by default it is a circled plus sign)
+#' @rdname tufte_handout
+#' @export
+marginnote <- local({
+  i <- 0L
+  function(text, icon = '&#8853;') {
+    if (is_html_output()) {
+      i <<- i + 1L
+      sprintf('<label for="tufte-mn-%d" class="margin-toggle">%s</label>
+              <input type="checkbox" id="tufte-mn-%d" class="margin-toggle">
+              <span class="marginnote">%s</span>', i, icon, i, text)
+    } else if (is_latex_output()) {
+      sprintf('\\marginnote{%s}', text)
+    } else {
+      warning('marginnote() only works for HTML and LaTeX output', call. = FALSE)
+      text
+    }
+  }
+})
