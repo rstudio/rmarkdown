@@ -72,7 +72,9 @@ tufte_html <- function(...) {
   config <- html_document(theme = NULL, ..., extra_dependencies = tufte_html_dependency())
   config$post_processor <- function(metadata, input, output, clean, verbose) {
     x <- read_lines_utf8(output, 'UTF-8')
-    notes <- parse_footnotes(x)
+    footnotes <- parse_footnotes(x)
+    notes <- footnotes$items
+    # replace footnotes with sidenotes
     for (i in seq_along(notes)) {
       num <- sprintf(
         '<a href="#fn%d" class="footnoteRef" id="fnref%d"><sup>%d</sup></a>',
@@ -85,6 +87,8 @@ tufte_html <- function(...) {
       ), i, i, i, i, notes[i])
       x <- sub(num, con, x, fixed = TRUE)
     }
+    # remove footnotes at the bottom
+    if (length(footnotes$range)) x <- x[-footnotes$range]
     writeLines(enc2utf8(x), output, useBytes = TRUE)
     output
   }
@@ -99,12 +103,19 @@ tufte_html_dependency <- function() {
   ))
 }
 
+# we assume one footnote only contains one paragraph here, although it is
+# possible to write multiple paragraphs in a footnote with Pandoc's Markdown
 parse_footnotes <- function(x) {
   i <- which(x == '<div class="footnotes">')
-  if (length(i) == 0) return(character())
+  if (length(i) == 0) return(list(items = character(), range = integer()))
+  j <- which(x == '</div>')
+  j <- min(j[j > i])
   n <- length(x)
   r <- '<li id="fn([0-9]+)"><p>(.+)<a href="#fnref\\1">.</a></p></li>'
-  gsub(r, '\\2', grep(r, x[i:n], value = TRUE))
+  list(
+    items = gsub(r, '\\2', grep(r, x[i:n], value = TRUE)),
+    range = i:j
+  )
 }
 
 #' @details \code{newthought()} can be used in inline R expressions in R
