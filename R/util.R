@@ -380,3 +380,5 @@ is_latex_output <- function(...) {
   })
   fun(...)
 }
+
+gsub_fixed <- function(...) gsub(..., fixed = TRUE)

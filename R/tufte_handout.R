@@ -100,6 +100,32 @@ tufte_html <- function(...) {
     writeLines(enc2utf8(x), output, useBytes = TRUE)
     output
   }
+  if (is.null(format$knitr$knit_hooks)) format$knitr$knit_hooks <- list()
+  format$knitr$knit_hooks$plot <- function(x, options) {
+    # make sure the plot hook always generates HTML code instead of ![]()
+    if (is.null(options$out.extra)) options$out.extra <- ''
+    fig_margin <- isTRUE(options$fig.margin)
+    fig_fullwd <- isTRUE(options$fig.fullwidth)
+    # for normal figures, place captions at the top of images
+    if (!fig_margin && !fig_fullwd && is.null(options$fig.topcaption))
+      options$fig.topcaption <- TRUE
+    res <- knitr::hook_plot_md(x, options)
+    if (fig_margin) {
+      res <- gsub_fixed('<p class="caption">', '<!--\n<p class="caption ">-->', res)
+      res <- gsub_fixed('</p>', '<!--</p>-->', res)
+      res <- gsub_fixed('</div>', '<!--</div>--></span></p>', res)
+      res <- gsub_fixed(
+        '<div class="figure">', paste0(
+          '<p>', marginnote_html(), '<span class="marginnote">',
+          '<!--\n<div class="figure">-->'
+        ), res
+      )
+    } else if (fig_fullwd) {
+      res <- gsub_fixed('<div class="figure">', '<div class="figure fullwidth">', res)
+      res <- gsub_fixed('<p class="caption">', '<p class="caption fullwidth">', res)
+    }
+    res
+  }
   format
 }
 
