@@ -69,8 +69,8 @@ tufte_html <- function(...) {
   tufte_css <- rmarkdown_system_file(
     'rmarkdown', 'templates', 'tufte_html', 'resources', 'tufte.css'
   )
-  config <- html_document(theme = NULL, ..., extra_dependencies = tufte_html_dependency())
-  config$post_processor <- function(metadata, input, output, clean, verbose) {
+  format <- html_document(theme = NULL, ..., extra_dependencies = tufte_html_dependency())
+  format$post_processor <- function(metadata, input, output, clean, verbose) {
     x <- read_lines_utf8(output, 'UTF-8')
     footnotes <- parse_footnotes(x)
     notes <- footnotes$items
@@ -100,7 +100,7 @@ tufte_html <- function(...) {
     writeLines(enc2utf8(x), output, useBytes = TRUE)
     output
   }
-  config
+  format
 }
 
 tufte_html_dependency <- function() {
