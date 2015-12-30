@@ -154,6 +154,19 @@ test_that("filenames with shell characters can use relative resource paths", {
   file.rename("resources/file exists.Rmd", "resources/file-exists.Rmd")
 })
 
+test_that("resources not deleted when filenames contain shell characters", {
+  skip_on_cran()
+
+  # save current working directory
+  oldwd <- setwd("resources")
+  on.exit(setwd(oldwd), add = TRUE)
+
+  file.rename("file-exists.Rmd", "file exists.Rmd")
+  capture.output(unlink(render("file exists.Rmd")))
+  file.rename("file exists.Rmd", "file-exists.Rmd")
+  expect_true(file.exists("empty.csv"))
+})
+
 test_that("empty quoted strings don't confuse resource discovery", {
   skip_on_cran()
   
