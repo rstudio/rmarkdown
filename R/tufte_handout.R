@@ -89,6 +89,14 @@ tufte_html <- function(...) {
     }
     # remove footnotes at the bottom
     if (length(footnotes$range)) x <- x[-footnotes$range]
+    # place figure captions in margin notes
+    x[x == '<p class="caption">'] <- marginnote_html('\n<p class="caption marginnote">')
+    # add an incremental number to the id of <label> and <input> for margin notes
+    r <- '(<label|<input type="checkbox") (id|for)(="tufte-mn)-(" )'
+    mn <- grep(r, x)
+    for (i in seq_along(mn)) {
+      x[mn[i]] <- gsub(r, paste0('\\1 \\2\\3-', i, '\\4'), x[mn[i]])
+    }
     writeLines(enc2utf8(x), output, useBytes = TRUE)
     output
   }
@@ -137,23 +145,26 @@ newthought <- function(text) {
   }
 }
 
+#' @details \code{marginnote()} can be used in inline R expressions to write a
+#'   margin note (like a sidenote but not numbered)
 #' @param icon A character string to indicate there is a hidden margin note when
 #'   the page width is too narrow (by default it is a circled plus sign)
 #' @rdname tufte_handout
 #' @export
-marginnote <- local({
-  i <- 0L
-  function(text, icon = '&#8853;') {
-    if (is_html_output()) {
-      i <<- i + 1L
-      sprintf('<label for="tufte-mn-%d" class="margin-toggle">%s</label>
-              <input type="checkbox" id="tufte-mn-%d" class="margin-toggle">
-              <span class="marginnote">%s</span>', i, icon, i, text)
-    } else if (is_latex_output()) {
-      sprintf('\\marginnote{%s}', text)
-    } else {
-      warning('marginnote() only works for HTML and LaTeX output', call. = FALSE)
-      text
-    }
+marginnote <- function(text, icon = '&#8853;') {
+  if (is_html_output()) {
+    marginnote_html(sprintf('<span class="marginnote">%s</span>', text), icon)
+  } else if (is_latex_output()) {
+    sprintf('\\marginnote{%s}', text)
+  } else {
+    warning('marginnote() only works for HTML and LaTeX output', call. = FALSE)
+    text
   }
-})
+}
+
+marginnote_html <- function(text = '', icon = '&#8853;') {
+  sprintf(paste0(
+    '<label for="tufte-mn-" class="margin-toggle">%s</label>',
+    '<input type="checkbox" id="tufte-mn-" class="margin-toggle">%s'
+  ), icon, text)
+}
