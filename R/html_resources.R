@@ -419,7 +419,7 @@ copy_render_intermediates <- function(original_input, encoding,
   by(resources, seq_len(nrow(resources)), function(res) {
     # skip web resources if requested
     if (skip_web && res$web)
-      return
+      return()
     
     # compute the new path to this file in the intermediates folder, and 
     # create the hosting folder if it doesn't exist
