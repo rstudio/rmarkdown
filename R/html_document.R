@@ -181,7 +181,7 @@ html_document <- function(toc = FALSE,
     # elsewhere.
     args <- c(args, includes_to_pandoc_args(includes,
                       filter = if (identical(runtime, "shiny"))
-                        normalize_path
+                        function(x) normalize_path(x, mustWork = FALSE)
                       else
                         identity))
 
