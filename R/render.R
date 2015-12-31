@@ -115,9 +115,15 @@ render <- function(input,
     input <- input_no_shell_chars
     
     # if an intermediates directory wasn't explicit before, make it explicit now
-    if (is.null(intermediates_dir))
+    if (is.null(intermediates_dir)) {
       intermediates_dir <- 
         dirname(normalizePath(input_no_shell_chars, winslash = "/"))
+      # never use the original input directory as the intermediate directory,
+      # otherwise external resources discovered will be deleted as intermediate
+      # files later (because they are copied to the "intermediate" dir)
+      if (intermediates_dir == normalizePath(dirname(original_input)))
+        intermediates_dir <- NULL
+    }
   }
 
   # execute within the input file's directory

@@ -4,7 +4,7 @@ sudo: false
 
 env:
   global:
-    - R_PKG="$(basename $TRAVIS_REPO_SLUG)" PATH=$HOME/bin:$PATH
+    - R_PKG="$(basename $TRAVIS_REPO_SLUG)" PATH=$HOME/bin:$PATH NOT_CRAN=true
 
 addons:
   apt:
