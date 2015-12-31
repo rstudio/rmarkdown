@@ -76,7 +76,7 @@ render <- function(input,
   if (!is.null(intermediates_dir)) {
     if (!dir_exists(intermediates_dir))
       dir.create(intermediates_dir, recursive = TRUE)
-    intermediates_dir <- normalizePath(intermediates_dir, winslash = "/")
+    intermediates_dir <- normalize_path(intermediates_dir)
   } 
   intermediates_loc <- function(file) {
     if (is.null(intermediates_dir))
@@ -90,12 +90,12 @@ render <- function(input,
   if (!is.null(output_dir)) {
     if (!dir_exists(output_dir))
       dir.create(output_dir, recursive = TRUE)
-    output_dir <- normalizePath(output_dir, winslash = "/")
+    output_dir <- normalize_path(output_dir)
   }
   
   # remember the name of the original input document (we overwrite 'input' once
   # we've knitted)
-  original_input <- normalizePath(input, winslash = "/")
+  original_input <- normalize_path(input)
 
   # if the input file has shell characters in its name then make a copy that
   # doesn't have shell characters
@@ -117,7 +117,7 @@ render <- function(input,
     # if an intermediates directory wasn't explicit before, make it explicit now
     if (is.null(intermediates_dir)) {
       intermediates_dir <- 
-        dirname(normalizePath(input_no_shell_chars, winslash = "/"))
+        dirname(normalize_path(input_no_shell_chars))
       # never use the original input directory as the intermediate directory,
       # otherwise external resources discovered will be deleted as intermediate
       # files later (because they are copied to the "intermediate" dir)
