@@ -121,7 +121,7 @@ render <- function(input,
       # never use the original input directory as the intermediate directory,
       # otherwise external resources discovered will be deleted as intermediate
       # files later (because they are copied to the "intermediate" dir)
-      if (intermediates_dir == normalizePath(dirname(original_input)))
+      if (intermediates_dir == normalizePath(dirname(original_input), winslash = "/"))
         intermediates_dir <- NULL
     }
   }
