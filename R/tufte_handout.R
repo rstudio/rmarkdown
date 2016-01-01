@@ -166,8 +166,7 @@ newthought <- function(text) {
   } else if (is_latex_output()) {
     sprintf('\\newthought{%s}', text)
   } else {
-    warning('newthought() only works for HTML and LaTeX output', call. = FALSE)
-    text
+    sprintf('<span style="font-variant:small-caps;">%s</span>', text)
   }
 }
 
