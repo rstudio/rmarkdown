@@ -117,6 +117,7 @@ tufte_html <- function(...) {
     writeLines(enc2utf8(x), output, useBytes = TRUE)
     output
   }
+
   if (is.null(format$knitr$knit_hooks)) format$knitr$knit_hooks <- list()
   format$knitr$knit_hooks$plot <- function(x, options) {
     # make sure the plot hook always generates HTML code instead of ![]()
@@ -128,7 +129,7 @@ tufte_html <- function(...) {
       options$fig.topcaption <- TRUE
     res <- knitr::hook_plot_md(x, options)
     if (fig_margin) {
-      res <- gsub_fixed('<p class="caption">', '<!--\n<p class="caption ">-->', res)
+      res <- gsub_fixed('<p class="caption">', '<!--\n<p class="caption marginnote">-->', res)
       res <- gsub_fixed('</p>', '<!--</p>-->', res)
       res <- gsub_fixed('</div>', '<!--</div>--></span></p>', res)
       res <- gsub_fixed(
