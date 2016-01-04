@@ -33,6 +33,12 @@ tufte_handout <- function(
     dev = dev, highlight = highlight, template = template, ...
   )
 
+  knitr::knit_engines$set(marginfigure = function(options) {
+    options$type <- 'marginfigure'
+    eng_block <- knitr::knit_engines$get('block')
+    eng_block(options)
+  })
+
   # create knitr options (ensure opts and hooks are non-null)
   knitr_options <- knitr_options_pdf(fig_width, fig_height, fig_crop, dev)
   if (is.null(knitr_options$opts_knit))
@@ -128,6 +134,15 @@ tufte_html <- function(...) {
     }
     res
   }
+
+  knitr::knit_engines$set(marginfigure = function(options) {
+    options$type <- 'marginnote'
+    options$html.tag <- 'span'
+    options$html.before <- marginnote_html()
+    eng_block <- knitr::knit_engines$get('block')
+    eng_block(options)
+  })
+
   format
 }
 
