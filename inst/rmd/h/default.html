@@ -28,11 +28,13 @@ $if(highlightjs)$
       href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css"
       $if(html5)$$else$type="text/css" $endif$/>
 <script src="$highlightjs$/highlight.js"></script>
+$if(theme)$
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
+$endif$
 <script type="text/javascript">
 if (window.hljs && document.readyState && document.readyState === "complete") {
    window.setTimeout(function() {
@@ -47,12 +49,13 @@ $if(highlighting-css)$
 <style type="text/css">
 $highlighting-css$
 </style>
+$if(theme)$
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-
+$endif$
 $endif$
 
 $for(css)$
