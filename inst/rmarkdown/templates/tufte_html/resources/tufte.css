@@ -126,6 +126,16 @@ ol, ul { width: 45%;
 
 li { padding: 0.5rem 0; }
 
+table {
+  border-top: 2px solid #111;
+  border-bottom: 2px solid #111;
+  font-size: 1.1rem;
+}
+
+th {
+  border-bottom: 1px solid #111;
+}
+
 div.figure { padding: 0;
          border: 0;
          font-size: 100%;
@@ -160,6 +170,8 @@ a:link::-moz-selection { text-shadow: 0.03em 0 #b4d5fe, -0.03em 0 #b4d5fe, 0 0.0
 /* Sidenotes, margin notes, figures, captions */
 img { max-width: 100%; }
 
+.marginnote img { display: block; }
+
 .sidenote, .marginnote { float: right;
                          clear: right;
                          margin-right: -60%;
@@ -190,7 +202,12 @@ img { max-width: 100%; }
 
 p, footer, table, div.table-wrapper-small, div.supertable-wrapper > p, div.booktabs-wrapper { width: 55%; }
 
-div.fullwidth, table.fullwidth { max-width: 100%; }
+div.fullwidth, table.fullwidth { max-width: 90%; }
+
+div.fullwidth p.caption {
+  margin-right: 0;
+  max-width: 33%;
+}
 
 div.table-wrapper { overflow-x: auto;
                     font-family: "Trebuchet MS", "Gill Sans", "Gill Sans MT", sans-serif; }
@@ -199,6 +216,7 @@ div.table-wrapper { overflow-x: auto;
                                        pre { width: 87.5%; }
                                        ul { width: 85%; }
                                        figure { max-width: 90%; }
+                                       div.fullwidth p.caption { max-width: none; }
                                        blockquote p, blockquote footer { width: 90%; }}
 
 .sans { font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
@@ -207,6 +225,10 @@ div.table-wrapper { overflow-x: auto;
 code { font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
         font-size: 1.125rem;
         line-height: 1.6; }
+
+pre code { font-size: 1rem; }
+
+p code { white-space: inherit; }
 
 h1 code, h2 code, h3 code { font-size: 0.80em; }
 
