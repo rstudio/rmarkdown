@@ -358,26 +358,14 @@ show_latex_error <- function(file) {
   }
 }
 
-# import two helper functions from knitr (with fallbacks if the knitr version is
-# not sufficient)
+# import two helper functions from knitr
 is_html_output <- function(...) {
-  fun <- tryCatch(getFromNamespace('is_html_output', 'knitr'), error = function(e) {
-    function(...) {
-      fmt <- knitr::opts_knit$get('rmarkdown.pandoc.to')
-      grepl('^markdown', fmt) ||
-        fmt %in% c('html', 'html5', 'revealjs',  's5', 'slideous', 'slidy')
-    }
-  })
+  fun <- getFromNamespace('is_html_output', 'knitr')
   fun(...)
 }
 
 is_latex_output <- function(...) {
-  fun <- tryCatch(getFromNamespace('is_latex_output', 'knitr'), error = function(e) {
-    function(...) {
-      fmt <- knitr::opts_knit$get('rmarkdown.pandoc.to')
-      fmt %in% c('latex', 'beamer')
-    }
-  })
+  fun <- getFromNamespace('is_latex_output', 'knitr')
   fun(...)
 }
 
