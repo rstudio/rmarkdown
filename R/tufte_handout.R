@@ -140,7 +140,9 @@ tufte_html <- function(...) {
       )
     } else if (fig_fullwd) {
       res <- gsub_fixed('<div class="figure">', '<div class="figure fullwidth">', res)
-      res <- gsub_fixed('<p class="caption">', '<p class="caption fullwidth">', res)
+      res <- gsub_fixed(
+        '<p class="caption">', marginnote_html('\n<p class="caption marginnote">'), res
+      )
     }
     res
   }
