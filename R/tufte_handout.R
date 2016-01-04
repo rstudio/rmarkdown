@@ -89,6 +89,8 @@ tufte_html <- function(...) {
     }
     # remove footnotes at the bottom
     if (length(footnotes$range)) x <- x[-footnotes$range]
+    # replace citations with margin notes
+    x <- margin_references(x)
     # place figure captions in margin notes
     x[x == '<p class="caption">'] <- marginnote_html('\n<p class="caption marginnote">')
     # add an incremental number to the id of <label> and <input> for margin notes
@@ -150,6 +152,24 @@ parse_footnotes <- function(x) {
     items = gsub(r, '\\2', grep(r, x[i:n], value = TRUE)),
     range = i:j
   )
+}
+
+margin_references <- function(x) {
+  i <- which(x == '<div id="refs" class="references">')
+  if (length(i) != 1) return(x)
+  r <- '^<div id="(ref-[^"]+?)">$'
+  k <- grep(r, x)
+  k <- k[k > i]
+  n <- length(k)
+  if (n == 0) return(x)
+  ids <- gsub(r, '\\1', x[k])
+  ids <- sprintf('<a href="#%s">(.+?)</a>', ids)
+  ref <- gsub('^<p>|</p>$', '', x[k + 1])
+  ref <- marginnote_html(paste0('\\1<span class="marginnote">', ref, '</span>'))
+  for (j in seq_len(n)) {
+    x <- gsub(ids[j], ref[j], x)
+  }
+  x[-(i:(max(k) + 3))]  # remove references at the bottom
 }
 
 #' @details \code{newthought()} can be used in inline R expressions in R
