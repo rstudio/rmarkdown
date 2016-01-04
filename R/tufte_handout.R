@@ -76,7 +76,16 @@ tufte_html <- function(...) {
     'rmarkdown', 'templates', 'tufte_html', 'resources', 'tufte.css'
   )
   format <- html_document(theme = NULL, ..., extra_dependencies = tufte_html_dependency())
+
+  ohooks <- knitr::opts_hooks$set(fig.margin = function(options) {
+    if (isTRUE(options$fig.margin)) options$fig.beforecode <- TRUE
+    options
+  })
+
   format$post_processor <- function(metadata, input, output, clean, verbose) {
+
+    knitr::opts_hooks$restore(ohooks)
+
     x <- read_lines_utf8(output, 'UTF-8')
     footnotes <- parse_footnotes(x)
     notes <- footnotes$items
