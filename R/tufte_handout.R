@@ -235,13 +235,13 @@ newthought <- function(text) {
   }
 }
 
-#' @details \code{marginnote()} can be used in inline R expressions to write a
+#' @details \code{margin_note()} can be used in inline R expressions to write a
 #'   margin note (like a sidenote but not numbered).
 #' @param icon A character string to indicate there is a hidden margin note when
 #'   the page width is too narrow (by default it is a circled plus sign)
 #' @rdname tufte_handout
 #' @export
-marginnote <- function(text, icon = '&#8853;') {
+margin_note <- function(text, icon = '&#8853;') {
   if (is_html_output()) {
     marginnote_html(sprintf('<span class="marginnote">%s</span>', text), icon)
   } else if (is_latex_output()) {
