@@ -77,6 +77,8 @@ tufte_html <- function(...) {
   )
   format <- html_document(theme = NULL, ..., extra_dependencies = tufte_html_dependency())
 
+  # when fig.margin = TRUE, set fig.beforecode = TRUE so plots are moved before
+  # code blocks, and they can be top-aligned
   ohooks <- knitr::opts_hooks$set(fig.margin = function(options) {
     if (isTRUE(options$fig.margin)) options$fig.beforecode <- TRUE
     options
@@ -196,6 +198,7 @@ parse_footnotes <- function(x) {
   )
 }
 
+# move reference items from the bottom to the margin (as margin notes)
 margin_references <- function(x) {
   i <- which(x == '<div id="refs" class="references">')
   if (length(i) != 1) return(x)
