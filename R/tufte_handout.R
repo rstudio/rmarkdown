@@ -104,10 +104,25 @@ tufte_html <- function(...) {
     }
     # remove footnotes at the bottom
     if (length(footnotes$range)) x <- x[-footnotes$range]
+
     # replace citations with margin notes
     x <- margin_references(x)
+
     # place figure captions in margin notes
     x[x == '<p class="caption">'] <- marginnote_html('\n<p class="caption marginnote">')
+
+    # place table captions in the margin
+    r <- '^<caption>(.+)</caption>$'
+    for (i in grep(r, x)) {
+      if (x[i - 1] != '<table>') next
+      cap <- gsub(r, '\\1', x[i])
+      x[i] <- '<table>'
+      x[i - 1] <- paste0(
+        '<p><!--\n<caption>-->', marginnote_html(), '<span class="marginnote">',
+        cap, '</span><!--</caption>--></p>'
+      )
+    }
+
     # add an incremental number to the id of <label> and <input> for margin notes
     r <- '(<label|<input type="checkbox") (id|for)(="tufte-mn)-(" )'
     mn <- grep(r, x)
