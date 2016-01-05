@@ -222,7 +222,7 @@ margin_references <- function(x) {
 #'   HTML (\samp{<span class="newthought">text</span>}) and PDF
 #'   (\samp{\\newthought{text}}) output.
 #' @param text A character string to be presented as a \dQuote{new thought}
-#'   (using small caps), or a margin note
+#'   (using small caps), or a margin note, or a footer of a quote
 #' @rdname tufte_handout
 #' @export
 newthought <- function(text) {
@@ -236,7 +236,7 @@ newthought <- function(text) {
 }
 
 #' @details \code{marginnote()} can be used in inline R expressions to write a
-#'   margin note (like a sidenote but not numbered)
+#'   margin note (like a sidenote but not numbered).
 #' @param icon A character string to indicate there is a hidden margin note when
 #'   the page width is too narrow (by default it is a circled plus sign)
 #' @rdname tufte_handout
@@ -257,4 +257,20 @@ marginnote_html <- function(text = '', icon = '&#8853;') {
     '<label for="tufte-mn-" class="margin-toggle">%s</label>',
     '<input type="checkbox" id="tufte-mn-" class="margin-toggle">%s'
   ), icon, text)
+}
+
+#' @details \code{quote_footer()} formats text as the footer of a quote. It puts
+#'   \code{text} in \samp{<footer></footer>} for HTML output, and
+#'   after \samp{\\hfill} for LaTeX output (to right-align text).
+#' @rdname tufte_handout
+#' @export
+quote_footer <- function(text) {
+  if (is_html_output()) {
+    sprintf('<footer>%s</footer>', text)
+  } else if (is_latex_output()) {
+    sprintf('\\hfill %s', text)
+  } else {
+    warning('quote_footer() only works for HTML and LaTeX output', call. = FALSE)
+    text
+  }
 }

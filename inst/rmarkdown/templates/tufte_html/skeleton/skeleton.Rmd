@@ -36,8 +36,7 @@ If you have any feature requests or find bugs in **rmarkdown**, please do not he
 
 # Headings
 
-This style provides first and second-level headings (that is, `#` and `##`), demonstrated in the next section.
-You may get unexpected output if you try to use `###` and smaller headings.
+This style provides first and second-level headings (that is, `#` and `##`), demonstrated in the next section. You may get unexpected output if you try to use `###` and smaller headings.
 
 `r newthought('In his later books')`^[[Beautiful Evidence](http://www.edwardtufte.com/tufte/books_be)], Tufte starts each section with a bit of vertical space, a non-indented paragraph, and sets the first few words of the sentence in small caps. To accomplish this using this style, call the `newthought()` function in **rmarkdown** in an _inline R expression_ `` `r ` `` as demonstrated at the beginning of this paragraph.^[Note you should not assume **rmarkdown** has been attached to your R session. You should either `library(rmarkdown)` in your R Markdown document before you call `newthought()`, or use `rmarkdown::newthought()`.]
 
@@ -112,9 +111,27 @@ You can use the `kable()` function from the **knitr** package to format tables t
 
 ```{r}
 knitr::kable(
-  head(mtcars[,1:6]), caption = 'First rows of mtcars.'
+  mtcars[1:22, 1:6], caption = 'A subset of mtcars.'
 )
 ```
+
+# Block Quotes
+
+We know from the Markdown syntax that paragraphs that start with `>` are converted to block quotes. If you want to add a right-aligned footer for the quote, you may use the function `quote_footer()` from **rmarkdown** in an inline R expression. Here is an example:
+
+> "If it weren't for my lawyer, I'd still be in prison. It went a lot faster with two people digging."
+>
+> `r rmarkdown::quote_footer('--- Joe Martin')`
+
+Without using `quote_footer()`, it looks like this (the second line is just a normal paragraph):
+
+> "Great people talk about ideas, average people talk about things, and small people talk about wine."
+>
+> --- Fran Lebowitz
+
+# Responsiveness
+
+The HTML page is responsive in the sense that when the page width is smaller than 760px, sidenotes and margin notes will be hidden by default. For sidenotes, you can click their numbers (the superscripts) to toggle their visibility. For margin notes, you may click the circled plus signs to toggle visibility.
 
 # More Examples
 
@@ -146,9 +163,8 @@ Then two plots from the same code chunk placed in different figure environments:
 ```{r fig-margin-separate, fig.margin=TRUE, fig.cap=sprintf("Two plots in separate figure environments in the margin (the %s plot).", c("first", "second")), fig.width=3.5, fig.height=2.5, cache=TRUE}
 knitr::kable(head(iris, 15))
 p
-knitr::kable(head(iris, 15))
+knitr::kable(head(iris, 12))
 p + geom_smooth(method = 'lm')
-knitr::kable(head(iris, 5))
 ```
 
 We blended some tables in the above code chunk only as _placeholders_ to make sure there is enough vertical space among the margin figures, otherwise they will be stacked tightly together.
