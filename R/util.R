@@ -212,6 +212,13 @@ base_dir <- function(x) {
   base
 }
 
+# Check if two paths are the same after being normalized
+same_path <- function(path1, path2, ...) {
+  if (length(path1) * length(path2) != 1)
+    stop('The two paths must be both of length 1')
+  normalize_path(path1, ...) == normalize_path(path2, ...)
+}
+
 # Regular expression representing characters likely to be considered special by
 # the shell (require quoting/escaping)
 .shell_chars_regex <- '[ <>()|\\:&;#?*\']'

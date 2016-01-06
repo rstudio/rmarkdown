@@ -155,7 +155,7 @@ html_document_base <- function(smart = TRUE,
 
           # check to see if it's already in the library (by absolute path)
           res_src <- normalized_relative_to(lib_dir, in_file) 
-          if (identical(res_src, normalizePath(in_file, winslash = "/"))) {
+          if (same_path(res_src, in_file)) {
             # not inside the library, copy it there
             target_dir <- if (dirname(in_file) == ".")  
               lib_dir 
