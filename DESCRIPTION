@@ -48,7 +48,7 @@ Imports:
     tools,
     utils,
     grDevices,
-    knitr (>= 1.11),
+    knitr (>= 1.11.26),
     yaml (>= 2.1.5),
     htmltools (>= 0.2.4),
     caTools

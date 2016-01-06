@@ -34,8 +34,8 @@ pandoc_output_file <- function(input, pandoc_options) {
 }
 
 
-rmarkdown_system_file <- function(file) {
-  system.file(file, package = "rmarkdown")
+rmarkdown_system_file <- function(...) {
+  system.file(..., package = "rmarkdown")
 }
 
 from_rmarkdown <- function(implicit_figures = TRUE, extensions = NULL) {
@@ -357,3 +357,16 @@ show_latex_error <- function(file) {
     stop(e, ' See ', logfile, ' for more info.', call. = FALSE)
   }
 }
+
+# import two helper functions from knitr
+is_html_output <- function(...) {
+  fun <- getFromNamespace('is_html_output', 'knitr')
+  fun(...)
+}
+
+is_latex_output <- function(...) {
+  fun <- getFromNamespace('is_latex_output', 'knitr')
+  fun(...)
+}
+
+gsub_fixed <- function(...) gsub(..., fixed = TRUE)
