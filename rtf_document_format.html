@@ -10,7 +10,7 @@
 
 
 
-<title>Bibliographies and Citations</title>
+<title>RTF Documents</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -171,158 +171,107 @@ img {
 </div><!--/.navbar -->
 
 <div id="header">
-<h1 class="title">Bibliographies and Citations</h1>
+<h1 class="title">RTF Documents</h1>
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#bibliographies">Bibliographies</a><ul>
-<li><a href="#specifying-a-bibliography">Specifying a Bibliography</a></li>
-<li><a href="#inline-references">Inline References</a></li>
-<li><a href="#bibliography-placement">Bibliography Placement</a></li>
-</ul></li>
-<li><a href="#citations">Citations</a><ul>
-<li><a href="#citation-syntax">Citation Syntax</a></li>
-<li><a href="#unused-references-nocite">Unused References (nocite)</a></li>
-<li><a href="#citation-and-reference-styles">Citation and Reference Styles</a></li>
-</ul></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#figure-options">Figure Options</a></li>
+<li><a href="#keeping-markdown">Keeping Markdown</a></li>
+<li><a href="#markdown-extensions">Markdown Extensions</a></li>
+<li><a href="#pandoc-arguments">Pandoc Arguments</a></li>
+<li><a href="#shared-options">Shared Options</a></li>
 </ul>
 </div>
 
-<div id="bibliographies" class="section level2">
-<h2>Bibliographies</h2>
-<div id="specifying-a-bibliography" class="section level3">
-<h3>Specifying a Bibliography</h3>
-<p>Pandoc can automatically generate citations and a bibliography in a number of styles. In order to use this feature, you will need to specify a bibliography file using the <code>bibliography</code> metadata field in a YAML metadata section. For example:</p>
-<pre><code>---
-title: &quot;Sample Document&quot;
-output: html_document
-bibliography: bibliography.bib
----</code></pre>
-<p>The bibliography may have any of these formats:</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Format</th>
-<th align="left">File extension</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">MODS</td>
-<td align="left">.mods</td>
-</tr>
-<tr class="even">
-<td align="left">BibLaTeX</td>
-<td align="left">.bib</td>
-</tr>
-<tr class="odd">
-<td align="left">BibTeX</td>
-<td align="left">.bibtex</td>
-</tr>
-<tr class="even">
-<td align="left">RIS</td>
-<td align="left">.ris</td>
-</tr>
-<tr class="odd">
-<td align="left">EndNote</td>
-<td align="left">.enl</td>
-</tr>
-<tr class="even">
-<td align="left">EndNote XML</td>
-<td align="left">.xml</td>
-</tr>
-<tr class="odd">
-<td align="left">ISI</td>
-<td align="left">.wos</td>
-</tr>
-<tr class="even">
-<td align="left">MEDLINE</td>
-<td align="left">.medline</td>
-</tr>
-<tr class="odd">
-<td align="left">Copac</td>
-<td align="left">.copac</td>
-</tr>
-<tr class="even">
-<td align="left">JSON citeproc</td>
-<td align="left">.json</td>
-</tr>
-</tbody>
-</table>
-<p>Note that <code>.bib</code> can generally be used with both BibTeX and BibLaTeX files, but you can use <code>.bibtex</code> to force BibTeX.</p>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>The <code>rtf_document</code> format is currently only available within the development version of the <strong>rmarkdown</strong> package. You can install the development version as follows:</p>
+<pre class="r"><code>devtools::install.github(&quot;rstudio/rmarkdown&quot;)</code></pre>
 </div>
-<div id="inline-references" class="section level3">
-<h3>Inline References</h3>
-<p>Alternatively you can use a <code>references</code> field in the document’s YAML metadata. This should include an array of YAML-encoded references, for example:</p>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>To create an RTF document from R Markdown you specify the <code>rtf_document</code> output format in the front-matter of your document:</p>
 <pre><code>---
-references:
-- id: fenner2012a
-  title: One-click science marketing
-  author:
-  - family: Fenner
-    given: Martin
-  container-title: Nature Materials
-  volume: 11
-  URL: &#39;http://dx.doi.org/10.1038/nmat3283&#39;
-  DOI: 10.1038/nmat3283
-  issue: 4
-  publisher: Nature Publishing Group
-  page: 261-263
-  type: article-journal
-  issued:
-    year: 2012
-    month: 3
+title: &quot;Habits&quot;
+author: John Doe
+date: March 22, 2005
+output: rtf_document
 ---</code></pre>
 </div>
-<div id="bibliography-placement" class="section level3">
-<h3>Bibliography Placement</h3>
-<p>Bibliographies will be placed at the end of the document. Normally, you will want to end your document with an appropriate header:</p>
-<pre><code>last paragraph...
-
-# References</code></pre>
-<p>The bibliography will be inserted after this header.</p>
-</div>
-</div>
-<div id="citations" class="section level2">
-<h2>Citations</h2>
-<div id="citation-syntax" class="section level3">
-<h3>Citation Syntax</h3>
-<p>Citations go inside square brackets and are separated by semicolons. Each citation must have a key, composed of ‘@’ + the citation identifier from the database, and may optionally have a prefix, a locator, and a suffix. Here are some examples:</p>
-<pre><code>Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].
-
-Blah blah [@doe99, pp. 33-35, 38-39 and *passim*].
-
-Blah blah [@smith04; @doe99].</code></pre>
-<p>A minus sign (<code>-</code>) before the <code>@</code> will suppress mention of the author in the citation. This can be useful when the author is already mentioned in the text:</p>
-<pre><code>Smith says blah [-@smith04].</code></pre>
-<p>You can also write an in-text citation, as follows:</p>
-<pre><code>@smith04 says blah.
-
-@smith04 [p. 33] says blah.</code></pre>
-</div>
-<div id="unused-references-nocite" class="section level3">
-<h3>Unused References (nocite)</h3>
-<p>If you want to include items in the bibliography without actually citing them in the body text, you can define a dummy <code>nocite</code> metadata field and put the citations there:</p>
+<div id="table-of-contents" class="section level2">
+<h2>Table of Contents</h2>
+<p>You can add a table of contents using the <code>toc</code> option and specify the depth of headers that it applies to using the <code>toc_depth</code> option. For example:</p>
 <pre><code>---
-nocite: | 
-  @item1, @item2
-...
-
-@item3</code></pre>
-<p>In this example, the document will contain a citation for <code>item3</code> only, but the bibliography will contain entries for <code>item1</code>, <code>item2</code>, and <code>item3</code>.</p>
-</div>
-<div id="citation-and-reference-styles" class="section level3">
-<h3>Citation and Reference Styles</h3>
-<p>By default, pandoc will use a Chicago author-date format for citations and references. To use another style, you will need to specify a CSL 1.0 style file in the <code>csl</code> metadata field. For example:</p>
-<pre><code>---
-title: &quot;Sample Document&quot;
-output: html_document
-bibliography: bibliography.bib
-csl: biomed-central.csl
+title: &quot;Habits&quot;
+output:
+  rtf_document:
+    toc: true
+    toc_depth: 2
 ---</code></pre>
-<p>A primer on creating and modifying CSL styles can be found at <a href="http://citationstyles.org/downloads/primer.html" class="uri">http://citationstyles.org/downloads/primer.html</a>. A repository of CSL styles can be found at <a href="https://github.com/citation-style-language/styles" class="uri">https://github.com/citation-style-language/styles</a>. See also <a href="http://zotero.org/styles" class="uri">http://zotero.org/styles</a> for easy browsing.</p>
+<p>If the table of contents depth isn’t explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).</p>
 </div>
+<div id="figure-options" class="section level2">
+<h2>Figure Options</h2>
+<p>The <code>fig_width</code> and <code>fig_height</code> options can be used to control the default figure width and height (5x4 is used if not values are specified). For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  word_document:
+    fig_width: 5
+    fig_height: 5
+---</code></pre>
+</div>
+<div id="keeping-markdown" class="section level2">
+<h2>Keeping Markdown</h2>
+<p>When knitr processes an R Markdown input file it creates a markdown (md) file which is subsequently tranformed into an RTF document by pandoc. If you want to keep a copy of the markdown file after rendering you can do so using the <code>keep_md</code> option:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  rtf_document:
+    keep_md: true
+---</code></pre>
+</div>
+<div id="markdown-extensions" class="section level2">
+<h2>Markdown Extensions</h2>
+<p>By default R Markdown is defined as all pandoc markdown extensions with the following tweaks for backward compatibility with the markdown package:</p>
+<pre><code>+autolink_bare_uris
++ascii_identifier
++tex_math_single_backslash</code></pre>
+<p>You can enable or disable markdown extensions using the <code>md_extensions</code> option (you preface an option with <code>-</code> to disable and <code>+</code> to enable it). For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  rtf_document:
+    md_extensions: -autolink_bare_uris+hard_line_breaks
+---</code></pre>
+<p>The above would disable the <code>autolink_bare_uris</code> extension and enable the <code>hard_line_breaks</code> extension.</p>
+<p>For more on available markdown extensions see the <a href="http://pandoc.org/README.html#pandocs-markdown">pandoc markdown specification</a>.</p>
+</div>
+<div id="pandoc-arguments" class="section level2">
+<h2>Pandoc Arguments</h2>
+<p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  rtf_document:
+    pandoc_args: [
+      &quot;--csl&quot;, &quot;/var/csl/acs-nano.csl&quot;
+    ]
+---</code></pre>
+<p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
+</div>
+<div id="shared-options" class="section level2">
+<h2>Shared Options</h2>
+<p>If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named <code>_output.yaml</code> within the directory. Note that no YAML delimeters or enclosing output object are used in this file. For example:</p>
+<p><strong>_output.yaml</strong></p>
+<pre class="yaml"><code>rtf_document:
+  fig_width: 5
+  fig_height: 5</code></pre>
+<p>All documents located in the same directory as <code>_output.yaml</code> will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.</p>
 </div>
 
 
