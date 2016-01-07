@@ -32,6 +32,11 @@ output:
 ---
 ```
 
+There are two goals of this package:
+
+1. To produce both PDF and HTML output with similar styles from the same R Markdown document;
+1. To provide simple syntax to write elements of the Tufte style such as side notes and margin figures, e.g. when you want a margin figure, all you need to do is the chunk option `fig.margin = TRUE`, and we will take care of the deails for you, so you never need to think about `\begin{marginfigure} \end{marginfigure}` or `<span class="marginfigure"> </span>`; the LaTeX and HTML code under the hood may be complicated, but you never need to learn or write such code.
+
 If you have any feature requests or find bugs in **rmarkdown**, please do not hesitate to file them to https://github.com/rstudio/rmarkdown/issues. For general questions, you may ask them on StackOverflow: http://stackoverflow.com/tags/rmarkdown.
 
 # Headings
@@ -111,7 +116,7 @@ You can use the `kable()` function from the **knitr** package to format tables t
 
 ```{r}
 knitr::kable(
-  mtcars[1:22, 1:6], caption = 'A subset of mtcars.'
+  mtcars[1:6, 1:6], caption = 'A subset of mtcars.'
 )
 ```
 
