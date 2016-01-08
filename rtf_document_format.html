@@ -191,8 +191,8 @@ img {
 <div id="installation" class="section level2">
 <h2>Installation</h2>
 <p>The <code>rtf_document</code> format is currently only available within the development version of the <strong>rmarkdown</strong> package. You can install the development version as follows:</p>
-<pre class="r"><code>devtools::install.github(&quot;rstudio/rmarkdown&quot;)</code></pre>
-<p>Installing the current <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release of RStudio</a> (v0.99.849 or higher) is also highly reccommended as it includes support for previewing RTF documents using Microsoft Word.</p>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
+<p>Installing the current <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release of RStudio</a> (v0.99.849 or higher) is also highly recommended as it includes support for previewing RTF documents using Microsoft Word.</p>
 </div>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
@@ -222,14 +222,14 @@ output:
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  word_document:
+  rtf_document:
     fig_width: 5
     fig_height: 5
 ---</code></pre>
 </div>
 <div id="keeping-markdown" class="section level2">
 <h2>Keeping Markdown</h2>
-<p>When knitr processes an R Markdown input file it creates a markdown (md) file which is subsequently tranformed into an RTF document by pandoc. If you want to keep a copy of the markdown file after rendering you can do so using the <code>keep_md</code> option:</p>
+<p>When knitr processes an R Markdown input file it creates a markdown (md) file which is subsequently transformed into an RTF document by pandoc. If you want to keep a copy of the markdown file after rendering you can do so using the <code>keep_md</code> option:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 output:
@@ -255,7 +255,7 @@ output:
 </div>
 <div id="pandoc-arguments" class="section level2">
 <h2>Pandoc Arguments</h2>
-<p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
+<p>If there are pandoc features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 output:
@@ -268,7 +268,7 @@ output:
 </div>
 <div id="shared-options" class="section level2">
 <h2>Shared Options</h2>
-<p>If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named <code>_output.yaml</code> within the directory. Note that no YAML delimeters or enclosing output object are used in this file. For example:</p>
+<p>If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named <code>_output.yaml</code> within the directory. Note that no YAML delimiters or enclosing output object are used in this file. For example:</p>
 <p><strong>_output.yaml</strong></p>
 <pre class="yaml"><code>rtf_document:
   fig_width: 5

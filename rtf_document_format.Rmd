@@ -10,7 +10,7 @@ output:
 The `rtf_document` format is currently only available within the development version of the **rmarkdown** package. You can install the development version as follows:
 
 ```r
-devtools::install.github("rstudio/rmarkdown")
+devtools::install_github("rstudio/rmarkdown")
 ```
 
 Installing the current [Preview Release of RStudio](https://www.rstudio.com/products/rstudio/download/preview/) (v0.99.849 or higher) is also highly recommended as it includes support for previewing RTF documents using Microsoft Word.
@@ -47,7 +47,7 @@ The `fig_width` and  `fig_height` options can be used to control the default fig
     ---
     title: "Habits"
     output:
-      word_document:
+      rtf_document:
         fig_width: 5
         fig_height: 5
     ---
