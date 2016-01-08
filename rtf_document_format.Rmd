@@ -13,6 +13,8 @@ The `rtf_document` format is currently only available within the development ver
 devtools::install.github("rstudio/rmarkdown")
 ```
 
+Installing the current [Preview Release of RStudio](https://www.rstudio.com/products/rstudio/download/preview/) (v0.99.849 or higher) is also highly recommended as it includes support for previewing RTF documents using Microsoft Word.
+
 ## Overview
 
 To create an RTF document from R Markdown you specify the `rtf_document` output format in the front-matter of your document:
@@ -52,7 +54,7 @@ The `fig_width` and  `fig_height` options can be used to control the default fig
 
 ## Keeping Markdown
 
-When knitr processes an R Markdown input file it creates a markdown (md) file which is subsequently tranformed into an RTF document by pandoc. If you want to keep a copy of the markdown file after rendering you can do so using the `keep_md` option:
+When knitr processes an R Markdown input file it creates a markdown (md) file which is subsequently transformed into an RTF document by pandoc. If you want to keep a copy of the markdown file after rendering you can do so using the `keep_md` option:
 
     ---
     title: "Habits"
@@ -87,7 +89,7 @@ For more on available markdown extensions see the [pandoc markdown specification
 
 ## Pandoc Arguments
 
-If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+If there are pandoc features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
 
     ---
     title: "Habits"
@@ -102,7 +104,7 @@ Documentation on all available pandoc arguments can be found in the [pandoc user
 
 ## Shared Options
 
-If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named `_output.yaml` within the directory. Note that no YAML delimeters or enclosing output object are used in this file. For example:
+If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named `_output.yaml` within the directory. Note that no YAML delimiters or enclosing output object are used in this file. For example:
 
 **\_output.yaml**
 
