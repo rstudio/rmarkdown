@@ -267,7 +267,10 @@ latexmk <- function(file, engine) {
     system2_quiet(latexmk_path, c(
       '-pdf -latexoption=-halt-on-error -interaction=batchmode',
       paste0('-pdflatex=', shQuote(engine)), shQuote(file)
-    ), error = show_latex_error(file))
+    ), error = {
+      check_latexmk_version(latexmk_path)
+      show_latex_error(file)
+    })
     system2(latexmk_path, '-c', stdout = FALSE)  # clean up nonessential files
   } else {
     warning("Perl must be installed and put on PATH for latexmk to work")
@@ -356,4 +359,20 @@ show_latex_error <- function(file) {
     message(paste(m, collapse = '\n'))
     stop(e, ' See ', logfile, ' for more info.', call. = FALSE)
   }
+}
+
+# check the version of latexmk
+check_latexmk_version <- function(latexmk_path = find_program('latexmk')) {
+  out <- system2(latexmk_path, '-v', stdout = TRUE)
+  reg <- '^.*Version (\\d+[.]\\d+).*$'
+  out <- grep(reg, out, value = TRUE)
+  if (length(out) == 0) return()
+  ver <- as.numeric_version(gsub(reg, '\\1', out[1]))
+  if (ver >= '4.43') return()
+  system2(latexmk_path, '-v')
+  warning(
+    'Your latexmk version seems to be too low. ',
+    'You may need to update the latexmk package or your LaTeX distribution.',
+    call. = FALSE
+  )
 }
