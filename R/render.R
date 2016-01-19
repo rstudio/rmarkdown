@@ -380,83 +380,83 @@ render <- function(input,
 
   if (run_pandoc) {
 
-  perf_timer_start("pre-processor")
+    perf_timer_start("pre-processor")
 
-  # call any pre_processor
-  if (!is.null(output_format$pre_processor)) {
-    extra_args <- output_format$pre_processor(yaml_front_matter,
-                                              utf8_input,
-                                              runtime,
-                                              knit_meta,
-                                              files_dir,
-                                              output_dir)
-    output_format$pandoc$args <- c(output_format$pandoc$args, extra_args)
-  }
-
-  perf_timer_stop("pre-processor")
-
-  # if we are running citeproc then explicitly forward the bibliography
-  # on the command line (works around pandoc-citeproc issue whereby yaml
-  # strings that begin with numbers are interpreted as numbers)
-  if (!is.null(yaml_front_matter$bibliography)) {
-    output_format$pandoc$args <- c(output_format$pandoc$args,
-      rbind("--bibliography", pandoc_path_arg(yaml_front_matter$bibliography)))
-  }
-
-  perf_timer_start("pandoc")
-
-  convert <- function(output, citeproc = FALSE) {
-    pandoc_convert(
-      utf8_input, pandoc_to, output_format$pandoc$from, output, citeproc,
-      output_format$pandoc$args, !quiet
-    )
-  }
-  texfile <- file_with_ext(output_file, "tex")
-  # compile Rmd to tex when we need to generate bibliography with natbib/biblatex
-  if (grepl('[.](pdf|tex)$', output_file) &&
-      any(c('--natbib', '--biblatex') %in% output_format$pandoc$args)) {
-    convert(texfile)
-    # manually compile tex if PDF output is expected
-    if (grepl('[.]pdf$', output_file)) {
-      latexmk(texfile, output_format$pandoc$latex_engine)
-      file.rename(file_with_ext(texfile, "pdf"), output_file)
-    }
-    # clean up the tex file if necessary
-    if ((texfile != output_file) && !output_format$pandoc$keep_tex)
-      on.exit(unlink(texfile), add = TRUE)
-  } else {
-    # run the main conversion if the output file is not .tex
-    convert(output_file, run_citeproc)
-    # run conversion again to .tex if we want to keep the tex source
-    if (output_format$pandoc$keep_tex) convert(texfile, run_citeproc)
-  }
-
-  # pandoc writes the output alongside the input, so if we rendered from an
-  # intermediate directory, move the output file
-  if (!is.null(intermediates_dir)) {
-    intermediate_output <- file.path(intermediates_dir, basename(output_file))
-    if (file.exists(intermediate_output)) {
-      file.rename(intermediate_output, output_file)
-    }
-  }
-
-  perf_timer_stop("pandoc")
-
-  perf_timer_start("post-processor")
-
-  # if there is a post-processor then call it
-  if (!is.null(output_format$post_processor))
-    output_file <- output_format$post_processor(yaml_front_matter,
+    # call any pre_processor
+    if (!is.null(output_format$pre_processor)) {
+      extra_args <- output_format$pre_processor(yaml_front_matter,
                                                 utf8_input,
-                                                output_file,
-                                                clean,
-                                                !quiet)
+                                                runtime,
+                                                knit_meta,
+                                                files_dir,
+                                                output_dir)
+      output_format$pandoc$args <- c(output_format$pandoc$args, extra_args)
+    }
 
-  if (!quiet) {
-    message("\nOutput created: ", relative_to(oldwd, output_file))
-  }
+    perf_timer_stop("pre-processor")
 
-  perf_timer_stop("post-processor")
+    # if we are running citeproc then explicitly forward the bibliography
+    # on the command line (works around pandoc-citeproc issue whereby yaml
+    # strings that begin with numbers are interpreted as numbers)
+    if (!is.null(yaml_front_matter$bibliography)) {
+      output_format$pandoc$args <- c(output_format$pandoc$args,
+                                     rbind("--bibliography", pandoc_path_arg(yaml_front_matter$bibliography)))
+    }
+
+    perf_timer_start("pandoc")
+
+    convert <- function(output, citeproc = FALSE) {
+      pandoc_convert(
+        utf8_input, pandoc_to, output_format$pandoc$from, output, citeproc,
+        output_format$pandoc$args, !quiet
+      )
+    }
+    texfile <- file_with_ext(output_file, "tex")
+    # compile Rmd to tex when we need to generate bibliography with natbib/biblatex
+    if (grepl('[.](pdf|tex)$', output_file) &&
+        any(c('--natbib', '--biblatex') %in% output_format$pandoc$args)) {
+      convert(texfile)
+      # manually compile tex if PDF output is expected
+      if (grepl('[.]pdf$', output_file)) {
+        latexmk(texfile, output_format$pandoc$latex_engine)
+        file.rename(file_with_ext(texfile, "pdf"), output_file)
+      }
+      # clean up the tex file if necessary
+      if ((texfile != output_file) && !output_format$pandoc$keep_tex)
+        on.exit(unlink(texfile), add = TRUE)
+    } else {
+      # run the main conversion if the output file is not .tex
+      convert(output_file, run_citeproc)
+      # run conversion again to .tex if we want to keep the tex source
+      if (output_format$pandoc$keep_tex) convert(texfile, run_citeproc)
+    }
+
+    # pandoc writes the output alongside the input, so if we rendered from an
+    # intermediate directory, move the output file
+    if (!is.null(intermediates_dir)) {
+      intermediate_output <- file.path(intermediates_dir, basename(output_file))
+      if (file.exists(intermediate_output)) {
+        file.rename(intermediate_output, output_file)
+      }
+    }
+
+    perf_timer_stop("pandoc")
+
+    perf_timer_start("post-processor")
+
+    # if there is a post-processor then call it
+    if (!is.null(output_format$post_processor))
+      output_file <- output_format$post_processor(yaml_front_matter,
+                                                  utf8_input,
+                                                  output_file,
+                                                  clean,
+                                                  !quiet)
+
+    if (!quiet) {
+      message("\nOutput created: ", relative_to(oldwd, output_file))
+    }
+
+    perf_timer_stop("post-processor")
 
   }
 
