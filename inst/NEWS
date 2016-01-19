@@ -7,6 +7,8 @@ rmarkdown 0.9.3 (unreleased)
 
 * Only apply white background for themed HTML documents
 
+* Specify --filter pandoc-citeproc after custom pandoc args
+
 
 rmarkdown 0.9.2
 --------------------------------------------------------------------------------

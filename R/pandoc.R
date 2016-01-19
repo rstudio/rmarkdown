@@ -71,14 +71,6 @@ pandoc_convert <- function(input,
   if (!is.null(output))
     args <- c(args, "--output", output)
 
-  # citeproc filter if requested
-  if (citeproc) {
-    args <- c(args, "--filter", pandoc_citeproc())
-    # --natbib/--biblatex conflicts with '--filter pandoc-citeproc'
-    i <- stats::na.omit(match(c("--natbib", "--biblatex"), options))
-    if (length(i)) options <- options[-i]
-  }
-
   # set pandoc stack size
   stack_size <- getOption("pandoc.stack.size", default = "512m")
   args <- c(c("+RTS", paste0("-K", stack_size), "-RTS"), args)
@@ -86,6 +78,14 @@ pandoc_convert <- function(input,
   # additional command line options
   args <- c(args, options)
 
+  # citeproc filter if requested
+  if (citeproc) {
+    args <- c(args, "--filter", pandoc_citeproc())
+    # --natbib/--biblatex conflicts with '--filter pandoc-citeproc'
+    i <- stats::na.omit(match(c("--natbib", "--biblatex"), options))
+    if (length(i)) options <- options[-i]
+  }
+  
   # build the conversion command
   command <- paste(quoted(pandoc()), paste(quoted(args), collapse = " "))
 
