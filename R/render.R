@@ -20,11 +20,11 @@ render <- function(input,
                    runtime = c("auto", "static", "shiny"),
                    clean = TRUE,
                    params = NULL,
+                   knit_meta = NULL,
                    envir = parent.frame(),
-                   quiet = FALSE,
-                   encoding = getOption("encoding"),
                    run_pandoc = TRUE,
-                   knit_meta = NULL) {
+                   quiet = FALSE,
+                   encoding = getOption("encoding")) {
 
   perf_timer_start("render")
 
