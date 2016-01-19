@@ -12,6 +12,7 @@ rmarkdown 0.9.4 (unreleased)
 
 * Specify --filter pandoc-citeproc after custom pandoc args
 
+* Long lines in code blocks will be wrapped in the `html_vignette()` output (#595)
 
 rmarkdown 0.9.2
 --------------------------------------------------------------------------------
