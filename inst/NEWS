@@ -1,11 +1,14 @@
-rmarkdown 0.9.3 (unreleased)
+rmarkdown 0.9.4 (unreleased)
 --------------------------------------------------------------------------------
 
 * Added odt_document format for OpenDocument Text output
 
 * Added rtf_document format for Rich Text Format output
 
-* Only apply white background for themed HTML documents
+* Only apply white background for themed HTML documents (#588)
+
+* Added <meta name="viewport" content="width=device-width, initial-scale=1"> to
+  the default HTML template to make it work better with mobile browsers. (#589)
 
 * Specify --filter pandoc-citeproc after custom pandoc args
 
