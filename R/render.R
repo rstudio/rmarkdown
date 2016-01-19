@@ -51,7 +51,9 @@ render <- function(input,
                        runtime = runtime,
                        clean = clean,
                        params = params,
+                       knit_meta = knit_meta,
                        envir = envir,
+                       run_pandoc = run_pandoc,
                        quiet = quiet,
                        encoding = encoding)
       outputs <- c(outputs, output)
