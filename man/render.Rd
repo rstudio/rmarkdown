@@ -5,9 +5,8 @@
 render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
        output_options = NULL, intermediates_dir = NULL,
        runtime = c("auto", "static", "shiny"),
-       clean = TRUE, params = NULL, envir = parent.frame(),
-       quiet = FALSE, encoding = getOption("encoding"),
-       run_pandoc = TRUE, knit_meta = NULL)
+       clean = TRUE, params = NULL, knit_meta = NULL, envir = parent.frame(),
+       run_pandoc = TRUE, quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{Input file (R script, Rmd, or plain markdown).}
