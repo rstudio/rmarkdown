@@ -14,9 +14,9 @@
 #'   \code{\link{render_supporting_files}}
 #' @param pre_processor An optional pre-processor function that receives the
 #'   \code{metadata}, \code{input_file}, \code{runtime}, \code{knit_meta},
-#'   \code{files_dir}, and \code{output_dir} and can return additional arguments 
+#'   \code{files_dir}, and \code{output_dir} and can return additional arguments
 #'   to pass to pandoc.
-#' @param intermediates_generator An optional function that receives the 
+#' @param intermediates_generator An optional function that receives the
 #'   original \code{input_file}, its \code{encoding}, and the intermediates
 #'   directory (i.e. the \code{intermediates_dir} argument to
 #'   \code{\link{render}}). The function should generate and return the names of
@@ -110,8 +110,8 @@ merge_output_formats <- function(base, overlay)  {
       merge_scalar(base$clean_supporting, overlay$clean_supporting),
     pre_processor =
       merge_function_outputs(base$pre_processor, overlay$pre_processor, c),
-    intermediates_generator = 
-      merge_function_outputs(base$intermediates_generator, 
+    intermediates_generator =
+      merge_function_outputs(base$intermediates_generator,
                              overlay$intermediates_generator, c),
     post_processor =
       merge_post_processors(base$post_processor, overlay$post_processor)
@@ -136,8 +136,8 @@ merge_pandoc_options <- function(base, overlay) {
 #'   (see \code{\link[knitr:knit_hooks]{knit_hooks}})
 #' @param opts_template List of templates for chunk level knitr options (see
 #'   \code{\link[knitr:opts_template]{opts_template}})
-#'   
-#' @return An list that can be passed as the \code{knitr} argument of the 
+#'
+#' @return An list that can be passed as the \code{knitr} argument of the
 #'   \code{\link{output_format}} function.
 #'
 #' @seealso \link{output_format}
@@ -173,14 +173,14 @@ knitr_options_pdf <- function(fig_width, fig_height, fig_crop, dev = 'pdf') {
   opts_chunk <- list(dev = dev,
                      fig.width = fig_width,
                      fig.height = fig_height)
-  
+
   # set the dingbats option for the pdf device if requried
   if (dev == 'pdf') {
     if (utils::packageVersion("knitr") >= "1.5.31") {
       opts_chunk$dev.args <- list(pdf = list(useDingbats = FALSE))
     } else grDevices::pdf.options(useDingbats = FALSE)
   }
-  
+
   knit_hooks <- NULL
 
   # apply cropping if requested and we have pdfcrop
@@ -280,13 +280,13 @@ rmarkdown_format <- function(extensions = NULL) {
     if (length(grep(extension, extensions)) == 0)
       format <<- c(format, paste0("+", extension))
   }
-  
+
   addExtension("autolink_bare_uris")
   addExtension("ascii_identifiers")
   addExtension("tex_math_single_backslash")
-  
+
   format <- c(format, extensions, recursive = TRUE)
-  
+
   paste(format, collapse = "")
 }
 
@@ -435,7 +435,7 @@ create_output_format <- function(name, options) {
   if (name == "revealjs_presentation")
     stop("reveal.js presentations are now located in a separate package: ",
          "https://github.com/jjallaire/revealjs")
-  
+
   # lookup the function
   output_format_func <- eval(parse(text = name))
   if (!is.function(output_format_func))

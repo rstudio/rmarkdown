@@ -1,7 +1,7 @@
 #' The YAML metadata of the current R Markdown document
-#' 
+#'
 #' The object \code{metadata} stores the YAML metadata of the current R Markdown
-#' document as a list, which you may use in the R code chunks, e.g. 
+#' document as a list, which you may use in the R code chunks, e.g.
 #' \code{rmarkdown::metadata$title} (the title of the document),
 #' \code{rmarkdown::metadata$author}, and \code{rmarkdown::metadata$foo} (if you
 #' have a YAML field named \code{foo}), etc.
@@ -77,22 +77,22 @@ render <- function(input,
     if (!dir_exists(intermediates_dir))
       dir.create(intermediates_dir, recursive = TRUE)
     intermediates_dir <- normalize_path(intermediates_dir)
-  } 
+  }
   intermediates_loc <- function(file) {
     if (is.null(intermediates_dir))
       file
     else
       file.path(intermediates_dir, file)
   }
-  
-  # resolve output directory before we change the working directory in 
+
+  # resolve output directory before we change the working directory in
   # preparation for rendering the document
   if (!is.null(output_dir)) {
     if (!dir_exists(output_dir))
       dir.create(output_dir, recursive = TRUE)
     output_dir <- normalize_path(output_dir)
   }
-  
+
   # remember the name of the original input document (we overwrite 'input' once
   # we've knitted)
   original_input <- normalize_path(input)
@@ -103,20 +103,20 @@ render <- function(input,
     # form the name of the file w/o shell characters
     input_no_shell_chars <- intermediates_loc(
         file_name_without_shell_chars(basename(input)))
-    
+
     if (file.exists(input_no_shell_chars)) {
       stop("The name of the input file cannot contain the special shell ",
-           "characters: ", .shell_chars_regex, " (attempted to copy to a ", 
+           "characters: ", .shell_chars_regex, " (attempted to copy to a ",
            "version without those characters '", input_no_shell_chars, "' ",
            "however that file already exists)", call. = FALSE)
     }
     file.copy(input, input_no_shell_chars, overwrite = TRUE)
     intermediates <- c(intermediates, input_no_shell_chars)
     input <- input_no_shell_chars
-    
+
     # if an intermediates directory wasn't explicit before, make it explicit now
     if (is.null(intermediates_dir)) {
-      intermediates_dir <- 
+      intermediates_dir <-
         dirname(normalize_path(input_no_shell_chars))
       # never use the original input directory as the intermediate directory,
       # otherwise external resources discovered will be deleted as intermediate
@@ -213,9 +213,9 @@ render <- function(input,
   # (do this before knitting in case the knit requires intermediates)
   if (!is.null(intermediates_dir) &&
       !is.null(output_format$intermediates_generator)) {
-    intermediates <- c(intermediates, 
-                       output_format$intermediates_generator(original_input, 
-                                                             encoding, 
+    intermediates <- c(intermediates,
+                       output_format$intermediates_generator(original_input,
+                                                             encoding,
                                                              intermediates_dir))
   }
 
@@ -293,7 +293,7 @@ render <- function(input,
     if (!is.null(yaml_front_matter$params)) {
 
       params <- knit_params_get(input_lines, params)
-     
+
       # make the params available in the knit environment
       if (!exists("params", envir = envir, inherits = FALSE)) {
         assign("params", params, envir = envir)
@@ -307,7 +307,7 @@ render <- function(input,
              "so can't be overwritten by render params", call. = FALSE)
       }
     }
-    
+
     # make the yaml_front_matter available as 'metadata' within the
     # knit environment (unless it is already defined there in which case
     # we emit a warning)
@@ -350,7 +350,7 @@ render <- function(input,
         if (!isTRUE(yaml_front_matter$always_allow_html)) {
           stop("Functions that produce HTML output found in document targeting ",
                pandoc_to, " output.\nPlease change the output type ",
-               "of this document to HTML. Alternatively, you can allow\n", 
+               "of this document to HTML. Alternatively, you can allow\n",
                "HTML output in non-HTML formats by adding this option to the YAML front",
                "-matter of\nyour rmarkdown file:\n\n",
                "  always_allow_html: yes\n\n",
@@ -387,7 +387,7 @@ render <- function(input,
                                               output_dir)
     output_format$pandoc$args <- c(output_format$pandoc$args, extra_args)
   }
-  
+
   perf_timer_stop("pre-processor")
 
   # if we are running citeproc then explicitly forward the bibliography
@@ -397,7 +397,7 @@ render <- function(input,
     output_format$pandoc$args <- c(output_format$pandoc$args,
       rbind("--bibliography", pandoc_path_arg(yaml_front_matter$bibliography)))
   }
-  
+
   perf_timer_start("pandoc")
 
   convert <- function(output, citeproc = FALSE) {
@@ -425,8 +425,8 @@ render <- function(input,
     # run conversion again to .tex if we want to keep the tex source
     if (output_format$pandoc$keep_tex) convert(texfile, run_citeproc)
   }
-  
-  # pandoc writes the output alongside the input, so if we rendered from an 
+
+  # pandoc writes the output alongside the input, so if we rendered from an
   # intermediate directory, move the output file
   if (!is.null(intermediates_dir)) {
     intermediate_output <- file.path(intermediates_dir, basename(output_file))

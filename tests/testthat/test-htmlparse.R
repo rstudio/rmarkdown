@@ -8,7 +8,7 @@ reset_accumulator <- function () {
 
 html_accumulator <- function(tag, att, val, idx) {
   accumulated <<- rbind(accumulated, data.frame(
-    tag = tag, 
+    tag = tag,
     attribute = att,
     value = val,
     stringsAsFactors = FALSE))

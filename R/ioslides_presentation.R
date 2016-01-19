@@ -119,7 +119,7 @@ ioslides_presentation <- function(logo = NULL,
       # to the output directory in this case. We don't always do this since
       # supplying a fully qualified path to the writer can trigger a bug on some
       # Linux configurations.
-      lua_writer <<- file.path(dirname(output_file), 
+      lua_writer <<- file.path(dirname(output_file),
                                "ioslides_presentation.lua")
     })
     on.exit(unlink(lua_writer), add = TRUE)
@@ -127,7 +127,7 @@ ioslides_presentation <- function(logo = NULL,
     # determine whether we need to run citeproc
     input_lines <- readLines(input_file, warn = FALSE)
     run_citeproc <- citeproc_required(metadata, input_lines)
-    
+
     # write settings to file
     settings <- c()
     add_setting <- function(name, value) {
@@ -147,7 +147,7 @@ ioslides_presentation <- function(logo = NULL,
 
     output_tmpfile <- tempfile("ioslides-output", fileext = ".html")
     on.exit(unlink(output_tmpfile), add = TRUE)
-    
+
     # on Windows, cache the current codepage and set it to 65001 (UTF-8) for the
     # duration of the Pandoc command. Without this, Pandoc fails when attempting
     # to hand UTF-8 encoded non-ASCII characters over to the custom Lua writer.
@@ -156,16 +156,16 @@ ioslides_presentation <- function(logo = NULL,
       # 'chcp' returns e.g., "Active code page: 437"; strip characters and parse
       # the number
       codepage <- as.numeric(gsub("\\D", "", system2("chcp", stdout = TRUE)))
-      
+
       if (!is.na(codepage)) {
         # if we got a valid codepage, restore it on exit
         on.exit(system2("chcp", args = codepage, stdout = TRUE), add = TRUE)
-        
+
         # change to the UTF-8 codepage
         system2("chcp", args = 65001, stdout = TRUE)
       }
     }
-    
+
     pandoc_convert(input = input_file,
                    to = relative_to(dirname(input_file), lua_writer),
                    from = from_rmarkdown(fig_caption),

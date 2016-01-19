@@ -13,18 +13,18 @@ pandoc_version()
 \item{version}{Required version of pandoc}
 }
 \value{
-\code{pandoc_available} returns a logical indicating whether the 
-  required version of pandoc is available. \code{pandoc_version} returns a 
+\code{pandoc_available} returns a logical indicating whether the
+  required version of pandoc is available. \code{pandoc_version} returns a
   \code{\link[base]{numeric_version}} with the version of pandoc found.
 }
 \description{
-Determine whether pandoc is currently available on the system (optionally 
-checking for a specific version or greater). Determine the specific version 
+Determine whether pandoc is currently available on the system (optionally
+checking for a specific version or greater). Determine the specific version
 of pandoc available.
 }
 \details{
-The system path as well as the version of pandoc shipped with RStudio (if 
-running under RStudio) are scanned for pandoc and the highest version 
+The system path as well as the version of pandoc shipped with RStudio (if
+running under RStudio) are scanned for pandoc and the highest version
 available is used.
 }
 \examples{

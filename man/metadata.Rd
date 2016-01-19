@@ -7,7 +7,7 @@
 \format{An object of class \code{list} of length 0.}
 \description{
 The object \code{metadata} stores the YAML metadata of the current R Markdown
-document as a list, which you may use in the R code chunks, e.g. 
+document as a list, which you may use in the R code chunks, e.g.
 \code{rmarkdown::metadata$title} (the title of the document),
 \code{rmarkdown::metadata$author}, and \code{rmarkdown::metadata$foo} (if you
 have a YAML field named \code{foo}), etc.

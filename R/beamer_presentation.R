@@ -65,7 +65,7 @@ beamer_presentation <- function(toc = FALSE,
                                 highlight = "default",
                                 template = "default",
                                 keep_tex = FALSE,
-                                latex_engine = "pdflatex",                              
+                                latex_engine = "pdflatex",
                                 citation_package = c("none", "natbib", "biblatex"),
                                 includes = NULL,
                                 md_extensions = NULL,
@@ -108,7 +108,7 @@ beamer_presentation <- function(toc = FALSE,
   # latex engine
   latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
   args <- c(args, pandoc_latex_engine_args(latex_engine))
-  
+
   # citation package
   citation_package <- match.arg(citation_package)
   if (citation_package != "none") args <- c(args, paste0("--", citation_package))
@@ -141,10 +141,10 @@ patch_beamer_template <- function() {
     tpl <- system(command, intern = TRUE)
   })
   patch <- c(
-    "% Comment these out if you don't want a slide with just the", 
-    "% part/section/subsection/subsubsection title:", "\\AtBeginPart{", 
-    "  \\let\\insertpartnumber\\relax", "  \\let\\partname\\relax", 
-    "  \\frame{\\partpage}", "}", "\\AtBeginSection{", 
+    "% Comment these out if you don't want a slide with just the",
+    "% part/section/subsection/subsubsection title:", "\\AtBeginPart{",
+    "  \\let\\insertpartnumber\\relax", "  \\let\\partname\\relax",
+    "  \\frame{\\partpage}", "}", "\\AtBeginSection{",
     "  \\let\\insertsectionnumber\\relax", "  \\let\\sectionname\\relax",
     "  \\frame{\\sectionpage}", "}", "\\AtBeginSubsection{",
     "  \\let\\insertsubsectionnumber\\relax", "  \\let\\subsectionname\\relax",

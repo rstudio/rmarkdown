@@ -59,7 +59,7 @@ output formatter}
 HTML base output format.
 }
 \description{
-Creates an HTML base output format suitable for passing as the 
+Creates an HTML base output format suitable for passing as the
 \code{base_format} argument of the \code{\link{output_format}} function.
 }
 

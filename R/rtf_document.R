@@ -53,10 +53,10 @@ rtf_document <- function(toc = FALSE,
 
   # build pandoc args
   args <- c("--standalone")
-  
+
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
-  
+
   # pandoc args
   args <- c(args, pandoc_args)
 

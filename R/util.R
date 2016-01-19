@@ -43,11 +43,11 @@ from_rmarkdown <- function(implicit_figures = TRUE, extensions = NULL) {
   # paste extensions together and remove whitespace
   extensions <- paste0(extensions, collapse = "")
   extensions <- gsub(" ", "", extensions)
-  
+
   # exclude implicit figures unless the user has added them back
   if (!implicit_figures && !grepl("implicit_figures", extensions))
     extensions <- paste0("-implicit_figures", extensions)
-    
+
   rmarkdown_format(extensions)
 }
 
@@ -229,9 +229,9 @@ same_path <- function(path1, path2, ...) {
 find_program <- function(program) {
   if (is_osx()) {
     res <- suppressWarnings({
-      # Quote the path (so it can contain spaces, etc.) and escape any quotes 
+      # Quote the path (so it can contain spaces, etc.) and escape any quotes
       # and escapes in the path itself
-      sanitized_path <- gsub("\\", "\\\\", Sys.getenv("PATH"), fixed = TRUE)      
+      sanitized_path <- gsub("\\", "\\\\", Sys.getenv("PATH"), fixed = TRUE)
       sanitized_path <- gsub("\"", "\\\"", sanitized_path, fixed = TRUE)
       system(paste("PATH=\"", sanitized_path, "\" /usr/bin/which ", program, sep=""),
              intern = TRUE)
