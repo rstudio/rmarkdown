@@ -5,6 +5,8 @@ rmarkdown 0.9.4 (unreleased)
 
 * Added rtf_document format for Rich Text Format output
 
+* Added github_document format for GitHub Flavored Markdown output
+
 * Only apply white background for themed HTML documents (#588)
 
 * Added <meta name="viewport" content="width=device-width, initial-scale=1"> to
