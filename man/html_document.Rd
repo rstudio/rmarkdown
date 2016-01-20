@@ -108,7 +108,7 @@ and Citations} article in the online documentation.
 
 
 You can provide a custom HTML template to be used for rendering. The syntax
-for templates is described in the 
+for templates is described in the
 \href{http://pandoc.org/README.html}{pandoc
 documentation}. You can also use the basic pandoc template by passing
 \code{template = NULL}.

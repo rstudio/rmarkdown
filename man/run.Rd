@@ -49,7 +49,7 @@ The \code{run} function runs a Shiny document by starting a Shiny
   rendered and viewed. You can therefore link to other documents in the
   directory using standard Markdown syntax, e.g.
   \code{[Analysis Page 2](page2.Rmd)}.
-  
+
   If \code{default_file} is not specified, nor is a file specified on the
   URL, then the default document to serve at \code{/} is chosen from (in
   order of preference):

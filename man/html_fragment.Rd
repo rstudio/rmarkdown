@@ -31,7 +31,7 @@ markdown document).}
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
 ellipses.}
 
-\item{mathjax}{\code{TRUE} to convert $ and $$ math blocks into MathJax 
+\item{mathjax}{\code{TRUE} to convert $ and $$ math blocks into MathJax
 compatible output. Note that you'll still need to ensure that the page
 where the fragment is included loads the required MathJax scripts.}
 
@@ -56,7 +56,7 @@ assumes you will include the output into an existing document (e.g. a blog
 post).
 }
 \details{
-See the \href{http://rmarkdown.rstudio.com/html_document_format.html}{online 
+See the \href{http://rmarkdown.rstudio.com/html_document_format.html}{online
 documentation} for additional details on using the \code{html_fragment}
 format.
 }

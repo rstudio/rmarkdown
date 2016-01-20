@@ -24,10 +24,10 @@ if this is \code{TRUE} then \code{clean_supporting} will always be
 
 \item{pre_processor}{An optional pre-processor function that receives the
 \code{metadata}, \code{input_file}, \code{runtime}, \code{knit_meta},
-\code{files_dir}, and \code{output_dir} and can return additional arguments 
+\code{files_dir}, and \code{output_dir} and can return additional arguments
 to pass to pandoc.}
 
-\item{intermediates_generator}{An optional function that receives the 
+\item{intermediates_generator}{An optional function that receives the
 original \code{input_file}, its \code{encoding}, and the intermediates
 directory (i.e. the \code{intermediates_dir} argument to
 \code{\link{render}}). The function should generate and return the names of

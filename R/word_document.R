@@ -60,13 +60,13 @@ word_document <- function(toc = FALSE,
 
   # base pandoc options for all docx output
   args <- c()
-  
+
   # table of contents
   if (pandoc_available("1.14"))
     args <- c(args, pandoc_toc_args(toc, toc_depth))
   else
     warning("table of contents for word_document requires pandoc >= 1.14")
-  
+
   # highlighting
   if (!is.null(highlight))
     highlight <- match.arg(highlight, highlighters())

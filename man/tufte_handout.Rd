@@ -38,7 +38,7 @@ for additional details.}
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 }
 \description{
-Template for creating a handout according to the style of 
+Template for creating a handout according to the style of
 Edward R. Tufte and Richard Feynman.
 }
 

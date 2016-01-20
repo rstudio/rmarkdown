@@ -4,14 +4,14 @@ knit_params_get <- function(input_lines, params) {
   if (utils::packageVersion("knitr") < "1.10") {
     stop("knitr >= 1.10 required to use rmarkdown params")
   }
-  
+
   # read the default parameters and extract them into a named list
   knit_params <- mark_utf8(knitr::knit_params(input_lines))
   default_params <- list()
   for (param in knit_params) {
     default_params[[param$name]] <- param$value
   }
-  
+
   # validate params passed to render
   if (!is.null(params)) {
 
@@ -19,18 +19,18 @@ knit_params_get <- function(input_lines, params) {
       if (!interactive()) {
         stop("render parameter configuration only allowed in an interactive environment")
       }
-      
+
       params <- knit_params_ask(input_lines = input_lines)
       if (is.null(params)) {
         stop("render parameter configuration canceled")
       }
     }
-    
+
     # verify they are a list
     if (!is.list(params) || (length(names(params)) != length(params))) {
       stop("render params argument must be a named list")
     }
-    
+
     # verify that all parameters passed are also in the yaml
     invalid_params <- setdiff(names(params), names(default_params))
     if (length(invalid_params) > 0) {
@@ -38,7 +38,7 @@ knit_params_get <- function(input_lines, params) {
            paste(invalid_params, sep = ", "))
     }
   }
-  
+
   # merge explicitly provided params with defaults
   merge_lists(default_params, params, recursive = FALSE)
 }
@@ -131,7 +131,7 @@ params_get_input <- function(param) {
     } else {
       ## Not choices. Look at the value type to find what input control we
       ## should use.
-      
+
       ## A value might have multiple classes. Try: class(Sys.time())
       ## Try to find first class listed with a named control.
       for (c in class(param$value)) {
@@ -192,7 +192,7 @@ params_namedList <- function() {
 #' @param encoding The encoding of the input file; see \code{\link{file}}.
 #'
 #' @return named list with overridden parameter names and value.
-#' 
+#'
 #' @export
 knit_params_ask <- function(file = NULL,
                             input_lines = NULL,
@@ -210,7 +210,7 @@ knit_params_ask <- function(file = NULL,
     }
     input_lines <- read_lines_utf8(file, encoding)
   }
-  
+
   knit_params <- mark_utf8(knitr::knit_params(input_lines))
 
   ## Input validation on params (checks shared with render)
@@ -229,7 +229,7 @@ knit_params_ask <- function(file = NULL,
   if (length(knit_params) == 0) {
     return(params_namedList())
   }
-  
+
   configurable <- Filter(params_configurable, knit_params)
   unconfigurable <- Filter(Negate(params_configurable), knit_params)
 
@@ -245,7 +245,7 @@ knit_params_ask <- function(file = NULL,
 
       inputId <- param$name
       label <- params_label(inputControlFn, param)
-      
+
       arguments = list(
           inputId = inputId,
           label = label
@@ -296,10 +296,10 @@ knit_params_ask <- function(file = NULL,
       unsupported <- setdiff(names(arguments), inputControlFnFormals)
       if (length(unsupported) > 0) {
         inputControl <- shiny::div(class = "form-group",
-                                   tags$label(class="control-label",param$name), 
+                                   tags$label(class="control-label",param$name),
                                    shiny::div(paste('Cannot customize the parameter "', param$name, '" ',
                                                     'because the "', params_get_input(param), '" ',
-                                                    'Shiny control does not support: ', 
+                                                    'Shiny control does not support: ',
                                                     paste(unsupported, collapse = ', '), sep = '')))
       } else {
         inputControl <- do.call(inputControlFn, arguments)
@@ -343,7 +343,7 @@ knit_params_ask <- function(file = NULL,
           }
         }
       }
-      
+
       output[[paste0("ui_", param$name)]] <- shiny::renderUI({
         # For most parameters, the selectInputId input will be NULL.
         if (!is.null(showSelectControl) && showSelectControl(input[[selectInputId]])) {
@@ -352,7 +352,7 @@ knit_params_ask <- function(file = NULL,
           inputControl
         }
       })
-      
+
       shiny::observe({
         # A little reactive magic to keep in mind. If you're in one of the
         # "default/custom" selector scenarios, this will never fire until the
@@ -372,7 +372,7 @@ knit_params_ask <- function(file = NULL,
     lapply(configurable, function(param) {
       param.ui(param)
     })
-    
+
     shiny::observeEvent(input$save, {
       shiny::stopApp(values)
     })
@@ -386,7 +386,7 @@ knit_params_ask <- function(file = NULL,
       shiny::fluidRow(shiny::column(12, lapply(configurable, function(param) {
         shiny::uiOutput(paste0("ui_", param$name))
       }))), class = "container-fluid")
-  
+
   if (length(unconfigurable) > 0) {
     skipped <- shiny::tags$div(shiny::tags$strong("Note:"),
                             "The following parameters cannot be customized:",

@@ -78,7 +78,7 @@ the markdown syntax for citations in the
 \href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 and Citations} article in the online documentation.
 
-Many aspects of the LaTeX template used to create PDF documents can be 
+Many aspects of the LaTeX template used to create PDF documents can be
 customized using metadata. For example:
 
 \tabular{l}{

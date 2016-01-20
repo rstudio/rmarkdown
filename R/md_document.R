@@ -8,7 +8,7 @@
 #' @param variant Markdown variant to produce (defaults to "markdown_strict").
 #'   Other valid values are "markdown_github", "markdown_mmd",
 #'   markdown_phpextra", or even "markdown" (which produces pandoc markdown).
-#'   You can also compose custom markdown variants, see the 
+#'   You can also compose custom markdown variants, see the
 #'   \href{http://pandoc.org/README.html}{pandoc online documentation}
 #'   for details.
 #'

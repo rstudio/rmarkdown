@@ -33,7 +33,7 @@
 #'   rendered and viewed. You can therefore link to other documents in the
 #'   directory using standard Markdown syntax, e.g.
 #'   \code{[Analysis Page 2](page2.Rmd)}.
-#'   
+#'
 #'   If \code{default_file} is not specified, nor is a file specified on the
 #'   URL, then the default document to serve at \code{/} is chosen from (in
 #'   order of preference):
@@ -68,7 +68,7 @@
 #'
 #' }
 #' @export
-run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL, 
+run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
                 auto_reload = TRUE, shiny_args = NULL, render_args = NULL) {
 
   # select the document to serve at the root URL if not user-specified
@@ -85,16 +85,16 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       }
     }
   }
-  
+
   if (is.null(default_file)) {
     # no R Markdown default found; how about an HTML?
-    indexHtml <- list.files(path = dir, pattern = "index.html?", 
+    indexHtml <- list.files(path = dir, pattern = "index.html?",
                             ignore.case = TRUE)
     if (length(indexHtml) > 0) {
       default_file <- indexHtml[1]
     }
   }
-  
+
   # form and test locations
   dir <- normalize_path(dir)
   if (!dir_exists(dir))
@@ -107,7 +107,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     if (identical(substr(file_rel, 1, nchar(dir)), dir))
       file_rel <- substr(file_rel, nchar(dir) + 2, nchar(file_rel))
 
-    # if we don't have a default to launch, make sure the user-specified file 
+    # if we don't have a default to launch, make sure the user-specified file
     # exists
     if (is.null(default_file)) {
       resolved <- resolve_relative(dir, file_rel)
@@ -174,7 +174,7 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
     if (!nzchar(path_info)) {
       path_info <- file
     }
-    
+
     file <- resolve_relative(dir, path_info)
     reactive_file <- if (auto_reload)
       shiny::reactiveFileReader(500, session, file, identity)
@@ -191,7 +191,7 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
       # if output is cached, return it directly
       if (out$cached) {
         if (nchar(out$resource_folder) > 0) {
-          shiny::addResourcePath(basename(out$resource_folder), 
+          shiny::addResourcePath(basename(out$resource_folder),
                                  out$resource_folder)
         }
         return (out$shiny_html)
@@ -275,11 +275,11 @@ rmarkdown_shiny_ui <- function(dir, file) {
     if (identical(req_path, "/")) {
       req_path <- file
     }
-    
+
     # request must be for an R Markdown or HTML document
     ext <- tolower(tools::file_ext(req_path))
     if (!identical(ext, "rmd") &&
-        !identical(ext, "htm") && 
+        !identical(ext, "htm") &&
         !identical(ext, "html")) {
       return(NULL)
     }
@@ -329,7 +329,7 @@ rmd_cached_output <- function (input, encoding) {
   resource_folder <- ""
 
   # if the file is raw HTML, return it directly
-  if (identical(tolower(tools::file_ext(input)), "htm") || 
+  if (identical(tolower(tools::file_ext(input)), "htm") ||
       identical(tolower(tools::file_ext(input)), "html")) {
     return(list(
       cacheable = TRUE,
@@ -338,7 +338,7 @@ rmd_cached_output <- function (input, encoding) {
       shiny_html = shinyHTML_with_deps(input, NULL),
       resource_folder = ""))
   }
-  
+
   # check to see if the file is a Shiny document
   front_matter <- parse_yaml_front_matter(read_lines_utf8(input, encoding))
   if (!identical(front_matter$runtime, "shiny")) {

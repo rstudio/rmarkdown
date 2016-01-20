@@ -1,17 +1,17 @@
 #' Base output format for HTML-based output formats
-#' 
-#' Creates an HTML base output format suitable for passing as the 
+#'
+#' Creates an HTML base output format suitable for passing as the
 #' \code{base_format} argument of the \code{\link{output_format}} function.
-#' 
+#'
 #' @inheritParams html_document
-#' 
+#'
 #' @param dependency_resolver A dependency resolver
 #' @param copy_resources Copy resources
 #' @param extra_dependencies Extra dependencies
 #' @param bootstrap_compatible Bootstrap compatible
-#' 
+#'
 #' @return HTML base output format.
-#' 
+#'
 #' @export
 html_document_base <- function(smart = TRUE,
                                theme = NULL,
@@ -25,11 +25,11 @@ html_document_base <- function(smart = TRUE,
                                extra_dependencies = NULL,
                                bootstrap_compatible = FALSE,
                                ...) {
-  
+
   # default for dependency_resovler
   if (is.null(dependency_resolver))
     dependency_resolver <- html_dependency_resolver
-  
+
   args <- c()
 
   # smart quotes, etc.
@@ -110,12 +110,12 @@ html_document_base <- function(smart = TRUE,
 
     args
   }
-  
-  intermediates_generator <- function(original_input, encoding, 
+
+  intermediates_generator <- function(original_input, encoding,
                                       intermediates_dir) {
     # copy intermediates; skip web resources if not self contained (pandoc can
     # create references to web resources without the file present)
-    return(copy_render_intermediates(original_input, encoding, 
+    return(copy_render_intermediates(original_input, encoding,
                                      intermediates_dir, !self_contained))
   }
 
@@ -136,16 +136,16 @@ html_document_base <- function(smart = TRUE,
     # document to its supporting files directory, and rewrites the document to
     # use the copies from that directory.
     if (copy_resources) {
-      
+
       # ensure the lib directory exists
       dir.create(lib_dir, recursive = TRUE, showWarnings = FALSE)
       relative_lib <- normalized_relative_to(output_dir, lib_dir)
-      
+
       res_replacements <- c()
-      
+
       resource_copier <- function(node, att, src, idx) {
         in_file <- utils::URLdecode(src)
-        
+
         # only process the file if (a) it isn't already in the library, and (b)
         # it exists on the local file system (this also excludes external
         # resources such as "http://foo/bar.png")
@@ -154,27 +154,27 @@ html_document_base <- function(smart = TRUE,
             file.exists(in_file)) {
 
           # check to see if it's already in the library (by absolute path)
-          res_src <- normalized_relative_to(lib_dir, in_file) 
+          res_src <- normalized_relative_to(lib_dir, in_file)
           if (same_path(res_src, in_file)) {
             # not inside the library, copy it there
-            target_dir <- if (dirname(in_file) == ".")  
-              lib_dir 
-            else 
+            target_dir <- if (dirname(in_file) == ".")
+              lib_dir
+            else
               file.path(lib_dir, dirname(in_file))
             dir.create(target_dir, recursive = TRUE, showWarnings = FALSE)
             target_res_file <- file.path(target_dir, basename(in_file))
-            
+
             # copy the file to the library
             if (!file.exists(target_res_file)) {
               file.copy(in_file, target_res_file)
             }
-            
+
             res_src <- file.path(relative_lib, src)
           } else {
             # inside the library, fix up the URL
             res_src <- file.path(relative_lib, res_src)
           }
-          
+
           # replace the reference in the document and adjust the offset
           if (!identical(src, res_src)) {
             res_replacements <<- c(res_replacements, list(list(
@@ -184,36 +184,36 @@ html_document_base <- function(smart = TRUE,
           }
         }
       }
-      
+
       # parse the HTML and copy the resources found
       output_str <- paste(output_str, collapse = "\n")
       call_resource_attrs(output_str, resource_copier)
-      
+
       # rewrite the HTML to refer to the copied resources
       if (length(res_replacements) > 0) {
         ch_pos <- 1
         new_output_str <- ""
-        
-        # we do all replacements in bytes for performance reasons--mark the 
-        # output with byte encoding temporarily 
+
+        # we do all replacements in bytes for performance reasons--mark the
+        # output with byte encoding temporarily
         prev_encoding <- Encoding(output_str)
         Encoding(output_str) <- "bytes"
         Encoding(new_output_str) <- "bytes"
-        
+
         for (res_rep in seq_along(res_replacements)) {
           rep <- res_replacements[[res_rep]]
-          
+
           # the text from the last replacement to the current one
           before <- substr(output_str, ch_pos, rep$pos - 1)
           ch_pos <- rep$pos + rep$len
-          
+
           # the text from the current replacement to the end of the output,
           # if applicable
           after <- if (res_rep == length(res_replacements))
             substring(output_str, ch_pos)
-          else 
+          else
             ""
-          
+
           # compose the next segment of the output from the text between
           # replacements and the current replacement text
           new_output_str <- paste(new_output_str, before, rep$text, after,
@@ -222,7 +222,7 @@ html_document_base <- function(smart = TRUE,
         output_str <- new_output_str
         Encoding(output_str) <- prev_encoding
       }
-      
+
     } else if (!self_contained) {
       # if we're not self-contained, find absolute references to the output
       # directory and replace them with relative ones

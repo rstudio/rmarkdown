@@ -15,7 +15,7 @@ find_external_resources(input_file, encoding = getOption("encoding"))
 A data frame with the following columns:
   \describe{
    \item{path}{The relative path from the document to the resource}
-   \item{explicit}{Whether the resource was specified explicitly 
+   \item{explicit}{Whether the resource was specified explicitly
      (\code{TRUE}) or discovered implicitly (\code{FALSE})}
    \item{web}{Whether the resource is needed to display a Web page rendered
      from the document}
@@ -27,17 +27,17 @@ additional files needed in order to render and display the document.
 }
 \details{
 This routine applies heuristics in order to scan a document for
-  possible resource references. 
-  
+  possible resource references.
+
   In R Markdown documents, it looks for references to files implicitly
   referenced in Markdown (e.g. \code{![alt](img.png)}), in the document's
   YAML header, in raw HTML chunks, and as quoted strings in R code chunks
   (e.g. \code{read.csv("data.csv")}).
-  
+
   Resources specified explicitly in the YAML header for R Markdown documents
   are also returned. To specify resources in YAML, use the
   \code{resource_files} key:
-  
+
   \preformatted{---
 title: My Document
 author: My Name
@@ -46,7 +46,7 @@ resource_files:
  - images/figure.png
 ---}
 
-  Each item in the \code{resource_files} list can refer to: 
+  Each item in the \code{resource_files} list can refer to:
   \enumerate{
   \item A single file, such as \code{images/figure.png}, or
   \item A directory, such as \code{resources/data}, in which case all of the
@@ -55,11 +55,11 @@ resource_files:
     the files matching the pattern will be included. No recursion is done in
     this case.
   }
-  
+
   In HTML files (and raw HTML chunks in R Markdown documents), this routine
   searches for resources specified in common tag attributes, such as
   \code{<img src="...">}, \code{<link href="...">}, etc.
-  
+
   In all cases, only resources that exist on disk and are contained in the
   document's directory (or a child thereof) are returned.
 }

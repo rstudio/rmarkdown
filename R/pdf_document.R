@@ -28,7 +28,7 @@
 #'
 #' See the \href{http://rmarkdown.rstudio.com/pdf_document_format.html}{online
 #' documentation} for additional details on using the \code{pdf_document} format.
-#' 
+#'
 #' Creating PDF output from R Markdown requires that LaTeX be installed.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
@@ -39,8 +39,8 @@
 #' the markdown syntax for citations in the
 #' \href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
-#' 
-#' Many aspects of the LaTeX template used to create PDF documents can be 
+#'
+#' Many aspects of the LaTeX template used to create PDF documents can be
 #' customized using metadata. For example:
 #'
 #' \tabular{l}{
@@ -105,18 +105,18 @@ pdf_document <- function(toc = FALSE,
 
   # template path and assets
   if (identical(template, "default")) {
-    
-    # choose the right template    
+
+    # choose the right template
     if (!pandoc_available("1.14"))
       latex_template <- "default.tex"
     else
       latex_template <- "default-1.14.tex"
-      
+
     # add to args
     args <- c(args, "--template",
-              pandoc_path_arg(rmarkdown_system_file(paste0("rmd/latex/", 
+              pandoc_path_arg(rmarkdown_system_file(paste0("rmd/latex/",
                                                            latex_template))))
-    
+
   } else if (!is.null(template)) {
     args <- c(args, "--template", pandoc_path_arg(template))
   }
@@ -148,24 +148,24 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_args)
 
   saved_files_dir <- NULL
-  
-  pre_processor <- function(metadata, input_file, runtime, knit_meta, 
+
+  pre_processor <- function(metadata, input_file, runtime, knit_meta,
                                 files_dir, output_dir) {
     # save files dir (for generating intermediates)
     saved_files_dir <<- files_dir
-    
+
     # use a geometry filter when we are using the "default" template
     if (identical(template, "default"))
-      pdf_pre_processor(metadata, input_file, runtime, knit_meta, files_dir, 
+      pdf_pre_processor(metadata, input_file, runtime, knit_meta, files_dir,
                         output_dir)
     else
       invisible(NULL)
   }
 
-  intermediates_generator <- function(original_input, encoding, 
+  intermediates_generator <- function(original_input, encoding,
                                       intermediates_dir) {
     # copy all intermediates (pandoc will need to bundle them in the PDF)
-    intermediates <- copy_render_intermediates(original_input, encoding, 
+    intermediates <- copy_render_intermediates(original_input, encoding,
                                                intermediates_dir, FALSE)
 
     # we need figures from the supporting files dir to be available during
@@ -176,8 +176,8 @@ pdf_document <- function(toc = FALSE,
         path = file.path(intermediates_dir, basename(saved_files_dir)),
         all.files = TRUE, recursive = TRUE, full.names = TRUE))
     }
-    
-    intermediates 
+
+    intermediates
   }
 
   # return format

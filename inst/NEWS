@@ -1,4 +1,4 @@
-rmarkdown 0.9.4 (unreleased)
+rmarkdown 0.9.5 (unreleased)
 --------------------------------------------------------------------------------
 
 * Added odt_document format for OpenDocument Text output
@@ -14,6 +14,10 @@ rmarkdown 0.9.4 (unreleased)
 
 * Specify --filter pandoc-citeproc after custom pandoc args
 
+* Long lines in code blocks will be wrapped in the `html_vignette()` output (#595)
+
+* Added new arguments `run_pandoc = TRUE` and `knit_meta = NULL` to `render()`.
+  See the help page of `render` for details. (#594)
 
 rmarkdown 0.9.2
 --------------------------------------------------------------------------------
@@ -33,9 +37,9 @@ rmarkdown 0.9.1
 rmarkdown 0.9
 --------------------------------------------------------------------------------
 
-* Fix for JS exception in slidy_presentation when served from the filesystem 
+* Fix for JS exception in slidy_presentation when served from the filesystem
   (don't call pushState for file:// urls)
-  
+
 * Escape single quotes in file paths
 
 * Fix for missing resources when rendering a filename with shell characters
@@ -48,7 +52,7 @@ rmarkdown 0.9
   emulation will be used (run pdflatex/xelatex/lualatex, bibtex, and makeindex
   a few times). You are recommended to install latexmk, and please note latexmk
   requires a Perl installation (this is important especially for Windows users).
-  
+
 * Always use the graphics package for PDF output
 
 * Fix for the error "cannot change value of locked binding for 'metadata'" when
@@ -57,11 +61,11 @@ rmarkdown 0.9
 * Fix for an issue causing image paths to be rendered incorrectly in Windows
   when rendering an `html_document` with `self_contained: false` and a path is
   passed in argument `output_dir`. (#551)
-  
-* Add always_allow_html option for preventing errors when html_dependencies are
-  rendered in non-HTML formats (e.g. pdf_document or word_document). 
 
-* Fix for an issue causing resources not to be discovered in some documents 
+* Add always_allow_html option for preventing errors when html_dependencies are
+  rendered in non-HTML formats (e.g. pdf_document or word_document).
+
+* Fix for an issue causing resources not to be discovered in some documents
   containing an empty quoted string (`""`) in an R chunk.
 
 
@@ -70,13 +74,13 @@ rmarkdown 0.8.1
 
 * Support for table of contents in word_document (requires pandoc >= 1.14)
 
-* Support for opts_template in knitr options 
+* Support for opts_template in knitr options
 
 * Don't implicitly discover directories when scanning for dependent resources
 
-* Fix for slide numbers not showing up in ioslides when served from 
+* Fix for slide numbers not showing up in ioslides when served from
   the filesystem (don't call pushState for file:// urls)
-  
+
 * Remove inlining of bootstrap CSS (was workaround for bug now fixed in pandoc)
 
 * Allow specifying an R file in calls to find_all_resources
@@ -86,21 +90,21 @@ rmarkdown 0.8
 
 * Add support for keep_md to word_document
 
-* Increase pandoc stack size to 512M (often required for base64 encoding 
+* Increase pandoc stack size to 512M (often required for base64 encoding
   e.g. larger embedded leaflet maps). Stack size can also be controlled
   by the pandoc.stack.size option.
-  
-* Allow YAML front matter to be terminated with ...  
-  
-* Automatically generate a user-interface (via a Shiny application) for 
+
+* Allow YAML front matter to be terminated with ...
+
+* Automatically generate a user-interface (via a Shiny application) for
   user specification of values in parameterized reports.
-  
-* Add tightlist macro for compatibility with pandoc >= 1.14  
-  
+
+* Add tightlist macro for compatibility with pandoc >= 1.14
+
 * Bugfix: Don't merge render params recursively with knit_params
 
-* Bugfix: Handle slashes correctly on Windows for slidy_presentation 
-  when self_contained = FALSE 
+* Bugfix: Handle slashes correctly on Windows for slidy_presentation
+  when self_contained = FALSE
 
 
 rmarkdown 0.7
@@ -110,7 +114,7 @@ rmarkdown 0.7
 
 * Ensure that when LANG=en_US pandoc receives en_US.UTF-8 (prevent hang)
 
-* Generate MathJax compatible output when using html_fragment format. 
+* Generate MathJax compatible output when using html_fragment format.
 
 * Use pandoc built-in template for Beamer
 
@@ -118,27 +122,27 @@ rmarkdown 0.7
 
 * Inline bootstrap.min.css to workaround pandoc 1.14 base64 encoding issue
 
-* Add support for discovering references to external resources when the 
+* Add support for discovering references to external resources when the
   document output format is PDF
 
-* Fix several issues causing pandoc errors when an intermediates directory is 
+* Fix several issues causing pandoc errors when an intermediates directory is
   used, including during render for Shiny documents
 
 
 rmarkdown 0.6
 --------------------------------------------------------------------------------
 
-* Support for parameterized reports. Parameter names and default values are 
+* Support for parameterized reports. Parameter names and default values are
   defined in YAML and can be specified via the 'params' argument to the
   render function
 
 * 'md_extensions' option to enable/disable markdown extensions for input files
 
-* Automatically discover and include dependent resources (e.g. images, css, 
+* Automatically discover and include dependent resources (e.g. images, css,
   etc.) for interactive documents.
-  
-* Added pandoc_version function.  
-  
+
+* Added pandoc_version function.
+
 * Use VignetteEncoding directive in html_vignette format
 
 * Fix issues related to use of non-ASCII characters in ioslides_presentation
@@ -174,7 +178,7 @@ rmarkdown 0.4.2
 
 * Improved support for multiple authors in ioslides
 
-* Workaround for poor rendering of ioslides multi-columns lists in Safari 8 
+* Workaround for poor rendering of ioslides multi-columns lists in Safari 8
 
 * Serve index.html as fallback default file for rmarkdown::run
 

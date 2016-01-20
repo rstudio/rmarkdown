@@ -1,41 +1,41 @@
 
 #' Convert to a slidy presentation
-#' 
+#'
 #' Format for converting from R Markdown to a slidy presentation.
-#' 
+#'
 #' @inheritParams beamer_presentation
 #' @inheritParams pdf_document
 #' @inheritParams html_document
-#'   
+#'
 #' @param duration Duration (in minutes) of the slide deck. This value is used
-#'   to add a countdown timer to the slide footer.  
+#'   to add a countdown timer to the slide footer.
 #' @param footer Footer text (e.g. organization name and/or copyright)
 #' @param font_adjustment Increase or decrease the default font size
 #'  (e.g. -1 or +1). You can also manually adjust the font size during the
 #'  presentation using the 'S' (smaller) and 'B' (bigger) keys.
-#' 
+#'
 #' @return R Markdown output format to pass to \code{\link{render}}
-#' 
+#'
 #' @details
 #'
 #' See the \href{http://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
 #' documentation} for additional details on using the \code{slidy_presentation} format.
-#' 
+#'
 #' For more information on markdown syntax for presentations see the
 #' \href{http://pandoc.org/README.html}{pandoc online documentation}.
-#' 
+#'
 #' @examples
 #' \dontrun{
-#' 
+#'
 #' library(rmarkdown)
-#' 
+#'
 #' # simple invocation
 #' render("pres.Rmd", slidy_presentation())
-#' 
+#'
 #' # specify an option for incremental rendering
 #' render("pres.Rmd", slidy_presentation(incremental = TRUE))
 #' }
-#' 
+#'
 #' @export
 slidy_presentation <- function(incremental = FALSE,
                                duration = NULL,
@@ -73,27 +73,27 @@ slidy_presentation <- function(incremental = FALSE,
   # incremental
   if (incremental)
     args <- c(args, "--incremental")
-  
+
   # duration
   if (!is.null(duration))
     args <- c(args, pandoc_variable_arg("duration", duration))
-  
+
   # footer
   if (!is.null(footer))
     args <- c(args, pandoc_variable_arg("footer", footer))
 
   # font size adjustment
   if (font_adjustment != 0)
-    args <- c(args, pandoc_variable_arg("font-size-adjustment", 
+    args <- c(args, pandoc_variable_arg("font-size-adjustment",
                                         font_adjustment))
-  
+
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
 
   # additional css
   for (css_file in css)
     args <- c(args, "--css", pandoc_path_arg(css_file))
-  
+
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
   pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
@@ -135,6 +135,6 @@ slidy_presentation <- function(incremental = FALSE,
     base_format = html_document_base(smart = smart, lib_dir = lib_dir,
                                      self_contained = self_contained,
                                      mathjax = mathjax,
-                                     bootstrap_compatible = TRUE, 
+                                     bootstrap_compatible = TRUE,
                                      pandoc_args = pandoc_args, ...))
 }
