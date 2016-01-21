@@ -1,0 +1,143 @@
+---
+title: "GitHub Documents"
+output:
+  html_document:
+    toc: true
+---
+
+## Installation
+
+The `github_document` format is currently only available within the development version of the **rmarkdown** package. You can install the development version as follows:
+
+```r
+devtools::install_github("rstudio/rmarkdown")
+```
+
+Installing the current [Preview Release of RStudio](https://www.rstudio.com/products/rstudio/download/preview/) (v0.99.865 or higher) is also highly recommended as it includes support for local HTML preview of documents using GitHub CSS.
+
+## Overview
+
+The GitHub Document format generates GitHub compatible markdown (.md) files which are subsequently rendered to HTML when viewed on GitHub.
+
+To create a GitHub Document from R Markdown you specify the `github_document` output format in the front-matter of your document:
+
+    ---
+    title: "Habits"
+    author: John Doe
+    date: March 22, 2005
+    output: github_document
+    ---
+
+## HTML Preview
+
+By default when you render a GitHub Document markdown file (.md) an HTML preview file (.html) is also written so you can see what the document will look like when it is rendered on GitHub. 
+
+When you call `rmarkdown::render` directly from the command line the preview file is written alongside the generated .md file. However, when you render from within RStudio using the **Knit** button the preview HTML is written to a temporary directory and then automatically displayed by RStudio.
+
+You can suppress the creation of preview HTML using the `html_preview` option. For example:
+
+    ---
+    title: "Habits"
+    output:
+      github_document:
+        html_preview: false
+    ---
+
+
+## Table of Contents
+
+You can add a table of contents using the `toc` option and specify the depth of headers that it applies to using the `toc_depth` option. For example:
+
+    ---
+    title: "Habits"
+    output:
+      github_document:
+        toc: true
+        toc_depth: 2
+    ---
+
+If the table of contents depth isn't explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).
+
+## Figure Options
+
+The `fig_width` and  `fig_height` options can be used to control the default figure width and height (7x5 is used if values are not explicitly specified). The `dev` option controls which graphics device is used for output (the default is "png") For example:
+
+    ---
+    title: "Habits"
+    output:
+      github_document:
+        fig_width: 5
+        fig_height: 5
+        dev: jpeg
+    ---
+
+## Includes
+
+You can do more advanced customization of output by including additional content. To include content in the document header or before/after the document body you use the `includes` option as follows:
+
+    ---
+    title: "Habits"
+    output:
+      github_document:
+        includes:
+          in_header: header.md
+          before_body: doc_prefix.md
+          after_body: doc_suffix.md
+    ---
+
+
+## Markdown Extensions
+
+By default R Markdown is defined as all pandoc markdown extensions with the following tweaks for backward compatibility with the markdown package:
+
+```
++autolink_bare_uris
++ascii_identifier
++tex_math_single_backslash
+```
+
+You can enable or disable markdown extensions using the `md_extensions` option (you preface an option with `-` to disable and `+` to enable it). For example:
+
+    ---
+    title: "Habits"
+    output:
+      github_document:
+        md_extensions: -autolink_bare_uris+hard_line_breaks
+    ---
+
+The above would disable the `autolink_bare_uris` extension and enable the `hard_line_breaks` extension. 
+
+For more on available markdown extensions see the [pandoc markdown specification](http://pandoc.org/README.html#pandocs-markdown).
+
+
+## Pandoc Arguments
+
+If there are pandoc features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+
+    ---
+    title: "Habits"
+    output:
+      github_document:
+        pandoc_args: [
+          "--filter", "/opt/local/filters/myfilter"
+        ]
+    ---
+
+Documentation on all available pandoc arguments can be found in the [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html#options).
+
+## Shared Options
+
+If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named `_output.yaml` within the directory. Note that no YAML delimiters or enclosing output object are used in this file. For example:
+
+**\_output.yaml**
+
+```yaml
+github_document:
+  fig_width: 5
+  fig_height: 5
+```
+
+All documents located in the same directory as `_output.yaml` will inherit it's options. Options defined explicitly within documents will override those specified in the shared options file.
+
+
+

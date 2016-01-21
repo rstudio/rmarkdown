@@ -11,7 +11,7 @@
 
 
 
-<title>Migrating from R Markdown v1</title>
+<title>GitHub Documents</title>
 
 <script src="libs/jquery-1.11.0/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -174,63 +174,126 @@ img {
 </div><!--/.navbar -->
 
 <div id="header">
-<h1 class="title">Migrating from R Markdown v1</h1>
+<h1 class="title">GitHub Documents</h1>
 </div>
 
-
-<div id="changes-in-v2" class="section level2">
-<h2>Changes in v2</h2>
-<p>The current implementation of R Markdown (v2) is an evolution of the original implementation, which was not based on pandoc but rather the <a href="https://github.com/rstudio/markdown">markdown</a> package. Moving to pandoc brings many new features to R Markdown however carries some minor incompatibilities with the previous implementation that are described below.</p>
-<div id="markdown-syntax" class="section level3">
-<h3>Markdown Syntax</h3>
-<p>The following changes to markdown syntax were made in R Markdown v2:</p>
-<ol style="list-style-type: decimal">
-<li>The syntax for superscript now requires a closing ^ (e.g. <code>superscript^2^</code>).</li>
-<li>The WordPress-style LaTeX equation syntax (e.g. <code>$latex &lt;equation&gt;$</code>) is no longer supported.</li>
-<li>Markdown is rendered even if it’s contained within HTML tags.</li>
-</ol>
-</div>
-<div id="preserving-generated-html" class="section level3">
-<h3>Preserving Generated HTML</h3>
-<p>The change to render markdown within HTML tags has consequences for R functions that generate HTML for inclusion in a markdown document. The markdown processor considers any text that is indented 4 spaces to be preformatted text. This means that if you indent generated HTML tags 4 spaces they will be output as preformatted (i.e. within a <code>&lt;pre&gt;</code> tag).</p>
-<p>If you are creating an R function that generates HTML there are a number of ways to avoid this behavior:</p>
-<ol style="list-style-type: decimal">
-<li>Enclose the HTML in a special comment that indicates that no markdown processing should occur:</li>
-</ol>
-<pre>
-    &lt;!--html_preserve--&gt;
-        &lt;strong&gt;This will render as HTML not preformatted text&lt;/strong&gt;
-    &lt;!--/html_preserve--&gt;
-</pre>
-<ol start="2" style="list-style-type: decimal">
-<li><p>Generate HTML that does not indent tags at the beginning of lines.</p></li>
-<li><p>A varation of #2, use the <a href="http://cran.r-project.org/web/packages/htmltools/index.html"><strong>htmltools</strong></a> package to generate HTML (which will print it’s output by default without indentation).</p></li>
-</ol>
-<p>If you are a user of an R package that is generating HTML that includes indentation you can temporarily workaround the problem by rendering your documnent with rmarkdown v1 (see section below on <a href="#continuing-to-use-v1">Continuing to Use v1</a>).</p>
-</div>
-<div id="the-knitr-package" class="section level3">
-<h3>The knitr Package</h3>
-<p>R Markdown v2 no longer attaches the <strong>knitr</strong> package by default, i.e. it does not do <code>library(knitr)</code> before an R Markdown document is compiled (whereas v1 does), and <strong>knitr</strong> is only <em>loaded</em> but not <em>attached</em>. As a result, you may see an error message like <code>object 'opts_chunk' not found</code> (or other objects in <strong>knitr</strong> not found). Not attaching a package makes the work space cleaner. If you only need to use a small number of objects in a package occasionally, you are recommended to use the <code>::</code> operator, e.g. <code>knitr::opts_chunk</code>. However, sometimes we may need to a lot of objects in a package, and it will be cumbersome to type <code>package::</code> again and again. In this case, you can attach the package to the current R session explicitly, e.g. <code>library(knitr)</code>.</p>
-</div>
-<div id="knitr-caching" class="section level3">
-<h3>Knitr Caching</h3>
-<p>One other important change relates to the use of the <a href="http://yihui.name/knitr/demo/cache/">knitr cache</a>. When R Markdown knits documents it explicitly configures the knitr cache to use a directory based on the name of the input file (e.g. <code>inputfile_cache</code>). If you are setting an explicit cache directory within your document (e.g. via <code>opts_chunk$set(cache.path = ...))</code>) you should remove this code and rely on R Markdown to set the cache directory.</p>
-</div>
-<div id="other-knitr-options" class="section level3">
-<h3>Other knitr Options</h3>
-<p>Besides the <code>cache.path</code> option, the rmarkdown package has also modifies a few other default <a href="http://yihui.name/knitr/options">chunk options</a> in knitr when calling <code>rmarkdown::render()</code>, including</p>
+<div id="TOC">
 <ul>
-<li><code>fig.path</code>: the default value in knitr is <code>figure/</code>, and it has been changed to <code>inputfile_files/figure-format/</code>, where <code>format</code> is the output format, such as <code>html</code>;</li>
-<li><code>error</code>: it was changed from <code>TRUE</code> to <code>FALSE</code>, meaning that knitr will stop on error by default;</li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#html-preview">HTML Preview</a></li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#figure-options">Figure Options</a></li>
+<li><a href="#includes">Includes</a></li>
+<li><a href="#markdown-extensions">Markdown Extensions</a></li>
+<li><a href="#pandoc-arguments">Pandoc Arguments</a></li>
+<li><a href="#shared-options">Shared Options</a></li>
 </ul>
-<p>There are some other subtle changes, such as <code>fig.retina</code> (from <code>NULL</code> to <code>2</code> for the HTML output), <code>fig.width</code> and <code>fig.height</code> (depending on the document output format). You can print <code>knitr::opts_chunk$get()</code> in an R Markdown document to see the default chunk options configured by rmarkdown.</p>
 </div>
+
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>The <code>github_document</code> format is currently only available within the development version of the <strong>rmarkdown</strong> package. You can install the development version as follows:</p>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
+<p>Installing the current <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release of RStudio</a> (v0.99.865 or higher) is also highly recommended as it includes support for local HTML preview of documents using GitHub CSS.</p>
 </div>
-<div id="continuing-to-use-v1" class="section level2">
-<h2>Continuing to Use v1</h2>
-<p>If you are using RStudio you can force RStudio to render documents using R Markdown v1 by adding a special comment to your source file:</p>
-<pre>&lt;!-- rmarkdown v1 --&gt;</pre>
-<p>For rendering R Markdown v1 documents outside of RStudio you can continue to use the <a href="https://github.com/rstudio/markdown">markdown</a> package.</p>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>The GitHub Document format generates GitHub compatible markdown (.md) files which are subsequently rendered to HTML when viewed on GitHub.</p>
+<p>To create a GitHub Document from R Markdown you specify the <code>github_document</code> output format in the front-matter of your document:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+author: John Doe
+date: March 22, 2005
+output: github_document
+---</code></pre>
+</div>
+<div id="html-preview" class="section level2">
+<h2>HTML Preview</h2>
+<p>By default when you render a GitHub Document markdown file (.md) an HTML preview file (.html) is also written so you can see what the document will look like when it is rendered on GitHub.</p>
+<p>When you call <code>rmarkdown::render</code> directly from the command line the preview file is written alongside the generated .md file. However, when you render from within RStudio using the <strong>Knit</strong> button the preview HTML is written to a temporary directory and then automatically displayed by RStudio.</p>
+<p>You can suppress the creation of preview HTML using the <code>html_preview</code> option. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  github_document:
+    html_preview: false
+---</code></pre>
+</div>
+<div id="table-of-contents" class="section level2">
+<h2>Table of Contents</h2>
+<p>You can add a table of contents using the <code>toc</code> option and specify the depth of headers that it applies to using the <code>toc_depth</code> option. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  github_document:
+    toc: true
+    toc_depth: 2
+---</code></pre>
+<p>If the table of contents depth isn’t explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).</p>
+</div>
+<div id="figure-options" class="section level2">
+<h2>Figure Options</h2>
+<p>The <code>fig_width</code> and <code>fig_height</code> options can be used to control the default figure width and height (7x5 is used if values are not explicitly specified). The <code>dev</code> option controls which graphics device is used for output (the default is “png”) For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  github_document:
+    fig_width: 5
+    fig_height: 5
+    dev: jpeg
+---</code></pre>
+</div>
+<div id="includes" class="section level2">
+<h2>Includes</h2>
+<p>You can do more advanced customization of output by including additional content. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  github_document:
+    includes:
+      in_header: header.md
+      before_body: doc_prefix.md
+      after_body: doc_suffix.md
+---</code></pre>
+</div>
+<div id="markdown-extensions" class="section level2">
+<h2>Markdown Extensions</h2>
+<p>By default R Markdown is defined as all pandoc markdown extensions with the following tweaks for backward compatibility with the markdown package:</p>
+<pre><code>+autolink_bare_uris
++ascii_identifier
++tex_math_single_backslash</code></pre>
+<p>You can enable or disable markdown extensions using the <code>md_extensions</code> option (you preface an option with <code>-</code> to disable and <code>+</code> to enable it). For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  github_document:
+    md_extensions: -autolink_bare_uris+hard_line_breaks
+---</code></pre>
+<p>The above would disable the <code>autolink_bare_uris</code> extension and enable the <code>hard_line_breaks</code> extension.</p>
+<p>For more on available markdown extensions see the <a href="http://pandoc.org/README.html#pandocs-markdown">pandoc markdown specification</a>.</p>
+</div>
+<div id="pandoc-arguments" class="section level2">
+<h2>Pandoc Arguments</h2>
+<p>If there are pandoc features you want to use that lack equivalents in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  github_document:
+    pandoc_args: [
+      &quot;--filter&quot;, &quot;/opt/local/filters/myfilter&quot;
+    ]
+---</code></pre>
+<p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
+</div>
+<div id="shared-options" class="section level2">
+<h2>Shared Options</h2>
+<p>If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named <code>_output.yaml</code> within the directory. Note that no YAML delimiters or enclosing output object are used in this file. For example:</p>
+<p><strong>_output.yaml</strong></p>
+<pre class="yaml"><code>github_document:
+  fig_width: 5
+  fig_height: 5</code></pre>
+<p>All documents located in the same directory as <code>_output.yaml</code> will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.</p>
 </div>
 
 
