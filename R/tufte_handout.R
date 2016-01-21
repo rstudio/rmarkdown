@@ -19,7 +19,7 @@ tufte_handout <- function(fig_width = 4,
                           pandoc_args = NULL) {
 
   # confirm we have the tufte package available
-  if (!require("tufte", quietly = TRUE, warn.conflicts = FALSE))
+  if (!requireNamespace("tufte", quietly = TRUE))
     stop("The 'tufte' package is required to render the tufte_handout format.")
 
   # delegate to the tufte package
