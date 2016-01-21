@@ -9,16 +9,6 @@
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-$for(author-meta)$
-<meta name="author" content="$author-meta$" />
-$endfor$
-
-$if(date-meta)$
-<meta name="date" content="$date-meta$" />
-$endif$
-
-<title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
-
 <link rel="stylesheet" href="$github-markdown-css$">
 <style>
 .markdown-body {
@@ -31,39 +21,13 @@ $endif$
 }
 </style>
 
-$for(header-includes)$
-$header-includes$
-$endfor$
-
-$for(css)$
-<link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
-$endfor$
-
 </head>
 
 <body>
 
 <article class="markdown-body">
 
-$for(include-before)$
-$include-before$
-$endfor$
-
-$if(title)$
-<h1>$title$</h1>
-$if(author)$
-$author$<br/>
-$endif$
-$if(date)$
-$date$<br/>
-$endif$
-$endif$
-
 $body$
-
-$for(include-after)$
-$include-after$
-$endfor$
 
 </article>
 
