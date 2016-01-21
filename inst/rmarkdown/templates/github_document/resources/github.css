@@ -665,12 +665,12 @@
 .markdown-body code > .fl { color: #009999; }
 .markdown-body code > .ch { color: #009999; }
 .markdown-body code > .st { color: #183691; }
-.markdown-body code > .co { color: #999988; font-style: italic; }
+.markdown-body code > .co { color: #969896; }
 .markdown-body code > .ot { color: #0086b3; }
 .markdown-body code > .al { color: #a61717; }
 .markdown-body code > .fu { color: #63a35c;  }
 .markdown-body code > .er { color: #a61717; background-color: #e3d2d2; }
-.markdown-body code > .wa { color: #000000; font-style: italic; }
+.markdown-body code > .wa { color: #000000; }
 .markdown-body code > .cn { color: #008080;  }
 .markdown-body code > .sc { color: #008080; }
 .markdown-body code > .vs { color: #183691; }
@@ -681,9 +681,9 @@
 .markdown-body code > .op { color: #000000; }
 .markdown-body code > .bu { color: #000000; }
 .markdown-body code > .ex { color: #000000; }
-.markdown-body code > .pp { color: #999999; font-style: italic; }
+.markdown-body code > .pp { color: #999999; }
 .markdown-body code > .at { color: #008080; }
-.markdown-body code > .do { color: #999988; font-style: italic; }
+.markdown-body code > .do { color: #969896; }
 .markdown-body code > .an { color: #008080; }
 .markdown-body code > .cv { color: #008080; }
 .markdown-body code > .in { color: #008080; }
