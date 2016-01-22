@@ -24,6 +24,16 @@ html_dependency_bootstrap <- function(theme) {
                  stylesheet = paste("css/", theme, ".min.css", sep=""))
 }
 
+# create an html_dependency for our embedded jqueryui
+html_dependency_jqueryui <- function() {
+  htmlDependency(name = 'jqueryui',
+                 version = '1.11.4',
+                 src = rmarkdown_system_file("rmd/h/jqueryui-1.11.4"),
+                 script = 'jquery-ui.min.js'
+  )
+}
+
+
 # flattens an arbitrarily nested list and returns all of the html_dependency
 # objects it contains
 flatten_html_dependencies <- function(knit_meta) {
