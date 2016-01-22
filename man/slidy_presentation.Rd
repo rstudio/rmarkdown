@@ -47,9 +47,9 @@ ellipses.}
 
 \item{self_contained}{Produce a standalone HTML file with no external
 dependencies, using data: URIs to incorporate the contents of linked
-scripts, stylesheets, images, and videos. Note that even for self
-contained documents MathJax is still loaded externally (this is
-necessary because of it's size).}
+scripts, stylesheets, images, and videos. Note that even for self contained
+documents MathJax is still loaded externally (this is necessary because of
+it's size).}
 
 \item{highlight}{Syntax highlighting style. Supported styles include
 "default", "tango", "pygments", "kate", "monochrome", "espresso",

@@ -24,6 +24,8 @@ rmarkdown 0.9.2.9001 (unreleased)
 
 * Update embedded JQuery to v1.11.3 and Bootstrap to v3.3.5.
 
+* New `html_document` themes: "lumen", "paper", "sandstone", "simplex", & "yeti".
+
 
 rmarkdown 0.9.2
 --------------------------------------------------------------------------------
