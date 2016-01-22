@@ -144,11 +144,7 @@ html_document <- function(toc = FALSE,
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # extra dependencies and variable for toc_float
-  if (toc_float) {
-
-    # must have a toc
-    if (!toc)
-      stop("You must specify toc = TRUE when using the 'toc_float' option")
+  if (toc && toc_float) {
 
     # must have a theme
     if (is.null(theme))
