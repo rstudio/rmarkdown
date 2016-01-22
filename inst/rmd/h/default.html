@@ -189,7 +189,9 @@ $$(function() {
       selectors: "$toc_selectors$",
       theme: "bootstrap3",
       context: '.toc-content',
-      hashGenerator: 'pretty',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
       scrollTo: 20,
       smoothScroll: false
     }).data("toc-tocify");
