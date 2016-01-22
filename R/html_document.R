@@ -5,7 +5,9 @@
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc_depth Depth of headers to include in table of contents
 #' @param toc_float \code{TRUE} to float the table of contents to the left of
-#'   the main document content.
+#'   the main document content. Note that when using \code{toc_float} you must
+#'   use level 2 headers (if your top level headers are level 3 the table
+#'   of contents won't display).
 #' @param number_sections \code{TRUE} to number section headings
 #' @param fig_width Default width (in inches) for figures
 #' @param fig_height Default width (in inches) for figures
