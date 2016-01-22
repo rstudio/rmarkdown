@@ -4,16 +4,16 @@ NULL
 # create an html dependency for our embedded jquery
 html_dependency_jquery <- function()  {
   htmlDependency(name = "jquery",
-                 version = "1.11.0",
-                 src = rmarkdown_system_file("rmd/h/jquery-1.11.0"),
+                 version = "1.11.3",
+                 src = rmarkdown_system_file("rmd/h/jquery-1.11.3"),
                  script = "jquery.min.js")
 }
 
 # create an html dependency for our embedded bootstrap
 html_dependency_bootstrap <- function(theme) {
   htmlDependency(name = "bootstrap",
-                 version = "3.3.1",
-                 rmarkdown_system_file("rmd/h/bootstrap-3.3.1"),
+                 version = "3.3.5",
+                 rmarkdown_system_file("rmd/h/bootstrap-3.3.5"),
                  meta = list(viewport = "width=device-width, initial-scale=1"),
                  script = c(
                    "js/bootstrap.min.js",
