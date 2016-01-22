@@ -69,7 +69,7 @@ $if(toc_float)$
 #$idprefix$TOC {
   margin: 30px 0px 20px 0px;
 }
-@media (max-width: 992px) {
+@media (max-width: 768px) {
 #$idprefix$TOC {
   position: relative;
   width: 100%;
@@ -110,25 +110,36 @@ $if(toc_float)$
   padding-right: 40px;
 }
 
-.tocify {
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 240px;
   max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
 }
 
 .tocify ul, .tocify li {
   line-height: 20px;
 }
 
-
 </style>
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
-<div class="col-md-3">
+<div class="col-sm-4 col-md-3">
 <div id="$idprefix$TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-md-9">
+<div class="toc-content col-sm-8 col-md-9">
 
 $endif$
 
@@ -184,14 +195,6 @@ $if(theme)$
 $if(toc_float)$
 </div>
 </div>
-
-<style type="text/css">
-/* allow main content to flow to occupy entire width of the container (without
-   this the floating toc and the content overlap when the browser is wide) */
-.main-container {
-  max-width: none;
-}
-</style>
 
 <script>
 $$(function() {
