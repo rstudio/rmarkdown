@@ -5,7 +5,26 @@ output:
     toc: true
 ---
 
-## Installation
+## Overview
+
+The GitHub document format generates GitHub compatible markdown (.md) files which are subsequently rendered to HTML when viewed on GitHub. The `keep_md` option of the HTML document format has traditionally been used for creating GitHub documents, however the `github_document` format has several advantages:
+
+- Use of full Pandoc markdown (e.g. citations) which is converted to GitHub markdown.
+- A local HTML preview (using CSS based on GitHub) is available for the document.
+- When using RStudio the local HTML preview is written to a temporary directory (and so won't be checked in or require a .gitignore).
+- Optional generation of a table of contents from section headings.
+- Support for including shared header and/or footer content.
+
+To create a GitHub document from R Markdown you specify the `github_document` output format in the front-matter of your document:
+
+    ---
+    title: "Habits"
+    author: John Doe
+    date: March 22, 2005
+    output: github_document
+    ---
+
+### Installation
 
 The `github_document` format is currently only available within the development version of the **rmarkdown** package. You can install the development version as follows:
 
@@ -15,22 +34,10 @@ devtools::install_github("rstudio/rmarkdown")
 
 Installing the current [Preview Release of RStudio](https://www.rstudio.com/products/rstudio/download/preview/) (v0.99.865 or higher) is also highly recommended as it includes support for local HTML preview of documents using GitHub CSS.
 
-## Overview
-
-The GitHub Document format generates GitHub compatible markdown (.md) files which are subsequently rendered to HTML when viewed on GitHub.
-
-To create a GitHub Document from R Markdown you specify the `github_document` output format in the front-matter of your document:
-
-    ---
-    title: "Habits"
-    author: John Doe
-    date: March 22, 2005
-    output: github_document
-    ---
 
 ## HTML Preview
 
-By default when you render a GitHub Document markdown file (.md) an HTML preview file (.html) is also written so you can see what the document will look like when it is rendered on GitHub. 
+By default when you render a GitHub document markdown file (.md) an HTML preview file (.html) is also written so you can see what the document will look like when it is rendered on GitHub. 
 
 When you call `rmarkdown::render` directly from the command line the preview file is written alongside the generated .md file. However, when you render from within RStudio using the **Knit** button the preview HTML is written to a temporary directory and then automatically displayed by RStudio.
 
