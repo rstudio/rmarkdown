@@ -63,6 +63,22 @@ $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
 
+$if(toc_float)$
+
+<style type="text/css">
+#$idprefix$TOC {
+  margin: 30px 0px 20px 0px;
+}
+@media (max-width: 992px) {
+#$idprefix$TOC {
+  position: relative;
+  width: 100%;
+}
+}
+</style>
+
+$endif$
+
 </head>
 
 <body>
@@ -78,12 +94,34 @@ code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
 }
-img { 
-  max-width:100%; 
-  height: auto; 
+img {
+  max-width:100%;
+  height: auto;
 }
 </style>
 <div class="container-fluid main-container">
+
+$if(toc_float)$
+
+<style type="text/css">
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-md-3">
+<div id="$idprefix$TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-md-9">
+
+$endif$
+
 $endif$
 
 $for(include-before)$
@@ -116,10 +154,13 @@ $endif$
 </div>
 $endif$
 
+$if(toc_float)$
+$else$
 $if(toc)$
 <div id="$idprefix$TOC">
 $toc$
 </div>
+$endif$
 $endif$
 
 $body$
@@ -129,6 +170,33 @@ $include-after$
 $endfor$
 
 $if(theme)$
+
+$if(toc_float)$
+</div>
+</div>
+
+<style type="text/css">
+/* allow main content to flow to occupy entire width of the container (without
+   this the floating toc and the content overlap when the browser is wide) */
+.main-container {
+  max-width: none;
+}
+</style>
+
+<script>
+$$(function() {
+    var toc = $$("#$idprefix$TOC").tocify({
+      selectors: "$toc_selectors$",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: 'pretty',
+      scrollTo: 20,
+      smoothScroll: false
+    }).data("toc-tocify");
+});
+</script>
+$endif$
+
 </div>
 
 <script>

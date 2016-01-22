@@ -4,6 +4,8 @@
 #'
 #' @param toc \code{TRUE} to include a table of contents in the output
 #' @param toc_depth Depth of headers to include in table of contents
+#' @param toc_float \code{TRUE} to float the table of contents to the left of
+#'   the main document content.
 #' @param number_sections \code{TRUE} to number section headings
 #' @param fig_width Default width (in inches) for figures
 #' @param fig_height Default width (in inches) for figures
@@ -106,6 +108,7 @@
 #' @export
 html_document <- function(toc = FALSE,
                           toc_depth = 3,
+                          toc_float = FALSE,
                           number_sections = FALSE,
                           fig_width = 7,
                           fig_height = 5,
@@ -126,6 +129,9 @@ html_document <- function(toc = FALSE,
                           pandoc_args = NULL,
                           ...) {
 
+  # placeholder for any extra dependencies
+  extra_dependencies <- NULL
+
   # build pandoc args
   args <- c("--standalone")
 
@@ -134,6 +140,31 @@ html_document <- function(toc = FALSE,
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
+
+  # extra dependencies and variable for toc_float
+  if (toc_float) {
+
+    # must have a toc
+    if (!toc)
+      stop("You must specify toc = TRUE when using the 'toc_float' option")
+
+    # must have a theme
+    if (is.null(theme))
+      stop("You must use a theme when specifying the 'toc_float' option")
+
+    # dependencies
+    extra_dependencies <- append(extra_dependencies,
+                                 list(html_dependency_jquery(),
+                                      html_dependency_jqueryui(),
+                                      html_dependency_tocify()))
+
+    # flag for template
+    args <- c(args, pandoc_variable_arg("toc_float", "1"))
+
+    # selectors
+    selectors <- paste0("h", seq(2, toc_depth), collapse = ",")
+    args <- c(args, pandoc_variable_arg("toc_selectors", selectors))
+  }
 
   # template path and assets
   if (identical(template, "default"))
@@ -196,7 +227,9 @@ html_document <- function(toc = FALSE,
                                      self_contained = self_contained,
                                      lib_dir = lib_dir, mathjax = mathjax,
                                      template = template,
-                                     pandoc_args = pandoc_args, ...)
+                                     pandoc_args = pandoc_args,
+                                     extra_dependencies = extra_dependencies,
+                                     ...)
   )
 }
 
