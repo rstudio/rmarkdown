@@ -18,7 +18,9 @@ html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
 \item{toc_depth}{Depth of headers to include in table of contents}
 
 \item{toc_float}{\code{TRUE} to float the table of contents to the left of
-the main document content.}
+the main document content. Note that when using \code{toc_float} you must
+use level 2 headers (if your top level headers are level 3 the table
+of contents won't display).}
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
