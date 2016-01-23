@@ -103,6 +103,21 @@ img {
 
 $if(toc_float)$
 
+<script>
+$$(function() {
+    var toc = $$("#$idprefix$TOC").tocify({
+      selectors: "$toc_selectors$",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      scrollTo: 20,
+      smoothScroll: false
+    }).data("toc-tocify");
+});
+</script>
+
 <style type="text/css">
 
 .toc-content {
@@ -203,21 +218,6 @@ $if(theme)$
 $if(toc_float)$
 </div>
 </div>
-
-<script>
-$$(function() {
-    var toc = $$("#$idprefix$TOC").tocify({
-      selectors: "$toc_selectors$",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      scrollTo: 20,
-      smoothScroll: false
-    }).data("toc-tocify");
-});
-</script>
 $endif$
 
 </div>
