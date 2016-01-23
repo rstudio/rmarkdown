@@ -63,22 +63,6 @@ $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
 
-$if(toc_float)$
-
-<style type="text/css">
-#$idprefix$TOC {
-  margin: 30px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#$idprefix$TOC {
-  position: relative;
-  width: 100%;
-}
-}
-</style>
-
-$endif$
-
 </head>
 
 <body>
@@ -119,6 +103,16 @@ $$(function() {
 </script>
 
 <style type="text/css">
+
+#$idprefix$TOC {
+  margin: 30px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#$idprefix$TOC {
+  position: relative;
+  width: 100%;
+}
+}
 
 .toc-content {
   padding-left: 30px;
