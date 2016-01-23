@@ -89,6 +89,7 @@ $if(toc_float)$
 
 <script>
 $$(function() {
+    // establish options
     var options = {
       selectors: "$toc_selectors$",
       theme: "bootstrap3",
@@ -109,7 +110,16 @@ $else$
     options.smoothScroll = false;
 $endif$
 
+    // tocify
     var toc = $$("#$idprefix$TOC").tocify(options).data("toc-tocify");
+
+    // move the data-unique element so the first h2 link targets h1
+    var h1 = $$('h1:first');
+    if (h1 !== null) {
+      var div = $$("div[data-unique]:first");
+      div.insertBefore(h1);
+    }
+
 });
 </script>
 
