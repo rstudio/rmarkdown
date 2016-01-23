@@ -78,12 +78,89 @@ code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
 }
-img { 
-  max-width:100%; 
-  height: auto; 
+img {
+  max-width:100%;
+  height: auto;
 }
 </style>
 <div class="container-fluid main-container">
+
+$if(toc_float)$
+
+<script>
+$$(function() {
+    var toc = $$("#$idprefix$TOC").tocify({
+      selectors: "$toc_selectors$",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      scrollTo: 20,
+      smoothScroll: true
+    }).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#$idprefix$TOC {
+  margin: 30px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#$idprefix$TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-sm-4 col-md-3">
+<div id="$idprefix$TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-sm-8 col-md-9">
+
+$endif$
+
 $endif$
 
 $for(include-before)$
@@ -116,10 +193,13 @@ $endif$
 </div>
 $endif$
 
+$if(toc_float)$
+$else$
 $if(toc)$
 <div id="$idprefix$TOC">
 $toc$
 </div>
+$endif$
 $endif$
 
 $body$
@@ -129,6 +209,12 @@ $include-after$
 $endfor$
 
 $if(theme)$
+
+$if(toc_float)$
+</div>
+</div>
+$endif$
+
 </div>
 
 <script>

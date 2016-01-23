@@ -33,6 +33,15 @@ html_dependency_jqueryui <- function() {
   )
 }
 
+# create an html_dependency for tocify
+html_dependency_tocify <- function() {
+  htmlDependency(name = "tocify",
+                 version = "1.9.1",
+                 src = rmarkdown_system_file("rmd/h/tocify-1.9.1"),
+                 script = "jquery.tocify.min.js",
+                 stylesheet = "jquery.tocify.css")
+}
+
 
 # flattens an arbitrarily nested list and returns all of the html_dependency
 # objects it contains

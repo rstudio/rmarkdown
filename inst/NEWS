@@ -26,6 +26,8 @@ rmarkdown 0.9.2.9001 (unreleased)
 
 * New `html_document` themes: "lumen", "paper", "sandstone", "simplex", & "yeti".
 
+* Added support for floating table of conents (via tocify) to `html_document`
+
 
 rmarkdown 0.9.2
 --------------------------------------------------------------------------------
