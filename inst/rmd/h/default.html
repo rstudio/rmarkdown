@@ -89,16 +89,27 @@ $if(toc_float)$
 
 <script>
 $$(function() {
-    var toc = $$("#$idprefix$TOC").tocify({
+    var options = {
       selectors: "$toc_selectors$",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
         return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
-      scrollTo: 20,
-      smoothScroll: true
-    }).data("toc-tocify");
+      scrollTo: 20
+    };
+$if(toc_collapsed)$
+    options.showAndHide = true;
+$else$
+    options.showAndHide = false;
+$endif$
+$if(toc_smooth_scroll)$
+    options.smoothScroll = true;
+$else$
+    options.smoothScroll = false;
+$endif$
+
+    var toc = $$("#$idprefix$TOC").tocify(options).data("toc-tocify");
 });
 </script>
 
@@ -147,6 +158,17 @@ div.tocify {
 .tocify .list-group-item {
   border-radius: 0px;
 }
+
+$if(toc_collapsed)$
+$else$
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 10px;
+}
+$endif$
 
 </style>
 

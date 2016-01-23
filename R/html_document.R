@@ -7,7 +7,9 @@
 #' @param toc_float \code{TRUE} to float the table of contents to the left of
 #'   the main document content. Note that when using \code{toc_float} you must
 #'   use level 2 headers (if your top level headers are level 3 the table
-#'   of contents won't display).
+#'   of contents won't display). Rather than \code{TRUE} you may also
+#'   pass a list of options that control the behavior of the floating table
+#'   of contents. See the \emph{Floating Table of Contents} section below for details.
 #' @param number_sections \code{TRUE} to number section headings
 #' @param fig_width Default width (in inches) for figures
 #' @param fig_height Default width (in inches) for figures
@@ -76,6 +78,20 @@
 #' \href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
 #'
+#' @section Floating Table of Contents:
+#'
+#'   You may specify a list of options for the \code{toc_float} parameter which control
+#'   the behavior of the floating table of contents. Options include:
+#'
+#'   \itemize{
+#'    \item{\code{collapsed} (defaults to \code{TRUE}) controls whether the table
+#'    of contents appers with only the top-level (H2) headers. When
+#'    collapsed the table of contents is automatically expanded inline
+#'    when necessary.}
+#'    \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls whether
+#'    page scrolls are animated when table of contents items are navigated
+#'    to via mouse clicks.}
+#'   }
 #'
 #' @section Templates:
 #'
@@ -143,12 +159,22 @@ html_document <- function(toc = FALSE,
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
-  # extra dependencies and variable for toc_float
-  if (toc && toc_float) {
+  # toc_float
+  if (toc && !identical(toc_float, FALSE)) {
 
     # must have a theme
     if (is.null(theme))
       stop("You must use a theme when specifying the 'toc_float' option")
+
+    # resolve options
+    toc_float_options <- list(collapsed = TRUE,
+                              smooth_scroll = TRUE)
+    if (is.list(toc_float)) {
+      toc_float_options <- merge_lists(toc_float_options, toc_float)
+      toc_float <- TRUE
+    } else if (!isTRUE(toc_float)) {
+      stop("toc_float must be a logical or a list with options")
+    }
 
     # dependencies
     extra_dependencies <- append(extra_dependencies,
@@ -162,6 +188,12 @@ html_document <- function(toc = FALSE,
     # selectors
     selectors <- paste0("h", seq(2, toc_depth), collapse = ",")
     args <- c(args, pandoc_variable_arg("toc_selectors", selectors))
+
+    # options
+    if (toc_float_options$collapsed)
+      args <- c(args, pandoc_variable_arg("toc_collapsed", "1"))
+    if (toc_float_options$smooth_scroll)
+      args <- c(args, pandoc_variable_arg("toc_smooth_scroll", "1"))
   }
 
   # template path and assets
