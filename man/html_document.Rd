@@ -20,7 +20,9 @@ html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
 \item{toc_float}{\code{TRUE} to float the table of contents to the left of
 the main document content. Note that when using \code{toc_float} you must
 use level 2 headers (if your top level headers are level 3 the table
-of contents won't display).}
+of contents won't display). Rather than \code{TRUE} you may also
+pass a list of options that control the behavior of the floating table
+of contents. See the \emph{Floating Table of Contents} section below for details.}
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
@@ -111,6 +113,23 @@ the markdown syntax for citations in the
 \href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 and Citations} article in the online documentation.
 }
+\section{Floating Table of Contents}{
+
+
+  You may specify a list of options for the \code{toc_float} parameter which control
+  the behavior of the floating table of contents. Options include:
+
+  \itemize{
+   \item{\code{collapsed} (defaults to \code{TRUE}) controls whether the table
+   of contents appers with only the top-level (H2) headers. When
+   collapsed the table of contents is automatically expanded inline
+   when necessary.}
+   \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls whether
+   page scrolls are animated when table of contents items are navigated
+   to via mouse clicks.}
+  }
+}
+
 \section{Templates}{
 
 
