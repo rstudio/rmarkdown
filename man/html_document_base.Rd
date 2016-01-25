@@ -52,8 +52,7 @@ section below for more details).}
 
 \item{bootstrap_compatible}{Bootstrap compatible}
 
-\item{...}{Additional function arguments to pass to the base R Markdown HTML
-output formatter}
+\item{...}{Ignored}
 }
 \value{
 HTML base output format.
