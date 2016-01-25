@@ -16,8 +16,7 @@ html_vignette(fig_width = 3, fig_height = 3, dev = "png", css = NULL,
 
 \item{css}{One or more css files to include}
 
-\item{...}{Additional function arguments to pass to the base R Markdown HTML
-output formatter}
+\item{...}{Additional arguments passed to \code{\link{html_document}}}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

@@ -16,6 +16,7 @@
 #' format.
 #'
 #' @inheritParams html_document
+#' @param ... Additional arguments passed to \code{\link{html_document}}
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @export
 html_fragment <- function(number_sections = FALSE,

@@ -9,6 +9,7 @@
 #' @param copy_resources Copy resources
 #' @param extra_dependencies Extra dependencies
 #' @param bootstrap_compatible Bootstrap compatible
+#' @param ... Ignored
 #'
 #' @return HTML base output format.
 #'
