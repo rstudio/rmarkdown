@@ -9,9 +9,9 @@ html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   fig_retina = if (!fig_caption) 2, fig_caption = FALSE, dev = "png",
   smart = TRUE, self_contained = TRUE, theme = "default",
   highlight = "default", mathjax = "default", template = "default",
-  css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  md_extensions = NULL, pandoc_args = NULL, extra_dependencies = NULL,
-  ...)
+  extra_dependencies = NULL, css = NULL, includes = NULL,
+  keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
+  pandoc_args = NULL, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -74,6 +74,9 @@ created. Note that if you don't use the "default" template then some
 features of \code{html_document} won't be available (see the Templates
 section below for more details).}
 
+\item{extra_dependencies, ...}{Additional function arguments to pass to the
+base R Markdown HTML output formatter \code{\link{html_document_base}}}
+
 \item{css}{One or more css files to include}
 
 \item{includes}{Named list of additional content to include within the
@@ -90,9 +93,6 @@ default definition or R Markdown. See the \code{\link{rmarkdown_format}}
 for additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
-
-\item{extra_dependencies, ...}{Additional function arguments to pass to the
-base R Markdown HTML output formatter \code{\link{html_document_base}}}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

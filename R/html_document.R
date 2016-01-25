@@ -139,13 +139,13 @@ html_document <- function(toc = FALSE,
                           highlight = "default",
                           mathjax = "default",
                           template = "default",
+                          extra_dependencies = NULL,
                           css = NULL,
                           includes = NULL,
                           keep_md = FALSE,
                           lib_dir = NULL,
                           md_extensions = NULL,
                           pandoc_args = NULL,
-                          extra_dependencies = NULL,
                           ...) {
 
   # build pandoc args
