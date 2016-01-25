@@ -18,6 +18,7 @@
 #' documentation} for additional details on using the \code{html_vignette} format.
 #'
 #' @inheritParams html_document
+#' @param ... Additional arguments passed to \code{\link{html_document}}
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @export
 html_vignette <- function(fig_width = 3,
