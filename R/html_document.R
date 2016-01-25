@@ -58,8 +58,8 @@
 #'   default definition or R Markdown. See the \code{\link{rmarkdown_format}}
 #'   for additional details.
 #' @param pandoc_args Additional command line options to pass to pandoc
-#' @param ... Additional function arguments to pass to the base R Markdown HTML
-#'   output formatter
+#' @param extra_dependencies,... Additional function arguments to pass to the
+#'   base R Markdown HTML output formatter \code{\link{html_document_base}}
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -145,10 +145,8 @@ html_document <- function(toc = FALSE,
                           lib_dir = NULL,
                           md_extensions = NULL,
                           pandoc_args = NULL,
+                          extra_dependencies = NULL,
                           ...) {
-
-  # placeholder for any extra dependencies
-  extra_dependencies <- NULL
 
   # build pandoc args
   args <- c("--standalone")
