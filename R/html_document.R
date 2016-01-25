@@ -186,7 +186,7 @@ html_document <- function(toc = FALSE,
     args <- c(args, pandoc_variable_arg("toc_float", "1"))
 
     # selectors
-    selectors <- paste0("h", seq(2, toc_depth), collapse = ",")
+    selectors <- paste0("h", seq(1, toc_depth), collapse = ",")
     args <- c(args, pandoc_variable_arg("toc_selectors", selectors))
 
     # options

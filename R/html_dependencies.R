@@ -38,7 +38,7 @@ html_dependency_tocify <- function() {
   htmlDependency(name = "tocify",
                  version = "1.9.1",
                  src = rmarkdown_system_file("rmd/h/tocify-1.9.1"),
-                 script = "jquery.tocify.min.js",
+                 script = "jquery.tocify.js",
                  stylesheet = "jquery.tocify.css")
 }
 

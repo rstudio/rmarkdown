@@ -213,20 +213,22 @@
           ul,
           ignoreSelector = self.options.ignoreSelector;
 
-        // If the selectors option has a comma within the string
-        if (this.options.selectors.indexOf(",") !== -1) {
 
-          // Grabs the first selector from the string
-          firstElem = $(this.options.context).find(this.options.selectors.replace(/ /g, "").substr(0, this.options.selectors.indexOf(",")));
-
-        }
-
-        // If the selectors option does not have a comman within the string
-        else {
-
-          // Grabs the first selector from the string and makes sure there are no spaces
-          firstElem = $(this.options.context).find(this.options.selectors.replace(/ /g, ""));
-
+        // Determine the element to start the toc with
+        // get all the top level selectors
+        firstElem = [];
+        var selectors = this.options.selectors.replace(/ /g, "").split(",");
+        // find the first set that have at least one non-ignored element
+        for(var i = 0; i < selectors.length; i++) {
+          var foundSelectors = $(this.options.context).find(selectors[i]);
+          for (var s = 0; s < foundSelectors.length; s++) {
+            if (!$(foundSelectors[s]).is(ignoreSelector)) {
+              firstElem = foundSelectors;
+              break;
+            }
+          }
+          if (firstElem.length> 0)
+            break;
         }
 
         if (!firstElem.length) {

@@ -97,6 +97,7 @@ $$(function() {
       hashGenerator: function (text) {
         return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
+      ignoreSelector: "h1.title",
       scrollTo: 20
     };
 $if(toc_collapsed)$
