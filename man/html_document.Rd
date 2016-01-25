@@ -10,7 +10,8 @@ html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   smart = TRUE, self_contained = TRUE, theme = "default",
   highlight = "default", mathjax = "default", template = "default",
   css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  md_extensions = NULL, pandoc_args = NULL, ...)
+  md_extensions = NULL, pandoc_args = NULL, extra_dependencies = NULL,
+  ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -90,8 +91,8 @@ for additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
-\item{...}{Additional function arguments to pass to the base R Markdown HTML
-output formatter}
+\item{extra_dependencies, ...}{Additional function arguments to pass to the
+base R Markdown HTML output formatter \code{\link{html_document_base}}}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}
