@@ -135,8 +135,8 @@ $endif$
     // tocify
     var toc = $$("#$idprefix$TOC").tocify(options).data("toc-tocify");
 
-    // move the data-unique element so the first h2 link targets h1
-    var h1 = $$('h1:first');
+    // move the data-unique element so the first toc entry targets the title
+    var h1 = $$('h1.title');
     if (h1 !== null) {
       var div = $$("div[data-unique]:first");
       div.insertBefore(h1);
