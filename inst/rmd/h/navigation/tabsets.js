@@ -34,9 +34,10 @@ $(document).ready(function () {
       // get the tab div
       var tab = $(tabs[i]);
 
-      // get the heading element within it and grab it's text
+      // get the heading element within it, grab it's text, then remove it
       var heading = tab.find('h' + tabLevel + ':first');
       var headingText = heading.html();
+      heading.remove();
 
       // build and append the tab list item
       var a = $('<a role="tab" data-toggle="tab">' + headingText + '</a>');
@@ -47,9 +48,6 @@ $(document).ready(function () {
       if (i === 0)
         li.attr('class', 'active');
       tabList.append(li);
-
-      // set the text of the heading to empty (since we show it in the tabs)
-      heading.html('');
 
       // set it's attributes
       tab.attr('role', 'tabpanel');
