@@ -107,10 +107,13 @@ pdf_document <- function(toc = FALSE,
   if (identical(template, "default")) {
 
     # choose the right template
-    if (!pandoc_available("1.14"))
-      latex_template <- "default.tex"
-    else
+    version <- pandoc_version()
+    if (version >= "1.15.2")
+      latex_template <- "default-1.15.2.tex"
+    else if (version >= "1.14")
       latex_template <- "default-1.14.tex"
+    else
+      latex_template <- "default.tex"
 
     # add to args
     args <- c(args, "--template",

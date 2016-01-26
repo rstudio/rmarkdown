@@ -168,13 +168,51 @@ $if(dir)$
 \fi
 $endif$
 
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
 $if(title)$
-\title{$title$$if(subtitle)$\\\vspace{0.5em}{\large $subtitle$}$endif$}
+  \title{$title$}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+$else$
+  \title{}
+  \pretitle{\vspace{\droptitle}}
+  \posttitle{}
+$endif$
+$if(subtitle)$
+\subtitle{$subtitle$}
 $endif$
 $if(author)$
-\author{$for(author)$$author$$sep$ \and $endfor$}
+  \author{$for(author)$$author$$sep$ \\ $endfor$}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+$else$
+  \author{}
+  \preauthor{}\postauthor{}
 $endif$
-\date{$date$}
+$if(date)$
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{$date$}
+$else$
+  \date{}
+  \predate{}\postdate{}
+$endif$
+
+
 $for(header-includes)$
 $header-includes$
 $endfor$
