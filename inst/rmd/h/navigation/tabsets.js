@@ -52,6 +52,7 @@ $(document).ready(function () {
       // set it's attributes
       tab.attr('role', 'tabpanel');
       tab.addClass('tab-pane');
+      tab.addClass('tabbed-pane');
       if (fade)
         tab.addClass('fade');
       if (i === 0) {
