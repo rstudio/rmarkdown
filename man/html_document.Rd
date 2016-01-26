@@ -146,6 +146,16 @@ and Citations} article in the online documentation.
 
 ### By Region
 }
+
+  You can also specify two additional attributes to control the appearance
+  and behavior of the tabs. The \code{.tabbed-fade} attributes causes the
+  tabs to fade in and out when switching. The \code{.tabbed-pills} attribute
+  causes the visual appearance of the tabs to be "pill" rather than
+  traditional tabs. For example:
+
+  \preformatted{
+## Quarterly Results {.tabset .tabset-fade .tabset-pills}
+}
 }
 
 \section{Templates}{
