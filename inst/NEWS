@@ -30,6 +30,9 @@ rmarkdown 0.9.2.9001 (unreleased)
 
 * Added support for floating table of conents (via tocify) to `html_document`
 
+* Added support for tabsets via use of {.tabset} class on top-level headings
+
+
 
 rmarkdown 0.9.2
 --------------------------------------------------------------------------------

@@ -228,6 +228,13 @@ html_document <- function(toc = FALSE,
                                                lib_dir,
                                                output_dir))
 
+    # bootstrap navigation (requires theme)
+    if (!is.null(theme)) {
+      args <- c(args, pandoc_html_navigation_args(self_contained,
+                                                  lib_dir,
+                                                  output_dir))
+    }
+
     # content includes (we do this here so that user include-in-header content
     # goes after dependency generated content). make the paths absolute if
     # making a Shiny document so we can resolve them even if rendering

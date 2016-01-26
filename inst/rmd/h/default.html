@@ -106,10 +106,13 @@ h6 {
 </style>
 <div class="container-fluid main-container">
 
+<!-- navigation js -->
+<script src="$navigationjs$/tabsets.js"></script>
+
 $if(toc_float)$
 
 <script>
-$$(function() {
+$$(document).ready(function ()  {
     // establish options
     var options = {
       selectors: "$toc_selectors$",
@@ -118,7 +121,7 @@ $$(function() {
       hashGenerator: function (text) {
         return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
-      ignoreSelector: "h1.title",
+      ignoreSelector: "h1.title, .toc-ignore",
       scrollTo: 0
     };
 $if(toc_collapsed)$
