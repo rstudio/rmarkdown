@@ -93,6 +93,21 @@
 #'    to via mouse clicks.}
 #'   }
 #'
+#' @section Tabbed Sections:
+#'
+#'   You can organize content using tabs by applying the \code{.tabbed} class
+#'   attribute to headers within a document. This will cause all sub-headers
+#'   of the header with the \code{.tabbed} attribute to appear within tabs
+#'   rather than as standalone sections. For example:
+#'
+#'   \preformatted{
+#'## Quarterly Results {.tabset}
+#'
+#'### By Product
+#'
+#'### By Region
+#'}
+#'
 #' @section Templates:
 #'
 #'   You can provide a custom HTML template to be used for rendering. The syntax
@@ -107,6 +122,8 @@
 #'   provide styles using the \code{css} parameter). } \item{For the
 #'   \code{highlight} parameter, the default highlighting style will resolve to
 #'   "pygments" and the "textmate" highlighting style is not available }
+#'   \item{The \code{toc_float} parameter will not work. }
+#'   \item{Tabbed sections (as described above) will not work.}
 #'   \item{MathJax will not work if \code{self_contained} is \code{TRUE} (these
 #'   two options can't be used together in normal pandoc templates). } }
 #'
