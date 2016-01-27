@@ -99,9 +99,9 @@
 #'
 #' @section Tabbed Sections:
 #'
-#'   You can organize content using tabs by applying the \code{.tabbed} class
+#'   You can organize content using tabs by applying the \code{.tabset} class
 #'   attribute to headers within a document. This will cause all sub-headers
-#'   of the header with the \code{.tabbed} attribute to appear within tabs
+#'   of the header with the \code{.tabset} attribute to appear within tabs
 #'   rather than as standalone sections. For example:
 #'
 #'   \preformatted{
@@ -113,8 +113,8 @@
 #'}
 #'
 #'   You can also specify two additional attributes to control the appearance
-#'   and behavior of the tabs. The \code{.tabbed-fade} attributes causes the
-#'   tabs to fade in and out when switching. The \code{.tabbed-pills} attribute
+#'   and behavior of the tabs. The \code{.tabset-fade} attributes causes the
+#'   tabs to fade in and out when switching. The \code{.tabset-pills} attribute
 #'   causes the visual appearance of the tabs to be "pill" rather than
 #'   traditional tabs. For example:
 #'
