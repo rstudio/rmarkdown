@@ -1,11 +1,9 @@
 ---
-title: "Tufte Handout (PDF)"
+title: "Tufte Handout"
 output:
   html_document:
-    toc: true
+    toc: false
 ---
-
-## Overview
 
 Tufte Handouts are documents formatted in the style that Edward Tufte uses in his books and handouts. Tufte’s style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography:
 
@@ -17,158 +15,13 @@ Tufte Handouts are documents formatted in the style that Edward Tufte uses in hi
 
 <br/>
 
-You can see a full example of a document produced with the Tufte Handout template here:
+The Tufte Handout format has been moved from the **rmarkdown** package to the **tufte** package which you can install as follows:
 
-![PDF](images/pdficon_small.png) [Tufte Handout Example](examples/tufte-handout.pdf).
-
-This document includes an overview of Tufte Handouts and the various techniques used for formatting footnotes, sidenotes, figures, tables, etc. You can find additional documentation on the website for the [tufte-latex project](https://code.google.com/p/tufte-latex/) upon which this format is based.
-
-Tufte Handout is also intended as an example of creating a LaTeX based custom format. If you are interested in creating your own formats see the source code for the Tufte Handout [format](https://github.com/rstudio/rmarkdown/blob/master/R/tufte_handout.R) and [template](https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/tufte_handout). In addtion, the **Developer** section of this website includes additional documentation on creating your own formats and templates.
-
-<br/>
-
-## Getting Started
-
-You can create a new Tufte Handout from within the RStudio **New R Markdown** dialog. Note that this requires the [very latest version](http://www.rstudio.com/products/rstudio/) of RStudio (v0.98.1027) so be sure to update before trying this.
-
-![New Tufte Handout](images/new-tufte-handout.png)
-
-<br/>
-
-If you are not using RStudio then you can use the `rmarkdown::draft` function as follows:
-
-```{r, eval=FALSE}
-rmarkdown::draft("my_handout.Rmd", template = "tufte_handout", package = "rmarkdown")
+```r
+install.packages("tufte")
 ```
 
-Note that the `tufte_handout` format is available only in the [very latest version](https://github.com/rstudio/rmarkdown) of the **rmarkdown** package so be sure to update before trying this.
-
-The newly created document will have an output type of `rmarkdown::tufte_handout` as shown here:
-
-    ---
-    title: "Tufte Handout"
-    author: "John Smith"
-    date: "August 13th, 2014"
-    output: rmarkdown::tufte_handout
-    ---
-
-Note that because this format is based on a LaTeX template you can use raw LaTeX and even define LaTeX macros within the document. See the documentation on [Raw TeX](authoring_pandoc_markdown.html#raw-tex) for details.
-
-## Figure Options
-
-There are a number of options that affect the output of figures within PD documents:
-
-* `fig_width` and `fig_height` can be used to control the default figure width and height (6 x 4.5 is used by default)
-
-* `fig_crop` controls whether the the pdfcrop utility (if available) is automatically applied to pdf figures (this is true by default).
-
-* `dev` controls the graphics device used to render figures (defaults to pdf)
-
-For example:
-
-    ---
-    title: "Tufte Handout"
-    output:
-      rmarkdown::tufte_handout:
-        fig_width: 4
-        fig_height: 4
-    ---
-
-## Syntax Highlighting
-
-The `highlight` option specifies the syntax highlighting style. Supported styles include "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn", and "haddock" (specify null to prevent syntax highlighting):
-
-For example:
-
-    ---
-    title: "Tufte Handout"
-    output:
-      rmarkdown::tufte_handout:
-        highlight: tango
-    ---
-
-## Advanced Customization
-
-### Keeping Intermediate TeX
-
-R Markdown documents are converted to PDF by first converting to a TeX file and then calling the LaTeX engine to convert to PDF. By default this TeX file is removed, however if you want to keep it (e.g. for an article submission) you can specify the `keep_tex` option. For example:
-
-    ---
-    title: "Tufte Handout"
-    output:
-      rmarkdown::tufte_handout:
-        keep_tex: true
-    ---
-
-### Includes
-
-You can do more advanced customization of PDF output by including additional LaTeX directives and/or content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the `includes` option as follows:
-
-    ---
-    title: "Tufte Handout"
-    output:
-      rmarkdown::tufte_handout:
-        includes:
-          in_header: header.tex
-          before_body: doc_prefix.tex
-          after_body: doc_suffix.tex
-    ---
-
-### Markdown Extensions
-
-By default R Markdown is defined as all pandoc markdown extensions with the following tweaks for backward compatibility with the markdown package:
-
-```
-+autolink_bare_uris
-+ascii_identifier
-+tex_math_single_backslash
-```
-
-You can enable or disable markdown extensions using the `md_extensions` option (you preface an option with `-` to disable and `+` to enable it). For example:
-
-    ---
-    title: "Habits"
-    output:
-      html_document:
-        md_extensions: -autolink_bare_uris+hard_line_breaks
-    ---
-
-The above would disable the `autolink_bare_uris` extension and enable the `hard_line_breaks` extension. 
-
-For more on available markdown extensions see the [pandoc markdown specification](http://pandoc.org/README.html#pandocs-markdown).
-
-
-### Pandoc Arguments
-
-If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
-
-    ---
-    title: "Tufte Handout"
-    output:
-      rmarkdown::tufte_handout:
-        pandoc_args: [
-          "--no-tex-ligatures"
-        ]
-    ---
-
-Documentation on all available pandoc arguments can be found in the [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html#options).
-
-## Shared Options
-
-If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named `_output.yaml` within the directory. Note that no YAML delimeters or enclosing output object are used in this file. For example:
-
-**\_output.yaml**
-
-```yaml
-rmarkdown::tufte_handout:
-  toc: true
-```
-
-All documents located in the same directory as `_output.yaml` will inherit it's options. Options defined explicitly within documents will override those specified in the shared options file.
-
-
-
-
+For an extensive example and documentation on using the **tufte** package see <http://rstudio.github.io/tufte/>.
 
 
 
