@@ -106,11 +106,26 @@ h6 {
 .tabbed-pane {
   padding-top: 12px;
 }
+button.code-folding-btn:focus {
+  outline: none;
+}
 </style>
 <div class="container-fluid main-container">
 
 <!-- navigation js -->
 <script src="$navigationjs$/tabsets.js"></script>
+
+<!-- code folding -->
+$if(code_folding)$
+<script src="$navigationjs$/codefolding.js"></script>
+<script>
+$$(document).ready(function () {
+  window.initializeCodeFolding("$code_folding$" === "show");
+});
+</script>
+$endif$
+
+
 
 $if(toc_float)$
 
@@ -226,8 +241,19 @@ $for(include-before)$
 $include-before$
 $endfor$
 
+<div class="fluid-row" id="$idprefix$header">
+
+$if(code_folding)$
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="text-muted">Code</span> <span class="text-muted caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All</a></li>
+</ul>
+</div>
+$endif$
+
 $if(title)$
-<div id="$idprefix$header">
 <h1 class="title">$title$</h1>
 $if(subtitle)$
 <h3 class="subtitle"><em>$subtitle$</em></h3>
@@ -249,8 +275,9 @@ $endfor$
 $if(date)$
 <h4 class="date"><em>$date$</em></h4>
 $endif$
-</div>
 $endif$
+
+</div>
 
 $if(toc_float)$
 $else$

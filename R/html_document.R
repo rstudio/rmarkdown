@@ -21,6 +21,12 @@
 #'   markdown document).
 #' @param fig_caption \code{TRUE} to render figures with captions
 #' @param dev Graphics device to use for figure output (defaults to png)
+#' @param code_folding Enable document readers to toggle the display of R code chunks.
+#'   Defaults to \code{"none"} which displays all code chunks (assuming they
+#'   were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R code
+#'   chunks by default (users can show hidden code chunks either individually
+#'   or document-wide). Specify \code{"show"} to show all R code chunks by
+#'   default.
 #' @param smart Produce typographically correct output, converting straight
 #'   quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
 #'   ellipses.
@@ -133,6 +139,7 @@
 #'   \code{highlight} parameter, the default highlighting style will resolve to
 #'   "pygments" and the "textmate" highlighting style is not available }
 #'   \item{The \code{toc_float} parameter will not work. }
+#'   \item{The \code{code_folding} parameter will not work. }
 #'   \item{Tabbed sections (as described above) will not work.}
 #'   \item{MathJax will not work if \code{self_contained} is \code{TRUE} (these
 #'   two options can't be used together in normal pandoc templates). } }
@@ -160,6 +167,7 @@ html_document <- function(toc = FALSE,
                           fig_retina = if (!fig_caption) 2,
                           fig_caption = FALSE,
                           dev = 'png',
+                          code_folding = c("none", "show", "hide"),
                           smart = TRUE,
                           self_contained = TRUE,
                           theme = "default",
@@ -236,6 +244,9 @@ html_document <- function(toc = FALSE,
   for (css_file in css)
     args <- c(args, "--css", pandoc_path_arg(css_file))
 
+  # validate code_folding
+  code_folding <- match.arg(code_folding)
+
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
   pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
@@ -260,6 +271,14 @@ html_document <- function(toc = FALSE,
       args <- c(args, pandoc_html_navigation_args(self_contained,
                                                   lib_dir,
                                                   output_dir))
+    }
+
+    # code_folding
+    if (code_folding %in% c("show", "hide")) {
+      # must have a theme
+      if (is.null(theme))
+        stop("You must use a theme when specifying the 'code_folding' option")
+      args <- c(args, pandoc_variable_arg("code_folding", code_folding))
     }
 
     # content includes (we do this here so that user include-in-header content

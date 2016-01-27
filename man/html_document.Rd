@@ -7,11 +7,11 @@
 html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   number_sections = FALSE, fig_width = 7, fig_height = 5,
   fig_retina = if (!fig_caption) 2, fig_caption = FALSE, dev = "png",
-  smart = TRUE, self_contained = TRUE, theme = "default",
-  highlight = "default", mathjax = "default", template = "default",
-  extra_dependencies = NULL, css = NULL, includes = NULL,
-  keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
-  pandoc_args = NULL, ...)
+  code_folding = c("none", "show", "hide"), smart = TRUE,
+  self_contained = TRUE, theme = "default", highlight = "default",
+  mathjax = "default", template = "default", extra_dependencies = NULL,
+  css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
+  md_extensions = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -41,6 +41,13 @@ markdown document).}
 \item{fig_caption}{\code{TRUE} to render figures with captions}
 
 \item{dev}{Graphics device to use for figure output (defaults to png)}
+
+\item{code_folding}{Enable document readers to toggle the display of R code chunks.
+Defaults to \code{"none"} which displays all code chunks (assuming they
+were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R code
+chunks by default (users can show hidden code chunks either individually
+or document-wide). Specify \code{"show"} to show all R code chunks by
+default.}
 
 \item{smart}{Produce typographically correct output, converting straight
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
@@ -174,6 +181,7 @@ and Citations} article in the online documentation.
   \code{highlight} parameter, the default highlighting style will resolve to
   "pygments" and the "textmate" highlighting style is not available }
   \item{The \code{toc_float} parameter will not work. }
+  \item{The \code{code_folding} parameter will not work. }
   \item{Tabbed sections (as described above) will not work.}
   \item{MathJax will not work if \code{self_contained} is \code{TRUE} (these
   two options can't be used together in normal pandoc templates). } }
