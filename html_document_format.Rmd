@@ -72,6 +72,14 @@ For example:
           smooth_scroll: false
     ---
 
+#### Development Version
+
+Support for floating table of contents is only available within the development version of the **rmarkdown** package. You can install the development version as follows:
+
+```r
+devtools::install_github("rstudio/rmarkdown")
+```
+
 ### Section Numbering
 
 You can add section numbering to headers using the `number_sections` option:
@@ -85,6 +93,32 @@ You can add section numbering to headers using the `number_sections` option:
     ---
 
 Note that if you do choose to use the `number_sections` option you will likely also want to use `#` (H1) headers in your document as `##` (H2) headers will include a decimal point.
+
+## Tabbed Sections
+
+You can organize content using tabs by applying the `.tabset` class attribute to headers within a document. This will cause all sub-headers of the header with the `.tabset` attribute to appear within tabs rather than as standalone sections. For example:
+
+    ## Quarterly Results {.tabset}
+
+    ### By Product
+
+    (tab content)
+
+    ### By Region
+
+    (tab content)
+
+You can also specify two additional attributes to control the appearance and behavior of the tabs. The `.tabset-fade` attribute causes the tabs to fade in and out when switching. The `.tabset-pills` attribute causes the visual appearance of the tabs to be "pill" rather than traditional tabs. For example:
+
+    ## Quarterly Results {.tabset .tabset-fade .tabset-pills}
+
+#### Development Version
+
+Support for tabsets is only available within the development version of the **rmarkdown** package. You can install the development version as follows:
+
+```r
+devtools::install_github("rstudio/rmarkdown")
+```
 
 ## Appearance and Style
 
@@ -166,6 +200,31 @@ For example:
         fig_height: 6
         fig_caption: true
     ---
+
+
+## Code Folding
+
+When the knitr chunk option `echo = TRUE` is specified (the default behavior) the R source code within chunks is included within the rendered document. In some cases it may be appropriate to exclude code entirely (`echo = FALSE`) but in other cases you might want the code available but not visible by default. 
+
+The `code_folding: hide` option enables you to include R code but have it hidden by default. Users can then choose to show hidden R code chunks either indvidually or document wide. For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        code_folding: hide
+    ---
+
+You can specify `code_folding: show` to still show all R code by default but then allow users to hide the code if they wish.
+
+
+#### Development Version
+
+Support for code folding is only available within the development version of the **rmarkdown** package. You can install the development version as follows:
+
+```r
+devtools::install_github("rstudio/rmarkdown")
+```
 
 
 ## MathJax Equations

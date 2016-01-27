@@ -350,6 +350,11 @@ output:
       collapsed: false
       smooth_scroll: false
 ---</code></pre>
+<div id="development-version" class="section level4">
+<h4>Development Version</h4>
+<p>Support for floating table of contents is only available within the development version of the <strong>rmarkdown</strong> package. You can install the development version as follows:</p>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
+</div>
 </div>
 <div id="section-numbering" class="section level3">
 <h3>Section Numbering</h3>
@@ -362,6 +367,26 @@ output:
     number_sections: true
 ---</code></pre>
 <p>Note that if you do choose to use the <code>number_sections</code> option you will likely also want to use <code>#</code> (H1) headers in your document as <code>##</code> (H2) headers will include a decimal point.</p>
+</div>
+</div>
+<div id="tabbed-sections" class="section level2">
+<h2>Tabbed Sections</h2>
+<p>You can organize content using tabs by applying the <code>.tabset</code> class attribute to headers within a document. This will cause all sub-headers of the header with the <code>.tabset</code> attribute to appear within tabs rather than as standalone sections. For example:</p>
+<pre><code>## Quarterly Results {.tabset}
+
+### By Product
+
+(tab content)
+
+### By Region
+
+(tab content)</code></pre>
+<p>You can also specify two additional attributes to control the appearance and behavior of the tabs. The <code>.tabset-fade</code> attribute causes the tabs to fade in and out when switching. The <code>.tabset-pills</code> attribute causes the visual appearance of the tabs to be “pill” rather than traditional tabs. For example:</p>
+<pre><code>## Quarterly Results {.tabset .tabset-fade .tabset-pills}</code></pre>
+<div id="development-version-1" class="section level4">
+<h4>Development Version</h4>
+<p>Support for tabsets is only available within the development version of the <strong>rmarkdown</strong> package. You can install the development version as follows:</p>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
 </div>
 </div>
 <div id="appearance-and-style" class="section level2">
@@ -428,6 +453,23 @@ output:
     fig_height: 6
     fig_caption: true
 ---</code></pre>
+</div>
+<div id="code-folding" class="section level2">
+<h2>Code Folding</h2>
+<p>When the knitr chunk option <code>echo = TRUE</code> is specified (the default behavior) the R source code within chunks is included within the rendered document. In some cases it may be appropriate to exclude code entirely (<code>echo = FALSE</code>) but in other cases you might want the code available but not visible by default.</p>
+<p>The <code>code_folding: hide</code> option enables you to include R code but have it hidden by default. Users can then choose to show hidden R code chunks either indvidually or document wide. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    code_folding: hide
+---</code></pre>
+<p>You can specify <code>code_folding: show</code> to still show all R code by default but then allow users to hide the code if they wish.</p>
+<div id="development-version-2" class="section level4">
+<h4>Development Version</h4>
+<p>Support for code folding is only available within the development version of the <strong>rmarkdown</strong> package. You can install the development version as follows:</p>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
+</div>
 </div>
 <div id="mathjax-equations" class="section level2">
 <h2>MathJax Equations</h2>
