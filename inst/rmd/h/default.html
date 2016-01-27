@@ -176,6 +176,13 @@ div.tocify {
   }
 }
 
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
 .tocify ul, .tocify li {
   line-height: 20px;
 }
@@ -204,12 +211,12 @@ $endif$
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
-<div class="col-sm-4 col-md-3">
+<div class="col-xs-12 col-sm-4 col-md-3">
 <div id="$idprefix$TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-sm-8 col-md-9">
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 $endif$
 
