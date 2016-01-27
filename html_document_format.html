@@ -14,6 +14,9 @@
 <title>HTML Documents</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -131,6 +134,93 @@ button.code-folding-btn:focus {
 
 
 
+<script>
+$(document).ready(function ()  {
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: "h1.title, .toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -213,20 +303,6 @@ button.code-folding-btn:focus {
 
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#overview">Overview</a></li>
-<li><a href="#table-of-contents">Table of Contents</a></li>
-<li><a href="#appearance-and-style">Appearance and Style</a></li>
-<li><a href="#figure-options">Figure Options</a></li>
-<li><a href="#mathjax-equations">MathJax Equations</a></li>
-<li><a href="#document-dependencies">Document Dependencies</a></li>
-<li><a href="#advanced-customization">Advanced Customization</a></li>
-<li><a href="#shared-options">Shared Options</a></li>
-<li><a href="#html-fragments">HTML Fragments</a></li>
-<li><a href="#creating-a-website">Creating a Website</a></li>
-</ul>
-</div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
@@ -249,6 +325,34 @@ output:
     toc_depth: 2
 ---</code></pre>
 <p>If the table of contents depth isn’t explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).</p>
+<div id="floating-toc" class="section level3">
+<h3>Floating TOC</h3>
+<p>You can specify the <code>toc_float</code> option to float the table of contents to the left of the main document content. The floating table of contents will always be visible even when the document is scrolled. For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---</code></pre>
+<p>You may optionally specify a list of options for the <code>toc_float</code> parameter which control it’s behavior. Options include:</p>
+<ul>
+<li><p><code>collapsed</code> (defaults to <code>TRUE</code>) controls whether the table of contents appers with only the top-level (e.g. H2) headers. When collapsed the table of contents is automatically expanded inline when necessary.</p></li>
+<li><p><code>smooth_scroll</code> (defaults to <code>TRUE</code>) controls whether page scrolls are animated when table of contents items are navigated to via mouse clicks.</p></li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+---</code></pre>
+</div>
+<div id="section-numbering" class="section level3">
+<h3>Section Numbering</h3>
 <p>You can add section numbering to headers using the <code>number_sections</code> option:</p>
 <pre><code>---
 title: &quot;Habits&quot;
@@ -257,6 +361,8 @@ output:
     toc: true
     number_sections: true
 ---</code></pre>
+<p>Note that if you do choose to use the <code>number_sections</code> option you will likely also want to use <code>#</code> (H1) headers in your document as <code>##</code> (H2) headers will include a decimal point.</p>
+</div>
 </div>
 <div id="appearance-and-style" class="section level2">
 <h2>Appearance and Style</h2>
@@ -548,6 +654,8 @@ $(document).ready(function () {
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
+</div>
+</div>
 
 </div>
 

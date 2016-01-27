@@ -3,6 +3,8 @@ title: "HTML Documents"
 output:
   html_document:
     toc: true
+    toc_depth: 3
+    toc_float: true
 ---
 
 ```{r setup, include=FALSE}
@@ -40,6 +42,38 @@ You can add a table of contents using the `toc` option and specify the depth of 
 
 If the table of contents depth isn't explicitly specified then it defaults to 3 (meaning that all level 1, 2, and 3 headers will be included in the table of contents).
 
+### Floating TOC
+
+You can specify the `toc_float` option to float the table of contents to the left of the main document content. The floating table of contents will always be visible even when the document is scrolled. For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        toc: true
+        toc_float: true
+    ---
+
+You may optionally specify a list of options for the `toc_float` parameter which control it's behavior. Options include:
+
+* `collapsed` (defaults to `TRUE`) controls whether the table of contents appers with only the top-level (e.g. H2) headers. When collapsed the table of contents is automatically expanded inline when necessary.
+
+* `smooth_scroll` (defaults to `TRUE`) controls whether page scrolls are animated when table of contents items are navigated to via mouse clicks.
+
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        toc: true
+        toc_float:
+          collapsed: false
+          smooth_scroll: false
+    ---
+
+### Section Numbering
+
 You can add section numbering to headers using the `number_sections` option:
 
     ---
@@ -50,6 +84,7 @@ You can add section numbering to headers using the `number_sections` option:
         number_sections: true
     ---
 
+Note that if you do choose to use the `number_sections` option you will likely also want to use `#` (H1) headers in your document as `##` (H2) headers will include a decimal point.
 
 ## Appearance and Style
 
