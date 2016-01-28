@@ -1,6 +1,6 @@
 
 
-$(document).ready(function () {
+window.buildTabsets = function(tocID) {
 
   // build a tabset from a section div with the .tabset class
   function buildTabset(tabset) {
@@ -36,6 +36,12 @@ $(document).ready(function () {
 
       // get the id then sanitize it for use with bootstrap tabs
       var id = tab.attr('id');
+
+      // remove any table of contents entries associated with
+      // this ID (since we'll be removing the heading element)
+      $("div#" + tocID + " li a[href='#" + id + "']").parent().remove();
+
+      // sanitize the id for use with bootstrap tabs
       id = id.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
       tab.attr('id', id);
 
@@ -76,6 +82,5 @@ $(document).ready(function () {
   tabsets.each(function(i) {
     buildTabset($(tabsets[i]));
   });
-});
-
+};
 

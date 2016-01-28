@@ -112,8 +112,13 @@ button.code-folding-btn:focus {
 </style>
 <div class="container-fluid main-container">
 
-<!-- navigation js -->
+<!-- tabsets -->
 <script src="$navigationjs$/tabsets.js"></script>
+<script>
+$$(document).ready(function () {
+  window.buildTabsets("$idprefix$TOC");
+});
+</script>
 
 <!-- code folding -->
 $if(code_folding)$
