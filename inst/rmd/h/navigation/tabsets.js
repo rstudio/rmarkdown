@@ -34,6 +34,11 @@ $(document).ready(function () {
       // get the tab div
       var tab = $(tabs[i]);
 
+      // get the id then sanitize it for use with bootstrap tabs
+      var id = tab.attr('id');
+      id = id.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
+      tab.attr('id', id);
+
       // get the heading element within it, grab it's text, then remove it
       var heading = tab.find('h' + tabLevel + ':first');
       var headingText = heading.html();
@@ -41,8 +46,8 @@ $(document).ready(function () {
 
       // build and append the tab list item
       var a = $('<a role="tab" data-toggle="tab">' + headingText + '</a>');
-      a.attr('href', '#' + tab.attr('id'));
-      a.attr('aria-controls', tab.attr('id'));
+      a.attr('href', '#' + id);
+      a.attr('aria-controls', id);
       var li = $('<li role="presentation"></li>');
       li.append(a);
       if (i === 0)
