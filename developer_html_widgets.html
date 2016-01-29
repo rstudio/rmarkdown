@@ -123,8 +123,13 @@ button.code-folding-btn:focus {
 </style>
 <div class="container-fluid main-container">
 
-<!-- navigation js -->
+<!-- tabsets -->
 <script src="libs/navigation/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
 
 <!-- code folding -->
 
