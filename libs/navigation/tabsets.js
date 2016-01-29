@@ -1,6 +1,6 @@
 
 
-$(document).ready(function () {
+window.buildTabsets = function(tocID) {
 
   // build a tabset from a section div with the .tabset class
   function buildTabset(tabset) {
@@ -34,26 +34,36 @@ $(document).ready(function () {
       // get the tab div
       var tab = $(tabs[i]);
 
-      // get the heading element within it and grab it's text
+      // get the id then sanitize it for use with bootstrap tabs
+      var id = tab.attr('id');
+
+      // remove any table of contents entries associated with
+      // this ID (since we'll be removing the heading element)
+      $("div#" + tocID + " li a[href='#" + id + "']").parent().remove();
+
+      // sanitize the id for use with bootstrap tabs
+      id = id.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
+      tab.attr('id', id);
+
+      // get the heading element within it, grab it's text, then remove it
       var heading = tab.find('h' + tabLevel + ':first');
       var headingText = heading.html();
+      heading.remove();
 
       // build and append the tab list item
       var a = $('<a role="tab" data-toggle="tab">' + headingText + '</a>');
-      a.attr('href', '#' + tab.attr('id'));
-      a.attr('aria-controls', tab.attr('id'));
+      a.attr('href', '#' + id);
+      a.attr('aria-controls', id);
       var li = $('<li role="presentation"></li>');
       li.append(a);
       if (i === 0)
         li.attr('class', 'active');
       tabList.append(li);
 
-      // set the text of the heading to empty (since we show it in the tabs)
-      heading.html('');
-
       // set it's attributes
       tab.attr('role', 'tabpanel');
       tab.addClass('tab-pane');
+      tab.addClass('tabbed-pane');
       if (fade)
         tab.addClass('fade');
       if (i === 0) {
@@ -72,6 +82,5 @@ $(document).ready(function () {
   tabsets.each(function(i) {
     buildTabset($(tabsets[i]));
   });
-});
-
+};
 
