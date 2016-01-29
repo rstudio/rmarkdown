@@ -636,21 +636,6 @@ title: &quot;Document Title&quot;
 ---</code></pre>
 <p>Here is a simple example of an R Markdown website that includes a global navigation bar to switch between pages:</p>
 <p><a href="https://github.com/rstudio/rmarkdown-website" class="uri">https://github.com/rstudio/rmarkdown-website</a></p>
-<div id="migrating-websites-to-bootstrap-3" class="section level3">
-<h3>Migrating Websites to Bootstrap 3</h3>
-<p>The <a href="https://github.com/rstudio/rmarkdown/tree/gh-pages">R Markdown website</a> linked to above was originally created with version 0.3 of the <strong>rmarkdown</strong> package and its HTML utilized <a href="http://getbootstrap.com/2.3.2/">Bootstrap 2</a> for layout and navigation. In version 0.4 of the <strong>rmarkdown</strong> package the embedded version of Bootstrap was upgraded to <a href="http://getbootstrap.com/">version 3</a> and as a result the underlying layout and navigation HTML needed to change.</p>
-<p>If you modeled a website on the Bootstrap 2 implementation you’ll also need to migrate to Bootstrap 3 to use more recent versions of <strong>rmarkdown</strong> to generate your site (you could of course also use <a href="http://rstudio.github.io/packrat">packrat</a> or some other means of freezing package versions and continue using Boostrap 2 with an older version of the package).</p>
-<p>Here are the steps required to migrate:</p>
-<ol style="list-style-type: decimal">
-<li><p>Install the most recent version of the <strong>rmarkdown</strong> package.</p></li>
-<li><p>Remove the libs/bootstrap-2.3.2 directory</p></li>
-<li><p>Copy the relevant sections from these files into the corresponding files within your site:</p>
-<p><a href="https://github.com/rstudio/rmarkdown/blob/gh-pages/include/in_header.html">include/in_header.html</a> — css for navbar padding and scroll position offset</p>
-<p><a href="https://github.com/rstudio/rmarkdown/blob/gh-pages/include/before_body.html">include/before_body.html</a> – copy the entire menu structure then substitute the drop-downs and menu items for your site.</p></li>
-<li><p>If you used Bootstrap 2 HTML elements elsewhere within your site then read the Bootstrap 3 <a href="http://getbootstrap.com/migration/">migration guide</a> and make whatever additional changes are required.</p></li>
-<li><p>Re-generate the site by re-executing <code>rmarkdown::render</code> on all of the Rmd or md files (or just re-execute the Makefile if you have one).</p></li>
-</ol>
-</div>
 </div>
 
 

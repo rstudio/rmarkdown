@@ -431,29 +431,6 @@ Here is a simple example of an R Markdown website that includes a global navigat
 
 <https://github.com/rstudio/rmarkdown-website>
 
-### Migrating Websites to Bootstrap 3
-
-The [R Markdown website](https://github.com/rstudio/rmarkdown/tree/gh-pages) linked to above was originally created with version 0.3 of the **rmarkdown** package and its HTML utilized [Bootstrap 2](http://getbootstrap.com/2.3.2/) for layout and navigation. In version 0.4 of the **rmarkdown** package the embedded version of Bootstrap was upgraded to [version 3](http://getbootstrap.com/) and as a result the underlying layout and navigation HTML needed to change.
-
-If you modeled a website on the Bootstrap 2 implementation you'll also need to migrate to Bootstrap 3 to use more recent versions of **rmarkdown** to generate your site (you could of course also use [packrat](http://rstudio.github.io/packrat) or some other means of freezing package versions and continue using Boostrap 2 with an older version of the package).
-
-Here are the steps required to migrate:
-
-1) Install the most recent version of the **rmarkdown** package.
-
-2) Remove the libs/bootstrap-2.3.2 directory
-
-3) Copy the relevant sections from these files into the corresponding files within your site:
-
-    [include/in_header.html](https://github.com/rstudio/rmarkdown/blob/gh-pages/include/in_header.html) --- css for navbar padding and scroll position offset
-
-    [include/before_body.html](https://github.com/rstudio/rmarkdown/blob/gh-pages/include/before_body.html) -- copy the entire menu structure then substitute the drop-downs and menu items for your site.
-
-4) If you used Bootstrap 2 HTML elements elsewhere within your site then read the Bootstrap 3 [migration guide](http://getbootstrap.com/migration/) and make whatever additional changes are required.
-
-5) Re-generate the site by re-executing `rmarkdown::render` on all of the Rmd or md files (or just re-execute the Makefile if you have one).
-
-
 
 
 
