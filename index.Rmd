@@ -156,9 +156,9 @@ With the basics described above you can get started with R Markdown right away. 
 
 * [Compiling Notebooks](r_notebook_format.html), which describes how to compile HTML, PDF, or MS Word notebooks from R scripts.
 
-* Document output formats: [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html), [Markdown](markdown_document_format.html), and [Tufte Handout](tufte_handout_format.html).
+* Document output formats: [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html), [Markdown](markdown_document_format.html), and [GitHub](github_document_format.html).
 
-* Presentation output formats: [ioslides](ioslides_presentation_format.html), [Slidy](slidy_presentation_format.html), [Beamer](beamer_presentation_format.html)
+* Presentation output formats: [ioslides](ioslides_presentation_format.html), [reveal.js](revealjs_presentation_format), [Slidy](slidy_presentation_format.html), and [Beamer](beamer_presentation_format.html)
 
 
 For even more in-depth documentation see:

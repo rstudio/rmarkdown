@@ -11,9 +11,12 @@
 
 
 
-<title>Presentations with ioslides</title>
+<title>Presentations with reveal.js</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -136,6 +139,93 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: "h1.title, .toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -215,38 +305,24 @@ $(document).ready(function () {
 <div class="fluid-row" id="header">
 
 
-<h1 class="title">Presentations with ioslides</h1>
+<h1 class="title">Presentations with reveal.js</h1>
 
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#overview">Overview</a></li>
-<li><a href="#display-modes">Display Modes</a></li>
-<li><a href="#incremental-bullets">Incremental Bullets</a></li>
-<li><a href="#visual-appearance">Visual Appearance</a></li>
-<li><a href="#code-highlighting">Code Highlighting</a></li>
-<li><a href="#tables">Tables</a></li>
-<li><a href="#advanced-layout">Advanced Layout</a></li>
-<li><a href="#text-color">Text Color</a></li>
-<li><a href="#presenter-mode">Presenter Mode</a></li>
-<li><a href="#printing-and-pdf-output">Printing and PDF Output</a></li>
-<li><a href="#figure-options">Figure Options</a></li>
-<li><a href="#mathjax-equations">MathJax Equations</a></li>
-<li><a href="#document-dependencies">Document Dependencies</a></li>
-<li><a href="#advanced-customization">Advanced Customization</a></li>
-<li><a href="#shared-options">Shared Options</a></li>
-</ul>
-</div>
 
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>Note that the <code>revealjs_presentation</code> format is not contained within the <strong>rmarkdown</strong> package but rather in a separate <strong>revealjs</strong> package. You can use this format in R Markdown documents by installing this package as follows:</p>
+<pre class="r"><code>install.packages(&quot;revealjs&quot;, type = &quot;source&quot;)</code></pre>
+</div>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>To create an <a href="https://code.google.com/p/io-2012-slides/">ioslides</a> presentation from R Markdown you specify the <code>ioslides_presentation</code> output format in the front-matter of your document. You can create a slide show broken up into sections by using the <code>#</code> and <code>##</code> heading tags (you can also create a new slide without a header using a horizontal rule (<code>----</code>). For example here’s a simple slide show:</p>
+<p>To create a <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a> presentation from R Markdown you specify the <code>revealjs_presentation</code> output format in the front-matter of your document. You can create a slide show broken up into sections by using the <code>#</code> and <code>##</code> heading tags (you can also create a new slide without a header using a horizontal rule (<code>----</code>). For example here’s a simple slide show:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 author: John Doe
 date: March 22, 2005
-output: ioslides_presentation
+output: revealjs::revealjs_presentation
 ---
 
 # In the morning
@@ -268,192 +344,123 @@ output: ioslides_presentation
 - Eat spaghetti
 - Drink wine
 
-----
-
-![picture of spaghetti](images/spaghetti.jpg)
-
 ## Going to sleep
 
 - Get in bed
 - Count sheep</code></pre>
-<p>You can add a subtitle to a slide or section by including text after the pipe (|) character. For example:</p>
-<pre><code>## Getting up | What I like to do first thing</code></pre>
 </div>
 <div id="display-modes" class="section level2">
 <h2>Display Modes</h2>
 <p>The following single character keyboard shortcuts enable alternate display modes:</p>
 <ul>
 <li><p><code>'f'</code> enable fullscreen mode</p></li>
-<li><p><code>'w'</code> toggle widescreen mode</p></li>
 <li><p><code>'o'</code> enable overview mode</p></li>
-<li><p><code>'h'</code> enable code highlight mode</p></li>
-<li><p><code>'p'</code> show presenter notes</p></li>
 </ul>
-<p>Pressing <code>Esc</code> exits all of these modes. See the sections below on <em>Code Highlighting</em> and <em>Presenter Mode</em> for additional detail on those modes.</p>
+<p>Pressing <code>Esc</code> exits all of these modes.</p>
 </div>
 <div id="incremental-bullets" class="section level2">
 <h2>Incremental Bullets</h2>
 <p>You can render bullets incrementally by adding the <code>incremental</code> option:</p>
 <pre><code>---
 output:
-  ioslides_presentation:
+  revealjs::revealjs_presentation:
     incremental: true
 ---</code></pre>
 <p>If you want to render bullets incrementally for some slides but not others you can use this syntax:</p>
 <pre><code>&gt; - Eat eggs
 &gt; - Drink coffee</code></pre>
 </div>
-<div id="visual-appearance" class="section level2">
-<h2>Visual Appearance</h2>
-<div id="presentation-size" class="section level3">
-<h3>Presentation Size</h3>
-<p>You can display the presentation using a wider form factor using the <code>widescreen</code> option. You can specify that smaller text be used with the <code>smaller</code> option. For example:</p>
+<div id="appearance-and-style" class="section level2">
+<h2>Appearance and Style</h2>
+<p>There are several options that control the appearance of revealjs presentations:</p>
+<ul>
+<li><p><code>theme</code> specifies the theme to use for the presentation (available themes are “default”, “simple”, “sky”, “beige”, “serif”, “solarized”, “blood”, “moon”, “night”, “black”, “league” or “white”).</p></li>
+<li><p><code>highlight</code> specifies the syntax highlighting style. Supported styles include “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, and “haddock”. Pass null to prevent syntax highlighting.</p></li>
+<li><p><code>center</code> specifies whether you want to vertically center content on slides (this defaults to false).</p></li>
+<li><p><code>smart</code> indicates whether to produce typographically correct output, converting straight quotes to curly quotes, <code>---</code> to em-dashes, <code>--</code> to en-dashes, and <code>...</code> to ellipses. Note that <code>smart</code> is enabled by default.</p></li>
+</ul>
+<p>For example:</p>
 <pre><code>---
 output:
-  ioslides_presentation:
-    widescreen: true
-    smaller: true
+  revealjs::revealjs_presentation:
+    theme: sky
+    highlight: pygments
+    center: true
 ---</code></pre>
-<p>You can also enable the <code>smaller</code> option on a slide-by-slide basis by adding the <code>.smaller</code> attribute to the slide header:</p>
-<pre><code>## Getting up {.smaller}</code></pre>
 </div>
-<div id="transition-speed" class="section level3">
-<h3>Transition Speed</h3>
-<p>You can customize the speed of slide transitions using <code>transition</code> option. This can be “default”, “slower”, “faster”, or a numeric value with a number of seconds (e.g. 0.5) . For example:</p>
+<div id="slide-transitions" class="section level2">
+<h2>Slide Transitions</h2>
+<p>You can use the <code>transition</code> and <code>background_transition</code> optoins to specify the global default slide transition style:</p>
+<ul>
+<li><p><code>transition</code> specifies the visual effect when moving between slides. Available transitions are “default”, “fade”, “slide”, “convex”, “concave”, “zoom” or “none”.</p></li>
+<li><p><code>background_transition</code> specifies the background transition effect when moving between full page slides. Available transitions are “default”, “fade”, “slide”, “convex”, “concave”, “zoom” or “none”.</p></li>
+</ul>
+<p>For example:</p>
 <pre><code>---
 output:
-  ioslides_presentation:
-    transition: slower
+  revealjs::revealjs_presentation:
+    transition: fade
 ---</code></pre>
+<p>You can override the global transition for a specific slide by using the data-transition attribute, for example:</p>
+<pre><code>## Use a zoom transition {data-transition=&quot;zoom&quot;}
+
+## Use a faster speed {data-transition-speed=&quot;fast&quot;}</code></pre>
+<p>You can also use different in and out transitions for the same slide, for example:</p>
+<pre><code>## Fade in, Slide out {data-transition=&quot;slide-in fade-out&quot;}
+
+## Slide in, Fade out {data-transition=&quot;fade-in slide-out&quot;}</code></pre>
 </div>
-<div id="build-slides" class="section level3">
-<h3>Build Slides</h3>
-<p>Slides can also have a <code>.build</code> attribute that indicate that their content should be displayed incrementally. For example:</p>
-<pre><code>## Getting up {.build}</code></pre>
-<p>Slide attributes can be combined if you need to specify more than one, for example:</p>
-<pre><code>## Getting up {.smaller .build}</code></pre>
+<div id="slide-backgrounds" class="section level2">
+<h2>Slide Backgrounds</h2>
+<p>Slides are contained within a limited portion of the screen by default to allow them to fit any display and scale uniformly. You can apply full page backgrounds outside of the slide area by adding a data-background attribute to your slide header element. Four different types of backgrounds are supported: color, image, video and iframe. Below are a few examples.</p>
+<pre><code>## CSS color background {data-background=#ff0000}
+
+## Full size image background {data-background=&quot;background.jpeg&quot;}
+
+## Video background {data-background-video=&quot;background.mp4&quot;}
+
+## Embed a web page as a background {data-background-iframe=&quot;https://example.com&quot;}</code></pre>
+<p>Backgrounds transition using a fade animation by default. This can be changed to a linear sliding transition by specifying the <code>background-transition: slide</code>. Alternatively you can set data-background-transition on any slide with a background to override that specific transition.</p>
 </div>
-<div id="custom-css" class="section level3">
-<h3>Custom CSS</h3>
-<p>You can add your own CSS to an ioslides presentation using the <code>css</code> option:</p>
+<div id="d-presenations" class="section level2">
+<h2>2-D Presenations</h2>
+<p>You can use the <code>slide_level</code> option to specify which level of heading will be used to denote individual slides. If <code>slide_level</code> is 2 (the default), a two-dimensional layout will be produced, with level 1 headers building horizontally and level 2 headers building vertically. For example:</p>
+<pre><code># Horizontal Slide 1
+
+## Vertical Slide 1
+
+## Vertical Slide 2
+
+# Horizontal Slide 2</code></pre>
+<p>With this layout horizontal navigation will proceed directly from “Horizontal Slide 1” to “Horizontal Slide 2”, with vertical navigation to “Vertical Slide 1”, etc. presented as an option on “Horizontal Slide 1”.</p>
+</div>
+<div id="reveal.js-options" class="section level2">
+<h2>Reveal.js Options</h2>
+<p>Reveal.js has many additional options to conigure it’s behavior. You can specify any of these options using <code>reveal_options</code>, for example:</p>
 <pre><code>---
+title: &quot;Habits&quot;
 output:
-  ioslides_presentation:
-    css: styles.css
+  revealjs::revealjs_presentation:
+    self_contained: false
+    reveal_options:
+      slideNumber: true
+      previewLinks: true
 ---</code></pre>
-<p>You can also target specific slides or classes of slice with custom CSS by adding ids or classes to the slides headers within your document. For example the following slide header:</p>
-<pre><code>## Next Steps {#nextsteps .emphasized}</code></pre>
-<p>Would enable you to apply CSS to all of it’s content using either of the following CSS selectors:</p>
-<pre><code>#nextsteps {
-   color: blue;
-}
-
-.emphasized {
-   font-size: 1.2em;
-}</code></pre>
-</div>
-</div>
-<div id="code-highlighting" class="section level2">
-<h2>Code Highlighting</h2>
-<p>It’s possible to select subsets of code for additional emphasis by adding a special “highlight” comment around the code. For example:</p>
-<pre><code>### &lt;b&gt;
-x &lt;- 10
-y &lt;- x * 2
-### &lt;/b&gt;</code></pre>
-<p>The highlighted region will be displayed with a bold font. When you want to help the audience focus exclusively on the highlighted region press the <code>'h'</code> key and the rest of the code will fade away.</p>
-<div id="adding-a-logo" class="section level3">
-<h3>Adding a Logo</h3>
-<p>You can add a logo to the presentation using the <code>logo</code> option (by default, the logo will be displayed in a 85x85 pixel square). For example:</p>
-<pre><code>---
-output:
-  ioslides_presentation:
-    logo: logo.png
----</code></pre>
-<p>The logo graphic will be rescaled to 85x85 (if necessary) and added to the title slide. A smaller icon version of the logo will be included in the bottom-left footer of each slide.</p>
-<p>The logo on the title page and the rectangular element containing it can be customised with CSS. For example:</p>
-<pre><code>.gdbar img {
-  width: 300px !important;
-  height: 150px !important;
-  margin: 8px 8px;
-}
-
-.gdbar {
-  width: 400px !important;
-  height: 170px !important;
-}</code></pre>
-<p>These selectors are to be placed in the CSS text file.</p>
-<p>Similarly, the logo in the footer of each slide can be resized to any desired size. For example:</p>
-<pre><code>slides &gt; slide:not(.nobackground):before {
-  width: 150px;
-  height: 75px;
-  background-size: 150px 75px;
-}</code></pre>
-<p>This will make the footer logo 150 by 75 pixels in size.</p>
-</div>
-</div>
-<div id="tables" class="section level2">
-<h2>Tables</h2>
-<p>The ioslides template has an attractive default style for tables so you shouldn’t hesitate to add tables for presenting more complex sets of information. Pandoc markdown supports several syntaxes for defining tables which are described in the <a href="authoring_pandoc_markdown.html#tables">pandoc markdown specification</a>.</p>
-</div>
-<div id="advanced-layout" class="section level2">
-<h2>Advanced Layout</h2>
-<p>You can center content on a slide by adding the <code>.flexbox</code> and <code>.vcenter</code> attributes to the slide title. For example:</p>
-<pre><code>## Dinner {.flexbox .vcenter}</code></pre>
-<p>You can horizontally center content by enclosing it in a <code>div</code> tag with class <code>centered</code>. For example:</p>
-<pre><code>&lt;div class=&quot;centered&quot;&gt;
-This text is centered.
-&lt;/div&gt;</code></pre>
-<p>You can do a two-column layout using the <code>columns-2</code> class. For example:</p>
-<pre><code>&lt;div class=&quot;columns-2&quot;&gt;
-  ![Image](image.png)
-
-  - Bullet 1
-  - Bullet 2
-  - Bullet 3
-&lt;/div&gt;</code></pre>
-<p>Note that content will flow across the columns so if you want to have an image on one side and text on the other you should make sure that the image has sufficient height to force the text to the other side of the slide.</p>
-</div>
-<div id="text-color" class="section level2">
-<h2>Text Color</h2>
-<p>You can color content using base color classes red, blue, green, yellow, and gray (or variations of them e.g. red2, red3, blue2, blue3, etc.). For example:</p>
-<pre><code>&lt;div class=&quot;red2&quot;&gt;
-This text is red
-&lt;/div&gt;</code></pre>
-</div>
-<div id="presenter-mode" class="section level2">
-<h2>Presenter Mode</h2>
-<p>A separate presenter window can also be opened (ideal for when you are presenting on one screen but have another screen that’s private to you). The window stays in sync with the main presentation window and also shows presenter notes and a thumbnail of the next slide. To enable presenter mode add <code>?presentme=true</code> to the URL of the presentation, for example:</p>
-<pre><code>mypresentation.html?presentme=true</code></pre>
-<p>The presenter mode window will open and will always re-open with the presentation until it’s disabled with:</p>
-<pre><code>mypresentation.html?presentme=false</code></pre>
-<p>To add presenter notes to a slide you include it within a “notes” <code>div</code>. For example:</p>
-<pre><code>&lt;div class=&quot;notes&quot;&gt;
-This is my *note*.
-
-- It can contain markdown
-- like this list
-
-&lt;/div&gt;</code></pre>
-</div>
-<div id="printing-and-pdf-output" class="section level2">
-<h2>Printing and PDF Output</h2>
-<p>You can print an ioslides presentation from within browsers that have good support for print CSS (i.e. as of this writing Google Chrome has the best support). Printing maintains most of the visual styles of the HTML version of the presentation.</p>
-<p>To create a PDF version of a presentation you can use Print to PDF from Google Chrome.</p>
+<p>You can find documentation on the various available Reveal.js options here: <a href="https://github.com/hakimel/reveal.js#configuration" class="uri">https://github.com/hakimel/reveal.js#configuration</a>.</p>
 </div>
 <div id="figure-options" class="section level2">
 <h2>Figure Options</h2>
-<p>There are a number of options that affect the output of figures within ioslides presentations:</p>
+<p>There are a number of options that affect the output of figures within reveal.js presentations:</p>
 <ul>
 <li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (7x5 is used by default)</p></li>
 <li><p><code>fig_retina</code> Specifies the scaling to perform for retina displays (defaults to 2, which currently works for all widely used retina displays). Note that this only takes effect if you are using knitr &gt;= 1.5.21. Set to <code>null</code> to prevent retina scaling.</p></li>
 <li><p><code>fig_caption</code> controls whether figures are rendered with captions</p></li>
-<li><p><code>dev</code> controls the graphics device used to render figures (defaults to png)</p></li>
 </ul>
 <p>For example:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  ioslides_presentation:
+  revealjs::revealjs_presentation:
     fig_width: 7
     fig_height: 6
     fig_caption: true
@@ -461,7 +468,7 @@ output:
 </div>
 <div id="mathjax-equations" class="section level2">
 <h2>MathJax Equations</h2>
-<p>By default <a href="http://www.mathjax.org/">MathJax</a> scripts are included in ioslides presentations for rendering LaTeX and MathML equations. You can use the <code>mathjax</code> option to control how MathJax is included:</p>
+<p>By default <a href="http://www.mathjax.org/">MathJax</a> scripts are included in reveal.js presentations for rendering LaTeX and MathML equations. You can use the <code>mathjax</code> option to control how MathJax is included:</p>
 <ul>
 <li><p>Specify “default” to use an https URL from the official MathJax CDN.</p></li>
 <li><p>Specify “local” to use a local version of MathJax (which is copied into the output directory). Note that when using “local” you also need to set the <code>self_contained</code> option to false.</p></li>
@@ -472,7 +479,7 @@ output:
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  ioslides_presentation:
+  revealjs::revealjs_presentation:
     mathjax: local
     self_contained: false
 ---</code></pre>
@@ -480,14 +487,14 @@ output:
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  ioslides_presentation:
+  revealjs::revealjs_presentation:
     mathjax: &quot;http://example.com/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;
 ---</code></pre>
 <p>To exclude MathJax entirely:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  ioslides_presentation:
+  revealjs::revealjs_presentation:
     mathjax: null
 ---</code></pre>
 </div>
@@ -497,7 +504,7 @@ output:
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  ioslides_presentation:
+  revealjs::revealjs_presentation:
     self_contained: false
 ---</code></pre>
 <p>Note that even for self contained documents MathJax is still loaded externally (this is necessary because of it’s size). If you want to serve MathJax locally then you should specify <code>mathjax: local</code> and <code>self_contained: false</code>.</p>
@@ -505,62 +512,25 @@ output:
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  ioslides_presentation:
+  revealjs::revealjs_presentation:
     self_contained: false
     lib_dir: libs
 ---</code></pre>
 </div>
 <div id="advanced-customization" class="section level2">
 <h2>Advanced Customization</h2>
-<div id="keeping-markdown" class="section level3">
-<h3>Keeping Markdown</h3>
-<p>When knitr processes an R Markdown input file it creates a markdown (md) file which is subsequently tranformed into HTML by pandoc. If you want to keep a copy of the markdown file after rendering you can do so using the <code>keep_md</code> option:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-output:
-  ioslides_presentation:
-    keep_md: true
----</code></pre>
-</div>
 <div id="includes" class="section level3">
 <h3>Includes</h3>
 <p>You can do more advanced customization of output by including additional HTML content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  ioslides_presentation:
+  revealjs::revealjs_presentation:
     includes:
       in_header: header.html
       before_body: doc_prefix.html
       after_body: doc_suffix.html
 ---</code></pre>
-</div>
-<div id="custom-templates" class="section level3">
-<h3>Custom Templates</h3>
-<p>You can also replace the underlying pandoc template using the <code>template</code> option:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-output:
-  ioslides_presentation:
-    template: quarterly_report.html
----</code></pre>
-<p>Consult the documentation on <a href="http://pandoc.org/README.html#templates">pandoc templates</a> for additional details on templates. You can also study the <a href="https://github.com/jgm/pandoc-templates/blob/master/default.html">default HTML template</a> as an example.</p>
-</div>
-<div id="markdown-extensions" class="section level3">
-<h3>Markdown Extensions</h3>
-<p>By default R Markdown is defined as all pandoc markdown extensions with the following tweaks for backward compatibility with the markdown package:</p>
-<pre><code>+autolink_bare_uris
-+ascii_identifier
-+tex_math_single_backslash</code></pre>
-<p>You can enable or disable markdown extensions using the <code>md_extensions</code> option (you preface an option with <code>-</code> to disable and <code>+</code> to enable it). For example:</p>
-<pre><code>---
-title: &quot;Habits&quot;
-output:
-  html_document:
-    md_extensions: -autolink_bare_uris+hard_line_breaks
----</code></pre>
-<p>The above would disable the <code>autolink_bare_uris</code> extension and enable the <code>hard_line_breaks</code> extension.</p>
-<p>For more on available markdown extensions see the <a href="http://pandoc.org/README.html#pandocs-markdown">pandoc markdown specification</a>.</p>
 </div>
 <div id="pandoc-arguments" class="section level3">
 <h3>Pandoc Arguments</h3>
@@ -568,7 +538,7 @@ output:
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  ioslides_presentation:
+  revealjs::revealjs_presentation:
     pandoc_args: [
       &quot;--title-prefix&quot;, &quot;Foo&quot;,
       &quot;--id-prefix&quot;, &quot;Bar&quot;
@@ -581,10 +551,11 @@ output:
 <h2>Shared Options</h2>
 <p>If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named <code>_output.yaml</code> within the directory. Note that no YAML delimeters or enclosing output object are used in this file. For example:</p>
 <p><strong>_output.yaml</strong></p>
-<pre class="yaml"><code>ioslides_presentation:
-  widescreen: true
-  smaller: true</code></pre>
-<p>All documents located in the same directory as <code>_output.yaml</code> will inherit its options. Options defined explicitly within documents will override those specified in the shared options file.</p>
+<pre class="yaml"><code>revealjs::revealjs_presentation:
+  theme: sky
+  transition: fade
+  highlight: pygments</code></pre>
+<p>All documents located in the same directory as <code>_output.yaml</code> will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.</p>
 </div>
 
 
@@ -634,6 +605,8 @@ $(document).ready(function () {
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
+</div>
+</div>
 
 </div>
 
