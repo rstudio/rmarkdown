@@ -11,9 +11,12 @@
 
 
 
-<title>Tufte Handout</title>
+<title>Tufte Handouts</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -136,6 +139,100 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: "h1.title, .toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 10px;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -181,14 +278,17 @@ $(document).ready(function () {
              <li><a href="odt_document_format.html">ODT</a></li>
              <li><a href="rtf_document_format.html">RTF</a></li>
              <li><a href="markdown_document_format.html">Markdown</a></li>
-             <li><a href="github_document_format.html">GitHub</a></li>
-             <li><a href="package_vignette_format.html">Vignette</a></li>
              <li class="divider"></li>
              <li class="dropdown-header">Presentations</li>
              <li><a href="ioslides_presentation_format.html">ioslides</a></li>
              <li><a href="revealjs_presentation_format.html">reveal.js</a></li>
              <li><a href="slidy_presentation_format.html">Slidy</a></li>
              <li><a href="beamer_presentation_format.html">Beamer</a></li>
+             <li class="divider"></li>
+             <li class="dropdown-header">Other</li>
+             <li><a href="tufte_handout_format.html">Tufte Handout</a></li>
+             <li><a href="package_vignette_format.html">Package Vignette</a></li>
+              <li><a href="github_document_format.html">GitHub Document</a></li>
              <li class="divider"></li>
              <li><a href="r_notebook_format.html">R Notebooks</a></li>
           </ul>
@@ -215,11 +315,13 @@ $(document).ready(function () {
 <div class="fluid-row" id="header">
 
 
-<h1 class="title">Tufte Handout</h1>
+<h1 class="title">Tufte Handouts</h1>
 
 </div>
 
 
+<div id="overview" class="section level2">
+<h2>Overview</h2>
 <p>Tufte Handouts are documents formatted in the style that Edward Tufte uses in his books and handouts. Tufte’s style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography:</p>
 <div class="row">
 <div class="thumbnail span9 offset1">
@@ -227,9 +329,111 @@ $(document).ready(function () {
 </div>
 </div>
 <p><br/></p>
-<p>The Tufte Handout format has been moved from the <strong>rmarkdown</strong> package to the <strong>tufte</strong> package which you can install as follows:</p>
-<pre class="r"><code>install.packages(&quot;tufte&quot;)</code></pre>
-<p>For an extensive example and documentation on using the <strong>tufte</strong> package see <a href="http://rstudio.github.io/tufte/" class="uri">http://rstudio.github.io/tufte/</a>.</p>
+<p>Tufte Handouts can create either HTML or PDF output. You can see a full examples documents produced with the Tufte Handout template here:</p>
+<ul>
+<li><a href="http://rstudio.github.io/tufte/">Tufte Handout (HTML)</a></li>
+<li><a href="examples/tufte-handout.pdf">Tufte Handout (PDF)</a></li>
+</ul>
+<p>These documents serve not only as examples but also documention of the various techniques used for formatting footnotes, sidenotes, figures, tables, etc.</p>
+</div>
+<div id="getting-started" class="section level2">
+<h2>Getting Started</h2>
+<div id="installation" class="section level3">
+<h3>Installation</h3>
+<p>Note that the <code>tufte_handout</code> format is not contained within the <strong>rmarkdown</strong> package but rather in a separate <strong>tufte</strong> package. You can use this format in R Markdown documents by installing this package as follows:</p>
+<pre class="r"><code>install.packages(&quot;tufte&quot;, type = &quot;source&quot;)</code></pre>
+</div>
+<div id="creating-a-handout" class="section level3">
+<h3>Creating a Handout</h3>
+<p>You can create a new Tufte Handout from within the RStudio <strong>New R Markdown</strong> dialog:</p>
+<p><img src="images/new-tufte-handout.png" alt="New Tufte Handout" /></p>
+<p>If you are not using RStudio then you can use the <code>rmarkdown::draft</code> function as follows:</p>
+<pre class="r"><code>library(rmarkdown)
+draft(&quot;my_handout.Rmd&quot;, template = &quot;tufte_handout&quot;, package = &quot;tufte&quot;)</code></pre>
+<p>The newly created document will have an output type of <code>tufte::tufte_handout</code> as shown here:</p>
+<pre><code>---
+title: &quot;Tufte Handout&quot;
+author: &quot;John Smith&quot;
+date: &quot;August 13th, 2014&quot;
+output: tufte::tufte_handout
+---</code></pre>
+<p>Note that because this format is based on a LaTeX template you can use raw LaTeX and even define LaTeX macros within the document. See the documentation on <a href="authoring_pandoc_markdown.html#raw-tex">Raw TeX</a> for details.</p>
+</div>
+</div>
+<div id="figure-options" class="section level2">
+<h2>Figure Options</h2>
+<p>There are a number of options that affect the output of figures within PD documents:</p>
+<ul>
+<li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (6 x 4.5 is used by default)</p></li>
+<li><p><code>fig_crop</code> controls whether the the pdfcrop utility (if available) is automatically applied to pdf figures (this is true by default).</p></li>
+</ul>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Tufte Handout&quot;
+output:
+  tufte::tufte_handout:
+    fig_width: 4
+    fig_height: 4
+---</code></pre>
+</div>
+<div id="syntax-highlighting" class="section level2">
+<h2>Syntax Highlighting</h2>
+<p>The <code>highlight</code> option specifies the syntax highlighting style. Supported styles include “default”, “tango”, “pygments”, “kate”, “monochrome”, “espresso”, “zenburn”, and “haddock” (specify null to prevent syntax highlighting):</p>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Tufte Handout&quot;
+output:
+  tufte::tufte_handout:
+    highlight: tango
+---</code></pre>
+</div>
+<div id="advanced-customization" class="section level2">
+<h2>Advanced Customization</h2>
+<div id="intermediate-tex" class="section level3">
+<h3>Intermediate TeX</h3>
+<p>R Markdown documents are converted to PDF by first converting to a TeX file and then calling the LaTeX engine to convert to PDF. By default this TeX file is removed, however if you want to keep it (e.g. for an article submission) you can specify the <code>keep_tex</code> option. For example:</p>
+<pre><code>---
+title: &quot;Tufte Handout&quot;
+output:
+  tufte::tufte_handout:
+    keep_tex: true
+---</code></pre>
+</div>
+<div id="includes" class="section level3">
+<h3>Includes</h3>
+<p>You can do more advanced customization of PDF output by including additional LaTeX directives and/or content or by replacing the core pandoc template entirely. To include content in the document header or before/after the document body you use the <code>includes</code> option as follows:</p>
+<pre><code>---
+title: &quot;Tufte Handout&quot;
+output:
+  tufte::tufte_handout:
+    includes:
+      in_header: header.tex
+      before_body: doc_prefix.tex
+      after_body: doc_suffix.tex
+---</code></pre>
+</div>
+<div id="pandoc-arguments" class="section level3">
+<h3>Pandoc Arguments</h3>
+<p>If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom <code>pandoc_args</code>. For example:</p>
+<pre><code>---
+title: &quot;Tufte Handout&quot;
+output:
+  tufte::tufte_handout:
+    pandoc_args: [
+      &quot;--no-tex-ligatures&quot;
+    ]
+---</code></pre>
+<p>Documentation on all available pandoc arguments can be found in the <a href="http://johnmacfarlane.net/pandoc/README.html#options">pandoc user guide</a>.</p>
+</div>
+</div>
+<div id="shared-options" class="section level2">
+<h2>Shared Options</h2>
+<p>If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named <code>_output.yaml</code> within the directory. Note that no YAML delimeters or enclosing output object are used in this file. For example:</p>
+<p><strong>_output.yaml</strong></p>
+<pre class="yaml"><code>tufte::tufte_handout:
+  toc: true</code></pre>
+<p>All documents located in the same directory as <code>_output.yaml</code> will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.</p>
+</div>
 
 
 <!-- some extra javascript for older browsers -->
@@ -278,6 +482,8 @@ $(document).ready(function () {
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
+</div>
+</div>
 
 </div>
 
