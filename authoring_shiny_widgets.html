@@ -14,6 +14,9 @@
 <title>Creating Shiny Widgets</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -136,6 +139,100 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: "h1.title, .toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 10px;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -219,15 +316,6 @@ $(document).ready(function () {
 
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#creating-a-shiny-widget">Creating a Shiny Widget</a><ul>
-<li><a href="#the-shinyapp-function">The shinyApp Function</a></li>
-<li><a href="#example-k-means-cluster">Example: K Means Cluster</a></li>
-<li><a href="#widget-size-and-layout">Widget Size and Layout</a></li>
-</ul></li>
-</ul>
-</div>
 
 <p>Shiny widgets enable you to create re-usable Shiny components that are included within an R Markdown document using a single function call. Shiny widgets can also be invoked directly from the console (useful during authoring) and show their output within the RStudio Viewer pane or an external web browser.</p>
 <div id="creating-a-shiny-widget" class="section level2">
@@ -365,6 +453,8 @@ $(document).ready(function () {
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
+</div>
+</div>
 
 </div>
 

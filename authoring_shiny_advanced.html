@@ -14,6 +14,9 @@
 <title>Interactive Documents: Advanced Topics</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -136,6 +139,100 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: "h1.title, .toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 10px;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -219,14 +316,6 @@ $(document).ready(function () {
 
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#shiny-reactives">Shiny Reactives</a></li>
-<li><a href="#multiple-pages">Multiple Pages</a></li>
-<li><a href="#performance-and-delayed-rendering">Performance and Delayed Rendering</a></li>
-<li><a href="#converting-existing-documents">Converting Existing Documents</a></li>
-</ul>
-</div>
 
 <div id="shiny-reactives" class="section level2">
 <h2>Shiny Reactives</h2>
@@ -255,8 +344,8 @@ renderPlot({
 <p>Currently, only one document can be active at a time, so documents can’t easily share state (although some primitive global sharing is possible via <code>global.R</code>; see the help for <code>rmarkdown::run</code>).</p>
 <p>By default it’s only possible to link to R Markdown files in the same directory subtree as the file on which <code>rmarkdown::run</code> was invoked (i.e you can’t link to <code>../foo.rmd</code>.) You can use the <code>dir</code> argument to <code>rmarkdown::run</code> to indicate the directory to treat as the root.</p>
 </div>
-<div id="performance-and-delayed-rendering" class="section level2">
-<h2>Performance and Delayed Rendering</h2>
+<div id="delayed-rendering" class="section level2">
+<h2>Delayed Rendering</h2>
 <p>An interactive document is generally rendered every time it is shown, and is not shown to the user until render is complete. Consequently, a document that is large or contains expensive computations may take some time to load.</p>
 <p>If your document contains interactive Shiny components that don’t need to be rendered right away, you can wrap Shiny code in the <code>rmarkdown::render_delayed</code> function. This function saves its argument until the document is done rendering and has been shown to the user, then evaluates it and injects it into the document when the computation is finished.</p>
 <p>Here’s an example that demonstrates how <code>render_delayed</code> works—the code enclosed within the <code>render_delayed</code> call will execute only after the document has been loaded and displayed to the user:</p>
@@ -271,8 +360,8 @@ rmarkdown::render_delayed({
 &#96;&#96;&#96;
 </code></pre>
 </div>
-<div id="converting-existing-documents" class="section level2">
-<h2>Converting Existing Documents</h2>
+<div id="migration" class="section level2">
+<h2>Migration</h2>
 <p>The getting started example demonstrated creating a brand new interactive document. However, any R Markdown output format that produces HTML can be converted into an interacitve document. To convert an existing document:</p>
 <ul>
 <li><p>Add <code>runtime: shiny</code> to its YAML front matter.</p></li>
@@ -340,6 +429,8 @@ $(document).ready(function () {
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
+</div>
+</div>
 
 </div>
 

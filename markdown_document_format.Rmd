@@ -47,7 +47,7 @@ You can also compose custom markdown variants, for example:
 
 The [pandoc markdown specification](http://pandoc.org/README.html#pandocs-markdown) defines all of the markdown extensions and their name to be used in composing custom variants.
 
-### Using Variants for Publishing
+### Publishing Formats
 
 Many popular publishing systems now accept markdown as input. Here are the correct markdown variants to use for some popular systems:
 

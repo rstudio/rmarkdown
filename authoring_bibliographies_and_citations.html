@@ -14,6 +14,9 @@
 <title>Bibliographies and Citations</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -136,6 +139,100 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: "h1.title, .toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 10px;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -219,20 +316,6 @@ $(document).ready(function () {
 
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#bibliographies">Bibliographies</a><ul>
-<li><a href="#specifying-a-bibliography">Specifying a Bibliography</a></li>
-<li><a href="#inline-references">Inline References</a></li>
-<li><a href="#bibliography-placement">Bibliography Placement</a></li>
-</ul></li>
-<li><a href="#citations">Citations</a><ul>
-<li><a href="#citation-syntax">Citation Syntax</a></li>
-<li><a href="#unused-references-nocite">Unused References (nocite)</a></li>
-<li><a href="#citation-and-reference-styles">Citation and Reference Styles</a></li>
-</ul></li>
-</ul>
-</div>
 
 <div id="bibliographies" class="section level2">
 <h2>Bibliographies</h2>
@@ -357,8 +440,8 @@ nocite: |
 @item3</code></pre>
 <p>In this example, the document will contain a citation for <code>item3</code> only, but the bibliography will contain entries for <code>item1</code>, <code>item2</code>, and <code>item3</code>.</p>
 </div>
-<div id="citation-and-reference-styles" class="section level3">
-<h3>Citation and Reference Styles</h3>
+<div id="citation-styles" class="section level3">
+<h3>Citation Styles</h3>
 <p>By default, pandoc will use a Chicago author-date format for citations and references. To use another style, you will need to specify a CSL 1.0 style file in the <code>csl</code> metadata field. For example:</p>
 <pre><code>---
 title: &quot;Sample Document&quot;
@@ -417,6 +500,8 @@ $(document).ready(function () {
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
+</div>
+</div>
 
 </div>
 

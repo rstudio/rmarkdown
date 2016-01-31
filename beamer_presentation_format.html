@@ -14,6 +14,9 @@
 <title>Presentations with Beamer</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libs/tocify-1.9.1/jquery.tocify.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="libs/bootstrap-3.3.5/css/united.min.css" rel="stylesheet" />
 <script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -136,6 +139,93 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: "h1.title, .toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -219,18 +309,6 @@ $(document).ready(function () {
 
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#overview">Overview</a></li>
-<li><a href="#incremental-bullets">Incremental Bullets</a></li>
-<li><a href="#themes">Themes</a></li>
-<li><a href="#table-of-contents-and-slide-level">Table of Contents and Slide Level</a></li>
-<li><a href="#figure-options">Figure Options</a></li>
-<li><a href="#syntax-highlighting">Syntax Highlighting</a></li>
-<li><a href="#advanced-customization">Advanced Customization</a></li>
-<li><a href="#shared-options">Shared Options</a></li>
-</ul>
-</div>
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
@@ -294,14 +372,17 @@ output:
     fonttheme: &quot;structurebold&quot;
 ---</code></pre>
 </div>
-<div id="table-of-contents-and-slide-level" class="section level2">
-<h2>Table of Contents and Slide Level</h2>
+<div id="table-of-contents" class="section level2">
+<h2>Table of Contents</h2>
 <p>The <code>toc</code> option specifies that a table of contents should be included at the beginning of the presentation (only level 1 headers will be included in the table of contents). For example:</p>
 <pre><code>---
 output:
   beamer_presentation:
     toc: true
 ---</code></pre>
+</div>
+<div id="slide-level" class="section level2">
+<h2>Slide Level</h2>
 <p>The <code>slide_level</code> option defines the heading level that defines individual slides. By default this is the highest header level in the hierarchy that is followed immediately by content, and not another header, somewhere in the document. This default can be overridden by specifying an explicit <code>slide_level</code>:</p>
 <pre><code>---
 output:
@@ -463,6 +544,8 @@ $(document).ready(function () {
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
+</div>
+</div>
 
 </div>
 

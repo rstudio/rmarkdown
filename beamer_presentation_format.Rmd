@@ -3,6 +3,8 @@ title: "Presentations with Beamer"
 output:
   html_document:
     toc: true
+    toc_float:
+      collapsed: true
 ---
 
 ## Overview
@@ -75,7 +77,7 @@ You can specify Beamer themes using the `theme`, `colortheme`, and `fonttheme` o
         fonttheme: "structurebold"
     ---
 
-## Table of Contents and Slide Level
+## Table of Contents
 
 The `toc` option specifies that a table of contents should be included at the beginning of the presentation (only level 1 headers will be included in the table of contents). For example:
 
@@ -84,6 +86,8 @@ The `toc` option specifies that a table of contents should be included at the be
       beamer_presentation:
         toc: true
     ---
+
+## Slide Level
 
 The `slide_level` option defines the heading level that defines individual slides.  By default this is the highest header level in the hierarchy that is followed immediately by content, and not another header, somewhere in the document. This default can be overridden by specifying an explicit `slide_level`:
 

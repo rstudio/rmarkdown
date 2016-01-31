@@ -4,7 +4,8 @@ output:
   html_document:
     toc: true
     toc_depth: 3
-    toc_float: yes
+    toc_float:
+      collapsed: true
 ---
 
 ## Installation

@@ -117,7 +117,7 @@ In this example, the document will contain a citation for `item3`
 only, but the bibliography will contain entries for `item1`, `item2`, and
 `item3`.
 
-### Citation and Reference Styles
+### Citation Styles
 
 By default, pandoc will use a Chicago author-date format for
 citations and references. To use another style, you will need to specify

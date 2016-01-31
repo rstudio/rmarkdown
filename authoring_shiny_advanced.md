@@ -37,7 +37,7 @@ Currently, only one document can be active at a time, so documents can't easily 
 By default it's only possible to link to R Markdown files in the same directory subtree as the file on which `rmarkdown::run` was invoked (i.e you can't link to `../foo.rmd`.) You can use the `dir` argument to `rmarkdown::run` to indicate the directory to treat as the root. 
 
 
-## Performance and Delayed Rendering
+## Delayed Rendering
 
 An interactive document is generally rendered every time it is shown, and is not shown to the user until render is complete. Consequently, a document that is large or contains expensive computations may take some time to load. 
 
@@ -56,7 +56,7 @@ rmarkdown::render_delayed({
 &#96;&#96;&#96;
 </code></pre>
 
-## Converting Existing Documents 
+## Migration
 
 The getting started example demonstrated creating a brand new interactive document. However, any R Markdown output format that produces HTML can be converted into an interacitve document. To convert an existing document:
  

@@ -3,6 +3,8 @@ title: "Presentations with ioslides"
 output:
   html_document:
     toc: true
+    toc_float:
+      collapsed: true
 ---
 
 ## Overview
