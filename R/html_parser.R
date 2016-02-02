@@ -70,3 +70,19 @@ call_resource_attrs <- function(html, callback = NULL)  {
     }
   }
 }
+
+# as call_resource_attrs, but for CSS
+call_css_resource_attrs <- function(css, callback = NULL)  {
+  css_encoding <- Encoding(css)
+  Encoding(css) <- "bytes"
+
+  urls <- gregexpr("url\\s*\\(\\s*['\"]?([^'\")]+)['\"]?\\s*\\)", css,
+                   perl = TRUE, useBytes = TRUE, ignore.case = TRUE)[[1]]
+  for (pos in seq_along(urls)) {
+    urlstart <- attr(urls, "capture.start", exact = TRUE)[pos,1]
+    url <- substr(css, urlstart,  urlstart +
+                    attr(urls, "capture.length", exact = TRUE)[pos,1] - 1)
+    Encoding(url) <- css_encoding
+    callback("css", "url", url, urlstart)
+  }
+}

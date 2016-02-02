@@ -57,7 +57,7 @@ find_external_resources <- function(input_file,
                                     encoding = getOption("encoding")) {
   # ensure we're working with valid input
   ext <- tolower(tools::file_ext(input_file))
-  if (!(ext %in% c("md", "rmd", "html", "htm", "r"))) {
+  if (!(ext %in% c("md", "rmd", "html", "htm", "r", "css"))) {
     stop("Resource discovery is only supported for R Markdown files or HTML ",
          "files.")
   }
@@ -80,10 +80,15 @@ find_external_resources <- function(input_file,
         length(path) == 1 &&
         path != "." && path != ".." &&
         file.exists(file.path(input_dir, path))) {
-      if (tolower(tools::file_ext(file.path(input_dir, path))) == "r") {
+      ext <- tolower(tools::file_ext(file.path(input_dir, path)))
+      if (identical(ext, "r")) {
         # if this is a .R script, look for resources it contains, too
         discover_r_resources(file.path(input_dir, path),
                              discover_single_resource)
+      } else if (identical(ext, "css")) {
+        # if it's a CSS file, look for files it references (e.g. fonts/images)
+        discover_css_resources(file.path(input_dir, path),
+                               discover_single_resource)
       }
       # if this is an implicitly discovered resource, it needs to refer to
       # a file rather than a directory
@@ -134,6 +139,8 @@ find_external_resources <- function(input_file,
     }
   } else if (ext == "r") {
     discover_r_resources(input_file, discover_single_resource)
+  } else if (ext == "css") {
+    discover_css_resources(input_file, discover_single_resource)
   }
 
   # clean row names (they're not meaningful)
@@ -434,6 +441,18 @@ copy_render_intermediates <- function(original_input, encoding,
 
   # return the list of files we generated
   intermediates
+}
+
+discover_css_resources <- function(css_file, discover_single_resource) {
+  css_lines <- readLines(css_file, warn = FALSE, encoding = "UTF-8")
+
+  discover_resource <- function(node, att, val, idx) {
+    res_file <- utils::URLdecode(val)
+    discover_single_resource(res_file, FALSE, TRUE)
+  }
+
+  call_css_resource_attrs(paste(css_lines, collapse="\n"),
+                                discover_resource)
 }
 
 # given a filename, return true if the file appears to be a web file
