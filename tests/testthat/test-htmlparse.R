@@ -60,3 +60,19 @@ test_that("common resource types are found in a simple document", {
     stringsAsFactors = FALSE))
   reset_accumulator()
 })
+
+test_that("resources referenced in CSS files are discovered", {
+  call_css_resource_attrs(paste(
+    "body {\n",
+    "  background-image: url('foo.png');\n",
+    "}\n",
+    "p {\n",
+    "  background-image: url(bar.png), url(\"baz.png\");\n",
+    "}\n)"), html_accumulator)
+  expect_equal(accumulated, data.frame(
+    tag = c("css", "css", "css"),
+    attribute = c("url", "url", "url"),
+    value = c("foo.png", "bar.png", "baz.png"),
+    stringsAsFactors = FALSE))
+  reset_accumulator()
+})

@@ -1,0 +1,6 @@
+/* this css file refers to an image */
+body 
+{
+    background-image: url(empty.png)
+}
+
