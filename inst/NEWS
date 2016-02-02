@@ -34,6 +34,8 @@ rmarkdown 0.9.2.9001 (unreleased)
 
 * Added support for folding/unfolding of R code chunks in `html_document`
 
+* Support `url` references in CSS files for `runtime: shiny`
+
 
 rmarkdown 0.9.2
 --------------------------------------------------------------------------------
