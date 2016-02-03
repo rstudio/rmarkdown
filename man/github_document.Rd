@@ -23,8 +23,8 @@ github_document(toc = FALSE, toc_depth = 3, fig_width = 7,
 document (typically created using the \code{\link{includes}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}}
-for additional details.}
+default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 

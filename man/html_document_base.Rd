@@ -27,22 +27,22 @@ documents MathJax is still loaded externally (this is necessary because of
 it's size).}
 
 \item{lib_dir}{Directory to copy dependent HTML libraries (e.g. jquery,
-bootstrap, etc.) into. By default this will be the name of the document
-with \code{_files} appended to it.}
+bootstrap, etc.) into. By default this will be the name of the document with
+\code{_files} appended to it.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from
-the official MathJax CDN. The "local" option uses a local version of
-MathJax (which is copied into the output directory). You can pass an
-alternate URL or pass \code{NULL} to exclude MathJax entirely.}
+the official MathJax CDN. The "local" option uses a local version of MathJax
+(which is copied into the output directory). You can pass an alternate URL
+or pass \code{NULL} to exclude MathJax entirely.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
 \item{template}{Pandoc template to use for rendering. Pass "default" to use
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
-built-in template; pass a path to use a custom template that you've
-created. Note that if you don't use the "default" template then some
-features of \code{html_document} won't be available (see the Templates
-section below for more details).}
+built-in template; pass a path to use a custom template that you've created.
+Note that if you don't use the "default" template then some features of
+\code{html_document} won't be available (see the Templates section below for
+more details).}
 
 \item{dependency_resolver}{A dependency resolver}
 
