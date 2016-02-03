@@ -25,25 +25,6 @@
 
 <style type="text/css">
 
-/* padding for bootstrap navbar */
-body {
-  padding-top: 50px;
-  padding-bottom: 40px;
-}
-
-
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h2 {
-  padding-top: 55px;
-  margin-top: -55px;
-}
-.section h3 {
-  padding-top: 55px;
-  margin-top: -55px;
-}
-
-
-
 /* don't use link color in navbar */
 .dropdown-menu>li>a {
   color: black;
@@ -124,6 +105,60 @@ button.code-folding-btn:focus {
   outline: none;
 }
 </style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 50px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 55px;
+  margin-top: -55px;
+}
+
+.section h2 {
+  padding-top: 55px;
+  margin-top: -55px;
+}
+.section h3 {
+  padding-top: 55px;
+  margin-top: -55px;
+}
+.section h4 {
+  padding-top: 55px;
+  margin-top: -55px;
+}
+.section h5 {
+  padding-top: 55px;
+  margin-top: -55px;
+}
+.section h6 {
+  padding-top: 55px;
+  margin-top: -55px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
@@ -247,7 +282,7 @@ div.tocify {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a href="/">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li class="dropdown">
           <a href="authoring" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Authoring <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -525,27 +560,6 @@ output:
 <!-- some extra javascript for older browsers -->
 <script type="text/javascript" src="libs/polyfill.js"></script>
 
-<script>
-
-// manage active state of menu based on current page
-$(document).ready(function () {
-
-    // active menu
-    href = window.location.pathname
-    href = href.substr(href.lastIndexOf('/') + 1)
-    $('a[href="' + href + '"]').parent().addClass('active');
-
-    // manage active menu header
-    if (href.startsWith('authoring_'))
-      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
-    else if (href.endsWith('_format.html'))
-      $('a[href="' + 'formats' + '"]').parent().addClass('active');
-    else if (href.startsWith('developer_'))
-      $('a[href="' + 'developer' + '"]').parent().addClass('active');
-
-});
-
-</script>
 
 <!-- bizible -->
 <script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>

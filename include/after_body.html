@@ -2,27 +2,6 @@
 <!-- some extra javascript for older browsers -->
 <script type="text/javascript" src="libs/polyfill.js"></script>
 
-<script>
-
-// manage active state of menu based on current page
-$(document).ready(function () {
-
-    // active menu
-    href = window.location.pathname
-    href = href.substr(href.lastIndexOf('/') + 1)
-    $('a[href="' + href + '"]').parent().addClass('active');
-
-    // manage active menu header
-    if (href.startsWith('authoring_'))
-      $('a[href="' + 'authoring' + '"]').parent().addClass('active');
-    else if (href.endsWith('_format.html'))
-      $('a[href="' + 'formats' + '"]').parent().addClass('active');
-    else if (href.startsWith('developer_'))
-      $('a[href="' + 'developer' + '"]').parent().addClass('active');
-
-});
-
-</script>
 
 <!-- bizible -->
 <script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
