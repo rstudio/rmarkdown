@@ -663,25 +663,32 @@ output: html_fragment
 <h2>Creating a Website</h2>
 <p>It’s possible to create full websites with R Markdown using a combination of the options described above. To create a website you need to:</p>
 <ol style="list-style-type: decimal">
-<li><p>Create a shared options file (_output.yaml) to ensure common options across all pages within the site.</p></li>
-<li><p>Specify includes for common header and footer content.</p></li>
-<li><p>Specify that documents are not <code>self_contained</code> and define a common <code>lib_dir</code> for JavaScript and CSS dependencies.</p></li>
-</ol>
-<p>For example, here’s a possible _output.yaml file for a website:</p>
-<p><strong>_output.yaml</strong></p>
-<pre><code>html_document:
+<li><p>Create a navigation bar (<strong>_navbar.html</strong>) to provide a way to navigate between the pages on the website. Here are two examples of navigation bars:</p>
+<ul>
+<li>Simple: <a href="https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html" class="uri">https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html</a></li>
+<li>More Complex: <a href="https://github.com/rstudio/rmarkdown/blob/gh-pages/_navbar.html" class="uri">https://github.com/rstudio/rmarkdown/blob/gh-pages/_navbar.html</a></li>
+</ul>
+<p><br/> Full documentation on syntax of Bootstrap navigation bars can be found here: <a href="http://getbootstrap.com/components/#navbar" class="uri">http://getbootstrap.com/components/#navbar</a>.</p></li>
+<li><p>Create a shared options file (<strong>_output.yaml</strong>) to ensure common options across all pages within the site. This file will typically specify that documents are not <code>self_contained</code> and define a common <code>lib_dir</code> for JavaScript and CSS dependencies. It may also include common page elements (e.g. Google Analytics or Disqus comments).</p>
+<p>For example, here’s a possible <strong>_output.yaml</strong> file for a website:</p>
+<pre class="yaml"><code>html_document:
   self_contained: false
   lib_dir: libs
   includes:
-    in_header: include/in_header.html
-    before_body: include/before_body.html
-    after_body: include/after_body.html</code></pre>
-<p>The YAML inside individual documents then only needs to specify the document title:</p>
-<pre><code>---
+    in_header: analytics.html
+    after_body: disqus.html</code></pre></li>
+<li><p>Add documents to the website (being sure to add them to the <strong>_navbar.html</strong>). Since common output options are specified in <strong>_output.yaml</strong> the front matter inside individual documents then only needs to specify the document title:</p>
+<pre class="yaml"><code>---
 title: &quot;Document Title&quot;
----</code></pre>
-<p>Here is a simple example of an R Markdown website that includes a global navigation bar to switch between pages:</p>
-<p><a href="https://github.com/rstudio/rmarkdown-website" class="uri">https://github.com/rstudio/rmarkdown-website</a></p>
+---</code></pre></li>
+<li><p>Add a Makefile which can be used to build all the pages within the site (here is an <a href="https://github.com/rstudio/rmarkdown-website/blob/master/Makefile">example Makefile</a> which does this.)</p></li>
+</ol>
+<p>Here is a simple example of an R Markdown website that includes all of the components described above: <a href="https://github.com/rstudio/rmarkdown-website" class="uri">https://github.com/rstudio/rmarkdown-website</a>.</p>
+<div id="development-version-3" class="section level4">
+<h4>Development Version</h4>
+<p>Support for creating websites as described above is only available within the development version of the <strong>rmarkdown</strong> package. You can install the development version as follows:</p>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
+</div>
 </div>
 
 
