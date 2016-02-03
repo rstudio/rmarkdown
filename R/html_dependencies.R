@@ -1,7 +1,18 @@
 #' @import htmltools
 NULL
 
+#' Provide common HTML dependencies for R Markdown formats
+#'
+#' These functions provide common HTML dependencies (e.g. jquery, bootstrap)
+#' for re-use by other R Markdown formats.
+#'
+#' @inheritParams html_document
+#' @name html-dependencies
+NULL
+
 # create an html dependency for our embedded jquery
+#' @rdname html-dependencies
+#' @export
 html_dependency_jquery <- function()  {
   htmlDependency(name = "jquery",
                  version = "1.11.3",
@@ -10,6 +21,8 @@ html_dependency_jquery <- function()  {
 }
 
 # create an html dependency for our embedded bootstrap
+#' @rdname html-dependencies
+#' @export
 html_dependency_bootstrap <- function(theme) {
   htmlDependency(name = "bootstrap",
                  version = "3.3.5",
@@ -25,6 +38,8 @@ html_dependency_bootstrap <- function(theme) {
 }
 
 # create an html_dependency for our embedded jqueryui
+#' @rdname html-dependencies
+#' @export
 html_dependency_jqueryui <- function() {
   htmlDependency(name = 'jqueryui',
                  version = '1.11.4',
@@ -34,6 +49,8 @@ html_dependency_jqueryui <- function() {
 }
 
 # create an html_dependency for tocify
+#' @rdname html-dependencies
+#' @export
 html_dependency_tocify <- function() {
   htmlDependency(name = "tocify",
                  version = "1.9.1",
