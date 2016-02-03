@@ -28,6 +28,8 @@ rmarkdown 0.9.2.9001 (unreleased)
 
 * New `html_document` themes: "lumen", "paper", "sandstone", "simplex", & "yeti".
 
+* Ability to include bootstrap navbar for multi-page `html_document` websites
+
 * Added support for floating table of contents (via tocify) to `html_document`
 
 * Added support for tabsets via use of {.tabset} class on top-level headings
