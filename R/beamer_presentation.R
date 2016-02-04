@@ -77,7 +77,8 @@ beamer_presentation <- function(toc = FALSE,
   # template path and assets
   if (!is.null(template)) {
     if (identical(template, "default")) template <- patch_beamer_template()
-    args <- c(args, "--template", pandoc_path_arg(template))
+    if (!is.null(template))
+      args <- c(args, "--template", pandoc_path_arg(template))
   }
 
   # table of contents
@@ -135,10 +136,11 @@ beamer_presentation <- function(toc = FALSE,
 }
 
 patch_beamer_template <- function() {
-  find_pandoc()
-  command <- paste(quoted(pandoc()), paste(quoted(c("-D", "beamer")), collapse = " "))
+  if (pandoc_version() >= '1.15.2') return()  # no need to patch the template
+  f <- tempfile(fileext = '.tex')
+  command <- paste(quoted(pandoc()), "-D beamer >", quoted(f))
   with_pandoc_safe_environment({
-    tpl <- system(command, intern = TRUE)
+    if (system(command) != 0) stop("Failed to execute the command '", command, "'")
   })
   patch <- c(
     "% Comment these out if you don't want a slide with just the",
@@ -150,8 +152,8 @@ patch_beamer_template <- function() {
     "  \\let\\insertsubsectionnumber\\relax", "  \\let\\subsectionname\\relax",
     "  \\frame{\\subsectionpage}", "}"
   )
+  tpl <- readLines(f, encoding = 'UTF-8')
   tpl <- sub(paste(patch, collapse = '\n'), '', paste(tpl, collapse = '\n'), fixed = TRUE)
-  f <- tempfile(fileext = '.tex')
-  writeLines(tpl, f)
+  writeLines(enc2utf8(tpl), f, useBytes = TRUE)
   f
 }
