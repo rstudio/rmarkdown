@@ -59,6 +59,19 @@ $if(theme)$
 $endif$
 $endif$
 
+$if(abstract)$
+<style type="text/css">
+  p.abstract{
+    text-align: center;
+    font-weight: bold;
+  }
+  div.abstract{
+    margin: auto;
+    width: 90%;
+  }
+</style>
+$endif$
+
 $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
@@ -335,6 +348,12 @@ $endif$
 $endfor$
 $if(date)$
 <h4 class="date"><em>$date$</em></h4>
+$endif$
+$if(abstract)$
+<div class="abstract">
+<p class="abstract">Abstract</p>
+$abstract$
+</div>
 $endif$
 $endif$
 
