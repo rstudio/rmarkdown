@@ -350,7 +350,7 @@ output_format_from_yaml_front_matter <- function(input_lines,
   output_format_options <- list()
 
   # parse common _output.yml if we have it
-  if (file.exiss("_output.yml"))
+  if (file.exists("_output.yml"))
     common_output_format_yaml <- yaml_load_file_utf8("_output.yml")
   if (file.exists("_output.yaml"))
     common_output_format_yaml <- yaml_load_file_utf8("_output.yaml")
