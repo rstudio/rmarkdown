@@ -107,7 +107,7 @@ render("input.Rmd", "all")
 
 #### Shared Output Formats
 
-You can also define output formats externally in a file named `_output.yaml` located in the same directory as the R Markdown source file. For example:
+You can also define output formats externally in a file named `_output.yml` located in the same directory as the R Markdown source file. For example:
 
 ``` yaml
 html_document:
@@ -118,7 +118,7 @@ pdf_document:
   highlight: zenburn
 ```
 
-Using an `_output.yaml` file is a good way to share output settings across multiple R Markdown files in the same directory.
+Using an `_output.yml` file is a good way to share output settings across multiple R Markdown files in the same directory.
 
 #### Output Format Functions
 
