@@ -100,6 +100,15 @@ For example:
         center: true
     ---
 
+
+#### Smaller Text
+
+If you need smaller text for certain paragraphs, you can enclose text in the `<small>` tag. For example: 
+
+```html
+<small>This sentence will appear smaller.</small>
+```
+
 ## Slide Transitions
 
 You can use the `transition` and `background_transition` optoins to specify the global default slide transition style:
@@ -158,7 +167,47 @@ You can use the `slide_level` option to specify which level of heading will be u
 
 With this layout horizontal navigation will proceed directly from "Horizontal Slide 1" to "Horizontal Slide 2", with vertical navigation to "Vertical Slide 1", etc. presented as an option on "Horizontal Slide 1".
 
+## Custom CSS
 
+You can add your own CSS to a reveal.js presentation using the `css` option:
+
+    ---
+    output:
+      revealjs::revealjs_presentation:
+        css: styles.css
+    ---
+
+If you want to override the appearance of particular HTML element document wide you need to be sure to qualify it with the `.reveal section` preface in your CSS. For example, to change the default text color in paragraphs to blue you'd use:
+
+```css
+.reveal section p {
+  color: blue;
+}
+```
+
+### Slide IDs and Classes 
+
+You can also target specific slides or classes of slice with custom CSS by adding ids or classes to the slides headers within your document. For example the following slide header:
+
+    ## Next Steps {#nextsteps .emphasized}
+
+Would enable you to apply CSS to all of it's content using either of the following CSS selectors:
+
+    #nextsteps {
+       color: blue;
+    }
+
+    .emphasized {
+       font-size: 1.2em;
+    }
+
+### Styling Text Spans
+
+You can apply classes defined in your CSS file to spans of text by using a span tag. For example:
+
+```html
+<span class="emphasized">Pay attention to this!</span>
+```
 
 ## Reveal.js Options
 

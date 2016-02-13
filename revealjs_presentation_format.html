@@ -110,34 +110,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 50px;
+  padding-top: 51px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 55px;
-  margin-top: -55px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 
 .section h2 {
-  padding-top: 55px;
-  margin-top: -55px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h3 {
-  padding-top: 55px;
-  margin-top: -55px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h4 {
-  padding-top: 55px;
-  margin-top: -55px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h5 {
-  padding-top: 55px;
-  margin-top: -55px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 .section h6 {
-  padding-top: 55px;
-  margin-top: -55px;
+  padding-top: 56px;
+  margin-top: -56px;
 }
 </style>
 
@@ -163,7 +163,7 @@ $(document).ready(function () {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="libs/navigation/tabsets.js"></script>
+<script src="libs/navigation-1.0/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -426,6 +426,11 @@ output:
     highlight: pygments
     center: true
 ---</code></pre>
+<div id="smaller-text" class="section level4">
+<h4>Smaller Text</h4>
+<p>If you need smaller text for certain paragraphs, you can enclose text in the <code>&lt;small&gt;</code> tag. For example:</p>
+<pre class="html"><code>&lt;small&gt;This sentence will appear smaller.&lt;/small&gt;</code></pre>
+</div>
 </div>
 <div id="slide-transitions" class="section level2">
 <h2>Slide Transitions</h2>
@@ -472,6 +477,37 @@ output:
 
 # Horizontal Slide 2</code></pre>
 <p>With this layout horizontal navigation will proceed directly from “Horizontal Slide 1” to “Horizontal Slide 2”, with vertical navigation to “Vertical Slide 1”, etc. presented as an option on “Horizontal Slide 1”.</p>
+</div>
+<div id="custom-css" class="section level2">
+<h2>Custom CSS</h2>
+<p>You can add your own CSS to a reveal.js presentation using the <code>css</code> option:</p>
+<pre><code>---
+output:
+  revealjs::revealjs_presentation:
+    css: styles.css
+---</code></pre>
+<p>If you want to override the appearance of particular HTML element document wide you need to be sure to qualify it with the <code>.reveal section</code> preface in your CSS. For example, to change the default text color in paragraphs to blue you’d use:</p>
+<pre class="css"><code>.reveal section p {
+  color: blue;
+}</code></pre>
+<div id="slide-ids-and-classes" class="section level3">
+<h3>Slide IDs and Classes</h3>
+<p>You can also target specific slides or classes of slice with custom CSS by adding ids or classes to the slides headers within your document. For example the following slide header:</p>
+<pre><code>## Next Steps {#nextsteps .emphasized}</code></pre>
+<p>Would enable you to apply CSS to all of it’s content using either of the following CSS selectors:</p>
+<pre><code>#nextsteps {
+   color: blue;
+}
+
+.emphasized {
+   font-size: 1.2em;
+}</code></pre>
+</div>
+<div id="styling-text-spans" class="section level3">
+<h3>Styling Text Spans</h3>
+<p>You can apply classes defined in your CSS file to spans of text by using a span tag. For example:</p>
+<pre class="html"><code>&lt;span class=&quot;emphasized&quot;&gt;Pay attention to this!&lt;/span&gt;</code></pre>
+</div>
 </div>
 <div id="reveal.js-options" class="section level2">
 <h2>Reveal.js Options</h2>
