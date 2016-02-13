@@ -287,6 +287,8 @@ html_document <- function(toc = FALSE,
         includes$before_body <- c(navbar, includes$before_body)
         # flag indicating we need extra navbar css and js
         args <- c(args, pandoc_variable_arg("navbar", "1"))
+        # variables controlling padding from navbar
+        args <- c(args, pandoc_body_padding_variable_args(theme))
       }
     }
 
@@ -387,3 +389,36 @@ default_mathjax <- function() {
 mathjax_config <- function() {
   "MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 }
+
+# variable which controls body offset (depends on height of navbar in theme)
+pandoc_body_padding_variable_args <- function(theme) {
+
+  # height of navbar in bootstrap 3.3.5
+  navbarHeights <- c("default" = 51,
+                     "cerulean" = 51,
+                     "journal" = 61 ,
+                     "flatly" = 60,
+                     "readable" = 66,
+                     "spacelab" = 52,
+                     "united" = 51,
+                     "cosmo" = 51,
+                     "lumen" = 54,
+                     "paper" = 64,
+                     "sandstone" = 61,
+                     "simplex" = 41,
+                     "yeti" = 45)
+
+  # body padding is navbar height
+  bodyPadding <- navbarHeights[[theme]]
+
+  # header padding is bodyPadding + 5
+  headerPadding <- bodyPadding + 5
+
+  # return variables
+  c(pandoc_variable_arg("body_padding", bodyPadding),
+    pandoc_variable_arg("header_padding", headerPadding))
+}
+
+
+
+
