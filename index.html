@@ -11,7 +11,7 @@
 
 
 
-<title>R Markdown — Dynamic Documents for R</title>
+<title>R Markdown</title>
 
 <script src="libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -255,104 +255,41 @@ $(document).ready(function () {
 <div class="fluid-row" id="header">
 
 
-<h1 class="title">R Markdown — Dynamic Documents for R</h1>
+<h1 class="title">R Markdown</h1>
+<h3 class="subtitle"><em>Dynamic Documents for R</em></h3>
 
 </div>
 
 
-<hr />
-<p>R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of <a href="http://daringfireball.net/projects/markdown/basics">markdown</a> (an easy-to-write plain text format) with embedded R code chunks that are run so their output can be included in the final document. R Markdown documents are fully <em>reproducible</em> (they can be automatically regenerated whenever underlying R code or data changes).</p>
-<p>This website describes R Markdown v2, a next generation implementation of R Markdown based on <a href="http://yihui.name/knitr/">knitr</a> and <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>. This implementation brings many enhancements to R Markdown, including:</p>
-<ul>
-<li>Many available output formats including HTML, PDF, and MS Word.</li>
-<li>Support for creating Beamer, ioslides, and Slidy presentations.</li>
-<li>New markdown syntax including expanded support for tables and bibliographies.</li>
-<li>Hooks for customizing HTML and PDF output (include CSS, headers, and footers).</li>
-<li>Include raw LaTeX within markdown for advanced customization of PDF output.</li>
-<li>Compile HTML, PDF, or MS Word notebooks from R scripts.</li>
-<li>Extensiblity: create custom templates and even entirely new output formats.</li>
-<li>Create interactive R Markdown documents using Shiny.</li>
-</ul>
-<p>Note that PDF output (including Beamer slides) requires a full installation of TeX.</p>
-<div id="quick-tour" class="section level2">
-<h2>Quick Tour</h2>
-<div id="installation" class="section level3">
-<h3>Installation</h3>
-<p>You can install the R Markdown package from CRAN as follows:</p>
-<pre class="r"><code>install.packages(&quot;rmarkdown&quot;)</code></pre>
+<style type="text/css">
+.title {
+  display: visible;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+
+</style>
+<div class="row" style="padding-top: 20px;">
+<div class="col-sm-6">
+<p>R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of <a href="https://daringfireball.net/projects/markdown/">markdown</a> (an easy to write plain text format) with embedded R code chunks that are run so their output can be included in the final document. R Markdown documents are fully reproducible (they can be automatically regenerated whenever underlying R code or data changes).</p>
+<p>R Markdown has many available output formats including <a href="html_document_format.html">HTML</a>, <a href="pdf_document_format.html">PDF</a>, <a href="word_document_format.html">MS Word</a>, <a href="beamer_presentation_format.html">Beamer</a>, <a href="ioslides_presentation_format.html">HTML5 presentations</a>, <a href="tufte_handout_format.html">Tufte handouts</a>, <a href="package_vignette_format.html">R package vignettes</a>, and even <a href="html_document_format.html#creating-a-website">entire websites</a>.</p>
 </div>
-<div id="markdown-basics" class="section level3">
-<h3>Markdown Basics</h3>
-<p>Markdown is a simple formatting language designed to make authoring content easy for everyone. Rather than writing complex markup code (e.g. HTML or LaTeX), Markdown enables the use of a syntax much more like plain-text email. For example the file on the left shows basic Markdown and the resulting output on the right:</p>
-<p><img src="images/markdownOverview.png" alt="Markdown Overview" /></p>
+<div class="col-sm-6">
+<p><img src="images/RMarkdownOutputFormats.png" alt="R Markdown Output Formats" /></p>
 </div>
-<div id="r-code-chunks" class="section level3">
-<h3>R Code Chunks</h3>
-<p>Within an R Markdown file, R Code Chunks can be embedded using the native Markdown syntax for fenced code regions. For example, the following code chunk computes a data summary and renders a plot as a PNG image:</p>
-<p><img src="images/markdownChunk.png" alt="Markdown Chunk" /></p>
 </div>
-<div id="inline-r-code" class="section level3">
-<h3>Inline R Code</h3>
-<p>You can also evaluate R expressions inline by enclosing the expression within a single back-tick qualified with ‘r’. For example, the following code:</p>
-<p><img src="images/markdownInline.png" alt="Markdown Inline" /></p>
-<p>Results in this output: “I counted 2 red trucks on the highway.”</p>
+<div id="getting-started" class="section level2">
+<h2>Getting Started</h2>
+<div style="height: 10px;">
+
 </div>
-<div id="embedding-equations" class="section level3">
-<h3>Embedding Equations</h3>
-<p>You can embed LaTeX or MathML equations in R Markdown files using the following syntax:</p>
-<ul>
-<li><em><code>$equation$</code></em> for inline equations (note there must not be white space adjacent to the $ delimiters)</li>
-<li><em><code>$$ equation $$</code></em> for display equations</li>
-<li><em><code>&lt;math ...&gt; &lt;/math&gt;</code></em> for MathML equations.</li>
-</ul>
-<p>For example:</p>
-<p><img src="images/equations_inline.png" alt="Equation Inline" /></p>
-</div>
-<div id="rendering-output" class="section level3">
-<h3>Rendering Output</h3>
-<p>There are two ways to render an R Markdown document into it’s final output format. If you are using RStudio, then the “Knit” command (Ctrl+Shift+K) will render the document and display a preview of it.</p>
-<p>If you are not using RStudio then you simply need to call the <code>rmarkdown::render</code> function, for example:</p>
-<pre class="r"><code>rmarkdown::render(&quot;input.Rmd&quot;)</code></pre>
-<p>Note that in the case using the “Knit” button in RStudio the basic mechanism is the same (RStudio calls the <code>rmarkdown::render</code> function under the hood).</p>
-</div>
-<div id="output-options" class="section level3">
-<h3>Output Options</h3>
-<p>R Markdown documents can contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:</p>
-<pre><code>---
-title: &quot;Sample Document&quot;
-output:
-  html_document:
-    toc: true
-    theme: united
----</code></pre>
-<p>R Markdown has built in support for several output formats (HTML, PDF, and MS Word documents as well as Beamer presentations). These formats can also be specified in metadata, for example:</p>
-<pre><code>---
-title: &quot;Sample Document&quot;
-output:
-  pdf_document:
-    toc: true
-    highlight: zenburn
----</code></pre>
-<p>If you aren’t specifying format options you can also just use a simple format name:</p>
-<pre><code>---
-title: &quot;Sample Document&quot;
-output: pdf_document
----</code></pre>
-<p>Multiple formats can be specified in metadata:</p>
-<pre><code>---
-title: &quot;Sample Document&quot;
-output:
-  html_document:
-    toc: true
-    theme: united
-  pdf_document:
-    toc: true
-    highlight: zenburn
----</code></pre>
-<p>If you are using <code>rmarkdown::render</code> then you can pass a format name to <code>render</code> to select from the available formats. For example:</p>
-<pre class="r"><code>render(&quot;input.Rmd&quot;, &quot;pdf_document&quot;)</code></pre>
-<p>You can also render all formats defined in an input file with:</p>
-<pre class="r"><code>render(&quot;input.Rmd&quot;, &quot;all&quot;)</code></pre>
+<p><img src="images/RMarkdownTour.png" alt="Quick Tour" /> <a href="authoring_quick_tour.html">Quick Tour</a></p>
+<p><img src="images/RMarkdownCheatSheet.png" alt="Cheat Sheet" /> <a href="http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">R Markdown Cheat Sheet</a></p>
+<p><img src="images/RMarkdownReference.png" alt="Reference" /> <a href="http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown Reference Guide</a></p>
+<div style="height: 10px;">
+
 </div>
 </div>
 <div id="learning-more" class="section level2">
