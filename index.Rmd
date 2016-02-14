@@ -43,6 +43,9 @@ R Markdown has many available output formats including [HTML](html_document_form
 
 ## Learning More
 
+<div class="row">
+<div class="col-sm-10">
+
 With the basics described above you can get started with R Markdown right away. To learn more see:
 
 * [Markdown Basics](authoring_basics.html), which describes the most commonly used markdown constructs.
@@ -81,4 +84,7 @@ See also the R Markdown developer documentation including:
 * Adding interactive components to R Markdown documents using [HTML Widgets](developer_html_widgets.html) and [Shiny Widgets](authoring_shiny_widgets.html).
 
 * Creating [Parameterized Reports](developer_parameterized_reports.html) to re-render the same document with distinct values for various key inputs.
+
+</div>
+</div>
 
