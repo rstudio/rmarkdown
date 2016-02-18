@@ -395,12 +395,16 @@ render <- function(input,
 
     perf_timer_stop("pre-processor")
 
+    need_bibtex <- grepl('[.](pdf|tex)$', output_file) &&
+      any(c('--natbib', '--biblatex') %in% output_format$pandoc$args)
     # if we are running citeproc then explicitly forward the bibliography
     # on the command line (works around pandoc-citeproc issue whereby yaml
     # strings that begin with numbers are interpreted as numbers)
-    if (!is.null(yaml_front_matter$bibliography)) {
+    if (!is.null(bibliography <- yaml_front_matter$bibliography)) {
+      # remove the .bib extension since it does not work with MikTeX's BibTeX
+      if (need_bibtex && is_windows()) bibliography <- sub('[.]bib$', '', bibliography)
       output_format$pandoc$args <- c(output_format$pandoc$args,
-                                     rbind("--bibliography", pandoc_path_arg(yaml_front_matter$bibliography)))
+                                     rbind("--bibliography", pandoc_path_arg(bibliography)))
     }
 
     perf_timer_start("pandoc")
@@ -413,8 +417,7 @@ render <- function(input,
     }
     texfile <- file_with_ext(output_file, "tex")
     # compile Rmd to tex when we need to generate bibliography with natbib/biblatex
-    if (grepl('[.](pdf|tex)$', output_file) &&
-        any(c('--natbib', '--biblatex') %in% output_format$pandoc$args)) {
+    if (need_bibtex) {
       convert(texfile)
       # manually compile tex if PDF output is expected
       if (grepl('[.]pdf$', output_file)) {
