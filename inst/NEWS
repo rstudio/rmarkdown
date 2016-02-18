@@ -46,6 +46,11 @@ rmarkdown 0.9.2.9001 (unreleased)
 
 * Change name of common options file to `_output.yml`
 
+* The filename extension .bib will be removed before bibliography files are
+  passed to Pandoc when the output is LaTeX/PDF and the citation package natbib
+  or biblatex is used on Windows. This is because bibtex in MikTeX will always
+  add the extension .bib to bibliography files, e.g. it treats foo.bib as
+  foo.bib.bib. (#623)
 
 rmarkdown 0.9.2
 --------------------------------------------------------------------------------
