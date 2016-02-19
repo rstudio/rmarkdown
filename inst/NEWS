@@ -52,6 +52,9 @@ rmarkdown 0.9.2.9001 (unreleased)
   add the extension .bib to bibliography files, e.g. it treats foo.bib as
   foo.bib.bib. (#623)
 
+* Render Shiny documents in a clean environment; fixes issue in which code in
+  Shiny documents could access internal R Markdown state
+
 rmarkdown 0.9.2
 --------------------------------------------------------------------------------
 
