@@ -46,6 +46,10 @@ rmarkdown 0.9.2.9001 (unreleased)
 
 * Change name of common options file to `_output.yml`
 
+* Tweak pandoc conversion used in `pandoc_self_contained_html` to prevent
+  hanging with large script elements (use "markdown" rather than
+  "markdown-strict" as input format)
+
 
 rmarkdown 0.9.2
 --------------------------------------------------------------------------------

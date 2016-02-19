@@ -361,11 +361,13 @@ pandoc_self_contained_html <- function(input, output) {
   template <- tempfile(fileext = ".html")
   writeLines("$body$", template)
 
-  # call pandoc with from format of "markdown_strict" to
-  # get as close as possible to html -> html conversion
-  rmarkdown::pandoc_convert(
+  # convert from markdown to html to get base64 encoding
+  # (note there is no markdown in the source document but
+  # we still need to do this "conversion" to get the
+  # base64 encoding)
+  pandoc_convert(
     input = input,
-    from = "markdown_strict",
+    from = "markdown",
     output = output,
     options = c(
       "--self-contained",
