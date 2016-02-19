@@ -231,7 +231,8 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
                                output_dir = dirname(output_dest),
                                output_options = output_opts,
                                intermediates_dir = dirname(output_dest),
-                               runtime = "shiny"),
+                               runtime = "shiny",
+                               envir = new.env()),
                           render_args)
       result_path <- shiny::maskReactiveContext(do.call(render, args))
 
