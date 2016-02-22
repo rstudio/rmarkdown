@@ -1532,7 +1532,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: monospace;
 }
 code {
   padding: 2px 4px;
@@ -2259,7 +2259,6 @@ caption {
   text-align: left;
 }
 th {
-  text-align: left;
 }
 .table {
   width: 100%;
