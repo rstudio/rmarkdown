@@ -26,13 +26,19 @@ To create a GitHub document from R Markdown you specify the `github_document` ou
 
 ### Installation
 
-The `github_document` format is currently only available within the development version of the **rmarkdown** package. You can install the development version as follows:
+The `github_document` format is currently only available within a very recent version of the **rmarkdown** package. You can install this version as follows:
 
 ```r
-devtools::install_github("rstudio/rmarkdown")
+install.packages("rmarkdown", type = "source")
 ```
 
-Installing the current [Preview Release of RStudio](https://www.rstudio.com/products/rstudio/download/preview/) (v0.99.865 or higher) is also highly recommended as it includes support for local HTML preview of documents using GitHub CSS.
+The development version of the **knitr** package is also recommend as it has a bugfix related to how images are rendered:
+
+```r
+devtools::install_github("yihui/knitr")
+```
+
+Installing the [current release of RStudio](https://www.rstudio.com/products/rstudio/download/) (v0.99.879 or higher) is also highly recommended as it includes support for local HTML preview of documents using GitHub CSS.
 
 
 ## HTML Preview

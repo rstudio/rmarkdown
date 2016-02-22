@@ -376,9 +376,11 @@ output: github_document
 ---</code></pre>
 <div id="installation" class="section level3">
 <h3>Installation</h3>
-<p>The <code>github_document</code> format is currently only available within the development version of the <strong>rmarkdown</strong> package. You can install the development version as follows:</p>
-<pre class="r"><code>devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
-<p>Installing the current <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release of RStudio</a> (v0.99.865 or higher) is also highly recommended as it includes support for local HTML preview of documents using GitHub CSS.</p>
+<p>The <code>github_document</code> format is currently only available within a very recent version of the <strong>rmarkdown</strong> package. You can install this version as follows:</p>
+<pre class="r"><code>install.packages(&quot;rmarkdown&quot;, type = &quot;source&quot;)</code></pre>
+<p>The development version of the <strong>knitr</strong> package is also recommend as it has a bugfix related to how images are rendered:</p>
+<pre class="r"><code>devtools::install_github(&quot;yihui/knitr&quot;)</code></pre>
+<p>Installing the <a href="https://www.rstudio.com/products/rstudio/download/">current release of RStudio</a> (v0.99.879 or higher) is also highly recommended as it includes support for local HTML preview of documents using GitHub CSS.</p>
 </div>
 </div>
 <div id="html-preview" class="section level2">

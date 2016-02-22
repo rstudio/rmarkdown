@@ -71,12 +71,12 @@ For example:
           smooth_scroll: false
     ---
 
-#### Development Version
+#### Requirements
 
-Support for floating table of contents is only available within the development version of the **rmarkdown** package. You can install the development version as follows:
+Support for floating table of contents is only available in very recent versions of the **rmarkdown** package. You can install the most current version as follows:
 
 ```r
-devtools::install_github("rstudio/rmarkdown")
+install.packages("rmarkdown", type = "source")
 ```
 
 ### Section Numbering
@@ -111,12 +111,12 @@ You can also specify two additional attributes to control the appearance and beh
 
     ## Quarterly Results {.tabset .tabset-fade .tabset-pills}
 
-#### Development Version
+#### Requirements
 
-Support for tabsets is only available within the development version of the **rmarkdown** package. You can install the development version as follows:
+Support for tabsets is only available in very recent versions of the **rmarkdown** package. You can install the most current version as follows:
 
 ```r
-devtools::install_github("rstudio/rmarkdown")
+install.packages("rmarkdown", type = "source")
 ```
 
 ## Appearance and Style
@@ -217,14 +217,13 @@ The `code_folding: hide` option enables you to include R code but have it hidden
 You can specify `code_folding: show` to still show all R code by default but then allow users to hide the code if they wish.
 
 
-#### Development Version
+#### Requirements
 
-Support for code folding is only available within the development version of the **rmarkdown** package. You can install the development version as follows:
+Support for code folding is only available in very recent versions of the **rmarkdown** package. You can install the most current version as follows:
 
 ```r
-devtools::install_github("rstudio/rmarkdown")
+install.packages("rmarkdown", type = "source")
 ```
-
 
 ## MathJax Equations
 
@@ -433,16 +432,13 @@ It's possible to create full websites with R Markdown using a combination of the
 
 Here is a simple example of an R Markdown website that includes all of the components described above: <https://github.com/rstudio/rmarkdown-website>. 
 
-#### Development Version
+#### Requirements
 
-Support for creating websites as described above is only available within the development version of the **rmarkdown** package. You can install the development version as follows:
+Support for creating websites as described above is only available in very recent versions of the **rmarkdown** package. You can install the most current version as follows:
 
 ```r
-devtools::install_github("rstudio/rmarkdown")
+install.packages("rmarkdown", type = "source")
 ```
-
-
-
 
 
 
