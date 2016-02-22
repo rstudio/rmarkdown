@@ -1,4 +1,4 @@
-rmarkdown 0.9.3
+rmarkdown 0.9.5
 --------------------------------------------------------------------------------
 
 * Added odt_document format for OpenDocument Text output
