@@ -1,8 +1,8 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 0.9.5
-Date: 2015-12-30
+Version: 0.9.3
+Date: 2016-02-22
 Authors@R: c(
   person("JJ", "Allaire", role = c("aut", "cre"), email = "jj@rstudio.com"),
   person("Joe", "Cheng", role = "aut", email = "joe@rstudio.com"),
