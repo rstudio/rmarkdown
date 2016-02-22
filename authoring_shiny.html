@@ -438,11 +438,11 @@ kmeans_cluster(iris)
 <p>You can also publish interactive documents to the <a href="http://shinyapps.io">ShinyApps</a> hosted service. To do this you should ensure that you have:</p>
 <ol style="list-style-type: decimal">
 <li><p>An account on ShinyApps (use the <a href="http://shinyapps.io">signup form</a> to request an account).</p></li>
-<li><p>The very latest version of the <strong>shinyapps</strong> R package. You can install this as follows:</p></li>
+<li><p>The very latest version of the <strong>rsconnect</strong> R package. You can install this as follows:</p></li>
 </ol>
-<pre class="r"><code>devtools::install_github(&quot;rstudio/shinyapps&quot;)</code></pre>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/rsconnect&quot;)</code></pre>
 <p>You can then deploy an interactive document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute:</p>
-<pre class="r"><code>shinyapps::deployApp()</code></pre>
+<pre class="r"><code>rsconnect::deployApp()</code></pre>
 <p>If you are using RStudio you can also use the <strong>Deploy</strong> button available when working with an interactive document:</p>
 <p><img src="images/shinyapps-deploy.png" alt="Shinyapps Deploy" /></p>
 </div>

@@ -113,16 +113,16 @@ You can also publish interactive documents to the [ShinyApps](http://shinyapps.i
 
 1. An account on ShinyApps (use the [signup form](http://shinyapps.io) to request an account).
 
-2. The very latest version of the **shinyapps** R package. You can install this as follows:
+2. The very latest version of the **rsconnect** R package. You can install this as follows:
 
 ```r
-devtools::install_github("rstudio/shinyapps")
+devtools::install_github("rstudio/rsconnect")
 ```
 
 You can then deploy an interactive document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute:
 
 ```r
-shinyapps::deployApp()
+rsconnect::deployApp()
 ```
 
 If you are using RStudio you can also use the **Deploy** button available when working with an interactive document:

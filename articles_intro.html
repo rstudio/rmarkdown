@@ -289,8 +289,8 @@ plot(cars)
 &#96``
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.</code></pre>
-<p>R Markdown files are designed to be used with the <code>rmarkdown</code> package. <code>rmarkdown</code> comes installed with the RStudio IDE, but you can acquire your own copy of <code>rmarkdown</code> from <a href="www.github.com">github</a> with the command</p>
-<pre class="r"><code>devtools:install_github("rmarkdown", "rstudio")</code></pre>
+<p>R Markdown files are designed to be used with the <code>rmarkdown</code> package. <code>rmarkdown</code> comes installed with the RStudio IDE, but you can acquire your own copy of <code>rmarkdown</code> from CRAN with the command</p>
+<pre class="r"><code>install.packages("rmarkdown", type = "source")</code></pre>
 <p>R Markdown files are the source code for rich, reproducible documents. You can transform an R Markdown file in two ways.</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>knit</strong> - You can <em>knit</em> the file. The <code>rmarkdown</code> package will call the <code>knitr</code> package. <code>knitr</code> will run each chunk of R code in the document and append the results of the code to the document next to the code chunk. This workflow saves time and facilitates reproducible reports.</p>
