@@ -41,7 +41,7 @@
 #' @export
 odt_document <- function(fig_width = 5,
                          fig_height = 4,
-                         fig_caption = FALSE,
+                         fig_caption = TRUE,
                          template = "default",
                          reference_odt = "default",
                          includes = NULL,

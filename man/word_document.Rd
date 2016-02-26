@@ -5,7 +5,7 @@
 \title{Convert to an MS Word document}
 \usage{
 word_document(toc = FALSE, toc_depth = 3, fig_width = 5, fig_height = 4,
-  fig_caption = FALSE, highlight = "default", reference_docx = "default",
+  fig_caption = TRUE, highlight = "default", reference_docx = "default",
   keep_md = FALSE, md_extensions = NULL, pandoc_args = NULL)
 }
 \arguments{

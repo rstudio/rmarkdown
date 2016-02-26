@@ -4,7 +4,7 @@
 \alias{odt_document}
 \title{Convert to an OpenDocument Text (ODT) document}
 \usage{
-odt_document(fig_width = 5, fig_height = 4, fig_caption = FALSE,
+odt_document(fig_width = 5, fig_height = 4, fig_caption = TRUE,
   template = "default", reference_odt = "default", includes = NULL,
   keep_md = FALSE, md_extensions = NULL, pandoc_args = NULL)
 }

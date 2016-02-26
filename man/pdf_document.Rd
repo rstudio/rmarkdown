@@ -6,7 +6,7 @@
 \usage{
 pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   fig_width = 6.5, fig_height = 4.5, fig_crop = TRUE,
-  fig_caption = FALSE, dev = "pdf", highlight = "default",
+  fig_caption = TRUE, dev = "pdf", highlight = "default",
   template = "default", keep_tex = FALSE, latex_engine = "pdflatex",
   citation_package = c("none", "natbib", "biblatex"), includes = NULL,
   md_extensions = NULL, pandoc_args = NULL)

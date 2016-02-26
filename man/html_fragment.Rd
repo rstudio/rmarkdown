@@ -5,7 +5,7 @@
 \title{Convert to an HTML fragment.}
 \usage{
 html_fragment(number_sections = FALSE, fig_width = 7, fig_height = 5,
-  fig_retina = if (!fig_caption) 2, fig_caption = FALSE, dev = "png",
+  fig_retina = if (!fig_caption) 2, fig_caption = TRUE, dev = "png",
   smart = TRUE, mathjax = TRUE, keep_md = FALSE, md_extensions = NULL,
   pandoc_args = NULL, ...)
 }

@@ -6,9 +6,9 @@
 }
 \usage{
 ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
-  fig_height = 4.5, fig_retina = if (!fig_caption) 2, fig_caption = FALSE,
-  dev = "png", smart = TRUE, self_contained = TRUE, widescreen = FALSE, 
-  smaller = FALSE, transition = "default", mathjax = "default", css = NULL, 
+  fig_height = 4.5, fig_retina = if (!fig_caption) 2, fig_caption = TRUE,
+  dev = "png", smart = TRUE, self_contained = TRUE, widescreen = FALSE,
+  smaller = FALSE, transition = "default", mathjax = "default", css = NULL,
   includes = NULL, keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
   pandoc_args = NULL, ...)
 }
@@ -36,7 +36,7 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
 
   \item{fig_caption}{\code{TRUE} to render figures with
   captions}
-  
+
   \item{dev}{Default graphics device to use for figure output}
 
   \item{smart}{Produce typographically correct output,
@@ -82,7 +82,7 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   (e.g. jquery, bootstrap, etc.) into. By default this will be
   the name of the document with \code{_files} appended to it.}
 
-  \item{md_extensions}{Markdown extensions to be added or 
+  \item{md_extensions}{Markdown extensions to be added or
   removed from the default definition or R Markdown. See the
   \code{\link{rmarkdown_format}} for additional details.}
 
