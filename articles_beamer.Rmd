@@ -13,7 +13,7 @@ However, I never particularly cared for Beamer. At least, I found LaTeX’s docu
 
 Look at it this way. Almost the entirety of a LaTeX document is the content itself whereas it seems half (if not more) of a Beamer document is markup. Take, for example, this sample code from a lecture slide for one of my classes.
 
-```{r eval = FALSE, highlight=FALSE}
+```latex
 \frame{
  \frametitle{Examples of States and Non-States}
 Here are some examples of a state and non-states by this classification.
@@ -50,7 +50,7 @@ I’ve known about [Markdown](http://en.wikipedia.org/wiki/Markdown) language (a
 
 R Markdown uses [YAML](http://www.yaml.org/) for its metadata. It also does so in a manner that’s more efficient than Pandoc (or, at least, more intuitive for me). Consider my working example below.
 
-```{r eval=FALSE, highlight = FALSE}
+```yaml
 ---
 title: An Example R Markdown Document
 subtitle: (A Subtitle Would Go Here if This Were a Class)
@@ -76,7 +76,7 @@ After `beamer_presentation`, enter a new line, hit the space bar four times and 
 
 The next option is an important one and it took me a while to figure out what exactly it was doing. `slide_level` determines how many pound signs are required for Markdown to assume you are wanting a new slide. I think the default option is one, but this may be inefficient if you want clear sections and subsections in your presentation. If `slide_level` is three, then Markdown output like this…
 
-```{r eval = FALSE, highlight=FALSE}
+```markdown
 # This is my section
 ## This is my subsection
 ### Title of a slide
@@ -86,7 +86,7 @@ The next option is an important one and it took me a while to figure out what ex
 
 …will look like this standard TeX/Beamer markup.
 
-```{r eval = FALSE, highlight=FALSE}
+```latex
 \section{This is my section}
 \subsection{This is my subsection}
 \frame{
@@ -101,7 +101,7 @@ Since this is how I’m used to handling Beamer (and I like occasional subsectio
 
 Next, you can use `in_header` (after `includes:`) to determine what additional packages and style changes you want to include in what would otherwise be the preamble of your Beamer document. This is where you can get creative with stylizing a theme how you want. I also thought it mandatory because Markdown does some things with Beamer that I think are odd (e.g. giving a section title its own slide). Here’s my standard style file, for your consideration.
 
-```{r eval = FALSE, highlight = FALSE}
+```latex
 \usepackage{graphicx}
 \usepackage{rotating}
 %\setbeamertemplate{caption}[numbered]
@@ -146,7 +146,7 @@ Most of these are cosmetic fixes (i.e. representing school colors in my presenta
 
 Finally, `after_body` is an optional command that will include whatever you want as slides material after what is otherwise the last slide of your document. Since I like table of contents after the last slide, I have simple .txt file with the following Beamer markup.
 
-```{r eval=FALSE, highlight=FALSE}
+```latex
 \section[]{}
 \frame{\small \frametitle{Table of Contents}
 \tableofcontents} 
@@ -176,7 +176,7 @@ From there, the rest involves learning how simple of a language Markdown is. The
 
 Here’s a sample document I created in Markdown for illustration purposes. [This is the output](http://svmiller.com/wp-content/uploads/rmarkdown-example.pdf) from compiling it with my R script.
 
-<pre class="r"><code>
+````markdown
 ---
 title: An Example R Markdown Document
 subtitle:  (A Subtitle Would Go Here if This Were a Class)
@@ -294,7 +294,7 @@ Save this to a .R script (call it whatever you like)
 - Note that the "s" in "utils" package is cut off in verbatim environment below.
 
 
-```
+```r
 #! /usr/bin/Rscript --vanilla --default-packages=base,stats,utils
 library(knitr)
 library(rmarkdown)
@@ -317,6 +317,6 @@ Beamer markup is messy. Markdown is much more elegant.
 - Incorporating R with Markdown makes Markdown that much better.
 - Rendering Markdown $\rightarrow$ Beamer requires minimal Rscript example.
  - I provide such a script to accompany this presentation.
-</code></pre>
+````
 
 [^1]: This was something I started doing in job market talks in order to field questions back to particular slides more easily. 
