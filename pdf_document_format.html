@@ -471,6 +471,15 @@ geometry: margin=1in
 </tr>
 </tbody>
 </table>
+<div id="latex-packages-for-citations" class="section level3">
+<h3>LaTeX Packages for Citations</h3>
+<p>By default, citations are processed through <code>pandoc-citeproc</code>, which works for all output formats. For PDF output, sometimes it is better to use LaTeX packages to process citations, such as <code>natbib</code> or <code>biblatex</code>. To use one of these packages, just set the option <code>citation_package</code> to be <code>natbib</code> or <code>biblatex</code>, e.g.</p>
+<pre><code>---
+output:
+  pdf_document:
+    citation_package: natbib
+---</code></pre>
+</div>
 </div>
 <div id="advanced-customization" class="section level2">
 <h2>Advanced Customization</h2>

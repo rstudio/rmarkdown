@@ -268,7 +268,7 @@ $(document).ready(function () {
 <p>I’ve been using LaTeX for document rendering for over five years. No one else in my department at the time used it, beyond <a href="http://www.joestradam.us/">my friend Joe</a> (who introduced it to me). There was no pressure from my department to learn it, only a curiosity on my end for the benefits of it. The transition to LaTeX came with a concurrent transition to its sister package Beamer, which renders Powerpoint-styled presentations. Both have numerous advantages over their Microsoft equivalents.</p>
 <p>However, I never particularly cared for Beamer. At least, I found LaTeX’s document preparation system more intuitive than Beamer’s slides preparation system. Using both will lead to proficiency, but Beamer markup remains ugly and a chore to write.</p>
 <p>Look at it this way. Almost the entirety of a LaTeX document is the content itself whereas it seems half (if not more) of a Beamer document is markup. Take, for example, this sample code from a lecture slide for one of my classes.</p>
-<pre class="text"><code>\frame{
+<pre class="latex"><code>\frame{
  \frametitle{Examples of States and Non-States}
 Here are some examples of a state and non-states by this classification.
  \begin{itemize}
@@ -298,7 +298,7 @@ Here are some examples of a state and non-states by this classification.
 <div id="understanding-your-markdown-document" class="section level2">
 <h2>Understanding Your Markdown Document</h2>
 <p>R Markdown uses <a href="http://www.yaml.org/">YAML</a> for its metadata. It also does so in a manner that’s more efficient than Pandoc (or, at least, more intuitive for me). Consider my working example below.</p>
-<pre class="text"><code>---
+<pre class="yaml"><code>---
 title: An Example R Markdown Document
 subtitle: (A Subtitle Would Go Here if This Were a Class)
 author: Steven V. Miller
@@ -317,13 +317,13 @@ output:
 <p>The output section designates how the Markdown language will be processed. You can insert <code>html_document</code> if HTML is the desired output, though I’m assuming the preferred output here is a Beamer PDF.</p>
 <p>After <code>beamer_presentation</code>, enter a new line, hit the space bar four times and add miscellaneous options. In the working example above, I commented out two options. When <code>keep_tex</code> is true, the compiling will also spit out a .tex file of the Markdown document. When <code>toc</code> is true, a table of contents is rendered after the title frame. In my case, I don’t want a .tex output in addition to the PDF (unless I’m doing some debugging) and I like my table of contents after my slides.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 <p>The next option is an important one and it took me a while to figure out what exactly it was doing. <code>slide_level</code> determines how many pound signs are required for Markdown to assume you are wanting a new slide. I think the default option is one, but this may be inefficient if you want clear sections and subsections in your presentation. If <code>slide_level</code> is three, then Markdown output like this…</p>
-<pre class="text"><code># This is my section
+<pre class="markdown"><code># This is my section
 ## This is my subsection
 ### Title of a slide
 
 *Hi mom!* </code></pre>
 <p>…will look like this standard TeX/Beamer markup.</p>
-<pre class="text"><code>\section{This is my section}
+<pre class="latex"><code>\section{This is my section}
 \subsection{This is my subsection}
 \frame{
 \frametitle{Title of a slide}
@@ -333,7 +333,7 @@ output:
 }</code></pre>
 <p>Since this is how I’m used to handling Beamer (and I like occasional subsections in my slides and in the table of contents), I set <code>slide_level</code> to three.</p>
 <p>Next, you can use <code>in_header</code> (after <code>includes:</code>) to determine what additional packages and style changes you want to include in what would otherwise be the preamble of your Beamer document. This is where you can get creative with stylizing a theme how you want. I also thought it mandatory because Markdown does some things with Beamer that I think are odd (e.g. giving a section title its own slide). Here’s my standard style file, for your consideration.</p>
-<pre class="text"><code>\usepackage{graphicx}
+<pre class="latex"><code>\usepackage{graphicx}
 \usepackage{rotating}
 %\setbeamertemplate{caption}[numbered]
 \usepackage{hyperref}
@@ -373,7 +373,7 @@ output:
 \setlength{\parskip}{0pt}</code></pre>
 <p>Most of these are cosmetic fixes (i.e. representing school colors in my presentations, which you are free to change), but some commands are quite useful. The last two commands in the above code reduce some of R Markdown’s odd vertical spacing. The four lines above that suppress R Markdown’s proclivity to create new slides that are just the section titles.</p>
 <p>Finally, <code>after_body</code> is an optional command that will include whatever you want as slides material after what is otherwise the last slide of your document. Since I like table of contents after the last slide, I have simple .txt file with the following Beamer markup.</p>
-<pre class="text"><code>\section[]{}
+<pre class="latex"><code>\section[]{}
 \frame{\small \frametitle{Table of Contents}
 \tableofcontents} </code></pre>
 </div>
@@ -393,8 +393,7 @@ rmarkdown::render(file)</code></pre>
 <h2>An Example R Markdown Document</h2>
 <p>From there, the rest involves learning how simple of a language Markdown is. There are <a href="https://help.github.com/articles/markdown-basics/">numerous cheatsheets</a>.</p>
 <p>Here’s a sample document I created in Markdown for illustration purposes. <a href="http://svmiller.com/wp-content/uploads/rmarkdown-example.pdf">This is the output</a> from compiling it with my R script.</p>
-<pre class="r"><code>
----
+<pre class="markdown"><code>---
 title: An Example R Markdown Document
 subtitle:  (A Subtitle Would Go Here if This Were a Class)
 author: Steven V. Miller
@@ -418,7 +417,7 @@ output:
 Sheena Easton describes the following scenario for her baby:
 
 1. Takes the morning train
-2. Works from nine 'til five
+2. Works from nine &#39;til five
 3. Takes another train home again
 4. Finds Sheena Easton waiting for him
 
@@ -430,9 +429,9 @@ Sheena Easton describes the following scenario for her baby:
 
 ## Never Gonna Give You Up
 
-### Rick Astley's Re-election Platform
+### Rick Astley&#39;s Re-election Platform
 
-Rick Astley's campaign promises:
+Rick Astley&#39;s campaign promises:
 
 - Never gonna give you up
 - Never gonna let you down
@@ -447,14 +446,14 @@ Rick Astley's campaign promises:
 ## Caribbean Queen
 ### Caribbean Queen and Operation Urgent Fury
 
-In 1984, Billy Ocean released ``Caribbean Queen''.
+In 1984, Billy Ocean released ``Caribbean Queen&#39;&#39;.
 
 - Emphasized sharing the same dream
 - Hearts beating as one
 
-\bigskip ``Caribbean Queen'' is about the poor execution of Operation Urgent Fury.
+\bigskip ``Caribbean Queen&#39;&#39; is about the poor execution of Operation Urgent Fury.
 
-- Echoed JCS chairman David Jones' frustrations with military establishment.
+- Echoed JCS chairman David Jones&#39; frustrations with military establishment.
 
 \bigskip Billy Ocean is advancing calls for what became the Goldwater-Nichols Act.
 
@@ -463,19 +462,19 @@ In 1984, Billy Ocean released ``Caribbean Queen''.
 ## Good Day
 ### The Good Day Hypothesis
 
-We know the following about Ice Cube's day.
+We know the following about Ice Cube&#39;s day.
 
 1. The Lakers beat the Supersonics.
 2. No helicopter looked for a murder.
 3. Consumed Fatburger at 2 a.m.
-4. Goodyear blimp: "Ice Cube's a pimp."
+4. Goodyear blimp: &quot;Ice Cube&#39;s a pimp.&quot;
 
 \bigskip This leads to two different hypotheses:
 
-- $H_0$: Ice Cube's day is statistically indistinguishable from a typical day.
+- $H_0$: Ice Cube&#39;s day is statistically indistinguishable from a typical day.
 - $H_1$: Ice Cube is having a good (i.e. greater than average) day.
 
-\bigskip These hypotheses are tested using archival data of Ice Cube's life.
+\bigskip These hypotheses are tested using archival data of Ice Cube&#39;s life.
 
 
 
@@ -484,7 +483,7 @@ We know the following about Ice Cube's day.
 
 One big disadvantage to Markdown: compiling.
 
-\bigskip Here's what it would look like from Terminal \medskip
+\bigskip Here&#39;s what it would look like from Terminal \medskip
 
 
 ![Markdown Call](markdown-call.png)
@@ -504,18 +503,18 @@ One big disadvantage to Markdown: compiling.
 Another option: noninteractive \texttt{Rscript}
 
 - I prefer this option since I tend to not like GUIs.
-- Assumes you're on a Linux/Mac system.
+- Assumes you&#39;re on a Linux/Mac system.
 
 Save this to a .R script (call it whatever you like)
 
-- Note that the "s" in "utils" package is cut off in verbatim environment below.
+- Note that the &quot;s&quot; in &quot;utils&quot; package is cut off in verbatim environment below.
 
 
-```
+```r
 #! /usr/bin/Rscript --vanilla --default-packages=base,stats,utils
 library(knitr)
 library(rmarkdown)
-file <- list.files(pattern='.Rmd')
+file &lt;- list.files(pattern=&#39;.Rmd&#39;)
 rmarkdown::render(file)
 ```
 
@@ -533,8 +532,7 @@ Beamer markup is messy. Markdown is much more elegant.
 
 - Incorporating R with Markdown makes Markdown that much better.
 - Rendering Markdown $\rightarrow$ Beamer requires minimal Rscript example.
- - I provide such a script to accompany this presentation.
-</code></pre>
+ - I provide such a script to accompany this presentation.</code></pre>
 </div>
 <div class="footnotes">
 <hr />
