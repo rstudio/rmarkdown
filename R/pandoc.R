@@ -564,6 +564,8 @@ find_pandoc <- function() {
 # Get an S3 numeric_version for the pandoc utility at the specified path
 get_pandoc_version <- function(pandoc_dir) {
   pandoc_path <- file.path(pandoc_dir, "pandoc")
+  if (is_windows()) pandoc_path <- paste0(pandoc_path, ".exe")
+  if (!utils::file_test("-x", pandoc_path)) return(numeric_version("0"))
   with_pandoc_safe_environment({
     version_info <- system(paste(shQuote(pandoc_path), "--version"),
                            intern = TRUE)
