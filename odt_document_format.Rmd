@@ -10,7 +10,7 @@ output:
 The `odt_document` format is currently only available within the development version of the **rmarkdown** package. You can install the development version as follows:
 
 ```r
-devtools::install.github("rstudio/rmarkdown")
+devtools::install_github("rstudio/rmarkdown")
 ```
 
 ## Overview
