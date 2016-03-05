@@ -318,6 +318,10 @@ default_output_format <- function(input, encoding = getOption("encoding")) {
   oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
+  # because we're now within the same directory as the input file,
+  # we just need its basename
+  input <- basename(input)
+
   # parse the YAML and front matter and get the explicitly set options
   input_lines <- read_lines_utf8(input, encoding)
   format <- output_format_from_yaml_front_matter(input_lines)
