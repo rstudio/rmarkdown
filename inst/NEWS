@@ -5,6 +5,8 @@ rmarkdown 0.9.6 (unreleased)
 
 * Ensure pandoc binary exists before binding to pandoc directory (#632)
 
+* Handle relative paths for 'default_output_format' (#638)
+
 
 rmarkdown 0.9.5
 --------------------------------------------------------------------------------
