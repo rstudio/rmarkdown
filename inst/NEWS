@@ -7,6 +7,8 @@ rmarkdown 0.9.6 (unreleased)
 
 * Handle relative paths for 'default_output_format' (#638)
 
+* Eliminate duplicate viewport meta tag from html_document
+
 
 rmarkdown 0.9.5
 --------------------------------------------------------------------------------
