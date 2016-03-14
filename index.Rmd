@@ -35,7 +35,7 @@ R Markdown has many available output formats including [HTML](html_document_form
 
 ![Quick Tour](images/RMarkdownTour.png) [Quick Tour](authoring_quick_tour.html)
 
-![Cheat Sheet](images/RMarkdownCheatSheet.png) [R Markdown Cheat Sheet](http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+![Cheat Sheet](images/RMarkdownCheatSheet.png) [R Markdown Cheat Sheet](http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
 
 ![Reference](images/RMarkdownReference.png) [R Markdown Reference Guide](http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
 
