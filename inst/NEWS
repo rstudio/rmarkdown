@@ -9,6 +9,7 @@ rmarkdown 0.9.6 (unreleased)
 
 * Eliminate duplicate viewport meta tag from html_document
 
+* Added biblatex biblio-style support to the LaTeX template for Pandoc 1.15.2 (#643)
 
 rmarkdown 0.9.5
 --------------------------------------------------------------------------------
