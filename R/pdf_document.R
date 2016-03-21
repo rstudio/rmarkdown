@@ -153,6 +153,34 @@ pdf_document <- function(toc = FALSE,
 
   saved_files_dir <- NULL
 
+  # Use filter to set pdf geometry defaults (while making sure we don't override
+  # any geometry settings already specified by the user)
+  pdf_pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
+                                output_dir) {
+
+    args <- c()
+
+    # set the margin to 1 inch if no other geometry options specified
+    has_geometry <- function(text) {
+      length(grep("^geometry:.*$", text)) > 0
+    }
+    if (!has_geometry(readLines(input_file, warn = FALSE)))
+      args <- c(args, "--variable", "geometry:margin=1in")
+
+    format_deps <- list()
+    format_deps <- append(format_deps, extra_dependencies)
+
+    if (has_latex_dependencies(knit_meta)) {
+      all_dependencies <- if (is.null(format_deps)) list() else format_deps
+      all_dependencies <- append(all_dependencies, flatten_latex_dependencies(knit_meta))
+      filename <- tempfile()
+      latex_dependencies_as_text_file(all_dependencies, filename)
+      args <- c(args, includes_to_pandoc_args(includes(in_header = filename)))
+    }
+    args
+  }
+
+
   pre_processor <- function(metadata, input_file, runtime, knit_meta,
                                 files_dir, output_dir) {
     # save files dir (for generating intermediates)
@@ -161,7 +189,7 @@ pdf_document <- function(toc = FALSE,
     # use a geometry filter when we are using the "default" template
     if (identical(template, "default"))
       pdf_pre_processor(metadata, input_file, runtime, knit_meta, files_dir,
-                        output_dir, extra_dependencies)
+                        output_dir)
     else
       invisible(NULL)
   }
@@ -196,32 +224,4 @@ pdf_document <- function(toc = FALSE,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator
   )
-}
-
-
-# Use filter to set pdf geometry defaults (while making sure we don't override
-# any geometry settings already specified by the user)
-pdf_pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
-                              output_dir, extra_dependencies) {
-
-  args <- c()
-
-  # set the margin to 1 inch if no other geometry options specified
-  has_geometry <- function(text) {
-    length(grep("^geometry:.*$", text)) > 0
-  }
-  if (!has_geometry(readLines(input_file, warn = FALSE)))
-    args <- c(args, "--variable", "geometry:margin=1in")
-
-  format_deps <- list()
-  format_deps <- append(format_deps, extra_dependencies)
-
-  if (has_latex_dependencies(knit_meta)) {
-    all_dependencies <- if (is.null(format_deps)) list() else format_deps
-    all_dependencies <- append(all_dependencies, flatten_latex_dependencies(knit_meta))
-    filename <- tempfile()
-    latex_dependencies_as_text_file(all_dependencies, filename)
-    args <- c(args, includes_to_pandoc_args(includes(in_header = filename)))
-  }
-  args
 }
