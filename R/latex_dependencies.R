@@ -73,13 +73,12 @@ validate_latex_dependency <- function(list) {
   list
 }
 
-# check if the passed knit_meta has any html dependencies
+# check if the passed knit_meta has any latex dependencies
 has_latex_dependencies <- function(knit_meta) {
-
   if (inherits(knit_meta, "latex_dependency"))
     return(TRUE)
 
-  else if (is.list(knit_meta)) {
+  if (is.list(knit_meta)) {
     for (dep in knit_meta) {
       if (is.null(names(dep))) {
         if (has_latex_dependencies(dep))
@@ -89,9 +88,6 @@ has_latex_dependencies <- function(knit_meta) {
           return(TRUE)
       }
     }
-
-    FALSE
-  } else {
-    FALSE
   }
+  return(FALSE)
 }
