@@ -8,7 +8,7 @@ html_document_base(smart = TRUE, theme = NULL, self_contained = TRUE,
   lib_dir = NULL, mathjax = "default", pandoc_args = NULL,
   template = "default", dependency_resolver = NULL,
   copy_resources = FALSE, extra_dependencies = NULL,
-  bootstrap_compatible = FALSE, ...)
+  bootstrap_compatible = FALSE, knitr = NULL, ...)
 }
 \arguments{
 \item{smart}{Produce typographically correct output, converting straight
@@ -51,6 +51,9 @@ more details).}
 \item{extra_dependencies}{Extra dependencies}
 
 \item{bootstrap_compatible}{Bootstrap compatible}
+
+\item{knitr}{Knitr options for an output format (see
+\code{\link{knitr_options}})}
 
 \item{...}{Ignored}
 }
