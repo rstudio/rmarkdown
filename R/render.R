@@ -367,15 +367,6 @@ render <- function(input,
              "of this document to HTML.", call. = FALSE)
       }
     }
-    # if this isn't latex and there are latex dependencies then flag an error
-    if (!(identical(output_format$pandoc$to, "pdf") ||
-          identical(tolower(tools::file_ext(output_file)), "pdf")))  {
-      if (has_latex_dependencies(knit_meta)) {
-        stop("Functions that produce PDF output found in document targetting",
-             pandoc_to, " output.\nPlease change the output type of this ",
-             "document to PDF.", call. = FALSE)
-      }
-    }
   }
 
   # clean the files_dir if we've either been asking to clean supporting files or
