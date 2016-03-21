@@ -57,8 +57,8 @@ additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
-\item{extra_dependencies}{Additional function arguments to pass to the
-base R Markdown HTML output formatter \code{\link{html_document_base}}}
+\item{extra_dependencies}{Add \code{latex_dependency()} dependencies. It can
+can be used to add custom LaTeX packages to the .tex header.}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

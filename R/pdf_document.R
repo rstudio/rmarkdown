@@ -21,6 +21,8 @@
 #'   created.  See the documentation on
 #'   \href{http://pandoc.org/README.html}{pandoc online documentation}
 #'   for details on creating custom templates.
+#' @param extra_dependencies Add \code{latex_dependency()} dependencies. It can
+#'   can be used to add custom LaTeX packages to the .tex header.
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
