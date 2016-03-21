@@ -264,7 +264,6 @@ $(document).ready(function () {
 <li><a href="#overview">Overview</a></li>
 <li><a href="#deriving-from-built-in-formats">Deriving from Built-In Formats</a><ul>
 <li><a href="#package-vignette-example">Package Vignette Example</a></li>
-<li><a href="#tufte-handout-example">Tufte Handout Example</a></li>
 </ul></li>
 <li><a href="#fully-custom-formats">Fully Custom Formats</a></li>
 </ul>
@@ -311,10 +310,6 @@ output:
 <h3>Package Vignette Example</h3>
 <p>The <a href="package_vignette_format.html">Package Vignette</a> format provides an example of a format that customizes the base <a href="html_document_format.html"><code>html_document</code></a> format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette <a href="https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R">format</a> and <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette">custom template</a> are a good starting point for creating your own HTML based formats.</p>
 </div>
-<div id="tufte-handout-example" class="section level3">
-<h3>Tufte Handout Example</h3>
-<p>The <a href="tufte_handout_format.html">Tufte Handout</a> format provides an example of deriving from the <code>pdf_document</code> format and using a custom LaTeX template. The source code for the Tufte Handout <a href="https://github.com/rstudio/rmarkdown/blob/master/R/tufte_handout.R">format</a> and <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/tufte_handout">custom template</a> are a good starting point for creating your own LaTeX based formats.</p>
-</div>
 </div>
 <div id="fully-custom-formats" class="section level2">
 <h2>Fully Custom Formats</h2>
@@ -326,14 +321,14 @@ output:
 </ol>
 <p>You can create a new format using the <code>output_format</code> function. For example, here is the simpliest possible format defintion:</p>
 <pre class="r"><code>simple_html_format &lt;- function() {
-  require(rmarkdown)
-  output_format(knitr = knitr_options(opts_chunk = list(dev = &#39;png&#39;)),
-                pandoc = pandoc_options(to = &quot;html&quot;),
-                clean_supporting = FALSE)
+  rmarkdown::output_format(knitr = knitr_options(opts_chunk = list(dev = &#39;png&#39;)),
+                           pandoc = pandoc_options(to = &quot;html&quot;),
+                           clean_supporting = FALSE)
 }</code></pre>
 <p>Of course, knitr and pandoc options can get considerabiy more complicated (see the <code>knitr_options</code> and <code>pandoc_options</code> functions for details). The <code>clean_supporting</code> option indicates that you aren’t creating self contained output (like a PDF or HTML document with base64 encoded resources) and therefore want to preserve supporting files like plot images generated during knitting.</p>
+<p>You can also pass a <code>base_format</code> to the <code>output_format</code> function if you want to inherit all of the behavior of an existing format but tweak a subset of it’s options.</p>
 <p>If there are supporting files required for your format (e.g. HTML/CSS/JS) then you’ll also need to use the other arguments to <code>output_format</code> to ensure they are handled correctly (e.g. copying them into place alongside the generated document).</p>
-<p>The best way to learn about creating fully custom formats is to study the code of the existing built-in formats (e.g. <code>html_document</code> and <code>pdf_document</code>). In some cases a custom format will define it’s own <a href="http://pandoc.org/README.html#templates">pandoc template</a>. You can see the default pandoc templates used by the rmarkdown package by looking in the <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmd"><code>inst/rmd</code></a> directory of the package.</p>
+<p>The best way to learn about creating fully custom formats is to study the <a href="https://github.com/rstudio/rmarkdown/tree/master/R">source code</a> of the existing built-in formats (e.g. <code>html_document</code> and <code>pdf_document</code>). In some cases a custom format will define it’s own <a href="http://pandoc.org/README.html#templates">pandoc template</a>. You can see the default pandoc templates used by the rmarkdown package by looking in the <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmd"><code>inst/rmd</code></a> directory of the package.</p>
 </div>
 
 

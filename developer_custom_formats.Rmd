@@ -59,10 +59,6 @@ Note that (3) and (4) are implemented using external files that are stored withi
 
 The [Package Vignette](package_vignette_format.html) format provides an example of a format that customizes the base [`html_document`](html_document_format.html) format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette [format](https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R) and [custom template](https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette) are a good starting point for creating your own HTML based formats.
 
-### Tufte Handout Example
-
-The [Tufte Handout](tufte_handout_format.html) format provides an example of deriving from the `pdf_document` format and using a custom LaTeX template. The source code for the Tufte Handout [format](https://github.com/rstudio/rmarkdown/blob/master/R/tufte_handout.R) and [custom template](https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/tufte_handout) are a good starting point for creating your own LaTeX based formats.
-
 ## Fully Custom Formats
 
 At it's core an R Markdown format consists of:
@@ -77,18 +73,19 @@ You can create a new format using the `output_format` function. For example, her
 
 ```{r}
 simple_html_format <- function() {
-  require(rmarkdown)
-  output_format(knitr = knitr_options(opts_chunk = list(dev = 'png')),
-                pandoc = pandoc_options(to = "html"),
-                clean_supporting = FALSE)
+  rmarkdown::output_format(knitr = knitr_options(opts_chunk = list(dev = 'png')),
+                           pandoc = pandoc_options(to = "html"),
+                           clean_supporting = FALSE)
 }
 ```
 
 Of course, knitr and pandoc options can get considerabiy more complicated (see the `knitr_options` and `pandoc_options` functions for details). The `clean_supporting` option indicates that you aren't creating self contained output (like a PDF or HTML document with base64 encoded resources) and therefore want to preserve supporting files like plot images generated during knitting.
 
+You can also pass a `base_format` to the `output_format` function if you want to inherit all of the behavior of an existing format but tweak a subset of it's options.
+
 If there are supporting files required for your format (e.g. HTML/CSS/JS) then you'll also need to use the other arguments to `output_format` to ensure they are handled correctly (e.g. copying them into place alongside the generated document).
 
-The best way to learn about creating fully custom formats is to study the code of the existing built-in formats (e.g. `html_document` and `pdf_document`). In some cases a custom format will define it's own [pandoc template](http://pandoc.org/README.html#templates). You can see the default pandoc templates used by the rmarkdown package by looking in the [`inst/rmd`](https://github.com/rstudio/rmarkdown/tree/master/inst/rmd) directory of the package.
+The best way to learn about creating fully custom formats is to study the [source code](https://github.com/rstudio/rmarkdown/tree/master/R) of the existing built-in formats (e.g. `html_document` and `pdf_document`). In some cases a custom format will define it's own [pandoc template](http://pandoc.org/README.html#templates). You can see the default pandoc templates used by the rmarkdown package by looking in the [`inst/rmd`](https://github.com/rstudio/rmarkdown/tree/master/inst/rmd) directory of the package.
 
 
 
