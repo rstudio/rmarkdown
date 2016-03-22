@@ -70,7 +70,7 @@ flatten_dependencies <- function(knit_meta, test) {
   # a list of dependencies we recurse on lists that aren't named
   for (dep in knit_meta) {
     if (is.null(names(dep)) && is.list(dep)) {
-      inner_dependencies <- flatten_dependencies(dep)
+      inner_dependencies <- flatten_dependencies(dep, test)
       all_dependencies <- append(all_dependencies, inner_dependencies)
     } else if (test(dep)) {
       all_dependencies[[length(all_dependencies) + 1]] <- dep
@@ -155,7 +155,7 @@ has_dependencies <- function(knit_meta, class) {
   if (is.list(knit_meta)) {
     for (dep in knit_meta) {
       if (is.null(names(dep))) {
-        if (has_dependencies(dep))
+        if (has_dependencies(dep, class))
           return(TRUE)
       } else {
         if (inherits(dep, class))
