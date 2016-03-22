@@ -21,6 +21,8 @@
 #'   created.  See the documentation on
 #'   \href{http://pandoc.org/README.html}{pandoc online documentation}
 #'   for details on creating custom templates.
+#' @param extra_dependencies Add \code{latex_dependency()} dependencies. It can
+#'   can be used to add custom LaTeX packages to the .tex header.
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -95,7 +97,8 @@ pdf_document <- function(toc = FALSE,
                          citation_package = c("none", "natbib", "biblatex"),
                          includes = NULL,
                          md_extensions = NULL,
-                         pandoc_args = NULL) {
+                         pandoc_args = NULL,
+                         extra_dependencies = NULL) {
 
   # base pandoc options for all PDF output
   args <- c()
@@ -152,6 +155,34 @@ pdf_document <- function(toc = FALSE,
 
   saved_files_dir <- NULL
 
+  # Use filter to set pdf geometry defaults (while making sure we don't override
+  # any geometry settings already specified by the user)
+  pdf_pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
+                                output_dir) {
+
+    args <- c()
+
+    # set the margin to 1 inch if no other geometry options specified
+    has_geometry <- function(text) {
+      length(grep("^geometry:.*$", text)) > 0
+    }
+    if (!has_geometry(readLines(input_file, warn = FALSE)))
+      args <- c(args, "--variable", "geometry:margin=1in")
+
+    format_deps <- list()
+    format_deps <- append(format_deps, extra_dependencies)
+
+    if (has_latex_dependencies(knit_meta)) {
+      all_dependencies <- if (is.null(format_deps)) list() else format_deps
+      all_dependencies <- append(all_dependencies, flatten_latex_dependencies(knit_meta))
+      filename <- tempfile()
+      latex_dependencies_as_text_file(all_dependencies, filename)
+      args <- c(args, includes_to_pandoc_args(includes(in_header = filename)))
+    }
+    args
+  }
+
+
   pre_processor <- function(metadata, input_file, runtime, knit_meta,
                                 files_dir, output_dir) {
     # save files dir (for generating intermediates)
@@ -195,22 +226,4 @@ pdf_document <- function(toc = FALSE,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator
   )
-}
-
-
-# Use filter to set pdf geometry defaults (while making sure we don't override
-# any geometry settings already specified by the user)
-pdf_pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
-                              output_dir) {
-
-  args <- c()
-
-  # set the margin to 1 inch if no other geometry options specified
-  has_geometry <- function(text) {
-    length(grep("^geometry:.*$", text)) > 0
-  }
-  if (!has_geometry(readLines(input_file, warn = FALSE)))
-    args <- c(args, "--variable", "geometry:margin=1in")
-
-  args
 }

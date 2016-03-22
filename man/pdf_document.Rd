@@ -9,7 +9,7 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   fig_caption = TRUE, dev = "pdf", highlight = "default",
   template = "default", keep_tex = FALSE, latex_engine = "pdflatex",
   citation_package = c("none", "natbib", "biblatex"), includes = NULL,
-  md_extensions = NULL, pandoc_args = NULL)
+  md_extensions = NULL, pandoc_args = NULL, extra_dependencies = NULL)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -56,6 +56,9 @@ default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
+
+\item{extra_dependencies}{Add \code{latex_dependency()} dependencies. It can
+can be used to add custom LaTeX packages to the .tex header.}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

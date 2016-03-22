@@ -1,6 +1,8 @@
 rmarkdown 0.9.6 (unreleased)
 --------------------------------------------------------------------------------
 
+* Discover `LaTeX` dependencies and add them to the `.tex` preamble (#647)
+
 * Change `fig_caption` default to TRUE for all formats
 
 * Ensure pandoc binary exists before binding to pandoc directory (#632)
