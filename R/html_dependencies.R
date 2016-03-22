@@ -155,7 +155,7 @@ has_dependencies <- function(knit_meta, class) {
   if (is.list(knit_meta)) {
     for (dep in knit_meta) {
       if (is.null(names(dep))) {
-        if (has_html_dependencies(dep))
+        if (has_dependencies(dep))
           return(TRUE)
       } else {
         if (inherits(dep, class))
