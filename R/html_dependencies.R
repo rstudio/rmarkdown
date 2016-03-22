@@ -59,10 +59,9 @@ html_dependency_tocify <- function() {
                  stylesheet = "jquery.tocify.css")
 }
 
-
-# flattens an arbitrarily nested list and returns all of the html_dependency
+# flattens an arbitrarily nested list and returns all of the dependency
 # objects it contains
-flatten_html_dependencies <- function(knit_meta) {
+flatten_dependencies <- function(knit_meta, test) {
 
   all_dependencies <- list()
 
@@ -71,15 +70,18 @@ flatten_html_dependencies <- function(knit_meta) {
   # a list of dependencies we recurse on lists that aren't named
   for (dep in knit_meta) {
     if (is.null(names(dep)) && is.list(dep)) {
-      inner_dependencies <- flatten_html_dependencies(dep)
+      inner_dependencies <- flatten_dependencies(dep)
       all_dependencies <- append(all_dependencies, inner_dependencies)
-    }
-    else if (is_html_dependency(dep)) {
+    } else if (test(dep)) {
       all_dependencies[[length(all_dependencies) + 1]] <- dep
     }
   }
 
   all_dependencies
+}
+
+flatten_html_dependencies <- function(knit_meta) {
+  flatten_dependencies(knit_meta, is_html_dependency)
 }
 
 # consolidate dependencies (use latest versions and remove duplicates). this
@@ -144,25 +146,26 @@ validate_html_dependency <- function(list) {
   list
 }
 
-# check if the passed knit_meta has any html dependencies
-has_html_dependencies <- function(knit_meta) {
+# check if the passed knit_meta has any (e.g. html/latex) dependencies
+has_dependencies <- function(knit_meta, class) {
 
-  if (inherits(knit_meta, "html_dependency"))
+  if (inherits(knit_meta, class))
     return(TRUE)
 
-  else if (is.list(knit_meta)) {
+  if (is.list(knit_meta)) {
     for (dep in knit_meta) {
       if (is.null(names(dep))) {
         if (has_html_dependencies(dep))
           return(TRUE)
       } else {
-        if (inherits(dep, "html_dependency"))
+        if (inherits(dep, class))
           return(TRUE)
       }
     }
-
-    FALSE
-  } else {
-    FALSE
   }
+  FALSE
+}
+
+has_html_dependencies <- function(knit_meta) {
+  has_dependencies(knit_meta, "html_dependency")
 }
