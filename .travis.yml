@@ -1,31 +1,3 @@
-language: c
-
+language: r
 sudo: false
-
-env:
-  global:
-    - R_PKG="$(basename $TRAVIS_REPO_SLUG)" PATH=$HOME/bin:$PATH NOT_CRAN=true
-
-addons:
-  apt:
-    sources:
-    - r-packages-precise
-    packages:
-    - r-base-dev
-    - r-recommended
-
-install:
-  - "wget -q -O - https://github.com/yihui/crandalf/raw/master/inst/scripts/install-pandoc | bash"
-  - "wget -q -O - http://yihui.name/xran/r-config | bash"
-  - Rscript -e "if (!require('devtools')) install.packages('devtools')"
-  - Rscript -e "devtools::install_deps(dep = TRUE)"
-
-cache:
-  directories:
-  - $HOME/R
-  - $HOME/bin
-
-script:
-  - cd ..; rm -f *.tar.gz; R CMD build $R_PKG
-  - R CMD check ${R_PKG}_*.tar.gz --no-manual
-  - cd $R_PKG
+cache: packages
