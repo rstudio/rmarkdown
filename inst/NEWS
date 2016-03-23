@@ -13,6 +13,9 @@ rmarkdown 0.9.6 (unreleased)
 
 * Added biblatex biblio-style support to the LaTeX template for Pandoc 1.15.2 (#643)
 
+* Allow override of header font-size in html_document custom css (#652)
+
+
 rmarkdown 0.9.5
 --------------------------------------------------------------------------------
 
