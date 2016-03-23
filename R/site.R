@@ -112,7 +112,7 @@ site_generator <- function(input = ".",
     # read index.Rmd and extract the front matter
     index_lines <- read_lines_utf8(index, encoding)
     front_matter <- parse_yaml_front_matter(index_lines)
-    if (!is.null(front_matter) && !is.null(front_matter$site)) {
+    if (!is.null(front_matter$site)) {
 
       # discover the site generator function (if "site" is a simple true
       # value then we use the default output format's name + _site). If
