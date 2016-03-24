@@ -18,6 +18,8 @@ rmarkdown 0.9.6 (unreleased)
 
 * Allow override of header font-size in html_document custom css (#652)
 
+* Fix for horizontal scrollbars appearing w/ code folding (#654)
+
 
 rmarkdown 0.9.5
 --------------------------------------------------------------------------------
