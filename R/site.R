@@ -157,11 +157,13 @@ default_site <- function(input, ...) {
     sapply(files, function(x) {
       # we suppress messages so that "Output created" isn't emitted
       # (which could result in RStudio previewing the wrong file)
-      suppressMessages(
+      suppressMessages({
+        set.seed(100) # for stable html output
         rmarkdown::render(x,
                           output_format = output_format,
                           envir = envir,
-                          quiet = quiet))
+                          quiet = quiet)
+      })
     })
   }
 
