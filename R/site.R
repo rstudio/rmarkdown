@@ -153,7 +153,7 @@ default_site <- function(input, ...) {
 
   # define render function (use ... to gracefully handle future args)
   render <- function(output_format, envir, quiet, encoding, ...) {
-    files <- list.files(input, pattern = "^[^_].*\\.Rmd$", full.names = TRUE)
+    files <- list.files(input, pattern = "^[^_].*\\.R?md$", full.names = TRUE)
     sapply(files, function(x) {
       # we suppress messages so that "Output created" isn't emitted
       # (which could result in RStudio previewing the wrong file)
