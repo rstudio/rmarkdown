@@ -4,6 +4,9 @@
 #'
 #' @param input Website directory (or the name of a file within the directory)
 #' @param output_format R Markdown format to convert to.
+#' @param envir The environment in which the code chunks are to be evaluated
+#'  during knitting (can use \code{\link{new.env}} to guarantee an empty new
+#'  environment).
 #' @param quiet \code{TRUE} to supress messages and other output.
 #' @param encoding The encoding of the input file; see \code{\link{file}}.
 #' @param ... Currently unused
@@ -44,8 +47,8 @@
 #'   \item{\code{output_dir} {The directory where the website output is written to
 #'   (e.g. "." or "_site")}}
 #'   \item{\code{render}} {An R function that can be called to generate the site.
-#'   The function should accept the \code{output_format}, \code{quiet},
-#'   \code{encoding}, and \code{...} arguments}
+#'   The function should accept the \code{output_format}, \code{envir}, \code{quiet},
+#'   \code{encoding}, and \code{...} arguments.}
 #' }
 #'
 #' See the source code of the \code{rmarkdown::default_site} function for a
@@ -65,6 +68,7 @@
 #' @export
 render_site <- function(input = ".",
                         output_format = NULL,
+                        envir = parent.frame(),
                         quiet = FALSE,
                         encoding = getOption("encoding"),
                         ...) {
@@ -80,6 +84,7 @@ render_site <- function(input = ".",
 
   # execute it
   generator$render(output_format = output_format,
+                   envir = envir,
                    quiet = quiet,
                    encoding = encoding)
 
@@ -147,10 +152,7 @@ site_generator <- function(input = ".",
 default_site <- function(input, ...) {
 
   # define render function (use ... to gracefully handle future args)
-  render <- function(output_format = NULL,
-                     quiet = FALSE,
-                     encoding = getOption("encoding"),
-                     ...) {
+  render <- function(output_format, envir, quiet, encoding, ...) {
     files <- list.files(input, pattern = "^[^_].*\\.Rmd$")
     sapply(files, function(x) {
       # we suppress messages so that "Output created" isn't emitted
@@ -158,6 +160,7 @@ default_site <- function(input, ...) {
       suppressMessages(
         rmarkdown::render(x,
                           output_format = output_format,
+                          envir = envir,
                           quiet = quiet))
     })
   }

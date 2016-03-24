@@ -6,8 +6,8 @@
 \alias{site_generator}
 \title{Render multiple documents as a website}
 \usage{
-render_site(input = ".", output_format = NULL, quiet = FALSE,
-  encoding = getOption("encoding"), ...)
+render_site(input = ".", output_format = NULL, envir = parent.frame(),
+  quiet = FALSE, encoding = getOption("encoding"), ...)
 
 site_generator(input = ".", output_format = NULL,
   encoding = getOption("encoding"))
@@ -18,6 +18,10 @@ default_site(input, ...)
 \item{input}{Website directory (or the name of a file within the directory)}
 
 \item{output_format}{R Markdown format to convert to.}
+
+\item{envir}{The environment in which the code chunks are to be evaluated
+during knitting (can use \code{\link{new.env}} to guarantee an empty new
+environment).}
 
 \item{quiet}{\code{TRUE} to supress messages and other output.}
 
@@ -64,8 +68,8 @@ elements:
   \item{\code{output_dir} {The directory where the website output is written to
   (e.g. "." or "_site")}}
   \item{\code{render}} {An R function that can be called to generate the site.
-  The function should accept the \code{output_format}, \code{quiet},
-  \code{encoding}, and \code{...} arguments}
+  The function should accept the \code{output_format}, \code{envir}, \code{quiet},
+  \code{encoding}, and \code{...} arguments.}
 }
 
 See the source code of the \code{rmarkdown::default_site} function for a
