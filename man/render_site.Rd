@@ -54,8 +54,9 @@ custom site generator which has alternate behavior. There are two ways for
 a custom site generator to be bound to from within \code{index.Rmd}:
 
 \itemize{
-  \item{The active output format defines a "_site" function (e.g.
-  \code{html_document_site}).}
+  \item{The active output format defines a "_site" function. This can be done
+  at the format level (e.g. \code{bookdown::gitbook_site}) or at the package
+  level (e.g. \code{bookdown::bookdown_site}).}
   \item{The \code{site} metadata entry refers to a custom function (e.g.
   \code{mypackage::site}).}
 }

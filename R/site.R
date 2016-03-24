@@ -33,8 +33,9 @@
 #' a custom site generator to be bound to from within \code{index.Rmd}:
 #'
 #' \itemize{
-#'   \item{The active output format defines a "_site" function (e.g.
-#'   \code{html_document_site}).}
+#'   \item{The active output format defines a "_site" function. This can be done
+#'   at the format level (e.g. \code{bookdown::gitbook_site}) or at the package
+#'   level (e.g. \code{bookdown::bookdown_site}).}
 #'   \item{The \code{site} metadata entry refers to a custom function (e.g.
 #'   \code{mypackage::site}).}
 #' }
@@ -130,8 +131,21 @@ site_generator <- function(input = ".",
         create_site_generator <- tryCatch(
                                    eval(parse(text = site_function_name)),
                                    error = function(x) NULL)
-        if (is.null(create_site_generator))
-          create_site_generator <- rmarkdown::default_site;
+        if (is.null(create_site_generator)) {
+
+          ## see if the package has a global site generator function
+          components <- strsplit(site_function_name, "::")[[1]]
+          if (length(components) > 1) {
+            package <- components[[1]]
+            create_site_generator <- tryCatch(
+              eval(parse(text = paste0(package, "::", package, "_site"))),
+              error = function(x) NULL)
+          }
+
+          # use the default if needed
+          if (is.null(create_site_generator))
+            create_site_generator <- rmarkdown::default_site;
+        }
       } else {
         create_site_generator <- eval(parse(text = front_matter$site))
       }
