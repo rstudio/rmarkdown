@@ -151,7 +151,7 @@ default_site <- function(input, ...) {
                      quiet = FALSE,
                      encoding = getOption("encoding"),
                      ...) {
-    files <- list.files(input, pattern = glob2rx("*.Rmd"))
+    files <- list.files(input, pattern = "^[^_].*\\.Rmd$")
     sapply(files, function(x) {
       # we suppress messages so that "Output created" isn't emitted
       # (which could result in RStudio previewing the wrong file)
