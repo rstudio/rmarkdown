@@ -11,6 +11,8 @@
 #' @param encoding The encoding of the input file; see \code{\link{file}}.
 #' @param ... Currently unused
 #'
+#' @return The name of the site output file (relative to the input directory).
+#'
 #' @details
 #'
 #' To render a group of R Markdown documents within a directory as a website

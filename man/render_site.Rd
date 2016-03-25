@@ -29,6 +29,9 @@ environment).}
 
 \item{...}{Currently unused}
 }
+\value{
+The name of the site output file (relative to the input directory).
+}
 \description{
 Render all of the R Markdown documents within a directory as a website.
 }
