@@ -36,9 +36,9 @@ Render all of the R Markdown documents within a directory as a website.
 To render a group of R Markdown documents within a directory as a website
 there are two requirements:
 \itemize{
-  \item{Include a file named \code{index.Rmd} which will serve as the site's
-  home page.}
-  \item{Add a \code{site: true} entry to the YAML metadata of \code{index.Rmd}}
+  \item{Include a file named \code{index.Rmd} or \code{index.md} which will
+  serve as the site's home page.}
+  \item{Add a \code{site: true} entry to the YAML metadata of the index file.}
 }
 
 Once you've met these requirements you can call the \code{render_site} function
@@ -51,7 +51,7 @@ R Markdown documents within the directory.
 The default site generation function (\code{rmarkdown::default_site}) simply
 renders all of the files in the input directory. You can however define a
 custom site generator which has alternate behavior. There are two ways for
-a custom site generator to be bound to from within \code{index.Rmd}:
+a custom site generator to be bound to from within the index file:
 
 \itemize{
   \item{The active output format defines a "_site" function. This can be done

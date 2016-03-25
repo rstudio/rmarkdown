@@ -7,7 +7,7 @@ test_that("render_site renders all pages in a directory", {
   # copy our demo site to a tempdir
   site_dir <- tempfile()
   dir.create(site_dir)
-  file.copy(c("site/index.Rmd", "site/PageA.Rmd", "site/PageB.Rmd", "site/PageC.md"),
+  file.copy(c("site/index.md", "site/PageA.Rmd", "site/PageB.Rmd", "site/PageC.md"),
             site_dir, recursive = TRUE)
 
   # render it

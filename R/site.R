@@ -16,9 +16,9 @@
 #' To render a group of R Markdown documents within a directory as a website
 #' there are two requirements:
 #' \itemize{
-#'   \item{Include a file named \code{index.Rmd} which will serve as the site's
-#'   home page.}
-#'   \item{Add a \code{site: true} entry to the YAML metadata of \code{index.Rmd}}
+#'   \item{Include a file named \code{index.Rmd} or \code{index.md} which will
+#'   serve as the site's home page.}
+#'   \item{Add a \code{site: true} entry to the YAML metadata of the index file.}
 #' }
 #'
 #' Once you've met these requirements you can call the \code{render_site} function
@@ -30,7 +30,7 @@
 #' The default site generation function (\code{rmarkdown::default_site}) simply
 #' renders all of the files in the input directory. You can however define a
 #' custom site generator which has alternate behavior. There are two ways for
-#' a custom site generator to be bound to from within \code{index.Rmd}:
+#' a custom site generator to be bound to from within the index file:
 #'
 #' \itemize{
 #'   \item{The active output format defines a "_site" function. This can be done
@@ -81,7 +81,7 @@ render_site <- function(input = ".",
   # find the site generator
   generator <- site_generator(input, output_format, encoding)
   if (is.null(generator))
-    stop("No index.Rmd with site entry found.")
+    stop("No website index file with 'site' metadata found.")
 
   # execute it
   generator$render(output_format = output_format,
@@ -92,7 +92,7 @@ render_site <- function(input = ".",
   # print the name of the index file (for RStudio Preview)
   if (!quiet) {
     # if the input was a filename use that as a base (otherwise
-    # use index.Rmd)
+    # use index.html)
     if (!dir_exists(original_input))
       output <- file_with_ext(basename(original_input), "html")
     else
@@ -111,8 +111,10 @@ site_generator <- function(input = ".",
   # normalize input
   input <- input_as_dir(input)
 
-  # if we have an index.Rmd then check it's yaml for "site:"
+  # if we have an index.Rmd (or .md) then check it's yaml for "site:"
   index <- file.path(input, "index.Rmd")
+  if (!file.exists(index))
+    index <- file.path(input, "index.md")
   if (file.exists(index)) {
 
     # read index.Rmd and extract the front matter
@@ -157,7 +159,7 @@ site_generator <- function(input = ".",
       NULL  # no site: front matter
     }
   } else {
-    NULL # no index.Rmd
+    NULL # no index.Rmd or index.md
   }
 }
 
