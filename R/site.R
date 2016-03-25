@@ -89,17 +89,21 @@ render_site <- function(input = ".",
                    quiet = quiet,
                    encoding = encoding)
 
-  # print the name of the index file (for RStudio Preview)
-  if (!quiet) {
-    # if the input was a filename use that as a base (otherwise
-    # use index.html)
-    if (!dir_exists(original_input))
-      output <- file_with_ext(basename(original_input), "html")
-    else
-      output <- "index.html"
-    output <- file.path(input, generator$output_dir, output)
-    message("\nOutput created: ", relative_to(getwd(), output))
-  }
+  # compute the name of the output file. if the input was a filename
+  # use that as a base (otherwise use index.html)
+  if (!dir_exists(original_input))
+    output <- file_with_ext(basename(original_input), "html")
+  else
+    output <- "index.html"
+  output <- file.path(input, generator$output_dir, output)
+  output <- normalized_relative_to(input, output)
+
+  # print the name of the output file (for RStudio Preview)
+  if (!quiet)
+    message("\nOutput created: ", output)
+
+  # return it invisibly
+  invisible(output)
 }
 
 #' @rdname render_site
