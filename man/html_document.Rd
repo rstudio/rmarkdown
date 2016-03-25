@@ -122,11 +122,30 @@ and Citations} article in the online documentation.
 
 
  If you have a set of html documents which you'd like to provide a common
- global navigation bar for, you can include a "_navbar.html" file within the
- same directory as your html document and it will automatically be included
- at the top of the document. For a simple example of including a navigation
- bar see
- .\href{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}
+ global navigation bar for, you can include a "_navbar.yml" or "_navbar.html"
+ file within the same directory as your html document and it will automatically
+ be included at the top of the document.
+
+ The "_navbar.yml" file includes \code{title}, \code{type}, \code{left}, and
+ \code{right} fields (to define menu items for the left and right of the navbar
+ resspectively). Menu items include \code{title} and \code{href} fields. For example:
+
+ \preformatted{ title: "My Website"
+ type: default
+ left:
+   - title: "Home"
+     href: index.Rmd
+   - title: "Other"
+     href: other.Rmd
+ right:
+   - title: GitHub
+     href: https://github.com}
+ The \code{type} field is optional and can take the value "default" or "inverse" (which
+ provides a different color scheme for the navigation bar).
+
+ Alternatively, you can include a "_navbar.html" file which is a full HTML definition
+ of a bootstrap navigation bar. For a simple example of including a navigation bar see
+ \href{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
   For additional documentation on creating Bootstrap navigation bars see
  \href{http://getbootstrap.com/components/#navbar}{http://getbootstrap.com/components/#navbar}.
 }

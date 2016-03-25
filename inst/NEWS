@@ -4,6 +4,8 @@ rmarkdown 0.9.6 (unreleased)
 * Added `render_site` and related functions for rendering collections of
   documents within a directory as a website.
 
+* Ability to define html_document navigation bar using simple yaml format.
+
 * Discover `LaTeX` dependencies and add them to the `.tex` preamble (#647)
 
 * Change `fig_caption` default to TRUE for all formats

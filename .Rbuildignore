@@ -5,3 +5,4 @@ README\.(Rmd|md|html)
 CONTRIBUTING\.(Rmd|md|html)
 PANDOC\.(Rmd|md|html)
 ^\.travis\.yml$
+tests/testthat/site/.*\.html

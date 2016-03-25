@@ -85,11 +85,30 @@
 #'@section Navigation Bars:
 #'
 #'  If you have a set of html documents which you'd like to provide a common
-#'  global navigation bar for, you can include a "_navbar.html" file within the
-#'  same directory as your html document and it will automatically be included
-#'  at the top of the document. For a simple example of including a navigation
-#'  bar see
-#'  .\href{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}
+#'  global navigation bar for, you can include a "_navbar.yml" or "_navbar.html"
+#'  file within the same directory as your html document and it will automatically
+#'  be included at the top of the document.
+#'
+#'  The "_navbar.yml" file includes \code{title}, \code{type}, \code{left}, and
+#'  \code{right} fields (to define menu items for the left and right of the navbar
+#'  resspectively). Menu items include \code{title} and \code{href} fields. For example:
+#'
+#'  \preformatted{ title: "My Website"
+#'  type: default
+#'  left:
+#'    - title: "Home"
+#'      href: index.Rmd
+#'    - title: "Other"
+#'      href: other.Rmd
+#'  right:
+#'    - title: GitHub
+#'      href: https://github.com}
+#'  The \code{type} field is optional and can take the value "default" or "inverse" (which
+#'  provides a different color scheme for the navigation bar).
+#'
+#'  Alternatively, you can include a "_navbar.html" file which is a full HTML definition
+#'  of a bootstrap navigation bar. For a simple example of including a navigation bar see
+#'  \href{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
 #'   For additional documentation on creating Bootstrap navigation bars see
 #'  \href{http://getbootstrap.com/components/#navbar}{http://getbootstrap.com/components/#navbar}.
 #'
@@ -280,6 +299,14 @@ html_document <- function(toc = FALSE,
 
       # add navbar to includes if necessary
       navbar <- file.path(normalize_path(dirname(input_file)), "_navbar.html")
+
+      # if there is no _navbar.html look for a _navbar.yml
+      if (!file.exists(navbar)) {
+        navbar_yaml <- file.path(dirname(navbar), "_navbar.yml")
+        if (file.exists(navbar_yaml))
+          navbar <- navbar_html_from_yaml(navbar_yaml)
+      }
+
       if (file.exists(navbar)) {
         if (is.null(includes))
           includes <- list()
@@ -419,6 +446,45 @@ pandoc_body_padding_variable_args <- function(theme) {
     pandoc_variable_arg("header_padding", headerPadding))
 }
 
+navbar_html_from_yaml <- function(navbar_yaml) {
+
+  # parse the yaml
+  navbar <- yaml_load_file_utf8(navbar_yaml)
+
+  # title and type
+  if (is.null(navbar$title))
+    navbar$title <- ""
+  if (is.null(navbar$type))
+    navbar$type <- "default"
+
+  # menu entries
+  left <- navbar_links_html(navbar$left)
+  right <- navbar_links_html(navbar$right)
+
+  # build the navigation bar and return it as a temp file
+  template_file <- rmarkdown_system_file("rmd/h/_navbar.html")
+  template <- paste(readLines(template_file), collapse = "\n")
+  navbar_html <- sprintf(template,
+                         navbar$type,
+                         navbar$title,
+                         left,
+                         right)
+  as_tmpfile(navbar_html)
+}
+
+navbar_links_html <- function(links) {
+  if (!is.null(links)) {
+    tags <- lapply(links, function(x) {
+      href <- x$href
+      if (!grepl("^http", href))
+        href <- gsub("R?md", "html", href)
+      tags$li(tags$a(href = href, x$title))
+    })
+    as.character(tagList(tags))
+  } else {
+    ""
+  }
+}
 
 
 
