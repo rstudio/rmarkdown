@@ -45,8 +45,8 @@
 #'
 #' \itemize{
 #'   \item{\code{name}} {The name for the website (e.g. the parent directory name).}
-#'   \item{\code{output_dir} {The directory where the website output is written to
-#'   (e.g. "." or "_site")}}
+#'   \item{\code{output_dir} {The directory where the website output is written to.
+#'   This path should be relative to the site directory (e.g. "." or "_site")}}
 #'   \item{\code{render}} {An R function that can be called to generate the site.
 #'   The function should accept the \code{output_format}, \code{envir}, \code{quiet},
 #'   \code{encoding}, and \code{...} arguments.}
@@ -184,7 +184,7 @@ default_site <- function(input, ...) {
   # return site generator
   list(
     name = basename(normalize_path(input)),
-    output_dir = input,
+    output_dir = '.',
     render = render
   )
 }
