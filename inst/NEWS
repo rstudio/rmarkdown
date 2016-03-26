@@ -25,6 +25,8 @@ rmarkdown 0.9.6 (unreleased)
 
 * Fix for horizontal scrollbars appearing w/ code folding (#654)
 
+* Specifying `toc_float` in `html_document` now automatically sets `toc = TRUE`
+
 
 rmarkdown 0.9.5
 --------------------------------------------------------------------------------
