@@ -16,4 +16,5 @@ navbar:
     - title: "GitHub"
       href: https://github.com
 output:
-  html_document: default
+  html_document:
+    css: styles.css

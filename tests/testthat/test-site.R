@@ -7,7 +7,8 @@ test_that("render_site renders all pages in a directory", {
   # copy our demo site to a tempdir
   site_dir <- tempfile()
   dir.create(site_dir)
-  file.copy(c("site/_site.yml", "site/index.md", "site/PageA.Rmd", "site/PageB.Rmd", "site/PageC.md"),
+  file.copy(c("site/_site.yml", "site/index.md", "site/PageA.Rmd",
+              "site/PageB.Rmd", "site/PageC.md", "site/styles.css"),
             site_dir, recursive = TRUE)
 
   # render it
@@ -18,4 +19,5 @@ test_that("render_site renders all pages in a directory", {
   expect_true(file.exists(file.path(site_dir, "_site", "PageA.html")))
   expect_true(file.exists(file.path(site_dir, "_site", "PageB.html")))
   expect_true(file.exists(file.path(site_dir, "_site", "PageC.html")))
+  expect_true(file.exists(file.path(site_dir, "_site", "styles.css")))
 })
