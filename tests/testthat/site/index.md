@@ -1,7 +1,6 @@
 ---
 title: "R Markdown Website"
 output: html_document
-site: true
 ---
 
 ```{r setup, include=FALSE}

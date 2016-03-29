@@ -308,6 +308,10 @@ html_document <- function(toc = FALSE,
         navbar_yaml <- file.path(dirname(navbar), "_navbar.yml")
         if (file.exists(navbar_yaml))
           navbar <- navbar_html_from_yaml(navbar_yaml)
+        # if there is no _navbar.yml then look in site config (if we have it)
+        config <- site_config(input_file)
+        if (!is.null(config) && !is.null(config$navbar))
+          navbar <- navbar_html(config$navbar)
       }
 
       if (file.exists(navbar)) {
@@ -453,6 +457,12 @@ navbar_html_from_yaml <- function(navbar_yaml) {
 
   # parse the yaml
   navbar <- yaml_load_file_utf8(navbar_yaml)
+
+  # generate the html
+  navbar_html(navbar)
+}
+
+navbar_html <- function(navbar) {
 
   # title and type
   if (is.null(navbar$title))

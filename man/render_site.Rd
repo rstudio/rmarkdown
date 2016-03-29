@@ -3,16 +3,19 @@
 \name{render_site}
 \alias{default_site}
 \alias{render_site}
+\alias{site_config}
 \alias{site_generator}
 \title{Render multiple documents as a website}
 \usage{
-render_site(input = ".", output_format = NULL, envir = parent.frame(),
+render_site(input = ".", output_format = "all", envir = parent.frame(),
   quiet = FALSE, encoding = getOption("encoding"), ...)
 
 site_generator(input = ".", output_format = NULL,
   encoding = getOption("encoding"))
 
-default_site(input, ...)
+site_config(input, encoding = getOption("encoding"))
+
+default_site(input, encoding = getOption("encoding"), ...)
 }
 \arguments{
 \item{input}{Website directory (or the name of a file within the directory)}
@@ -34,62 +37,5 @@ The name of the site output file (relative to the input directory).
 }
 \description{
 Render all of the R Markdown documents within a directory as a website.
-}
-\details{
-To render a group of R Markdown documents within a directory as a website
-there are two requirements:
-\itemize{
-  \item{Include a file named \code{index.Rmd} or \code{index.md} which will
-  serve as the site's home page.}
-  \item{Add a \code{site: true} entry to the YAML metadata of the index file.}
-}
-
-Once you've met these requirements you can call the \code{render_site} function
-on the directory (or any Rmd file within the directory) to render all of the
-R Markdown documents within the directory.
-}
-\section{Custom Site Generation}{
-
-
-The default site generation function (\code{rmarkdown::default_site}) simply
-renders all of the files in the input directory. You can however define a
-custom site generator which has alternate behavior. There are two ways for
-a custom site generator to be bound to from within the index file:
-
-\itemize{
-  \item{The active output format defines a "_site" function. This can be done
-  at the format level (e.g. \code{bookdown::gitbook_site}) or at the package
-  level (e.g. \code{bookdown::bookdown_site}).}
-  \item{The \code{site} metadata entry refers to a custom function (e.g.
-  \code{mypackage::site}).}
-}
-
-The site generation function should return a list with the following
-elements:
-
-\itemize{
-  \item{\code{name}} {The name for the website (e.g. the parent directory name).}
-  \item{\code{output_dir} {The directory where the website output is written to.
-  This path should be relative to the site directory (e.g. "." or "_site")}}
-  \item{\code{render}} {An R function that can be called to generate the site.
-  The function should accept the \code{output_format}, \code{envir}, \code{quiet},
-  \code{encoding}, and \code{...} arguments.}
-}
-
-See the source code of the \code{rmarkdown::default_site} function for a
-simple example of a custom site generation function.
-}
-
-\section{Site Preview}{
-
-
-Note that the \code{render_site} function can be used as a custom \code{knit}
-handler within RStudio by adding the following to the YAML of any
-document within a site directory:
-
-\code{knit: rmarkdown::render_site}
-
-This will result in the entire site being rendered each time Knit is
-executed within RStudio.
 }
 

@@ -378,6 +378,14 @@ output_format_from_yaml_front_matter <- function(input_lines,
   # default to no options
   output_format_options <- list()
 
+  # parse _site.yml output format if we have it
+  config <- site_config(".")
+  if (!is.null(config) && !is.null(config$output)) {
+    site_output_format_yaml <- config$output
+  } else {
+    site_output_format_yaml <- list()
+  }
+
   # parse common _output.yml if we have it
   if (file.exists("_output.yml"))
     common_output_format_yaml <- yaml_load_file_utf8("_output.yml")
@@ -385,6 +393,10 @@ output_format_from_yaml_front_matter <- function(input_lines,
     common_output_format_yaml <- yaml_load_file_utf8("_output.yaml")
   else
     common_output_format_yaml <- list()
+
+  # merge _site.yml and _output.yml
+  common_output_format_yaml <- merge_output_options(site_output_format_yaml,
+                                                    common_output_format_yaml)
 
   # parse output format from front-matter if we have it
   if (length(common_output_format_yaml) > 0 ||
@@ -494,6 +506,14 @@ enumerate_output_formats <- function(input, envir, encoding) {
   if (identical(tolower(tools::file_ext(input)), "r"))
     input_lines <- knitr::spin(text = input_lines, knit = FALSE, envir = envir)
 
+  # parse _site.yml output format if we have it
+  config <- site_config(input, encoding = encoding)
+  if (!is.null(config) && !is.null(config$output)) {
+    site_output_format_yaml <- config$output
+  } else {
+    site_output_format_yaml <- list()
+  }
+
   # read the ymal front matter
   yaml_front_matter <- parse_yaml_front_matter(input_lines)
 
@@ -506,6 +526,10 @@ enumerate_output_formats <- function(input, envir, encoding) {
     common_output_format_yaml <- yaml_load_file_utf8(output_yaml)
   else
     common_output_format_yaml <- list()
+
+  # merge site and common
+  common_output_format_yaml <- merge_output_options(site_output_format_yaml,
+                                                    common_output_format_yaml)
 
   # parse output formats from front-matter if we have it
   if (length(common_output_format_yaml) > 0 ||

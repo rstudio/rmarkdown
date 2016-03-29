@@ -1,1 +1,5 @@
 *.html
+*_files
+rsconnect
+lib
+_site
