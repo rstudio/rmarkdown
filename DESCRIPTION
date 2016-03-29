@@ -45,6 +45,9 @@ Authors@R: c(
   person(family = "W3C", role = "cph",
          comment = "slidy library")
   )
+Author: JJ Allaire, Jonathan McPherson, Yihui Xie, Hadley Wickham, Joe Cheng,
+    Jeff Allen
+Maintainer: JJ Allaire <jj@rstudio.com>
 Description: Convert R Markdown documents into a variety of formats.
 Depends:
     R (>= 3.0)
