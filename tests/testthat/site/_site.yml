@@ -1,5 +1,7 @@
 name: "mysite"
 output_dir: "_site"
+include: script.R
+exclude: docs.txt
 navbar:
   title: "Navigation Bar"
   type: default
