@@ -1,18 +1,5 @@
-#' Render multiple documents as a website
-#'
-#' Render all of the R Markdown documents within a directory as a website.
-#'
-#' @param input Website directory (or the name of a file within the directory)
-#' @param output_format R Markdown format to convert to.
-#' @param envir The environment in which the code chunks are to be evaluated
-#'  during knitting (can use \code{\link{new.env}} to guarantee an empty new
-#'  environment).
-#' @param quiet \code{TRUE} to supress messages and other output.
-#' @param encoding The encoding of the input file; see \code{\link{file}}.
-#' @param ... Currently unused
-#'
-#' @return The name of the site output file (relative to the input directory).
-#'
+
+#' @noRd
 #' @export
 render_site <- function(input = ".",
                         output_format = "all",
@@ -61,7 +48,7 @@ render_site <- function(input = ".",
   invisible(output)
 }
 
-#' @rdname render_site
+#' @noRd
 #' @export
 site_generator <- function(input = ".",
                            output_format = NULL,
@@ -100,7 +87,7 @@ site_generator <- function(input = ".",
   }
 }
 
-#' @rdname render_site
+#' @noRd
 #' @export
 site_config <- function(input, encoding = getOption("encoding")) {
 
@@ -133,7 +120,7 @@ site_config <- function(input, encoding = getOption("encoding")) {
 }
 
 
-#' @rdname render_site
+#' @noRd
 #' @export
 default_site <- function(input, encoding = getOption("encoding"), ...) {
 
