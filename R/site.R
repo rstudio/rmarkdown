@@ -219,10 +219,26 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
         file.copy(file.path(lib_dir, lib), output_lib_dir, recursive = TRUE)
       unlink(lib_dir, recursive = TRUE)
 
-    # no output directory
-    } else {
-      output_dir <- input
+      # copy other files
+      copy_site_resources(input, encoding)
     }
+  }
+
+  # return site generator
+  list(
+    name = config$name,
+    output_dir = config$output_dir,
+    render = render
+  )
+}
+
+# utility function to copy all files into the _site directory
+copy_site_resources <- function(input, encoding = getOption("encoding")) {
+
+  # get the site config
+  config <- site_config(input, encoding)
+
+  if (config$output_dir != ".") {
 
     # get the original file list (we'll need it to apply includes)
     all_files <- list.files(input, all.files = TRUE)
@@ -251,21 +267,12 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       files <- unique(c(files, include_files))
     }
 
-    # copy to output_dir if necessary
-    if (config$output_dir != '.') {
-      output_dir <- file.path(input, config$output_dir)
-      file.copy(from = file.path(input, files),
-                to = output_dir,
-                recursive = TRUE)
-    }
+    # perform the copy
+    output_dir <- file.path(input, config$output_dir)
+    file.copy(from = file.path(input, files),
+              to = output_dir,
+              recursive = TRUE)
   }
-
-  # return site generator
-  list(
-    name = config$name,
-    output_dir = config$output_dir,
-    render = render
-  )
 }
 
 # utility function to ensure that 'input' is a valid directory
