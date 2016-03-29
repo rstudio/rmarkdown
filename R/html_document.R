@@ -253,7 +253,7 @@ html_document <- function(toc = FALSE,
   }
 
   # table of contents
-  args <- c(args, pandoc_toc_args(toc || toc_float, toc_depth))
+  args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # template path and assets
   if (identical(template, "default"))
