@@ -49,7 +49,7 @@ render_site <- function(input = ".",
 
 #' @noRd
 #' @export
-clean_site <- function(input = ".", preview = FALSE,
+clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
                        encoding = getOption("encoding")) {
 
   # normalize to a directory
@@ -69,8 +69,13 @@ clean_site <- function(input = ".", preview = FALSE,
   # actually remove the files
   if (preview)
     files
-  else
+  else {
+    if (!quiet) {
+      cat("Removing files: \n\n")
+      cat(paste(paste0(" ", files), collapse = "\n"))
+    }
     unlink(file.path(input, files), recursive = TRUE)
+  }
 }
 
 #' @noRd
@@ -259,18 +264,18 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       generated <- c(generated, html_files)
 
       # _files peers
-      html_supporting <- knitr_files_dir(html_files)
+      html_supporting <- paste0(knitr_files_dir(html_files), '/')
       generated <- c(generated, html_supporting)
 
       # lib dir
-      generated <- c(generated, "lib")
+      generated <- c(generated, "lib/")
 
       # filter out by existence
       generated[file.exists(file.path(input, generated))]
 
     # for an explicit output_dir just remove the directory
     } else {
-      config$output_dir
+      paste0(config$output_dir, '/')
     }
   }
 
