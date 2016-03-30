@@ -9,7 +9,8 @@
 render_site(input = ".", output_format = "all", envir = parent.frame(),
   quiet = FALSE, encoding = getOption("encoding"))
 
-clean_site(input = ".", preview = FALSE, encoding = getOption("encoding"))
+clean_site(input = ".", preview = FALSE, quiet = FALSE,
+  encoding = getOption("encoding"))
 
 site_generator(input = ".", output_format = NULL,
   encoding = getOption("encoding"))
