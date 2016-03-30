@@ -97,9 +97,9 @@
 #'  type: default
 #'  left:
 #'    - title: "Home"
-#'      href: index.Rmd
+#'      href: index.html
 #'    - title: "Other"
-#'      href: other.Rmd
+#'      href: other.html
 #'  right:
 #'    - title: GitHub
 #'      href: https://github.com}
