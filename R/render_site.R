@@ -159,6 +159,9 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
 
   # get the site config
   config <- site_config(input, encoding)
+  if (is.null(config))
+    stop("No site configuration (_site.yml) file found.")
+
 
   # helper function to get all input files. includes all .Rmd and
   # .md files that don't start with "_" (note that we don't do this
