@@ -76,9 +76,9 @@ navbar:
   title: "My Website"
   left:
     - title: "Home"
-      href: index.Rmd
+      href: index.html
     - title: "About"
-      href: about.Rmd
+      href: about.html
 output:
   html_document:
     toc: true
