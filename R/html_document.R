@@ -488,10 +488,7 @@ navbar_html <- function(navbar) {
 navbar_links_html <- function(links) {
   if (!is.null(links)) {
     tags <- lapply(links, function(x) {
-      href <- x$href
-      if (!grepl("^http", href))
-        href <- gsub("R?md", "html", href)
-      tags$li(tags$a(href = href, x$title))
+      tags$li(tags$a(href = x$href, x$title))
     })
     as.character(tagList(tags))
   } else {

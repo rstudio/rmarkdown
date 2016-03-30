@@ -7,13 +7,13 @@ navbar:
   type: default
   left:
     - title: "Home"
-      href: index.md
+      href: index.html
     - title: "Page A"
       href: PageA.html
     - title: "Page B"
-      href: PageB.Rmd
+      href: PageB.html
     - title: "Page C"
-      href: PageC.md
+      href: PageC.html
   right:
     - title: "GitHub"
       href: https://github.com
