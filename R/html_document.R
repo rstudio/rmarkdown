@@ -485,16 +485,40 @@ navbar_html <- function(navbar) {
   as_tmpfile(navbar_html)
 }
 
+
 navbar_links_html <- function(links) {
+  as.character(navbar_links_tags(links))
+}
+
+navbar_links_tags <- function(links) {
   if (!is.null(links)) {
     tags <- lapply(links, function(x) {
-      tags$li(tags$a(href = x$href, x$title))
+
+      # sub-menu
+      if (!is.null(x$menu)) {
+        submenuLinks <- navbar_links_tags(x$menu)
+        tags$li(class = "dropdown",
+          tags$a(href = "foo", class = "dropdown-toggle", `data-toggle` = "dropdown",
+                 role = "button", `aria-expanded` = "false",
+                   paste0(x$title, " "), tags$span(class = "caret")),
+          tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
+        )
+
+      # divider
+      } else if (grepl("^\\s*-{3,}\\s*$", x$title)) {
+        tags$li(class = "divider")
+
+      # standard menu item
+      } else {
+        tags$li(tags$a(href = x$href, x$title))
+      }
     })
-    as.character(tagList(tags))
+    tagList(tags)
   } else {
-    ""
+    tagList()
   }
 }
+
 
 
 
