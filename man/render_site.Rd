@@ -14,10 +14,6 @@ clean_site(input = ".", preview = FALSE, quiet = FALSE,
 
 site_generator(input = ".", output_format = NULL,
   encoding = getOption("encoding"))
-
-site_config(input, encoding = getOption("encoding"))
-
-default_site(input, encoding = getOption("encoding"), ...)
 }
 \arguments{
 \item{input}{Website directory (or the name of a file within the directory)}
@@ -38,6 +34,7 @@ environment).}
 }
 \value{
 \code{render_site} returns the name of the site output file (relative to the input directory).
+\code{clean_site} returns the names of the generated files removed during cleaning.
 }
 \description{
 Render all of the R Markdown documents within a directory as a website.

@@ -121,8 +121,7 @@ site_generator <- function(input = ".",
   }
 }
 
-#' @noRd
-#' @export
+# helper function to get the site configuration as an R list
 site_config <- function(input, encoding = getOption("encoding")) {
 
   # normalize input
@@ -153,9 +152,7 @@ site_config <- function(input, encoding = getOption("encoding")) {
   }
 }
 
-
-#' @noRd
-#' @export
+# default site implementation (can be overridden by custom site generators)
 default_site <- function(input, encoding = getOption("encoding"), ...) {
 
   # get the site config
@@ -353,7 +350,7 @@ input_as_dir <- function(input) {
   input
 }
 
-
+# get the path to the site config file
 site_config_file <- function(input) {
   file.path(input, "_site.yml")
 }
