@@ -226,7 +226,7 @@ discover_rmd_resources <- function(rmd_file, encoding,
   # These will be needed to produce even a vanilla Markdown variant of the input
   # document, so copy them to the temporary folder in preparation for rendering
   # (in addition to marking them as required resources).
-  output_formats <- front_matter$output
+  output_formats <- front_matter[["output"]]
   if (is.list(output_formats)) {
     for (output_format in output_formats) {
       if (is.list(output_format)) {

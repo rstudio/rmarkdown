@@ -380,8 +380,8 @@ output_format_from_yaml_front_matter <- function(input_lines,
 
   # parse _site.yml output format if we have it
   config <- site_config(".")
-  if (!is.null(config) && !is.null(config$output)) {
-    site_output_format_yaml <- config$output
+  if (!is.null(config) && !is.null(config[["output"]])) {
+    site_output_format_yaml <- config[["output"]]
   } else {
     site_output_format_yaml <- list()
   }
@@ -400,10 +400,10 @@ output_format_from_yaml_front_matter <- function(input_lines,
 
   # parse output format from front-matter if we have it
   if (length(common_output_format_yaml) > 0 ||
-      length(yaml_front_matter$output) > 0) {
+      length(yaml_front_matter[["output"]]) > 0) {
 
     # alias the output format yaml
-    output_format_yaml <- yaml_front_matter$output
+    output_format_yaml <- yaml_front_matter[["output"]]
 
     # merge against common _output.yml
     output_format_yaml <- merge_output_options(common_output_format_yaml,
@@ -508,8 +508,8 @@ enumerate_output_formats <- function(input, envir, encoding) {
 
   # parse _site.yml output format if we have it
   config <- site_config(input, encoding = encoding)
-  if (!is.null(config) && !is.null(config$output)) {
-    site_output_format_yaml <- config$output
+  if (!is.null(config) && !is.null(config[["output"]])) {
+    site_output_format_yaml <- config[["output"]]
   } else {
     site_output_format_yaml <- list()
   }
@@ -533,10 +533,10 @@ enumerate_output_formats <- function(input, envir, encoding) {
 
   # parse output formats from front-matter if we have it
   if (length(common_output_format_yaml) > 0 ||
-      length(yaml_front_matter$output) > 0) {
+      length(yaml_front_matter[["output"]]) > 0) {
 
     # alias the output format yaml
-    output_format_yaml <- yaml_front_matter$output
+    output_format_yaml <- yaml_front_matter[["output"]]
 
     # merge against common _output.yml
     output_format_yaml <- merge_output_options(common_output_format_yaml,

@@ -103,12 +103,14 @@ site_generator <- function(input = ".",
 
     # is there a custom site generator function?
     if (!is.null(front_matter$site)) {
+
       create_site_generator <- eval(parse(text = front_matter$site))
       create_site_generator(input, encoding)
 
     # is there a "_site.yml"?
     } else if (file.exists(site_config_file(input))) {
-      rmarkdown::default_site(input, encoding)
+
+      default_site(input, encoding)
 
     # no custom site generator or "_site.yml"
     } else {
