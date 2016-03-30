@@ -2,6 +2,7 @@
 
 export(all_output_formats)
 export(beamer_presentation)
+export(clean_site)
 export(default_output_format)
 export(default_site)
 export(draft)

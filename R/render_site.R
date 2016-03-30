@@ -5,8 +5,7 @@ render_site <- function(input = ".",
                         output_format = "all",
                         envir = parent.frame(),
                         quiet = FALSE,
-                        encoding = getOption("encoding"),
-                        ...) {
+                        encoding = getOption("encoding")) {
 
   # capture original input
   original_input <- input
@@ -22,7 +21,7 @@ render_site <- function(input = ".",
   # find the site generator
   generator <- site_generator(input, output_format, encoding)
   if (is.null(generator))
-    stop("No website index file with 'site' metadata found.")
+    stop("No site generator found.")
 
   # execute it
   generator$render(input_file = input_file,
@@ -46,6 +45,26 @@ render_site <- function(input = ".",
 
   # return it invisibly
   invisible(output)
+}
+
+#' @noRd
+#' @export
+clean_site <- function(input = ".", encoding = getOption("encoding")) {
+
+  # normalize to a directory
+  input <- input_as_dir(input)
+
+  # find the site generator
+  generator <- site_generator(input = input,
+                              output_format = NULL,
+                              encoding = encoding)
+  if (is.null(generator))
+    stop("No site generator found.")
+
+  # clean the site
+  generator$clean()
+
+  invisible(NULL)
 }
 
 #' @noRd
@@ -127,6 +146,14 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
   # get the site config
   config <- site_config(input, encoding)
 
+  # helper function to get all input files. includes all .Rmd and
+  # .md files that don't start with "_" (note that we don't do this
+  # recursively because rmarkdown in general handles applying common
+  # options/elements across subdirectories poorly)
+  input_files <- function() {
+    list.files(input, pattern = "^[^_].*\\.R?md$", full.names = TRUE)
+  }
+
   # define render function (use ... to gracefully handle future args)
   render <- function(input_file,
                      output_format,
@@ -145,10 +172,7 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
     if (incremental)
       files <- input_file
     else {
-      # render all .Rmd and .md files that don't start with "_" (note that
-      # don't do this recursively because rmarkdown in general handles
-      # applying common options/elements across subdirectories poorly)
-      files <- list.files(input, pattern = "^[^_].*\\.R?md$", full.names = TRUE)
+      files <- input_files()
     }
     sapply(files, function(x) {
       # we suppress messages so that "Output created" isn't emitted
@@ -211,11 +235,44 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
     }
   }
 
+  # define clean function
+  clean <- function() {
+
+    # for rendering in the current directory we need to eliminate
+    # output files for our inputs (including _files) and the lib dir
+    if (config$output_dir == ".") {
+
+      # enumerate rendered markdown files
+      files <- input_files()
+
+      # remove their .html peer
+      html_files <- file_with_ext(files, "html")
+      file.remove(html_files)
+
+      # remove their _files peer
+      html_files_dir <- knitr_files_dir(html_files)
+      for (dir in html_files_dir) {
+        dir_info <- file.info(dir)
+        if (isTRUE(dir_info$isdir))
+          unlink(dir, recursive = TRUE)
+      }
+
+      # remove lib dir
+      lib_dir <- file.path(input, "lib")
+      unlink(lib_dir, recursive = TRUE)
+
+    # for an explicit output_dir just remove the directory
+    } else {
+      unlink(file.path(input, config$output_dir), recursive = TRUE)
+    }
+  }
+
   # return site generator
   list(
     name = config$name,
     output_dir = config$output_dir,
-    render = render
+    render = render,
+    clean = clean
   )
 }
 
