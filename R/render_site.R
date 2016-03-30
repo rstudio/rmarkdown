@@ -13,10 +13,14 @@ render_site <- function(input = ".",
   # normalize to a directory
   input <- input_as_dir(input)
 
-  # if it's a file then capture that
+  # if it's a file then capture that and force output_format to be NULL
+  # (to only render a single format for incremental/previewing)
   input_file <- NULL
-  if (!dir_exists(original_input))
+  if (!dir_exists(original_input)) {
     input_file <- original_input
+    if (output_format == "all")
+      output_format <- NULL
+  }
 
   # find the site generator
   generator <- site_generator(input, output_format, encoding)
