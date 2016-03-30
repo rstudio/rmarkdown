@@ -49,7 +49,8 @@ render_site <- function(input = ".",
 
 #' @noRd
 #' @export
-clean_site <- function(input = ".", encoding = getOption("encoding")) {
+clean_site <- function(input = ".", preview = FALSE,
+                       encoding = getOption("encoding")) {
 
   # normalize to a directory
   input <- input_as_dir(input)
@@ -61,10 +62,15 @@ clean_site <- function(input = ".", encoding = getOption("encoding")) {
   if (is.null(generator))
     stop("No site generator found.")
 
-  # clean the site
-  generator$clean()
+  # get the files to be cleaned
+  files <- generator$clean()
 
-  invisible(NULL)
+  # if it's just a preview then return the files, otherwise
+  # actually remove the files
+  if (preview)
+    files
+  else
+    unlink(file.path(input, files), recursive = TRUE)
 }
 
 #' @noRd
@@ -151,7 +157,7 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
   # recursively because rmarkdown in general handles applying common
   # options/elements across subdirectories poorly)
   input_files <- function() {
-    list.files(input, pattern = "^[^_].*\\.R?md$", full.names = TRUE)
+    list.files(input, pattern = "^[^_].*\\.R?md$")
   }
 
   # define render function (use ... to gracefully handle future args)
@@ -172,7 +178,7 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
     if (incremental)
       files <- input_file
     else {
-      files <- input_files()
+      files <- file.path(input, input_files())
     }
     sapply(files, function(x) {
       # we suppress messages so that "Output created" isn't emitted
@@ -242,28 +248,29 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
     # output files for our inputs (including _files) and the lib dir
     if (config$output_dir == ".") {
 
+      # build list of generated files
+      generated <- c()
+
       # enumerate rendered markdown files
       files <- input_files()
 
-      # remove their .html peer
+      # .html peers
       html_files <- file_with_ext(files, "html")
-      file.remove(html_files)
+      generated <- c(generated, html_files)
 
-      # remove their _files peer
-      html_files_dir <- knitr_files_dir(html_files)
-      for (dir in html_files_dir) {
-        dir_info <- file.info(dir)
-        if (isTRUE(dir_info$isdir))
-          unlink(dir, recursive = TRUE)
-      }
+      # _files peers
+      html_supporting <- knitr_files_dir(html_files)
+      generated <- c(generated, html_supporting)
 
-      # remove lib dir
-      lib_dir <- file.path(input, "lib")
-      unlink(lib_dir, recursive = TRUE)
+      # lib dir
+      generated <- c(generated, "lib")
+
+      # filter out by existence
+      generated[file.exists(file.path(input, generated))]
 
     # for an explicit output_dir just remove the directory
     } else {
-      unlink(file.path(input, config$output_dir), recursive = TRUE)
+      config$output_dir
     }
   }
 
