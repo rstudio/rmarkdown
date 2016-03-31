@@ -498,7 +498,7 @@ navbar_links_tags <- function(links) {
       if (!is.null(x$menu)) {
         submenuLinks <- navbar_links_tags(x$menu)
         tags$li(class = "dropdown",
-          tags$a(href = "foo", class = "dropdown-toggle", `data-toggle` = "dropdown",
+          tags$a(href = "#", class = "dropdown-toggle", `data-toggle` = "dropdown",
                  role = "button", `aria-expanded` = "false",
                    paste0(x$title, " "), tags$span(class = "caret")),
           tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
