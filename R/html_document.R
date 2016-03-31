@@ -274,6 +274,56 @@ html_document <- function(toc = FALSE,
   code_folding <- match.arg(code_folding)
 
   # pre-processor for arguments that may depend on the name of the
+  # the input file AND which need to inject html dependencies
+  # (otherwise we could just call the pre_processor)
+  post_knit <- function(metadata, input_file, runtime, ...) {
+
+    # extra args
+    args <- c()
+
+    # navbar (requires theme)
+    if (!is.null(theme)) {
+
+      # add navbar to includes if necessary
+      navbar <- file.path(normalize_path(dirname(input_file)), "_navbar.html")
+
+      # if there is no _navbar.html look for a _navbar.yml
+      if (!file.exists(navbar)) {
+        navbar_yaml <- file.path(dirname(navbar), "_navbar.yml")
+        if (file.exists(navbar_yaml))
+          navbar <- navbar_html_from_yaml(navbar_yaml)
+        # if there is no _navbar.yml then look in site config (if we have it)
+        config <- site_config(input_file)
+        if (!is.null(config) && !is.null(config$navbar))
+          navbar <- navbar_html(config$navbar)
+      }
+
+      if (file.exists(navbar)) {
+
+        # include the navbar html
+        includes <- list(before_body = navbar)
+        args <- c(args, includes_to_pandoc_args(includes,
+                                  filter = if (identical(runtime, "shiny"))
+                                    function(x) normalize_path(x, mustWork = FALSE)
+                                  else
+                                    identity))
+
+        # flag indicating we need extra navbar css and js
+        args <- c(args, pandoc_variable_arg("navbar", "1"))
+        # variables controlling padding from navbar
+        args <- c(args, pandoc_body_padding_variable_args(theme))
+
+        # navbar icon dependencies
+        iconDeps <- navbar_icon_dependencies(navbar)
+        if (length(iconDeps) > 0)
+          knit_meta_add(list(iconDeps))
+      }
+    }
+
+    args
+  }
+
+  # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
   pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
                             output_dir) {
@@ -299,31 +349,6 @@ html_document <- function(toc = FALSE,
       args <- c(args, pandoc_html_navigation_args(self_contained,
                                                   lib_dir,
                                                   output_dir))
-
-      # add navbar to includes if necessary
-      navbar <- file.path(normalize_path(dirname(input_file)), "_navbar.html")
-
-      # if there is no _navbar.html look for a _navbar.yml
-      if (!file.exists(navbar)) {
-        navbar_yaml <- file.path(dirname(navbar), "_navbar.yml")
-        if (file.exists(navbar_yaml))
-          navbar <- navbar_html_from_yaml(navbar_yaml)
-        # if there is no _navbar.yml then look in site config (if we have it)
-        config <- site_config(input_file)
-        if (!is.null(config) && !is.null(config$navbar))
-          navbar <- navbar_html(config$navbar)
-      }
-
-      if (file.exists(navbar)) {
-        if (is.null(includes))
-          includes <- list()
-        # include the navbar html
-        includes$before_body <- c(navbar, includes$before_body)
-        # flag indicating we need extra navbar css and js
-        args <- c(args, pandoc_variable_arg("navbar", "1"))
-        # variables controlling padding from navbar
-        args <- c(args, pandoc_body_padding_variable_args(theme))
-      }
     }
 
     # code_folding
@@ -356,6 +381,7 @@ html_document <- function(toc = FALSE,
                             args = args),
     keep_md = keep_md,
     clean_supporting = self_contained,
+    post_knit = post_knit,
     pre_processor = pre_processor,
     base_format = html_document_base(smart = smart, theme = theme,
                                      self_contained = self_contained,
@@ -505,12 +531,23 @@ navbar_links_tags <- function(links) {
         )
 
       # divider
-      } else if (grepl("^\\s*-{3,}\\s*$", x$title)) {
+      } else if (!is.null(x$title) && grepl("^\\s*-{3,}\\s*$", x$title)) {
         tags$li(class = "divider")
 
       # standard menu item
       } else {
-        tags$li(tags$a(href = x$href, x$title))
+        if (!is.null(x$icon)) {
+          # find the iconset
+          split <- strsplit(x$icon, "-")
+          if (length(split[[1]]) > 1)
+            iconset <- split[[1]][[1]]
+          else
+            iconset <- ""
+          titleTags <- tagList(tags$span(class = paste(iconset, x$icon)), " ", x$title)
+        }
+        else
+          titleTags <- tagList(x$title)
+        tags$li(tags$a(href = x$href, titleTags))
       }
     })
     tagList(tags)

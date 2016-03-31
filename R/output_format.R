@@ -12,6 +12,13 @@
 #'   \code{FALSE}.
 #' @param clean_supporting Cleanup any supporting files after conversion see
 #'   \code{\link{render_supporting_files}}
+#' @param post_knit An optional function that runs after kniting which
+#'   receives the \code{metadata}, \code{input_file}, \code{runtime}, and \code{...}
+#'   (for future expansion) arguments. This function can return additional
+#'   arguments to pass to pandoc and can call \code{\link[knitr:knit_meta_add]{knit_meta_add}}
+#'   to add additional dependencies based on the contents of the input_file or on other
+#'   assets side by side with it that may be used to produce html with dependencies
+#'   during subsequent processing.
 #' @param pre_processor An optional pre-processor function that receives the
 #'   \code{metadata}, \code{input_file}, \code{runtime}, \code{knit_meta},
 #'   \code{files_dir}, and \code{output_dir} and can return additional arguments
@@ -43,6 +50,7 @@ output_format <- function(knitr,
                           pandoc,
                           keep_md = FALSE,
                           clean_supporting = TRUE,
+                          post_knit = NULL,
                           pre_processor = NULL,
                           intermediates_generator = NULL,
                           post_processor = NULL,
@@ -51,6 +59,7 @@ output_format <- function(knitr,
                  pandoc = pandoc,
                  keep_md = keep_md,
                  clean_supporting = clean_supporting && !keep_md,
+                 post_knit = post_knit,
                  pre_processor = pre_processor,
                  intermediates_generator = intermediates_generator,
                  post_processor = post_processor),
@@ -108,6 +117,8 @@ merge_output_formats <- function(base, overlay)  {
       merge_scalar(base$keep_md, overlay$keep_md),
     clean_supporting =
       merge_scalar(base$clean_supporting, overlay$clean_supporting),
+    post_knit =
+      merge_function_outputs(base$post_knit, overlay$post_knit, c),
     pre_processor =
       merge_function_outputs(base$pre_processor, overlay$pre_processor, c),
     intermediates_generator =

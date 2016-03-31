@@ -43,7 +43,13 @@ Authors@R: c(
   person("Dave", "Raggett", role = "ctb",
          comment = "slidy library"),
   person(family = "W3C", role = "cph",
-         comment = "slidy library")
+         comment = "slidy library"),
+  person("Dave", "Gandy", role = c("ctb", "cph"),
+         comment = "Font-Awesome"),
+  person("Ben", "Sperry", role = "ctb",
+         comment = "Ionicons"),
+  person(family = "Drifty", role = "cph",
+         comment = "Ionicons")
   )
 Author: JJ Allaire, Jonathan McPherson, Yihui Xie, Hadley Wickham, Joe Cheng,
     Jeff Allen

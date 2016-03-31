@@ -5,7 +5,7 @@
 \title{Define an R Markdown output format}
 \usage{
 output_format(knitr, pandoc, keep_md = FALSE, clean_supporting = TRUE,
-  pre_processor = NULL, intermediates_generator = NULL,
+  post_knit = NULL, pre_processor = NULL, intermediates_generator = NULL,
   post_processor = NULL, base_format = NULL)
 }
 \arguments{
@@ -21,6 +21,14 @@ if this is \code{TRUE} then \code{clean_supporting} will always be
 
 \item{clean_supporting}{Cleanup any supporting files after conversion see
 \code{\link{render_supporting_files}}}
+
+\item{post_knit}{An optional function that runs after kniting which
+receives the \code{metadata}, \code{input_file}, \code{runtime}, and \code{...}
+(for future expansion) arguments. This function can return additional
+arguments to pass to pandoc and can call \code{\link[knitr:knit_meta_add]{knit_meta_add}}
+to add additional dependencies based on the contents of the input_file or on other
+assets side by side with it that may be used to produce html with dependencies
+during subsequent processing.}
 
 \item{pre_processor}{An optional pre-processor function that receives the
 \code{metadata}, \code{input_file}, \code{runtime}, \code{knit_meta},

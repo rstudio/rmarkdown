@@ -337,6 +337,15 @@ render <- function(input,
 
     perf_timer_stop("knitr")
 
+    # call any post_knit handler
+    if (!is.null(output_format$post_knit)) {
+      post_knit_extra_args <- output_format$post_knit(yaml_front_matter,
+                                                      knit_input,
+                                                      runtime)
+      print(post_knit_extra_args)
+      output_format$pandoc$args <- c(output_format$pandoc$args, post_knit_extra_args)
+    }
+
     # pull any R Markdown warnings from knit_meta and emit
     rmd_warnings <- knit_meta_reset(class = "rmd_warning")
     for (rmd_warning in rmd_warnings) {

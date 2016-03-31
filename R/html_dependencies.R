@@ -59,6 +59,81 @@ html_dependency_tocify <- function() {
                  stylesheet = "jquery.tocify.css")
 }
 
+
+# create an html_dependency for font awesome
+#' @rdname html-dependencies
+#' @export
+html_dependency_font_awesome <- function() {
+  htmlDependency(
+    "font-awesome",
+    "4.5.0",
+    src = rmarkdown_system_file("rmd/h/font-awesome-4.5.0"),
+    stylesheet = "css/font-awesome.min.css"
+  )
+}
+
+# create an html_dependency for ionicons
+#' @rdname html-dependencies
+#' @export
+html_dependency_ionicons <- function() {
+  htmlDependency(
+    "ionicons",
+    "2.0.1",
+    src = rmarkdown_system_file("rmd/h/ionicons-2.0.1"),
+    stylesheet = "css/ionicons.min.css"
+  )
+}
+
+# analyze navbar html source for icon dependencies
+navbar_icon_dependencies <- function(navbar) {
+
+  # read the navbar source
+  source <- readLines(navbar)
+
+  # find icon references
+  res <- regexec('<span class="(fa fa|ion ion)-', source)
+  matches <- regmatches(source, res)
+  libs <- c()
+  for (match in matches) {
+    if (length(match) > 0)
+      libs <- c(libs, match[[2]])
+  }
+  libs <- unique(libs)
+
+  # return their dependencies
+  html_dependencies_fonts("fa fa" %in% libs, "ion ion" %in% libs)
+}
+
+
+# utilty function to return a list of font dependencies based
+# whether we are including font_awesome and/or iconicons
+html_dependencies_fonts <- function(font_awesome, ionicons) {
+  deps <- list()
+  if (font_awesome)
+    deps <- append(deps, list(html_dependency_font_awesome()))
+  if (ionicons)
+    deps <- append(deps, list(html_dependency_ionicons()))
+  deps
+}
+
+# local implementation of knit_meta_add until we can depend on a later
+# version of knitr
+knit_meta_add = function(meta, label = '') {
+  # if (packageVersion("knitr") >= "1.12.20") {
+  #   knitr::knit_meta_add(meta, label)
+  # } else {
+  knitrNamespace <- asNamespace("knitr")
+  knitEnv <- get(".knitEnv", envir = knitrNamespace)
+  if (length(meta)) {
+    meta_id = attr(knitEnv$meta, 'knit_meta_id')
+    knitEnv$meta <- c(knitEnv$meta, meta)
+    attr(knitEnv$meta, "knit_meta_id") = c(meta_id, rep(label, length(meta)))
+  }
+  knitEnv$meta
+  # }
+}
+
+
 # flattens an arbitrarily nested list and returns all of the dependency
 # objects it contains
 flatten_dependencies <- function(knit_meta, test) {

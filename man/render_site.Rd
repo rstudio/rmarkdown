@@ -43,7 +43,7 @@ Render all of the R Markdown documents within a directory as a website.
 The \code{render_site} function enables you to render a collection of markdown documents within a directory as a website. There are two requirements for a directory to be rendered as a website:
 
 \enumerate{
-\item{It must contain either an "index.Rmd" or "index.md" file.}
+\item{It must contain either an "index.Rmd" file.}
 \item{It must contain a site configuration file ("_site.yml").}
 }
 
@@ -51,7 +51,7 @@ The most minimal valid website is an empty "index.Rmd" and an empty "_site.yml".
 
 \enumerate{
 
-\item{R Markdown (.Rmd) and plain markdown (.md) files in the root directory are rendered. Note however that markdown files beginning with "_" are not rendered (this is a convention to designate files that are included by top level documents).}
+\item{R Markdown (.Rmd) files in the root directory are rendered. Note however that markdown files beginning with "_" are not rendered (this is a convention to designate files that are included by top level documents).}
 
 \item{All output and supporting files are copied to a "_site" subdirectory of the website directory (this is configurable, see discussion below).}
 
@@ -102,7 +102,7 @@ Finally, the \code{output} field enables you to specify output options that are 
 
 \section{Custom Site Generation}{
 
-The behavior of the default site generation function (\code{rmarkdown::default_site}) is described above. It is also possible to define a custom site generator that has alternate behavior. A site generator is an R function that is bound to by including it in the "site:" field of the "index.Rmd" or "index.md" file. For example:
+The behavior of the default site generation function (\code{rmarkdown::default_site}) is described above. It is also possible to define a custom site generator that has alternate behavior. A site generator is an R function that is bound to by including it in the "site:" field of the "index.Rmd" file. For example:
 
 \preformatted{title: "My Book"
 output: bookdown::gitbook
