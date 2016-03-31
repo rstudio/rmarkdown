@@ -329,6 +329,7 @@ $for(include-before)$
 $include-before$
 $endfor$
 
+$if(theme)$
 <div class="fluid-row" id="$idprefix$header">
 
 $if(code_folding)$
@@ -339,6 +340,8 @@ $if(code_folding)$
 <li><a id="rmd-hide-all-code" href="#">Hide All</a></li>
 </ul>
 </div>
+$endif$
+
 $endif$
 
 $if(title)$
@@ -371,7 +374,9 @@ $abstract$
 $endif$
 $endif$
 
+$if(theme)$
 </div>
+$endif$
 
 $if(toc_float)$
 $else$
