@@ -15,7 +15,7 @@
 #' @param post_knit An optional function that runs after kniting which
 #'   receives the \code{metadata}, \code{input_file}, \code{runtime}, and \code{...}
 #'   (for future expansion) arguments. This function can return additional
-#'   arguments to pass to pandoc and can call \code{\link[knitr:knit_meta_add]{knit_meta_add}}
+#'   arguments to pass to pandoc and can call \code{knitr::knit_meta_add}
 #'   to add additional dependencies based on the contents of the input_file or on other
 #'   assets side by side with it that may be used to produce html with dependencies
 #'   during subsequent processing.
