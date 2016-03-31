@@ -91,8 +91,10 @@ site_generator <- function(input = ".",
   # normalize input
   input <- input_as_dir(input)
 
-  # if we have an index.Rmd then check it's yaml for "site:"
+  # if we have an index.Rmd (or .md) then check it's yaml for "site:"
   index <- file.path(input, "index.Rmd")
+  if (!file.exists(index))
+    index <- file.path(input, "index.md")
   if (file.exists(index)) {
 
     # read index.Rmd and extract the front matter
@@ -115,7 +117,7 @@ site_generator <- function(input = ".",
       NULL
     }
 
-  # no index.Rmd
+  # no index.Rmd or index.md
   } else {
     NULL
   }
@@ -160,12 +162,12 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
   if (is.null(config))
     stop("No site configuration (_site.yml) file found.")
 
-  # helper function to get all input files. includes all .Rmd files
-  # that don't start with "_" (note that we don't do this
+  # helper function to get all input files. includes all .Rmd and
+  # .md files that don't start with "_" (note that we don't do this
   # recursively because rmarkdown in general handles applying common
   # options/elements across subdirectories poorly)
   input_files <- function() {
-    list.files(input, pattern = "^[^_].*\\.Rmd$")
+    list.files(input, pattern = "^[^_].*\\.R?md$")
   }
 
   # define render function (use ... to gracefully handle future args)
