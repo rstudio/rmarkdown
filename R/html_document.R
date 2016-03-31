@@ -526,12 +526,12 @@ navbar_links_tags <- function(links) {
         tags$li(class = "dropdown",
           tags$a(href = "#", class = "dropdown-toggle", `data-toggle` = "dropdown",
                  role = "button", `aria-expanded` = "false",
-                   paste0(x$title, " "), tags$span(class = "caret")),
+                   paste0(x$text, " "), tags$span(class = "caret")),
           tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
         )
 
       # divider
-      } else if (!is.null(x$title) && grepl("^\\s*-{3,}\\s*$", x$title)) {
+      } else if (!is.null(x$text) && grepl("^\\s*-{3,}\\s*$", x$text)) {
         tags$li(class = "divider")
 
       # standard menu item
@@ -543,11 +543,11 @@ navbar_links_tags <- function(links) {
             iconset <- split[[1]][[1]]
           else
             iconset <- ""
-          titleTags <- tagList(tags$span(class = paste(iconset, x$icon)), " ", x$title)
+          textTags <- tagList(tags$span(class = paste(iconset, x$icon)), " ", x$text)
         }
         else
-          titleTags <- tagList(x$title)
-        tags$li(tags$a(href = x$href, titleTags))
+          textTags <- tagList(x$text)
+        tags$li(tags$a(href = x$href, textTags))
       }
     })
     tagList(tags)

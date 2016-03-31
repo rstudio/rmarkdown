@@ -81,9 +81,9 @@ exclude: ["docs.txt", "*.csv"]
 navbar:
   title: "My Website"
   left:
-    - title: "Home"
+    - text: "Home"
       href: index.html
-    - title: "About"
+    - text: "About"
       href: about.html
 output:
   html_document:
