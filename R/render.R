@@ -342,7 +342,6 @@ render <- function(input,
       post_knit_extra_args <- output_format$post_knit(yaml_front_matter,
                                                       knit_input,
                                                       runtime)
-      print(post_knit_extra_args)
       output_format$pandoc$args <- c(output_format$pandoc$args, post_knit_extra_args)
     }
 
