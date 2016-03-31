@@ -6,16 +6,18 @@ navbar:
   title: "Navigation Bar"
   type: default
   left:
-    - title: "Home"
+    - text: "Home"
       href: index.html
-    - title: "Page A"
+    - text: "Page A"
       href: PageA.html
-    - title: "Page B"
-      href: PageB.html
-    - title: "Page C"
-      href: PageC.html
+    - text: "More"
+      menu:
+        - text: "Page B"
+          href: PageB.html
+        - text: "Page C"
+          href: PageC.html
   right:
-    - title: "GitHub"
+    - text: "GitHub"
       href: https://github.com
 output:
   html_document:
