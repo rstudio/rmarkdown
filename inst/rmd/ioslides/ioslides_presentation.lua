@@ -91,6 +91,10 @@ function LineBreak()
   return "<br/>"
 end
 
+function SoftBreak()
+  return " "
+end
+
 function Emph(s)
   return "<em>" .. s .. "</em>"
 end
