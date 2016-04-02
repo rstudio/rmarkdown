@@ -534,6 +534,10 @@ navbar_links_tags <- function(links) {
       } else if (!is.null(x$text) && grepl("^\\s*-{3,}\\s*$", x$text)) {
         tags$li(class = "divider")
 
+      # header
+      } else if (!is.null(x$text) && is.null(x$href)) {
+        tags$li(class = "dropdown-header", x$text)
+
       # standard menu item
       } else {
         if (!is.null(x$icon)) {
