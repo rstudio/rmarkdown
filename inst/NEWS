@@ -27,6 +27,8 @@ rmarkdown 0.9.6 (unreleased)
 
 * Specifying `toc_float` in `html_document` now automatically sets `toc = TRUE`
 
+* Correctly handle soft line breaks in ioslides_presentation (#661)
+
 
 rmarkdown 0.9.5
 --------------------------------------------------------------------------------
