@@ -304,38 +304,71 @@ copy_site_resources <- function(input, encoding = getOption("encoding")) {
 
   if (config$output_dir != ".") {
 
-    # get the original file list (we'll need it to apply includes)
-    all_files <- list.files(input, all.files = TRUE)
-
-    # excludes:
-    #   - known source/data extensions
-    #   - anything that starts w/ '.' or '_'
-    #   - rsconnect directory
-    #   - user excludes
-    extensions <- c("R", "r", "S", "s",
-                    "Rmd", "rmd", "md", "Rmarkdown", "rmarkdown",
-                    "Rproj", "rproj",
-                    "RData", "rdata", "rds")
-    extensions_regex <- glob2rx(paste0("*.", extensions))
-    excludes <- c("^rsconnect$", "^\\..*$", "^_.*$",
-                  extensions_regex,
-                  glob2rx(config$exclude))
-    files <- all_files
-    for (exclude in excludes)
-      files <- files[!grepl(exclude, files)]
-
-    # allow back in anything specified as an explicit "include"
-    includes <- glob2rx(config$include)
-    for (include in includes) {
-      include_files <- all_files[grepl(include, all_files)]
-      files <- unique(c(files, include_files))
-    }
+    # get the list of files
+    files <- copyable_site_resources(input = input,
+                                     config = config,
+                                     recursive = FALSE,
+                                     encoding = encoding)
 
     # perform the copy
     output_dir <- file.path(input, config$output_dir)
     file.copy(from = file.path(input, files),
               to = output_dir,
               recursive = TRUE)
+  }
+}
+
+# utility function to list the files that should be copied
+copyable_site_resources <- function(input,
+                                    config = site_config(input, encoding),
+                                    recursive = FALSE,
+                                    encoding = getOption("encoding")) {
+
+  # get the original file list (we'll need it to apply includes)
+  all_files <- list.files(input, all.files = TRUE)
+
+  # excludes:
+  #   - known source/data extensions
+  #   - anything that starts w/ '.' or '_'
+  #   - rsconnect directory
+  #   - user excludes
+  extensions <- c("R", "r", "S", "s",
+                  "Rmd", "rmd", "md", "Rmarkdown", "rmarkdown",
+                  "Rproj", "rproj",
+                  "RData", "rdata", "rds")
+  extensions_regex <- glob2rx(paste0("*.", extensions))
+  excludes <- c("^rsconnect$", "^\\..*$", "^_.*$",
+                extensions_regex,
+                glob2rx(config$exclude))
+  files <- all_files
+  for (exclude in excludes)
+    files <- files[!grepl(exclude, files)]
+
+  # allow back in anything specified as an explicit "include"
+  includes <- glob2rx(config$include)
+  for (include in includes) {
+    include_files <- all_files[grepl(include, all_files)]
+    files <- unique(c(files, include_files))
+  }
+
+  # if this is recursive then we need to blow out the directories
+  if (recursive) {
+    recursive_files <- c()
+    for (file in files) {
+      file_path <- file.path(input, file)
+      if (dir_exists(file_path)) {
+        dir_files <- file.path(list.files(file_path,
+                                          full.names = FALSE,
+                                          recursive = TRUE))
+        dir_files <- file.path(file, dir_files)
+        recursive_files <- c(recursive_files, dir_files)
+      } else {
+        recursive_files <- c(recursive_files, file)
+      }
+    }
+    recursive_files
+  } else {
+    files
   }
 }
 
