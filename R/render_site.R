@@ -78,7 +78,7 @@ clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
     files
   else {
     if (!quiet) {
-      cat("Removing files: \n\n")
+      cat("Removing files: \n")
       cat(paste(paste0(" ", files), collapse = "\n"))
     }
     unlink(file.path(input, files), recursive = TRUE)
