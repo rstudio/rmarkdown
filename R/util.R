@@ -132,6 +132,10 @@ knitr_files_dir <- function(file) {
   paste(tools::file_path_sans_ext(file), "_files", sep = "")
 }
 
+knitr_root_cache_dir <- function(file) {
+  paste(tools::file_path_sans_ext(file), "_cache", sep = "")
+}
+
 knitr_cache_dir <- function(file, pandoc_to) {
   paste(tools::file_path_sans_ext(file), "_cache/", pandoc_to, "/", sep = "")
 }

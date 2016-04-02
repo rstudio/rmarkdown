@@ -257,18 +257,24 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
   # define clean function
   clean <- function() {
 
+    # build list of generated files
+    generated <- c()
+
+    # enumerate rendered markdown files
+    files <- input_files()
+
+    # get html files
+    html_files <- file_with_ext(files, "html")
+
+    # _cache peers are always removed
+    html_cache <- paste0(knitr_root_cache_dir(html_files), '/')
+    generated <- c(generated, html_cache)
+
     # for rendering in the current directory we need to eliminate
     # output files for our inputs (including _files) and the lib dir
     if (config$output_dir == ".") {
 
-      # build list of generated files
-      generated <- c()
-
-      # enumerate rendered markdown files
-      files <- input_files()
-
       # .html peers
-      html_files <- file_with_ext(files, "html")
       generated <- c(generated, html_files)
 
       # _files peers
@@ -278,13 +284,13 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       # lib dir
       generated <- c(generated, "lib/")
 
-      # filter out by existence
-      generated[file.exists(file.path(input, generated))]
-
     # for an explicit output_dir just remove the directory
     } else {
-      paste0(config$output_dir, '/')
+      generated <- c(generated, paste0(config$output_dir, '/'))
     }
+
+    # filter out by existence
+    generated[file.exists(file.path(input, generated))]
   }
 
   # return site generator
