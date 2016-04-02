@@ -337,7 +337,7 @@ copyable_site_resources <- function(input,
                   "Rproj", "rproj",
                   "RData", "rdata", "rds")
   extensions_regex <- glob2rx(paste0("*.", extensions))
-  excludes <- c("^rsconnect$", "^\\..*$", "^_.*$",
+  excludes <- c("^rsconnect$", "^\\..*$", "^_.*$", "^.*_cache$",
                 extensions_regex,
                 glob2rx(config$exclude))
   files <- all_files
