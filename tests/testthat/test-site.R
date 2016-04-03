@@ -21,7 +21,7 @@ test_that("render_site", {
   expect_true(all(file.exists(html_files)))
 
   # moved directories
-  moved <- c("lib", "PageA_files")
+  moved <- c("site_libs", "PageA_files")
   expect_true(all(!file.exists(file.path(site_dir, moved))))
   expect_true(all(file.exists(file.path(site_dir, "_site", moved))))
 

@@ -1,5 +1,6 @@
 *.html
 *_files
+*_cache
 rsconnect
-lib
+site_libs
 _site

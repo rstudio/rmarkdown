@@ -199,7 +199,7 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       output <- suppressMessages(
         rmarkdown::render(x,
                           output_format = output_format,
-                          output_options = list(lib_dir = "lib",
+                          output_options = list(lib_dir = "site_libs",
                                                 self_contained = FALSE),
                           envir = envir,
                           quiet = quiet)
@@ -240,8 +240,8 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       }
 
       # copy lib dir a directory at a time (allows it to work with incremental)
-      lib_dir <- file.path(input, "lib")
-      output_lib_dir <- file.path(output_dir, "lib")
+      lib_dir <- file.path(input, "site_libs")
+      output_lib_dir <- file.path(output_dir, "site_libs")
       if (!file.exists(output_lib_dir))
         dir.create(output_lib_dir)
       libs <- list.files(lib_dir)
