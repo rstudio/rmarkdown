@@ -10,7 +10,7 @@ output:
 
 If there is a particular form of R Markdown document that you or those you work with create frequently, it may make sense to create a re-usable document template for it. R Markdown templates are typically re-distributed within R packages, and can be easily discovered from within RStudio using the **New R Markdown** dialog:
 
-![New R Markdown dialog](images/new_r_markdown.png)
+![](images/new_r_markdown.png)
 
 Note that if you are not using RStudio you can also create new documents based on templates using the `rmarkdown::draft` function:
 
@@ -88,7 +88,7 @@ output:
     css: styles.css
 ---
 
-![Logo](logo.png)
+![](logo.png)
 
 ## Overview
 

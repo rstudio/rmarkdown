@@ -81,9 +81,9 @@ http://example.com
 Images on the web or local files in the same directory:
 
 ```markdown
-![alt text](http://example.com/logo.png)
+![](http://example.com/logo.png)
 
-![alt text](figures/img.png)
+![optional caption text](figures/img.png)
 ```
 
 #### Blockquotes

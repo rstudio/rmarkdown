@@ -237,7 +237,7 @@ class `centered`. For example:
 You can do a two-column layout using the `columns-2` class. For example:
 
     <div class="columns-2">
-      ![Image](image.png)
+      ![](image.png)
 
       - Bullet 1
       - Bullet 2

@@ -44,7 +44,7 @@ kmeans_cluster(iris)
 
 This is what the widget looks like inside a running document:
 
-![Shiny Widget KMeans](images/shiny-widget-kmeans.png)
+![](images/shiny-widget-kmeans.png)
 
 #### Source Code
 

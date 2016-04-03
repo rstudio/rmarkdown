@@ -68,6 +68,7 @@ left:
         href: github_document_format.html
       - text: "-----------------"
       - text: "R Notebooks"
+        href: r_notebook_format.html
   - text: "Developer"
     menu:
       - text: "HTML Widgets"

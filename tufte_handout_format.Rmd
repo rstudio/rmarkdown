@@ -38,7 +38,7 @@ install.packages("tufte", type = "source")
 
 You can create a new Tufte Handout from within the RStudio **New R Markdown** dialog:
 
-![New Tufte Handout](images/new-tufte-handout.png)
+![](images/new-tufte-handout.png)
 
 If you are not using RStudio then you can use the `rmarkdown::draft` function as follows:
 

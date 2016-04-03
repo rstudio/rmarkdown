@@ -373,7 +373,9 @@ div.tocify {
       <a href="github_document_format.html">GitHub Document</a>
     </li>
     <li class="divider"></li>
-    <li class="dropdown-header">R Notebooks</li>
+    <li>
+      <a href="r_notebook_format.html">R Notebooks</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -432,19 +434,19 @@ div.tocify {
 <p>R Markdown has been extended to support fully interactive documents. Unlike the more traditional workflow of creating static reports, you can now create documents that allow your readers to change the parameters underlying your analysis and see the results immediately.</p>
 <p>R Markdown leverages <a href="http://shiny.rstudio.com">Shiny</a> at its core to make this possible. Here is a simple example of an R Markdown document with an interactive plot:</p>
 <div class="figure">
-<img src="images/shiny-interactive-plot.png" alt="Shiny Hist Plot" />
-<p class="caption">Shiny Hist Plot</p>
+<img src="images/shiny-interactive-plot.png" alt="" />
+
 </div>
 <p>Note that the reader of this document is able to manipulate the number of bins and bandwidth adjustment which in turn automatically updates the plot to reflect the changes.</p>
 <p>Adding an interactive plot to a document is straightfoward: simply wrap the code used to generate the plot in the <code>renderPlot</code> function and define the user inputs required to make the plot dynamic. For example, here’s what the code used to generate the document above looks like:</p>
 <div class="figure">
-<img src="images/shiny-code.png" alt="Shiny Code" />
-<p class="caption">Shiny Code</p>
+<img src="images/shiny-code.png" alt="" />
+
 </div>
 <p>You can also embed Shiny components directly within HTML presentations:</p>
 <div class="figure">
-<img src="images/shiny-run-presentation.png" alt="Shiny Presentation" />
-<p class="caption">Shiny Presentation</p>
+<img src="images/shiny-run-presentation.png" alt="" />
+
 </div>
 <p>These documents combine the expressiveness of R Markdown with the interactivity of Shiny. These documents can be run locally on the desktop or be deployed to <a href="http://shinyapps.io">ShinyApps</a> or Shiny Server v1.2 (see the <a href="#deployment">Deployment</a> section below for more details).</p>
 </div>
@@ -458,13 +460,13 @@ div.tocify {
 <h3>Creating an Interactive Document</h3>
 <p>To create a new interactive document open the <strong>New R Markdown</strong> dialog in RStudio and choose to create a document with the “Shiny Document” template:</p>
 <div class="figure">
-<img src="images/new-shiny-document.png" alt="New R Markdown Shiny Document" />
-<p class="caption">New R Markdown Shiny Document</p>
+<img src="images/new-shiny-document.png" alt="" />
+
 </div>
 <p>You can run a document locally using the <strong>Run Document</strong> command on the editor toolbar, or use the keyboard shortcut Ctrl+Shift+K (Cmd+Shift+K on Mac):</p>
 <div class="figure">
-<img src="images/shiny-run-document.png" alt="Shiny Run Document" />
-<p class="caption">Shiny Run Document</p>
+<img src="images/shiny-run-document.png" alt="" />
+
 </div>
 <p>Note that this command runs the document in a separate R process, so you can continue to use the R console while the document is running. You can see any R console output from this separate process in the R Markdown console tab in RStudio.</p>
 <p>If you’re not using RStudio, or want to run the document in-process for troubleshooting, you can also run the document from the console using the <code>rmarkdown::run</code> function.</p>
@@ -481,8 +483,8 @@ renderTable({
 &#96;&#96;&#96;
 </code></pre>
 <div class="figure">
-<img src="images/shiny-cars-table.gif" alt="Shiny Cars Table" />
-<p class="caption">Shiny Cars Table</p>
+<img src="images/shiny-cars-table.gif" alt="" />
+
 </div>
 <p>In this example the output code was wrapped in a call to <code>renderTable</code>. There are many other render functions in Shiny that can be used for plots, printed R output, and more. This example uses <code>renderPlot</code> to create dynamic plot output:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
@@ -498,10 +500,10 @@ renderPlot({
 &#96;&#96;&#96;
 </code></pre>
 <div class="figure">
-<img src="images/shiny-hist-plot.gif" alt="Shiny Hist Plot" />
-<p class="caption">Shiny Hist Plot</p>
+<img src="images/shiny-hist-plot.gif" alt="" />
+
 </div>
-<p>If you haven’t used Shiny before some of the above code will be unfamiliar to you. The <a href="http://shiny.rstudio.com/tutorial">Shiny Tutorial</a> is a good place to learn more.</p>
+<p>If you haven’t used Shiny before some of the above code will be unfamiliar to you. The <a href="http://shiny.rstudio.com/tutorial"></a> is a good place to learn more.</p>
 </div>
 <div id="embedded-applications" class="section level3">
 <h3>Embedded Applications</h3>
@@ -539,8 +541,8 @@ kmeans_cluster(iris)
 <pre class="r"><code>rsconnect::deployApp()</code></pre>
 <p>If you are using RStudio you can also use the <strong>Deploy</strong> button available when working with an interactive document:</p>
 <div class="figure">
-<img src="images/shinyapps-deploy.png" alt="Shinyapps Deploy" />
-<p class="caption">Shinyapps Deploy</p>
+<img src="images/shinyapps-deploy.png" alt="" />
+
 </div>
 </div>
 </div>

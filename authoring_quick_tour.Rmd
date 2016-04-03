@@ -8,7 +8,7 @@ output:
 
 ### Overview
 
-![R Markdown Flow](images/RMarkdownFlow.png)
+![](images/RMarkdownFlow.png)
 
 Creating documents with R Markdown starts with an .Rmd file that contains a combination of markdown (content with simple text formatting) and R code chunks. The .Rmd file is fed to [knitr](http://yihui.name/knitr/), which executes all of the R code chunks and creates a new markdown (.md) document which includes the R code and it's output.
 
@@ -28,20 +28,20 @@ install.packages("rmarkdown")
 
 Markdown is a simple formatting language designed to make authoring content easy for everyone. Rather than writing complex markup code (e.g. HTML or LaTeX), Markdown enables the use of a syntax much more like plain-text email. For example the file on the left shows basic Markdown and the resulting output on the right:
 
-![Markdown Overview](images/markdownOverview.png)
+![](images/markdownOverview.png)
 
 ### R Code Chunks
 
 Within an R Markdown file, R Code Chunks can be embedded using the native Markdown syntax for fenced code regions. For example, the following code chunk computes a data summary and renders a plot as a PNG image:
 
-![Markdown Chunk](images/markdownChunk.png)
+![](images/markdownChunk.png)
 
 
 ### Inline R Code
 
 You can also evaluate R expressions inline by enclosing the expression within a single back-tick qualified with 'r'. For example, the following code:
 
-![Markdown Inline](images/markdownInline.png)
+![](images/markdownInline.png)
 
 Results in this output: "I counted 2 red trucks on the highway."
 
@@ -55,7 +55,7 @@ You can embed LaTeX or MathML equations in R Markdown files using the following 
 
 For example:
 
-![Equation Inline](images/equations_inline.png)
+![](images/equations_inline.png)
 
 ### Rendering Output
 

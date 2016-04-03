@@ -12,17 +12,17 @@ R Markdown has been extended to support fully interactive documents. Unlike the 
 
 R Markdown leverages [Shiny](http://shiny.rstudio.com) at its core to make this possible. Here is a simple example of an R Markdown document with an interactive plot:
 
-![Shiny Hist Plot](images/shiny-interactive-plot.png)
+![](images/shiny-interactive-plot.png)
 
 Note that the reader of this document is able to manipulate the number of bins and bandwidth adjustment which in turn automatically updates the plot to reflect the changes. 
 
 Adding an interactive plot to a document is straightfoward: simply wrap the code used to generate the plot in the `renderPlot` function and define the user inputs required to make the plot dynamic. For example, here's what the code used to generate the document above looks like:
 
-![Shiny Code](images/shiny-code.png)
+![](images/shiny-code.png)
 
 You can also embed Shiny components directly within HTML presentations:
 
-![Shiny Presentation](images/shiny-run-presentation.png)
+![](images/shiny-run-presentation.png)
 
 These documents combine the expressiveness of R Markdown with the interactivity of Shiny. These documents can be run locally on the desktop or be deployed to [ShinyApps](http://shinyapps.io) or Shiny Server v1.2 (see the [Deployment] section below for more details).
 
@@ -36,11 +36,11 @@ R Markdown interactive documents require the most recent version of RStudio (v0.
 
 To create a new interactive document open the **New R Markdown** dialog in RStudio and choose to create a document with the "Shiny Document" template:
 
-![New R Markdown Shiny Document](images/new-shiny-document.png)
+![](images/new-shiny-document.png)
 
 You can run a document locally using the **Run Document** command on the editor toolbar, or use the keyboard shortcut Ctrl+Shift+K (Cmd+Shift+K on Mac):
 
-![Shiny Run Document](images/shiny-run-document.png)
+![](images/shiny-run-document.png)
 
 Note that this command runs the document in a separate R process, so you can continue to use the R console while the document is running. You can see any R console output from this separate process in the R Markdown console tab in RStudio. 
 
@@ -59,7 +59,7 @@ renderTable({
 &#96;&#96;&#96;
 </code></pre>
 
-![Shiny Cars Table](images/shiny-cars-table.gif)
+![](images/shiny-cars-table.gif)
 
 In this example the output code was wrapped in a call to `renderTable`. There are many other render functions in Shiny that can be used for plots, printed R output, and more. This example uses `renderPlot` to create dynamic plot output:
 
@@ -76,9 +76,9 @@ renderPlot({
 &#96;&#96;&#96;
 </code></pre>
 
-![Shiny Hist Plot](images/shiny-hist-plot.gif)
+![](images/shiny-hist-plot.gif)
 
-If you haven’t used Shiny before some of the above code will be unfamiliar to you. The [Shiny Tutorial](http://shiny.rstudio.com/tutorial) is a good place to learn more.
+If you haven’t used Shiny before some of the above code will be unfamiliar to you. The [](http://shiny.rstudio.com/tutorial) is a good place to learn more.
 
 ### Embedded Applications
 
@@ -127,7 +127,7 @@ rsconnect::deployApp()
 
 If you are using RStudio you can also use the **Deploy** button available when working with an interactive document:
 
-![Shinyapps Deploy](images/shinyapps-deploy.png)
+![](images/shinyapps-deploy.png)
 
 
 ## Learning More

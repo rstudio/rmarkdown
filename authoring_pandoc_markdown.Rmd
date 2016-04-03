@@ -1227,7 +1227,7 @@ Images
 ------
 
 A link immediately preceded by a `!` will be treated as an image.
-The link text will be used as the image's alt text:
+The link text will be used as the image's caption:
 
     ![la lune](lalune.jpg "Voyage to the moon")
 
