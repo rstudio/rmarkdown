@@ -1,0 +1,89 @@
+title: "R Markdown v2"
+left:
+  - text: "Home"
+    href: index.html
+  - text: "Authoring"
+    menu:
+      - text: "R Markdown"
+      - text: "Quick Tour"
+        href: authoring_quick_tour.html
+      - text: "Markdown Basics"
+        href: authoring_basics.html
+      - text: "Pandoc Markdown"
+        href: authoring_pandoc_markdown.html
+      - text: "R Code Chunks"
+        href: authoring_rcodechunks.html
+      - text: "Bibliographies & Citations"
+        href: authoring_bibliographies_and_citations.html
+      - text: "Migrating from v1"
+        href: authoring_migrating_from_v1.html
+      - text: "-----------------"
+      - text: "Cheat Sheet [PDF]"
+        href: http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf
+      - text: "Reference Guide [PDF]"
+        href: http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf
+      - text: "-----------------"
+      - text: "Shiny"
+      - text: "Interactive Documents"
+        href: authoring_shiny.html
+      - text: "Embedded Shiny Apps"
+        href: authoring_embedded_shiny.html
+      - text: "Creating Shiny Widgets"
+        href: authoring_shiny_widgets.html
+      - text: Advanced Topics
+        href: authoring_shiny_advanced.html
+  - text: "Formats"
+    menu:
+      - text: "Documents"
+      - text: "HTML"
+        href: html_document_format.html
+      - text: "PDF"
+        href: pdf_document_format.html
+      - text: "Word"
+        href: word_document_format.html
+      - text: "ODT"
+        href: odt_document_format.html
+      - text: "RTF"
+        href: rtf_document_format.html
+      - text: "Markdown"
+        href: markdown_document_format.html
+      - text: "-----------------"
+      - text: "Presentations"
+      - text: "ioslides"
+        href: ioslides_presentation_format.html
+      - text: "reveal.js"
+        href: revealjs_presentation_format.html
+      - text: "Slidy"
+        href: slidy_presentation_format.html
+      - text: "Beamer"
+        href: beamer_presentation_format.html
+      - text: "-----------------"
+      - text: "Other"
+      - text: "Tufte Handout"
+        href: tufte_handout_format.html
+      - text: "Package Vignette"
+        href: package_vignette_format.html
+      - text: "GitHub Document"
+        href: github_document_format.html
+      - text: "-----------------"
+      - text: "R Notebooks"
+  - text: "Developer"
+    menu:
+      - text: "HTML Widgets"
+        href: developer_html_widgets.html
+      - text: "-----------------"
+      - text: "Parameterized Reports"
+        href: developer_parameterized_reports.html
+      - text: "-----------------"
+      - text: "Document Templates"
+        href: developer_document_templates.html
+      - text: "Creating New Formats"
+        href: developer_custom_formats.html
+      - text: "-----------------"
+      - text: "R Markdown on GitHub"
+        href: https://github.com/rstudio/rmarkdown
+  - text: "Articles"
+    href: articles.html
+right:
+  - icon: fa-github
+    href: https://github.com/rstudio/rmarkdown

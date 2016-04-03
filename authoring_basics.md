@@ -1,5 +1,8 @@
 ---
 title: "Markdown Basics"
+output:
+  html_document:
+    toc_float: false
 ---
 
 This document provides quick references to the most commonly used R Markdown syntax. See the following articles for more in-depth treatment of all the capabilities of R Markdown:

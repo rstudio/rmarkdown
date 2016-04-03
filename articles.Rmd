@@ -1,5 +1,8 @@
 ---
 title: "R Markdown Articles"
+output:
+  html_document:
+    toc_float: false
 ---
 
 ### Basics

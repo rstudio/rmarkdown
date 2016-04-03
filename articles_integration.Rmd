@@ -2,6 +2,9 @@
 title: R Markdown integration in the RStudio IDE
 author: Garrett Grolemund
 date: "July 10, 2014"
+output:
+  html_document:
+    toc_float: false
 ---
 
 [Introduction to interactive documents](../articles/interactive-docs.html) describes how to use R Markdown to build light-weight Shiny apps that are easy to assemble. 

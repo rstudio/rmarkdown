@@ -2,7 +2,9 @@
 title: "Happy collaboration with Rmd to docx"
 author: "Richard Layton"
 date: "`r Sys.Date()`"
-output: "html_document"
+output:
+  html_document:
+    toc_float: false
 bibliography: "articles/RepResRef.bib" 
 ---
 

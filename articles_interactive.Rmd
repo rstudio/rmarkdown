@@ -2,6 +2,9 @@
 title: Introduction to interactive documents
 author: Garrett Grolemund
 date: "July 9, 2014"
+output:
+  html_document:
+    toc_float: false
 ---
 
 Interactive documents are a new way to build Shiny apps. An interactive document is an [R Markdown](http://rmarkdown.rstudio.com) file that contains Shiny widgets and outputs. You write the report in [markdown](http://daringfireball.net/projects/markdown/basics), and then launch it as an app with the click of a button.

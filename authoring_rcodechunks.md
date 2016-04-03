@@ -1,5 +1,8 @@
 ---
 title: "R Code Chunks"
+output:
+  html_document:
+    toc_float: false
 ---
 
 ## Basic Usage

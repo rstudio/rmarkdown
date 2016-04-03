@@ -2,7 +2,9 @@
 title: "Verbatim Chunks in R Markdown"
 author: "Ramnath Vaidyanathan"
 date: "March 12, 2014"
-output: html_document
+output:
+  html_document:
+    toc_float: false
 ---
 
 _This article is reposted from [Addicted to R](https://ramnathv.github.io/posts/verbatim-chunks-knitr/) with the kind permission of Ramnath Vaidyanathan._

@@ -2,7 +2,9 @@
 title: "Moving from Beamer to R Markdown"
 author: "Steven V. Miller"
 date: "February 12, 2015"
-output: html_document
+output:
+  html_document:
+    toc_float: false
 ---
 
 _This article is reposted from [svmiller.com](http://svmiller.com/blog/2015/02/moving-from-beamer-to-r-markdown/) with the kind permission of Steven Miller._

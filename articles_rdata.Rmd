@@ -2,7 +2,9 @@
 title: "Embedding RData files in R Markdown files for more reproducible analyses"
 author: "Richard Morey"
 date: "September 12, 2014"
-output: html_document
+output:
+  html_document:
+    toc_float: false
 ---
 
 _This article is reposted from [bayesfactor.blogspot.com](http://bayesfactor.blogspot.com/2014/09/embedding-rdata-files-in-R Markdown.html) with the kind permission of Richard Morey._

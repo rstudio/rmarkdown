@@ -1,0 +1,12 @@
+output_dir: '.'
+output:
+  html_document:
+    theme: united
+    highlight: textmate
+    mathjax: null
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+    includes:
+      after_body: include/after_body.html
+

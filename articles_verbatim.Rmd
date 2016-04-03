@@ -2,7 +2,9 @@
 title: "Get verbatim R chunks into R Markdown"
 author: "Jenny Bryan"
 date: "18 September, 2014"
-output: html_document
+output:
+  html_document:
+    toc_float: false
 ---
 
 _This article is reposted from a [gist](https://gist.github.com/jennybc/8add4496cbef43324c59) with the kind permission of Jenny Bryan._

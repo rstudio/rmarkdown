@@ -1,5 +1,8 @@
 ---
 title: "Compiling Notebooks from R Scripts"
+output:
+  html_document:
+    toc_float: false
 ---
 
 ## Overview

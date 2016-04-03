@@ -1,5 +1,8 @@
 ---
 title: "Migrating from R Markdown v1"
+output:
+  html_document:
+    toc_float: false
 ---
 
 ## Changes in v2

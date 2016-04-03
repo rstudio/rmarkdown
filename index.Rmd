@@ -1,6 +1,9 @@
 ---
 title: "R Markdown"
 subtitle: "Dynamic Documents for R"
+output:
+  html_document:
+    toc_float: false
 ---
 
 <style type="text/css">

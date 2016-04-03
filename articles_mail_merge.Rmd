@@ -2,7 +2,9 @@
 title: "Mail merge with RMarkdown"
 author: "Mine Çetinkaya-Rundel"
 date: "June 1, 2015"
-output: html_document
+output:
+  html_document:
+    toc_float: false
 ---
 
 _This article is reposted from [citizen-statistician.org](http://citizen-statistician.org/2015/06/01/mail-merge-with-rmarkdown/) with the kind permission of Mine Çetinkaya-Rundel._\
