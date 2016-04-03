@@ -86,5 +86,5 @@ left:
   - text: "Articles"
     href: articles.html
 right:
-  - icon: fa-github
+  - icon: fa-github fa-lg
     href: https://github.com/rstudio/rmarkdown
