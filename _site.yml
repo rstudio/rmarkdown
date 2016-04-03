@@ -1,7 +1,7 @@
 output_dir: '.'
 output:
   html_document:
-    theme: united
+    theme: cosmo
     highlight: textmate
     mathjax: null
     toc_depth: 3

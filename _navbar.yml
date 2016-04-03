@@ -1,4 +1,5 @@
 title: "R Markdown v2"
+type: inverse
 left:
   - text: "Home"
     href: index.html
