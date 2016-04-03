@@ -17,10 +17,7 @@ render_site <- function(input = ".",
   # (to only render a single format for incremental/previewing)
   input_file <- NULL
   if (!dir_exists(original_input)) {
-    # provide the input file as an incremental render hint (but don't
-    # incremental render for index.Rmd, rather do the whole site)
-    if (!grepl("^index\\.R?md$", basename(original_input)))
-      input_file <- original_input
+    input_file <- original_input
     if (output_format == "all")
       output_format <- NULL
   }
