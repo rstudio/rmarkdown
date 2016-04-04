@@ -526,7 +526,7 @@ navbar_links_tags <- function(links) {
         tags$li(class = "dropdown",
           tags$a(href = "#", class = "dropdown-toggle", `data-toggle` = "dropdown",
                  role = "button", `aria-expanded` = "false",
-                   paste0(x$text, " "), tags$span(class = "caret")),
+                   navbar_link_text(x, " ", tags$span(class = "caret"))),
           tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
         )
 
@@ -540,17 +540,7 @@ navbar_links_tags <- function(links) {
 
       # standard menu item
       } else {
-        if (!is.null(x$icon)) {
-          # find the iconset
-          split <- strsplit(x$icon, "-")
-          if (length(split[[1]]) > 1)
-            iconset <- split[[1]][[1]]
-          else
-            iconset <- ""
-          textTags <- tagList(tags$span(class = paste(iconset, x$icon)), " ", x$text)
-        }
-        else
-          textTags <- tagList(x$text)
+        textTags <- navbar_link_text(x)
         tags$li(tags$a(href = x$href, textTags))
       }
     })
@@ -560,6 +550,19 @@ navbar_links_tags <- function(links) {
   }
 }
 
+navbar_link_text <- function(x, ...) {
+  if (!is.null(x$icon)) {
+    # find the iconset
+    split <- strsplit(x$icon, "-")
+    if (length(split[[1]]) > 1)
+      iconset <- split[[1]][[1]]
+    else
+      iconset <- ""
+    tagList(tags$span(class = paste(iconset, x$icon)), " ", x$text, ...)
+  }
+  else
+    tagList(x$text, ...)
+}
 
 
 
