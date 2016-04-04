@@ -9,11 +9,9 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Richard Morey" />
 
-<meta name="date" content="2014-09-12" />
 
-<title>Embedding RData files in R Markdown files for more reproducible analyses</title>
+<title>Custom Site Generators</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,24 +21,50 @@
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
+
 <style type="text/css">code{white-space: pre;}</style>
-<link rel="stylesheet"
-      href="site_libs/highlight/textmate.css"
-      type="text/css" />
-<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
-}
-</script>
-
 
 
 <style type="text/css">
@@ -337,47 +361,43 @@ $(document).ready(function () {
 
 
 
-<h1 class="title">Embedding RData files in R Markdown files for more reproducible analyses</h1>
-<h4 class="author"><em>Richard Morey</em></h4>
-<h4 class="date"><em>September 12, 2014</em></h4>
+<h1 class="title">Custom Site Generators</h1>
 
 </div>
 
 
-<p><em>This article is reposted from <a href="http://bayesfactor.blogspot.com/2014/09/embedding-rdata-files-in-R%20Markdown.html">bayesfactor.blogspot.com</a> with the kind permission of Richard Morey.</em></p>
-<p>For those of us interested in reproducible analysis, <a href="http://rmarkdown.rstudio.com/">R Markdown</a> is a great way of communicating our code to other researchers. <a href="http://www.rstudio.com/">RStudio</a>, in particular, makes it very easy to create attractive HTML document containing text, code, and figures, which can then be sent to colleagues or put on the internet for anyone to see. If you aren’t using R Markdown for your statistical analyses, I recommend you start; you’ll never go back to simple script files again (and your colleagues won’t want you to).</p>
-<p>In this post, I describe how to improve your R Markdown by embedding data that can be downloaded by anyone viewing the document in a modern browser with javascript enabled. For a quick look, see the <a href="http://drsmorey.org/Rmarkdown/download_RData.Rmd">example Rmd file</a> and <a href="http://drsmorey.org/Rmarkdown/download_RData.html">resulting HTML file</a>.</p>
-<p>One of the drawbacks of Rmakdown, from a reproducible analysis perspective, is that the data is not a part of the document itself. Typically, an R Markdown file will use R code to load a file from your disk, and when you send the resulting HTML file to a colleague, or put it on the internet, that file is separate. It must be sent in an email or placed on a server to be downloaded.</p>
-<p>This raises the possibility that the data could get separated from the code, and I think this is a terrible thing for reproducible analysis. In my mind, the data and the document and data should travel together as a single document. What we would like is a method of encoding R data into the HTML file such that any user who has access to the HTML file can download it, without even having access to the internet.</p>
-<p>As it turns out, files can be encoded in an HTML document via the <a href="http://en.wikipedia.org/wiki/Data_URI_scheme">URI data scheme</a>. All we need is an R function that encodes the data, and produces a link to enable downloading the data.</p>
-<pre class="r"><code>setDownloadURI = function(list, filename = stop(&quot;&#39;filename&#39; must be specified&quot;), textHTML = &quot;Click here to download the data.&quot;, fileext = &quot;RData&quot;, envir = parent.frame()){
-  require(base64enc,quietly = TRUE)
-  divname = paste(sample(LETTERS),collapse=&quot;&quot;)
-  tf = tempfile(pattern=filename, fileext = fileext)
-  save(list = list, file = tf, envir = envir)
-  filenameWithExt = paste(filename,fileext,sep=&quot;.&quot;)
- 
-  uri = dataURI(file = tf, mime = &quot;application/octet-stream&quot;, encoding = &quot;base64&quot;)
-  cat(&quot;&lt;a style=&#39;text-decoration: none&#39; id=&#39;&quot;,divname,&quot;&#39;&gt;&lt;/a&gt;
-    &lt;script&gt;
-    var a = document.createElement(&#39;a&#39;);
-    var div = document.getElementById(&#39;&quot;,divname,&quot;&#39;);
-    div.appendChild(a);
-    a.setAttribute(&#39;href&#39;, &#39;&quot;,uri,&quot;&#39;);
-    a.innerHTML = &#39;&quot;,textHTML,&quot;&#39; + &#39; (&quot;,filenameWithExt,&quot;)&#39;;
-    if (typeof a.download != &#39;undefined&#39;) {
-      a.setAttribute(&#39;download&#39;, &#39;&quot;,filenameWithExt,&quot;&#39;);
-    }else{
-      a.setAttribute(&#39;onclick&#39;, &#39;confirm(\&quot;Your browser does not support the download HTML5 attribute. You must rename the file to &quot;,filenameWithExt,&quot; after downloading it (or use Chrome/Firefox/Opera). \&quot;)&#39;);
-    }
-    &lt;/script&gt;&quot;,
-    sep=&quot;&quot;)
-}</code></pre>
-<p>The first argument of the function, list, is a character vector containing names of variables to save in the RData file.</p>
-<p>Once this function is declared, all we need to do is call it in our Rmd file. If we use the argument results = ‘asis’ in our R code block, it will inject the appropriate HTML code into our compiled HTML document to allow a download of the embedded data as an RData file, and anyone with the HTML file can download it.</p>
-<p>Unfortunately, blogger will not allow me to embed the data into a post; therefore, a complete, self-contained example Rmd file can be found <a href="http://drsmorey.org/Rmarkdown/download_RData.Rmd">here</a>, and the resulting HTML file can be found <a href="http://drsmorey.org/Rmarkdown/download_RData.html">here</a>.</p>
-<p>Keep in mind, however, that the data file is actually embedded in the HTML file. This means that the resulting HTML file can be very large, if your data file is large. Also consider that data are encoded in base64, which increases the size of the file by about a third over the equivalent RData binary file. For very large data sets, one might consider hosting them outside of the HTML file; but for many purposes, the technique I describe will improve the ease with which you can share reproducible analyses.</p>
-<p><em>Note: Richard has included a slightly cleaned up version of this functionality as <code>createDownloadURI()</code> in the <a href="https://github.com/richarddmorey/BayesFactorExtras/">BayesFactorExtras</a> package, which can be installed on github.</em></p>
+<p>The behavior of the default site generation function (<code>rmarkdown::default_site</code>) is described in the article on <a href="rmarkdown_websites.html">Creating a Website</a>. It is also possible to define a custom site generator that has alternate behavior.</p>
+<div id="site-generator-function" class="section level2">
+<h2>Site Generator Function</h2>
+<p>A site generator is an R function that is bound to by including it in the “site:” field of the “index.Rmd” or “index.md” file. For example:</p>
+<p><strong>index.Rmd</strong></p>
+<div class="sourceCode"><pre class="sourceCode markdown"><code class="sourceCode markdown">---
+title: &quot;My Book&quot;
+output: bookdown::gitbook
+site: bookdown::bookdown_site
+---</code></pre></div>
+<p>A site generation function should return a list with the following elements:</p>
+<dl>
+<dt>name</dt>
+<dd><p>The name for the website (e.g. the parent directory name).</p>
+</dd>
+<dt>output_dir</dt>
+<dd><p>The directory where the website output is written to. This path should be relative to the site directory (e.g. “.” or “_site“)</p>
+</dd>
+<dt>render</dt>
+<dd><p>An R function that can be called to generate the site. The function should accept the <code>input_file</code>, <code>output_format</code>, <code>envir</code>, <code>quiet</code>, and <code>encoding</code> arguments.</p>
+</dd>
+<dt>clean</dt>
+<dd><p>An R function that returns relative paths to the files generated by <code>render_site</code> (these files are the ones which will be removed by the <code>clean_site</code> function.</p>
+</dd>
+</dl>
+<p>Note that the <code>input_file</code> argument will be NULL when the entire site is being generated. It will be set to a specific file name if a front-end tool is attempting to preview it (e.g. RStudio IDE via the Knit button).</p>
+</div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<p>See the source code of the <a href="https://github.com/rstudio/rmarkdown/blob/master/R/render_site.R#L157"><code>rmarkdown::default_site</code></a> function for an example of a site generation function.</p>
+<p>The <strong>bookdown</strong> package also implements a custom site generator via it’s <a href="https://github.com/rstudio/bookdown/blob/master/R/site.R"><code>bookdown::bookdown_site</code></a> function.</p>
+</div>
 
 
 

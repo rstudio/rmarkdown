@@ -1,0 +1,302 @@
+---
+title: "R Markdown Websites"
+output: 
+  html_document:
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+
+You can render collections of R Markdown documents as a website using the `rmarkdown::render_site` function. This article describes the basics of creating websites with R Markdown and provides several examples which you can use as a starting point for your own websites.
+
+#### Installation
+
+The features described here are currently available only within the development version of the **rmarkdown** package which you can install as follows:
+
+```r
+devtools::install_github("rstudio/rmarkdown")
+```
+
+The RStudio IDE also includes integrated support for developing R Markdown websites. These features are available in the current Preview Release of RStudio which you can install from here: [RStudio Preview Release](https://www.rstudio.com/products/rstudio/download/preview/).
+
+## Simple Example
+
+To start with let's walk through a very simple example, a website that includes two pages (Home and About) and a navigation bar to switch between them:
+
+**\_site.yml**
+
+```yaml
+name: "my-website"
+navbar:
+  title: "My Website"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+```
+
+**index.Rmd**
+
+```markdown
+---
+title: "My Website"
+---
+
+Hello, Website!
+```
+
+**about.Rmd**
+
+```markdown
+---
+title: "About This Website"
+---
+
+More about this website.
+```
+
+Note that the minimum requirement for any website is that it have an `index.Rmd` file as well as a `_site.yml` file. If you execute the `rmarkdown::render_site` function from within the directory containing the website the following will occur:
+
+1. All of the Rmd and md files in the root website directory will be rendered into HTML. Note however that markdown files beginning with "_" are not rendered (this is a convention to designate files that are included by top level documents); and
+
+2. The generated HTML files and any supporting files (e.g. CSS) are copied into an output directory (`_site` by default).
+
+The HTML files within the `_site` directory are now ready to deploy as a standalone static website. 
+
+The full source code for simple example above can be found here: <https://github.com/rstudio/rmarkdown-website-examples/tree/master/hello-website>.
+
+
+## Site Authoring
+
+### RStudio
+
+The current [Preview Release](https://www.rstudio.com/products/rstudio/download/preview/) includes additional tools for R Markdown website development. When you create an RStudio project containing an R Markdown website the **Build** pane can be used to call `rmarkdown::render_site` and to display a preview of the site:
+
+<img src="images/build-website.png" width=602 height=270/>
+
+If you want to just build and preview a single Rmd file within a website you can use the **Knit** button as is normally done with standalone R Markdown documents.
+
+RStudio also supports "live preview" of changes that you make to supporting files in your website (e.g. CSS, JavaScript, R scripts shared by multiple Rmd files, etc.). As soon as you save a supporting file within the editor the current preview is updated to reflect the changes.
+
+### Command Line
+
+If you aren't working within RStudio and/or want to build sites from the command line you can just call the `render_site` function directly from within the site directory:
+
+```r
+rmarkdown::render_site()
+```
+
+To render just a single file within a website you pass the file name as the first argument:
+
+```r
+rmarkdown::render_site("about.Rmd")
+```
+
+### knitr Caching
+
+If your website is time consuming to render you may want to enable [knitr caching](authoring_rcodechunks.html#caching) during the development of the site so that you can more rapidly preview changes. To enable caching for an individual chunk just add the `cache = TRUE` chunk option:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r, cache = TRUE}
+data <- longComputation()
+&#96;&#96;&#96;
+</code></pre>
+
+To enable caching for an entire document add `cache = TRUE` to the global chunk option defaults:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+&#96;&#96;&#96;
+</code></pre>
+
+
+## Common Elements
+
+### Content
+
+Typically when creating a website there are various common elements you want to include in all pages (e.g. output options, CSS styles, header and footer elements, etc.). Here's some additions to the example above that makes use of common content elements:
+
+**\_site.yml**
+
+```yaml
+name: "my-website"
+navbar:
+  title: "My Website"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
+    include:
+      after_body: footer.html
+    css: styles.css
+```
+
+**footer.html**
+
+```html
+<p>Copyright &copy; 2016 Skynet, Inc. All rights reserved.</p>
+```
+
+**styles.css**
+
+```css
+blockquote {
+  font-style: italic
+}
+```
+
+Note that we've included an `output` element in our **\_site.yml** file. This defines shared output options for all R Markdown documents within a site. Note that individual documents can also include their own output options, which will be merged with the common options at render time.
+
+As part of our common output options we've specified an HTML footer (via the `include: after-body:` option) and CSS stylesheet. Note that you can also include HTML before the body or in the document `<head>`, see the documentation on [includes](html_document_format.html#includes) for more details.
+
+
+In addition to whatever common options you define, the are two output options which are automatically set when rendering a site:
+
+1. The `self_contained` option is set `FALSE`; and
+
+2. The `lib_dir` option is set to `site_libs`.
+
+These options are set so that dependent files (e.g jQuery, Bootstrap, HTML widget libraries, etc.) are shared across all documents within the site rather than redundantly embedded within each document.
+
+### R Scripts
+
+If you have R code that you'd like to share across multiple R Markdown documents within your site you can simply create an R script (e.g. "utils.R") and then source it within your Rmd files. For example:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
+source("utils.R")
+&#96;&#96;&#96;
+</code></pre>
+
+### Rmd Partials
+
+You may also have common fragments of R Markdown that you want to share across pages within your site. To share Rmd fragments you should name them with a leading underscore (`_`) then include them within their parent Rmd document using the `child` chunk option. For example:
+
+**about.Rmd**
+
+<pre class="markdown">---
+title: "About This Website"
+---
+
+More about this website.
+
+<code>&#96;&#96;&#96;{r, child="_sessioninfo.Rmd"}
+&#96;&#96;&#96;
+</code></pre>
+
+**\_sessioninfo.Rmd**
+
+<pre class="markdown">Session information:
+
+<code>&#96;&#96;&#96;{r}
+sessionInfo()
+&#96;&#96;&#96;
+</code></pre>
+
+The leading underscore is an indicator to the site generation engine that the Rmd is a partial document to be included in other documents so it's not Knit as a standalone document during site rendering.
+
+The full source code for the above examples of using common website elements can be found here: <https://github.com/rstudio/rmarkdown-website-examples/tree/master/common-elements>
+
+## Site Configuration
+
+The **\_site.yml** file has a number of options that affect site output including where it is written and what files are included and excluded from the site. Here's an example that makes use of a few of these options:
+
+```yaml
+name: "my-website"
+output_dir: "_site"
+include: ["import.R"]
+exclude: ["docs.txt", "*.csv"]
+```
+
+The `name` field provides a suggested URL path for your website when it is published (by default this is just the name of the directory containing the site). 
+
+The `output_dir` field indicates which directory to copy site content into ("_site" is the default if none is specified). Note that this can be "." to keep all content within the root website directory alongside the source code.
+
+The `include` and `exclude` fields enable you to override the default behavior visa-vi what files are copied into the output directory. By default, all files within the website directory are copied into the output directory (e.g. "_site") save for the following:
+
+1. Files beginning with "." (hidden files).
+
+2. Files beginning with "_"
+
+3. Files known to contain R source code (e.g. ".R", ".s", ".Rmd"), R data (e.g. ".RData", ".rds"), or configuration data (e.g. ".Rproj", "rsconnect")).
+
+The `include` and `exclude` fields of **\_site.yml** can be used to override this default behavior (wildcards can be used to specify groups of files to be included or excluded).
+
+## Site Navigation
+
+The `navbar` element of **\_site.yml** can be used to define a common navigation bar for your website. You can include internal and external links on the navigation bar as well as drop-down menus for sites with a large number of pages. Note that if your navigation bar's definition is large you can also include it within it's own file (**\_navbar.yml**).
+
+Here's a navigation bar definition that makes use of a variety of features: 
+
+**\_navbar.yml**
+
+```yaml
+title: "My Website"
+type: inverse
+left:
+  - text: "Home"
+    icon: fa-home
+    href: index.html
+  - text: "About"
+    icon: fa-info
+    href: about.html
+  - text: "More"
+    icon: fa-gear
+    menu:
+      - text: "Heading 1"
+      - text: "Page A"
+        href: page_a.html
+      - text: "Page B"
+        href: page_b.html
+      - text: "---------"
+      - text: "Heading 2"
+      - text: "Page C"
+        href: page_c.html
+      - text: "Page D"
+        href: page_d.html
+right:
+  - icon: fa-github fa-lg
+    href: https://github.com
+```
+
+This example demonstrates a number of capabilities of navigation bars:
+
+1. You can use the `type` field to choose between the "default" and "inverse" navigation bar style (each theme includes distinct colors for "default" and "inverse" navigation bars).
+
+2. You can align navigational items either to the `left` or to the `right`.
+
+3. You can include menus on the navigation bar, and those menus can have separators (`text: "--------------"`) and internal headings (`text` without a corresponding `href`).
+
+4. You can include both internal and external links on the navigation bar.
+
+5. You can use icons on the navigation bar. Icons from three different icon sets are available.
+    - [Font Awesome](https://fortawesome.github.io/Font-Awesome/icons/)
+    - [Ionicons](http://ionicons.com/)
+    - [Bootstrap Glyphicons](https://getbootstrap.com/components/#glyphicons)
+
+
+    When referring to an icon you should use it's full name including the icon set prefix (e.g. "fa-github", "ion-social-twitter", "glyphicon-time", etc.). 
+
+
+
+
+
+#### HTML Navigation Bar
+
+If you want to have even more control over the appearance and behavior of the navigation bar you can define it in HTML rather than YAML. If you include a file named **\_navbar.html** in your website directory it will be used as the navigation bar. Here's an example of navigation bar defined in HTML: <https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html>.
+
+Full documentation on syntax of Bootstrap navigation bars can be found here: <http://getbootstrap.com/components/#navbar>.
+
+
+
+
+
+

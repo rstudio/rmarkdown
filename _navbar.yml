@@ -24,6 +24,12 @@ left:
       - text: "Reference Guide [PDF]"
         href: http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf
       - text: "-----------------"
+      - text: "Websites"
+      - text: "R Markdown Websites"
+        href: rmarkdown_websites.html
+      - text: "Custom Site Generators"
+        href: rmarkdown_site_generators.html
+      - text: "-----------------"
       - text: "Shiny"
       - text: "Interactive Documents"
         href: authoring_shiny.html

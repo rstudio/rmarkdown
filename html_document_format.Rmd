@@ -397,53 +397,7 @@ For additional information see the article on [HTML Fragments](html_fragment_for
 
 ## Creating a Website
 
-It's possible to create full websites with R Markdown using a combination of the options described above. To create a website you need to:
-
-1. Create a navigation bar (**\_navbar.html**) to provide a way to navigate between the pages on the website. Here are two examples of navigation bars:
-
-    - Simple: <https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html>
-    - More Complex: <https://github.com/rstudio/rmarkdown/blob/gh-pages/_navbar.html>
-    
-    <br/>
-    Full documentation on syntax of Bootstrap navigation bars can be found here: <http://getbootstrap.com/components/#navbar>.
-
-2. Create a shared options file (**\_output.yaml**) to ensure common options across all pages within the site. This file will typically specify that documents are not `self_contained` and define a common `lib_dir` for JavaScript and CSS dependencies. It may also include common page elements (e.g. Google Analytics or Disqus comments).
-
-    For example, here's a possible **\_output.yaml** file for a website:
-
-    ```yaml
-    html_document:
-      self_contained: false
-      lib_dir: libs
-      includes:
-        in_header: analytics.html
-        after_body: disqus.html
-    ```
-
-3. Add documents to the website (being sure to add them to the **\_navbar.html**). Since common output options are specified in **\_output.yaml** the front matter inside individual documents then only needs to specify the document title:
-
-    ```yaml
-    ---
-    title: "Document Title"
-    ---
-    ```
-    
-4. Add a Makefile which can be used to build all the pages within the site (here is an [example Makefile](https://github.com/rstudio/rmarkdown-website/blob/master/Makefile) which does this.)
-
-Here is a simple example of an R Markdown website that includes all of the components described above: <https://github.com/rstudio/rmarkdown-website>. 
-
-#### Requirements
-
-Support for creating websites as described above is only available in very recent versions of the **rmarkdown** package. You can install the most current version as follows:
-
-```r
-install.packages("rmarkdown", type = "source")
-```
-
-
-
-
-
+You can render collections of R Markdown documents as a website using the `rmarkdown::render_site` function. See the article on [R Markdown Websites](rmarkdown_websites.html) for additional details.
 
 
 

@@ -95,7 +95,7 @@ Many aspects of the LaTeX template used to create PDF documents can be customize
 Available metadata variables include:
 
 Variable|Description
---------|-----------
+------------------------|--------------------------------------------------------------------
 lang|Document language code
 fontsize|Font size (e.g. 10pt, 11pt, 12pt)
 documentclass|LaTeX document class (e.g. article)
