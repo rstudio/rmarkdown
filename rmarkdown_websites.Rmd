@@ -9,9 +9,15 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<style type="text/css">
+h4 {
+  font-size: 24px;
+}
+</style>
+
 ## Overview
 
-You can render collections of R Markdown documents as a website using the `rmarkdown::render_site` function. This article describes the basics of creating websites with R Markdown and provides several examples which you can use as a starting point for your own websites.
+You can render collections of R Markdown documents as a website using the `rmarkdown::render_site` function. This article describes the basics of creating websites with R Markdown and provides some examples which you can use as a starting point for your own websites.
 
 #### Installation
 
@@ -287,13 +293,90 @@ This example demonstrates a number of capabilities of navigation bars:
 
 
 
-
-
 #### HTML Navigation Bar
 
 If you want to have even more control over the appearance and behavior of the navigation bar you can define it in HTML rather than YAML. If you include a file named **\_navbar.html** in your website directory it will be used as the navigation bar. Here's an example of navigation bar defined in HTML: <https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html>.
 
 Full documentation on syntax of Bootstrap navigation bars can be found here: <http://getbootstrap.com/components/#navbar>.
+
+
+## HTML Generation
+
+R Markdown includes many facilities for generation of HTML content from R objects, including:
+
+- The conversion to HTML of standard R output types within code chunks (e.g. textual output, plots, etc.) done automatically by knitr.
+
+- A variety of ways to generate HTML tables, including the `knitr::kable` function and the **xtable** package.
+
+- A large number of available [HTML widgets](http://www.htmlwidgets.org) for outputting rich JavaScript data visualizations.
+
+As a result, for many R Markdown websites you won't need to worry about generating HTML output at all (since it's created automatically).
+
+#### htmltools Package
+
+If the facilities described above don't meet your requirements, you can also generate custom HTML from your R code using the **htmltools** package. The **htmltools** package enables you to write HTML using a convenient R based syntax (this is the same core HTML generation facility used by the [shiny](http://shiny.rstudio.com) package).
+
+Here's an example of an R function that creates a [Bootstrap](https://getbootstrap.com) thumbnail div:
+
+```r
+library(htmltools)
+thumbnail <- function(title, img, href, caption = TRUE) {
+  div(class = "col-sm-4",
+      a(class = "thumbnail", title = title, href = href,
+        img(src = img),
+        div(class = ifelse(caption, "caption", ""),
+          ifelse(caption, title, "")
+        )
+      )
+  )
+}
+```
+
+You can write functions which build HTML like the one above then call them from other R code which combines them with your data to produce dynamic HTML. An R code chunk that makes use of this function might look like this:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
+thumbnail("Apple", "images/apple.png", "https://en.wikipedia.org/wiki/Apple")
+thumbnail("Grape", "images/grape.png", "https://en.wikipedia.org/wiki/Grape")
+thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
+&#96;&#96;&#96;
+</code></pre>
+
+## Publishing Websites
+
+R Markdown websites are static HTML sites that can be deployed to any standard web server. All site content (generated documents and supporting files) are copied into the `_site` directory so deployment is simply a matter of moving that directory to the appropriate directory of a web server.
+
+This section provides additional documentation on publishing websites to several popular hosting services. 
+
+#### GitHub Pages
+
+R Markdown websites are can be hosted using [GitHub Pages](https://pages.github.com/) with two additions to the standard site configuration:
+
+1. Add a file named `.nojekyll` to your site source code directory (this tells GitHub Pages to not process your site with the Jekyll engine).
+
+2. Change your output directory to "." within **\_site.yml**. For example:
+
+        output_dir: "."
+        
+   This keeps all of your output side-by-side with your source code in the root of your website (rather than writing it to the `_site` directory).
+   
+Note that when deploying to GitHub Pages your source code, data, and anything else in your repository is all publicly available alongside your generated website content.
+
+#### Amazon S3
+
+If you have an [Amazon Web Services](http://aws.amazon.com/) account, you can deploy your R Markdown website directly to the S3 storage service. S3-based websites have global replication, support custom domains, and can be accelerated via the use of the Amazon CloudFront CDN.
+
+For additional information on deploying websites to S3 see: <http://docs.aws.amazon.com/gettingstarted/latest/swh/website-hosting-intro.html>.
+
+#### Other Web Hosts
+
+There are a wide variety of options for static web hosting, all of which are compatible with R Markdown websites. This guide includes an overview of several of the more popular services: <http://alignedleft.com/resources/cheap-web-hosting>
+
+
+
+
+    
+
+
 
 
 

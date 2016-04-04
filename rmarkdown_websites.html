@@ -466,9 +466,14 @@ div.tocify {
 </div>
 
 
+<style type="text/css">
+h4 {
+  font-size: 24px;
+}
+</style>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>You can render collections of R Markdown documents as a website using the <code>rmarkdown::render_site</code> function. This article describes the basics of creating websites with R Markdown and provides several examples which you can use as a starting point for your own websites.</p>
+<p>You can render collections of R Markdown documents as a website using the <code>rmarkdown::render_site</code> function. This article describes the basics of creating websites with R Markdown and provides some examples which you can use as a starting point for your own websites.</p>
 <div id="installation" class="section level4">
 <h4>Installation</h4>
 <p>The features described here are currently available only within the development version of the <strong>rmarkdown</strong> package which you can install as follows:</p>
@@ -672,6 +677,64 @@ sessionInfo()
 <h4>HTML Navigation Bar</h4>
 <p>If you want to have even more control over the appearance and behavior of the navigation bar you can define it in HTML rather than YAML. If you include a file named <strong>_navbar.html</strong> in your website directory it will be used as the navigation bar. Here’s an example of navigation bar defined in HTML: <a href="https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html" class="uri">https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html</a>.</p>
 <p>Full documentation on syntax of Bootstrap navigation bars can be found here: <a href="http://getbootstrap.com/components/#navbar" class="uri">http://getbootstrap.com/components/#navbar</a>.</p>
+</div>
+</div>
+<div id="html-generation" class="section level2">
+<h2>HTML Generation</h2>
+<p>R Markdown includes many facilities for generation of HTML content from R objects, including:</p>
+<ul>
+<li><p>The conversion to HTML of standard R output types within code chunks (e.g. textual output, plots, etc.) done automatically by knitr.</p></li>
+<li><p>A variety of ways to generate HTML tables, including the <code>knitr::kable</code> function and the <strong>xtable</strong> package.</p></li>
+<li><p>A large number of available <a href="http://www.htmlwidgets.org">HTML widgets</a> for outputting rich JavaScript data visualizations.</p></li>
+</ul>
+<p>As a result, for many R Markdown websites you won’t need to worry about generating HTML output at all (since it’s created automatically).</p>
+<div id="htmltools-package" class="section level4">
+<h4>htmltools Package</h4>
+<p>If the facilities described above don’t meet your requirements, you can also generate custom HTML from your R code using the <strong>htmltools</strong> package. The <strong>htmltools</strong> package enables you to write HTML using a convenient R based syntax (this is the same core HTML generation facility used by the <a href="http://shiny.rstudio.com">shiny</a> package).</p>
+<p>Here’s an example of an R function that creates a <a href="https://getbootstrap.com">Bootstrap</a> thumbnail div:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(htmltools)
+thumbnail &lt;-<span class="st"> </span>function(title, img, href, <span class="dt">caption =</span> <span class="ot">TRUE</span>) {
+  <span class="kw">div</span>(<span class="dt">class =</span> <span class="st">&quot;col-sm-4&quot;</span>,
+      <span class="kw">a</span>(<span class="dt">class =</span> <span class="st">&quot;thumbnail&quot;</span>, <span class="dt">title =</span> title, <span class="dt">href =</span> href,
+        <span class="kw">img</span>(<span class="dt">src =</span> img),
+        <span class="kw">div</span>(<span class="dt">class =</span> <span class="kw">ifelse</span>(caption, <span class="st">&quot;caption&quot;</span>, <span class="st">&quot;&quot;</span>),
+          <span class="kw">ifelse</span>(caption, title, <span class="st">&quot;&quot;</span>)
+        )
+      )
+  )
+}</code></pre></div>
+<p>You can write functions which build HTML like the one above then call them from other R code which combines them with your data to produce dynamic HTML. An R code chunk that makes use of this function might look like this:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
+thumbnail("Apple", "images/apple.png", "https://en.wikipedia.org/wiki/Apple")
+thumbnail("Grape", "images/grape.png", "https://en.wikipedia.org/wiki/Grape")
+thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
+&#96;&#96;&#96;
+</code></pre>
+</div>
+</div>
+<div id="publishing-websites" class="section level2">
+<h2>Publishing Websites</h2>
+<p>R Markdown websites are static HTML sites that can be deployed to any standard web server. All site content (generated documents and supporting files) are copied into the <code>_site</code> directory so deployment is simply a matter of moving that directory to the appropriate directory of a web server.</p>
+<p>This section provides additional documentation on publishing websites to several popular hosting services.</p>
+<div id="github-pages" class="section level4">
+<h4>GitHub Pages</h4>
+<p>R Markdown websites are can be hosted using <a href="https://pages.github.com/">GitHub Pages</a> with two additions to the standard site configuration:</p>
+<ol style="list-style-type: decimal">
+<li><p>Add a file named <code>.nojekyll</code> to your site source code directory (this tells GitHub Pages to not process your site with the Jekyll engine).</p></li>
+<li><p>Change your output directory to “.” within <strong>_site.yml</strong>. For example:</p>
+<pre><code>output_dir: &quot;.&quot;</code></pre></li>
+</ol>
+<p>This keeps all of your output side-by-side with your source code in the root of your website (rather than writing it to the <code>_site</code> directory).</p>
+<p>Note that when deploying to GitHub Pages your source code, data, and anything else in your repository is all publicly available alongside your generated website content.</p>
+</div>
+<div id="amazon-s3" class="section level4">
+<h4>Amazon S3</h4>
+<p>If you have an <a href="http://aws.amazon.com/">Amazon Web Services</a> account, you can deploy your R Markdown website directly to the S3 storage service. S3-based websites have global replication, support custom domains, and can be accelerated via the use of the Amazon CloudFront CDN.</p>
+<p>For additional information on deploying websites to S3 see: <a href="http://docs.aws.amazon.com/gettingstarted/latest/swh/website-hosting-intro.html" class="uri">http://docs.aws.amazon.com/gettingstarted/latest/swh/website-hosting-intro.html</a>.</p>
+</div>
+<div id="other-web-hosts" class="section level4">
+<h4>Other Web Hosts</h4>
+<p>There are a wide variety of options for static web hosting, all of which are compatible with R Markdown websites. This guide includes an overview of several of the more popular services: <a href="http://alignedleft.com/resources/cheap-web-hosting" class="uri">http://alignedleft.com/resources/cheap-web-hosting</a></p>
 </div>
 </div>
 
