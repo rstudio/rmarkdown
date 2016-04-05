@@ -230,6 +230,14 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
 
       # move outputs
       for (output in outputs) {
+
+        # don't move it if it's a _files dir that has a _cache dir
+        if (grepl("^.*_files$", output)) {
+          cache_dir <- gsub("_files$", "_cache", output)
+          if (dir_exists(cache_dir))
+            next;
+        }
+
         output_dest <- file.path(output_dir, basename(output))
         if (dir_exists(output_dest))
           unlink(output_dest, recursive = TRUE)
@@ -263,6 +271,11 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
     # get html files
     html_files <- file_with_ext(files, "html")
 
+    # _files peers are always removed (they could be here due to
+    # output_dir == "." or due to a _cache existing for the page)
+    html_supporting <- paste0(knitr_files_dir(html_files), '/')
+    generated <- c(generated, html_supporting)
+
     # _cache peers are always removed
     html_cache <- paste0(knitr_root_cache_dir(html_files), '/')
     generated <- c(generated, html_cache)
@@ -274,12 +287,8 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       # .html peers
       generated <- c(generated, html_files)
 
-      # _files peers
-      html_supporting <- paste0(knitr_files_dir(html_files), '/')
-      generated <- c(generated, html_supporting)
-
-      # lib dir
-      generated <- c(generated, "lib/")
+      # site_libs dir
+      generated <- c(generated, "site_libs/")
 
     # for an explicit output_dir just remove the directory
     } else {
