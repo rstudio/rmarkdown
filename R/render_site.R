@@ -43,10 +43,6 @@ render_site <- function(input = ".",
   output <- file.path(input, generator$output_dir, output)
   output <- normalized_relative_to(input, output)
 
-  # print the name of the output file (for RStudio Preview)
-  if (!quiet)
-    message("\nOutput created: ", output)
-
   # return it invisibly
   invisible(output)
 }
@@ -256,6 +252,17 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
 
       # copy other files
       copy_site_resources(input, encoding)
+    }
+
+    # Print output created for rstudio preview
+    if (!quiet) {
+      # determine output file
+      output_file <- ifelse(is.null(input_file),
+                            "index.html",
+                            file_with_ext(basename(input_file), "html"))
+      if (config$output_dir != ".")
+        output_file <- file.path(config$output_dir, output_file)
+      message("\nOutput created: ", output_file)
     }
   }
 

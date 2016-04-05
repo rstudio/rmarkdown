@@ -123,7 +123,15 @@ A site generation function should return a list with the following elements:
   by the \code{clean_site} function.}
 }
 
-Note that the \code{input_file} argument will be \code{NULL} when the entire site is being generated. It will be set to a specific filename if a front-end tool is attempting to preview it (e.g. RStudio IDE via the Knit button).
+Note that the \code{input_file} argument will be \code{NULL} when the entire site is being generated. It will be set to a specific file name if a front-end tool is attempting to preview it (e.g. RStudio IDE via the Knit button).
+
+When \code{quiet = FALSE} the \code{render} function should also print a line of output using the \code{\link{message}} function indicating which output file should be previewed, for example:
+
+\preformatted{if (!quiet)
+  message("\nOutput created: ", output)
+}
+
+Emitting this line enables front-ends like RStudio to determine which file they should open to preview the website.
 
 See the source code of the \code{rmarkdown::default_site} function for a
 example of a site generation function.
