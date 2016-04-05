@@ -259,8 +259,8 @@ navbar:
         - text: "Page D"
           href: page_d.html
   right:
-    - icon: fa-github fa-lg
-      href: https://github.com
+    - icon: fa-question fa-lg
+      href: https://example.com
 ```
 
 This example demonstrates a number of capabilities of navigation bars:
