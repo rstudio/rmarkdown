@@ -10,16 +10,20 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <style type="text/css">
-h4 {
+#site-navigation h4,
+#html-generation h4,
+#publishing-websites h4 {
   font-size: 24px;
+}
+
+img {
+  border: 1px solid #ccc;
 }
 </style>
 
 ## Overview
 
 You can render collections of R Markdown documents as a website using the `rmarkdown::render_site` function. This article describes the basics of creating websites with R Markdown and provides some examples which you can use as a starting point for your own websites.
-
-#### Installation
 
 The features described here are currently available only within the development version of the **rmarkdown** package which you can install as follows:
 
@@ -68,9 +72,9 @@ More about this website.
 
 Note that the minimum requirement for any website is that it have an `index.Rmd` file as well as a `_site.yml` file. If you execute the `rmarkdown::render_site` function from within the directory containing the website the following will occur:
 
-1. All of the Rmd and md files in the root website directory will be rendered into HTML. Note however that markdown files beginning with "_" are not rendered (this is a convention to designate files that are included by top level documents); and
+1. All of the Rmd and md files in the root website directory will be rendered into HTML. Note however that markdown files beginning with "_" are not rendered (this is a convention to designate files that are included by top level documents).
 
-2. The generated HTML files and any supporting files (e.g. CSS) are copied into an output directory (`_site` by default).
+2. The generated HTML files and any supporting files (e.g. CSS and JavaScript) are copied into an output directory (`_site` by default).
 
 The HTML files within the `_site` directory are now ready to deploy as a standalone static website. 
 
@@ -81,38 +85,60 @@ The full source code for simple example above can be found here: <https://github
 
 ### RStudio
 
-The current [Preview Release](https://www.rstudio.com/products/rstudio/download/preview/) includes additional tools for R Markdown website development. When you create an RStudio project containing an R Markdown website the **Build** pane can be used to call `rmarkdown::render_site` and to display a preview of the site:
+RStudio includes a variety of features intended to make developing R Markdown websites more productive. These features are available only in the current [Preview Release](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio so you should download and install it before trying out the features described below.
+
+#### Individual Pages
+
+As you work on the individual pages of your website you can render them using the **Knit** button just as you do with conventional standalone R Markdown documents:
+
+<img src="images/knit-page.png" width=601 height=158/>
+
+Knitting an individual page will only render and preview that page, not the other pages in the website.
+
+#### Entire Website
+
+To render all of the pages in the website you use the **Build** pane, which calls `rmarkdown::render_site` to build and then preview the entire site:
 
 <img src="images/build-website.png" width=602 height=270/>
 
-If you want to just build and preview a single Rmd file within a website you can use the **Knit** button as is normally done with standalone R Markdown documents.
+#### Supporting Files
 
-RStudio also supports "live preview" of changes that you make to supporting files in your website (e.g. CSS, JavaScript, R scripts shared by multiple Rmd files, etc.). As soon as you save a supporting file within the editor the current preview is updated to reflect the changes.
+RStudio supports "live preview" of changes that you make to supporting files within your website (e.g. CSS, JavaScript, Rmd partials, R scripts, YAML config files, etc.). 
+
+Changes to CSS and JavaScript files always result in a refresh of the currently active page preview. Changes to other files (e.g. shared scripts and config files) trigger a re-knit of the active page preview (this behavior can be disabled via the options dialog available from the Build pane). 
+
+Note that only the active page is re-knit so once you are happy with the results of rendering you should be sure to rebuild the entire site from the **Build** pane to ensure that all pages inherit your changes.
+
+#### Side by Side Preview
+
+When working iteratively on a page you might find it more convenient to preview it side-by-side with the editor rather than in an external window. You can configure RStudio to do this using the options menu on the editor toolbar:
+
+<img src="images/viewer-preview.png" width=601 height=175/>
 
 ### Command Line
 
-If you aren't working within RStudio and/or want to build sites from the command line you can just call the `render_site` function directly from within the site directory:
+#### Rendering
+
+If you aren't working within RStudio and/or want to build sites from the command line you can call the `render_site` function directly from within the website directory. Pass no arguments to render the entire site or a single file in order to render just that file:
 
 ```r
+# render the entire site
 rmarkdown::render_site()
-```
 
-To render just a single file within a website you pass the file name as the first argument:
-
-```r
+# render a single file only
 rmarkdown::render_site("about.Rmd")
 ```
 
-To clean up all of the files generated via `render_site` you can call the `clean_site` function, which will remove all files generated by rendering your site's markdown documents including knitr `_cache` directories. For example:
+#### Cleaning Up
+
+To clean up all of the files generated via `render_site` you can call the `clean_site` function, which will remove all files generated by rendering your site's markdown documents including knitr `_cache` directories. You can specify the `preview = FALSE` option to just list the files to be removed rather than actually removing them:
 
 ```r
-rmarkdown::clean_site()
-```
-
-You can optionally preview which files will be removed during a clean operation by specifying the `preview = TRUE` argument:
-
-```r
+# list which files will be removed
 rmarkdown::clean_site(preview = TRUE)
+
+# actually remove the files
+rmarkdown::clean_site()
 ```
 
 ### knitr Caching
@@ -131,13 +157,13 @@ knitr::opts_chunk$set(cache=TRUE)
 &#96;&#96;&#96;
 </code></pre>
 
-Note that when knitr caching is enabled for an Rmd it's `_files` dir will be copied rather than moved to the `_site` directory (since the cache requires references to generated figures in the `_files` directory).
+Note that when knitr caching is enabled for an Rmd it's `_files` directory will be copied rather than moved to the `_site` directory (since the cache requires references to generated figures in the `_files` directory).
 
 ## Common Elements
 
 ### Content
 
-Typically when creating a website there are various common elements you want to include in all pages (e.g. output options, CSS styles, header and footer elements, etc.). Here's some additions to the example above that makes use of common content elements:
+Typically when creating a website there are various common elements you want to include in all pages (e.g. output options, CSS styles, header and footer elements, etc.). Here's some additions to the example above that makes use of common elements:
 
 **\_site.yml**
 
@@ -173,7 +199,7 @@ blockquote {
 }
 ```
 
-Note that we've included an `output` element in our **\_site.yml** file. This defines shared output options for all R Markdown documents within a site. Note that individual documents can also include their own output options, which will be merged with the common options at render time.
+Note that we've included an `output` element within our **\_site.yml** file. This defines shared output options for all R Markdown documents within a site. Note that individual documents can also include their own output options, which will be merged with the common options at render time.
 
 As part of our common output options we've specified an HTML footer (via the `include: after-body:` option) and CSS stylesheet. Note that you can also include HTML before the body or in the document `<head>`, see the documentation on [includes](html_document_format.html#includes) for more details.
 
@@ -197,7 +223,7 @@ source("utils.R")
 
 ### Rmd Partials
 
-You may also have common fragments of R Markdown that you want to share across pages within your site. To share Rmd fragments you should name them with a leading underscore (`_`) then include them within their parent Rmd document using the `child` chunk option. For example:
+You may have common fragments of R Markdown that you want to share across pages within your site. To share Rmd fragments you should name them with a leading underscore (`_`) then include them within their parent Rmd document using the `child` chunk option. For example:
 
 **about.Rmd**
 
@@ -222,7 +248,7 @@ sessionInfo()
 
 The leading underscore is an indicator to the site generation engine that the Rmd is a partial document to be included in other documents so it's not Knit as a standalone document during site rendering.
 
-The full source code for the above examples of using common website elements can be found here: <https://github.com/rstudio/rmarkdown-website-examples/tree/master/common-elements>
+The full source code for the above example can be found here: <https://github.com/rstudio/rmarkdown-website-examples/tree/master/common-elements>
 
 ## Site Navigation
 
@@ -292,11 +318,11 @@ Full documentation on syntax of Bootstrap navigation bars can be found here: <ht
 
 R Markdown includes many facilities for generation of HTML content from R objects, including:
 
-- The conversion to HTML of standard R output types within code chunks (e.g. textual output, plots, etc.) done automatically by knitr.
+- The conversion to HTML of standard R output types (e.g. textual output, plots, etc.) within code chunks done automatically by knitr.
 
 - A variety of ways to generate HTML tables, including the `knitr::kable` function and the **xtable** package.
 
-- A large number of available [HTML widgets](http://www.htmlwidgets.org) for outputting rich JavaScript data visualizations.
+- A large number of available [HTML widgets](http://www.htmlwidgets.org) that provide rich JavaScript data visualizations.
 
 As a result, for many R Markdown websites you won't need to worry about generating HTML output at all (since it's created automatically).
 
@@ -375,7 +401,7 @@ R Markdown websites are can be hosted using [GitHub Pages](https://pages.github.
         
    This keeps all of your output side-by-side with your source code in the root of your website (rather than writing it to the `_site` directory).
    
-Note that when deploying to GitHub Pages your source code, data, and anything else in your repository is all publicly available alongside your generated website content.
+Note that when deploying to GitHub Pages your source code, data, and everything else in your repository is all publicly available alongside your generated website content.
 
 You can find an example of a minimal R Markdown website configured for publishing to GitHub Pages here: <https://github.com/rstudio/rmarkdown-website-examples/tree/master/gh-pages>.
 
@@ -387,7 +413,7 @@ For additional information on deploying websites to S3 see: <http://docs.aws.ama
 
 #### Other Web Hosts
 
-There are a wide variety of options for static web hosting, all of which are compatible with R Markdown websites. This guide includes an overview of several of the more popular services: <http://alignedleft.com/resources/cheap-web-hosting>
+There are a wide variety of options for static web hosting, all of which are compatible with R Markdown websites. This guide includes an overview of several of the more popular services: <http://alignedleft.com/resources/cheap-web-hosting>.
 
 
 

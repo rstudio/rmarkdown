@@ -467,19 +467,22 @@ div.tocify {
 
 
 <style type="text/css">
-h4 {
+#site-navigation h4,
+#html-generation h4,
+#publishing-websites h4 {
   font-size: 24px;
+}
+
+img {
+  border: 1px solid #ccc;
 }
 </style>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
 <p>You can render collections of R Markdown documents as a website using the <code>rmarkdown::render_site</code> function. This article describes the basics of creating websites with R Markdown and provides some examples which you can use as a starting point for your own websites.</p>
-<div id="installation" class="section level4">
-<h4>Installation</h4>
 <p>The features described here are currently available only within the development version of the <strong>rmarkdown</strong> package which you can install as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;rstudio/rmarkdown&quot;</span>)</code></pre></div>
 <p>The RStudio IDE also includes integrated support for developing R Markdown websites. These features are available in the current Preview Release of RStudio which you can install from here: <a href="https://www.rstudio.com/products/rstudio/download/preview/">RStudio Preview Release</a>.</p>
-</div>
 </div>
 <div id="simple-example" class="section level2">
 <h2>Simple Example</h2>
@@ -507,8 +510,8 @@ title: &quot;About This Website&quot;
 More about this website.</code></pre></div>
 <p>Note that the minimum requirement for any website is that it have an <code>index.Rmd</code> file as well as a <code>_site.yml</code> file. If you execute the <code>rmarkdown::render_site</code> function from within the directory containing the website the following will occur:</p>
 <ol style="list-style-type: decimal">
-<li><p>All of the Rmd and md files in the root website directory will be rendered into HTML. Note however that markdown files beginning with “_&quot; are not rendered (this is a convention to designate files that are included by top level documents); and</p></li>
-<li><p>The generated HTML files and any supporting files (e.g. CSS) are copied into an output directory (<code>_site</code> by default).</p></li>
+<li><p>All of the Rmd and md files in the root website directory will be rendered into HTML. Note however that markdown files beginning with “_&quot; are not rendered (this is a convention to designate files that are included by top level documents).</p></li>
+<li><p>The generated HTML files and any supporting files (e.g. CSS and JavaScript) are copied into an output directory (<code>_site</code> by default).</p></li>
 </ol>
 <p>The HTML files within the <code>_site</code> directory are now ready to deploy as a standalone static website.</p>
 <p>The full source code for simple example above can be found here: <a href="https://github.com/rstudio/rmarkdown-website-examples/tree/master/hello-website" class="uri">https://github.com/rstudio/rmarkdown-website-examples/tree/master/hello-website</a>.</p>
@@ -517,21 +520,50 @@ More about this website.</code></pre></div>
 <h2>Site Authoring</h2>
 <div id="rstudio" class="section level3">
 <h3>RStudio</h3>
-<p>The current <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release</a> includes additional tools for R Markdown website development. When you create an RStudio project containing an R Markdown website the <strong>Build</strong> pane can be used to call <code>rmarkdown::render_site</code> and to display a preview of the site:</p>
+<p>RStudio includes a variety of features intended to make developing R Markdown websites more productive. These features are available only in the current <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release</a> of RStudio so you should download and install it before trying out the features described below.</p>
+<div id="individual-pages" class="section level4">
+<h4>Individual Pages</h4>
+<p>As you work on the individual pages of your website you can render them using the <strong>Knit</strong> button just as you do with conventional standalone R Markdown documents:</p>
+<p><img src="images/knit-page.png" width=601 height=158/></p>
+<p>Knitting an individual page will only render and preview that page, not the other pages in the website.</p>
+</div>
+<div id="entire-website" class="section level4">
+<h4>Entire Website</h4>
+<p>To render all of the pages in the website you use the <strong>Build</strong> pane, which calls <code>rmarkdown::render_site</code> to build and then preview the entire site:</p>
 <p><img src="images/build-website.png" width=602 height=270/></p>
-<p>If you want to just build and preview a single Rmd file within a website you can use the <strong>Knit</strong> button as is normally done with standalone R Markdown documents.</p>
-<p>RStudio also supports “live preview” of changes that you make to supporting files in your website (e.g. CSS, JavaScript, R scripts shared by multiple Rmd files, etc.). As soon as you save a supporting file within the editor the current preview is updated to reflect the changes.</p>
+</div>
+<div id="supporting-files" class="section level4">
+<h4>Supporting Files</h4>
+<p>RStudio supports “live preview” of changes that you make to supporting files within your website (e.g. CSS, JavaScript, Rmd partials, R scripts, YAML config files, etc.).</p>
+<p>Changes to CSS and JavaScript files always result in a refresh of the currently active page preview. Changes to other files (e.g. shared scripts and config files) trigger a re-knit of the active page preview (this behavior can be disabled via the options dialog available from the Build pane).</p>
+<p>Note that only the active page is re-knit so once you are happy with the results of rendering you should be sure to rebuild the entire site from the <strong>Build</strong> pane to ensure that all pages inherit your changes.</p>
+</div>
+<div id="side-by-side-preview" class="section level4">
+<h4>Side by Side Preview</h4>
+<p>When working iteratively on a page you might find it more convenient to preview it side-by-side with the editor rather than in an external window. You can configure RStudio to do this using the options menu on the editor toolbar:</p>
+<p><img src="images/viewer-preview.png" width=601 height=175/></p>
+</div>
 </div>
 <div id="command-line" class="section level3">
 <h3>Command Line</h3>
-<p>If you aren’t working within RStudio and/or want to build sites from the command line you can just call the <code>render_site</code> function directly from within the site directory:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rmarkdown::<span class="kw">render_site</span>()</code></pre></div>
-<p>To render just a single file within a website you pass the file name as the first argument:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rmarkdown::<span class="kw">render_site</span>(<span class="st">&quot;about.Rmd&quot;</span>)</code></pre></div>
-<p>To clean up all of the files generated via <code>render_site</code> you can call the <code>clean_site</code> function, which will remove all files generated by rendering your site’s markdown documents including knitr <code>_cache</code> directories. For example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rmarkdown::<span class="kw">clean_site</span>()</code></pre></div>
-<p>You can optionally preview which files will be removed during a clean operation by specifying the <code>preview = TRUE</code> argument:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rmarkdown::<span class="kw">clean_site</span>(<span class="dt">preview =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div id="rendering" class="section level4">
+<h4>Rendering</h4>
+<p>If you aren’t working within RStudio and/or want to build sites from the command line you can call the <code>render_site</code> function directly from within the website directory. Pass no arguments to render the entire site or a single file in order to render just that file:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># render the entire site</span>
+rmarkdown::<span class="kw">render_site</span>()
+
+<span class="co"># render a single file only</span>
+rmarkdown::<span class="kw">render_site</span>(<span class="st">&quot;about.Rmd&quot;</span>)</code></pre></div>
+</div>
+<div id="cleaning-up" class="section level4">
+<h4>Cleaning Up</h4>
+<p>To clean up all of the files generated via <code>render_site</code> you can call the <code>clean_site</code> function, which will remove all files generated by rendering your site’s markdown documents including knitr <code>_cache</code> directories. You can specify the <code>preview = FALSE</code> option to just list the files to be removed rather than actually removing them:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># list which files will be removed</span>
+rmarkdown::<span class="kw">clean_site</span>(<span class="dt">preview =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># actually remove the files</span>
+rmarkdown::<span class="kw">clean_site</span>()</code></pre></div>
+</div>
 </div>
 <div id="knitr-caching" class="section level3">
 <h3>knitr Caching</h3>
@@ -545,14 +577,14 @@ data <- longComputation()
 knitr::opts_chunk$set(cache=TRUE)
 &#96;&#96;&#96;
 </code></pre>
-<p>Note that when knitr caching is enabled for an Rmd it’s <code>_files</code> dir will be copied rather than moved to the <code>_site</code> directory (since the cache requires references to generated figures in the <code>_files</code> directory).</p>
+<p>Note that when knitr caching is enabled for an Rmd it’s <code>_files</code> directory will be copied rather than moved to the <code>_site</code> directory (since the cache requires references to generated figures in the <code>_files</code> directory).</p>
 </div>
 </div>
 <div id="common-elements" class="section level2">
 <h2>Common Elements</h2>
 <div id="content" class="section level3">
 <h3>Content</h3>
-<p>Typically when creating a website there are various common elements you want to include in all pages (e.g. output options, CSS styles, header and footer elements, etc.). Here’s some additions to the example above that makes use of common content elements:</p>
+<p>Typically when creating a website there are various common elements you want to include in all pages (e.g. output options, CSS styles, header and footer elements, etc.). Here’s some additions to the example above that makes use of common elements:</p>
 <p><strong>_site.yml</strong></p>
 <div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="fu">name:</span> <span class="st">&quot;my-website&quot;</span>
 <span class="fu">navbar:</span>
@@ -575,7 +607,7 @@ knitr::opts_chunk$set(cache=TRUE)
 <div class="sourceCode"><pre class="sourceCode css"><code class="sourceCode css">blockquote <span class="kw">{</span>
   <span class="kw">font-style:</span> <span class="dt">italic</span>
 <span class="kw">}</span></code></pre></div>
-<p>Note that we’ve included an <code>output</code> element in our <strong>_site.yml</strong> file. This defines shared output options for all R Markdown documents within a site. Note that individual documents can also include their own output options, which will be merged with the common options at render time.</p>
+<p>Note that we’ve included an <code>output</code> element within our <strong>_site.yml</strong> file. This defines shared output options for all R Markdown documents within a site. Note that individual documents can also include their own output options, which will be merged with the common options at render time.</p>
 <p>As part of our common output options we’ve specified an HTML footer (via the <code>include: after-body:</code> option) and CSS stylesheet. Note that you can also include HTML before the body or in the document <code>&lt;head&gt;</code>, see the documentation on <a href="html_document_format.html#includes">includes</a> for more details.</p>
 <p>In addition to whatever common options you define, the are two output options which are automatically set when rendering a site:</p>
 <ol style="list-style-type: decimal">
@@ -594,7 +626,7 @@ source("utils.R")
 </div>
 <div id="rmd-partials" class="section level3">
 <h3>Rmd Partials</h3>
-<p>You may also have common fragments of R Markdown that you want to share across pages within your site. To share Rmd fragments you should name them with a leading underscore (<code>_</code>) then include them within their parent Rmd document using the <code>child</code> chunk option. For example:</p>
+<p>You may have common fragments of R Markdown that you want to share across pages within your site. To share Rmd fragments you should name them with a leading underscore (<code>_</code>) then include them within their parent Rmd document using the <code>child</code> chunk option. For example:</p>
 <p><strong>about.Rmd</strong></p>
 <pre class="markdown">---
 title: "About This Website"
@@ -613,7 +645,7 @@ sessionInfo()
 &#96;&#96;&#96;
 </code></pre>
 <p>The leading underscore is an indicator to the site generation engine that the Rmd is a partial document to be included in other documents so it’s not Knit as a standalone document during site rendering.</p>
-<p>The full source code for the above examples of using common website elements can be found here: <a href="https://github.com/rstudio/rmarkdown-website-examples/tree/master/common-elements" class="uri">https://github.com/rstudio/rmarkdown-website-examples/tree/master/common-elements</a></p>
+<p>The full source code for the above example can be found here: <a href="https://github.com/rstudio/rmarkdown-website-examples/tree/master/common-elements" class="uri">https://github.com/rstudio/rmarkdown-website-examples/tree/master/common-elements</a></p>
 </div>
 </div>
 <div id="site-navigation" class="section level2">
@@ -673,9 +705,9 @@ sessionInfo()
 <h2>HTML Generation</h2>
 <p>R Markdown includes many facilities for generation of HTML content from R objects, including:</p>
 <ul>
-<li><p>The conversion to HTML of standard R output types within code chunks (e.g. textual output, plots, etc.) done automatically by knitr.</p></li>
+<li><p>The conversion to HTML of standard R output types (e.g. textual output, plots, etc.) within code chunks done automatically by knitr.</p></li>
 <li><p>A variety of ways to generate HTML tables, including the <code>knitr::kable</code> function and the <strong>xtable</strong> package.</p></li>
-<li><p>A large number of available <a href="http://www.htmlwidgets.org">HTML widgets</a> for outputting rich JavaScript data visualizations.</p></li>
+<li><p>A large number of available <a href="http://www.htmlwidgets.org">HTML widgets</a> that provide rich JavaScript data visualizations.</p></li>
 </ul>
 <p>As a result, for many R Markdown websites you won’t need to worry about generating HTML output at all (since it’s created automatically).</p>
 <div id="htmltools-package" class="section level4">
@@ -733,7 +765,7 @@ thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
 <pre><code>output_dir: &quot;.&quot;</code></pre></li>
 </ol>
 <p>This keeps all of your output side-by-side with your source code in the root of your website (rather than writing it to the <code>_site</code> directory).</p>
-<p>Note that when deploying to GitHub Pages your source code, data, and anything else in your repository is all publicly available alongside your generated website content.</p>
+<p>Note that when deploying to GitHub Pages your source code, data, and everything else in your repository is all publicly available alongside your generated website content.</p>
 <p>You can find an example of a minimal R Markdown website configured for publishing to GitHub Pages here: <a href="https://github.com/rstudio/rmarkdown-website-examples/tree/master/gh-pages" class="uri">https://github.com/rstudio/rmarkdown-website-examples/tree/master/gh-pages</a>.</p>
 </div>
 <div id="amazon-s3" class="section level4">
@@ -743,7 +775,7 @@ thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
 </div>
 <div id="other-web-hosts" class="section level4">
 <h4>Other Web Hosts</h4>
-<p>There are a wide variety of options for static web hosting, all of which are compatible with R Markdown websites. This guide includes an overview of several of the more popular services: <a href="http://alignedleft.com/resources/cheap-web-hosting" class="uri">http://alignedleft.com/resources/cheap-web-hosting</a></p>
+<p>There are a wide variety of options for static web hosting, all of which are compatible with R Markdown websites. This guide includes an overview of several of the more popular services: <a href="http://alignedleft.com/resources/cheap-web-hosting" class="uri">http://alignedleft.com/resources/cheap-web-hosting</a>.</p>
 </div>
 </div>
 
