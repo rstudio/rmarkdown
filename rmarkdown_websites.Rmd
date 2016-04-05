@@ -377,6 +377,8 @@ R Markdown websites are can be hosted using [GitHub Pages](https://pages.github.
    
 Note that when deploying to GitHub Pages your source code, data, and anything else in your repository is all publicly available alongside your generated website content.
 
+You can find an example of a minimal R Markdown website configured for publishing to GitHub Pages here: <https://github.com/rstudio/rmarkdown-website-examples/tree/master/gh-pages>.
+
 #### Amazon S3
 
 If you have an [Amazon Web Services](http://aws.amazon.com/) account, you can deploy your R Markdown website directly to the S3 storage service. S3-based websites have global replication, support custom domains, and can be accelerated via the use of the Amazon CloudFront CDN.
