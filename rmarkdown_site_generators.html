@@ -395,6 +395,10 @@ site: bookdown::bookdown_site
 </dd>
 </dl>
 <p>Note that the <code>input_file</code> argument will be NULL when the entire site is being generated. It will be set to a specific file name if a front-end tool is attempting to preview it (e.g. RStudio IDE via the Knit button).</p>
+<p>When <code>quiet = FALSE</code> the <code>render</code> function should also print a line of output using the <code>message</code> function indicating which output file should be previewed, for example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if (!quiet)
+  <span class="kw">message</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Output created: &quot;</span>, output)</code></pre></div>
+<p>Emitting this line enables front-ends like RStudio to determine which file they should open to preview the website.</p>
 </div>
 <div id="examples" class="section level2">
 <h2>Examples</h2>

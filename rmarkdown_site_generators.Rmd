@@ -46,6 +46,15 @@ clean
 
 Note that the `input_file` argument will be NULL when the entire site is being generated. It will be set to a specific file name if a front-end tool is attempting to preview it (e.g. RStudio IDE via the Knit button).
 
+When `quiet = FALSE` the `render` function should also print a line of output using the `message` function indicating which output file should be previewed, for example:
+
+```r
+if (!quiet)
+  message("\nOutput created: ", output)
+```
+
+Emitting this line enables front-ends like RStudio to determine which file they should open to preview the website.
+
 ## Examples
 
 See the source code of the [`rmarkdown::default_site`](https://github.com/rstudio/rmarkdown/blob/master/R/render_site.R#L157) function for an example of a site generation function.
