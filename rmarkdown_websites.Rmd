@@ -359,6 +359,8 @@ The `name` field provides a suggested URL path for your website when it is publi
 
 The `output_dir` field indicates which directory to copy site content into ("_site" is the default if none is specified). Note that this can be "." to keep all content within the root website directory alongside the source code.
 
+### Included Files {.toc-ignore}
+
 The `include` and `exclude` fields enable you to override the default behavior visa-vi what files are copied into the output directory. By default, all files within the website directory are copied into the output directory (e.g. "_site") save for the following:
 
 1. Files beginning with "." (hidden files).
@@ -404,11 +406,15 @@ For additional information on deploying websites to S3 see: <http://docs.aws.ama
 There are a wide variety of options for static web hosting, all of which are compatible with R Markdown websites. This guide includes an overview of several of the more popular services: <http://alignedleft.com/resources/cheap-web-hosting>.
 
 
+## Additional Examples
 
+Here are some additional examples of websites created with R Markdown: 
 
-    
-
-
+Site|Description|Source
+|----------|--------------------------------------------------|---------|
+[rmarkdown](http://rmarkdown.rstudio.com) | This website was created using R Markdown. There are a large number of pages (over 40) that are organized using sub-menus on the navigation bar. Disqus comments are included on each page via an after_body include.| [View code](https://github.com/rstudio/rmarkdown/tree/gh-pages) 
+[flexdashboard](https://rstudio.github.io/flexdashboard) | Documentation for the flexdashboard R package. Illustrates using an R script to dynamically generate HTML thumbnails of flexdashboard examples from YAML. | [View code](https://github.com/rstudio/flexdashboard/tree/gh-pages)
+[bookdown](https://bookdown.org) | Home page for the bookdown R package and publishing service. Illustrates creating a site with a completely custom theme (no use of Bootstrap). | [View code](https://github.com/rstudio/bookdown/tree/master/inst/homepage)
 
 
 
