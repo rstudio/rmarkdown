@@ -94,6 +94,7 @@ h6 {
 }
 </style>
 
+<link rel="stylesheet" href="styles.css" type="text/css" />
 
 </head>
 
@@ -191,6 +192,12 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
     // establish options
     var options = {
       selectors: "h1,h2,h3",
@@ -199,7 +206,7 @@ $(document).ready(function ()  {
       hashGenerator: function (text) {
         return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
-      ignoreSelector: "h1.title, .toc-ignore",
+      ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
     options.showAndHide = false;
@@ -461,22 +468,11 @@ div.tocify {
 
 
 
-<h1 class="title">R Markdown Websites</h1>
+<h1 class="title toc-ignore">R Markdown Websites</h1>
 
 </div>
 
 
-<style type="text/css">
-#site-navigation h4,
-#html-generation h4,
-#publishing-websites h4 {
-  font-size: 24px;
-}
-
-img {
-  border: 1px solid #ccc;
-}
-</style>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
 <p>You can render collections of R Markdown documents as a website using the <code>rmarkdown::render_site</code> function. This article describes the basics of creating websites with R Markdown and provides some examples which you can use as a starting point for your own websites.</p>
@@ -524,13 +520,13 @@ More about this website.</code></pre></div>
 <div id="individual-pages" class="section level4">
 <h4>Individual Pages</h4>
 <p>As you work on the individual pages of your website you can render them using the <strong>Knit</strong> button just as you do with conventional standalone R Markdown documents:</p>
-<p><img src="images/knit-page.png" width=601 height=158/></p>
+<p><img class="screenshot" src="images/knit-page.png" width=601 height=158/></p>
 <p>Knitting an individual page will only render and preview that page, not the other pages in the website.</p>
 </div>
 <div id="entire-website" class="section level4">
 <h4>Entire Website</h4>
 <p>To render all of the pages in the website you use the <strong>Build</strong> pane, which calls <code>rmarkdown::render_site</code> to build and then preview the entire site:</p>
-<p><img src="images/build-website.png" width=602 height=270/></p>
+<p><img class="screenshot" src="images/build-website.png" width=602 height=270/></p>
 </div>
 <div id="supporting-files" class="section level4">
 <h4>Supporting Files</h4>
@@ -541,7 +537,7 @@ More about this website.</code></pre></div>
 <div id="side-by-side-preview" class="section level4">
 <h4>Side by Side Preview</h4>
 <p>When working iteratively on a page you might find it more convenient to preview it side-by-side with the editor rather than in an external window. You can configure RStudio to do this using the options menu on the editor toolbar:</p>
-<p><img src="images/viewer-preview.png" width=601 height=175/></p>
+<p><img class="screenshot" src="images/viewer-preview.png" width=601 height=175/></p>
 </div>
 </div>
 <div id="command-line" class="section level3">
@@ -695,8 +691,8 @@ sessionInfo()
 </ul>
 <p>When referring to an icon you should use it’s full name including the icon set prefix (e.g. “fa-github”, “ion-social-twitter”, “glyphicon-time”, etc.).</p></li>
 </ol>
-<div id="html-navigation-bar" class="section level4">
-<h4>HTML Navigation Bar</h4>
+<div id="html-navigation-bar" class="section level3 toc-ignore">
+<h3>HTML Navigation Bar</h3>
 <p>If you want to have even more control over the appearance and behavior of the navigation bar you can define it in HTML rather than YAML. If you include a file named <strong>_navbar.html</strong> in your website directory it will be used as the navigation bar. Here’s an example of navigation bar defined in HTML: <a href="https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html" class="uri">https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html</a>.</p>
 <p>Full documentation on syntax of Bootstrap navigation bars can be found here: <a href="http://getbootstrap.com/components/#navbar" class="uri">http://getbootstrap.com/components/#navbar</a>.</p>
 </div>
@@ -710,8 +706,8 @@ sessionInfo()
 <li><p>A large number of available <a href="http://www.htmlwidgets.org">HTML widgets</a> that provide rich JavaScript data visualizations.</p></li>
 </ul>
 <p>As a result, for many R Markdown websites you won’t need to worry about generating HTML output at all (since it’s created automatically).</p>
-<div id="htmltools-package" class="section level4">
-<h4>htmltools Package</h4>
+<div id="htmltools-package" class="section level3 toc-ignore">
+<h3>htmltools Package</h3>
 <p>If the facilities described above don’t meet your requirements, you can also generate custom HTML from your R code using the <strong>htmltools</strong> package. The <strong>htmltools</strong> package enables you to write HTML using a convenient R based syntax (this is the same core HTML generation facility used by the <a href="http://shiny.rstudio.com">shiny</a> package).</p>
 <p>Here’s an example of an R function that creates a <a href="https://getbootstrap.com">Bootstrap</a> thumbnail div:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(htmltools)
@@ -756,8 +752,8 @@ thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
 <h2>Publishing Websites</h2>
 <p>R Markdown websites are static HTML sites that can be deployed to any standard web server. All site content (generated documents and supporting files) are copied into the <code>_site</code> directory so deployment is simply a matter of moving that directory to the appropriate directory of a web server.</p>
 <p>This section provides additional documentation on publishing websites to several popular hosting services.</p>
-<div id="github-pages" class="section level4">
-<h4>GitHub Pages</h4>
+<div id="github-pages" class="section level3 toc-ignore">
+<h3>GitHub Pages</h3>
 <p>R Markdown websites are can be hosted using <a href="https://pages.github.com/">GitHub Pages</a> with two additions to the standard site configuration:</p>
 <ol style="list-style-type: decimal">
 <li><p>Add a file named <code>.nojekyll</code> to your site source code directory (this tells GitHub Pages to not process your site with the Jekyll engine).</p></li>
@@ -768,13 +764,13 @@ thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
 <p>Note that when deploying to GitHub Pages your source code, data, and everything else in your repository is all publicly available alongside your generated website content.</p>
 <p>You can find an example of a minimal R Markdown website configured for publishing to GitHub Pages here: <a href="https://github.com/rstudio/rmarkdown-website-examples/tree/master/gh-pages" class="uri">https://github.com/rstudio/rmarkdown-website-examples/tree/master/gh-pages</a>.</p>
 </div>
-<div id="amazon-s3" class="section level4">
-<h4>Amazon S3</h4>
+<div id="amazon-s3" class="section level3 toc-ignore">
+<h3>Amazon S3</h3>
 <p>If you have an <a href="http://aws.amazon.com/">Amazon Web Services</a> account, you can deploy your R Markdown website directly to the S3 storage service. S3-based websites have global replication, support custom domains, and can be accelerated via the use of the Amazon CloudFront CDN.</p>
 <p>For additional information on deploying websites to S3 see: <a href="http://docs.aws.amazon.com/gettingstarted/latest/swh/website-hosting-intro.html" class="uri">http://docs.aws.amazon.com/gettingstarted/latest/swh/website-hosting-intro.html</a>.</p>
 </div>
-<div id="other-web-hosts" class="section level4">
-<h4>Other Web Hosts</h4>
+<div id="other-web-hosts" class="section level3 toc-ignore">
+<h3>Other Web Hosts</h3>
 <p>There are a wide variety of options for static web hosting, all of which are compatible with R Markdown websites. This guide includes an overview of several of the more popular services: <a href="http://alignedleft.com/resources/cheap-web-hosting" class="uri">http://alignedleft.com/resources/cheap-web-hosting</a>.</p>
 </div>
 </div>

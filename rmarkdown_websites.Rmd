@@ -9,18 +9,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<style type="text/css">
-#site-navigation h4,
-#html-generation h4,
-#publishing-websites h4 {
-  font-size: 24px;
-}
-
-img {
-  border: 1px solid #ccc;
-}
-</style>
-
 ## Overview
 
 You can render collections of R Markdown documents as a website using the `rmarkdown::render_site` function. This article describes the basics of creating websites with R Markdown and provides some examples which you can use as a starting point for your own websites.
@@ -91,7 +79,7 @@ RStudio includes a variety of features intended to make developing R Markdown we
 
 As you work on the individual pages of your website you can render them using the **Knit** button just as you do with conventional standalone R Markdown documents:
 
-<img src="images/knit-page.png" width=601 height=158/>
+<img class="screenshot" src="images/knit-page.png" width=601 height=158/>
 
 Knitting an individual page will only render and preview that page, not the other pages in the website.
 
@@ -99,7 +87,7 @@ Knitting an individual page will only render and preview that page, not the othe
 
 To render all of the pages in the website you use the **Build** pane, which calls `rmarkdown::render_site` to build and then preview the entire site:
 
-<img src="images/build-website.png" width=602 height=270/>
+<img class="screenshot" src="images/build-website.png" width=602 height=270/>
 
 #### Supporting Files
 
@@ -113,7 +101,7 @@ Note that only the active page is re-knit so once you are happy with the results
 
 When working iteratively on a page you might find it more convenient to preview it side-by-side with the editor rather than in an external window. You can configure RStudio to do this using the options menu on the editor toolbar:
 
-<img src="images/viewer-preview.png" width=601 height=175/>
+<img class="screenshot" src="images/viewer-preview.png" width=601 height=175/>
 
 ### Command Line
 
@@ -307,7 +295,7 @@ This example demonstrates a number of capabilities of navigation bars:
 
     When referring to an icon you should use it's full name including the icon set prefix (e.g. "fa-github", "ion-social-twitter", "glyphicon-time", etc.). 
 
-#### HTML Navigation Bar
+### HTML Navigation Bar {.toc-ignore}
 
 If you want to have even more control over the appearance and behavior of the navigation bar you can define it in HTML rather than YAML. If you include a file named **\_navbar.html** in your website directory it will be used as the navigation bar. Here's an example of navigation bar defined in HTML: <https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html>.
 
@@ -326,7 +314,7 @@ R Markdown includes many facilities for generation of HTML content from R object
 
 As a result, for many R Markdown websites you won't need to worry about generating HTML output at all (since it's created automatically).
 
-#### htmltools Package
+### htmltools Package {.toc-ignore}
 
 If the facilities described above don't meet your requirements, you can also generate custom HTML from your R code using the **htmltools** package. The **htmltools** package enables you to write HTML using a convenient R based syntax (this is the same core HTML generation facility used by the [shiny](http://shiny.rstudio.com) package).
 
@@ -389,7 +377,7 @@ R Markdown websites are static HTML sites that can be deployed to any standard w
 
 This section provides additional documentation on publishing websites to several popular hosting services. 
 
-#### GitHub Pages
+### GitHub Pages {.toc-ignore}
 
 R Markdown websites are can be hosted using [GitHub Pages](https://pages.github.com/) with two additions to the standard site configuration:
 
@@ -405,13 +393,13 @@ Note that when deploying to GitHub Pages your source code, data, and everything 
 
 You can find an example of a minimal R Markdown website configured for publishing to GitHub Pages here: <https://github.com/rstudio/rmarkdown-website-examples/tree/master/gh-pages>.
 
-#### Amazon S3
+### Amazon S3 {.toc-ignore}
 
 If you have an [Amazon Web Services](http://aws.amazon.com/) account, you can deploy your R Markdown website directly to the S3 storage service. S3-based websites have global replication, support custom domains, and can be accelerated via the use of the Amazon CloudFront CDN.
 
 For additional information on deploying websites to S3 see: <http://docs.aws.amazon.com/gettingstarted/latest/swh/website-hosting-intro.html>.
 
-#### Other Web Hosts
+### Other Web Hosts {.toc-ignore}
 
 There are a wide variety of options for static web hosting, all of which are compatible with R Markdown websites. This guide includes an overview of several of the more popular services: <http://alignedleft.com/resources/cheap-web-hosting>.
 
