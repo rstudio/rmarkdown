@@ -27,6 +27,8 @@ rmarkdown 0.9.6 (unreleased)
 
 * Specifying `toc_float` in `html_document` now automatically sets `toc = TRUE`
 
+* Enable per-header opt-out of `toc-float` via {.toc-ignore} attribute
+
 * Correctly handle soft line breaks in ioslides_presentation (#661)
 
 

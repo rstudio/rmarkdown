@@ -219,6 +219,12 @@ $if(toc_float)$
 
 <script>
 $$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $$('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
     // establish options
     var options = {
       selectors: "$toc_selectors$",
@@ -227,7 +233,7 @@ $$(document).ready(function ()  {
       hashGenerator: function (text) {
         return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
-      ignoreSelector: "h1.title, .toc-ignore",
+      ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
 $if(toc_collapsed)$
@@ -345,7 +351,7 @@ $endif$
 $endif$
 
 $if(title)$
-<h1 class="title">$title$</h1>
+<h1 class="title toc-ignore">$title$</h1>
 $if(subtitle)$
 <h3 class="subtitle"><em>$subtitle$</em></h3>
 $endif$
