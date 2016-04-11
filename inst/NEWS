@@ -31,6 +31,8 @@ rmarkdown 0.9.6 (unreleased)
 
 * Correctly handle soft line breaks in ioslides_presentation (#661)
 
+* Don't use text-muted for code folding btns (text visibility in non-default themes)
+
 
 rmarkdown 0.9.5
 --------------------------------------------------------------------------------
