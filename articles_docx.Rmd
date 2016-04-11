@@ -1,7 +1,7 @@
 ---
 title: "Happy collaboration with Rmd to docx"
 author: "Richard Layton"
-date: "`r Sys.Date()`"
+date: "July 21st, 2015"
 output:
   html_document:
     toc_float: false
