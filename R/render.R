@@ -236,6 +236,8 @@ render <- function(input,
     on.exit(knitr::opts_chunk$restore(optc), add = TRUE)
     hooks <- knitr::knit_hooks$get()
     on.exit(knitr::knit_hooks$restore(hooks), add = TRUE)
+    ohooks <- knitr::opts_hooks$get()
+    on.exit(knitr::opts_hooks$restore(ohooks), add = TRUE)
     templates <- knitr::opts_template$get()
     on.exit(knitr::opts_template$restore(templates), add = TRUE)
 
@@ -277,6 +279,7 @@ render <- function(input,
       knitr::opts_chunk$set(as.list(output_format$knitr$opts_chunk))
       knitr::opts_template$set(as.list(output_format$knitr$opts_template))
       knitr::knit_hooks$set(as.list(output_format$knitr$knit_hooks))
+      knitr::opts_hooks$set(as.list(output_format$knitr$opts_hooks))
     }
 
     # presume that we're rendering as a static document unless specified

@@ -5,7 +5,7 @@
 \title{Knitr options for an output format}
 \usage{
 knitr_options(opts_knit = NULL, opts_chunk = NULL, knit_hooks = NULL,
-  opts_template = NULL)
+  opts_hooks = NULL, opts_template = NULL)
 }
 \arguments{
 \item{opts_knit}{List of package level knitr options (see
@@ -16,6 +16,9 @@ knitr_options(opts_knit = NULL, opts_chunk = NULL, knit_hooks = NULL,
 
 \item{knit_hooks}{List of hooks for R code chunks, inline R code, and output
 (see \code{\link[knitr:knit_hooks]{knit_hooks}})}
+
+\item{opts_hooks}{List of hooks for code chunk options
+(see \code{\link[knitr:opts_hooks]{opts_hooks}})}
 
 \item{opts_template}{List of templates for chunk level knitr options (see
 \code{\link[knitr:opts_template]{opts_template}})}
