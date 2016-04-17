@@ -1,6 +1,8 @@
 rmarkdown 0.9.6 (unreleased)
 --------------------------------------------------------------------------------
 
+* Ability to set `opts_hooks` in `knitr_options()` (#672)
+
 * Added `render_site` and related functions for rendering collections of
   documents within a directory as a website.
 
