@@ -145,6 +145,8 @@ merge_pandoc_options <- function(base, overlay) {
 #'   \code{\link[knitr:opts_chunk]{opts_chunk}})
 #' @param knit_hooks List of hooks for R code chunks, inline R code, and output
 #'   (see \code{\link[knitr:knit_hooks]{knit_hooks}})
+#' @param opts_hooks List of hooks for code chunk options
+#'   (see \code{\link[knitr:opts_hooks]{opts_hooks}})
 #' @param opts_template List of templates for chunk level knitr options (see
 #'   \code{\link[knitr:opts_template]{opts_template}})
 #'
@@ -157,10 +159,12 @@ merge_pandoc_options <- function(base, overlay) {
 knitr_options <- function(opts_knit = NULL,
                           opts_chunk = NULL,
                           knit_hooks = NULL,
+                          opts_hooks = NULL,
                           opts_template = NULL) {
   list(opts_knit = opts_knit,
        opts_chunk = opts_chunk,
        knit_hooks = knit_hooks,
+       opts_hooks = opts_hooks,
        opts_template = opts_template)
 }
 
