@@ -15,6 +15,8 @@ rmarkdown 0.9.6 (unreleased)
 
 * Change `fig_caption` default to TRUE for all formats
 
+* Change `fig_retina` to 2 for HTML formats (no longer contingent on `fig_caption`)
+
 * Ensure pandoc binary exists before binding to pandoc directory (#632)
 
 * Handle relative paths for 'default_output_format' (#638)
