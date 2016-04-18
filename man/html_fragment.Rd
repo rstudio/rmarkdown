@@ -5,8 +5,8 @@
 \title{Convert to an HTML fragment.}
 \usage{
 html_fragment(number_sections = FALSE, fig_width = 7, fig_height = 5,
-  fig_retina = if (!fig_caption) 2, fig_caption = TRUE, dev = "png",
-  smart = TRUE, mathjax = TRUE, keep_md = FALSE, md_extensions = NULL,
+  fig_retina = 2, fig_caption = TRUE, dev = "png", smart = TRUE,
+  mathjax = TRUE, keep_md = FALSE, md_extensions = NULL,
   pandoc_args = NULL, ...)
 }
 \arguments{
@@ -16,12 +16,11 @@ html_fragment(number_sections = FALSE, fig_width = 7, fig_height = 5,
 
 \item{fig_height}{Default width (in inches) for figures}
 
-\item{fig_retina}{Scaling to perform for retina displays (defaults to 2 when
-\code{fig_caption} is \code{FALSE}, which currently works for all widely
-used retina displays). Set to \code{NULL} to prevent retina scaling. Note
-that this will always be \code{NULL} when \code{keep_md} is specified (this
-is because \code{fig_retina} relies on outputting HTML directly into the
-markdown document).}
+\item{fig_retina}{Scaling to perform for retina displays (defaults to 2, which
+currently works for all widely used retina displays). Set to\code{NULL} to
+prevent retina scaling. Note that this will always be\code{NULL} when
+\code{keep_md} is specified (this is because \code{fig_retina} relies on
+outputting HTML directly into the markdown document).}
 
 \item{fig_caption}{\code{TRUE} to render figures with captions}
 

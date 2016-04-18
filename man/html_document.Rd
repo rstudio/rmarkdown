@@ -6,7 +6,7 @@
 \usage{
 html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   number_sections = FALSE, fig_width = 7, fig_height = 5,
-  fig_retina = if (!fig_caption) 2, fig_caption = TRUE, dev = "png",
+  fig_retina = 2, fig_caption = TRUE, dev = "png",
   code_folding = c("none", "show", "hide"), smart = TRUE,
   self_contained = TRUE, theme = "default", highlight = "default",
   mathjax = "default", template = "default", extra_dependencies = NULL,
@@ -29,12 +29,11 @@ options that control the behavior of the floating table of contents. See the
 
 \item{fig_height}{Default width (in inches) for figures}
 
-\item{fig_retina}{Scaling to perform for retina displays (defaults to 2 when
-\code{fig_caption} is \code{FALSE}, which currently works for all widely
-used retina displays). Set to \code{NULL} to prevent retina scaling. Note
-that this will always be \code{NULL} when \code{keep_md} is specified (this
-is because \code{fig_retina} relies on outputting HTML directly into the
-markdown document).}
+\item{fig_retina}{Scaling to perform for retina displays (defaults to 2, which
+currently works for all widely used retina displays). Set to\code{NULL} to
+prevent retina scaling. Note that this will always be\code{NULL} when
+\code{keep_md} is specified (this is because \code{fig_retina} relies on
+outputting HTML directly into the markdown document).}
 
 \item{fig_caption}{\code{TRUE} to render figures with captions}
 

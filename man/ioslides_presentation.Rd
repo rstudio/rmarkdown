@@ -6,7 +6,7 @@
 }
 \usage{
 ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
-  fig_height = 4.5, fig_retina = if (!fig_caption) 2, fig_caption = TRUE,
+  fig_height = 4.5, fig_retina = 2, fig_caption = TRUE,
   dev = "png", smart = TRUE, self_contained = TRUE, widescreen = FALSE,
   smaller = FALSE, transition = "default", mathjax = "default", css = NULL,
   includes = NULL, keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
