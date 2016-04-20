@@ -226,6 +226,16 @@ render <- function(input,
   knit_meta_reset()
   on.exit(knit_meta_reset(), add = TRUE)
 
+  # presume that we're rendering as a static document unless specified
+  # otherwise in the parameters
+  runtime <- match.arg(runtime)
+  if (identical(runtime, "auto")) {
+    if (!is.null(yaml_front_matter$runtime))
+      runtime <- yaml_front_matter$runtime
+    else
+      runtime <- "static"
+  }
+
   # knit if necessary
   if (tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")) {
 
@@ -282,15 +292,7 @@ render <- function(input,
       knitr::opts_hooks$set(as.list(output_format$knitr$opts_hooks))
     }
 
-    # presume that we're rendering as a static document unless specified
-    # otherwise in the parameters
-    runtime <- match.arg(runtime)
-    if (identical(runtime, "auto")) {
-      if (!is.null(yaml_front_matter$runtime))
-        runtime <- yaml_front_matter$runtime
-      else
-        runtime <- "static"
-    }
+    # setting the runtime (static/shiny) type
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
     # make the params available within the knit environment
