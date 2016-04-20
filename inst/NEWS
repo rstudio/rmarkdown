@@ -37,6 +37,10 @@ rmarkdown 0.9.6 (unreleased)
 
 * Don't use text-muted for code folding btns (text visibility in non-default themes)
 
+* Fix for rendering non-HTML formats from .md files (resolve runtime before knit)
+
+* `html_dependency_bootstrap` now accepts theme = "default" argument
+
 
 rmarkdown 0.9.5
 --------------------------------------------------------------------------------
