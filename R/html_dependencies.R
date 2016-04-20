@@ -24,6 +24,7 @@ html_dependency_jquery <- function()  {
 #' @rdname html-dependencies
 #' @export
 html_dependency_bootstrap <- function(theme) {
+  if (identical(theme, "default")) theme <- "bootstrap"
   htmlDependency(name = "bootstrap",
                  version = "3.3.5",
                  rmarkdown_system_file("rmd/h/bootstrap-3.3.5"),
