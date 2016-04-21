@@ -19,6 +19,7 @@ ioslides_presentation <- function(logo = NULL,
                                   lib_dir = NULL,
                                   md_extensions = NULL,
                                   pandoc_args = NULL,
+                                  template = NULL,
                                   ...) {
 
   # base pandoc options for all output
@@ -49,9 +50,12 @@ ioslides_presentation <- function(logo = NULL,
   args <- c(args, includes_to_pandoc_args(includes))
 
   # template path and assets
-  args <- c(args,
-            "--template",
-            pandoc_path_arg(rmarkdown_system_file("rmd/ioslides/default.html")))
+  if (!is.null(template) && file.exists(template))
+    args <- c(args, "--template", template)
+  else
+    args <- c(args,
+              "--template",
+              pandoc_path_arg(rmarkdown_system_file("rmd/ioslides/default.html")))
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
