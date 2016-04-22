@@ -10,7 +10,7 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   dev = "png", smart = TRUE, self_contained = TRUE, widescreen = FALSE,
   smaller = FALSE, transition = "default", mathjax = "default", css = NULL,
   includes = NULL, keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
-  pandoc_args = NULL, ...)
+  analytics = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
   \item{logo}{Path to file that includes a logo for use in
@@ -85,6 +85,8 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   \item{md_extensions}{Markdown extensions to be added or
   removed from the default definition or R Markdown. See the
   \code{\link{rmarkdown_format}} for additional details.}
+
+  \item{analytics}{A Google analytics property ID}
 
   \item{pandoc_args}{Additional command line options to
   pass to pandoc}
