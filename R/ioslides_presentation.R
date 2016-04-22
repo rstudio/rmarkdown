@@ -18,8 +18,8 @@ ioslides_presentation <- function(logo = NULL,
                                   keep_md = FALSE,
                                   lib_dir = NULL,
                                   md_extensions = NULL,
-                                  pandoc_args = NULL,
                                   template = NULL,
+                                  pandoc_args = NULL,
                                   ...) {
 
   # base pandoc options for all output
