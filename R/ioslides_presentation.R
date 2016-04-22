@@ -19,6 +19,7 @@ ioslides_presentation <- function(logo = NULL,
                                   lib_dir = NULL,
                                   md_extensions = NULL,
                                   pandoc_args = NULL,
+                                  analytics = NULL,
                                   ...) {
 
   # base pandoc options for all output
@@ -52,6 +53,10 @@ ioslides_presentation <- function(logo = NULL,
   args <- c(args,
             "--template",
             pandoc_path_arg(rmarkdown_system_file("rmd/ioslides/default.html")))
+
+  # analytics
+  if(!is.null(analytics))
+    args <- c(args, '--variable', paste("analytics", analytics, sep = ':'))
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
