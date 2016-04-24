@@ -5,8 +5,9 @@
 \title{Define an R Markdown output format}
 \usage{
 output_format(knitr, pandoc, keep_md = FALSE, clean_supporting = TRUE,
-  post_knit = NULL, pre_processor = NULL, intermediates_generator = NULL,
-  post_processor = NULL, base_format = NULL)
+  pre_knit = NULL, post_knit = NULL, pre_processor = NULL,
+  intermediates_generator = NULL, post_processor = NULL,
+  base_format = NULL)
 }
 \arguments{
 \item{knitr}{Knitr options for an output format (see
@@ -21,6 +22,10 @@ if this is \code{TRUE} then \code{clean_supporting} will always be
 
 \item{clean_supporting}{Cleanup any supporting files after conversion see
 \code{\link{render_supporting_files}}}
+
+\item{pre_knit}{An optional function that runs before kniting which
+receives the \code{input} (input filename passed to \code{render}) and
+\code{...} (for future expansion) arguments.}
 
 \item{post_knit}{An optional function that runs after kniting which
 receives the \code{metadata}, \code{input_file}, \code{runtime}, and \code{...}

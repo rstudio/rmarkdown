@@ -55,6 +55,11 @@ html_document_base <- function(smart = TRUE,
 
   output_dir <- ""
 
+  # dummy pre_knit and post_knit functions so that merging of outputs works
+  pre_knit <- function(input, ...) {}
+  post_knit <- function(metadata, input_file, runtime, ...) {}
+
+  # pre_processor
   pre_processor <- function (metadata, input_file, runtime, knit_meta,
                              files_dir, output_dir) {
 
@@ -163,6 +168,8 @@ html_document_base <- function(smart = TRUE,
     pandoc = pandoc_options(to = "html", from = NULL, args = args),
     keep_md = FALSE,
     clean_supporting = FALSE,
+    pre_knit = pre_knit,
+    post_knit = post_knit,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor

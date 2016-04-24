@@ -8,6 +8,8 @@ rmarkdown 0.9.6 (unreleased)
 
 * Ability to define html_document navigation bar using simple yaml format.
 
+* Added `pre_knit` and `post_knit` hooks for output formats.
+
 * Discover `LaTeX` dependencies and add them to the `.tex` preamble (#647)
 
 * Added new `all_output_formats` function to enumerate all output

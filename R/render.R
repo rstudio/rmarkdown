@@ -236,6 +236,11 @@ render <- function(input,
       runtime <- "static"
   }
 
+  # call any pre_knit handler
+  if (!is.null(output_format$pre_knit)) {
+    output_format$pre_knit(input = original_input)
+  }
+
   # knit if necessary
   if (tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")) {
 

@@ -272,6 +272,9 @@ html_document <- function(toc = FALSE,
   # validate code_folding
   code_folding <- match.arg(code_folding)
 
+  # dummy pre_knit function so that merging of outputs works
+  pre_knit <- function(input, ...) {}
+
   # pre-processor for arguments that may depend on the name of the
   # the input file AND which need to inject html dependencies
   # (otherwise we could just call the pre_processor)
