@@ -111,7 +111,9 @@ pdf_document <- function(toc = FALSE,
 
     # choose the right template
     version <- pandoc_version()
-    if (version >= "1.15.2")
+    if (version >= "1.17.0.2")
+      latex_template <- "default-1.17.0.2.tex"
+    else if (version >= "1.15.2")
       latex_template <- "default-1.15.2.tex"
     else if (version >= "1.14")
       latex_template <- "default-1.14.tex"

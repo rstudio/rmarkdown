@@ -43,6 +43,8 @@ rmarkdown 0.9.6 (unreleased)
 
 * `html_dependency_bootstrap` now accepts theme = "default" argument
 
+* Use pandoc 1.17.0.2 compatible LaTeX template when pandoc >= 1.17.0.2
+
 
 rmarkdown 0.9.5
 --------------------------------------------------------------------------------
