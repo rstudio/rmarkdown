@@ -13,6 +13,7 @@ ioslides_presentation <- function(logo = NULL,
                                   smaller = FALSE,
                                   transition = "default",
                                   mathjax = "default",
+                                  analytics = NULL,
                                   template = NULL,
                                   css = NULL,
                                   includes = NULL,
@@ -56,6 +57,10 @@ ioslides_presentation <- function(logo = NULL,
     args <- c(args,
               "--template",
               pandoc_path_arg(rmarkdown_system_file("rmd/ioslides/default.html")))
+
+  # analytics
+  if(!is.null(analytics))
+    args <- c(args, pandoc_variable_arg("analytics", analytics))
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)

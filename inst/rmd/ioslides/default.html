@@ -38,6 +38,9 @@ $endif$
         usePrettify: true,
         enableSlideAreas: true,
         enableTouch: true,
+        $if(analytics)$
+        analytics: '$analytics$',
+        $endif$
         $if(logo)$
         favIcon: '$logo$',
         $endif$
