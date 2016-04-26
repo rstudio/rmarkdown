@@ -64,6 +64,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -373,7 +376,7 @@ $(document).ready(function () {
 <h3>runtime: shiny</h3>
 <p>Notify <code>rmarkdown</code> that your file contains Shiny components by adding <code>runtime: shiny</code> to the file’s YAML header. RStudio will change its “Knit” icon to a “Run Document” icon when you save this change.</p>
 <div class="figure">
-<img src="articles/images/rmd-run.png" alt="" />
+<img src="articles/images/rmd-run.png" />
 
 </div>
 <p>“Run Document” is a cue that <code>rmarkdown</code> will no longer compile your document into a static file. Instead it will “run” the document as a live Shiny app.</p>
@@ -401,7 +404,7 @@ sliderInput("bw_adjust", label = "Bandwidth adjustment:",
 </code></pre>
 <p>The document looks like this when rendered. (<em>This is a static image of the output, the actual widgets are “live”; you can manipulate them</em>).</p>
 <div class="figure">
-<img src="articles/images/rmd-widget.png" alt="" />
+<img src="articles/images/rmd-widget.png" />
 
 </div>
 </div>
@@ -411,34 +414,34 @@ sliderInput("bw_adjust", label = "Bandwidth adjustment:",
 <table>
 <thead>
 <tr class="header">
-<th align="left">render function</th>
-<th align="left">creates</th>
+<th>render function</th>
+<th>creates</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><code>renderImage</code></td>
-<td align="left">images (saved as a link to a source file)</td>
+<td><code>renderImage</code></td>
+<td>images (saved as a link to a source file)</td>
 </tr>
 <tr class="even">
-<td align="left"><code>renderPlot</code></td>
-<td align="left">plots</td>
+<td><code>renderPlot</code></td>
+<td>plots</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>renderPrint</code></td>
-<td align="left">any printed output</td>
+<td><code>renderPrint</code></td>
+<td>any printed output</td>
 </tr>
 <tr class="even">
-<td align="left"><code>renderTable</code></td>
-<td align="left">data frame, matrix, other table like structures</td>
+<td><code>renderTable</code></td>
+<td>data frame, matrix, other table like structures</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>renderText</code></td>
-<td align="left">character strings</td>
+<td><code>renderText</code></td>
+<td>character strings</td>
 </tr>
 <tr class="even">
-<td align="left"><code>renderUI</code></td>
-<td align="left">a Shiny tag object or HTML</td>
+<td><code>renderUI</code></td>
+<td>a Shiny tag object or HTML</td>
 </tr>
 </tbody>
 </table>
@@ -475,7 +478,7 @@ renderPlot({
 </code></pre>
 <p>The document creates the app below when you click “Run Document.”</p>
 <div class="figure">
-<img src="articles/images/rmd-outputs.png" alt="" />
+<img src="articles/images/rmd-outputs.png" />
 
 </div>
 </div>
@@ -483,7 +486,7 @@ renderPlot({
 <h3>The structure of an interactive document</h3>
 <p>When you run an interactive document, <code>rmarkdown</code> extracts the code in your code chunks and places them into a pseudo server.R file. R Markdown uses the html output of the markdown file as an <a href="html-ui.html">index.html</a> file to place the reactive elements into.</p>
 <div class="figure">
-<img src="articles/images/rmd-structure.png" alt="" />
+<img src="articles/images/rmd-structure.png" />
 
 </div>
 <p>As a result, outputs in one code chunk can use widgets and reactive expressions that occur in other code chunks.</p>

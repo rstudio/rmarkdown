@@ -65,6 +65,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -362,7 +365,7 @@ $(document).ready(function () {
 <li>The R Markdown console</li>
 </ol>
 <div class="figure">
-<img src="articles/images/rmdint-all.png" alt="" />
+<img src="articles/images/rmdint-all.png" />
 
 </div>
 <p><br></p>
@@ -370,12 +373,12 @@ $(document).ready(function () {
 <h2>1. File templates</h2>
 <p>The RStudio IDE provides a template document when you open a new .Rmd file. To open a new file, click File &gt; New File &gt; R Markdown in the RStudio menu bar.</p>
 <div class="figure">
-<img src="articles/images/rmd-new.png" alt="" />
+<img src="articles/images/rmd-new.png" />
 
 </div>
 <p>A window will pop up that helps you build the YAML frontmatter for the .Rmd file.</p>
 <div class="figure">
-<img src="articles/images/rmd-window.png" alt="" />
+<img src="articles/images/rmd-window.png" />
 
 </div>
 <p>From the window’s sidebar, select the category of output that you plan to convert your .Rmd file into. You can select</p>
@@ -391,7 +394,7 @@ $(document).ready(function () {
 <p>RStudio will open a new .Rmd file for you to use. The file will contain a YAML header that includes all of the parameters that your file will need to correctly render with <code>rmarkdown::render()</code>. You can manually change these parameters afterwords if you like.</p>
 <p>RStudio will fill the rest of the file with a template that demonstrates the basic features of .Rmd files. The templates work right out of the box, which means that you can immediately knit or run one. The image below shows the template for interactive documents.</p>
 <div class="figure">
-<img src="articles/images/rmdint-template.png" alt="" />
+<img src="articles/images/rmdint-template.png" />
 
 </div>
 <p>Study the template as a refresher on R Markdown, or erase it and begin writing your own document.</p>
@@ -400,7 +403,7 @@ $(document).ready(function () {
 <h2>2. Using R Markdown</h2>
 <p>The IDE places a question mark icon in the scripts pane whenever you open a .Rmd file. The question mark opens a drop down menu with two helpful resources.</p>
 <div class="figure">
-<img src="articles/images/rmdint-question.png" alt="" />
+<img src="articles/images/rmdint-question.png" />
 
 </div>
 <p>The first option, “Using R Markdown,” opens the development website for the <code>rmarkdown</code> package, <a href="http://rmarkdown.rstudio.com">rmarkdown.rstudio.com</a>. Here you can look up the many useful features of R Markdown.</p>
@@ -414,19 +417,19 @@ $(document).ready(function () {
 <h2>4. The Run Document button</h2>
 <p>If your .Rmd file contains <code>runtime: shiny</code> in its YAML header, the RStudio IDE will display a “Run Document” button at the top of the scripts pane.</p>
 <div class="figure">
-<img src="articles/images/rmdint-run-button.png" alt="" />
+<img src="articles/images/rmdint-run-button.png" />
 
 </div>
 <p>The “Run Document” button is a shortcut for the <code>rmarkdown::render</code> command. It let’s you quickly render your .Rmd file into an interactive document hosted locally on your computer. The RStudio IDE will diplay your document in a preview window.</p>
 <p>You can edit the .Rmd file while the preview is running. To see your changes, save the .Rmd file. Then click the refresh icon in the top left corner of the preview window.</p>
 <div class="figure">
-<img src="articles/images/rmdint-refresh.png" alt="" />
+<img src="articles/images/rmdint-refresh.png" />
 
 </div>
 <p>If your .Rmd file does not contain <code>runtime: shiny</code>, the RStudio IDE will display a “Knit HTML” button in place of the “Run Document” button. The “Knit HTML” button works in the same way. It renders your .Rmd file and launches a preview of your output document.</p>
 <p>The Knit HTML button contains a dropdown menu that let’s you choose which type of output to knit your file into (this will override the output type specified in your file’s YAML header).</p>
 <div class="figure">
-<img src="articles/images/rmdint-dropdown.png" alt="" />
+<img src="articles/images/rmdint-dropdown.png" />
 
 </div>
 </div>
@@ -436,7 +439,7 @@ $(document).ready(function () {
 <p>To do this, select “View in Pane” for m the drop down menu that appears when you click on the “Run Document” button (or “Knit HTML” button).</p>
 <p>The viewer pane provides a side-by-side view that resembles some text and Latex editors.</p>
 <div class="figure">
-<img src="articles/images/rmdint-viewer.png" alt="" />
+<img src="articles/images/rmdint-viewer.png" />
 
 </div>
 </div>
@@ -453,7 +456,7 @@ $(document).ready(function () {
 <li>Tweak the render process</li>
 </ul>
 <div class="figure">
-<img src="articles/images/rmdint-gear.png" alt="" />
+<img src="articles/images/rmdint-gear.png" />
 
 </div>
 <p>Set the features you like, and the RStudio IDE will apply them when you click “Run Document”.</p>
@@ -462,7 +465,7 @@ $(document).ready(function () {
 <h2>7. Insert Chunk</h2>
 <p>The Chunks button in the top left corner of the Scripts pane opens a dropdown menu that you can use to manage code chunks in your .Rmd file.</p>
 <div class="figure">
-<img src="articles/images/rmdint-chunk.png" alt="" />
+<img src="articles/images/rmdint-chunk.png" />
 
 </div>
 <p>The first option in the menu is the most useful. “Insert Chunk” will insert a blank code chunk into your .Rmd file at the location of your cursor. You can then fill this chunk with code.</p>
@@ -472,7 +475,7 @@ $(document).ready(function () {
 <h2>8. Deploy to shinyapps.io</h2>
 <p>If you’ve set up the <code>shinyapps</code> package as described in <a href="../articles/shinyapps.html">Getting started with shinyapps.io</a>, the RStudio IDE will place a deploy button at the top of your interactive document’s preview window.</p>
 <div class="figure">
-<img src="articles/images/rmdint-deploy.png" alt="" />
+<img src="articles/images/rmdint-deploy.png" />
 
 </div>
 <p>You can click this button to deploy your document directly to your shinyapps.io account. Shinyapps.io will host the document at its own web URL for people to visit.</p>

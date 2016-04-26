@@ -66,6 +66,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -478,7 +481,7 @@ kmeans_cluster(iris)
 </code></pre>
 <p>This is what the widget looks like inside a running document:</p>
 <div class="figure">
-<img src="images/shiny-widget-kmeans.png" alt="" />
+<img src="images/shiny-widget-kmeans.png" />
 
 </div>
 <div id="source-code" class="section level4">

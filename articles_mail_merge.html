@@ -64,6 +64,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -348,7 +351,7 @@ $(document).ready(function () {
 
 
 <p><em>This article is reposted from <a href="http://citizen-statistician.org/2015/06/01/mail-merge-with-rmarkdown/">citizen-statistician.org</a> with the kind permission of Mine Çetinkaya-Rundel.</em><br />
- The term “mail merge” might not be familiar to those who have not worked in an office setting, but here is the Wikipedia definition:</p>
+The term “mail merge” might not be familiar to those who have not worked in an office setting, but here is the Wikipedia definition:</p>
 <blockquote>
 <p>Mail merge is a software operation describing the production of multiple (and potentially large numbers of) documents from a single template form and a structured data source. The letter may be sent out to many “recipients” with small changes, such as a change of address or a change in the greeting line.</p>
 <p>Source: <a href="http://en.wikipedia.org/wiki/Mail_merge" class="uri">http://en.wikipedia.org/wiki/Mail_merge</a></p>
@@ -436,7 +439,7 @@ See you then!
 </code></pre>
 <p>Save the Rmd file and the R script in the same folder (or specify the path to the Rmd file accordingly in the R script), and then run the R script. This will call the Rmd file within the loop and output 20 PDF files to the handouts directory. Each of these files look something like this</p>
 <div class="figure">
-<img src="http://citizen-statistician.org/wp-content/uploads/2015/06/mail_merge_sample1.png" alt="" />
+<img src="http://citizen-statistician.org/wp-content/uploads/2015/06/mail_merge_sample1.png" />
 
 </div>
 <p>with the name and date field being different in each one.</p>

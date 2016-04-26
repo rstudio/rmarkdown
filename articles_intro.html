@@ -65,6 +65,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -386,7 +389,7 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 <p>In practice, authors almost always knit and convert their documents at the same time. In this article, I will use the term <em>render</em> to refer to the two step process of knitting and converting an R Markdown file.</p>
 <p>You can manually render an R Markdown file with <code>rmarkdown::render()</code>. This is what the above document looks like when rendered as a HTML file.</p>
 <div class="figure">
-<img src="articles/images/rmd-temp.png" alt="" />
+<img src="articles/images/rmd-temp.png" />
 
 </div>
 <p>In practice, you do not need to call <code>rmarkdown::render()</code>. You can use a button in the RStudio IDE to render your reprt. R Markdown is heavily <a href="../articles/rmd-integration.html">integrated into the RStudio IDE</a>.</p>
@@ -395,12 +398,12 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 <h2>Getting started</h2>
 <p>To create an R Markdown report, open a plain text file and save it with the extension <em>.Rmd</em>. You can open a plain text file in your scripts editor by clicking File &gt; New File &gt; Text File in the RStudio toolbar.</p>
 <div class="figure">
-<img src="articles/images/rmd-file.png" alt="" />
+<img src="articles/images/rmd-file.png" />
 
 </div>
 <p>Be sure to save the file with the extension <em>.Rmd</em>. The RStudio IDE enables several helpful buttons when you save the file with the .Rmd extension. You can save your file by clicking File &gt; Save in the RStudio toolbar.</p>
 <div class="figure">
-<img src="articles/images/rmd-save.png" alt="" />
+<img src="articles/images/rmd-save.png" />
 
 </div>
 <p>R Markdown reports rely on three frameworks</p>
@@ -447,21 +450,21 @@ Markdown is an **easy to use** format for writing reports. It resembles what you
 <p>You can learn about more of markdown’s conventions in the <em>Markdown Quick Reference</em> guide, which comes with the RStudio IDE.</p>
 <p>To access the guide, open a <em>.md</em> or <em>.Rmd</em> file in RStudio. Then click the question mark that appears at the top of the scripts pane. Next, select “Markdown Quick Reference”. RStudio will open the <em>Markdown Quick Reference</em> guide in the Help pane.</p>
 <div class="figure">
-<img src="articles/images/rmd-ref.png" alt="" />
+<img src="articles/images/rmd-ref.png" />
 
 </div>
 <div id="rendering" class="section level3">
 <h3>Rendering</h3>
 <p>To transform your markdown file into an HTML, PDF, or Word document, click the “Knit” icon that appears above your file in the scripts editor. A drop down menu will let you select the type of output that you want.</p>
 <div class="figure">
-<img src="articles/images/rmd-dropdown.png" alt="" />
+<img src="articles/images/rmd-dropdown.png" />
 
 </div>
 <p>When you click the button, <code>rmarkdown</code> will duplicate your text in the new file format. <code>rmarkdown</code> will use the formatting instructions that you provided with markdown syntax.</p>
 <p>Once the file is rendered, RStudio will show you a preview of the new output and save the output file in your working directory.</p>
 <p>Here is how the markdown script above would look in each output format.</p>
 <div class="figure">
-<img src="articles/images/rmd-types.png" alt="" />
+<img src="articles/images/rmd-types.png" />
 
 </div>
 <p><em>Note: RStudio does not build PDF and Word documents from scratch. You will need to have a distribution of Latex installed on your computer to make PDFs and Microsoft Word (or a similar program) installed to make Word files.</em></p>
@@ -486,22 +489,22 @@ dim(iris)
 <p>When you render your document, <code>knitr</code> will run the code and append the results to the code chunk. <code>knitr</code> will provide formatting and syntax highlighting to both the code and its results (where appropriate).</p>
 <p>As a result, the markdown snippet above will look like this when rendered (to HTML).</p>
 <div class="figure">
-<img src="articles/images/rmd-code.png" alt="" />
+<img src="articles/images/rmd-code.png" />
 
 </div>
 <p>To omit the <em>results</em> from your final report (and not run the code) add the argument <code>eval = FALSE</code> inside the brackets and after <code>r</code>. This will place a copy of your code into the report.</p>
 <div class="figure">
-<img src="articles/images/rmd-eval.png" alt="" />
+<img src="articles/images/rmd-eval.png" />
 
 </div>
 <p>To omit the <em>code</em> from the final report (while including the results) add the argument <code>echo = FALSE</code>. This will place a copy of the results into your report.</p>
 <div class="figure">
-<img src="articles/images/rmd-echo.png" alt="" />
+<img src="articles/images/rmd-echo.png" />
 
 </div>
 <p><code>echo = FALSE</code> is very handy for adding plots to a report, since you usually do not want to see the code that generates the plot.</p>
 <div class="figure">
-<img src="articles/images/rmd-echo2.png" alt="" />
+<img src="articles/images/rmd-echo2.png" />
 
 </div>
 <p><code>echo</code> and <code>eval</code> are not the only arguments that you can use to customize code chunks. You can learn more about formatting the output of code chunks at the <a href="http://rmarkdown.rstudio.com/authoring_rcodechunks.html">rmarkdown</a> and <a href="http://yihui.name/knitr/options">knitr</a> websites.</p>
@@ -513,7 +516,7 @@ Two plus two equals 4.
 </code></pre>
 <p><code>knitr</code> will replace the inline code with its result in your final document (inline code is <em>always</em> replaced by its result). The result will appear as if it were part of the original text. For example, the snippet above will appear like this:</p>
 <div class="figure">
-<img src="articles/images/rmd-inline.png" alt="" />
+<img src="articles/images/rmd-inline.png" />
 
 </div>
 </div>

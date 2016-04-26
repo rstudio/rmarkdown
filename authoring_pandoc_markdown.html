@@ -66,6 +66,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -1069,7 +1072,9 @@ Age &amp; Frequency \\ \hline
 <h2>LaTeX macros</h2>
 <p><strong>Extension: <code>latex_macros</code></strong></p>
 <p>For output formats other than LaTeX, pandoc will parse LaTeX <code>\newcommand</code> and <code>\renewcommand</code> definitions and apply the resulting macros to all LaTeX math. So, for example, the following will work in all output formats, not just LaTeX:</p>
-<p><span class="math inline">⟨<em>a</em>, <em>b</em>, <em>c</em>⟩</span></p>
+<pre><code>\newcommand{\tuple}[1]{\langle #1 \rangle}
+
+$\tuple{a, b, c}$</code></pre>
 <p>In LaTeX output, the <code>\newcommand</code> definition will simply be passed unchanged to the output.</p>
 </div>
 <div id="links" class="section level2">
@@ -1181,49 +1186,49 @@ note.]</code></pre>
 <thead>
 <tr class="header">
 <th align="left">Format</th>
-<th align="left">File extension</th>
+<th>File extension</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">MODS</td>
-<td align="left">.mods</td>
+<td>.mods</td>
 </tr>
 <tr class="even">
 <td align="left">BibLaTeX</td>
-<td align="left">.bib</td>
+<td>.bib</td>
 </tr>
 <tr class="odd">
 <td align="left">BibTeX</td>
-<td align="left">.bibtex</td>
+<td>.bibtex</td>
 </tr>
 <tr class="even">
 <td align="left">RIS</td>
-<td align="left">.ris</td>
+<td>.ris</td>
 </tr>
 <tr class="odd">
 <td align="left">EndNote</td>
-<td align="left">.enl</td>
+<td>.enl</td>
 </tr>
 <tr class="even">
 <td align="left">EndNote XML</td>
-<td align="left">.xml</td>
+<td>.xml</td>
 </tr>
 <tr class="odd">
 <td align="left">ISI</td>
-<td align="left">.wos</td>
+<td>.wos</td>
 </tr>
 <tr class="even">
 <td align="left">MEDLINE</td>
-<td align="left">.medline</td>
+<td>.medline</td>
 </tr>
 <tr class="odd">
 <td align="left">Copac</td>
-<td align="left">.copac</td>
+<td>.copac</td>
 </tr>
 <tr class="even">
 <td align="left">JSON citeproc</td>
-<td align="left">.json</td>
+<td>.json</td>
 </tr>
 </tbody>
 </table>

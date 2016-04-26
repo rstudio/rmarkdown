@@ -66,6 +66,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -451,7 +454,7 @@ div.tocify {
 <h2>Overview</h2>
 <p>If there is a particular form of R Markdown document that you or those you work with create frequently, it may make sense to create a re-usable document template for it. R Markdown templates are typically re-distributed within R packages, and can be easily discovered from within RStudio using the <strong>New R Markdown</strong> dialog:</p>
 <div class="figure">
-<img src="images/new_r_markdown.png" alt="" />
+<img src="images/new_r_markdown.png" />
 
 </div>
 <p>Note that if you are not using RStudio you can also create new documents based on templates using the <code>rmarkdown::draft</code> function:</p>

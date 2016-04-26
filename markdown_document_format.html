@@ -66,6 +66,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -487,26 +490,26 @@ output:
 <table>
 <thead>
 <tr class="header">
-<th align="left">System</th>
-<th align="left">Markdown Variant</th>
+<th>System</th>
+<th>Markdown Variant</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">GitHub Wikis</td>
-<td align="left"><code>markdown_github</code></td>
+<td>GitHub Wikis</td>
+<td><code>markdown_github</code></td>
 </tr>
 <tr class="even">
-<td align="left">Drupal</td>
-<td align="left"><code>markdown_phpextra</code></td>
+<td>Drupal</td>
+<td><code>markdown_phpextra</code></td>
 </tr>
 <tr class="odd">
-<td align="left">WordPress.com</td>
-<td align="left"><code>markdown_phpextra+backtick_code_blocks</code></td>
+<td>WordPress.com</td>
+<td><code>markdown_phpextra+backtick_code_blocks</code></td>
 </tr>
 <tr class="even">
-<td align="left">StackOverflow</td>
-<td align="left"><code>markdown_strict+autolink_bare_uris</code></td>
+<td>StackOverflow</td>
+<td><code>markdown_strict+autolink_bare_uris</code></td>
 </tr>
 </tbody>
 </table>

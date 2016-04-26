@@ -65,6 +65,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -388,7 +391,7 @@ library(ggplot2)
 <pre><code>```{r qplot, fig.width = 5, fig.height = 5, fig.align = &quot;center&quot;}
 qplot(wt, am, color = vs, data = mtcars)
 ```</code></pre>
-<p><img src="articles_verbatim2_files/figure-html/qplot-1.png" style="display: block; margin: auto;" /></p>
+<p><img src="articles_verbatim2_files/figure-html/qplot-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Yeyy! It works exactly like how I wanted it to. As always, this post is fully reproducible, and you can find the code <a href="https://ramnathv.github.io/posts/verbatim-chunks-knitr/index.Rmd">here</a>.</p>
 <style>
 pre {

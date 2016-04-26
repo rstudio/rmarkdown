@@ -66,6 +66,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -565,49 +568,45 @@ params:
 <p>This results in the following user-interface for parameter editing:</p>
 <p><img src="images/parameters-custom.png" width="523" height="411"/></p>
 <p>The type of Shiny control used is controlled by the <code>input</code> field. The following input types are currently supported (see the help for the associated Shiny function for additional attributes which can be specified to customize the input):</p>
-<table style="width:18%;">
-<colgroup>
-<col width="9%" />
-<col width="8%" />
-</colgroup>
+<table>
 <thead>
 <tr class="header">
-<th align="left">Input Type</th>
-<th align="left">Shiny Function</th>
+<th>Input Type</th>
+<th>Shiny Function</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">checkbox</td>
-<td align="left"><a href="http://shiny.rstudio.com/reference/shiny/latest/checkboxInput.html">checkboxInput</a></td>
+<td>checkbox</td>
+<td><a href="http://shiny.rstudio.com/reference/shiny/latest/checkboxInput.html">checkboxInput</a></td>
 </tr>
 <tr class="even">
-<td align="left">numeric</td>
-<td align="left"><a href="http://shiny.rstudio.com/reference/shiny/latest/numericInput.html">numericInput</a></td>
+<td>numeric</td>
+<td><a href="http://shiny.rstudio.com/reference/shiny/latest/numericInput.html">numericInput</a></td>
 </tr>
 <tr class="odd">
-<td align="left">slider</td>
-<td align="left"><a href="http://shiny.rstudio.com/reference/shiny/latest/sliderInput.html">sliderInput</a></td>
+<td>slider</td>
+<td><a href="http://shiny.rstudio.com/reference/shiny/latest/sliderInput.html">sliderInput</a></td>
 </tr>
 <tr class="even">
-<td align="left">date</td>
-<td align="left"><a href="http://shiny.rstudio.com/reference/shiny/latest/dateInput.html">dateInput</a></td>
+<td>date</td>
+<td><a href="http://shiny.rstudio.com/reference/shiny/latest/dateInput.html">dateInput</a></td>
 </tr>
 <tr class="odd">
-<td align="left">text</td>
-<td align="left"><a href="http://shiny.rstudio.com/reference/shiny/latest/textInput.html">textInput</a></td>
+<td>text</td>
+<td><a href="http://shiny.rstudio.com/reference/shiny/latest/textInput.html">textInput</a></td>
 </tr>
 <tr class="even">
-<td align="left">file</td>
-<td align="left"><a href="http://shiny.rstudio.com/reference/shiny/latest/fileInput.html">fileInput</a></td>
+<td>file</td>
+<td><a href="http://shiny.rstudio.com/reference/shiny/latest/fileInput.html">fileInput</a></td>
 </tr>
 <tr class="odd">
-<td align="left">radio</td>
-<td align="left"><a href="http://shiny.rstudio.com/reference/shiny/latest/radioButtons.html">radioButtons</a></td>
+<td>radio</td>
+<td><a href="http://shiny.rstudio.com/reference/shiny/latest/radioButtons.html">radioButtons</a></td>
 </tr>
 <tr class="even">
-<td align="left">select</td>
-<td align="left"><a href="http://shiny.rstudio.com/reference/shiny/latest/selectInput.html">selectInput</a></td>
+<td>select</td>
+<td><a href="http://shiny.rstudio.com/reference/shiny/latest/selectInput.html">selectInput</a></td>
 </tr>
 </tbody>
 </table>

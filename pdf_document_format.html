@@ -66,6 +66,9 @@ h5 {
 h6 {
   font-size: 12px;
 }
+.table th:not([align]) {
+  text-align: left;
+}
 </style>
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -519,45 +522,45 @@ fontsize: 11pt
 geometry: margin=1in
 ---</code></pre>
 <p>Available metadata variables include:</p>
-<table style="width:131%;">
+<table>
 <colgroup>
-<col width="34%" />
-<col width="95%" />
+<col width="26%" />
+<col width="73%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">Variable</th>
-<th align="left">Description</th>
+<th>Variable</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">lang</td>
-<td align="left">Document language code</td>
+<td>lang</td>
+<td>Document language code</td>
 </tr>
 <tr class="even">
-<td align="left">fontsize</td>
-<td align="left">Font size (e.g. 10pt, 11pt, 12pt)</td>
+<td>fontsize</td>
+<td>Font size (e.g. 10pt, 11pt, 12pt)</td>
 </tr>
 <tr class="odd">
-<td align="left">documentclass</td>
-<td align="left">LaTeX document class (e.g. article)</td>
+<td>documentclass</td>
+<td>LaTeX document class (e.g. article)</td>
 </tr>
 <tr class="even">
-<td align="left">classoption</td>
-<td align="left">Option for documentclass (e.g. oneside); may be repeated</td>
+<td>classoption</td>
+<td>Option for documentclass (e.g. oneside); may be repeated</td>
 </tr>
 <tr class="odd">
-<td align="left">geometry</td>
-<td align="left">Options for geometry class (e.g. margin=1in); may be repeated</td>
+<td>geometry</td>
+<td>Options for geometry class (e.g. margin=1in); may be repeated</td>
 </tr>
 <tr class="even">
-<td align="left">mainfont, sansfont, monofont, mathfont</td>
-<td align="left">Document fonts (works only with xelatex and lualatex, see the <code>latex_engine</code> option)</td>
+<td>mainfont, sansfont, monofont, mathfont</td>
+<td>Document fonts (works only with xelatex and lualatex, see the <code>latex_engine</code> option)</td>
 </tr>
 <tr class="odd">
-<td align="left">linkcolor, urlcolor, citecolor</td>
-<td align="left">Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)</td>
+<td>linkcolor, urlcolor, citecolor</td>
+<td>Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)</td>
 </tr>
 </tbody>
 </table>
