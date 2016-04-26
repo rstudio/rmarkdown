@@ -8,9 +8,9 @@
 ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   fig_height = 4.5, fig_retina = 2, fig_caption = TRUE,
   dev = "png", smart = TRUE, self_contained = TRUE, widescreen = FALSE,
-  smaller = FALSE, transition = "default", mathjax = "default", css = NULL,
-  includes = NULL, keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
-  pandoc_args = NULL, ...)
+  smaller = FALSE, transition = "default", mathjax = "default", template = NULL,
+  css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
+  md_extensions = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
   \item{logo}{Path to file that includes a logo for use in
@@ -67,6 +67,9 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
   option uses a local version of MathJax (which is copied
   into the output directory). You can pass an alternate URL
   or pass \code{NULL} to exclude MathJax entirely.}
+
+  \item{template}{Path to a pandoc template to use instead of
+  the default bundled template.}
 
   \item{css}{One or more css files to include}
 
@@ -383,4 +386,3 @@ To create a PDF version of a presentation you can use Print to PDF
 from Google Chrome.
 
 }
-
