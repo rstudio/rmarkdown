@@ -13,12 +13,12 @@ ioslides_presentation <- function(logo = NULL,
                                   smaller = FALSE,
                                   transition = "default",
                                   mathjax = "default",
+                                  template = NULL,
                                   css = NULL,
                                   includes = NULL,
                                   keep_md = FALSE,
                                   lib_dir = NULL,
                                   md_extensions = NULL,
-                                  template = NULL,
                                   pandoc_args = NULL,
                                   ...) {
 
