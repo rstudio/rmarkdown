@@ -45,6 +45,10 @@ rmarkdown 0.9.6 (unreleased)
 
 * Use pandoc 1.17.0.2 compatible LaTeX template when pandoc >= 1.17.0.2
 
+* Support custom template for `ioslides_presentation`
+
+* Added `analytics` option for `ioslides_presentation` for Google Analytics
+
 
 rmarkdown 0.9.5
 --------------------------------------------------------------------------------
