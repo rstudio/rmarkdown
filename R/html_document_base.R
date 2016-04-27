@@ -135,8 +135,15 @@ html_document_base <- function(smart = TRUE,
     output_str <- readLines(output_file, warn = FALSE, encoding = "UTF-8")
 
     # if we preserved chunks, restore them
-    if (length(preserved_chunks) > 0)
+    if (length(preserved_chunks) > 0) {
+      # Pandoc adds an empty <p></p> around the IDs of preserved chunks, and we
+      # need to remove these empty tags, otherwise we may have invalid HTML like
+      # <p><div>...</div></p>
+      for (i in names(preserved_chunks)) {
+        output_str <- gsub(paste0("<p>", i, "</p>"), i, output_str, fixed = TRUE)
+      }
       output_str <- restorePreserveChunks(output_str, preserved_chunks)
+    }
 
     if (copy_resources) {
       # The copy_resources flag copies all the resources referenced in the
