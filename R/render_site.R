@@ -355,16 +355,16 @@ copyable_site_resources <- function(input,
                   "Rmd", "rmd", "md", "Rmarkdown", "rmarkdown",
                   "Rproj", "rproj",
                   "RData", "rdata", "rds")
-  extensions_regex <- glob2rx(paste0("*.", extensions))
+  extensions_regex <- utils::glob2rx(paste0("*.", extensions))
   excludes <- c("^rsconnect$", "^\\..*$", "^_.*$", "^.*_cache$",
                 extensions_regex,
-                glob2rx(config$exclude))
+                utils::glob2rx(config$exclude))
   files <- all_files
   for (exclude in excludes)
     files <- files[!grepl(exclude, files)]
 
   # allow back in anything specified as an explicit "include"
-  includes <- glob2rx(config$include)
+  includes <- utils::glob2rx(config$include)
   for (include in includes) {
     include_files <- all_files[grepl(include, all_files)]
     files <- unique(c(files, include_files))
