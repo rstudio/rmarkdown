@@ -1,4 +1,4 @@
-rmarkdown 0.9.6 (unreleased)
+rmarkdown 0.9.6
 --------------------------------------------------------------------------------
 
 * Ability to set `opts_hooks` in `knitr_options()` (#672)
