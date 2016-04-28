@@ -140,7 +140,8 @@ html_document_base <- function(smart = TRUE,
       # need to remove these empty tags, otherwise we may have invalid HTML like
       # <p><div>...</div></p>
       for (i in names(preserved_chunks)) {
-        output_str <- gsub(paste0("<p>", i, "</p>"), i, output_str, fixed = TRUE)
+        output_str <- gsub(paste0("<p>", i, "</p>"), i, output_str,
+                           fixed = TRUE, useBytes = TRUE)
       }
       output_str <- restorePreserveChunks(output_str, preserved_chunks)
     }
