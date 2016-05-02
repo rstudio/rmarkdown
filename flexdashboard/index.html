@@ -254,7 +254,10 @@ $(document).ready(function () {
 <p>Install the <strong>flexdashboard</strong> package from GitHub as follows:</p>
 <pre class="r"><code>devtools::install_github(&quot;rstudio/flexdashboard&quot;)</code></pre>
 <p>To author a flexdashboard you create an <a href="http://rmarkdown.rstudio.com">R Markdown</a> document with the <code>flexdashboard::flex_dashboard</code> output format. You can do this from within RStudio using the <strong>New R Markdown</strong> dialog:</p>
-<p><img src="images/NewRMarkdown.png" width="579" height="465"/></p>
+<div class="figure">
+<img src="images/NewRMarkdown.png" width="579" height="465" />
+
+</div>
 <p>If you are not using RStudio, you can create a new <code>flexdashboard</code> R Markdown file from the R console:</p>
 <pre class="r"><code>rmarkdown::draft(&quot;dashboard.Rmd&quot;, template = &quot;flex_dashboard&quot;, package = &quot;flexdashboard&quot;)</code></pre>
 </div>

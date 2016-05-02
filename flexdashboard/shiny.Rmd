@@ -31,7 +31,7 @@ The steps required to add Shiny components to a flexdashboard are as follows:
 
 Here's a simple example of a flexdashboard that uses Shiny:
 
-<img src="images/shiny-eruptions.png" width="865" height="640" class="screenshot"/>
+![](images/shiny-eruptions.png){.screenshot width=865 height=640}
 
 #### Source Code
 

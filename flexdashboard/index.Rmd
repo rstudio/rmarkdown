@@ -40,7 +40,7 @@ devtools::install_github("rstudio/flexdashboard")
 
 To author a flexdashboard you create an [R Markdown](http://rmarkdown.rstudio.com) document with the `flexdashboard::flex_dashboard` output format. You can do this from within RStudio using the **New R Markdown** dialog:
 
-<img src="images/NewRMarkdown.png" width="579" height="465"/>
+![](images/NewRMarkdown.png){width=579 height=465}
 
 If you are not using RStudio, you can create a new `flexdashboard` R Markdown file from the R console:
 

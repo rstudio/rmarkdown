@@ -20,6 +20,12 @@
 
 .screenshot {
   border: solid 1px #cccccc;
+  margin-bottom: 15px;
+}
+
+.screenshot-right {
+  float: right;
+  margin-left: 15px;
 }
 
 .holder {
