@@ -562,11 +562,28 @@ It's also possible to create a mobile-specific version of a given dashboard comp
 <div id="mobile"></div>
 <script type="text/javascript">loadSnippet('mobile')</script>
 
-## Themes
+## Appearance
 
-A variety of themes are available to modify the appearance of flexdashboard. Supported themes include "default", "bootstrap", "cerulean", "journal", "flatly", "readable", "spacelab", "united", "cosmo", "lumen", "paper", "sandstone", "simplex", and "yeti". Note that the "cosmo" theme is used when "default" is specified.
+### Themes
 
-These themes are all based on the themes available in the [R Markdown](http://rmarkdown.rstudio.com) package (which are in turn based on [Bootswatch](https://bootswatch.com/) themes).
+A variety of themes are available to modify the base appearance of flexdashboard. Available themes include:
+
+- default 
+- cosmo
+- bootstrap
+- cerulean
+- journal
+- flatly
+- readable
+- spacelab
+- united
+- lumen
+- paper
+- sandstone
+- simplex
+- yeti 
+
+The "cosmo" theme is used when "default" is specified. These themes are all based on the themes available in the [R Markdown](http://rmarkdown.rstudio.com) package (which are in turn based on [Bootswatch](https://bootswatch.com/) themes).
 
 Use the `theme` option to specify an alternate theme:
 
@@ -575,7 +592,16 @@ Use the `theme` option to specify an alternate theme:
 
 If you are looking for a theme that embeds well inside another content frame (e.g. one that doesn't use such a strong color for the navigation bar) then the "bootstrap" theme is a good choice. 
 
-#### Custom Colors
+### CSS Styles
+
+You can customize the various CSS styles used in flexdashboard by including a stylesheet via the `css` option. For example:
+
+<div id="cssexample"></div>
+<script type="text/javascript">loadSnippet('cssexample')</script>
+
+Note that the base CSS styles are defined both the active [Bootswatch](https://bootswatch.com/) theme as well as in the flexdashboard specific stylesheets found here: <https://github.com/rstudio/flexdashboard/tree/feature/logo-and-favicon/inst/rmarkdown/templates/flex_dashboard/resources>
+
+#### Navigation Bar Colors
 
 You can use CSS to customize the colors used within the navigation bar of each theme. If you do this, realize that themes define colors for many elements and states, so you should be careful to override all of the required elements. 
 
@@ -584,6 +610,15 @@ The navigation bar for flexdashboard uses the `navbar-inverse` class for each of
 https://github.com/thomaspark/bootswatch/blob/v3.3.5/cosmo/bootstrap.css#L4643-L4744
 
 If you want to customize these colors you should create a CSS stylesheet with the requisite `navbar-inverse` entries and include it using the `css` option of the `flex_dashboard` format.
+
+### Logo & Favicon
+
+You can specify a logo image and/or favicon for your dashboard using the `logo` and `favicon` options, respectively. For example:
+
+<div id="logoexample"></div>
+<script type="text/javascript">loadSnippet('logoexample')</script>
+
+The logo will be placed at the far left of the dashboard navigation bar. No scaling is performed on the logo image, so it should fit exactly within the dimensions of the navigation bar (48 pixels high for the default "cosmo" theme, other themes may have slightly different navigation bar heights).
 
 ## Learning More
 

@@ -824,22 +824,59 @@ div.tocify {
 <script type="text/javascript">loadSnippet('mobile')</script>
 </div>
 </div>
-<div id="themes" class="section level2">
-<h2>Themes</h2>
-<p>A variety of themes are available to modify the appearance of flexdashboard. Supported themes include “default”, “bootstrap”, “cerulean”, “journal”, “flatly”, “readable”, “spacelab”, “united”, “cosmo”, “lumen”, “paper”, “sandstone”, “simplex”, and “yeti”. Note that the “cosmo” theme is used when “default” is specified.</p>
-<p>These themes are all based on the themes available in the <a href="http://rmarkdown.rstudio.com">R Markdown</a> package (which are in turn based on <a href="https://bootswatch.com/">Bootswatch</a> themes).</p>
+<div id="appearance" class="section level2">
+<h2>Appearance</h2>
+<div id="themes" class="section level3">
+<h3>Themes</h3>
+<p>A variety of themes are available to modify the base appearance of flexdashboard. Available themes include:</p>
+<ul>
+<li>default</li>
+<li>cosmo</li>
+<li>bootstrap</li>
+<li>cerulean</li>
+<li>journal</li>
+<li>flatly</li>
+<li>readable</li>
+<li>spacelab</li>
+<li>united</li>
+<li>lumen</li>
+<li>paper</li>
+<li>sandstone</li>
+<li>simplex</li>
+<li>yeti</li>
+</ul>
+<p>The “cosmo” theme is used when “default” is specified. These themes are all based on the themes available in the <a href="http://rmarkdown.rstudio.com">R Markdown</a> package (which are in turn based on <a href="https://bootswatch.com/">Bootswatch</a> themes).</p>
 <p>Use the <code>theme</code> option to specify an alternate theme:</p>
 <div id="themesexample">
 
 </div>
 <script type="text/javascript">loadSnippet('themesexample')</script>
 <p>If you are looking for a theme that embeds well inside another content frame (e.g. one that doesn’t use such a strong color for the navigation bar) then the “bootstrap” theme is a good choice.</p>
-<div id="custom-colors" class="section level4">
-<h4>Custom Colors</h4>
+</div>
+<div id="css-styles" class="section level3">
+<h3>CSS Styles</h3>
+<p>You can customize the various CSS styles used in flexdashboard by including a stylesheet via the <code>css</code> option. For example:</p>
+<div id="cssexample">
+
+</div>
+<script type="text/javascript">loadSnippet('cssexample')</script>
+<p>Note that the base CSS styles are defined both the active <a href="https://bootswatch.com/">Bootswatch</a> theme as well as in the flexdashboard specific stylesheets found here: <a href="https://github.com/rstudio/flexdashboard/tree/feature/logo-and-favicon/inst/rmarkdown/templates/flex_dashboard/resources" class="uri">https://github.com/rstudio/flexdashboard/tree/feature/logo-and-favicon/inst/rmarkdown/templates/flex_dashboard/resources</a></p>
+<div id="navigation-bar-colors" class="section level4">
+<h4>Navigation Bar Colors</h4>
 <p>You can use CSS to customize the colors used within the navigation bar of each theme. If you do this, realize that themes define colors for many elements and states, so you should be careful to override all of the required elements.</p>
 <p>The navigation bar for flexdashboard uses the <code>navbar-inverse</code> class for each of its themes. Here is the <code>navabar-inverse</code> CSS for the default “cosmo” theme used by flexdashboard:</p>
 <p><a href="https://github.com/thomaspark/bootswatch/blob/v3.3.5/cosmo/bootstrap.css#L4643-L4744" class="uri">https://github.com/thomaspark/bootswatch/blob/v3.3.5/cosmo/bootstrap.css#L4643-L4744</a></p>
 <p>If you want to customize these colors you should create a CSS stylesheet with the requisite <code>navbar-inverse</code> entries and include it using the <code>css</code> option of the <code>flex_dashboard</code> format.</p>
+</div>
+</div>
+<div id="logo-favicon" class="section level3">
+<h3>Logo &amp; Favicon</h3>
+<p>You can specify a logo image and/or favicon for your dashboard using the <code>logo</code> and <code>favicon</code> options, respectively. For example:</p>
+<div id="logoexample">
+
+</div>
+<script type="text/javascript">loadSnippet('logoexample')</script>
+<p>The logo will be placed at the far left of the dashboard navigation bar. No scaling is performed on the logo image, so it should fit exactly within the dimensions of the navigation bar (48 pixels high for the default “cosmo” theme, other themes may have slightly different navigation bar heights).</p>
 </div>
 </div>
 <div id="learning-more" class="section level2">
