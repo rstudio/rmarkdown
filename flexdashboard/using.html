@@ -402,6 +402,10 @@ div.tocify {
 <div id="tabsets" class="section level3">
 <h3>Tabsets</h3>
 <p>If you have several components you’d like to display within a row or column then rather than attempting to fit them all on screen at the same time you can lay them out as a tabset. This is especially appropriate when one component is primary (i.e. should be seen by all readers) and the others provide secondary information that might be of interest to only some readers.</p>
+<div class="figure">
+<img src="images/tabsets.png" class="screenshot" width="824" height="57" />
+
+</div>
 <p>In many cases tabsets are a better solution than <code>vertical_layout: scroll</code> for displaying large numbers of components since they are so straightforward to navigate.</p>
 <p>To layout a row or column as a tabset you simply add the <code>{.tabset}</code> attribute to the section heading. For example, the following code lays out the second column in tabset:</p>
 <div id="tabsetcolumn">
@@ -609,12 +613,17 @@ div.tocify {
 </div>
 <div id="navigation-bar" class="section level3">
 <h3>Navigation Bar</h3>
-<p>By default, the flexdashboard navigation bar includes only the dashboard title. When a dashboard has <a href="#multiple-pages">Multiple Pages</a>, links to the various pages are also included on the left side of the navigation bar. You can add custom links to navigation bar using the <code>navbar</code> option. For example, the following adds an “About” link to the left side of the navigation bar and a Source Code link to the right side of the navigation bar:</p>
+<p>By default, the flexdashboard navigation bar includes only the dashboard title. When a dashboard has <a href="#multiple-pages">Multiple Pages</a>, links to the various pages are also included on the left side of the navigation bar. You can also add social links and a link to view the source code of the dashboard. For example:</p>
+<div class="figure">
+<img src="images/navigation-bar.png" class="screenshot" width="804" height="50" />
+
+</div>
+<p>In addition, you can custom links to the navigation bar using the <code>navbar</code> option. For example, the following adds an “About” link to the left side of the navigation bar:</p>
 <div id="navbarlinks">
 
 </div>
 <script type="text/javascript">loadSnippet('navbarlinks')</script>
-<p>Navigation bar items must include either a <code>title</code> or <code>icon</code> field (both can also be specified as the “Source Code” item demonstrates). You should also include a <code>href</code> as the navigation target. The <code>align</code> field is optional (it can be “left” or “right” and defaults to “right”).</p>
+<p>Navigation bar items must include either a <code>title</code> or <code>icon</code> field (or both). You should also include a <code>href</code> as the navigation target. The <code>align</code> field is optional (it can be “left” or “right” and defaults to “right”).</p>
 <p>See <a href="#icon-sets">Icon Sets</a> above for details on the icons available for use within the navigation bar.</p>
 <div id="social-links" class="section level4">
 <h4>Social Links</h4>

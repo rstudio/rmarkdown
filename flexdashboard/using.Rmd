@@ -111,6 +111,8 @@ For example, the following layout includes 3 charts and requests that the page s
 
 If you have several components you'd like to display within a row or column then rather than attempting to fit them all on screen at the same time you can lay them out as a tabset. This is especially appropriate when one component is primary (i.e. should be seen by all readers) and the others provide secondary information that might be of interest to only some readers. 
 
+![](images/tabsets.png){.screenshot width=824 height=57}
+
 In many cases tabsets are a better solution than `vertical_layout: scroll` for displaying large numbers of components since they are so straightforward to navigate.
 
 To layout a row or column as a tabset you simply add the `{.tabset}` attribute to the section heading. For example, the following code lays out the second column in tabset:
@@ -338,12 +340,17 @@ To include a gauge within a Shiny flexdashboard you need to be sure to wrap the 
 
 ### Navigation Bar
 
-By default, the flexdashboard navigation bar includes only the dashboard title. When a dashboard has [Multiple Pages], links to the various pages are also included on the left side of the navigation bar. You can add custom links to navigation bar using the `navbar` option. For example, the following adds an "About" link to the left side of the navigation bar and a Source Code link to the right side of the navigation bar:
+By default, the flexdashboard navigation bar includes only the dashboard title. When a dashboard has [Multiple Pages], links to the various pages are also included on the left side of the navigation bar. You can also add social links and a link to view the source code of the dashboard. For example:
+
+![](images/navigation-bar.png){.screenshot width=804 height=50}
+
+
+In addition, you can custom links to the navigation bar using the `navbar` option. For example, the following adds an "About" link to the left side of the navigation bar:
 
 <div id="navbarlinks"></div>
 <script type="text/javascript">loadSnippet('navbarlinks')</script>
 
-Navigation bar items must include either a `title` or `icon` field (both can also be specified as the "Source Code" item demonstrates). You should also include a `href` as the navigation target. The `align` field is optional (it can be "left" or "right" and defaults to "right").
+Navigation bar items must include either a `title` or `icon` field (or both). You should also include a `href` as the navigation target. The `align` field is optional (it can be "left" or "right" and defaults to "right").
 
 See [Icon Sets] above for details on the icons available for use within the navigation bar.
 
