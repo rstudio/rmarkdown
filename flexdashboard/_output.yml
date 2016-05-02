@@ -1,0 +1,15 @@
+html_document:
+  self_contained: false
+  theme: cosmo
+  highlight: textmate
+  mathjax: null
+  lib_dir: libs
+  css: styles.css
+  include:
+    in_header: head.html
+  toc: true
+  toc_depth: 3
+  toc_float:
+    collapsed: false
+
+

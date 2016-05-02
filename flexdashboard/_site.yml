@@ -1,0 +1,32 @@
+output_dir: '.'
+navbar:
+  title: "flexdashboard for R"
+  type: inverse
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Using"
+      href: using.html
+    - text: "Shiny"
+      href: shiny.html
+    - text: Layouts
+      href: layouts.html
+    - text: Examples
+      href: examples.html
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/rstudio/flexdashboard
+output:
+  html_document:
+    self_contained: false
+    theme: cosmo
+    highlight: textmate
+    mathjax: null
+    lib_dir: libs
+    css: styles.css
+    include:
+      in_header: head.html
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+

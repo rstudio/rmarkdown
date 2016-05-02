@@ -1,0 +1,17 @@
+---
+title: "flexdashboard Examples"
+output:
+  html_document:
+    toc_float: false
+---
+
+The examples below illustrate the use of flexdashboard with various packages and layouts. If you want to learn more about how the dashboards were created each example includes a link to it's source code. 
+
+```{r setup, include=FALSE}
+source("utils.R")
+```
+
+```{r, echo=FALSE}
+examples()
+```
+
