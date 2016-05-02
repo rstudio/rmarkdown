@@ -215,8 +215,6 @@ Here's an example of a row based layout that includes 3 charts from R base graph
 
 We've specified an explicit `fig.height` and `fig.width` for each chart so that their rendered size fits their flex container as closely as possible. Note that the ideal values for these dimensions typically need to be determined by experimentation. 
 
-Even with the tweaks described above standard R graphics won't always fit perfectly into their containers, so in general htmlwidget based charts are preferred within static dashboards. Note that the [plotly](https://plot.ly/ggplot2/) package enables rendering of ggplot2 graphics as interactive htmlwidgets.
-
 ### Tabular Data
 
 You can include tabular data within flexdashboards in one of two ways:
