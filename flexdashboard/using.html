@@ -565,6 +565,14 @@ div.tocify {
 <script type="text/javascript">loadSnippet('valuebox')</script>
 <p>The <code>valueBox</code> function is called to emit a value and specify an icon (see <a href="#icon-sets">Icon Sets</a> below for details on available icons).</p>
 <p>The third code chunk (“Spam per Day”) makes the background color of the value box dynamic using the <code>color</code> parameter. Available colors include “primary”, “info”, “success”, “warning”, and “danger” (the default is “primary”). For custom colors you can also specify any valid CSS color (e.g. “#ffffff”, “rgb(100,100,100)”, etc.).</p>
+<div id="linking" class="section level4">
+<h4>Linking</h4>
+<p>If a <code>valueBox</code> displays a value for which additional detail is available on another <a href="#multiple-pages">dashboard page</a> you can enable navigation to the other page via the <code>href</code> parameter. For example, if you have a page with the anchor “#details” you could link a value box to it as follows:</p>
+<div id="valueboxlinked">
+
+</div>
+<script type="text/javascript">loadSnippet('valueboxlinked')</script>
+</div>
 <div id="icon-sets" class="section level4">
 <h4>Icon Sets</h4>
 <p>You can specify icons from three different icon sets:</p>
@@ -602,6 +610,14 @@ div.tocify {
 <li><p>You can specify an optional <code>symbol</code> to be displayed alongside the value (in the example “%” is used to denote a percentage).</p></li>
 <li><p>You can specify a set of custom color <code>sectors</code> using the <code>gaugeSectors</code> function. By default the current theme’s “success” color (typically green) is used for the gauge color. The <code>sectors</code> option enables you to specify a set of three value ranges (“success”, “warning”, and “danger”) which cause the gauge’s color to change based on it’s value.</p></li>
 </ol>
+<div id="linking-1" class="section level4">
+<h4>Linking</h4>
+<p>If a <code>gauge</code> displays a value for which additional detail is available on another <a href="#multiple-pages">dashboard page</a> you can enable navigation to the other page via the <code>href</code> parameter. For example, if you have a page with the anchor “#details” you could link a gauge to it as follows:</p>
+<div id="gaugelinked">
+
+</div>
+<script type="text/javascript">loadSnippet('gaugelinked')</script>
+</div>
 <div id="shiny-2" class="section level4">
 <h4>Shiny</h4>
 <p>To include a gauge within a Shiny flexdashboard you need to be sure to wrap the gauge output in <code>renderGauge</code> (so that it is updated when inputs it depends on change). For example:</p>

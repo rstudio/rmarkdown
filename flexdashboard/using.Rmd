@@ -291,6 +291,13 @@ The `valueBox` function is called to emit a value and specify an icon (see [Icon
 
 The third code chunk ("Spam per Day") makes the background color of the value box dynamic using the `color` parameter. Available colors include "primary", "info", "success", "warning", and "danger" (the default is "primary"). For custom colors you can also specify any valid CSS color (e.g. "#ffffff", "rgb(100,100,100)", etc.).
 
+#### Linking
+
+If a `valueBox` displays a value for which additional detail is available on another [dashboard page](#multiple-pages) you can enable navigation to the other page via the `href` parameter. For example, if you have a page with the anchor "#details" you could link a value box to it as follows:
+
+<div id="valueboxlinked"></div>
+<script type="text/javascript">loadSnippet('valueboxlinked')</script>
+
 
 #### Icon Sets
 
@@ -329,6 +336,14 @@ There are a few things to note about this example:
 2. You can specify an optional `symbol` to be displayed alongside the value (in the example "%" is used to denote a percentage).
 
 3. You can specify a set of custom color `sectors` using the `gaugeSectors` function. By default the current theme's "success" color (typically green) is used for the gauge color. The `sectors` option enables you to specify a set of three value ranges ("success", "warning", and "danger") which cause the gauge's color to change based on it's value. 
+
+#### Linking
+
+If a `gauge` displays a value for which additional detail is available on another [dashboard page](#multiple-pages) you can enable navigation to the other page via the `href` parameter. For example, if you have a page with the anchor "#details" you could link a gauge to it as follows:
+
+<div id="gaugelinked"></div>
+<script type="text/javascript">loadSnippet('gaugelinked')</script>
+
 
 #### Shiny
 
