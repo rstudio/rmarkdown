@@ -5,14 +5,6 @@ output:
     toc: true
 ---
 
-## Installation
-
-The `odt_document` format is currently only available within the development version of the **rmarkdown** package. You can install the development version as follows:
-
-```r
-devtools::install_github("rstudio/rmarkdown")
-```
-
 ## Overview
 
 To create an OpenDocument Text (ODT) document from R Markdown you specify the `odt_document` output format in the front-matter of your document:

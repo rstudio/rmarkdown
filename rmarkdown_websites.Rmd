@@ -13,10 +13,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 You can render collections of R Markdown documents as a website using the `rmarkdown::render_site` function. This article describes the basics of creating websites with R Markdown and provides some examples which you can use as a starting point for your own websites.
 
-The features described here are currently available only within the development version of the **rmarkdown** package which you can install as follows:
+The features described here are available only within the most recent version of the **rmarkdown** package (v0.9.6) which you can install from CRAN as follows:
 
 ```r
-devtools::install_github("rstudio/rmarkdown")
+install.packages("rmarkdown", type = "source")
 ```
 
 The RStudio IDE also includes integrated support for developing R Markdown websites. These features are available in the current Preview Release of RStudio which you can install from here: [RStudio Preview Release](https://www.rstudio.com/products/rstudio/download/preview/).
