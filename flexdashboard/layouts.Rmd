@@ -136,10 +136,6 @@ This layout is a 2x2 grid of charts. This layout uses the default `vertical_scro
 
 This layout displays the right column as a set of two tabs. Tabs are especially useful when you have a large number of components to display and prefer not to require the user to scroll to access everything.
 
-<div id="tabsetcolumn"></div>
-<script type="text/javascript">loadSnippet('tabsetcolumn')</script>
-
-<!--
 <div class="row">
 
 <div class="col-md-6">
@@ -149,26 +145,16 @@ This layout displays the right column as a set of two tabs. Tabs are especially 
 
 <div class="col-md-6 nopadding">
 <div height="422px" width="100%">
-<div style="float: left; width: 50%;">
-<img class="holder" data-src="holder.js/100px422?size=28&amp;text=Chart 1">
-</div>
-<div style="margin-left: 50%;">
-<img class="holder" data-src="holder.js/100px422?size=28&amp;text=Chart 2">
-</div>
+<img src="images/tabset-column.png" width=415 height=422>
 </div>
 </div>
 
 </div>
--->
 
 ## Tabset Row
 
 This layout displays the bottom row as a set of two tabs. Note that the `{.tabset-fade}` attribute is also used to enable a fade in/out effect when switching tabs.
 
-<div id="tabsetrow"></div>
-<script type="text/javascript">loadSnippet('tabsetrow')</script>
-
-<!--
 <div class="row">
 
 <div class="col-md-6">
@@ -178,13 +164,12 @@ This layout displays the bottom row as a set of two tabs. Note that the `{.tabse
 
 <div class="col-md-6 nopadding">
 <div height="454px" width="100%">
-<img class="holder" data-src="holder.js/100px227?size=28&amp;text=Chart 1">
-<img class="holder" data-src="holder.js/100px227?size=28&amp;text=Chart 2">
+<img src="images/tabset-row.png" width=415 height=454>
 </div>
 </div>
 
 </div>
--->
+
 
 ## Multiple Pages
 
