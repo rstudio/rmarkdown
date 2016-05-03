@@ -3,6 +3,8 @@ rmarkdown 0.9.7 (unreleased)
 
 * `toc_float` no longer automatically sets `toc = TRUE`
 
+* Added an argument `error` to `pandoc_available()` to signal an error when (if
+  `error = TRUE`) pandoc with the required version is not found.
 
 rmarkdown 0.9.6
 --------------------------------------------------------------------------------

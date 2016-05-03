@@ -110,6 +110,8 @@ pandoc_convert <- function(input,
 #' of pandoc available.
 #'
 #' @param version Required version of pandoc
+#' @param error Whether to signal an error if pandoc with the required version
+#'   is not found
 #'
 #' @return \code{pandoc_available} returns a logical indicating whether the
 #'   required version of pandoc is available. \code{pandoc_version} returns a
@@ -117,9 +119,12 @@ pandoc_convert <- function(input,
 #'
 #' @details
 #'
-#' The system path as well as the version of pandoc shipped with RStudio (if
-#' running under RStudio) are scanned for pandoc and the highest version
-#' available is used.
+#' The system environment variable \samp{PATH} as well as the version of pandoc
+#' shipped with RStudio (its location is set via the environment variable
+#' \samp{RSTUDIO_PANDOC} by RStudio products like the RStudio IDE, RStudio
+#' Server, Shiny Server, and RStudio Connect, etc) are scanned for pandoc and
+#' the highest version available is used. Please do not modify the environment
+#' varaible \samp{RSTUDIO_PANDOC} unless you know what it means.
 #'
 #' @examples
 #' \dontrun{
@@ -132,19 +137,21 @@ pandoc_convert <- function(input,
 #'   cat("requried version of pandoc is available!\n")
 #' }
 #' @export
-pandoc_available <- function(version = NULL) {
+pandoc_available <- function(version = NULL, error = FALSE) {
 
   # ensure we've scanned for pandoc
   find_pandoc()
 
   # check availability
-  if (!is.null(.pandoc$dir))
-    if (!is.null(version))
-      .pandoc$version >= version
-  else
-    TRUE
-  else
-    FALSE
+  found <- !is.null(.pandoc$dir) && (is.null(version) || .pandoc$version >= version)
+
+  msg <- c(
+    "pandoc", if (!is.null(version)) c("version", version, "or higher"),
+    "is required and was not found (see the help page ?rmarkdown::pandoc_available)."
+  )
+  if (error && !found) stop(paste(msg, collapse = " "), call. = FALSE)
+
+  found
 }
 
 
