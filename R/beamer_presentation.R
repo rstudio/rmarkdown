@@ -136,6 +136,7 @@ beamer_presentation <- function(toc = FALSE,
 }
 
 patch_beamer_template <- function() {
+  pandoc_available(error = TRUE)
   if (pandoc_version() >= '1.15.2') return()  # no need to patch the template
   f <- tempfile(fileext = '.tex')
   command <- paste(quoted(pandoc()), "-D beamer >", quoted(f))

@@ -109,6 +109,7 @@ pdf_document <- function(toc = FALSE,
   # template path and assets
   if (identical(template, "default")) {
 
+    pandoc_available(error = TRUE)
     # choose the right template
     version <- pandoc_version()
     if (version >= "1.17.0.2")
