@@ -526,6 +526,47 @@ You can specify icons for navigation bar items from three different icon sets:
 
 When referring to an icon you should use it's full name including the icon set prefix (e.g. "fa-github", "ion-social-twitter", "glyphicon-time", etc.).
 
+## Storyboards
+
+[![](images/htmlwidgets-showcase-storyboard.png){.screenshot .screenshot-right width=275 height=203}](https://beta.rstudioconnect.com/jjallaire/htmlwidgets-showcase-storyboard/)
+
+Storyboards are an alternative to the row and column based layout schemes described above that are well suited to presenting a sequence of data visualizations and related commentary.
+
+### Storyboard Basics
+
+To create a storyboard layout you do the following:
+
+1. Add the `storyboard: true` option to the dashboard.
+
+2. Include a set of level 3 (`###`) dashboard components. Each component will be allocated it's own frame in the storyboard, with the section title used as the navigation caption.
+
+The basics of creating storyboards are explained below. For a more complete example, see the [HTML Widgets Showcase](https://beta.rstudioconnect.com/jjallaire/htmlwidgets-showcase-storyboard/) storyboard.
+
+The following code creates a storyboard with 3 frames:
+
+<div id="storyboard"></div>
+<script type="text/javascript">loadSnippet('storyboard')</script>
+
+Note that the level 3 section titles (e.g. "Frame 1") will be used as navigation captions. These captions should provide a one or two sentence summary of the frame, so will typically be longer than illustrated here. 
+
+### Storyboard Pages
+
+You can layout one or more pages of a dashboard as storyboards and then use traditional row and column layout on the other pages. To do this, you exclude the `storyboard: true` option and instead add the `{.storyboard}` class to pages you want laid out as storyboards. 
+
+For example, the following dashboard includes a storyboard on the first page ("Analysis") as well as another page ("Details") that uses conventional layout:
+
+<div id="storyboardpage"></div>
+<script type="text/javascript">loadSnippet('storyboardpage')</script>
+
+### Commentary
+
+You may wish to add commentary alongside the frames in your storyboard. To do this you add a horizontal rule separator (`***`) after the main body of frame content. Content after the separator will appear in a commentary sidebar to the right. For example:
+
+<div id="storyboardcommentary"></div>
+<script type="text/javascript">loadSnippet('storyboardcommentary')</script>
+
+Note that the second frame includes a `data-commentary-width=400` attribute. By default the width of the commentary sidebar is 300 pixels, you can use `data-commentary-width` to modify this on a per-frame basis.
+
 ## Mobile Layout
 
 The flexdashboard layout system adapts itself intelligently for display on mobile devices. This section describes layout behavior for various screen sizes as well as some guidelines for ensuring that your dashboards work well on smaller screens.

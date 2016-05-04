@@ -16,9 +16,11 @@ source("utils.R")
 
 * Use [R Markdown](http://rmarkdown.rstudio.com) to publish a group of related data visualizations as a dashboard.
 
-* Ideal for publishing interactive JavaScript visualizations based on [htmlwidgets](http://www.htmlwidgets.org) (also works with standard base, lattice, and grid graphics).
+* Support for a wide variety of components including [htmlwidgets](http://www.htmlwidgets.org); base, lattice, and grid graphics; tabular data; gauges and value boxes; and text annotations.
 
-* Flexible and easy to specify layouts. Charts are intelligently re-sized to fill the browser and adapted for display on mobile devices.
+* Flexible and easy to specify row and column-based [layouts](layouts.html). Components are intelligently re-sized to fill the browser and adapted for display on mobile devices.
+
+* [Storyboard](using.html#storyboards) layouts for presenting sequences of visualizations and related commentary.
 
 * Optionally use [Shiny](http://shiny.rstudio.com) to drive visualizations dynamically.
 

@@ -21,6 +21,9 @@
 - title: "Sales report with highcharter"
   img: images/highcharter.png
   href: https://beta.rstudioconnect.com/jjallaire/htmlwidgets-highcharter/
+- title: "Storyboard: htmlwidgets showcase"
+  img: images/htmlwidgets-showcase-storyboard.png
+  href: https://beta.rstudioconnect.com/jjallaire/htmlwidgets-showcase-storyboard/
 - title: "Shiny: ggplot2 linked brushing"
   img: images/shiny-ggplot2-brushing.png
   href: https://jjallaire.shinyapps.io/shiny-ggplot2-brushing/
