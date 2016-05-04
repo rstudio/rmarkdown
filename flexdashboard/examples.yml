@@ -50,6 +50,10 @@
 - title: "Shiny: old faithful eruptions"
   img: images/shiny-eruptions.png
   href: https://beta.rstudioconnect.com/jjallaire/shiny-eruptions/
+  shiny: false
+- title: "Shiny: Diamonds Explorer"
+  img: images/shiny-diamonds-explorer.png
+  href: https://jjallaire.shinyapps.io/shiny-ggplot2-diamonds/
   shiny: true
 - title: "Shiny: Embedding"
   img: images/shiny-embedding.png
