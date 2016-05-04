@@ -12,14 +12,14 @@
   showcase: true
   shiny: true
 - title: "Shiny: CRAN downloads"
-  img: images/shiny-crandash.png
+  img: images/shiny-cran-dash.png
   href: https://jjallaire.shinyapps.io/shiny-crandash/
   shiny: true
 - title: "Linked time-series with dygraphs"
   img: images/dygraphs.png
   href: https://beta.rstudioconnect.com/jjallaire/htmlwidgets-dygraphs/
 - title: "Sales report with highcharter"
-  img: images/highcharter.png
+  img: images/htmlwidgets-highcharter.png
   href: https://beta.rstudioconnect.com/jjallaire/htmlwidgets-highcharter/
 - title: "Storyboard: htmlwidgets showcase"
   img: images/htmlwidgets-showcase-storyboard.png
