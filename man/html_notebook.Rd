@@ -4,8 +4,7 @@
 \alias{html_notebook}
 \title{Convert to an HTML notebook}
 \usage{
-html_notebook(code_folding = "show", highlight = "textmate",
-  knitr = knitr_options_notebook(), ...)
+html_notebook(code_folding = "show", highlight = "textmate", ...)
 }
 \arguments{
 \item{code_folding}{Enable document readers to toggle the display of R code
@@ -18,8 +17,6 @@ chunks by default.}
 \item{highlight}{Syntax highlighting style. Supported styles include
 "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
 "haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.}
-
-\item{knitr}{A list of \code{knitr} hooks, used to annotate notebook output.}
 
 \item{...}{Optional arguments to be passed to \code{\link{html_document}}.}
 }
