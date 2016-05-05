@@ -1,6 +1,5 @@
 ---
 title: "R Markdown"
-subtitle: "Dynamic Documents for R"
 output:
   html_document:
     toc_float: false
@@ -8,7 +7,7 @@ output:
 
 <style type="text/css">
 .title {
-  display: visible;
+  display: none;
 }
 
 #getting-started img {
@@ -17,15 +16,21 @@ output:
 
 </style>
 
-<div class="row" style="padding-top: 20px;">
-<div class="col-sm-6">
+<div class="row" style="padding-top: 30px;">
+<div class="col-sm-7">
 
-R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of [markdown](https://daringfireball.net/projects/markdown/) (an easy to write plain text format) with embedded R code chunks that are run so their output can be included in the final document. R Markdown documents are fully reproducible (they can be automatically regenerated whenever underlying R code or data changes).
+# **R Markdown**
 
-R Markdown has many available output formats including [HTML](html_document_format.html), [PDF](pdf_document_format.html), [MS Word](word_document_format.html), [Beamer](beamer_presentation_format.html), [HTML5 presentations](ioslides_presentation_format.html), [Tufte handouts](tufte_handout_format.html), [books](https://bookdown.org), [dashboards](flexdashboard/), and even [entire websites](rmarkdown_websites.html).
+### *Dynamic Documents for R* {style="padding-top: 0px;"}
+
+R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of [markdown](https://daringfireball.net/projects/markdown/) (an easy to write plain text format) with embedded R code chunks that are run so their output can be included in the final document. 
+
+R Markdown documents are fully reproducible (they can be automatically regenerated whenever underlying R code or data changes).
+
+R Markdown has many available output formats including [HTML](html_document_format.html), [PDF](pdf_document_format.html), [MS Word](word_document_format.html), [Beamer](beamer_presentation_format.html), [HTML5 slides](ioslides_presentation_format.html), [Tufte handouts](tufte_handout_format.html), [books](https://bookdown.org), [dashboards](flexdashboard/), and [websites](rmarkdown_websites.html).
 
 </div>
-<div class="col-sm-6">
+<div class="col-sm-5">
 
 ![](images/RMarkdownOutputFormats.png)
 
