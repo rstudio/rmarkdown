@@ -66,7 +66,7 @@ html_notebook <- function(code_folding = "show",
 #' @param path The path to an R Notebook file (with extension \code{.nb.html}).
 #' @param encoding The document's encoding (assumend \code{"UTF-8"} by default).
 #' @export
-parse_notebook <- function(path, encoding = "UTF-8") {
+parse_html_notebook <- function(path, encoding = "UTF-8") {
 
   contents <- read_lines_utf8(path, encoding = encoding)
 
