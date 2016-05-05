@@ -17,7 +17,7 @@ output:
 </style>
 
 <div class="row" style="padding-top: 30px;">
-<div class="col-sm-7">
+<div class="col-sm-6">
 
 # **R Markdown**
 
@@ -30,16 +30,16 @@ R Markdown documents are fully reproducible (they can be automatically regenerat
 R Markdown has many available output formats including [HTML](html_document_format.html), [PDF](pdf_document_format.html), [MS Word](word_document_format.html), [Beamer](beamer_presentation_format.html), [HTML5 slides](ioslides_presentation_format.html), [Tufte handouts](tufte_handout_format.html), [books](https://bookdown.org), [dashboards](flexdashboard/), and [websites](rmarkdown_websites.html).
 
 </div>
-<div class="col-sm-5">
+<div class="col-sm-6">
 
-![](images/RMarkdownOutputFormats.png)
+![](images/RMarkdownOutputFormats.png){width=350 height=350 style="margin-top:27px;"}
 
 </div>
 </div>
 
 ## Getting Started
 
-<div style="height: 10px;"></div>
+<div style="height: 20px;"></div>
 
 ![](images/RMarkdownTour.png) [Quick Tour](authoring_quick_tour.html)
 
