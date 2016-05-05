@@ -5,7 +5,7 @@ test_that("an example R Notebook document can be rendered and parsed", {
   # generate the file
   path <- "resources/r-notebook.Rmd"
   file <- tempfile(fileext = ".nb.html")
-  rmarkdown::render(path, output_file = file)
+  rmarkdown::render(path, output_file = file, quiet = TRUE)
 
   # if running interactively, try running the following code to open the
   # generated document -- in RStudio, you should see the source .Rmd opened,

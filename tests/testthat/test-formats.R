@@ -6,9 +6,10 @@ test_that("formats successfully produce a document", {
 
   testFormat <- function(output_format) {
     output_file <- tempfile()
-    capture.output(render("test-formats.Rmd",
-                          output_format = output_format,
-                          output_file = output_file))
+    render("test-formats.Rmd",
+           output_format = output_format,
+           output_file = output_file,
+           quiet = TRUE)
     expect_true(file.exists(output_file))
     output_file
   }
