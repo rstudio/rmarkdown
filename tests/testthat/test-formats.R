@@ -14,6 +14,7 @@ test_that("formats successfully produce a document", {
   }
 
   testFormat(html_document())
+  testFormat(html_notebook())
   testFormat(html_fragment())
   testFormat(html_vignette())
   testFormat(ioslides_presentation())
