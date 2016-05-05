@@ -31,7 +31,7 @@ notebook_render_html <- function(path = NULL, bytes = NULL, format) {
   sprintf(format, encoded)
 }
 
-noteobok_render_png <- function(path = NULL, bytes = NULL) {
+notebook_render_png <- function(path = NULL, bytes = NULL) {
   format <- '<img src="data:image/png;base64,%s" />'
   notebook_render_html(path, bytes, format)
 }
