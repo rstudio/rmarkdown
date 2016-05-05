@@ -1,3 +1,10 @@
+#' Convert to an HTML notebook
+#'
+#' Format for converting from R Markdown to an HTML notebook.
+#'
+#' @inheritParams html_document
+#' @param ... Optional arguments to be passed to \code{\link{html_document}}.
+#' @export
 html_notebook <- function(code_folding = "show",
                           highlight = "textmate",
                           ...)
@@ -50,6 +57,15 @@ html_notebook <- function(code_folding = "show",
   )
 }
 
+#' Parse an HTML Notebook
+#'
+#' Parse an HTML notebook, retrieving annotation information
+#' related to generated outputs in the document, as well as the
+#' original R Markdown source document.
+#'
+#' @param path The path to an R Notebook file (with extension \code{.nb.html}).
+#' @param encoding The document's encoding (assumend \code{"UTF-8"} by default).
+#' @export
 parse_notebook <- function(path, encoding = "UTF-8") {
 
   contents <- read_lines_utf8(path, encoding = encoding)
