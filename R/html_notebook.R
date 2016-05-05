@@ -3,10 +3,13 @@
 #' Format for converting from R Markdown to an HTML notebook.
 #'
 #' @inheritParams html_document
+#' @param knitr A list of \code{knitr} hooks, used to annotate notebook output.
+#'   See \code{knitr_options} for more information.
 #' @param ... Optional arguments to be passed to \code{\link{html_document}}.
 #' @export
 html_notebook <- function(code_folding = "show",
                           highlight = "textmate",
+                          knitr = knitr_options_notebook(),
                           ...)
 {
   # use a pre-knit hook to capture the original document
@@ -49,7 +52,7 @@ html_notebook <- function(code_folding = "show",
                                highlight = highlight,
                                ...)
   rmarkdown::output_format(
-    knitr = knitr_options_notebook(),
+    knitr = knitr,
     pandoc = NULL,
     pre_knit = pre_knit,
     post_processor = post_processor,

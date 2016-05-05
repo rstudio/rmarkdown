@@ -457,35 +457,6 @@ to_html_attributes <- function(data) {
 
 }
 
-replace_binding <- function(binding, package, override) {
-
-  # override in namespace
-  if (!requireNamespace(package, quietly = TRUE))
-    stop(sprintf("Failed to load namespace for package '%s'", package))
-
-  namespace <- asNamespace(package)
-
-  # get reference to original binding
-  original <- get(binding, envir = namespace)
-
-  # replace the binding
-  do.call("unlockBinding", list(binding, namespace))
-  assign(binding, override, envir = namespace)
-  do.call("lockBinding", list(binding, namespace))
-
-  # if package is attached, override there as well
-  searchPathName <- paste("package", package, sep = ":")
-  if (searchPathName %in% search()) {
-    env <- as.environment(searchPathName)
-    do.call("unlockBinding", list(binding, env))
-    assign(binding, override, envir = env)
-    do.call("lockBinding", list(binding, env))
-  }
-
-  # return original
-  original
-}
-
 rbind_list <- function(data) {
   result <- do.call(mapply, c(c, data, USE.NAMES = FALSE, SIMPLIFY = FALSE))
   names(result) <- names(data[[1]])
