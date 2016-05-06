@@ -147,11 +147,12 @@ test_that("filenames with shell characters can use relative resource paths", {
   on.exit(setwd(oldwd), add = TRUE)
 
   file.rename("resources/file-exists.Rmd", "resources/file exists.Rmd")
+  on.exit(file.rename("resources/file exists.Rmd", "resources/file-exists.Rmd"), add = TRUE)
+
   # render the file (contains an expression that stops if its resource is not
   # present)
   capture.output(output_file <- render("resources/file exists.Rmd"))
   on.exit(unlink(output_file), add = TRUE)
-  file.rename("resources/file exists.Rmd", "resources/file-exists.Rmd")
 })
 
 test_that("resources not deleted when filenames contain shell characters", {
