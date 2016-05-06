@@ -339,6 +339,8 @@ render <- function(input,
 
     # hook up output_source to evaluate if specified
     if (is.function(output_format$output_source)) {
+
+      # pull out 'output_source'
       output_source <- output_format$output_source
       validate_output_source(output_source)
 
@@ -354,6 +356,22 @@ render <- function(input,
 
       # track knit context
       chunk_options <- list()
+
+      # force knitr labeling (required for uniqueness of labels + cache coherence)
+      knitr.duplicate.label <- getOption("knitr.duplicate.label")
+      if (identical(knitr.duplicate.label, "allow")) {
+        warning("unsetting 'knitr.duplicate.label' for duration of render")
+        options(knitr.duplicate.label = "deny")
+        on.exit(options(knitr.duplicate.label = knitr.duplicate.label), add = TRUE)
+      }
+
+      # force default unnamed chunk labeling scheme (for cache coherence)
+      unnamed.chunk.label <- knitr::opts_knit$get("unnamed.chunk.label")
+      if (!identical(unnamed.chunk.label, "unnamed-chunk")) {
+        warning("reverting 'unnamed.chunk.label' to 'unnamed-chunk' for duration of render")
+        knitr::opts_knit$set(unnamed.chunk.label = "unnamed-chunk")
+        on.exit(knitr::opts_knit$set(unnamed.chunk.label = unnamed.chunk.label), add = TRUE)
+      }
 
       # use an 'include' hook to track chunk options (any
       # 'opts_hooks' hook will do; we just want this to be called
@@ -371,7 +389,10 @@ render <- function(input,
           options
       })
 
-      evaluate_hook <- function(code, ...) {
+      # set up evaluate hook (override any pre-existing evaluate hook)
+      evaluate <- knitr::knit_hooks$get("evaluate")
+      on.exit(knitr::knit_hooks$set(evaluate = evaluate), add = TRUE)
+      knitr::knit_hooks$set(evaluate = function(code, ...) {
 
         # restore 'evaluate' for duration of hook call
         if (needs_hooks) {
@@ -381,10 +402,8 @@ render <- function(input,
 
         # call output_source function
         output_source(code, chunk_options, ...)
-      }
 
-      # set up evaluate hook
-      knitr::knit_hooks$set(evaluate = evaluate_hook)
+      })
     }
 
     perf_timer_start("knitr")
