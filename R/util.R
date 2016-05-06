@@ -505,9 +505,9 @@ replace_binding <- function(binding, package, override) {
   do.call("lockBinding", list(binding, namespace))
 
   # if package is attached, override there as well
-  searchPathName <- paste("package", package, sep = ":")
-  if (searchPathName %in% search()) {
-    env <- as.environment(searchPathName)
+  search_name <- paste("package", package, sep = ":")
+  if (search_name %in% search()) {
+    env <- as.environment(search_name)
     do.call("unlockBinding", list(binding, env))
     assign(binding, override, envir = env)
     do.call("lockBinding", list(binding, env))
