@@ -23,7 +23,8 @@ test_that("formats successfully produce a document", {
   testFormat(md_document())
   testFormat(pdf_document())
   testFormat(beamer_presentation())
-  testFormat(tufte_handout())
   testFormat(word_document())
 
+  if (requireNamespace("tufte", quietly = TRUE))
+    testFormat(tufte_handout())
 })
