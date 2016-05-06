@@ -6,6 +6,13 @@ rmarkdown 0.9.7 (unreleased)
 * Added an argument `error` to `pandoc_available()` to signal an error when (if
   `error = TRUE`) pandoc with the required version is not found.
 
+* Added `html_notebook` format for creating HTML documents that include source
+  code and output.
+
+* Added `resolve_output_format` function (useful for front ends that need to
+  mirror the default format resolution logic of `render`).
+
+
 rmarkdown 0.9.6
 --------------------------------------------------------------------------------
 

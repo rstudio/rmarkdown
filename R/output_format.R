@@ -357,6 +357,53 @@ default_output_format <- function(input, encoding = getOption("encoding")) {
   format
 }
 
+#' Resolve the output format for an R Markdown document
+#'
+#' Read the YAML metadata (and any common _output.yml file) for the
+#' document and return an output format object that can be
+#' passed to the \code{\link{render}} function.
+#'
+#' @param input Input file (Rmd or plain markdown)
+#' @param output_format Name of output format (or \code{NULL} to use
+#'   the default format for the input file).
+#' @param output_options List of output options that should override the
+#'   options specified in metadata.
+#' @param encoding The encoding of the input file; see \code{\link{file}}
+#'
+#' @return An R Markdown output format definition that can be passed to
+#'   \code{\link{render}}.
+#'
+#' @details
+#'
+#' This function is useful for front-end tools that need to modify
+#' the default behavior of an output format.
+#'
+#' @export
+resolve_output_format <- function(input,
+                                  output_format = NULL,
+                                  output_options = NULL,
+                                  encoding = getOption("encoding")) {
+
+  # read the input file
+  input_lines <- read_lines_utf8(input, encoding)
+
+  # read the yaml front matter
+  yaml_front_matter <- parse_yaml_front_matter(input_lines)
+
+  # validate that the output format is either NULL or a character vector
+  if (!is.null(output_format) && !is.character(output_format))
+    stop("output_format must be a character vector")
+
+  # resolve the output format by looking at the yaml
+  output_format <- output_format_from_yaml_front_matter(input_lines,
+                                                        output_options,
+                                                        output_format)
+
+  # return it
+  create_output_format(output_format$name, output_format$options)
+}
+
+
 #' Determine all output formats for an R Markdown document
 #'
 #' Read the YAML metadata (and any common _output.yml file) for the
