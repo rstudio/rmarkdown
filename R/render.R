@@ -24,7 +24,11 @@ render <- function(input,
                    envir = parent.frame(),
                    run_pandoc = TRUE,
                    quiet = FALSE,
-                   encoding = getOption("encoding")) {
+                   encoding = getOption("encoding"),
+                   on_exit = NULL) {
+
+  if (is.function(on_exit))
+    on.exit(on_exit(), add = TRUE)
 
   perf_timer_start("render")
 
