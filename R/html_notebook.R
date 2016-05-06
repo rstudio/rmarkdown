@@ -22,6 +22,7 @@ html_notebook <- function(toc = FALSE,
                           includes = NULL,
                           md_extensions = NULL,
                           pandoc_args = NULL,
+                          output_source = NULL,
                           ...)
 {
   # use a pre-knit hook to capture the original document
@@ -99,7 +100,8 @@ html_notebook <- function(toc = FALSE,
     pandoc = NULL,
     pre_knit = pre_knit,
     post_processor = post_processor,
-    base_format =  base_format
+    base_format =  base_format,
+    output_source = output_source
   )
 }
 

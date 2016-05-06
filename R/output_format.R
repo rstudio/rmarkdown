@@ -58,17 +58,23 @@ output_format <- function(knitr,
                           pre_processor = NULL,
                           intermediates_generator = NULL,
                           post_processor = NULL,
+                          output_source = NULL,
                           base_format = NULL) {
-  format <- structure(list(knitr = knitr,
-                 pandoc = pandoc,
-                 keep_md = keep_md,
-                 clean_supporting = clean_supporting && !keep_md,
-                 pre_knit = pre_knit,
-                 post_knit = post_knit,
-                 pre_processor = pre_processor,
-                 intermediates_generator = intermediates_generator,
-                 post_processor = post_processor),
-            class = "rmarkdown_output_format")
+
+  format <- list(
+    knitr = knitr,
+    pandoc = pandoc,
+    keep_md = keep_md,
+    clean_supporting = clean_supporting && !keep_md,
+    pre_knit = pre_knit,
+    post_knit = post_knit,
+    pre_processor = pre_processor,
+    intermediates_generator = intermediates_generator,
+    post_processor = post_processor,
+    output_source = output_source
+  )
+
+  class(format) <- "rmarkdown_output_format"
 
   # if a base format was supplied, merge it with the format we just created
   if (!is.null(base_format))
@@ -132,8 +138,15 @@ merge_output_formats <- function(base, overlay)  {
       merge_function_outputs(base$intermediates_generator,
                              overlay$intermediates_generator, c),
     post_processor =
-      merge_post_processors(base$post_processor, overlay$post_processor)
+      merge_post_processors(base$post_processor, overlay$post_processor),
+    output_source =
+      merge_output_source(base$output_source, overlay$output_source)
   ), class = "rmarkdown_output_format")
+}
+
+merge_output_source <- function(base, overlay) {
+  # TODO
+  overlay
 }
 
 merge_pandoc_options <- function(base, overlay) {

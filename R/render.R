@@ -337,6 +337,56 @@ render <- function(input,
     }, add = TRUE)
     env$metadata <- yaml_front_matter
 
+    # hook up output_source to evaluate if specified
+    if (is.function(output_format$output_source)) {
+      output_source <- output_format$output_source
+      validate_output_source(output_source)
+
+      # ensure evaluate hook for knitr
+      # TODO: remove once next version of knitr hits CRAN
+      needs_hooks <- packageVersion("knitr") < "1.13"
+      if (needs_hooks) {
+        evaluate <- replace_binding("evaluate", "evaluate", function(...) {
+          knitr::knit_hooks$get("evaluate")(...)
+        })
+        on.exit(replace_binding("evaluate", "evaluate", evaluate), add = TRUE)
+      }
+
+      # track knit context
+      chunk_options <- list()
+
+      # use an 'include' hook to track chunk options (any
+      # 'opts_hooks' hook will do; we just want this to be called
+      # on entry to any chunk)
+      include_hook <- knitr::opts_hooks$get("include")
+      knitr::opts_hooks$set(include = function(options) {
+
+        # save context
+        chunk_options <<- options
+
+        # call original hook
+        if (is.function(include_hook))
+          include_hook(options)
+        else
+          options
+      })
+
+      evaluate_hook <- function(code, ...) {
+
+        # restore 'evaluate' for duration of hook call
+        if (needs_hooks) {
+          hook <- replace_binding("evaluate", "evaluate", evaluate)
+          on.exit(replace_binding("evaluate", "evaluate", hook), add = TRUE)
+        }
+
+        # call output_source function
+        output_source(code, chunk_options, ...)
+      }
+
+      # set up evaluate hook
+      knitr::knit_hooks$set(evaluate = evaluate_hook)
+    }
+
     perf_timer_start("knitr")
 
     # perform the knit
@@ -572,6 +622,26 @@ md_header_from_front_matter <- function(front_matter) {
   md
 }
 
+validate_output_source <- function(output_source) {
 
+  # error message to report
+  required_signature <- "function(code, context, ...) {}"
+  prefix <- "'output_source' should be a function with signature"
+  error_msg <- sprintf("%s '%s'", prefix, required_signature)
+
+  # ensure function
+  if (!is.function(output_source))
+    stop(error_msg, call. = FALSE)
+
+  # check formals
+  fmls <- names(formals(output_source))
+  if (length(fmls) < 3)
+    stop(error_msg, call. = FALSE)
+
+  if (!("..." %in% fmls))
+    stop(error_msg, call. = FALSE)
+
+  TRUE
+}
 
 
