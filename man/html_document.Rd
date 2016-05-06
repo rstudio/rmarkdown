@@ -40,7 +40,7 @@ outputting HTML directly into the markdown document).}
 \item{dev}{Graphics device to use for figure output (defaults to png)}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
-chunks. Defaults to \code{"none"} which displays all code chunks (assuming
+chunks. Specify \code{"none"} to display all code chunks (assuming
 they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
 code chunks by default (users can show hidden code chunks either
 individually or document-wide). Specify \code{"show"} to show all R code

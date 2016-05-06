@@ -3,10 +3,25 @@
 #' Format for converting from R Markdown to an HTML notebook.
 #'
 #' @inheritParams html_document
-#' @param ... Optional arguments to be passed to \code{\link{html_document}}.
 #' @export
-html_notebook <- function(code_folding = "show",
+html_notebook <- function(toc = FALSE,
+                          toc_depth = 3,
+                          toc_float = FALSE,
+                          number_sections = FALSE,
+                          fig_width = 7,
+                          fig_height = 5,
+                          fig_retina = 2,
+                          fig_caption = TRUE,
+                          code_folding = "show",
+                          smart = TRUE,
+                          theme = "default",
                           highlight = "textmate",
+                          mathjax = "default",
+                          extra_dependencies = NULL,
+                          css = NULL,
+                          includes = NULL,
+                          md_extensions = NULL,
+                          pandoc_args = NULL,
                           ...)
 {
   # use a pre-knit hook to capture the original document
@@ -44,9 +59,40 @@ html_notebook <- function(code_folding = "show",
     nb_output_file
   }
 
+  # these arguments to html_document are fixed so we need to
+  # flag them as invalid for users
+  fixed_args <- c("self_contained", "keep_md", "template", "lib_dir", "dev")
+  forwarded_args <- names(list(...))
+  for (arg in forwarded_args) {
+    if (arg %in% fixed_args)
+      stop("The ", arg, " option is not valid for the html_notebook format.")
+  }
+
   # generate actual format
-  base_format <- html_document(code_folding = code_folding,
+  base_format <- html_document(toc = toc,
+                               toc_depth = toc_depth,
+                               toc_float = toc_float,
+                               number_sections = number_sections,
+                               fig_width = fig_width,
+                               fig_height = fig_height,
+                               fig_retina = fig_retina,
+                               fig_caption = fig_caption,
+                               code_folding = code_folding,
+                               smart = smart,
+                               theme = theme,
                                highlight = highlight,
+                               mathjax = mathjax,
+                               extra_dependencies = extra_dependencies,
+                               css = css,
+                               includes = includes,
+                               md_extensions = md_extensions,
+                               pandoc_args = pandoc_args,
+                               # options forced for notebooks
+                               dev = "png",
+                               self_contained = TRUE,
+                               keep_md = FALSE,
+                               template = "default",
+                               lib_dir = NULL,
                                ...)
   rmarkdown::output_format(
     knitr = knitr_options_notebook(),
