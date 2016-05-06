@@ -347,8 +347,9 @@ render <- function(input,
       # ensure evaluate hook for knitr
       # TODO: remove once next version of knitr hits CRAN
       needs_hooks <- packageVersion("knitr") < "1.13"
+      evaluate <- evaluate::evaluate
       if (needs_hooks) {
-        evaluate <- replace_binding("evaluate", "evaluate", function(...) {
+        replace_binding("evaluate", "evaluate", function(...) {
           knitr::knit_hooks$get("evaluate")(...)
         })
         on.exit(replace_binding("evaluate", "evaluate", evaluate), add = TRUE)
@@ -390,8 +391,8 @@ render <- function(input,
       })
 
       # set up evaluate hook (override any pre-existing evaluate hook)
-      evaluate <- knitr::knit_hooks$get("evaluate")
-      on.exit(knitr::knit_hooks$set(evaluate = evaluate), add = TRUE)
+      evaluate_hook <- knitr::knit_hooks$get("evaluate")
+      on.exit(knitr::knit_hooks$set(evaluate = evaluate_hook), add = TRUE)
       knitr::knit_hooks$set(evaluate = function(code, ...) {
 
         # restore 'evaluate' for duration of hook call
