@@ -340,7 +340,7 @@ To include a gauge within a Shiny flexdashboard you need to be sure to wrap the 
 
 ### Navigation Bar
 
-By default, the flexdashboard navigation bar includes only the dashboard title. When a dashboard has [Multiple Pages], links to the various pages are also included on the left side of the navigation bar. You can also add social links and a link to view the source code of the dashboard. For example:
+By default, the flexdashboard navigation bar includes the document's `title`, `author`, and `date`. When a dashboard has [Multiple Pages], links to the various pages are also included on the left side of the navigation bar. You can also add social links and a link to view the source code of the dashboard. For example:
 
 ![](images/navigation-bar.png){.screenshot width=804 height=50}
 
