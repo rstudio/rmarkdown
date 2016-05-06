@@ -1,0 +1,26 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an R Markdown Notebook.
+
+```{r}
+summary(cars)
+```
+
+This is a plot.
+
+```{r}
+plot(cars)
+```
+
+This is an HTML widget.
+
+```{r}
+if (requireNamespace("dygraphs", quietly = TRUE)) {
+  dygraphs::dygraph(nhtemp, main = "New Haven Temperatures") %>% 
+    dygraphs::dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
+}
+```
+For more details on using R Markdown see <http://rmarkdown.rstudio.com>.

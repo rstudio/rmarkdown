@@ -5,12 +5,15 @@
 \alias{pandoc_version}
 \title{Check pandoc availabilty and version}
 \usage{
-pandoc_available(version = NULL)
+pandoc_available(version = NULL, error = FALSE)
 
 pandoc_version()
 }
 \arguments{
 \item{version}{Required version of pandoc}
+
+\item{error}{Whether to signal an error if pandoc with the required version
+is not found}
 }
 \value{
 \code{pandoc_available} returns a logical indicating whether the
@@ -23,9 +26,12 @@ checking for a specific version or greater). Determine the specific version
 of pandoc available.
 }
 \details{
-The system path as well as the version of pandoc shipped with RStudio (if
-running under RStudio) are scanned for pandoc and the highest version
-available is used.
+The system environment variable \samp{PATH} as well as the version of pandoc
+shipped with RStudio (its location is set via the environment variable
+\samp{RSTUDIO_PANDOC} by RStudio products like the RStudio IDE, RStudio
+Server, Shiny Server, and RStudio Connect, etc) are scanned for pandoc and
+the highest version available is used. Please do not modify the environment
+varaible \samp{RSTUDIO_PANDOC} unless you know what it means.
 }
 \examples{
 \dontrun{

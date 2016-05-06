@@ -140,6 +140,25 @@ knitr_cache_dir <- function(file, pandoc_to) {
   paste(tools::file_path_sans_ext(file), "_cache/", pandoc_to, "/", sep = "")
 }
 
+get_knitr_hook_list <- function(hook_names = NULL) {
+  if (is.null(hook_names))
+    hook_names <- c("knit_hooks", "opts_chunk", "opts_hooks", "opts_knit")
+  knitr_ns <- asNamespace("knitr")
+  hook_list <- lapply(hook_names, function(hook_name) {
+    hooks <- get(hook_name, envir = knitr_ns, inherits = FALSE)
+    hooks$get()
+  })
+  names(hook_list) <- hook_names
+  hook_list
+}
+
+set_knitr_hook_list <- function(hook_list) {
+  knitr_ns <- asNamespace("knitr")
+  enumerate(hook_list, function(hook_name, hook_value) {
+    hook <- get(hook_name, envir = knitr_ns, inherits = FALSE)
+    hook$set(hook_value)
+  })
+}
 
 highlighters <- function() {
   c("default",
@@ -379,4 +398,90 @@ check_latexmk_version <- function(latexmk_path = find_program('latexmk')) {
     'You may need to update the latexmk package or your LaTeX distribution.',
     call. = FALSE
   )
+}
+
+n_bytes <- function(string) {
+  nchar(string, type = "bytes")
+}
+
+starts_with_bytes <- function(string, bytes) {
+  Encoding(string) <- Encoding(bytes) <- "bytes"
+  if (nchar(bytes) > nchar(string))
+    return(FALSE)
+  substring(string, 1, nchar(bytes)) == bytes
+}
+
+ends_with_bytes <- function(string, bytes) {
+  Encoding(string) <- Encoding(bytes) <- "bytes"
+  if (nchar(bytes) > nchar(string))
+    return(FALSE)
+  substring(string, nchar(string) - nchar(bytes) + 1, nchar(string)) == bytes
+}
+
+
+
+base64_encode_object <- function(object) {
+  object <- rapply(object, unclass, how = "replace")
+  json <- charToRaw(jsonlite::toJSON(object, auto_unbox = TRUE))
+  base64enc::base64encode(json)
+}
+
+base64_decode_object <- function(encoded) {
+  json <- rawToChar(base64enc::base64decode(encoded))
+  jsonlite::fromJSON(json)
+}
+
+read_file <- function(path, binary = FALSE) {
+  n <- file.info(path)$size
+  if (binary) {
+    readBin(path, raw(), n)
+  } else {
+    readChar(path, n, TRUE)
+  }
+}
+
+surround <- function(string, with) {
+  paste(with, string, with, sep = "")
+}
+
+to_html_attributes <- function(data) {
+
+  if (!length(data)) return("")
+
+  escaped <- unlist(lapply(data, function(el) {
+    htmltools::htmlEscape(as.character(el), attribute = TRUE)
+  }))
+
+  quoted <- surround(escaped, with = "\"")
+  paste(names(data), quoted, sep = "=")
+
+}
+
+rbind_list <- function(data) {
+  result <- do.call(mapply, c(c, data, USE.NAMES = FALSE, SIMPLIFY = FALSE))
+  names(result) <- names(data[[1]])
+  as.data.frame(result, stringsAsFactors = FALSE)
+}
+
+enumerate <- function(data, f, ...) {
+  lapply(seq_along(data), function(i) {
+    f(names(data)[[i]], data[[i]], ...)
+  })
+}
+
+insert <- function(vector, index, ...) {
+
+  dots <- list(...)
+  mode(dots) <- mode(vector)
+  n <- length(vector)
+
+  result <- if (index == 0) {
+    c(dots, vector)
+  } else if (index == n) {
+    c(vector, dots)
+  } else {
+    c(vector[1:index], dots, vector[(index + 1):n])
+  }
+
+  result
 }
