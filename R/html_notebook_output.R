@@ -13,7 +13,6 @@ html_notebook_render_base64_data <- function(path = NULL,
 }
 
 html_notebook_output_png <- function(path = NULL, bytes = NULL) {
-  browser()
   format <- '<img src="data:image/png;base64,%s" />'
   html <- html_notebook_render_base64_data(path, bytes, format)
   html_notebook_annotated_output(html, "plot")

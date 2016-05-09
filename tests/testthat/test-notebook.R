@@ -22,7 +22,7 @@ test_that("an example R Notebook document can be rendered and parsed", {
 test_that("a custom output_source can be used on render", {
 
   # set up output_source hook
-  png_path <- normalizePath("resources/tinyplot.png", winslash = "/", mustWork = TRUE)
+  png_path <- normalizePath(test_path("resources/tinyplot.png"), winslash = "/")
   output_options <- list(output_source = function(code, context, ...) {
 
     label <- context$label
@@ -42,10 +42,26 @@ test_that("a custom output_source can be used on render", {
       return(widget)
     }
 
+    if (label == "chunk-four") {
+
+      styles <- list(
+        "background-color" = "#4AF",
+        "width" = "100px",
+        "height" = "100px",
+        "border" = "1px solid black",
+        "box-shadow" = "0 0 10px #ACE"
+      )
+
+      pasted <- paste(names(styles), styles, sep = ": ", collapse = "; ")
+      format <- '<div style="%s"><pre style="margin-top: 30px; text-align: center;">Box!</pre></div>'
+      knitr::asis_output(sprintf(format, pasted))
+    }
+
   })
 
   input_file <- test_path("resources/r-notebook.Rmd")
-  output_file <- "~/Desktop/output.nb.html"
+  # output_file <- "~/Desktop/output.nb.html"
+  output_file <- tempfile(fileext = ".nb.html")
   on.exit(unlink(file), add = TRUE)
   render(input_file, output_options = output_options, output_file = output_file, quiet = TRUE)
 

@@ -23,4 +23,10 @@ if (requireNamespace("dygraphs", quietly = TRUE)) {
     dygraphs::dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
 }
 ```
+
+```{r chunk-four}
+# The R code in here is ignored; we're
+# just going to inject some arbitrary HTML.
+```
+
 For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
