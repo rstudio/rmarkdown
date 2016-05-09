@@ -142,6 +142,7 @@ base64_encode_images <- function(html, encoder) {
 }
 
 # get a base64 image encoder based on caTools
+# TODO: consider using 'base64enc::base64encode'
 base64_image_encoder <- function() {
   function(data) base64_encode_images(data, caTools::base64encode)
 }

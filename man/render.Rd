@@ -6,8 +6,7 @@ render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
        output_options = NULL, intermediates_dir = NULL,
        runtime = c("auto", "static", "shiny"),
        clean = TRUE, params = NULL, knit_meta = NULL, envir = parent.frame(),
-       run_pandoc = TRUE, quiet = FALSE, encoding = getOption("encoding"),
-       on_exit = NULL)
+       run_pandoc = TRUE, quiet = FALSE, encoding = getOption("encoding"))
 }
 \arguments{
   \item{input}{Input file (R script, Rmd, or plain markdown).}
@@ -65,9 +64,6 @@ render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
 
   \item{encoding}{The encoding of the input file; see
   \code{\link{file}}.}
-
-  \item{on_exit}{A function taking no arguments, to be called when \code{render}
-  exits (as an \code{\link{on.exit}} handler).}
 }
 \value{
 When \code{run_pandoc = TRUE}, the compiled document is written into the output

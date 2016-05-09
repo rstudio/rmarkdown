@@ -65,6 +65,7 @@ Imports:
     yaml (>= 2.1.5),
     htmltools (>= 0.2.4),
     caTools,
+    evaluate,
     base64enc,
     jsonlite
 Suggests:

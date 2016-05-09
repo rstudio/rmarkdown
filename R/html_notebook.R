@@ -3,6 +3,11 @@
 #' Format for converting from R Markdown to an HTML notebook.
 #'
 #' @inheritParams html_document
+#' @param output_source Define an output source for \R chunks (ie,
+#'   outputs to use instead of those produced by evaluating the
+#'   underlying \R code). See \code{\link{output_format}}
+#'   for more details.
+#' @importFrom evaluate evaluate
 #' @export
 html_notebook <- function(toc = FALSE,
                           toc_depth = 3,

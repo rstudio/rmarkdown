@@ -35,6 +35,8 @@
 #'   \code{metadata}, \code{input_file}, \code{output_file}, \code{clean},
 #'   and \code{verbose} parmaeters, and can return an alternative
 #'   \code{output_file}.
+#' @param output_source output_source
+#' @param on_exit on_exit
 #' @param base_format An optional format to extend.
 #'
 #' @return An R Markdown output format definition that can be passed to
