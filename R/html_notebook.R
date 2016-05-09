@@ -25,10 +25,97 @@ html_notebook <- function(toc = FALSE,
                           output_source = NULL,
                           ...)
 {
-  # use a pre-knit hook to capture the original document
+  # some global state that is captured in pre_knit
   encoded_document <- NULL
+  evaluate <- NULL
+  exit_actions <- list()
+  on_exit <- function() {
+    for (action in exit_actions)
+      action()
+  }
+
+  # define pre_knit hook
   pre_knit <- function(input, ...) {
+
+    # store encoded document
     encoded_document <<- base64enc::base64encode(input)
+
+    # store original definition of 'evaluate'
+    evaluate <<- evaluate::evaluate
+
+    if (is.function(output_source)) {
+
+      # pull out 'output_source'
+      validate_output_source(output_source)
+
+      # ensure evaluate hook for knitr
+      # TODO: remove once next version of knitr hits CRAN
+      needs_hooks <- packageVersion("knitr") < "1.13"
+      evaluate <- evaluate::evaluate
+      if (needs_hooks) {
+        replace_binding("evaluate", "evaluate", function(...) {
+          knitr::knit_hooks$get("evaluate")(...)
+        })
+        exit_actions <<- c(exit_actions, function() {
+          replace_binding("evaluate", "evaluate", evaluate)
+        })
+      }
+
+      # track knit context
+      chunk_options <- list()
+
+      # force knitr labeling (required for uniqueness of labels + cache coherence)
+      knitr.duplicate.label <- getOption("knitr.duplicate.label")
+      if (identical(knitr.duplicate.label, "allow")) {
+        warning("unsetting 'knitr.duplicate.label' for duration of render")
+        options(knitr.duplicate.label = "deny")
+        exit_actions <<- c(exit_actions, function() {
+          options(knitr.duplicate.label = knitr.duplicate.label)
+        })
+      }
+
+      # force default unnamed chunk labeling scheme (for cache coherence)
+      unnamed.chunk.label <- knitr::opts_knit$get("unnamed.chunk.label")
+      if (!identical(unnamed.chunk.label, "unnamed-chunk")) {
+        warning("reverting 'unnamed.chunk.label' to 'unnamed-chunk' for duration of render")
+        knitr::opts_knit$set(unnamed.chunk.label = "unnamed-chunk")
+        exit_actions <<- c(exit_actions, function() {
+          knitr::opts_knit$set(unnamed.chunk.label = unnamed.chunk.label)
+        })
+      }
+
+      # use an 'include' hook to track chunk options (any
+      # 'opts_hooks' hook will do; we just want this to be called
+      # on entry to any chunk)
+      include_hook <- knitr::opts_hooks$get("include")
+      knitr::opts_hooks$set(include = function(options) {
+
+        # save context
+        chunk_options <<- options
+
+        # call original hook
+        if (is.function(include_hook))
+          include_hook(options)
+        else
+          options
+      })
+
+      # set up evaluate hook (override any pre-existing evaluate hook)
+      evaluate_hook <- knitr::knit_hooks$get("evaluate")
+      on.exit(knitr::knit_hooks$set(evaluate = evaluate_hook), add = TRUE)
+      knitr::knit_hooks$set(evaluate = function(code, ...) {
+
+        # restore 'evaluate' for duration of hook call
+        if (needs_hooks) {
+          hook <- replace_binding("evaluate", "evaluate", evaluate)
+          on.exit(replace_binding("evaluate", "evaluate", hook), add = TRUE)
+        }
+
+        # call output_source function
+        output_source(code, chunk_options, ...)
+
+      })
+    }
   }
 
   # post-processor to rename output file if necessary, and also
@@ -101,7 +188,8 @@ html_notebook <- function(toc = FALSE,
     pre_knit = pre_knit,
     post_processor = post_processor,
     base_format =  base_format,
-    output_source = output_source
+    output_source = output_source,
+    on_exit = on_exit
   )
 }
 

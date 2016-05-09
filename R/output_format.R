@@ -59,6 +59,7 @@ output_format <- function(knitr,
                           intermediates_generator = NULL,
                           post_processor = NULL,
                           output_source = NULL,
+                          on_exit = NULL,
                           base_format = NULL) {
 
   format <- list(
@@ -71,7 +72,8 @@ output_format <- function(knitr,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor,
-    output_source = output_source
+    output_source = output_source,
+    on_exit = on_exit
   )
 
   class(format) <- "rmarkdown_output_format"
