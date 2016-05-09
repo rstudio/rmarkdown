@@ -334,7 +334,11 @@ as_evaluate_output <- function(output, code, context, ...) {
 }
 
 as_evaluate_output.htmlwidget <- function(output, code, context, ...) {
-  as_evaluate_output_impl(code, knitr::knit_print(output), context)
+  widget <- knitr::knit_print(output)
+  meta <- lapply(attr(widget, "knit_meta"), unclass)
+  asis <- knitr::asis_output(c(widget))
+  annotated <- html_notebook_annotated_output(asis, "htmlwidget", meta)
+  as_evaluate_output_impl(code, annotated, context)
 }
 
 as_evaluate_output.knit_asis <- function(output, code, context, ...) {

@@ -22,7 +22,7 @@ test_that("an example R Notebook document can be rendered and parsed", {
 test_that("a custom output_source can be used on render", {
 
   # set up output_source hook
-  png_path <- normalizePath(test_path("resources/tinyplot.png"), winslash = "/")
+  png_path <- normalizePath(testthat::test_path("resources/tinyplot.png"), winslash = "/")
   output_options <- list(output_source = function(code, context, ...) {
 
     label <- context$label
@@ -59,7 +59,7 @@ test_that("a custom output_source can be used on render", {
 
   })
 
-  input_file <- test_path("resources/r-notebook.Rmd")
+  input_file <- testthat::test_path("resources/r-notebook.Rmd")
   # output_file <- "~/Desktop/output.nb.html"
   output_file <- tempfile(fileext = ".nb.html")
   on.exit(unlink(output_file), add = TRUE)
