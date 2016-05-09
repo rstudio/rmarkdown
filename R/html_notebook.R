@@ -32,7 +32,6 @@ html_notebook <- function(toc = FALSE,
 {
   # some global state that is captured in pre_knit
   encoded_document <- NULL
-  evaluate <- NULL
   evaluate_hook <- NULL
   exit_actions <- list()
   on_exit <- function() {
@@ -46,25 +45,10 @@ html_notebook <- function(toc = FALSE,
     # store encoded document
     encoded_document <<- base64enc::base64encode(input)
 
-    # store original definition of 'evaluate'
-    evaluate <<- evaluate::evaluate
-
     if (is.function(output_source)) {
 
       # pull out 'output_source'
       validate_output_source(output_source)
-
-      # ensure evaluate hook for knitr
-      # TODO: remove once next version of knitr hits CRAN
-      needs_hooks <- packageVersion("knitr") < "1.13"
-      if (needs_hooks) {
-        replace_binding("evaluate", "evaluate", function(...) {
-          knitr::knit_hooks$get("evaluate")(...)
-        })
-        exit_actions <<- c(exit_actions, function() {
-          replace_binding("evaluate", "evaluate", evaluate)
-        })
-      }
 
       # track knit context
       chunk_options <- list()
@@ -112,16 +96,8 @@ html_notebook <- function(toc = FALSE,
       })
 
       knitr::knit_hooks$set(evaluate = function(code, ...) {
-
-        # restore 'evaluate' for duration of hook call
-        if (needs_hooks) {
-          hook <- replace_binding("evaluate", "evaluate", evaluate)
-          on.exit(replace_binding("evaluate", "evaluate", hook), add = TRUE)
-        }
-
-        # call output_source function
         output <- output_source(code, chunk_options, ...)
-        evaluate_output(output, code, chunk_options, ...)
+        as_evaluate_output(output, code, chunk_options, ...)
       })
     }
   }
@@ -353,19 +329,19 @@ evaluate_output_impl <- function(code, output, context) {
   )
 }
 
-evaluate_output <- function(output, code, context, ...) {
+as_evaluate_output <- function(output, code, context, ...) {
   UseMethod("evaluate_output")
 }
 
-evaluate_output.htmlwidget <- function(output, code, context, ...) {
-  evaluate_output_impl(code, knitr::knit_print(output), context)
+as_evaluate_output.htmlwidget <- function(output, code, context, ...) {
+  as_evaluate_output_impl(code, knitr::knit_print(output), context)
 }
 
-evaluate_output.knit_asis <- function(output, code, context, ...) {
-  evaluate_output_impl(code, output, context)
+as_evaluate_output.knit_asis <- function(output, code, context, ...) {
+  as_evaluate_output_impl(code, output, context)
 }
 
-evaluate_output.default <- function(output, code, context, ...) {
+as_evaluate_output.default <- function(output, code, context, ...) {
   captured <- capture.output(knitr::knit_print(output))
-  evaluate_output_impl(code, paste(captured, collapse = "\n"), context)
+  as_evaluate_output_impl(code, paste(captured, collapse = "\n"), context)
 }
