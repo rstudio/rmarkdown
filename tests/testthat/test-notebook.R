@@ -22,30 +22,34 @@ test_that("an example R Notebook document can be rendered and parsed", {
 test_that("a custom output_source can be used on render", {
 
   # set up output_source hook
+  png_path <- normalizePath("resources/tinyplot.png", winslash = "/", mustWork = TRUE)
   output_options <- list(output_source = function(code, context, ...) {
-    # instead of evaluating code, just return the label
-    context$label
+
+    label <- context$label
+
+    if (label == "chunk-one") {
+      return(summary(cars))
+    }
+
+    if (label == "chunk-two") {
+      return(html_notebook_output_png(png_path))
+    }
+
+    if (label == "chunk-three") {
+      library(dygraphs)
+      widget <- dygraph(nhtemp, main = "New Haven Temperatures") %>%
+        dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
+      return(widget)
+    }
+
   })
 
-  # render file
-  path <- test_path("resources/r-notebook.Rmd")
-  file <- tempfile(fileext = ".nb.html")
+  input_file <- test_path("resources/r-notebook.Rmd")
+  output_file <- "~/Desktop/output.nb.html"
   on.exit(unlink(file), add = TRUE)
-  render(path, output_options = output_options, output_file = file, quiet = TRUE)
+  render(input_file, output_options = output_options, output_file = output_file, quiet = TRUE)
 
   # parse notebook
   parsed <- parse_html_notebook(file)
-
-  # extract metadata
-  metadata <- unlist(Filter(Negate(is.null), lapply(parsed$annotations, function(annotation) {
-    annotation$meta$data
-  })))
-
-  # strip whitespace
-  metadata <- gsub("^\\s*|\\s*$", "", metadata)
-
-  # check metadata
-  expect_identical(metadata, c("chunk-one", "chunk-two", "chunk-three"))
-
 
 })

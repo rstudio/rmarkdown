@@ -35,8 +35,11 @@
 #'   \code{metadata}, \code{input_file}, \code{output_file}, \code{clean},
 #'   and \code{verbose} parmaeters, and can return an alternative
 #'   \code{output_file}.
-#' @param output_source output_source
-#' @param on_exit on_exit
+#' @param output_source Define an output source for R chunks (ie, outputs to use
+#'   instead of those produced by evaluating the underlying R code).
+#'   See \code{\link{html_notebook_output}} for more details.
+#' @param on_exit A function to call when \code{rmarkdown::render()} finishes
+#'   execution (as registered with a \code{\link{on.exit}} handler).
 #' @param base_format An optional format to extend.
 #'
 #' @return An R Markdown output format definition that can be passed to

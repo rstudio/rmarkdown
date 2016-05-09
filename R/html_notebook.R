@@ -5,8 +5,8 @@
 #' @inheritParams html_document
 #' @param output_source Define an output source for \R chunks (ie,
 #'   outputs to use instead of those produced by evaluating the
-#'   underlying \R code). See \code{\link{output_format}}
-#'   for more details.
+#'   underlying \R code). See \code{\link{html_notebook_output}} for
+#'   more details.
 #' @importFrom evaluate evaluate
 #' @export
 html_notebook <- function(toc = FALSE,
@@ -120,8 +120,8 @@ html_notebook <- function(toc = FALSE,
         }
 
         # call output_source function
-        output_source(code, chunk_options, ...)
-
+        output <- output_source(code, chunk_options, ...)
+        evaluate_output(output, code, chunk_options, ...)
       })
     }
   }
@@ -191,7 +191,7 @@ html_notebook <- function(toc = FALSE,
                                lib_dir = NULL,
                                ...)
   rmarkdown::output_format(
-    knitr = knitr_options_notebook(),
+    knitr = html_notebook_knitr_options(),
     pandoc = NULL,
     pre_knit = pre_knit,
     post_processor = post_processor,
@@ -273,7 +273,7 @@ parse_html_notebook <- function(path, encoding = "UTF-8") {
        annotations = annotations)
 }
 
-notebook_annotated_output <- function(output, label, meta = NULL) {
+html_notebook_annotated_output <- function(output, label, meta = NULL) {
   before <- if (is.null(meta)) {
     sprintf("\n<!-- rnb-%s-begin -->\n", label)
   } else {
@@ -281,19 +281,20 @@ notebook_annotated_output <- function(output, label, meta = NULL) {
     sprintf("\n<!-- rnb-%s-begin %s -->\n", label, meta)
   }
   after  <- sprintf("\n<!-- rnb-%s-end -->\n", label)
-  paste(before, output, after, sep = "\n")
+  pasted <- paste(before, output, after, sep = "\n")
+  knitr::asis_output(pasted)
 }
 
-notebook_annotated_knitr_hook <- function(label, hook, meta = NULL) {
+html_notebook_annotated_knitr_hook <- function(label, hook, meta = NULL) {
   force(list(label, hook, meta))
   function(x, ...) {
     output <- hook(x, ...)
     meta <- if (is.function(meta)) meta(x, output, ...)
-    notebook_annotated_output(output, label, meta)
+    html_notebook_annotated_output(output, label, meta)
   }
 }
 
-knitr_options_notebook <- function() {
+html_notebook_knitr_options <- function() {
 
   # save original hooks (restore after we've stored requisite
   # hooks in our output format)
@@ -311,21 +312,21 @@ knitr_options_notebook <- function() {
                  "warning", "error", "message", "error")
 
   meta_hooks <- list(
-    source  = notebook_text_hook,
-    output  = notebook_text_hook,
-    warning = notebook_text_hook,
-    message = notebook_text_hook,
-    error   = notebook_text_hook
+    source  = html_notebook_text_hook,
+    output  = html_notebook_text_hook,
+    warning = html_notebook_text_hook,
+    message = html_notebook_text_hook,
+    error   = html_notebook_text_hook
   )
 
   knit_hooks <- lapply(hook_names, function(hook_name) {
-    notebook_annotated_knitr_hook(hook_name,
+    html_notebook_annotated_knitr_hook(hook_name,
                                   orig_knit_hooks[[hook_name]],
                                   meta_hooks[[hook_name]])
   })
   names(knit_hooks) <- hook_names
 
-  opts_chunk <- list(render = notebook_render_hook,
+  opts_chunk <- list(render = html_notebook_render_hook,
                      comment = NA)
 
   # return as knitr options
@@ -333,13 +334,38 @@ knitr_options_notebook <- function() {
                            opts_chunk = opts_chunk)
 }
 
-notebook_text_hook <- function(input, output, ...) {
+html_notebook_text_hook <- function(input, output, ...) {
   list(data = input)
 }
 
-notebook_render_hook <- function(x, ...) {
+html_notebook_render_hook <- function(x, ...) {
   output <- knitr::knit_print(x, ...)
   if (inherits(x, "htmlwidget"))
     return(notebook_render_html_widget(output))
   output
+}
+
+evaluate_output_impl <- function(code, output, context) {
+  code <- if (isTRUE(context$include)) code else ""
+  list(
+    structure(list(src = code), class = "source"),
+    output
+  )
+}
+
+evaluate_output <- function(output, code, context, ...) {
+  UseMethod("evaluate_output")
+}
+
+evaluate_output.htmlwidget <- function(output, code, context, ...) {
+  evaluate_output_impl(code, knitr::knit_print(output), context)
+}
+
+evaluate_output.knit_asis <- function(output, code, context, ...) {
+  evaluate_output_impl(code, output, context)
+}
+
+evaluate_output.default <- function(output, code, context, ...) {
+  captured <- capture.output(knitr::knit_print(output))
+  evaluate_output_impl(code, paste(captured, collapse = "\n"), context)
 }
