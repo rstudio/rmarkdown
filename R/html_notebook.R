@@ -321,7 +321,7 @@ html_notebook_render_hook <- function(x, ...) {
   output
 }
 
-evaluate_output_impl <- function(code, output, context) {
+as_evaluate_output_impl <- function(code, output, context) {
   code <- if (isTRUE(context$include)) code else ""
   list(
     structure(list(src = code), class = "source"),
@@ -330,7 +330,7 @@ evaluate_output_impl <- function(code, output, context) {
 }
 
 as_evaluate_output <- function(output, code, context, ...) {
-  UseMethod("evaluate_output")
+  UseMethod("as_evaluate_output")
 }
 
 as_evaluate_output.htmlwidget <- function(output, code, context, ...) {
