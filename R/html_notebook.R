@@ -30,24 +30,8 @@ html_notebook <- function(toc = FALSE,
     encoded_document <<- base64enc::base64encode(input)
   }
 
-  # post-processor to rename output file if necessary, and also
-  # inject the (encoded) original document
+  # post-processor to rename output file if necessary
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
-
-    # read generated document contents
-    contents <- read_lines_utf8(output_file, encoding = "UTF-8")
-
-    # find the body end
-    body_index <- tail(which(contents == "</body>"), n = 1)
-    if (length(body_index) == 0)
-      stop("failed to find '</body>' element in generated html document")
-
-    # inject document contents
-    comment <- sprintf("<!-- rnb-document-source %s -->", encoded_document)
-    contents <- insert(contents, body_index, comment)
-
-    # write to file
-    cat(contents, file = output_file, sep = "\n")
 
     # rename to .nb.html if necessary
     nb_output_file <- output_file
@@ -89,6 +73,7 @@ html_notebook <- function(toc = FALSE,
                                pandoc_args = pandoc_args,
                                # options forced for notebooks
                                dev = "png",
+                               code_download = TRUE,
                                self_contained = TRUE,
                                keep_md = FALSE,
                                template = "default",
@@ -117,7 +102,7 @@ parse_html_notebook <- function(path, encoding = "UTF-8") {
   contents <- read_lines_utf8(path, encoding = encoding)
 
   re_comment  <- "^\\s*<!--\\s*rnb-([^-]+)-(begin|end)\\s*([^\\s-]+)?\\s*-->\\s*$"
-  re_document <- "^\\s*<!--\\s*rnb-document-source\\s*([^\\s-]+)\\s*-->\\s*$"
+  re_document <- "^<div id=\"rmd-source-code\">([^<]+)<\\/div>$"
 
   rmd_contents <- NULL
   builder <- list_builder()
