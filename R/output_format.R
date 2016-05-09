@@ -142,8 +142,17 @@ merge_output_formats <- function(base, overlay)  {
     post_processor =
       merge_post_processors(base$post_processor, overlay$post_processor),
     output_source =
-      merge_output_source(base$output_source, overlay$output_source)
+      merge_output_source(base$output_source, overlay$output_source),
+    on_exit =
+      merge_on_exit(base$on_exit, overlay$on_exit)
   ), class = "rmarkdown_output_format")
+}
+
+merge_on_exit <- function(base, overlay) {
+  function() {
+    if (is.function(base)) base()
+    if (is.function(overlay)) overlay()
+  }
 }
 
 merge_output_source <- function(base, overlay) {

@@ -188,6 +188,10 @@ render <- function(input,
   }
   pandoc_to <- output_format$pandoc$to
 
+  # register format's on_exit handler
+  if (is.function(output_format$on_exit))
+    on.exit(output_format$on_exit(), add = TRUE)
+
   # determine whether we need to run citeproc (based on whether we
   # have references in the input)
   run_citeproc <- citeproc_required(yaml_front_matter, input_lines)

@@ -28,6 +28,7 @@ html_notebook <- function(toc = FALSE,
   # some global state that is captured in pre_knit
   encoded_document <- NULL
   evaluate <- NULL
+  evaluate_hook <- NULL
   exit_actions <- list()
   on_exit <- function() {
     for (action in exit_actions)
@@ -51,7 +52,6 @@ html_notebook <- function(toc = FALSE,
       # ensure evaluate hook for knitr
       # TODO: remove once next version of knitr hits CRAN
       needs_hooks <- packageVersion("knitr") < "1.13"
-      evaluate <- evaluate::evaluate
       if (needs_hooks) {
         replace_binding("evaluate", "evaluate", function(...) {
           knitr::knit_hooks$get("evaluate")(...)
@@ -101,8 +101,11 @@ html_notebook <- function(toc = FALSE,
       })
 
       # set up evaluate hook (override any pre-existing evaluate hook)
-      evaluate_hook <- knitr::knit_hooks$get("evaluate")
-      on.exit(knitr::knit_hooks$set(evaluate = evaluate_hook), add = TRUE)
+      evaluate_hook <<- knitr::knit_hooks$get("evaluate")
+      exit_actions <<- c(exit_actions, function() {
+        knitr::knit_hooks$set(evaluate = evaluate_hook)
+      })
+
       knitr::knit_hooks$set(evaluate = function(code, ...) {
 
         # restore 'evaluate' for duration of hook call
