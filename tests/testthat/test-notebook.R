@@ -62,10 +62,10 @@ test_that("a custom output_source can be used on render", {
   input_file <- test_path("resources/r-notebook.Rmd")
   # output_file <- "~/Desktop/output.nb.html"
   output_file <- tempfile(fileext = ".nb.html")
-  on.exit(unlink(file), add = TRUE)
+  on.exit(unlink(output_file), add = TRUE)
   render(input_file, output_options = output_options, output_file = output_file, quiet = TRUE)
 
   # parse notebook
-  parsed <- parse_html_notebook(file)
+  parsed <- parse_html_notebook(output_file)
 
 })
