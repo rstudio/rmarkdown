@@ -1,5 +1,4 @@
 
-
 window.initializeCodeFolding = function(show) {
 
   // handlers for show-all and hide all

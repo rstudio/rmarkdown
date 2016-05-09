@@ -107,6 +107,11 @@ h6 {
 .table th:not([align]) {
   text-align: left;
 }
+$if(source_embed)$
+#rmd-source-code {
+  display: none;
+}
+$endif$
 </style>
 $endif$
 
@@ -207,11 +212,20 @@ $$(document).ready(function () {
 </script>
 
 <!-- code folding -->
-$if(code_folding)$
+$if(code_menu)$
 <script src="$navigationjs$/codefolding.js"></script>
+$if(source_embed)$
+<script src="$navigationjs$/FileSaver.min.js"></script>
+<script src="$navigationjs$/sourceembed.js"></script>
+$endif$
 <script>
 $$(document).ready(function () {
+$if(source_embed)$
+  window.initializeSourceEmbed("$source_embed$");
+$endif$
+$if(code_folding)$
   window.initializeCodeFolding("$code_folding$" === "show");
+$endif$
 });
 </script>
 $endif$
@@ -341,14 +355,23 @@ $endfor$
 $if(theme)$
 <div class="fluid-row" id="$idprefix$header">
 
-$if(code_folding)$
+$if(code_menu)$
 <div class="btn-group pull-right">
 <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All</a></li>
+$if(code_folding)$
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+$if(source_embed)$
+<li role="separator" class="divider"></li>
+$endif$
+$endif$
+$if(source_embed)$
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+$endif$
 </ul>
 </div>
+
 $endif$
 
 $endif$

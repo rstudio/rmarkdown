@@ -7,11 +7,12 @@
 html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   number_sections = FALSE, fig_width = 7, fig_height = 5,
   fig_retina = 2, fig_caption = TRUE, dev = "png",
-  code_folding = c("none", "show", "hide"), smart = TRUE,
-  self_contained = TRUE, theme = "default", highlight = "default",
-  mathjax = "default", template = "default", extra_dependencies = NULL,
-  css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  md_extensions = NULL, pandoc_args = NULL, ...)
+  code_folding = c("none", "show", "hide"), code_download = FALSE,
+  smart = TRUE, self_contained = TRUE, theme = "default",
+  highlight = "default", mathjax = "default", template = "default",
+  extra_dependencies = NULL, css = NULL, includes = NULL,
+  keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
+  pandoc_args = NULL, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -45,6 +46,9 @@ they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
 code chunks by default (users can show hidden code chunks either
 individually or document-wide). Specify \code{"show"} to show all R code
 chunks by default.}
+
+\item{code_download}{Embed the Rmd source code within the document and provide
+a link that can be used by readers to download the code.}
 
 \item{smart}{Produce typographically correct output, converting straight
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to

@@ -24,6 +24,8 @@
 #'  code chunks by default (users can show hidden code chunks either
 #'  individually or document-wide). Specify \code{"show"} to show all R code
 #'  chunks by default.
+#'@param code_download Embed the Rmd source code within the document and provide
+#'  a link that can be used by readers to download the code.
 #'@param smart Produce typographically correct output, converting straight
 #'  quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
 #'  ellipses.
@@ -190,6 +192,7 @@ html_document <- function(toc = FALSE,
                           fig_caption = TRUE,
                           dev = 'png',
                           code_folding = c("none", "show", "hide"),
+                          code_download = FALSE,
                           smart = TRUE,
                           self_contained = TRUE,
                           theme = "default",
@@ -269,8 +272,18 @@ html_document <- function(toc = FALSE,
   # validate code_folding
   code_folding <- match.arg(code_folding)
 
-  # dummy pre_knit function so that merging of outputs works
-  pre_knit <- function(input, ...) {}
+  # capture the source code if requested
+  source_code <- NULL
+  source_file <- NULL
+  pre_knit <- function(input, ...) {
+    if (code_download) {
+      source_file <<- basename(input)
+      source_code <<- paste0(
+        '<div id="rmd-source-code">',
+        base64enc::base64encode(input),
+        '</div>')
+    }
+  }
 
   # pre-processor for arguments that may depend on the name of the
   # the input file AND which need to inject html dependencies
@@ -350,13 +363,32 @@ html_document <- function(toc = FALSE,
                                                   output_dir))
     }
 
+    # track whether we have a code menu
+    code_menu <- FALSE
+
     # code_folding
     if (code_folding %in% c("show", "hide")) {
       # must have a theme
       if (is.null(theme))
         stop("You must use a theme when specifying the 'code_folding' option")
       args <- c(args, pandoc_variable_arg("code_folding", code_folding))
+      code_menu <- TRUE
     }
+
+    # source_embed
+    if (code_download) {
+      if (is.null(theme))
+        stop("You must use a theme when specifying the 'code_download' option")
+      args <- c(args, pandoc_variable_arg("source_embed", source_file))
+      sourceCodeFile <- tempfile(fileext = ".html")
+      writeLines(source_code, sourceCodeFile)
+      args <- c(args, pandoc_include_args(after_body = sourceCodeFile))
+      code_menu <- TRUE
+    }
+
+    # code menu
+    if (code_menu)
+      args <- c(args, pandoc_variable_arg("code_menu", "1"))
 
     # content includes (we do this here so that user include-in-header content
     # goes after dependency generated content). make the paths absolute if
