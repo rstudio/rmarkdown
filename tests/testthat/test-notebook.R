@@ -1,6 +1,7 @@
 context("notebook")
 
 test_that("an example R Notebook document can be rendered and parsed", {
+  skip_on_cran()
 
   # check initial status of hook
   expect_identical(knitr::knit_hooks$get("evaluate"), evaluate::evaluate)
@@ -26,6 +27,7 @@ test_that("an example R Notebook document can be rendered and parsed", {
 })
 
 test_that("a custom output_source can be used on render", {
+  skip_on_cran()
 
   # set up output_source hook
   png_path <- normalizePath(testthat::test_path("resources/tinyplot.png"), winslash = "/")
@@ -42,10 +44,13 @@ test_that("a custom output_source can be used on render", {
     }
 
     if (label == "chunk-three") {
-      library(dygraphs)
-      widget <- dygraph(nhtemp, main = "New Haven Temperatures") %>%
-        dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
-      return(widget)
+      if (requireNamespace("dygraphs", quietly = TRUE)) {
+        library(dygraphs)
+        widget <- dygraph(nhtemp, main = "New Haven Temperatures") %>%
+          dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
+        return(widget)
+      }
+      return(knitr::asis_output("<!-- dygraphs not installed -->"))
     }
 
     if (label == "chunk-four") {

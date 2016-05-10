@@ -346,6 +346,6 @@ as_evaluate_output.knit_asis <- function(output, code, context, ...) {
 }
 
 as_evaluate_output.default <- function(output, code, context, ...) {
-  captured <- capture.output(knitr::knit_print(output))
+  captured <- utils::capture.output(knitr::knit_print(output))
   as_evaluate_output_impl(code, paste(captured, collapse = "\n"), context)
 }
