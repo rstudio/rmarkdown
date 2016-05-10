@@ -35,7 +35,7 @@ html_notebook <- function(toc = FALSE,
   exit_actions <- list()
   on_exit <- function() {
     for (action in exit_actions)
-      action()
+      try(action())
   }
 
   # define pre_knit hook
