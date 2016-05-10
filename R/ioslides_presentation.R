@@ -1,12 +1,7 @@
 
 
 
-#' Convert to a ioslides html presentation
-#'
-#' Note: All slides contain an additional css class "levelX", where
-#' X is the header level. This can be used for css customization.
-#' 
-#' @inheritParams beamer_presentation
+
 #' @export
 ioslides_presentation <- function(logo = NULL,
                                   slide_level = 2,
