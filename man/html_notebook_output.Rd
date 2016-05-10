@@ -8,7 +8,7 @@
 \usage{
 html_notebook_output_html(html, iframe = TRUE)
 
-html_notebook_output_png(path = NULL, bytes = NULL)
+html_notebook_output_png(path = NULL, bytes = NULL, iframe = TRUE)
 }
 \arguments{
 \item{html}{Arbitrary HTML content to insert.}

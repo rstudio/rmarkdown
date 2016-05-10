@@ -93,8 +93,9 @@ html_notebook <- function(toc = FALSE,
 
       knitr::knit_hooks$set(evaluate = function(code, ...) {
         chunk_options <- merge_render_context(chunk_options)
-        output <- output_source(code, chunk_options, ...)
-        as_evaluate_output(output, code, chunk_options, ...)
+        context <- list2env(chunk_options)
+        output <- output_source(code, context, ...)
+        as_evaluate_output(output, code, context, ...)
       })
     }
   }
@@ -324,6 +325,7 @@ prepare_evaluate_output <- function(output, ...) {
   UseMethod("prepare_evaluate_output")
 }
 
+#' @export
 prepare_evaluate_output.htmlwidget <- function(output, ...) {
   widget <- knitr::knit_print(output)
   meta <- attr(widget, "knit_meta")
@@ -333,14 +335,17 @@ prepare_evaluate_output.htmlwidget <- function(output, ...) {
   annotated
 }
 
+#' @export
 prepare_evaluate_output.knit_asis <- function(output, ...) {
   output
 }
 
+#' @export
 prepare_evaluate_output.list <- function(output, ...) {
   lapply(output, prepare_evaluate_output)
 }
 
+#' @export
 prepare_evaluate_output.default <- function(output, ...) {
   paste(utils::capture.output(knitr::knit_print(output)), collapse = "\n")
 }
