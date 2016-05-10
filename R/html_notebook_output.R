@@ -28,7 +28,7 @@ html_notebook_render_base64_data <- function(path = NULL,
 #' @export
 html_notebook_output_html <- function(html, iframe = TRUE) {
   meta <- list(iframe = isTRUE(iframe))
-  html_notebook_annotated_output(html, "html", meta)
+  html_notebook_annotated_output(paste(html, collapse = "\n"), "html", meta)
 }
 
 #' @name html_notebook_output
