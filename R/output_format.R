@@ -63,7 +63,6 @@ output_format <- function(knitr,
                           pre_processor = NULL,
                           intermediates_generator = NULL,
                           post_processor = NULL,
-                          output_source = NULL,
                           on_exit = NULL,
                           base_format = NULL) {
 
@@ -77,7 +76,6 @@ output_format <- function(knitr,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor,
-    output_source = output_source,
     on_exit = on_exit
   )
 
@@ -146,8 +144,6 @@ merge_output_formats <- function(base, overlay)  {
                              overlay$intermediates_generator, c),
     post_processor =
       merge_post_processors(base$post_processor, overlay$post_processor),
-    output_source =
-      merge_output_source(base$output_source, overlay$output_source),
     on_exit =
       merge_on_exit(base$on_exit, overlay$on_exit)
   ), class = "rmarkdown_output_format")
@@ -158,11 +154,6 @@ merge_on_exit <- function(base, overlay) {
     if (is.function(base)) base()
     if (is.function(overlay)) overlay()
   }
-}
-
-merge_output_source <- function(base, overlay) {
-  # TODO
-  overlay
 }
 
 merge_pandoc_options <- function(base, overlay) {

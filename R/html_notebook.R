@@ -154,7 +154,6 @@ html_notebook <- function(toc = FALSE,
     pre_knit = pre_knit,
     post_processor = post_processor,
     base_format =  base_format,
-    output_source = output_source,
     on_exit = on_exit
   )
 }
