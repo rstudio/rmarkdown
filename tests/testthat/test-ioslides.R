@@ -52,11 +52,17 @@ test_ioslides_presentation <- function() {
   expect_true(all(header_lines))
 
  # test status of css slide class
- # Only header 1  have slide class with a level
+ # Only header 1 have slide class with a level
  header_classes <- c(
     any(grepl("level1.*Header1", html_file))
  )
  expect_true(header_classes)
+  # but not level 2 and 3
+ header_classes <- c(
+    any(grepl("level2.*Header2", html_file)),
+    any(grepl("level3.*Header3", html_file))
+ )
+ expect_false(any(header_classes))
 
 
  # Place the header 3 as title slide
@@ -81,15 +87,20 @@ test_ioslides_presentation <- function() {
      any(grepl("<h2>Header2 again</h2>", html_file, fixed = TRUE)),
      any(grepl("<h2>Header3 again</h2>", html_file, fixed = TRUE))
   )
-  expect_true(all(header_lines > 0))
+  expect_true(all(header_lines))
 
  # test status of css slide class
- # Only header 1 and header 2 have slide class with a level
+ # Header 1 and header 2 have slide class with a level
  header_classes <- c(
     any(grepl("level1.*Header1", html_file)),
     any(grepl("level2.*Header2", html_file))
  )
- expect_true(all(header_classes > 0))
+ expect_true(all(header_classes))
+ # but not level 3
+ header_classes <- c(
+    any(grepl("level3.*Header3", html_file))
+ )
+ expect_false(header_classes)
 
 }
 
