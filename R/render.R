@@ -188,10 +188,6 @@ render <- function(input,
   }
   pandoc_to <- output_format$pandoc$to
 
-  # register format's on_exit handler
-  if (is.function(output_format$on_exit))
-    on.exit(output_format$on_exit(), add = TRUE)
-
   # determine whether we need to run citeproc (based on whether we
   # have references in the input)
   run_citeproc <- citeproc_required(yaml_front_matter, input_lines)
@@ -256,6 +252,11 @@ render <- function(input,
     on.exit(knitr::opts_hooks$restore(ohooks), add = TRUE)
     templates <- knitr::opts_template$get()
     on.exit(knitr::opts_template$restore(templates), add = TRUE)
+
+    # run render on_exit (run after the knit hooks are saved so that
+    # any hook restoration can take precedence)
+    if (is.function(output_format$on_exit))
+      on.exit(output_format$on_exit(), add = TRUE)
 
     # default rendering and chunk options
     knitr::render_markdown()
