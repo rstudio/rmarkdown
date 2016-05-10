@@ -33,9 +33,10 @@ html_notebook_output_html <- function(html, iframe = TRUE) {
 
 #' @name html_notebook_output
 #' @export
-html_notebook_output_png <- function(path = NULL, bytes = NULL) {
+html_notebook_output_png <- function(path = NULL, bytes = NULL, iframe = TRUE) {
   format <- '<img src="data:image/png;base64,%s" />'
   html <- html_notebook_render_base64_data(path, bytes, format)
-  html_notebook_annotated_output(html, "plot")
+  meta <- list(iframe = isTRUE(iframe))
+  html_notebook_annotated_output(html, "plot", meta)
 }
 
