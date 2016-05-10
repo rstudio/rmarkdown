@@ -603,7 +603,7 @@ render_context <- new.env(parent = emptyenv())
 
 init_render_context <- function() {
   clear_render_context()
-  render_context$chunk.index <<- 1
+  render_context$chunk.index <- 1
 }
 
 clear_render_context <- function() {

@@ -36,14 +36,17 @@ test_that("a custom output_source can be used on render", {
     label <- context$label
 
     if (label == "chunk-one") {
+      expect_true(context$chunk.index == 1)
       return(summary(cars))
     }
 
     if (label == "chunk-two") {
+      expect_true(context$chunk.index == 2)
       return(html_notebook_output_png(png_path))
     }
 
     if (label == "chunk-three") {
+      expect_true(context$chunk.index == 3)
       if (requireNamespace("dygraphs", quietly = TRUE)) {
         library(dygraphs)
         widget <- dygraph(nhtemp, main = "New Haven Temperatures") %>%
@@ -54,7 +57,7 @@ test_that("a custom output_source can be used on render", {
     }
 
     if (label == "chunk-four") {
-
+      expect_true(context$chunk.index == 4)
       styles <- list(
         "background-color" = "#4AF",
         "width" = "100px",
@@ -65,7 +68,8 @@ test_that("a custom output_source can be used on render", {
 
       pasted <- paste(names(styles), styles, sep = ": ", collapse = "; ")
       format <- '<div style="%s"><pre style="margin-top: 30px; text-align: center;">Box!</pre></div>'
-      knitr::asis_output(sprintf(format, pasted))
+      rendered <- sprintf(format, pasted)
+      return(html_notebook_output_html(rendered))
     }
 
   })

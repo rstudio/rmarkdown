@@ -2,10 +2,13 @@
 % Please edit documentation in R/html_notebook_output.R
 \name{html_notebook_output}
 \alias{html_notebook_output}
+\alias{html_notebook_output_html}
 \alias{html_notebook_output_png}
 \title{Generate R Notebook Output}
 \usage{
 html_notebook_output_png(path = NULL, bytes = NULL)
+
+html_notebook_output_html(html)
 }
 \arguments{
 \item{path}{A path to a file. For functions accepting both \code{path}
@@ -13,6 +16,8 @@ and \code{bytes}, if \code{bytes} is \code{NULL}, the bytewise contents
 will be obtained by reading the file.}
 
 \item{bytes}{The bytewise representation of content.}
+
+\item{html}{Arbitrary HTML content to insert.}
 }
 \description{
 Utilities for generating output for the \code{html_notebook} format,

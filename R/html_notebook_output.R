@@ -8,6 +8,7 @@
 #'   and \code{bytes}, if \code{bytes} is \code{NULL}, the bytewise contents
 #'   will be obtained by reading the file.
 #' @param bytes The bytewise representation of content.
+#' @param html Arbitrary HTML content to insert.
 #'
 #' @name html_notebook_output
 NULL
@@ -29,4 +30,10 @@ html_notebook_output_png <- function(path = NULL, bytes = NULL) {
   format <- '<img src="data:image/png;base64,%s" />'
   html <- html_notebook_render_base64_data(path, bytes, format)
   html_notebook_annotated_output(html, "plot")
+}
+
+#' @name html_notebook_output
+#' @export
+html_notebook_output_html <- function(html) {
+  html_notebook_annotated_output(html, "html")
 }
