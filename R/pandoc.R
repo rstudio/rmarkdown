@@ -471,7 +471,7 @@ pandoc_html_navigation_args <- function(self_contained,
                                         files_dir,
                                         output_dir) {
   args <- c()
-  navigation_path <- rmarkdown_system_file("rmd/h/navigation-1.0")
+  navigation_path <- rmarkdown_system_file("rmd/h/navigation-1.1")
   if (self_contained) {
     navigation_path <- pandoc_path_arg(navigation_path)
   }
