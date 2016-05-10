@@ -31,7 +31,6 @@ html_notebook <- function(toc = FALSE,
                           ...)
 {
   # some global state that is captured in pre_knit
-  encoded_document <- NULL
   evaluate_hook <- NULL
   exit_actions <- list()
   on_exit <- function() {
@@ -41,9 +40,6 @@ html_notebook <- function(toc = FALSE,
 
   # define pre_knit hook
   pre_knit <- function(input, ...) {
-
-    # store encoded document
-    encoded_document <<- base64enc::base64encode(input)
 
     if (is.function(output_source)) {
 
