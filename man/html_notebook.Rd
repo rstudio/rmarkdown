@@ -77,8 +77,8 @@ additional details.}
 
 \item{output_source}{Define an output source for \R chunks (ie,
 outputs to use instead of those produced by evaluating the
-underlying \R code). See \code{\link{output_format}}
-for more details.}
+underlying \R code). See \code{\link{html_notebook_output}} for
+more details.}
 
 \item{...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}

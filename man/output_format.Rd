@@ -51,9 +51,12 @@ any intermediate files required to render the \code{input_file}.}
 and \code{verbose} parmaeters, and can return an alternative
 \code{output_file}.}
 
-\item{output_source}{output_source}
+\item{output_source}{Define an output source for R chunks (ie, outputs to use
+instead of those produced by evaluating the underlying R code).
+See \code{\link{html_notebook_output}} for more details.}
 
-\item{on_exit}{on_exit}
+\item{on_exit}{A function to call when \code{rmarkdown::render()} finishes
+execution (as registered with a \code{\link{on.exit}} handler).}
 
 \item{base_format}{An optional format to extend.}
 }

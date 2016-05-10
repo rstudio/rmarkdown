@@ -1,4 +1,14 @@
-#' @rdname html_notebook_output
+#' Generate R Notebook Output
+#'
+#' Utilities for generating output for the \code{html_notebook} format,
+#' through the \code{output_source} function attached to a
+#' \code{\link{output_format}}.
+#'
+#' @param path  A path to a file. For functions accepting both \code{path}
+#'   and \code{bytes}, if \code{bytes} is \code{NULL}, the bytewise contents
+#'   will be obtained by reading the file.
+#' @param bytes The bytewise representation of content.
+#'
 #' @name html_notebook_output
 NULL
 
@@ -12,6 +22,9 @@ html_notebook_render_base64_data <- function(path = NULL,
   sprintf(format, encoded)
 }
 
+
+#' @name html_notebook_output
+#' @export
 html_notebook_output_png <- function(path = NULL, bytes = NULL) {
   format <- '<img src="data:image/png;base64,%s" />'
   html <- html_notebook_render_base64_data(path, bytes, format)
