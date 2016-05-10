@@ -576,28 +576,6 @@ md_header_from_front_matter <- function(front_matter) {
   md
 }
 
-validate_output_source <- function(output_source) {
-
-  # error message to report
-  required_signature <- "function(code, context, ...) {}"
-  prefix <- "'output_source' should be a function with signature"
-  error_msg <- sprintf("%s '%s'", prefix, required_signature)
-
-  # ensure function
-  if (!is.function(output_source))
-    stop(error_msg, call. = FALSE)
-
-  # check formals
-  fmls <- names(formals(output_source))
-  if (length(fmls) < 3)
-    stop(error_msg, call. = FALSE)
-
-  if (!("..." %in% fmls))
-    stop(error_msg, call. = FALSE)
-
-  TRUE
-}
-
 # render context (render-related state can be stuffed here)
 render_context <- function() {
   .render_context$peek()
@@ -607,14 +585,14 @@ init_render_context <- function() {
   .render_context$push(new_render_context())
 }
 
+clear_render_context <- function() {
+  .render_context$pop()
+}
+
 new_render_context <- function() {
   env <- new.env(parent = emptyenv())
   env$chunk.index <- 1
   env
-}
-
-clear_render_context <- function() {
-  .render_context$pop()
 }
 
 merge_render_context <- function(context) {

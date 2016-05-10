@@ -349,3 +349,25 @@ as_evaluate_output.default <- function(output, code, context, ...) {
   captured <- utils::capture.output(knitr::knit_print(output))
   as_evaluate_output_impl(code, paste(captured, collapse = "\n"), context)
 }
+
+validate_output_source <- function(output_source) {
+
+  # error message to report
+  required_signature <- "function(code, context, ...) {}"
+  prefix <- "'output_source' should be a function with signature"
+  error_msg <- sprintf("%s '%s'", prefix, required_signature)
+
+  # ensure function
+  if (!is.function(output_source))
+    stop(error_msg, call. = FALSE)
+
+  # check formals
+  fmls <- names(formals(output_source))
+  if (length(fmls) < 3)
+    stop(error_msg, call. = FALSE)
+
+  if (!("..." %in% fmls))
+    stop(error_msg, call. = FALSE)
+
+  TRUE
+}
