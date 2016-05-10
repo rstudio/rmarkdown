@@ -5,7 +5,7 @@ output: html_notebook
 
 This is an R Markdown Notebook.
 
-```{r chunk-one, include=FALSE}
+```{r chunk-one}
 summary(cars)
 ```
 
