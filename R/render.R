@@ -28,6 +28,9 @@ render <- function(input,
 
   perf_timer_start("render")
 
+  init_render_context()
+  on.exit(clear_render_context(), add = TRUE)
+
   # check for "all" output formats
   if (identical(output_format, "all")) {
     output_format <- enumerate_output_formats(input, envir, encoding)
@@ -252,6 +255,11 @@ render <- function(input,
     on.exit(knitr::opts_hooks$restore(ohooks), add = TRUE)
     templates <- knitr::opts_template$get()
     on.exit(knitr::opts_template$restore(templates), add = TRUE)
+
+    # run render on_exit (run after the knit hooks are saved so that
+    # any hook restoration can take precedence)
+    if (is.function(output_format$on_exit))
+      on.exit(output_format$on_exit(), add = TRUE)
 
     # default rendering and chunk options
     knitr::render_markdown()
@@ -568,6 +576,29 @@ md_header_from_front_matter <- function(front_matter) {
   md
 }
 
+# render context (render-related state can be stuffed here)
+.render_context <- NULL # initialized in .onLoad
+render_context <- function() {
+  .render_context$peek()
+}
 
+init_render_context <- function() {
+  .render_context$push(new_render_context())
+}
 
+clear_render_context <- function() {
+  .render_context$pop()
+}
 
+new_render_context <- function() {
+  env <- new.env(parent = emptyenv())
+  env$chunk.index <- 1
+  env
+}
+
+merge_render_context <- function(context) {
+  elements <- ls(envir = render_context(), all.names = TRUE)
+  for (el in elements)
+    context[[el]] <- get(el, envir = render_context())
+  context
+}

@@ -3,6 +3,11 @@
 #' Format for converting from R Markdown to an HTML notebook.
 #'
 #' @inheritParams html_document
+#' @param output_source Define an output source for \R chunks (ie,
+#'   outputs to use instead of those produced by evaluating the
+#'   underlying \R code). See \code{\link{html_notebook_output}} for
+#'   more details.
+#' @importFrom evaluate evaluate
 #' @export
 html_notebook <- function(toc = FALSE,
                           toc_depth = 3,
@@ -22,12 +27,76 @@ html_notebook <- function(toc = FALSE,
                           includes = NULL,
                           md_extensions = NULL,
                           pandoc_args = NULL,
+                          output_source = NULL,
                           ...)
 {
-  # use a pre-knit hook to capture the original document
-  encoded_document <- NULL
+  # some global state that is captured in pre_knit
+  evaluate_hook <- NULL
+  exit_actions <- list()
+  on_exit <- function() {
+    for (action in exit_actions)
+      try(action())
+  }
+
+  # define pre_knit hook
   pre_knit <- function(input, ...) {
-    encoded_document <<- base64enc::base64encode(input)
+
+    if (is.function(output_source)) {
+
+      # pull out 'output_source'
+      validate_output_source(output_source)
+
+      # track knit context
+      chunk_options <- list()
+
+      # force knitr labeling (required for uniqueness of labels + cache coherence)
+      knitr.duplicate.label <- getOption("knitr.duplicate.label")
+      if (identical(knitr.duplicate.label, "allow")) {
+        warning("unsetting 'knitr.duplicate.label' for duration of render")
+        options(knitr.duplicate.label = "deny")
+        exit_actions <<- c(exit_actions, function() {
+          options(knitr.duplicate.label = knitr.duplicate.label)
+        })
+      }
+
+      # force default unnamed chunk labeling scheme (for cache coherence)
+      unnamed.chunk.label <- knitr::opts_knit$get("unnamed.chunk.label")
+      if (!identical(unnamed.chunk.label, "unnamed-chunk")) {
+        warning("reverting 'unnamed.chunk.label' to 'unnamed-chunk' for duration of render")
+        knitr::opts_knit$set(unnamed.chunk.label = "unnamed-chunk")
+        exit_actions <<- c(exit_actions, function() {
+          knitr::opts_knit$set(unnamed.chunk.label = unnamed.chunk.label)
+        })
+      }
+
+      # use an 'include' hook to track chunk options (any
+      # 'opts_hooks' hook will do; we just want this to be called
+      # on entry to any chunk)
+      include_hook <- knitr::opts_hooks$get("include")
+      knitr::opts_hooks$set(include = function(options) {
+
+        # save context
+        chunk_options <<- options
+
+        # call original hook
+        if (is.function(include_hook))
+          include_hook(options)
+        else
+          options
+      })
+
+      # set up evaluate hook (override any pre-existing evaluate hook)
+      evaluate_hook <<- knitr::knit_hooks$get("evaluate")
+      exit_actions <<- c(exit_actions, function() {
+        knitr::knit_hooks$set(evaluate = evaluate_hook)
+      })
+
+      knitr::knit_hooks$set(evaluate = function(code, ...) {
+        chunk_options <- merge_render_context(chunk_options)
+        output <- output_source(code, chunk_options, ...)
+        as_evaluate_output(output, code, chunk_options, ...)
+      })
+    }
   }
 
   # post-processor to rename output file if necessary
@@ -80,11 +149,12 @@ html_notebook <- function(toc = FALSE,
                                lib_dir = NULL,
                                ...)
   rmarkdown::output_format(
-    knitr = knitr_options_notebook(),
+    knitr = html_notebook_knitr_options(),
     pandoc = NULL,
     pre_knit = pre_knit,
     post_processor = post_processor,
-    base_format =  base_format
+    base_format =  base_format,
+    on_exit = on_exit
   )
 }
 
@@ -160,7 +230,7 @@ parse_html_notebook <- function(path, encoding = "UTF-8") {
        annotations = annotations)
 }
 
-notebook_annotated_output <- function(output, label, meta = NULL) {
+html_notebook_annotated_output <- function(output, label, meta = NULL) {
   before <- if (is.null(meta)) {
     sprintf("\n<!-- rnb-%s-begin -->\n", label)
   } else {
@@ -168,19 +238,27 @@ notebook_annotated_output <- function(output, label, meta = NULL) {
     sprintf("\n<!-- rnb-%s-begin %s -->\n", label, meta)
   }
   after  <- sprintf("\n<!-- rnb-%s-end -->\n", label)
-  paste(before, output, after, sep = "\n")
+  pasted <- paste(before, output, after, sep = "\n")
+  knitr::asis_output(pasted)
 }
 
-notebook_annotated_knitr_hook <- function(label, hook, meta = NULL) {
-  force(list(label, hook, meta))
+html_notebook_annotated_knitr_hook <- function(label, hook, meta = NULL,
+                                               pre = NULL, post = NULL) {
+  force(list(label, hook, meta, pre, post))
   function(x, ...) {
+
+    # call pre, post hooks
+    if (is.function(pre)) pre(x, output, ...)
+    if (is.function(post)) on.exit(post(x, output, ...), add = TRUE)
+
+    # call regular hooks and annotate output
     output <- hook(x, ...)
     meta <- if (is.function(meta)) meta(x, output, ...)
-    notebook_annotated_output(output, label, meta)
+    html_notebook_annotated_output(output, label, meta)
   }
 }
 
-knitr_options_notebook <- function() {
+html_notebook_knitr_options <- function() {
 
   # save original hooks (restore after we've stored requisite
   # hooks in our output format)
@@ -198,21 +276,32 @@ knitr_options_notebook <- function() {
                  "warning", "error", "message", "error")
 
   meta_hooks <- list(
-    source  = notebook_text_hook,
-    output  = notebook_text_hook,
-    warning = notebook_text_hook,
-    message = notebook_text_hook,
-    error   = notebook_text_hook
+    source  = html_notebook_text_hook,
+    output  = html_notebook_text_hook,
+    warning = html_notebook_text_hook,
+    message = html_notebook_text_hook,
+    error   = html_notebook_text_hook
   )
 
+  pre_hooks <- list(
+    chunk = function(...) {
+      context <- render_context()
+      context$chunk.index <- context$chunk.index + 1
+    }
+  )
+
+  post_hooks <- list()
+
   knit_hooks <- lapply(hook_names, function(hook_name) {
-    notebook_annotated_knitr_hook(hook_name,
-                                  orig_knit_hooks[[hook_name]],
-                                  meta_hooks[[hook_name]])
+    html_notebook_annotated_knitr_hook(hook_name,
+                                       orig_knit_hooks[[hook_name]],
+                                       meta_hooks[[hook_name]],
+                                       pre_hooks[[hook_name]],
+                                       post_hooks[[hook_name]])
   })
   names(knit_hooks) <- hook_names
 
-  opts_chunk <- list(render = notebook_render_hook,
+  opts_chunk <- list(render = html_notebook_render_hook,
                      comment = NA)
 
   # return as knitr options
@@ -220,13 +309,65 @@ knitr_options_notebook <- function() {
                            opts_chunk = opts_chunk)
 }
 
-notebook_text_hook <- function(input, output, ...) {
+html_notebook_text_hook <- function(input, output, ...) {
   list(data = input)
 }
 
-notebook_render_hook <- function(x, ...) {
+html_notebook_render_hook <- function(x, ...) {
   output <- knitr::knit_print(x, ...)
   if (inherits(x, "htmlwidget"))
     return(notebook_render_html_widget(output))
   output
+}
+
+as_evaluate_output_impl <- function(code, output, context) {
+  code <- if (isTRUE(context$include)) code else ""
+  list(
+    structure(list(src = code), class = "source"),
+    output
+  )
+}
+
+as_evaluate_output <- function(output, code, context, ...) {
+  UseMethod("as_evaluate_output")
+}
+
+as_evaluate_output.htmlwidget <- function(output, code, context, ...) {
+  widget <- knitr::knit_print(output)
+  meta <- attr(widget, "knit_meta")
+  asis <- knitr::asis_output(c(widget))
+  annotated <- html_notebook_annotated_output(asis, "htmlwidget", meta)
+  attr(annotated, "knit_meta") <- meta
+  as_evaluate_output_impl(code, annotated, context)
+}
+
+as_evaluate_output.knit_asis <- function(output, code, context, ...) {
+  as_evaluate_output_impl(code, output, context)
+}
+
+as_evaluate_output.default <- function(output, code, context, ...) {
+  captured <- utils::capture.output(knitr::knit_print(output))
+  as_evaluate_output_impl(code, paste(captured, collapse = "\n"), context)
+}
+
+validate_output_source <- function(output_source) {
+
+  # error message to report
+  required_signature <- "function(code, context, ...) {}"
+  prefix <- "'output_source' should be a function with signature"
+  error_msg <- sprintf("%s '%s'", prefix, required_signature)
+
+  # ensure function
+  if (!is.function(output_source))
+    stop(error_msg, call. = FALSE)
+
+  # check formals
+  fmls <- names(formals(output_source))
+  if (length(fmls) < 3)
+    stop(error_msg, call. = FALSE)
+
+  if (!("..." %in% fmls))
+    stop(error_msg, call. = FALSE)
+
+  TRUE
 }

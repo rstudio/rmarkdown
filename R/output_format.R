@@ -35,6 +35,8 @@
 #'   \code{metadata}, \code{input_file}, \code{output_file}, \code{clean},
 #'   and \code{verbose} parmaeters, and can return an alternative
 #'   \code{output_file}.
+#' @param on_exit A function to call when \code{rmarkdown::render()} finishes
+#'   execution (as registered with a \code{\link{on.exit}} handler).
 #' @param base_format An optional format to extend.
 #'
 #' @return An R Markdown output format definition that can be passed to
@@ -58,17 +60,23 @@ output_format <- function(knitr,
                           pre_processor = NULL,
                           intermediates_generator = NULL,
                           post_processor = NULL,
+                          on_exit = NULL,
                           base_format = NULL) {
-  format <- structure(list(knitr = knitr,
-                 pandoc = pandoc,
-                 keep_md = keep_md,
-                 clean_supporting = clean_supporting && !keep_md,
-                 pre_knit = pre_knit,
-                 post_knit = post_knit,
-                 pre_processor = pre_processor,
-                 intermediates_generator = intermediates_generator,
-                 post_processor = post_processor),
-            class = "rmarkdown_output_format")
+
+  format <- list(
+    knitr = knitr,
+    pandoc = pandoc,
+    keep_md = keep_md,
+    clean_supporting = clean_supporting && !keep_md,
+    pre_knit = pre_knit,
+    post_knit = post_knit,
+    pre_processor = pre_processor,
+    intermediates_generator = intermediates_generator,
+    post_processor = post_processor,
+    on_exit = on_exit
+  )
+
+  class(format) <- "rmarkdown_output_format"
 
   # if a base format was supplied, merge it with the format we just created
   if (!is.null(base_format))
@@ -132,8 +140,17 @@ merge_output_formats <- function(base, overlay)  {
       merge_function_outputs(base$intermediates_generator,
                              overlay$intermediates_generator, c),
     post_processor =
-      merge_post_processors(base$post_processor, overlay$post_processor)
+      merge_post_processors(base$post_processor, overlay$post_processor),
+    on_exit =
+      merge_on_exit(base$on_exit, overlay$on_exit)
   ), class = "rmarkdown_output_format")
+}
+
+merge_on_exit <- function(base, overlay) {
+  function() {
+    if (is.function(base)) base()
+    if (is.function(overlay)) overlay()
+  }
 }
 
 merge_pandoc_options <- function(base, overlay) {

@@ -9,7 +9,8 @@ html_notebook(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   fig_retina = 2, fig_caption = TRUE, code_folding = "show",
   smart = TRUE, theme = "default", highlight = "textmate",
   mathjax = "default", extra_dependencies = NULL, css = NULL,
-  includes = NULL, md_extensions = NULL, pandoc_args = NULL, ...)
+  includes = NULL, md_extensions = NULL, pandoc_args = NULL,
+  output_source = NULL, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -73,6 +74,11 @@ default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
+
+\item{output_source}{Define an output source for \R chunks (ie,
+outputs to use instead of those produced by evaluating the
+underlying \R code). See \code{\link{html_notebook_output}} for
+more details.}
 
 \item{...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}

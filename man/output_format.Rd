@@ -6,7 +6,7 @@
 \usage{
 output_format(knitr, pandoc, keep_md = FALSE, clean_supporting = TRUE,
   pre_knit = NULL, post_knit = NULL, pre_processor = NULL,
-  intermediates_generator = NULL, post_processor = NULL,
+  intermediates_generator = NULL, post_processor = NULL, on_exit = NULL,
   base_format = NULL)
 }
 \arguments{
@@ -50,6 +50,9 @@ any intermediate files required to render the \code{input_file}.}
 \code{metadata}, \code{input_file}, \code{output_file}, \code{clean},
 and \code{verbose} parmaeters, and can return an alternative
 \code{output_file}.}
+
+\item{on_exit}{A function to call when \code{rmarkdown::render()} finishes
+execution (as registered with a \code{\link{on.exit}} handler).}
 
 \item{base_format}{An optional format to extend.}
 }
