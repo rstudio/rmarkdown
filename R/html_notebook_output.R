@@ -23,6 +23,11 @@ html_notebook_render_base64_data <- function(path = NULL,
   sprintf(format, encoded)
 }
 
+#' @name html_notebook_output
+#' @export
+html_notebook_output_html <- function(html) {
+  html_notebook_annotated_output(html, "html")
+}
 
 #' @name html_notebook_output
 #' @export
@@ -32,8 +37,3 @@ html_notebook_output_png <- function(path = NULL, bytes = NULL) {
   html_notebook_annotated_output(html, "plot")
 }
 
-#' @name html_notebook_output
-#' @export
-html_notebook_output_html <- function(html) {
-  html_notebook_annotated_output(html, "html")
-}
