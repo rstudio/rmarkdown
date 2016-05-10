@@ -285,7 +285,8 @@ html_notebook_knitr_options <- function() {
 
   pre_hooks <- list(
     chunk = function(...) {
-      render_context$chunk.index <- render_context$chunk.index + 1
+      context <- render_context()
+      context$chunk.index <- context$chunk.index + 1
     }
   )
 

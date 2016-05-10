@@ -599,20 +599,27 @@ validate_output_source <- function(output_source) {
 }
 
 # render context (render-related state can be stuffed here)
-render_context <- new.env(parent = emptyenv())
+render_context <- function() {
+  .render_context$peek()
+}
 
 init_render_context <- function() {
-  clear_render_context()
-  render_context$chunk.index <- 1
+  .render_context$push(new_render_context())
+}
+
+new_render_context <- function() {
+  env <- new.env(parent = emptyenv())
+  env$chunk.index <- 1
+  env
 }
 
 clear_render_context <- function() {
-  rm(list = ls(render_context), envir = render_context)
+  .render_context$pop()
 }
 
 merge_render_context <- function(context) {
-  elements <- ls(envir = render_context, all.names = TRUE)
+  elements <- ls(envir = render_context(), all.names = TRUE)
   for (el in elements)
-    context[[el]] <- get(el, envir = render_context)
+    context[[el]] <- get(el, envir = render_context())
   context
 }
