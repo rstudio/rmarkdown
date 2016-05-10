@@ -7,8 +7,8 @@ used by these components are included below):
 - Bootswatch
 - highlight.js
 - Google Web Fonts
-- MathJax
-- reveal.js
+- Slidy
+- tufte-latex
 
 jQuery License
 ----------------------------------------------------------------------
@@ -36,7 +36,59 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-Bootstrap, Bootswatch, and OpenSans Web Font License
+Bootstrap 
+----------------------------------------------------------------------
+
+The MIT License (MIT)
+
+Copyright (c) 2011-2014 Twitter, Inc
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+Bootswatch 
+----------------------------------------------------------------------
+
+The MIT License (MIT)
+
+Copyright 2014 Thomas Park
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+tufte latex and Open Sans Web Font License
 ----------------------------------------------------------------------
 
                                  Apache License
@@ -271,32 +323,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-reveal.js
------------------------------------------------------------------------
-
-Copyright (C) 2013 Hakim El Hattab, http://hakim.se
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-
-Lato, Lora, Telex, NewsCycle, Quicksand, Montserrat,
-and Raleway Bold Web Fonts
+Lato, News Cycle, Source Sans Pro, and Raleway Web Fonts
 ----------------------------------------------------------------------
 
 SIL OPEN FONT LICENSE
@@ -487,4 +514,52 @@ DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER
 DEALINGS IN THE FONT SOFTWARE.
 
+
+Slidy
+----------------------------------------------------------------------
+
+Copyright (c) 2005-2013 W3C (r) (MIT, ERCIM, Keio, Beihang)
+
+W3C SOFTWARE NOTICE AND LICENSE
+
+This work (and included software, documentation such as READMEs, or
+other related items) is being provided by the copyright holders under
+the following license.
+
+License
+
+By obtaining, using and/or copying this work, you (the licensee)
+agree that you have read, understood, and will comply with the
+following terms and conditions.
+
+Permission to copy, modify, and distribute this software and its
+documentation, with or without modification, for any purpose and
+without fee or royalty is hereby granted, provided that you include
+the following on ALL copies of the software and documentation or
+portions thereof, including modifications:
+
+- The full text of this NOTICE in a location viewable to users of
+the redistributed or derivative work.
+
+- Any pre-existing intellectual property disclaimers, notices, or
+terms and conditions. If none exist, the W3C Software Short Notice
+should be included (hypertext is preferred, text is permitted)
+within the body of any redistributed or derivative code.
+
+Notice of any changes or modifications to the files, including
+the date changes were made. (We recommend you provide URIs to the
+location from which the code is derived.)
+
+Disclaimers
+
+THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND COPYRIGHT
+HOLDERS MAKE NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY OR
+FITNESS FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF THE SOFTWARE
+OR DOCUMENTATION WILL NOT INFRINGE ANY THIRD PARTY PATENTS,
+COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.
+
+COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT,
+SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THE
+SOFTWARE OR DOCUMENTATION.
 

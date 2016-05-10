@@ -14,15 +14,17 @@
 #'
 #' @details
 #'
+#' See the \href{http://rmarkdown.rstudio.com/word_document_format.html}{online
+#' documentation} for additional details on using the \code{word_document} format.
+#'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. For more details
 #' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 #'
 #' R Markdown documents also support citations. You can find more information on
-#' the markdown syntax for citations within the pandoc documentation on
-#' \href{http://johnmacfarlane.net/pandoc/demo/example19/Citations.html}{citations}
-#' and
-#' \href{http://johnmacfarlane.net/pandoc/demo/example19/Footnotes.html}{footnotes}.
+#' the markdown syntax for citations in the
+#' \href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' and Citations} article in the online documentation.
 #'
 #' @examples
 #' \dontrun{
@@ -37,11 +39,15 @@
 #' }
 #'
 #' @export
-word_document <- function(fig_width = 5,
+word_document <- function(toc = FALSE,
+                          toc_depth = 3,
+                          fig_width = 5,
                           fig_height = 4,
-                          fig_caption = FALSE,
+                          fig_caption = TRUE,
                           highlight = "default",
                           reference_docx = "default",
+                          keep_md = FALSE,
+                          md_extensions = NULL,
                           pandoc_args = NULL) {
 
   # knitr options and hooks
@@ -54,6 +60,12 @@ word_document <- function(fig_width = 5,
 
   # base pandoc options for all docx output
   args <- c()
+
+  # table of contents
+  if (pandoc_available("1.14"))
+    args <- c(args, pandoc_toc_args(toc, toc_depth))
+  else
+    warning("table of contents for word_document requires pandoc >= 1.14")
 
   # highlighting
   if (!is.null(highlight))
@@ -72,8 +84,9 @@ word_document <- function(fig_width = 5,
   output_format(
     knitr = knitr,
     pandoc = pandoc_options(to = "docx",
-                            from = from_rmarkdown(fig_caption),
-                            args = args)
+                            from = from_rmarkdown(fig_caption, md_extensions),
+                            args = args),
+    keep_md = keep_md
   )
 }
 

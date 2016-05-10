@@ -85,7 +85,7 @@ draft <- function(file,
   if (!file.exists(template_yaml)) {
     stop("No template.yaml file found for template '", template, "'")
   }
-  template_meta <- yaml::yaml.load_file(template_yaml)
+  template_meta <- yaml_load_file_utf8(template_yaml)
   if (is.null(template_meta$name) || is.null(template_meta$description)) {
     stop("template.yaml must contain name and description fields")
   }
@@ -101,7 +101,7 @@ draft <- function(file,
     file <- tools::file_path_sans_ext(file)
 
     # create dir (new dir only)
-    if (file.exists(file))
+    if (dir_exists(file))
       stop("The directory '", file, "' already exists.")
     dir.create(file)
 
@@ -132,7 +132,7 @@ draft <- function(file,
 
   # invoke the editor if requested
   if (edit)
-    file.edit(normalizePath(file))
+    utils::file.edit(normalizePath(file))
 
   # return the name of the file created
   invisible(file)
@@ -142,12 +142,12 @@ draft <- function(file,
 list_template_dirs <- function() {
 
   # check each installed package for templates
-  packages <- row.names(installed.packages())
+  packages <- row.names(utils::installed.packages())
   for (pkg in packages) {
 
     # check to see if the package includes a template folder
     template_folder <- system.file("rmarkdown", "templates", package = pkg)
-    if (file.exists(template_folder)) {
+    if (dir_exists(template_folder)) {
 
       # it does; list each template directory within the template folder
       template_dirs <- list.dirs(path = template_folder, recursive = FALSE)

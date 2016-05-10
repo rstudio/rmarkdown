@@ -36,7 +36,7 @@
 #' pandoc_convert("input.md", to = "html", citeproc = TRUE)
 #'
 #' # add some pandoc options
-#' pandoc_convert("input.md", to="pdf, options = c("--listings"))
+#' pandoc_convert("input.md", to="pdf", options = c("--listings"))
 #' }
 #'
 #' @export
@@ -71,12 +71,20 @@ pandoc_convert <- function(input,
   if (!is.null(output))
     args <- c(args, "--output", output)
 
-  # citeproc filter if requested
-  if (citeproc)
-    args <- c(args, "--filter", pandoc_citeproc())
+  # set pandoc stack size
+  stack_size <- getOption("pandoc.stack.size", default = "512m")
+  args <- c(c("+RTS", paste0("-K", stack_size), "-RTS"), args)
 
   # additional command line options
   args <- c(args, options)
+
+  # citeproc filter if requested
+  if (citeproc) {
+    args <- c(args, "--filter", pandoc_citeproc())
+    # --natbib/--biblatex conflicts with '--filter pandoc-citeproc'
+    i <- stats::na.omit(match(c("--natbib", "--biblatex"), options))
+    if (length(i)) options <- options[-i]
+  }
 
   # build the conversion command
   command <- paste(quoted(pandoc()), paste(quoted(args), collapse = " "))
@@ -95,48 +103,64 @@ pandoc_convert <- function(input,
   invisible(NULL)
 }
 
-#' Check whether pandoc is available
+#' Check pandoc availabilty and version
 #'
-#' Determine whether pandoc is currently available on the system, optionally
-#' checking for a specific version or greater.
+#' Determine whether pandoc is currently available on the system (optionally
+#' checking for a specific version or greater). Determine the specific version
+#' of pandoc available.
 #'
 #' @param version Required version of pandoc
+#' @param error Whether to signal an error if pandoc with the required version
+#'   is not found
 #'
-#' @return Logical indicating whether a version of pandoc is available
+#' @return \code{pandoc_available} returns a logical indicating whether the
+#'   required version of pandoc is available. \code{pandoc_version} returns a
+#'   \code{\link[base]{numeric_version}} with the version of pandoc found.
 #'
 #' @details
 #'
-#' The system path as well as the version of pandoc shipped with RStudio (if
-#' running under RStudio) are scanned for pandoc and the highest version
-#' available is used.
+#' The system environment variable \samp{PATH} as well as the version of pandoc
+#' shipped with RStudio (its location is set via the environment variable
+#' \samp{RSTUDIO_PANDOC} by RStudio products like the RStudio IDE, RStudio
+#' Server, Shiny Server, and RStudio Connect, etc) are scanned for pandoc and
+#' the highest version available is used. Please do not modify the environment
+#' varaible \samp{RSTUDIO_PANDOC} unless you know what it means.
 #'
 #' @examples
 #' \dontrun{
 #' library(rmarkdown)
 #'
 #' if (pandoc_available())
-#'
-#'   cat("pandoc is available!\n")
+#'   cat("pandoc", as.character(pandoc_version()), "is available!\n")
 #'
 #' if (pandoc_available("1.12.3"))
 #'   cat("requried version of pandoc is available!\n")
 #' }
 #' @export
-pandoc_available <- function(version = NULL) {
+pandoc_available <- function(version = NULL, error = FALSE) {
 
   # ensure we've scanned for pandoc
   find_pandoc()
 
   # check availability
-  if (!is.null(.pandoc$dir))
-    if (!is.null(version))
-      .pandoc$version >= version
-  else
-    TRUE
-  else
-    FALSE
+  found <- !is.null(.pandoc$dir) && (is.null(version) || .pandoc$version >= version)
+
+  msg <- c(
+    "pandoc", if (!is.null(version)) c("version", version, "or higher"),
+    "is required and was not found (see the help page ?rmarkdown::pandoc_available)."
+  )
+  if (error && !found) stop(paste(msg, collapse = " "), call. = FALSE)
+
+  found
 }
 
+
+#' @rdname pandoc_available
+#' @export
+pandoc_version <- function() {
+  find_pandoc()
+  .pandoc$version
+}
 
 #' Functions for generating pandoc command line arguments
 #'
@@ -151,6 +175,8 @@ pandoc_available <- function(version = NULL) {
 #' @param toc \code{TRUE} to include a table of contents in the output.
 #' @param toc_depth Depth of headers to include in table of contents.
 #' @param highlight The name of a pandoc syntax highlighting theme.
+#' @param latex_engine LaTeX engine for producing PDF output. Options are
+#'   "pdflatex", "lualatex", and "xelatex".
 #' @param default The highlighting theme to use if "default"
 #'   is specified.
 #'
@@ -169,6 +195,8 @@ pandoc_available <- function(version = NULL) {
 #' pandoc_include_args(before_body = "header.tex")
 #'
 #' pancoc_highlight_args("kate")
+#'
+#' pandoc_latex_engine_args("pdflatex")
 #'
 #' pandoc_toc_args(toc = TRUE, toc_depth = 2)
 #'
@@ -221,6 +249,26 @@ pandoc_highlight_args <- function(highlight, default = "tango") {
 
 #' @rdname pandoc_args
 #' @export
+pandoc_latex_engine_args <- function(latex_engine) {
+  c("--latex-engine", find_latex_engine(latex_engine))
+}
+
+find_latex_engine <- function(latex_engine) {
+  # use a full path to the latex engine on OSX since the stripping
+  # of the PATH environment variable by OSX 10.10 Yosemite prevents
+  # pandoc from finding the engine in e.g. /usr/texbin
+  if (is_osx()) {
+    # resolve path if it's not already an absolute path
+    if (!grepl("/", latex_engine, fixed = TRUE))
+      program_path <- find_program(latex_engine)
+    if (nzchar(program_path))
+      latex_engine <- program_path
+  }
+  latex_engine
+}
+
+#' @rdname pandoc_args
+#' @export
 pandoc_toc_args <- function(toc, toc_depth = 3) {
 
   args <- c()
@@ -239,7 +287,8 @@ pandoc_toc_args <- function(toc, toc_depth = 3) {
 #' Transform a path for passing to pandoc on the command line. Calls
 #' \code{\link[base:path.expand]{path.expand}} on all platforms. On Windows,
 #' transform it to a short path name if it contains spaces, and then convert
-#' backslashes to forward slashes
+#' forward slashes to back slashes (as required by pandoc for some path
+#' references)
 #'
 #' @param path Path to transform
 #'
@@ -251,14 +300,13 @@ pandoc_path_arg <- function(path) {
   path <- path.expand(path)
 
   # remove redundant ./ prefix if present
-  if (identical(substring(path, 1, 2), "./")) {
-    path <- substring(path, 3, nchar(path))
-  }
+  path <- sub('^[.]/', '', path)
 
   if (is_windows()) {
-    if (grepl(' ', path, fixed=TRUE))
-      path <- utils::shortPathName(path)
-    path <- gsub("/", "\\\\", path)
+    i <- grep(' ', path)
+    if (length(i))
+      path[i] <- utils::shortPathName(path[i])
+    path <- gsub('/', '\\\\', path)
   }
 
   path
@@ -295,6 +343,50 @@ pandoc_template <- function(metadata, template, output, verbose = FALSE) {
   invisible(output)
 }
 
+#' Create a self-contained HTML document using pandoc.
+#'
+#' Create a self-contained HTML document by base64 encoding images,
+#' scripts, and stylesheets referended by the input document.
+#'
+#' @param input Input html file to create self-contained version of.
+#' @param output Path to save output.
+#'
+#' @return (Invisibly) The path of the generated file.
+#'
+#' @export
+pandoc_self_contained_html <- function(input, output) {
+
+  # make input file path absolute
+  input <- normalizePath(input)
+
+  # ensure output file exists and make it's path absolute
+  if (!file.exists(output))
+    file.create(output)
+  output <- normalizePath(output)
+
+  # create a simple body-only template
+  template <- tempfile(fileext = ".html")
+  writeLines("$body$", template)
+
+  # convert from markdown to html to get base64 encoding
+  # (note there is no markdown in the source document but
+  # we still need to do this "conversion" to get the
+  # base64 encoding)
+  pandoc_convert(
+    input = input,
+    from = "markdown",
+    output = output,
+    options = c(
+      "--self-contained",
+      "--template", template
+    )
+  )
+
+  invisible(output)
+}
+
+
+
 validate_self_contained <- function(mathjax) {
   if (identical(mathjax, "local"))
     stop("Local MathJax isn't compatible with self_contained\n",
@@ -304,7 +396,8 @@ validate_self_contained <- function(mathjax) {
 pandoc_mathjax_args <- function(mathjax,
                                 template,
                                 self_contained,
-                                files_dir) {
+                                files_dir,
+                                output_dir) {
   args <- c()
 
   if (!is.null(mathjax)) {
@@ -316,12 +409,12 @@ pandoc_mathjax_args <- function(mathjax,
         mathjax <- NULL
     }
     else if (identical(mathjax, "local")) {
-      mathjax_path <- rmarkdown_system_file("rmd/h/m")
+      mathjax_path <- pandoc_mathjax_local_path()
       mathjax_path <- render_supporting_files(mathjax_path,
                                               files_dir,
-                                              "mathjax-2.3.0")
-      mathjax_path <- pandoc_path_arg(mathjax_path)
-      mathjax <- paste(mathjax_path, "/", mathjax_config(), sep = "")
+                                              "mathjax-local")
+      mathjax <- paste(normalized_relative_to(output_dir, mathjax_path), "/",
+                       mathjax_config(), sep = "")
     }
 
     if (identical(template, "default")) {
@@ -339,6 +432,56 @@ pandoc_mathjax_args <- function(mathjax,
   }
 
   args
+}
+
+
+pandoc_mathjax_local_path <- function() {
+
+  local_path <- Sys.getenv("RMARKDOWN_MATHJAX_PATH", unset = NA)
+  if (is.na(local_path)) {
+    local_path <- unix_mathjax_path()
+    if (is.na(local_path)) {
+      stop("For mathjax = \"local\", please set the RMARKDOWN_MATHJAX_PATH ",
+           "environment variable to the location of MathJax. ",
+           "On Linux systems you can also install MathJax using your ",
+           "system package manager.")
+    } else {
+      local_path
+    }
+  } else {
+    local_path
+  }
+}
+
+
+unix_mathjax_path <- function() {
+  if (identical(.Platform$OS.type, "unix")) {
+    mathjax_path <- "/usr/share/javascript/mathjax"
+    if (file.exists(file.path(mathjax_path, "MathJax.js")))
+      mathjax_path
+    else
+      NA
+  } else {
+    NA
+  }
+}
+
+
+pandoc_html_navigation_args <- function(self_contained,
+                                        files_dir,
+                                        output_dir) {
+  args <- c()
+  navigation_path <- rmarkdown_system_file("rmd/h/navigation-1.1")
+  if (self_contained) {
+    navigation_path <- pandoc_path_arg(navigation_path)
+  }
+  else {
+    navigation_path <- normalized_relative_to(output_dir,
+                                              render_supporting_files(
+                                               navigation_path, files_dir))
+  }
+  args <- c(args,
+            "--variable", paste("navigationjs=", navigation_path, sep=""))
 }
 
 pandoc_html_highlight_args <- function(highlight,
@@ -364,8 +507,10 @@ pandoc_html_highlight_args <- function(highlight,
       if (self_contained)
         highlight_path <- pandoc_path_arg(highlight_path)
       else
-        highlight_path <- relative_to(output_dir,
+      {
+        highlight_path <- normalized_relative_to(output_dir,
           render_supporting_files(highlight_path, files_dir))
+      }
       args <- c(args, "--no-highlight")
       args <- c(args,
                 "--variable", paste("highlightjs=", highlight_path, sep=""))
@@ -390,7 +535,7 @@ find_pandoc <- function() {
   if (is.null(.pandoc$dir)) {
 
     # define potential sources
-    sys_pandoc <- Sys.which("pandoc")
+    sys_pandoc <- find_program("pandoc")
     sources <- c(Sys.getenv("RSTUDIO_PANDOC"),
                  ifelse(nzchar(sys_pandoc), dirname(sys_pandoc), ""))
     if (!is_windows())
@@ -398,7 +543,7 @@ find_pandoc <- function() {
 
     # determine the versions of the sources
     versions <- lapply(sources, function(src) {
-      if (file.exists(src))
+      if (dir_exists(src))
         get_pandoc_version(src)
       else
         numeric_version("0")
@@ -426,6 +571,8 @@ find_pandoc <- function() {
 # Get an S3 numeric_version for the pandoc utility at the specified path
 get_pandoc_version <- function(pandoc_dir) {
   pandoc_path <- file.path(pandoc_dir, "pandoc")
+  if (is_windows()) pandoc_path <- paste0(pandoc_path, ".exe")
+  if (!utils::file_test("-x", pandoc_path)) return(numeric_version("0"))
   with_pandoc_safe_environment({
     version_info <- system(paste(shQuote(pandoc_path), "--version"),
                            intern = TRUE)
@@ -444,6 +591,11 @@ with_pandoc_safe_environment <- function(code) {
     Sys.unsetenv("LC_ALL")
     on.exit(Sys.setenv(LC_ALL = lc_all), add = TRUE)
   }
+  lc_ctype <- Sys.getenv("LC_CTYPE", unset = NA)
+  if (!is.na(lc_ctype)) {
+    Sys.unsetenv("LC_CTYPE")
+    on.exit(Sys.setenv(LC_CTYPE = lc_ctype), add = TRUE)
+  }
   if (Sys.info()['sysname'] == "Linux" &&
         is.na(Sys.getenv("HOME", unset = NA))) {
     stop("The 'HOME' environment variable must be set before running Pandoc.")
@@ -453,6 +605,11 @@ with_pandoc_safe_environment <- function(code) {
     # fill in a the LANG environment variable if it doesn't exist
     Sys.setenv(LANG=detect_generic_lang())
     on.exit(Sys.unsetenv("LANG"), add = TRUE)
+  }
+  if (Sys.info()['sysname'] == "Linux" &&
+    identical(Sys.getenv("LANG"), "en_US")) {
+    Sys.setenv(LANG="en_US.UTF-8")
+    on.exit(Sys.setenv(LANG="en_US"), add = TRUE)
   }
   force(code)
 }
@@ -498,8 +655,11 @@ pandoc_citeproc <- function() {
 
 # quote args if they need it
 quoted <- function(args) {
-  spaces <- grepl(' ', args, fixed=TRUE)
-  args[spaces] <- shQuote(args[spaces])
+  # some characters are legal in filenames but without quoting are likely to be
+  # interpreted by the shell (e.g. redirection, wildcard expansion, etc.) --
+  # wrap arguments containing these characters in quotes.
+  shell_chars <- grepl(.shell_chars_regex, args)
+  args[shell_chars] <- shQuote(args[shell_chars])
   args
 }
 

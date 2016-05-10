@@ -1,0 +1,23 @@
+name: "mysite"
+output_dir: "_site"
+include: script.R
+exclude: docs.txt
+navbar:
+  title: "Navigation Bar"
+  type: default
+  left:
+    - { text: "Home", href: index.html }
+    - { text: "Page A", href: PageA.html }
+    - text: "More"
+      menu:
+        - { text: "Page B", href: PageB.html }
+        - { text: "-----------------" }
+        - { text: "Header" }
+        - { text: "Page C", href: PageC.html }
+  right:
+    - text: "GitHub"
+      href: https://github.com
+output:
+  html_document:
+    css: styles.css
+    theme: united

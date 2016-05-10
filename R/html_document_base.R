@@ -1,4 +1,19 @@
-# base output format for HTML-based output formats
+#' Base output format for HTML-based output formats
+#'
+#' Creates an HTML base output format suitable for passing as the
+#' \code{base_format} argument of the \code{\link{output_format}} function.
+#'
+#' @inheritParams html_document
+#'
+#' @param dependency_resolver A dependency resolver
+#' @param copy_resources Copy resources
+#' @param extra_dependencies Extra dependencies
+#' @param bootstrap_compatible Bootstrap compatible
+#' @param ... Ignored
+#'
+#' @return HTML base output format.
+#'
+#' @export
 html_document_base <- function(smart = TRUE,
                                theme = NULL,
                                self_contained = TRUE,
@@ -6,11 +21,16 @@ html_document_base <- function(smart = TRUE,
                                mathjax = "default",
                                pandoc_args = NULL,
                                template = "default",
-                               dependency_resolver = html_dependency_resolver,
-                               copy_images = FALSE,
+                               dependency_resolver = NULL,
+                               copy_resources = FALSE,
                                extra_dependencies = NULL,
                                bootstrap_compatible = FALSE,
                                ...) {
+
+  # default for dependency_resovler
+  if (is.null(dependency_resolver))
+    dependency_resolver <- html_dependency_resolver
+
   args <- c()
 
   # smart quotes, etc.
@@ -22,8 +42,8 @@ html_document_base <- function(smart = TRUE,
 
   # self contained document
   if (self_contained) {
-    if (copy_images)
-      stop("Local image copying is incompatible with self-contained documents.")
+    if (copy_resources)
+      stop("Local resource copying is incompatible with self-contained documents.")
     validate_self_contained(mathjax)
     args <- c(args, "--self-contained")
   }
@@ -35,6 +55,11 @@ html_document_base <- function(smart = TRUE,
 
   output_dir <- ""
 
+  # dummy pre_knit and post_knit functions so that merging of outputs works
+  pre_knit <- function(input, ...) {}
+  post_knit <- function(metadata, input_file, runtime, ...) {}
+
+  # pre_processor
   pre_processor <- function (metadata, input_file, runtime, knit_meta,
                              files_dir, output_dir) {
 
@@ -78,7 +103,8 @@ html_document_base <- function(smart = TRUE,
     args <- c(args, pandoc_mathjax_args(mathjax,
                                         template,
                                         self_contained,
-                                        lib_dir))
+                                        lib_dir,
+                                        output_dir))
 
     # The input file is converted to UTF-8 from its native encoding prior
     # to calling the preprocessor (see ::render)
@@ -91,39 +117,41 @@ html_document_base <- function(smart = TRUE,
     args
   }
 
+  intermediates_generator <- function(original_input, encoding,
+                                      intermediates_dir) {
+    # copy intermediates; skip web resources if not self contained (pandoc can
+    # create references to web resources without the file present)
+    return(copy_render_intermediates(original_input, encoding,
+                                     intermediates_dir, !self_contained))
+  }
+
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
-    # if there are no preserved chunks to restore and no images to copy then no
+    # if there are no preserved chunks to restore and no resource to copy then no
     # post-processing is necessary
-    if (length(preserved_chunks) == 0 && !isTRUE(copy_images) && self_contained)
+    if (length(preserved_chunks) == 0 && !isTRUE(copy_resources) && self_contained)
       return(output_file)
 
     # read the output file
     output_str <- readLines(output_file, warn = FALSE, encoding = "UTF-8")
 
     # if we preserved chunks, restore them
-    if (length(preserved_chunks) > 0)
-      output_str <- restorePreserveChunks(output_str, preserved_chunks)
-
-    # The copy_images flag copies all the images referenced in the document to
-    # its supporting files directory, and rewrites the document to use the
-    # copies from that directory.
-    if (copy_images) {
-      image_copier <- function(img_src, src) {
-        in_file <- utils::URLdecode(src)
-        if (length(in_file) && file.exists(in_file)) {
-
-          # create a unique image name in the library folder and copy the image
-          # there
-          target_img_file <- paste(file.path(lib_dir, createUniqueId(16)),
-                                   tools::file_ext(in_file), sep = ".")
-          file.copy(in_file, target_img_file)
-
-          # replace the reference in the document
-          img_src <- sub(src, relative_to(output_dir, target_img_file), img_src)
-        }
-        img_src
+    if (length(preserved_chunks) > 0) {
+      # Pandoc adds an empty <p></p> around the IDs of preserved chunks, and we
+      # need to remove these empty tags, otherwise we may have invalid HTML like
+      # <p><div>...</div></p>
+      for (i in names(preserved_chunks)) {
+        output_str <- gsub(paste0("<p>", i, "</p>"), i, output_str,
+                           fixed = TRUE, useBytes = TRUE)
       }
-      output_str <- process_images(output_str, image_copier)
+      output_str <- restorePreserveChunks(output_str, preserved_chunks)
+    }
+
+    if (copy_resources) {
+      # The copy_resources flag copies all the resources referenced in the
+      # document to its supporting files directory, and rewrites the document to
+      # use the copies from that directory.
+      output_str <- copy_html_resources(paste(output_str, collapse="\n"),
+                                              lib_dir, output_dir)
     } else if (!self_contained) {
       # if we're not self-contained, find absolute references to the output
       # directory and replace them with relative ones
@@ -131,7 +159,8 @@ html_document_base <- function(smart = TRUE,
         in_file <- utils::URLdecode(src)
         if (length(in_file) && file.exists(in_file)) {
           img_src <- sub(
-            src, utils::URLencode(relative_to(output_dir, in_file)), img_src)
+            src, utils::URLencode(normalized_relative_to(output_dir, in_file)),
+            img_src, fixed = TRUE)
         }
         img_src
       }
@@ -145,8 +174,13 @@ html_document_base <- function(smart = TRUE,
   output_format(
     knitr = NULL,
     pandoc = pandoc_options(to = "html", from = NULL, args = args),
+    keep_md = FALSE,
     clean_supporting = FALSE,
+    pre_knit = pre_knit,
+    post_knit = post_knit,
     pre_processor = pre_processor,
+    intermediates_generator = intermediates_generator,
     post_processor = post_processor
   )
 }
+

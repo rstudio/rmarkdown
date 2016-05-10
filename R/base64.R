@@ -104,10 +104,10 @@ base64_encode_file <- function(in_file, encoder) {
          sep = '')
 }
 
-process_images <- function(html, processor) {
+# processes an HTML resource, given a regular expression that locates
+# instances of that resource
+process_html_res <- function(html, reg, processor) {
   html <- paste(html, collapse = "\n")
-
-  reg <- "<\\s*[Ii][Mm][Gg]\\s+[Ss][Rr][Cc]\\s*=\\s*[\"']([^\"']+)[\"']"
   m <- gregexpr(reg, html, perl = TRUE)
   if (m[[1]][1] != -1) {
     process_img_src <- function(img_src) {
@@ -122,6 +122,13 @@ process_images <- function(html, processor) {
   strsplit(html, "\n", fixed = TRUE)[[1]]
 }
 
+process_images <- function(html, processor) {
+  process_html_res(
+    html,
+    "<\\s*[Ii][Mm][Gg]\\s+[Ss][Rr][Cc]\\s*=\\s*[\"']([^\"']+)[\"']",
+    processor)
+}
+
 base64_encode_images <- function(html, encoder) {
   base64_encode_img <- function(img_src, src) {
     in_file <- utils::URLdecode(src)
@@ -134,18 +141,9 @@ base64_encode_images <- function(html, encoder) {
   process_images(html, base64_encode_img)
 }
 
-# See if we have a usable base64 image encoder (requires caTools or httpuv)
+# get a base64 image encoder based on caTools
 base64_image_encoder <- function() {
-  if (suppressMessages(requireNamespace("caTools", quietly = TRUE))) {
-    function(data) base64_encode_images(data, caTools::base64encode)
-  }
-  else if (suppressMessages(requireNamespace("httpuv", quietly = TRUE)) &&
-           utils::packageVersion("httpuv") >= "1.2.2") {
-    function(data) base64_encode_images(data, httpuv::rawToBase64)
-  }
-  else {
-    NULL
-  }
+  function(data) base64_encode_images(data, caTools::base64encode)
 }
 
 
