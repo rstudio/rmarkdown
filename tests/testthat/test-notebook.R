@@ -2,11 +2,18 @@ context("notebook")
 
 test_that("an example R Notebook document can be rendered and parsed", {
 
+  # capture evaluate hook
+  evaluate_hook <- knitr::knit_hooks$get("evaluate")
+  expect_identical(evaluate_hook, evaluate::evaluate)
+
   # generate the file
   path <- test_path("resources/r-notebook.Rmd")
   file <- tempfile(fileext = ".nb.html")
   on.exit(unlink(file), add = TRUE)
   rmarkdown::render(path, output_file = file, quiet = TRUE)
+
+  # confirm the evaluate hook has been restored post-render
+  expect_identical(evaluate_hook, evaluate::evaluate)
 
   # if running interactively, try running the following code to open the
   # generated document -- in RStudio, you should see the source .Rmd opened,
