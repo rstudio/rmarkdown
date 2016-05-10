@@ -48,11 +48,19 @@ test_that("a custom output_source can be used on render", {
     if (label == "chunk-three") {
       expect_true(context$chunk.index == 3)
       if (requireNamespace("dygraphs", quietly = TRUE)) {
+
         library(dygraphs)
         widget <- dygraph(nhtemp, main = "New Haven Temperatures") %>%
           dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
-        return(widget)
+
+        return(list(
+          knitr::asis_output("<pre>First Widget</pre>"),
+          widget,
+          knitr::asis_output("<pre>Second Widget</pre>"),
+          widget
+        ))
       }
+
       return(html_notebook_output_html("<!-- dygraphs not installed -->"))
     }
 

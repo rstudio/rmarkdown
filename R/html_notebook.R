@@ -320,34 +320,37 @@ html_notebook_render_hook <- function(x, ...) {
   output
 }
 
-as_evaluate_output_impl <- function(code, output, context) {
-  code <- if (isTRUE(context$include)) code else ""
-  list(
-    structure(list(src = code), class = "source"),
-    output
-  )
+prepare_evaluate_output <- function(output, ...) {
+  UseMethod("prepare_evaluate_output")
 }
 
-as_evaluate_output <- function(output, code, context, ...) {
-  UseMethod("as_evaluate_output")
-}
-
-as_evaluate_output.htmlwidget <- function(output, code, context, ...) {
+prepare_evaluate_output.htmlwidget <- function(output, ...) {
   widget <- knitr::knit_print(output)
   meta <- attr(widget, "knit_meta")
   asis <- knitr::asis_output(c(widget))
   annotated <- html_notebook_annotated_output(asis, "htmlwidget", meta)
   attr(annotated, "knit_meta") <- meta
-  as_evaluate_output_impl(code, annotated, context)
+  annotated
 }
 
-as_evaluate_output.knit_asis <- function(output, code, context, ...) {
-  as_evaluate_output_impl(code, output, context)
+prepare_evaluate_output.knit_asis <- function(output, ...) {
+  output
 }
 
-as_evaluate_output.default <- function(output, code, context, ...) {
-  captured <- utils::capture.output(knitr::knit_print(output))
-  as_evaluate_output_impl(code, paste(captured, collapse = "\n"), context)
+prepare_evaluate_output.list <- function(output, ...) {
+  lapply(output, prepare_evaluate_output)
+}
+
+prepare_evaluate_output.default <- function(output, ...) {
+  paste(utils::capture.output(knitr::knit_print(output)), collapse = "\n")
+}
+
+as_evaluate_output <- function(output, code, context, ...) {
+  code <- if (isTRUE(context$include)) code else ""
+  list(
+    structure(list(src = code), class = "source"),
+    prepare_evaluate_output(output)
+  )
 }
 
 validate_output_source <- function(output_source) {
