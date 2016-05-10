@@ -92,6 +92,7 @@ html_notebook <- function(toc = FALSE,
       })
 
       knitr::knit_hooks$set(evaluate = function(code, ...) {
+        chunk_options <- merge_render_context(chunk_options)
         output <- output_source(code, chunk_options, ...)
         as_evaluate_output(output, code, chunk_options, ...)
       })
@@ -242,9 +243,16 @@ html_notebook_annotated_output <- function(output, label, meta = NULL) {
   knitr::asis_output(pasted)
 }
 
-html_notebook_annotated_knitr_hook <- function(label, hook, meta = NULL) {
-  force(list(label, hook, meta))
+html_notebook_annotated_knitr_hook <- function(label, hook, meta = NULL,
+                                               pre = NULL, post = NULL) {
+  force(list(label, hook, meta, pre, post))
   function(x, ...) {
+
+    # call pre, post hooks
+    if (is.function(pre)) pre(x, output, ...)
+    if (is.function(post)) on.exit(post(x, output, ...), add = TRUE)
+
+    # call regular hooks and annotate output
     output <- hook(x, ...)
     meta <- if (is.function(meta)) meta(x, output, ...)
     html_notebook_annotated_output(output, label, meta)
@@ -276,10 +284,20 @@ html_notebook_knitr_options <- function() {
     error   = html_notebook_text_hook
   )
 
+  pre_hooks <- list(
+    chunk = function(...) {
+      render_context$chunk.index <- render_context$chunk.index + 1
+    }
+  )
+
+  post_hooks <- list()
+
   knit_hooks <- lapply(hook_names, function(hook_name) {
     html_notebook_annotated_knitr_hook(hook_name,
-                                  orig_knit_hooks[[hook_name]],
-                                  meta_hooks[[hook_name]])
+                                       orig_knit_hooks[[hook_name]],
+                                       meta_hooks[[hook_name]],
+                                       pre_hooks[[hook_name]],
+                                       post_hooks[[hook_name]])
   })
   names(knit_hooks) <- hook_names
 

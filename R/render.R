@@ -28,6 +28,9 @@ render <- function(input,
 
   perf_timer_start("render")
 
+  init_render_context()
+  on.exit(clear_render_context(), add = TRUE)
+
   # check for "all" output formats
   if (identical(output_format, "all")) {
     output_format <- enumerate_output_formats(input, envir, encoding)
@@ -595,4 +598,21 @@ validate_output_source <- function(output_source) {
   TRUE
 }
 
+# render context (render-related state can be stuffed here)
+render_context <- new.env(parent = emptyenv())
 
+init_render_context <- function() {
+  clear_render_context()
+  render_context$chunk.index <<- 1
+}
+
+clear_render_context <- function() {
+  rm(list = ls(render_context), envir = render_context)
+}
+
+merge_render_context <- function(context) {
+  elements <- ls(envir = render_context, all.names = TRUE)
+  for (el in elements)
+    context[[el]] <- get(el, envir = render_context)
+  context
+}
