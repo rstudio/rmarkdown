@@ -53,7 +53,7 @@ test_that("a custom output_source can be used on render", {
           dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
         return(widget)
       }
-      return(knitr::asis_output("<!-- dygraphs not installed -->"))
+      return(html_notebook_output_html("<!-- dygraphs not installed -->"))
     }
 
     if (label == "chunk-four") {
