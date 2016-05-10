@@ -577,6 +577,7 @@ md_header_from_front_matter <- function(front_matter) {
 }
 
 # render context (render-related state can be stuffed here)
+.render_context <- NULL # initialized in .onLoad
 render_context <- function() {
   .render_context$peek()
 }
