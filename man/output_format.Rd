@@ -55,10 +55,6 @@ and \code{verbose} parmaeters, and can return an alternative
 execution (as registered with a \code{\link{on.exit}} handler).}
 
 \item{base_format}{An optional format to extend.}
-
-\item{output_source}{Define an output source for R chunks (ie, outputs to use
-instead of those produced by evaluating the underlying R code).
-See \code{\link{html_notebook_output}} for more details.}
 }
 \value{
 An R Markdown output format definition that can be passed to
