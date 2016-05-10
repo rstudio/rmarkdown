@@ -6,8 +6,8 @@
 \usage{
 output_format(knitr, pandoc, keep_md = FALSE, clean_supporting = TRUE,
   pre_knit = NULL, post_knit = NULL, pre_processor = NULL,
-  intermediates_generator = NULL, post_processor = NULL,
-  output_source = NULL, on_exit = NULL, base_format = NULL)
+  intermediates_generator = NULL, post_processor = NULL, on_exit = NULL,
+  base_format = NULL)
 }
 \arguments{
 \item{knitr}{Knitr options for an output format (see
@@ -51,14 +51,14 @@ any intermediate files required to render the \code{input_file}.}
 and \code{verbose} parmaeters, and can return an alternative
 \code{output_file}.}
 
-\item{output_source}{Define an output source for R chunks (ie, outputs to use
-instead of those produced by evaluating the underlying R code).
-See \code{\link{html_notebook_output}} for more details.}
-
 \item{on_exit}{A function to call when \code{rmarkdown::render()} finishes
 execution (as registered with a \code{\link{on.exit}} handler).}
 
 \item{base_format}{An optional format to extend.}
+
+\item{output_source}{Define an output source for R chunks (ie, outputs to use
+instead of those produced by evaluating the underlying R code).
+See \code{\link{html_notebook_output}} for more details.}
 }
 \value{
 An R Markdown output format definition that can be passed to

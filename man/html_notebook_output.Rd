@@ -6,12 +6,14 @@
 \alias{html_notebook_output_png}
 \title{Generate R Notebook Output}
 \usage{
-html_notebook_output_html(html)
+html_notebook_output_html(html, iframe = TRUE)
 
 html_notebook_output_png(path = NULL, bytes = NULL)
 }
 \arguments{
 \item{html}{Arbitrary HTML content to insert.}
+
+\item{iframe}{Boolean; should the generated HTML be shown in an iframe?}
 
 \item{path}{A path to a file. For functions accepting both \code{path}
 and \code{bytes}, if \code{bytes} is \code{NULL}, the bytewise contents
