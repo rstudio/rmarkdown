@@ -5,8 +5,8 @@
   Format for converting from R Markdown to an \href{https://code.google.com/p/io-2012-slides/}{ioslides} presentation.
 }
 \usage{
-ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
-  fig_height = 4.5, fig_retina = 2, fig_caption = TRUE,
+ioslides_presentation(logo = NULL,  slide_level = 2, incremental = FALSE,
+  fig_width = 7.5, fig_height = 4.5, fig_retina = 2, fig_caption = TRUE,
   dev = "png", smart = TRUE, self_contained = TRUE, widescreen = FALSE,
   smaller = FALSE, transition = "default", mathjax = "default", analytics = NULL,
   template = NULL, css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
@@ -15,6 +15,8 @@ ioslides_presentation(logo = NULL, incremental = FALSE, fig_width = 7.5,
 \arguments{
   \item{logo}{Path to file that includes a logo for use in
   the presentation (should be square and at least 128x128)}
+
+  \item{slide_level}{Header level to consider as slide separator (Defaults to header 2)}
 
  \item{incremental}{\code{TRUE} to render slide bullets
   incrementally. Note that if you want to reverse the

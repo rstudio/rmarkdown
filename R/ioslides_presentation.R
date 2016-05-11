@@ -1,6 +1,10 @@
 
+
+
+
 #' @export
 ioslides_presentation <- function(logo = NULL,
+                                  slide_level = 2,
                                   incremental = FALSE,
                                   fig_width = 7.5,
                                   fig_height = 4.5,
@@ -148,7 +152,13 @@ ioslides_presentation <- function(logo = NULL,
     add_setting("smaller", smaller)
     add_setting("smart", smart)
     add_setting("mathjax", !is.null(mathjax))
+
+    # Set level of slide header (used by ioslides_presentation.lua)
+    settings <- c(settings, sprintf("local slide_level = %s", slide_level))
     writeLines(settings, lua_writer, useBytes = TRUE)
+
+    # For consistency add as pandoc argument
+    args <- c(args, "--slide-level", as.character(slide_level))
 
     # append main body of script
     file.append(lua_writer,

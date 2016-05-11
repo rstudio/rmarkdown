@@ -209,8 +209,10 @@ function Header(lev, s, attr)
   -- detect level 1 header and convert it to a segue slide
   local slide_class = ""
   local hgroup_class = ""
-  if lev == 1 then
-    slide_class = "segue dark nobackground"
+  -- make all headers < slide_level as segue slides
+  if lev < slide_level then
+  	-- create a segue slide but add lev class for possible customization
+    slide_class = "segue dark nobackground" .. " level" .. lev
     hgroup_class = " class = 'auto-fadein'"
     lev = 2
   end
@@ -225,12 +227,18 @@ function Header(lev, s, attr)
     end
   end
 
+  -- trick: as lev value 2 is used in code below to start a new slide
+  -- we force all lev <= slide_level as new slides 
+  if lev > 2 and lev <= slide_level then
+  	lev = 2
+  end
+
   -- build slide header (including optional subtitle)
   local header = "<h" .. lev ..  ">" .. s .. "</h" .. lev .. ">"
   if string.len(subtitle) > 0 then
     header = header .. "<h3>" .. subtitle .. "</h3>"
   end
-
+  
   -- treat level 2 headers as slides
   if lev == 2 then
 
