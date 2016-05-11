@@ -346,6 +346,11 @@ prepare_evaluate_output.list <- function(output, ...) {
 }
 
 #' @export
+prepare_evaluate_output.table <- function(output, ...) {
+  paste(utils::capture.output(print(output)), collapse = "\n")
+}
+
+#' @export
 prepare_evaluate_output.default <- function(output, ...) {
   paste(utils::capture.output(knitr::knit_print(output)), collapse = "\n")
 }
