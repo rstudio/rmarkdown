@@ -25,6 +25,11 @@ and \code{bytes}, if \code{bytes} is \code{NULL}, the bytewise contents
 will be obtained by reading the file.}
 
 \item{bytes}{The bytewise representation of content.}
+
+\item{attributes}{A named \R list of HTML attributes. These will be
+escaped and inserted into the generated HTML as appropriate.}
+
+\item{code}{Source code.}
 }
 \description{
 Utilities for generating output for the \code{html_notebook} format,

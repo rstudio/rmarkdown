@@ -9,6 +9,9 @@
 #'   will be obtained by reading the file.
 #' @param bytes The bytewise representation of content.
 #' @param html Arbitrary HTML content to insert.
+#' @param attributes A named \R list of HTML attributes. These will be
+#'   escaped and inserted into the generated HTML as appropriate.
+#' @param code Source code.
 #' @param meta An \R list of arbitrary meta-data. The data will
 #'   be converted to JSON, base64-encoded, and injected into the header comment.
 #'
