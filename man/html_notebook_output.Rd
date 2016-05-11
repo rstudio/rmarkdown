@@ -2,18 +2,23 @@
 % Please edit documentation in R/html_notebook_output.R
 \name{html_notebook_output}
 \alias{html_notebook_output}
+\alias{html_notebook_output_code}
 \alias{html_notebook_output_html}
 \alias{html_notebook_output_png}
 \title{Generate R Notebook Output}
 \usage{
-html_notebook_output_html(html, iframe = TRUE)
+html_notebook_output_html(html, meta = NULL)
 
-html_notebook_output_png(path = NULL, bytes = NULL, iframe = TRUE)
+html_notebook_output_png(path = NULL, bytes = NULL, attributes = NULL,
+  meta = NULL)
+
+html_notebook_output_code(code, attributes = list(class = "r"), meta = NULL)
 }
 \arguments{
 \item{html}{Arbitrary HTML content to insert.}
 
-\item{iframe}{Boolean; should the generated HTML be shown in an iframe?}
+\item{meta}{An \R list of arbitrary meta-data. The data will
+be converted to JSON, base64-encoded, and injected into the header comment.}
 
 \item{path}{A path to a file. For functions accepting both \code{path}
 and \code{bytes}, if \code{bytes} is \code{NULL}, the bytewise contents

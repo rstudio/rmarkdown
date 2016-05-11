@@ -444,17 +444,57 @@ surround <- function(string, with) {
   paste(with, string, with, sep = "")
 }
 
-to_html_attributes <- function(data) {
+to_html_attributes <- function(data, on_empty = "", prefix = " ") {
 
-  if (!length(data)) return("")
+  if (inherits(data, "html"))
+    return(data)
 
+  if (!length(data))
+    return(on_empty)
+
+  # escape attribute contents
   escaped <- unlist(lapply(data, function(el) {
-    htmltools::htmlEscape(as.character(el), attribute = TRUE)
+    htmltools::htmlEscape(join(as.character(el), collapse = " "), attribute = TRUE)
   }))
 
+  # generate html attributes as string
   quoted <- surround(escaped, with = "\"")
-  paste(names(data), quoted, sep = "=")
+  result <- join(names(data), quoted, sep = "=", collapse = " ")
 
+  # add prefix if necessary
+  if (nzchar(prefix))
+    result <- join(prefix, result)
+
+  # mark as html and return
+  class(result) <- "html"
+  result
+
+}
+
+to_css <- function(data, on_empty = "", prefix = "") {
+
+  if (inherits(data, "html"))
+    return(data)
+
+  if (!length(data))
+    return(on_empty)
+
+  # collapse vectors in data list
+  collapsed <- unlist(lapply(data, function(el) {
+    join(el, collapse = " ")
+  }))
+
+  # paste into single string
+  joined <- join(names(data), collapsed, sep = ": ", collapse = "; ")
+
+  # add prefix
+  if (nzchar(prefix))
+    joined <- join(prefix, joined)
+
+  # return with trailing semi-colon
+  result <- join(joined, ";", sep = "")
+  class(result) <- "html"
+  result
 }
 
 rbind_list <- function(data) {
@@ -515,4 +555,8 @@ replace_binding <- function(binding, package, override) {
 
   # return original
   original
+}
+
+join <- function(..., sep = "", collapse = "") {
+  paste(..., sep = sep, collapse = collapse)
 }

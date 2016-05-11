@@ -95,7 +95,7 @@ html_notebook <- function(toc = FALSE,
         chunk_options <- merge_render_context(chunk_options)
         context <- list2env(chunk_options)
         output <- output_source(code, context, ...)
-        as_evaluate_output(output, code, context, ...)
+        as_evaluate_output(output, context, ...)
       })
     }
   }
@@ -350,12 +350,11 @@ prepare_evaluate_output.default <- function(output, ...) {
   paste(utils::capture.output(knitr::knit_print(output)), collapse = "\n")
 }
 
-as_evaluate_output <- function(output, code, context, ...) {
-  code <- if (isTRUE(context$include)) code else ""
-  list(
-    structure(list(src = code), class = "source"),
-    prepare_evaluate_output(output)
-  )
+as_evaluate_output <- function(output, context, ...) {
+  prepared <- prepare_evaluate_output(output)
+  if (!is.list(prepared))
+    prepared <- list(prepared)
+  prepared
 }
 
 validate_output_source <- function(output_source) {

@@ -37,7 +37,11 @@ test_that("a custom output_source can be used on render", {
 
     if (label == "chunk-one") {
       expect_true(context$chunk.index == 1)
-      return(summary(cars))
+      output <- summary(cars)
+      return(list(
+        html_notebook_output_code("summary(cars)"),
+        output
+      ))
     }
 
     if (label == "chunk-two") {
@@ -54,9 +58,7 @@ test_that("a custom output_source can be used on render", {
           dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01"))
 
         return(list(
-          knitr::asis_output("<pre>First Widget</pre>"),
-          widget,
-          knitr::asis_output("<pre>Second Widget</pre>"),
+          html_notebook_output_code("# This is a fake comment!"),
           widget
         ))
       }
