@@ -15,6 +15,9 @@ rmarkdown 0.9.7 (unreleased)
 * Added `code_download` option to `html_document` to provide an option to
   embed a downloadable copy of the Rmd source code within the document.
 
+* Added `slide_level` option to ioslides_presentation to set the level of
+  heading used for individual slides.
+
 
 rmarkdown 0.9.6
 --------------------------------------------------------------------------------
