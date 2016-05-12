@@ -1,13 +1,13 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-tools/
+^tools/
 README\.(Rmd|md|html)
 CONTRIBUTING\.(Rmd|md|html)
 PANDOC\.(Rmd|md|html)
 ^\.travis\.yml$
-tests/testthat/site/.*\.html
-tests/testthat/site/rsconnect/
-tests/testthat/site/_site/
-tests/testthat/site/lib/
-tests/testthat/site/.*_files/
+^tests/testthat/site/.*\.html
+^tests/testthat/site/rsconnect/
+^tests/testthat/site/_site/
+^tests/testthat/site/lib/
+^tests/testthat/site/.*_files/
 

@@ -54,7 +54,7 @@ html_notebook_output_html <- function(html,
 
 #' @name html_notebook_output
 #' @export
-html_notebook_output_png <- function(path = NULL,
+html_notebook_output_img <- function(path = NULL,
                                      bytes = NULL,
                                      attributes = NULL,
                                      meta = NULL)
@@ -63,6 +63,10 @@ html_notebook_output_png <- function(path = NULL,
   html <- html_notebook_render_base64_data(path, bytes, attributes, format)
   html_notebook_annotated_output(html, "plot", meta)
 }
+
+#' @name html_notebook_output
+#' @export
+html_notebook_output_png <- html_notebook_output_img
 
 #' @name html_notebook_output
 #' @export

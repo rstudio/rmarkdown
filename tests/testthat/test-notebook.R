@@ -46,7 +46,7 @@ test_that("a custom output_source can be used on render", {
 
     if (label == "chunk-two") {
       expect_true(context$chunk.index == 2)
-      return(html_notebook_output_png(png_path))
+      return(html_notebook_output_img(png_path))
     }
 
     if (label == "chunk-three") {

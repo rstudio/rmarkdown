@@ -4,10 +4,14 @@
 \alias{html_notebook_output}
 \alias{html_notebook_output_code}
 \alias{html_notebook_output_html}
+\alias{html_notebook_output_img}
 \alias{html_notebook_output_png}
 \title{Generate R Notebook Output}
 \usage{
 html_notebook_output_html(html, meta = NULL)
+
+html_notebook_output_img(path = NULL, bytes = NULL, attributes = NULL,
+  meta = NULL)
 
 html_notebook_output_png(path = NULL, bytes = NULL, attributes = NULL,
   meta = NULL)
