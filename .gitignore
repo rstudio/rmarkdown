@@ -6,4 +6,7 @@ README.html
 CONTRIBUTING.html
 PANDOC.html
 issues/
-.*.Rnb.cached
+inst/doc
+vignettes/*.R
+vignettes/*.html
+
