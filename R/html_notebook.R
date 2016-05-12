@@ -247,13 +247,16 @@ html_notebook_annotated_knitr_hook <- function(label, hook, meta = NULL,
                                                pre = NULL, post = NULL) {
   force(list(label, hook, meta, pre, post))
   function(x, ...) {
-
     # call pre, post hooks
-    if (is.function(pre)) pre(x, output, ...)
-    if (is.function(post)) on.exit(post(x, output, ...), add = TRUE)
+    if (is.function(pre)) pre(x, ...)
 
     # call regular hooks and annotate output
     output <- hook(x, ...)
+
+    # register post hook handler
+    if (is.function(post)) on.exit(post(x, output, ...), add = TRUE)
+
+    # generate output
     meta <- if (is.function(meta)) meta(x, output, ...)
     html_notebook_annotated_output(output, label, meta)
   }
