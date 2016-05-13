@@ -18,6 +18,9 @@ rmarkdown 0.9.7 (unreleased)
 * Added `slide_level` option to ioslides_presentation to set the level of
   heading used for individual slides.
 
+* Added `hard_line_breaks` option to `github_document` to deal with change
+  in behavior of GitHub's markdown renderer with respect to line breaks.
+
 
 rmarkdown 0.9.6
 --------------------------------------------------------------------------------
