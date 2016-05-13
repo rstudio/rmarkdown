@@ -5,6 +5,9 @@
 #' @inheritParams html_document
 #' @inheritParams md_document
 #'
+#' @param hard_line_breaks \code{TRUE} to genreate markdown that uses a simple
+#'   newline to represent a line break (as opposed to two-spaces and a newline).
+#'
 #' @param html_preview \code{TRUE} to also generate an HTML file for the purpose of
 #'   locally previewing what the document will look like on GitHub.
 #'
