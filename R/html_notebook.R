@@ -46,9 +46,6 @@ html_notebook <- function(toc = FALSE,
       # pull out 'output_source'
       validate_output_source(output_source)
 
-      # track knit context
-      chunk_options <- list()
-
       # force knitr labeling (required for uniqueness of labels + cache coherence)
       knitr.duplicate.label <- getOption("knitr.duplicate.label")
       if (identical(knitr.duplicate.label, "allow")) {
@@ -69,6 +66,9 @@ html_notebook <- function(toc = FALSE,
         })
       }
 
+      # track knit context
+      chunk_options <- list()
+
       # use an 'include' hook to track chunk options (any
       # 'opts_hooks' hook will do; we just want this to be called
       # on entry to any chunk)
@@ -77,6 +77,11 @@ html_notebook <- function(toc = FALSE,
 
         # save context
         chunk_options <<- options
+
+        # force R engine (so that everything goes through evaluate
+        # hook and hence 'output_source')
+        options$engine <- "R"
+        options$engine.opts <- NULL
 
         # call original hook
         if (is.function(include_hook))
