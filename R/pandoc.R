@@ -372,9 +372,19 @@ pandoc_self_contained_html <- function(input, output) {
   # (note there is no markdown in the source document but
   # we still need to do this "conversion" to get the
   # base64 encoding)
+
+  # determine from (there are bugs in pandoc < 1.17 that
+  # cause markdown_strict to hang on very large script
+  # elements)
+  from <- if (pandoc_available("1.17"))
+            "markdown_strict"
+          else
+            "markdown"
+
+  # do the conversion
   pandoc_convert(
     input = input,
-    from = "markdown",
+    from = from,
     output = output,
     options = c(
       "--self-contained",
