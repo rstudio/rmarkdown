@@ -6,7 +6,7 @@
 \usage{
 github_document(toc = FALSE, toc_depth = 3, fig_width = 7,
   fig_height = 5, dev = "png", includes = NULL, md_extensions = NULL,
-  pandoc_args = NULL, html_preview = TRUE)
+  hard_line_breaks = TRUE, pandoc_args = NULL, html_preview = TRUE)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
