@@ -24,6 +24,9 @@ rmarkdown 0.9.7 (unreleased)
 * Use "markdown_strict" rather than "markdown" for `pandoc_self_contained_html`
   when pandoc >= 1.17 (pandoc hanging bug was fixed in this version)
 
+* Default highlighting engine for `html_document` now highlights bash, c++,
+  css, ini, javascript, perl, python, r, ruby, scala, and xml
+
 
 rmarkdown 0.9.6
 --------------------------------------------------------------------------------
