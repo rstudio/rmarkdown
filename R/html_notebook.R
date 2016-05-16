@@ -83,6 +83,9 @@ html_notebook <- function(toc = FALSE,
         options$engine <- "R"
         options$engine.opts <- NULL
 
+        # disable caching
+        options$cache <- FALSE
+
         # call original hook
         if (is.function(include_hook))
           include_hook(options)
