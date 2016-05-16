@@ -9,10 +9,9 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Mine Çetinkaya-Rundel" />
 
 
-<title>Mail merge with RMarkdown</title>
+<title>Compiling Reports from R Scripts</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -339,107 +338,51 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Mail merge with RMarkdown</h1>
-<h4 class="author"><em>Mine Çetinkaya-Rundel</em></h4>
-<h4 class="date"><em>June 1, 2015</em></h4>
+<h1 class="title toc-ignore">Compiling Reports from R Scripts</h1>
 
 </div>
 
 
-<p><em>This article is reposted from <a href="http://citizen-statistician.org/2015/06/01/mail-merge-with-rmarkdown/">citizen-statistician.org</a> with the kind permission of Mine Çetinkaya-Rundel.</em><br />
-The term “mail merge” might not be familiar to those who have not worked in an office setting, but here is the Wikipedia definition:</p>
-<blockquote>
-<p>Mail merge is a software operation describing the production of multiple (and potentially large numbers of) documents from a single template form and a structured data source. The letter may be sent out to many “recipients” with small changes, such as a change of address or a change in the greeting line.</p>
-<p>Source: <a href="http://en.wikipedia.org/wiki/Mail_merge" class="uri">http://en.wikipedia.org/wiki/Mail_merge</a></p>
-</blockquote>
-<p>The other day I was working on creating personalized handouts for a workshop. That is, each handout contained some standard text (including some R code) and some fields that were personalized for each participant (login information for our RStudio server). I wanted to do this in RMarkdown so that the R code on the handout could be formatted nicely. Googling “rmarkdown mail merge” didn’t yield much (that’s why I’m posting this), but I finally came across <a href="http://reed.edu/data-at-reed/software/R/markdown_multiple_reports.html">this tutorial</a> which called the process “iterative reporting”.</p>
-<p>Turns our this is a pretty straightforward task. Below is a very simple minimum working example. You can obviously make your markdown document a lot more complicated. I’m thinking holiday cards made in R…</p>
-<p>All relevant files for this example can also be found <a href="https://github.com/mine-cetinkaya-rundel/mail_merge">here</a>.</p>
-<div id="input-data-meeting_times.csv" class="section level4">
-<h4>Input data: meeting_times.csv</h4>
-<p>This is a 20 x 2 csv file, an excerpt is shown below. I got the names from here.</p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">name</th>
-<th align="left">meeting_time</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Peggy Kallas</td>
-<td align="left">9:00 AM</td>
-</tr>
-<tr class="even">
-<td align="left">Ezra Zanders</td>
-<td align="left">9:15 AM</td>
-</tr>
-<tr class="odd">
-<td align="left">Hope Mogan</td>
-<td align="left">9:30 AM</td>
-</tr>
-<tr class="even">
-<td align="left">Nathanael Scully</td>
-<td align="left">9:45 AM</td>
-</tr>
-<tr class="odd">
-<td align="left">Mayra Cowley</td>
-<td align="left">10:00 AM</td>
-</tr>
-<tr class="even">
-<td align="left">Ethelene Oglesbee</td>
-<td align="left">10:15 AM</td>
-</tr>
-<tr class="odd">
-<td align="left">…</td>
-<td align="left">…</td>
-</tr>
-</tbody>
-</table>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>You don’t necessary need to author an R Markdown document to create a dynamic report. In fact, you can take any R script and compile it into a report that includes commentary, source code, and script output. Reports can be compiled to any output format including HTML, PDF, MS Word, and Markdown.</p>
+<p>To compile a report from an R script you simply pass the script to render. For example:</p>
+<pre class="r"><code>rmarkdown::render(&quot;analysis.R&quot;)
+rmarkdown::render(&quot;analysis.R&quot;, &quot;pdf_document&quot;)</code></pre>
+<p>The first call to render creates an HTML document, whereas the second creates a PDF document.</p>
+<p>If you are using RStudio then you can also create a report using the <em>Compile Report</em> command (Ctrl+Shift+K).</p>
 </div>
-<div id="r-script-mail_merge_script.r" class="section level4">
-<h4>R script: mail_merge_script.R</h4>
-<pre class="r"><code>## Packages
-library(knitr)
-library(rmarkdown)
- 
-## Data
-personalized_info &lt;- read.csv(file = &quot;meeting_times.csv&quot;)
- 
-## Loop
-for (i in 1:nrow(personalized_info)){
- rmarkdown::render(input = &quot;mail_merge_handout.Rmd&quot;,
- output_format = &quot;pdf_document&quot;,
- output_file = paste(&quot;handout_&quot;, i, &quot;.pdf&quot;, sep=&#39;&#39;),
- output_dir = &quot;handouts/&quot;)
-}</code></pre>
+<div id="metadata" class="section level2">
+<h2>Metadata</h2>
+<p>By default the name of the script, username, and current date and time are included in the header of the report You can override this default behavior by including metadata in a specially formatted R comment:</p>
+<pre class="r"><code>#&#39; ---
+#&#39; title: &quot;Crop Analysis Q3 2013&quot;
+#&#39; author: &quot;John Smith&quot;
+#&#39; date: &quot;May 3rd, 2014&quot;
+#&#39; ---</code></pre>
+<p>You can also specify the output format within the metadata, for example:</p>
+<pre class="r"><code>#&#39; ---
+#&#39; title: &quot;Crop Analysis Q3 2013&quot;
+#&#39; output: pdf_document
+#&#39; ---</code></pre>
 </div>
-<div id="rmarkdown-mail_merge_handout.rmd" class="section level4">
-<h4>RMarkdown: mail_merge_handout.Rmd</h4>
-<pre class = "r"><code>
----
-output: pdf_document
----
- 
-&#96``{r echo=FALSE}
-personalized_info <- read.csv("meeting_times.csv", stringsAsFactors = FALSE)
-name <- personalized_info$name[i]
-time <- personalized_info$meeting_time[i]
-&#96``
- 
-Dear &#96r name`,
- 
-Your meeting time is &#96r time`.
- 
-See you then!
-</code></pre>
-<p>Save the Rmd file and the R script in the same folder (or specify the path to the Rmd file accordingly in the R script), and then run the R script. This will call the Rmd file within the loop and output 20 PDF files to the handouts directory. Each of these files look something like this</p>
-<div class="figure">
-<img src="http://citizen-statistician.org/wp-content/uploads/2015/06/mail_merge_sample1.png" />
-
+<div id="markdown-formatting" class="section level2">
+<h2>Markdown Formatting</h2>
+<p>Note that the R comment used above to add a title, author, and date includes a single-quote as a special prefix character. This is a <a href="https://cran.rstudio.com/web/packages/roxygen2/index.html">roxygen2</a> style comment, and it’s actually possible to include many such comments in an R script, all of which will be converted to markdown content within the compiled report For example:</p>
+<pre class="r"><code>#&#39; A script comment that includes **markdown** formatting.</code></pre>
+<p>Rather than displaying as an R comment in the compiled report any roxygen2 style comment will be treated as markdown and rendered accordingly.</p>
 </div>
-<p>with the name and date field being different in each one.</p>
-<p>If you prefer HTML or Word output, you can specify this in the output_format argument in the R script.</p>
+<div id="knitr-spin" class="section level2">
+<h2>knitr Spin</h2>
+<p>Including markdown within R comments is possible because <code>rmarkdown::render</code> calls the <a href="http://yihui.name/knitr/demo/stitch/"><code>knitr::spin</code></a> function to convert the R script to an Rmd file. The spin function also enables you to add knitr chunk options with another special comment prefix (<code>#+</code>). For example:</p>
+<pre class="r"><code>#+ fig.width=5, fig.height=5
+plot(cars)</code></pre>
+<p>For more information on using spin see:</p>
+<ul>
+<li><p>Spin documentation: <a href="http://yihui.name/knitr/demo/stitch/" class="uri">http://yihui.name/knitr/demo/stitch/</a></p></li>
+<li><p>Spin example: <a href="https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R" class="uri">https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R</a></p></li>
+</ul>
+<p>Note that when using <code>rmarkdown::render</code> the spin function is called automatically under the hood as part of rendering.</p>
 </div>
 
 

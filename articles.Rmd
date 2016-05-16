@@ -23,4 +23,6 @@ output:
 
 * [Happy collaboration with Rmd to docx](articles_docx.html)
 * [Moving from Beamer to R Markdown](articles_beamer.html)
+* [Compiling Reports from R Scripts](articles_report_from_r_script.html)
+
 
