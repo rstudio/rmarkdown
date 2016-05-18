@@ -34,10 +34,10 @@ examples(caption = FALSE, showcaseOnly = TRUE)
 
 ## Getting Started
 
-Install the **flexdashboard** package from GitHub as follows:
+Install the **flexdashboard** package from CRAN as follows:
 
 ```r
-devtools::install_github("rstudio/flexdashboard")
+install.packages("flexdashboard", type = "source")
 ```
 
 To author a flexdashboard you create an [R Markdown](http://rmarkdown.rstudio.com) document with the `flexdashboard::flex_dashboard` output format. You can do this from within RStudio using the **New R Markdown** dialog:
