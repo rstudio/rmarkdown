@@ -28,3 +28,26 @@ test_that("formats successfully produce a document", {
   if (requireNamespace("tufte", quietly = TRUE))
     testFormat(tufte_handout())
 })
+
+test_that("documents with spaces in names can be rendered", {
+
+  # get path to notebook
+  rmd_path <- "resources/empty.Rmd"
+
+  # attempt to write to directory with spaces
+  output_file <- "directory with spaces/r output.nb.html"
+  dir.create(dirname(output_file))
+  on.exit(unlink("directory with spaces", recursive = TRUE), add = TRUE)
+
+  # generate copy with space in name
+  with_spaces <- "directory with spaces/no content.Rmd"
+  file.copy(rmd_path, with_spaces)
+
+  output <- rmarkdown::render(with_spaces,
+                              output_format = "html_notebook",
+                              output_file = output_file,
+                              quiet = TRUE)
+
+  expect_true(file.exists(output))
+
+})
