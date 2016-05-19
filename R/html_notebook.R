@@ -7,6 +7,10 @@
 #'   outputs to use instead of those produced by evaluating the
 #'   underlying \R code). See \code{\link{html_notebook_output}} for
 #'   more details.
+#' @param self_contained Produce a standalone HTML file with no external
+#'   dependencies. Defaults to \code{TRUE}. In notebooks, setting this to
+#'   \code{FALSE} is not recommended, since the setting does not apply to
+#'   embedded notebook output such as plots and HTML widgets.
 #' @importFrom evaluate evaluate
 #' @export
 html_notebook <- function(toc = FALSE,
