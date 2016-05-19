@@ -28,6 +28,7 @@ html_notebook <- function(toc = FALSE,
                           md_extensions = NULL,
                           pandoc_args = NULL,
                           output_source = NULL,
+                          self_contained = TRUE,
                           ...)
 {
   # some global state that is captured in pre_knit
@@ -123,7 +124,7 @@ html_notebook <- function(toc = FALSE,
 
   # these arguments to html_document are fixed so we need to
   # flag them as invalid for users
-  fixed_args <- c("self_contained", "keep_md", "template", "lib_dir", "dev")
+  fixed_args <- c("keep_md", "template", "lib_dir", "dev")
   forwarded_args <- names(list(...))
   for (arg in forwarded_args) {
     if (arg %in% fixed_args)
@@ -149,10 +150,10 @@ html_notebook <- function(toc = FALSE,
                                includes = includes,
                                md_extensions = md_extensions,
                                pandoc_args = pandoc_args,
+                               self_contained = self_contained,
                                # options forced for notebooks
                                dev = "png",
                                code_download = TRUE,
-                               self_contained = TRUE,
                                keep_md = FALSE,
                                template = "default",
                                lib_dir = NULL,

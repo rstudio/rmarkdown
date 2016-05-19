@@ -197,3 +197,18 @@ test_that("resources are discovered in CSS files", {
   expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
   expect_equal(resources, expected)
 })
+
+test_that("resources are discovered in notebook files", {
+  skip_on_cran()
+
+  resources <- find_external_resources("resources/r-notebook.Rmd")
+  expected <- data.frame(
+    path = c("tinyplot.png"),
+    explicit = c(FALSE),
+    web      = c(TRUE),
+    stringsAsFactors = FALSE)
+
+  resources <- as.data.frame(resources[order(resources[[1]]), , drop = FALSE])
+  expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
+  expect_equal(resources, expected)
+})

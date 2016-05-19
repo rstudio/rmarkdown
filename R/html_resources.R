@@ -362,10 +362,11 @@ discover_rmd_resources <- function(rmd_file, encoding,
                             else
                               "html_document"
 
-  render(input = md_file, output_file = html_file,
-         output_format = override_output_format,
-         output_options = list(self_contained = FALSE), quiet = TRUE,
-         encoding = "UTF-8")
+  html_file <- render(input = md_file, output_file = html_file,
+                      output_format = override_output_format,
+                      output_options = list(self_contained = FALSE),
+                      quiet = TRUE,
+                      encoding = "UTF-8")
 
   # clean up output file and its supporting files directory
   temp_files <- c(temp_files, html_file, knitr_files_dir(md_file))
