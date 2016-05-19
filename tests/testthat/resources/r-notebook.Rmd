@@ -15,6 +15,10 @@ This is a plot.
 plot(cars)
 ```
 
+This plot is static.
+
+![plot](tinyplot.png)
+
 This is an HTML widget.
 
 ```{r chunk-three}
