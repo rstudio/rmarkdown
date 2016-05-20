@@ -1,5 +1,5 @@
 ---
-title: "R Notebook"
+title: "R Notebook HTML Format"
 ---
 
 This article describes the HTML notebook format, and is primarily intended for
