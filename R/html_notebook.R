@@ -40,7 +40,6 @@ html_notebook <- function(toc = FALSE,
                           ...)
 {
   # some global state that is captured in pre_knit
-  evaluate_hook <- NULL
   exit_actions <- list()
   on_exit <- function() {
     for (action in exit_actions)
@@ -83,11 +82,13 @@ html_notebook <- function(toc = FALSE,
       # on entry to any chunk)
       include_hook <- knitr::opts_hooks$get("include")
       exit_actions <<- c(exit_actions, function() {
-        include_hook <- if (is.null(include_hook))
-          function(options) options
-        else
-          include_hook
-        knitr::opts_hooks$set(include = include_hook)
+        knitr::opts_hooks$set(
+          include = if (is.null(include_hook)) {
+            function(options) options
+          } else {
+            include_hook
+          }
+        )
       })
 
       knitr::opts_hooks$set(include = function(options) {
@@ -111,7 +112,7 @@ html_notebook <- function(toc = FALSE,
       })
 
       # set up evaluate hook (override any pre-existing evaluate hook)
-      evaluate_hook <<- knitr::knit_hooks$get("evaluate")
+      evaluate_hook <- knitr::knit_hooks$get("evaluate")
       exit_actions <<- c(exit_actions, function() {
         knitr::knit_hooks$set(evaluate = evaluate_hook)
       })
