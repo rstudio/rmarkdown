@@ -17,8 +17,8 @@ html_fragment(number_sections = FALSE, fig_width = 7, fig_height = 5,
 \item{fig_height}{Default width (in inches) for figures}
 
 \item{fig_retina}{Scaling to perform for retina displays (defaults to 2, which
-currently works for all widely used retina displays). Set to\code{NULL} to
-prevent retina scaling. Note that this will always be\code{NULL} when
+currently works for all widely used retina displays). Set to \code{NULL} to
+prevent retina scaling. Note that this will always be \code{NULL} when
 \code{keep_md} is specified (this is because \code{fig_retina} relies on
 outputting HTML directly into the markdown document).}
 

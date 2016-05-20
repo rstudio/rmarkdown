@@ -421,7 +421,7 @@ ends_with_bytes <- function(string, bytes) {
 
 
 base64_encode_object <- function(object) {
-  object <- rapply(object, unclass, how = "replace")
+  object <- rapply(object, unclass, how = "list")
   json <- charToRaw(jsonlite::toJSON(object, auto_unbox = TRUE))
   base64enc::base64encode(json)
 }

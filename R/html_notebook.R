@@ -7,6 +7,10 @@
 #'   outputs to use instead of those produced by evaluating the
 #'   underlying \R code). See \code{\link{html_notebook_output}} for
 #'   more details.
+#' @param self_contained Produce a standalone HTML file with no external
+#'   dependencies. Defaults to \code{TRUE}. In notebooks, setting this to
+#'   \code{FALSE} is not recommended, since the setting does not apply to
+#'   embedded notebook output such as plots and HTML widgets.
 #'
 #' @details For more details on the HTML file format produced by
 #'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_html_format.html}{http://rmarkdown.rstudio.com/r_notebook_html_format.html}.
@@ -32,6 +36,7 @@ html_notebook <- function(toc = FALSE,
                           md_extensions = NULL,
                           pandoc_args = NULL,
                           output_source = NULL,
+                          self_contained = TRUE,
                           ...)
 {
   # some global state that is captured in pre_knit
@@ -87,6 +92,9 @@ html_notebook <- function(toc = FALSE,
         options$engine <- "R"
         options$engine.opts <- NULL
 
+        # disable caching
+        options$cache <- FALSE
+
         # call original hook
         if (is.function(include_hook))
           include_hook(options)
@@ -124,7 +132,7 @@ html_notebook <- function(toc = FALSE,
 
   # these arguments to html_document are fixed so we need to
   # flag them as invalid for users
-  fixed_args <- c("self_contained", "keep_md", "template", "lib_dir", "dev")
+  fixed_args <- c("keep_md", "template", "lib_dir", "dev")
   forwarded_args <- names(list(...))
   for (arg in forwarded_args) {
     if (arg %in% fixed_args)
@@ -150,10 +158,10 @@ html_notebook <- function(toc = FALSE,
                                includes = includes,
                                md_extensions = md_extensions,
                                pandoc_args = pandoc_args,
+                               self_contained = self_contained,
                                # options forced for notebooks
                                dev = "png",
                                code_download = TRUE,
-                               self_contained = TRUE,
                                keep_md = FALSE,
                                template = "default",
                                lib_dir = NULL,

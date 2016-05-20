@@ -10,7 +10,7 @@ html_notebook(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   smart = TRUE, theme = "default", highlight = "textmate",
   mathjax = "default", extra_dependencies = NULL, css = NULL,
   includes = NULL, md_extensions = NULL, pandoc_args = NULL,
-  output_source = NULL, ...)
+  output_source = NULL, self_contained = TRUE, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -29,8 +29,8 @@ options that control the behavior of the floating table of contents. See the
 \item{fig_height}{Default width (in inches) for figures}
 
 \item{fig_retina}{Scaling to perform for retina displays (defaults to 2, which
-currently works for all widely used retina displays). Set to\code{NULL} to
-prevent retina scaling. Note that this will always be\code{NULL} when
+currently works for all widely used retina displays). Set to \code{NULL} to
+prevent retina scaling. Note that this will always be \code{NULL} when
 \code{keep_md} is specified (this is because \code{fig_retina} relies on
 outputting HTML directly into the markdown document).}
 
@@ -79,6 +79,11 @@ additional details.}
 outputs to use instead of those produced by evaluating the
 underlying \R code). See \code{\link{html_notebook_output}} for
 more details.}
+
+\item{self_contained}{Produce a standalone HTML file with no external
+dependencies. Defaults to \code{TRUE}. In notebooks, setting this to
+\code{FALSE} is not recommended, since the setting does not apply to
+embedded notebook output such as plots and HTML widgets.}
 
 \item{...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
