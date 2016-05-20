@@ -433,10 +433,24 @@ render <- function(input,
     perf_timer_start("pandoc")
 
     convert <- function(output, citeproc = FALSE) {
-      pandoc_convert(
-        utf8_input, pandoc_to, output_format$pandoc$from, output, citeproc,
-        output_format$pandoc$args, !quiet
+
+      # render to temporary file (preserve extension)
+      # this also ensures we don't pass a file path with invalid
+      # characters to our pandoc invocation
+      ext <- paste(".", tools::file_ext(output), sep = "")
+      pandoc_output_tmp <- tempfile("pandoc", getwd(), ext)
+
+      # call pandoc to render file
+      status <- pandoc_convert(
+        utf8_input, pandoc_to, output_format$pandoc$from, pandoc_output_tmp,
+        citeproc, output_format$pandoc$args, !quiet
       )
+
+      # rename output file to desired location
+      file.rename(pandoc_output_tmp, output)
+
+      # return status
+      status
     }
     texfile <- file_with_ext(output_file, "tex")
     # compile Rmd to tex when we need to generate bibliography with natbib/biblatex
