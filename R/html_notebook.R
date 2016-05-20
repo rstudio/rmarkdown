@@ -7,6 +7,10 @@
 #'   outputs to use instead of those produced by evaluating the
 #'   underlying \R code). See \code{\link{html_notebook_output}} for
 #'   more details.
+#'
+#' @details For more details on the HTML file format produced by
+#'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_html_format.html}{http://rmarkdown.rstudio.com/r_notebook_html_format.html}.
+#'
 #' @importFrom evaluate evaluate
 #' @export
 html_notebook <- function(toc = FALSE,
@@ -172,6 +176,10 @@ html_notebook <- function(toc = FALSE,
 #'
 #' @param path The path to an R Notebook file (with extension \code{.nb.html}).
 #' @param encoding The document's encoding (assumend \code{"UTF-8"} by default).
+#'
+#' @details For more details on the HTML file format produced by
+#'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_html_format.html}{http://rmarkdown.rstudio.com/r_notebook_html_format.html}.
+#'
 #' @export
 parse_html_notebook <- function(path, encoding = "UTF-8") {
 

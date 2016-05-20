@@ -16,4 +16,8 @@ Parse an HTML notebook, retrieving annotation information
 related to generated outputs in the document, as well as the
 original R Markdown source document.
 }
+\details{
+For more details on the HTML file format produced by
+ \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_html_format.html}{http://rmarkdown.rstudio.com/r_notebook_html_format.html}.
+}
 

@@ -86,4 +86,8 @@ base R Markdown HTML output formatter \code{\link{html_document_base}}}
 \description{
 Format for converting from R Markdown to an HTML notebook.
 }
+\details{
+For more details on the HTML file format produced by
+ \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_html_format.html}{http://rmarkdown.rstudio.com/r_notebook_html_format.html}.
+}
 

@@ -40,4 +40,8 @@ Utilities for generating output for the \code{html_notebook} format,
 through the \code{output_source} function attached to a
 \code{\link{output_format}}.
 }
+\details{
+For more details on the HTML file format produced by
+ \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_html_format.html}{http://rmarkdown.rstudio.com/r_notebook_html_format.html}.
+}
 
