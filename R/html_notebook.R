@@ -82,6 +82,14 @@ html_notebook <- function(toc = FALSE,
       # 'opts_hooks' hook will do; we just want this to be called
       # on entry to any chunk)
       include_hook <- knitr::opts_hooks$get("include")
+      exit_actions <<- c(exit_actions, function() {
+        include_hook <- if (is.null(include_hook))
+          function(options) options
+        else
+          include_hook
+        knitr::opts_hooks$set(include = include_hook)
+      })
+
       knitr::opts_hooks$set(include = function(options) {
 
         # save context
