@@ -273,18 +273,12 @@ html_notebook_annotated_output <- function(output, label, meta = NULL) {
   knitr::asis_output(pasted)
 }
 
-html_notebook_annotated_knitr_hook <- function(label, hook, meta = NULL,
-                                               pre = NULL, post = NULL) {
-  force(list(label, hook, meta, pre, post))
+html_notebook_annotated_knitr_hook <- function(label, hook, meta = NULL) {
+  force(list(label, hook, meta))
   function(x, ...) {
-    # call pre, post hooks
-    if (is.function(pre)) pre(x, ...)
 
     # call regular hooks and annotate output
     output <- hook(x, ...)
-
-    # register post hook handler
-    if (is.function(post)) on.exit(post(x, output, ...), add = TRUE)
 
     # generate output
     meta <- if (is.function(meta)) meta(x, output, ...)
@@ -317,23 +311,33 @@ html_notebook_knitr_options <- function() {
     error   = html_notebook_text_hook
   )
 
-  pre_hooks <- list(
-    chunk = function(...) {
-      context <- render_context()
-      context$chunk.index <- context$chunk.index + 1
-    }
-  )
-
-  post_hooks <- list()
-
   knit_hooks <- lapply(hook_names, function(hook_name) {
     html_notebook_annotated_knitr_hook(hook_name,
                                        orig_knit_hooks[[hook_name]],
-                                       meta_hooks[[hook_name]],
-                                       pre_hooks[[hook_name]],
-                                       post_hooks[[hook_name]])
+                                       meta_hooks[[hook_name]])
   })
   names(knit_hooks) <- hook_names
+
+  # use a custom 'chunk' hook that ensures that html comments
+  # do not get indented
+  chunk_hook <- knitr::knit_hooks$get("chunk")
+  knit_hooks$chunk <- function(x, options) {
+
+    # update chunk line
+    context <- render_context()
+    context$chunk.index <- context$chunk.index + 1
+
+    # call original hook
+    output <- chunk_hook(x, options)
+
+    # clean up indentation for html
+    if (!is.null(options$indent)) {
+      output <- gsub("\n\\s*<!-- rnb-", "\n<!-- rnb-", output, perl = TRUE)
+    }
+
+    # write output
+    output
+  }
 
   opts_chunk <- list(render = html_notebook_render_hook,
                      comment = NA)
