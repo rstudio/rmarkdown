@@ -31,6 +31,8 @@ test_that("formats successfully produce a document", {
 
 test_that("documents with spaces in names can be rendered", {
 
+  skip_on_cran()
+
   # get path to notebook
   rmd_path <- "resources/empty.Rmd"
 
