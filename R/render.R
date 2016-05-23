@@ -434,6 +434,15 @@ render <- function(input,
 
     convert <- function(output, citeproc = FALSE) {
 
+      # if we don't detect any invalid shell characters in the
+      # target path, then just call pandoc directly
+      if (!grepl(.shell_chars_regex, output) && !grepl(.shell_chars_regex, utf8_input)) {
+        return(pandoc_convert(
+          utf8_input, pandoc_to, output_format$pandoc$from, output,
+          citeproc, output_format$pandoc$args, !quiet
+        ))
+      }
+
       # render to temporary file (preserve extension)
       # this also ensures we don't pass a file path with invalid
       # characters to our pandoc invocation
