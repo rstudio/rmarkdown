@@ -447,7 +447,17 @@ render <- function(input,
       )
 
       # rename output file to desired location
-      file.rename(pandoc_output_tmp, output)
+      renamed <- suppressWarnings(file.rename(pandoc_output_tmp, output))
+
+      # rename can fail if the temporary directory and output path
+      # lie on different volumes; in such a case attempt a file copy
+      # see: https://github.com/rstudio/rmarkdown/issues/705
+      if (!renamed) {
+        copied <- file.copy(pandoc_output_tmp, output)
+        if (!copied) {
+          stop("failed to copy rendered pandoc artefact to '", output, "'")
+        }
+      }
 
       # return status
       status
