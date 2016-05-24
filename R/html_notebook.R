@@ -335,8 +335,8 @@ html_notebook_knitr_options <- function() {
       output <- gsub("\n\\s*<!-- rnb-", "\n<!-- rnb-", output, perl = TRUE)
     }
 
-    # write output
-    output
+    # write annotated output
+    html_notebook_annotated_output(output, "chunk")
   }
 
   opts_chunk <- list(render = html_notebook_render_hook,
