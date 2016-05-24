@@ -120,11 +120,12 @@
 #'  control the behavior of the floating table of contents. Options include:
 #'
 #'  \itemize{ \item{\code{collapsed} (defaults to \code{TRUE}) controls whether
-#'  the table of contents appers with only the top-level (H2) headers. When
+#'  the table of contents appears with only the top-level (H2) headers. When
 #'  collapsed the table of contents is automatically expanded inline when
 #'  necessary.} \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls
 #'  whether page scrolls are animated when table of contents items are navigated
-#'  to via mouse clicks.} }
+#'  to via mouse clicks.} \item{\code{print_hide} (defaults to \code{FALSE}) controls
+#'  whether the table of contents appears when user prints out the HTML page.}}
 #'
 #'@section Tabbed Sections:
 #'
@@ -226,7 +227,8 @@ html_document <- function(toc = FALSE,
 
     # resolve options
     toc_float_options <- list(collapsed = TRUE,
-                              smooth_scroll = TRUE)
+                              smooth_scroll = TRUE,
+                              print_hide = FALSE)
     if (is.list(toc_float)) {
       toc_float_options <- merge_lists(toc_float_options, toc_float)
       toc_float <- TRUE
@@ -252,6 +254,8 @@ html_document <- function(toc = FALSE,
       args <- c(args, pandoc_variable_arg("toc_collapsed", "1"))
     if (toc_float_options$smooth_scroll)
       args <- c(args, pandoc_variable_arg("toc_smooth_scroll", "1"))
+    if (toc_float_options$print_hide)
+      args <- c(args, pandoc_variable_arg("toc_print_hide", "1"))
   }
 
   # template path and assets

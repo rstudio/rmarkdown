@@ -281,6 +281,14 @@ $endif$
 }
 }
 
+$if(toc_print_hide)$
+@media print {
+#$idprefix$TOC {
+  display: none !important;
+}
+}
+$endif$
+
 .toc-content {
   padding-left: 30px;
   padding-right: 40px;
