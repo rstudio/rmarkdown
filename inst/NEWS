@@ -27,6 +27,8 @@ rmarkdown 0.9.7 (unreleased)
 * Default highlighting engine for `html_document` now highlights bash, c++,
   css, ini, javascript, perl, python, r, ruby, scala, and xml
 
+* Added `print` sub-option to `toc_float` to control whether the table of contents appears when user prints out the HTML page.
+
 
 rmarkdown 0.9.6
 --------------------------------------------------------------------------------

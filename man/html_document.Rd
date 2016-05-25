@@ -160,11 +160,12 @@ and Citations} article in the online documentation.
  control the behavior of the floating table of contents. Options include:
 
  \itemize{ \item{\code{collapsed} (defaults to \code{TRUE}) controls whether
- the table of contents appers with only the top-level (H2) headers. When
+ the table of contents appears with only the top-level (H2) headers. When
  collapsed the table of contents is automatically expanded inline when
  necessary.} \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls
  whether page scrolls are animated when table of contents items are navigated
- to via mouse clicks.} }
+ to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
+ whether the table of contents appears when user prints out the HTML page.}}
 }
 
 \section{Tabbed Sections}{
