@@ -25,7 +25,7 @@ rmarkdown 0.9.7 (unreleased)
   when pandoc >= 1.17 (pandoc hanging bug was fixed in this version)
 
 * Default highlighting engine for `html_document` now highlights bash, c++,
-  css, ini, javascript, perl, python, r, ruby, scala, and xml
+  css, ini, javascript, perl, python, r, ruby, scala, stan and xml
 
 * Added `print` sub-option to `toc_float` to control whether the table of contents appears when user prints out the HTML page.
 
