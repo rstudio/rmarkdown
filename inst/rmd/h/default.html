@@ -281,7 +281,8 @@ $endif$
 }
 }
 
-$if(toc_print_hide)$
+$if(toc_print)$
+$else$
 @media print {
 #$idprefix$TOC {
   display: none !important;
