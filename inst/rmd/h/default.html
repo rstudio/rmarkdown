@@ -112,6 +112,11 @@ $if(source_embed)$
   display: none;
 }
 $endif$
+$if(proj_embed)$
+#proj-zip {
+  display: none;
+}
+$endif$
 </style>
 $endif$
 
@@ -214,14 +219,22 @@ $$(document).ready(function () {
 <!-- code folding -->
 $if(code_menu)$
 <script src="$navigationjs$/codefolding.js"></script>
-$if(source_embed)$
+$if(filesaver)$
 <script src="$navigationjs$/FileSaver.min.js"></script>
+$endif$
+$if(source_embed)$
 <script src="$navigationjs$/sourceembed.js"></script>
+$endif$
+$if(proj_embed)$
+<script src="$navigationjs$/projembed.js"></script>
 $endif$
 <script>
 $$(document).ready(function () {
 $if(source_embed)$
   window.initializeSourceEmbed("$source_embed$");
+$endif$
+$if(proj_embed)$
+  window.initializeProjEmbed("$proj_embed$");
 $endif$
 $if(code_folding)$
   window.initializeCodeFolding("$code_folding$" === "show");
@@ -377,6 +390,9 @@ $endif$
 $endif$
 $if(source_embed)$
 <li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+$endif$
+$if(proj_embed)$
+<li><a id="proj-download-zip" href="#">Download Project Zip</a></li>
 $endif$
 </ul>
 </div>

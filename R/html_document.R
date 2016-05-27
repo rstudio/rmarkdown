@@ -26,6 +26,9 @@
 #'  chunks by default.
 #'@param code_download Embed the Rmd source code within the document and provide
 #'  a link that can be used by readers to download the code.
+#'@param proj_download A path to a project directory.  If provided, will embed
+#'  a zipped file of the directory within the document and provide a link to
+#'  download
 #'@param smart Produce typographically correct output, converting straight
 #'  quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
 #'  ellipses.
@@ -194,6 +197,7 @@ html_document <- function(toc = FALSE,
                           dev = 'png',
                           code_folding = c("none", "show", "hide"),
                           code_download = FALSE,
+                          proj_download = NULL,
                           smart = TRUE,
                           self_contained = TRUE,
                           theme = "default",
@@ -279,6 +283,8 @@ html_document <- function(toc = FALSE,
   # capture the source code if requested
   source_code <- NULL
   source_file <- NULL
+  proj_zip_file <- NULL
+  proj_zip <- NULL
   pre_knit <- function(input, ...) {
     if (code_download) {
       source_file <<- basename(input)
@@ -286,6 +292,16 @@ html_document <- function(toc = FALSE,
         '<div id="rmd-source-code">',
         base64enc::base64encode(input),
         '</div>')
+    }
+    if (!is.null(proj_download)) {
+      proj_zip_file <- file.path(tempdir(), paste0(basename(proj_download), ".zip"))
+      zip(zipfile = proj_zip_file, flags = "-r9Xq", files = list.files(proj_download, recursive = TRUE, no.. = TRUE))
+      proj_zip <<- paste0(
+        '<div id="proj-zip">',
+        base64enc::base64encode(readBin(proj_zip_file, "raw",
+                                        n = file.info(proj_zip_file)$size)),
+        '</div>')
+      proj_zip_file <<- basename(proj_zip_file)
     }
   }
 
@@ -379,7 +395,10 @@ html_document <- function(toc = FALSE,
       code_menu <- TRUE
     }
 
-    # source_embed
+    # source_embed and proj_embed
+    if (code_download | !is.null(proj_download)) {
+      args <- c(args, pandoc_variable_arg("filesaver", "TRUE"))
+    }
     if (code_download) {
       if (is.null(theme))
         stop("You must use a theme when specifying the 'code_download' option")
@@ -387,6 +406,15 @@ html_document <- function(toc = FALSE,
       sourceCodeFile <- tempfile(fileext = ".html")
       writeLines(source_code, sourceCodeFile)
       args <- c(args, pandoc_include_args(after_body = sourceCodeFile))
+      code_menu <- TRUE
+    }
+    if (!is.null(proj_download)) {
+      if (is.null(theme))
+        stop("You must use a theme when specifying the 'proj_download' option")
+      args <- c(args, pandoc_variable_arg("proj_embed", proj_zip_file))
+      ProjZipURIFile <- tempfile(fileext = ".html")
+      writeLines(proj_zip, ProjZipURIFile)
+      args <- c(args, pandoc_include_args(after_body = ProjZipURIFile))
       code_menu <- TRUE
     }
 

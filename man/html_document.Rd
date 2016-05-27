@@ -8,11 +8,11 @@ html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   number_sections = FALSE, fig_width = 7, fig_height = 5,
   fig_retina = 2, fig_caption = TRUE, dev = "png",
   code_folding = c("none", "show", "hide"), code_download = FALSE,
-  smart = TRUE, self_contained = TRUE, theme = "default",
-  highlight = "default", mathjax = "default", template = "default",
-  extra_dependencies = NULL, css = NULL, includes = NULL,
-  keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
-  pandoc_args = NULL, ...)
+  proj_download = NULL, smart = TRUE, self_contained = TRUE,
+  theme = "default", highlight = "default", mathjax = "default",
+  template = "default", extra_dependencies = NULL, css = NULL,
+  includes = NULL, keep_md = FALSE, lib_dir = NULL,
+  md_extensions = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -49,6 +49,10 @@ chunks by default.}
 
 \item{code_download}{Embed the Rmd source code within the document and provide
 a link that can be used by readers to download the code.}
+
+\item{proj_download}{A path to a project directory.  If provided, will embed
+a zipped file of the directory within the document and provide a link to
+download}
 
 \item{smart}{Produce typographically correct output, converting straight
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
