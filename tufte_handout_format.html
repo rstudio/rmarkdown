@@ -479,15 +479,24 @@ div.tocify {
 </div>
 <p>If you are not using RStudio then you can use the <code>rmarkdown::draft</code> function as follows:</p>
 <pre class="r"><code>library(rmarkdown)
-draft(&quot;my_handout.Rmd&quot;, template = &quot;tufte_handout&quot;, package = &quot;tufte&quot;)</code></pre>
-<p>The newly created document will have an output type of <code>tufte::tufte_handout</code> as shown here:</p>
+draft(&quot;my_handout.Rmd&quot;, template = &quot;tufte_html&quot;, package = &quot;tufte&quot;)</code></pre>
+<p>The newly created document will include the various HTML and LaTeX based tufte handout formats as shown here:</p>
 <pre><code>---
 title: &quot;Tufte Handout&quot;
-author: &quot;John Smith&quot;
-date: &quot;August 13th, 2014&quot;
-output: tufte::tufte_handout
+subtitle: &quot;An implementation in R Markdown&quot;
+author: &quot;JJ Allaire and Yihui Xie&quot;
+date: &quot;2016-05-28&quot;
+output:
+  tufte::tufte_html: default
+  tufte::tufte_handout:
+    citation_package: natbib
+    latex_engine: xelatex
+  tufte::tufte_book:
+    citation_package: natbib
+    latex_engine: xelatex
+bibliography: skeleton.bib
+link-citations: yes
 ---</code></pre>
-<p>Note that because this format is based on a LaTeX template you can use raw LaTeX and even define LaTeX macros within the document. See the documentation on <a href="authoring_pandoc_markdown.html#raw-tex">Raw TeX</a> for details.</p>
 </div>
 </div>
 <div id="figure-options" class="section level2">
