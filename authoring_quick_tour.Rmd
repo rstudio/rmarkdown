@@ -6,6 +6,12 @@ output:
     toc_depth: 3
 ---
 
+```{css}
+img {
+  margin-bottom: 15px;
+}
+```
+
 ### Overview
 
 ![](images/RMarkdownFlow.png)
