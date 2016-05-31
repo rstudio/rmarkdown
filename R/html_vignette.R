@@ -20,7 +20,8 @@
 #' @inheritParams html_document
 #' @param ... Additional arguments passed to \code{\link{html_document}}
 #' @param readme Use this vignette as the package README.md file (i.e. render
-#'   it as README.md to the package root)
+#'   it as README.md to the package root). Note that if there are image files
+#'   within your vignette you should be sure to add README_files to .Rbuildignore
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @export
 html_vignette <- function(fig_width = 3,

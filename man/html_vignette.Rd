@@ -17,7 +17,8 @@ html_vignette(fig_width = 3, fig_height = 3, dev = "png", css = NULL,
 \item{css}{One or more css files to include}
 
 \item{readme}{Use this vignette as the package README.md file (i.e. render
-it as README.md to the package root)}
+it as README.md to the package root). Note that if there are image files
+within your vignette you should be sure to add README_files to .Rbuildignore}
 
 \item{...}{Additional arguments passed to \code{\link{html_document}}}
 }
