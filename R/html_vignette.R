@@ -19,12 +19,15 @@
 #'
 #' @inheritParams html_document
 #' @param ... Additional arguments passed to \code{\link{html_document}}
+#' @param readme Use this vignette as the package README.md file (i.e. render
+#'   it as README.md to the package root)
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @export
 html_vignette <- function(fig_width = 3,
                           fig_height = 3,
                           dev = 'png',
                           css = NULL,
+                          readme = FALSE,
                           ...) {
 
   if (is.null(css)) {
@@ -32,12 +35,26 @@ html_vignette <- function(fig_width = 3,
       "vignette.css", package = "rmarkdown")
   }
 
-  html_document(fig_width = fig_width,
-                fig_height = fig_height,
-                dev = dev,
-                fig_retina = NULL,
-                css = css,
-                theme = NULL,
-                highlight = "pygments",
-                ...)
+  pre_knit <- function(input, ...) {
+    if (readme && !is.na(Sys.getenv("NOT_CRAN", unset = NA))) {
+      rmarkdown::render(input,
+                        output_format = "github_document",
+                        output_file = "README.md",
+                        output_dir = dirname(dirname(input)))
+    }
+  }
+
+  output_format(
+    knitr = NULL,
+    pandoc = NULL,
+    pre_knit = pre_knit,
+    base_format = html_document(fig_width = fig_width,
+                                fig_height = fig_height,
+                                dev = dev,
+                                fig_retina = NULL,
+                                css = css,
+                                theme = NULL,
+                                highlight = "pygments",
+                                ...)
+  )
 }
