@@ -36,7 +36,7 @@ html_vignette <- function(fig_width = 3,
   }
 
   pre_knit <- function(input, ...) {
-    if (readme && !is.na(Sys.getenv("NOT_CRAN", unset = NA))) {
+    if (readme) {
       rmarkdown::render(input,
                         output_format = "github_document",
                         output_file = "README.md",
