@@ -5,7 +5,7 @@
 \title{Convert to an HTML vignette.}
 \usage{
 html_vignette(fig_width = 3, fig_height = 3, dev = "png", css = NULL,
-  ...)
+  readme = FALSE, ...)
 }
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}
@@ -15,6 +15,10 @@ html_vignette(fig_width = 3, fig_height = 3, dev = "png", css = NULL,
 \item{dev}{Graphics device to use for figure output (defaults to png)}
 
 \item{css}{One or more css files to include}
+
+\item{readme}{Use this vignette as the package README.md file (i.e. render
+it as README.md to the package root). Note that if there are image files
+within your vignette you should be sure to add README_files to .Rbuildignore}
 
 \item{...}{Additional arguments passed to \code{\link{html_document}}}
 }
