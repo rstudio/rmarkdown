@@ -39,6 +39,7 @@ html_vignette <- function(fig_width = 3,
     if (readme) {
       rmarkdown::render(input,
                         output_format = "github_document",
+                        output_options = list(html_preview = FALSE),
                         output_file = "README.md",
                         output_dir = dirname(dirname(input)))
     }
