@@ -434,6 +434,11 @@ render <- function(input,
 
     convert <- function(output, citeproc = FALSE) {
 
+      # ensure we expand paths (for Windows where leading `~/` does
+      # not get expanded by pandoc)
+      utf8_input <- path.expand(utf8_input)
+      output     <- path.expand(output)
+
       # if we don't detect any invalid shell characters in the
       # target path, then just call pandoc directly
       if (!grepl(.shell_chars_regex, output) && !grepl(.shell_chars_regex, utf8_input)) {
