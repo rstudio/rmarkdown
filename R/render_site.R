@@ -195,7 +195,8 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
                           output_options = list(lib_dir = "site_libs",
                                                 self_contained = FALSE),
                           envir = envir,
-                          quiet = quiet)
+                          quiet = quiet,
+                          encoding = encoding)
       )
 
       # add to global list of outputs

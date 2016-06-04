@@ -185,7 +185,8 @@ render <- function(input,
   if (!is_output_format(output_format)) {
     output_format <- output_format_from_yaml_front_matter(input_lines,
                                                           output_options,
-                                                          output_format)
+                                                          output_format,
+                                                          encoding = encoding)
     output_format <- create_output_format(output_format$name,
                                           output_format$options)
   }
