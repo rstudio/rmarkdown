@@ -10,7 +10,7 @@ html_notebook(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   smart = TRUE, theme = "default", highlight = "textmate",
   mathjax = "default", extra_dependencies = NULL, css = NULL,
   includes = NULL, md_extensions = NULL, pandoc_args = NULL,
-  output_source = NULL, self_contained = TRUE, proj_download = NULL, ...)
+  output_source = NULL, self_contained = TRUE, code_download = TRUE, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -85,9 +85,13 @@ dependencies. Defaults to \code{TRUE}. In notebooks, setting this to
 \code{FALSE} is not recommended, since the setting does not apply to
 embedded notebook output such as plots and HTML widgets.}
 
-\item{proj_download}{A path to a project directory.  If provided, will embed
-a zipped file of the directory within the document and provide a link to
-download}
+\item{code_download}{Embed the Rmd source code within the document and provide
+a link that can be used by readers to download the code.  Alternatively,
+a list may be provided containing \code{include_resources}, which if TRUE
+will embed the Rmd source as well as supporting files a zip file. Supporting
+files are auto-detected but additional resources may be added under
+\code{resource_files} in the YAML header. See also
+\code{\link{source_download_link}}.}
 
 \item{...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}

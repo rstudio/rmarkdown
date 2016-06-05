@@ -362,9 +362,17 @@ discover_rmd_resources <- function(rmd_file, encoding,
                             else
                               "html_document"
 
+  if  (isTRUE(output_format$options$code_download$include_resources)) {
+    code_download_override <- list(include_resources = FALSE)
+  } else {
+    code_download_override <- output_format$options$code_download
+  }
+
   html_file <- render(input = md_file, output_file = html_file,
                       output_format = override_output_format,
-                      output_options = list(self_contained = FALSE),
+                      output_options = list(
+                        self_contained = FALSE,
+                        code_download = code_download_override),
                       quiet = TRUE,
                       encoding = "UTF-8")
 
@@ -472,3 +480,39 @@ is_web_file <- function(filename) {
     "wav")
 }
 
+get_common_dir <- function(paths, delim = .Platform$file.sep) {
+  path_chunks <- strsplit(paths, delim)
+
+  i <- 1
+  repeat {
+    current_chunk <- sapply(path_chunks, function(x) x[i])
+    if(any(current_chunk != current_chunk[1])) break
+    i <- i + 1
+  }
+list(parent_dir = paste(path_chunks[[1]][seq_len(i - 1)], collapse = delim),
+     file_paths = sapply(path_chunks,
+                          function(z) paste(z[i:length(z)], collapse = delim)))
+
+}
+
+
+
+#' Insert a link to download source code in an R Markdown file
+#'
+#' When using the \code{code_download} option in \code{\link{html_document}}, you
+#' may use think funcion to insert a link in the document text to download
+#' the source code or data.  This is useful when not using a theme, which
+#' automatically places this link in the page menu
+#'
+#' @param text text to display in the link
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   To download the source code and data for this
+#'   document, `r source_download_link("click here")`.
+#' }
+source_download_link <- function(text = "Download Source") {
+  paste0('<a class="rmd-download-source" href="#">', text, '</a>')
+}

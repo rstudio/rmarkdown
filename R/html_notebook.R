@@ -37,7 +37,7 @@ html_notebook <- function(toc = FALSE,
                           pandoc_args = NULL,
                           output_source = NULL,
                           self_contained = TRUE,
-                          proj_download = NULL,
+                          code_download = TRUE,
                           ...)
 {
   # some global state that is captured in pre_knit
@@ -171,8 +171,7 @@ html_notebook <- function(toc = FALSE,
                                self_contained = self_contained,
                                # options forced for notebooks
                                dev = "png",
-                               code_download = TRUE,
-                               proj_download = proj_download,
+                               code_download = code_download,
                                keep_md = FALSE,
                                template = "default",
                                lib_dir = NULL,
