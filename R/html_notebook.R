@@ -37,7 +37,6 @@ html_notebook <- function(toc = FALSE,
                           pandoc_args = NULL,
                           output_source = NULL,
                           self_contained = TRUE,
-                          code_download = TRUE,
                           ...)
 {
   # some global state that is captured in pre_knit
@@ -171,10 +170,10 @@ html_notebook <- function(toc = FALSE,
                                self_contained = self_contained,
                                # options forced for notebooks
                                dev = "png",
-                               code_download = code_download,
                                keep_md = FALSE,
                                template = "default",
                                lib_dir = NULL,
+                               code_download = TRUE,
                                ...)
   rmarkdown::output_format(
     knitr = html_notebook_knitr_options(),
