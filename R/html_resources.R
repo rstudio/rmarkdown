@@ -363,7 +363,7 @@ discover_rmd_resources <- function(rmd_file, encoding,
                               "html_document"
 
   if  (isTRUE(output_format$options$code_download$include_resources)) {
-    code_download_override <- list(include_resources = FALSE)
+    code_download_override <- TRUE
   } else {
     code_download_override <- output_format$options$code_download
   }
