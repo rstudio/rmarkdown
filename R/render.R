@@ -459,9 +459,7 @@ render <- function(input,
 
       # render to a path in the current working directory
       # (avoid passing invalid characters to shell)
-      pandoc_output_tmp <- basename(tempfile("pandoc", fileext = ext))
-      while (file.exists(pandoc_output_tmp))
-        pandoc_output_tmp <- basename(tempfile("pandoc", fileext = ext))
+      pandoc_output_tmp <- basename(tempfile("pandoc", tmpdir = getwd(), fileext = ext))
 
       # clean up temporary file on exit
       on.exit({
@@ -475,14 +473,18 @@ render <- function(input,
         citeproc, output_format$pandoc$args, !quiet
       )
 
+      # construct output path (when passed only a file name to '--output',
+      # pandoc seems to render in the same directory as the input file)
+      pandoc_output_tmp_path <- file.path(dirname(utf8_input), pandoc_output_tmp)
+
       # rename output file to desired location
-      renamed <- suppressWarnings(file.rename(pandoc_output_tmp, output))
+      renamed <- suppressWarnings(file.rename(pandoc_output_tmp_path, output))
 
       # rename can fail if the temporary directory and output path
       # lie on different volumes; in such a case attempt a file copy
       # see: https://github.com/rstudio/rmarkdown/issues/705
       if (!renamed) {
-        copied <- file.copy(pandoc_output_tmp, output, overwrite = TRUE)
+        copied <- file.copy(pandoc_output_tmp_path, output, overwrite = TRUE)
         if (!copied) {
           stop("failed to copy rendered pandoc artefact to '", output, "'")
         }
