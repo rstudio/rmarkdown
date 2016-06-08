@@ -17,6 +17,7 @@ output:
 * [Get verbatim R chunks into R Markdown](articles_verbatim.html)
 * [Verbatim Chunks in R Markdown](articles_verbatim2.html) (Alternate method)
 * [Embedding RData files in Rmarkdown files for more reproducible analyses](articles_rdata.html)
+* [knitr code chunk documentation](http://yihui.name/knitr/options/)
 * [The knitr showcase](http://yihui.name/knitr/demo/showcase/) (Examples and links)
 
 ### Output Formats
