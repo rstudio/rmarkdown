@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>R Markdown Notebooks</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 10px;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R Markdown v2</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Authoring
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">R Markdown</li>
+    <li>
+      <a href="authoring_quick_tour.html">Quick Tour</a>
+    </li>
+    <li>
+      <a href="authoring_basics.html">Markdown Basics</a>
+    </li>
+    <li>
+      <a href="authoring_pandoc_markdown.html">Pandoc Markdown</a>
+    </li>
+    <li>
+      <a href="authoring_rcodechunks.html">R Code Chunks</a>
+    </li>
+    <li>
+      <a href="authoring_bibliographies_and_citations.html">Bibliographies &amp; Citations</a>
+    </li>
+    <li>
+      <a href="authoring_migrating_from_v1.html">Migrating from v1</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf">Cheat Sheet [PDF]</a>
+    </li>
+    <li>
+      <a href="http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">Reference Guide [PDF]</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Websites</li>
+    <li>
+      <a href="rmarkdown_websites.html">R Markdown Websites</a>
+    </li>
+    <li>
+      <a href="rmarkdown_site_generators.html">Custom Site Generators</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Shiny</li>
+    <li>
+      <a href="authoring_shiny.html">Interactive Documents</a>
+    </li>
+    <li>
+      <a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a>
+    </li>
+    <li>
+      <a href="authoring_shiny_widgets.html">Creating Shiny Widgets</a>
+    </li>
+    <li>
+      <a href="authoring_shiny_advanced.html">Advanced Topics</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Formats
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Documents</li>
+    <li>
+      <a href="html_document_format.html">HTML</a>
+    </li>
+    <li>
+      <a href="pdf_document_format.html">PDF</a>
+    </li>
+    <li>
+      <a href="word_document_format.html">Word</a>
+    </li>
+    <li>
+      <a href="odt_document_format.html">ODT</a>
+    </li>
+    <li>
+      <a href="rtf_document_format.html">RTF</a>
+    </li>
+    <li>
+      <a href="markdown_document_format.html">Markdown</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Presentations</li>
+    <li>
+      <a href="ioslides_presentation_format.html">ioslides</a>
+    </li>
+    <li>
+      <a href="revealjs_presentation_format.html">reveal.js</a>
+    </li>
+    <li>
+      <a href="slidy_presentation_format.html">Slidy</a>
+    </li>
+    <li>
+      <a href="beamer_presentation_format.html">Beamer</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Other</li>
+    <li>
+      <a href="tufte_handout_format.html">Tufte Handout</a>
+    </li>
+    <li>
+      <a href="package_vignette_format.html">Package Vignette</a>
+    </li>
+    <li>
+      <a href="github_document_format.html">GitHub Document</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Developer
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="developer_html_widgets.html">HTML Widgets</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="developer_parameterized_reports.html">Parameterized Reports</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="developer_document_templates.html">Document Templates</a>
+    </li>
+    <li>
+      <a href="developer_custom_formats.html">Creating New Formats</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="https://github.com/rstudio/rmarkdown">R Markdown on GitHub</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="articles.html">Articles</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/rstudio/rmarkdown">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">R Markdown Notebooks</h1>
+
+</div>
+
+
+<p><strong>NOTE</strong>: R Markdown Notebooks are new feature of RStudio, and are currently available only in the the <a href="https://www.rstudio.com/products/rstudio/download/preview/">RStudio Preview Release</a>. If you want to try out the features described below please install the preview release.</p>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>An R Markdown Notebook (or simply R Notebook) is an R Markdown document with chunks that can be executed independently and interactively, with output visible immediately beneath the input.</p>
+<div class="figure">
+<img src="images/notebook-demo.png" />
+
+</div>
+<p>R Notebooks are a method of <a href="https://en.wikipedia.org/wiki/Literate_programming">literate programming</a> that allows for direct interaction with R while producing a reproducible document with publication-quality output.</p>
+<p>Any R Markdown document can be used as a notebook, and all R Notebooks can be rendered to other R Markdown document types. A notebook can therefore be thought of as a special execution mode for R Markdown documents. The immediacy of notebook mode makes it a good choice while authoring the R Markdown document and iterating on code; when you are ready to publish the document, you can share the notebook directly, or render it to a publication format with the <strong>Knit</strong> command.</p>
+</div>
+<div id="using-notebooks" class="section level2">
+<h2>Using Notebooks</h2>
+<div id="creating-a-notebook" class="section level3">
+<h3>Creating a Notebook</h3>
+<p>You can create a new notebook in RStudio with the menu command <em>File -&gt; New File -&gt; R Notebook</em>, or by using the <code>html_notebook</code> output type in your document’s YAML header.</p>
+<pre class="yaml"><code>---
+title: &quot;My Notebook&quot;
+output: html_notebook
+---</code></pre>
+<p>By default, RStudio enables inline output (notebook mode) on all R Markdown documents, so you can interact with any R Markdown document as though it were a notebook. If you have a document with which you prefer to use the traditional console method of interaction, you can disable notebook mode by clicking the gear in the editor toolbar and choosing <em>Chunk Output in Console</em>.</p>
+<div class="figure">
+<img src="images/notebook-console.png" class="notebook-screenshot" />
+
+</div>
+<p>If you prefer to use the console by default for <em>all</em> your R Markdown documents (restoring the behavior in previous versions of RStudio), you can make <em>Chunk Output in Console</em> the default: <em>Tools -&gt; Options -&gt; R Markdown -&gt; Show output inline for all R Markdown documents</em>.</p>
+</div>
+<div id="inserting-chunks" class="section level3">
+<h3>Inserting Chunks</h3>
+<p>Notebook chunks can be inserted quickly using the keyboard shortcut <strong>Ctrl + Alt + I</strong> (OS X: <strong>Cmd + Option + I</strong>), or via the Add Chunk <img src="images/notebook-insert-chunk.png" /> command in the editor toolbar.</p>
+<p>Because all of a chunk’s output appears beneath the chunk (not alongside the statement which emitted the output, as it does in rendered R Markdown output), it’s often helpful to split chunks that produce multiple outputs into two or more chunks which each produce only one output. To do this, select the code to split into a new chunk:</p>
+<div class="figure">
+<img src="images/notebook-split-before.png" class="notebook-screenshot" />
+
+</div>
+<p>Then, press <strong>Ctrl + Alt + I</strong> (OS X: <strong>Cmd + Option + I</strong>):</p>
+<div class="figure">
+<img src="images/notebook-split-after.png" class="notebook-screenshot" />
+
+</div>
+</div>
+<div id="executing-code" class="section level3">
+<h3>Executing Code</h3>
+<p>Code in the notebook is executed with the same gestures you’d use to execute code in an R Markdown document:</p>
+<ol style="list-style-type: decimal">
+<li><p>Use the <img src="images/notebook-run-chunk.png" /> Run Chunk command, or <strong>Ctrl + Shift * Enter</strong> (OS X: <strong>Cmd + Shift + Enter</strong>) to run the current chunk.</p></li>
+<li><p>Press <strong>Ctrl + Enter</strong> (OS X: <strong>Cmd + Enter</strong>) to run just the current statement. Running a single statement is much like running an entire chunk consisting only of that statement (see notes below on the chunk execution environment).</p></li>
+<li><p>Use the <strong>Run All</strong> and <strong>Run Previous</strong> commands to run a batch of chunks.</p></li>
+</ol>
+<p>The primary difference is that when executing chunks in an R Markdown document, all the code is sent to the console at once, but in a notebook, only one line at a time is sent. This allows execution to stop if a line raises an error (see notes below on handling errors).</p>
+<p>There’s also a new <strong>Restart R and Run All Chunks</strong> command (available in the Run menu on the editor toolbar), which gives you a fresh R session prior to running all the chunks. This behavior is similar to the Knit command, which in RStudio occurs in a separate R session.</p>
+<div id="execution-queue" class="section level4">
+<h4>Execution Queue</h4>
+<p>When you execute code in a notebook, an indicator will appear in the gutter to show you execution progress.</p>
+<div class="figure">
+<img src="images/notebook-longrunning.png" />
+
+</div>
+<p>Lines of code which have been sent to R are marked with dark green; lines which have not yet been sent to R are marked with light green.</p>
+<p>If at least one chunk is waiting to be executed, you’ll see a progress meter appear in the editor’s status bar indicating the number of chunks remaining to be executed. You can click on this meter at any time to jump to the currently executing chunk.</p>
+<p>When a chunk is waiting to execute, the Run button in its toolbar will change to a <img src="images/notebook-run-chunk-pending.png" /> Queued icon. If you don’t want the chunk to run, you can click on the Queued icon to remove it from the execution queue.</p>
+</div>
+<div id="execution-environment" class="section level4">
+<h4>Execution Environment</h4>
+<p>In general, when you execute code in a notebook chunk, it will do exactly the same thing as it would if that same code were typed into the console. There are however a few differences:</p>
+<p><strong>Output</strong>: The most obvious difference is that most forms of output produced from a notebook chunk are shown in the chunk output rather than e.g. the Viewer or Plots pane. Console output (including warnings and messages) appears both at the console <em>and</em> in the chunk output.</p>
+<p><strong>Working directory</strong>: The current working directory inside a notebook chunk is always the directory containing the notebook .Rmd file. This makes it easier to use relative paths inside notebook chunks, and also matches the behavior when knitting, making it easier to write code that works identically both interactively and in a standalone render.</p>
+<p>You’ll get a warning if you try to change the working directory inside a notebook chunk, and the directory will revert back to the notebook’s directory once the chunk is finished executing. You can suppress this warning by using the <code>warnings = FALSE</code> chunk option.</p>
+<p><strong>Warnings</strong>: Inside a notebook chunk, warnings are always displayed immediately rather than being held until the end, as in <code>options(warn = 1)</code>.</p>
+</div>
+</div>
+<div id="chunk-output" class="section level3">
+<h3>Chunk Output</h3>
+<div id="managing-output" class="section level4">
+<h4>Managing Output</h4>
+<p>When code is executed in the notebook, its output appears beneath the code chunk that produced it. You can clear an individual chunk’s output by clicking the <strong>X</strong> in the upper right corner of the output, or collapse it by clicking the chevron.</p>
+<p>It’s also possible to clear or collapse all of the output in the document at once using the <strong>Collapse All Output</strong> and <strong>Clear All Output</strong> commands; these commands are available on the gear menu in the editor toolbar.</p>
+<div class="figure">
+<img src="images/notebook-collapse-all-output.png" class="notebook-screenshot" />
+
+</div>
+<p>If you want to fully reset the state of the notebook, the command <strong>Restart R and Clear All Output</strong> will do the job.</p>
+<p>See <a href="#output-storage">Output Storage</a> below for more information on where chunk output is saved.</p>
+</div>
+<div id="previewing-output" class="section level4">
+<h4>Previewing Output</h4>
+<p>Ordinary R Markdown documents are “knit”, but notebooks are “previewed”. While the notebook preview looks similar to a rendered R Markdown document, the notebook preview does not execute any of your R code chunks; it simply shows you a rendered copy of the markdown in your document along with the most recent chunk output. This preview is generated automatically whenever you save the notebook (whether you are viewing it in RStudio or not); see the section beneath on the <em>.nb.html</em> file for details.</p>
+<p>When <code>html_notebook</code> is the topmost (default) format in your YAML header, you’ll see a <strong>Preview</strong> button in the editor toolbar. Clicking it will show you the notebook preview:</p>
+<div class="figure">
+<img src="images/notebook-preview.png" />
+
+</div>
+<p>If you have configured R Markdown previewing to use the Viewer pane (as illustrated above) then the preview will be automatically updated whenever you save your notebook.</p>
+</div>
+<div id="handling-errors" class="section level4">
+<h4>Handling Errors</h4>
+<p>When an error occurs while a notebook chunk is executing:</p>
+<div class="figure">
+<img src="images/notebook-error.png" class="notebook-screenshot" />
+
+</div>
+<ol style="list-style-type: decimal">
+<li>Execution will stop; the remaining lines of that chunk (and any chunks that have not yet been run) will not be executed.</li>
+<li>The editor will scroll to the error.</li>
+<li>The line of code that caused the error will have a red indicator in the editor’s gutter.</li>
+</ol>
+<p>If you want your notebook to keep running after an error, you can suppress the first two behaviors by specifying <code>errors = TRUE</code> in the chunk options.</p>
+</div>
+<div id="console-hiding" class="section level4">
+<h4>Console Hiding</h4>
+<p>In most cases it shouldn’t be necessary to have the console open while using the notebook, as you can see all of the console output in the notebook itself. To preserve vertical space, the console will be automatically collapsed when you open a notebook or run a chunk in the notebook.</p>
+<p>If you prefer not to have the console hidden when chunks are executed, uncheck <em>Tools -&gt; Global Options -&gt; R Markdown -&gt; Hide console automatically when executing notebook chunks</em>.</p>
+</div>
+</div>
+</div>
+<div id="saving-and-sharing" class="section level2">
+<h2>Saving and Sharing</h2>
+<div id="notebook-file" class="section level3">
+<h3>Notebook File</h3>
+<p>When a notebook .Rmd is saved, an <code>.nb.html</code> file is created alongside it. This file is a self-contained HTML file which contains both a rendered copy of the notebook with all current chunk outputs (suitable for display on a website) and a copy of the notebook .Rmd itself.</p>
+<p>You can view the <code>.nb.html</code> file in any ordinary web browser. It can also be opened in RStudio; when you open there (using e.g. <em>File -&gt; Open</em>), RStudio will do the following:</p>
+<ol style="list-style-type: decimal">
+<li>Extract the bundled .Rmd file and place it alongside the <em>.nb.html</em> file</li>
+<li>Open the .Rmd file in a new RStudio editor tab</li>
+<li>Extract the chunk outputs from the <code>.nb.html</code> file and place them appropriately in the editor</li>
+</ol>
+<p>Note that the <code>.nb.html</code> file is only created for R Markdown documents which are notebooks (i.e. at least one of their output formats is <code>html_notebook</code>). It’s possible to have an R Markdown document which includes inline chunk output but does not produce an <code>.nb.html</code> file.</p>
+</div>
+<div id="output-storage" class="section level3">
+<h3>Output Storage</h3>
+<p>The document’s chunk outputs are also stored in an internal RStudio folder beneath the project’s <code>.Rproj.user</code> folder. If you work with a notebook but don’t have a project open, the outputs are stored in the RStudio state folder in your home directory (the location of this folder varies between the <a href="https://support.rstudio.com//200534577-Resetting-RStudio-Desktop-s-State">desktop</a> and the <a href="https://support.rstudio.com//218730228-Resetting-a-user-s-state-on-RStudio-Server">server</a>).</p>
+</div>
+<div id="version-control" class="section level3">
+<h3>Version Control</h3>
+<p>One of the major advantages of R Markdown Notebooks compared to other notebook systems is that they are plain-text files and therefore work well with version control. We recommend checking in both the .Rmd and .nb.html files into version control so that both your source code and output are available to collaborators. However, you can choose to include only the .Rmd file (with a <code>.gitignore</code> that excludes the .nb.html) if you want each collaborator to work with their own private copies of the output.</p>
+</div>
+<div id="notebook-format" class="section level3">
+<h3>Notebook Format</h3>
+<p>While RStudio provides a set of integrated tools for authoring R Notebooks, the notebook file format itself is decoupled from RStudio. The <strong>rmarkdown</strong> package provides several functions that can be used to read and write R Notebooks outside of RStudio.</p>
+<p>You can find documentation for these functions and additional information on the <code>.nb.html</code> file format in the <a href="r_notebook_format.html">R Notebook HTML Format</a> article.</p>
+</div>
+</div>
+
+
+
+<!-- bizible -->
+<script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
+
+
+<!-- disqus -->
+  <div id="disqus_thread" style="margin-top: 45px;"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

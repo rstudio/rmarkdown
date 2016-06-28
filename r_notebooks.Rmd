@@ -1,0 +1,171 @@
+---
+title: "R Markdown Notebooks"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+---
+
+**NOTE**: R Markdown Notebooks are new feature of RStudio, and are currently available only in the the [RStudio Preview Release](https://www.rstudio.com/products/rstudio/download/preview/). If you want to try out the features described below please install the preview release.
+
+## Overview
+
+An R Markdown Notebook (or simply R Notebook) is an R Markdown document with chunks that can be executed independently and interactively, with output visible immediately beneath the input.
+
+![](images/notebook-demo.png)
+
+
+R Notebooks are a method of [literate programming](https://en.wikipedia.org/wiki/Literate_programming) that allows for direct interaction with R while producing a reproducible document with publication-quality output.
+
+Any R Markdown document can be used as a notebook, and all R Notebooks can be rendered to other R Markdown document types. A notebook can therefore be thought of as a special execution mode for R Markdown documents. The immediacy of notebook mode makes it a good choice while authoring the R Markdown document and iterating on code; when you are ready to publish the document, you can share the notebook directly, or render it to a publication format with the **Knit** command.
+
+## Using Notebooks
+
+
+### Creating a Notebook
+
+You can create a new notebook in RStudio with the menu command *File -&gt; New File -&gt; R Notebook*, or by using the `html_notebook` output type in your document’s YAML header.
+
+```yaml
+---
+title: "My Notebook"
+output: html_notebook
+---
+```
+
+By default, RStudio enables inline output (notebook mode) on all R Markdown documents, so you can interact with any R Markdown document as though it were a notebook. If you have a document with which you prefer to use the traditional console method of interaction, you can disable notebook mode by clicking the gear in the editor toolbar and choosing *Chunk Output in Console*.
+
+![](images/notebook-console.png){.notebook-screenshot}
+
+If you prefer to use the console by default for *all* your R Markdown documents (restoring the behavior in previous versions of RStudio), you can make *Chunk Output in Console* the default: *Tools -&gt; Options -&gt; R Markdown -&gt; Show output inline for all R Markdown documents*.
+
+### Inserting Chunks
+
+
+Notebook chunks can be inserted quickly using the keyboard shortcut **Ctrl + Alt + I** (OS X: **Cmd + Option + I**), or via the Add Chunk ![](images/notebook-insert-chunk.png) command in the editor toolbar.
+
+Because all of a chunk’s output appears beneath the chunk (not alongside the statement which emitted the output, as it does in rendered R Markdown output), it’s often helpful to split chunks that produce multiple outputs into two or more chunks which each produce only one output. To do this, select the code to split into a new chunk:
+
+![](images/notebook-split-before.png){.notebook-screenshot}
+
+Then, press **Ctrl + Alt + I** (OS X: **Cmd + Option + I**):
+
+![](images/notebook-split-after.png){.notebook-screenshot}
+
+
+### Executing Code
+
+Code in the notebook is executed with the same gestures you’d use to execute code in an R Markdown document:
+
+1.  Use the ![](images/notebook-run-chunk.png) Run Chunk command, or **Ctrl + Shift \* Enter** (OS X: **Cmd + Shift + Enter**) to run the current chunk.
+
+2.  Press **Ctrl + Enter** (OS X: **Cmd + Enter**) to run just the current statement. Running a single statement is much like running an entire chunk consisting only of that statement (see notes below on the chunk execution environment).
+
+3.  Use the **Run All** and **Run Previous** commands to run a batch of chunks.
+
+The primary difference is that when executing chunks in an R Markdown document, all the code is sent to the console at once, but in a notebook, only one line at a time is sent. This allows execution to stop if a line raises an error (see notes below on handling errors).
+
+There’s also a new **Restart R and Run All Chunks** command (available in the Run menu on the editor toolbar), which gives you a fresh R session prior to running all the chunks. This behavior is similar to the Knit command, which in RStudio occurs in a separate R session.
+
+#### Execution Queue
+
+When you execute code in a notebook, an indicator will appear in the gutter to show you execution progress.
+
+![](images/notebook-longrunning.png)
+
+Lines of code which have been sent to R are marked with dark green; lines which have not yet been sent to R are marked with light green.
+
+If at least one chunk is waiting to be executed, you’ll see a progress meter appear in the editor’s status bar indicating the number of chunks remaining to be executed. You can click on this meter at any time to jump to the currently executing chunk.
+
+When a chunk is waiting to execute, the Run button in its toolbar will change to a ![](images/notebook-run-chunk-pending.png) Queued icon. If you don’t want the chunk to run, you can click on the Queued icon to remove it from the execution queue.
+
+
+#### Execution Environment
+
+In general, when you execute code in a notebook chunk, it will do exactly the same thing as it would if that same code were typed into the console. There are however a few differences:
+
+**Output**: The most obvious difference is that most forms of output produced from a notebook chunk are shown in the chunk output rather than e.g. the Viewer or Plots pane. Console output (including warnings and messages) appears both at the console *and* in the chunk output.
+
+**Working directory**: The current working directory inside a notebook chunk is always the directory containing the notebook .Rmd file. This makes it easier to use relative paths inside notebook chunks, and also matches the behavior when knitting, making it easier to write code that
+works identically both interactively and in a standalone render.
+
+You’ll get a warning if you try to change the working directory inside a notebook chunk, and the directory will revert back to the notebook’s directory once the chunk is finished executing. You can suppress this warning by using the `warnings = FALSE` chunk option.
+
+**Warnings**: Inside a notebook chunk, warnings are always displayed immediately rather than being held until the end, as in `options(warn = 1)`.
+
+### Chunk Output
+
+#### Managing Output
+
+When code is executed in the notebook, its output appears beneath the code chunk that produced it. You can clear an individual chunk’s output by clicking the **X** in the upper right corner of the output, or collapse it by clicking the chevron.
+
+It’s also possible to clear or collapse all of the output in the document at once using the **Collapse All Output** and **Clear All Output** commands; these commands are available on the gear menu in the editor toolbar.
+
+![](images/notebook-collapse-all-output.png){.notebook-screenshot}
+
+
+If you want to fully reset the state of the notebook, the command **Restart R and Clear All Output** will do the job.
+
+See [Output Storage] below for more information on where chunk output is saved.
+
+#### Previewing Output
+
+Ordinary R Markdown documents are "knit", but notebooks are "previewed". While the notebook preview looks similar to a rendered R Markdown document, the notebook preview does not execute any of your R code chunks; it simply shows you a rendered copy of the markdown in your document along with the most recent chunk output. This preview is generated automatically whenever you save the notebook (whether you are viewing it in RStudio or not); see the section beneath on the *.nb.html* file for details.
+
+When `html_notebook` is the topmost (default) format in your YAML header, you’ll see a **Preview** button in the editor toolbar. Clicking it will show you the notebook preview:
+
+![](images/notebook-preview.png)
+
+If you have configured R Markdown previewing to use the Viewer pane (as illustrated above) then the preview will be automatically updated whenever you save your notebook.
+
+#### Handling Errors
+
+When an error occurs while a notebook chunk is executing:
+
+![](images/notebook-error.png){.notebook-screenshot}
+
+1.  Execution will stop; the remaining lines of that chunk (and any chunks that have not yet been run) will not be executed.
+2.  The editor will scroll to the error.
+3.  The line of code that caused the error will have a red indicator in the editor’s gutter.
+
+If you want your notebook to keep running after an error, you can suppress the first two behaviors by specifying `errors = TRUE` in the chunk options.
+
+
+#### Console Hiding
+
+In most cases it shouldn’t be necessary to have the console open while using the notebook, as you can see all of the console output in the notebook itself. To preserve vertical space, the console will be automatically collapsed when you open a notebook or run a chunk in the notebook.
+
+If you prefer not to have the console hidden when chunks are executed, uncheck *Tools -&gt; Global Options -&gt; R Markdown -&gt; Hide console automatically when executing notebook chunks*.
+
+
+## Saving and Sharing
+
+### Notebook File
+
+When a notebook .Rmd is saved, an `.nb.html` file is created alongside it. This file is a self-contained HTML file which contains both a rendered copy of the notebook with all current chunk outputs (suitable for display on a website) and a copy of the notebook .Rmd itself.
+
+You can view the `.nb.html` file in any ordinary web browser. It can also be opened in RStudio; when you open there (using e.g. *File -&gt; Open*), RStudio will do the following:
+
+1.  Extract the bundled .Rmd file and place it alongside the *.nb.html* file
+2.  Open the .Rmd file in a new RStudio editor tab
+3.  Extract the chunk outputs from the `.nb.html` file and place them appropriately in the editor
+
+Note that the `.nb.html` file is only created for R Markdown documents which are notebooks (i.e. at least one of their output formats is `html_notebook`). It’s possible to have an R Markdown document which includes inline chunk output but does not produce an `.nb.html` file.
+
+### Output Storage
+
+The document’s chunk outputs are also stored in an internal RStudio folder beneath the project’s `.Rproj.user` folder. If you work with a notebook but don’t have a project open, the outputs are stored in the RStudio state folder in your home directory (the location of this folder varies between the [desktop](https://support.rstudio.com//200534577-Resetting-RStudio-Desktop-s-State) and the [server](https://support.rstudio.com//218730228-Resetting-a-user-s-state-on-RStudio-Server)).
+
+
+
+### Version Control
+
+One of the major advantages of R Markdown Notebooks compared to other notebook systems is that they are plain-text files and therefore work well with version control. We recommend checking in both the .Rmd and .nb.html files into version control so that both your source code and output are available to collaborators. However, you can choose to include only the .Rmd file (with a `.gitignore` that excludes the .nb.html) if you want each collaborator to work with their own private copies of the output.
+
+### Notebook Format
+
+While RStudio provides a set of integrated tools for authoring R Notebooks, the notebook file format itself is decoupled from RStudio. The **rmarkdown** package provides several functions that can be used to read and write R Notebooks outside of RStudio.  
+
+You can find documentation for these functions and additional information on the `.nb.html` file format in the [R Notebook HTML Format](r_notebook_format.html) article. 
+
+
