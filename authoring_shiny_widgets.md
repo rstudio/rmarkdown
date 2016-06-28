@@ -48,7 +48,7 @@ This is what the widget looks like inside a running document:
 
 #### Source Code
 
-Here's the source code for the `kmeans_cluster` function. Note the use of use of `options = list(height = 500)` in the call to `shinyApp` to control the default height of the widget when rendered inside a document.
+Here's the source code for the `kmeans_cluster` function. Note the use of `options = list(height = 500)` in the call to `shinyApp` to control the default height of the widget when rendered inside a document.
 
 ```r
 kmeans_cluster <- function(dataset) { 
