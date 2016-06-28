@@ -516,6 +516,8 @@ output: html_notebook
 <p><strong>Working directory</strong>: The current working directory inside a notebook chunk is always the directory containing the notebook .Rmd file. This makes it easier to use relative paths inside notebook chunks, and also matches the behavior when knitting, making it easier to write code that works identically both interactively and in a standalone render.</p>
 <p>You’ll get a warning if you try to change the working directory inside a notebook chunk, and the directory will revert back to the notebook’s directory once the chunk is finished executing. You can suppress this warning by using the <code>warnings = FALSE</code> chunk option.</p>
 <p><strong>Warnings</strong>: Inside a notebook chunk, warnings are always displayed immediately rather than being held until the end, as in <code>options(warn = 1)</code>.</p>
+<p><strong>Plots</strong>: Plots emitted from a chunk are rendered to match the width of the editor at the time the chunk was executed. The height of the plot is determined by the <a href="https://en.wikipedia.org/wiki/Golden_ratio">golden ratio</a>. The plot’s display list is saved, too, and the plot is re-rendered to match the editor’s width when the editor is resized.</p>
+<p>You can use the <code>fig.width</code> and <code>fig.height</code> chunk options to manually specify the size of rendered plots in the notebook. Note however that doing so suppresses the generation of the display list, so plots with manually specified sizes will be resized using simple image scaling when the notebook editor is resized.</p>
 </div>
 </div>
 <div id="chunk-output" class="section level3">

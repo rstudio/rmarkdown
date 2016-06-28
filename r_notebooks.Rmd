@@ -93,6 +93,10 @@ You’ll get a warning if you try to change the working directory inside a noteb
 
 **Warnings**: Inside a notebook chunk, warnings are always displayed immediately rather than being held until the end, as in `options(warn = 1)`.
 
+**Plots**: Plots emitted from a chunk are rendered to match the width of the editor at the time the chunk was executed. The height of the plot is determined by the [golden ratio](https://en.wikipedia.org/wiki/Golden_ratio). The plot's display list is saved, too, and the plot is re-rendered to match the editor's width when the editor is resized.
+
+You can use the `fig.width` and `fig.height` chunk options to manually specify the size of rendered plots in the notebook. Note however that doing so suppresses the generation of the display list, so plots with manually specified sizes will be resized using simple image scaling when the notebook editor is resized. 
+
 ### Chunk Output
 
 #### Managing Output
