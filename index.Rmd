@@ -27,7 +27,7 @@ R Markdown is an authoring format that enables easy creation of dynamic document
 
 R Markdown documents are fully reproducible (they can be automatically regenerated whenever underlying R code or data changes).
 
-R Markdown has many available output formats including [HTML](html_document_format.html), [PDF](pdf_document_format.html), [MS Word](word_document_format.html), [Beamer](beamer_presentation_format.html), [HTML5 slides](ioslides_presentation_format.html), [Tufte handouts](tufte_handout_format.html), [books](https://bookdown.org), [dashboards](flexdashboard/), and [websites](rmarkdown_websites.html).
+R Markdown has many available output formats including [HTML](html_document_format.html), [PDF](pdf_document_format.html), [MS Word](word_document_format.html), [Beamer](beamer_presentation_format.html), [HTML5 slides](ioslides_presentation_format.html), [Tufte handouts](tufte_handout_format.html), [notebooks](r_notebooks.html), [books](https://bookdown.org), [dashboards](flexdashboard/), and [websites](rmarkdown_websites.html).
 
 </div>
 <div class="col-sm-6">

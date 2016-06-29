@@ -65,6 +65,10 @@ left:
       - text: "Beamer"
         href: beamer_presentation_format.html
       - text: "-----------------"
+      - text: "Notebooks"
+      - text: R Notebooks
+        href: r_notebooks.html
+      - text: "-----------------"
       - text: "Other"
       - text: "Tufte Handout"
         href: tufte_handout_format.html
