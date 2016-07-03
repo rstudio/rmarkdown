@@ -33,6 +33,8 @@ rmarkdown 0.9.7 (unreleased)
 * Added `readme` option to `html_vignette` which automatically creates a
   package level README.md (for GitHub) in addition to rendering the vignette.
 
+* Support for `keep_md` in `html_vignette` format.
+
 
 rmarkdown 0.9.6
 --------------------------------------------------------------------------------
