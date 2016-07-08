@@ -13,7 +13,7 @@
 #'   embedded notebook output such as plots and HTML widgets.
 #'
 #' @details For more details on the HTML file format produced by
-#'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_html_format.html}{http://rmarkdown.rstudio.com/r_notebook_html_format.html}.
+#'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_format.html}{http://rmarkdown.rstudio.com/r_notebook_format.html}.
 #'
 #' @importFrom evaluate evaluate
 #' @export
@@ -195,7 +195,7 @@ html_notebook <- function(toc = FALSE,
 #' @param encoding The document's encoding (assumend \code{"UTF-8"} by default).
 #'
 #' @details For more details on the HTML file format produced by
-#'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_html_format.html}{http://rmarkdown.rstudio.com/r_notebook_html_format.html}.
+#'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_format.html}{http://rmarkdown.rstudio.com/r_notebook_format.html}.
 #'
 #' @export
 parse_html_notebook <- function(path, encoding = "UTF-8") {

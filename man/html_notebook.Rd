@@ -93,6 +93,6 @@ Format for converting from R Markdown to an HTML notebook.
 }
 \details{
 For more details on the HTML file format produced by
- \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_html_format.html}{http://rmarkdown.rstudio.com/r_notebook_html_format.html}.
+ \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_format.html}{http://rmarkdown.rstudio.com/r_notebook_format.html}.
 }
 
