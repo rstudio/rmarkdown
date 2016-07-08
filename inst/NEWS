@@ -1,4 +1,4 @@
-rmarkdown 0.9.7 (unreleased)
+rmarkdown 1.0
 --------------------------------------------------------------------------------
 
 * `toc_float` no longer automatically sets `toc = TRUE`
