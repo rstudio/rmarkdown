@@ -286,7 +286,7 @@ latexmk <- function(file, engine) {
   if (latexmk_path == '') {
     # latexmk not found
     latexmk_emu(file, engine)
-  } else if (find_program('perl') != '') {
+  } else if (find_program('perl') != '' && latexmk_installed(latexmk_path)) {
     system2_quiet(latexmk_path, c(
       '-pdf -latexoption=-halt-on-error -interaction=batchmode',
       paste0('-pdflatex=', shQuote(engine)), shQuote(file)
@@ -382,6 +382,16 @@ show_latex_error <- function(file) {
     message(paste(m, collapse = '\n'))
     stop(e, ' See ', logfile, ' for more info.', call. = FALSE)
   }
+}
+
+# check if latexmk was correctly installed; see more info at
+# https://github.com/rstudio/bookdown/issues/121
+latexmk_installed <- function(latexmk_path) {
+  if (system2_quiet(latexmk_path, '-v') == 0) return(TRUE)
+  warning('The LaTeX package latexmk was not correctly installed.', call. = FALSE)
+  if (!is_windows()) return(FALSE)
+  shell('latexmk -v')  # hopefully MiKTeX can fix it automatically
+  system2_quiet(latexmk_path, '-v') == 0
 }
 
 # check the version of latexmk
