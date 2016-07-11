@@ -51,7 +51,7 @@ Supported styles include "default", "tango", "pygments", "kate", "monochrome", "
 
 ## Style Reference
 
-You can also specify a document to be used as as a style reference in producing a docx file. For best results, the reference docx should be a modified version of a docx file produced using rmarkdown. Pass "default" to use the default styles. You can do this with the `reference_docx` option:
+You can also specify a document to be used as as a style reference in producing a docx file. This will allow you to customize things such as margins and other formatting characteristics. For best results, the reference docx should be a modified version of a docx file produced using rmarkdown. Pass "default" to use the default styles. You can do this with the `reference_docx` option:
 
     ---
     title: "Habits"
@@ -59,6 +59,8 @@ You can also specify a document to be used as as a style reference in producing 
       word_document:
         reference_docx: mystyles.docx
     ---
+    
+For more on this, see the article [here](http://rmarkdown.rstudio.com/articles_docx.html).
 
 ## Keeping Markdown
 
