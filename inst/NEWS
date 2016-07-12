@@ -35,6 +35,8 @@ rmarkdown 1.0
 
 * Support for `keep_md` in `html_vignette` format.
 
+* Try to install the latexmk package automatically on Windows if the executable
+  latexmk.exe exists.
 
 rmarkdown 0.9.6
 --------------------------------------------------------------------------------
