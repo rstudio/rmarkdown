@@ -25,7 +25,12 @@
 #'  individually or document-wide). Specify \code{"show"} to show all R code
 #'  chunks by default.
 #'@param code_download Embed the Rmd source code within the document and provide
-#'  a link that can be used by readers to download the code.
+#'  a link that can be used by readers to download the code.  Alternatively,
+#'  a list may be provided containing \code{include_resources}, which if TRUE
+#'  will embed the Rmd source as well as supporting files a zip file. Supporting
+#'  files are auto-detected but additional resources may be added under
+#'  \code{resource_files} in the YAML header. See also
+#'  \code{\link{source_download_link}}.
 #'@param smart Produce typographically correct output, converting straight
 #'  quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
 #'  ellipses.
@@ -193,7 +198,7 @@ html_document <- function(toc = FALSE,
                           fig_caption = TRUE,
                           dev = 'png',
                           code_folding = c("none", "show", "hide"),
-                          code_download = FALSE,
+                          code_download = NULL,
                           smart = TRUE,
                           self_contained = TRUE,
                           theme = "default",
@@ -279,13 +284,40 @@ html_document <- function(toc = FALSE,
   # capture the source code if requested
   source_code <- NULL
   source_file <- NULL
+  source_type <- NULL
+  source_link_text <- NULL
   pre_knit <- function(input, ...) {
-    if (code_download) {
+    if (isTRUE(code_download) ||
+        identical(code_download$include_resources, FALSE)) {
+      source_type <<- "text/x-r-markdown"
+      source_link_text <<- "Download Rmd"
       source_file <<- basename(input)
       source_code <<- paste0(
         '<div id="rmd-source-code">',
         base64enc::base64encode(input),
         '</div>')
+    } else if(isTRUE(code_download$include_resources)) {
+      source_type <<- "application/zip"
+      source_link_text <<- "Download Zip"
+      temp_proj_dir <- tempfile(pattern= "dir")
+      dir.create(temp_proj_dir)
+      proj_zip_file <- tempfile(pattern="zipfile", fileext=".zip")
+      resources <- find_external_resources(input)
+      resources <- rbind(resources,
+                        data.frame(path=input, explicit=FALSE, web=FALSE))
+      resources <- normalize_path(unique(resources$path[!resources$web]))
+      resources <- get_common_dir(resources)
+      file.copy(input, temp_proj_dir)
+      cwd <- getwd()
+      setwd(resources$parent_dir)
+      zip(zipfile = proj_zip_file, flags = "-r9Xq",
+          files = resources$file_paths)
+      setwd(cwd)
+      source_code <<- paste0(
+        '<div id="rmd-source-code">',
+        base64enc::base64encode(proj_zip_file),
+        '</div>')
+      source_file <<- paste0(basename(tools::file_path_sans_ext(input)), ".zip")
     }
   }
 
@@ -380,10 +412,13 @@ html_document <- function(toc = FALSE,
     }
 
     # source_embed
-    if (code_download) {
+    if (!is.null(code_download) & !identical(code_download, FALSE)) {
+      args <- c(args, pandoc_variable_arg("filesaver", "TRUE"))
       if (is.null(theme))
-        stop("You must use a theme when specifying the 'code_download' option")
-      args <- c(args, pandoc_variable_arg("source_embed", source_file))
+        warning("Use a theme when specifying the 'code_download' option or use source_download_link()")
+      args <- c(args, pandoc_variable_arg("source_embed", source_file),
+                pandoc_variable_arg("source_type", source_type),
+                pandoc_variable_arg("source_link_text", source_link_text))
       sourceCodeFile <- tempfile(fileext = ".html")
       writeLines(source_code, sourceCodeFile)
       args <- c(args, pandoc_include_args(after_body = sourceCodeFile))

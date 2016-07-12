@@ -214,14 +214,16 @@ $$(document).ready(function () {
 <!-- code folding -->
 $if(code_menu)$
 <script src="$navigationjs$/codefolding.js"></script>
-$if(source_embed)$
+$if(filesaver)$
 <script src="$navigationjs$/FileSaver.min.js"></script>
+$endif$
+$if(source_embed)$
 <script src="$navigationjs$/sourceembed.js"></script>
 $endif$
 <script>
 $$(document).ready(function () {
 $if(source_embed)$
-  window.initializeSourceEmbed("$source_embed$");
+  window.initializeSourceEmbed("$source_embed$", "$source_type$");
 $endif$
 $if(code_folding)$
   window.initializeCodeFolding("$code_folding$" === "show");
@@ -376,7 +378,7 @@ $if(source_embed)$
 $endif$
 $endif$
 $if(source_embed)$
-<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+<li><a class="rmd-download-source" href="#">$source_link_text$</a></li>
 $endif$
 </ul>
 </div>

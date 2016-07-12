@@ -7,7 +7,7 @@
 html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   number_sections = FALSE, fig_width = 7, fig_height = 5,
   fig_retina = 2, fig_caption = TRUE, dev = "png",
-  code_folding = c("none", "show", "hide"), code_download = FALSE,
+  code_folding = c("none", "show", "hide"), code_download = NULL,
   smart = TRUE, self_contained = TRUE, theme = "default",
   highlight = "default", mathjax = "default", template = "default",
   extra_dependencies = NULL, css = NULL, includes = NULL,
@@ -48,7 +48,12 @@ individually or document-wide). Specify \code{"show"} to show all R code
 chunks by default.}
 
 \item{code_download}{Embed the Rmd source code within the document and provide
-a link that can be used by readers to download the code.}
+a link that can be used by readers to download the code.  Alternatively,
+a list may be provided containing \code{include_resources}, which if TRUE
+will embed the Rmd source as well as supporting files a zip file. Supporting
+files are auto-detected but additional resources may be added under
+\code{resource_files} in the YAML header. See also
+\code{\link{source_download_link}}.}
 
 \item{smart}{Produce typographically correct output, converting straight
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
