@@ -1,0 +1,674 @@
+body {
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica Neue, Helvetica, Arial, sans-serif;
+  background-color:#fff;
+
+  font-weight: normal;
+  color: #404040;
+}
+
+html, body {
+  height: 100%;
+}
+
+.band.full {
+  position: relative;
+}
+
+.band.full.first {
+  height: 550px;
+}
+
+.band.full.second {
+  height: 480px;
+
+  overflow: hidden;
+  border-bottom: 1px solid #f8f8f8;
+}
+
+.band.full.third {
+  height: 520px;
+}
+
+.bandContent {
+  margin: 0 auto;
+  max-width: 1140px;
+}
+
+.vCenter {
+  position: relative;
+  min-height: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rightText .vCenter {
+  align-items: flex-end;
+}
+
+.band .imageOne {
+  position: absolute;
+  left: 0px;
+  bottom: -120px;
+  width: 630px;
+  height: auto;
+
+  z-index: 5;
+}
+
+.band .imageTwo {
+  position: absolute;
+  top: 10%;
+  right: 10px;
+  width: 45%;
+  height: auto;
+}
+
+.band .imageThree {
+  position: absolute;
+  left: 10px;
+  bottom: 0px;
+  width: 500px;
+  height: auto;
+
+  z-index: 5;
+}
+
+
+#rStudioHeader {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: auto;
+  z-index: 100;
+  padding: 0 5%;
+/*
+  color: #fff;
+}
+
+#rStudioHeader.shrunk, #rStudioHeader.alwaysShrunk {
+  color: inherit;
+*/
+  background-color: rgba(255, 255, 255, .98);
+
+  -webkit-box-shadow: 0px 3px 15px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 3px 15px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 3px 15px 0px rgba(0,0,0,0.1);
+}
+
+#rStudioHeader .innards {
+  padding: 40px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  -webkit-transition-property: padding;
+  -moz-transition-property: padding;
+  -o-transition-property: padding;
+  transition-property: padding;
+
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+
+#rStudioHeader.shrunk .innards, #rStudioHeader.alwaysShrunk .innards {
+  padding: 9px 0;
+}
+
+#rStudioHeader .productName {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: normal;
+  font-size: 40px;
+  color: inherit;
+
+  white-space: nowrap;
+
+  -webkit-transition-property: font-size;
+  -moz-transition-property: font-size;
+  -o-transition-property: font-size;
+  transition-property: font-size;
+
+  -webkit-transition-duration: 0.25s;
+  -moz-transition-duration: 0.25s;
+  -o-transition-duration: 0.25s;
+  transition-duration: 0.25s;
+}
+
+#rStudioHeader .productName:hover {
+  text-decoration: none;
+}
+
+#rStudioHeader.shrunk .productName, #rStudioHeader.alwaysShrunk .productName {
+  display: inline-block;
+  font-size: 20px;
+}
+
+#rStudioHeader .rStudio {
+  margin-top: 5px;
+  font-size: 13px;
+  line-height: 25px;
+  font-weight: 200;
+  color: #4d4d4d;
+}
+
+#rStudioHeader .rStudio .logo {
+  display: inline-block;
+  width: 70px;
+  height: 25px;
+  background-image:url(../images/logoRStudio.png);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+}
+
+#rStudioHeader.shrunk .rStudio, #rStudioHeader.alwaysShrunk .rStudio {
+  display: inline-block;
+  margin-left: 3px;
+}
+
+#rStudioHeader .rStudio a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#rStudioHeader #menu {
+  text-align: right;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+#rStudioHeader #menu #menuToggler {
+  display: none;
+}
+
+#rStudioHeader #menu #menuItems {
+  display: block;
+}
+
+#rStudioHeader #menu .menuItem {
+  display: inline-block;
+  padding: 0px 15px;
+
+  opacity: .8;
+  cursor: pointer;
+
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;
+
+  -webkit-transition-duration: .5s;
+  -moz-transition-duration: .5s;
+  -o-transition-duration: .5s;
+  transition-duration: .5s;
+
+  color: inherit;
+}
+
+#rStudioHeader #menu .menuItem:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+#rStudioHeader #menu .menuItem.gitHub {
+  width: 20px;
+  height: 20px;
+  padding: 0px;
+  margin: 0px 0px 0px 10px;
+
+  background-image: url(../images/gitHubLogo.svg);
+  background-repeat: no-repeat;
+  background-size: 20px auto;
+  background-position: center center;
+
+  vertical-align: bottom;
+}
+
+#rStudioHeader #menu .menuItem.gitHubText {
+  display: none;
+}
+
+
+#homeContent, #pageContent {
+  position: relative;
+  z-index: 1;
+  min-height: 100%;
+  margin-bottom: -91px;  /* height of footer */
+}
+
+#homeContent:after, #pageContent:after {
+  content: "";
+  height: 91px; /* height of footer */
+  display: block;
+}
+
+#pageContent {
+  padding: 80px 5%;
+}
+
+#pageContent .pageTitle {
+  font-size: 40px;
+  font-weight: 300;
+}
+
+#pageContent .pageIntro {
+  font-size: 20px;
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+
+#pageContent .linkSection {
+  line-height: 20px;
+  margin-bottom: 20px;
+}
+
+#pageContent .links a {
+  display: block;
+  max-width: 500px;
+  padding: 5px 0;
+}
+
+.gallerySection {
+  margin-bottom: 50px;
+}
+
+.gallerySection .gallerySectionTitle {
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.gallerySection .galleryIntro {
+  margin-bottom: 10px;
+}
+
+.gallerySection .galleryItems {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.gallerySection .galleryItems .galleryItem {
+  width: 24%;
+
+  border: 1px solid #f0f0f0;
+  margin-bottom: 20px;
+}
+
+.gallerySection .galleryItems .galleryItem:hover {
+
+}
+
+.gallerySection .galleryItems .galleryItem .galleryItemLabel {
+  border-top: 1px solid #f0f0f0;
+  padding: 10px 10px 5px 10px;
+}
+
+.gallerySection .galleryItems .galleryItem .galleryItemImage {
+  width: 100%;
+  height: auto;
+}
+
+.gallerySection .galleryItems .galleryItem .galleryItemDescription {
+  font-size: 12px;
+  padding: 0px 10px 10px 10px;
+}
+
+#homeContent .tagline {
+  padding-top: 100px;
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+#homeContent a {
+  text-decoration: none;
+  color: #75aadb;
+}
+
+#homeContent .blue a {
+  color: #fcbf49;
+  font-weight: normal;
+}
+
+#homeContent a:hover {
+  text-decoration: underline;
+}
+
+#homeContent .band {
+  padding: 0 5%;
+}
+
+#homeContent .band.gray1 {
+  background-color: #f8f8f8;
+}
+
+#homeContent .band.blue {
+  background-color: #75aadb;
+  color: #fff;
+}
+
+#homeContent .band.orange {
+  background-color: #e6553a;
+  color: #fff;
+}
+
+#homeContent .band.leftText {
+  text-align: left;
+}
+
+#homeContent .band.rightText {
+  text-align: right;
+}
+
+#homeContent .band .blurb {
+  display: inline-block;
+  text-align: left;
+  max-width: 505px;
+  line-height: 40px;
+  min-height: 160px;
+  font-size: 25px;
+}
+
+#homeContent .band .actions {
+  margin-top: 20px;
+}
+
+#homeContent .band .actions div {
+  display: inline-block;
+}
+
+#homeContent .bigButton {
+  padding: 20px 40px;
+  font-size: 20px;
+  border: none;
+
+  border-radius: 5px;
+
+  margin: 5px;
+}
+
+#homeContent .bigButton.gallery {
+  color: #fff;
+  background-color: #a3c586;
+}
+
+#homeContent .bigButton.getStarted {
+  color: #fff;
+  background-color: #75aadb;
+}
+
+#rStudioFooter {
+  position: relative;
+  z-index: 2;
+
+  box-sizing: border-box;
+  height: 91px;
+}
+
+#rStudioFooter.band {
+
+  background-color: #5d4c45;
+  padding: 30px 5%;
+
+  color: #fff;
+
+  font-weight: 300;
+  font-size: 12px;
+
+  line-height: 25px;
+}
+
+#rStudioFooter .bandContent {
+  color: #fff;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  line-height: 20px;
+}
+
+#rStudioFooter .bandContent #copyright {
+  flex-shrink: 5;
+}
+
+#rStudioFooter .bandContent #logos {
+  flex-shrink: 1;
+}
+
+#rStudioFooter .bandContent .footerLogo {
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center center;
+
+  margin: 0 8px;
+}
+
+#rStudioFooter .bandContent #logos .footerLogo:last-child {
+  margin-right: 0px;
+}
+
+#rStudioFooter .bandContent .footerLogo.twitter {
+  background-image: url(../images/twitterLogo.svg);
+}
+
+#rStudioFooter .bandContent .footerLogo.gitHub {
+  background-image: url(../images/gitHubLogo2.svg);
+}
+
+#rStudioFooter .bandContent .footerLogo.linkedIn {
+  background-image: url(../images/linkedInLogo.svg);
+}
+
+#rStudioFooter .bandContent .footerLogo.facebook {
+  background-image: url(../images/facebookLogo.svg);
+}
+
+
+/* size adjustments */
+
+@media screen and (max-width: 1200px){
+
+  .band .imageOne {
+    width: 490px;
+    bottom: -50px;
+    left: -25px;
+  }
+
+  .band .imageThree {
+    left: 0px;
+  }
+}
+
+@media screen and (max-width: 1023px){
+
+  #rStudioHeader .productName {
+    font-size: 30px;
+  }
+
+  #rStudioHeader .innards {
+    align-items: flex-start;
+  }
+
+  #rStudioHeader #menu #menuToggler {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-image: url(../images/menuToggler.svg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center center;
+  }
+
+  #rStudioHeader #menu #menuItems {
+    display: none;
+  }
+
+  #rStudioHeader #menu #menuItems.showMenu {
+    display: block;
+  }
+
+  #rStudioHeader #menu .menuItem {
+    display: block;
+    line-height: 30px;
+    text-align: left;
+  }
+
+  #rStudioHeader #menu .menuItem.gitHub {
+    display: none;
+  }
+
+  #rStudioHeader #menu .menuItem.gitHubText {
+    display: block;
+  }
+
+  #homeContent {
+    overflow-x: hidden;
+  }
+
+  .band.full.first, .band.full.second, .band.full.third {
+      height: auto;
+  }
+
+  .vCenter {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    display: block;
+    padding: 100px 0px;
+  }
+
+  .third .vCenter {
+    padding-top: 10px;
+  }
+
+  #homeContent .band.rightText, #homeContent .band.leftText {
+    text-align: center;
+  }
+
+  #homeContent .band .blurb {
+    text-align: center;
+  }
+
+  .band .imageOne {
+    position: relative;
+    max-width: 120%;
+    bottom: auto;
+    left: auto;
+    top: -50px;
+  }
+
+  .band .imageTwo {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    margin-bottom: 100px;
+  }
+
+  .band .imageThree {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    max-width: 100%;
+  }
+
+  #pageContent .pageTitle {
+    font-size: 30px;
+  }
+  #pageContent .pageIntro {
+    font-size: 18px;
+  }
+
+  .gallerySection .galleryItems .galleryItem {
+    width: 49%;
+  }
+
+  .gallerySection .gallerySectionTitle {
+    font-size: 24px;
+  }
+
+}
+
+@media screen and (max-width: 500px){
+  .gallerySection .galleryItems .galleryItem {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 350px){
+
+    #rStudioHeader .productName {
+      font-size: 26px;
+    }
+
+    #rStudioFooter .bandContent .footerLogo {
+      margin: 0 2px;
+    }
+
+}
+
+.screenshot {
+  border: 1px solid #ccc;
+}
+
+.notebook-screenshot {
+  border: 1px solid #ccc;
+  margin-bottom: 8px;
+}
+
+/* Don't show link underlines in tables (too busy) */
+table.table td a:only-child:link,
+table.table td a:only-child:visited {
+  text-decoration: none;
+}
+table.table td a:only-child:hover,
+table.table td a:only-child:active {
+  text-decoration: underline;
+}
+
+/* Use the background color from the R logo for the floating toc nav */
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+  background-color: rgb(97,151,213);
+}
+
+/* offset scroll position for anchor links  */
+
+.section h1 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+
+.section h2 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+.section h3 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+.section h4 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+.section h5 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+.section h6 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+
+
+
