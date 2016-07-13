@@ -190,9 +190,15 @@ SELECT * FROM trials WHERE subjects >= ?subjects
 
 ## Stan
 
-The [Stan](http://mc-stan.org/) engine enables embedding of the Stan probabilistic programming language within R Markdown documents. The Stan model within the code chunk is compiled into a `stanmodel` object and is assigned it to a variable with the name given by the `x` option. For example:
+The [Stan](http://mc-stan.org/) engine enables embedding of the Stan probabilistic programming language within R Markdown documents. The development version of knitr is required to use the Stan engine with the options described below. You can install it as follows:
 
-<pre class="markdown"><code>&#96;&#96;&#96;{stan, x="ex1"}
+```r
+devtools::install_github("yihui/knitr")
+```
+
+The Stan model within the code chunk is compiled into a `stanmodel` object and is assigned it to a variable with the name given by the `output.var` option. For example:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{stan, output.var="ex1"}
 parameters {
   real y[2]; 
 } 
