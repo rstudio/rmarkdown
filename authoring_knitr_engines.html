@@ -562,8 +562,8 @@ ggplot(flights, aes(carrier, arr_delay)) + geom_point() + geom_jitter()
 </div>
 <div id="sql" class="section level2">
 <h2>SQL</h2>
-<p>The <a href="https://en.wikipedia.org/wiki/SQL">SQL</a> engine uses the <a href="https://github.com/rstats-db/DBI">DBI</a> package to execute SQL queries, print their results, and optionally assign the results to a data frame. Note that the SQL engine is currently under development. A branch of knitr that supports the SQL engine can be installed as follows:</p>
-<pre class="r"><code>devtools::install_github(&quot;yihui/knitr#1241&quot;)</code></pre>
+<p>The <a href="https://en.wikipedia.org/wiki/SQL">SQL</a> engine uses the <a href="https://github.com/rstats-db/DBI">DBI</a> package to execute SQL queries, print their results, and optionally assign the results to a data frame. The SQL engine is currently only available in the development version of knitr, which you can install as follows:</p>
+<pre class="r"><code>devtools::install_github(&quot;yihui/knitr&quot;)</code></pre>
 <p>To use the knitr SQL engine you first need to establish a DBI connection to a database (typically via the <code>dbConnect</code> function). You can make use of this connection in a SQL chunk via the <code>connection</code> option. For example:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r}
 library(DBI)
