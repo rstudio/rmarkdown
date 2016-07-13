@@ -19,7 +19,10 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<link rel="icon" type="image/png" href="images/favicon.png" />
+
+<script type="text/javascript" src="js/rmarkdown.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <link rel="stylesheet"
@@ -68,7 +71,7 @@ h6 {
 }
 </style>
 
-<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="css/rmarkdown.css" type="text/css" />
 
 </head>
 
@@ -96,58 +99,6 @@ button.code-folding-btn:focus {
 }
 </style>
 
-<style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-</style>
-
-<script>
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark it active
-  menuAnchor.parent().addClass('active');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
-});
-</script>
-
 
 <div class="container-fluid main-container">
 
@@ -166,181 +117,52 @@ $(document).ready(function () {
 
 
 
-<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">R Markdown v2</a>
+<div id="rStudioHeader" class="alwaysShrunk">
+  <div class="innards bandContent">
+    <div>
+      <a class="productName" href="index.html">R Markdown</a>
+      <div class="rStudio"><span class="light">from </span> <a href="https://www.rstudio.com/"><div class="logo"></div></a></div>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="index.html">Home</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Authoring
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">R Markdown</li>
-    <li>
-      <a href="authoring_quick_tour.html">Quick Tour</a>
-    </li>
-    <li>
-      <a href="authoring_basics.html">Markdown Basics</a>
-    </li>
-    <li>
-      <a href="authoring_pandoc_markdown.html">Pandoc Markdown</a>
-    </li>
-    <li>
-      <a href="authoring_rcodechunks.html">R Code Chunks</a>
-    </li>
-    <li>
-      <a href="authoring_knitr_engines.html">knitr Language Engines</a>
-    </li>
-    <li>
-      <a href="authoring_bibliographies_and_citations.html">Bibliographies &amp; Citations</a>
-    </li>
-    <li>
-      <a href="authoring_migrating_from_v1.html">Migrating from v1</a>
-    </li>
-    <li class="divider"></li>
-    <li>
-      <a href="http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf">Cheat Sheet [PDF]</a>
-    </li>
-    <li>
-      <a href="http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">Reference Guide [PDF]</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Websites</li>
-    <li>
-      <a href="rmarkdown_websites.html">R Markdown Websites</a>
-    </li>
-    <li>
-      <a href="rmarkdown_site_generators.html">Custom Site Generators</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Shiny</li>
-    <li>
-      <a href="authoring_shiny.html">Interactive Documents</a>
-    </li>
-    <li>
-      <a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a>
-    </li>
-    <li>
-      <a href="authoring_shiny_widgets.html">Creating Shiny Widgets</a>
-    </li>
-    <li>
-      <a href="authoring_shiny_advanced.html">Advanced Topics</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Formats
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Documents</li>
-    <li>
-      <a href="html_document_format.html">HTML</a>
-    </li>
-    <li>
-      <a href="pdf_document_format.html">PDF</a>
-    </li>
-    <li>
-      <a href="word_document_format.html">Word</a>
-    </li>
-    <li>
-      <a href="odt_document_format.html">ODT</a>
-    </li>
-    <li>
-      <a href="rtf_document_format.html">RTF</a>
-    </li>
-    <li>
-      <a href="markdown_document_format.html">Markdown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Presentations</li>
-    <li>
-      <a href="ioslides_presentation_format.html">ioslides</a>
-    </li>
-    <li>
-      <a href="revealjs_presentation_format.html">reveal.js</a>
-    </li>
-    <li>
-      <a href="slidy_presentation_format.html">Slidy</a>
-    </li>
-    <li>
-      <a href="beamer_presentation_format.html">Beamer</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Notebooks</li>
-    <li>
-      <a href="r_notebooks.html">R Notebooks</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Other</li>
-    <li>
-      <a href="tufte_handout_format.html">Tufte Handout</a>
-    </li>
-    <li>
-      <a href="package_vignette_format.html">Package Vignette</a>
-    </li>
-    <li>
-      <a href="github_document_format.html">GitHub Document</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Developer
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="developer_html_widgets.html">HTML Widgets</a>
-    </li>
-    <li class="divider"></li>
-    <li>
-      <a href="developer_parameterized_reports.html">Parameterized Reports</a>
-    </li>
-    <li class="divider"></li>
-    <li>
-      <a href="developer_document_templates.html">Document Templates</a>
-    </li>
-    <li>
-      <a href="developer_custom_formats.html">Creating New Formats</a>
-    </li>
-    <li class="divider"></li>
-    <li>
-      <a href="https://github.com/rstudio/rmarkdown">R Markdown on GitHub</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="articles.html">Articles</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/rstudio/rmarkdown">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
+
+    <div id="menu">
+      <div id="menuToggler"></div>
+      <div id="menuItems">
+        <a class="menuItem" href="gallery.html">Gallery</a>
+        <a class="menuItem" href="start.html">Get Started</a>
+        <a class="menuItem" href="authoring.html">Authoring</a>
+        <a class="menuItem" href="formats.html">Formats</a>
+        <a class="menuItem" href="developer.html">Developer</a>
+        <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
+        <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+#TOC {
+  margin-left: 35px;
+  margin-top: 90px;
+}
+</style>
+
+<script type="text/javascript">
+$(".main-container").removeClass("main-container").removeClass("container-fluid");
+</script>
+
+
+<div id="pageContent">
+
+<style type="text/css">
+.title {
+  display: none;
+}
+</style>
+
+<script type="text/javascript">
+$(".main-container").removeClass("main-container").removeClass("container-fluid");
+</script>
 
 <div class="fluid-row" id="header">
 
@@ -351,97 +173,68 @@ $(document).ready(function () {
 </div>
 
 
-<style type="text/css">
-.title {
-  display: none;
-}
+<script type="text/javascript">
+$("#rStudioHeader").removeClass("alwaysShrunk");
+</script>
 
-#getting-started img {
-  margin-right: 10px;
-}
 
-</style>
-<div class="row" style="padding-top: 30px;">
-<div class="col-sm-6">
-<h1 id="r-markdown"><strong>R Markdown</strong></h1>
-<h3 id="dynamic-documents-for-r" style="padding-top: 0px;"><em>Dynamic Documents for R</em></h3>
-<p>R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of <a href="https://daringfireball.net/projects/markdown/">markdown</a> (an easy to write plain text format) with embedded R code chunks that are run so their output can be included in the final document.</p>
-<p>R Markdown documents are fully reproducible (they can be automatically regenerated whenever underlying R code or data changes).</p>
-<p>R Markdown has many available output formats including <a href="html_document_format.html">HTML</a>, <a href="pdf_document_format.html">PDF</a>, <a href="word_document_format.html">MS Word</a>, <a href="beamer_presentation_format.html">Beamer</a>, <a href="ioslides_presentation_format.html">HTML5 slides</a>, <a href="tufte_handout_format.html">Tufte handouts</a>, <a href="r_notebooks.html">notebooks</a>, <a href="https://bookdown.org">books</a>, <a href="flexdashboard/">dashboards</a>, and <a href="rmarkdown_websites.html">websites</a>.</p>
-</div>
-<div class="col-sm-6">
-<div class="figure">
-<img src="images/RMarkdownOutputFormats.png" style="margin-top:27px;" width="350" height="350" />
+<div id="homeContent">
+  <div class="band full blue first rightText">
+    <div class="bandContent vCenter">
+      <div class="blurb">
+        <div class="tagline">Analyze. Share. Reproduce.</div>
+        <div>Your data tells a story. Tell it with R Markdown. Turn your analyses into high quality documents, reports, presentations and dashboards.</div>
+      </div>
+    </div>
+    <img class="imageOne" src="images/bandOne.png"/>
+  </div>
 
-</div>
-</div>
-</div>
-<div id="getting-started" class="section level2">
-<h2>Getting Started</h2>
-<div style="height: 20px;">
+  <div class="band full gray1 second leftText">
+    <div class="bandContent vCenter">
+      <div class="blurb">
+        <div>R Markdown documents are fully reproducible. Use a productive notebook interface to weave together narrative text and R code to produce elegantly formatted output. So long copy & paste.</div>
+      </div>
+    </div>
+    <img class="imageTwo" src="images/bandTwo2.png"/>
+  </div>
 
-</div>
-<p><img src="images/RMarkdownTour.png" /> <a href="authoring_quick_tour.html">Quick Tour</a></p>
-<p><img src="images/RMarkdownCheatSheet.png" /> <a href="http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf">R Markdown Cheat Sheet</a></p>
-<p><img src="images/RMarkdownReference.png" /> <a href="http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown Reference Guide</a></p>
-<div style="height: 10px;">
-
-</div>
-</div>
-<div id="learning-more" class="section level2">
-<h2>Learning More</h2>
-<div class="row">
-<div class="col-sm-10">
-<p>With the basics described above you can get started with R Markdown right away. To learn more see:</p>
-<ul>
-<li><p><a href="authoring_basics.html">Markdown Basics</a>, which describes the most commonly used markdown constructs.</p></li>
-<li><p><a href="authoring_rcodechunks.html">R Code Chunks</a>, which goes into more depth on customizing the behavior of embedded R code.</p></li>
-<li><p><a href="http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf">R Markdown Cheat Sheet (PDF)</a>, a quick guide to the most commonly used markdown syntax, knitr options, and output formats.</p></li>
-<li><p><a href="http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown Reference Guide (PDF)</a>, a more comprehensive reference guide to markdown, knitr, and output format options.</p></li>
-<li><p><a href="authoring_bibliographies_and_citations.html">Bibliographies and Citations</a>, which describes how to include references in R Markdown documents.</p></li>
-<li><p><a href="authoring_shiny.html">Interactive Documents with Shiny</a>, which describes how to make R Markdown documents interactive using <a href="http://shiny.rstudio.com">Shiny</a>.</p></li>
-<li><p><a href="articles_report_from_r_script.html">Compiling Reports from R Scripts</a>, which describes how to compile HTML, PDF, or MS Word reports from R scripts.</p></li>
-<li><p>Document output formats: <a href="html_document_format.html">HTML</a>, <a href="pdf_document_format.html">PDF</a>, <a href="word_document_format.html">Word</a>, <a href="markdown_document_format.html">Markdown</a>, and <a href="github_document_format.html">GitHub</a>.</p></li>
-<li><p>Presentation output formats: <a href="ioslides_presentation_format.html">ioslides</a>, <a href="revealjs_presentation_format">reveal.js</a>, <a href="slidy_presentation_format.html">Slidy</a>, and <a href="beamer_presentation_format.html">Beamer</a></p></li>
-</ul>
-<p>For even more in-depth documentation see:</p>
-<ul>
-<li><p>The website for the <a href="http://yihui.name/knitr/">knitr package</a>. Knitr is an extremely powerful tool for dynamic content generation and the website has a wealth of documentation and examples to help you utilize it to its full potential.</p></li>
-<li><p>The full specification of <a href="authoring_pandoc_markdown.html">Pandoc Markdown</a>, which describes all of the markdown features and syntax available within R Markdown documents.</p></li>
-<li><p>If you are migrating documents from R Markdown v1 or wish to continue using RMarkdown v1 see the article on <a href="authoring_migrating_from_v1.html">Migrating from R Markdown v1</a>.</p></li>
-</ul>
-<p>See also the R Markdown developer documentation including:</p>
-<ul>
-<li><p>Creating re-usable <a href="developer_document_templates.html">Document Templates</a></p></li>
-<li><p>Guide to <a href="developer_custom_formats.html">Creating New Formats</a> for R Markdown</p></li>
-<li><p>Adding interactive components to R Markdown documents using <a href="developer_html_widgets.html">HTML Widgets</a> and <a href="authoring_shiny_widgets.html">Shiny Widgets</a>.</p></li>
-<li><p>Creating <a href="developer_parameterized_reports.html">Parameterized Reports</a> to re-render the same document with distinct values for various key inputs.</p></li>
-</ul>
-</div>
-</div>
+  <div class="band full third rightText">
+    <img class="imageThree" src="images/bandThree.png"/>
+    <div class="bandContent vCenter">
+      <div class="blurb">
+        <div>
+          R Markdown supports dozens of static and dynamic output formats including
+          <a href="html_document_format.html">HTML</a>, <a href="pdf_document_format.html">PDF</a>, <a href="word_document_format.html">MS Word</a>, <a href="beamer_presentation_format.html">Beamer</a>, <a href="ioslides_presentation_format.html">HTML5 slides</a>, <a href="tufte_handout_format.html">Tufte-style handouts</a>, <a href="https://bookdown.org">books</a>, <a href="flexdashboard/">dashboards</a>,
+          shiny applications, scientific articles, <a href="rmarkdown_websites.html">websites</a>, and more.
+        </div>
+        <div class="actions">
+          <div><a href="gallery.html"><button class="bigButton gallery">See Gallery</button></a></div>
+          <div><a href="start.html"><button class="bigButton getStarted">Get Started</button></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
+
+
+</div> <!-- pageContent -->
+
+<div id="rStudioFooter" class="band full">
+<div class="bandContent">
+  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="logos">
+    <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+    <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+    <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+    <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
+  </div>
+</div>
+</div>
 
 <!-- bizible -->
 <script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
-
-
-<!-- disqus -->
-  <div id="disqus_thread" style="margin-top: 45px;"></div>
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
-
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
 

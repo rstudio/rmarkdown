@@ -1,0 +1,47 @@
+---
+title: "Authoring"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_header_navpage.html]
+---
+
+<!--html_preserve-->
+
+<div class="band full">
+  <div class="bandContent pageTitle">Authoring</div>
+  <div class="bandContent pageIntro">Writing R Markdown is straightforward ... </div>
+  <div class="bandContent">
+    <div class="links">
+      <div class="linkSection">
+        <div class="linkSectionTitle">R Markdown</div>
+        <a href="authoring_basics.html">Markdown Basics</a>
+        <a href="authoring_pandoc_markdown.html">Pandoc Markdown</a>
+        <a href="authoring_rcodechunks.html">R Code Chunks</a>
+        <a href="authoring_bibliographies_and_citations.html">Bibliographies & Citations</a>
+        <a href="authoring_migrating_from_v1.html">Migrating from v1</a>
+      </div>
+      <div class="linkSection">
+        <a href="http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf">Cheat Sheet [PDF]</a>
+        <a href="http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">Reference Guide [PDF]</a>
+      </div>
+      <div class="linkSection">
+        <div class="linkSectionTitle">Websites</div>
+        <a href="rmarkdown_websites.html">R Markdown Websites</a>
+        <a href="rmarkdown_site_generators.html">Custom Site Generators</a>
+      </div>
+      <div class="linkSection">
+        <div class="linkSectionTitle">Shiny</div>
+        <a href="authoring_shiny.html">Interactive Documents</a>
+        <a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a>
+        <a href="authoring_shiny_widgets.html">Creating Shiny Widgets</a>
+        <a href="authoring_shiny_advanced.html">Advanced Topics</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--/html_preserve-->
+

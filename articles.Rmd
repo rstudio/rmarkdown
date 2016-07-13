@@ -1,29 +1,42 @@
 ---
-title: "R Markdown Articles"
+title: "R Markdown Gallery"
 output:
   html_document:
     toc_float: false
+    includes:
+      before_body: [include_header.html, include_header_navpage.html]
 ---
 
-### Basics
+<!--html_preserve-->
 
-* [Introduction to R Markdown](articles_intro.html)
-* [Introduction to interactive documents](articles_interactive.html)
-* [R Markdown integration in the RStudio IDE](articles_integration.html)
-* [Mail merge with R Markdown](articles_mail_merge.html) (Automation Demo)
+<div class="band full">
+  <div class="bandContent pageTitle">Articles</div>
+  <div class="bandContent pageIntro">Read more details on some interesting topics ...</div>
+  <div class="bandContent">
+    <div class="links">
+      <div class="linkSection">
+        <div class="linkSectionTitle">Basics</div>
+        <a href="articles_intro.html">Introduction to R Markdown</a>
+        <a href="articles_interactive.html">Introduction to interactive documents</a>
+        <a href="articles_integration.html">R Markdown integration in the RStudio IDE</a>
+        <a href="articles_mail_merge.html">Mail merge with R Markdown (Automation Demo)</a>
+      </div>
+      <div class="linkSection">
+        <div class="linkSectionTitle">Embedding Code</div>
+        <a href="articles_verbatim.html">Get verbatim R chunks into R Markdown</a>
+        <a href="articles_verbatim2.html">Verbatim Chunks in R Markdown (Alternate method)</a>
+        <a href="articles_rdata.html">Embedding RData files in Rmarkdown files for more reproducible analyses</a>
+        <a href="http://yihui.name/knitr/options">knitr code chunk documentation</a>
+        <a href="http://yihui.name/knitr/demo/showcase/">The knitr showcase (Examples and links)</a>
+      </div>
+      <div class="linkSection">
+        <div class="linkSectionTitle">Output Formats</div>
+        <a href="articles_docx.html">Happy collaboration with Rmd to docx</a>
+        <a href="articles_beamer.html">Moving from Beamer to R Markdown</a>
+        <a href="articles_report_from_r_script.html">Compiling Reports from R Scripts</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-### Embedding Code
-
-* [Get verbatim R chunks into R Markdown](articles_verbatim.html)
-* [Verbatim Chunks in R Markdown](articles_verbatim2.html) (Alternate method)
-* [Embedding RData files in Rmarkdown files for more reproducible analyses](articles_rdata.html)
-* [knitr code chunk documentation](http://yihui.name/knitr/options/)
-* [The knitr showcase](http://yihui.name/knitr/demo/showcase/) (Examples and links)
-
-### Output Formats
-
-* [Happy collaboration with Rmd to docx](articles_docx.html)
-* [Moving from Beamer to R Markdown](articles_beamer.html)
-* [Compiling Reports from R Scripts](articles_report_from_r_script.html)
-
-
+<!--/html_preserve-->

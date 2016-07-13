@@ -1,0 +1,45 @@
+---
+title: "Formats"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_header_navpage.html]
+---
+
+<!--html_preserve-->
+
+<div class="band full">
+  <div class="bandContent pageTitle">Formats</div>
+  <div class="bandContent pageIntro">Create output in any of these formats ... </div>
+  <div class="bandContent">
+    <div class="links">
+      <div class="linkSection">
+        <div class="linkSectionTitle">Documents</div>
+        <a href="html_document_format.html">HTML</a>
+        <a href="pdf_document_format.html">PDF</a>
+        <a href="word_document_format.html">Word</a>
+        <a href="odt_document_format.html">ODT</a>
+        <a href="rtf_document_format.html">RTF</a>
+        <a href="markdown_document_format.html">Markdown</a>
+      </div>
+      <div class="linkSection">
+        <div class="linkSectionTitle">Presentations</div>
+        <a href="ioslides_presentation_format.html">ioslides</a>
+        <a href="revealjs_presentation_format.html">reveal.js</a>
+        <a href="slidy_presentation_format.html">Slidy</a>
+        <a href="beamer_presentation_format.html">Beamer</a>
+      </div>
+      <div class="linkSection">
+        <div class="linkSectionTitle">Other</div>
+        <a href="tufte_handout_format.html">Tufte Handout</a>
+        <a href="package_vignette_format.html">Package Vignette</a>
+        <a href="github_document_format.html">GitHub Document</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--/html_preserve-->
+
+

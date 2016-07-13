@@ -1,0 +1,28 @@
+---
+title: "Developer"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_header_navpage.html]
+---
+
+<!--html_preserve-->
+
+<div class="band full">
+  <div class="bandContent pageTitle">Developer</div>
+  <div class="bandContent pageIntro">Here are some ways to extend and integrate with R Markdown ... </div>
+  <div class="bandContent">
+    <div class="links">
+      <div class="linkSection">
+        <a href="developer_html_widgets.html">HTML Widgets</a>
+        <a href="developer_parameterized_reports.html">Parameterized Reports</a>
+        <a href="developer_document_templates.html">Document Templates</a>
+        <a href="developer_custom_formats.html">Creating New Formats</a>
+        <a href="https://github.com/rstudio/rmarkdown">R Markdown on GitHub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--/html_preserve-->

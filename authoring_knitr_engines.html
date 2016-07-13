@@ -22,7 +22,10 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<link rel="icon" type="image/png" href="images/favicon.png" />
+
+<script type="text/javascript" src="js/rmarkdown.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <link rel="stylesheet"
@@ -71,7 +74,7 @@ h6 {
 }
 </style>
 
-<link rel="stylesheet" href="styles.css" type="text/css" />
+<link rel="stylesheet" href="css/rmarkdown.css" type="text/css" />
 
 </head>
 
@@ -98,58 +101,6 @@ button.code-folding-btn:focus {
   outline: none;
 }
 </style>
-
-<style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-</style>
-
-<script>
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark it active
-  menuAnchor.parent().addClass('active');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
-});
-</script>
 
 
 <div class="container-fluid main-container">
@@ -263,181 +214,42 @@ div.tocify {
 
 
 
-<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">R Markdown v2</a>
+<div id="rStudioHeader" class="alwaysShrunk">
+  <div class="innards bandContent">
+    <div>
+      <a class="productName" href="index.html">R Markdown</a>
+      <div class="rStudio"><span class="light">from </span> <a href="https://www.rstudio.com/"><div class="logo"></div></a></div>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="index.html">Home</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Authoring
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">R Markdown</li>
-    <li>
-      <a href="authoring_quick_tour.html">Quick Tour</a>
-    </li>
-    <li>
-      <a href="authoring_basics.html">Markdown Basics</a>
-    </li>
-    <li>
-      <a href="authoring_pandoc_markdown.html">Pandoc Markdown</a>
-    </li>
-    <li>
-      <a href="authoring_rcodechunks.html">R Code Chunks</a>
-    </li>
-    <li>
-      <a href="authoring_knitr_engines.html">knitr Language Engines</a>
-    </li>
-    <li>
-      <a href="authoring_bibliographies_and_citations.html">Bibliographies &amp; Citations</a>
-    </li>
-    <li>
-      <a href="authoring_migrating_from_v1.html">Migrating from v1</a>
-    </li>
-    <li class="divider"></li>
-    <li>
-      <a href="http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf">Cheat Sheet [PDF]</a>
-    </li>
-    <li>
-      <a href="http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">Reference Guide [PDF]</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Websites</li>
-    <li>
-      <a href="rmarkdown_websites.html">R Markdown Websites</a>
-    </li>
-    <li>
-      <a href="rmarkdown_site_generators.html">Custom Site Generators</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Shiny</li>
-    <li>
-      <a href="authoring_shiny.html">Interactive Documents</a>
-    </li>
-    <li>
-      <a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a>
-    </li>
-    <li>
-      <a href="authoring_shiny_widgets.html">Creating Shiny Widgets</a>
-    </li>
-    <li>
-      <a href="authoring_shiny_advanced.html">Advanced Topics</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Formats
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Documents</li>
-    <li>
-      <a href="html_document_format.html">HTML</a>
-    </li>
-    <li>
-      <a href="pdf_document_format.html">PDF</a>
-    </li>
-    <li>
-      <a href="word_document_format.html">Word</a>
-    </li>
-    <li>
-      <a href="odt_document_format.html">ODT</a>
-    </li>
-    <li>
-      <a href="rtf_document_format.html">RTF</a>
-    </li>
-    <li>
-      <a href="markdown_document_format.html">Markdown</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Presentations</li>
-    <li>
-      <a href="ioslides_presentation_format.html">ioslides</a>
-    </li>
-    <li>
-      <a href="revealjs_presentation_format.html">reveal.js</a>
-    </li>
-    <li>
-      <a href="slidy_presentation_format.html">Slidy</a>
-    </li>
-    <li>
-      <a href="beamer_presentation_format.html">Beamer</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Notebooks</li>
-    <li>
-      <a href="r_notebooks.html">R Notebooks</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Other</li>
-    <li>
-      <a href="tufte_handout_format.html">Tufte Handout</a>
-    </li>
-    <li>
-      <a href="package_vignette_format.html">Package Vignette</a>
-    </li>
-    <li>
-      <a href="github_document_format.html">GitHub Document</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Developer
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="developer_html_widgets.html">HTML Widgets</a>
-    </li>
-    <li class="divider"></li>
-    <li>
-      <a href="developer_parameterized_reports.html">Parameterized Reports</a>
-    </li>
-    <li class="divider"></li>
-    <li>
-      <a href="developer_document_templates.html">Document Templates</a>
-    </li>
-    <li>
-      <a href="developer_custom_formats.html">Creating New Formats</a>
-    </li>
-    <li class="divider"></li>
-    <li>
-      <a href="https://github.com/rstudio/rmarkdown">R Markdown on GitHub</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="articles.html">Articles</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/rstudio/rmarkdown">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
+
+    <div id="menu">
+      <div id="menuToggler"></div>
+      <div id="menuItems">
+        <a class="menuItem" href="gallery.html">Gallery</a>
+        <a class="menuItem" href="start.html">Get Started</a>
+        <a class="menuItem" href="authoring.html">Authoring</a>
+        <a class="menuItem" href="formats.html">Formats</a>
+        <a class="menuItem" href="developer.html">Developer</a>
+        <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
+        <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+#TOC {
+  margin-left: 35px;
+  margin-top: 90px;
+}
+</style>
+
+<script type="text/javascript">
+$(".main-container").removeClass("main-container").removeClass("container-fluid");
+</script>
+
+
+<div id="pageContent">
 
 <div class="fluid-row" id="header">
 
@@ -632,7 +444,7 @@ cat flights1.csv flights2.csv flights3.csv > flights.csv
 $('.title').remove()
 &#96;&#96;&#96;
 </code></pre>
-<p>Note that the JavaScript engine is specified using abbreviation <code>js</code>.</p>
+<p>Note that the JavaScript engine is specified using the abbreviation <code>js</code>.</p>
 </div>
 <div id="css" class="section level2">
 <h2>CSS</h2>
@@ -647,26 +459,22 @@ body {
 </div>
 
 
+</div> <!-- pageContent -->
+
+<div id="rStudioFooter" class="band full">
+<div class="bandContent">
+  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="logos">
+    <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+    <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+    <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+    <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
+  </div>
+</div>
+</div>
 
 <!-- bizible -->
 <script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
-
-
-<!-- disqus -->
-  <div id="disqus_thread" style="margin-top: 45px;"></div>
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
-
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
 </div>

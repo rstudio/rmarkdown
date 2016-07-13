@@ -3,96 +3,54 @@ title: "R Markdown"
 output:
   html_document:
     toc_float: false
+    includes:
+      before_body: [include_header.html, include_header_navpage.html]
 ---
 
-<style type="text/css">
-.title {
-  display: none;
-}
 
-#getting-started img {
-  margin-right: 10px;
-}
-
-</style>
-
-<div class="row" style="padding-top: 30px;">
-<div class="col-sm-6">
-
-# **R Markdown**
-
-### *Dynamic Documents for R* {style="padding-top: 0px;"}
-
-R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of [markdown](https://daringfireball.net/projects/markdown/) (an easy to write plain text format) with embedded R code chunks that are run so their output can be included in the final document. 
-
-R Markdown documents are fully reproducible (they can be automatically regenerated whenever underlying R code or data changes).
-
-R Markdown has many available output formats including [HTML](html_document_format.html), [PDF](pdf_document_format.html), [MS Word](word_document_format.html), [Beamer](beamer_presentation_format.html), [HTML5 slides](ioslides_presentation_format.html), [Tufte handouts](tufte_handout_format.html), [notebooks](r_notebooks.html), [books](https://bookdown.org), [dashboards](flexdashboard/), and [websites](rmarkdown_websites.html).
-
-</div>
-<div class="col-sm-6">
-
-![](images/RMarkdownOutputFormats.png){width=350 height=350 style="margin-top:27px;"}
-
-</div>
-</div>
-
-## Getting Started
-
-<div style="height: 20px;"></div>
-
-![](images/RMarkdownTour.png) [Quick Tour](authoring_quick_tour.html)
-
-![](images/RMarkdownCheatSheet.png) [R Markdown Cheat Sheet](http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
-
-![](images/RMarkdownReference.png) [R Markdown Reference Guide](http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
-
-<div style="height: 10px;"></div>
-
-## Learning More
-
-<div class="row">
-<div class="col-sm-10">
-
-With the basics described above you can get started with R Markdown right away. To learn more see:
-
-* [Markdown Basics](authoring_basics.html), which describes the most commonly used markdown constructs.
-
-* [R Code Chunks](authoring_rcodechunks.html), which goes into more depth on customizing the behavior of embedded R code.
-
-* [R Markdown Cheat Sheet (PDF)](http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf), a quick guide to the most commonly used markdown syntax, knitr options, and output formats.
-
-* [R Markdown Reference Guide (PDF)](http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf), a more comprehensive reference guide to markdown, knitr, and output format options.
-
-* [Bibliographies and Citations](authoring_bibliographies_and_citations.html), which describes how to include references in R Markdown documents.
-
-* [Interactive Documents with Shiny](authoring_shiny.html), which describes how to make R Markdown documents interactive using [Shiny](http://shiny.rstudio.com).
-
-* [Compiling Reports from R Scripts](articles_report_from_r_script.html), which describes how to compile HTML, PDF, or MS Word reports from R scripts.
-
-* Document output formats: [HTML](html_document_format.html), [PDF](pdf_document_format.html), [Word](word_document_format.html), [Markdown](markdown_document_format.html), and [GitHub](github_document_format.html).
-
-* Presentation output formats: [ioslides](ioslides_presentation_format.html), [reveal.js](revealjs_presentation_format), [Slidy](slidy_presentation_format.html), and [Beamer](beamer_presentation_format.html)
+```{js}
+$("#rStudioHeader").removeClass("alwaysShrunk");
+```
 
 
-For even more in-depth documentation see:
+<!--html_preserve-->
 
-* The website for the [knitr package](http://yihui.name/knitr/). Knitr is an extremely powerful tool for dynamic content generation and the website has a wealth of documentation and examples to help you utilize it to its full potential.
+<div id="homeContent">
+  <div class="band full blue first rightText">
+    <div class="bandContent vCenter">
+      <div class="blurb">
+        <div class="tagline">Analyze. Share. Reproduce.</div>
+        <div>Your data tells a story. Tell it with R Markdown. Turn your analyses into high quality documents, reports, presentations and dashboards.</div>
+      </div>
+    </div>
+    <img class="imageOne" src="images/bandOne.png"/>
+  </div>
 
-* The full specification of [Pandoc Markdown](authoring_pandoc_markdown.html), which describes all of the markdown features and syntax available within R Markdown documents.
+  <div class="band full gray1 second leftText">
+    <div class="bandContent vCenter">
+      <div class="blurb">
+        <div>R Markdown documents are fully reproducible. Use a productive notebook interface to weave together narrative text and R code to produce elegantly formatted output. So long copy & paste.</div>
+      </div>
+    </div>
+    <img class="imageTwo" src="images/bandTwo2.png"/>
+  </div>
 
-* If you are migrating documents from R Markdown v1 or wish to continue using RMarkdown v1 see the article on [Migrating from R Markdown v1](authoring_migrating_from_v1.html).
-
-See also the R Markdown developer documentation including:
-
-* Creating re-usable [Document Templates](developer_document_templates.html)
-    
-* Guide to [Creating New Formats](developer_custom_formats.html) for R Markdown
-    
-* Adding interactive components to R Markdown documents using [HTML Widgets](developer_html_widgets.html) and [Shiny Widgets](authoring_shiny_widgets.html).
-
-* Creating [Parameterized Reports](developer_parameterized_reports.html) to re-render the same document with distinct values for various key inputs.
-
-</div>
+  <div class="band full third rightText">
+    <img class="imageThree" src="images/bandThree.png"/>
+    <div class="bandContent vCenter">
+      <div class="blurb">
+        <div>
+          R Markdown supports dozens of static and dynamic output formats including
+          <a href="html_document_format.html">HTML</a>, <a href="pdf_document_format.html">PDF</a>, <a href="word_document_format.html">MS Word</a>, <a href="beamer_presentation_format.html">Beamer</a>, <a href="ioslides_presentation_format.html">HTML5 slides</a>, <a href="tufte_handout_format.html">Tufte-style handouts</a>, <a href="https://bookdown.org">books</a>, <a href="flexdashboard/">dashboards</a>,
+          shiny applications, scientific articles, <a href="rmarkdown_websites.html">websites</a>, and more.
+        </div>
+        <div class="actions">
+          <div><a href="gallery.html"><button class="bigButton gallery">See Gallery</button></a></div>
+          <div><a href="start.html"><button class="bigButton getStarted">Get Started</button></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+<!--/html_preserve-->
