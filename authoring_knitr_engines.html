@@ -11,7 +11,7 @@
 
 
 
-<title>Document Templates</title>
+<title>knitr Language Engines</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
@@ -177,7 +177,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2,h3",
+      selectors: "h1,h2",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
@@ -186,7 +186,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = false;
+    options.showAndHide = true;
     options.smoothScroll = true;
 
     // tocify
@@ -248,13 +248,6 @@ div.tocify {
   border-radius: 0px;
 }
 
-.tocify-subheader {
-  display: inline;
-}
-.tocify-subheader .tocify-item {
-  font-size: 0.95em;
-  padding-left: 10px;
-}
 
 </style>
 
@@ -450,115 +443,207 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Document Templates</h1>
+<h1 class="title toc-ignore">knitr Language Engines</h1>
 
 </div>
 
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>If there is a particular form of R Markdown document that you or those you work with create frequently, it may make sense to create a re-usable document template for it. R Markdown templates are typically re-distributed within R packages, and can be easily discovered from within RStudio using the <strong>New R Markdown</strong> dialog:</p>
-<div class="figure">
-<img src="images/new_r_markdown.png" />
-
-</div>
-<p>Note that if you are not using RStudio you can also create new documents based on templates using the <code>rmarkdown::draft</code> function:</p>
-<pre class="r"><code>rmarkdown::draft(&quot;my_article.Rmd&quot;, template = &quot;jss_article&quot;, package = &quot;rticles&quot;)</code></pre>
-</div>
-<div id="template-basics" class="section level2">
-<h2>Template Basics</h2>
-<p>R Markdown templates should be located within the <code>inst/rmarkdown/templates</code> directory of an R package. The minimum files required for a template are:</p>
-<p><strong>Directory:</strong> <code>inst/rmarkdown/templates/my_template</code></p>
-<pre class="bash"><code>template.yaml 
-skeleton/skeleton.Rmd </code></pre>
-<p>The contents of the two files might look like this:</p>
-<p><strong>template.yaml</strong></p>
-<pre class="yaml"><code>name: My Template</code></pre>
-<p><strong>skeleton/skeleton.Rmd</strong></p>
-<pre class="markdown"><code>---
-title: &quot;Untitled&quot;
-output:
-  html_document:
-    toc: true
-    fig_caption: true
----
-
-## Overview
-
-## Analysis
+<p>In addition to executing R code chunks, the <a href="http://yihui.name/knitr/">kntir</a> package can also execute chunks in a variety of other languages. Some of the available language engines include:</p>
+<ul>
+<li>Rcpp</li>
+<li>Python</li>
+<li>SQL</li>
+<li>Bash</li>
+<li>Stan</li>
+<li>JavaScript</li>
+<li>CSS</li>
+</ul>
+<p>For additional documentation and examples as well as a list of all supported engines see the <a href="http://yihui.name/knitr/demo/engines/">language engines</a> section of the knitr website.</p>
+<p>To process a code chunk using an alternate language engine you simply use the name of the engine in place of <code>r</code> in your chunk declaration, for example:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{bash}
+cat flights1.csv flights2.csv flights3.csv > flights.csv
+&#96;&#96;&#96;
 </code></pre>
-<p>This is a trivial example that simply overrides a couple of the default parameters of <code>html_document</code>. You could of course also include additional document structure, logo elements, stylesheets, etc.</p>
 </div>
-<div id="supporting-files" class="section level2">
-<h2>Supporting Files</h2>
-<p>If want to include supporting files with your template they should be placed in the <code>skeleton</code> directory. These files will be automatically copied alongside new documents. For example, if your template included a standard logo and stylesheet it contain the following:</p>
-<p><strong>Directory:</strong> <code>inst/rmarkdown/templates/my_template</code></p>
-<pre class="bash"><code>template.yaml 
-skeleton/skeleton.Rmd 
-skeleton/logo.png 
-skeleton/styles.css </code></pre>
-<p><strong>template.yaml</strong></p>
-<pre class="yaml"><code>name: My Template
-create_dir: true</code></pre>
-<p><strong>skeleton.Rmd</strong></p>
-<pre class="markdown"><code>---
-title: &quot;Untitled&quot;
-output:
-  html_document:
-    toc: true
-    fig_caption: true
-    css: styles.css
----
+<div id="rcpp" class="section level2">
+<h2>Rcpp</h2>
+<p>The <a href="http://rcpp.org">Rcpp</a> engine enables compilation of C++ into R functions via the Rcpp <code>sourceCpp</code> function. For example:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{Rcpp}
+#include &lt;Rcpp.h&gt;
+using namespace Rcpp;
 
-![](logo.png)
-
-## Overview
-
-## Analysis
+// [[Rcpp::export]]
+NumericVector timesTwo(NumericVector x) {
+  return x * 2;
+}
+&#96;&#96;&#96;
 </code></pre>
-<p>Note the use of the <code>create_dir</code> field in the template definition to indicate that a new directory should be created when documents are created from the template (this is a default that the user can override).</p>
-</div>
-<div id="custom-formats" class="section level2">
-<h2>Custom Formats</h2>
-<p>When creating a template it’s also convenient to create a <a href="developer_custom_formats.html">custom format</a> that is used by the template. Custom formats are useful when you have lots of supporting files or want to constrain the output options to a set of invariants established by the format.</p>
-<p>Here’s an example of a custom format based on <code>html_document</code>:</p>
-<pre class="r"><code>quarterly_report &lt;- function(toc = TRUE) {
+<p>Executing this chunk will compile the code and make the <code>timesTwo</code> C++ function available to R.</p>
+<div id="caching" class="section level3">
+<h3>Caching</h3>
+<p>You can cache the compilation of C++ code chunks using standard knitr caching. Note however that this feature currently requires development versions of both the Rcpp and knitr packages, which you can install as follows:</p>
+<pre class="r"><code>devtools::install_github(&quot;RcppCore/Rcpp&quot;)
+devtools::install_github(&quot;yihui/knitr&quot;)</code></pre>
+<p>To cache the compilation of an Rcpp chunk simply add the <code>cache = TRUE</code> option to the chunk:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{Rcpp, cache=TRUE}
+#include &lt;Rcpp.h&gt;
+using namespace Rcpp;
 
-  # get the locations of resource files located within the package
-  css &lt;- system.file(&quot;reports/styles.css&quot;, package = &quot;mypackage&quot;)
-  header &lt;- system.file(&quot;reports/quarterly/header.html&quot;, package = &quot;mypackage&quot;)
+// [[Rcpp::export]]
+NumericVector timesTwo(NumericVector x) {
+  return x * 2;
+}
+&#96;&#96;&#96;
+</code></pre>
+</div>
+<div id="combining-chunks" class="section level3">
+<h3>Combining Chunks</h3>
+<p>In some cases it’s desirable to combine all of the Rcpp code chunks in a document into a single compilation unit. This is especially useful when you want to intersperse narrative between pieces of C++ code (e.g. for a tutorial or user guide). It also reduces total compilation time for the document (since there is only a single invocation of the C++ compiler rather than multiple).</p>
+<p>To combine all Rcpp chunks into a single compilation unit you use the <code>ref.label</code> chunk option along with the <code>knitr::all_rcpp_labels()</code> function to collect all of the Rcpp chunks in the document. Here’s a simple example:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{Rcpp, ref.label=knitr::all_rcpp_labels(), cache=TRUE, include=FALSE}
+&#96;&#96;&#96;
+</code></pre>
+<pre class="markdown"><code>&#96;&#96;&#96;{Rcpp, eval = FALSE}
+#include &lt;Rcpp.h&gt;
+&#96;&#96;&#96;
+</code></pre>
+<pre class="markdown"><code>&#96;&#96;&#96;{Rcpp, eval = FALSE}
+// [[Rcpp::export]]
+int timesTwo(int x) {
+  return x * 2;
+}
+&#96;&#96;&#96;
+</code></pre>
+<p>The two Rcpp chunks that include code will be collected and compiled together in the first Rcpp chunk via the <code>ref.label</code> chunk option. Note that we set the <code>eval = FALSE</code> option on the Rcpp chunks with code in them to prevent them from being compiled again.</p>
+</div>
+</div>
+<div id="python" class="section level2">
+<h2>Python</h2>
+<p>The <a href="https://www.python.org/">python</a> engine enables execution of python code via an external python interpreter (the interpreter returned by <code>Sys.which(&quot;python&quot;)</code> is used to execute the code). Here’s a simple example:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{python}
+x = 'hello, python world!'
+print(x.split(' '))
+&#96;&#96;&#96;
+</code></pre>
+<p>Note that chunk options like <code>echo</code> and <code>results</code> are all valid when using a language engine like python. If your python code is generating raw HTML or LaTeX then the <code>results='asis'</code> option will ensure that it’s passed straight into the document’s output stream.</p>
+<div id="data-exchange" class="section level3">
+<h3>Data Exchange</h3>
+<p>Since the python engine executes code in an external process, exchanging data between R chunks and python chunks is done via the file system. If you are exchanging data frames, you can use the <a href="https://blog.rstudio.org/2016/03/29/feather/">feather</a> package for very high performance transfer of even large data frames between python and R. Here’s an example that uses feather to transfer a data frame created with pandas to R for plotting with ggplot2:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{python}
+import pandas
+import feather
 
-  # call the base html_document function
-  rmarkdown::html_document(toc = toc,
-                           fig_width = 6.5,
-                           fig_height = 4,
-                           theme = NULL,
-                           css = css,
-                           includes = includes(before_body = header))
-}</code></pre>
-<p>This format could then be used in a template follows:</p>
-<pre class="yaml"><code>---
-title: &quot;Untitled&quot;
-output: mypackage::quarterly_report
----</code></pre>
-<p>See the article on <a href="developer_custom_formats.html">Creating New Formats</a> for additional details on custom formats.</p>
+# Read flights data and select flights to O'Hare
+flights = pandas.read_csv("flights.csv")
+flights = flights[flights['dest'] == "ORD"]
+
+# Select carrier and delay columns and drop rows with missing values
+flights = flights[['carrier', 'dep_delay', 'arr_delay']]
+flights = flights.dropna()
+print flights.head(10)
+
+# Write to feather file for reading from R
+feather.write_dataframe(flights, "flights.feather")
+&#96;&#96;&#96;
+</code></pre>
+<p>Now we read the feather file from R and plot the data frame using ggplot2:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
+library(feather)
+library(ggplot2)
+
+# Read from feather and plot
+flights <- read_feather("flights.feather")
+ggplot(flights, aes(carrier, arr_delay)) + geom_point() + geom_jitter()
+&#96;&#96;&#96;
+</code></pre>
 </div>
-<div id="examples" class="section level2">
-<h2>Examples</h2>
-<div id="package-vignette" class="section level3">
-<h3>Package Vignette</h3>
-<p>The <a href="package_vignette_format.html">Package Vignette</a> format provides an example of a format that customizes the base <a href="html_document_format.html"><code>html_document</code></a> format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette <a href="https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R">format</a> and <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette">custom template</a> are a good starting point for creating your own HTML based formats.</p>
 </div>
-<div id="rticles-package" class="section level3">
-<h3>rticles Package</h3>
-<p>The <a href="https://github.com/rstudio/rticles">rticles</a> package includes three examples of templates (all of which have an associated custom format):</p>
-<ol style="list-style-type: decimal">
-<li><p><a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/jss_article">JSS article</a></p></li>
-<li><p><a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/rjournal_article">R Journal article</a></p></li>
-<li><p><a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/use_r_abstract">useR abstract</a></p></li>
-</ol>
-<p>Both of these use custom LaTeX templates to produce output that conforms to the document standards of JSS and useR.</p>
+<div id="sql" class="section level2">
+<h2>SQL</h2>
+<p>The <a href="https://en.wikipedia.org/wiki/SQL">SQL</a> engine uses the <a href="https://github.com/rstats-db/DBI">DBI</a> package to execute SQL queries, print their results, and optionally assign the results to a data frame. Note that the SQL engine is currently under development. A branch of knitr that supports the SQL engine can be installed as follows:</p>
+<pre class="r"><code>devtools::install_github(&quot;yihui/knitr#1241&quot;)</code></pre>
+<p>To use the knitr SQL engine you first need to establish a DBI connection to a database (typically via the <code>dbConnect</code> function). You can make use of this connection in a SQL chunk via the <code>connection</code> option. For example:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
+library(DBI)
+db <- dbConnect(RSQLite::SQLite(), dbname = "sql.sqlite")
+&#96;&#96;&#96;
+</code></pre>
+<pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db}
+SELECT * FROM trials
+&#96;&#96;&#96;
+</code></pre>
+<p>By default, this will display records from the <code>trials</code> table within the document.</p>
+<div id="data-frames" class="section level3">
+<h3>Data Frames</h3>
+<p>If you want to assign the results of the SQL query to an R data frame, you can do this using the <code>output.var</code> option, for example:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, output.var=trials}
+SELECT * FROM trials
+&#96;&#96;&#96;
+</code></pre>
 </div>
+<div id="parameters" class="section level3">
+<h3>Parameters</h3>
+<p>If you need to bind the values of R variables into SQL queries, you can do so by prefacing R variable references with a <code>?</code>. For example:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
+subjects <- 10
+&#96;&#96;&#96;
+</code></pre>
+<pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, output.var="trials"}
+SELECT * FROM trials WHERE subjects >= ?subjects
+&#96;&#96;&#96;
+</code></pre>
+</div>
+</div>
+<div id="stan" class="section level2">
+<h2>Stan</h2>
+<p>The <a href="http://mc-stan.org/">Stan</a> engine enables embedding of the Stan probabilistic programming language within R Markdown documents. The Stan model within the code chunk is compiled into a <code>stanmodel</code> object and is assigned it to a variable with the name given by the <code>x</code> option. For example:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{stan, x="ex1"}
+parameters {
+  real y[2]; 
+} 
+model {
+  y[1] ~ normal(0, 1);
+  y[2] ~ double_exponential(0, 2);
+} 
+&#96;&#96;&#96;
+</code></pre>
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
+library(rstan)
+fit <- sampling(ex1) 
+print(fit)
+&#96;&#96;&#96;
+</code></pre>
+</div>
+<div id="bash" class="section level2">
+<h2>Bash</h2>
+<p>The <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)">bash</a> engine enables the execution of shell scripts via the bash interpreter (note that <code>sh</code> and <code>zsh</code> engines are also available). For example:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{bash}
+cat flights1.csv flights2.csv flights3.csv > flights.csv
+&#96;&#96;&#96;
+</code></pre>
+</div>
+<div id="javascript" class="section level2">
+<h2>JavaScript</h2>
+<p>If you are using an R Markdown format that targets HTML output (e.g. <a href="html_document_format">html_document</a>, <a href="ioslides_presentation_format.html">ioslides_presenation</a>, etc.) then you can include JavaScript to be executed within the HTML page using the <a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a> engine.</p>
+<p>For example, the following chunk uses <a href="https://jquery.com/">jQuery</a> (which is included in most R Markdown HTML formats) to hide the document title:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{js}
+$('.title').remove()
+&#96;&#96;&#96;
+</code></pre>
+<p>Note that the JavaScript engine is specified using abbreviation <code>js</code>.</p>
+</div>
+<div id="css" class="section level2">
+<h2>CSS</h2>
+<p>If you are using an R Markdown format that targets HTML output (e.g. <a href="html_document_format">html_document</a>, <a href="ioslides_presentation_format.html">ioslides_presenation</a>, etc.) then you can include CSS to applied to the HTML page using the <a href="https://en.wikipedia.org/wiki/CSS">CSS</a> engine.</p>
+<p>For example, the following code chunk turns text within the document body red:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{css}
+body {
+  color: red;
+}
+&#96;&#96;&#96;
+</code></pre>
 </div>
 
 
