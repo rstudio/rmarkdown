@@ -10,6 +10,7 @@ output:
 
 ```{js}
 $("#rStudioHeader").removeClass("alwaysShrunk");
+$("#pageContent").removeClass("standardPadding");
 ```
 
 

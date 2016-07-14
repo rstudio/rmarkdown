@@ -6,7 +6,7 @@ body {
   color: #404040;
 }
 
-html, body {
+html, body, .footerPushDown {
   height: 100%;
 }
 
@@ -248,7 +248,7 @@ html, body {
   display: block;
 }
 
-#pageContent {
+.standardPadding {
   padding: 80px 5%;
 }
 
@@ -669,6 +669,3 @@ table.table td a:only-child:active {
   padding-top: 58px;
   margin-top: -58px;
 }
-
-
-
