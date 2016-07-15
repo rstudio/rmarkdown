@@ -146,26 +146,32 @@ button.code-folding-btn:focus {
 }
 </style>
 
-<!-- knitsql -->
+$if(kable)$
 <style type="text/css">
-.knitsql-table {
+.kable-table {
   border: 1px solid #ccc;
   border-radius: 4px;
-  max-height: 350px;
+  max-height: $kable_max_height$;
   overflow: auto;
   padding-left: 8px;
   padding-right: 8px;
+  margin-bottom: 20px;
 }
 
-.knitsql-table table>thead>tr>th {
+.kable-table table {
+  margin-bottom: 0px;
+}
+
+.kable-table table>thead>tr>th {
   border: none;
   border-bottom: 2px solid #dddddd;
 }
 
-.knitsql-table table>thead {
+.kable-table table>thead {
   background-color: #fff;
 }
 </style>
+$endif$
 
 $if(navbar)$
 <style type="text/css">
@@ -471,17 +477,23 @@ $$(document).ready(function () {
   $$('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
 
-// knitsql
+$if(kable)$
 $$(document).ready(function () {
-  var container = $$('.knitsql-table');
-  var table = container.children('table');
-  var caption = table.children('caption').detach();
-  caption.insertBefore(container).css('display', 'inherit');
-  table.stickyTableHeaders({
-    scrollableArea: container,
-    fixedOffset: 1
+  $$('.knitsql-table').addClass('kable-table');
+  var container = $$('.kable-table');
+  container.each(function() {
+    var table = $$(this).children('table');
+    var caption = table.children('caption').detach();
+    caption.insertBefore($$(this)).css('display', 'inherit');
+    if ($$(this).css('max-height') !== "none") {
+      table.stickyTableHeaders({
+        scrollableArea: $$(this),
+        fixedOffset: 1
+      });
+    }
   });
 });
+$endif$
 
 </script>
 $endif$

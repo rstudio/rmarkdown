@@ -18,6 +18,13 @@
 #'  outputting HTML directly into the markdown document).
 #'@param fig_caption \code{TRUE} to render figures with captions
 #'@param dev Graphics device to use for figure output (defaults to png)
+#'@param kable Use the \code{\link[knitr:kable]{knitr::kable}} function for
+#'  printing data frames. To specify a maximum height pass the sub-option
+#'  \code{max_height}, which can be any CSS height property (e.g. "350px",
+#'  which is the default). Specifying a \code{max_height} will result in a
+#'  scrolling table if the height exceeds the threshold. Specify
+#'  \code{max_height: none} to prevent scrollbars and always show all of
+#'   the records.
 #'@param code_folding Enable document readers to toggle the display of R code
 #'  chunks. Specify \code{"none"} to display all code chunks (assuming
 #'  they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
@@ -192,6 +199,7 @@ html_document <- function(toc = FALSE,
                           fig_retina = 2,
                           fig_caption = TRUE,
                           dev = 'png',
+                          kable = TRUE,
                           code_folding = c("none", "show", "hide"),
                           code_download = FALSE,
                           smart = TRUE,
@@ -305,10 +313,18 @@ html_document <- function(toc = FALSE,
     # if we have a theme then we can do stickytableheaders for sql
     if (!is.null(theme)) {
       knit_sql_max_print <- knitr::opts_knit$get('sql.max.print');
-      knitr::opts_knit$set(sql.max.print = 1000)
-      exit_actions <<- c(exit_actions, function() {
-        knitr::opts_knit$set(sql.max.print = knit_sql_max_print)
-      })
+      if (is.null(knit_sql_max_print)) {
+        knitr::opts_knit$set(sql.max.print = 1000)
+        exit_actions <<- c(exit_actions, function() {
+          knitr::opts_knit$set(sql.max.print = knit_sql_max_print)
+        })
+      }
+    }
+
+    # set kable option in render context (requires theme)
+    if (!is.null(theme)) {
+      context <- render_context()
+      context$kable <- ifelse(is.list(kable), TRUE, kable)
     }
   }
 
@@ -416,6 +432,17 @@ html_document <- function(toc = FALSE,
     # code menu
     if (code_menu)
       args <- c(args, pandoc_variable_arg("code_menu", "1"))
+
+    # kable
+    if (is.list(kable) || isTRUE(kable)) {
+      kable_max_height <- "350px"
+      if (is.list(kable)) {
+        if (!is.null(kable$max_height))
+          kable_max_height <- kable$max_height
+      }
+      args <- c(args, pandoc_variable_arg("kable", "1"))
+      args <- c(args, pandoc_variable_arg("kable_max_height", kable_max_height))
+    }
 
     # content includes (we do this here so that user include-in-header content
     # goes after dependency generated content). make the paths absolute if
