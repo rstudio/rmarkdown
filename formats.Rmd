@@ -11,35 +11,31 @@ output:
 
 <div class="band full">
   <div class="bandContent pageTitle">Formats</div>
-  <div class="bandContent pageIntro">Create output in any of these formats ... </div>
+  <div class="bandContent pageIntro">Use R Markdown to create output in any of these formats. Select one to learn more.</div>
   <div class="bandContent">
-    <div class="links">
-      <div class="linkSection">
-        <div class="linkSectionTitle">Documents</div>
-        <a href="html_document_format.html">HTML</a>
-        <a href="pdf_document_format.html">PDF</a>
-        <a href="word_document_format.html">Word</a>
-        <a href="odt_document_format.html">ODT</a>
-        <a href="rtf_document_format.html">RTF</a>
-        <a href="markdown_document_format.html">Markdown</a>
-      </div>
-      <div class="linkSection">
-        <div class="linkSectionTitle">Presentations</div>
-        <a href="ioslides_presentation_format.html">ioslides</a>
-        <a href="revealjs_presentation_format.html">reveal.js</a>
-        <a href="slidy_presentation_format.html">Slidy</a>
-        <a href="beamer_presentation_format.html">Beamer</a>
-      </div>
-      <div class="linkSection">
-        <div class="linkSectionTitle">Other</div>
-        <a href="tufte_handout_format.html">Tufte Handout</a>
-        <a href="package_vignette_format.html">Package Vignette</a>
-        <a href="github_document_format.html">GitHub Document</a>
-      </div>
+    <div class="formatSection">
+      <div class="formatSectionTitle">Documents</div>
+      <a class="doc html" href="html_document_format.html"><div>HTML</div></a>
+      <a class="doc pdf" href="pdf_document_format.html"><div>PDF</div></a>
+      <a class="doc word" href="word_document_format.html"><div>Word</div></a>
+      <a class="doc odt" href="odt_document_format.html"><div>ODT</div></a>
+      <a class="doc rtf" href="rtf_document_format.html"><div>RTF</div></a>
+      <a class="doc markdown" href="markdown_document_format.html"><div>Markdown</div></a>
+    </div>
+    <div class="formatSection">
+      <div class="formatSectionTitle">Presentations</div>
+      <a class="pres ioslides" href="ioslides_presentation_format.html"><div>ioslides</div></a>
+      <a class="pres reveal" href="revealjs_presentation_format.html"><div>reveal.js</div></a>
+      <a class="pres slidy" href="slidy_presentation_format.html"><div>Slidy</div></a>
+      <a class="pres beamer" href="beamer_presentation_format.html"><div>Beamer</div></a>
+    </div>
+    <div class="formatSection">
+      <div class="formatSectionTitle">More</div>
+      <a class="more tufte" href="tufte_handout_format.html"><div>Tufte Handout</div></a>
+      <a class="more vignette" href="package_vignette_format.html"><div>Package Vignette</div></a>
+      <a class="more github" href="github_document_format.html"><div>GitHub Document</div></a>
     </div>
   </div>
 </div>
 
 <!--/html_preserve-->
-
-

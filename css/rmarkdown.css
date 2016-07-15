@@ -263,6 +263,15 @@ html, body, .footerPushDown {
   margin-bottom: 30px;
 }
 
+#pageContent .columns {
+  display: flex;
+  justify-content: space-between;
+}
+
+#pageContent .columns .column3 {
+  max-width: 33%;
+}
+
 #pageContent .linkSection {
   line-height: 20px;
   margin-bottom: 20px;
@@ -271,16 +280,24 @@ html, body, .footerPushDown {
 #pageContent .links a {
   display: block;
   max-width: 500px;
-  padding: 5px 0;
+  padding: 5px 0 5px 18px;
+  background-repeat: no-repeat;
+  background-position: left 10px;
+  background-size: 10px 10px;
+  background-image: url(../images/link-icon.png);
 }
 
-.gallerySection {
+.gallerySection, .formatSection {
   margin-bottom: 50px;
 }
 
-.gallerySection .gallerySectionTitle {
+.gallerySection .gallerySectionTitle, .formatSection .formatSectionTitle {
   font-size: 30px;
   font-weight: 300;
+}
+
+.formatSection .formatSectionTitle {
+  margin-bottom: 10px;
 }
 
 .gallerySection .galleryIntro {
@@ -320,6 +337,105 @@ html, body, .footerPushDown {
   padding: 0px 10px 10px 10px;
 }
 
+.formatSection a.doc, .formatSection a.pres, .formatSection a.more {
+  display: inline-block;
+  margin: 0 15px 15px 0;
+
+  color: #fff;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+
+  vertical-align: top;
+
+  background-color: #f0f0f0;
+}
+
+.formatSection a.doc, .formatSection a.more {
+  border-radius: 9px;
+  height: 180px;
+  width: 140px;
+
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-image: url(../images/doc-corner.png);
+}
+
+.formatSection a.pres {
+  height: 160px;
+  width: 180px;
+  border-radius: 15px;
+}
+
+.formatSection a.doc div, .formatSection a.more div {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 4px;
+  margin: 0 1px;
+}
+
+.formatSection a.pres div {
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 30px 0;
+  margin: 0 30px;
+  border-radius: 5px;
+}
+
+.formatSection a.doc.html {
+  background-color: #8cb06c;
+}
+
+.formatSection a.doc.pdf {
+  background-color: #b60300;
+}
+
+.formatSection a.doc.word {
+  background-color: #29559c;
+}
+
+.formatSection a.doc.odt {
+  background-color: #7b8d8e;
+}
+
+.formatSection a.doc.rtf {
+  background-color: #843511;
+}
+
+.formatSection a.doc.markdown {
+  background-color: #5a9ddb;
+}
+
+.formatSection a.pres.ioslides {
+  background-color: #5d4c45;
+}
+
+.formatSection a.pres.reveal {
+  background-color: #669ca6;
+}
+
+.formatSection a.pres.slidy {
+  background-color: #e6553a;
+}
+
+.formatSection a.pres.beamer {
+  background-color: #f9b02d;
+}
+
+.formatSection a.more.tufte {
+  background-color: #aba06f;
+}
+
+.formatSection a.more.vignette {
+  background-color: #448bca;
+}
+
+.formatSection a.more.github {
+  background-color: #7e363c;
+}
+
 #homeContent .tagline {
   padding-top: 100px;
   font-size: 32px;
@@ -328,7 +444,7 @@ html, body, .footerPushDown {
 
 #homeContent a {
   text-decoration: none;
-  color: #75aadb;
+  color: #2780e3;
 }
 
 #homeContent .blue a {
@@ -395,7 +511,7 @@ html, body, .footerPushDown {
 
 #homeContent .bigButton.gallery {
   color: #fff;
-  background-color: #a3c586;
+  background-color: #8cb06c;
 }
 
 #homeContent .bigButton.getStarted {
@@ -413,7 +529,7 @@ html, body, .footerPushDown {
 
 #rStudioFooter.band {
 
-  background-color: #5d4c45;
+  background-color: #75aadb;
   padding: 30px 5%;
 
   color: #fff;
@@ -596,6 +712,14 @@ html, body, .footerPushDown {
 
   .gallerySection .gallerySectionTitle {
     font-size: 24px;
+  }
+
+  #pageContent .columns {
+    display: block;
+  }
+
+  #pageContent .columns .column3 {
+    max-width: none;
   }
 
 }
