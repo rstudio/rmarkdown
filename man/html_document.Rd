@@ -42,11 +42,10 @@ outputting HTML directly into the markdown document).}
 
 \item{kable}{Use the \code{\link[knitr:kable]{knitr::kable}} function for
 printing data frames. To specify a maximum height pass the sub-option
-\code{max_height}, which can be any CSS height property (e.g. "350px",
-which is the default). Specifying a \code{max_height} will result in a
-scrolling table if the height exceeds the threshold. Specify
-\code{max_height: none} to prevent scrollbars and always show all of
- the records.}
+\code{max_height}, which can be any CSS height property (e.g. "350px").
+Specifying a \code{max_height} will result in a scrolling table if the
+height exceeds the threshold. The default \code{max_height} is "none"
+which displays all of the records inline.}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
 chunks. Specify \code{"none"} to display all code chunks (assuming
