@@ -7,7 +7,6 @@
 \alias{html_dependency_ionicons}
 \alias{html_dependency_jquery}
 \alias{html_dependency_jqueryui}
-\alias{html_dependency_stickytableheaders}
 \alias{html_dependency_tocify}
 \title{Provide common HTML dependencies for R Markdown formats}
 \usage{
@@ -22,8 +21,6 @@ html_dependency_tocify()
 html_dependency_font_awesome()
 
 html_dependency_ionicons()
-
-html_dependency_stickytableheaders()
 }
 \arguments{
 \item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
@@ -34,7 +31,5 @@ use the \code{css} parameter to add your own styles).}
 \description{
 These functions provide common HTML dependencies (e.g. jquery, bootstrap)
 for re-use by other R Markdown formats.
-
-create an html_dependency for stickytableheaders
 }
 

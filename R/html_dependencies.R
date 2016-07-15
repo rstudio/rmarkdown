@@ -85,9 +85,8 @@ html_dependency_ionicons <- function() {
   )
 }
 
-#' create an html_dependency for stickytableheaders
-#' @rdname html-dependencies
-#' @export
+# create an html_dependency for stickytableheaders (not exported
+# b/c we are likely to eventually use a different library)
 html_dependency_stickytableheaders <- function() {
   htmlDependency(
     "stickytableheaders",
