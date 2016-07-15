@@ -258,6 +258,13 @@ html_document <- function(toc = FALSE,
       args <- c(args, pandoc_variable_arg("toc_print", "1"))
   }
 
+  # stickytableheaders (requires theme)
+  if (!is.null(theme)) {
+    extra_dependencies <- append(extra_dependencies,
+                                 list(html_dependency_jquery(),
+                                      html_dependency_stickytableheaders()))
+  }
+
   # template path and assets
   if (identical(template, "default"))
     args <- c(args, "--template",
@@ -276,6 +283,13 @@ html_document <- function(toc = FALSE,
   # validate code_folding
   code_folding <- match.arg(code_folding)
 
+  # manage list of exit_actions (backing out changes to knitr options)
+  exit_actions <- list()
+  on_exit <- function() {
+    for (action in exit_actions)
+      try(action())
+  }
+
   # capture the source code if requested
   source_code <- NULL
   source_file <- NULL
@@ -286,6 +300,15 @@ html_document <- function(toc = FALSE,
         '<div id="rmd-source-code">',
         base64enc::base64encode(input),
         '</div>')
+    }
+
+    # if we have a theme then we can do stickytableheaders for sql
+    if (!is.null(theme)) {
+      knit_sql_max_print <- knitr::opts_knit$get('sql.max.print');
+      knitr::opts_knit$set(sql.max.print = 1000)
+      exit_actions <<- c(exit_actions, function() {
+        knitr::opts_knit$set(sql.max.print = knit_sql_max_print)
+      })
     }
   }
 
@@ -419,6 +442,7 @@ html_document <- function(toc = FALSE,
     pre_knit = pre_knit,
     post_knit = post_knit,
     pre_processor = pre_processor,
+    on_exit = on_exit,
     base_format = html_document_base(smart = smart, theme = theme,
                                      self_contained = self_contained,
                                      lib_dir = lib_dir, mathjax = mathjax,
