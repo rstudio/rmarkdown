@@ -151,11 +151,14 @@ $if(kable)$
 .kable-table {
   border: 1px solid #ccc;
   border-radius: 4px;
-  max-height: $kable_max_height$;
   overflow: auto;
   padding-left: 8px;
   padding-right: 8px;
   margin-bottom: 20px;
+}
+
+.knitsql-table {
+  max-height: 350px;
 }
 
 .kable-table table {
@@ -482,10 +485,21 @@ $$(document).ready(function () {
   $$('.knitsql-table').addClass('kable-table');
   var container = $$('.kable-table');
   container.each(function() {
+
+    // move the caption out of the table
     var table = $$(this).children('table');
     var caption = table.children('caption').detach();
     caption.insertBefore($$(this)).css('display', 'inherit');
-    if ($$(this).css('max-height') !== "none") {
+
+    // if there is an explicit max-height or this is a
+    // knitrsql-table then apply sticktableheaders
+    if ("$kable_max_height$" !== "none" || $$(this).hasClass('knitsql-table')) {
+
+      // apply max height
+      if ("$kable_max_height$" !== "none")
+        $$(this).css('max-height', "$kable_max_height$");
+
+      // sticky table headers
       table.stickyTableHeaders({
         scrollableArea: $$(this),
         fixedOffset: 1
