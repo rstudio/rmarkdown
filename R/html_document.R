@@ -314,7 +314,7 @@ html_document <- function(toc = FALSE,
     if (!is.null(theme)) {
       knit_sql_max_print <- knitr::opts_knit$get('sql.max.print');
       if (is.null(knit_sql_max_print)) {
-        knitr::opts_knit$set(sql.max.print = 1000)
+        knitr::opts_knit$set(sql.max.print = 100)
         exit_actions <<- c(exit_actions, function() {
           knitr::opts_knit$set(sql.max.print = knit_sql_max_print)
         })
