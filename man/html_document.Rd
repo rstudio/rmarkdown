@@ -6,13 +6,13 @@
 \usage{
 html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   number_sections = FALSE, fig_width = 7, fig_height = 5,
-  fig_retina = 2, fig_caption = TRUE, dev = "png", kable = TRUE,
-  code_folding = c("none", "show", "hide"), code_download = FALSE,
-  smart = TRUE, self_contained = TRUE, theme = "default",
-  highlight = "default", mathjax = "default", template = "default",
-  extra_dependencies = NULL, css = NULL, includes = NULL,
-  keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
-  pandoc_args = NULL, ...)
+  fig_retina = 2, fig_caption = TRUE, dev = "png",
+  df_print = c("default", "kable", "tibble"), code_folding = c("none",
+  "show", "hide"), code_download = FALSE, smart = TRUE,
+  self_contained = TRUE, theme = "default", highlight = "default",
+  mathjax = "default", template = "default", extra_dependencies = NULL,
+  css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
+  md_extensions = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -40,12 +40,13 @@ outputting HTML directly into the markdown document).}
 
 \item{dev}{Graphics device to use for figure output (defaults to png)}
 
-\item{kable}{Use the \code{\link[knitr:kable]{knitr::kable}} function for
-printing data frames. To specify a maximum height pass the sub-option
-\code{max_height}, which can be any CSS height property (e.g. "350px").
-Specifying a \code{max_height} will result in a scrolling table if the
-height exceeds the threshold. The default \code{max_height} is "none"
-which displays all of the records inline.}
+\item{df_print}{Method to be used for printing data frames. Valid values
+include "default", "kable", and "tibble". The "default" method uses
+\code{print.data.frame}. The "kable" method uses the
+\code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+the \pkg{tibble} package to print a summary of the data frame. In addition
+to the named methods you can also pass an arbitrary function to be used
+for printing data frames.}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
 chunks. Specify \code{"none"} to display all code chunks (assuming

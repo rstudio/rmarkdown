@@ -6,10 +6,10 @@
 \usage{
 html_notebook(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   number_sections = FALSE, fig_width = 7, fig_height = 5,
-  fig_retina = 2, fig_caption = TRUE, kable = list(max_height = "350px"),
-  code_folding = "show", smart = TRUE, theme = "default",
-  highlight = "textmate", mathjax = "default", extra_dependencies = NULL,
-  css = NULL, includes = NULL, md_extensions = NULL, pandoc_args = NULL,
+  fig_retina = 2, fig_caption = TRUE, code_folding = "show",
+  smart = TRUE, theme = "default", highlight = "textmate",
+  mathjax = "default", extra_dependencies = NULL, css = NULL,
+  includes = NULL, md_extensions = NULL, pandoc_args = NULL,
   output_source = NULL, self_contained = TRUE, ...)
 }
 \arguments{
@@ -35,13 +35,6 @@ prevent retina scaling. Note that this will always be \code{NULL} when
 outputting HTML directly into the markdown document).}
 
 \item{fig_caption}{\code{TRUE} to render figures with captions}
-
-\item{kable}{Use the \code{\link[knitr:kable]{knitr::kable}} function for
-printing data frames. To specify a maximum height pass the sub-option
-\code{max_height}, which can be any CSS height property (e.g. "350px").
-Specifying a \code{max_height} will result in a scrolling table if the
-height exceeds the threshold. The default \code{max_height} is "none"
-which displays all of the records inline.}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
 chunks. Specify \code{"none"} to display all code chunks (assuming
