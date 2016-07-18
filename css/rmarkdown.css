@@ -355,86 +355,38 @@ html, body, .footerPushDown {
   background-color: #f0f0f0;
 }
 
-.formatSection a.doc, .formatSection a.more {
-  border-radius: 9px;
-  height: 180px;
-  width: 140px;
-
-  background-repeat: no-repeat;
-  background-position: right top;
-  background-image: url(../images/doc-corner.png);
+.formatTable {
+  display: table;
+  width: 100%;
+  font-size: 16px;
 }
 
-.formatSection a.pres {
-  height: 160px;
-  width: 180px;
-  border-radius: 15px;
+.formatTable .formatTableRow {
+  display: table-row;
+  text-decoration: none;
 }
 
-.formatSection a.doc div, .formatSection a.more div {
-  background-color: rgba(255, 255, 255, 0.15);
-  padding: 4px;
-  margin: 0 1px;
+.formatTable .formatTableRow:hover {
+  background-color: #f8f8f8;
 }
 
-.formatSection a.pres div {
-  background-color: rgba(255, 255, 255, 0.15);
-  padding: 30px 0;
-  margin: 0 30px;
-  border-radius: 5px;
+.formatTable .formatName {
+  display: table-cell;
+  font-size: 20px;
+  padding: 10px;
+  width: 200px;
 }
 
-.formatSection a.doc.html {
-  background-color: #8cb06c;
+.formatTable .formatDescription {
+  display: table-cell;
+  line-height: 20px;
+  padding-bottom: 10px;
 }
 
-.formatSection a.doc.pdf {
-  background-color: #b60300;
+.formatTable a.formatTableRow .formatDescription {
+  color: #404040;
 }
 
-.formatSection a.doc.word {
-  background-color: #29559c;
-}
-
-.formatSection a.doc.odt {
-  background-color: #7b8d8e;
-}
-
-.formatSection a.doc.rtf {
-  background-color: #843511;
-}
-
-.formatSection a.doc.markdown {
-  background-color: #5a9ddb;
-}
-
-.formatSection a.pres.ioslides {
-  background-color: #5d4c45;
-}
-
-.formatSection a.pres.reveal {
-  background-color: #669ca6;
-}
-
-.formatSection a.pres.slidy {
-  background-color: #e6553a;
-}
-
-.formatSection a.pres.beamer {
-  background-color: #f9b02d;
-}
-
-.formatSection a.more.tufte {
-  background-color: #aba06f;
-}
-
-.formatSection a.more.vignette {
-  background-color: #448bca;
-}
-
-.formatSection a.more.github {
-  background-color: #7e363c;
-}
 
 #homeContent .tagline {
   padding-top: 100px;
@@ -727,6 +679,9 @@ html, body, .footerPushDown {
 @media screen and (max-width: 500px){
   .gallerySection .galleryItems .galleryItem {
     width: 100%;
+  }
+  .formatTable .formatName {
+    width: 150px;
   }
 }
 
