@@ -146,7 +146,7 @@ button.code-folding-btn:focus {
 }
 </style>
 
-$if(kable)$
+$if(kable-scroll)$
 <style type="text/css">
 .kable-table {
   border: 1px solid #ccc;
@@ -155,9 +155,6 @@ $if(kable)$
   padding-left: 8px;
   padding-right: 8px;
   margin-bottom: 20px;
-}
-
-.knitsql-table {
   max-height: 350px;
 }
 
@@ -480,7 +477,7 @@ $$(document).ready(function () {
   $$('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
 
-$if(kable)$
+$if(kable-scroll)$
 $$(document).ready(function () {
   $$('.knitsql-table').addClass('kable-table');
   var container = $$('.kable-table');
@@ -491,20 +488,11 @@ $$(document).ready(function () {
     var caption = table.children('caption').detach();
     caption.insertBefore($$(this)).css('display', 'inherit');
 
-    // if there is an explicit max-height or this is a
-    // knitrsql-table then apply sticktableheaders
-    if ("$kable_max_height$" !== "none" || $$(this).hasClass('knitsql-table')) {
-
-      // apply max height
-      if ("$kable_max_height$" !== "none")
-        $$(this).css('max-height', "$kable_max_height$");
-
-      // sticky table headers
-      table.stickyTableHeaders({
-        scrollableArea: $$(this),
-        fixedOffset: 1
-      });
-    }
+    // sticky table headers
+    table.stickyTableHeaders({
+      scrollableArea: $$(this),
+      fixedOffset: 1
+    });
   });
 });
 $endif$

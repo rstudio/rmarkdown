@@ -18,12 +18,13 @@
 #'  outputting HTML directly into the markdown document).
 #'@param fig_caption \code{TRUE} to render figures with captions
 #'@param dev Graphics device to use for figure output (defaults to png)
-#'@param kable Use the \code{\link[knitr:kable]{knitr::kable}} function for
-#'  printing data frames. To specify a maximum height pass the sub-option
-#'  \code{max_height}, which can be any CSS height property (e.g. "350px").
-#'  Specifying a \code{max_height} will result in a scrolling table if the
-#'  height exceeds the threshold. The default \code{max_height} is "none"
-#'  which displays all of the records inline.
+#'@param df_print Method to be used for printing data frames. Valid values
+#'  include "default", "kable", and "tibble". The "default" method uses
+#'  \code{print.data.frame}. The "kable" method uses the
+#'  \code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+#'  the \pkg{tibble} package to print a summary of the data frame. In addition
+#'  to the named methods you can also pass an arbitrary function to be used
+#'  for printing data frames.
 #'@param code_folding Enable document readers to toggle the display of R code
 #'  chunks. Specify \code{"none"} to display all code chunks (assuming
 #'  they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
@@ -198,7 +199,7 @@ html_document <- function(toc = FALSE,
                           fig_retina = 2,
                           fig_caption = TRUE,
                           dev = 'png',
-                          kable = TRUE,
+                          df_print = c("default", "kable", "tibble"),
                           code_folding = c("none", "show", "hide"),
                           code_download = FALSE,
                           smart = TRUE,
@@ -265,13 +266,6 @@ html_document <- function(toc = FALSE,
       args <- c(args, pandoc_variable_arg("toc_print", "1"))
   }
 
-  # stickytableheaders (requires theme)
-  if (!is.null(theme)) {
-    extra_dependencies <- append(extra_dependencies,
-                                 list(html_dependency_jquery(),
-                                      html_dependency_stickytableheaders()))
-  }
-
   # template path and assets
   if (identical(template, "default"))
     args <- c(args, "--template",
@@ -309,22 +303,9 @@ html_document <- function(toc = FALSE,
         '</div>')
     }
 
-    # if we have a theme then we can do stickytableheaders for sql
-    if (!is.null(theme)) {
-      knit_sql_max_print <- knitr::opts_knit$get('sql.max.print');
-      if (is.null(knit_sql_max_print)) {
-        knitr::opts_knit$set(sql.max.print = 100)
-        exit_actions <<- c(exit_actions, function() {
-          knitr::opts_knit$set(sql.max.print = knit_sql_max_print)
-        })
-      }
-    }
-
-    # set kable option in render context (requires theme)
-    if (!is.null(theme)) {
-      context <- render_context()
-      context$kable <- ifelse(is.list(kable), TRUE, kable)
-    }
+    # set df_print option in render context
+    context <- render_context()
+    context$df_print <- resolve_df_print(df_print)
   }
 
   # pre-processor for arguments that may depend on the name of the
@@ -431,17 +412,6 @@ html_document <- function(toc = FALSE,
     # code menu
     if (code_menu)
       args <- c(args, pandoc_variable_arg("code_menu", "1"))
-
-    # kable
-    if (is.list(kable) || isTRUE(kable)) {
-      kable_max_height <- "none"
-      if (is.list(kable)) {
-        if (!is.null(kable$max_height))
-          kable_max_height <- kable$max_height
-      }
-      args <- c(args, pandoc_variable_arg("kable", "1"))
-      args <- c(args, pandoc_variable_arg("kable_max_height", kable_max_height))
-    }
 
     # content includes (we do this here so that user include-in-header content
     # goes after dependency generated content). make the paths absolute if

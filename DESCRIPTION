@@ -75,7 +75,8 @@ Suggests:
     shiny (>= 0.11),
     tufte,
     testthat,
-    digest
+    digest,
+    tibble
 SystemRequirements: pandoc (>= 1.12.3) - http://johnmacfarlane.net/pandoc
 URL: http://rmarkdown.rstudio.com
 License: GPL-3

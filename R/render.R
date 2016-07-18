@@ -657,3 +657,30 @@ merge_render_context <- function(context) {
     context[[el]] <- get(el, envir = render_context())
   context
 }
+
+resolve_df_print <- function(df_print) {
+
+  # available methods
+  valid_methods <- c("default", "kable", "tibble")
+
+  # if we are passed all of valid_methods then select the first one
+  if (identical(valid_methods, df_print))
+    df_print <- valid_methods[[1]]
+
+  if (!is.function(df_print)) {
+    if (df_print == "kable")
+      df_print <- knitr::kable
+    else if (df_print == "tibble")
+      df_print <- function(x) print(tibble::as_tibble(x))
+    else if (df_print == "default")
+      df_print <- print.data.frame
+    else
+      stop('Invalid value for df_print (valid values are ',
+           paste(valid_methods, collapse = ", "), call. = FALSE)
+  }
+
+  df_print
+}
+
+
+

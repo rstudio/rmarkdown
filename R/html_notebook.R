@@ -25,7 +25,6 @@ html_notebook <- function(toc = FALSE,
                           fig_height = 5,
                           fig_retina = 2,
                           fig_caption = TRUE,
-                          kable = list(max_height = "350px"),
                           code_folding = "show",
                           smart = TRUE,
                           theme = "default",
@@ -125,6 +124,25 @@ html_notebook <- function(toc = FALSE,
         as_evaluate_output(output, context, ...)
       })
     }
+
+    # set large max.print for knitr sql engine (since we will give
+    # it a scrolling treatment)
+    knit_sql_max_print <- knitr::opts_knit$get('sql.max.print');
+    if (is.null(knit_sql_max_print)) {
+      knitr::opts_knit$set(sql.max.print = 1000)
+      exit_actions <<- c(exit_actions, function() {
+        knitr::opts_knit$set(sql.max.print = knit_sql_max_print)
+      })
+    }
+  }
+
+  # pre-processor adds kable-scroll argument to give scrolling treatment for
+  # data frames (which are printed via kable by default)
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
+                            output_dir) {
+    args <- c()
+    args <- c(args, pandoc_variable_arg("kable-scroll", "1"))
+    args
   }
 
   # post-processor to rename output file if necessary
@@ -142,12 +160,17 @@ html_notebook <- function(toc = FALSE,
 
   # these arguments to html_document are fixed so we need to
   # flag them as invalid for users
-  fixed_args <- c("keep_md", "template", "lib_dir", "dev")
+  fixed_args <- c("keep_md", "template", "lib_dir", "dev", "df_print")
   forwarded_args <- names(list(...))
   for (arg in forwarded_args) {
     if (arg %in% fixed_args)
       stop("The ", arg, " option is not valid for the html_notebook format.")
   }
+
+  # add stickytableheaders dependency
+  extra_dependencies <- append(extra_dependencies,
+                               list(html_dependency_jquery(),
+                                    html_dependency_stickytableheaders()))
 
   # generate actual format
   base_format <- html_document(toc = toc,
@@ -158,7 +181,7 @@ html_notebook <- function(toc = FALSE,
                                fig_height = fig_height,
                                fig_retina = fig_retina,
                                fig_caption = fig_caption,
-                               kable = kable,
+                               df_print = "kable",
                                code_folding = code_folding,
                                smart = smart,
                                theme = theme,
@@ -181,6 +204,7 @@ html_notebook <- function(toc = FALSE,
     knitr = html_notebook_knitr_options(),
     pandoc = NULL,
     pre_knit = pre_knit,
+    pre_processor = pre_processor,
     post_processor = post_processor,
     base_format =  base_format,
     on_exit = on_exit
