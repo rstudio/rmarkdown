@@ -12,6 +12,13 @@
 #'   \code{FALSE}.
 #' @param clean_supporting Cleanup any supporting files after conversion see
 #'   \code{\link{render_supporting_files}}
+#' @param df_print Method to be used for printing data frames. Valid values
+#'   include "default", "kable", and "tibble". The "default" method uses
+#'   \code{print.data.frame}. The "kable" method uses the
+#'   \code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+#'   the \pkg{tibble} package to print a summary of the data frame. In addition
+#'   to the named methods you can also pass an arbitrary function to be used
+#'   for printing data frames.
 #' @param pre_knit An optional function that runs before kniting which
 #'   receives the \code{input} (input filename passed to \code{render}) and
 #'   \code{...} (for future expansion) arguments.
@@ -55,6 +62,7 @@ output_format <- function(knitr,
                           pandoc,
                           keep_md = FALSE,
                           clean_supporting = TRUE,
+                          df_print = NULL,
                           pre_knit = NULL,
                           post_knit = NULL,
                           pre_processor = NULL,
@@ -68,6 +76,7 @@ output_format <- function(knitr,
     pandoc = pandoc,
     keep_md = keep_md,
     clean_supporting = clean_supporting && !keep_md,
+    df_print = resolve_df_print(df_print),
     pre_knit = pre_knit,
     post_knit = post_knit,
     pre_processor = pre_processor,
@@ -130,6 +139,8 @@ merge_output_formats <- function(base, overlay)  {
       merge_scalar(base$keep_md, overlay$keep_md),
     clean_supporting =
       merge_scalar(base$clean_supporting, overlay$clean_supporting),
+    df_print =
+      merge_scalar(base$df_print, overlay$df_print),
     pre_knit =
       merge_function_outputs(base$pre_knit, overlay$pre_knit, c),
     post_knit =

@@ -5,9 +5,9 @@
 \title{Define an R Markdown output format}
 \usage{
 output_format(knitr, pandoc, keep_md = FALSE, clean_supporting = TRUE,
-  pre_knit = NULL, post_knit = NULL, pre_processor = NULL,
-  intermediates_generator = NULL, post_processor = NULL, on_exit = NULL,
-  base_format = NULL)
+  df_print = NULL, pre_knit = NULL, post_knit = NULL,
+  pre_processor = NULL, intermediates_generator = NULL,
+  post_processor = NULL, on_exit = NULL, base_format = NULL)
 }
 \arguments{
 \item{knitr}{Knitr options for an output format (see
@@ -22,6 +22,14 @@ if this is \code{TRUE} then \code{clean_supporting} will always be
 
 \item{clean_supporting}{Cleanup any supporting files after conversion see
 \code{\link{render_supporting_files}}}
+
+\item{df_print}{Method to be used for printing data frames. Valid values
+include "default", "kable", and "tibble". The "default" method uses
+\code{print.data.frame}. The "kable" method uses the
+\code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+the \pkg{tibble} package to print a summary of the data frame. In addition
+to the named methods you can also pass an arbitrary function to be used
+for printing data frames.}
 
 \item{pre_knit}{An optional function that runs before kniting which
 receives the \code{input} (input filename passed to \code{render}) and

@@ -6,8 +6,8 @@
 \usage{
 md_document(variant = "markdown_strict", preserve_yaml = FALSE,
   toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
-  fig_retina = NULL, dev = "png", includes = NULL, md_extensions = NULL,
-  pandoc_args = NULL)
+  fig_retina = NULL, dev = "png", df_print = "default", includes = NULL,
+  md_extensions = NULL, pandoc_args = NULL)
 }
 \arguments{
 \item{variant}{Markdown variant to produce (defaults to "markdown_strict").
@@ -34,6 +34,14 @@ widely used retina displays, but will also result in the output of
 width of the image explicitly.}
 
 \item{dev}{Graphics device to use for figure output (defaults to png)}
+
+\item{df_print}{Method to be used for printing data frames. Valid values
+include "default", "kable", and "tibble". The "default" method uses
+\code{print.data.frame}. The "kable" method uses the
+\code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+the \pkg{tibble} package to print a summary of the data frame. In addition
+to the named methods you can also pass an arbitrary function to be used
+for printing data frames.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}

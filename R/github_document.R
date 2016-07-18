@@ -2,6 +2,7 @@
 #'
 #' Format for converting from R Markdown to GitHub Flavored Markdown.
 #'
+#' @inheritParams output_format
 #' @inheritParams html_document
 #' @inheritParams md_document
 #'
@@ -19,6 +20,7 @@ github_document <- function(toc = FALSE,
                             fig_width = 7,
                             fig_height = 5,
                             dev = 'png',
+                            df_print = "default",
                             includes = NULL,
                             md_extensions = NULL,
                             hard_line_breaks = TRUE,
@@ -40,6 +42,7 @@ github_document <- function(toc = FALSE,
                         fig_width = fig_width,
                         fig_height = fig_height,
                         dev = dev,
+                        df_print = df_print,
                         includes = includes,
                         md_extensions = md_extensions,
                         pandoc_args = pandoc_args)

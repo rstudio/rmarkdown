@@ -55,6 +55,7 @@ md_document <- function(variant = "markdown_strict",
                         fig_height = 5,
                         fig_retina = NULL,
                         dev = 'png',
+                        df_print = "default",
                         includes = NULL,
                         md_extensions = NULL,
                         pandoc_args = NULL) {
@@ -95,6 +96,7 @@ md_document <- function(variant = "markdown_strict",
                             from = from_rmarkdown(extensions = md_extensions),
                             args = args),
     clean_supporting = FALSE,
+    df_print = df_print,
     post_processor = post_processor
   )
 }

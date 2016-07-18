@@ -2,6 +2,8 @@
 #'
 #'Format for converting from R Markdown to an HTML document.
 #'
+#' @inheritParams output_format
+#'
 #'@param toc \code{TRUE} to include a table of contents in the output
 #'@param toc_depth Depth of headers to include in table of contents
 #'@param toc_float \code{TRUE} to float the table of contents to the left of the
@@ -18,13 +20,6 @@
 #'  outputting HTML directly into the markdown document).
 #'@param fig_caption \code{TRUE} to render figures with captions
 #'@param dev Graphics device to use for figure output (defaults to png)
-#'@param df_print Method to be used for printing data frames. Valid values
-#'  include "default", "kable", and "tibble". The "default" method uses
-#'  \code{print.data.frame}. The "kable" method uses the
-#'  \code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
-#'  the \pkg{tibble} package to print a summary of the data frame. In addition
-#'  to the named methods you can also pass an arbitrary function to be used
-#'  for printing data frames.
 #'@param code_folding Enable document readers to toggle the display of R code
 #'  chunks. Specify \code{"none"} to display all code chunks (assuming
 #'  they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
@@ -199,7 +194,7 @@ html_document <- function(toc = FALSE,
                           fig_retina = 2,
                           fig_caption = TRUE,
                           dev = 'png',
-                          df_print = c("default", "kable", "tibble"),
+                          df_print = "default",
                           code_folding = c("none", "show", "hide"),
                           code_download = FALSE,
                           smart = TRUE,
@@ -302,10 +297,6 @@ html_document <- function(toc = FALSE,
         base64enc::base64encode(input),
         '</div>')
     }
-
-    # set df_print option in render context
-    context <- render_context()
-    context$df_print <- resolve_df_print(df_print)
   }
 
   # pre-processor for arguments that may depend on the name of the
@@ -435,6 +426,7 @@ html_document <- function(toc = FALSE,
                             args = args),
     keep_md = keep_md,
     clean_supporting = self_contained,
+    df_print = df_print,
     pre_knit = pre_knit,
     post_knit = post_knit,
     pre_processor = pre_processor,

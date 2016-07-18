@@ -2,6 +2,7 @@
 #'
 #' Format for converting from R Markdown to a Beamer presentation.
 #'
+#' @inheritParams output_format
 #' @inheritParams pdf_document
 #' @inheritParams html_document
 #'
@@ -59,6 +60,7 @@ beamer_presentation <- function(toc = FALSE,
                                 fig_crop = TRUE,
                                 fig_caption = TRUE,
                                 dev = 'pdf',
+                                df_print = "default",
                                 theme = "default",
                                 colortheme = "default",
                                 fonttheme = "default",
@@ -131,7 +133,8 @@ beamer_presentation <- function(toc = FALSE,
                             args = args,
                             latex_engine = latex_engine,
                             keep_tex = keep_tex),
-    clean_supporting = !keep_tex
+    clean_supporting = !keep_tex,
+    df_print = df_print
   )
 }
 

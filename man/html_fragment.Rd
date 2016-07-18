@@ -5,8 +5,8 @@
 \title{Convert to an HTML fragment.}
 \usage{
 html_fragment(number_sections = FALSE, fig_width = 7, fig_height = 5,
-  fig_retina = 2, fig_caption = TRUE, dev = "png", smart = TRUE,
-  mathjax = TRUE, keep_md = FALSE, md_extensions = NULL,
+  fig_retina = 2, fig_caption = TRUE, dev = "png", df_print = "default",
+  smart = TRUE, mathjax = TRUE, keep_md = FALSE, md_extensions = NULL,
   pandoc_args = NULL, ...)
 }
 \arguments{
@@ -25,6 +25,14 @@ outputting HTML directly into the markdown document).}
 \item{fig_caption}{\code{TRUE} to render figures with captions}
 
 \item{dev}{Graphics device to use for figure output (defaults to png)}
+
+\item{df_print}{Method to be used for printing data frames. Valid values
+include "default", "kable", and "tibble". The "default" method uses
+\code{print.data.frame}. The "kable" method uses the
+\code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+the \pkg{tibble} package to print a summary of the data frame. In addition
+to the named methods you can also pass an arbitrary function to be used
+for printing data frames.}
 
 \item{smart}{Produce typographically correct output, converting straight
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to

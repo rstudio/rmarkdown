@@ -4,26 +4,27 @@ test_that("formats successfully produce a document", {
 
   skip_on_cran()
 
-  testFormat <- function(output_format) {
+  testFormat <- function(output_format, df_print = NULL) {
     output_file <- tempfile()
     render("test-formats.Rmd",
            output_format = output_format,
            output_file = output_file,
+          # output_options = ifelse(is.null(df_print), NULL, list(df_print = df_print)),
            quiet = TRUE)
     expect_true(file.exists(output_file))
     output_file
   }
 
-  testFormat(html_document())
+  testFormat(html_document(), df_print = "kable")
   testFormat(html_notebook())
-  testFormat(html_fragment())
-  testFormat(html_vignette())
-  testFormat(ioslides_presentation())
-  testFormat(slidy_presentation())
-  testFormat(md_document())
-  testFormat(pdf_document())
-  testFormat(beamer_presentation())
-  testFormat(word_document())
+  testFormat(html_fragment(), df_print = "tibble")
+  testFormat(html_vignette(), df_print = "tibble")
+  testFormat(ioslides_presentation(), df_print = "kable")
+  testFormat(slidy_presentation(), df_print = "kable")
+  testFormat(md_document(), df_print = "kable")
+  testFormat(pdf_document(), df_print = "kable")
+  testFormat(beamer_presentation(), df_print = "kable")
+  testFormat(word_document(), df_print = "kable")
 
   if (requireNamespace("tufte", quietly = TRUE))
     testFormat(tufte_handout())

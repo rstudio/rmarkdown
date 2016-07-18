@@ -6,10 +6,11 @@
 \usage{
 pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   fig_width = 6.5, fig_height = 4.5, fig_crop = TRUE,
-  fig_caption = TRUE, dev = "pdf", highlight = "default",
-  template = "default", keep_tex = FALSE, latex_engine = "pdflatex",
-  citation_package = c("none", "natbib", "biblatex"), includes = NULL,
-  md_extensions = NULL, pandoc_args = NULL, extra_dependencies = NULL)
+  fig_caption = TRUE, dev = "pdf", df_print = "default",
+  highlight = "default", template = "default", keep_tex = FALSE,
+  latex_engine = "pdflatex", citation_package = c("none", "natbib",
+  "biblatex"), includes = NULL, md_extensions = NULL, pandoc_args = NULL,
+  extra_dependencies = NULL)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -28,6 +29,14 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
 \item{fig_caption}{\code{TRUE} to render figures with captions}
 
 \item{dev}{Graphics device to use for figure output (defaults to pdf)}
+
+\item{df_print}{Method to be used for printing data frames. Valid values
+include "default", "kable", and "tibble". The "default" method uses
+\code{print.data.frame}. The "kable" method uses the
+\code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+the \pkg{tibble} package to print a summary of the data frame. In addition
+to the named methods you can also pass an arbitrary function to be used
+for printing data frames.}
 
 \item{highlight}{Syntax highlighting style. Supported styles include
 "default", "tango", "pygments", "kate", "monochrome", "espresso",

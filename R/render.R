@@ -236,6 +236,10 @@ render <- function(input,
       runtime <- "static"
   }
 
+  # set df_print
+  context <- render_context()
+  context$df_print <- output_format$df_print
+
   # call any pre_knit handler
   if (!is.null(output_format$pre_knit)) {
     output_format$pre_knit(input = original_input)
@@ -662,6 +666,10 @@ resolve_df_print <- function(df_print) {
 
   # available methods
   valid_methods <- c("default", "kable", "tibble")
+
+  # if we are passed NULL then select the first method
+  if (is.null(df_print))
+    df_print <- valid_methods[[1]]
 
   # if we are passed all of valid_methods then select the first one
   if (identical(valid_methods, df_print))

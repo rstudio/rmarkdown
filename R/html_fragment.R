@@ -25,6 +25,7 @@ html_fragment <- function(number_sections = FALSE,
                           fig_retina = 2,
                           fig_caption = TRUE,
                           dev = 'png',
+                          df_print = "default",
                           smart = TRUE,
                           mathjax = TRUE,
                           keep_md = FALSE,
@@ -38,8 +39,9 @@ html_fragment <- function(number_sections = FALSE,
   html_document(
     number_sections = number_sections, fig_width = fig_width,
     fig_height = fig_height, fig_retina = fig_retina, fig_caption = fig_caption,
-    dev = dev, smart = smart, keep_md = keep_md, md_extensions = md_extensions,
-    pandoc_args = pandoc_args, mathjax = NULL, highlight = NULL, theme = NULL,
-    ..., template = rmarkdown_system_file("rmd/fragment/default.html")
+    dev = dev, df_print = df_print, smart = smart, keep_md = keep_md,
+    md_extensions = md_extensions, pandoc_args = pandoc_args, mathjax = NULL,
+    highlight = NULL, theme = NULL, ...,
+    template = rmarkdown_system_file("rmd/fragment/default.html")
   )
 }

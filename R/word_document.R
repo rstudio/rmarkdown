@@ -44,6 +44,7 @@ word_document <- function(toc = FALSE,
                           fig_width = 5,
                           fig_height = 4,
                           fig_caption = TRUE,
+                          df_print = "default",
                           highlight = "default",
                           reference_docx = "default",
                           keep_md = FALSE,
@@ -86,7 +87,8 @@ word_document <- function(toc = FALSE,
     pandoc = pandoc_options(to = "docx",
                             from = from_rmarkdown(fig_caption, md_extensions),
                             args = args),
-    keep_md = keep_md
+    keep_md = keep_md,
+    df_print = df_print
   )
 }
 

@@ -7,10 +7,11 @@
 \usage{
 ioslides_presentation(logo = NULL,  slide_level = 2, incremental = FALSE,
   fig_width = 7.5, fig_height = 4.5, fig_retina = 2, fig_caption = TRUE,
-  dev = "png", smart = TRUE, self_contained = TRUE, widescreen = FALSE,
-  smaller = FALSE, transition = "default", mathjax = "default", analytics = NULL,
-  template = NULL, css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  md_extensions = NULL, pandoc_args = NULL, ...)
+  dev = "png", df_print = "default", smart = TRUE, self_contained = TRUE,
+  widescreen = FALSE, smaller = FALSE, transition = "default",
+  mathjax = "default", analytics = NULL, template = NULL, css = NULL,
+  includes = NULL, keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
+  pandoc_args = NULL, ...)
 }
 \arguments{
   \item{logo}{Path to file that includes a logo for use in
@@ -40,6 +41,14 @@ ioslides_presentation(logo = NULL,  slide_level = 2, incremental = FALSE,
   captions}
 
   \item{dev}{Default graphics device to use for figure output}
+
+  \item{df_print}{Method to be used for printing data frames. Valid values
+  include "default", "kable", and "tibble". The "default" method uses
+  \code{print.data.frame}. The "kable" method uses the
+  \code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+  the \pkg{tibble} package to print a summary of the data frame. In addition
+  to the named methods you can also pass an arbitrary function to be used
+  for printing data frames.}
 
   \item{smart}{Produce typographically correct output,
   converting straight quotes to curly quotes, --- to

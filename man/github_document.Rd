@@ -5,8 +5,9 @@
 \title{Convert to GitHub Flavored Markdown}
 \usage{
 github_document(toc = FALSE, toc_depth = 3, fig_width = 7,
-  fig_height = 5, dev = "png", includes = NULL, md_extensions = NULL,
-  hard_line_breaks = TRUE, pandoc_args = NULL, html_preview = TRUE)
+  fig_height = 5, dev = "png", df_print = "default", includes = NULL,
+  md_extensions = NULL, hard_line_breaks = TRUE, pandoc_args = NULL,
+  html_preview = TRUE)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -18,6 +19,14 @@ github_document(toc = FALSE, toc_depth = 3, fig_width = 7,
 \item{fig_height}{Default width (in inches) for figures}
 
 \item{dev}{Graphics device to use for figure output (defaults to png)}
+
+\item{df_print}{Method to be used for printing data frames. Valid values
+include "default", "kable", and "tibble". The "default" method uses
+\code{print.data.frame}. The "kable" method uses the
+\code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+the \pkg{tibble} package to print a summary of the data frame. In addition
+to the named methods you can also pass an arbitrary function to be used
+for printing data frames.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}

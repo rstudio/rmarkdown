@@ -6,10 +6,10 @@
 \usage{
 slidy_presentation(incremental = FALSE, duration = NULL, footer = NULL,
   font_adjustment = 0, fig_width = 8, fig_height = 6, fig_retina = 2,
-  fig_caption = TRUE, dev = "png", smart = TRUE, self_contained = TRUE,
-  highlight = "default", mathjax = "default", template = "default",
-  css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  md_extensions = NULL, pandoc_args = NULL, ...)
+  fig_caption = TRUE, dev = "png", df_print = "default", smart = TRUE,
+  self_contained = TRUE, highlight = "default", mathjax = "default",
+  template = "default", css = NULL, includes = NULL, keep_md = FALSE,
+  lib_dir = NULL, md_extensions = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note
@@ -39,6 +39,14 @@ outputting HTML directly into the markdown document).}
 \item{fig_caption}{\code{TRUE} to render figures with captions}
 
 \item{dev}{Graphics device to use for figure output (defaults to pdf)}
+
+\item{df_print}{Method to be used for printing data frames. Valid values
+include "default", "kable", and "tibble". The "default" method uses
+\code{print.data.frame}. The "kable" method uses the
+\code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+the \pkg{tibble} package to print a summary of the data frame. In addition
+to the named methods you can also pass an arbitrary function to be used
+for printing data frames.}
 
 \item{smart}{Produce typographically correct output, converting straight
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
