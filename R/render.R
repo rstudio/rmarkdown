@@ -185,7 +185,8 @@ render <- function(input,
   if (!is_output_format(output_format)) {
     output_format <- output_format_from_yaml_front_matter(input_lines,
                                                           output_options,
-                                                          output_format)
+                                                          output_format,
+                                                          encoding = encoding)
     output_format <- create_output_format(output_format$name,
                                           output_format$options)
   }
@@ -361,7 +362,8 @@ render <- function(input,
   if (!is.null(output_format$post_knit)) {
     post_knit_extra_args <- output_format$post_knit(yaml_front_matter,
                                                     knit_input,
-                                                    runtime)
+                                                    runtime,
+                                                    encoding = encoding)
     output_format$pandoc$args <- c(output_format$pandoc$args, post_knit_extra_args)
   }
 

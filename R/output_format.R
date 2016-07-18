@@ -462,7 +462,8 @@ all_output_formats <- function(input, encoding = getOption("encoding")) {
 # find an output format then we just return html_document
 output_format_from_yaml_front_matter <- function(input_lines,
                                                  output_options = NULL,
-                                                 output_format_name = NULL) {
+                                                 output_format_name = NULL,
+                                                 encoding = getOption("encoding")) {
 
   # ensure input is the correct data type
   if (!is_null_or_string(output_format_name)) {
@@ -476,7 +477,7 @@ output_format_from_yaml_front_matter <- function(input_lines,
   output_format_options <- list()
 
   # parse _site.yml output format if we have it
-  config <- site_config(".")
+  config <- site_config(".", encoding = encoding)
   if (!is.null(config) && !is.null(config[["output"]])) {
     site_output_format_yaml <- config[["output"]]
   } else {
