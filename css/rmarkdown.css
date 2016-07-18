@@ -373,7 +373,7 @@ html, body, .footerPushDown {
 .formatTable .formatName {
   display: table-cell;
   font-size: 20px;
-  padding: 10px;
+  padding: 8px;
   width: 200px;
 }
 
