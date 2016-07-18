@@ -3,8 +3,8 @@ rmarkdown 1.1 (unreleased)
 
 * Try to install latexmk automatically on Windows
 
-* Added `kable` option to html_document format for printing data frames
-  using `knitr::kable`
+* Added `df_print` option to html_document format for optionally printing
+  data frames using `knitr::kable` or the `tibble` package.
 
 
 rmarkdown 1.0
