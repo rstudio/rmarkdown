@@ -355,7 +355,8 @@ discover_rmd_resources <- function(rmd_file, encoding,
   # check to see what format this document is going to render as; if it's a
   # format that produces HTML, let it render as-is, but if it isn't, render as
   # html_document to pick up dependencies
-  output_format <- output_format_from_yaml_front_matter(rmd_content)
+  output_format <- output_format_from_yaml_front_matter(rmd_content,
+                                                        encoding = encoding)
   output_format_function <- eval(parse(text = output_format$name))
   override_output_format <- if (output_format_function()$pandoc$to == "html")
                               NULL

@@ -374,7 +374,7 @@ default_output_format <- function(input, encoding = getOption("encoding")) {
 
   # parse the YAML and front matter and get the explicitly set options
   input_lines <- read_lines_utf8(input, encoding)
-  format <- output_format_from_yaml_front_matter(input_lines)
+  format <- output_format_from_yaml_front_matter(input_lines, encoding = encoding)
 
   # look up the formals of the output function to get the full option list and
   # merge against the explicitly set list
@@ -425,7 +425,8 @@ resolve_output_format <- function(input,
   # resolve the output format by looking at the yaml
   output_format <- output_format_from_yaml_front_matter(input_lines,
                                                         output_options,
-                                                        output_format)
+                                                        output_format,
+                                                        encoding = encoding)
 
   # return it
   create_output_format(output_format$name, output_format$options)

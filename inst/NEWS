@@ -6,6 +6,8 @@ rmarkdown 1.1 (unreleased)
 * Added `df_print` option to html_document format for optionally printing
   data frames using `knitr::kable` or the `tibble` package.
 
+* Fix for render_site not showing Chinese characters correctly
+
 
 rmarkdown 1.0
 --------------------------------------------------------------------------------
