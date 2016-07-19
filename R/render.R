@@ -683,7 +683,7 @@ resolve_df_print <- function(df_print) {
     else if (df_print == "tibble")
       df_print <- function(x) print(tibble::as_tibble(x))
     else if (df_print == "default")
-      df_print <- print.data.frame
+      df_print <- print
     else
       stop('Invalid value for df_print (valid values are ',
            paste(valid_methods, collapse = ", "), call. = FALSE)
