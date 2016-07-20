@@ -8,6 +8,8 @@ rmarkdown 1.1 (unreleased)
 
 * Fix for render_site not showing Chinese characters correctly
 
+* Fix for ignoring knit_meta that is explicitly passed to render
+
 
 rmarkdown 1.0
 --------------------------------------------------------------------------------
