@@ -356,6 +356,16 @@ render <- function(input,
                          encoding = encoding)
 
     perf_timer_stop("knitr")
+
+    # pull any R Markdown warnings from knit_meta and emit
+    rmd_warnings <- knit_meta_reset(class = "rmd_warning")
+    for (rmd_warning in rmd_warnings) {
+      message("Warning: ", rmd_warning)
+    }
+
+    # collect remaining knit_meta
+    knit_meta <- knit_meta_reset()
+
   }
 
   # call any post_knit handler
@@ -366,15 +376,6 @@ render <- function(input,
                                                     encoding = encoding)
     output_format$pandoc$args <- c(output_format$pandoc$args, post_knit_extra_args)
   }
-
-  # pull any R Markdown warnings from knit_meta and emit
-  rmd_warnings <- knit_meta_reset(class = "rmd_warning")
-  for (rmd_warning in rmd_warnings) {
-    message("Warning: ", rmd_warning)
-  }
-
-  # collect remaining knit_meta
-  knit_meta <- knit_meta_reset()
 
   # if this isn't html and there are html dependencies then flag an error
   if (!(is_pandoc_to_html(output_format$pandoc) ||
