@@ -129,7 +129,7 @@ $(document).ready(function () {
     <div id="menu">
       <div id="menuToggler"></div>
       <div id="menuItems">
-        <a class="menuItem" href="start.html">Get Started</a>
+        <a class="menuItem" href="lesson-1.html">Get Started</a>
         <a class="menuItem" href="gallery.html">Gallery</a>
         <a class="menuItem" href="formats.html">Formats</a>
         <a class="menuItem" href="articles.html">Articles</a>
@@ -153,6 +153,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 
 <div id="pageContent" class="standardPadding">
+  <div class="articleBandContent">
 
 <div class="fluid-row" id="header">
 
@@ -200,7 +201,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <p>Keep in mind, however, that the data file is actually embedded in the HTML file. This means that the resulting HTML file can be very large, if your data file is large. Also consider that data are encoded in base64, which increases the size of the file by about a third over the equivalent RData binary file. For very large data sets, one might consider hosting them outside of the HTML file; but for many purposes, the technique I describe will improve the ease with which you can share reproducible analyses.</p>
 <p><em>Note: Richard has included a slightly cleaned up version of this functionality as <code>createDownloadURI()</code> in the <a href="https://github.com/richarddmorey/BayesFactorExtras/">BayesFactorExtras</a> package, which can be installed on github.</em></p>
 
-
+  </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 
 <div id="rStudioFooter" class="band full">

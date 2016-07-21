@@ -29,7 +29,7 @@ html, body, .footerPushDown {
   height: 520px;
 }
 
-.bandContent {
+.bandContent, .standardPadding .articleBandContent {
   margin: 0 auto;
   max-width: 1140px;
 }

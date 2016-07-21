@@ -1,0 +1,60 @@
+---
+title: "Markdown Basics"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_header_navpage.html]
+---
+#### | **[ 1 ](lesson-1.html)** | Lesson 2 | **[ 3 ](lesson-3.html)** |
+***
+
+# Markdown Basics
+
+Markdown is a simple formatting language designed to make authoring content easy for everyone. Rather than write in complex markup code (e.g. HTML or LaTex), you write in plain text with formatting cues. Pandoc uses these cues to turn your document into attractive output. For example, the file on the left shows basic Markdown and the resulting output on the right:
+
+![](lesson-images/quicktourExample.png)
+
+Markdown has about two dozen formatting cues for you to use. You can learn all of them by reading [Authoring Basics](http://rmarkdown.rstudio.com/authoring_basics.html).
+
+## Exercise
+
+Let's start a simple report. Copy the text below into your .Rmd file (and erase everything else in the file).
+
+```
+Introduction
+
+This report examines the price of two stocks: AMZN, AAPL.
+
+It is written in R Markdown, an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. R Markdown combines the core syntax of markdown (an easy to write plain text format) with embedded R code chunks that are run so their output can be included in the final document.
+
+The data comes from Yahoo finance.
+```
+
+Now format the text with markdown to create the output seen below. What links should R Markdown and Yahoo finance lead to? These, of course:
+
+* http://rmarkdown.rstudio.com
+* http://finance.yahoo.com
+
+***
+
+# Introduction
+
+This report examines the price of two stocks:
+
+* AMZN
+* AAPL
+
+It is written in [R Markdown](http://rmarkdown.rstudio.com), an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. R Markdown combines the core syntax of **markdown** (an easy to write plain text format) with embedded **R** code chunks that are run so their output can be included in the final document.
+
+The data comes from [Yahoo finance](http://finance.yahoo.com).
+
+***
+
+## Model Answer
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("solution-2.Rmd"))
+```
+***
+#### [Continue to lesson 3](lesson-3.html)
