@@ -201,7 +201,9 @@ patch_beamer_template <- function() {
   template <- readLines(f, encoding = "UTF-8")
   template <- gsub("^\\s+|\\s+$", "", template, perl = TRUE)
 
-  # apply patches
+  # apply patches (store original version of template so we can
+  # compare after applying patches)
+  original <- template
   version <- pandoc_version()
 
   if (version < "1.15.2")
@@ -209,6 +211,11 @@ patch_beamer_template <- function() {
 
   if (version > "1.15.2" && version < "1.17.3")
     template <- patch_beamer_template_paragraph_spacing(template)
+
+  # if the template hasn't changed, return NULL (we don't need
+  # to apply a custom template)
+  if (identical(template, original))
+    return(NULL)
 
   # write and return path to template
   template <- paste(template, collapse = "\n")
