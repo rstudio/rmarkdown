@@ -1,0 +1,42 @@
+---
+title: "Slides"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_header_navpage.html]
+---
+
+#### | **[ 1 ](lesson-1.html)** |  **[ 2 ](lesson-2.html)** |  **[ 3 ](lesson-3.html)** | **[ 4 ](lesson-4.html)** | **[ 5 ](lesson-5.html)** | **[ 6 ](lesson-6.html)** | **[ 7 ](lesson-7.html)** | Lesson 8 | **[ 9 ](lesson-9.html)** | **[ 10 ](lesson-10.html)** | **[ 11 ](lesson-11.html)** | **[ 12 ](lesson-12.html)** |
+***
+
+# Slides
+
+You can generate a slide presentation from the same .Rmd file that you use to render reports. Each of R Markdown's presentation formats will intuitively divide your content into slides, with a new slide beginning at each first or second level header.
+
+Insert a horizontal rule (`***`) into your document to create a manual slide break.
+
+You can learn more about each of R Markdown's slide formats here:
+
+* [ioslides slideshows](http://rmarkdown.rstudio.com/ioslides_presentation_format.html)
+* [reveal.js slideshows](http://rmarkdown.rstudio.com/revealjs_presentation_format.html)
+* [slidy slideshows](http://rmarkdown.rstudio.com/slidy_presentation_format.html)
+* [Beamer Slideshows](http://rmarkdown.rstudio.com/beamer_presentation_format.html)
+
+## Exercise
+
+Add a title and author to the YAML of your [your document](lesson-exercises/exercise-8.Rmd) and remove the table of contents. Then change the output field to `ioslides_presentation` and add slide breaks to make your report resemble the slide deck below.
+
+***
+
+![](lesson-images/markdownSlides.png)
+
+***
+
+## Model Answer
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("lesson-solutions/solution-8.Rmd"))
+```
+***
+#### [Continue to lesson 9](lesson-9.html)

@@ -7,7 +7,7 @@ output:
       before_body: [include_header.html, include_header_navpage.html]
 ---
 
-#### | **[ 1 ](lesson-1.html)** |  **[ 2 ](lesson-2.html)** |  Lesson 3
+#### | **[ 1 ](lesson-1.html)** |  **[ 2 ](lesson-2.html)** |  Lesson 3 | **[ 4 ](lesson-4.html)** | **[ 5 ](lesson-5.html)** | **[ 6 ](lesson-6.html)** | **[ 7 ](lesson-7.html)** | **[ 8 ](lesson-8.html)** | **[ 9 ](lesson-9.html)** | **[ 10 ](lesson-10.html)** | **[ 11 ](lesson-11.html)** | **[ 12 ](lesson-12.html)** |
 ***
 
 # R Code Chunks
@@ -54,7 +54,7 @@ You will need to install the quantmod and dygraphs packages if you do not alread
 install.packages(c("quantmod", "dygraphs"))
 ```
 
-You will also need a copy of your solution to exercise 2. You can download one [here](exercise-3.Rmd). Solutions will build on each other for the rest of the tutorial.
+You will also need a copy of your solution to exercise 2. You can download one [here](lesson-exercises/exercise-3.Rmd). Solutions will build on each other for the rest of the tutorial.
 
 ***
 # Introduction
@@ -108,5 +108,7 @@ dygraph(Vo(stock2))
 ## Model Answer
 
 ```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("solution-3.Rmd"))
+cat(htmltools::includeText("lesson-solutions/solution-3.Rmd"))
 ```
+***
+#### [Continue to lesson 4](lesson-4.html)

@@ -11,7 +11,7 @@
 
 
 
-<title></title>
+<title>Using Parameters</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -153,23 +153,109 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <div id="pageContent" class="standardPadding">
   <div class="articleBandContent">
 
+<style type="text/css">
+.title {
+  display: none;
+}
+</style>
+
 <div class="fluid-row" id="header">
 
 
 
+<h1 class="title toc-ignore">Using Parameters</h1>
 
 </div>
 
 
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>This report examines the price of two stocks:</p>
-<ul>
-<li>AMZN</li>
-<li>AAPL</li>
-</ul>
-<p>It is written in <a href="http://rmarkdown.rstudio.com">R Markdown</a>, an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. R Markdown combines the core syntax of <strong>markdown</strong> (an easy to write plain text format) with embedded <strong>R</strong> code chunks that are run so their output can be included in the final document.</p>
-<p>The data comes from <a href="http://finance.yahoo.com">Yahoo finance</a>.</p>
+<div id="lesson-5-6-7-8-9-10-11-12" class="section level4">
+<h4>| <strong><a href="lesson-1.html">1</a></strong> | <strong><a href="lesson-2.html">2</a></strong> | <strong><a href="lesson-3.html">3</a></strong> | <strong><a href="lesson-4.html">4</a></strong> | Lesson 5 | <strong><a href="lesson-6.html">6</a></strong> | <strong><a href="lesson-7.html">7</a></strong> | <strong><a href="lesson-8.html">8</a></strong> | <strong><a href="lesson-9.html">9</a></strong> | <strong><a href="lesson-10.html">10</a></strong> | <strong><a href="lesson-11.html">11</a></strong> | <strong><a href="lesson-12.html">12</a></strong> |</h4>
+<hr />
+</div>
+<div id="using-parameters" class="section level1">
+<h1>Using Parameters</h1>
+<p>R Markdown documents can contain a metadata section that includes title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an .Rmd file adds a title, author, and date to your document.</p>
+<pre><code>---
+title: &quot;Report with date&quot;
+author: &quot;RStudio&quot;
+date: &quot;2016-06-23&quot;
+---</code></pre>
+<p>You can add a <code>params:</code> field to the metadata to provide a list of values for your document to use. R Markdown will make the list available as <code>params</code> within any R code chunk in the report. For example, the file below takes a filename as a parameter and uses the name to read in a data set. To use multiple parameters, list each one on a new line under <code>params:</code>, indented two spaces.</p>
+<div class="figure">
+<img src="lesson-images/quicktourParams.png" />
+
+</div>
+<p>Parameters let you quickly apply your data set to new data sets, models, and parameters. You can set new values for the parameters when you call <code>rmarkdown::render()</code>,</p>
+<pre class="r"><code>rmarkdown::render(&quot;input.Rmd&quot;, params = list())</code></pre>
+<p>as well as when you press the “Knit” button:</p>
+<div class="figure">
+<img src="lesson-images/quicktourParamsButton.png" />
+
+</div>
+<p>You can learn more about params at <a href="http://rmarkdown.rstudio.com/developer_parameterized_reports.html">Paramaterized Reports</a>.</p>
+<div id="exercise" class="section level2">
+<h2>Exercise</h2>
+<p>Add two parameters to <a href="lesson-exercises/exercise-5.Rmd">your report</a>, <code>symbol1</code> and <code>symbol2</code>. You can use “FB” (Facebook) and “GOOG” (Google) as their default values. Then replace every instance of <code>&quot;AMZN&quot;</code> or <code>&quot;AAPL&quot;</code> in your code with one of the parameters.</p>
+<p>When you Knit with Parameters, R Markdown will let you choose two new stocks to examine. For now, your text will still refer to AMZN and AAPL, but your graphs will update.</p>
+</div>
+<div id="model-answer" class="section level2">
+<h2>Model Answer</h2>
+<pre><code>---
+params:
+  symbol1: &quot;FB&quot;
+  symbol2: &quot;GOOG&quot;
+---
+
+# Introduction
+
+```{r include = FALSE}
+library(quantmod)
+library(dygraphs)
+
+stock1 &lt;- getSymbols(params$symbol1, auto.assign = FALSE,
+                    from = &quot;2016-01-01&quot;, end = Sys.Date())
+stock2 &lt;- getSymbols(params$symbol2, auto.assign = FALSE,
+                    from = &quot;2016-01-01&quot;, end = Sys.Date())
+```
+
+
+This report examines the price of two stocks: 
+  
+* AMZN
+* AAPL 
+
+It is written in [R Markdown](http://rmarkdown.rstudio.com), an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. R Markdown combines the core syntax of **markdown** (an easy to write plain text format) with embedded **R** code chunks that are run so their output can be included in the final document.
+
+The data comes from [Yahoo finance](http://finance.yahoo.com).
+
+### AMZN price
+
+```{r echo = FALSE}
+dygraph(Cl(stock1))
+```
+
+### AAPL price
+
+```{r echo = FALSE}
+dygraph(Cl(stock2))
+```
+
+### AMZN volume
+
+```{r echo = FALSE}
+dygraph(Vo(stock1))
+```
+
+### AAPL volume
+
+```{r echo = FALSE}
+dygraph(Vo(stock2))
+```</code></pre>
+<hr />
+<div id="continue-to-lesson-6" class="section level4">
+<h4><a href="lesson-6.html">Continue to lesson 6</a></h4>
+</div>
+</div>
 </div>
 
   </div> <!-- articleBandContent -->

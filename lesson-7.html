@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Output Formats</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<link rel="icon" type="image/png" href="images/favicon.png" />
+
+<script type="text/javascript" src="js/rmarkdown.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/rmarkdown.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div id="rStudioHeader" class="alwaysShrunk">
+  <div class="innards bandContent">
+    <div>
+      <a class="productName" href="index.html">R Markdown</a>
+      <div class="rStudio"><span class="light">from </span> <a href="https://www.rstudio.com/"><div class="logo"></div></a></div>
+    </div>
+
+    <div id="menu">
+      <div id="menuToggler"></div>
+      <div id="menuItems">
+        <a class="menuItem" href="lesson-1.html">Get Started</a>
+        <a class="menuItem" href="gallery.html">Gallery</a>
+        <a class="menuItem" href="formats.html">Formats</a>
+        <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
+        <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+#TOC {
+  margin-left: 35px;
+  margin-top: 90px;
+}
+</style>
+
+<script type="text/javascript">
+$(".main-container").removeClass("main-container").removeClass("container-fluid").addClass("footerPushDown");
+</script>
+
+
+<div id="pageContent" class="standardPadding">
+  <div class="articleBandContent">
+
+<style type="text/css">
+.title {
+  display: none;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Output Formats</h1>
+
+</div>
+
+
+<div id="lesson-7-8-9-10-11-12" class="section level4">
+<h4>| <strong><a href="lesson-1.html">1</a></strong> | <strong><a href="lesson-2.html">2</a></strong> | <strong><a href="lesson-3.html">3</a></strong> | <strong><a href="lesson-4.html">4</a></strong> | <strong><a href="lesson-5.html">5</a></strong> | <strong><a href="lesson-6.html">6</a></strong> | Lesson 7 | <strong><a href="lesson-8.html">8</a></strong> | <strong><a href="lesson-9.html">9</a></strong> | <strong><a href="lesson-10.html">10</a></strong> | <strong><a href="lesson-11.html">11</a></strong> | <strong><a href="lesson-12.html">12</a></strong> |</h4>
+<hr />
+</div>
+<div id="output-formats" class="section level1">
+<h1>Output Formats</h1>
+<p><img align="middle" width = "300" src = "lesson-images/RMarkdownOutputFormats.png"></img></p>
+<p>You can create many types of output from a single .Rmd file. R Markdown has built in support for HTML, PDF, MS_Word, ODT, RTF, Markdown, and Github flavored Markdown documents; Beamer, slidy.js, ioslides, and reveal.js slideshows; and websites, dashboards, books, handouts, package vignettes, and Shiny apps. These formats can be specified in metadata, for example:</p>
+<pre><code>---
+title: &quot;Sample Document&quot;
+output: pdf_document
+---</code></pre>
+<p>And you can set sub-options to customize each format:</p>
+<pre><code>---
+title: &quot;Sample Document&quot;
+output:
+  pdf_document:
+    toc: true
+    highlight: zenburn
+---</code></pre>
+<p>Multiple formats can be specified in metadata:</p>
+<pre><code>---
+title: &quot;Sample Document&quot;
+output:
+  html_document:
+    toc: true
+    theme: united
+  pdf_document:
+    toc: true
+    highlight: zenburn
+---</code></pre>
+<p>If you are using <code>rmarkdown::render</code> then you can pass a format name to <code>render</code> to select from the available formats. For example:</p>
+<pre class="r"><code>render(&quot;input.Rmd&quot;, &quot;pdf_document&quot;)</code></pre>
+<p>You can also render all formats defined in an input file with:</p>
+<pre class="r"><code>render(&quot;input.Rmd&quot;, &quot;all&quot;)</code></pre>
+<p>You can learn more about each of R Markdown’s formats, including whih sub-options the format supports at the following links:</p>
+<ul>
+<li><a href="http://rmarkdown.rstudio.com/html_document_format.html">HTML documents</a></li>
+<li><a href="http://rmarkdown.rstudio.com/pdf_document_format.html">PDF documents</a></li>
+<li><a href="http://rmarkdown.rstudio.com/word_document_format.html">MS Word documents</a></li>
+<li><a href="http://rmarkdown.rstudio.com/odt_document_format.html">OpenDocument Text files</a></li>
+<li><a href="http://rmarkdown.rstudio.com/rtf_document_format.html">Rich Text Format files</a></li>
+<li><a href="http://rmarkdown.rstudio.com/markdown_document_format.html">Markdown documents</a></li>
+<li><a href="http://rmarkdown.rstudio.com/github_document_format.html">Github compatible Markdown documents</a></li>
+<li><a href="http://rmarkdown.rstudio.com/ioslides_presentation_format.html">ioslides slideshows</a></li>
+<li><a href="http://rmarkdown.rstudio.com/revealjs_presentation_format.html">reveal.js slideshows</a></li>
+<li><a href="http://rmarkdown.rstudio.com/slidy_presentation_format.html">slidy slideshows</a></li>
+<li><a href="http://rmarkdown.rstudio.com/beamer_presentation_format.html">Beamer Slideshows</a></li>
+<li><a href="http://rmarkdown.rstudio.com/rmarkdown_websites.html">websites</a></li>
+<li><a href="http://rmarkdown.rstudio.com/flexdashboard/">dashboards</a></li>
+<li><a href="https://bookdown.org/">books</a></li>
+<li><a href="http://rmarkdown.rstudio.com/tufte_handout_format.html">handouts</a></li>
+<li><a href="http://rmarkdown.rstudio.com/package_vignette_format.html">package vignettes</a></li>
+<li><a href="http://rmarkdown.rstudio.com/authoring_shiny.html">Shiny apps</a> .</li>
+</ul>
+<div id="exercise" class="section level2">
+<h2>Exercise</h2>
+<p>Add table of contents to your <a href="lesson-exercises/exercise-7.Rmd">HTML document</a> with <code>toc: true</code> then make the table of contents “float” with <code>toc_float: true</code>.</p>
+<hr />
+<div class="figure">
+<img src="lesson-images/markdownTOC.png" />
+
+</div>
+<hr />
+</div>
+<div id="model-answer" class="section level2">
+<h2>Model Answer</h2>
+<pre><code>---
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+params:
+  symbol1: &quot;FB&quot;
+  symbol2: &quot;GOOG&quot;
+---
+
+# Introduction
+
+```{r include = FALSE}
+library(quantmod)
+library(dygraphs)
+
+stock1 &lt;- getSymbols(params$symbol1, auto.assign = FALSE,
+                    from = &quot;2016-01-01&quot;, end = Sys.Date())
+stock2 &lt;- getSymbols(params$symbol2, auto.assign = FALSE,
+                    from = &quot;2016-01-01&quot;, end = Sys.Date())
+```
+
+
+This report examines the price of two stocks: 
+  
+* `r params$symbol1`
+* `r params$symbol2` 
+
+It is written in [R Markdown](http://rmarkdown.rstudio.com), an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. R Markdown combines the core syntax of **markdown** (an easy to write plain text format) with embedded **R** code chunks that are run so their output can be included in the final document.
+
+The data comes from [Yahoo finance](http://finance.yahoo.com).
+
+### `r params$symbol1` price
+
+```{r echo = FALSE}
+dygraph(Cl(stock1))
+```
+
+### `r params$symbol2` price
+
+```{r echo = FALSE}
+dygraph(Cl(stock2))
+```
+
+### `r params$symbol1` volume
+
+```{r echo = FALSE}
+dygraph(Vo(stock1))
+```
+
+### `r params$symbol2` volume
+
+```{r echo = FALSE}
+dygraph(Vo(stock2))
+```</code></pre>
+<hr />
+<div id="continue-to-lesson-8" class="section level4">
+<h4><a href="lesson-8.html">Continue to lesson 8</a></h4>
+</div>
+</div>
+</div>
+
+  </div> <!-- articleBandContent -->
+</div> <!-- pageContent -->
+
+<div id="rStudioFooter" class="band full">
+<div class="bandContent">
+  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="logos">
+    <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+    <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+    <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+    <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
+  </div>
+</div>
+</div>
+
+<!-- bizible -->
+<script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>
