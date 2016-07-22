@@ -271,25 +271,40 @@ p {
 #pageContent .columns {
   display: flex;
   justify-content: space-between;
+
+  display: -ms-flexbox;
+  -ms-flex-pack: justify;
 }
 
-#pageContent .columns .column3 {
-  max-width: 33%;
+#pageContent .columns .column2 {
+  max-width: 46%;
 }
 
 #pageContent .linkSection {
   line-height: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+}
+
+#pageContent .linkSection .linkSectionTitle {
+  font-size: 1.4em;
+  margin-bottom: 4px;
 }
 
 #pageContent .links a {
   display: block;
+  line-height: 24px;
   max-width: 500px;
-  padding: 5px 0 5px 18px;
+  padding: 0 0 0 16px;
   background-repeat: no-repeat;
-  background-position: left 10px;
-  background-size: 10px 10px;
+  background-position: left 8px;
+  background-size: 8px 8px;
   background-image: url(../images/link-icon.png);
+}
+
+#pageContent .linkSection .articleBlurb {
+  padding-left: 16px;
+  line-height: 20px;
+  margin-bottom: 10px;
 }
 
 .gallerySection, .formatSection {
@@ -630,7 +645,8 @@ table.table td a:only-child:active {
 
 .lessonPage .lessonContent #show-answer h2 {
   display: inline-block;
-  padding: 5px 10px;
+  margin-top: 10px;
+  padding: 7px 20px;
   background-color: #75aadb;
   color: #fff;
 
@@ -782,7 +798,7 @@ table.table td a:only-child:active {
     display: block;
   }
 
-  #pageContent .columns .column3 {
+  #pageContent .columns .column2 {
     max-width: none;
   }
 
