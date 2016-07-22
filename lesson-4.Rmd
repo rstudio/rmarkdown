@@ -36,5 +36,4 @@ Use the `rmarkdown::render()` function to render [your .Rmd file](lesson-exercis
 render("exercise-4.Rmd", output_file = "stocks.html")
 ```
 
-***
 ## [Continue to next lesson](lesson-5.html)

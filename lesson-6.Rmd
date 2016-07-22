@@ -37,5 +37,5 @@ When you re-knit your file, the results will look like this:
 ```{r echo = FALSE, comment = ""}
 cat(htmltools::includeText("lesson-solutions/solution-6.Rmd"))
 ```
-***
+
 ## [Continue to next lesson](lesson-7.html)

@@ -35,5 +35,5 @@ Use `{.sidebar}` to move the text at the top of [your dashboard](lesson-exercise
 ```{r echo = FALSE, comment = ""}
 cat(htmltools::includeText("lesson-solutions/solution-10.Rmd"))
 ```
-***
+
 ## [Continue to next lesson](lesson-11.html)

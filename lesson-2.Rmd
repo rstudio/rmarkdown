@@ -55,5 +55,5 @@ The data comes from [Yahoo finance](http://finance.yahoo.com).
 ```{r echo = FALSE, comment = ""}
 cat(htmltools::includeText("lesson-solutions/solution-2.Rmd"))
 ```
-***
+
 ## [Continue to next lesson](lesson-3.html)

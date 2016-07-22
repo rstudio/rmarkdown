@@ -40,4 +40,4 @@ Think you have it? Install the current versions of R Markdown. Then:
 4. Find the .html output file on your computer
 
 ***
-#### [Continue to next lesson](lesson-2.html)
+## [Continue to next lesson](lesson-2.html)

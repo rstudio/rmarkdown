@@ -108,5 +108,5 @@ dygraph(Vo(stock2))
 ```{r echo = FALSE, comment = ""}
 cat(htmltools::includeText("lesson-solutions/solution-3.Rmd"))
 ```
-***
+
 ## [Continue to next lesson](lesson-4.html)

@@ -77,5 +77,5 @@ Remove all of the line breaks from [your document](lesson-exercises/exercise-9.R
 ```{r echo = FALSE, comment = ""}
 cat(htmltools::includeText("lesson-solutions/solution-9.Rmd"))
 ```
-***
+
 ## [Continue to next lesson](lesson-10.html)

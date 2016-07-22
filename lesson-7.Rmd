@@ -99,5 +99,5 @@ Add table of contents to your [HTML document](lesson-exercises/exercise-7.Rmd) w
 ```{r echo = FALSE, comment = ""}
 cat(htmltools::includeText("lesson-solutions/solution-7.Rmd"))
 ```
-***
+
 ## [Continue to next lesson](lesson-8.html)

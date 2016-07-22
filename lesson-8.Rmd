@@ -36,5 +36,5 @@ Add a title and author to the YAML of your [your document](lesson-exercises/exer
 ```{r echo = FALSE, comment = ""}
 cat(htmltools::includeText("lesson-solutions/solution-8.Rmd"))
 ```
-***
+
 ## [Continue to next lesson](lesson-9.html)

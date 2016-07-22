@@ -48,5 +48,5 @@ When you Knit with Parameters, R Markdown will let you choose two new stocks to 
 ```{r echo = FALSE, comment = ""}
 cat(htmltools::includeText("lesson-solutions/solution-5.Rmd"))
 ```
-***
+
 ## [Continue to next lesson](lesson-6.html)

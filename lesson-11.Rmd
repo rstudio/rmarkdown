@@ -78,5 +78,5 @@ When you are finished, your website should look like this.
 
 ![](lesson-images/rmarkdownWebsite2.png)
 
-***
+
 ## [Continue to next lesson](lesson-12.html)
