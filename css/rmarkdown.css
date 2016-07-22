@@ -328,6 +328,8 @@ p {
 }
 
 .gallerySection .galleryItems .galleryItem .galleryItemLabel {
+  display: block;
+  cursor: pointer;
   border-top: 1px solid #f0f0f0;
   padding: 10px 10px 5px 10px;
 }
