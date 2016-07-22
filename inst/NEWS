@@ -1,6 +1,9 @@
 rmarkdown 1.1 (unreleased)
 --------------------------------------------------------------------------------
 
+* Fixed an issue where attempts to render an R Notebook could fail if the
+  path contained multibyte characters.
+
 * Fixed an issue where the default Beamer template did not provide vertical
   padding between paragraphs with certain versions of pandoc (<= 1.17.2).
 
