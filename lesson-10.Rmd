@@ -4,13 +4,9 @@ output:
   html_document:
     toc_float: false
     includes:
-      before_body: [include_header.html, include_header_navpage.html]
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
-
-#### | **[ 1 ](lesson-1.html)** |  **[ 2 ](lesson-2.html)** |  **[ 3 ](lesson-3.html)** | **[ 4 ](lesson-4.html)** | **[ 5 ](lesson-5.html)** | **[ 6 ](lesson-6.html)** | **[ 7 ](lesson-7.html)** | **[ 8 ](lesson-8.html)** | **[ 9 ](lesson-9.html)** | Lesson 10 | **[ 11 ](lesson-11.html)** | **[ 12 ](lesson-12.html)** |
-***
-
-# Dashboard Layouts 2
 
 With flexdashboard, layout options are easy to customize. For example, you can group columns (or rows) into separate pages with level 1 headers (`==========` or `#`). The title of the header will appear as the title of the page in the dashboard's navbar. The page will contain every box, column, or row in the section that is associated with the header.
 
@@ -32,10 +28,12 @@ Use `{.sidebar}` to move the text at the top of [your dashboard](lesson-exercise
 
 ***
 
+## Show Answer
+
 ## Model Answer
 
 ```{r echo = FALSE, comment = ""}
 cat(htmltools::includeText("lesson-solutions/solution-10.Rmd"))
 ```
 ***
-#### [Continue to lesson 11](lesson-11.html)
+## [Continue to next lesson](lesson-11.html)

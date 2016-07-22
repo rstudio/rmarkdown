@@ -4,13 +4,9 @@ output:
   html_document:
     toc_float: false
     includes:
-      before_body: [include_header.html, include_header_navpage.html]
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
-
-#### | **[ 1 ](lesson-1.html)** |  **[ 2 ](lesson-2.html)** |  **[ 3 ](lesson-3.html)** | Lesson 4 | **[ 5 ](lesson-5.html)** | **[ 6 ](lesson-6.html)** | **[ 7 ](lesson-7.html)** | **[ 8 ](lesson-8.html)** | **[ 9 ](lesson-9.html)** | **[ 10 ](lesson-10.html)** | **[ 11 ](lesson-11.html)** | **[ 12 ](lesson-12.html)** |
-***
-
-# Rendering Output
 
 There are two ways to render an R Markdown document into it's final output format. If you are using RStudio, then the "Knit" button (Ctrl+Shift+K) will render the document and display a preview of it.
 
@@ -30,13 +26,15 @@ Note that both methods use the same mechanism; RStudio's "Knit" button calls `rm
 
 Use the `rmarkdown::render()` function to render [your .Rmd file](lesson-exercises/exercise-4.Rmd). Be sure to give `rmarkdown::render()` the filepath to your .Rmd file. Set `render()`'s `output_file` to choose a custom name for the output file.
 
-## Model answer
-
 ***
+
+## Show Answer
+
+## Model answer
 
 ```{r, eval = FALSE}
 render("exercise-4.Rmd", output_file = "stocks.html")
 ```
 
 ***
-#### [Continue to lesson 5](lesson-5.html)
+## [Continue to next lesson](lesson-5.html)

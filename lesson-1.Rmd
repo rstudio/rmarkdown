@@ -1,16 +1,12 @@
 ---
-title: "Getting Started"
+title: "Intro"
 output:
   html_document:
     toc_float: false
     includes:
-      before_body: [include_header.html, include_header_navpage.html]
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
-
-#### Lesson 1 | **[ 2 ](lesson-2.html)** | **[ 3 ](lesson-3.html)** | **[ 4 ](lesson-4.html)** | **[ 5 ](lesson-5.html)** | **[ 6 ](lesson-6.html)** | **[ 7 ](lesson-7.html)** | **[ 8 ](lesson-8.html)** | **[ 9 ](lesson-9.html)** | **[ 10 ](lesson-10.html)** | **[ 11 ](lesson-11.html)** | **[ 12 ](lesson-12.html)** |
-***
-
-# Getting Started
 
 ### Overview
 
@@ -44,4 +40,4 @@ Think you have it? Install the current versions of R Markdown. Then:
 4. Find the .html output file on your computer
 
 ***
-#### [Continue to lesson 2](lesson-2.html)
+#### [Continue to next lesson](lesson-2.html)

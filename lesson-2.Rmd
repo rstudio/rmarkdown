@@ -4,12 +4,9 @@ output:
   html_document:
     toc_float: false
     includes:
-      before_body: [include_header.html, include_header_navpage.html]
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
-#### | **[ 1 ](lesson-1.html)** | Lesson 2 | **[ 3 ](lesson-3.html)** | **[ 4 ](lesson-4.html)** | **[ 5 ](lesson-5.html)** | **[ 6 ](lesson-6.html)** | **[ 7 ](lesson-7.html)** | **[ 8 ](lesson-8.html)** | **[ 9 ](lesson-9.html)** | **[ 10 ](lesson-10.html)** | **[ 11 ](lesson-11.html)** | **[ 12 ](lesson-12.html)** |
-***
-
-# Markdown Basics
 
 Markdown is a simple formatting language designed to make authoring content easy for everyone. Rather than write in complex markup code (e.g. HTML or LaTex), you write in plain text with formatting cues. Pandoc uses these cues to turn your document into attractive output. For example, the file on the left shows basic Markdown and the resulting output on the right:
 
@@ -51,10 +48,12 @@ The data comes from [Yahoo finance](http://finance.yahoo.com).
 
 ***
 
+## Show Answer
+
 ## Model Answer
 
 ```{r echo = FALSE, comment = ""}
 cat(htmltools::includeText("lesson-solutions/solution-2.Rmd"))
 ```
 ***
-#### [Continue to lesson 3](lesson-3.html)
+## [Continue to next lesson](lesson-3.html)

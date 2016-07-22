@@ -4,13 +4,9 @@ output:
   html_document:
     toc_float: false
     includes:
-      before_body: [include_header.html, include_header_navpage.html]
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
-
-#### | **[ 1 ](lesson-1.html)** |  **[ 2 ](lesson-2.html)** |  **[ 3 ](lesson-3.html)** | **[ 4 ](lesson-4.html)** | Lesson 5 | **[ 6 ](lesson-6.html)** | **[ 7 ](lesson-7.html)** | **[ 8 ](lesson-8.html)** | **[ 9 ](lesson-9.html)** | **[ 10 ](lesson-10.html)** | **[ 11 ](lesson-11.html)** | **[ 12 ](lesson-12.html)** |
-***
-
-# Using Parameters
 
 R Markdown documents can contain a metadata section that includes title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an .Rmd file adds a title, author, and date to your document.
 
@@ -43,6 +39,9 @@ You can learn more about params at [Paramaterized Reports](http://rmarkdown.rstu
 Add two parameters to [your report](lesson-exercises/exercise-5.Rmd), `symbol1` and `symbol2`. You can use "FB" (Facebook) and "GOOG" (Google) as their default values. Then replace every instance of `"AMZN"` or `"AAPL"` in your code with one of the parameters.
 
 When you Knit with Parameters, R Markdown will let you choose two new stocks to examine. For now, your text will still refer to AMZN and AAPL, but your graphs will update.
+***
+
+## Show Answer
 
 ## Model Answer
 
@@ -50,4 +49,4 @@ When you Knit with Parameters, R Markdown will let you choose two new stocks to 
 cat(htmltools::includeText("lesson-solutions/solution-5.Rmd"))
 ```
 ***
-#### [Continue to lesson 6](lesson-6.html)
+## [Continue to next lesson](lesson-6.html)

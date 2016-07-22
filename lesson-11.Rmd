@@ -4,13 +4,9 @@ output:
   html_document:
     toc_float: false
     includes:
-      before_body: [include_header.html, include_header_navpage.html]
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
-
-#### | **[ 1 ](lesson-1.html)** |  **[ 2 ](lesson-2.html)** |  **[ 3 ](lesson-3.html)** | **[ 4 ](lesson-4.html)** | **[ 5 ](lesson-5.html)** | **[ 6 ](lesson-6.html)** | **[ 7 ](lesson-7.html)** | **[ 8 ](lesson-8.html)** | **[ 9 ](lesson-9.html)** | **[ 10 ](lesson-10.html)** | Lesson 11 | **[ 12 ](lesson-12.html)** |
-***
-
-# R Markdown Websites
 
 You can render collections of R Markdown documents as a website using the `rmarkdown::render_site` function. To do so, you will need the most recent version of the **rmarkdown** package (v0.9.6) which you can install from CRAN as follows:
 
@@ -83,4 +79,4 @@ When you are finished, your website should look like this.
 ![](lesson-images/rmarkdownWebsite2.png)
 
 ***
-#### [Continue to lesson 12](lesson-12.html)
+## [Continue to next lesson](lesson-12.html)

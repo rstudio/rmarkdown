@@ -4,16 +4,12 @@ output:
   html_document:
     toc_float: false
     includes:
-      before_body: [include_header.html, include_header_navpage.html]
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
 params:
   symbol1: "FB"
   symbol2: "GOOG"
 ---
-
-#### | **[ 1 ](lesson-1.html)** |  **[ 2 ](lesson-2.html)** |  **[ 3 ](lesson-3.html)** | **[ 4 ](lesson-4.html)** | **[ 5 ](lesson-5.html)** | Lesson 6 | **[ 7 ](lesson-7.html)** | **[ 8 ](lesson-8.html)** | **[ 9 ](lesson-9.html)** | **[ 10 ](lesson-10.html)** | **[ 11 ](lesson-11.html)** | **[ 12 ](lesson-12.html)** |
-***
-
-# Inline R Code
 
 You can evaluate R expressions inline by enclosing the expression within a single back-tick qualified with 'r'. For example, the following code embeds R results as text in the output at right
 
@@ -34,10 +30,12 @@ When you re-knit your file, the results will look like this:
 
 ***
 
+## Show Answer
+
 ## Model Answer
 
 ```{r echo = FALSE, comment = ""}
 cat(htmltools::includeText("lesson-solutions/solution-6.Rmd"))
 ```
 ***
-#### [Continue to lesson 7](lesson-7.html)
+## [Continue to next lesson](lesson-7.html)

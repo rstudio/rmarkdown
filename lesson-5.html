@@ -152,12 +152,22 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 <div id="pageContent" class="standardPadding">
   <div class="articleBandContent">
-
-<style type="text/css">
-.title {
-  display: none;
-}
-</style>
+<div class="lessonPage">
+  <div class="lessonsNav">
+    <a id="nav-lesson-1" href="lesson-1.html">Intro</a>
+    <a id="nav-lesson-2" href="lesson-2.html">Markdown Basics</a>
+    <a id="nav-lesson-3" href="lesson-3.html">R Code Chunks</a>
+    <a id="nav-lesson-4" href="lesson-4.html">Rendering Ouput</a>
+    <a id="nav-lesson-5" href="lesson-5.html">Using Parameters</a>
+    <a id="nav-lesson-6" href="lesson-6.html">Inline R Code</a>
+    <a id="nav-lesson-7" href="lesson-7.html">Output Formats</a>
+    <a id="nav-lesson-8" href="lesson-8.html">Slides</a>
+    <a id="nav-lesson-9" href="lesson-9.html">Dashboard Layouts</a>
+    <a id="nav-lesson-10" href="lesson-10.html">Dashboard Layouts 2</a>
+    <a id="nav-lesson-11" href="lesson-11.html">R Markdown Websites</a>
+    <a id="nav-lesson-12" href="lesson-12.html">Interactive Documents</a>
+  </div>
+  <div class="lessonContent">
 
 <div class="fluid-row" id="header">
 
@@ -168,12 +178,6 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<div id="lesson-5-6-7-8-9-10-11-12" class="section level4">
-<h4>| <strong><a href="lesson-1.html">1</a></strong> | <strong><a href="lesson-2.html">2</a></strong> | <strong><a href="lesson-3.html">3</a></strong> | <strong><a href="lesson-4.html">4</a></strong> | Lesson 5 | <strong><a href="lesson-6.html">6</a></strong> | <strong><a href="lesson-7.html">7</a></strong> | <strong><a href="lesson-8.html">8</a></strong> | <strong><a href="lesson-9.html">9</a></strong> | <strong><a href="lesson-10.html">10</a></strong> | <strong><a href="lesson-11.html">11</a></strong> | <strong><a href="lesson-12.html">12</a></strong> |</h4>
-<hr />
-</div>
-<div id="using-parameters" class="section level1">
-<h1>Using Parameters</h1>
 <p>R Markdown documents can contain a metadata section that includes title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an .Rmd file adds a title, author, and date to your document.</p>
 <pre><code>---
 title: &quot;Report with date&quot;
@@ -196,7 +200,10 @@ date: &quot;2016-06-23&quot;
 <div id="exercise" class="section level2">
 <h2>Exercise</h2>
 <p>Add two parameters to <a href="lesson-exercises/exercise-5.Rmd">your report</a>, <code>symbol1</code> and <code>symbol2</code>. You can use “FB” (Facebook) and “GOOG” (Google) as their default values. Then replace every instance of <code>&quot;AMZN&quot;</code> or <code>&quot;AAPL&quot;</code> in your code with one of the parameters.</p>
-<p>When you Knit with Parameters, R Markdown will let you choose two new stocks to examine. For now, your text will still refer to AMZN and AAPL, but your graphs will update.</p>
+<p>When you Knit with Parameters, R Markdown will let you choose two new stocks to examine. For now, your text will still refer to AMZN and AAPL, but your graphs will update. ***</p>
+</div>
+<div id="show-answer" class="section level2">
+<h2>Show Answer</h2>
 </div>
 <div id="model-answer" class="section level2">
 <h2>Model Answer</h2>
@@ -252,12 +259,27 @@ dygraph(Vo(stock1))
 dygraph(Vo(stock2))
 ```</code></pre>
 <hr />
-<div id="continue-to-lesson-6" class="section level4">
-<h4><a href="lesson-6.html">Continue to lesson 6</a></h4>
 </div>
-</div>
+<div id="continue-to-next-lesson" class="section level2">
+<h2><a href="lesson-6.html">Continue to next lesson</a></h2>
 </div>
 
+  </div> <!-- lessonContent -->
+</div> <!-- lessonPage -->
+
+
+<script type="text/javascript">
+  var lesson = window.location.href.match(/lesson-[0-9]+/g);
+  if (lesson !== null) {
+    lesson = 'nav-' + lesson[0];
+    $('#'+lesson).addClass('current');
+  }
+
+  $('#show-answer').on("click", function() {
+    $('#show-answer').addClass('showing');
+    $('#model-answer').addClass('showing');
+  })
+</script>
   </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 

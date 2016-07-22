@@ -11,7 +11,7 @@
 
 
 
-<title>Getting Started</title>
+<title>Intro</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -152,28 +152,32 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 <div id="pageContent" class="standardPadding">
   <div class="articleBandContent">
-
-<style type="text/css">
-.title {
-  display: none;
-}
-</style>
+<div class="lessonPage">
+  <div class="lessonsNav">
+    <a id="nav-lesson-1" href="lesson-1.html">Intro</a>
+    <a id="nav-lesson-2" href="lesson-2.html">Markdown Basics</a>
+    <a id="nav-lesson-3" href="lesson-3.html">R Code Chunks</a>
+    <a id="nav-lesson-4" href="lesson-4.html">Rendering Ouput</a>
+    <a id="nav-lesson-5" href="lesson-5.html">Using Parameters</a>
+    <a id="nav-lesson-6" href="lesson-6.html">Inline R Code</a>
+    <a id="nav-lesson-7" href="lesson-7.html">Output Formats</a>
+    <a id="nav-lesson-8" href="lesson-8.html">Slides</a>
+    <a id="nav-lesson-9" href="lesson-9.html">Dashboard Layouts</a>
+    <a id="nav-lesson-10" href="lesson-10.html">Dashboard Layouts 2</a>
+    <a id="nav-lesson-11" href="lesson-11.html">R Markdown Websites</a>
+    <a id="nav-lesson-12" href="lesson-12.html">Interactive Documents</a>
+  </div>
+  <div class="lessonContent">
 
 <div class="fluid-row" id="header">
 
 
 
-<h1 class="title toc-ignore">Getting Started</h1>
+<h1 class="title toc-ignore">Intro</h1>
 
 </div>
 
 
-<div id="lesson-1-2-3-4-5-6-7-8-9-10-11-12" class="section level4">
-<h4>Lesson 1 | <strong><a href="lesson-2.html">2</a></strong> | <strong><a href="lesson-3.html">3</a></strong> | <strong><a href="lesson-4.html">4</a></strong> | <strong><a href="lesson-5.html">5</a></strong> | <strong><a href="lesson-6.html">6</a></strong> | <strong><a href="lesson-7.html">7</a></strong> | <strong><a href="lesson-8.html">8</a></strong> | <strong><a href="lesson-9.html">9</a></strong> | <strong><a href="lesson-10.html">10</a></strong> | <strong><a href="lesson-11.html">11</a></strong> | <strong><a href="lesson-12.html">12</a></strong> |</h4>
-<hr />
-</div>
-<div id="getting-started" class="section level1">
-<h1>Getting Started</h1>
 <div id="overview" class="section level3">
 <h3>Overview</h3>
 <div class="figure">
@@ -204,12 +208,27 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <li>Find the .html output file on your computer</li>
 </ol>
 <hr />
-<div id="continue-to-lesson-2" class="section level4">
-<h4><a href="lesson-2.html">Continue to lesson 2</a></h4>
-</div>
+<div id="continue-to-next-lesson" class="section level4">
+<h4><a href="lesson-2.html">Continue to next lesson</a></h4>
 </div>
 </div>
 
+  </div> <!-- lessonContent -->
+</div> <!-- lessonPage -->
+
+
+<script type="text/javascript">
+  var lesson = window.location.href.match(/lesson-[0-9]+/g);
+  if (lesson !== null) {
+    lesson = 'nav-' + lesson[0];
+    $('#'+lesson).addClass('current');
+  }
+
+  $('#show-answer').on("click", function() {
+    $('#show-answer').addClass('showing');
+    $('#model-answer').addClass('showing');
+  })
+</script>
   </div> <!-- articleBandContent -->
 </div> <!-- pageContent -->
 

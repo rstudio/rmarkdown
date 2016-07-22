@@ -10,6 +10,11 @@ html, body, .footerPushDown {
   height: 100%;
 }
 
+p {
+  line-height: 1.7em;
+  margin-bottom: 2em;
+}
+
 .band.full {
   position: relative;
 }
@@ -542,8 +547,113 @@ html, body, .footerPushDown {
   background-image: url(../images/facebookLogo.svg);
 }
 
+.screenshot {
+  border: 1px solid #ccc;
+}
 
-/* size adjustments */
+.notebook-screenshot {
+  border: 1px solid #ccc;
+  margin-bottom: 8px;
+}
+
+/* Don't show link underlines in tables (too busy) */
+table.table td a:only-child:link,
+table.table td a:only-child:visited {
+  text-decoration: none;
+}
+table.table td a:only-child:hover,
+table.table td a:only-child:active {
+  text-decoration: underline;
+}
+
+/* Use the background color from the R logo for the floating toc nav */
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+  background-color: rgb(97,151,213);
+}
+
+/* offset scroll position for anchor links  */
+
+.section h1 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+
+.section h2 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+.section h3 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+.section h4 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+.section h5 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+.section h6 {
+  padding-top: 58px;
+  margin-top: -58px;
+}
+
+.lessonPage {
+  display: flex;
+  display: -ms-flexbox;
+}
+
+.lessonPage .lessonsNav {
+  margin-top: 23px;
+  min-width: 290px;
+  line-height: 40px;
+  padding-right: 30px;
+}
+
+.lessonPage .lessonsNav a {
+  display: block;
+  padding: 0 10px;
+}
+
+.lessonPage .lessonsNav a:hover {
+  text-decoration: none;
+  background-color: #f8f8f8;
+}
+
+.lessonPage .lessonsNav a.current {
+  background-color: #75aadb;
+  color: #fff;
+}
+
+.lessonPage .lessonContent #show-answer h2 {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #75aadb;
+  color: #fff;
+
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.lessonPage .lessonContent #show-answer.showing {
+  display: none;
+}
+
+.lessonPage .lessonContent #model-answer {
+  display: none;
+}
+
+.lessonPage .lessonContent #model-answer.showing {
+  display: block;
+}
+
+.lessonPage .lessonContent #continue-to-next-lesson h2 {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+/* adjustments for smaller screens */
 
 @media screen and (max-width: 1200px){
 
@@ -674,6 +784,20 @@ html, body, .footerPushDown {
     max-width: none;
   }
 
+  .lessonPage .lessonsNav {
+    min-width: 200px;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .lessonPage {
+    display: block;
+  }
+
+  .lessonPage .lessonsNav {
+    display: none;
+  }
+
 }
 
 @media screen and (max-width: 500px){
@@ -695,56 +819,4 @@ html, body, .footerPushDown {
       margin: 0 2px;
     }
 
-}
-
-.screenshot {
-  border: 1px solid #ccc;
-}
-
-.notebook-screenshot {
-  border: 1px solid #ccc;
-  margin-bottom: 8px;
-}
-
-/* Don't show link underlines in tables (too busy) */
-table.table td a:only-child:link,
-table.table td a:only-child:visited {
-  text-decoration: none;
-}
-table.table td a:only-child:hover,
-table.table td a:only-child:active {
-  text-decoration: underline;
-}
-
-/* Use the background color from the R logo for the floating toc nav */
-.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
-  background-color: rgb(97,151,213);
-}
-
-/* offset scroll position for anchor links  */
-
-.section h1 {
-  padding-top: 58px;
-  margin-top: -58px;
-}
-
-.section h2 {
-  padding-top: 58px;
-  margin-top: -58px;
-}
-.section h3 {
-  padding-top: 58px;
-  margin-top: -58px;
-}
-.section h4 {
-  padding-top: 58px;
-  margin-top: -58px;
-}
-.section h5 {
-  padding-top: 58px;
-  margin-top: -58px;
-}
-.section h6 {
-  padding-top: 58px;
-  margin-top: -58px;
 }
