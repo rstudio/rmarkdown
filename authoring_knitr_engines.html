@@ -22,7 +22,6 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
 <link rel="stylesheet"
@@ -98,6 +97,7 @@ button.code-folding-btn:focus {
   outline: none;
 }
 </style>
+
 
 <style type="text/css">
 /* padding for bootstrap navbar */
@@ -532,6 +532,15 @@ SELECT * FROM trials
 </code></pre>
 <p>You can specify no limit on the records to be displayed via <code>max.print = -1</code> or <code>max.print = NA</code>.</p>
 </div>
+<div id="table-captions" class="section level3">
+<h3>Table Captions</h3>
+<p>By default the knitr SQL engine includes a caption that indicates the total number of records displayed. You can override this caption using the <code>tab.cap</code> chunk option. For example:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, tab.cap = "My Caption"}
+SELECT * FROM trials
+&#96;&#96;&#96;
+</code></pre>
+<p>You can specify that you want no caption all via <code>tab.cap = NA</code>.</p>
+</div>
 <div id="assigning-results-to-a-data-frame" class="section level3">
 <h3>Assigning Results to a Data Frame</h3>
 <p>If you want to assign the results of the SQL query to an R data frame, you can do this using the <code>output.var</code> option, for example:</p>
@@ -692,6 +701,7 @@ body {
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

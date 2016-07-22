@@ -109,6 +109,16 @@ SELECT * FROM trials
 
 You can specify no limit on the records to be displayed via `max.print = -1` or `max.print = NA`.
 
+### Table Captions
+
+By default the knitr SQL engine includes a caption that indicates the total number of records displayed. You can override this caption using the `tab.cap` chunk option. For example:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, tab.cap = "My Caption"}
+SELECT * FROM trials
+&#96;&#96;&#96;
+</code></pre>
+
+You can specify that you want no caption all via `tab.cap = NA`.
 
 ### Assigning Results to a Data Frame
 
