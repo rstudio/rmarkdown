@@ -416,19 +416,17 @@ n_bytes <- function(string) {
 
 starts_with_bytes <- function(string, bytes) {
   Encoding(string) <- Encoding(bytes) <- "bytes"
-  if (nchar(bytes) > nchar(string))
+  if (n_bytes(bytes) > n_bytes(string))
     return(FALSE)
-  substring(string, 1, nchar(bytes)) == bytes
+  substring(string, 1, n_bytes(bytes)) == bytes
 }
 
 ends_with_bytes <- function(string, bytes) {
   Encoding(string) <- Encoding(bytes) <- "bytes"
-  if (nchar(bytes) > nchar(string))
+  if (n_bytes(bytes) > n_bytes(string))
     return(FALSE)
-  substring(string, nchar(string) - nchar(bytes) + 1, nchar(string)) == bytes
+  substring(string, n_bytes(string) - n_bytes(bytes) + 1, n_bytes(string)) == bytes
 }
-
-
 
 base64_encode_object <- function(object) {
   object <- rapply(object, unclass, how = "list")
