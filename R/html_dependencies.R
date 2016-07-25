@@ -85,17 +85,6 @@ html_dependency_ionicons <- function() {
   )
 }
 
-# create an html_dependency for stickytableheaders (not exported
-# b/c we are likely to eventually use a different library)
-html_dependency_stickytableheaders <- function() {
-  htmlDependency(
-    "stickytableheaders",
-    "0.1.19",
-    src = rmarkdown_system_file("rmd/h/stickytableheaders-0.1.19"),
-    script = "jquery.stickytableheaders.min.js"
-  )
-}
-
 # analyze navbar html source for icon dependencies
 navbar_icon_dependencies <- function(navbar) {
 

@@ -167,10 +167,9 @@ html_notebook <- function(toc = FALSE,
       stop("The ", arg, " option is not valid for the html_notebook format.")
   }
 
-  # add stickytableheaders dependency
+  # add dependencies
   extra_dependencies <- append(extra_dependencies,
-                               list(html_dependency_jquery(),
-                                    html_dependency_stickytableheaders()))
+                               list(html_dependency_jquery()))
 
   # generate actual format
   base_format <- html_document(toc = toc,

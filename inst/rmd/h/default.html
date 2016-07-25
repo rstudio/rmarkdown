@@ -487,12 +487,6 @@ $$(document).ready(function () {
     var table = $$(this).children('table');
     var caption = table.children('caption').detach();
     caption.insertBefore($$(this)).css('display', 'inherit');
-
-    // sticky table headers
-    table.stickyTableHeaders({
-      scrollableArea: $$(this),
-      fixedOffset: 1
-    });
   });
 });
 $endif$
