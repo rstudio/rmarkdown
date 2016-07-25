@@ -169,7 +169,8 @@ html_notebook <- function(toc = FALSE,
 
   # add dependencies
   extra_dependencies <- append(extra_dependencies,
-                               list(html_dependency_jquery()))
+                               list(html_dependency_jquery(),
+                                    html_dependency_pagedtable()))
 
   # generate actual format
   base_format <- html_document(toc = toc,

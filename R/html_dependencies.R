@@ -245,3 +245,13 @@ has_dependencies <- function(knit_meta, class) {
 has_html_dependencies <- function(knit_meta) {
   has_dependencies(knit_meta, "html_dependency")
 }
+
+# create an html_dependency for pagedtable
+html_dependency_pagedtable <- function() {
+  htmlDependency(
+    "pagedtable",
+    "0.0.1",
+    src = rmarkdown_system_file("rmd/h/pagedtable-0.0.1"),
+    script = "pagedtable.js"
+  )
+}
