@@ -1,9 +1,10 @@
 paged_table_html = function(x) {
   paste(
-    "<script id=\"pagedtable-test\" type=\"application/json\">",
-    "[{\"Sepal.Length\":5.1,\"Sepal.Width\":3.5,\"Petal.Length\":1.4,\"Petal.Width\":0.2,\"Species\":\"setosa\"}]",
-    "</script>",
-    "<div data-pagedtable=\"pagedtable-test\"></div>",
+    "<div data-pagedtable>",
+    "  <script data-pagedtable-source type=\"application/json\">",
+    "    [{\"Sepal.Length\":5.1,\"Sepal.Width\":3.5,\"Petal.Length\":1.4,\"Petal.Width\":0.2,\"Species\":\"setosa\"}]",
+    "  </script>",
+    "</div>",
     sep = "\n"
   )
 }
