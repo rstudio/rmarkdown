@@ -6,7 +6,13 @@ var PagedTable;
     if (json === null || json.length === 0)
       return [];
 
-    return Object.keys(json[0]);
+    var columns = Object.keys(json[0]);
+    if (columns.length > 10) {
+      columns = columns.slice(1, 10);
+      columns[10] = "...";
+    }
+
+    return columns;
   };
 
   var renderHeader = function(pagedTable) {
@@ -46,7 +52,7 @@ var PagedTable;
       htmlRow.setAttribute("class", (idxRow % 2 !==0) ? "even" : "odd");
 
       headerNames.forEach(function(cellName) {
-        var dataCell = dataRow[cellName];
+        var dataCell = cellName === "..." ? "" : dataRow[cellName];
         var htmlCell = document.createElement("td");
         htmlCell.appendChild(document.createTextNode(dataCell));
         htmlRow.appendChild(htmlCell);
