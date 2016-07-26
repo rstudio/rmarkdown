@@ -10,6 +10,7 @@
 .pagedtable table {
   width: 100%;
   max-width: 100%;
+  margin-bottom: 5px
 }
 
 .pagedtable th {
@@ -21,4 +22,10 @@
 
 .pagedtable td {
   text-align: right;
+}
+
+.pagedtable a {
+  cursor: pointer;
+  text-align: right;
+  margin-left: 15px;
 }

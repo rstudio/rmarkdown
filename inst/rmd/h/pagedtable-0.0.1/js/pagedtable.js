@@ -50,9 +50,7 @@ var PagedTable;
     return tbody;
   };
 
-  var getDataFromPagedTable = function(pagedTableId) {
-    var pagedTable = document.getElementById(pagedTableId);
-
+  var getDataFromPagedTable = function(pagedTable) {
     var sourceElems = [].slice.call(pagedTable.children).filter(function(e) {
       return e.hasAttribute("data-pagedtable-source");
     });
@@ -64,31 +62,82 @@ var PagedTable;
     return JSON.parse(sourceElems[0].innerHTML);
   };
 
-  var renderOne = function(pagedTableId, pageNumber) {
-    var pagedTable = document.getElementById(pagedTableId);
-    var data = getDataFromPagedTable(pagedTableId);
+  var getTableDiv = function(pagedTable) {
+    var selection = pagedTable.querySelectorAll("div.pagedtable");
 
-    var tableDiv = document.createElement("div");
-    tableDiv.setAttribute("class", "pagedtable");
+    var tableDiv = null;
+    if (selection.length === 0) {
+      tableDiv = document.createElement("div");
+      pagedTable.appendChild(tableDiv);
+      tableDiv.setAttribute("class", "pagedtable");
+    }
+    else {
+      tableDiv = selection[0];
+    }
+
+    return tableDiv;
+  };
+
+  var getPageNumber = function(pagedTable) {
+    return parseInt(pagedTable.getAttribute("pagedtable-page"));
+  };
+
+  var increasePageNumber = function(pagedTable, increase) {
+    var newPageNumber = getPageNumber(pagedTable) + increase;
+    pagedTable.setAttribute("pagedtable-page", newPageNumber);
+  };
+
+  var renderOne = function(pagedTable) {
+    var pageNumber = getPageNumber(pagedTable);
+
+    var data = getDataFromPagedTable(pagedTable);
+
+    var tableDiv = getTableDiv(pagedTable);
+    tableDiv.innerHTML = "";
 
     var table = document.createElement("table");
     table.setAttribute("class", "table table-condensed");
     tableDiv.appendChild(table);
 
-    var thead = renderHeader(data);
-    table.appendChild(thead);
+    table.appendChild(renderHeader(data));
+    table.appendChild(renderBody(data, pageNumber));
+    table.appendChild(renderFooter(pagedTable, pageNumber));
+  };
 
-    var tbody = renderBody(data, pageNumber);
-    table.appendChild(tbody);
+  var renderFooter = function(pagedTable) {
+    var footer = document.createElement("tfoot");
 
-    pagedTable.appendChild(tableDiv);
+    var row = document.createElement("tr");
+    footer.appendChild(row);
+
+    var cell = document.createElement("td");
+    cell.setAttribute("colspan", "100%");
+    row.appendChild(cell);
+
+    var previous = document.createElement("a");
+    previous.appendChild(document.createTextNode("previous"));
+    previous.onclick = function() {
+      increasePageNumber(pagedTable, -1);
+      renderOne(pagedTable);
+    };
+    cell.appendChild(previous);
+
+    var next = document.createElement("a");
+    next.appendChild(document.createTextNode("next"));
+    next.onclick = function() {
+      increasePageNumber(pagedTable, 1);
+      renderOne(pagedTable);
+    };
+    cell.appendChild(next);
+
+    return footer;
   };
 
   PagedTable.renderAll = function() {
     var pagedTables = document.querySelectorAll('[data-pagedtable]');
     pagedTables.forEach(function(pagedTable, idx) {
-      pagedTable.id = pagedTable.id === "" ? "pagedtable-" + idx : pagedTable.id;
-      renderOne(pagedTable.id, 0);
+      pagedTable.setAttribute("pagedtable-page", 0);
+      renderOne(pagedTable);
     });
   };
 
