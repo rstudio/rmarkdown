@@ -46,34 +46,41 @@ var PagedTable;
     return tbody;
   }
 
-  PagedTable.render = function() {
+  var getDataFromPagedTable = function(pagedTable) {
+    var sourceElems = [].slice.call(pagedTable.children).filter(function(e) {
+      return e.hasAttribute("data-pagedtable-source")
+    });
+
+    if (sourceElems === null || sourceElems.length !== 1) {
+      throw("A single data-pagedtable-source was not found")
+    }
+
+    return JSON.parse(sourceElems[0].innerHTML);
+  }
+
+  var renderOne = function(pagedTable) {
+    var data = getDataFromPagedTable(pagedTable);
+
+    var tableDiv = document.createElement("div");
+    tableDiv.setAttribute("class", "pagedtable")
+
+    var table = document.createElement("table");
+    table.setAttribute("class", "table table-condensed")
+    tableDiv.appendChild(table);
+
+    var thead = renderHeader(data);
+    table.appendChild(thead);
+
+    var tbody = renderBody(data);
+    table.appendChild(tbody);
+
+    pagedTable.appendChild(tableDiv);
+  }
+
+  PagedTable.renderAll = function() {
     var pagedTables = document.querySelectorAll('[data-pagedtable]');
     pagedTables.forEach(function(pagedTable) {
-      var sourceName = pagedTable.getAttribute("data-pagedtable");
-      var sourceElems = [].slice.call(pagedTable.children).filter(function(e) {
-        return e.hasAttribute("data-pagedtable-source")
-      });
-      if (sourceElems === null || sourceElems.length !== 1) {
-        pagedTable.innerHTML = "Error: A single data-pagedtable-source was not found";
-      }
-      else {
-        var data = JSON.parse(sourceElems[0].innerHTML);
-
-        var tableDiv = document.createElement("div");
-        tableDiv.setAttribute("class", "pagedtable")
-
-        var table = document.createElement("table");
-        table.setAttribute("class", "table table-condensed")
-        tableDiv.appendChild(table);
-
-        var thead = renderHeader(data);
-        table.appendChild(thead);
-
-        var tbody = renderBody(data);
-        table.appendChild(tbody);
-
-        pagedTable.appendChild(tableDiv);
-      }
+      renderOne(pagedTable);
     });
   };
 
@@ -81,5 +88,5 @@ var PagedTable;
 })(PagedTable || (PagedTable = {}));
 
 window.onload = function() {
-  PagedTable.render();
+  PagedTable.renderAll();
 };
