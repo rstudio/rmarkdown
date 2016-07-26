@@ -25,11 +25,23 @@ function renderPagedTables() {
       table.appendChild(header);
 
       var headerNames = headersFromJson(sourceData);
-      headerNames.map(function(headerName) {
+      headerNames.forEach(function(headerName) {
         var column = document.createElement("th");
         column.appendChild(document.createTextNode(headerName));
         header.appendChild(column);
       })
+
+      sourceData.forEach(function(dataRow) {
+        var htmlRow = document.createElement("tr");
+        headerNames.forEach(function(cellName) {
+          var dataCell = dataRow[cellName];
+          var htmlCell = document.createElement("td");
+          htmlCell.appendChild(document.createTextNode(dataCell));
+          htmlRow.appendChild(htmlCell);
+        });
+
+        table.appendChild(htmlRow);
+      });
 
       pagedTable.appendChild(table);
     }
