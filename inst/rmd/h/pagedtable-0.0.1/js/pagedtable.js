@@ -59,6 +59,9 @@ var PagedTable;
   };
 
   var renderFooter = function(pagedTable) {
+    var pageNumber = getPageNumber(pagedTable);
+    var data = getDataFromPagedTable(pagedTable);
+
     var footer = pagedTable.querySelectorAll("tfoot")[0];
     footer.innerHTML = "";
 
@@ -74,6 +77,7 @@ var PagedTable;
     previous.onclick = function() {
       increasePageNumber(pagedTable, -1);
       renderBody(pagedTable);
+      renderFooter(pagedTable);
     };
     cell.appendChild(previous);
 
@@ -82,8 +86,12 @@ var PagedTable;
     next.onclick = function() {
       increasePageNumber(pagedTable, 1);
       renderBody(pagedTable);
+      renderFooter(pagedTable);
     };
     cell.appendChild(next);
+
+    previous.setAttribute("class", pageNumber <= 0 ? "disabled" : "enabled");
+    next.setAttribute("class", (pageNumber + 1) * pageSize >= data.length - 1 ? "disabled" : "enabled");
   };
 
   var getDataFromPagedTable = function(pagedTable) {
@@ -104,6 +112,11 @@ var PagedTable;
 
   var increasePageNumber = function(pagedTable, increase) {
     var newPageNumber = getPageNumber(pagedTable) + increase;
+    var data = getDataFromPagedTable(pagedTable);
+
+    if (newPageNumber < 0) newPageNumber = 0;
+    if (newPageNumber * pageSize >= data.length) newPageNumber = newPageNumber - increase;
+
     pagedTable.setAttribute("pagedtable-page", newPageNumber);
   };
 

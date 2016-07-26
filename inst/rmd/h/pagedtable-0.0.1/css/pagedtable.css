@@ -36,3 +36,9 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+.pagedtable a.disabled {
+  cursor: default;
+  text-decoration: none;
+  color: #999;
+}
