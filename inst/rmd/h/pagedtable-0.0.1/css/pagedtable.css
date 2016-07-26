@@ -26,6 +26,7 @@
 
 .pagedtable a {
   cursor: pointer;
+  padding: 0 5px 9px 5px;
 
   -webkit-touch-callout: none;
   -webkit-user-select: none;

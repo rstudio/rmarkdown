@@ -68,15 +68,8 @@ var PagedTable;
     var pageNumber = getPageNumber(pagedTable);
     var data = getDataFromPagedTable(pagedTable);
 
-    var footer = pagedTable.querySelectorAll("tfoot")[0];
+    var footer = pagedTable.querySelectorAll("div.pagedtable-page-footer")[0];
     footer.innerHTML = "";
-
-    var row = document.createElement("tr");
-    footer.appendChild(row);
-
-    var cell = document.createElement("td");
-    cell.setAttribute("colspan", "100%");
-    row.appendChild(cell);
 
     var previous = document.createElement("a");
     previous.appendChild(document.createTextNode("previous"));
@@ -85,7 +78,7 @@ var PagedTable;
       renderBody(pagedTable);
       renderFooter(pagedTable);
     };
-    cell.appendChild(previous);
+    footer.appendChild(previous);
 
     var next = document.createElement("a");
     next.appendChild(document.createTextNode("next"));
@@ -94,7 +87,7 @@ var PagedTable;
       renderBody(pagedTable);
       renderFooter(pagedTable);
     };
-    cell.appendChild(next);
+    footer.appendChild(next);
 
     previous.setAttribute("class", pageNumber <= 0 ? "prev disabled" : "prev enabled");
     next.setAttribute("class", (pageNumber + 1) * pageSize >= data.length - 1 ? "next disabled" : "next enabled");
@@ -137,7 +130,10 @@ var PagedTable;
 
     table.appendChild(document.createElement("thead"));
     table.appendChild(document.createElement("tbody"));
-    table.appendChild(document.createElement("tfoot"));
+
+    var footerDiv = document.createElement("div");
+    footerDiv.setAttribute("class", "pagedtable-page-footer");
+    tableDiv.appendChild(footerDiv);
 
     renderHeader(pagedTable);
     renderBody(pagedTable);
