@@ -1,3 +1,24 @@
+.pagedtable {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: auto;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-bottom: 20px;
+}
+
+.pagedtable table {
+  width: 100%;
+  max-width: 100%;
+}
+
 .pagedtable th {
   padding: 0px 5px 0px 5px;
+  border: none;
+  border-bottom: 2px solid #dddddd;
+  text-align: right;
+}
+
+.pagedtable td {
+  text-align: right;
 }

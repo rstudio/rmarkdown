@@ -18,21 +18,35 @@ function renderPagedTables() {
     else {
       var sourceData = JSON.parse(sourceElems[0].innerHTML);
 
+      var tableDiv = document.createElement("div");
+      tableDiv.setAttribute("class", "pagedtable")
+
       var table = document.createElement("table");
-      table.setAttribute("class", "pagedtable")
+      table.setAttribute("class", "table table-condensed")
+      tableDiv.appendChild(table);
+
+      var thead = document.createElement("thead");
+      table.appendChild(thead);
 
       var header = document.createElement("tr");
-      table.appendChild(header);
+      thead.appendChild(header);
 
       var headerNames = headersFromJson(sourceData);
       headerNames.forEach(function(headerName) {
         var column = document.createElement("th");
+        column.setAttribute("style", "text-align: right")
+
         column.appendChild(document.createTextNode(headerName));
         header.appendChild(column);
       })
 
-      sourceData.forEach(function(dataRow) {
+      var tbody = document.createElement("tbody");
+      table.appendChild(tbody);
+
+      sourceData.forEach(function(dataRow, idxRow) {
         var htmlRow = document.createElement("tr");
+        htmlRow.setAttribute("class", (idxRow % 2 !==0) ? "even" : "odd");
+
         headerNames.forEach(function(cellName) {
           var dataCell = dataRow[cellName];
           var htmlCell = document.createElement("td");
@@ -40,10 +54,10 @@ function renderPagedTables() {
           htmlRow.appendChild(htmlCell);
         });
 
-        table.appendChild(htmlRow);
+        tbody.appendChild(htmlRow);
       });
 
-      pagedTable.appendChild(table);
+      pagedTable.appendChild(tableDiv);
     }
   })
 }
