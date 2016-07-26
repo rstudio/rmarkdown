@@ -90,8 +90,8 @@ var PagedTable;
     };
     cell.appendChild(next);
 
-    previous.setAttribute("class", pageNumber <= 0 ? "disabled" : "enabled");
-    next.setAttribute("class", (pageNumber + 1) * pageSize >= data.length - 1 ? "disabled" : "enabled");
+    previous.setAttribute("class", pageNumber <= 0 ? "prev disabled" : "prev enabled");
+    next.setAttribute("class", (pageNumber + 1) * pageSize >= data.length - 1 ? "next disabled" : "next enabled");
   };
 
   var getDataFromPagedTable = function(pagedTable) {

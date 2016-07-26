@@ -26,8 +26,6 @@
 
 .pagedtable a {
   cursor: pointer;
-  text-align: right;
-  margin-left: 15px;
 
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -37,8 +35,16 @@
   user-select: none;
 }
 
-.pagedtable a.disabled {
+.pagedtable .disabled {
   cursor: default;
   text-decoration: none;
   color: #999;
+}
+
+.pagedtable .prev {
+  float: left;
+}
+
+.pagedtable .next {
+  float: right;
 }
