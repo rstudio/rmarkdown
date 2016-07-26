@@ -1,3 +1,10 @@
+function headersFromJson(json) {
+  if (json === null || json.length === 0)
+    return [];
+
+  return Object.keys(json[0]);
+}
+
 function renderPagedTables() {
   var pagedTables = document.querySelectorAll('[data-pagedtable]');
   pagedTables.forEach(function(pagedTable) {
@@ -9,9 +16,21 @@ function renderPagedTables() {
       pagedTable.innerHTML = "Error: A single data-pagedtable-source was not found";
     }
     else {
-      var sourceElem = sourceElems[0];
+      var sourceData = JSON.parse(sourceElems[0].innerHTML);
 
-      pagedTable.innerHTML = sourceElem.innerHTML
+      var table = document.createElement("table");
+
+      var header = document.createElement("tr");
+      table.appendChild(header);
+
+      var headerNames = headersFromJson(sourceData);
+      headerNames.map(function(headerName) {
+        var column = document.createElement("th");
+        column.appendChild(document.createTextNode(headerName));
+        header.appendChild(column);
+      })
+
+      pagedTable.appendChild(table);
     }
   })
 }
