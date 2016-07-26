@@ -19,6 +19,7 @@ function renderPagedTables() {
       var sourceData = JSON.parse(sourceElems[0].innerHTML);
 
       var table = document.createElement("table");
+      table.setAttribute("class", "pagedtable")
 
       var header = document.createElement("tr");
       table.appendChild(header);

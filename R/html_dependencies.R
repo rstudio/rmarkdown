@@ -252,6 +252,7 @@ html_dependency_pagedtable <- function() {
     "pagedtable",
     "0.0.1",
     src = rmarkdown_system_file("rmd/h/pagedtable-0.0.1"),
-    script = "pagedtable.js"
+    script = "js/pagedtable.js",
+    stylesheet = "css/pagedtable.css"
   )
 }
