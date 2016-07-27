@@ -169,8 +169,7 @@ html_notebook <- function(toc = FALSE,
 
   # add dependencies
   extra_dependencies <- append(extra_dependencies,
-                               list(html_dependency_jquery(),
-                                    html_dependency_pagedtable()))
+                               list(html_dependency_pagedtable()))
 
   # generate actual format
   base_format <- html_document(toc = toc,
@@ -199,10 +198,27 @@ html_notebook <- function(toc = FALSE,
                                template = "default",
                                lib_dir = NULL,
                                ...)
+
+  paged_table_html = function(x) {
+    knitr::asis_output(
+      paste(
+        "<div data-pagedtable>",
+        "  <script data-pagedtable-source type=\"application/json\">",
+        jsonlite::toJSON(list(
+          types = sapply(x, class),
+          data = head(x, 1000)
+        )),
+        "  </script>",
+        "</div>",
+        sep = "\n"
+      )
+    )
+  }
+
   rmarkdown::output_format(
     knitr = html_notebook_knitr_options(),
     pandoc = NULL,
-    df_print = "kable",
+    df_print = paged_table_html,
     pre_knit = pre_knit,
     pre_processor = pre_processor,
     post_processor = post_processor,
