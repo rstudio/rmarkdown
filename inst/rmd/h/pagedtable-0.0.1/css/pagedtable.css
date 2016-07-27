@@ -73,3 +73,11 @@ a.pagedtable-index-current:hover {
   display: inline-block;
   text-align: center;
 }
+
+.pagedtable .pagedtable-type-character {
+  text-align: left;
+}
+
+.pagedtable .pagedtable-type-factor {
+  text-align: left;
+}

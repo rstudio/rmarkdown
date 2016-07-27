@@ -2,7 +2,10 @@ paged_table_html = function(x) {
   paste(
     "<div data-pagedtable>",
     "  <script data-pagedtable-source type=\"application/json\">",
-    jsonlite::toJSON(head(x, 1000)),
+    jsonlite::toJSON(list(
+      types = sapply(x, class),
+      data = head(x, 1000)
+    )),
     "  </script>",
     "</div>",
     sep = "\n"

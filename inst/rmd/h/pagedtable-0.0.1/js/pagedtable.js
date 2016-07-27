@@ -3,8 +3,9 @@ var PagedTable = function (pagedTable) {
   var pageNumber = 0;
   var pageCount;
   var data;
+  var types;
 
-  var headersFromJson = function(json) {
+  var columnsFromJson = function(json) {
     if (json === null || json.length === 0)
       return [];
 
@@ -14,7 +15,14 @@ var PagedTable = function (pagedTable) {
       columns[10] = "...";
     }
 
-    return columns;
+    var typedColumns = columns.map(function(columnName, columnIdx) {
+      return {
+        name: columnName,
+        type: types[columnIdx]
+      }
+    });
+
+    return typedColumns;
   };
 
   var renderHeader = function() {
@@ -24,12 +32,12 @@ var PagedTable = function (pagedTable) {
     var header = document.createElement("tr");
     thead.appendChild(header);
 
-    var headerNames = headersFromJson(data);
-    headerNames.forEach(function(headerName) {
+    var columnsData = columnsFromJson(data);
+    columnsData.forEach(function(columnData) {
       var column = document.createElement("th");
       column.setAttribute("style", "text-align: right");
 
-      column.appendChild(document.createTextNode(headerName));
+      column.appendChild(document.createTextNode(columnData.name));
       header.appendChild(column);
     });
 
@@ -40,7 +48,7 @@ var PagedTable = function (pagedTable) {
     var tbody = pagedTable.querySelectorAll("tbody")[0];
     tbody.innerHTML = "";
 
-    var headerNames = headersFromJson(data);
+    var columnsData = columnsFromJson(data);
 
     var pageData = data.slice(pageNumber * pageSize, (pageNumber + 1) * pageSize);
 
@@ -48,10 +56,12 @@ var PagedTable = function (pagedTable) {
       var htmlRow = document.createElement("tr");
       htmlRow.setAttribute("class", (idxRow % 2 !==0) ? "even" : "odd");
 
-      headerNames.forEach(function(cellName) {
+      columnsData.forEach(function(columnData) {
+        var cellName = columnData.name;
         var dataCell = cellName === "..." ? "" : dataRow[cellName];
         var htmlCell = document.createElement("td");
         htmlCell.appendChild(document.createTextNode(dataCell));
+        htmlCell.setAttribute("class", "pagedtable-type-" + columnData.type);
         htmlRow.appendChild(htmlCell);
       });
 
@@ -134,7 +144,7 @@ var PagedTable = function (pagedTable) {
     next.setAttribute("class", (pageNumber + 1) * pageSize >= data.length - 1 ? disabledClass : enabledClass);
   };
 
-  var getDataFromPagedTable = function() {
+  var loadDataFromPagedTable = function() {
     var sourceElems = [].slice.call(pagedTable.children).filter(function(e) {
       return e.hasAttribute("data-pagedtable-source");
     });
@@ -143,7 +153,9 @@ var PagedTable = function (pagedTable) {
       throw("A single data-pagedtable-source was not found");
     }
 
-    return JSON.parse(sourceElems[0].innerHTML);
+    var source = JSON.parse(sourceElems[0].innerHTML);
+    data = source.data;
+    types = source.types;
   };
 
   var setPageNumber = function(newPageNumber) {
@@ -179,7 +191,7 @@ var PagedTable = function (pagedTable) {
   };
 
   var init = function() {
-    data = getDataFromPagedTable(pagedTable);
+    loadDataFromPagedTable(pagedTable);
     pageCount = getPageCount();
   };
 
