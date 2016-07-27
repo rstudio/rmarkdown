@@ -85,3 +85,11 @@ a.pagedtable-index-current:hover {
 .pagedtable-footer {
   min-width: 380px;
 }
+
+.pagedtable-info {
+  overflow: hidden;
+  max-height: 20px;
+  color: #999;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

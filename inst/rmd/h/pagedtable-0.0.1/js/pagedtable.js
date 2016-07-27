@@ -96,6 +96,13 @@ var PagedTable = function (pagedTable) {
     };
   };
 
+  var getLabelInfo = function() {
+    var pageStart = pageNumber * pageSize + 1;
+    var pageEnd = (pageNumber + 1) * pageSize;
+    var totalRecods = data.length;
+    return pageStart + "-" + pageEnd + " of " + totalRecods;
+  };
+
   var renderFooter = function() {
     var footer = pagedTable.querySelectorAll("div.pagedtable-footer")[0];
     footer.innerHTML = "";
@@ -137,6 +144,11 @@ var PagedTable = function (pagedTable) {
       renderFooter(pagedTable);
     };
     footer.appendChild(previous);
+
+    var infoLabel = document.createElement("div");
+    infoLabel.setAttribute("class", "pagedtable-info");
+    infoLabel.appendChild(document.createTextNode(getLabelInfo()));
+    footer.appendChild(infoLabel);
 
     var enabledClass = "pagedtable-index-nav";
     var disabledClass = "pagedtable-index-nav pagedtable-index-nav-disabled";
@@ -181,13 +193,17 @@ var PagedTable = function (pagedTable) {
     table.appendChild(document.createElement("thead"));
     table.appendChild(document.createElement("tbody"));
 
+    var infoDiv = document.createElement("div");
+    infoDiv.setAttribute("class", "pagedtable-info");
+    tableDiv.appendChild(infoDiv);
+
     var footerDiv = document.createElement("div");
     footerDiv.setAttribute("class", "pagedtable-footer");
     tableDiv.appendChild(footerDiv);
 
-    renderHeader(pagedTable);
-    renderBody(pagedTable);
-    renderFooter(pagedTable);
+    renderHeader();
+    renderBody();
+    renderFooter();
   };
 
   var init = function() {
