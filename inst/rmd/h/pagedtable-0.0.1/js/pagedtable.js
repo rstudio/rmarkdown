@@ -1,6 +1,7 @@
 var PagedTable = function (pagedTable) {
   var pageSize = 10;
   var pageNumber = 0;
+  var pageCount;
   var data;
 
   var headersFromJson = function(json) {
@@ -60,30 +61,77 @@ var PagedTable = function (pagedTable) {
     return tbody;
   };
 
-  var renderFooter = function() {
-    var footer = pagedTable.querySelectorAll("div.pagedtable-page-footer")[0];
-    footer.innerHTML = "";
+  var getVisiblePageRange = function() {
+    var start = pageNumber - 4;
+    var end = pageNumber + 5;
 
-    var previous = document.createElement("a");
-    previous.appendChild(document.createTextNode("previous"));
-    previous.onclick = function() {
-      increasePageNumber(-1);
-      renderBody(pagedTable);
-      renderFooter(pagedTable);
+    if (start < 0) {
+      var diffToStart = 0 - start;
+      start += diffToStart;
+      end += diffToStart;
+    }
+
+    if (end > pageCount) {
+      var diffToEnd = end - pageCount;
+      start -= diffToEnd;
+      end -= diffToEnd;
+    }
+
+    start = start < 0 ? 0 : start;
+    end = end >= pageCount ? pageCount : end;
+
+    return {
+      start: start,
+      end: end
     };
-    footer.appendChild(previous);
+  };
+
+  var renderFooter = function() {
+    var footer = pagedTable.querySelectorAll("div.pagedtable-footer")[0];
+    footer.innerHTML = "";
 
     var next = document.createElement("a");
     next.appendChild(document.createTextNode("next"));
     next.onclick = function() {
-      increasePageNumber(1);
+      setPageNumber(pageNumber + 1);
       renderBody(pagedTable);
       renderFooter(pagedTable);
     };
     footer.appendChild(next);
 
-    previous.setAttribute("class", pageNumber <= 0 ? "prev disabled" : "prev enabled");
-    next.setAttribute("class", (pageNumber + 1) * pageSize >= data.length - 1 ? "next disabled" : "next enabled");
+    var pageNumbers = document.createElement("div");
+    pageNumbers.setAttribute("class", "pagedtable-indexes");
+
+    var pageRange = getVisiblePageRange();
+    for (var idxPage = pageRange.start; idxPage < pageRange.end; idxPage++) {
+      var pageLink = document.createElement("a");
+      pageLinkClass = idxPage === pageNumber ? "pagedtable-index pagedtable-index-current" : "pagedtable-index";
+      pageLink.setAttribute("class", pageLinkClass);
+      pageLink.setAttribute("data-page-index", idxPage);
+      pageLink.onclick = function() {
+        setPageNumber(parseInt(this.getAttribute("data-page-index")));
+        renderBody(pagedTable);
+        renderFooter(pagedTable);
+      };
+
+      pageLink.appendChild(document.createTextNode(idxPage + 1));
+      pageNumbers.appendChild(pageLink);
+    }
+    footer.appendChild(pageNumbers);
+
+    var previous = document.createElement("a");
+    previous.appendChild(document.createTextNode("previous"));
+    previous.onclick = function() {
+      setPageNumber(pageNumber - 1);
+      renderBody(pagedTable);
+      renderFooter(pagedTable);
+    };
+    footer.appendChild(previous);
+
+    var enabledClass = "pagedtable-index-nav";
+    var disabledClass = "pagedtable-index-nav pagedtable-index-nav-disabled";
+    previous.setAttribute("class", pageNumber <= 0 ? disabledClass : enabledClass);
+    next.setAttribute("class", (pageNumber + 1) * pageSize >= data.length - 1 ? disabledClass : enabledClass);
   };
 
   var getDataFromPagedTable = function() {
@@ -98,11 +146,15 @@ var PagedTable = function (pagedTable) {
     return JSON.parse(sourceElems[0].innerHTML);
   };
 
-  var increasePageNumber = function(increase) {
-    pageNumber = pageNumber + increase;
+  var setPageNumber = function(newPageNumber) {
+    if (newPageNumber < 0) return;
+    if (newPageNumber * pageSize >= data.length) return;
 
-    if (pageNumber < 0) pageNumber = 0;
-    if (pageNumber * pageSize >= data.length) pageNumber = pageNumber - increase;
+    pageNumber = newPageNumber;
+  };
+
+  var getPageCount = function() {
+    return Math.ceil(data.length / pageSize);
   };
 
   this.render = function() {
@@ -118,7 +170,7 @@ var PagedTable = function (pagedTable) {
     table.appendChild(document.createElement("tbody"));
 
     var footerDiv = document.createElement("div");
-    footerDiv.setAttribute("class", "pagedtable-page-footer");
+    footerDiv.setAttribute("class", "pagedtable-footer");
     tableDiv.appendChild(footerDiv);
 
     renderHeader(pagedTable);
@@ -128,6 +180,7 @@ var PagedTable = function (pagedTable) {
 
   var init = function() {
     data = getDataFromPagedTable(pagedTable);
+    pageCount = getPageCount();
   };
 
   init();

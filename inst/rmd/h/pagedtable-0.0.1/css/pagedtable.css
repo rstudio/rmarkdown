@@ -14,7 +14,7 @@
 }
 
 .pagedtable th {
-  padding: 0px 5px 0px 5px;
+  padding: 0 5px 0 5px;
   border: none;
   border-bottom: 2px solid #dddddd;
   text-align: right;
@@ -25,9 +25,6 @@
 }
 
 .pagedtable a {
-  cursor: pointer;
-  padding: 0 5px 9px 5px;
-
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -36,16 +33,43 @@
   user-select: none;
 }
 
-.pagedtable .disabled {
+.pagedtable-index-nav {
+  cursor: pointer;
+  padding: 0 5px 9px 5px;
+  float: right;
+}
+
+.pagedtable-index-nav-disabled {
   cursor: default;
   text-decoration: none;
   color: #999;
 }
 
-.pagedtable .prev {
-  float: left;
+a.pagedtable-index-nav-disabled:hover {
+  text-decoration: none;
+  color: #999;
 }
 
-.pagedtable .next {
+.pagedtable-indexes {
+  cursor: pointer;
   float: right;
+}
+
+.pagedtable-index-current {
+  cursor: default;
+  text-decoration: none;
+  font-weight: bold;
+  color: #333;
+}
+
+a.pagedtable-index-current:hover {
+  text-decoration: none;
+  font-weight: bold;
+  color: #333;
+}
+
+.pagedtable-index {
+  width: 30px;
+  display: inline-block;
+  text-align: center;
 }
