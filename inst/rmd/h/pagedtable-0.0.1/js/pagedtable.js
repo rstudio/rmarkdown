@@ -1,6 +1,7 @@
-var PagedTable;
-(function (PagedTable) {
+var PagedTable = function (pagedTable) {
   var pageSize = 10;
+  var pageNumber = 0;
+  var data;
 
   var headersFromJson = function(json) {
     if (json === null || json.length === 0)
@@ -15,9 +16,7 @@ var PagedTable;
     return columns;
   };
 
-  var renderHeader = function(pagedTable) {
-    var data = getDataFromPagedTable(pagedTable);
-
+  var renderHeader = function() {
     var thead = pagedTable.querySelectorAll("thead")[0];
     thead.innerHTML = "";
 
@@ -36,10 +35,7 @@ var PagedTable;
     return thead;
   };
 
-  var renderBody = function(pagedTable) {
-    var pageNumber = getPageNumber(pagedTable);
-    var data = getDataFromPagedTable(pagedTable);
-
+  var renderBody = function() {
     var tbody = pagedTable.querySelectorAll("tbody")[0];
     tbody.innerHTML = "";
 
@@ -64,17 +60,14 @@ var PagedTable;
     return tbody;
   };
 
-  var renderFooter = function(pagedTable) {
-    var pageNumber = getPageNumber(pagedTable);
-    var data = getDataFromPagedTable(pagedTable);
-
+  var renderFooter = function() {
     var footer = pagedTable.querySelectorAll("div.pagedtable-page-footer")[0];
     footer.innerHTML = "";
 
     var previous = document.createElement("a");
     previous.appendChild(document.createTextNode("previous"));
     previous.onclick = function() {
-      increasePageNumber(pagedTable, -1);
+      increasePageNumber(-1);
       renderBody(pagedTable);
       renderFooter(pagedTable);
     };
@@ -83,7 +76,7 @@ var PagedTable;
     var next = document.createElement("a");
     next.appendChild(document.createTextNode("next"));
     next.onclick = function() {
-      increasePageNumber(pagedTable, 1);
+      increasePageNumber(1);
       renderBody(pagedTable);
       renderFooter(pagedTable);
     };
@@ -93,7 +86,7 @@ var PagedTable;
     next.setAttribute("class", (pageNumber + 1) * pageSize >= data.length - 1 ? "next disabled" : "next enabled");
   };
 
-  var getDataFromPagedTable = function(pagedTable) {
+  var getDataFromPagedTable = function() {
     var sourceElems = [].slice.call(pagedTable.children).filter(function(e) {
       return e.hasAttribute("data-pagedtable-source");
     });
@@ -105,21 +98,14 @@ var PagedTable;
     return JSON.parse(sourceElems[0].innerHTML);
   };
 
-  var getPageNumber = function(pagedTable) {
-    return parseInt(pagedTable.getAttribute("pagedtable-page"));
+  var increasePageNumber = function(increase) {
+    pageNumber = pageNumber + increase;
+
+    if (pageNumber < 0) pageNumber = 0;
+    if (pageNumber * pageSize >= data.length) pageNumber = pageNumber - increase;
   };
 
-  var increasePageNumber = function(pagedTable, increase) {
-    var newPageNumber = getPageNumber(pagedTable) + increase;
-    var data = getDataFromPagedTable(pagedTable);
-
-    if (newPageNumber < 0) newPageNumber = 0;
-    if (newPageNumber * pageSize >= data.length) newPageNumber = newPageNumber - increase;
-
-    pagedTable.setAttribute("pagedtable-page", newPageNumber);
-  };
-
-  var renderOne = function(pagedTable) {
+  this.render = function() {
     var tableDiv = document.createElement("div");
     pagedTable.appendChild(tableDiv);
     tableDiv.setAttribute("class", "pagedtable");
@@ -140,21 +126,28 @@ var PagedTable;
     renderFooter(pagedTable);
   };
 
-  PagedTable.renderAll = function() {
+  var init = function() {
+    data = getDataFromPagedTable(pagedTable);
+  };
+
+  init();
+};
+
+var PagedTableDoc;
+(function (PagedTableDoc) {
+  PagedTableDoc.renderAll = function() {
     var pagedTables = document.querySelectorAll('[data-pagedtable]');
     pagedTables.forEach(function(pagedTable, idx) {
       pagedTable.setAttribute("pagedtable-page", 0);
-      renderOne(pagedTable);
+
+      var pagedTableInstance = new PagedTable(pagedTable);
+      pagedTableInstance.render();
     });
   };
 
-  PagedTable.setPageSize = function(newPageSize) {
-    pageSize = newPageSize;
-  };
-
-  return PagedTable;
-})(PagedTable || (PagedTable = {}));
+  return PagedTableDoc;
+})(PagedTableDoc || (PagedTableDoc = {}));
 
 window.onload = function() {
-  PagedTable.renderAll();
+  PagedTableDoc.renderAll();
 };
