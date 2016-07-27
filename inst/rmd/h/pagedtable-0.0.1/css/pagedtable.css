@@ -81,3 +81,7 @@ a.pagedtable-index-current:hover {
 .pagedtable .pagedtable-type-factor {
   text-align: left;
 }
+
+.pagedtable-footer {
+  min-width: 380px;
+}
