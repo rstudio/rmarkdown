@@ -108,7 +108,7 @@ var PagedTable = function (pagedTable) {
     footer.innerHTML = "";
 
     var next = document.createElement("a");
-    next.appendChild(document.createTextNode("next"));
+    next.appendChild(document.createTextNode("Next"));
     next.onclick = function() {
       setPageNumber(pageNumber + 1);
       renderBody(pagedTable);
@@ -137,7 +137,7 @@ var PagedTable = function (pagedTable) {
     footer.appendChild(pageNumbers);
 
     var previous = document.createElement("a");
-    previous.appendChild(document.createTextNode("previous"));
+    previous.appendChild(document.createTextNode("Previous"));
     previous.onclick = function() {
       setPageNumber(pageNumber - 1);
       renderBody(pagedTable);
