@@ -10,7 +10,7 @@
 .pagedtable table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 5px
+  margin-bottom: 0px
 }
 
 .pagedtable th {
@@ -35,7 +35,7 @@
 
 .pagedtable-index-nav {
   cursor: pointer;
-  padding: 0 5px 9px 5px;
+  padding: 0 5px 0px 5px;
   float: right;
 }
 
@@ -84,6 +84,9 @@ a.pagedtable-index-current:hover {
 
 .pagedtable-footer {
   min-width: 380px;
+  border-top: 2px solid #dddddd;
+  padding-top: 4px;
+  padding-bottom: 5px;
 }
 
 .pagedtable-info {

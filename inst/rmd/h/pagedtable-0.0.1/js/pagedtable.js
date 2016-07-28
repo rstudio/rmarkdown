@@ -100,7 +100,13 @@ var PagedTable = function (pagedTable) {
     var pageStart = pageNumber * pageSize + 1;
     var pageEnd = Math.min((pageNumber + 1) * pageSize, data.length);
     var totalRecods = data.length;
-    return pageStart + "-" + pageEnd + " of " + totalRecods;
+
+    var infoText = pageStart + "-" + pageEnd + " of " + totalRecods;
+    if (totalRecods < pageSize) {
+      infoText = totalRecods + " Records";
+    }
+
+    return infoText;
   };
 
   var renderFooter = function() {
@@ -114,7 +120,7 @@ var PagedTable = function (pagedTable) {
       renderBody(pagedTable);
       renderFooter(pagedTable);
     };
-    footer.appendChild(next);
+    if (data.length > pageSize) footer.appendChild(next);
 
     var pageNumbers = document.createElement("div");
     pageNumbers.setAttribute("class", "pagedtable-indexes");
@@ -143,7 +149,7 @@ var PagedTable = function (pagedTable) {
       renderBody(pagedTable);
       renderFooter(pagedTable);
     };
-    footer.appendChild(previous);
+    if (data.length > pageSize) footer.appendChild(previous);
 
     var infoLabel = document.createElement("div");
     infoLabel.setAttribute("class", "pagedtable-info");
