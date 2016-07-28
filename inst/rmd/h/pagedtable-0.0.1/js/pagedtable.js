@@ -35,7 +35,8 @@ var PagedTable = function (pagedTable) {
     var columnsData = columnsFromJson(data);
     columnsData.forEach(function(columnData) {
       var column = document.createElement("th");
-      column.setAttribute("style", "text-align: right");
+      column.setAttribute("align", "");
+      column.setAttribute("class", "pagedtable-type pagedtable-type-" + columnData.type);
 
       column.appendChild(document.createTextNode(columnData.name));
       header.appendChild(column);
@@ -61,7 +62,7 @@ var PagedTable = function (pagedTable) {
         var dataCell = cellName === "..." ? "" : dataRow[cellName];
         var htmlCell = document.createElement("td");
         htmlCell.appendChild(document.createTextNode(dataCell));
-        htmlCell.setAttribute("class", "pagedtable-type-" + columnData.type);
+        htmlCell.setAttribute("class", "pagedtable-type pagedtable-type-" + columnData.type);
         htmlRow.appendChild(htmlCell);
       });
 
@@ -140,7 +141,7 @@ var PagedTable = function (pagedTable) {
       pageLink.appendChild(document.createTextNode(idxPage + 1));
       pageNumbers.appendChild(pageLink);
     }
-    footer.appendChild(pageNumbers);
+    if (data.length > pageSize) footer.appendChild(pageNumbers);
 
     var previous = document.createElement("a");
     previous.appendChild(document.createTextNode("Previous"));
@@ -204,7 +205,7 @@ var PagedTable = function (pagedTable) {
     tableDiv.appendChild(infoDiv);
 
     var footerDiv = document.createElement("div");
-    var footerDivNotEmpty = "pagedtable-footer-not-empty pagedtable-footer"
+    var footerDivNotEmpty = "pagedtable-footer-not-empty pagedtable-footer";
     footerDiv.setAttribute("class", data.length > 0 ? footerDivNotEmpty : "pagedtable-footer");
     tableDiv.appendChild(footerDiv);
 

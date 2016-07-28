@@ -17,11 +17,6 @@
   padding: 0 5px 0 5px;
   border: none;
   border-bottom: 2px solid #dddddd;
-  text-align: right;
-}
-
-.pagedtable td {
-  text-align: right;
 }
 
 .pagedtable a {
@@ -74,11 +69,15 @@ a.pagedtable-index-current:hover {
   text-align: center;
 }
 
-.pagedtable .pagedtable-type-character {
+.pagedtable-type {
+  text-align: right;
+}
+
+.pagedtable-type-character {
   text-align: left;
 }
 
-.pagedtable .pagedtable-type-factor {
+.pagedtable-type-factor {
   text-align: left;
 }
 
