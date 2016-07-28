@@ -204,7 +204,8 @@ var PagedTable = function (pagedTable) {
     tableDiv.appendChild(infoDiv);
 
     var footerDiv = document.createElement("div");
-    footerDiv.setAttribute("class", "pagedtable-footer");
+    var footerDivNotEmpty = "pagedtable-footer-not-empty pagedtable-footer"
+    footerDiv.setAttribute("class", data.length > 0 ? footerDivNotEmpty : "pagedtable-footer");
     tableDiv.appendChild(footerDiv);
 
     renderHeader();

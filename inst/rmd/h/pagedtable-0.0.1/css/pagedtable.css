@@ -84,9 +84,12 @@ a.pagedtable-index-current:hover {
 
 .pagedtable-footer {
   min-width: 380px;
-  border-top: 2px solid #dddddd;
   padding-top: 4px;
   padding-bottom: 5px;
+}
+
+.pagedtable-footer-not-empty {
+  border-top: 2px solid #dddddd;
 }
 
 .pagedtable-info {
