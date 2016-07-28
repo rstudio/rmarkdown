@@ -98,7 +98,7 @@ var PagedTable = function (pagedTable) {
 
   var getLabelInfo = function() {
     var pageStart = pageNumber * pageSize + 1;
-    var pageEnd = (pageNumber + 1) * pageSize;
+    var pageEnd = Math.min((pageNumber + 1) * pageSize, data.length);
     var totalRecods = data.length;
     return pageStart + "-" + pageEnd + " of " + totalRecods;
   };
