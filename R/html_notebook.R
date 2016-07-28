@@ -46,6 +46,26 @@ html_notebook <- function(toc = FALSE,
       try(action())
   }
 
+  paged_table_html = function(x) {
+    paste(
+      "<div data-pagedtable>",
+      "  <script data-pagedtable-source type=\"application/json\">",
+      jsonlite::toJSON(list(
+        types = sapply(x, class),
+        data = head(x, 1000)
+      )),
+      "  </script>",
+      "</div>",
+      sep = "\n"
+    )
+  }
+
+  paged_table_html_asis = function(x) {
+    knitr::asis_output(
+      paged_table_html(x)
+    )
+  }
+
   # define pre_knit hook
   pre_knit <- function(input, ...) {
 
@@ -134,6 +154,15 @@ html_notebook <- function(toc = FALSE,
         knitr::opts_knit$set(sql.max.print = knit_sql_max_print)
       })
     }
+
+    # set sql.print to use paged tables
+    knit_sql_print <- knitr::opts_knit$get('sql.print');
+    if (is.null(knit_sql_print)) {
+      knitr::opts_knit$set(sql.print = paged_table_html)
+      exit_actions <<- c(exit_actions, function() {
+        knitr::opts_knit$set(sql.print = knit_sql_print)
+      })
+    }
   }
 
   # pre-processor adds kable-scroll argument to give scrolling treatment for
@@ -199,26 +228,10 @@ html_notebook <- function(toc = FALSE,
                                lib_dir = NULL,
                                ...)
 
-  paged_table_html = function(x) {
-    knitr::asis_output(
-      paste(
-        "<div data-pagedtable>",
-        "  <script data-pagedtable-source type=\"application/json\">",
-        jsonlite::toJSON(list(
-          types = sapply(x, class),
-          data = head(x, 1000)
-        )),
-        "  </script>",
-        "</div>",
-        sep = "\n"
-      )
-    )
-  }
-
   rmarkdown::output_format(
     knitr = html_notebook_knitr_options(),
     pandoc = NULL,
-    df_print = paged_table_html,
+    df_print = paged_table_html_asis,
     pre_knit = pre_knit,
     pre_processor = pre_processor,
     post_processor = post_processor,
