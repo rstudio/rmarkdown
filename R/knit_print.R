@@ -1,5 +1,3 @@
-
-
 knit_print.data.frame = function(x, ...) {
   context <- render_context()
   if (!is.null(context$df_print)) {

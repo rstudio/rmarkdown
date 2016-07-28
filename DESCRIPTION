@@ -50,9 +50,7 @@ Authors@R: c(
   person("Ben", "Sperry", role = "ctb",
          comment = "Ionicons"),
   person(family = "Drifty", role = "cph",
-         comment = "Ionicons"),
-  person("Jonas", "Mosbech", role = c("ctb", "cph"),
-         comment = "StickyTableHeaders")
+         comment = "Ionicons")
   )
 Author: JJ Allaire, Jonathan McPherson, Yihui Xie, Hadley Wickham, Joe Cheng,
     Jeff Allen
