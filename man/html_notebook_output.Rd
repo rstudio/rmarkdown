@@ -11,7 +11,7 @@
 html_notebook_output_html(html, meta = NULL)
 
 html_notebook_output_img(path = NULL, bytes = NULL, attributes = NULL,
-  meta = NULL)
+  meta = NULL, format = c("png", "jpeg"))
 
 html_notebook_output_png(path = NULL, bytes = NULL, attributes = NULL,
   meta = NULL)
@@ -32,6 +32,8 @@ will be obtained by reading the file.}
 
 \item{attributes}{A named \R list of HTML attributes. These will be
 escaped and inserted into the generated HTML as appropriate.}
+
+\item{format}{The image format; one of \code{"png"} or \code{"jpeg"}.}
 
 \item{code}{Source code.}
 }

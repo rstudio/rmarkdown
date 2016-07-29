@@ -14,6 +14,7 @@
 #' @param code Source code.
 #' @param meta An \R list of arbitrary meta-data. The data will
 #'   be converted to JSON, base64-encoded, and injected into the header comment.
+#' @param format The image format; one of \code{"png"} or \code{"jpeg"}.
 #'
 #' @details For more details on the HTML file format produced by
 #'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_format.html}{http://rmarkdown.rstudio.com/r_notebook_format.html}.
@@ -60,10 +61,12 @@ html_notebook_output_html <- function(html,
 html_notebook_output_img <- function(path = NULL,
                                      bytes = NULL,
                                      attributes = NULL,
-                                     meta = NULL)
+                                     meta = NULL,
+                                     format = c("png", "jpeg"))
 {
-  format <- '<img%s src="data:image/png;base64,%s" />'
-  html <- html_notebook_render_base64_data(path, bytes, attributes, format)
+  template <- paste0('<img%s src="data:image/', match.arg(format),
+                     ';base64,%s" />')
+  html <- html_notebook_render_base64_data(path, bytes, attributes, template)
   html_notebook_annotated_output(html, "plot", meta)
 }
 
