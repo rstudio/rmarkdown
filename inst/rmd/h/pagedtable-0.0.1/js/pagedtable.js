@@ -194,6 +194,7 @@ var PagedTable = function (pagedTable) {
     tableDiv.setAttribute("class", "pagedtable");
 
     var table = document.createElement("table");
+    table.setAttribute("cellspacing", "0");
     table.setAttribute("class", "table table-condensed");
     tableDiv.appendChild(table);
 
@@ -228,6 +229,7 @@ var PagedTableDoc;
     var pagedTables = document.querySelectorAll('[data-pagedtable]');
     pagedTables.forEach(function(pagedTable, idx) {
       pagedTable.setAttribute("pagedtable-page", 0);
+      pagedTable.setAttribute("class", "pagedtable-wrapper");
 
       var pagedTableInstance = new PagedTable(pagedTable);
       pagedTableInstance.render();

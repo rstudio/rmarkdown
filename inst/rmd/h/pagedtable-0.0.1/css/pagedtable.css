@@ -1,16 +1,19 @@
 .pagedtable {
-  border: 1px solid #ccc;
-  border-radius: 4px;
   overflow: auto;
   padding-left: 8px;
   padding-right: 8px;
   margin-bottom: 20px;
 }
 
+.pagedtable-wrapper {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .pagedtable table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 0px
+  margin-bottom: 0;
 }
 
 .pagedtable th {
@@ -30,7 +33,7 @@
 
 .pagedtable-index-nav {
   cursor: pointer;
-  padding: 0 5px 0px 5px;
+  padding: 0 5px 0 5px;
   float: right;
 }
 
