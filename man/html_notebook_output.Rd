@@ -14,7 +14,7 @@ html_notebook_output_img(path = NULL, bytes = NULL, attributes = NULL,
   meta = NULL, format = c("png", "jpeg"))
 
 html_notebook_output_png(path = NULL, bytes = NULL, attributes = NULL,
-  meta = NULL)
+  meta = NULL, format = c("png", "jpeg"))
 
 html_notebook_output_code(code, attributes = list(class = "r"), meta = NULL)
 }
