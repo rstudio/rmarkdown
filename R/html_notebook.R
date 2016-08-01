@@ -51,7 +51,10 @@ html_notebook <- function(toc = FALSE,
       "<div data-pagedtable>",
       "  <script data-pagedtable-source type=\"application/json\">",
       jsonlite::toJSON(list(
-        types = sapply(x, class),
+        types = unlist(lapply(
+          sapply(x, class),
+          function(e) e[[1]]
+        )),
         data = head(x, 1000)
       )),
       "  </script>",
