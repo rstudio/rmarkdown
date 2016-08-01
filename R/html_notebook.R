@@ -47,12 +47,34 @@ html_notebook <- function(toc = FALSE,
   }
 
   paged_table_html = function(x) {
+    columns <- unname(lapply(
+      names(x),
+      function(columnName) {
+        type <- class(x[[columnName]])[[1]]
+        list(
+          name = jsonlite::unbox(columnName),
+          type = jsonlite::unbox(type),
+          align = jsonlite::unbox(
+            if (type == "character" || type == "factor") "left" else "right"
+          )
+        )
+      }
+    ))
+
+    data <- head(x, 1000)
+
+    if (length(columns) > 0) {
+      first_column = data[[1]]
+      if (is.numeric(first_column) && all(diff(first_column) == 1))
+        columns[[1]]$align <- "left"
+    }
+
     paste(
       "<div data-pagedtable>",
       "  <script data-pagedtable-source type=\"application/json\">",
       jsonlite::toJSON(list(
-        types = sapply(x, class),
-        data = head(x, 1000)
+        columns = columns,
+        data = data
       )),
       "  </script>",
       "</div>",

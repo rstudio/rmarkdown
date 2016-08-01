@@ -2,6 +2,7 @@
   overflow: auto;
   padding-left: 8px;
   padding-right: 8px;
+  margin-bottom: 10px;
 }
 
 .pagedtable-not-empty .pagedtable {
@@ -75,18 +76,6 @@ a.pagedtable-index-current:hover {
   text-align: center;
 }
 
-.pagedtable-type {
-  text-align: right;
-}
-
-.pagedtable-type-character {
-  text-align: left;
-}
-
-.pagedtable-type-factor {
-  text-align: left;
-}
-
 .pagedtable-footer {
   min-width: 380px;
   padding-top: 4px;
@@ -103,4 +92,9 @@ a.pagedtable-index-current:hover {
   color: #999;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.pagedtable-header-type {
+  color: #999;
+  font-weight: 100;
 }
