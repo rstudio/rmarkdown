@@ -75,18 +75,6 @@ a.pagedtable-index-current:hover {
   text-align: center;
 }
 
-.pagedtable-type {
-  text-align: right;
-}
-
-.pagedtable-type-character {
-  text-align: left;
-}
-
-.pagedtable-type-factor {
-  text-align: left;
-}
-
 .pagedtable-footer {
   min-width: 380px;
   padding-top: 4px;

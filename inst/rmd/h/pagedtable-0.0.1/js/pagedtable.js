@@ -3,23 +3,26 @@ var PagedTable = function (pagedTable) {
   var pageNumber = 0;
   var pageCount;
   var data;
-  var types;
+  var columnsData;
 
-  var columnsFromJson = function(json) {
+  var columnsFromSource = function(json) {
     if (json === null || json.length === 0)
       return [];
 
-    var columns = Object.keys(json[0]);
+    var columns = json.columns;
     if (columns.length > 10) {
       columns = columns.slice(1, 10);
-      columns[10] = "...";
-      types[10] = null;
+      columns[10] = {
+        name: "...",
+        type: ""
+      };
     }
 
-    var typedColumns = columns.map(function(columnName, columnIdx) {
+    var typedColumns = columns.map(function(column) {
       return {
-        name: columnName,
-        type: types[columnIdx]
+        name: column.name,
+        type: column.type,
+        align: column.align
       };
     });
 
@@ -33,11 +36,9 @@ var PagedTable = function (pagedTable) {
     var header = document.createElement("tr");
     thead.appendChild(header);
 
-    var columnsData = columnsFromJson(data);
     columnsData.forEach(function(columnData) {
       var column = document.createElement("th");
-      column.setAttribute("align", "");
-      column.setAttribute("class", "pagedtable-type pagedtable-type-" + columnData.type);
+      column.setAttribute("align", columnData.align);
 
       var columnName = document.createElement("div");
       columnName.appendChild(document.createTextNode(columnData.name));
@@ -60,8 +61,6 @@ var PagedTable = function (pagedTable) {
     var tbody = pagedTable.querySelectorAll("tbody")[0];
     tbody.innerHTML = "";
 
-    var columnsData = columnsFromJson(data);
-
     var pageData = data.slice(pageNumber * pageSize, (pageNumber + 1) * pageSize);
 
     pageData.forEach(function(dataRow, idxRow) {
@@ -73,7 +72,7 @@ var PagedTable = function (pagedTable) {
         var dataCell = cellName === "..." ? "" : dataRow[cellName];
         var htmlCell = document.createElement("td");
         htmlCell.appendChild(document.createTextNode(dataCell));
-        htmlCell.setAttribute("class", "pagedtable-type pagedtable-type-" + columnData.type);
+        htmlCell.setAttribute("align", columnData.align);
         htmlRow.appendChild(htmlCell);
       });
 
@@ -183,9 +182,9 @@ var PagedTable = function (pagedTable) {
       throw("A single data-pagedtable-source was not found");
     }
 
-    var source = JSON.parse(sourceElems[0].innerHTML);
+    source = JSON.parse(sourceElems[0].innerHTML);
     data = source.data;
-    types = source.types;
+    columnsData = columnsFromSource(source);
   };
 
   var setPageNumber = function(newPageNumber) {
