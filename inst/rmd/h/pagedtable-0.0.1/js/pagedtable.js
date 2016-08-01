@@ -13,13 +13,14 @@ var PagedTable = function (pagedTable) {
     if (columns.length > 10) {
       columns = columns.slice(1, 10);
       columns[10] = "...";
+      types[10] = null;
     }
 
     var typedColumns = columns.map(function(columnName, columnIdx) {
       return {
         name: columnName,
         type: types[columnIdx]
-      }
+      };
     });
 
     return typedColumns;
@@ -38,7 +39,17 @@ var PagedTable = function (pagedTable) {
       column.setAttribute("align", "");
       column.setAttribute("class", "pagedtable-type pagedtable-type-" + columnData.type);
 
-      column.appendChild(document.createTextNode(columnData.name));
+      var columnName = document.createElement("div");
+      columnName.appendChild(document.createTextNode(columnData.name));
+      column.appendChild(columnName);
+
+      if (columnData.type !== null) {
+        var columnType = document.createElement("div");
+        columnType.setAttribute("class", "pagedtable-header-type");
+        columnType.appendChild(document.createTextNode("(" + columnData.type + ")"));
+        column.appendChild(columnType);
+      }
+
       header.appendChild(column);
     });
 

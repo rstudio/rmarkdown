@@ -104,3 +104,8 @@ a.pagedtable-index-current:hover {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.pagedtable-header-type {
+  color: #999;
+  font-weight: 100;
+}
