@@ -246,6 +246,19 @@ render <- function(input,
     output_format$pre_knit(input = original_input)
   }
 
+  # function used to call post_knit handler
+  call_post_knit_handler <- function() {
+    if (!is.null(output_format$post_knit)) {
+      post_knit_extra_args <- output_format$post_knit(yaml_front_matter,
+                                                      knit_input,
+                                                      runtime,
+                                                      encoding = encoding)
+    } else {
+      post_knit_extra_args <- NULL
+    }
+    c(output_format$pandoc$args, post_knit_extra_args)
+  }
+
   # knit if necessary
   if (tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")) {
 
@@ -357,6 +370,9 @@ render <- function(input,
 
     perf_timer_stop("knitr")
 
+    # call post_knit handler
+    output_format$pandoc$args <- call_post_knit_handler()
+
     # pull any R Markdown warnings from knit_meta and emit
     rmd_warnings <- knit_meta_reset(class = "rmd_warning")
     for (rmd_warning in rmd_warnings) {
@@ -366,15 +382,8 @@ render <- function(input,
     # collect remaining knit_meta
     knit_meta <- knit_meta_reset()
 
-  }
-
-  # call any post_knit handler
-  if (!is.null(output_format$post_knit)) {
-    post_knit_extra_args <- output_format$post_knit(yaml_front_matter,
-                                                    knit_input,
-                                                    runtime,
-                                                    encoding = encoding)
-    output_format$pandoc$args <- c(output_format$pandoc$args, post_knit_extra_args)
+  } else {
+    output_format$pandoc$args <- call_post_knit_handler()
   }
 
   # if this isn't html and there are html dependencies then flag an error
