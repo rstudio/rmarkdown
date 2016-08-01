@@ -99,6 +99,7 @@ button.code-folding-btn:focus {
 }
 </style>
 
+
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -691,6 +692,44 @@ output:
     lib_dir: libs
 ---</code></pre>
 </div>
+<div id="reveal-plugins" class="section level2">
+<h2>Reveal Plugins</h2>
+<p>You can enable various reveal.js plugins using the <code>reveal_plugins</code> option. Plugins currently supported include:</p>
+<table>
+<colgroup>
+<col width="38%" />
+<col width="61%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Plugin</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://github.com/hakimel/reveal.js/#speaker-notes">notes</a></td>
+<td>Present per-slide notes in a separate browser window.</td>
+</tr>
+<tr class="even">
+<td><a href="http://lab.hakim.se/zoom-js/">zoom</a></td>
+<td>Zoom in and out of selected content with Alt+Click.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://github.com/hakimel/reveal.js/blob/master/plugin/search/search.js">search</a></td>
+<td>Find a text string anywhere in the slides and show the next occurrence to the user.</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the use of plugins requires that the <code>self_contained</code> option be set to false. For example, this presentation includes both the “notes” and “search” plugins:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs::revealjs_presentation:
+    self_contained: false
+    reveal_plugins: [&quot;notes&quot;, &quot;search&quot;]
+---</code></pre>
+</div>
 <div id="advanced-customization" class="section level2">
 <h2>Advanced Customization</h2>
 <div id="includes" class="section level3">
@@ -766,6 +805,7 @@ output:
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

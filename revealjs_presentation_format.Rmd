@@ -311,6 +311,27 @@ One common reason keep dependencies external is for serving R Markdown documents
         lib_dir: libs
     ---
 
+## Reveal Plugins
+
+You can enable various reveal.js plugins using the `reveal_plugins` option. Plugins currently supported include:
+
+| Plugin | Description  |
+|----------------------------|---------------------------------------------|
+| [notes](https://github.com/hakimel/reveal.js/#speaker-notes) | Present per-slide notes in a separate browser window. |
+| [zoom](http://lab.hakim.se/zoom-js/) | Zoom in and out of selected content with Alt+Click. |
+| [search](https://github.com/hakimel/reveal.js/blob/master/plugin/search/search.js) | Find a text string anywhere in the slides and show the next occurrence to the user. |
+
+Note that the use of plugins requires that the `self_contained` option be set to false. For example, this presentation includes both the "notes" and "search" plugins:
+
+    ---
+    title: "Habits"
+    output:
+      revealjs::revealjs_presentation:
+        self_contained: false
+        reveal_plugins: ["notes", "search"]
+    ---
+
+
 ## Advanced Customization
 
 ### Includes
