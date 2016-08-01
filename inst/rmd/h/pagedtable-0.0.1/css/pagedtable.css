@@ -2,16 +2,12 @@
   overflow: auto;
   padding-left: 8px;
   padding-right: 8px;
-  margin-bottom: 10px;
-}
-
-.pagedtable-not-empty .pagedtable {
-  margin-bottom: 20px;
 }
 
 .pagedtable-wrapper {
   border: 1px solid #ccc;
   border-radius: 4px;
+  margin-bottom: 10px;
 }
 
 .pagedtable table {
