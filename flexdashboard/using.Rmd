@@ -508,6 +508,13 @@ You can form links directly to dashboard pages using markdown link syntax: `[Pag
 <div id="pagelinks"></div>
 <script type="text/javascript">loadSnippet('pagelinks')</script>
 
+#### Hiding Pages
+
+The typical means of navigating between pages is the global navigation bar as described above. However, if you've already provided prominent navigational links to pages you may wish to exclude them from the navigation bar entirely. This can be accomplished by adding the `{.hidden}` attribute to the page you want to hide from the navigation bar. For example:
+
+<div id="hidingpages"></div>
+<script type="text/javascript">loadSnippet('hidingpages')</script>
+
 
 ### Page Icons
 
