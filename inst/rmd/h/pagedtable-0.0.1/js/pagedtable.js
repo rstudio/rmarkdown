@@ -191,7 +191,8 @@ var PagedTable = function (pagedTable) {
   this.render = function() {
     var tableDiv = document.createElement("div");
     pagedTable.appendChild(tableDiv);
-    tableDiv.setAttribute("class", "pagedtable");
+    var pagedTableClass = (data.length > 0) ? "pagedtable pagedtable-not-empty" : "pagedtable";
+    tableDiv.setAttribute("class", pagedTableClass);
 
     var table = document.createElement("table");
     table.setAttribute("cellspacing", "0");
@@ -206,8 +207,7 @@ var PagedTable = function (pagedTable) {
     tableDiv.appendChild(infoDiv);
 
     var footerDiv = document.createElement("div");
-    var footerDivNotEmpty = "pagedtable-footer-not-empty pagedtable-footer";
-    footerDiv.setAttribute("class", data.length > 0 ? footerDivNotEmpty : "pagedtable-footer");
+    footerDiv.setAttribute("class", "pagedtable-footer");
     tableDiv.appendChild(footerDiv);
 
     renderHeader();

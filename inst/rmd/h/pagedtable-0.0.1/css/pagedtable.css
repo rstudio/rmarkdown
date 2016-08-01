@@ -2,6 +2,9 @@
   overflow: auto;
   padding-left: 8px;
   padding-right: 8px;
+}
+
+.pagedtable-not-empty .pagedtable {
   margin-bottom: 20px;
 }
 
@@ -90,7 +93,7 @@ a.pagedtable-index-current:hover {
   padding-bottom: 5px;
 }
 
-.pagedtable-footer-not-empty {
+.pagedtable-not-empty .pagedtable-footer {
   border-top: 2px solid #dddddd;
 }
 
