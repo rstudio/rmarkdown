@@ -1,0 +1,234 @@
+---
+title: "Gallery"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_header_navpage.html]
+---
+
+<!--html_preserve-->
+
+<div class="band full">
+  <div class="bandContent pageTitle">Gallery</div>
+  <div class="bandContent pageIntro">Check out the range of outputs and formats you can create using R Markdown.</div>
+  <div class="bandContent gallerySection">
+    <div class="gallerySectionTitle">Documents</div>
+    <div class="galleryIntro">With R Markdown, you write a single .Rmd file and then use it to render finished output in a variety of formats.</div>
+    <div class="galleryItems">
+      <div class="galleryItem">
+        <a href="http://timelyportfolio.github.io/rCharts_nyt_home_price/"><img class="galleryItemImage" src="galleryImages/html.png"/></a>
+        <a href="http://timelyportfolio.github.io/rCharts_nyt_home_price/" class="galleryItemLabel">HTML</a>
+        <div class="galleryItemDescription">HTML documents for web publishing.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/svm-rmarkdown-article-example.pdf"><img class="galleryItemImage" src="galleryImages/pdf.png"/></a>
+        <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/svm-rmarkdown-article-example.pdf" class="galleryItemLabel">PDF</a>
+        <div class="galleryItemDescription">PDF documents for printing. <a href="https://raw.githubusercontent.com/svmiller/svm-r-markdown-templates/master/svm-rmarkdown-article-example.Rmd">Example Code</a></div>
+      </div>
+      <div class="galleryItem">
+        <img class="galleryItemImage" src="galleryImages/word.png"/>
+        <a class="galleryItemLabel">Microsoft Word</a>
+        <div class="galleryItemDescription">Microsoft Word documents for Office workflows.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://rstudio.github.io/tufte/"><img class="galleryItemImage" src="galleryImages/tufte.png"/></a>
+        <a href="https://rstudio.github.io/tufte/" class="galleryItemLabel">Handouts</a>
+        <div class="galleryItemDescription">Tufte styled documents for handouts. <a href="https://raw.githubusercontent.com/rstudio/tufte/master/inst/rmarkdown/templates/tufte_html/skeleton/skeleton.Rmd">Example Code</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bandContent gallerySection">
+    <div class="gallerySectionTitle">Interactive Documents</div>
+    <div class="galleryIntro">Combine R Markdown with htmlwidgets or the shiny package to make interactive documents.</div>
+    <div class="galleryItems">
+      <div class="galleryItem">
+        <a href="https://rpubs.com/jcheng/leaflet-layers-example"><img class="galleryItemImage" src="galleryImages/widgets1.png"/></a>
+        <a href="https://rpubs.com/jcheng/leaflet-layers-example" class="galleryItemLabel">HTML Widgets</a>
+        <div class="galleryItemDescription">Add interactive graphics with htmlwidgets, such as the leaflet map widget.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://gallery.shinyapps.io/UNCCC2/"><img class="galleryItemImage" src="galleryImages/widgets2.png"/></a>
+        <a href="https://gallery.shinyapps.io/UNCCC2/" class="galleryItemLabel">HTML Widgets</a>
+        <div class="galleryItemDescription">Embed htmlwidgets such as dygraphs and datatables directly into your reports.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://uasnap.shinyapps.io/ex_leaflet/"><img class="galleryItemImage" src="galleryImages/shiny1.png"/></a>
+        <a href="https://uasnap.shinyapps.io/ex_leaflet/" class="galleryItemLabel">Shiny</a>
+        <div class="galleryItemDescription">Add interactive analysis with shiny, which lets your user rerun the actual analysis within your report.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://bookdown.org/csgillespie/shiny_components/"><img class="galleryItemImage" src="galleryImages/shiny2.png"/></a>
+        <a href="https://bookdown.org/csgillespie/shiny_components/" class="galleryItemLabel">Shiny</a>
+        <div class="galleryItemDescription">Shiny components and htmlwidgets will work in any HTML based output, such as a file, slide show or dashboard.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bandContent gallerySection">
+    <div class="gallerySectionTitle">Dashboards</div>
+    <div class="galleryIntro">Combine R Markdown with the flexdashboard package to quickly assemble R components into administrative dashboards. Each example below contains a link to the source code within the dashboard.</div>
+    <div class="galleryItems">
+      <div class="galleryItem">
+        <a href="https://gallery.shinyapps.io/cran-gauge/"><img class="galleryItemImage" src="galleryImages/dashboard1.png"/></a>
+        <a href="https://gallery.shinyapps.io/cran-gauge/" class="galleryItemLabel">Dashboard with gauges and value boxes</a>
+        <div class="galleryItemDescription">Use flexdashboard to create dashboards with gauges and value boxes.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://beta.rstudioconnect.com/jjallaire/htmlwidgets-highcharter/"><img class="galleryItemImage" src="galleryImages/dashboard2.png"/></a>
+        <a href="https://beta.rstudioconnect.com/jjallaire/htmlwidgets-highcharter/" class="galleryItemLabel">Dashboard with htmlwidgets</a>
+        <div class="galleryItemDescription">Add interactive graphics to a dashboard with htmlwidgets.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://walkerke.shinyapps.io/neighborhood_diversity/"><img class="galleryItemImage" src="galleryImages/dashboard3.png"/></a>
+        <a href="https://walkerke.shinyapps.io/neighborhood_diversity/" class="galleryItemLabel">Dashboard with Shiny</a>
+        <div class="galleryItemDescription">Add interactive analysis to a dashboard with Shiny.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://beta.rstudioconnect.com/jjallaire/htmlwidgets-showcase-storyboard/"><img class="galleryItemImage" src="galleryImages/dashboard4.png"/></a>
+        <a href="https://beta.rstudioconnect.com/jjallaire/htmlwidgets-showcase-storyboard/" class="galleryItemLabel">Dashboard with storyboard</a>
+        <div class="galleryItemDescription">Organize dashboards around a storyboard.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bandContent gallerySection">
+    <div class="gallerySectionTitle">Presentations</div>
+    <div class="galleryIntro">R Markdown supports several presentation (slide show) formats.</div>
+    <div class="galleryItems">
+      <div class="galleryItem">
+        <a href="http://svmiller.com/rmarkdown-example.pdf"><img class="galleryItemImage" src="galleryImages/presentation1.png"/></a>
+        <a href="http://svmiller.com/rmarkdown-example.pdf" class="galleryItemLabel">Beamer slideshow</a>
+        <div class="galleryItemDescription">Create pdf slides with Beamer. Example Code.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://rpubs.com/sdplus/vulcan74"><img class="galleryItemImage" src="galleryImages/presentation2.png"/></a>
+        <a href="https://rpubs.com/sdplus/vulcan74" class="galleryItemLabel">Slidy slideshow</a>
+        <div class="galleryItemDescription">Create HTML-based slides with Slidy.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://github.com/rstudio/ShinyDeveloperConference/tree/master/Debugging"><img class="galleryItemImage" src="galleryImages/presentation3.png"/></a>
+        <a href="https://github.com/rstudio/ShinyDeveloperConference/tree/master/Debugging" class="galleryItemLabel">ioslides slideshow</a>
+        <div class="galleryItemDescription">Create HTML-slides with ioslides. Example Code</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://github.com/rstudio/ShinyDeveloperConference/tree/master/Reactivity"><img class="galleryItemImage" src="galleryImages/presentation4.png"/></a>
+        <a href="https://github.com/rstudio/ShinyDeveloperConference/tree/master/Reactivity" class="galleryItemLabel">reveal.js slideshow</a>
+        <div class="galleryItemDescription">Create HTML-based slides with reveal.js. Example Code</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bandContent gallerySection">
+    <div class="gallerySectionTitle">Books</div>
+    <div class="galleryIntro">Use R Markdown alongside bookdown to author books and then distribute the books as PDF, HTML, EPUB documents and more. Here are some books that have been authored in R Markdown.</div>
+    <div class="galleryItems">
+      <div class="galleryItem">
+        <a href="https://bookdown.org/yihui/bookdown/"><img class="galleryItemImage" src="galleryImages/book1.png"/></a>
+        <a href="https://bookdown.org/yihui/bookdown/" class="galleryItemLabel">Bookdown: Authoring Books with R Markdown</a>
+        <div class="galleryItemDescription">The Bookdown book explains how to author books in R Markdown.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="http://r4ds.had.co.nz/"><img class="galleryItemImage" src="galleryImages/book2.png"/></a>
+        <a href="http://r4ds.had.co.nz/" class="galleryItemLabel">R for Data Science</a>
+        <div class="galleryItemDescription">R for Data Science teaches how to do Data Science with R.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://bookdown.org/csgillespie/efficientR/"><img class="galleryItemImage" src="galleryImages/book3.png"/></a>
+        <a href="https://bookdown.org/csgillespie/efficientR/" class="galleryItemLabel">Efficient R Programming</a>
+        <div class="galleryItemDescription">Efficient R Programming explains how to write nimble, performant R code.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://bookdown.org/nowosad/Geostatystyka/"><img class="galleryItemImage" src="galleryImages/book4.png"/></a>
+        <a href="https://bookdown.org/nowosad/Geostatystyka/" class="galleryItemLabel">Geostatystyka w R</a>
+        <div class="galleryItemDescription">Geostatystyka w R is a Polish introduction to geostatistics.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bandContent gallerySection">
+    <div class="gallerySectionTitle">Websites</div>
+    <div class="galleryIntro">R Markdown makes it easy to build webpages straight from .Rmd files.</div>
+    <div class="galleryItems">
+      <div class="galleryItem">
+        <a href="http://rmarkdown.rstudio.com/"><img class="galleryItemImage" src="galleryImages/gallery-site-rmarkdown.png"/></a>
+        <a href="http://rmarkdown.rstudio.com/" class="galleryItemLabel">R Markdown</a>
+        <div class="galleryItemDescription">The <a href="http://rmarkdown.rstudio.com/">R Markdown website</a> is itself built with R Markdown. <a href="https://github.com/rstudio/rmarkdown/tree/gh-pages">Example Code</a>.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://rstudio.github.io/flexdashboard"><img class="galleryItemImage" src="galleryImages/gallery-site-flexdashboard.png"/></a>
+        <a href="https://rstudio.github.io/flexdashboard" class="galleryItemLabel">flexDashboard</a>
+        <div class="galleryItemDescription">flexdashboard extends R Markdown to make administrative dashbords. Its website is also built from R Markdown. <a href="https://github.com/rstudio/flexdashboard/tree/gh-pages">Example Code</a>.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://bookdown.org/"><img class="galleryItemImage" src="galleryImages/gallery-site-bookdown.png"/></a>
+        <a href="https://bookdown.org/" class="galleryItemLabel">bookdown</a>
+        <div class="galleryItemDescription">Bookdown extends R Markdown to make books. Its website is built with R Markdown and CSS styling. <a href="https://github.com/rstudio/bookdown/tree/master/inst/homepage">Example Code</a>.</div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://rstudio.github.io/profvis/"><img class="galleryItemImage" src="galleryImages/gallery-site-profvis.png"/></a>
+        <a href="https://rstudio.github.io/profvis/" class="galleryItemLabel">profvis</a>
+        <div class="galleryItemDescription">profvis provides profiling tools for R code, as well as a website made with R Markdown. <a href="https://github.com/rstudio/profvis/tree/gh-pages">Example Code</a>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bandContent gallerySection">
+    <div class="gallerySectionTitle">Templates</div>
+    <div class="galleryIntro">Create reusable templates to quickly apply styling and content to yan R Markdown document.</div>
+    <div class="galleryItems">
+      <div class="galleryItem">
+        <a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/jss_article"><img class="galleryItemImage" src="galleryImages/gallery-template-jss.png"/></a>
+        <a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/jss_article" class="galleryItemLabel">JSS</a>
+        <div class="galleryItemDescription">The JSS article template in the rticles package formats an R Markdown document to meet the style guidelines of the Journal of Statistical Software. <a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/jss_article">Example Code</a></div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/rjournal_article"><img class="galleryItemImage" src="galleryImages/gallery-template-rjournal.png"/></a>
+        <a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/rjournal_article" class="galleryItemLabel">R Journal</a>
+        <div class="galleryItemDescription">The rjournal article template in the rticles package formats an R Markdown document to meet the style guidelings of the R Journal. <a href="https://github.com/rstudio/rticles/tree/master/inst/rmarkdown/templates/rjournal_article">Example Code</a></div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://github.com/hrbrmstr/markdowntemplates"><img class="galleryItemImage" src="galleryImages/gallery-template-skeleton.png"/></a>
+        <a href="https://github.com/hrbrmstr/markdowntemplates" class="galleryItemLabel">Skeleton</a>
+        <div class="galleryItemDescription">The skeleton template is one of several provided in Bob Rudis’ markdowntemplates package. <a href="https://github.com/hrbrmstr/markdowntemplates/tree/master/inst/rmarkdown/templates/default">Example Code</a></div>
+      </div>
+      <div class="galleryItem">
+        <a href="http://svmiller.com/blog/2016/03/svm-r-markdown-cv/"><img class="galleryItemImage" src="galleryImages/gallery-template-cv.png"/></a>
+        <a href="http://svmiller.com/blog/2016/03/svm-r-markdown-cv/" class="galleryItemLabel">CV</a>
+        <div class="galleryItemDescription">Steve Miller’s CV template formats an R Markdown file into a Curriculum Vitae (CV). <a href="https://raw.githubusercontent.com/svmiller/svm-r-markdown-templates/master/svm-rmarkdown-cv.Rmd">Example Code</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bandContent gallerySection">
+    <div class="gallerySectionTitle">Package Vignettes</div>
+    <div class="galleryIntro">The html_vignette template makes it easy to write R package vignettes with R Markdown. These vignettes were each written with R Markdown.</div>
+    <div class="galleryItems">
+      <div class="galleryItem">
+        <a href="https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html"><img class="galleryItemImage" src="galleryImages/gallery-vignette-httr.png"/></a>
+        <a href="https://cran.r-project.org/web/packages/httr/vignettes/quickstart.html" class="galleryItemLabel">httr</a>
+        <div class="galleryItemDescription">The Quickstart vignette in the httr package. <a href="https://github.com/hadley/httr/blob/master/vignettes/quickstart.Rmd">Example Code</a></div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://cran.r-project.org/web/packages/rvest/vignettes/selectorgadget.html"><img class="galleryItemImage" src="galleryImages/gallery-vignette-rvest.png"/></a>
+        <a href="https://cran.r-project.org/web/packages/rvest/vignettes/selectorgadget.html" class="galleryItemLabel">rvest</a>
+        <div class="galleryItemDescription">The Selector Gadget vignette in the rvest package. <a href="https://github.com/hadley/rvest/blob/master/vignettes/selectorgadget.Rmd">Example Code</a></div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://cran.r-project.org/web/packages/knitr/vignettes/docco-linear.html"><img class="galleryItemImage" src="galleryImages/gallery-vignette-doccolinear.png"/></a>
+        <a href="https://cran.r-project.org/web/packages/knitr/vignettes/docco-linear.html" class="galleryItemLabel">R Markdown with the Docco Linear Style (knitr)</a>
+        <div class="galleryItemDescription">The Docco Linear example vignette in the knitr package. <a href="https://github.com/yihui/knitr/blob/master/vignettes/docco-linear.Rmd">Example Code</a></div>
+      </div>
+      <div class="galleryItem">
+        <a href="https://cran.r-project.org/web/packages/knitr/vignettes/docco-classic.html"><img class="galleryItemImage" src="galleryImages/gallery-vignette-doccoclassic.png"/></a>
+        <a href="https://cran.r-project.org/web/packages/knitr/vignettes/docco-classic.html" class="galleryItemLabel">R Markdown with the Docco Classic Style (knitr)</a>
+        <div class="galleryItemDescription">The Docco Classical example vignette in the knitr package. <a href="https://github.com/yihui/knitr/blob/master/vignettes/docco-classic.Rmd">Example Code</a></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!--/html_preserve-->

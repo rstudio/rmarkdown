@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Formats</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<link rel="icon" type="image/png" href="images/favicon.png" />
+
+<script type="text/javascript" src="js/rmarkdown.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/rmarkdown.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div id="rStudioHeader" class="alwaysShrunk">
+  <div class="innards bandContent">
+    <div>
+      <a class="productName" href="index.html">R Markdown</a>
+      <div class="rStudio"><span class="light">from </span> <a href="https://www.rstudio.com/"><div class="logo"></div></a></div>
+    </div>
+
+    <div id="menu">
+      <div id="menuToggler"></div>
+      <div id="menuItems">
+        <a class="menuItem" href="lesson-1.html">Get Started</a>
+        <a class="menuItem" href="gallery.html">Gallery</a>
+        <a class="menuItem" href="formats.html">Formats</a>
+        <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
+        <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+#TOC {
+  margin-left: 35px;
+  margin-top: 90px;
+}
+</style>
+
+<script type="text/javascript">
+$(".main-container").removeClass("main-container").removeClass("container-fluid").addClass("footerPushDown");
+</script>
+
+
+<div id="pageContent" class="standardPadding">
+  <div class="articleBandContent">
+
+<style type="text/css">
+.title {
+  display: none;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Formats</h1>
+
+</div>
+
+
+
+
+<div class="band full">
+  <div class="bandContent pageTitle">Formats</div>
+  <div class="bandContent pageIntro">Use R Markdown to create output in any of these formats.</div>
+  <div class="bandContent">
+
+  <div class="columns">
+    <div class="column2">
+
+    <div class="formatSection">
+      <div class="formatSectionTitle">Documents</div>
+      <div class="formatTable">
+        <a href="html_document_format.html" class="formatTableRow">
+          <div class="formatName">HTML</div>
+          <div class="formatDescription">HTML document with Bootstrap CSS</div>
+        </a>
+        <a href="pdf_document_format.html" class="formatTableRow">
+          <div class="formatName">PDF</div>
+          <div class="formatDescription">PDF document (via LaTeX template)</div>
+        </a>
+        <a href="word_document_format.html" class="formatTableRow">
+          <div class="formatName">Word</div>
+          <div class="formatDescription">Microsoft Word document (docx)</div>
+        </a>
+        <a href="odt_document_format.html" class="formatTableRow">
+          <div class="formatName">ODT</div>
+          <div class="formatDescription">OpenDocument Text document</div>
+        </a>
+        <a href="rtf_document_format.html" class="formatTableRow">
+          <div class="formatName">RTF</div>
+          <div class="formatDescription">Rich Text Format document</div>
+        </a>
+        <a href="markdown_document_format.html" class="formatTableRow">
+          <div class="formatName">Markdown</div>
+          <div class="formatDescription">Markdown document (various flavors)</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="formatSection">
+      <div class="formatSectionTitle">Presentations</div>
+      <div class="formatTable">
+        <a href="ioslides_presentation_format.html" class="formatTableRow">
+          <div class="formatName">ioslides</div>
+          <div class="formatDescription">HTML presentation with ioslides</div>
+        </a>
+        <a href="revealjs_presentation_format.html" class="formatTableRow">
+          <div class="formatName">reveal.js</div>
+          <div class="formatDescription">HTML presentation with reveal.js</div>
+        </a>
+        <a href="slidy_presentation_format.html" class="formatTableRow">
+          <div class="formatName">Slidy</div>
+          <div class="formatDescription">HTML presentation with W3C Slidy</div>
+        </a>
+        <a href="beamer_presentation_format.html" class="formatTableRow">
+          <div class="formatName">Beamer</div>
+          <div class="formatDescription">PDF presentation with LaTeX Beamer</div>
+        </a>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="column2">
+    
+    <div class="formatSection">
+      <div class="formatSectionTitle">Journals</div>
+      <div class="formatTable">
+         <a href="https://github.com/rstudio/rticles" class="formatTableRow">
+          <div class="formatName">jss_article</div>
+          <div class="formatDescription">Journal of Statistical Software (JSS)</div>
+        </a>
+        <a href="https://github.com/rstudio/rticles" class="formatTableRow">
+          <div class="formatName">acm_article</div>
+          <div class="formatDescription">Association for Computing Machinery (ACM)</div>
+        </a>
+        <a href="https://github.com/rstudio/rticles" class="formatTableRow">
+          <div class="formatName">acs_article</div>
+          <div class="formatDescription">American Chemical Society (ACS) Journal</div>
+        </a>
+        <a href="https://github.com/rstudio/rticles" class="formatTableRow">
+          <div class="formatName">ctex</div>
+          <div class="formatDescription">Documents based on the LaTeX package ctex</div>
+        </a>
+        <a href="https://github.com/rstudio/rticles" class="formatTableRow">
+          <div class="formatName">elsevier_article</div>
+          <div class="formatDescription">Submissions to Elsevier journals</div>
+        </a>
+      </div>
+    </div>
+    
+    <div class="formatSection">
+      <div class="formatSectionTitle">More</div>
+      <div class="formatTable">
+        <a href="flexdashboard/index.html" class="formatTableRow">
+          <div class="formatName">flexdashboard</div>
+          <div class="formatDescription">Interactive dashboards</div>
+        </a>
+        <a href="https://bookdown.org" class="formatTableRow">
+          <div class="formatName">bookdown</div>
+          <div class="formatDescription">HTML, PDF, ePub, and Kindle books</div>
+        </a>
+        <a href="tufte_handout_format.html" class="formatTableRow">
+          <div class="formatName">Tufte Handout</div>
+          <div class="formatDescription">Handouts in the style of Edward Tufte</div>
+        </a>
+        <a href="package_vignette_format.html" class="formatTableRow">
+          <div class="formatName">Package Vignette</div>
+          <div class="formatDescription">R package vignette (HTML)</div>
+        </a>
+        <a href="github_document_format.html" class="formatTableRow">
+          <div class="formatName">Github Document</div>
+          <div class="formatDescription">GitHub Flavored Markdown document.</div>
+        </a>
+      </div>
+    </div>
+    
+    </div>
+    
+    
+  </div>
+  </div>
+</div>
+
+
+
+  </div> <!-- articleBandContent -->
+</div> <!-- pageContent -->
+
+<div id="rStudioFooter" class="band full">
+<div class="bandContent">
+  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="logos">
+    <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+    <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+    <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+    <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
+  </div>
+</div>
+</div>
+
+<!-- bizible -->
+<script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+
+</body>
+</html>

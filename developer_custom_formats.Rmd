@@ -2,7 +2,7 @@
 title: "Creating New Formats"
 output:
   html_document:
-    toc: true
+    toc: false
     toc_depth: 3
     toc_float: false
 ---

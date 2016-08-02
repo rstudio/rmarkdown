@@ -1,0 +1,57 @@
+---
+title: "Two Stocks"
+author: "John Foo"
+output: flexdashboard::flex_dashboard
+params:
+  symbol1: "FB"
+  symbol2: "GOOG"
+---
+
+# Introduction {.sidebar}
+
+```{r include = FALSE}
+library(quantmod)
+library(dygraphs)
+
+stock1 <- getSymbols(params$symbol1, auto.assign = FALSE,
+                    from = "2016-01-01", end = Sys.Date())
+stock2 <- getSymbols(params$symbol2, auto.assign = FALSE,
+                    from = "2016-01-01", end = Sys.Date())
+```
+
+This report examines the price of two stocks: 
+  
+* `r params$symbol1`
+* `r params$symbol2` 
+
+It is written in [R Markdown](http://rmarkdown.rstudio.com), an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. R Markdown combines the core syntax of **markdown** (an easy to write plain text format) with embedded **R** code chunks that are run so their output can be included in the final document.
+
+The data comes from [Yahoo finance](http://finance.yahoo.com).
+
+# Price
+
+### `r params$symbol1` price
+
+```{r echo = FALSE}
+dygraph(Cl(stock1))
+```
+
+### `r params$symbol2` price
+
+```{r echo = FALSE}
+dygraph(Cl(stock2))
+```
+
+# Volume
+
+### `r params$symbol1` volume
+
+```{r echo = FALSE}
+dygraph(Vo(stock1))
+```
+
+### `r params$symbol2` volume
+
+```{r echo = FALSE}
+dygraph(Vo(stock2))
+```

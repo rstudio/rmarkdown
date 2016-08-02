@@ -1,0 +1,52 @@
+---
+title: "Using Parameters"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
+---
+
+R Markdown documents can contain a metadata section that includes title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an .Rmd file adds a title, author, and date to your document.
+
+```
+---
+title: "Report with date"
+author: "RStudio"
+date: "2016-06-23"
+---
+```
+
+You can add a `params:` field to the metadata to provide a list of values for your document to use. R Markdown will make the list available as `params` within any R code chunk in the report. For example, the file below takes a filename as a parameter and uses the name to read in a data set. To use multiple parameters, list each one on a new line under `params:`, indented two spaces.
+
+![](lesson-images/quicktourParams.png)
+
+Parameters let you quickly apply your data set to new data sets, models, and parameters. You can set new values for the parameters when you call `rmarkdown::render()`,
+
+```r
+rmarkdown::render("input.Rmd", params = list())
+```
+
+as well as when you press the "Knit" button:
+
+![](lesson-images/quicktourParamsButton.png)
+
+You can learn more about params at [Paramaterized Reports](http://rmarkdown.rstudio.com/developer_parameterized_reports.html).
+
+## Exercise
+
+Add two parameters to [your report](lesson-exercises/exercise-5.Rmd), `symbol1` and `symbol2`. You can use "FB" (Facebook) and "GOOG" (Google) as their default values. Then replace every instance of `"AMZN"` or `"AAPL"` in your code with one of the parameters.
+
+When you Knit with Parameters, R Markdown will let you choose two new stocks to examine. For now, your text will still refer to AMZN and AAPL, but your graphs will update.
+***
+
+## Show Answer
+
+## Model Answer
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("lesson-solutions/solution-5.Rmd"))
+```
+
+## [Continue to next lesson](lesson-6.html)

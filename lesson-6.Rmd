@@ -1,0 +1,41 @@
+---
+title: "Inline R Code"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
+params:
+  symbol1: "FB"
+  symbol2: "GOOG"
+---
+
+You can evaluate R expressions inline by enclosing the expression within a single back-tick qualified with 'r'. For example, the following code embeds R results as text in the output at right
+
+![](lesson-images/quicktourInline.png)
+
+## Exercise
+
+Use inline code to call your parameters from within your text.
+
+Replace every instance of AMZN or AAPL in the text of [your report](lesson-exercises/exercise-6.Rmd) with inline code that calls `params$symbol1` or `params$symbol2`.
+
+When you re-knit your file, the results will look like this:
+
+***
+
+```{r child="lesson-solutions/solution-6.Rmd"}
+```
+
+***
+
+## Show Answer
+
+## Model Answer
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("lesson-solutions/solution-6.Rmd"))
+```
+
+## [Continue to next lesson](lesson-7.html)

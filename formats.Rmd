@@ -1,0 +1,135 @@
+---
+title: "Formats"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_header_navpage.html]
+---
+
+<!--html_preserve-->
+
+<div class="band full">
+  <div class="bandContent pageTitle">Formats</div>
+  <div class="bandContent pageIntro">Use R Markdown to create output in any of these formats.</div>
+  <div class="bandContent">
+
+  <div class="columns">
+    <div class="column2">
+
+    <div class="formatSection">
+      <div class="formatSectionTitle">Documents</div>
+      <div class="formatTable">
+        <a href="html_document_format.html" class="formatTableRow">
+          <div class="formatName">HTML</div>
+          <div class="formatDescription">HTML document with Bootstrap CSS</div>
+        </a>
+        <a href="pdf_document_format.html" class="formatTableRow">
+          <div class="formatName">PDF</div>
+          <div class="formatDescription">PDF document (via LaTeX template)</div>
+        </a>
+        <a href="word_document_format.html" class="formatTableRow">
+          <div class="formatName">Word</div>
+          <div class="formatDescription">Microsoft Word document (docx)</div>
+        </a>
+        <a href="odt_document_format.html" class="formatTableRow">
+          <div class="formatName">ODT</div>
+          <div class="formatDescription">OpenDocument Text document</div>
+        </a>
+        <a href="rtf_document_format.html" class="formatTableRow">
+          <div class="formatName">RTF</div>
+          <div class="formatDescription">Rich Text Format document</div>
+        </a>
+        <a href="markdown_document_format.html" class="formatTableRow">
+          <div class="formatName">Markdown</div>
+          <div class="formatDescription">Markdown document (various flavors)</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="formatSection">
+      <div class="formatSectionTitle">Presentations</div>
+      <div class="formatTable">
+        <a href="ioslides_presentation_format.html" class="formatTableRow">
+          <div class="formatName">ioslides</div>
+          <div class="formatDescription">HTML presentation with ioslides</div>
+        </a>
+        <a href="revealjs_presentation_format.html" class="formatTableRow">
+          <div class="formatName">reveal.js</div>
+          <div class="formatDescription">HTML presentation with reveal.js</div>
+        </a>
+        <a href="slidy_presentation_format.html" class="formatTableRow">
+          <div class="formatName">Slidy</div>
+          <div class="formatDescription">HTML presentation with W3C Slidy</div>
+        </a>
+        <a href="beamer_presentation_format.html" class="formatTableRow">
+          <div class="formatName">Beamer</div>
+          <div class="formatDescription">PDF presentation with LaTeX Beamer</div>
+        </a>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="column2">
+    
+    <div class="formatSection">
+      <div class="formatSectionTitle">Journals</div>
+      <div class="formatTable">
+         <a href="https://github.com/rstudio/rticles" class="formatTableRow">
+          <div class="formatName">jss_article</div>
+          <div class="formatDescription">Journal of Statistical Software (JSS)</div>
+        </a>
+        <a href="https://github.com/rstudio/rticles" class="formatTableRow">
+          <div class="formatName">acm_article</div>
+          <div class="formatDescription">Association for Computing Machinery (ACM)</div>
+        </a>
+        <a href="https://github.com/rstudio/rticles" class="formatTableRow">
+          <div class="formatName">acs_article</div>
+          <div class="formatDescription">American Chemical Society (ACS) Journal</div>
+        </a>
+        <a href="https://github.com/rstudio/rticles" class="formatTableRow">
+          <div class="formatName">ctex</div>
+          <div class="formatDescription">Documents based on the LaTeX package ctex</div>
+        </a>
+        <a href="https://github.com/rstudio/rticles" class="formatTableRow">
+          <div class="formatName">elsevier_article</div>
+          <div class="formatDescription">Submissions to Elsevier journals</div>
+        </a>
+      </div>
+    </div>
+    
+    <div class="formatSection">
+      <div class="formatSectionTitle">More</div>
+      <div class="formatTable">
+        <a href="flexdashboard/index.html" class="formatTableRow">
+          <div class="formatName">flexdashboard</div>
+          <div class="formatDescription">Interactive dashboards</div>
+        </a>
+        <a href="https://bookdown.org" class="formatTableRow">
+          <div class="formatName">bookdown</div>
+          <div class="formatDescription">HTML, PDF, ePub, and Kindle books</div>
+        </a>
+        <a href="tufte_handout_format.html" class="formatTableRow">
+          <div class="formatName">Tufte Handout</div>
+          <div class="formatDescription">Handouts in the style of Edward Tufte</div>
+        </a>
+        <a href="package_vignette_format.html" class="formatTableRow">
+          <div class="formatName">Package Vignette</div>
+          <div class="formatDescription">R package vignette (HTML)</div>
+        </a>
+        <a href="github_document_format.html" class="formatTableRow">
+          <div class="formatName">Github Document</div>
+          <div class="formatDescription">GitHub Flavored Markdown document.</div>
+        </a>
+      </div>
+    </div>
+    
+    </div>
+    
+    
+  </div>
+  </div>
+</div>
+
+<!--/html_preserve-->
