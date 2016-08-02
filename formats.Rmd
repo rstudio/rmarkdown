@@ -19,27 +19,27 @@ output:
       <div class="formatTable">
         <a href="html_document_format.html" class="formatTableRow">
           <div class="formatName">HTML</div>
-          <div class="formatDescription">Yawl parrel pressgang driver pinnace yardarm pirate.</div>
+          <div class="formatDescription">HTML document with Bootstrap CSS</div>
         </a>
         <a href="pdf_document_format.html" class="formatTableRow">
           <div class="formatName">PDF</div>
-          <div class="formatDescription">Pressgang hulk ho lugsail dance the hempen jig provost warp.</div>
+          <div class="formatDescription">PDF document (via LaTeX template)</div>
         </a>
         <a href="word_document_format.html" class="formatTableRow">
           <div class="formatName">Word</div>
-          <div class="formatDescription">Reef sails gally loaded to the gunwalls jack doubloon Blimey Yellow Jack.</div>
+          <div class="formatDescription">Microsoft Word document (docx)</div>
         </a>
         <a href="odt_document_format.html" class="formatTableRow">
           <div class="formatName">ODT</div>
-          <div class="formatDescription">Piracy to go on account Nelsons folly Arr prow reef sails hands.</div>
+          <div class="formatDescription">OpenDocument Text document</div>
         </a>
         <a href="rtf_document_format.html" class="formatTableRow">
           <div class="formatName">RTF</div>
-          <div class="formatDescription">Keel snow Spanish Main weigh anchor barkadeer spanker chandler.</div>
+          <div class="formatDescription">Rich Text Format document</div>
         </a>
         <a href="markdown_document_format.html" class="formatTableRow">
           <div class="formatName">Markdown</div>
-          <div class="formatDescription">Scourge of the seven seas capstan crow's nest avast dance the hempen jig grapple gangplank.</div>
+          <div class="formatDescription">Markdown document (various flavors)</div>
         </a>
       </div>
     </div>
@@ -49,19 +49,19 @@ output:
       <div class="formatTable">
         <a href="ioslides_presentation_format.html" class="formatTableRow">
           <div class="formatName">ioslides</div>
-          <div class="formatDescription">Broadside quarter port jolly boat bounty haul wind keelhaul.</div>
+          <div class="formatDescription">HTML presentation with ioslides</div>
         </a>
         <a href="revealjs_presentation_format.html" class="formatTableRow">
           <div class="formatName">reveal.js</div>
-          <div class="formatDescription">Ballast prow draft lanyard landlubber or just lubber parrel lass.</div>
+          <div class="formatDescription">HTML presentation with reveal.js</div>
         </a>
         <a href="slidy_presentation_format.html" class="formatTableRow">
           <div class="formatName">Slidy</div>
-          <div class="formatDescription">Killick lugger rum hang the jib take a caulk yardarm Barbary Coast.</div>
+          <div class="formatDescription">HTML presentation with W3C Slidy</div>
         </a>
         <a href="beamer_presentation_format.html" class="formatTableRow">
           <div class="formatName">Beamer</div>
-          <div class="formatDescription">Tender yawl weigh anchor hardtack Jack Ketch hearties fathom deadlights.</div>
+          <div class="formatDescription">PDF presentation with LaTeX Beamer</div>
         </a>
       </div>
     </div>
@@ -71,15 +71,15 @@ output:
       <div class="formatTable">
         <a href="tufte_handout_format.html" class="formatTableRow">
           <div class="formatName">Tufte Handout</div>
-          <div class="formatDescription">Walk the plank jolly boat Sea Legs gun stern cog grog ho.</div>
+          <div class="formatDescription">Handouts in the style of Edward Tufte</div>
         </a>
         <a href="package_vignette_format.html" class="formatTableRow">
           <div class="formatName">Package Vignette</div>
-          <div class="formatDescription">Rum tender dead men tell no tales rope's end rigging careen lateen sail Shiver me timbers.</div>
+          <div class="formatDescription">R package vignette (HTML)</div>
         </a>
         <a href="github_document_format.html" class="formatTableRow">
           <div class="formatName">Github Document</div>
-          <div class="formatDescription">Handsomely cutlass lugsail take a caulk killick jury mast spyglass bilged on her anchor.</div>
+          <div class="formatDescription">GitHub Flavored Markdown document.</div>
         </a>
       </div>
     </div>
