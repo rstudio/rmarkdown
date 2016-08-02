@@ -309,11 +309,11 @@ p {
 }
 
 .gallerySection, .formatSection {
-  margin-bottom: 50px;
+  margin-bottom: 2em;
 }
 
 .gallerySection .gallerySectionTitle, .formatSection .formatSectionTitle {
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 300;
 }
 
@@ -381,7 +381,6 @@ p {
 .formatTable {
   display: table;
   width: 100%;
-  font-size: 16px;
 }
 
 .formatTable .formatTableRow {
@@ -395,15 +394,14 @@ p {
 
 .formatTable .formatName {
   display: table-cell;
-  font-size: 20px;
-  padding: 8px;
+  padding: 5px;
   width: 200px;
 }
 
 .formatTable .formatDescription {
   display: table-cell;
-  line-height: 20px;
-  padding-bottom: 10px;
+  line-height: 15px;
+  padding-bottom: 5px;
 }
 
 .formatTable a.formatTableRow .formatDescription {
