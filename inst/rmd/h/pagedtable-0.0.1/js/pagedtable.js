@@ -14,7 +14,7 @@ var PagedTable = function (pagedTable) {
       columns = columns.slice(1, 10);
       columns[10] = {
         name: "...",
-        type: ""
+        type: null
       };
     }
 
