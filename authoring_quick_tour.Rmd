@@ -14,7 +14,7 @@ img {
 
 ### Overview
 
-<iframe src="https://player.vimeo.com/video/177254549?color=428bca&title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" style="margin-bottom: 2em;" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<iframe src="https://player.vimeo.com/video/177254549?color=428bca&title=0&byline=0&portrait=0" width="800" height="450" frameborder="0" style="margin-bottom: 2em;" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 ![](images/RMarkdownFlow.png)
 
