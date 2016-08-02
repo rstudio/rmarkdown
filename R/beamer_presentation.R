@@ -182,9 +182,9 @@ patch_beamer_template_paragraph_spacing <- function(template) {
 
   # insert patch
   c(
-    head(template, n = targetIdx - 1),
+    utils::head(template, n = targetIdx - 1),
     patch,
-    tail(template, n = -(targetIdx - 1))
+    utils::tail(template, n = -(targetIdx - 1))
   )
 }
 
