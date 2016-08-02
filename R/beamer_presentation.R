@@ -191,14 +191,20 @@ patch_beamer_template_paragraph_spacing <- function(template) {
 patch_beamer_template <- function() {
   pandoc_available(error = TRUE)
 
-  # invoke pandoc to copy default template to tempfile path, then
-  # read that in as a UTF-8 character vector
-  f <- tempfile(fileext = '.tex')
-  command <- paste(quoted(pandoc()), "-D beamer >", quoted(f))
-  with_pandoc_safe_environment({
-    if (shell_exec(command) != 0) stop("Failed to execute the command '", command, "'")
+  # invoke pandoc to read default template
+  command <- paste(quoted(pandoc()), "-D beamer")
+  template <- with_pandoc_safe_environment({
+    tryCatch(
+      system(command, intern = TRUE),
+      error = function(e) NULL
+    )
   })
-  template <- readLines(f, encoding = "UTF-8")
+
+  # make failure to read template non-fatal
+  if (is.null(template))
+    return(NULL)
+
+  # trim whitespace
   template <- gsub("^\\s+|\\s+$", "", template, perl = TRUE)
 
   # apply patches (store original version of template so we can
@@ -218,7 +224,8 @@ patch_beamer_template <- function() {
     return(NULL)
 
   # write and return path to template
+  tempfile <- tempfile(fileext = ".tex")
   template <- paste(template, collapse = "\n")
-  writeLines(enc2utf8(template), f, useBytes = TRUE)
-  f
+  writeLines(enc2utf8(template), tempfile, useBytes = TRUE)
+  tempfile
 }
