@@ -10,6 +10,12 @@ output:
 
 ### Overview
 
+R Markdown enables you to turn your analyses into high quality documents, reports, presentations and dashboards. R Markdown documents are fully reproducible and support dozens of static and dynamic output formats. This 2-minute video provides a quick tour of what's possible with R Markdown:
+
+<iframe src="https://player.vimeo.com/video/177254549?color=428bca&title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" style="margin-bottom: 2em;" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+### How It Works
+
 ![](lesson-images/RMarkdownFlow.png)
 
 Creating documents with R Markdown starts with an .Rmd file that contains a combination of markdown (content with simple text formatting) and R code chunks. The .Rmd file is fed to [knitr](http://yihui.name/knitr/), which executes all of the R code chunks and creates a new markdown (.md) document which includes the R code and it's output.
