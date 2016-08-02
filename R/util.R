@@ -568,3 +568,10 @@ replace_binding <- function(binding, package, override) {
 join <- function(..., sep = "", collapse = "") {
   paste(..., sep = sep, collapse = collapse)
 }
+
+shell_exec <- function(cmd, intern = FALSE, wait = TRUE, ...) {
+  if (Sys.info()[["sysname"]] == "Windows")
+    shell(cmd, intern = intern, wait = wait, ...)
+  else
+    system(cmd, intern = intern, wait = wait, ...)
+}

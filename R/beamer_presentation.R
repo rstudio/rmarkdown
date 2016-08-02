@@ -182,9 +182,9 @@ patch_beamer_template_paragraph_spacing <- function(template) {
 
   # insert patch
   c(
-    head(template, n = targetIdx - 1),
+    utils::head(template, n = targetIdx - 1),
     patch,
-    tail(template, n = -(targetIdx - 1))
+    utils::tail(template, n = -(targetIdx - 1))
   )
 }
 
@@ -196,7 +196,7 @@ patch_beamer_template <- function() {
   f <- tempfile(fileext = '.tex')
   command <- paste(quoted(pandoc()), "-D beamer >", quoted(f))
   with_pandoc_safe_environment({
-    if (system(command) != 0) stop("Failed to execute the command '", command, "'")
+    if (shell_exec(command) != 0) stop("Failed to execute the command '", command, "'")
   })
   template <- readLines(f, encoding = "UTF-8")
   template <- gsub("^\\s+|\\s+$", "", template, perl = TRUE)
