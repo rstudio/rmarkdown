@@ -7,6 +7,8 @@ output:
     toc_float: true
 ---
 
+**NOTE**: Enhanced support for knitr language engines is currently available in the [RStudio Preview Release](https://www.rstudio.com/products/rstudio/download/preview/). If you want to try out the features described below please install the preview release.
+
 ## Overview
 
 In addition to executing R code chunks, the [kntir](http://yihui.name/knitr/) package can also execute chunks in a variety of other languages. Some of the available language engines include:

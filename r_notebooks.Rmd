@@ -6,7 +6,7 @@ output:
     toc_depth: 3
 ---
 
-**NOTE**: R Notebooks are new feature of RStudio, and are currently available only in the the [RStudio Preview Release](https://www.rstudio.com/products/rstudio/download/preview/). If you want to try out the features described below please install the preview release.
+**NOTE**: R Notebooks are new feature of RStudio, and are currently available only in the [RStudio Preview Release](https://www.rstudio.com/products/rstudio/download/preview/). If you want to try out the features described below please install the preview release.
 
 ## Overview
 
