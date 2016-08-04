@@ -264,18 +264,23 @@ var PagedTable = function (pagedTable) {
     renderFooter();
   };
 
-  this.resized = function() {
-    columns.setVisibleColumns(Math.floor(pagedTable.offsetWidth / 100));
-    renderHeader();
-    renderBody();
-  };
+  this.resizeColumns = function() {
+    if (pagedTable.offsetWidth > 0) {
+      columns.setVisibleColumns(Math.floor(pagedTable.offsetWidth / 100));
 
-  window.addEventListener("resize", this.resized);
+      renderHeader();
+      renderBody();
+    }
+  };
 };
 
 var PagedTableDoc;
 (function (PagedTableDoc) {
+  var allPagedTables = [];
+
   PagedTableDoc.renderAll = function() {
+    allPagedTables = [];
+
     var pagedTables = document.querySelectorAll('[data-pagedtable]');
     pagedTables.forEach(function(pagedTable, idx) {
       pagedTable.setAttribute("pagedtable-page", 0);
@@ -283,8 +288,18 @@ var PagedTableDoc;
 
       var pagedTableInstance = new PagedTable(pagedTable);
       pagedTableInstance.render();
+
+      allPagedTables.push(pagedTableInstance);
     });
   };
+
+  PagedTableDoc.resizeAll = function() {
+    allPagedTables.forEach(function(pagedTable) {
+      pagedTable.resizeColumns();
+    });
+  };
+
+  window.addEventListener("resize", PagedTableDoc.resizeAll);
 
   return PagedTableDoc;
 })(PagedTableDoc || (PagedTableDoc = {}));
