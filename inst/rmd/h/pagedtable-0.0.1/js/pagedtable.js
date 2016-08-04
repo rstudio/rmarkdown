@@ -65,15 +65,23 @@ var PagedTable = function (pagedTable) {
     me.total = source.columns.length;
     me.subset = [];
 
-    me.incColumnNumber = function(increment) {
-      var newColumnNumber = me.number + increment;
-      if (newColumnNumber + me.visible >= me.total)
-        newColumnNumber = me.total - me.visible;
+    var updateSlice = function() {
+      if (me.number + me.visible >= me.total)
+        me.number = me.total - me.visible;
 
-      if (newColumnNumber < 0) newColumnNumber = 0;
+      if (me.number < 0) me.number = 0;
 
-      me.number = newColumnNumber;
       me.subset = source.columns.slice(me.number, Math.min(me.number + me.visible, me.total));
+    };
+
+    me.setVisibleColumns = function(newVisibleColumns) {
+      me.visible = newVisibleColumns;
+      updateSlice();
+    };
+
+    me.incColumnNumber = function(increment) {
+      me.number = me.number + increment;
+      updateSlice();
     };
 
     me.incColumnNumber(0);
@@ -255,6 +263,14 @@ var PagedTable = function (pagedTable) {
     renderBody();
     renderFooter();
   };
+
+  this.resized = function() {
+    columns.setVisibleColumns(Math.floor(pagedTable.offsetWidth / 100));
+    renderHeader();
+    renderBody();
+  };
+
+  window.addEventListener("resize", this.resized);
 };
 
 var PagedTableDoc;
