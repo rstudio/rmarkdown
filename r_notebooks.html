@@ -11,7 +11,7 @@
 
 
 
-<title>R Markdown Notebooks</title>
+<title>R Notebooks</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
@@ -101,6 +101,7 @@ button.code-folding-btn:focus {
   outline: none;
 }
 </style>
+
 
 
 <div class="container-fluid main-container">
@@ -261,15 +262,15 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 
 
-<h1 class="title toc-ignore">R Markdown Notebooks</h1>
+<h1 class="title toc-ignore">R Notebooks</h1>
 
 </div>
 
 
-<p><strong>NOTE</strong>: R Markdown Notebooks are new feature of RStudio, and are currently available only in the the <a href="https://www.rstudio.com/products/rstudio/download/preview/">RStudio Preview Release</a>. If you want to try out the features described below please install the preview release.</p>
+<p><strong>NOTE</strong>: R Notebooks are new feature of RStudio, and are currently available only in the the <a href="https://www.rstudio.com/products/rstudio/download/preview/">RStudio Preview Release</a>. If you want to try out the features described below please install the preview release.</p>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>An R Markdown Notebook (or simply R Notebook) is an R Markdown document with chunks that can be executed independently and interactively, with output visible immediately beneath the input.</p>
+<p>An R Notebook is an R Markdown document with chunks that can be executed independently and interactively, with output visible immediately beneath the input.</p>
 <div class="figure">
 <img src="images/notebook-demo.png" />
 
@@ -402,7 +403,7 @@ output: html_notebook
 </div>
 <div id="version-control" class="section level3">
 <h3>Version Control</h3>
-<p>One of the major advantages of R Markdown Notebooks compared to other notebook systems is that they are plain-text files and therefore work well with version control. We recommend checking in both the .Rmd and .nb.html files into version control so that both your source code and output are available to collaborators. However, you can choose to include only the .Rmd file (with a <code>.gitignore</code> that excludes the .nb.html) if you want each collaborator to work with their own private copies of the output.</p>
+<p>One of the major advantages of R Notebooks compared to other notebook systems is that they are plain-text files and therefore work well with version control. We recommend checking in both the .Rmd and .nb.html files into version control so that both your source code and output are available to collaborators. However, you can choose to include only the .Rmd file (with a <code>.gitignore</code> that excludes the .nb.html) if you want each collaborator to work with their own private copies of the output.</p>
 </div>
 <div id="notebook-format" class="section level3">
 <h3>Notebook Format</h3>
@@ -457,6 +458,7 @@ output: html_notebook
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

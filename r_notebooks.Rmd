@@ -1,16 +1,16 @@
 ---
-title: "R Markdown Notebooks"
+title: "R Notebooks"
 output:
   html_document:
     toc: true
     toc_depth: 3
 ---
 
-**NOTE**: R Markdown Notebooks are new feature of RStudio, and are currently available only in the the [RStudio Preview Release](https://www.rstudio.com/products/rstudio/download/preview/). If you want to try out the features described below please install the preview release.
+**NOTE**: R Notebooks are new feature of RStudio, and are currently available only in the the [RStudio Preview Release](https://www.rstudio.com/products/rstudio/download/preview/). If you want to try out the features described below please install the preview release.
 
 ## Overview
 
-An R Markdown Notebook (or simply R Notebook) is an R Markdown document with chunks that can be executed independently and interactively, with output visible immediately beneath the input.
+An R Notebook is an R Markdown document with chunks that can be executed independently and interactively, with output visible immediately beneath the input.
 
 ![](images/notebook-demo.png)
 
@@ -164,7 +164,7 @@ The document’s chunk outputs are also stored in an internal RStudio folder ben
 
 ### Version Control
 
-One of the major advantages of R Markdown Notebooks compared to other notebook systems is that they are plain-text files and therefore work well with version control. We recommend checking in both the .Rmd and .nb.html files into version control so that both your source code and output are available to collaborators. However, you can choose to include only the .Rmd file (with a `.gitignore` that excludes the .nb.html) if you want each collaborator to work with their own private copies of the output.
+One of the major advantages of R Notebooks compared to other notebook systems is that they are plain-text files and therefore work well with version control. We recommend checking in both the .Rmd and .nb.html files into version control so that both your source code and output are available to collaborators. However, you can choose to include only the .Rmd file (with a `.gitignore` that excludes the .nb.html) if you want each collaborator to work with their own private copies of the output.
 
 ### Notebook Format
 

@@ -48,7 +48,7 @@ output:
           </div>
         </div>
       </div>
-
+    
       <div class="column2">
         <div class="links">
           <div class="linkSection">
@@ -59,35 +59,6 @@ output:
             <div class="articleBlurb">Main sheet walk the plank me avast barkadeer topgallant strike colors. Shiver me timbers clipper lanyard tackle fathom haul wind clap of thunder.</div>
             <a href="articles_integration.html">R Markdown integration in the RStudio IDE</a>
             <div class="articleBlurb">Barque poop deck scuppers killick bilge water heave to jolly boat. Ye black jack capstan carouser jib blow the man down long boat.</div>
-          </div>
-          <div class="linkSection">
-            <div class="linkSectionTitle">Embedding Code</div>
-            <a href="articles_verbatim.html">Get verbatim R chunks into R Markdown</a>
-            <div class="articleBlurb">Main sheet yawl code of conduct to go on account provost topsail crow's nest. Snow scuttle dance the hempen jig schooner chase guns pinnace jury mast.</div>
-            <a href="articles_verbatim2.html">Verbatim Chunks in R Markdown (Alternate method)</a>
-            <div class="articleBlurb">Wench no prey, no pay tender ye doubloon blow the man down salmagundi. Cackle fruit jury mast brig salmagundi dead men tell no tales quarter bucko.</div>
-            <a href="articles_rdata.html">Embedding RData files in Rmarkdown files</a>
-            <div class="articleBlurb">Scuttle quarterdeck Letter of Marque salmagundi brig sloop spirits. Walk the plank Sail ho list loaded to the gunwalls pillage log interloper.</div>
-            <a href="http://yihui.name/knitr/options">knitr code chunk documentation</a>
-            <div class="articleBlurb">Run a shot across the bow lookout wherry marooned knave barkadeer pinnace. Broadside careen measured fer yer chains Admiral of the Black wench topgallant Buccaneer.</div>
-            <a href="http://yihui.name/knitr/demo/showcase/">The knitr showcase (Examples and links)</a>
-            <div class="articleBlurb">Parrel furl Sail ho dance the hempen jig American Main bilge rat six pounders. Grapple chase guns long clothes flogging parley Sea Legs boatswain.</div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="column2">
-        <div class="links">
-          <div class="linkSection">
-            <div class="linkSectionTitle">Output Formats</div>
-            <a href="articles_docx.html">Happy collaboration with Rmd to docx</a>
-            <div class="articleBlurb">Sea Legs heave down hang the jib marooned weigh anchor tack Sail ho. Rutters long boat walk the plank cog hearties gaff Jolly Roger.</div>
-             <a href="articles_mail_merge.html">Mail merge with R Markdown</a>
-            <div class="articleBlurb">Long boat wherry American Main nipper pink grog scurvy. Wench prow belaying pin skysail haul wind sutler stern.</div>
-            <a href="articles_beamer.html">Moving from Beamer to R Markdown</a>
-            <div class="articleBlurb">Gaff belaying pin smartly doubloon keelhaul Yellow Jack lad. Parley quarter grog case shot brig Chain Shot Letter of Marque.</div>
-            <a href="articles_report_from_r_script.html">Compiling Reports from R Scripts</a>
-            <div class="articleBlurb">Carouser gabion nipper matey poop deck lugger gangplank. Strike colors Jolly Roger scallywag handsomely capstan league square-rigged.</div>
           </div>
           <div class="linkSection">
             <div class="linkSectionTitle">Websites</div>
@@ -109,6 +80,37 @@ output:
             <a href="https://github.com/rstudio/rmarkdown">R Markdown on GitHub</a>
             <div class="articleBlurb">Hardtack schooner poop deck Jack Ketch warp marooned draft. Scuppers shrouds spanker Buccaneer splice the main brace quarter bilge water.</div>
           </div>    
+        </div>
+      </div>
+    
+     <div class="column2">
+        <div class="links">
+          <div class="linkSection">
+            <div class="linkSectionTitle">Output Formats</div>
+            <a href="articles_docx.html">Happy collaboration with Rmd to docx</a>
+            <div class="articleBlurb">Sea Legs heave down hang the jib marooned weigh anchor tack Sail ho. Rutters long boat walk the plank cog hearties gaff Jolly Roger.</div>
+             <a href="articles_mail_merge.html">Mail merge with R Markdown</a>
+            <div class="articleBlurb">Long boat wherry American Main nipper pink grog scurvy. Wench prow belaying pin skysail haul wind sutler stern.</div>
+            <a href="articles_beamer.html">Moving from Beamer to R Markdown</a>
+            <div class="articleBlurb">Gaff belaying pin smartly doubloon keelhaul Yellow Jack lad. Parley quarter grog case shot brig Chain Shot Letter of Marque.</div>
+            <a href="articles_report_from_r_script.html">Compiling Reports from R Scripts</a>
+            <div class="articleBlurb">Carouser gabion nipper matey poop deck lugger gangplank. Strike colors Jolly Roger scallywag handsomely capstan league square-rigged.</div>
+          </div>
+  
+  
+          <div class="linkSection">
+            <div class="linkSectionTitle">Embedding Code</div>
+            <a href="articles_verbatim.html">Get verbatim R chunks into R Markdown</a>
+            <div class="articleBlurb">Main sheet yawl code of conduct to go on account provost topsail crow's nest. Snow scuttle dance the hempen jig schooner chase guns pinnace jury mast.</div>
+            <a href="articles_verbatim2.html">Verbatim Chunks in R Markdown (Alternate method)</a>
+            <div class="articleBlurb">Wench no prey, no pay tender ye doubloon blow the man down salmagundi. Cackle fruit jury mast brig salmagundi dead men tell no tales quarter bucko.</div>
+            <a href="articles_rdata.html">Embedding RData files in Rmarkdown files</a>
+            <div class="articleBlurb">Scuttle quarterdeck Letter of Marque salmagundi brig sloop spirits. Walk the plank Sail ho list loaded to the gunwalls pillage log interloper.</div>
+            <a href="http://yihui.name/knitr/options">knitr code chunk documentation</a>
+            <div class="articleBlurb">Run a shot across the bow lookout wherry marooned knave barkadeer pinnace. Broadside careen measured fer yer chains Admiral of the Black wench topgallant Buccaneer.</div>
+            <a href="http://yihui.name/knitr/demo/showcase/">The knitr showcase (Examples and links)</a>
+            <div class="articleBlurb">Parrel furl Sail ho dance the hempen jig American Main bilge rat six pounders. Grapple chase guns long clothes flogging parley Sea Legs boatswain.</div>
+          </div>
         </div>
       </div>
     

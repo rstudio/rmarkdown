@@ -100,6 +100,7 @@ button.code-folding-btn:focus {
 </style>
 
 
+
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
@@ -218,7 +219,7 @@ cat(contents, sep = &quot;\n&quot;)</code></pre>
   rmarkdown::render(rmd_stub,
                     output_options = list(output_source = output_source),
                     quiet = TRUE)</code></pre>
-<p>We’ve now generated an R Markdown notebook. Opening <a href="notebook/r-notebook-stub.nb.html">this document</a> in a web browser will show that the <code>output_source</code> function has effectively side-stepped evaluation of code within that chunk, and instead returned the injected result:</p>
+<p>We’ve now generated an R Notebook. Opening <a href="notebook/r-notebook-stub.nb.html">this document</a> in a web browser will show that the <code>output_source</code> function has effectively side-stepped evaluation of code within that chunk, and instead returned the injected result:</p>
 </div>
 <div id="implementing-output-sources" class="section level2">
 <h2>Implementing Output Sources</h2>
@@ -231,68 +232,68 @@ cat(contents, sep = &quot;\n&quot;)</code></pre>
 <pre class="r"><code>parsed &lt;- rmarkdown::parse_html_notebook(output_file)
 str(parsed)</code></pre>
 <pre><code>## List of 4
-##  $ source     : chr [1:187] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&quot; &quot;&quot; ...
+##  $ source     : chr [1:226] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&quot; &quot;&quot; ...
 ##  $ rmd        : chr [1:8] &quot;---&quot; &quot;title: \&quot;R Notebook Stub\&quot;&quot; &quot;output: html_notebook&quot; &quot;---&quot; ...
-##  $ header     : chr [1:68] &quot;&lt;head&gt;&quot; &quot;&quot; &quot;&lt;meta charset=\&quot;utf-8\&quot;&gt;&quot; &quot;&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html; charset=utf-8\&quot; /&gt;&quot; ...
+##  $ header     : chr [1:70] &quot;&lt;head&gt;&quot; &quot;&quot; &quot;&lt;meta charset=\&quot;utf-8\&quot;&gt;&quot; &quot;&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html; charset=utf-8\&quot; /&gt;&quot; ...
 ##  $ annotations:List of 12
 ##   ..$ :List of 4
-##   .. ..$ row  : int 144
+##   .. ..$ row  : int 171
 ##   .. ..$ label: chr &quot;text&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 145
+##   .. ..$ row  : int 172
 ##   .. ..$ label: chr &quot;text&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 146
+##   .. ..$ row  : int 173
 ##   .. ..$ label: chr &quot;chunk&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 147
+##   .. ..$ row  : int 174
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 149
+##   .. ..$ row  : int 176
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 150
+##   .. ..$ row  : int 177
 ##   .. ..$ label: chr &quot;output&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;Custom output for chunk: 1\n&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 152
+##   .. ..$ row  : int 179
 ##   .. ..$ label: chr &quot;output&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 153
+##   .. ..$ row  : int 180
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 155
+##   .. ..$ row  : int 182
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 156
+##   .. ..$ row  : int 183
 ##   .. ..$ label: chr &quot;plot&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 158
+##   .. ..$ row  : int 185
 ##   .. ..$ label: chr &quot;plot&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 159
+##   .. ..$ row  : int 186
 ##   .. ..$ label: chr &quot;chunk&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL</code></pre>
@@ -343,6 +344,7 @@ str(parsed)</code></pre>
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 

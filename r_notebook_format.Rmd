@@ -92,7 +92,7 @@ output_file <-
                     quiet = TRUE)
 ```
 
-We've now generated an R Markdown notebook. Opening
+We've now generated an R Notebook. Opening
 [this document](notebook/r-notebook-stub.nb.html) in a web browser will show
 that the `output_source` function has effectively side-stepped evaluation of
 code within that chunk, and instead returned the injected result:

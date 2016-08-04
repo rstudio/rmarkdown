@@ -100,6 +100,7 @@ button.code-folding-btn:focus {
 </style>
 
 
+
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
@@ -184,9 +185,13 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
     <div class="formatSection">
       <div class="formatSectionTitle">Documents</div>
       <div class="formatTable">
+        <a href="r_notebooks.html" class="formatTableRow">
+          <div class="formatName">Notebook</div>
+          <div class="formatDescription">Interactive R Notebooks</div>
+        </a>
         <a href="html_document_format.html" class="formatTableRow">
           <div class="formatName">HTML</div>
-          <div class="formatDescription">HTML document with Bootstrap CSS</div>
+          <div class="formatDescription">HTML document w/ Bootstrap CSS</div>
         </a>
         <a href="pdf_document_format.html" class="formatTableRow">
           <div class="formatName">PDF</div>
@@ -274,6 +279,10 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
           <div class="formatName">bookdown</div>
           <div class="formatDescription">HTML, PDF, ePub, and Kindle books</div>
         </a>
+        <a href="rmarkdown_websites.html" class="formatTableRow">
+          <div class="formatName">Websites</div>
+          <div class="formatDescription">Multi-page websites</div>
+        </a>
         <a href="tufte_handout_format.html" class="formatTableRow">
           <div class="formatName">Tufte Handout</div>
           <div class="formatDescription">Handouts in the style of Edward Tufte</div>
@@ -342,6 +351,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 $(document).ready(function () {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
 });
+
 
 </script>
 
