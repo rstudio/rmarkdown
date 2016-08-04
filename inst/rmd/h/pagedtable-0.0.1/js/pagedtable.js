@@ -92,10 +92,18 @@ var PagedTable = function (pagedTable) {
   var page = new Page(data);
   var columns = new Columns(source);
 
-  var renderColumnNavigation = function(increment) {
+  var renderColumnNavigation = function(increment, leftArrow) {
+    var arrow = document.createElement("div");
+    arrow.setAttribute("style",
+      "border-top: 5px solid transparent;" +
+      "border-bottom: 5px solid transparent;" +
+      "border-" + (leftArrow ? "right" : "left") + ": 5px solid;");
+
     var header = document.createElement("th");
-    header.appendChild(document.createTextNode("..."));
-    header.setAttribute("style", "cursor: pointer;");
+    header.appendChild(arrow);
+    header.setAttribute("style",
+      "cursor: pointer;" +
+      "vertical-align: middle;");
 
     header.onclick = function() {
       columns.incColumnNumber(increment);
@@ -114,7 +122,7 @@ var PagedTable = function (pagedTable) {
     thead.appendChild(header);
 
     if (columns.number > 0)
-      header.appendChild(renderColumnNavigation(-columns.visible));
+      header.appendChild(renderColumnNavigation(-columns.visible, true));
 
     columns.subset.forEach(function(columnData) {
       var column = document.createElement("th");
@@ -135,7 +143,7 @@ var PagedTable = function (pagedTable) {
     });
 
     if (columns.number + columns.visible < columns.total)
-      header.appendChild(renderColumnNavigation(columns.visible));
+      header.appendChild(renderColumnNavigation(columns.visible, false));
 
     return thead;
   };
