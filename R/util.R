@@ -296,7 +296,6 @@ latexmk <- function(file, engine) {
     })
     system2(latexmk_path, '-c', stdout = FALSE)  # clean up nonessential files
   } else {
-    warning("Perl must be installed and put on PATH for latexmk to work")
     latexmk_emu(file, engine)
   }
 }
