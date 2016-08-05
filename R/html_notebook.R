@@ -53,7 +53,13 @@ html_notebook <- function(toc = FALSE,
         type <- class(x[[columnName]])[[1]]
         list(
           name = jsonlite::unbox(columnName),
-          type = jsonlite::unbox(type),
+          type = jsonlite::unbox(switch(type,
+            "character" = "chr",
+            "numeric" = "num",
+            "integer" = "int",
+            "logical" = "logi",
+            "complex" = "cplx",
+            type)),
           align = jsonlite::unbox(
             if (type == "character" || type == "factor") "left" else "right"
           )
