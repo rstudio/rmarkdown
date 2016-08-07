@@ -280,7 +280,9 @@ knit_params_ask <- function(file = NULL,
           }
         } else {
           ## Not a special field. Blindly promote to the input control.
-          arguments[[name]] <<- param[[name]]
+          arguments[[name]] <<- if (inherits(param[[name]], 'knit_param_expr')) {
+            param[[name]][['value']]
+          } else param[[name]]
         }
       })
 
