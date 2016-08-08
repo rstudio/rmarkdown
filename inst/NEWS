@@ -16,6 +16,10 @@ rmarkdown 1.1 (unreleased)
 
 * Fix for ignoring knit_meta that is explicitly passed to render
 
+* Parameter editing: don't allow NULL to overwrite previous state 
+
+* Parameter editing: fix incorrect name for parameters with expressions
+
 
 rmarkdown 1.0
 --------------------------------------------------------------------------------
