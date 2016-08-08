@@ -171,8 +171,16 @@ params_get_control <- function(param) {
   control
 }
 
+# Returns true if the parameter can be configurable with Shiny UI elements.
 params_configurable <- function(param) {
-  length(param$value) <= 1 && !is.null(params_get_control(param))
+  if (is.null(params_get_control(param))) {
+    return(FALSE)                       # no Shiny control
+  }
+  multiple_ok <- (!is.null(param$multiple) && param$multiple)
+  if (multiple_ok) {
+    return(TRUE)
+  }
+  return (length(param$value) <= 1)     # multiple values only when multi-input controls
 }
 
 # Returns a new empty named list.
