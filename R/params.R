@@ -358,12 +358,10 @@ knit_params_ask <- function(file = NULL,
       shiny::observe({
         # A little reactive magic to keep in mind. If you're in one of the
         # "default/custom" selector scenarios, this will never fire until the
-        # user selects "custom" because hte value-producing input control is
+        # user selects "custom" because the value-producing input control is
         # not rendered until that point.
         uivalue <- input[[param$name]]
-        if (is.null(uivalue)) {
-          # ignore startup NULLs
-        } else if (hasDefaultValue(uivalue)) {
+        if (is.null(uivalue) || hasDefaultValue(uivalue)) {
           values[[param$name]] <<- NULL
         } else {
           values[[param$name]] <<- params_value_from_ui(inputControlFn, param$value, uivalue)
