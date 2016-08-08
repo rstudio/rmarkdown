@@ -27,6 +27,10 @@ rmarkdown 1.1 (unreleased)
 rmarkdown 1.0
 --------------------------------------------------------------------------------
 
+* Switched the order in which format dependencies are added for
+  `html_document` so that `extra_dependencies` are added at the end, after
+  bootstrap, etc. (#737)
+
 * `toc_float` no longer automatically sets `toc = TRUE`
 
 * Added an argument `error` to `pandoc_available()` to signal an error when (if
