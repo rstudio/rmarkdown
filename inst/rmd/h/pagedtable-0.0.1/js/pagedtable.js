@@ -84,6 +84,10 @@ var PagedTable = function (pagedTable) {
       updateSlice();
     };
 
+    me.getPaddingCount = function() {
+      return Math.max((me.visible / 2) - me.subset.length, 0);
+    };
+
     me.incColumnNumber(0);
     return me;
   };
@@ -142,6 +146,12 @@ var PagedTable = function (pagedTable) {
       header.appendChild(column);
     });
 
+    for (var idx = 0; idx < columns.getPaddingCount(); idx++) {
+      var paddingCol = document.createElement("th");
+      paddingCol.setAttribute("class", "pagedtable-padding-col");
+      header.appendChild(paddingCol);
+    }
+
     if (columns.number + columns.visible < columns.total)
       header.appendChild(renderColumnNavigation(columns.visible, false));
 
@@ -169,6 +179,12 @@ var PagedTable = function (pagedTable) {
         htmlCell.setAttribute("align", columnData.align);
         htmlRow.appendChild(htmlCell);
       });
+
+      for (var idx = 0; idx < columns.getPaddingCount(); idx++) {
+        var paddingCol = document.createElement("td");
+        paddingCol.setAttribute("class", "pagedtable-padding-col");
+        htmlRow.appendChild(paddingCol);
+      }
 
       if (columns.number + columns.visible < columns.total)
         htmlRow.appendChild(document.createElement("td"));
@@ -248,7 +264,7 @@ var PagedTable = function (pagedTable) {
   this.render = function() {
     var tableDiv = document.createElement("div");
     pagedTable.appendChild(tableDiv);
-    var pagedTableClass = (data.length > 0) ? "pagedtable pagedtable-not-empty" : "pagedtable";
+    var pagedTableClass = (data.length > 0) ? "pagedtable pagedtable-not-empty" : "pagedtable pagedtable-empty";
     tableDiv.setAttribute("class", pagedTableClass);
 
     var table = document.createElement("table");
@@ -258,10 +274,6 @@ var PagedTable = function (pagedTable) {
 
     table.appendChild(document.createElement("thead"));
     table.appendChild(document.createElement("tbody"));
-
-    var infoDiv = document.createElement("div");
-    infoDiv.setAttribute("class", "pagedtable-info");
-    tableDiv.appendChild(infoDiv);
 
     var footerDiv = document.createElement("div");
     footerDiv.setAttribute("class", "pagedtable-footer");

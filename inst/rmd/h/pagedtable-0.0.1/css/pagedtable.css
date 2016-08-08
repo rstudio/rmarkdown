@@ -22,6 +22,10 @@
   border-bottom: 2px solid #dddddd;
 }
 
+.pagedtable-padding-col {
+  display: none;
+}
+
 .pagedtable a {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
