@@ -20,6 +20,9 @@ rmarkdown 1.1 (unreleased)
 
 * Parameter editing: fix incorrect name for parameters with expressions
 
+* Parameter editing: allow multiple values when the parameter is configured
+  to use a "multiple" selector
+
 
 rmarkdown 1.0
 --------------------------------------------------------------------------------
