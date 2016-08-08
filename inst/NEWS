@@ -16,20 +16,20 @@ rmarkdown 1.1 (unreleased)
 
 * Fix for ignoring knit_meta that is explicitly passed to render
 
-* Parameter editing: don't allow NULL to overwrite previous state 
+* Parameter editing: don't allow NULL to overwrite previous state
 
 * Parameter editing: fix incorrect name for parameters with expressions
 
 * Parameter editing: allow multiple values when the parameter is configured
   to use a "multiple" selector
 
-
-rmarkdown 1.0
---------------------------------------------------------------------------------
-
 * Switched the order in which format dependencies are added for
   `html_document` so that `extra_dependencies` are added at the end, after
   bootstrap, etc. (#737)
+
+
+rmarkdown 1.0
+--------------------------------------------------------------------------------
 
 * `toc_float` no longer automatically sets `toc = TRUE`
 
