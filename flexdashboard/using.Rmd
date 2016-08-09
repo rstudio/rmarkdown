@@ -228,10 +228,10 @@ This ensures that the tabular display is updated when the inputs upon which it d
 
 The [DT](http://rstudio.github.io/DT/) package (an interface to the DataTables JavaScript library) can display R matrices or data frames as interactive HTML tables that support filtering, pagination, and sorting.
 
-Note that if you want to use DataTables with flexdashboard you should install the development version of the DT package from GitHub (it contains some changes required for flexdashboard compatibility):
+Note that if you want to use DataTables with flexdashboard you should install the very latest version of the DT (v0.2) from CRAN (it contains some changes required for flexdashboard compatibility):
 
 ```r
-devtools::install_github("rstudio/DT")
+install.packages("DT", type = "source")
 ```
 
 To include a DataTable you use the `DT::datatable` function:
