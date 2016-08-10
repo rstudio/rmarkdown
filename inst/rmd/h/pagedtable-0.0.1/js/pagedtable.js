@@ -14,29 +14,33 @@ var PagedTable = function (pagedTable) {
   var Page = function(data) {
     var me = this;
 
-    me.max = 10;
+    var defaults = {
+      size: 10
+    };
+
     me.size = 10;
-    me.count = 0;
     me.number = 0;
 
     var getPageCount = function() {
       return Math.ceil(data.length / me.size);
     };
 
-    me.setSize = function(newSize) {
-      me.size = Math.min(me.max, newSize);
-    };
-
     me.setPageNumber = function(newPageNumber) {
-      if (newPageNumber < 0) return;
-      if (newPageNumber * me.size >= data.length) return;
+      if (newPageNumber < 0) newPageNumber = 0;
+      if (newPageNumber >= getPageCount()) newPageNumber = getPageCount() - 1;
 
       me.number = newPageNumber;
     };
 
+    me.setSize = function(newSize) {
+      me.size = Math.min(defaults.size, newSize);
+      me.setPageNumber(me.number);
+    };
+
     me.getVisiblePageRange = function() {
-      var start = me.number - Math.max(Math.floor((me.size / 2 - 1)), 0);
-      var end = me.number + (me.size / 2);
+      var start = me.number - Math.max(Math.floor((me.size - 1) / 2), 0);
+      var end = me.number + Math.floor(me.size / 2);
+      var pageCount = getPageCount();
 
       if (start < 0) {
         var diffToStart = 0 - start;
@@ -44,29 +48,31 @@ var PagedTable = function (pagedTable) {
         end += diffToStart;
       }
 
-      if (end > me.count) {
-        var diffToEnd = end - me.count;
+      if (end > pageCount) {
+        var diffToEnd = end - pageCount;
         start -= diffToEnd;
         end -= diffToEnd;
       }
 
       start = start < 0 ? 0 : start;
-      end = end >= me.count ? me.count : end;
+      end = end >= pageCount ? pageCount : end;
 
       return {
         start: start,
         end: end
       };
     };
-
-    me.count = getPageCount();
   };
 
   var Columns = function(source) {
     var me = this;
 
+    var defaults = {
+      visible: 10
+    };
+
     me.number = 0;
-    me.visible = 10;
+    me.visible = defaults.visible;
     me.total = source.columns.length;
     me.subset = [];
 
@@ -90,7 +96,7 @@ var PagedTable = function (pagedTable) {
     };
 
     me.getPaddingCount = function() {
-      return Math.max((me.visible / 2) - me.subset.length, 0);
+      return Math.max((defaults.visible / 2) - me.subset.length, 0);
     };
 
     me.incColumnNumber(0);
@@ -300,7 +306,7 @@ var PagedTable = function (pagedTable) {
     if (pagedTable.offsetWidth > 0) {
       columns.setVisibleColumns(Math.floor(pagedTable.offsetWidth / 100));
       columns.setVisibleColumns(Math.floor(pagedTable.offsetWidth / 100));
-      page.setSize(Math.floor(pagedTable.offsetWidth / 100));
+      page.setSize(Math.floor(pagedTable.offsetWidth / 80));
 
       renderHeader();
       renderBody();
