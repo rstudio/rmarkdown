@@ -51,12 +51,15 @@ html_notebook <- function(toc = FALSE,
     columns <- unname(lapply(
       names(x),
       function(columnName) {
-        type <- tibble::type_sum(x[[columnName]])
+        column <- x[[columnName]]
+        baseType <- class(column)[[1]]
+        tibbleType <- tibble::type_sum(column)
+
         list(
           name = jsonlite::unbox(columnName),
-          type = jsonlite::unbox(type),
+          type = jsonlite::unbox(tibbleType),
           align = jsonlite::unbox(
-            if (type == "character" || type == "factor") "left" else "right"
+            if (baseType == "character" || baseType == "factor") "left" else "right"
           )
         )
       }
@@ -80,7 +83,8 @@ html_notebook <- function(toc = FALSE,
       lapply(
         data,
         function (y) format(y)),
-      stringsAsFactors = FALSE)
+      stringsAsFactors = FALSE,
+      optional = TRUE)
 
     paste(
       "<div data-pagedtable>",
