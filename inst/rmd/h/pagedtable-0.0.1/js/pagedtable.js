@@ -14,12 +14,17 @@ var PagedTable = function (pagedTable) {
   var Page = function(data) {
     var me = this;
 
+    me.max = 10;
     me.size = 10;
     me.count = 0;
     me.number = 0;
 
     var getPageCount = function() {
       return Math.ceil(data.length / me.size);
+    };
+
+    me.setSize = function(newSize) {
+      me.size = Math.min(me.max, newSize);
     };
 
     me.setPageNumber = function(newPageNumber) {
@@ -30,8 +35,8 @@ var PagedTable = function (pagedTable) {
     };
 
     me.getVisiblePageRange = function() {
-      var start = me.number - 4;
-      var end = me.number + 5;
+      var start = me.number - Math.max(Math.floor((me.size / 2 - 1)), 0);
+      var end = me.number + (me.size / 2);
 
       if (start < 0) {
         var diffToStart = 0 - start;
@@ -113,6 +118,7 @@ var PagedTable = function (pagedTable) {
       columns.incColumnNumber(increment);
       renderHeader();
       renderBody();
+      renderFooter();
     };
 
     return header;
@@ -139,7 +145,7 @@ var PagedTable = function (pagedTable) {
       if (columnData.type !== null) {
         var columnType = document.createElement("div");
         columnType.setAttribute("class", "pagedtable-header-type");
-        columnType.appendChild(document.createTextNode("(" + columnData.type + ")"));
+        columnType.appendChild(document.createTextNode("<" + columnData.type + ">"));
         column.appendChild(columnType);
       }
 
@@ -195,14 +201,19 @@ var PagedTable = function (pagedTable) {
     return tbody;
   };
 
-  var getLabelInfo = function() {
-    var pageStart = page.number * page.size + 1;
+  var getLabelInfo = function(long) {
+    var pageStart = page.number * page.size;
     var pageEnd = Math.min((page.number + 1) * page.size, data.length);
     var totalRecods = data.length;
 
-    var infoText = pageStart + "-" + pageEnd + " of " + totalRecods;
+    var infoText = (pageStart + 1) + "-" + pageEnd + " of " + totalRecods;
     if (totalRecods < page.size) {
       infoText = totalRecods + " Record" + (totalRecods != 1 ? "s" : "");
+    }
+    if (columns.total > columns.visible) {
+      infoText = infoText + (long ? " Rows" : "") + " | " + (columns.number + 1) + "-" +
+        (Math.min(columns.number + columns.visible, columns.total)) +
+        " of " + columns.total + (long ? " Columns" : "");
     }
 
     return infoText;
@@ -252,13 +263,14 @@ var PagedTable = function (pagedTable) {
 
     var infoLabel = document.createElement("div");
     infoLabel.setAttribute("class", "pagedtable-info");
-    infoLabel.appendChild(document.createTextNode(getLabelInfo()));
+    infoLabel.setAttribute("title", getLabelInfo(true));
+    infoLabel.appendChild(document.createTextNode(getLabelInfo(false)));
     footer.appendChild(infoLabel);
 
     var enabledClass = "pagedtable-index-nav";
     var disabledClass = "pagedtable-index-nav pagedtable-index-nav-disabled";
     previous.setAttribute("class", page.number <= 0 ? disabledClass : enabledClass);
-    next.setAttribute("class", (page.number + 1) * page.size >= data.length - 1 ? disabledClass : enabledClass);
+    next.setAttribute("class", (page.number + 1) * page.size >= data.length ? disabledClass : enabledClass);
   };
 
   this.render = function() {
@@ -287,9 +299,12 @@ var PagedTable = function (pagedTable) {
   this.resizeColumns = function() {
     if (pagedTable.offsetWidth > 0) {
       columns.setVisibleColumns(Math.floor(pagedTable.offsetWidth / 100));
+      columns.setVisibleColumns(Math.floor(pagedTable.offsetWidth / 100));
+      page.setSize(Math.floor(pagedTable.offsetWidth / 100));
 
       renderHeader();
       renderBody();
+      renderFooter();
     }
   };
 };

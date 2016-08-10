@@ -16,6 +16,7 @@
 #'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_format.html}{http://rmarkdown.rstudio.com/r_notebook_format.html}.
 #'
 #' @importFrom evaluate evaluate
+#' @import tibble
 #' @export
 html_notebook <- function(toc = FALSE,
                           toc_depth = 3,
@@ -50,16 +51,10 @@ html_notebook <- function(toc = FALSE,
     columns <- unname(lapply(
       names(x),
       function(columnName) {
-        type <- class(x[[columnName]])[[1]]
+        type <- tibble::type_sum(x[[columnName]])
         list(
           name = jsonlite::unbox(columnName),
-          type = jsonlite::unbox(switch(type,
-            "character" = "chr",
-            "numeric" = "num",
-            "integer" = "int",
-            "logical" = "logi",
-            "complex" = "cplx",
-            type)),
+          type = jsonlite::unbox(type),
           align = jsonlite::unbox(
             if (type == "character" || type == "factor") "left" else "right"
           )
@@ -67,13 +62,25 @@ html_notebook <- function(toc = FALSE,
       }
     ))
 
-    data <- head(x, 1000)
+    data <- x
+
+    is_list <- vapply(data, is.list, logical(1))
+    data[is_list] <- lapply(data[is_list], function(x) {
+      summary <- tibble::obj_sum(x)
+      paste0("<", summary, ">")
+    })
 
     if (length(columns) > 0) {
       first_column = data[[1]]
       if (is.numeric(first_column) && all(diff(first_column) == 1))
         columns[[1]]$align <- "left"
     }
+
+    data <- as.data.frame(
+      lapply(
+        data,
+        function (y) format(y)),
+      stringsAsFactors = FALSE)
 
     paste(
       "<div data-pagedtable>",
