@@ -63,6 +63,8 @@ if (!Array.prototype.forEach) {
 }
 
 var PagedTable = function (pagedTable) {
+  var me = this;
+
   var source = function(pagedTable) {
     var sourceElems = [].slice.call(pagedTable.children).filter(function(e) {
       return e.hasAttribute("data-pagedtable-source");
@@ -189,6 +191,8 @@ var PagedTable = function (pagedTable) {
       renderHeader();
       renderBody();
       renderFooter();
+
+      triggerOnChange();
     };
 
     return header;
@@ -232,6 +236,18 @@ var PagedTable = function (pagedTable) {
       header.appendChild(renderColumnNavigation(columns.visible, false));
 
     return thead;
+  };
+
+  var onChangeCallbacks = [];
+
+  me.onChange = function(callback) {
+    onChangeCallbacks.push(callback);
+  };
+
+  var triggerOnChange = function() {
+    onChangeCallbacks.forEach(function(onChange) {
+      onChange();
+    });
   };
 
   var renderBody = function() {
@@ -299,6 +315,8 @@ var PagedTable = function (pagedTable) {
       page.setPageNumber(page.number + 1);
       renderBody();
       renderFooter();
+
+      triggerOnChange();
     };
     if (data.length > page.size) footer.appendChild(next);
 
@@ -315,6 +333,8 @@ var PagedTable = function (pagedTable) {
         page.setPageNumber(parseInt(this.getAttribute("data-page-index")));
         renderBody();
         renderFooter();
+
+        triggerOnChange();
       };
 
       pageLink.appendChild(document.createTextNode(idxPage + 1));
@@ -328,6 +348,8 @@ var PagedTable = function (pagedTable) {
       page.setPageNumber(page.number - 1);
       renderBody(pagedTable);
       renderFooter(pagedTable);
+
+      triggerOnChange();
     };
     if (data.length > page.size) footer.appendChild(previous);
 
@@ -343,7 +365,7 @@ var PagedTable = function (pagedTable) {
     next.setAttribute("class", (page.number + 1) * page.size >= data.length ? disabledClass : enabledClass);
   };
 
-  this.render = function() {
+  me.render = function() {
     var tableDiv = document.createElement("div");
     pagedTable.appendChild(tableDiv);
     var pagedTableClass = (data.length > 0) ? "pagedtable pagedtable-not-empty" : "pagedtable pagedtable-empty";
@@ -366,7 +388,7 @@ var PagedTable = function (pagedTable) {
     renderFooter();
   };
 
-  this.resizeColumns = function() {
+  me.resizeColumns = function() {
     if (pagedTable.offsetWidth > 0) {
       columns.setVisibleColumns(Math.floor(pagedTable.offsetWidth / 100));
       columns.setVisibleColumns(Math.floor(pagedTable.offsetWidth / 100));
