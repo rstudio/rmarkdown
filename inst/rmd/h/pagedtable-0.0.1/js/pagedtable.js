@@ -130,6 +130,21 @@ var PagedTable = function (pagedTable) {
         end: end
       };
     };
+
+    me.getRowStart = function() {
+      var rowStart = page.number * page.size;
+      if (rowStart + me.size > data.length)
+        rowStart = rowStart - (rowStart + me.size - data.length);
+      if (rowStart < 0)
+        rowStart = 0;
+
+      return rowStart;
+    };
+
+    me.getRowEnd = function() {
+      var rowStart = me.getRowStart();
+      return Math.min(rowStart + me.size, data.length);
+    };
   };
 
   var Columns = function(source) {
@@ -277,7 +292,7 @@ var PagedTable = function (pagedTable) {
     var tbody = pagedTable.querySelectorAll("tbody")[0];
     tbody.innerHTML = "";
 
-    var pageData = data.slice(page.number * page.size, (page.number + 1) * page.size);
+    var pageData = data.slice(page.getRowStart(), page.getRowEnd());
 
     pageData.forEach(function(dataRow, idxRow) {
       var htmlRow = document.createElement("tr");
@@ -311,8 +326,8 @@ var PagedTable = function (pagedTable) {
   };
 
   var getLabelInfo = function(long) {
-    var pageStart = page.number * page.size;
-    var pageEnd = Math.min((page.number + 1) * page.size, data.length);
+    var pageStart = page.getRowStart();
+    var pageEnd = page.getRowEnd();
     var totalRecods = data.length;
 
     var infoText = (pageStart + 1) + "-" + pageEnd + " of " + totalRecods;
