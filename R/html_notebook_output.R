@@ -88,10 +88,7 @@ html_notebook_output_code <- function(code,
   )
 
   # update metadata
-  if ("data" %in% names(meta)) {
-    warning("'data' element of metadata will be overwritten")
-    meta$data <- code
-  }
+  meta$data <- code
 
   # render
   html_notebook_annotated_output(code, "source", meta)
