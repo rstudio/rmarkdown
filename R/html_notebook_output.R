@@ -80,12 +80,12 @@ html_notebook_output_code <- function(code,
                                       attributes = list(class = "r"),
                                       meta = NULL)
 {
-  # normalize code
-  joined <- htmltools::htmlEscape(join(code, collapse = "\n"))
-
-  # generate html
-  format <- '<pre%s><code>%s</code></pre>'
-  html <- sprintf(format, to_html_attributes(attributes), joined)
+  # generate code
+  code <- sprintf(
+    "```%s\n%s\n```",
+    attributes$class,
+    paste(code, collapse = "\n")
+  )
 
   # update metadata
   if ("data" %in% names(meta)) {
@@ -94,5 +94,5 @@ html_notebook_output_code <- function(code,
   }
 
   # render
-  html_notebook_annotated_output(html, "source", meta)
+  html_notebook_annotated_output(code, "source", meta)
 }
