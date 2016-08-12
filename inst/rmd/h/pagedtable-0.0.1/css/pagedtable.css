@@ -22,6 +22,10 @@
   border-bottom: 2px solid #dddddd;
 }
 
+.pagedtable-empty th {
+  display: none;
+}
+
 .pagedtable .even {
   background-color: #fcfcfc;
 }
