@@ -512,6 +512,7 @@ var PagedTable = function (pagedTable) {
 
   var table;
   var tableDiv;
+  var tableDivLastWidth = -1;
 
   me.render = function() {
     tableDiv = document.createElement("div");
@@ -540,6 +541,7 @@ var PagedTable = function (pagedTable) {
         setTimeout(retryFitColumns, 100);
       } else {
         me.fitColumns(false);
+        triggerOnChange();
       }
     }
     if (tableDiv.clientWidth <= 0) {
@@ -644,7 +646,27 @@ var PagedTable = function (pagedTable) {
     renderHeader();
     renderBody();
     renderFooter();
+
+    tableDivLastWidth = tableDiv.clientWidth
   };
+
+  me.resizeColumns = function() {
+    var tableDivLastResizeWidth = -1;
+
+    function resizeColumnsDelayed() {
+      if (tableDiv.clientWidth !== tableDivLastResizeWidth) {
+        tableDivLastResizeWidth = tableDiv.clientWidth;
+        setTimeout(resizeColumnsDelayed, 500);
+      } else {
+        if (tableDiv.clientWidth !== tableDivLastWidth) {
+          me.fitColumns(false);
+          triggerOnChange();
+        }
+      }
+    }
+
+    resizeColumnsDelayed();
+  }
 };
 
 var PagedTableDoc;
