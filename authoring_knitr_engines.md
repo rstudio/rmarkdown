@@ -11,7 +11,7 @@ output:
 
 ## Overview
 
-In addition to executing R code chunks, the [kntir](http://yihui.name/knitr/) package can also execute chunks in a variety of other languages. Some of the available language engines include:
+In addition to executing R code chunks, the [knitr](http://yihui.name/knitr/) package can also execute chunks in a variety of other languages. Some of the available language engines include:
 
 - Python
 - SQL
