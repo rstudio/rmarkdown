@@ -328,6 +328,7 @@ var PagedTable = function (pagedTable) {
     header.setAttribute("style",
       "cursor: pointer;" +
       "vertical-align: middle;" +
+      "min-width: 5px;" +
       "width: 5px;");
 
     header.onclick = function() {
