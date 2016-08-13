@@ -300,6 +300,13 @@ var PagedTable = function (pagedTable) {
   var page = new Page(data);
   var columns = new Columns(source);
 
+  var table;
+  var tableDiv;
+  var header;
+  var tableDivLastWidth = -1;
+
+  var onChangeCallbacks = [];
+
   var clearSelection = function() {
     if(document.selection && document.selection.empty) {
       document.selection.empty();
@@ -339,15 +346,20 @@ var PagedTable = function (pagedTable) {
     var thead = pagedTable.querySelectorAll("thead")[0];
     thead.innerHTML = "";
 
-    var header = document.createElement("tr");
+    header = document.createElement("tr");
     thead.appendChild(header);
 
     if (columns.number > 0)
       header.appendChild(renderColumnNavigation(-columns.visible, true));
 
-    columns.subset.forEach(function(columnData) {
+    columns.subset = columns.subset.map(function(columnData) {
       var column = document.createElement("th");
       column.setAttribute("align", columnData.align);
+
+      if (columnData.width) {
+        column.style.minWidth =
+          column.style.maxWidth = columnData.width;
+      }
 
       var columnName = document.createElement("div");
       if (columnData.label === "") {
@@ -369,6 +381,10 @@ var PagedTable = function (pagedTable) {
       column.appendChild(columnType);
 
       header.appendChild(column);
+
+      columnData.element = column;
+
+      return columnData;
     });
 
     for (var idx = 0; idx < columns.getPaddingCount(); idx++) {
@@ -382,8 +398,6 @@ var PagedTable = function (pagedTable) {
 
     return thead;
   };
-
-  var onChangeCallbacks = [];
 
   me.onChange = function(callback) {
     onChangeCallbacks.push(callback);
@@ -414,6 +428,9 @@ var PagedTable = function (pagedTable) {
         var htmlCell = document.createElement("td");
         htmlCell.appendChild(document.createTextNode(dataCell));
         htmlCell.setAttribute("align", columnData.align);
+        if (columnData.width) {
+          htmlCell.style.minWidth = htmlCell.style.maxWidth = columnData.width;
+        }
         htmlRow.appendChild(htmlCell);
       });
 
@@ -510,10 +527,6 @@ var PagedTable = function (pagedTable) {
     next.setAttribute("class", (page.number + 1) * page.size >= data.length ? disabledClass : enabledClass);
   };
 
-  var table;
-  var tableDiv;
-  var tableDivLastWidth = -1;
-
   me.render = function() {
     tableDiv = document.createElement("div");
     pagedTable.appendChild(tableDiv);
@@ -532,21 +545,44 @@ var PagedTable = function (pagedTable) {
     footerDiv.setAttribute("class", "pagedtable-footer");
     tableDiv.appendChild(footerDiv);
 
+    // if the host has not yet provided horizontal space, render hidden
+    if (tableDiv.clientWidth <= 0) {
+      tableDiv.style.visibility = "hidden";
+    }
+
     me.fitColumns(false);
 
     // retry seizing columns later if the host has not provided space
     var retries = 20;
     function retryFitColumns() {
-      if (tableDiv.clientWidth <= 0) {
+      retries = retries - 1;
+      if (tableDiv.clientWidth <= 0 && retries > 0) {
         setTimeout(retryFitColumns, 100);
       } else {
         me.fitColumns(false);
+        tableDiv.style.visibility = "visible";
         triggerOnChange();
       }
     }
     if (tableDiv.clientWidth <= 0) {
       retryFitColumns();
     }
+  };
+
+  var registerWidths = function() {
+    columns.subset = columns.subset.map(function(column) {
+      if (column.element.clientWidth > 0) {
+        var elementStyle = window.getComputedStyle(column.element, null);
+        var columnPadding = parseFloat(elementStyle.paddingLeft) +
+          parseFloat(elementStyle.paddingRight);
+
+        column.width =
+          column.element.style.minWidth =
+          column.element.style.maxWidth = (column.element.clientWidth - columnPadding) + "px";
+      }
+
+      return column;
+    });
   };
 
   // The goal of this function is to add as many columns as possible
@@ -646,6 +682,8 @@ var PagedTable = function (pagedTable) {
     renderHeader();
     renderBody();
     renderFooter();
+
+    registerWidths();
 
     tableDivLastWidth = tableDiv.clientWidth
   };
