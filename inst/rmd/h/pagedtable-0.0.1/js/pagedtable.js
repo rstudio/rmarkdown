@@ -581,7 +581,14 @@ var PagedTable = function (pagedTable) {
   me.render = function() {
     tableDiv = document.createElement("div");
     pagedTable.appendChild(tableDiv);
-    var pagedTableClass = (data.length > 0) ? "pagedtable pagedtable-not-empty" : "pagedtable pagedtable-empty";
+    var pagedTableClass = data.length > 0 ?
+      "pagedtable pagedtable-not-empty" :
+      "pagedtable pagedtable-empty";
+
+    if (columns.total == 0) {
+      pagedTableClass = pagedTableClass + " pagedtable-empty-columns";
+    }
+
     tableDiv.setAttribute("class", pagedTableClass);
 
     table = document.createElement("table");
@@ -604,15 +611,17 @@ var PagedTable = function (pagedTable) {
     me.fitColumns(false);
 
     // retry seizing columns later if the host has not provided space
-    var retries = 20;
+    var retries = 100;
     function retryFitColumns() {
       retries = retries - 1;
-      if (tableDiv.clientWidth <= 0 && retries > 0) {
-        setTimeout(retryFitColumns, 100);
-      } else {
-        me.fitColumns(false);
-        tableDiv.style.visibility = "visible";
-        triggerOnChange();
+      if (retries > 0) {
+        if (tableDiv.clientWidth <= 0) {
+          setTimeout(retryFitColumns, 100);
+        } else {
+          me.fitColumns(false);
+          tableDiv.style.visibility = "visible";
+          triggerOnChange();
+        }
       }
     }
     if (tableDiv.clientWidth <= 0) {
@@ -745,7 +754,9 @@ var PagedTable = function (pagedTable) {
       lastRenderableColumn.visibleColumns,
       lastRenderableColumn.paddingCount);
 
-    page.setVisiblePages(Math.max(Math.ceil(1.0 * (pagedTable.offsetWidth - 250) / 40), 2));
+    if (pagedTable.offsetWidth > 0) {
+      page.setVisiblePages(Math.max(Math.ceil(1.0 * (pagedTable.offsetWidth - 250) / 40), 2));
+    }
 
     renderHeader();
     renderBody();
@@ -772,7 +783,7 @@ var PagedTable = function (pagedTable) {
     }
 
     resizeColumnsDelayed();
-  }
+  };
 };
 
 var PagedTableDoc;
