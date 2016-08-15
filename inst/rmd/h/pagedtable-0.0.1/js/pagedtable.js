@@ -633,8 +633,8 @@ var PagedTable = function (pagedTable) {
     columns.subset = columns.subset.map(function(column) {
       if (column.element.clientWidth > 0) {
         var elementStyle = window.getComputedStyle(column.element, null);
-        var columnPadding = parseFloat(elementStyle.paddingLeft) +
-          parseFloat(elementStyle.paddingRight);
+        var columnPadding = parsePadding(elementStyle.paddingLeft) +
+          parsePadding(elementStyle.paddingRight);
 
         column.width =
           column.element.style.minWidth =
@@ -645,13 +645,17 @@ var PagedTable = function (pagedTable) {
     });
   };
 
+  var parsePadding = function(value) {
+    return parseInt(value) >= 0 ? parseInt(value) : 0;
+  };
+
   // The goal of this function is to add as many columns as possible
   // starting from left-to-right, when the right most limit is reached
   // it tries to add columns from the left as well.
   //
   // When startBackwards is true columns are added from right-to-left
   me.fitColumns = function(startBackwards) {
-    var visibleColumns = 1;
+    var visibleColumns = tableDiv.clientWidth <= 0 ? columns.max  : 1;
     var columnNumber = columns.number;
     var paddingCount = 0;
 
@@ -663,10 +667,14 @@ var PagedTable = function (pagedTable) {
     var backwards = startBackwards;
 
     var tableDivStyle = window.getComputedStyle(tableDiv, null);
-    var tableDivPadding = parseFloat(tableDivStyle.paddingLeft) +
-      parseFloat(tableDivStyle.paddingRight);
+    var tableDivPadding = parsePadding(tableDivStyle.paddingLeft) +
+      parsePadding(tableDivStyle.paddingRight);
 
     var addPaddingCol = false;
+
+    // while sizing columns, use only a subset of the data.
+    var originalRows = page.rows;
+    page.rows = 10;
 
     while (true) {
       columnHistory.push({
@@ -763,6 +771,12 @@ var PagedTable = function (pagedTable) {
     renderFooter();
 
     registerWidths();
+
+    page.rows = originalRows;
+
+    renderHeader();
+    renderBody();
+    renderFooter();
 
     tableDivLastWidth = tableDiv.clientWidth
   };
