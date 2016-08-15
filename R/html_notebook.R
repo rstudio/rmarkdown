@@ -78,7 +78,7 @@ html_notebook <- function(toc = FALSE,
         list(
           list(
             label = "",
-            name = "__rownames__",
+            name = "_rn_",
             type = "",
             align = "left"
           )
@@ -87,7 +87,7 @@ html_notebook <- function(toc = FALSE,
       )
     )
 
-    data$`__rownames__` <- rownames(data)
+    data$`_rn_` <- rownames(data)
 
     is_list <- vapply(data, is.list, logical(1))
     data[is_list] <- lapply(data[is_list], function(x) {

@@ -167,20 +167,40 @@ var PagedTable = function (pagedTable) {
     return JSON.parse(sourceElems[0].innerHTML);
   }(pagedTable);
 
-  var Page = function(data) {
+  var options = function(source) {
+    var options = source.options !== null ? source.options : {};
+    var columns = options.columns;
+
+    var positiveIntOrNull = function(value) {
+      var parsed = value !== null ? parseInt(value) : null;
+      return value > 0 ? value : null;
+    };
+
+    return {
+      pages: positiveIntOrNull(source.options.pages),
+      rows: positiveIntOrNull(source.options.rows),
+      columns: {
+        min: columns !== null ? positiveIntOrNull(columns.min) : null,
+        max: columns !== null ? positiveIntOrNull(columns.max) : null
+      }
+    };
+  }(source);
+
+  var Page = function(data, options) {
     var me = this;
 
     var defaults = {
-      size: 10,
-      visible: 10
+      max: 9,
+      rows: 10
     };
 
-    me.size = 10;
     me.number = 0;
-    me.rows = 10;
+    me.max = options.pages !== null ? options.pages : defaults.max;
+    me.visible = me.max + 1;
+    me.rows = options.rows !== null ? options.rows : defaults.rows;
 
     var getPageCount = function() {
-      return Math.ceil(data.length / me.size);
+      return Math.ceil(data.length / me.rows);
     };
 
     me.setPageNumber = function(newPageNumber) {
@@ -191,7 +211,7 @@ var PagedTable = function (pagedTable) {
     };
 
     me.setVisiblePages = function(visiblePages) {
-      me.visible = Math.min(defaults.visible, visiblePages);
+      me.visible = Math.min(me.max + 1, visiblePages);
       me.setPageNumber(me.number);
     };
 
@@ -222,9 +242,9 @@ var PagedTable = function (pagedTable) {
     };
 
     me.getRowStart = function() {
-      var rowStart = page.number * page.size;
-      if (rowStart + me.size > data.length)
-        rowStart = rowStart - (rowStart + me.size - data.length);
+      var rowStart = page.number * page.rows;
+      if (rowStart + me.rows > data.length)
+        rowStart = rowStart - (rowStart + me.rows - data.length);
       if (rowStart < 0)
         rowStart = 0;
 
@@ -233,23 +253,24 @@ var PagedTable = function (pagedTable) {
 
     me.getRowEnd = function() {
       var rowStart = me.getRowStart();
-      return Math.min(rowStart + me.size, data.length);
+      return Math.min(rowStart + me.rows, data.length);
     };
   };
 
-  var Columns = function(source) {
+  var Columns = function(columns, options) {
     var me = this;
 
     me.defaults = {
-      visible: 10
+      max: 10
     };
 
     me.number = 0;
-    me.visible = me.defaults.visible;
-    me.total = source.columns.length;
+    me.visible = 0;
+    me.total = columns.length;
     me.subset = [];
     me.padding = 0;
-    me.min = 5;
+    me.min = options.columns !== null ? options.columns.min : null;
+    me.max = options.columns !== null && options.columns.max !== null ? options.columns.max : me.defaults.max;
 
     me.updateSlice = function() {
       if (me.number + me.visible >= me.total)
@@ -257,13 +278,14 @@ var PagedTable = function (pagedTable) {
 
       if (me.number < 0) me.number = 0;
 
-      me.subset = source.columns.slice(me.number, Math.min(me.number + me.visible, me.total));
+      me.subset = columns.slice(me.number, Math.min(me.number + me.visible, me.total));
 
       me.subset = me.subset.map(function(column) {
         Object.keys(column).forEach(function(colKey) {
           column[colKey] = column[colKey] === null ? "" : column[colKey].toString();
         });
 
+        column.width = null;
         return column;
       });
     };
@@ -297,8 +319,8 @@ var PagedTable = function (pagedTable) {
   };
 
   var data = source.data;
-  var page = new Page(data);
-  var columns = new Columns(source);
+  var page = new Page(data, options);
+  var columns = new Columns(source.columns, options);
 
   var table;
   var tableDiv;
@@ -450,19 +472,19 @@ var PagedTable = function (pagedTable) {
     return tbody;
   };
 
-  var getLabelInfo = function(long) {
+  var getLabelInfo = function() {
     var pageStart = page.getRowStart();
     var pageEnd = page.getRowEnd();
     var totalRecods = data.length;
 
-    var infoText = (pageStart + 1) + "-" + pageEnd + " of " + totalRecods;
-    if (totalRecods < page.size) {
+    var infoText = (pageStart + 1) + "-" + pageEnd + " of " + totalRecods + " Records";
+    if (totalRecods < page.rows) {
       infoText = totalRecods + " Record" + (totalRecods != 1 ? "s" : "");
     }
     if (columns.total > columns.visible) {
-      infoText = infoText + (long ? " Rows" : "") + " | " + (columns.number + 1) + "-" +
+      infoText = infoText + " | " + (columns.number + 1) + "-" +
         (Math.min(columns.number + columns.visible, columns.total)) +
-        " of " + columns.total + (long ? " Columns" : "");
+        " of " + columns.total + " Columns";
     }
 
     return infoText;
@@ -481,7 +503,7 @@ var PagedTable = function (pagedTable) {
 
       triggerOnChange();
     };
-    if (data.length > page.size) footer.appendChild(next);
+    if (data.length > page.rows) footer.appendChild(next);
 
     var pageNumbers = document.createElement("div");
     pageNumbers.setAttribute("class", "pagedtable-indexes");
@@ -503,7 +525,7 @@ var PagedTable = function (pagedTable) {
       pageLink.appendChild(document.createTextNode(idxPage + 1));
       pageNumbers.appendChild(pageLink);
     }
-    if (data.length > page.size) footer.appendChild(pageNumbers);
+    if (data.length > page.rows) footer.appendChild(pageNumbers);
 
     var previous = document.createElement("a");
     previous.appendChild(document.createTextNode("Previous"));
@@ -514,18 +536,18 @@ var PagedTable = function (pagedTable) {
 
       triggerOnChange();
     };
-    if (data.length > page.size) footer.appendChild(previous);
+    if (data.length > page.rows) footer.appendChild(previous);
 
     var infoLabel = document.createElement("div");
     infoLabel.setAttribute("class", "pagedtable-info");
-    infoLabel.setAttribute("title", getLabelInfo(true));
-    infoLabel.appendChild(document.createTextNode(getLabelInfo(false)));
+    infoLabel.setAttribute("title", getLabelInfo());
+    infoLabel.appendChild(document.createTextNode(getLabelInfo()));
     footer.appendChild(infoLabel);
 
     var enabledClass = "pagedtable-index-nav";
     var disabledClass = "pagedtable-index-nav pagedtable-index-nav-disabled";
     previous.setAttribute("class", page.number <= 0 ? disabledClass : enabledClass);
-    next.setAttribute("class", (page.number + 1) * page.size >= data.length ? disabledClass : enabledClass);
+    next.setAttribute("class", (page.number + 1) * page.rows >= data.length ? disabledClass : enabledClass);
   };
 
   me.render = function() {
@@ -607,6 +629,8 @@ var PagedTable = function (pagedTable) {
     var tableDivPadding = parseFloat(tableDivStyle.paddingLeft) +
       parseFloat(tableDivStyle.paddingRight);
 
+    var addPaddingCol = false;
+
     while (true) {
       columnHistory.push({
         columnNumber: columnNumber,
@@ -620,6 +644,11 @@ var PagedTable = function (pagedTable) {
       renderBody();
       renderFooter();
 
+      if (columnHistory.length > 100) {
+        console.error("More than 100 tries to fit columns, aborting");
+        break;
+      }
+
       if (tableDiv.clientWidth - tableDivPadding < table.offsetWidth) {
         break;
       }
@@ -630,13 +659,16 @@ var PagedTable = function (pagedTable) {
       }
 
       // if we run out of right-columns
-      if (!backwards && columnNumber + columns.visible > Math.max(columns.total, columns.min)) {
+      if (!backwards && columnNumber + columns.visible > columns.total) {
         // if we started adding right-columns, try adding left-columns
         if (!startBackwards) {
           backwards = true;
         }
-        else {
+        else if (columns.min === null || visibleColumns + columns.getPaddingCount() > columns.min) {
           break;
+        }
+        else {
+          addPaddingCol = true;
         }
       }
 
@@ -646,18 +678,25 @@ var PagedTable = function (pagedTable) {
         if (startBackwards) {
           backwards = false;
         }
-        else {
+        else if (columns.min === null || visibleColumns + columns.getPaddingCount() > columns.min) {
           break;
+        }
+        else {
+          addPaddingCol = true;
         }
       }
 
+      if (visibleColumns + columns.getPaddingCount() > columns.max) {
+        break;
+      }
+
       // if we run out of columns to add try adding padding columns
-      if (!backwards && columnNumber + columns.visible > columns.total) {
+      if (addPaddingCol && columnNumber + columns.visible > columns.total) {
         paddingCount = paddingCount + 1;
         columns.setPaddingCount(paddingCount);
       }
 
-      // when moving backwards try fetting left olumns first
+      // when moving backwards try fitting left columns first
       if (backwards) {
         columnNumber = columnNumber - 1;
       }
@@ -670,15 +709,15 @@ var PagedTable = function (pagedTable) {
     // some browsers, for isntance, don't apply font-weight until later.
     // Therefore, we need to account for this and remove at least one
     // column to leave space for this issues.
-    var removeVisibleCols = columnHistory.length > 1 ? 2 : 1;
-    var lastRenderableColumn = columnHistory[columnHistory.length - removeVisibleCols];
+    var removeVisibleCols = columnHistory.length > 1 ? 1 : 0;
+    var lastRenderableColumn = columnHistory[columnHistory.length - 1 - removeVisibleCols];
 
     columns.setVisibleColumns(
       lastRenderableColumn.columnNumber,
       lastRenderableColumn.visibleColumns,
       lastRenderableColumn.paddingCount);
 
-    page.setVisiblePages(Math.max(Math.floor(pagedTable.offsetWidth / 80), 2));
+    page.setVisiblePages(Math.max(Math.ceil(1.0 * (pagedTable.offsetWidth - 250) / 40), 2));
 
     renderHeader();
     renderBody();
