@@ -243,8 +243,6 @@ var PagedTable = function (pagedTable) {
 
     me.getRowStart = function() {
       var rowStart = page.number * page.rows;
-      if (rowStart + me.rows > data.length)
-        rowStart = rowStart - (rowStart + me.rows - data.length);
       if (rowStart < 0)
         rowStart = 0;
 
@@ -254,6 +252,12 @@ var PagedTable = function (pagedTable) {
     me.getRowEnd = function() {
       var rowStart = me.getRowStart();
       return Math.min(rowStart + me.rows, data.length);
+    };
+
+    me.getPaddingRows = function() {
+      var rowStart = me.getRowStart();
+      var rowEnd = me.getRowEnd();
+      return me.rows - (rowEnd - rowStart);
     };
   };
 
@@ -365,6 +369,15 @@ var PagedTable = function (pagedTable) {
     return header;
   };
 
+  var maxColumnWidth = function(width) {
+    var padding = 80;
+    var columnMax = Math.max(pagedTable.clientWidth - padding, 0);
+
+    return parseInt(width) > 0 ?
+      Math.min(columnMax, parseInt(width)) + "px" :
+      columnMax + "px";
+  };
+
   var renderHeader = function() {
     var thead = pagedTable.querySelectorAll("thead")[0];
     thead.innerHTML = "";
@@ -379,9 +392,10 @@ var PagedTable = function (pagedTable) {
       var column = document.createElement("th");
       column.setAttribute("align", columnData.align);
 
+      column.style.maxWidth = maxColumnWidth(null);
       if (columnData.width) {
         column.style.minWidth =
-          column.style.maxWidth = columnData.width;
+          column.style.maxWidth = maxColumnWidth(columnData.width);
       }
 
       var columnName = document.createElement("div");
@@ -450,9 +464,13 @@ var PagedTable = function (pagedTable) {
         var dataCell = dataRow[cellName];
         var htmlCell = document.createElement("td");
         htmlCell.appendChild(document.createTextNode(dataCell));
+        if (dataCell.length > 50) {
+          htmlCell.setAttribute("title", dataCell);
+        }
         htmlCell.setAttribute("align", columnData.align);
+        htmlCell.style.maxWidth = maxColumnWidth(null);
         if (columnData.width) {
-          htmlCell.style.minWidth = htmlCell.style.maxWidth = columnData.width;
+          htmlCell.style.minWidth = htmlCell.style.maxWidth = maxColumnWidth(columnData.width);
         }
         htmlRow.appendChild(htmlCell);
       });
@@ -468,6 +486,10 @@ var PagedTable = function (pagedTable) {
 
       tbody.appendChild(htmlRow);
     });
+
+    for (var idxPadding = 0; idxPadding < page.getPaddingRows(); idxPadding++) {
+
+    }
 
     return tbody;
   };
