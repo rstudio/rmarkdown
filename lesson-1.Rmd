@@ -10,7 +10,12 @@ output:
 
 ### Overview
 
-R Markdown enables you to turn your analyses into high quality documents, reports, presentations and dashboards. R Markdown documents are fully reproducible and support dozens of static and dynamic output formats. This 1-minute video provides a quick tour of what's possible with R Markdown:
+R Markdown provides an authoring framework for data science. You can use a single R Markdown file to both 
+
+* save and execute code
+* generate high quality reports that can be shared with an audience 
+
+R Markdown documents are fully reproducible and support dozens of static and dynamic output formats. This 1-minute video provides a quick tour of what's possible with R Markdown:
 
 
 <iframe src="https://player.vimeo.com/video/178485416" width="700" height="394" frameborder="0" style="margin-bottom: 2em;" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
@@ -23,7 +28,7 @@ Like the rest of R, R Markdown is free and open source. You can install the R Ma
 install.packages("rmarkdown")
 ```
 
-## Get Started
+### Get Started
 
 The links to the left provide a quick tour of R Markdown. The links at the top provide examples of R Markdown documents, as well as an in depth discussion of various R Markdown topics. 
 
