@@ -172,8 +172,7 @@ var PagedTable = function (pagedTable) {
     var columns = options.columns;
 
     var positiveIntOrNull = function(value) {
-      var parsed = value !== null ? parseInt(value) : null;
-      return value > 0 ? value : null;
+      return parseInt(value) >= 0 ? parseInt(value) : null;
     };
 
     return {
@@ -488,7 +487,14 @@ var PagedTable = function (pagedTable) {
     });
 
     for (var idxPadding = 0; idxPadding < page.getPaddingRows(); idxPadding++) {
+      var paddingRow = document.createElement("tr");
 
+      var paddingCellRow = document.createElement("td");
+      paddingCellRow.innerHTML = "&nbsp;";
+      paddingCellRow.setAttribute("colspan", "100%");
+      paddingRow.appendChild(paddingCellRow);
+
+      tbody.appendChild(paddingRow);
     }
 
     return tbody;
