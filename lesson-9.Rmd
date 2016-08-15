@@ -1,5 +1,5 @@
 ---
-title: "Dashboard Layouts"
+title: "Notebooks"
 output:
   html_document:
     toc_float: false
@@ -8,74 +8,38 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-The **flexdashboard** package renders dashboards straight from your .Rmd files. Within your flexdashboard, you can place interactive JavaScript data visualizations based on [htmlwidgets](http://www.htmlwidgets.org), R graphics, tabular data, value boxes, gauges, and text annotations of various kinds.
+R Markdown files provide a [notebook interface for R](http://rmarkdown.rstudio.com/r_notebooks.html), which makes it easy to test and iterate on code while authoring your file. The RStudio IDE will display the results of each code chunk beneath the chunk in your source editor.
 
-![](lesson-images/dashboardExamples.png)
+<!-- Notebook screenshot Same as lesson 2
+![]()
+-->
 
-To get started, install the flexdashboard package from CRAN as follows:
+## Notebook Output
 
-```r
-install.packages("flexdashboard", type = "source")
-```
+Set the `output: html_notebook`
 
-To author a flexdashboard you create an [R Markdown](http://rmarkdown.rstudio.com) document with the `flexdashboard::flex_dashboard` output format, e.g. `output: flexdashboard::flex_dashboard`. You can do this from within RStudio using the **New R Markdown** dialog:
 
-![](lesson-images/NewRMarkdown.png){width=579 height=465}
 
-If you are not using RStudio, you can create a new `flexdashboard` R Markdown file from the R console:
+can be used as a notebook
+Your R Markdown file is itself a notebook. Share it.
 
-```r
-rmarkdown::draft("dashboard.Rmd", template = "flex_dashboard", package = "flexdashboard")
-```
+Notebook File
+When a notebook .Rmd is saved, an .nb.html file is created alongside it. This file is a self-contained HTML file which contains both a rendered copy of the notebook with all current chunk outputs (suitable for display on a website) and a copy of the notebook .Rmd itself.
 
-### Layout
+You can view the .nb.html file in any ordinary web browser. It can also be opened in RStudio; when you open there (using e.g. File -> Open), RStudio will do the following:
 
-#### Single Column
+Extract the bundled .Rmd file and place it alongside the .nb.html file
+Open the .Rmd file in a new RStudio editor tab
+Extract the chunk outputs from the .nb.html file and place them appropriately in the editor
+Note that the .nb.html file is only created for R Markdown documents which are notebooks (i.e. at least one of their output formats is html_notebook). It’s possible to have an R Markdown document which includes inline chunk output but does not produce an .nb.html file.
 
-Dashboards group content into boxes that are separated by level 3 markdown headers (`###`). By default, dashboards are laid out within a single column, with boxes stacked vertically within a column and sized to fill available browser height. For example, this layout defines a single column with two charts that fills available browser space:
+Output Storage
+The document’s chunk outputs are also stored in an internal RStudio folder beneath the project’s .Rproj.user folder. If you work with a notebook but don’t have a project open, the outputs are stored in the RStudio state folder in your home directory (the location of this folder varies between the desktop and the server).
 
-```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("lesson9-examples/example-1.Rmd"))
-```
+##  Version Control
 
-![](lesson-images/dashboardLayout1.png)
-
-#### Multiple Columns
-
-You use level 2 markdown headers (`--------------` or `##`) to group boxes into separate columns. For example, this dashboard displays 3 charts split across two columns:
-
-```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("lesson9-examples/example-2.Rmd"))
-```
-
-![](lesson-images/dashboardLayout2.png)
-
-#### Row Orientation
-
-You can also choose to orient dashboards row-wise rather than column-wise by specifying the `orientation: rows` option. For example, this layout defines two rows, the first of which has a single chart and the second of which has two charts:
-
-```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("lesson9-examples/example-3.Rmd"))
-```
-
-![](lesson-images/dashboardLayout3.png)
-
-## Exercise
-
-Remove all of the line breaks from [your document](lesson-exercises/exercise-9.Rmd). Then turn it into a [flexdashboard](http://rmarkdown.rstudio.com/flexdashboard/) like the one below. The price graphs are in their own column, as are the volume graphs.
+One of the major advantages of R Notebooks compared to other notebook systems is that they are plain-text files and therefore work well with version control. We recommend checking in both the .Rmd and .nb.html files into version control so that both your source code and output are available to collaborators. However, you can choose to include only the .Rmd file (with a .gitignore that excludes the .nb.html) if you want each collaborator to work with their own private copies of the output.
 
 ***
 
-![](lesson-images/dashboardDashboard.png)
-
-***
-
-## Show Answer
-
-## Model Answer
-
-```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("lesson-solutions/solution-9.Rmd"))
-```
-
-## [Continue to next lesson](lesson-10.html)
+## [Continue to Slide Presentations](lesson-10.html)

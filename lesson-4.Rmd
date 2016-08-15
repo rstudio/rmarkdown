@@ -1,5 +1,5 @@
 ---
-title: "Rendering Output"
+title: "Inline Code"
 output:
   html_document:
     toc_float: false
@@ -8,32 +8,18 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-There are two ways to render an R Markdown document into it's final output format. If you are using RStudio, then the "Knit" button (Ctrl+Shift+K) will render the document and display a preview of it.
+You can insert code results into the text of an [.Rmd file](demos/3-inline.Rmd) by enclosing the code with `` `r `  ``. 
 
-![](lesson-images/markdownKnitButton.png)
+<!-- Screenshot of 3-inline.Rmd being rendered.
+![]()
+-->
 
-If you are not using RStudio then you simply need to call the `rmarkdown::render` function, for example:
+Inline expressions do not take knitr options. R Markdown will always 
 
-```r
-rmarkdown::render("input.Rmd")
-```
+* hide the source code of an inline expression
+* apply relevant text formatting to the results
 
-You can learn more about the `render()` function by examining it's help page, `help(render, package = "rmarkdown")`.
-
-Note that both methods use the same mechanism; RStudio's "Knit" button calls `rmarkdown::render()` under the hood.
-
-## Exercise
-
-Use the `rmarkdown::render()` function to render [your .Rmd file](lesson-exercises/exercise-4.Rmd). Be sure to give `rmarkdown::render()` the filepath to your .Rmd file. Set `render()`'s `output_file` to choose a custom name for the output file.
+As a result, inline output is indistinguishable from the surrounding text.
 
 ***
-
-## Show Answer
-
-## Model answer
-
-```{r, eval = FALSE}
-render("exercise-4.Rmd", output_file = "stocks.html")
-```
-
-## [Continue to next lesson](lesson-5.html)
+## [Continue to Code Languages](lesson-5.html)

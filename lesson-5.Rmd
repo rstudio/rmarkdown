@@ -1,5 +1,5 @@
 ---
-title: "Using Parameters"
+title: "Code Languages"
 output:
   html_document:
     toc_float: false
@@ -8,45 +8,39 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-R Markdown documents can contain a metadata section that includes title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an .Rmd file adds a title, author, and date to your document.
+In addition to executing R code chunks, the [knitr](http://yihui.name/knitr/) package can also execute chunks in a variety of other languages. Some of the available language engines include:
 
-```
----
-title: "Report with date"
-author: "RStudio"
-date: "2016-06-23"
----
-```
+* Python
+* SQL
+* Bash
+* Rcpp
+* Stan
+* JavaScript
+* CSS
 
-You can add a `params:` field to the metadata to provide a list of values for your document to use. R Markdown will make the list available as `params` within any R code chunk in the report. For example, the file below takes a filename as a parameter and uses the name to read in a data set. To use multiple parameters, list each one on a new line under `params:`, indented two spaces.
-
-![](lesson-images/quicktourParams.png)
-
-Parameters let you quickly apply your data set to new data sets, models, and parameters. You can set new values for the parameters when you call `rmarkdown::render()`,
-
-```r
-rmarkdown::render("input.Rmd", params = list())
-```
-
-as well as when you press the "Knit" button:
-
-![](lesson-images/quicktourParamsButton.png)
-
-You can learn more about params at [Paramaterized Reports](http://rmarkdown.rstudio.com/developer_parameterized_reports.html).
-
-## Exercise
-
-Add two parameters to [your report](lesson-exercises/exercise-5.Rmd), `symbol1` and `symbol2`. You can use "FB" (Facebook) and "GOOG" (Google) as their default values. Then replace every instance of `"AMZN"` or `"AAPL"` in your code with one of the parameters.
-
-When you Knit with Parameters, R Markdown will let you choose two new stocks to examine. For now, your text will still refer to AMZN and AAPL, but your graphs will update.
-***
-
-## Show Answer
-
-## Model Answer
+To process a code chunk using an alternate language engine you simply use the name of the engine in place of `r` in your chunk declaration, for example:
 
 ```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("lesson-solutions/solution-5.Rmd"))
+cat(htmltools::includeText("demos/bash.Rmd"))
 ```
 
-## [Continue to next lesson](lesson-6.html)
+## Example
+
+The python engine enables execution of python code via an external python interpreter (the interpreter returned by `Sys.which("python")` is used to execute the code). Here’s a simple example:
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("demos/python.Rmd"))
+```
+
+```{python, echo = FALSE}
+x = 'hello, python world!'
+print(x.split(' '))
+```
+
+Note that chunk options like `echo` and `results` are all valid when using a language engine like python. 
+
+Learn more about using other languages with R Markdown in [knitr Language Engines](authoring_knitr_engines.html).
+
+***
+
+## [Continue to Parameters](lesson-6.html)

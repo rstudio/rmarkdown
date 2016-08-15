@@ -1,5 +1,5 @@
 ---
-title: "R Code Chunks"
+title: "Code Chunks"
 output:
   html_document:
     toc_float: false
@@ -8,105 +8,53 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-Within an R Markdown file, R Code Chunks can be embedded with the native Markdown syntax for fenced code regions. For example, the following code chunk computes a data summary and renders a plot as a PNG image:
+To add an R code chunk to your .Rmd file, type your code between the lines
 
-![](lesson-images/markdownChunk.png)
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("demos/chunk-boundaries.Rmd"))
+```
+
+When you render your .Rmd file, R Markdown will run each code chunk and embed the results beneath the code chunk in your final report.
+
+<!-- Screenshot of 2-chunks.Rmd being rendered.
+![]()
+-->
 
 ## Chunk Options
 
-You can customize how code chunks are displayed by adding options within the brackets at the start of the code chunk. For example, the option `echo=FALSE` will cause the chunk output, but not the code chunk itself, to be displayed in the final document.
+Add [knitr options](http://yihui.name/knitr/options/) to a chunk header to customize how the contents are displayed.
 
-![](lesson-images/markdownChunk2.png)
+In the [file above](demos/2-chunks.Rmd), the option `echo=FALSE` prevents a chunk's code from appearing in the final report. `results='hide'` prevents a chunk's results from appearing in the final report.
 
-You can learn more about code chunk options by reading [R Code Chunks](http://rmarkdown.rstudio.com/authoring_rcodechunks.html). The [R Markdown Reference Guide](http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) provides a glossary of the many code chunk options that are available.
+You can view a quick list of knitr chunk options in the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf).
 
-## Exercise
+## Global Options
 
-The R script below visualizes the price and trade volume of two stocks, Amazon (AMZN) and Apple (AAPL).
-
-```{r eval = FALSE}
-library(quantmod)
-library(dygraphs)
-
-stock1 <- getSymbols("AMZN", auto.assign = FALSE,
-                    from = "2016-01-01", end = Sys.Date())
-stock2 <- getSymbols("AAPL", auto.assign = FALSE,
-                    from = "2016-01-01", end = Sys.Date())
-
-# Prices
-dygraph(Cl(stock1))
-dygraph(Cl(stock2))
-
-# Volume
-dygraph(Vo(stock1))
-dygraph(Vo(stock2))
-```
-
-Use R code chunks to embed the script throughout your document. Arrange for your finished report to look exactly like this---no messages, no code, just results.
-
-You will need to install the quantmod and dygraphs packages if you do not already have them:
-
-```{r eval = FALSE}
-install.packages(c("quantmod", "dygraphs"))
-```
-
-You will also need a copy of your solution to exercise 2. You can download one [here](lesson-exercises/exercise-3.Rmd). Solutions will build on each other for the rest of the tutorial.
-
-***
-# Introduction
-
-```{r include = FALSE}
-library(quantmod)
-library(dygraphs)
-
-stock1 <- getSymbols("AMZN", auto.assign = FALSE,
-                    from = "2016-01-01", end = Sys.Date())
-stock2 <- getSymbols("AAPL", auto.assign = FALSE,
-                    from = "2016-01-01", end = Sys.Date())
-```
-
-
-This report examines the price of two stocks:
-
-* AMZN
-* AAPL
-
-It is written in [R Markdown](http://rmarkdown.rstudio.com), an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. R Markdown combines the core syntax of **markdown** (an easy to write plain text format) with embedded **R** code chunks that are run so their output can be included in the final document.
-
-The data comes from [Yahoo finance](http://finance.yahoo.com).
-
-### AMZN price
-
-```{r echo = FALSE}
-dygraph(Cl(stock1))
-```
-
-### AAPL price
-
-```{r echo = FALSE}
-dygraph(Cl(stock2))
-```
-
-### AMZN volume
-
-```{r echo = FALSE}
-dygraph(Vo(stock1))
-```
-
-### AAPL volume
-
-```{r echo = FALSE}
-dygraph(Vo(stock2))
-```
-
-***
-
-## Show Answer
-
-## Model Answer
+To set global options that apply to every chunk in your file, call `knitr::opts_chunk$set` from a code chunk, e.g
 
 ```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("lesson-solutions/solution-3.Rmd"))
+cat(htmltools::includeText("demos/global-chunk-options.Rmd"))
 ```
 
-## [Continue to next lesson](lesson-4.html)
+Knitr will treat each option that you pass to `knitr::opts_chunk$set` as a global default that can be overwritten in individual chunk headers.
+
+## Table Output
+
+By default, data frames and matrixes are output as they would be in the R terminal (in a monospaced font). If you prefer that data be displayed with additional formatting you can use the `knitr::kable` function. For example:
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("demos/kable.Rmd"))
+```
+
+```{r, echo = FALSE, results='asis'}
+knitr::kable(mtcars[1:5, ])
+```
+
+Note the use of the `results='asis'` chunk option. This is required to ensure that the raw table output isn’t processed further by knitr.
+
+## Caching
+
+If document rendering becomes time consuming due to long computations you can use knitr caching to improve performance. The documentation [knitr chunk and package options](http://yihui.name/knitr/options) describe how caching works and the [cache examples](http://yihui.name/knitr/demo/cache/) provide additional details.
+
+***
+## [Continue to Inline Code](lesson-4.html)
