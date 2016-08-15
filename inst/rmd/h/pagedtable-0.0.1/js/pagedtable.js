@@ -256,7 +256,7 @@ var PagedTable = function (pagedTable) {
     me.getPaddingRows = function() {
       var rowStart = me.getRowStart();
       var rowEnd = me.getRowEnd();
-      return me.rows - (rowEnd - rowStart);
+      return data.length > me.rows ? me.rows - (rowEnd - rowStart) : 0;
     };
   };
 
