@@ -8,18 +8,22 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-You can insert code results into the text of an [.Rmd file](demos/3-inline.Rmd) by enclosing the code with `` `r `  ``. 
+Code results can be inserted directly into the text of a .Rmd file by enclosing the code with `` `r `  ``. The [file below](demos/3-inline.Rmd) uses `` `r `  `` twice to call `colorFunc`, which returns "heat.colors."
 
-<!-- Screenshot of 3-inline.Rmd being rendered.
-![]()
--->
+![](lesson-images/inline-1-heat.png)
+</br>
 
-Inline expressions do not take knitr options. R Markdown will always 
+This makes it easy to update the report to refer to another function. 
 
-* hide the source code of an inline expression
+![](lesson-images/inline-2-terrain.png)
+</br>
+
+R Markdown will always 
+
+* display the results of inline code, but not the code
 * apply relevant text formatting to the results
 
-As a result, inline output is indistinguishable from the surrounding text.
+As a result, inline output is indistinguishable from the surrounding text. Inline expressions do not take knitr options. 
 
 ***
 ## [Continue to Code Languages](lesson-5.html)
