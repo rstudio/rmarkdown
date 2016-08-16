@@ -1,0 +1,33 @@
+---
+title: "R Markdown Websites"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
+---
+
+Render collections of R Markdown documents into a website with the `rmarkdown::render_site` function. Each .Rmd file becomes a page of the site. Here we build a website from [these files](demos/12-website.zip).
+
+
+![](lesson-images/websites-1-render.png)
+</br>
+
+Each website requires 
+
+* a file named `_site.yml`, which provides the global YAML header for the site
+* a .Rmd file named `index.Rmd`, which provides the content for the home page of your website.
+
+Execute the `rmarkdown::render_site` function from within the directory containing your files to build `_site`, a directory of files ready to deploy as a standalone static website.
+
+Better yet, create an [RStudio Project](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects) for your directory. RStudio will add a Build tab to the IDE that you can use to build and preview your site.
+
+![](lesson-images/websites-2-build.png)
+</br>
+
+Learn more about generating websites with R Markdown at [R Markdown Websites](http://rmarkdown.rstudio.com/rmarkdown_websites.html).
+
+****
+
+## [Continue to Interactive Documents](lesson-14.html)
