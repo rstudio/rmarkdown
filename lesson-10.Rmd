@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-In [How it Works](lesson-2.html), you learned that R Markdown files provide a [notebook interface](http://rmarkdown.rstudio.com/r_notebooks.html) that makes it easy to test and iterate when writing code. 
+In [How It Works](lesson-2.html), you learned that R Markdown files provide a [notebook interface](http://rmarkdown.rstudio.com/r_notebooks.html) that makes it easy to test and iterate when writing code. 
 
 Share this experience by sharing your .Rmd file with colleagues for them to open in their RStudio IDE. Or recreate the notebook interface for non-R users by rendering your file to an HTML notebook with `output: html_notebook`, as in [this example](demos/9-notebook.Rmd).
 
