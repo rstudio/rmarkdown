@@ -1,5 +1,5 @@
 ---
-title: "Dashboard Layouts 2"
+title: "Notebooks"
 output:
   html_document:
     toc_float: false
@@ -8,32 +8,23 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-With flexdashboard, layout options are easy to customize. For example, you can group columns (or rows) into separate pages with level 1 headers (`==========` or `#`). The title of the header will appear as the title of the page in the dashboard's navbar. The page will contain every box, column, or row in the section that is associated with the header.
+In [How it Works](lesson-2.html), you learned that R Markdown files provide a [notebook interface](http://rmarkdown.rstudio.com/r_notebooks.html) that makes it easy to test and iterate when writing code. 
 
-To further customize pages, columns (or rows) and boxes, place options surrounded by brackets next to the title of the element. For example, the option below would turn a page into a sidebar for the dashboard.
+Share this experience by sharing your .Rmd file with colleagues for them to open in their RStudio IDE. Or recreate the notebook interface for non-R users by rendering your file to an HTML notebook with `output: html_notebook`, as in [this example](demos/9-notebook.Rmd).
 
-```
-# Introduction {.sidebar}
-```
+![](lesson-images/notebooks-1-notebook.png)
+</br>
 
-flexdashboard also provides simple tools for creating tabsets, value boxes, and gauges. Learn more about flexdashboard at [flexdashboard: Easy interactive dashboards for R](http://rmarkdown.rstudio.com/flexdashboard/).
+R Markdown will create a `nb.html` version of your file: a self-contained HTML file that contains both a rendered copy of the notebook with all current chunk outputs (suitable for display on a website) and a copy of the notebook .Rmd itself.
 
-## Exercise
+You can view the .nb.html file in any ordinary web browser, or open it in RStudio. In this case, RStudio will extract and open the .Rmd file that underlies the nb.html file.
 
-Use `{.sidebar}` to move the text at the top of [your dashboard](lesson-exercises/exercise-10.Rmd) into a sidebar. Then migrate each column to its own page. The results should look like this:
+##  Version Control
+
+One of the major advantages of R Notebooks compared to other notebook systems is that they are plain-text files and therefore work well with version control. We recommend checking in both the .Rmd and .nb.html files into version control so that both your source code and output are available to collaborators. However, you can choose to include only the .Rmd file (with a .gitignore that excludes the .nb.html) if you want each collaborator to work with their own private copies of the output.
+
+See [R Notebooks](http://rmarkdown.rstudio.com/r_notebooks.html) to learn more about notebooks with R Markdown.
 
 ***
 
-![](lesson-images/dashboardDashboard2.png)
-
-***
-
-## Show Answer
-
-## Model Answer
-
-```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("lesson-solutions/solution-10.Rmd"))
-```
-
-## [Continue to next lesson](lesson-11.html)
+## [Continue to Slide Presentations](lesson-11.html)
