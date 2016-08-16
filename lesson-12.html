@@ -11,7 +11,7 @@
 
 
 
-<title>Interactive Documents</title>
+<title>Dashboards</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -153,12 +153,6 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 <div id="pageContent" class="standardPadding">
   <div class="articleBandContent">
-<style type="text/css">
-img {
-  margin-bottom: 2em;
-}
-</style>
-
 <div class="lessonPage">
   <div class="lessonsNav">
     <a id="nav-lesson-1" href="lesson-1.html">Introduction</a>
@@ -180,121 +174,24 @@ img {
 
 
 
-<h1 class="title toc-ignore">Interactive Documents</h1>
+<h1 class="title toc-ignore">Dashboards</h1>
 
 </div>
 
 
-<p>There are two ways to make R Markdown output interactive. You can add:</p>
-<ol style="list-style-type: decimal">
-<li>Interactive JavaScript data visualizations based on <a href="http://www.htmlwidgets.org/">htmlwidgets</a></li>
-<li>Reactive components made with <a href="http://shiny.rstudio.com/">Shiny</a></li>
-</ol>
-<p>The <a href="http://rstudio.github.io/dygraphs/">dygraphs</a> in our examples are JavaScript visualizations created by htmlwidgets. Htmlwidgets run on the client side, they embed into your document all of the JavaScript code and data that your user’s web browser will need to execute interactions. Since htmlwidgets are exported in JavaScript, any common web browser can execute the code.</p>
-<p>Shiny components execute on the server side. They provide a way for the user to trigger the execution of R code, which you write, and to see the results. Since web browsers cannot execute R code, Shiny components must be run locally (e.g. in your RStudio IDE) or hosted by a Shiny server that can execute the R code on the server side (e.g. <a href="http://www.shinyapps.io/">shinyapps.io</a>). This arrangement has the side benefit of not requiring you to share data, which could be private or burdensomely large, with the user. Shiny components also let you run arbitrary R code to respond to an interaction, whereas htmlwidgets are limited to prepackaged routines.</p>
-<div id="using-shiny" class="section level2">
-<h2>Using Shiny</h2>
-<p>To get started, download the Shiny R package from CRAN:</p>
-<pre class="r"><code>install.packages(&quot;shiny&quot;)</code></pre>
-<p>To include Shiny components in an R Markdown document, add <code>runtime: shiny</code> to the YAML header of the document. This will ensure the R Markdown deploys the document as an interactive Shiny app connected with a live R session to handle interactions.</p>
-<p>To render the document, click the “Run Document” button that appears at the top of the window.</p>
-<div class="figure">
-<img src="lesson-images/shiny-code.png" />
-
-</div>
-<p>You can use Shiny components in any HTML based R Markdown output including HTML documents, slide presentations, and flexdashboards.</p>
-<p>Learn more about interactive documents with R Markdown at <a href="http://rmarkdown.rstudio.com/authoring_shiny.html">Interactive Documents</a>. Learn more about the Shiny package at the <a href="http://shiny.rstudio.com/">Shiny Development Center</a>.</p>
-</div>
-<div id="exercise" class="section level2">
-<h2>Exercise</h2>
-<p>Install the shiny package. Then copy and paste the text below into your own R Markdown file.</p>
-<p>Run the document and move with the sliders to see interactivity in action.</p>
-<p>Close the document to return to your R session when you are finished.</p>
-<pre><code>---
-title: &quot;Interactive components&quot;
-output: flexdashboard::flex_dashboard
-runtime: shiny    
----
-
-```{r include = FALSE}
-library(flexdashboard)
-```
-
-
-# Introduction {.sidebar}
-
-Move the sliders to make each pair of value boxes and gauges respond.
-  
-# Dashboard
-
-## Slider column
-
-### Slider Value {.value-box}
-
-```{r}
-renderValueBox({
-  valueBox(
-    value = input$slider,
-    icon = &quot;fa-area-chart&quot;,
-    color = if (input$slider &gt;= 5) &quot;warning&quot; else &quot;primary&quot;
-  )
-})
-```
-
-
-### Slider Value 
-
-```{r}
-renderGauge({
-  gauge(input$slider, min = 0, max = 10, gaugeSectors(
-    success = c(0, 4), 
-    warning = c(4, 7), 
-    danger = c(7, 10)
-  ))
-})
-```
-
-### Slider
-
-```{r echo=FALSE}
-sliderInput(&quot;slider&quot;, &quot;Choose a number&quot;,
-            min = 0, max = 10, value = 1, step = 1)
-```
-
-## Numeric Input column
-
-### Numeric Input Value {.value-box}
-
-```{r}
-renderValueBox({
-  valueBox(
-    value = input$num,
-    icon = &quot;fa-area-chart&quot;,
-    color = if (input$num &gt;= 5) &quot;warning&quot; else &quot;primary&quot;
-  )
-})
-```
-
-
-### Numeric Input Value 
-
-```{r}
-renderGauge({
-  gauge(input$num, min = 0, max = 10, gaugeSectors(
-    success = c(0, 4), 
-    warning = c(4, 7), 
-    danger = c(7, 10)
-  ))
-})
-```
-
-### Numeric Input
-
-```{r echo=FALSE}
-# Maximum number of raw data rows to keep
-numericInput(&quot;num&quot;, &quot;Choose a number&quot;, 1, min = 0, max = 10 )
-```</code></pre>
-<p>You can see this document hosted at shinyapps.io <a href="https://gallery.shinyapps.io/solution-12/">here</a>.</p>
+<p>Dashboards are a useful way to communicate large amounts of information visually and quickly. Create one with the <code>flexdashboard::flex_dashboard</code> output format, as in the <a href="demos/11-dashboard.Rmd">.Rmd file below</a>:</p>
+<p><img src="lesson-images/dashboards-1-dashboard.png" /> </br></p>
+<p>Flexdashboard makes it easy to organize your content into a visual layout:</p>
+<ul>
+<li>Each Level 1 Header (<code>#</code>) begins a new page in the dashboard.</li>
+<li>Each Level 2 Header (<code>##</code>) begins a new column.</li>
+<li>Each Level 3 Header (<code>###</code>) begins a new box.</li>
+</ul>
+<p>You can further modify elements with attributes, as in the <code>{.sidebar}</code> above.</p>
+<p>Flexdashboard also provides simple tools for creating tabsets, value boxes, and gauges. Learn more about flexdashboard at <a href="http://rmarkdown.rstudio.com/flexdashboard/">flexdashboard: Easy interactive dashboards for R</a>.</p>
+<hr />
+<div id="continue-to-websites" class="section level2">
+<h2><a href="lesson-13.html">Continue to Websites</a></h2>
 </div>
 
   </div> <!-- lessonContent -->
