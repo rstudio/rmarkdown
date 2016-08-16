@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Interactive Documents</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+
+<link rel="icon" type="image/png" href="images/favicon.png" />
+
+<script type="text/javascript" src="js/rmarkdown.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/rmarkdown.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div id="rStudioHeader" class="alwaysShrunk">
+  <div class="innards bandContent">
+    <div>
+      <a class="productName" href="index.html">R Markdown</a>
+      <div class="rStudio"><span class="light">from </span> <a href="https://www.rstudio.com/"><div class="logo"></div></a></div>
+    </div>
+
+    <div id="menu">
+      <div id="menuToggler"></div>
+      <div id="menuItems">
+        <a class="menuItem" href="lesson-1.html">Get Started</a>
+        <a class="menuItem" href="gallery.html">Gallery</a>
+        <a class="menuItem" href="formats.html">Formats</a>
+        <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
+        <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+#TOC {
+  margin-left: 35px;
+  margin-top: 90px;
+}
+</style>
+
+<script type="text/javascript">
+$(".main-container").removeClass("main-container").removeClass("container-fluid").addClass("footerPushDown");
+</script>
+
+
+<div id="pageContent" class="standardPadding">
+  <div class="articleBandContent">
+<div class="lessonPage">
+  <div class="lessonsNav">
+    <a id="nav-lesson-1" href="lesson-1.html">Introduction</a>
+    <a id="nav-lesson-2" href="lesson-2.html">Markdown Basics</a>
+    <a id="nav-lesson-3" href="lesson-3.html">R Code Chunks</a>
+    <a id="nav-lesson-4" href="lesson-4.html">Rendering Ouput</a>
+    <a id="nav-lesson-5" href="lesson-5.html">Using Parameters</a>
+    <a id="nav-lesson-6" href="lesson-6.html">Inline R Code</a>
+    <a id="nav-lesson-7" href="lesson-7.html">Output Formats</a>
+    <a id="nav-lesson-8" href="lesson-8.html">Presentations</a>
+    <a id="nav-lesson-9" href="lesson-9.html">Dashboard Layouts</a>
+    <a id="nav-lesson-10" href="lesson-10.html">Dashboard Layouts 2</a>
+    <a id="nav-lesson-11" href="lesson-11.html">R Markdown Websites</a>
+    <a id="nav-lesson-12" href="lesson-12.html">Interactive Documents</a>
+  </div>
+  <div class="lessonContent">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Interactive Documents</h1>
+
+</div>
+
+
+<p>R Markdown documents are a perfect platform for interactive content. To make your documents interactive, add:</p>
+<ol style="list-style-type: decimal">
+<li>Interactive JavaScript visualizations based on <a href="http://www.htmlwidgets.org/">htmlwidgets</a>, or</li>
+<li>Reactive components made with <a href="http://shiny.rstudio.com/">Shiny</a></li>
+</ol>
+<div id="htmlwidgets" class="section level2">
+<h2>htmlwidgets</h2>
+<p><a href="http://www.htmlwidgets.org/">Htmlwidgets</a> are R functions that return JavaScript visualizations. The <a href="demos/13-htmlwidget.Rmd">document below</a> uses a <a href="http://rstudio.github.io/leaflet/">leaflet</a> htmlwidget to create an interactive map.</p>
+<p><img src="lesson-images/interactive-1-htmlwidget.png" /> </br></p>
+<p>Htmlwidgets create <em>client side</em> interactions. Since htmlwidgets are exported in JavaScript, any common web browser can execute the interactions.</p>
+<p>Learn more about packages that build htmlwidgets at <a href="http://www.htmlwidgets.org/showcase_leaflet.html">www.htmlwidgets.org</a>.</p>
+</div>
+<div id="shiny" class="section level2">
+<h2>Shiny</h2>
+<p>The <a href="http://shiny.rstudio.com/">Shiny</a> package builds interactive web apps powered by R. To call Shiny code from an R Markdown document, add <code>runtime: shiny</code> to the header, like in <a href="demos/14-shiny.Rmd">this document</a>.</p>
+<p><img src="lesson-images/interactive-2-shiny.png" /> </br></p>
+<p>Use Shiny to run any R code that you like in response to user actions. Since web browsers cannot execute R code, Shiny interactions occur on the <em>server side</em>.</p>
+<p>Learn more about Shiny at the <a href="http://shiny.rstudio.com/">Shiny Development Center</a>.</p>
+</div>
+<div id="output-formats" class="section level2">
+<h2>Output formats</h2>
+<p>Htmlwidgets and Shiny elements rely on HTML and JavaScript. They will work in any R Markdown format that is viewed in a web browser, such as html documents, notebooks and websites, as well as dashboards and slide presentations.</p>
+<p>If you include an interactive element in a static output format, like a PDF, R Markdown will embed a screenshot of the element.</p>
+<p>Learn more about interactive documents with R Markdown at <a href="http://rmarkdown.rstudio.com/authoring_shiny.html">Interactive Documents</a>.</p>
+<hr />
+</div>
+<div id="continue-to-the-cheatsheets" class="section level2">
+<h2><a href="lesson-15.html">Continue to the Cheatsheets</a></h2>
+</div>
+
+  </div> <!-- lessonContent -->
+</div> <!-- lessonPage -->
+
+
+<script type="text/javascript">
+  var lesson = window.location.href.match(/lesson-[0-9]+/g);
+  if (lesson !== null) {
+    lesson = 'nav-' + lesson[0];
+    $('#'+lesson).addClass('current');
+  }
+
+  $('#show-answer').on("click", function() {
+    $('#show-answer').addClass('showing');
+    $('#model-answer').addClass('showing');
+  })
+</script>
+  </div> <!-- articleBandContent -->
+</div> <!-- pageContent -->
+
+<div id="rStudioFooter" class="band full">
+<div class="bandContent">
+  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="logos">
+    <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+    <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+    <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+    <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
+  </div>
+</div>
+</div>
+
+<!-- bizible -->
+<script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
+
+<!-- disqus -->
+ <div id="disqus_thread" class="standardPadding"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+
+</script>
+
+
+</body>
+</html>
