@@ -1,5 +1,5 @@
 ---
-title: "Notebooks"
+title: "Output Formats"
 output:
   html_document:
     toc_float: false
@@ -8,38 +8,64 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-R Markdown files provide a [notebook interface for R](http://rmarkdown.rstudio.com/r_notebooks.html), which makes it easy to test and iterate on code while authoring your file. The RStudio IDE will display the results of each code chunk beneath the chunk in your source editor.
+Set the `output_format` argument of `render` to render your .Rmd file into any of R Markdown's supported formats. For example, the code below renders [1-example.Rmd](demos/1-example.Rmd) to a Microsoft Word document: 
 
-<!-- Notebook screenshot Same as lesson 2
-![]()
--->
+```{r eval = FALSE}
+library(rmarkdown)
+render("1-example.Rmd", output_format = "word_document")
+```
 
-## Notebook Output
+![](lesson-images/outputs-1-word.png)
+</br>
 
-Set the `output: html_notebook`
+If you do not select a format, R Markdown renders the file to its default format, which you can set in the `output` field of a .Rmd file's header. The header of 1-example.Rmd shows that it renders to an HTML file by default. 
+
+The RStudio IDE knit button renders a file to the first format listed in its `output` field. You can render to additional formats by clicking the dropdown menu beside the knit button:
+
+![](lesson-images/outputs-2-pdf.png)
+</br>
+
+The following output formats are available to use with R Markdown.
+
+### Documents
+
+* [html_notebook]( http://rmarkdown.rstudio.com/r_notebooks.html) - Interactive R Notebooks
+* [html_document](http://rmarkdown.rstudio.com/html_document_format.html) - HTML document w/ Bootstrap CSS
+* [pdf_document](http://rmarkdown.rstudio.com/pdf_document_format.html) - PDF document (via LaTeX template)
+* [word_document](http://rmarkdown.rstudio.com/word_document_format.html) - Microsoft Word document (docx)
+* [odt_document](http://rmarkdown.rstudio.com/odt_document_format.html) - OpenDocument Text document
+* [rtf_document](http://rmarkdown.rstudio.com/rtf_document_format.html) - Rich Text Format document
+* [md_document](http://rmarkdown.rstudio.com/markdown_document_format.html) - Markdown document (various flavors)
+
+### Presentations (slides)
+
+* [ioslides_presentation](http://rmarkdown.rstudio.com/ioslides_presentation_format.html) - HTML presentation with ioslides
+* [revealjs::revealjs_presentation](http://rmarkdown.rstudio.com/revealjs_presentation_format.html) - HTML presentation with reveal.js
+* [slidy_presentation](http://rmarkdown.rstudio.com/slidy_presentation_format.html) - HTML presentation with W3C Slidy
+* [beamer_presentation](http://rmarkdown.rstudio.com/beamer_presentation_format.html) - PDF presentation with LaTeX Beamer
+
+### More
+
+* [flexdashboard::flex_dashboard](http://rmarkdown.rstudio.com/flexdashboard/) - Interactive dashboards
+* [tufte::tufte_handout](http://rmarkdown.rstudio.com/tufte_handout_format.html) - PDF handouts in the style of Edward Tufte
+* [tufte::tufte_html](http://rmarkdown.rstudio.com/tufte_handout_format.html) - HTML handouts in the style of Edward Tufte
+* [tufte::tufte_book](http://rmarkdown.rstudio.com/tufte_handout_format.html) - PDF books in the style of Edward Tufte
+* [html_vignette](http://rmarkdown.rstudio.com/package_vignette_format.html) - R package vignette (HTML)
+* [github_document](http://rmarkdown.rstudio.com/github_document_format.html) - GitHub Flavored Markdown document
+
+You can also build [books](https://bookdown.org/), [websites](http://rmarkdown.rstudio.com/rmarkdown_websites.html), and [interactive documents](http://rmarkdown.rstudio.com/authoring_shiny.html) with R Markdown.
 
 
+## Output Options
 
-can be used as a notebook
-Your R Markdown file is itself a notebook. Share it.
+Each output format is implemented as a function in R. You can customize the output by passing arguments to the function as sub-values of the `output` field. For example, [8-outputs.Rmd](demos/8-outputs.Rmd) would render with a floating table of contents.
 
-Notebook File
-When a notebook .Rmd is saved, an .nb.html file is created alongside it. This file is a self-contained HTML file which contains both a rendered copy of the notebook with all current chunk outputs (suitable for display on a website) and a copy of the notebook .Rmd itself.
+![](lesson-images/outputs-3-toc.png)
+</br>
 
-You can view the .nb.html file in any ordinary web browser. It can also be opened in RStudio; when you open there (using e.g. File -> Open), RStudio will do the following:
+To learn which arguments a format takes, read the format's help page in R, e.g. `?html_document`.
 
-Extract the bundled .Rmd file and place it alongside the .nb.html file
-Open the .Rmd file in a new RStudio editor tab
-Extract the chunk outputs from the .nb.html file and place them appropriately in the editor
-Note that the .nb.html file is only created for R Markdown documents which are notebooks (i.e. at least one of their output formats is html_notebook). It’s possible to have an R Markdown document which includes inline chunk output but does not produce an .nb.html file.
-
-Output Storage
-The document’s chunk outputs are also stored in an internal RStudio folder beneath the project’s .Rproj.user folder. If you work with a notebook but don’t have a project open, the outputs are stored in the RStudio state folder in your home directory (the location of this folder varies between the desktop and the server).
-
-##  Version Control
-
-One of the major advantages of R Notebooks compared to other notebook systems is that they are plain-text files and therefore work well with version control. We recommend checking in both the .Rmd and .nb.html files into version control so that both your source code and output are available to collaborators. However, you can choose to include only the .Rmd file (with a .gitignore that excludes the .nb.html) if you want each collaborator to work with their own private copies of the output.
 
 ***
 
-## [Continue to Slide Presentations](lesson-10.html)
+## [Continue to Notebooks](lesson-10.html)

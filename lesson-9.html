@@ -11,7 +11,7 @@
 
 
 
-<title>Dashboard Layouts</title>
+<title>Output Formats</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -153,12 +153,6 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 <div id="pageContent" class="standardPadding">
   <div class="articleBandContent">
-<style type="text/css">
-img {
-  margin-bottom: 2em;
-}
-</style>
-
 <div class="lessonPage">
   <div class="lessonsNav">
     <a id="nav-lesson-1" href="lesson-1.html">Introduction</a>
@@ -180,209 +174,61 @@ img {
 
 
 
-<h1 class="title toc-ignore">Dashboard Layouts</h1>
+<h1 class="title toc-ignore">Output Formats</h1>
 
 </div>
 
 
-<p>The <strong>flexdashboard</strong> package renders dashboards straight from your .Rmd files. Within your flexdashboard, you can place interactive JavaScript data visualizations based on <a href="http://www.htmlwidgets.org">htmlwidgets</a>, R graphics, tabular data, value boxes, gauges, and text annotations of various kinds.</p>
-<div class="figure">
-<img src="lesson-images/dashboardExamples.png" />
-
+<p>Set the <code>output_format</code> argument of <code>render</code> to render your .Rmd file into any of R Markdown’s supported formats. For example, the code below renders <a href="demos/1-example.Rmd">1-example.Rmd</a> to a Microsoft Word document:</p>
+<pre class="r"><code>library(rmarkdown)
+render(&quot;1-example.Rmd&quot;, output_format = &quot;word_document&quot;)</code></pre>
+<p><img src="lesson-images/outputs-1-word.png" /> </br></p>
+<p>If you do not select a format, R Markdown renders the file to its default format, which you can set in the <code>output</code> field of a .Rmd file’s header. The header of 1-example.Rmd shows that it renders to an HTML file by default.</p>
+<p>The RStudio IDE knit button renders a file to the first format listed in its <code>output</code> field. You can render to additional formats by clicking the dropdown menu beside the knit button:</p>
+<p><img src="lesson-images/outputs-2-pdf.png" /> </br></p>
+<p>The following output formats are available to use with R Markdown.</p>
+<div id="documents" class="section level3">
+<h3>Documents</h3>
+<ul>
+<li><a href="http://rmarkdown.rstudio.com/r_notebooks.html">html_notebook</a> - Interactive R Notebooks</li>
+<li><a href="http://rmarkdown.rstudio.com/html_document_format.html">html_document</a> - HTML document w/ Bootstrap CSS</li>
+<li><a href="http://rmarkdown.rstudio.com/pdf_document_format.html">pdf_document</a> - PDF document (via LaTeX template)</li>
+<li><a href="http://rmarkdown.rstudio.com/word_document_format.html">word_document</a> - Microsoft Word document (docx)</li>
+<li><a href="http://rmarkdown.rstudio.com/odt_document_format.html">odt_document</a> - OpenDocument Text document</li>
+<li><a href="http://rmarkdown.rstudio.com/rtf_document_format.html">rtf_document</a> - Rich Text Format document</li>
+<li><a href="http://rmarkdown.rstudio.com/markdown_document_format.html">md_document</a> - Markdown document (various flavors)</li>
+</ul>
 </div>
-<p>To get started, install the flexdashboard package from CRAN as follows:</p>
-<pre class="r"><code>install.packages(&quot;flexdashboard&quot;, type = &quot;source&quot;)</code></pre>
-<p>To author a flexdashboard you create an <a href="http://rmarkdown.rstudio.com">R Markdown</a> document with the <code>flexdashboard::flex_dashboard</code> output format, e.g. <code>output: flexdashboard::flex_dashboard</code>. You can do this from within RStudio using the <strong>New R Markdown</strong> dialog:</p>
-<div class="figure">
-<img src="lesson-images/NewRMarkdown.png" width="579" height="465" />
-
+<div id="presentations-slides" class="section level3">
+<h3>Presentations (slides)</h3>
+<ul>
+<li><a href="http://rmarkdown.rstudio.com/ioslides_presentation_format.html">ioslides_presentation</a> - HTML presentation with ioslides</li>
+<li><a href="http://rmarkdown.rstudio.com/revealjs_presentation_format.html">revealjs::revealjs_presentation</a> - HTML presentation with reveal.js</li>
+<li><a href="http://rmarkdown.rstudio.com/slidy_presentation_format.html">slidy_presentation</a> - HTML presentation with W3C Slidy</li>
+<li><a href="http://rmarkdown.rstudio.com/beamer_presentation_format.html">beamer_presentation</a> - PDF presentation with LaTeX Beamer</li>
+</ul>
 </div>
-<p>If you are not using RStudio, you can create a new <code>flexdashboard</code> R Markdown file from the R console:</p>
-<pre class="r"><code>rmarkdown::draft(&quot;dashboard.Rmd&quot;, template = &quot;flex_dashboard&quot;, package = &quot;flexdashboard&quot;)</code></pre>
-<div id="layout" class="section level3">
-<h3>Layout</h3>
-<div id="single-column" class="section level4">
-<h4>Single Column</h4>
-<p>Dashboards group content into boxes that are separated by level 3 markdown headers (<code>###</code>). By default, dashboards are laid out within a single column, with boxes stacked vertically within a column and sized to fill available browser height. For example, this layout defines a single column with two charts that fills available browser space:</p>
-<pre><code>---
-title: &quot;Single Column (Fill)&quot;
-output: 
-  flexdashboard::flex_dashboard:
-    vertical_layout: fill
----
-
-### Chart 1
-    
-```{r}
-
-```
-    
-### Chart 2
-
-```{r}
-
-```
-
-### Chart 3
-
-```{r}
-
-```</code></pre>
-<div class="figure">
-<img src="lesson-images/dashboardLayout1.png" />
-
+<div id="more" class="section level3">
+<h3>More</h3>
+<ul>
+<li><a href="http://rmarkdown.rstudio.com/flexdashboard/">flexdashboard::flex_dashboard</a> - Interactive dashboards</li>
+<li><a href="http://rmarkdown.rstudio.com/tufte_handout_format.html">tufte::tufte_handout</a> - PDF handouts in the style of Edward Tufte</li>
+<li><a href="http://rmarkdown.rstudio.com/tufte_handout_format.html">tufte::tufte_html</a> - HTML handouts in the style of Edward Tufte</li>
+<li><a href="http://rmarkdown.rstudio.com/tufte_handout_format.html">tufte::tufte_book</a> - PDF books in the style of Edward Tufte</li>
+<li><a href="http://rmarkdown.rstudio.com/package_vignette_format.html">html_vignette</a> - R package vignette (HTML)</li>
+<li><a href="http://rmarkdown.rstudio.com/github_document_format.html">github_document</a> - GitHub Flavored Markdown document</li>
+</ul>
+<p>You can also build <a href="https://bookdown.org/">books</a>, <a href="http://rmarkdown.rstudio.com/rmarkdown_websites.html">websites</a>, and <a href="http://rmarkdown.rstudio.com/authoring_shiny.html">interactive documents</a> with R Markdown.</p>
 </div>
-</div>
-<div id="multiple-columns" class="section level4">
-<h4>Multiple Columns</h4>
-<p>You use level 2 markdown headers (<code>--------------</code> or <code>##</code>) to group boxes into separate columns. For example, this dashboard displays 3 charts split across two columns:</p>
-<pre><code>---
-title: &quot;Multiple Columns&quot;
-output: flexdashboard::flex_dashboard
----
-    
-Column {data-width=600}
--------------------------------------
-    
-### Chart 1
-    
-```{r}
-
-```
-   
-Column {data-width=400}
--------------------------------------
-   
-### Chart 2
-
-```{r}
-
-```   
- 
-### Chart 3
-    
-```{r}
-
-```</code></pre>
-<div class="figure">
-<img src="lesson-images/dashboardLayout2.png" />
-
-</div>
-</div>
-<div id="row-orientation" class="section level4">
-<h4>Row Orientation</h4>
-<p>You can also choose to orient dashboards row-wise rather than column-wise by specifying the <code>orientation: rows</code> option. For example, this layout defines two rows, the first of which has a single chart and the second of which has two charts:</p>
-<pre><code>---
-title: &quot;Row Orientation&quot;
-output: 
-  flexdashboard::flex_dashboard:
-    orientation: rows
----
-    
-Row
--------------------------------------
-    
-### Chart 1
-    
-```{r}
-
-```
-   
-Row
--------------------------------------
-    
-### Chart 2
-    
-```{r}
-
-```
-    
-### Chart 3
-
-```{r}
-
-```</code></pre>
-<div class="figure">
-<img src="lesson-images/dashboardLayout3.png" />
-
-</div>
-</div>
-</div>
-<div id="exercise" class="section level2">
-<h2>Exercise</h2>
-<p>Remove all of the line breaks from <a href="lesson-exercises/exercise-9.Rmd">your document</a>. Then turn it into a <a href="http://rmarkdown.rstudio.com/flexdashboard/">flexdashboard</a> like the one below. The price graphs are in their own column, as are the volume graphs.</p>
-<hr />
-<div class="figure">
-<img src="lesson-images/dashboardDashboard.png" />
-
-</div>
+<div id="output-options" class="section level2">
+<h2>Output Options</h2>
+<p>Each output format is implemented as a function in R. You can customize the output by passing arguments to the function as sub-values of the <code>output</code> field. For example, <a href="demos/8-outputs.Rmd">8-outputs.Rmd</a> would render with a floating table of contents.</p>
+<p><img src="lesson-images/outputs-3-toc.png" /> </br></p>
+<p>To learn which arguments a format takes, read the format’s help page in R, e.g. <code>?html_document</code>.</p>
 <hr />
 </div>
-<div id="show-answer" class="section level2">
-<h2>Show Answer</h2>
-</div>
-<div id="model-answer" class="section level2">
-<h2>Model Answer</h2>
-<pre><code>---
-title: &quot;Two Stocks&quot;
-author: &quot;John Foo&quot;
-output: flexdashboard::flex_dashboard
-params:
-  symbol1: &quot;FB&quot;
-  symbol2: &quot;GOOG&quot;
----
-
-# Introduction
-
-```{r include = FALSE}
-library(quantmod)
-library(dygraphs)
-
-stock1 &lt;- getSymbols(params$symbol1, auto.assign = FALSE,
-                    from = &quot;2016-01-01&quot;, end = Sys.Date())
-stock2 &lt;- getSymbols(params$symbol2, auto.assign = FALSE,
-                    from = &quot;2016-01-01&quot;, end = Sys.Date())
-```
-
-This report examines the price of two stocks: 
-  
-* `r params$symbol1`
-* `r params$symbol2` 
-
-It is written in [R Markdown](http://rmarkdown.rstudio.com), an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. R Markdown combines the core syntax of **markdown** (an easy to write plain text format) with embedded **R** code chunks that are run so their output can be included in the final document.
-
-The data comes from [Yahoo finance](http://finance.yahoo.com).
-
-## Price
-
-### `r params$symbol1` price
-
-```{r echo = FALSE}
-dygraph(Cl(stock1))
-```
-
-### `r params$symbol2` price
-
-```{r echo = FALSE}
-dygraph(Cl(stock2))
-```
-
-## Volume
-
-### `r params$symbol1` volume
-
-```{r echo = FALSE}
-dygraph(Vo(stock1))
-```
-
-### `r params$symbol2` volume
-
-```{r echo = FALSE}
-dygraph(Vo(stock2))
-```</code></pre>
-</div>
-<div id="continue-to-next-lesson" class="section level2">
-<h2><a href="lesson-10.html">Continue to next lesson</a></h2>
+<div id="continue-to-notebooks" class="section level2">
+<h2><a href="lesson-10.html">Continue to Notebooks</a></h2>
 </div>
 
   </div> <!-- lessonContent -->
