@@ -11,7 +11,7 @@
 
 
 
-<title>R Markdown Websites</title>
+<title>Slide Presentations</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -153,12 +153,6 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 <div id="pageContent" class="standardPadding">
   <div class="articleBandContent">
-<style type="text/css">
-img {
-  margin-bottom: 2em;
-}
-</style>
-
 <div class="lessonPage">
   <div class="lessonsNav">
     <a id="nav-lesson-1" href="lesson-1.html">Introduction</a>
@@ -180,66 +174,24 @@ img {
 
 
 
-<h1 class="title toc-ignore">R Markdown Websites</h1>
+<h1 class="title toc-ignore">Slide Presentations</h1>
 
 </div>
 
 
-<p>You can render collections of R Markdown documents as a website using the <code>rmarkdown::render_site</code> function. To do so, you will need the most recent version of the <strong>rmarkdown</strong> package (v0.9.6) which you can install from CRAN as follows:</p>
-<pre class="r"><code>install.packages(&quot;rmarkdown&quot;, type = &quot;source&quot;)</code></pre>
-<div id="overview" class="section level2">
-<h2>Overview</h2>
-<p>An R Markdown website is a collection of files. Each website contains a file named <code>_site.yml</code> and a .Rmd file named <code>index.Rmd</code>, which provides the content for the home page of your website. You add pages to your website by adding additional .Rmd files, one per page.</p>
-<p>Here is the file structure of a very simple R Markdown website. This website has two pages, and a navbar to navigate between them.</p>
-<p><strong>_site.yml</strong></p>
-<pre class="yaml"><code>name: &quot;my-website&quot;
-navbar:
-  title: &quot;My Website&quot;
-  left:
-    - text: &quot;Home&quot;
-      href: index.html
-    - text: &quot;About&quot;
-      href: about.html</code></pre>
-<p><strong>index.Rmd</strong></p>
-<pre class="markdown"><code>---
-title: &quot;My Website&quot;
----
-
-Hello, Website!</code></pre>
-<p><strong>about.Rmd</strong></p>
-<pre class="markdown"><code>---
-title: &quot;About This Website&quot;
----
-
-More about this website.</code></pre>
-<p>When you execute the <code>rmarkdown::render_site</code> function from within the directory containing the website, R Markdown generates HTML files and places them into a directory named <code>_site</code>. These files are now ready to deploy as a standalone static website.</p>
-<div id="rstudio-ide-integration" class="section level3">
-<h3>RStudio IDE integration</h3>
-<p>The RStudio IDE also includes integrated support for developing R Markdown websites. These features are available in the current Preview Release of RStudio (v0.99.1242) which you can install from here: <a href="https://www.rstudio.com/products/rstudio/download/preview/">RStudio Preview Release</a>.</p>
-<p>To use these features, create an <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects">RStudio Project</a> that is associated with your website directory. You can then build and preview your website by clicking “Build Website” in the Build tab.</p>
-<div class="figure">
-<img src="lesson-images/build-website.png" />
-
-</div>
-<p>Learn more about generating websites with R Markdown at <a href="http://rmarkdown.rstudio.com/rmarkdown_websites.html">R Markdown Websites</a>.</p>
-</div>
-</div>
-<div id="exercise" class="section level2">
-<h2>Exercise</h2>
-<p>This <a href="lesson11-website/website.zip">zip file</a> contains an R Markdown website, but it is missing an <code>index.Rmd</code> file.</p>
-<p>Unzip the file and open the .Rproj file on your computer. Then save <a href="lesson-exercises/exercise-11.Rmd">your report</a> to the directory as <code>index.Rmd</code> and build the website. You’ll want to change the <code>output:</code> field back to <code>html_document</code>. For added effect, restore the floating table of contents.</p>
-<p>When you are finished, your website should look like this.</p>
-<div class="figure">
-<img src="lesson-images/rmarkdownWebsite1.png" />
-
-</div>
-<div class="figure">
-<img src="lesson-images/rmarkdownWebsite2.png" />
-
-</div>
-</div>
-<div id="continue-to-next-lesson" class="section level2">
-<h2><a href="lesson-12.html">Continue to next lesson</a></h2>
+<p>R Markdown renders to four presentation formats:</p>
+<ul>
+<li><a href="http://rmarkdown.rstudio.com/beamer_presentation_format.html">beamer_presentation</a> - PDF presentations with beamer</li>
+<li><a href="http://rmarkdown.rstudio.com/ioslides_presentation_format.html">ioslides_presentation</a> - HTML presentations with ioslides</li>
+<li><a href="http://rmarkdown.rstudio.com/slidy_presentation_format.html">slidy_presentation</a> - HTML presentations with slidy</li>
+<li><a href="http://rmarkdown.rstudio.com/revealjs_presentation_format.html">revealjs::revealjs_presentation</a> - HTML presentations with reveal.js</li>
+</ul>
+<p>Each format will intuitively divide your content into slides, with a new slide beginning at each first or second level header.</p>
+<p>Insert a horizontal rule (<code>***</code>) into your document to create a manual slide break. Create incremental bullets with <code>&gt;-</code>, as in the <a href="demos/10-presentation.Rmd">.Rmd file below</a>.</p>
+<p><img src="lesson-images/slides-1-slideshow.png" /> </br></p>
+<hr />
+<div id="continue-to-dashboards" class="section level2">
+<h2><a href="lesson-12.html">Continue to Dashboards</a></h2>
 </div>
 
   </div> <!-- lessonContent -->

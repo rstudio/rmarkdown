@@ -1,0 +1,44 @@
+---
+title: "Viridis Presentation"
+output: 
+  revealjs::revealjs_presentation:
+    theme: league
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(viridis)
+```
+
+The [viridis](https://github.com/sjmgarnier/viridis) package contains four color palettes, revealed in the plots that follow. 
+
+>- Viridis
+>- Magma
+>- Inferno
+>- Plasma
+
+Each plot displays a contour map of the Maunga Whau volcano in Auckland, New Zealand.
+
+## Viridis colors
+
+```{r}
+image(volcano, col = viridis(200))
+```
+
+## Magma colors
+
+```{r}
+image(volcano, col = viridis(200, option = "A"))
+```
+
+## Inferno colors
+
+```{r}
+image(volcano, col = viridis(200, option = "B"))
+```
+
+## Plasma colors
+
+```{r}
+image(volcano, col = viridis(200, option = "C"))
+```
