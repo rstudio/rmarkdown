@@ -1,0 +1,20 @@
+---
+title: "Simple Language Demos"
+output: html_document
+---
+
+You can write code in languages other than R with R Markdown, e.g.
+
+## Bash
+
+```{bash}
+ls *.Rmd
+```
+
+## Python
+
+```{python}
+x = 'hello, python world!'
+print(x.split(' '))
+```
+

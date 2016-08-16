@@ -8,7 +8,12 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-In addition to executing R code chunks, the [knitr](http://yihui.name/knitr/) package can also execute chunks in a variety of other languages. Some of the available language engines include:
+Notice how [this .Rmd file](demos/4-languages.Rmd) executes code in bash and python.
+
+![](lesson-images/languages-1-demos.png)
+</br>
+
+[knitr](http://yihui.name/knitr/) can execute code in many languages besides R. Some of the available language engines include:
 
 * Python
 * SQL
@@ -18,23 +23,11 @@ In addition to executing R code chunks, the [knitr](http://yihui.name/knitr/) pa
 * JavaScript
 * CSS
 
-To process a code chunk using an alternate language engine you simply use the name of the engine in place of `r` in your chunk declaration, for example:
+To process a code chunk using an alternate language engine, replace the `r` at the start of your chunk declaration with the name of the language:
 
-```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("demos/bash.Rmd"))
-```
-
-## Example
-
-The python engine enables execution of python code via an external python interpreter (the interpreter returned by `Sys.which("python")` is used to execute the code). Here’s a simple example:
-
-```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("demos/python.Rmd"))
-```
-
-```{python, echo = FALSE}
-x = 'hello, python world!'
-print(x.split(' '))
+```{r eval = FALSE}
+```{bash}
+```
 ```
 
 Note that chunk options like `echo` and `results` are all valid when using a language engine like python. 
