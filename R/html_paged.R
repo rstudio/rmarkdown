@@ -1,5 +1,5 @@
 paged_table_html <- function(x) {
-  data <- head(x, getOption("max.print", 1000))
+  data <- utils::head(x, getOption("max.print", 1000))
   data <- if (is.null(data)) as.data.frame(list()) else data
 
   columnNames <- names(data)
