@@ -168,19 +168,21 @@ var PagedTable = function (pagedTable) {
   }(pagedTable);
 
   var options = function(source) {
-    var options = source.options !== null ? source.options : {};
-    var columns = options.columns;
+    var options = typeof(source.options) !== "undefined" &&
+      source.options !== null ? source.options : {};
+
+    var columns = typeof(options.columns) !== "undefined" ? options.columns : {};
 
     var positiveIntOrNull = function(value) {
       return parseInt(value) >= 0 ? parseInt(value) : null;
     };
 
     return {
-      pages: positiveIntOrNull(source.options.pages),
-      rows: positiveIntOrNull(source.options.rows),
+      pages: positiveIntOrNull(options.pages),
+      rows: positiveIntOrNull(options.rows),
       columns: {
-        min: columns !== null ? positiveIntOrNull(columns.min) : null,
-        max: columns !== null ? positiveIntOrNull(columns.max) : null
+        min: positiveIntOrNull(columns.min),
+        max: positiveIntOrNull(columns.max)
       }
     };
   }(source);
@@ -423,6 +425,7 @@ var PagedTable = function (pagedTable) {
   var tableDiv;
   var header;
   var tableDivLastWidth = -1;
+  var tbody;
 
   // Caches pagedTable.clientWidth, specially for webkit
   var cachedPagedTableClientWidth = null;
@@ -458,7 +461,8 @@ var PagedTable = function (pagedTable) {
     header.onclick = function() {
       columns.incColumnNumber(backwards ? -1 : increment);
 
-      me.fitColumns(backwards);
+      renderFooter();
+      me.animateColumns(backwards);
 
       clearSelection();
       triggerOnChange();
@@ -479,11 +483,9 @@ var PagedTable = function (pagedTable) {
   var clearHeader = function() {
     var thead = pagedTable.querySelectorAll("thead")[0];
     thead.innerHTML = "";
-
-    return thead;
   };
 
-  var renderHeader = function() {
+  var renderHeader = function(clear) {
     cachedPagedTableClientWidth = pagedTable.clientWidth;
 
     var fragment = document.createDocumentFragment();
@@ -539,11 +541,60 @@ var PagedTable = function (pagedTable) {
     if (columns.number + columns.visible < columns.total)
       header.appendChild(renderColumnNavigation(columns.visible, false));
 
-    var thead = clearHeader();
+    if (typeof(clear) == "undefined" || clear) clearHeader();
+    var thead = pagedTable.querySelectorAll("thead")[0];
     thead.appendChild(fragment);
-
-    return thead;
   };
+
+  me.animateColumns = function(backwards) {
+    var thead = pagedTable.querySelectorAll("thead")[0];
+
+    var headerOld = thead.querySelectorAll("tr")[0];
+    var tbodyOld = table.querySelectorAll("tbody")[0];
+
+    me.fitColumns(backwards);
+
+    renderHeader(false);
+
+    header.style.opacity = "0";
+    header.style.transform = backwards ? "translateX(-30px)" : "translateX(30px)";
+    header.style.transition = "transform 200ms linear, opacity 200ms";
+    header.style.transitionDelay = "0";
+
+    renderBody(false);
+
+    if (headerOld) {
+      headerOld.style.position = "absolute";
+      headerOld.style.transform = "translateX(0px)";
+      headerOld.style.opacity = "1";
+      headerOld.style.transition = "transform 100ms linear, opacity 100ms";
+      headerOld.setAttribute("class", "pagedtable-remove-head");
+      headerOld.addEventListener("webkitTransitionEnd", function() {
+        var headerOldByClass = thead.querySelector(".pagedtable-remove-head");
+        if (headerOldByClass) thead.removeChild(headerOldByClass);
+      });
+    }
+
+    if (tbodyOld) table.removeChild(tbodyOld);
+
+    tbody.style.opacity = "0";
+    tbody.style.transition = "transform 200ms linear, opacity 200ms";
+    tbody.style.transitionDelay = "0ms";
+
+    // force relayout
+    window.getComputedStyle(header).opacity;
+    window.getComputedStyle(tbody).opacity;
+
+    if (headerOld) {
+      headerOld.style.transform = backwards ? "translateX(20px)" : "translateX(-30px)";
+      headerOld.style.opacity = "0";
+    }
+
+    header.style.transform = "translateX(0px)";
+    header.style.opacity = "1";
+
+    tbody.style.opacity = "1";
+  }
 
   me.onChange = function(callback) {
     onChangeCallbacks.push(callback);
@@ -556,13 +607,13 @@ var PagedTable = function (pagedTable) {
   };
 
   var clearBody = function() {
-    var tbody = pagedTable.querySelectorAll("tbody")[0];
-    tbody.innerHTML = "";
-
-    return tbody;
+    if (tbody) {
+      table.removeChild(tbody);
+      tbody = null;
+    }
   };
 
-  var renderBody = function() {
+  var renderBody = function(clear) {
     cachedPagedTableClientWidth = pagedTable.clientWidth
 
     var fragment = document.createDocumentFragment();
@@ -615,10 +666,11 @@ var PagedTable = function (pagedTable) {
       fragment.appendChild(paddingRow);
     }
 
-    var tbody = clearBody();
+    if (typeof(clear) == "undefined" || clear) clearBody();
+    tbody = document.createElement("tbody");
     tbody.appendChild(fragment);
 
-    return tbody;
+    table.appendChild(tbody);
   };
 
   var getLabelInfo = function() {
@@ -686,8 +738,8 @@ var PagedTable = function (pagedTable) {
     previous.appendChild(document.createTextNode("Previous"));
     previous.onclick = function() {
       page.setPageNumber(page.number - 1);
-      renderBody(pagedTable);
-      renderFooter(pagedTable);
+      renderBody();
+      renderFooter();
 
       triggerOnChange();
     };
@@ -748,7 +800,6 @@ var PagedTable = function (pagedTable) {
     tableDiv.appendChild(table);
 
     table.appendChild(document.createElement("thead"));
-    table.appendChild(document.createElement("tbody"));
 
     var footerDiv = document.createElement("div");
     footerDiv.setAttribute("class", "pagedtable-footer");
@@ -756,10 +807,10 @@ var PagedTable = function (pagedTable) {
 
     // if the host has not yet provided horizontal space, render hidden
     if (tableDiv.clientWidth <= 0) {
-      tableDiv.style.visibility = "hidden";
+      tableDiv.style.opacity = "0";
     }
 
-    me.fitColumns(false);
+    me.renderColumns();
 
     // retry seizing columns later if the host has not provided space
     var retries = 100;
@@ -769,7 +820,7 @@ var PagedTable = function (pagedTable) {
         if (tableDiv.clientWidth <= 0) {
           setTimeout(retryFitColumns, 100);
         } else {
-          me.fitColumns(false);
+          me.renderColumns();
           triggerOnChange();
         }
       }
@@ -799,7 +850,7 @@ var PagedTable = function (pagedTable) {
     columns.calculateMeasures(measuresCell);
 
     if (tableDiv.clientWidth > 0) {
-      tableDiv.style.visibility = "visible";
+      tableDiv.style.opacity = 1;
     }
 
     var visibleColumns = tableDiv.clientWidth <= 0 ? Math.max(columns.max, 1) : 1;
@@ -902,12 +953,16 @@ var PagedTable = function (pagedTable) {
 
     registerWidths();
 
+    tableDivLastWidth = tableDiv.clientWidth
+  };
+
+  me.renderColumns = function() {
+    me.fitColumns(false);
+
     renderHeader();
     renderBody();
     renderFooter();
-
-    tableDivLastWidth = tableDiv.clientWidth
-  };
+  }
 
   me.resizeColumns = function() {
     var tableDivLastResizeWidth = -1;
@@ -918,7 +973,7 @@ var PagedTable = function (pagedTable) {
         setTimeout(resizeColumnsDelayed, 500);
       } else {
         if (tableDiv.clientWidth !== tableDivLastWidth) {
-          me.fitColumns(false);
+          me.renderColumns();
           triggerOnChange();
         }
       }
@@ -949,7 +1004,7 @@ var PagedTableDoc;
 
   PagedTableDoc.resizeAll = function() {
     allPagedTables.forEach(function(pagedTable) {
-      pagedTable.fitColumns(false);
+      pagedTable.renderColumns();
     });
   };
 
