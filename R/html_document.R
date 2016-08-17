@@ -305,7 +305,7 @@ html_document <- function(toc = FALSE,
       isSQL <- "tbl_sql" %in% class(x)
       n <- if (isSQL) getOption("sql.max.print", 1000) else getOption("max.print", 1000)
 
-      df <- as.data.frame(head(x, n))
+      df <- as.data.frame(utils::head(x, n))
       print(df)
     })
   }
