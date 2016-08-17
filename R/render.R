@@ -677,7 +677,7 @@ merge_render_context <- function(context) {
 resolve_df_print <- function(df_print) {
 
   # available methods
-  valid_methods <- c("default", "kable", "tibble")
+  valid_methods <- c("default", "kable", "tibble", "paged")
 
   # if we are passed NULL then select the first method
   if (is.null(df_print))
@@ -692,6 +692,8 @@ resolve_df_print <- function(df_print) {
       df_print <- knitr::kable
     else if (df_print == "tibble")
       df_print <- function(x) print(tibble::as_tibble(x))
+    else if (df_print == "paged")
+      df_print <- function(x) knitr::asis_output(paged_table_html(x))
     else if (df_print == "default")
       df_print <- print
     else

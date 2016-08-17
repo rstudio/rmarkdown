@@ -368,6 +368,13 @@ html_document <- function(toc = FALSE,
                                                lib_dir,
                                                output_dir))
 
+    # pagedtable
+    args <- c(args, pandoc_html_pagedtable_args(df_print,
+                                               template,
+                                               self_contained,
+                                               lib_dir,
+                                               output_dir))
+
     # bootstrap navigation (requires theme)
     if (!is.null(theme)) {
 
