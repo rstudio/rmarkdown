@@ -299,6 +299,17 @@ html_document <- function(toc = FALSE,
     }
   }
 
+  # pagedtable global options
+  if (identical(df_print, "paged")) {
+    options("dplyr.tibble.print" = function(x, n, width, ...) {
+      isSQL <- "tbl_sql" %in% class(x)
+      n <- if (isSQL) getOption("sql.max.print", 1000) else getOption("max.print", 1000)
+
+      df <- as.data.frame(head(x, n))
+      print(df)
+    })
+  }
+
   # pre-processor for arguments that may depend on the name of the
   # the input file AND which need to inject html dependencies
   # (otherwise we could just call the pre_processor)

@@ -35,6 +35,15 @@ ioslides_presentation <- function(logo = NULL,
   if (widescreen)
     args <- c(args, "--variable", "widescreen");
 
+  # pagedtables
+  if (identical(df_print, "paged")) {
+    pagedtable_path <- rmarkdown_system_file("rmd/h/pagedtable-0.0.1")
+    pagedtable_path <- pandoc_path_arg(pagedtable_path)
+
+    args <- c(args,
+              "--variable", paste("pagedtablejs=", pagedtable_path, sep=""))
+  }
+
   # transition
   if (is.numeric(transition))
     transition <- as.character(transition)

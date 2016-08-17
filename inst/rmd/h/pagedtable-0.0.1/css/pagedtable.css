@@ -13,7 +13,7 @@
 .pagedtable table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .pagedtable th {
@@ -26,6 +26,10 @@
 
 .pagedtable-empty th {
   display: none;
+}
+
+.pagedtable td {
+  padding: 0 4px 0 4px;
 }
 
 .pagedtable .even {
@@ -49,6 +53,7 @@
   cursor: pointer;
   padding: 0 5px 0 5px;
   float: right;
+  border: 0;
 }
 
 .pagedtable-index-nav-disabled {
@@ -65,6 +70,7 @@ a.pagedtable-index-nav-disabled:hover {
 .pagedtable-indexes {
   cursor: pointer;
   float: right;
+  border: 0;
 }
 
 .pagedtable-index-current {
@@ -72,6 +78,7 @@ a.pagedtable-index-nav-disabled:hover {
   text-decoration: none;
   font-weight: bold;
   color: #333;
+  border: 0;
 }
 
 a.pagedtable-index-current:hover {
@@ -84,6 +91,7 @@ a.pagedtable-index-current:hover {
   width: 30px;
   display: inline-block;
   text-align: center;
+  border: 0;
 }
 
 .pagedtable-footer {
@@ -97,7 +105,6 @@ a.pagedtable-index-current:hover {
 
 .pagedtable-info {
   overflow: hidden;
-  max-height: 20px;
   color: #999;
   white-space: nowrap;
   text-overflow: ellipsis;

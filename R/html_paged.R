@@ -1,4 +1,4 @@
-paged_table_html = function(x) {
+paged_table_html <- function(x) {
   data <- head(x, getOption("max.print", 1000))
   data <- if (is.null(data)) as.data.frame(list()) else data
 
@@ -21,11 +21,11 @@ paged_table_html = function(x) {
     }
   )
 
-  names(data) <- columnSequence
+  names(data) <- as.character(columnSequence)
 
-  # add the names column
-  columns <- unname(
-    c(
+  addRowNames = all.equal(.row_names_info(data), -50)
+  if (addRowNames) {
+    columns <- c(
       list(
         list(
           label = "",
@@ -36,9 +36,11 @@ paged_table_html = function(x) {
       ),
       columns
     )
-  )
 
-  data$`_rn_` <- rownames(data)
+    data$`_rn_` <- rownames(data)
+  }
+
+  columns <- unname(columns)
 
   is_list <- vapply(data, is.list, logical(1))
   data[is_list] <- lapply(data[is_list], function(x) {
@@ -59,13 +61,23 @@ paged_table_html = function(x) {
     stringsAsFactors = FALSE,
     optional = TRUE)
 
+  pagedTableOptions <- list(
+    columns = list(
+      min = getOption("cols.min.print"),
+      max = getOption("cols.print")
+    ),
+    rows = getOption("rows.print"),
+    pages = getOption("pages.print")
+  )
+
   list(
     columns = columns,
-    data = if (length(data) == 0) list() else data
+    data = if (length(data) == 0) list() else data,
+    options = pagedTableOptions
   )
 
   paste(
-    "<div data-pagedtable>",
+    "<div data-pagedtable=\"true\">",
     "  <script data-pagedtable-source type=\"application/json\">",
     jsonlite::toJSON(list(
       columns = columns,
