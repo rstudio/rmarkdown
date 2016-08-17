@@ -11,7 +11,7 @@
 
 
 
-<title>Rendering Output</title>
+<title>Inline Code</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -153,26 +153,23 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 <div id="pageContent" class="standardPadding">
   <div class="articleBandContent">
-<style type="text/css">
-img {
-  margin-bottom: 2em;
-}
-</style>
-
 <div class="lessonPage">
   <div class="lessonsNav">
     <a id="nav-lesson-1" href="lesson-1.html">Introduction</a>
-    <a id="nav-lesson-2" href="lesson-2.html">Markdown Basics</a>
-    <a id="nav-lesson-3" href="lesson-3.html">R Code Chunks</a>
-    <a id="nav-lesson-4" href="lesson-4.html">Rendering Ouput</a>
-    <a id="nav-lesson-5" href="lesson-5.html">Using Parameters</a>
-    <a id="nav-lesson-6" href="lesson-6.html">Inline R Code</a>
-    <a id="nav-lesson-7" href="lesson-7.html">Output Formats</a>
-    <a id="nav-lesson-8" href="lesson-8.html">Presentations</a>
-    <a id="nav-lesson-9" href="lesson-9.html">Dashboard Layouts</a>
-    <a id="nav-lesson-10" href="lesson-10.html">Dashboard Layouts 2</a>
-    <a id="nav-lesson-11" href="lesson-11.html">R Markdown Websites</a>
-    <a id="nav-lesson-12" href="lesson-12.html">Interactive Documents</a>
+    <a id="nav-lesson-2" href="lesson-2.html">How It Works</a>
+    <a id="nav-lesson-3" href="lesson-3.html">Code Chunks</a>
+    <a id="nav-lesson-4" href="lesson-4.html">Inline Code</a>
+    <a id="nav-lesson-5" href="lesson-5.html">Code Languages</a>
+    <a id="nav-lesson-6" href="lesson-6.html">Parameters</a>
+    <a id="nav-lesson-7" href="lesson-7.html">Tables</a>
+    <a id="nav-lesson-8" href="lesson-8.html">Markdown Basics</a>
+    <a id="nav-lesson-9" href="lesson-9.html">Output Formats</a>
+    <a id="nav-lesson-10" href="lesson-10.html">Notebooks</a>
+    <a id="nav-lesson-11" href="lesson-11.html">Slide Presentations</a>
+    <a id="nav-lesson-12" href="lesson-12.html">Dashboards</a>
+    <a id="nav-lesson-13" href="lesson-13.html">Websites</a>
+    <a id="nav-lesson-14" href="lesson-14.html">Interactive Documents</a>
+    <a id="nav-lesson-15" href="lesson-15.html">Cheatsheets</a>
   </div>
   <div class="lessonContent">
 
@@ -180,34 +177,24 @@ img {
 
 
 
-<h1 class="title toc-ignore">Rendering Output</h1>
+<h1 class="title toc-ignore">Inline Code</h1>
 
 </div>
 
 
-<p>There are two ways to render an R Markdown document into it’s final output format. If you are using RStudio, then the “Knit” button (Ctrl+Shift+K) will render the document and display a preview of it.</p>
-<div class="figure">
-<img src="lesson-images/markdownKnitButton.png" />
-
-</div>
-<p>If you are not using RStudio then you simply need to call the <code>rmarkdown::render</code> function, for example:</p>
-<pre class="r"><code>rmarkdown::render(&quot;input.Rmd&quot;)</code></pre>
-<p>You can learn more about the <code>render()</code> function by examining it’s help page, <code>help(render, package = &quot;rmarkdown&quot;)</code>.</p>
-<p>Note that both methods use the same mechanism; RStudio’s “Knit” button calls <code>rmarkdown::render()</code> under the hood.</p>
-<div id="exercise" class="section level2">
-<h2>Exercise</h2>
-<p>Use the <code>rmarkdown::render()</code> function to render <a href="lesson-exercises/exercise-4.Rmd">your .Rmd file</a>. Be sure to give <code>rmarkdown::render()</code> the filepath to your .Rmd file. Set <code>render()</code>’s <code>output_file</code> to choose a custom name for the output file.</p>
+<p>Code results can be inserted directly into the text of a .Rmd file by enclosing the code with <code>`r `</code>. The <a href="demos/3-inline.Rmd">file below</a> uses <code>`r `</code> twice to call <code>colorFunc</code>, which returns “heat.colors.”</p>
+<p><img src="lesson-images/inline-1-heat.png" /> </br></p>
+<p>This makes it easy to update the report to refer to another function.</p>
+<p><img src="lesson-images/inline-2-terrain.png" /> </br></p>
+<p>R Markdown will always</p>
+<ul>
+<li>display the results of inline code, but not the code</li>
+<li>apply relevant text formatting to the results</li>
+</ul>
+<p>As a result, inline output is indistinguishable from the surrounding text. Inline expressions do not take knitr options.</p>
 <hr />
-</div>
-<div id="show-answer" class="section level2">
-<h2>Show Answer</h2>
-</div>
-<div id="model-answer" class="section level2">
-<h2>Model answer</h2>
-<pre class="r"><code>render(&quot;exercise-4.Rmd&quot;, output_file = &quot;stocks.html&quot;)</code></pre>
-</div>
-<div id="continue-to-next-lesson" class="section level2">
-<h2><a href="lesson-5.html">Continue to next lesson</a></h2>
+<div id="continue-to-code-languages" class="section level2">
+<h2><a href="lesson-5.html">Continue to Code Languages</a></h2>
 </div>
 
   </div> <!-- lessonContent -->

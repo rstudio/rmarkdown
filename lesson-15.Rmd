@@ -1,0 +1,28 @@
+---
+title: "Cheatsheets"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_header.html, include_lessons_nav.html]
+      after_body: [include_lessons_nav_end.html, include_footer.html]
+---
+
+Use the cheatsheets that are built into the RStudio IDE to jog your memory about R Markdown.
+
+[![](lesson-images/cheatsheets-1-cheatsheet.png)](http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
+</br>
+
+Go to *File > Help > Cheatsheets > R Markdown Cheat Sheet* to open the main [R Markdown cheatsheet](http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf), pictured above.
+
+![](lesson-images/cheatsheets-2-path.png)
+</br>
+
+Go to *File > Help > Markdown Quick Reference* to open the *Markdown Quick Reference* in your help pane.
+
+![](lesson-images/cheatsheets-3-quick-reference.png)
+</br>
+
+****
+
+## Visit the [Formats](formats.html) and [Articles](articles.html) tabs to learn more.

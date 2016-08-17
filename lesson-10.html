@@ -11,7 +11,7 @@
 
 
 
-<title>Dashboard Layouts 2</title>
+<title>Notebooks</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -153,26 +153,23 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 <div id="pageContent" class="standardPadding">
   <div class="articleBandContent">
-<style type="text/css">
-img {
-  margin-bottom: 2em;
-}
-</style>
-
 <div class="lessonPage">
   <div class="lessonsNav">
     <a id="nav-lesson-1" href="lesson-1.html">Introduction</a>
-    <a id="nav-lesson-2" href="lesson-2.html">Markdown Basics</a>
-    <a id="nav-lesson-3" href="lesson-3.html">R Code Chunks</a>
-    <a id="nav-lesson-4" href="lesson-4.html">Rendering Ouput</a>
-    <a id="nav-lesson-5" href="lesson-5.html">Using Parameters</a>
-    <a id="nav-lesson-6" href="lesson-6.html">Inline R Code</a>
-    <a id="nav-lesson-7" href="lesson-7.html">Output Formats</a>
-    <a id="nav-lesson-8" href="lesson-8.html">Presentations</a>
-    <a id="nav-lesson-9" href="lesson-9.html">Dashboard Layouts</a>
-    <a id="nav-lesson-10" href="lesson-10.html">Dashboard Layouts 2</a>
-    <a id="nav-lesson-11" href="lesson-11.html">R Markdown Websites</a>
-    <a id="nav-lesson-12" href="lesson-12.html">Interactive Documents</a>
+    <a id="nav-lesson-2" href="lesson-2.html">How It Works</a>
+    <a id="nav-lesson-3" href="lesson-3.html">Code Chunks</a>
+    <a id="nav-lesson-4" href="lesson-4.html">Inline Code</a>
+    <a id="nav-lesson-5" href="lesson-5.html">Code Languages</a>
+    <a id="nav-lesson-6" href="lesson-6.html">Parameters</a>
+    <a id="nav-lesson-7" href="lesson-7.html">Tables</a>
+    <a id="nav-lesson-8" href="lesson-8.html">Markdown Basics</a>
+    <a id="nav-lesson-9" href="lesson-9.html">Output Formats</a>
+    <a id="nav-lesson-10" href="lesson-10.html">Notebooks</a>
+    <a id="nav-lesson-11" href="lesson-11.html">Slide Presentations</a>
+    <a id="nav-lesson-12" href="lesson-12.html">Dashboards</a>
+    <a id="nav-lesson-13" href="lesson-13.html">Websites</a>
+    <a id="nav-lesson-14" href="lesson-14.html">Interactive Documents</a>
+    <a id="nav-lesson-15" href="lesson-15.html">Cheatsheets</a>
   </div>
   <div class="lessonContent">
 
@@ -180,90 +177,24 @@ img {
 
 
 
-<h1 class="title toc-ignore">Dashboard Layouts 2</h1>
+<h1 class="title toc-ignore">Notebooks</h1>
 
 </div>
 
 
-<p>With flexdashboard, layout options are easy to customize. For example, you can group columns (or rows) into separate pages with level 1 headers (<code>==========</code> or <code>#</code>). The title of the header will appear as the title of the page in the dashboard’s navbar. The page will contain every box, column, or row in the section that is associated with the header.</p>
-<p>To further customize pages, columns (or rows) and boxes, place options surrounded by brackets next to the title of the element. For example, the option below would turn a page into a sidebar for the dashboard.</p>
-<pre><code># Introduction {.sidebar}</code></pre>
-<p>flexdashboard also provides simple tools for creating tabsets, value boxes, and gauges. Learn more about flexdashboard at <a href="http://rmarkdown.rstudio.com/flexdashboard/">flexdashboard: Easy interactive dashboards for R</a>.</p>
-<div id="exercise" class="section level2">
-<h2>Exercise</h2>
-<p>Use <code>{.sidebar}</code> to move the text at the top of <a href="lesson-exercises/exercise-10.Rmd">your dashboard</a> into a sidebar. Then migrate each column to its own page. The results should look like this:</p>
-<hr />
-<div class="figure">
-<img src="lesson-images/dashboardDashboard2.png" />
-
-</div>
+<p>In <a href="lesson-2.html">How it Works</a>, you learned that R Markdown files provide a <a href="http://rmarkdown.rstudio.com/r_notebooks.html">notebook interface</a> that makes it easy to test and iterate when writing code.</p>
+<p>Share this experience by sharing your .Rmd file with colleagues for them to open in their RStudio IDE. Or recreate the notebook interface for non-R users by rendering your file to an HTML notebook with <code>output: html_notebook</code>, as in <a href="demos/9-notebook.Rmd">this example</a>.</p>
+<p><img src="lesson-images/notebooks-1-notebook.png" /> </br></p>
+<p>R Markdown will create a <code>nb.html</code> version of your file: a self-contained HTML file that contains both a rendered copy of the notebook with all current chunk outputs (suitable for display on a website) and a copy of the notebook .Rmd itself.</p>
+<p>You can view the .nb.html file in any ordinary web browser, or open it in RStudio. In this case, RStudio will extract and open the .Rmd file that underlies the nb.html file.</p>
+<div id="version-control" class="section level2">
+<h2>Version Control</h2>
+<p>One of the major advantages of R Notebooks compared to other notebook systems is that they are plain-text files and therefore work well with version control. We recommend checking in both the .Rmd and .nb.html files into version control so that both your source code and output are available to collaborators. However, you can choose to include only the .Rmd file (with a .gitignore that excludes the .nb.html) if you want each collaborator to work with their own private copies of the output.</p>
+<p>See <a href="http://rmarkdown.rstudio.com/r_notebooks.html">R Notebooks</a> to learn more about notebooks with R Markdown.</p>
 <hr />
 </div>
-<div id="show-answer" class="section level2">
-<h2>Show Answer</h2>
-</div>
-<div id="model-answer" class="section level2">
-<h2>Model Answer</h2>
-<pre><code>---
-title: &quot;Two Stocks&quot;
-author: &quot;John Foo&quot;
-output: flexdashboard::flex_dashboard
-params:
-  symbol1: &quot;FB&quot;
-  symbol2: &quot;GOOG&quot;
----
-
-# Introduction {.sidebar}
-
-```{r include = FALSE}
-library(quantmod)
-library(dygraphs)
-
-stock1 &lt;- getSymbols(params$symbol1, auto.assign = FALSE,
-                    from = &quot;2016-01-01&quot;, end = Sys.Date())
-stock2 &lt;- getSymbols(params$symbol2, auto.assign = FALSE,
-                    from = &quot;2016-01-01&quot;, end = Sys.Date())
-```
-
-This report examines the price of two stocks: 
-  
-* `r params$symbol1`
-* `r params$symbol2` 
-
-It is written in [R Markdown](http://rmarkdown.rstudio.com), an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. R Markdown combines the core syntax of **markdown** (an easy to write plain text format) with embedded **R** code chunks that are run so their output can be included in the final document.
-
-The data comes from [Yahoo finance](http://finance.yahoo.com).
-
-# Price
-
-### `r params$symbol1` price
-
-```{r echo = FALSE}
-dygraph(Cl(stock1))
-```
-
-### `r params$symbol2` price
-
-```{r echo = FALSE}
-dygraph(Cl(stock2))
-```
-
-# Volume
-
-### `r params$symbol1` volume
-
-```{r echo = FALSE}
-dygraph(Vo(stock1))
-```
-
-### `r params$symbol2` volume
-
-```{r echo = FALSE}
-dygraph(Vo(stock2))
-```</code></pre>
-</div>
-<div id="continue-to-next-lesson" class="section level2">
-<h2><a href="lesson-11.html">Continue to next lesson</a></h2>
+<div id="continue-to-slide-presentations" class="section level2">
+<h2><a href="lesson-11.html">Continue to Slide Presentations</a></h2>
 </div>
 
   </div> <!-- lessonContent -->

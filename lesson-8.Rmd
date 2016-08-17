@@ -1,5 +1,5 @@
 ---
-title: "Presentations"
+title: "Markdown Basics"
 output:
   html_document:
     toc_float: false
@@ -8,33 +8,33 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-You can generate a slide presentation from the same .Rmd file that you use to render reports. Each of R Markdown's presentation formats will intuitively divide your content into slides, with a new slide beginning at each first or second level header.
+Format the text in your R Markdown file with [Pandoc's Markdown](authoring_pandoc_markdown.html), a set of markup annotations for plain text files. When you render your file, Pandoc transforms the [marked up text](demos/7-Markdown.Rmd) into formatted text in your final file format:
 
-Insert a horizontal rule (`***`) into your document to create a manual slide break.
+![](lesson-images/markdown-1-markup.png)
+</br>
 
-You can learn more about each of R Markdown's slide formats here:
+You can use Pandoc's Markdown to make:
 
-* [ioslides slideshows](http://rmarkdown.rstudio.com/ioslides_presentation_format.html)
-* [reveal.js slideshows](http://rmarkdown.rstudio.com/revealjs_presentation_format.html)
-* [slidy slideshows](http://rmarkdown.rstudio.com/slidy_presentation_format.html)
-* [Beamer Slideshows](http://rmarkdown.rstudio.com/beamer_presentation_format.html)
+* Headers
+* Lists
+* Links
+* Images
+* Block quotes
+* Latex equations
+* Horizontal rules
+* Tables
+* Footnotes
+* Bibliographies and Citations
+* Slide breaks
+* Italicized text
+* Bold text
+* Superscripts
+* Subscripts
+* Strikethrough text
 
-## Exercise
-
-Add a title and author to the YAML of your [your document](lesson-exercises/exercise-8.Rmd) and remove the table of contents. Then change the output field to `ioslides_presentation` and add slide breaks to make your report resemble the slide deck below.
+Read more about markdown at [Pandoc's Markdown](authoring_pandoc_markdown.html) or consult the quick reference in the [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf).
 
 ***
 
-![](lesson-images/markdownSlides.png)
+## [Continue to Output Formats](lesson-9.html)
 
-***
-
-## Show Answer
-
-## Model Answer
-
-```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("lesson-solutions/solution-8.Rmd"))
-```
-
-## [Continue to next lesson](lesson-9.html)

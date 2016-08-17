@@ -1,0 +1,21 @@
+---
+title: "Markdown Demo"
+output: html_document
+bibliography: rmarkdown.bib
+---
+
+Markdown provides an easy way to make standard types of formatted text, like
+
+- *italics*
+- **bold**
+- `code`
+- [links](rmarkdown.rstudio.com)
+- etc.
+
+But did you know that you can also use R Markdown's markdown to make
+
+- Latex equations, $E = mc^{2}$
+- And bibliographies [@rmarkdown15].
+
+# References
+    

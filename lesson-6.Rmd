@@ -1,41 +1,52 @@
 ---
-title: "Inline R Code"
+title: "Parameters"
 output:
   html_document:
     toc_float: false
     includes:
       before_body: [include_header.html, include_lessons_nav.html]
       after_body: [include_lessons_nav_end.html, include_footer.html]
-params:
-  symbol1: "FB"
-  symbol2: "GOOG"
 ---
 
-You can evaluate R expressions inline by enclosing the expression within a single back-tick qualified with 'r'. For example, the following code embeds R results as text in the output at right
+R Markdown documents can include one or more parameters whose values can be set when you render the report. For example, the [file below](demos/5-parameters.Rmd) uses a `data` parameter that determines which data set to plot.
 
-![](lesson-images/quicktourInline.png)
+![](lesson-images/params-1-hawaii.png)
+</br>
 
-## Exercise
+## Declaring Parameters
 
-Use inline code to call your parameters from within your text.
+Parameters are declared using the `params` field within the YAML header of the document. For example, the file above creates the parameter `data` and assigns it the default value `"hawaii"`.
 
-Replace every instance of AMZN or AAPL in the text of [your report](lesson-exercises/exercise-6.Rmd) with inline code that calls `params$symbol1` or `params$symbol2`.
+## Using Parameters in Code
 
-When you re-knit your file, the results will look like this:
+Parameters are made available within the knit environment as a read-only list named `params`. To access a parameter in code, call `params$<parameter name>`.
+
+## Setting Parameters values
+
+Add a `params` argument to `render` to create a report that uses a new set of parameter values. Here we modify our report to use the `aleutians` data set with 
+
+```{r eval = FALSE}
+render("5-parameters.Rmd", params = list(data = "aleutians"))
+```
+
+![](lesson-images/params-2-aleutians.png)
+</br>
+
+Better yet, click the "Knit with Parameters" option in the dropdown menu next to the RStudio IDE knit button to set parameters, render, and preview the report in a single user friendly step.
+
+![](lesson-images/params-3-florida.png)
+</br>
+
+Parameters are useful when you want to re-render the same report with distinct values for various key inputs, for example:
+
+* Running a report specific to a department or geographic region.
+
+* Running a report that covers a specific period in time.
+
+* Running multiple versions of a report for distinct sets of core assumptions.
+
+Learn more about parameters at [Paramaterized Reports](http://rmarkdown.rstudio.com/developer_parameterized_reports.html).
 
 ***
 
-```{r child="lesson-solutions/solution-6.Rmd"}
-```
-
-***
-
-## Show Answer
-
-## Model Answer
-
-```{r echo = FALSE, comment = ""}
-cat(htmltools::includeText("lesson-solutions/solution-6.Rmd"))
-```
-
-## [Continue to next lesson](lesson-7.html)
+## [Continue to Tables](lesson-7.html)

@@ -1,0 +1,20 @@
+---
+title: "Magma Demo"
+output: html_document
+---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r message = FALSE, warning = FALSE}
+library(viridis)
+```
+
+The code below demonstrates the Magma palette in the [viridis](https://github.com/sjmgarnier/viridis) package. It displays a contour map of the Maunga Whau volcano in Auckland, New Zealand.
+
+## Magma colors
+
+```{r fig.cap = "The Maunga Whau volcano, Auckland."}
+image(volcano, col = viridis(200, option = "A"))
+```
