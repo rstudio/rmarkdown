@@ -114,3 +114,8 @@ a.pagedtable-index-current:hover {
   color: #999;
   font-weight: 400;
 }
+
+.pagedtable-na-cell {
+  font-style: italic;
+  opacity: 0.3;
+}

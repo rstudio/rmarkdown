@@ -632,7 +632,12 @@ var PagedTable = function (pagedTable) {
         var cellName = columnData.name;
         var dataCell = dataRow[cellName];
         var htmlCell = document.createElement("td");
-        htmlCell.appendChild(document.createTextNode(dataCell));
+
+        if (dataCell === "NA") htmlCell.setAttribute("class", "pagedtable-na-cell");
+        if (dataCell === "__NA__") dataCell = "NA";
+
+        var cellText = document.createTextNode(dataCell);
+        htmlCell.appendChild(cellText);
         if (dataCell.length > 50) {
           htmlCell.setAttribute("title", dataCell);
         }
