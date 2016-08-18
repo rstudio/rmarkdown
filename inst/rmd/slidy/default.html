@@ -13,10 +13,10 @@ $if(date-meta)$
   <meta name="date" content="$date-meta$" />
 $endif$
 $if(footer)$
-  <meta name="copyright" content="$footer$"/> 
+  <meta name="copyright" content="$footer$"/>
 $endif$
 $if(font-size-adjustment)$
-  <meta name="font-size-adjustment" content="$font-size-adjustment$"/> 
+  <meta name="font-size-adjustment" content="$font-size-adjustment$"/>
 $endif$
   <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
   <style type="text/css">code{white-space: pre;}</style>
@@ -38,6 +38,11 @@ $endfor$
     charset="utf-8" type="text/javascript"></script>
 $if(duration)$
   <meta name="duration" content="$duration$" />
+$endif$
+$if(pagedtablejs)$
+<link rel="stylesheet" href="$pagedtablejs$/css/pagedtable.css"
+      $if(html5)$$else$type="text/css" $endif$/>
+<script src="$pagedtablejs$/js/pagedtable.js"></script>
 $endif$
 </head>
 <body>

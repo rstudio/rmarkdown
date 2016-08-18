@@ -119,6 +119,11 @@ $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
 
+$if(pagedtablejs)$
+<link rel="stylesheet" href="$pagedtablejs$/css/pagedtable.css"
+      $if(html5)$$else$type="text/css" $endif$/>
+<script src="$pagedtablejs$/js/pagedtable.js"></script>
+$endif$
 </head>
 
 <body>

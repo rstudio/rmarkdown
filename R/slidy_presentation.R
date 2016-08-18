@@ -91,6 +91,15 @@ slidy_presentation <- function(incremental = FALSE,
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
 
+  # pagedtables
+  if (identical(df_print, "paged")) {
+    pagedtable_path <- rmarkdown_system_file("rmd/h/pagedtable-0.0.1")
+    pagedtable_path <- pandoc_path_arg(pagedtable_path)
+
+    args <- c(args,
+              "--variable", paste("pagedtablejs=", pagedtable_path, sep=""))
+  }
+
   # additional css
   for (css_file in css)
     args <- c(args, "--css", pandoc_path_arg(css_file))

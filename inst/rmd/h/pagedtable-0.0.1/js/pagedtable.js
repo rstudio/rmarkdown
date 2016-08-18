@@ -191,7 +191,7 @@ var PagedTable = function (pagedTable) {
     var me = this;
 
     var defaults = {
-      max: 9,
+      max: 1,
       rows: 10
     };
 
@@ -266,7 +266,8 @@ var PagedTable = function (pagedTable) {
     var me = this;
 
     me.defaults = {
-      max: 10
+      max: 10,
+      min: 5
     };
 
     me.number = 0;
@@ -274,7 +275,7 @@ var PagedTable = function (pagedTable) {
     me.total = columns.length;
     me.subset = [];
     me.padding = 0;
-    me.min = options.columns !== null ? options.columns.min : null;
+    me.min = options.columns !== null && options.columns.min !== null ? options.columns.min : me.defaults.min;
     me.max = options.columns !== null && options.columns.max !== null ? options.columns.max : me.defaults.max;
     me.widths = {};
 
@@ -631,7 +632,12 @@ var PagedTable = function (pagedTable) {
         var cellName = columnData.name;
         var dataCell = dataRow[cellName];
         var htmlCell = document.createElement("td");
-        htmlCell.appendChild(document.createTextNode(dataCell));
+
+        if (dataCell === "NA") htmlCell.setAttribute("class", "pagedtable-na-cell");
+        if (dataCell === "__NA__") dataCell = "NA";
+
+        var cellText = document.createTextNode(dataCell);
+        htmlCell.appendChild(cellText);
         if (dataCell.length > 50) {
           htmlCell.setAttribute("title", dataCell);
         }
@@ -676,16 +682,17 @@ var PagedTable = function (pagedTable) {
   var getLabelInfo = function() {
     var pageStart = page.getRowStart();
     var pageEnd = page.getRowEnd();
-    var totalRecods = data.length;
+    var totalRows = data.length;
+    var totalRowsLabel = totalRows.toString().replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 
-    var infoText = (pageStart + 1) + "-" + pageEnd + " of " + totalRecods + " Records";
-    if (totalRecods < page.rows) {
-      infoText = totalRecods + " Record" + (totalRecods != 1 ? "s" : "");
+    var infoText = (pageStart + 1) + "-" + pageEnd + " of " + totalRowsLabel + " rows";
+    if (totalRows < page.rows) {
+      infoText = totalRowsLabel + " row" + (totalRows != 1 ? "s" : "");
     }
     if (columns.total > columns.visible) {
       infoText = infoText + " | " + (columns.number + 1) + "-" +
         (Math.min(columns.number + columns.visible, columns.total)) +
-        " of " + columns.total + " Columns";
+        " of " + columns.total + " columns";
     }
 
     return infoText;
