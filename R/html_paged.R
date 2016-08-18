@@ -1,4 +1,6 @@
 paged_table_html <- function(x) {
+  addRowNames = .row_names_info(data, type = 1) > 0
+
   data <- utils::head(x, getOption("max.print", 1000))
   data <- if (is.null(data)) as.data.frame(list()) else data
 
@@ -23,7 +25,6 @@ paged_table_html <- function(x) {
 
   names(data) <- as.character(columnSequence)
 
-  addRowNames = .row_names_info(data, type = 1) > 0
   if (addRowNames) {
     columns <- c(
       list(
@@ -57,7 +58,7 @@ paged_table_html <- function(x) {
   data <- as.data.frame(
     lapply(
       data,
-      function (y) format(y)),
+      function (y) encodeString(format(y, digits = getOption("digits")))),
     stringsAsFactors = FALSE,
     optional = TRUE)
 
