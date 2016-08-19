@@ -34,7 +34,7 @@ render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
 
   \item{intermediates_dir}{Intermediate files directory. If \code{NULL},
   intermediate files are written to the same directory as the input file;
-  otherwis.}
+  otherwise.}
 
   \item{runtime}{The runtime target for rendering. \code{static} produces output
   intended for static files; \code{shiny} produces output suitable for use in a
