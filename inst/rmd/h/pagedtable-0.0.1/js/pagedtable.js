@@ -191,35 +191,32 @@ var PagedTable = function (pagedTable) {
     var me = this;
 
     var defaults = {
-      max: 1,
+      max: 7,
       rows: 10
     };
 
     me.number = 0;
     me.max = options.pages !== null ? options.pages : defaults.max;
-    me.visible = me.max + 1;
+    me.visible = me.max;
     me.rows = options.rows !== null ? options.rows : defaults.rows;
-
-    var getPageCount = function() {
-      return Math.ceil(data.length / me.rows);
-    };
+    me.total = Math.ceil(data.length / me.rows);
 
     me.setPageNumber = function(newPageNumber) {
       if (newPageNumber < 0) newPageNumber = 0;
-      if (newPageNumber >= getPageCount()) newPageNumber = getPageCount() - 1;
+      if (newPageNumber >= me.total) newPageNumber = me.total - 1;
 
       me.number = newPageNumber;
     };
 
     me.setVisiblePages = function(visiblePages) {
-      me.visible = Math.min(me.max + 1, visiblePages);
+      me.visible = Math.min(me.max, visiblePages);
       me.setPageNumber(me.number);
     };
 
     me.getVisiblePageRange = function() {
       var start = me.number - Math.max(Math.floor((me.visible - 1) / 2), 0);
-      var end = me.number + Math.floor(me.visible / 2);
-      var pageCount = getPageCount();
+      var end = me.number + Math.floor(me.visible / 2) + 1;
+      var pageCount = me.total;
 
       if (start < 0) {
         var diffToStart = 0 - start;
@@ -236,9 +233,24 @@ var PagedTable = function (pagedTable) {
       start = start < 0 ? 0 : start;
       end = end >= pageCount ? pageCount : end;
 
+      var first = false;
+      var last = false;
+
+      if (start > 0 && me.visible > 1) {
+        start = start + 1;
+        first = true;
+      }
+
+      if (end < pageCount && me.visible > 2) {
+        end = end - 1;
+        last = true;
+      }
+
       return {
+        first: first,
         start: start,
-        end: end
+        end: end,
+        last: last
       };
     };
 
@@ -705,6 +717,24 @@ var PagedTable = function (pagedTable) {
     return footer;
   };
 
+  var createPageLink = function(idxPage) {
+    var pageLink = document.createElement("a");
+    pageLinkClass = idxPage === page.number ? "pagedtable-index pagedtable-index-current" : "pagedtable-index";
+    pageLink.setAttribute("class", pageLinkClass);
+    pageLink.setAttribute("data-page-index", idxPage);
+    pageLink.onclick = function() {
+      page.setPageNumber(parseInt(this.getAttribute("data-page-index")));
+      renderBody();
+      renderFooter();
+
+      triggerOnChange();
+    };
+
+    pageLink.appendChild(document.createTextNode(idxPage + 1));
+
+    return pageLink;
+  }
+
   var renderFooter = function() {
     var footer = clearFooter();
 
@@ -723,22 +753,33 @@ var PagedTable = function (pagedTable) {
     pageNumbers.setAttribute("class", "pagedtable-indexes");
 
     var pageRange = page.getVisiblePageRange();
+
+    if (pageRange.first) {
+      var pageLink = createPageLink(0);
+      pageNumbers.appendChild(pageLink);
+
+      var pageSeparator = document.createElement("div");
+      pageSeparator.setAttribute("class", "pagedtable-index-separator-left");
+      pageSeparator.appendChild(document.createTextNode("..."))
+      pageNumbers.appendChild(pageSeparator);
+    }
+
     for (var idxPage = pageRange.start; idxPage < pageRange.end; idxPage++) {
-      var pageLink = document.createElement("a");
-      pageLinkClass = idxPage === page.number ? "pagedtable-index pagedtable-index-current" : "pagedtable-index";
-      pageLink.setAttribute("class", pageLinkClass);
-      pageLink.setAttribute("data-page-index", idxPage);
-      pageLink.onclick = function() {
-        page.setPageNumber(parseInt(this.getAttribute("data-page-index")));
-        renderBody();
-        renderFooter();
+      var pageLink = createPageLink(idxPage);
 
-        triggerOnChange();
-      };
-
-      pageLink.appendChild(document.createTextNode(idxPage + 1));
       pageNumbers.appendChild(pageLink);
     }
+
+    if (pageRange.last) {
+      var pageSeparator = document.createElement("div");
+      pageSeparator.setAttribute("class", "pagedtable-index-separator-right");
+      pageSeparator.appendChild(document.createTextNode("..."))
+      pageNumbers.appendChild(pageSeparator);
+
+      var pageLink = createPageLink(page.total - 1);
+      pageNumbers.appendChild(pageLink);
+    }
+
     if (data.length > page.rows) footer.appendChild(pageNumbers);
 
     var previous = document.createElement("a");
