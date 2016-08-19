@@ -522,10 +522,10 @@ render <- function(input,
       if ((texfile != output_file) && !output_format$pandoc$keep_tex)
         on.exit(unlink(texfile), add = TRUE)
     } else {
+      # generate .tex if we want to keep the tex source
+      if (output_format$pandoc$keep_tex) convert(texfile, run_citeproc)
       # run the main conversion if the output file is not .tex
       convert(output_file, run_citeproc)
-      # run conversion again to .tex if we want to keep the tex source
-      if (output_format$pandoc$keep_tex) convert(texfile, run_citeproc)
     }
 
     # pandoc writes the output alongside the input, so if we rendered from an

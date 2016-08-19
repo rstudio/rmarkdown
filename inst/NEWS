@@ -27,6 +27,8 @@ rmarkdown 1.1 (unreleased)
   `html_document` so that `extra_dependencies` are added at the end, after
   bootstrap, etc. (#737)
 
+* `pdf_document(keep_tex = TRUE)` will generate the .tex document even if PDF
+  conversion fails (#779).
 
 rmarkdown 1.0
 --------------------------------------------------------------------------------
