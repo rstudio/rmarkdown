@@ -79,10 +79,10 @@ ggplot(flights, aes(carrier, arr_delay)) + geom_point() + geom_jitter()
 
 ## SQL
 
-The [SQL](https://en.wikipedia.org/wiki/SQL) engine uses the [DBI](https://github.com/rstats-db/DBI) package to execute SQL queries, print their results, and optionally assign the results to a data frame. The SQL engine is currently only available in the development version of knitr, which you can install as follows:
+The [SQL](https://en.wikipedia.org/wiki/SQL) engine uses the [DBI](https://github.com/rstats-db/DBI) package to execute SQL queries, print their results, and optionally assign the results to a data frame. The SQL engine is available only in the most recent version of knitr (v1.14) which you can install as follows:
 
 ```r
-devtools::install_github("yihui/knitr")
+install.packages("knitr")
 ```
 
 To use the knitr SQL engine you first need to establish a DBI connection to a database (typically via the `dbConnect` function). You can make use of this connection in a SQL chunk via the `connection` option. For example:
@@ -176,11 +176,11 @@ Executing this chunk will compile the code and make the `timesTwo` C++ function 
 
 ### Caching
 
-You can cache the compilation of C++ code chunks using standard knitr caching. Note however that this feature currently requires development versions of both the Rcpp and knitr packages, which you can install as follows:
+You can cache the compilation of C++ code chunks using standard knitr caching. Note however that this feature currently requires the most recent versions of both the Rcpp (v0.12.6) and knitr (v1.14) packages, which you can install as follows:
 
 ```r
-devtools::install_github("RcppCore/Rcpp")
-devtools::install_github("yihui/knitr")
+install.packages("Rcpp")
+install.pakcages("knitr")
 ```
 
 To cache the compilation of an Rcpp chunk simply add the `cache = TRUE` option to the chunk:
@@ -225,10 +225,10 @@ The two Rcpp chunks that include code will be collected and compiled together in
 
 ## Stan
 
-The [Stan](http://mc-stan.org/) engine enables embedding of the Stan probabilistic programming language within R Markdown documents. The development version of knitr is required to use the Stan engine with the options described below. You can install it as follows:
+The [Stan](http://mc-stan.org/) engine enables embedding of the Stan probabilistic programming language within R Markdown documents. Note that using the Stan engine as documented below requires the most recent version of knitr (v 1.14) which you can install as follows:
 
 ```r
-devtools::install_github("yihui/knitr")
+install.packages("knitr")
 ```
 
 The Stan model within the code chunk is compiled into a `stanmodel` object and is assigned it to a variable with the name given by the `output.var` option. For example:

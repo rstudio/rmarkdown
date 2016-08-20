@@ -14,14 +14,14 @@
 <title>knitr Language Engines</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
@@ -263,7 +263,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <p><strong>NOTE</strong>: Enhanced support for knitr language engines is currently available in the <a href="https://www.rstudio.com/products/rstudio/download/preview/">RStudio Preview Release</a>. If you want to try out the features described below please install the preview release.</p>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>In addition to executing R code chunks, the <a href="http://yihui.name/knitr/">kntir</a> package can also execute chunks in a variety of other languages. Some of the available language engines include:</p>
+<p>In addition to executing R code chunks, the <a href="http://yihui.name/knitr/">knitr</a> package can also execute chunks in a variety of other languages. Some of the available language engines include:</p>
 <ul>
 <li>Python</li>
 <li>SQL</li>
@@ -323,8 +323,8 @@ ggplot(flights, aes(carrier, arr_delay)) + geom_point() + geom_jitter()
 </div>
 <div id="sql" class="section level2">
 <h2>SQL</h2>
-<p>The <a href="https://en.wikipedia.org/wiki/SQL">SQL</a> engine uses the <a href="https://github.com/rstats-db/DBI">DBI</a> package to execute SQL queries, print their results, and optionally assign the results to a data frame. The SQL engine is currently only available in the development version of knitr, which you can install as follows:</p>
-<pre class="r"><code>devtools::install_github(&quot;yihui/knitr&quot;)</code></pre>
+<p>The <a href="https://en.wikipedia.org/wiki/SQL">SQL</a> engine uses the <a href="https://github.com/rstats-db/DBI">DBI</a> package to execute SQL queries, print their results, and optionally assign the results to a data frame. The SQL engine is available only in the most recent version of knitr (v1.14) which you can install as follows:</p>
+<pre class="r"><code>install.packages(&quot;knitr&quot;)</code></pre>
 <p>To use the knitr SQL engine you first need to establish a DBI connection to a database (typically via the <code>dbConnect</code> function). You can make use of this connection in a SQL chunk via the <code>connection</code> option. For example:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r}
 library(DBI)
@@ -400,9 +400,9 @@ NumericVector timesTwo(NumericVector x) {
 <p>Executing this chunk will compile the code and make the <code>timesTwo</code> C++ function available to R.</p>
 <div id="caching" class="section level3">
 <h3>Caching</h3>
-<p>You can cache the compilation of C++ code chunks using standard knitr caching. Note however that this feature currently requires development versions of both the Rcpp and knitr packages, which you can install as follows:</p>
-<pre class="r"><code>devtools::install_github(&quot;RcppCore/Rcpp&quot;)
-devtools::install_github(&quot;yihui/knitr&quot;)</code></pre>
+<p>You can cache the compilation of C++ code chunks using standard knitr caching. Note however that this feature currently requires the most recent versions of both the Rcpp (v0.12.6) and knitr (v1.14) packages, which you can install as follows:</p>
+<pre class="r"><code>install.packages(&quot;Rcpp&quot;)
+install.pakcages(&quot;knitr&quot;)</code></pre>
 <p>To cache the compilation of an Rcpp chunk simply add the <code>cache = TRUE</code> option to the chunk:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{Rcpp, cache=TRUE}
 #include &lt;Rcpp.h&gt;
@@ -438,8 +438,8 @@ int timesTwo(int x) {
 </div>
 <div id="stan" class="section level2">
 <h2>Stan</h2>
-<p>The <a href="http://mc-stan.org/">Stan</a> engine enables embedding of the Stan probabilistic programming language within R Markdown documents. The development version of knitr is required to use the Stan engine with the options described below. You can install it as follows:</p>
-<pre class="r"><code>devtools::install_github(&quot;yihui/knitr&quot;)</code></pre>
+<p>The <a href="http://mc-stan.org/">Stan</a> engine enables embedding of the Stan probabilistic programming language within R Markdown documents. Note that using the Stan engine as documented below requires the most recent version of knitr (v 1.14) which you can install as follows:</p>
+<pre class="r"><code>install.packages(&quot;knitr&quot;)</code></pre>
 <p>The Stan model within the code chunk is compiled into a <code>stanmodel</code> object and is assigned it to a variable with the name given by the <code>output.var</code> option. For example:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{stan, output.var="ex1"}
 parameters {
