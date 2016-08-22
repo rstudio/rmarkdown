@@ -582,10 +582,15 @@ var PagedTable = function (pagedTable) {
       headerOld.style.opacity = "1";
       headerOld.style.transition = "transform 100ms linear, opacity 100ms";
       headerOld.setAttribute("class", "pagedtable-remove-head");
-      headerOld.addEventListener("webkitTransitionEnd", function() {
-        var headerOldByClass = thead.querySelector(".pagedtable-remove-head");
-        if (headerOldByClass) thead.removeChild(headerOldByClass);
-      });
+      if (headerOld.style.transitionEnd) {
+        headerOld.addEventListener("transitionend", function() {
+          var headerOldByClass = thead.querySelector(".pagedtable-remove-head");
+          if (headerOldByClass) thead.removeChild(headerOldByClass);
+        });
+      }
+      else {
+        thead.removeChild(headerOld);
+      }
     }
 
     if (tbodyOld) table.removeChild(tbodyOld);
