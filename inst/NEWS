@@ -29,6 +29,9 @@ rmarkdown 1.1 (unreleased)
 
 * `pdf_document(keep_tex = TRUE)` will generate the .tex document even if PDF
   conversion fails (#779).
+  
+* Move latex header includes to just before \begin{document}
+
 
 rmarkdown 1.0
 --------------------------------------------------------------------------------
