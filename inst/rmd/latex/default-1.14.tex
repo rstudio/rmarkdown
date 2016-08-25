@@ -179,10 +179,6 @@ $else$
   \predate{}\postdate{}
 $endif$
 
-$for(header-includes)$
-$header-includes$
-$endfor$
-
 % Redefines (sub)paragraphs to behave more like sections
 \ifx\paragraph\undefined\else
 \let\oldparagraph\paragraph
@@ -192,6 +188,10 @@ $endfor$
 \let\oldsubparagraph\subparagraph
 \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
+
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 \begin{document}
 \maketitle

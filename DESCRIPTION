@@ -11,7 +11,7 @@ Authors@R: c(
   person("Jeff", "Allen", role = "aut", email = "jeff@rstudio.com"),
   person("Hadley", "Wickham", role = "aut", email = "hadley@rstudio.com"),
   person("Aron", "Atkins", role = "aut", email = "aron@rstudio.com"),
-  person("Rob", "Hyndman", role = "aut", email = "robjhyndman@gmail.com"),
+  person("Rob", "Hyndman", role = "aut", email = "Rob.Hyndman@monash.edu"),
   person(family = "RStudio, Inc.", role = "cph"),
   person(family = "jQuery Foundation", role = "cph",
          comment = "jQuery library"),

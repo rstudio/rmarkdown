@@ -213,10 +213,6 @@ $else$
 $endif$
 
 
-$for(header-includes)$
-$header-includes$
-$endfor$
-
 $if(subparagraph)$
 $else$
 % Redefines (sub)paragraphs to behave more like sections
@@ -229,6 +225,10 @@ $else$
 \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
 $endif$
+
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 \begin{document}
 $if(title)$
