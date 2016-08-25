@@ -185,9 +185,6 @@ $if(dir)$
   \newenvironment{LTR}{\beginL}{\endL}
 \fi
 $endif$
-$for(header-includes)$
-$header-includes$
-$endfor$
 
 %%% Use protect on footnotes to avoid problems with footnotes in titles
 \let\rmarkdownfootnote\footnote%
@@ -232,6 +229,10 @@ $else$
   \date{}
   \predate{}\postdate{}
 $endif$
+
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 \begin{document}
 $if(title)$
