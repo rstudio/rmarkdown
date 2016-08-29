@@ -43,4 +43,4 @@ To set global options that apply to every chunk in your file, call `knitr::opts_
 If document rendering becomes time consuming due to long computations you can use knitr caching to improve performance. [*Knitr chunk and package options*](http://yihui.name/knitr/options) describes how caching works and the [*Cache examples*](http://yihui.name/knitr/demo/cache/) provide additional details.
 
 ***
-## [Continue to Inline Code](lesson-4.html)
+## [Continue to Inline Code](lesson-4.html){.continue-link}

@@ -45,4 +45,4 @@ Learn more about interactive documents with R Markdown at [Interactive Documents
 
 ****
 
-## [Continue to the Cheatsheets](lesson-15.html)
+## [Continue to the Cheatsheets](lesson-15.html){.continue-link}

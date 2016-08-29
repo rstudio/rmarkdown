@@ -26,4 +26,4 @@ R Markdown will always
 As a result, inline output is indistinguishable from the surrounding text. Inline expressions do not take knitr options. 
 
 ***
-## [Continue to Code Languages](lesson-5.html)
+## [Continue to Code Languages](lesson-5.html){.continue-link}

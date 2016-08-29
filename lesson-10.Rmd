@@ -27,4 +27,4 @@ See [R Notebooks](http://rmarkdown.rstudio.com/r_notebooks.html) to learn more a
 
 ***
 
-## [Continue to Slide Presentations](lesson-11.html)
+## [Continue to Slide Presentations](lesson-11.html){.continue-link}

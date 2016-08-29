@@ -36,5 +36,5 @@ Read more about markdown at [Pandoc's Markdown](authoring_pandoc_markdown.html) 
 
 ***
 
-## [Continue to Output Formats](lesson-9.html)
+## [Continue to Output Formats](lesson-9.html){.continue-link}
 

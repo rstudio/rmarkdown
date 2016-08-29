@@ -25,4 +25,4 @@ Go to *File > Help > Markdown Quick Reference* to open the *Markdown Quick Refer
 
 ****
 
-## Visit the [Formats](formats.html) and [Articles](articles.html) tabs to learn more.
+## Visit the [Formats](formats.html) and [Articles](articles.html) tabs to learn more.{.continue-link}

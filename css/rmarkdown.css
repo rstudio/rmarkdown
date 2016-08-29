@@ -670,6 +670,10 @@ table.table td a:only-child:active {
   font-size: 20px;
 }
 
+.lessonPage .continue-link {
+  font-size: 24px;
+}
+
 /* adjustments for smaller screens */
 
 @media screen and (max-width: 1200px){

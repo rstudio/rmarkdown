@@ -38,4 +38,4 @@ You may also find the following resources helpful:
 * [The R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
 
 ***
-## [Continue to How It Works](lesson-2.html)
+## [Continue to How It Works](lesson-2.html){.continue-link}

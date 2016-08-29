@@ -25,5 +25,5 @@ Insert a horizontal rule (`***`) into your document to create a manual slide bre
 
 ****
 
-## [Continue to Dashboards](lesson-12.html)
+## [Continue to Dashboards](lesson-12.html){.continue-link}
 

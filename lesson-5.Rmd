@@ -36,4 +36,4 @@ Learn more about using other languages with R Markdown in [knitr Language Engine
 
 ***
 
-## [Continue to Parameters](lesson-6.html)
+## [Continue to Parameters](lesson-6.html){.continue-link}

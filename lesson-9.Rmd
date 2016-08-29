@@ -68,4 +68,4 @@ To learn which arguments a format takes, read the format's help page in R, e.g. 
 
 ***
 
-## [Continue to Notebooks](lesson-10.html)
+## [Continue to Notebooks](lesson-10.html){.continue-link}

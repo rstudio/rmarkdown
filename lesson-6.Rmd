@@ -49,4 +49,4 @@ Learn more about parameters at [Paramaterized Reports](http://rmarkdown.rstudio.
 
 ***
 
-## [Continue to Tables](lesson-7.html)
+## [Continue to Tables](lesson-7.html){.continue-link}

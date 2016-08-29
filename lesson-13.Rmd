@@ -30,4 +30,4 @@ Learn more about generating websites with R Markdown at [R Markdown Websites](ht
 
 ****
 
-## [Continue to Interactive Documents](lesson-14.html)
+## [Continue to Interactive Documents](lesson-14.html){.continue-link}

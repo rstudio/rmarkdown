@@ -25,6 +25,6 @@ Flexdashboard also provides simple tools for creating tabsets, value boxes, and 
 
 ***
 
-## [Continue to Websites](lesson-13.html)
+## [Continue to Websites](lesson-13.html){.continue-link}
 
 
