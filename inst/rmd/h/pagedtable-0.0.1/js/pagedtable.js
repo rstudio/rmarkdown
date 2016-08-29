@@ -172,6 +172,7 @@ var PagedTable = function (pagedTable) {
       source.options !== null ? source.options : {};
 
     var columns = typeof(options.columns) !== "undefined" ? options.columns : {};
+    var rows = typeof(options.rows) !== "undefined" ? options.rows : {};
 
     var positiveIntOrNull = function(value) {
       return parseInt(value) >= 0 ? parseInt(value) : null;
@@ -179,13 +180,50 @@ var PagedTable = function (pagedTable) {
 
     return {
       pages: positiveIntOrNull(options.pages),
-      rows: positiveIntOrNull(options.rows),
+      rows: {
+        min: positiveIntOrNull(rows.min),
+        max: positiveIntOrNull(rows.max)
+      },
       columns: {
         min: positiveIntOrNull(columns.min),
         max: positiveIntOrNull(columns.max)
       }
     };
   }(source);
+
+  var Measurer = function() {
+
+    // set some default initial values that will get adjusted in runtime
+    me.measures = {
+      padding: 12,
+      character: 8,
+      height: 15,
+      defaults: true
+    };
+
+    me.calculate = function(measuresCell) {
+      if (!me.measures.defaults)
+        return;
+
+      var measuresCellStyle = window.getComputedStyle(measuresCell, null);
+
+      var newPadding = parsePadding(measuresCellStyle.paddingLeft) +
+            parsePadding(measuresCellStyle.paddingRight);
+
+      var sampleString = "ABCDEFGHIJ0123456789";
+      var newCharacter = Math.ceil(measuresCell.clientWidth / sampleString.length);
+
+      if (newPadding <= 0 || newCharacter <= 0)
+        return;
+
+      me.measures.padding = newPadding;
+      me.measures.character = newCharacter;
+      me.measures.height = measuresCell.clientHeight;
+      me.measures.defaults = false;
+    };
+
+    return me;
+  };
 
   var Page = function(data, options) {
     var me = this;
@@ -195,11 +233,20 @@ var PagedTable = function (pagedTable) {
       rows: 10
     };
 
+    var totalPages = function() {
+      return Math.ceil(data.length / me.rows);
+    };
+
     me.number = 0;
     me.max = options.pages !== null ? options.pages : defaults.max;
     me.visible = me.max;
-    me.rows = options.rows !== null ? options.rows : defaults.rows;
-    me.total = Math.ceil(data.length / me.rows);
+    me.rows = options.rows.min !== null ? options.rows.min : defaults.rows;
+    me.total = totalPages();
+
+    me.setRows = function(newRows) {
+      me.rows = newRows;
+      me.total = totalPages();
+    };
 
     me.setPageNumber = function(newPageNumber) {
       if (newPageNumber < 0) newPageNumber = 0;
@@ -278,7 +325,6 @@ var PagedTable = function (pagedTable) {
     var me = this;
 
     me.defaults = {
-      max: 10,
       min: 5
     };
 
@@ -287,19 +333,12 @@ var PagedTable = function (pagedTable) {
     me.total = columns.length;
     me.subset = [];
     me.padding = 0;
-    me.min = options.columns !== null && options.columns.min !== null ? options.columns.min : me.defaults.min;
-    me.max = options.columns !== null && options.columns.max !== null ? options.columns.max : me.defaults.max;
+    me.min = options.columns.min !== null ? options.columns.min : me.defaults.min;
+    me.max = options.columns.max !== null ? options.columns.max : null;
     me.widths = {};
 
     var widthsLookAhead = 10;
     var paddingColChars = 10;
-
-    // set some default initial values that will get adjusted iin runtime
-    me.measures = {
-      padding: 12,
-      character: 8,
-      defaults: true
-    };
 
     me.emptyNames = function() {
       columns.forEach(function(column) {
@@ -314,7 +353,7 @@ var PagedTable = function (pagedTable) {
       return parseInt(value) >= 0 ? parseInt(value) : 0;
     };
 
-    var calculateWidths = function() {
+    me.calculateWidths = function(measures) {
       columns.forEach(function(column) {
         var maxChars = column.label.toString().length;
         for (var idxRow = 0; idxRow < Math.min(widthsLookAhead, data.length); idxRow++) {
@@ -325,35 +364,11 @@ var PagedTable = function (pagedTable) {
           // width in characters
           chars: maxChars,
           // width for the inner html columns
-          inner: maxChars * me.measures.character,
+          inner: maxChars * measures.character,
           // width adding outer styles like padding
-          outer: maxChars * me.measures.character + me.measures.padding
+          outer: maxChars * measures.character + measures.padding
         };
       });
-    };
-
-    calculateWidths();
-
-    me.calculateMeasures = function(measuresCell) {
-      if (!me.measures.defaults)
-        return;
-
-      var measuresCellStyle = window.getComputedStyle(measuresCell, null);
-
-      var newPadding = parsePadding(measuresCellStyle.paddingLeft) +
-            parsePadding(measuresCellStyle.paddingRight);
-
-      var sampleString = "ABCDEFGHIJ0123456789";
-      var newCharacter = Math.ceil(measuresCell.clientWidth / sampleString.length);
-
-      if (newPadding <= 0 || newCharacter <= 0)
-        return;
-
-      me.measures.padding = newPadding;
-      me.measures.character = newCharacter;
-      me.measures.defaults = false;
-
-      calculateWidths();
     };
 
     me.getWidth = function() {
@@ -363,14 +378,14 @@ var PagedTable = function (pagedTable) {
         widthOuter = widthOuter + me.widths[columnName].outer;
       }
 
-      widthOuter = widthOuter + me.padding * paddingColChars * me.measures.character;
+      widthOuter = widthOuter + me.padding * paddingColChars * measurer.measures.character;
 
       if (me.hasMoreLeftColumns()) {
-        widthOuter = widthOuter + columnNavigationWidthPX + me.measures.padding;
+        widthOuter = widthOuter + columnNavigationWidthPX + measurer.measures.padding;
       }
 
       if (me.hasMoreRightColumns()) {
-        widthOuter = widthOuter + columnNavigationWidthPX + me.measures.padding;
+        widthOuter = widthOuter + columnNavigationWidthPX + measurer.measures.padding;
       }
 
       return widthOuter;
@@ -432,12 +447,13 @@ var PagedTable = function (pagedTable) {
 
   var data = source.data;
   var page = new Page(data, options);
+  var measurer = new Measurer(data, options);
   var columns = new Columns(data, source.columns, options);
 
   var table;
   var tableDiv;
   var header;
-  var tableDivLastWidth = -1;
+  var footer;
   var tbody;
 
   // Caches pagedTable.clientWidth, specially for webkit
@@ -474,8 +490,8 @@ var PagedTable = function (pagedTable) {
     header.onclick = function() {
       columns.incColumnNumber(backwards ? -1 : increment);
 
-      renderFooter();
       me.animateColumns(backwards);
+      renderFooter();
 
       clearSelection();
       triggerOnChange();
@@ -512,6 +528,7 @@ var PagedTable = function (pagedTable) {
     columns.subset = columns.subset.map(function(columnData) {
       var column = document.createElement("th");
       column.setAttribute("align", columnData.align);
+      column.style.textAlign = columnData.align;
 
       column.style.maxWidth = maxColumnWidth(null);
       if (columnData.width) {
@@ -659,6 +676,7 @@ var PagedTable = function (pagedTable) {
           htmlCell.setAttribute("title", dataCell);
         }
         htmlCell.setAttribute("align", columnData.align);
+        htmlCell.style.textAlign = columnData.align;
         htmlCell.style.maxWidth = maxColumnWidth(null);
         if (columnData.width) {
           htmlCell.style.minWidth = htmlCell.style.maxWidth = maxColumnWidth(columnData.width);
@@ -716,7 +734,7 @@ var PagedTable = function (pagedTable) {
   };
 
   var clearFooter = function() {
-    var footer = pagedTable.querySelectorAll("div.pagedtable-footer")[0];
+    footer = pagedTable.querySelectorAll("div.pagedtable-footer")[0];
     footer.innerHTML = "";
 
     return footer;
@@ -741,7 +759,7 @@ var PagedTable = function (pagedTable) {
   }
 
   var renderFooter = function() {
-    var footer = clearFooter();
+    footer = clearFooter();
 
     var next = document.createElement("a");
     next.appendChild(document.createTextNode("Next"));
@@ -832,7 +850,7 @@ var PagedTable = function (pagedTable) {
     tableDiv.appendChild(measuresTable);
   }
 
-  me.render = function() {
+  me.init = function() {
     tableDiv = document.createElement("div");
     pagedTable.appendChild(tableDiv);
     var pagedTableClass = data.length > 0 ?
@@ -846,6 +864,8 @@ var PagedTable = function (pagedTable) {
     tableDiv.setAttribute("class", pagedTableClass);
 
     renderMeasures();
+    measurer.calculate(measuresCell);
+    columns.calculateWidths(measurer.measures);
 
     table = document.createElement("table");
     table.setAttribute("cellspacing", "0");
@@ -863,23 +883,23 @@ var PagedTable = function (pagedTable) {
       tableDiv.style.opacity = "0";
     }
 
-    me.renderColumns();
+    me.render();
 
     // retry seizing columns later if the host has not provided space
     var retries = 100;
-    function retryFitColumns() {
+    function retryFit() {
       retries = retries - 1;
       if (retries > 0) {
         if (tableDiv.clientWidth <= 0) {
-          setTimeout(retryFitColumns, 100);
+          setTimeout(retryFit, 100);
         } else {
-          me.renderColumns();
+          me.render();
           triggerOnChange();
         }
       }
     }
     if (tableDiv.clientWidth <= 0) {
-      retryFitColumns();
+      retryFit();
     }
   };
 
@@ -894,19 +914,41 @@ var PagedTable = function (pagedTable) {
     return parseInt(value) >= 0 ? parseInt(value) : 0;
   };
 
+  me.fixedHeight = function() {
+    return options.rows.max != null;
+  }
+
+  me.fitRows = function() {
+    if (me.fixedHeight())
+      return;
+
+    measurer.calculate(measuresCell);
+
+    var rows = options.rows.min !== null ? options.rows.min : 0;
+    if (pagedTable.offsetHeight > 0) {
+      var availableHeight = pagedTable.offsetHeight - header.offsetHeight - footer.offsetHeight;
+      rows = Math.floor((availableHeight) / measurer.measures.height);
+    }
+
+    rows = options.rows.min !== null ? Math.max(options.rows.min, rows) : rows;
+
+    page.setRows(rows);
+  }
+
   // The goal of this function is to add as many columns as possible
   // starting from left-to-right, when the right most limit is reached
   // it tries to add columns from the left as well.
   //
   // When startBackwards is true columns are added from right-to-left
   me.fitColumns = function(startBackwards) {
-    columns.calculateMeasures(measuresCell);
+    measurer.calculate(measuresCell);
+    columns.calculateWidths(measurer.measures);
 
     if (tableDiv.clientWidth > 0) {
       tableDiv.style.opacity = 1;
     }
 
-    var visibleColumns = tableDiv.clientWidth <= 0 ? Math.max(columns.max, 1) : 1;
+    var visibleColumns = tableDiv.clientWidth <= 0 ? Math.max(columns.min, 1) : 1;
     var columnNumber = columns.number;
     var paddingCount = 0;
 
@@ -943,7 +985,8 @@ var PagedTable = function (pagedTable) {
         break;
       }
 
-      if (columns.visible + columns.getPaddingCount() >= columns.max) {
+      if (columns.max !== null &&
+        columns.visible + columns.getPaddingCount() >= columns.max) {
         break;
       }
 
@@ -1005,34 +1048,41 @@ var PagedTable = function (pagedTable) {
     }
 
     registerWidths();
-
-    tableDivLastWidth = tableDiv.clientWidth
   };
 
-  me.renderColumns = function() {
-    me.fitColumns(false);
+  me.fit = function(startBackwards) {
+    me.fitRows();
+    me.fitColumns(startBackwards);
+  }
+
+  me.render = function() {
+    me.fit(false);
 
     renderHeader();
     renderBody();
     renderFooter();
   }
 
-  me.resizeColumns = function() {
-    var tableDivLastResizeWidth = -1;
+  me.resize = function(newWidth, newHeight) {
+    var lastWidth = -1;
+    var lastHeight = -1;
 
-    function resizeColumnsDelayed() {
-      if (tableDiv.clientWidth !== tableDivLastResizeWidth) {
-        tableDivLastResizeWidth = tableDiv.clientWidth;
-        setTimeout(resizeColumnsDelayed, 500);
+    function resizeDelayed() {
+      if (
+        (newWidth !== lastWidth) ||
+        (!me.fixedHeight() && newHeight !== lastHeight)
+      ) {
+        lastWidth = newWidth;
+        lastHeight = newHeight;
+
+        setTimeout(resizeDelayed, 500);
       } else {
-        if (tableDiv.clientWidth !== tableDivLastWidth) {
-          me.renderColumns();
-          triggerOnChange();
-        }
+        me.render();
+        triggerOnChange();
       }
     }
 
-    resizeColumnsDelayed();
+    resizeDelayed();
   };
 };
 
@@ -1040,7 +1090,7 @@ var PagedTableDoc;
 (function (PagedTableDoc) {
   var allPagedTables = [];
 
-  PagedTableDoc.renderAll = function() {
+  PagedTableDoc.initAll = function() {
     allPagedTables = [];
 
     var pagedTables = [].slice.call(document.querySelectorAll('[data-pagedtable]'));
@@ -1049,7 +1099,7 @@ var PagedTableDoc;
       pagedTable.setAttribute("class", "pagedtable-wrapper");
 
       var pagedTableInstance = new PagedTable(pagedTable);
-      pagedTableInstance.render();
+      pagedTableInstance.init();
 
       allPagedTables.push(pagedTableInstance);
     });
@@ -1057,7 +1107,7 @@ var PagedTableDoc;
 
   PagedTableDoc.resizeAll = function() {
     allPagedTables.forEach(function(pagedTable) {
-      pagedTable.renderColumns();
+      pagedTable.render();
     });
   };
 
@@ -1067,5 +1117,5 @@ var PagedTableDoc;
 })(PagedTableDoc || (PagedTableDoc = {}));
 
 window.onload = function() {
-  PagedTableDoc.renderAll();
+  PagedTableDoc.initAll();
 };

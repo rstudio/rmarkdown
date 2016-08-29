@@ -1,7 +1,13 @@
 paged_table_html <- function(x) {
   addRowNames = .row_names_info(data, type = 1) > 0
 
-  data <- utils::head(x, getOption("max.print", 1000))
+  maxPrint <- getOption("max.print", 1000)
+
+  # hard stop at 10K items to print to prevent pandoc from failing
+  maxPrint <- if (maxPrint > 10000) 10000 else maxPrint
+
+  data <- utils::head(x, maxPrint)
+
   data <- if (is.null(data)) as.data.frame(list()) else data
 
   columnNames <- names(data)
@@ -73,16 +79,21 @@ paged_table_html <- function(x) {
     stringsAsFactors = FALSE,
     optional = TRUE)
 
+  rowCount <- if (is.null(getOption("rows.print"))) 10 else getOption("rows.print")
+
   pagedTableOptions <- list(
     columns = list(
       min = getOption("cols.min.print"),
-      max = getOption("cols.print")
+      max = getOption("cols.print", 10)
     ),
-    rows = getOption("rows.print"),
+    rows = list(
+      min = rowCount,
+      max = rowCount
+    ),
     pages = getOption("pages.print")
   )
 
-  list(
+  pagedData <- list(
     columns = columns,
     data = if (length(data) == 0) list() else data,
     options = pagedTableOptions
@@ -91,10 +102,7 @@ paged_table_html <- function(x) {
   paste(
     "<div data-pagedtable=\"true\">",
     "  <script data-pagedtable-source type=\"application/json\">",
-    jsonlite::toJSON(list(
-      columns = columns,
-      data = data
-    )),
+    jsonlite::toJSON(pagedData),
     "  </script>",
     "</div>",
     sep = "\n"
