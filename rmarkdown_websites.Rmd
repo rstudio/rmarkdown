@@ -3,6 +3,9 @@ title: "R Markdown Websites"
 output: 
   html_document:
     highlight: tango
+    toc: true
+    toc_float:
+      collapsed: false
 ---
 
 ```{r setup, include=FALSE}
@@ -392,11 +395,15 @@ R Markdown websites are can be hosted using [GitHub Pages](https://pages.github.
 2. Change your output directory to "." within **\_site.yml**. For example:
 
         output_dir: "."
-        
-   This keeps all of your output side-by-side with your source code in the root of your website (rather than writing it to the `_site` directory).
+      
+This keeps all of your output side-by-side with your source code in the root of your website (rather than writing it to the `_site` directory).
    
-Note that when deploying to GitHub Pages your source code, data, and everything else in your repository is all publicly available alongside your generated website content.
+Note that when deploying to GitHub Pages using this configuration your source code, data, and everything else in your repository is all publicly available alongside your generated website content.
 
+Alternatively, you can [configure GitHub Pages](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/#publishing-your-github-pages-site-from-a-docs-folder-on-your-master-branch) to publish from a `/docs` subdirectory of your repository. If you work in this configuration you should change your output directory to "docs" within **\_site.yml**. For example:
+
+        output_dir: "docs"
+      
 You can find an example of a minimal R Markdown website configured for publishing to GitHub Pages here: <https://github.com/rstudio/rmarkdown-website-examples/tree/master/gh-pages>.
 
 ### Amazon S3 {.toc-ignore}
