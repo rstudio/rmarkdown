@@ -450,11 +450,11 @@ var PagedTable = function (pagedTable) {
   var measurer = new Measurer(data, options);
   var columns = new Columns(data, source.columns, options);
 
-  var table;
-  var tableDiv;
-  var header;
-  var footer;
-  var tbody;
+  var table = null;
+  var tableDiv = null;
+  var header = null;
+  var footer = null;
+  var tbody = null;
 
   // Caches pagedTable.clientWidth, specially for webkit
   var cachedPagedTableClientWidth = null;
@@ -925,8 +925,11 @@ var PagedTable = function (pagedTable) {
     measurer.calculate(measuresCell);
 
     var rows = options.rows.min !== null ? options.rows.min : 0;
+    var headerHeight = header !== null && header.offsetHeight > 0 ? header.offsetHeight : 0;
+    var footerHeight = footer !== null && footer.offsetHeight > 0 ? footer.offsetHeight : 0;
+
     if (pagedTable.offsetHeight > 0) {
-      var availableHeight = pagedTable.offsetHeight - header.offsetHeight - footer.offsetHeight;
+      var availableHeight = pagedTable.offsetHeight - headerHeight - footerHeight;
       rows = Math.floor((availableHeight) / measurer.measures.height);
     }
 
@@ -1056,33 +1059,48 @@ var PagedTable = function (pagedTable) {
   }
 
   me.render = function() {
-    me.fit(false);
-
+    me.fitColumns(false);
     renderHeader();
+
+    me.fitRows();
     renderBody();
+
     renderFooter();
   }
 
+  var resizeLastWidth = -1;
+  var resizeLastHeight = -1;
+  var resizeNewWidth = -1;
+  var resizeNewHeight = -1;
+  var resizePending = false;
+
   me.resize = function(newWidth, newHeight) {
-    var lastWidth = -1;
-    var lastHeight = -1;
 
     function resizeDelayed() {
+      resizePending = false;
+
       if (
-        (newWidth !== lastWidth) ||
-        (!me.fixedHeight() && newHeight !== lastHeight)
+        (resizeNewWidth !== resizeLastWidth) ||
+        (!me.fixedHeight() && resizeNewHeight !== resizeLastHeight)
       ) {
-        lastWidth = newWidth;
-        lastHeight = newHeight;
+        resizeLastWidth = resizeNewWidth;
+        resizeLastHeight = resizeNewHeight;
 
         setTimeout(resizeDelayed, 500);
+        resizePending = true;
       } else {
         me.render();
         triggerOnChange();
+
+        resizeLastWidth = -1;
+        resizeLastHeight = -1;
       }
     }
 
-    resizeDelayed();
+    resizeNewWidth = newWidth;
+    resizeNewHeight = newHeight;
+
+    if (!resizePending) resizeDelayed();
   };
 };
 
