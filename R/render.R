@@ -323,6 +323,36 @@ render <- function(input,
     # setting the runtime (static/shiny) type
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
+    # install global chunk handling for runtime: shiny (evaluate the 'global'
+    # chunk only once, and in the global environment)
+    if (identical(runtime, "shiny") &&
+        !is.null(shiny::getDefaultReactiveDomain())) {
+
+      # install evaluate hook to ensure that the 'global' chunk for this source
+      # file is evaluated only once
+      knitr::knit_hooks$set(evaluate = function(code, envir, ...) {
+        if (identical(knitr::opts_current$get("label"), "global")) {
+          code_string <- paste(code, collapse = '\n')
+          if (!code_string %in% .globals$evaluated_global_chunks) {
+            .globals$evaluated_global_chunks <-
+              c(.globals$evaluated_global_chunks, code_string)
+            evaluate::evaluate(code, envir = globalenv(), ...)
+          } else {
+            list()
+          }
+          # delegate to standard evaluate for everything else
+        } else {
+          evaluate::evaluate(code, envir, ...)
+        }
+      })
+
+      # cleanup evaluated cache when the current shiny app exits
+      shiny::onReactiveDomainEnded(shiny::getDefaultReactiveDomain(),
+                                   function() {
+        .globals$evaluated_global_chunks <- character()
+      })
+    }
+
     # make the params available within the knit environment
     # (only do this if there are parameters in the front matter
     # so we don't require recent knitr for all users)
@@ -704,5 +734,9 @@ resolve_df_print <- function(df_print) {
   df_print
 }
 
+
+# package level globals
+.globals <- new.env(parent = emptyenv())
+.globals$evaluated_global_chunks <- character()
 
 

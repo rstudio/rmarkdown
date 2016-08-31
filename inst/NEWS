@@ -32,6 +32,10 @@ rmarkdown 1.1 (unreleased)
   
 * Move latex header includes to just before \begin{document}
 
+* Special 'global' chunk label for runtime: shiny which designates
+  a chunk to be run once and only once in the global environment
+  (startup performance improvement for multi-user shiny documents)
+
 
 rmarkdown 1.0
 --------------------------------------------------------------------------------
