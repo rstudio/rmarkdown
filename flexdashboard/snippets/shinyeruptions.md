@@ -4,6 +4,12 @@ output: flexdashboard::flex_dashboard
 runtime: shiny
 ---
 
+```{r global, include=FALSE}
+# load data in 'global' chunk so it can be shared by all users of the dashboard
+library(datasets)
+data(faithful)
+```
+
 Column {.sidebar}
 -----------------------------------------------------------------------
 

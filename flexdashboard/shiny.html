@@ -364,11 +364,22 @@ div.tocify {
 </div>
 <script type="text/javascript">loadSnippet('shinyeruptions')</script>
 <p>The first column includes the <code>{.sidebar}</code> attribute and two Shiny input controls; the second column includes the Shiny code required to render the chart based on the inputs.</p>
+<p>One important thing to note about this example is the chunk labeled <code>global</code> at the top of the document. The <code>global</code> chunk has special behavior within flexdashboard: it is executed only once within the global environment so that it’s results (e.g. data frames read from disk) can be accessed by all users of a multi-user flexdashboard. Loading your data within a <code>global</code> chunk will result in substantially better startup performance for your users so is highly recommended.</p>
 </div>
 </div>
 </div>
 <div id="using-shiny" class="section level2">
 <h2>Using Shiny</h2>
+<div id="loading-data" class="section level3">
+<h3>Loading Data</h3>
+<p>As described above, you should perform any expensive loading of data within the <code>global</code> chunk, for example:</p>
+<div id="shinyglobal">
+
+</div>
+<script type="text/javascript">loadSnippet('shinyglobal')</script>
+<p>Note that special handling of the <code>global</code> chunk is a feature currently only available within the development version of the <strong>rmarkdown</strong> package. You can install this version as follows:</p>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
+</div>
 <div id="inputs-outputs" class="section level3">
 <h3>Inputs &amp; Outputs</h3>
 <p>When you use Shiny within a flexdashboard you’ll be making use of both input elements (e.g. sliders, checkboxes, etc.) and output elements (plots, tables, etc.). Input elements are typically presented within a sidebar and outputs within flexdashboard content panes (it’s also possible to combine inputs and outputs in a single pane, this is described in more detail below).</p>
