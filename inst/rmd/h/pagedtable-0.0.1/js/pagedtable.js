@@ -1060,11 +1060,15 @@ var PagedTable = function (pagedTable) {
 
   me.render = function() {
     me.fitColumns(false);
+
+    // render header/footer to measure height accurately
     renderHeader();
+    renderFooter();
 
     me.fitRows();
     renderBody();
 
+    // re-render footer to match new rows
     renderFooter();
   }
 
@@ -1086,7 +1090,7 @@ var PagedTable = function (pagedTable) {
         resizeLastWidth = resizeNewWidth;
         resizeLastHeight = resizeNewHeight;
 
-        setTimeout(resizeDelayed, 500);
+        setTimeout(resizeDelayed, 200);
         resizePending = true;
       } else {
         me.render();
