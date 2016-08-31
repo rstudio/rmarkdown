@@ -155,6 +155,11 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     }
   }
 
+  # cleanup evaluated cache when the current shiny app exits
+  on.exit({
+    .globals$evaluated_global_chunks <- character()
+  }, add = TRUE)
+
   shiny_args <- merge_lists(list(appDir = app,
                                  launch.browser = launch_browser),
                             shiny_args)

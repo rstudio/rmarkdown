@@ -329,27 +329,34 @@ render <- function(input,
         !is.null(shiny::getDefaultReactiveDomain())) {
 
       # install evaluate hook to ensure that the 'global' chunk for this source
-      # file is evaluated only once
+      # file is evaluated only once and is run outside of a user reactive domain
       knitr::knit_hooks$set(evaluate = function(code, envir, ...) {
+
+        # check for 'global' chunk label
         if (identical(knitr::opts_current$get("label"), "global")) {
+
+          # check list of previously evaludated global chunks
           code_string <- paste(code, collapse = '\n')
           if (!code_string %in% .globals$evaluated_global_chunks) {
+
+            # save it in our list of evaluated global chunks
             .globals$evaluated_global_chunks <-
               c(.globals$evaluated_global_chunks, code_string)
-            evaluate::evaluate(code, envir = globalenv(), ...)
+
+            # evaluate with no reactive domain to prevent any shiny code (e.g.
+            # a reactive timer) from attaching to the current user session
+            # (resulting in it's destruction when that session ends)
+            shiny::withReactiveDomain(NULL, {
+              evaluate::evaluate(code, envir = globalenv(), ...)
+            })
+
           } else {
             list()
           }
-          # delegate to standard evaluate for everything else
+        # delegate to standard evaluate for everything else
         } else {
           evaluate::evaluate(code, envir, ...)
         }
-      })
-
-      # cleanup evaluated cache when the current shiny app exits
-      shiny::onReactiveDomainEnded(shiny::getDefaultReactiveDomain(),
-                                   function() {
-        .globals$evaluated_global_chunks <- character()
       })
     }
 
