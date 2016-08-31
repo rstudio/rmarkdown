@@ -337,7 +337,7 @@ var PagedTable = function (pagedTable) {
     me.max = options.columns.max !== null ? options.columns.max : null;
     me.widths = {};
 
-    var widthsLookAhead = 10;
+    var widthsLookAhead = Math.max(100, options.rows.min);
     var paddingColChars = 10;
 
     me.emptyNames = function() {
