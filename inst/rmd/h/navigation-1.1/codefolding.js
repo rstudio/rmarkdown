@@ -31,14 +31,13 @@ window.initializeCodeFolding = function(show) {
 
     // add a show code button right above
     var showCodeText = $('<span>' + (show ? 'Hide' : 'Code') + '</span>');
-    var showCodeButton = $('<button type="button" class="btn btn-default btn-xs code-folding-btn pull-right"></button>');
+    var showCodeButton = $('<button type="button" class="btn btn-default btn-xs code-folding-btn"></button>');
     showCodeButton.append(showCodeText);
     showCodeButton
         .attr('data-toggle', 'collapse')
         .attr('data-target', '#' + id)
         .attr('aria-expanded', show)
-        .attr('aria-controls', id)
-        .css('margin-bottom', '4px');
+        .attr('aria-controls', id);
 
     var buttonRow = $('<div class="row"></div>');
     var buttonCol = $('<div class="col-md-12"></div>');
