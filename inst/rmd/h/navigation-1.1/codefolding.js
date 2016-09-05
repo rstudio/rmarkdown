@@ -36,7 +36,7 @@ window.initializeCodeFolding = function(show) {
     showCodeButton
         .attr('data-toggle', 'collapse')
         .attr('data-target', '#' + id)
-        .attr('aria-expanded', true)
+        .attr('aria-expanded', show)
         .attr('aria-controls', id)
         .css('margin-bottom', '4px');
 
