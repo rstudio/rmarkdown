@@ -17,6 +17,7 @@ $("#pageContent").removeClass("standardPadding");
 <!--html_preserve-->
 
 <div id="homeContent">
+
   <div class="band full blue first rightText">
     <div class="bandContent vCenter">
       <div class="blurb">
