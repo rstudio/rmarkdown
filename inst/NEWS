@@ -35,6 +35,8 @@ rmarkdown 1.1 (unreleased)
 * Special 'global' chunk label for runtime: shiny which designates
   a chunk to be run once and only once in the global environment
   (startup performance improvement for multi-user shiny documents)
+  
+* Ensure supporting files are writeable (#800)
 
 
 rmarkdown 1.0
