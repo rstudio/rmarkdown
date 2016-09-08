@@ -1,0 +1,109 @@
+---
+title: "Setting Output args via Render functions"
+output:
+  html_document:
+    highlight: pygments
+    toc: true
+---
+
+## Basic Usage
+
+Often in an interactive R Markdown document, you want to embed snippets of Shiny code without having to specify the corresponding `ui` function. For example, you may want to use a `renderPlot()` function without having to create a `plotOutput()` slot beforehand. In this case, Shiny helpfully associates the corresponding output object to each `render` function, letting you use Shiny code outside of a full app. However, some functionality is lost in this process. In particular, `plotOutput()` can take in some optional arguments to set things like width and height, or allow you to click or brush over the plot (and store that information). Previously, this functionality was not available to you outside of a full Shiny app (one with a `server` function and a `ui` function, where all the `output` objects are made explicit). 
+
+Now, for the sake of convenience, when working with just snippets of Shiny code, you'll able to set `output` arguments directly from the corresponding `render` function. To do so, use the `outputArgs` argument, which is available to all `render` functions. For example, let's say that you want to render a plot and specify its width to be 200px and its height 100px. Then you should use: 
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
+renderPlot({
+  plot(yourData)
+}, outputArgs = list(width = "200px",
+                     height = "100px")
+)
+&#96;&#96;&#96;
+</code></pre>
+
+No matter how many arguments you set (all the way from zero to all possible ones), `outputArgs` always takes in a list (as you'd expect, the default is an empty list, which sets no `output` arguments). If you try to pass in a non-existent argument, you'll get an error with the following message (in this example, you tried to set an argument named "not_an_argument"):
+
+<p style="color:#f00; font-family: serif; padding: 12px">
+<strong>Error:</strong> Unused argument: in 'outputArgs', 'not_an_argument' is not an valid argument for the output function
+</p>
+
+To see this in action, check out the R Markdown script and resulting document below. The document is interactive -- brush over the image and see the 'xmin', 'xmax', 'ymin' and 'ymax'  values change (printed just under the image).
+
+### Script
+
+<pre class="markdown"><code>---
+title: Setting `output` args via `render` functions
+runtime: shiny
+output: html_document
+---
+
+This interactive Rmd document makes use of the `outputArgs` argument now available to all Shiny `render` functions. To give an example, this allows you to set arguments to `imageOutput` through `renderImage`. This means that you don't have to create a `ui` object just to be able to brush over an image. Note that this only applies to snippets of Shiny code during an interactive Rmd (and not to embedded full apps -- the ones you need to call `shinyApp` to run).
+
+### Brushing over an image (and storing the data)
+
+&#96;&#96;&#96{r setup, echo=FALSE}
+library(datasets)
+
+generateImage <- function() {
+  outfile <- tempfile(fileext = '.png')
+  png(outfile)
+  par(mar = c(0,0,0,0))
+  image(volcano, axes = FALSE)
+  contour(volcano, add = TRUE)
+  dev.off()
+  list(src = outfile)
+}
+&#96;&#96;&#96
+
+&#96;&#96;&#96{r image}
+renderImage({
+  generateImage()
+}, deleteFile = TRUE, 
+   outputArgs = list(brush = brushOpts(id = "plot_brush"),
+                     width = "250",
+                     height = "250px")
+)
+&#96;&#96;&#96
+
+##### Here's some of the brushing info sent to the server:
+(brush over the image to change the data)
+
+&#96;&#96;&#96{r brush info}
+renderText({ 
+  print(input$plot_brush)
+  brush <- input$plot_brush
+  paste0("xmin: ", brush$xmin, "; ",
+         "xmax: ", brush$xmax, "; ",
+         "ymin: ", brush$ymin, "; ",
+         "ymax: ", brush$ymax)
+})
+&#96;&#96;&#96
+
+---
+
+### Resizing a plot
+
+&#96;&#96;&#96{r plot}
+renderPlot({ 
+  plot(cars) 
+}, outputArgs = list(width = "75%", 
+                     height = "250px")
+)
+&#96;&#96;&#96
+</code></pre>
+
+<br>
+
+### Result
+<iframe src="https://gallery.shinyapps.io/output-args/" frameborder="no" class="scale65" height="1360px" style="margin-bottom: -480px;"></iframe>
+
+## A caveat
+
+It's important to highlight that you can only use this functionality within an interactive R Markdown document (i.e. you must set `runtime: shiny` in the header). But even if that is the case, this is only applicable to `ui`-less pieces of Shiny code. If you embed a full Shiny application in your document and try to use `outputArgs`, it will be ignored and print the following warning to the R Markdown console (in this case, your `ui` function would be something like `ui <- plotOutput("plot")`): 
+
+<p style="color:#f00; font-family: serif; padding: 12px">
+Warning in `output$plot`(...) :<br>
+Unused argument: outputArgs. The argument outputArgs is only meant to be used when embedding snippets of Shiny code in an R Markdown code chunk (using runtime: shiny). When running a full Shiny app, please set the output arguments directly in the corresponding output function of your UI code.
+</p>  
+
+The same will happen if you try to use `outputArgs` in any other context, like inside a regular (i.e. not embedded) Shiny app. The rationale is that, if you are already specifying a `ui` function with all the `output` objects made explicit, you should set their arguments directly there, instead of going through this round-about way.
