@@ -646,7 +646,8 @@ render_supporting_files <- function(from, files_dir, rename_to = NULL) {
   if (!dir_exists(target_dir) && !dir_exists(target_stage_dir)) {
     file.copy(from = from,
               to = files_dir,
-              recursive = TRUE)
+              recursive = TRUE,
+              copy.mode = FALSE)
     if (!is.null(rename_to)) {
       file.rename(from = target_stage_dir,
                   to = target_dir)
