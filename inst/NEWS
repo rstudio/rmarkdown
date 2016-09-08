@@ -38,6 +38,8 @@ rmarkdown 1.1 (unreleased)
   
 * Ensure supporting files are writeable (#800)
 
+* Make the "show code" buttons more CSS-friendly (#795)
+
 
 rmarkdown 1.0
 --------------------------------------------------------------------------------
