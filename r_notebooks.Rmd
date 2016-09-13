@@ -86,16 +86,31 @@ In general, when you execute code in a notebook chunk, it will do exactly the sa
 
 **Output**: The most obvious difference is that most forms of output produced from a notebook chunk are shown in the chunk output rather than e.g. the Viewer or Plots pane. Console output (including warnings and messages) appears both at the console *and* in the chunk output.
 
-**Working directory**: The current working directory inside a notebook chunk is always the directory containing the notebook .Rmd file. This makes it easier to use relative paths inside notebook chunks, and also matches the behavior when knitting, making it easier to write code that
-works identically both interactively and in a standalone render.
+**Working directory**: The current working directory inside a notebook chunk is always the directory containing the notebook .Rmd file. This makes it easier to use relative paths inside notebook chunks, and also matches the behavior when knitting, making it easier to write code that works identically both interactively and in a standalone render.
 
 You’ll get a warning if you try to change the working directory inside a notebook chunk, and the directory will revert back to the notebook’s directory once the chunk is finished executing. You can suppress this warning by using the `warnings = FALSE` chunk option.
+
+If it's necessary to execute notebook chunks in a different directory, you can change the working directory for **all** your chunks by using the knitr `root.dir` option. For instance, to execute all notebook chunks in the grandparent folder of the notebook:
+
+    knitr::opts_chunk$set(root.dir = normalizePath("..")) 
+
+This option is only effective when used inside the setup chunk. Note also that, as in knitr, the `root.dir` chunk option applies only to chunks; relative paths in Markdown are still relative to the notebook's parent folder.
 
 **Warnings**: Inside a notebook chunk, warnings are always displayed immediately rather than being held until the end, as in `options(warn = 1)`.
 
 **Plots**: Plots emitted from a chunk are rendered to match the width of the editor at the time the chunk was executed. The height of the plot is determined by the [golden ratio](https://en.wikipedia.org/wiki/Golden_ratio). The plot's display list is saved, too, and the plot is re-rendered to match the editor's width when the editor is resized.
 
-You can use the `fig.width` and `fig.height` chunk options to manually specify the size of rendered plots in the notebook. Note however that doing so suppresses the generation of the display list, so plots with manually specified sizes will be resized using simple image scaling when the notebook editor is resized. 
+You can use the `fig.width`, `fig.height`, and `fig.asp` chunk options to manually specify the size of rendered plots in the notebook; you can also use `knitr::opts_chunk$set(fig.width = ..., fig.height = ...)` in the setup chunk to to set a default rendered size. Note however specifying a chunk size manually suppresses the generation of the display list, so plots with manually specified sizes will be resized using simple image scaling when the notebook editor is resized. 
+
+#### Executing Inline Chunks
+
+An inline chunk is a chunk which is inline with the text rather than on its own line. For instance, "2 + 2 = <code>&#96;r 2 + 2&#96;</code>" will be rendered as "2 + 2 = 4". 
+
+To execute an inline chunk in the notebook, put your cursor inside the chunk and press  **Ctrl + Shift + Enter** (OS X: **Cmd + Shift + Enter**). As in the execution of ordinary chunks, the content of the chunk will be sent to the R console for evaluation. The results will appear in a small pop-up window next to the code:
+
+![](images/notebook-inline-output.png){.notebook-screenshot}
+
+In notebooks, inline R chunks can only produce text, not figures or other kinds of output. It's also important that R code run inside inline chunks executes quickly and does not have side effects, as it's executed whenever you save the notebook.
 
 ### Chunk Output
 
