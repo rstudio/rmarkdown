@@ -40,6 +40,8 @@ rmarkdown 1.1 (unreleased)
 
 * Make the "show code" buttons more CSS-friendly (#795)
 
+* Exclude `output_dir` from site files (#803)
+
 
 rmarkdown 1.0
 --------------------------------------------------------------------------------
