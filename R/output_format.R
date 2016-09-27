@@ -655,6 +655,21 @@ enumerate_output_formats <- function(input, envir, encoding) {
   }
 }
 
+#' Parse the YAML front matter from a file
+#'
+#' @inheritParams default_output_format
+#'
+#' @keywords internal
+#' @export
+yaml_front_matter <- function(input, encoding = getOption("encoding")) {
+
+   # read the input file
+  input_lines <- read_lines_utf8(input, encoding)
+
+  # parse the yaml front matter
+  parse_yaml_front_matter(input_lines)
+}
+
 parse_yaml_front_matter <- function(input_lines) {
 
   partitions <- partition_yaml_front_matter(input_lines)

@@ -42,6 +42,8 @@ rmarkdown 1.1 (unreleased)
 
 * Exclude `output_dir` from site files (#803)
 
+* Export `navbar_html` and `yaml_front_matter` functions
+
 
 rmarkdown 1.0
 --------------------------------------------------------------------------------
