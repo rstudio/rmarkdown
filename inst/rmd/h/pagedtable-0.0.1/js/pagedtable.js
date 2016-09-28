@@ -722,7 +722,7 @@ var PagedTable = function (pagedTable) {
     var totalRows = data.length;
 
     var totalRowsLabel = options.rows.total ? options.rows.total : totalRows;
-    var totalRowsLabelFormat = totalRowsLabel.toString().replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+    var totalRowsLabelFormat = totalRowsLabel.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 
     var infoText = (pageStart + 1) + "-" + pageEnd + " of " + totalRowsLabelFormat + " rows";
     if (totalRows < page.rows) {
