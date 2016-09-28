@@ -182,11 +182,13 @@ var PagedTable = function (pagedTable) {
       pages: positiveIntOrNull(options.pages),
       rows: {
         min: positiveIntOrNull(rows.min),
-        max: positiveIntOrNull(rows.max)
+        max: positiveIntOrNull(rows.max),
+        total: positiveIntOrNull(rows.total)
       },
       columns: {
         min: positiveIntOrNull(columns.min),
-        max: positiveIntOrNull(columns.max)
+        max: positiveIntOrNull(columns.max),
+        total: positiveIntOrNull(columns.total)
       }
     };
   }(source);
@@ -718,16 +720,20 @@ var PagedTable = function (pagedTable) {
     var pageStart = page.getRowStart();
     var pageEnd = page.getRowEnd();
     var totalRows = data.length;
-    var totalRowsLabel = totalRows.toString().replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 
-    var infoText = (pageStart + 1) + "-" + pageEnd + " of " + totalRowsLabel + " rows";
+    var totalRowsLabel = options.rows.total ? options.rows.total : totalRows;
+    var totalRowsLabelFormat = totalRowsLabel.toString().replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+
+    var infoText = (pageStart + 1) + "-" + pageEnd + " of " + totalRowsLabelFormat + " rows";
     if (totalRows < page.rows) {
       infoText = totalRowsLabel + " row" + (totalRows != 1 ? "s" : "");
     }
     if (columns.total > columns.visible) {
+      var totalColumnsLabel = options.columns.total ? options.columns.total : columns.total;
+
       infoText = infoText + " | " + (columns.number + 1) + "-" +
         (Math.min(columns.number + columns.visible, columns.total)) +
-        " of " + columns.total + " columns";
+        " of " + totalColumnsLabel + " columns";
     }
 
     return infoText;
