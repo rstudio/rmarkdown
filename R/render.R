@@ -609,10 +609,7 @@ render <- function(input,
       pandoc_output_tmp <- basename(tempfile("pandoc", tmpdir = getwd(), fileext = ext))
 
       # clean up temporary file on exit
-      on.exit({
-        if (file.exists(pandoc_output_tmp))
-          unlink(pandoc_output_tmp)
-      }, add = TRUE)
+      on.exit(unlink(pandoc_output_tmp), add = TRUE)
 
       # call pandoc to render file
       status <- pandoc_convert(
