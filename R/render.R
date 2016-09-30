@@ -32,6 +32,8 @@ render <- function(input,
   init_render_context()
   on.exit(clear_render_context(), add = TRUE)
 
+  on.exit(clean_tmpfiles(), add = TRUE)
+
   # check for "all" output formats
   if (identical(output_format, "all")) {
     output_format <- enumerate_output_formats(input, envir, encoding)
