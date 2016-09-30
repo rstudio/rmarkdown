@@ -26,15 +26,6 @@ latex_dependencies <- function(x = list()) {
   }
 }
 
-# Write the LaTeX dependencies to a text file, suitable for passing it
-# to an include LaTeX command
-latex_dependencies_as_text_file <- function(dependencies, filename) {
-  text <- latex_dependencies_as_string(dependencies)
-  cat(text, file = filename)
-  filename
-}
-
-
 # return the LaTeX dependencies as a string suitable for inclusion
 # in the head of a document
 latex_dependencies_as_string <- function(dependencies) {

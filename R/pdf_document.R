@@ -180,8 +180,7 @@ pdf_document <- function(toc = FALSE,
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
       extra_dependencies <- latex_dependencies(extra_dependencies)
       all_dependencies <- append(extra_dependencies, flatten_latex_dependencies(knit_meta))
-      filename <- tempfile()
-      latex_dependencies_as_text_file(all_dependencies, filename)
+      filename <- as_tmpfile(latex_dependencies_as_string(all_dependencies))
       if ("header-includes" %in% names(metadata)) {
         cat(c("", metadata[["header-includes"]]), sep = "\n", file = filename, append = TRUE)
       }
