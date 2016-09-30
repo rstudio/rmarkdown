@@ -351,6 +351,7 @@ discover_rmd_resources <- function(rmd_file, encoding,
 
   # render "raw" markdown to HTML
   html_file <- tempfile(fileext = ".html")
+  on.exit(unlink(html_file), add = TRUE)
 
   # check to see what format this document is going to render as; if it's a
   # format that produces HTML, let it render as-is, but if it isn't, render as
@@ -378,6 +379,7 @@ discover_rmd_resources <- function(rmd_file, encoding,
   # if this is an R Markdown file, purl the file to extract just the R code
   if (tolower(tools::file_ext(rmd_file)) == "rmd") {
     r_file <- tempfile(fileext = ".R")
+    on.exit(unlink(r_file), add = TRUE)
     knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0,
                 encoding = "UTF-8")
     temp_files <- c(temp_files, r_file)

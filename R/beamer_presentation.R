@@ -78,7 +78,12 @@ beamer_presentation <- function(toc = FALSE,
 
   # template path and assets
   if (!is.null(template)) {
-    if (identical(template, "default")) template <- patch_beamer_template()
+    if (identical(template, "default")) {
+      template <- patch_beamer_template()
+      # the default template could be a tempfile, which is a patched version of
+      # Pandoc's default template
+      if (!is.null(template)) on.exit(unlink(template), add = TRUE)
+    }
     if (!is.null(template))
       args <- c(args, "--template", pandoc_path_arg(template))
   }
