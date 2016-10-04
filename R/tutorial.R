@@ -1,5 +1,11 @@
 
+# tutorial_shiny_app is going to need to copy the files
+# into a temporary directory (to avoid races on RSC when
+# running in the same appDir)
 
+# The IDE is assuming that Run Document == Reload which
+# sometimes causes connection refused errors. Run Document
+# should stop and restart the document
 
 tutorial_shiny_app <- function(tutorial_rmd, encoding, render_args) {
 

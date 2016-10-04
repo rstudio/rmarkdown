@@ -123,19 +123,6 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     else
       render_args$encoding
 
-  # determine the runtime mode from the yaml
-
-  # RSC passes NULL for file (determined from appDir)
-
-  # tutorial_shiny_app is going to need to copy the files
-  # into a temporary directory (to avoid races on RSC when
-  # running in the same appDir)
-
-  # The IDE is assuming that Run Document == Reload which
-  # sometimes causes connection refused errors
-
-  # we probably want to do runtime: shiny/tutorial or runtime: tutorial
-
   # determine the target file so we can look for alternate runtime modes
   target_file <- ifelse(!is.null(file), file, default_file)
 
