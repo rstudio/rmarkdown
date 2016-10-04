@@ -22,7 +22,7 @@ tutorial_shiny_app <- function(tutorial_rmd, encoding, render_args) {
 
   # add some resource paths
   add_resource_path <- function(path) {
-    if (file_test("-d", path))
+    if (utils::file_test("-d", path))
       shiny::addResourcePath(basename(path), path)
   }
   stem <- tools::file_path_sans_ext(basename(tutorial_html))
