@@ -145,7 +145,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     yaml <- list()
 
   # run using the requested mode
-  if (identical(yaml$mode, "tutorial")) {
+  if (identical(yaml$runtime, "shiny/tutorial")) {
 
     app <- tutorial_shiny_app(target_file,
                               encoding = encoding,

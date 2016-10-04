@@ -17,7 +17,7 @@ render <- function(input,
                    output_dir = NULL,
                    output_options = NULL,
                    intermediates_dir = NULL,
-                   runtime = c("auto", "static", "shiny"),
+                   runtime = "auto",
                    clean = TRUE,
                    params = NULL,
                    knit_meta = NULL,
@@ -229,13 +229,15 @@ render <- function(input,
 
   # presume that we're rendering as a static document unless specified
   # otherwise in the parameters
-  runtime <- match.arg(runtime)
   if (identical(runtime, "auto")) {
     if (!is.null(yaml_front_matter$runtime))
       runtime <- yaml_front_matter$runtime
     else
       runtime <- "static"
   }
+
+  # trim off the sub-runtime (e.g. "shiny/tutorial")
+  runtime <- sub("^shiny.*$", "shiny", runtime)
 
   # set df_print
   context <- render_context()
