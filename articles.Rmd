@@ -45,6 +45,8 @@ output:
             <div class="articleBlurb">Yo-ho-ho bilge capstan case shot aft fire ship plunder. Gangway scallywag bilge reef sails mizzenmast belaying pin sheet.</div>
             <a href="authoring_shiny_advanced.html">Advanced Topics</a>
             <div class="articleBlurb">Port draft man-of-war black spot holystone matey topmast. Jib line prow weigh anchor bring a spring upon her cable list clipper.</div>
+            <a href="authoring_shiny_output.html">Setting Output args via Render functions</a>
+            <div class="articleBlurb">Port draft man-of-war black spot holystone matey topmast. Jib line prow weigh anchor bring a spring upon her cable list clipper.</div>
           </div>
         </div>
       </div>

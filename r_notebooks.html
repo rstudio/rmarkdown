@@ -345,9 +345,22 @@ output: html_notebook
 <p><strong>Output</strong>: The most obvious difference is that most forms of output produced from a notebook chunk are shown in the chunk output rather than e.g. the Viewer or Plots pane. Console output (including warnings and messages) appears both at the console <em>and</em> in the chunk output.</p>
 <p><strong>Working directory</strong>: The current working directory inside a notebook chunk is always the directory containing the notebook .Rmd file. This makes it easier to use relative paths inside notebook chunks, and also matches the behavior when knitting, making it easier to write code that works identically both interactively and in a standalone render.</p>
 <p>You’ll get a warning if you try to change the working directory inside a notebook chunk, and the directory will revert back to the notebook’s directory once the chunk is finished executing. You can suppress this warning by using the <code>warnings = FALSE</code> chunk option.</p>
+<p>If it’s necessary to execute notebook chunks in a different directory, you can change the working directory for <strong>all</strong> your chunks by using the knitr <code>root.dir</code> option. For instance, to execute all notebook chunks in the grandparent folder of the notebook:</p>
+<pre><code>knitr::opts_chunk$set(root.dir = normalizePath(&quot;..&quot;)) </code></pre>
+<p>This option is only effective when used inside the setup chunk. Note also that, as in knitr, the <code>root.dir</code> chunk option applies only to chunks; relative paths in Markdown are still relative to the notebook’s parent folder.</p>
 <p><strong>Warnings</strong>: Inside a notebook chunk, warnings are always displayed immediately rather than being held until the end, as in <code>options(warn = 1)</code>.</p>
 <p><strong>Plots</strong>: Plots emitted from a chunk are rendered to match the width of the editor at the time the chunk was executed. The height of the plot is determined by the <a href="https://en.wikipedia.org/wiki/Golden_ratio">golden ratio</a>. The plot’s display list is saved, too, and the plot is re-rendered to match the editor’s width when the editor is resized.</p>
-<p>You can use the <code>fig.width</code> and <code>fig.height</code> chunk options to manually specify the size of rendered plots in the notebook. Note however that doing so suppresses the generation of the display list, so plots with manually specified sizes will be resized using simple image scaling when the notebook editor is resized.</p>
+<p>You can use the <code>fig.width</code>, <code>fig.height</code>, and <code>fig.asp</code> chunk options to manually specify the size of rendered plots in the notebook; you can also use <code>knitr::opts_chunk$set(fig.width = ..., fig.height = ...)</code> in the setup chunk to to set a default rendered size. Note however specifying a chunk size manually suppresses the generation of the display list, so plots with manually specified sizes will be resized using simple image scaling when the notebook editor is resized.</p>
+</div>
+<div id="executing-inline-chunks" class="section level4">
+<h4>Executing Inline Chunks</h4>
+<p>An inline chunk is a chunk which is inline with the text rather than on its own line. For instance, “2 + 2 = <code>`r 2 + 2`</code>” will be rendered as “2 + 2 = 4”.</p>
+<p>To execute an inline chunk in the notebook, put your cursor inside the chunk and press <strong>Ctrl + Shift + Enter</strong> (OS X: <strong>Cmd + Shift + Enter</strong>). As in the execution of ordinary chunks, the content of the chunk will be sent to the R console for evaluation. The results will appear in a small pop-up window next to the code:</p>
+<div class="figure">
+<img src="images/notebook-inline-output.png" class="notebook-screenshot" />
+
+</div>
+<p>In notebooks, inline R chunks can only produce text, not figures or other kinds of output. It’s also important that R code run inside inline chunks executes quickly and does not have side effects, as it’s executed whenever you save the notebook.</p>
 </div>
 </div>
 <div id="chunk-output" class="section level3">

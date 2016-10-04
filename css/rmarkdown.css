@@ -842,3 +842,16 @@ table.table td a:only-child:active {
 
 }
 
+iframe.scale65 {
+  width: 154%;
+  border: #ddd 8px solid;
+  overflow: hidden;
+  position: relative;
+  -ms-zoom: 0.65;
+  -moz-transform: scale(0.65);
+  -moz-transform-origin: 0px 0;
+  -o-transform: scale(0.65);
+  -o-transform-origin: 0 0;
+  -webkit-transform: scale(0.65);
+  -webkit-transform-origin: 0 0;
+}
