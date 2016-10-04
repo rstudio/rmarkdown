@@ -87,7 +87,7 @@ html_document_base <- function(smart = TRUE,
       format_deps <- append(format_deps, list(html_dependency_jquery(),
                                               html_dependency_bootstrap(theme)))
     }
-    else if (isTRUE(bootstrap_compatible) && runtime %in% c("shiny", "tutorial")) {
+    else if (isTRUE(bootstrap_compatible) && identical(runtime, "shiny")) {
       # If we can add bootstrap for Shiny, do it
       format_deps <- append(format_deps,
                             list(html_dependency_bootstrap("bootstrap")))

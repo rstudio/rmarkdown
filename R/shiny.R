@@ -123,12 +123,21 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     else
       render_args$encoding
 
-  # determine the runtime from the yaml
-  yaml <- yaml_front_matter(file, encoding)
-  runtime <- ifelse(!is.null(yaml$runtime), yaml$runtime, "shiny")
+  # determine the runtime mode from the yaml
+  if (!is.null(file))
+    yaml <- yaml_front_matter(file, encoding)
+  else
+    yaml <- list()
 
-  # run using the requested runtime
-  if (identical(runtime, "shiny")) {
+  # run using the requested mode
+  if (identical(yaml$mode, "tutorial")) {
+
+    app <- tutorial_shiny_app(file,
+                              encoding = encoding,
+                              render_args = render_args)
+
+  }
+  else {
 
     onStart <- function() {
       global_r <- file.path.ci(dir, "global.R")
@@ -151,14 +160,6 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     on.exit({
       .globals$evaluated_global_chunks <- character()
     }, add = TRUE)
-  }
-  else if (identical(runtime, "tutorial")) {
-
-    app <- tutorial_shiny_app(file, encoding = encoding, render_args = render_args)
-
-  }
-  else {
-    stop("Unrecognized runtime '", runtime, "'")
   }
 
   # launch the app and open a browser to the requested page, if one was
