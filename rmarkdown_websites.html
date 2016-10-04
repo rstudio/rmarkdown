@@ -27,6 +27,16 @@
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-20375833-14', 'auto');
+  ga('send', 'pageview');
+</script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -588,7 +598,7 @@ thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
 <pre><code>output_dir: &quot;.&quot;</code></pre></li>
 </ol>
 <p>This keeps all of your output side-by-side with your source code in the root of your website (rather than writing it to the <code>_site</code> directory).</p>
-<p>Note that when deploying to GitHub Pages usign this configuration your source code, data, and everything else in your repository is all publicly available alongside your generated website content.</p>
+<p>Note that when deploying to GitHub Pages using this configuration your source code, data, and everything else in your repository is all publicly available alongside your generated website content.</p>
 <p>Alternatively, you can <a href="https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/#publishing-your-github-pages-site-from-a-docs-folder-on-your-master-branch">configure GitHub Pages</a> to publish from a <code>/docs</code> subdirectory of your repository. If you work in this configuration you should change your output directory to “docs” within <strong>_site.yml</strong>. For example:</p>
 <pre><code>    output_dir: &quot;docs&quot;
   </code></pre>

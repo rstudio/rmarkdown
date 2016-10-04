@@ -24,6 +24,16 @@
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-20375833-14', 'auto');
+  ga('send', 'pageview');
+</script>
+
 <style type="text/css">code{white-space: pre;}</style>
 <link rel="stylesheet"
       href="site_libs/highlight/textmate.css"
@@ -232,70 +242,70 @@ cat(contents, sep = &quot;\n&quot;)</code></pre>
 <pre class="r"><code>parsed &lt;- rmarkdown::parse_html_notebook(output_file)
 str(parsed)</code></pre>
 <pre><code>## List of 4
-##  $ source     : chr [1:226] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&quot; &quot;&quot; ...
+##  $ source     : chr [1:229] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&quot; &quot;&quot; ...
 ##  $ rmd        : chr [1:8] &quot;---&quot; &quot;title: \&quot;R Notebook Stub\&quot;&quot; &quot;output: html_notebook&quot; &quot;---&quot; ...
 ##  $ header     : chr [1:70] &quot;&lt;head&gt;&quot; &quot;&quot; &quot;&lt;meta charset=\&quot;utf-8\&quot;&gt;&quot; &quot;&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html; charset=utf-8\&quot; /&gt;&quot; ...
 ##  $ annotations:List of 12
 ##   ..$ :List of 4
-##   .. ..$ row  : int 171
+##   .. ..$ row  : int 174
 ##   .. ..$ label: chr &quot;text&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 172
+##   .. ..$ row  : int 175
 ##   .. ..$ label: chr &quot;text&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 173
+##   .. ..$ row  : int 176
 ##   .. ..$ label: chr &quot;chunk&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 174
+##   .. ..$ row  : int 177
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;```r\n# R Code\n```&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 176
+##   .. ..$ row  : int 179
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 177
+##   .. ..$ row  : int 180
 ##   .. ..$ label: chr &quot;output&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;Custom output for chunk: 1\n&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 179
+##   .. ..$ row  : int 182
 ##   .. ..$ label: chr &quot;output&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 180
+##   .. ..$ row  : int 183
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;```r\n# R Logo\n```&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 182
+##   .. ..$ row  : int 185
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 183
+##   .. ..$ row  : int 186
 ##   .. ..$ label: chr &quot;plot&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 185
+##   .. ..$ row  : int 188
 ##   .. ..$ label: chr &quot;plot&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 186
+##   .. ..$ row  : int 189
 ##   .. ..$ label: chr &quot;chunk&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL</code></pre>
