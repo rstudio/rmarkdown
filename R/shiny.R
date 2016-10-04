@@ -500,6 +500,14 @@ render_delayed <- function(expr) {
 }
 
 
+# TODO: location of files during render
+
+# TODO: ability to write the server.R file directly
+
+# TODO: side effect functions for server and other contexts
+
+# TODO: ability to publish the static files
+
 prerendered_shiny_app <- function(tutorial_rmd, encoding, render_args) {
 
   # render rmd
