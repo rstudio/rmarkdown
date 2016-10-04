@@ -236,9 +236,6 @@ render <- function(input,
       runtime <- "static"
   }
 
-  # trim off the sub-runtime (e.g. "shiny/tutorial")
-  runtime <- sub("^shiny.*$", "shiny", runtime)
-
   # set df_print
   context <- render_context()
   context$df_print <- output_format$df_print
