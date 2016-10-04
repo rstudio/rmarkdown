@@ -6,8 +6,7 @@ tutorial_shiny_app <- function(tutorial_rmd, encoding, render_args) {
   # render rmd
   args <- merge_lists(list(input = tutorial_rmd,
                            encoding = encoding,
-                           output_options = list(self_contained = FALSE),
-                           runtime = "tutorial"),
+                           output_options = list(self_contained = FALSE)),
                       render_args)
   tutorial_html <- do.call(render, args)
 
