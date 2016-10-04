@@ -123,22 +123,43 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     else
       render_args$encoding
 
-  onStart <- function() {
-    global_r <- file.path.ci(dir, "global.R")
-    if (file.exists(global_r)) {
-      source(global_r, local = FALSE)
-    }
-    shiny::addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
-  }
+  # determine the runtime from the yaml
+  yaml <- yaml_front_matter(file, encoding)
+  runtime <- ifelse(!is.null(yaml$runtime), yaml$runtime, "shiny")
 
-  # combine the user-supplied list of Shiny arguments with our own and start
-  # the Shiny server; handle requests for the root (/) and any R markdown files
-  # within
-  app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir, default_file),
-                         uiPattern = "^/$|^/index\\.html?$|^(/.*\\.[Rr][Mm][Dd])$",
-                         onStart = onStart,
-                         server = rmarkdown_shiny_server(
-                           dir, default_file, encoding, auto_reload, render_args))
+  # run using the requested runtime
+  if (identical(runtime, "shiny")) {
+
+    onStart <- function() {
+      global_r <- file.path.ci(dir, "global.R")
+      if (file.exists(global_r)) {
+        source(global_r, local = FALSE)
+      }
+      shiny::addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
+    }
+
+    # combine the user-supplied list of Shiny arguments with our own and start
+    # the Shiny server; handle requests for the root (/) and any R markdown files
+    # within
+    app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir, default_file),
+                           uiPattern = "^/$|^/index\\.html?$|^(/.*\\.[Rr][Mm][Dd])$",
+                           onStart = onStart,
+                           server = rmarkdown_shiny_server(
+                             dir, default_file, encoding, auto_reload, render_args))
+
+    # cleanup evaluated cache when the current shiny app exits
+    on.exit({
+      .globals$evaluated_global_chunks <- character()
+    }, add = TRUE)
+  }
+  else if (identical(runtime, "tutorial")) {
+
+    app <- tutorial_shiny_app(file, encoding = encoding, render_args = render_args)
+
+  }
+  else {
+    stop("Unrecognized runtime '", runtime, "'")
+  }
 
   # launch the app and open a browser to the requested page, if one was
   # specified
@@ -154,11 +175,6 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       }
     }
   }
-
-  # cleanup evaluated cache when the current shiny app exits
-  on.exit({
-    .globals$evaluated_global_chunks <- character()
-  }, add = TRUE)
 
   shiny_args <- merge_lists(list(appDir = app,
                                  launch.browser = launch_browser),
