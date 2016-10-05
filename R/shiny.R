@@ -143,11 +143,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   }
   else {
 
+    # add rmd_resources handler on start
     onStart <- function() {
-      global_r <- file.path.ci(dir, "global.R")
-      if (file.exists(global_r)) {
-        source(global_r, local = FALSE)
-      }
       shiny::addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
     }
 
@@ -165,6 +162,9 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       .globals$evaluated_global_chunks <- character()
     }, add = TRUE)
   }
+
+  # source global.R onStart
+  app <- ammend_on_start(app, source_global_r(dir))
 
   # launch the app and open a browser to the requested page, if one was
   # specified
@@ -503,7 +503,6 @@ render_delayed <- function(expr) {
 }
 
 # TODO: ability to write the server.R file directly
-# TODO: global.R for shared
 
 # TODO: side effect functions for server and other contexts
 
@@ -585,8 +584,12 @@ prerender <- function(tutorial_rmd, encoding, render_args) {
       # find external resources referenced by the file
       external_resources <- find_external_resources(tutorial_rmd, encoding)
 
+      # additional R source files that might be executed
+      r_files <- c("global.R", "server.R")
+
       # get paths to external resources
       input_files <- c(tutorial_rmd,
+                       file.path(output_dir, r_files),
                        file.path(output_dir, external_resources$path))
 
       # what's the maximum last_modified time of an input file
@@ -603,9 +606,15 @@ prerender <- function(tutorial_rmd, encoding, render_args) {
 
   # prerender if necessary
   if (prerender) {
+
+    # source global.R if necessary
+    source_global_r(dirname(tutorial_rmd))
+
+    # execute the render
     args <- merge_lists(list(input = tutorial_rmd,
                              encoding = encoding,
-                             output_options = list(self_contained = FALSE)),
+                             output_options = list(self_contained = FALSE),
+                             envir = new.env()),
                         render_args)
     tutorial_html <- do.call(render, args)
   }
@@ -614,4 +623,21 @@ prerender <- function(tutorial_rmd, encoding, render_args) {
   normalizePath(tutorial_html, winslash = "/")
 }
 
+
+source_global_r <- function(dir, local = FALSE) {
+  global_r <- file.path.ci(dir, "global.R")
+  if (file.exists(global_r)) {
+    source(global_r, local = local)
+  }
+}
+
+ammend_on_start <- function(app, onStart) {
+  appOnStart <- app$onStart
+  app$onStart <- function() {
+    if (!is.null(appOnStart))
+      appOnStart()
+    force(onStart)
+  }
+  app
+}
 
