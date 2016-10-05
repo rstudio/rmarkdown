@@ -133,10 +133,13 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   # run using the requested mode
   if (identical(runtime, "shiny/prerendered")) {
 
+    # get the pre-rendered shiny app
     app <- prerendered_shiny_app(target_file,
                                  encoding = encoding,
                                  render_args = render_args)
 
+    # set file_rel so launched browser navigates to "/"
+    file_rel <- NULL
   }
   else {
 
@@ -502,8 +505,6 @@ render_delayed <- function(expr) {
 # TODO: ability to write the server.R file directly
 # TODO: global.R for shared
 
-# TODO: printing shiny app at console still passes index.Rmd and fails
-
 # TODO: side effect functions for server and other contexts
 
 # TODO: ability to publish the static files
@@ -536,7 +537,9 @@ prerendered_shiny_app <- function(tutorial_rmd, encoding, render_args) {
 
   # create shiny app
   shiny::shinyApp(
-    ui = htmlTemplate(text_ = html),
+    ui = function(req) {
+      htmlTemplate(text_ = html)
+    },
     server = function(input, output, session) {
 
     }
