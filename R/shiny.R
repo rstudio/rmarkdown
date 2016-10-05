@@ -500,7 +500,12 @@ render_delayed <- function(expr) {
   quoted = TRUE)
 }
 
-# TODO: multiple Rmd's in one directory without an index.Rmd
+# TODO: multiple Rmd's in one directory without an index.Rmd. Is there
+# any reason why this shouldn't work?
+
+# TODO: Shouldn't rmarkdown::render be able to trigger a pre-render?
+# that combined with serving multiple Rmds means this could work for
+# render-site
 
 # TODO: side effect functions for server and other contexts
 
