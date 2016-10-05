@@ -501,13 +501,16 @@ render_delayed <- function(expr) {
 }
 
 # TODO: multiple Rmd's in one directory without an index.Rmd. Is there
-# any reason why this shouldn't work?
+# any reason why this shouldn't work? Currently if we deploy in this
+# scenario then I think things will break. We may need to think
+# though appPrimaryDoc as well.
 
 # TODO: Shouldn't rmarkdown::render be able to trigger a pre-render?
 # that combined with serving multiple Rmds means this could work for
 # render-site
 
-# TODO: side effect functions for server and other contexts
+# TODO: side effect functions for server and other contexts (use
+# the evalute hook as from above?)
 
 prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
 
