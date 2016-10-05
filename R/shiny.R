@@ -509,8 +509,6 @@ render_delayed <- function(expr) {
 
 # TODO: side effect functions for server and other contexts
 
-# TODO: ability to publish the static files
-
 prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
 
   # TODO: reconcile the double-render here w/ "always" mode
