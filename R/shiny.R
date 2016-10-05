@@ -499,10 +499,10 @@ render_delayed <- function(expr) {
   quoted = TRUE)
 }
 
-
-# TODO: location of files during render
-
 # TODO: ability to write the server.R file directly
+# TODO: global.R for shared
+
+# TODO: printing shiny app at console still passes index.Rmd and fails
 
 # TODO: side effect functions for server and other contexts
 
@@ -510,15 +510,8 @@ render_delayed <- function(expr) {
 
 prerendered_shiny_app <- function(tutorial_rmd, encoding, render_args) {
 
-  # render rmd
-  args <- merge_lists(list(input = tutorial_rmd,
-                           encoding = encoding,
-                           output_options = list(self_contained = FALSE)),
-                      render_args)
-  tutorial_html <- do.call(render, args)
-
-  # normalize path and get directory
-  tutorial_html <- normalizePath(tutorial_html, winslash = "/")
+  # resolve tutorial html file and directory (may include a render)
+  tutorial_html <- prerender(tutorial_rmd, encoding, render_args)
   tutorial_dir <- dirname(tutorial_html)
 
   # add some resource paths
@@ -548,6 +541,74 @@ prerendered_shiny_app <- function(tutorial_rmd, encoding, render_args) {
 
     }
   )
+}
+
+
+prerender <- function(tutorial_rmd, encoding, render_args) {
+
+  # determine the path to the tutorial_html output file
+  output_file <- render_args$output_file
+  if (is.null(output_file))
+    output_file <- file_with_ext(basename(tutorial_rmd), "html")
+  output_dir <- render_args$output_dir
+  if (is.null(output_dir))
+    output_dir <- dirname(tutorial_rmd)
+  tutorial_html <- file.path(output_dir, output_file)
+
+  # determine whether we need to render the Rmd in advance
+  prerender_option <- tolower(Sys.getenv("RMARKDOWN_SHINY_PRERENDER", "auto"))
+
+  if (identical(prerender_option, "always")) {
+    prerender <- TRUE
+  }
+  else if (identical(prerender_option, "never")) {
+    prerender <- FALSE
+  }
+  else if (identical(prerender_option, "auto")) {
+
+    # determine the last modified time of the output file
+    if (file.exists(tutorial_html))
+      output_last_modified <- as.integer(file.info(tutorial_html)$mtime)
+    else
+      output_last_modified <- 0L
+
+    # short circuit for Rmd modified. if it hasn't been modified since the
+    # html was generated look at external resources
+    input_last_modified <- as.integer(file.info(tutorial_rmd)$mtime)
+    if (input_last_modified > output_last_modified) {
+      prerender <- TRUE
+    }
+    else {
+      # find external resources referenced by the file
+      external_resources <- find_external_resources(tutorial_rmd, encoding)
+
+      # get paths to external resources
+      input_files <- c(tutorial_rmd,
+                       file.path(output_dir, external_resources$path))
+
+      # what's the maximum last_modified time of an input file
+      input_last_modified <- max(as.integer(file.info(input_files)$mtime),
+                                 na.rm = TRUE)
+
+      # render if an input file was modified after the output file
+      prerender <- input_last_modified > output_last_modified
+    }
+  }
+  else {
+    stop("Invalid value '", prerender_option, "' for RMARKDOWN_SHINY_PRERENDER")
+  }
+
+  # prerender if necessary
+  if (prerender) {
+    args <- merge_lists(list(input = tutorial_rmd,
+                             encoding = encoding,
+                             output_options = list(self_contained = FALSE)),
+                        render_args)
+    tutorial_html <- do.call(render, args)
+  }
+
+  # normalize path and return it
+  normalizePath(tutorial_html, winslash = "/")
 }
 
 
