@@ -145,6 +145,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
     # add rmd_resources handler on start
     onStart <- function() {
+      source_global_r(dir)
       shiny::addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
     }
 
@@ -162,9 +163,6 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       .globals$evaluated_global_chunks <- character()
     }, add = TRUE)
   }
-
-  # source global.R onStart
-  app <- ammend_on_start(app, source_global_r(dir))
 
   # launch the app and open a browser to the requested page, if one was
   # specified
@@ -619,12 +617,8 @@ prerender <- function(input_rmd, encoding, render_args) {
       # find external resources referenced by the file
       external_resources <- find_external_resources(input_rmd, encoding)
 
-      # additional R source files that might be executed
-      r_files <- c("global.R", "server.R")
-
       # get paths to external resources
       input_files <- c(input_rmd,
-                       file.path(output_dir, r_files),
                        file.path(output_dir, external_resources$path))
 
       # what's the maximum last_modified time of an input file
@@ -641,9 +635,6 @@ prerender <- function(input_rmd, encoding, render_args) {
 
   # prerender if necessary
   if (prerender) {
-
-    # source global.R if necessary
-    source_global_r(dirname(input_rmd))
 
     # execute the render
     args <- merge_lists(list(input = input_rmd,
