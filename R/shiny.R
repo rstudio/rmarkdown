@@ -508,8 +508,26 @@ render_delayed <- function(expr) {
 
 prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
 
+  # TODO: reconcile the double-render here w/ "always" mode
 
-  # TODO: all of this code can go into the function(req)
+  # get rendered html
+  html <- prerendered_shiny_html(input_rmd, encoding, render_args)
+
+  # TODO: pull out global.R and server.R from rendered html
+
+  # create shiny app
+  shiny::shinyApp(
+    ui = function(req) {
+      html <- prerendered_shiny_html(input_rmd, encoding, render_args)
+      htmlTemplate(text_ = html)
+    },
+    server = function(input, output, session) {
+
+    }
+  )
+}
+
+prerendered_shiny_html <- function(input_rmd, encoding, render_args) {
 
   # resolve input html file and directory (may include a render)
   rendered_html <- prerender(input_rmd, encoding, render_args)
@@ -534,16 +552,7 @@ prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
   Encoding(html) <- "UTF-8"
   html <- sub("<head>", "<head>{{ headContent() }}", html)
   html <- gsub('<script src=".*jquery\\.min\\.js"></script>', '', html)
-
-  # server = function(input, output, session) source("server.R", local=environment())
-
-  # create shiny app
-  shiny::shinyApp(
-    ui =  htmlTemplate(text_ = html),
-    server = function(input, output, session) {
-
-    }
-  )
+  html
 }
 
 # install evaluate hook to ensure that the 'global' chunk for this source
