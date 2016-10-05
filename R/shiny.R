@@ -502,37 +502,42 @@ render_delayed <- function(expr) {
   quoted = TRUE)
 }
 
-# TODO: ability to write the server.R file directly
+# TODO: multiple Rmd's in one directory without an index.Rmd
 
 # TODO: side effect functions for server and other contexts
 
 # TODO: ability to publish the static files
 
-prerendered_shiny_app <- function(tutorial_rmd, encoding, render_args) {
+prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
 
-  # resolve tutorial html file and directory (may include a render)
-  tutorial_html <- prerender(tutorial_rmd, encoding, render_args)
-  tutorial_dir <- dirname(tutorial_html)
+
+  # TODO: all of this code can go into the function(req)
+
+  # resolve input html file and directory (may include a render)
+  rendered_html <- prerender(input_rmd, encoding, render_args)
+  output_dir <- dirname(rendered_html)
 
   # add some resource paths
   add_resource_path <- function(path) {
     if (utils::file_test("-d", path))
       shiny::addResourcePath(basename(path), path)
   }
-  stem <- tools::file_path_sans_ext(basename(tutorial_html))
-  add_resource_path(file.path(tutorial_dir,paste0(stem, "_files")))
-  add_resource_path(file.path(tutorial_dir,"css"))
-  add_resource_path(file.path(tutorial_dir,"js"))
-  add_resource_path(file.path(tutorial_dir,"images"))
-  add_resource_path(file.path(tutorial_dir,"www"))
+  stem <- tools::file_path_sans_ext(basename(rendered_html))
+  add_resource_path(file.path(output_dir,paste0(stem, "_files")))
+  add_resource_path(file.path(output_dir,"css"))
+  add_resource_path(file.path(output_dir,"js"))
+  add_resource_path(file.path(output_dir,"images"))
+  add_resource_path(file.path(output_dir,"www"))
 
   # read in the htm, add the shiny {{ headContent() }}, then remove
   # any other lines that include jquery.min.js (since shiny does this)
-  html <- readChar(tutorial_html, file.info(tutorial_html)$size,
+  html <- readChar(rendered_html, file.info(rendered_html)$size,
                    useBytes = TRUE)
   Encoding(html) <- "UTF-8"
   html <- sub("<head>", "<head>{{ headContent() }}", html)
   html <- gsub('<script src=".*jquery\\.min\\.js"></script>', '', html)
+
+  # server = function(input, output, session) source("server.R", local=environment())
 
   # create shiny app
   shiny::shinyApp(
@@ -543,17 +548,49 @@ prerendered_shiny_app <- function(tutorial_rmd, encoding, render_args) {
   )
 }
 
+# install evaluate hook to ensure that the 'global' chunk for this source
+# file is evaluated only once and is run outside of a user reactive domain
+# knitr::knit_hooks$set(evaluate = function(code, envir, ...) {
+#
+#   # check for 'global' chunk label
+#   if (identical(knitr::opts_current$get("label"), "global")) {
+#
+#     # check list of previously evaludated global chunks
+#     code_string <- paste(code, collapse = '\n')
+#     if (!code_string %in% .globals$evaluated_global_chunks) {
+#
+#       # save it in our list of evaluated global chunks
+#       .globals$evaluated_global_chunks <-
+#         c(.globals$evaluated_global_chunks, code_string)
+#
+#       # evaluate with no reactive domain to prevent any shiny code (e.g.
+#       # a reactive timer) from attaching to the current user session
+#       # (resulting in it's destruction when that session ends)
+#       shiny::withReactiveDomain(NULL, {
+#         evaluate::evaluate(code, envir = globalenv(), ...)
+#       })
+#
+#     } else {
+#       list()
+#     }
+#     # delegate to standard evaluate for everything else
+#   } else {
+#     evaluate::evaluate(code, envir, ...)
+#   }
+# })
 
-prerender <- function(tutorial_rmd, encoding, render_args) {
+prerender <- function(input_rmd, encoding, render_args) {
 
-  # determine the path to the tutorial_html output file
+  # TODO: check for write and if I can't write then don't even bother
+
+  # determine the path to the rendered_html
   output_file <- render_args$output_file
   if (is.null(output_file))
-    output_file <- file_with_ext(basename(tutorial_rmd), "html")
+    output_file <- file_with_ext(basename(input_rmd), "html")
   output_dir <- render_args$output_dir
   if (is.null(output_dir))
-    output_dir <- dirname(tutorial_rmd)
-  tutorial_html <- file.path(output_dir, output_file)
+    output_dir <- dirname(input_rmd)
+  rendered_html <- file.path(output_dir, output_file)
 
   # determine whether we need to render the Rmd in advance
   prerender_option <- tolower(Sys.getenv("RMARKDOWN_SHINY_PRERENDER", "auto"))
@@ -567,26 +604,26 @@ prerender <- function(tutorial_rmd, encoding, render_args) {
   else if (identical(prerender_option, "auto")) {
 
     # determine the last modified time of the output file
-    if (file.exists(tutorial_html))
-      output_last_modified <- as.integer(file.info(tutorial_html)$mtime)
+    if (file.exists(rendered_html))
+      output_last_modified <- as.integer(file.info(rendered_html)$mtime)
     else
       output_last_modified <- 0L
 
     # short circuit for Rmd modified. if it hasn't been modified since the
     # html was generated look at external resources
-    input_last_modified <- as.integer(file.info(tutorial_rmd)$mtime)
+    input_last_modified <- as.integer(file.info(input_rmd)$mtime)
     if (input_last_modified > output_last_modified) {
       prerender <- TRUE
     }
     else {
       # find external resources referenced by the file
-      external_resources <- find_external_resources(tutorial_rmd, encoding)
+      external_resources <- find_external_resources(input_rmd, encoding)
 
       # additional R source files that might be executed
       r_files <- c("global.R", "server.R")
 
       # get paths to external resources
-      input_files <- c(tutorial_rmd,
+      input_files <- c(input_rmd,
                        file.path(output_dir, r_files),
                        file.path(output_dir, external_resources$path))
 
@@ -606,19 +643,19 @@ prerender <- function(tutorial_rmd, encoding, render_args) {
   if (prerender) {
 
     # source global.R if necessary
-    source_global_r(dirname(tutorial_rmd))
+    source_global_r(dirname(input_rmd))
 
     # execute the render
-    args <- merge_lists(list(input = tutorial_rmd,
+    args <- merge_lists(list(input = input_rmd,
                              encoding = encoding,
                              output_options = list(self_contained = FALSE),
                              envir = new.env()),
                         render_args)
-    tutorial_html <- do.call(render, args)
+    rendered_html <- do.call(render, args)
   }
 
   # normalize path and return it
-  normalizePath(tutorial_html, winslash = "/")
+  normalizePath(rendered_html, winslash = "/")
 }
 
 
