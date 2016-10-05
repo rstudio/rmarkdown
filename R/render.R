@@ -367,18 +367,34 @@ render <- function(input,
 
       params <- knit_params_get(input_lines, params)
 
-      # make the params available in the knit environment
-      if (!exists("params", envir = envir, inherits = FALSE)) {
-        assign("params", params, envir = envir)
-        lockBinding("params", envir)
-        on.exit({
-          do.call("unlockBinding", list("params", envir))
-          remove("params", envir = envir)
-        }, add = TRUE)
-      } else {
-        stop("params object already exists in knit environment ",
-             "so can't be overwritten by render params", call. = FALSE)
+      # bail if an object called 'params' exists in this environment,
+      # and it seems to be an unrelated user-created object. store
+      # references so we can restore them post-render
+      hasParams <- exists("params", envir = envir, inherits = FALSE)
+      envirParams <- NULL
+
+      if (hasParams) {
+        envirParams <- get("params", envir = envir, inherits = FALSE)
+        isKnownParamsObject <-
+          inherits(envirParams, "knit_param_list") ||
+          inherits(envirParams, "knit_param")
+
+        if (!isKnownParamsObject) {
+          stop("params object already exists in knit environment ",
+               "so can't be overwritten by render params", call. = FALSE)
+        }
       }
+
+      # make the params available in the knit environment
+      assign("params", params, envir = envir)
+      lockBinding("params", envir)
+      on.exit({
+        do.call("unlockBinding", list("params", envir))
+        if (hasParams)
+          assign("params", envirParams, envir = envir)
+        else
+          remove("params", envir = envir)
+      }, add = TRUE)
     }
 
     # make the yaml_front_matter available as 'metadata' within the
