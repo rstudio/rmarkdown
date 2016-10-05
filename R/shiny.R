@@ -536,9 +536,7 @@ prerendered_shiny_app <- function(tutorial_rmd, encoding, render_args) {
 
   # create shiny app
   shiny::shinyApp(
-    ui = function(req) {
-      htmlTemplate(text_ = html)
-    },
+    ui =  htmlTemplate(text_ = html),
     server = function(input, output, session) {
 
     }
