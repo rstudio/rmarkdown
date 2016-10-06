@@ -7,9 +7,9 @@
 html_notebook(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   number_sections = FALSE, fig_width = 7, fig_height = 5,
   fig_retina = 2, fig_caption = TRUE, code_folding = "show",
-  smart = TRUE, theme = "default", highlight = "textmate",
-  mathjax = "default", extra_dependencies = NULL, css = NULL,
-  includes = NULL, md_extensions = NULL, pandoc_args = NULL,
+  code_download = TRUE, smart = TRUE, theme = "default",
+  highlight = "textmate", mathjax = "default", extra_dependencies = NULL,
+  css = NULL, includes = NULL, md_extensions = NULL, pandoc_args = NULL,
   output_source = NULL, self_contained = TRUE, ...)
 }
 \arguments{
@@ -42,6 +42,9 @@ they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
 code chunks by default (users can show hidden code chunks either
 individually or document-wide). Specify \code{"show"} to show all R code
 chunks by default.}
+
+\item{code_download}{Embed the Rmd source code within the document and provide
+a link that can be used by readers to download the code.}
 
 \item{smart}{Produce typographically correct output, converting straight
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
