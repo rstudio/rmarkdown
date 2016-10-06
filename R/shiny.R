@@ -612,7 +612,10 @@ prerender <- function(input_rmd, encoding, render_args) {
   # determine whether we need to render the Rmd in advance
   prerender_option <- tolower(Sys.getenv("RMARKDOWN_SHINY_PRERENDER", "auto"))
 
-  if (identical(prerender_option, "always")) {
+  if (file.access(output_dir, 2) != 0) {
+    prerender <- FALSE
+  }
+  else if (identical(prerender_option, "always")) {
     prerender <- TRUE
   }
   else if (identical(prerender_option, "never")) {
