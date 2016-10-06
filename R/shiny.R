@@ -71,9 +71,11 @@
 run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
                 auto_reload = TRUE, shiny_args = NULL, render_args = NULL) {
 
-  # select the document to serve at the root URL if not user-specified
+  # select the document to serve at the root URL if not user-specified. We exclude
+  # documents which start with a leading underscore (same pattern is used to
+  # designate "sub-documents" in R Markdown websites and bookdown)
   if (is.null(default_file)) {
-    allRmds <- list.files(path = dir, pattern = "^.*\\.[Rr][Mm][Dd]$")
+    allRmds <- list.files(path = dir, pattern = "^[^_].*\\.[Rr][Mm][Dd]$")
     if (length(allRmds) == 1) {
       # just one R Markdown document
       default_file <- allRmds
@@ -82,6 +84,19 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       index <- which(tolower(allRmds) == "index.rmd")
       if (length(index) > 0) {
         default_file <- allRmds[index[1]]
+      }
+      # look for first one that has runtime: shiny
+      else {
+        for (rmd in allRmds) {
+          encoding <- getOption("encoding")
+          if (!is.null(render_args) && !is.null(render_args$encoding))
+            encoding <- render_args$encoding
+          runtime <- yaml_front_matter(rmd, encoding)$runtime
+          if (!is.null(runtime) && grepl('^shiny', runtime)) {
+            default_file <- rmd
+            break
+          }
+        }
       }
     }
   }
@@ -499,15 +514,6 @@ render_delayed <- function(expr) {
   env = env_snapshot,
   quoted = TRUE)
 }
-
-# TODO: multiple Rmd's in one directory without an index.Rmd. Is there
-# any reason why this shouldn't work? Currently if we deploy in this
-# scenario then I think things will break. We may need to think
-# though appPrimaryDoc as well.
-
-# TODO: Shouldn't rmarkdown::render be able to trigger a pre-render?
-# that combined with serving multiple Rmds means this could work for
-# render-site
 
 # TODO: side effect functions for server and other contexts (use
 # the evalute hook as from above?)
