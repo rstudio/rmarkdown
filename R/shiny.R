@@ -596,8 +596,6 @@ prerendered_shiny_html <- function(input_rmd, encoding, render_args) {
 
 prerender <- function(input_rmd, encoding, render_args) {
 
-  # TODO: check for write and if I can't write then don't even bother
-
   # TODO: export prerender
 
   # determine the path to the rendered_html
