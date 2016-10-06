@@ -515,17 +515,10 @@ render_delayed <- function(expr) {
   quoted = TRUE)
 }
 
-# TODO: side effect functions for server and other contexts (use
-# the evalute hook as from above?)
-
 prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
 
-  # TODO: reconcile the double-render here w/ "always" mode
-
-  # get rendered html
+  # get rendered html (required to create server below)
   html <- prerendered_shiny_html(input_rmd, encoding, render_args)
-
-  # TODO: pull out global.R and server.R from rendered html
 
   # create shiny app
   shiny::shinyApp(
@@ -534,7 +527,10 @@ prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
       htmlTemplate(text_ = html)
     },
     server = function(input, output, session) {
-
+      #
+      # synthesize server by pulling context = "global" and context = "server"
+      # chunks out of the prerendered html
+      #
     }
   )
 }
