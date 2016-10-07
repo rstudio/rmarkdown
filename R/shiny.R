@@ -517,23 +517,20 @@ render_delayed <- function(expr) {
 
 prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
 
-  # get rendered html (required to create server below)
+  # get rendered html
   html <- prerendered_shiny_html(input_rmd, encoding, render_args)
 
-  # extract the global context and run it
+  # extract the global context and execute it
   html_lines <- strsplit(html, "\\r?\\n")[[1]]
   global_context <- extract_prerendered_context(html_lines, "global")
-  eval(parse(text = global_context))
+  eval(parse(text = global_context), envir = globalenv())
 
   # extract the server context (will be executed below)
   server_context <- extract_prerendered_context(html_lines, "server")
 
   # create shiny app
   shiny::shinyApp(
-    ui = function(req) {
-      html <- prerendered_shiny_html(input_rmd, encoding, render_args)
-      htmlTemplate(text_ = html)
-    },
+    ui = htmlTemplate(text_ = html),
     server = function(input, output, session) {
       eval(parse(text = server_context))
     }
