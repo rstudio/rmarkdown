@@ -605,15 +605,15 @@ prerender <- function(input_rmd, encoding, render_args) {
   rendered_html <- file.path(output_dir, output_file)
 
   # determine whether we need to render the Rmd in advance
-  prerender_option <- tolower(Sys.getenv("RMARKDOWN_SHINY_PRERENDER", "auto"))
+  prerender_option <- tolower(Sys.getenv("RMARKDOWN_RUN_PRERENDER", "1"))
 
   if (file.access(output_dir, 2) != 0) {
     prerender <- FALSE
   }
-  else if (identical(prerender_option, "never")) {
+  else if (identical(prerender_option, "0")) {
     prerender <- FALSE
   }
-  else if (identical(prerender_option, "auto")) {
+  else if (identical(prerender_option, "1")) {
 
     # determine the last modified time of the output file
     if (file.exists(rendered_html))
@@ -644,7 +644,7 @@ prerender <- function(input_rmd, encoding, render_args) {
     }
   }
   else {
-    stop("Invalid value '", prerender_option, "' for RMARKDOWN_SHINY_PRERENDER")
+    stop("Invalid value '", prerender_option, "' for RMARKDOWN_RUN_PRERENDER")
   }
 
   # prerender if necessary
