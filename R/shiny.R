@@ -610,9 +610,6 @@ prerender <- function(input_rmd, encoding, render_args) {
   if (file.access(output_dir, 2) != 0) {
     prerender <- FALSE
   }
-  else if (identical(prerender_option, "always")) {
-    prerender <- TRUE
-  }
   else if (identical(prerender_option, "never")) {
     prerender <- FALSE
   }
