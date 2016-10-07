@@ -322,6 +322,27 @@ render <- function(input,
     # setting the runtime (static/shiny) type
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
+    # special handling for "global" and "server" contexts in
+    # runtime: shiny/prerendered
+    shiny_prerendered_contexts <- NULL
+    if (identical(runtime, "shiny/prerendered")) {
+      knitr::knit_hooks$set(evaluate = function(code, envir, ...) {
+        # if there is a context then emit knit_meta for it
+        context <- knitr::opts_current$get("context")
+        if (!is.null(context)) {
+          context_meta <- list()
+          context_meta$name <- context
+          context_meta$code <- code
+          knitr::knit_meta_add(
+            list(structure(context_meta, class = "shiny_prerendered"))
+          )
+        }
+        # evaluate if this isn't in the server context
+        if (!identical(context, "server"))
+          evaluate::evaluate(code, envir, ...)
+      })
+    }
+
     # install global chunk handling for runtime: shiny (evaluate the 'global'
     # chunk only once, and in the global environment)
     if (identical(runtime, "shiny") &&
@@ -414,6 +435,19 @@ render <- function(input,
     for (rmd_warning in rmd_warnings) {
       message("Warning: ", rmd_warning)
     }
+
+    # pull out shiny_prerendered_contexts and append them as script tags
+    shiny_prerendered_contexts <- knit_meta_reset(class = "shiny_prerendered")
+    input_file <- file(input, open="at", encoding = encoding)
+    tryCatch({
+      for (context in shiny_prerendered_contexts) {
+        lines <- c(paste0('<script type="application/shiny-prerendered" ',
+                   'data-context="', context$name ,'">'),
+                   context$code,
+                   '</script>')
+        writeLines(lines, con = input_file)
+      }
+    }, finally = close(input_file))
 
     # collect remaining knit_meta
     knit_meta <- knit_meta_reset()

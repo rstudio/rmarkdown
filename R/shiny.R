@@ -520,6 +520,14 @@ prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
   # get rendered html (required to create server below)
   html <- prerendered_shiny_html(input_rmd, encoding, render_args)
 
+  # extract the global context and run it
+  html_lines <- strsplit(html, "\\r?\\n")[[1]]
+  global_context <- extract_prerendered_context(html_lines, "global")
+  eval(parse(text = global_context))
+
+  # extract the server context (will be executed below)
+  server_context <- extract_prerendered_context(html_lines, "server")
+
   # create shiny app
   shiny::shinyApp(
     ui = function(req) {
@@ -527,12 +535,33 @@ prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
       htmlTemplate(text_ = html)
     },
     server = function(input, output, session) {
-      #
-      # synthesize server by pulling context = "global" and context = "server"
-      # chunks out of the prerendered html
-      #
+      eval(parse(text = server_context))
     }
   )
+}
+
+
+extract_prerendered_context <- function(html_lines, context) {
+
+  # look for lines that start the context
+  pattern <- paste0('<script type="application/shiny-prerendered" data-context="', context, '">')
+  matches <- regmatches(html_lines, regexec(pattern, html_lines))
+
+  # extract the code within the contexts
+  in_context <- FALSE
+  context_lines <- c()
+  for (i in 1:length(matches)) {
+    if (length(matches[[i]]) > 0) {
+      in_context <- TRUE
+      next
+    }
+    else if (in_context && identical(html_lines[[i]], "</script>")) {
+      in_context <- FALSE
+    }
+    if (in_context)
+      context_lines <- c(context_lines, html_lines[[i]])
+  }
+  context_lines
 }
 
 prerendered_shiny_html <- function(input_rmd, encoding, render_args) {
@@ -563,40 +592,8 @@ prerendered_shiny_html <- function(input_rmd, encoding, render_args) {
   html
 }
 
-# install evaluate hook to ensure that the 'global' chunk for this source
-# file is evaluated only once and is run outside of a user reactive domain
-# knitr::knit_hooks$set(evaluate = function(code, envir, ...) {
-#
-#   # check for 'global' chunk label
-#   if (identical(knitr::opts_current$get("label"), "global")) {
-#
-#     # check list of previously evaludated global chunks
-#     code_string <- paste(code, collapse = '\n')
-#     if (!code_string %in% .globals$evaluated_global_chunks) {
-#
-#       # save it in our list of evaluated global chunks
-#       .globals$evaluated_global_chunks <-
-#         c(.globals$evaluated_global_chunks, code_string)
-#
-#       # evaluate with no reactive domain to prevent any shiny code (e.g.
-#       # a reactive timer) from attaching to the current user session
-#       # (resulting in it's destruction when that session ends)
-#       shiny::withReactiveDomain(NULL, {
-#         evaluate::evaluate(code, envir = globalenv(), ...)
-#       })
-#
-#     } else {
-#       list()
-#     }
-#     # delegate to standard evaluate for everything else
-#   } else {
-#     evaluate::evaluate(code, envir, ...)
-#   }
-# })
 
 prerender <- function(input_rmd, encoding, render_args) {
-
-  # TODO: export prerender
 
   # determine the path to the rendered_html
   output_file <- render_args$output_file
