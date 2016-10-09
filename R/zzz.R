@@ -1,9 +1,11 @@
 .onLoad <- function(lib, pkg) {
   .render_context <<- new_stack()
-  registerMethods(list(
-    # c(package, genname, class)
-    c("knitr", "knit_print", "data.frame")
-  ))
+  if (getOption("rmarkdown.df_print", TRUE)) {
+    registerMethods(list(
+      # c(package, genname, class)
+      c("knitr", "knit_print", "data.frame")
+    ))
+  }
 }
 
 # Reusable function for registering a set of methods with S3 manually. The

@@ -32,7 +32,8 @@ include "default", "kable", and "tibble". The "default" method uses
 \code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
 the \pkg{tibble} package to print a summary of the data frame. In addition
 to the named methods you can also pass an arbitrary function to be used
-for printing data frames.}
+for printing data frames. You can disable the df_print behavior entirely
+by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 
 \item{smart}{Produce typographically correct output, converting straight
 quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
