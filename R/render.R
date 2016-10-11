@@ -349,7 +349,7 @@ render <- function(input,
     # setting the runtime (static/shiny) type
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
-    # special handling for "global" and "server" contexts in
+    # special handling for "global", "server-onstart" and "server" contexts in
     # runtime: shiny/prerendered
     shiny_prerendered_contexts <- NULL
     if (identical(runtime, "shiny/prerendered")) {
@@ -364,9 +364,15 @@ render <- function(input,
             list(structure(context_meta, class = "shiny_prerendered"))
           )
         }
-        # evaluate if this isn't in the server context
-        if (!identical(context, "server"))
+        # evaluate if this isn't a server context
+        if (is.null(context) || !grepl("^server", context)) {
           evaluate::evaluate(code, envir, ...)
+        }
+        # otherwise parse so we can throw an error for invalid code
+        else {
+          parse(text = code)
+          NULL
+        }
       })
     }
 
