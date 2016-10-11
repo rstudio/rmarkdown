@@ -354,23 +354,28 @@ render <- function(input,
     # setting the runtime (static/shiny) type
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
-    # special handling for "global", "server-onstart" and "server" contexts in
-    # runtime: shiny_prerendered
+    # defer execution of non "knit" contexts
     shiny_prerendered_contexts <- NULL
     if (identical(runtime, "shiny_prerendered")) {
       knitr::knit_hooks$set(evaluate = function(code, envir, ...) {
-        # if there is a context then emit knit_meta for it
+
+        # if there are non-knit contexts then emit knit_meta for them
         context <- knitr::opts_current$get("context")
-        if (!is.null(context)) {
+        if (is.null(context))
+          context <- "knit"
+        for (name in context) {
+          if (identical(name, "knit"))
+            next
           context_meta <- list()
-          context_meta$name <- context
+          context_meta$name <- name
           context_meta$code <- code
           knitr::knit_meta_add(
             list(structure(context_meta, class = "shiny_prerendered"))
           )
         }
-        # evaluate if this isn't a server context
-        if (is.null(context) || !grepl("^server", context)) {
+
+        # evaluate if this is a knit context
+        if ("knit" %in% context) {
           evaluate::evaluate(code, envir, ...)
         }
         # otherwise parse so we can throw an error for invalid code
