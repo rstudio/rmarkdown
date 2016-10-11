@@ -530,7 +530,7 @@ prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
 
   # create shiny app
   shiny::shinyApp(
-    ui = htmlTemplate(text_ = html),
+    ui = html,
     server = function(input, output, session) {
       eval(parse(text = server_context))
     }
@@ -546,7 +546,7 @@ extract_prerendered_context <- function(html_lines, context) {
 
   # extract the code within the contexts
   in_context <- FALSE
-  context_lines <- c()
+  context_lines <- character()
   for (i in 1:length(matches)) {
     if (length(matches[[i]]) > 0) {
       in_context <- TRUE
@@ -572,21 +572,23 @@ prerendered_shiny_html <- function(input_rmd, encoding, render_args) {
     if (utils::file_test("-d", path))
       shiny::addResourcePath(basename(path), path)
   }
-  stem <- tools::file_path_sans_ext(basename(rendered_html))
-  add_resource_path(file.path(output_dir,paste0(stem, "_files")))
+  files_dir <- knitr_files_dir(rendered_html)
+  add_resource_path(files_dir)
   add_resource_path(file.path(output_dir,"css"))
   add_resource_path(file.path(output_dir,"js"))
   add_resource_path(file.path(output_dir,"images"))
   add_resource_path(file.path(output_dir,"www"))
 
-  # read in the htm, add the shiny {{ headContent() }}, then remove
-  # any other lines that include jquery.min.js (since shiny does this)
-  html <- readChar(rendered_html, file.info(rendered_html)$size,
-                   useBytes = TRUE)
-  Encoding(html) <- "UTF-8"
-  html <- sub("<head>", "<head>{{ headContent() }}", html)
-  html <- gsub('<script src=".*jquery\\.min\\.js"></script>', '', html)
-  html
+  # generate html w/ dependencies
+  deps_path <- file.path(files_dir, "shiny.dep")
+  dependencies <- list()
+  if (file.exists(deps_path)) {
+    read_deps <- base::file(deps_path, open = "rb")
+    on.exit(close(read_deps), add = TRUE)
+    dependencies <- unserialize(read_deps)
+  }
+  # return it
+  shinyHTML_with_deps(rendered_html, dependencies)
 }
 
 
@@ -650,7 +652,6 @@ prerender <- function(input_rmd, encoding, render_args) {
     # execute the render
     args <- merge_lists(list(input = input_rmd,
                              encoding = encoding,
-                             output_options = list(self_contained = FALSE),
                              envir = new.env()),
                         render_args)
     rendered_html <- do.call(render, args)

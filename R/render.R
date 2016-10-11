@@ -97,6 +97,9 @@ render <- function(input,
     output_dir <- normalize_path(output_dir)
   }
 
+  # check whether this document requires a knit
+  requires_knit <- tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")
+
   # remember the name of the original input document (we overwrite 'input' once
   # we've knitted)
   original_input <- normalize_path(input)
@@ -180,6 +183,27 @@ render <- function(input,
   # read the yaml front matter
   yaml_front_matter <- parse_yaml_front_matter(input_lines)
 
+  # if this is shiny/prerendered then modify the output format to
+  # be single-page and to output dependencies to the shiny.dep file
+  shiny_dependencies <- list()
+  if (requires_knit && identical(yaml_front_matter$runtime,
+                                 "shiny/prerendered")) {
+
+    # first validate that the user hasn't passed an already created output_format
+    if (is_output_format(output_format)) {
+      stop("You cannot pass a fully constructed output_format to render when ",
+           "using runtime: shiny/prerendered")
+    }
+
+    # force various output options
+    output_options$self_contained <- FALSE
+    output_options$copy_resources <- TRUE
+    output_options$dependency_resolver <- function(deps) {
+      shiny_dependencies <<- deps
+      list()
+    }
+  }
+
   # if we haven't been passed a fully formed output format then
   # resolve it by looking at the yaml
   if (!is_output_format(output_format)) {
@@ -259,7 +283,7 @@ render <- function(input,
   }
 
   # knit if necessary
-  if (tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")) {
+  if (requires_knit) {
 
     # restore options and hooks after knit
     optk <- knitr::opts_knit$get()
@@ -500,6 +524,14 @@ render <- function(input,
                                                 files_dir,
                                                 output_dir)
       output_format$pandoc$args <- c(output_format$pandoc$args, extra_args)
+    }
+
+    # write shiny_dependencies if we have them
+    if (length(shiny_dependencies) > 0 ) {
+      write_deps <- base::file(file.path(files_dir, "shiny.dep"),
+                               open = "wb")
+      on.exit(close(write_deps), add = TRUE)
+      serialize(shiny_dependencies, write_deps, ascii = FALSE)
     }
 
     perf_timer_stop("pre-processor")
