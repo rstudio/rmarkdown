@@ -547,6 +547,19 @@ render <- function(input,
 
     # write shiny_dependencies if we have them
     if (length(shiny_dependencies) > 0 ) {
+
+      # first convert absolute file references into shiny style relative deps
+      shiny_dependencies <- lapply(shiny_dependencies, function(dependency) {
+        src <- dependency$src
+        if (!is.null(src$file)) {
+          dependency <- htmltools::copyDependencyToDir(dependency, files_dir)
+          dependency <- htmltools::makeDependencyRelative(dependency, output_dir)
+          dependency$src = list(href = unname(dependency$src))
+        }
+        dependency
+      })
+
+      # write deps
       write_deps <- base::file(file.path(files_dir, "shiny.dep"),
                                open = "wb")
       on.exit(close(write_deps), add = TRUE)
