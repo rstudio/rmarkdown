@@ -146,7 +146,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     runtime <- NULL
 
   # run using the requested mode
-  if (identical(runtime, "shiny/prerendered")) {
+  if (identical(runtime, "shiny_prerendered")) {
 
     # get the pre-rendered shiny app
     app <- prerendered_shiny_app(target_file,

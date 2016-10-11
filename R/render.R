@@ -183,16 +183,16 @@ render <- function(input,
   # read the yaml front matter
   yaml_front_matter <- parse_yaml_front_matter(input_lines)
 
-  # if this is shiny/prerendered then modify the output format to
+  # if this is shiny_prerendered then modify the output format to
   # be single-page and to output dependencies to the shiny.dep file
   shiny_dependencies <- list()
   if (requires_knit && identical(yaml_front_matter$runtime,
-                                 "shiny/prerendered")) {
+                                 "shiny_prerendered")) {
 
     # first validate that the user hasn't passed an already created output_format
     if (is_output_format(output_format)) {
       stop("You cannot pass a fully constructed output_format to render when ",
-           "using runtime: shiny/prerendered")
+           "using runtime: shiny_prerendered")
     }
 
     # require shiny for the knit
@@ -201,7 +201,7 @@ render <- function(input,
         attachNamespace("shiny")
     }
     else
-      stop("The shiny package is required for 'shiny/prerendered' documents")
+      stop("The shiny package is required for 'shiny_prerendered' documents")
 
     # force various output options
     output_options$self_contained <- FALSE
@@ -355,9 +355,9 @@ render <- function(input,
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
     # special handling for "global", "server-onstart" and "server" contexts in
-    # runtime: shiny/prerendered
+    # runtime: shiny_prerendered
     shiny_prerendered_contexts <- NULL
-    if (identical(runtime, "shiny/prerendered")) {
+    if (identical(runtime, "shiny_prerendered")) {
       knitr::knit_hooks$set(evaluate = function(code, envir, ...) {
         # if there is a context then emit knit_meta for it
         context <- knitr::opts_current$get("context")
