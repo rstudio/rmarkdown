@@ -371,7 +371,7 @@ render <- function(input,
         # otherwise parse so we can throw an error for invalid code
         else {
           parse(text = code)
-          NULL
+          list()
         }
       })
     }
