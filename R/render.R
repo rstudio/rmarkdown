@@ -196,8 +196,10 @@ render <- function(input,
     }
 
     # require shiny for the knit
-    if (requireNamespace("shiny"))
-      attachNamespace("shiny")
+    if (requireNamespace("shiny")) {
+      if (!"shiny" %in% loadedNamespaces())
+        attachNamespace("shiny")
+    }
     else
       stop("The shiny package is required for 'shiny/prerendered' documents")
 
