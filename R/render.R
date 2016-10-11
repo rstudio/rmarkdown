@@ -195,6 +195,9 @@ render <- function(input,
            "using runtime: shiny/prerendered")
     }
 
+    # require shiny for the knit
+    require(shiny)
+
     # force various output options
     output_options$self_contained <- FALSE
     output_options$copy_resources <- TRUE
