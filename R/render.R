@@ -197,7 +197,7 @@ render <- function(input,
 
     # require shiny for the knit
     if (requireNamespace("shiny")) {
-      if (!"shiny" %in% loadedNamespaces())
+      if (!"package:shiny" %in% search())
         attachNamespace("shiny")
     }
     else
