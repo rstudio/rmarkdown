@@ -520,24 +520,30 @@ prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
   # get rendered html
   html <- prerendered_shiny_html(input_rmd, encoding, render_args)
 
-  # extract the global context and execute it
+  # create the server environment
+  server_envir = new.env(parent = globalenv())
+
+  # extract the global and server-onstarts contexts
   html_lines <- strsplit(html, "\\r?\\n")[[1]]
   global_context <- extract_prerendered_context(html_lines, "global")
-  eval(parse(text = global_context), envir = globalenv())
-
-  # extract the server-onstart and server contexts and create a server from them
   server_onstart_context <- extract_prerendered_context(html_lines, "server-onstart")
-  server_context <- extract_prerendered_context(html_lines, "server")
-  server_r <- server_onstart_context
-  server_r <- c(server_r, "function(input, output, session) {")
-  server_r <- c(server_r, paste0("  ", server_context))
-  server_r <- c(server_r, "}")
-  server <- eval(parse(text = server_r), envir = new.env(parent = globalenv()))
+  onStart <- function() {
+    eval(parse(text = global_context), envir = globalenv())
+    eval(parse(text = server_onstart_context), envir = server_envir)
+  }
+
+  # extract the server context
+  server_envir$server_context <- extract_prerendered_context(html_lines, "server")
+  server <- function(input, output, session) {
+    eval(parse(text = server_context))
+  }
+  environment(server) <- server_envir
 
   # create shiny app
   shiny::shinyApp(
     ui = html,
-    server = server
+    server = server,
+    onStart = onStart
   )
 }
 
