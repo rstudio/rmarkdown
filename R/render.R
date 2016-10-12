@@ -355,7 +355,6 @@ render <- function(input,
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
     # defer execution of non "render" contexts
-    shiny_prerendered_contexts <- NULL
     if (is_shiny_prerendered(runtime)) {
       knitr::knit_hooks$set(evaluate = function(code, envir, ...) {
 
