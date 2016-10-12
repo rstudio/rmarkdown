@@ -186,8 +186,7 @@ render <- function(input,
   # if this is shiny_prerendered then modify the output format to
   # be single-page and to output dependencies to the shiny.dep file
   shiny_dependencies <- list()
-  if (requires_knit && identical(yaml_front_matter$runtime,
-                                 "shiny_prerendered")) {
+  if (requires_knit && is_shiny_prerendered(yaml_front_matter$runtime)) {
 
     # first validate that the user hasn't passed an already created output_format
     if (is_output_format(output_format)) {
