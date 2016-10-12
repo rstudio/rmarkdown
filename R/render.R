@@ -185,7 +185,7 @@ render <- function(input,
 
   # if this is shiny_prerendered then modify the output format to
   # be single-page and to output dependencies to the shiny.dep file
-  shiny_dependencies <- list()
+  shiny_prerendered_dependencies <- list()
   if (requires_knit && is_shiny_prerendered(yaml_front_matter$runtime)) {
 
     # first validate that the user hasn't passed an already created output_format
@@ -206,7 +206,7 @@ render <- function(input,
     output_options$self_contained <- FALSE
     output_options$copy_resources <- TRUE
     output_options$dependency_resolver <- function(deps) {
-      shiny_dependencies <<- deps
+      shiny_prerendered_dependencies <<- deps
       list()
     }
   }
@@ -354,36 +354,9 @@ render <- function(input,
     # setting the runtime (static/shiny) type
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
-    # defer execution of non "render" contexts
-    if (is_shiny_prerendered(runtime)) {
-      knitr::knit_hooks$set(evaluate = function(code, envir, ...) {
-
-        # if there are non-knit contexts then emit knit_meta for them
-        context <- knitr::opts_current$get("context")
-        if (is.null(context))
-          context <- "render"
-        for (name in context) {
-          if (identical(name, "render"))
-            next
-          context_meta <- list()
-          context_meta$name <- name
-          context_meta$code <- code
-          knitr::knit_meta_add(
-            list(structure(context_meta, class = "shiny_prerendered"))
-          )
-        }
-
-        # evaluate if this is a render context
-        if ("render" %in% context) {
-          evaluate::evaluate(code, envir, ...)
-        }
-        # otherwise parse so we can throw an error for invalid code
-        else {
-          parse(text = code)
-          list()
-        }
-      })
-    }
+    # install evaluate hook for shiny_prerendred
+    if (is_shiny_prerendered(runtime))
+      knitr::knit_hooks$set(evaluate = shiny_prerendered_evaluate_hook)
 
     # install global chunk handling for runtime: shiny (evaluate the 'global'
     # chunk only once, and in the global environment)
@@ -478,17 +451,8 @@ render <- function(input,
     }
 
     # pull out shiny_prerendered_contexts and append them as script tags
-    shiny_prerendered_contexts <- knit_meta_reset(class = "shiny_prerendered")
-    input_file <- file(input, open="at", encoding = encoding)
-    tryCatch({
-      for (context in shiny_prerendered_contexts) {
-        lines <- c(paste0('<script type="application/shiny-prerendered" ',
-                   'data-context="', context$name ,'">'),
-                   context$code,
-                   '</script>')
-        writeLines(lines, con = input_file)
-      }
-    }, finally = close(input_file))
+    if (is_shiny_prerendered(runtime))
+      shiny_prerendered_append_contexts(input, encoding)
 
     # collect remaining knit_meta
     knit_meta <- knit_meta_reset()
@@ -543,11 +507,11 @@ render <- function(input,
       output_format$pandoc$args <- c(output_format$pandoc$args, extra_args)
     }
 
-    # write shiny_dependencies if we have them
-    if (length(shiny_dependencies) > 0 ) {
+    # write shiny_prerendered_dependencies if we have them
+    if (is_shiny_prerendered(runtime)) {
 
       # first convert absolute file references into shiny style relative deps
-      shiny_dependencies <- lapply(shiny_dependencies, function(dependency) {
+      dependencies <- lapply(shiny_prerendered_dependencies, function(dependency) {
         src <- dependency$src
         if (!is.null(src$file)) {
           dependency <- htmltools::copyDependencyToDir(dependency, files_dir)
@@ -558,7 +522,7 @@ render <- function(input,
       })
 
       # write deps
-      write_shiny_deps(files_dir, shiny_dependencies)
+      write_shiny_deps(files_dir, dependencies)
     }
 
     perf_timer_stop("pre-processor")

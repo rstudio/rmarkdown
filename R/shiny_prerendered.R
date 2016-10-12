@@ -148,3 +148,48 @@ prerender <- function(input_rmd, encoding, render_args) {
   normalizePath(rendered_html, winslash = "/")
 }
 
+
+shiny_prerendered_evaluate_hook <- function(code, envir, ...) {
+
+  # if there are non-knit contexts then emit knit_meta for them
+  context <- knitr::opts_current$get("context")
+  if (is.null(context))
+    context <- "render"
+  for (name in context) {
+    if (identical(name, "render"))
+      next
+    context_meta <- list()
+    context_meta$name <- name
+    context_meta$code <- code
+    knitr::knit_meta_add(
+      list(structure(context_meta, class = "shiny_prerendered"))
+    )
+  }
+
+  # evaluate if this is a render context
+  if ("render" %in% context) {
+    evaluate::evaluate(code, envir, ...)
+  }
+  # otherwise parse so we can throw an error for invalid code
+  else {
+    parse(text = code)
+    list()
+  }
+}
+
+shiny_prerendered_append_contexts <- function(input, encoding) {
+  shiny_prerendered_contexts <- knit_meta_reset(class = "shiny_prerendered")
+  input_file <- file(input, open="at", encoding = encoding)
+  tryCatch({
+    for (context in shiny_prerendered_contexts) {
+      lines <- c(paste0('<script type="application/shiny-prerendered" ',
+                        'data-context="', context$name ,'">'),
+                 context$code,
+                 '</script>')
+      writeLines(lines, con = input_file)
+    }
+  }, finally = close(input_file))
+}
+
+
+
