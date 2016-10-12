@@ -153,7 +153,7 @@ shiny_prerendered_extract_context <- function(html_lines, context) {
 #' Programmatic equivalent to including a code chunk with a
 #' context in a runtime: shiny_prerendered document.
 #'
-#' @param name Context name (e.g. "server", "server_start")
+#' @param context Context name (e.g. "server", "server_start")
 #' @param code Character vector with code
 #'
 #' @export

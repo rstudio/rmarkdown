@@ -7,9 +7,9 @@
 shiny_prerendered_chunk(context, code)
 }
 \arguments{
-\item{code}{Character vector with code}
+\item{context}{Context name (e.g. "server", "server_start")}
 
-\item{name}{Context name (e.g. "server", "server_start")}
+\item{code}{Character vector with code}
 }
 \description{
 Programmatic equivalent to including a code chunk with a
