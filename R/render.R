@@ -559,10 +559,7 @@ render <- function(input,
       })
 
       # write deps
-      write_deps <- base::file(file.path(files_dir, "shiny.dep"),
-                               open = "wb")
-      on.exit(close(write_deps), add = TRUE)
-      serialize(shiny_dependencies, write_deps, ascii = FALSE)
+      write_shiny_deps(files_dir, shiny_dependencies)
     }
 
     perf_timer_stop("pre-processor")

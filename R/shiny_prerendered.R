@@ -74,14 +74,7 @@ prerendered_shiny_html <- function(input_rmd, encoding, render_args) {
   add_resource_path(file.path(output_dir,"www"))
 
   # generate html w/ dependencies
-  deps_path <- file.path(files_dir, "shiny.dep")
-  dependencies <- list()
-  if (file.exists(deps_path)) {
-    read_deps <- base::file(deps_path, open = "rb")
-    on.exit(close(read_deps), add = TRUE)
-    dependencies <- unserialize(read_deps)
-  }
-  # return it
+  dependencies <- read_shiny_deps(files_dir)
   shinyHTML_with_deps(rendered_html, dependencies)
 }
 

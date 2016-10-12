@@ -285,10 +285,7 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
         create_performance_dependency(resource_folder)))
 
       # save the structured dependency information
-      write_deps <- base::file(file.path(resource_folder, "shiny.dep"),
-                               open = "wb")
-      on.exit(close(write_deps), add = TRUE)
-      serialize(dependencies, write_deps, ascii = FALSE)
+      write_shiny_deps(resource_folder, dependencies)
 
       # when the session ends, remove the rendered document and any supporting
       # files, if they're not cacheable
@@ -395,13 +392,7 @@ rmd_cached_output <- function (input, encoding) {
     # If the output is cacheable, it may also be already cached
     if (file.exists(output_dest)) {
       resource_folder <- knitr_files_dir(output_dest)
-      deps_path <- file.path(resource_folder, "shiny.dep")
-      dependencies <- list()
-      if (file.exists(deps_path)) {
-        read_deps <- base::file(deps_path, open = "rb")
-        on.exit(close(read_deps), add = TRUE)
-        dependencies <- unserialize(read_deps)
-      }
+      dependencies <- read_shiny_deps(resource_folder)
       shiny_html <- shinyHTML_with_deps(output_dest, dependencies)
       cached <- TRUE
     }
@@ -527,4 +518,20 @@ is_shiny_prerendered <- function(runtime) {
   identical(runtime, "shiny_prerendered")
 }
 
+write_shiny_deps <- function(files_dir, deps) {
+  deps_file <- base::file(file.path(files_dir, "shiny.dep"), open = "wb")
+  on.exit(close(deps_file), add = TRUE)
+  serialize(deps, deps_file, ascii = FALSE)
+}
 
+read_shiny_deps <- function(files_dir) {
+  deps_path <- file.path(files_dir, "shiny.dep")
+  if (file.exists(deps_path)) {
+    deps_file <- base::file(deps_path, open = "rb")
+    on.exit(close(deps_file), add = TRUE)
+    unserialize(deps_file)
+  }
+  else {
+    list()
+  }
+}
