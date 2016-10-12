@@ -1,4 +1,5 @@
 
+# Create a shiny app object from an Rmd w/ runtime: shiny_prerendered
 shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
 
   # get rendered html
@@ -33,29 +34,8 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
 }
 
 
-shiny_prerendered_extract_context <- function(html_lines, context) {
-
-  # look for lines that start the context
-  pattern <- paste0('<script type="application/shiny-prerendered" data-context="', context, '">')
-  matches <- regmatches(html_lines, regexec(pattern, html_lines))
-
-  # extract the code within the contexts
-  in_context <- FALSE
-  context_lines <- character()
-  for (i in 1:length(matches)) {
-    if (length(matches[[i]]) > 0) {
-      in_context <- TRUE
-      next
-    }
-    else if (in_context && identical(html_lines[[i]], "</script>")) {
-      in_context <- FALSE
-    }
-    if (in_context)
-      context_lines <- c(context_lines, html_lines[[i]])
-  }
-  context_lines
-}
-
+# Generate the html for a runtime: shiny_prerendered Rmd (attempts to use
+# an existing rendering of the html if it's still valid)
 shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
 
   # determine the path to the rendered_html
@@ -143,73 +123,28 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
 }
 
 
-shiny_prerender <- function(input_rmd, encoding, render_args) {
+# Extract application/shiny-prerendered script tags from an html document
+shiny_prerendered_extract_context <- function(html_lines, context) {
 
-  # determine the path to the rendered_html
-  output_file <- render_args$output_file
-  if (is.null(output_file))
-    output_file <- file_with_ext(basename(input_rmd), "html")
-  output_dir <- render_args$output_dir
-  if (is.null(output_dir))
-    output_dir <- dirname(input_rmd)
-  rendered_html <- file.path(output_dir, output_file)
+  # look for lines that start the context
+  pattern <- paste0('<script type="application/shiny-prerendered" data-context="', context, '">')
+  matches <- regmatches(html_lines, regexec(pattern, html_lines))
 
-  # determine whether we need to render the Rmd in advance
-  prerender_option <- tolower(Sys.getenv("RMARKDOWN_RUN_PRERENDER", "1"))
-
-  if (file.access(output_dir, 2) != 0) {
-    prerender <- FALSE
-  }
-  else if (identical(prerender_option, "0")) {
-    prerender <- FALSE
-  }
-  else if (identical(prerender_option, "1")) {
-
-    # determine the last modified time of the output file
-    if (file.exists(rendered_html))
-      output_last_modified <- as.integer(file.info(rendered_html)$mtime)
-    else
-      output_last_modified <- 0L
-
-    # short circuit for Rmd modified. if it hasn't been modified since the
-    # html was generated look at external resources
-    input_last_modified <- as.integer(file.info(input_rmd)$mtime)
-    if (input_last_modified > output_last_modified) {
-      prerender <- TRUE
+  # extract the code within the contexts
+  in_context <- FALSE
+  context_lines <- character()
+  for (i in 1:length(matches)) {
+    if (length(matches[[i]]) > 0) {
+      in_context <- TRUE
+      next
     }
-    else {
-      # find external resources referenced by the file
-      external_resources <- find_external_resources(input_rmd, encoding)
-
-      # get paths to external resources
-      input_files <- c(input_rmd,
-                       file.path(output_dir, external_resources$path))
-
-      # what's the maximum last_modified time of an input file
-      input_last_modified <- max(as.integer(file.info(input_files)$mtime),
-                                 na.rm = TRUE)
-
-      # render if an input file was modified after the output file
-      prerender <- input_last_modified > output_last_modified
+    else if (in_context && identical(html_lines[[i]], "</script>")) {
+      in_context <- FALSE
     }
+    if (in_context)
+      context_lines <- c(context_lines, html_lines[[i]])
   }
-  else {
-    stop("Invalid value '", prerender_option, "' for RMARKDOWN_RUN_PRERENDER")
-  }
-
-  # prerender if necessary
-  if (prerender) {
-
-    # execute the render
-    args <- merge_lists(list(input = input_rmd,
-                             encoding = encoding,
-                             envir = new.env()),
-                        render_args)
-    rendered_html <- do.call(render, args)
-  }
-
-  # normalize path and return it
-  normalizePath(rendered_html, winslash = "/")
+  context_lines
 }
 
 
