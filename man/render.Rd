@@ -3,7 +3,8 @@
 \title{Render R Markdown}
 \usage{
 render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
-       output_options = NULL, intermediates_dir = NULL, runtime = "auto",
+       output_options = NULL, intermediates_dir = NULL,
+       runtime = c("auto", "static", "shiny", "shiny_prerendered"),
        clean = TRUE, params = NULL, knit_meta = NULL, envir = parent.frame(),
        run_pandoc = TRUE, quiet = FALSE, encoding = getOption("encoding"))
 }
