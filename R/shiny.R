@@ -152,9 +152,6 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     app <- prerendered_shiny_app(target_file,
                                  encoding = encoding,
                                  render_args = render_args)
-
-    # set file_rel so launched browser navigates to "/"
-    file_rel <- NULL
   }
   else {
 
@@ -545,7 +542,8 @@ prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
   shiny::shinyApp(
     ui = html,
     server = server,
-    onStart = onStart
+    onStart = onStart,
+    uiPattern = "^/$|^(/.*\\.[Rr][Mm][Dd])$"
   )
 }
 
