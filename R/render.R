@@ -451,8 +451,7 @@ render <- function(input,
     }
 
     # pull out shiny_prerendered_contexts and append them as script tags
-    if (is_shiny_prerendered(runtime))
-      shiny_prerendered_append_contexts(input, encoding)
+    shiny_prerendered_append_contexts(runtime, input, encoding)
 
     # collect remaining knit_meta
     knit_meta <- knit_meta_reset()

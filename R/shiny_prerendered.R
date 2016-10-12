@@ -213,6 +213,28 @@ shiny_prerender <- function(input_rmd, encoding, render_args) {
 }
 
 
+#' Add code to a shiny_prerendered context
+#'
+#' Programmatic equivalent to including a code chunk with a
+#' context in a runtime: shiny_prerendered document.
+#'
+#' @param name Context name (e.g. "server", "server_start")
+#' @param code Character vector with code
+#'
+#' @export
+shiny_prerendered_chunk <- function(context, code) {
+  knitr::knit_meta_add(list(
+    structure(class = "shiny_prerendered", list(
+      name = context,
+      code = code
+    ))
+  ))
+  invisible()
+}
+
+
+# Evaluate hook to capture chunks with e.g. context="server" and
+# append their code to the appropriate shiny_prerendered_context
 shiny_prerendered_evaluate_hook <- function(code, envir, ...) {
 
   # if there are non-knit contexts then emit knit_meta for them
@@ -220,14 +242,8 @@ shiny_prerendered_evaluate_hook <- function(code, envir, ...) {
   if (is.null(context))
     context <- "render"
   for (name in context) {
-    if (identical(name, "render"))
-      next
-    context_meta <- list()
-    context_meta$name <- name
-    context_meta$code <- code
-    knitr::knit_meta_add(
-      list(structure(context_meta, class = "shiny_prerendered"))
-    )
+    if (!identical(name, "render"))
+      shiny_prerendered_chunk(name, code)
   }
 
   # evaluate if this is a render context
@@ -241,18 +257,34 @@ shiny_prerendered_evaluate_hook <- function(code, envir, ...) {
   }
 }
 
-shiny_prerendered_append_contexts <- function(input, encoding) {
+
+# Gather shiny_prerendred contexts and append them as script tags to
+# the passed file
+shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
+
+  # collect contexts
   shiny_prerendered_contexts <- knit_meta_reset(class = "shiny_prerendered")
-  input_file <- file(input, open="at", encoding = encoding)
-  tryCatch({
+  if (length(shiny_prerendered_contexts) > 0) {
+
+    # validate we are in runtime: shiny_prerendered
+    if (!is_shiny_prerendered(runtime)) {
+      stop("The code within this document requires runtime: shiny_prerendered",
+           call. = FALSE)
+    }
+
+    # open the file
+    con <- file(file, open="at", encoding = encoding)
+    on.exit(close(con), add = TRUE)
+
+    # append the contexts as script tags
     for (context in shiny_prerendered_contexts) {
       lines <- c(paste0('<script type="application/shiny-prerendered" ',
                         'data-context="', context$name ,'">'),
                  context$code,
                  '</script>')
-      writeLines(lines, con = input_file)
+      writeLines(lines, con = con)
     }
-  }, finally = close(input_file))
+  }
 }
 
 
