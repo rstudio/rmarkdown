@@ -149,7 +149,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   if (is_shiny_prerendered(runtime)) {
 
     # get the pre-rendered shiny app
-    app <- prerendered_shiny_app(target_file,
+    app <- shiny_prerendered_app(target_file,
                                  encoding = encoding,
                                  render_args = render_args)
   }
