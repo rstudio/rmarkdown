@@ -354,7 +354,7 @@ render <- function(input,
     # setting the runtime (static/shiny) type
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
-    # defer execution of non "knit" contexts
+    # defer execution of non "render" contexts
     shiny_prerendered_contexts <- NULL
     if (identical(runtime, "shiny_prerendered")) {
       knitr::knit_hooks$set(evaluate = function(code, envir, ...) {
@@ -362,9 +362,9 @@ render <- function(input,
         # if there are non-knit contexts then emit knit_meta for them
         context <- knitr::opts_current$get("context")
         if (is.null(context))
-          context <- "knit"
+          context <- "render"
         for (name in context) {
-          if (identical(name, "knit"))
+          if (identical(name, "render"))
             next
           context_meta <- list()
           context_meta$name <- name
@@ -374,8 +374,8 @@ render <- function(input,
           )
         }
 
-        # evaluate if this is a knit context
-        if ("knit" %in% context) {
+        # evaluate if this is a render context
+        if ("render" %in% context) {
           evaluate::evaluate(code, envir, ...)
         }
         # otherwise parse so we can throw an error for invalid code

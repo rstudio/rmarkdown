@@ -523,12 +523,10 @@ prerendered_shiny_app <- function(input_rmd, encoding, render_args) {
   # create the server environment
   server_envir = new.env(parent = globalenv())
 
-  # extract the global and server-start contexts
+  # extract the server-start context
   html_lines <- strsplit(html, "\\r?\\n")[[1]]
-  global_context <- extract_prerendered_context(html_lines, "global")
-  server_start_context <- extract_prerendered_context(html_lines, "server-start")
+  server_start_context <- extract_prerendered_context(html_lines, "server_start")
   onStart <- function() {
-    eval(parse(text = global_context), envir = globalenv())
     eval(parse(text = server_start_context), envir = server_envir)
   }
 
