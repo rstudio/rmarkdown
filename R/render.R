@@ -17,7 +17,7 @@ render <- function(input,
                    output_dir = NULL,
                    output_options = NULL,
                    intermediates_dir = NULL,
-                   runtime = "auto",
+                   runtime =  c("auto", "static", "shiny", "shiny_prerendered"),
                    clean = TRUE,
                    params = NULL,
                    knit_meta = NULL,
@@ -260,6 +260,7 @@ render <- function(input,
 
   # presume that we're rendering as a static document unless specified
   # otherwise in the parameters
+  runtime <- match.arg(runtime)
   if (identical(runtime, "auto")) {
     if (!is.null(yaml_front_matter$runtime))
       runtime <- yaml_front_matter$runtime
