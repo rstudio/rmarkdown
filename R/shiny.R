@@ -160,7 +160,10 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
     # add rmd_resources handler on start
     onStart <- function() {
-      source_global_r(dir)
+      global_r <- file.path.ci(dir, "global.R")
+      if (file.exists(global_r)) {
+        source(global_r, local = FALSE)
+      }
       shiny::addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
     }
 
@@ -668,23 +671,5 @@ prerender <- function(input_rmd, encoding, render_args) {
 
   # normalize path and return it
   normalizePath(rendered_html, winslash = "/")
-}
-
-
-source_global_r <- function(dir, local = FALSE) {
-  global_r <- file.path.ci(dir, "global.R")
-  if (file.exists(global_r)) {
-    source(global_r, local = local)
-  }
-}
-
-ammend_on_start <- function(app, onStart) {
-  appOnStart <- app$onStart
-  app$onStart <- function() {
-    if (!is.null(appOnStart))
-      appOnStart()
-    force(onStart)
-  }
-  app
 }
 
