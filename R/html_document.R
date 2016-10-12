@@ -340,7 +340,7 @@ html_document <- function(toc = FALSE,
         # include the navbar html
         includes <- list(before_body = navbar)
         args <- c(args, includes_to_pandoc_args(includes,
-                                  filter = if (identical(runtime, "shiny"))
+                                  filter = if (is_shiny_classic(runtime))
                                     function(x) normalize_path(x, mustWork = FALSE)
                                   else
                                     identity))
@@ -427,7 +427,7 @@ html_document <- function(toc = FALSE,
     # making a Shiny document so we can resolve them even if rendering
     # elsewhere.
     args <- c(args, includes_to_pandoc_args(includes,
-                      filter = if (identical(runtime, "shiny"))
+                      filter = if (is_shiny_classic(runtime))
                         function(x) normalize_path(x, mustWork = FALSE)
                       else
                         identity))

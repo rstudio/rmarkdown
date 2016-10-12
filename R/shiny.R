@@ -91,8 +91,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
           encoding <- getOption("encoding")
           if (!is.null(render_args) && !is.null(render_args$encoding))
             encoding <- render_args$encoding
-          runtime <- yaml_front_matter(rmd, encoding)$runtime
-          if (!is.null(runtime) && grepl('^shiny', runtime)) {
+          runtime <- yaml_front_matter(file.path(dir,rmd), encoding)$runtime
+          if (is_shiny(runtime)) {
             default_file <- rmd
             break
           }
@@ -146,7 +146,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     runtime <- NULL
 
   # run using the requested mode
-  if (identical(runtime, "shiny_prerendered")) {
+  if (is_shiny_prerendered(runtime)) {
 
     # get the pre-rendered shiny app
     app <- prerendered_shiny_app(target_file,
@@ -381,7 +381,7 @@ rmd_cached_output <- function (input, encoding) {
 
   # check to see if the file is a Shiny document
   front_matter <- parse_yaml_front_matter(read_lines_utf8(input, encoding))
-  if (!identical(front_matter$runtime, "shiny")) {
+  if (!is_shiny_classic(front_matter$runtime)) {
 
     # If it's not a Shiny document, then its output is cacheable. Hash the file
     # with its modified date to get a cache key.
@@ -514,4 +514,17 @@ render_delayed <- function(expr) {
   env = env_snapshot,
   quoted = TRUE)
 }
+
+is_shiny <- function(runtime) {
+  !is.null(runtime) && grepl('^shiny', runtime)
+}
+
+is_shiny_classic <-function(runtime) {
+  identical(runtime, "shiny")
+}
+
+is_shiny_prerendered <- function(runtime) {
+  identical(runtime, "shiny_prerendered")
+}
+
 

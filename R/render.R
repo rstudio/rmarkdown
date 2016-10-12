@@ -356,7 +356,7 @@ render <- function(input,
 
     # defer execution of non "render" contexts
     shiny_prerendered_contexts <- NULL
-    if (identical(runtime, "shiny_prerendered")) {
+    if (is_shiny_prerendered(runtime)) {
       knitr::knit_hooks$set(evaluate = function(code, envir, ...) {
 
         # if there are non-knit contexts then emit knit_meta for them
@@ -388,8 +388,7 @@ render <- function(input,
 
     # install global chunk handling for runtime: shiny (evaluate the 'global'
     # chunk only once, and in the global environment)
-    if (identical(runtime, "shiny") &&
-        !is.null(shiny::getDefaultReactiveDomain())) {
+    if (is_shiny_classic(runtime) && !is.null(shiny::getDefaultReactiveDomain())) {
 
       # install evaluate hook to ensure that the 'global' chunk for this source
       # file is evaluated only once and is run outside of a user reactive domain
