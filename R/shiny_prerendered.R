@@ -180,7 +180,7 @@ shiny_prerendered_chunk <- function(context, code) {
 # we'll use this later to determine which .RData files in the _data
 # directory should actually be loaded (as some could be from chunks
 # that used to be cached / were cached under different names)
-shiny_prerendered_cache_option_hook <- function(input) {
+shiny_prerendered_option_hook <- function(input) {
   function(options) {
     if (identical(options$context, "data") && (options$cache > 0)) {
       data_dir <- shiny_prerendered_data_dir(input, create = TRUE)

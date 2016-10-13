@@ -361,7 +361,7 @@ render <- function(input,
       shiny_prerendered_remove_uncached_data(original_input)
 
       # set the cache option hook and evaluate hook
-      knitr::opts_hooks$set(cache = shiny_prerendered_cache_option_hook(original_input))
+      knitr::opts_hooks$set(label = shiny_prerendered_option_hook(original_input))
       knitr::knit_hooks$set(evaluate = shiny_prerendered_evaluate_hook(original_input))
     }
 
