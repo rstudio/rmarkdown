@@ -233,7 +233,6 @@ shiny_prerendered_evaluate_hook <- function(input) {
       data_dir <- shiny_prerendered_data_dir(input, create = TRUE)
       # use a special path prefix for cached chunks so we know not
       # to remove them at the beginning of render
-      type <- ifelse(cache, ".cached", "")
       rdata_file <- file.path(data_dir,
                               shiny_prendered_data_file_name(label, cache))
       save(list = ls(data_env),
