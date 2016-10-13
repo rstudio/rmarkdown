@@ -276,15 +276,6 @@ shiny_prerendered_remove_uncached_data <- function(input) {
 }
 
 
-# Read the labels of chunks which had cache=TRUE during the last render
-shiny_prerendred_cached_chunk_labels <- function(data_dir) {
-  chunk_labels <- character()
-  labels_file <- shiny_prerendred_cached_chunk_labels_file(data_dir)
-  if (file.exists(labels_file))
-    chunk_labels <- readLines(labels_file)
-  chunk_labels
-}
-
 # File used to store names of chunks which had cache=TRUE during the last render
 shiny_prerendred_cached_chunk_labels_file <- function(data_dir) {
   file.path(data_dir, "cached_chunk_labels.txt")
@@ -364,7 +355,13 @@ shiny_prerendered_data_dir <- function(input, create = FALSE) {
 shiny_prerendered_data_load <- function(input_rmd, server_envir) {
   data_dir <- shiny_prerendered_data_dir(input_rmd)
   if (dir_exists(data_dir)) {
-    cached_chunk_labels <- shiny_prerendred_cached_chunk_labels(data_dir)
+
+    # read cached chunk labels
+    cached_chunk_labels <- character()
+    labels_file <- shiny_prerendred_cached_chunk_labels_file(data_dir)
+    if (file.exists(labels_file))
+      cached_chunk_labels <- readLines(labels_file)
+
     rdata_files <- list.files(data_dir, pattern = glob2rx("*.RData"))
     for (rdata_file in rdata_files) {
       # if it's a cached chunk then only load it if was one of the
