@@ -176,6 +176,21 @@ shiny_prerendered_chunk <- function(context, code) {
 }
 
 
+# record which context="data" chunks are actually stored in the cache
+# we'll use this later to determine which .RData files in the _data
+# directory should actually be loaded (as some could be from chunks
+# that used to be cached / were cached under different names)
+shiny_prerendered_cache_option_hook <- function(input) {
+  function(options) {
+    if (identical(options$context, "data") && (options$cache > 0)) {
+      data_dir <- shiny_prerendered_data_dir(input, create = TRUE)
+      cached_file <- shiny_prerendred_cached_chunk_labels_file(data_dir)
+      cat(options$label, "\n", sep = "", file = cached_file, append = TRUE)
+    }
+    options
+  }
+}
+
 # Evaluate hook to capture chunks with e.g. context="server" and
 # append their code to the appropriate shiny_prerendered_context
 shiny_prerendered_evaluate_hook <- function(input) {
@@ -202,23 +217,34 @@ shiny_prerendered_evaluate_hook <- function(input) {
     # capture and serialize data for context = "data"
     if ("data" %in% context) {
 
-      # evaluate the chunk in a new environment parented by the default envoir
+      # determine whether caching is active
+      label <- knitr::opts_current$get("label")
+      cache_option <- knitr::opts_current$get("cache")
+      cache <- !is.null(cache_option) && cache_option > 0
+
+      # evaluate the chunk in a new environment parented by the default envir
       data_env <- new.env(parent = envir)
-      evaluate::evaluate(code, data_env, ...)
+      result <- evaluate::evaluate(code, data_env, ...)
 
       # save all of the created objects then move them back into the parent
-      data_dir <- shiny_prerendered_data_dir(input)
-      if (!dir_exists(data_dir))
-        dir.create(data_dir)
+      data_dir <- shiny_prerendered_data_dir(input, create = TRUE)
+      # use a special path prefix for cached chunks so we know not
+      # to remove them at the beginning of render
+      type <- ifelse(cache, ".cached", "")
+      rdata_file <- file.path(data_dir,
+                              sprintf("%s%s.RData", label, type))
+      save(list = ls(data_env),
+           file = rdata_file,
+           envir = data_env,
+           compress = FALSE)
+
       for (name in ls(data_env)) {
-        rdata_file <- tempfile("prerendered", tmpdir = data_dir, fileext = ".RData")
-        save(list = c(name),
-             file = rdata_file,
-             envir = data_env,
-             compress = FALSE)
         assign(name, get(name, envir = data_env), envir = envir)
-        remove(name, envir = data_env)
+        remove(list = c(name), envir = data_env)
       }
+
+      # return results of evaluation (used for knitr cache)
+      result
     }
 
     # straight evaluate if this is a render context
@@ -232,6 +258,36 @@ shiny_prerendered_evaluate_hook <- function(input) {
       list()
     }
   }
+}
+
+# Remove prerendered .RData that isn't in the cache (as data in the
+# cache won't necessarily be recreated during the next render)
+shiny_prerendered_remove_uncached_data <- function(input) {
+  data_dir <- shiny_prerendered_data_dir(input)
+  if (dir_exists(data_dir)) {
+    labels_file <- shiny_prerendred_cached_chunk_labels_file(data_dir)
+    if (file.exists(labels_file))
+      unlink(labels_file)
+    rdata_files <- list.files(data_dir, pattern = glob2rx("*.RData"))
+    cached_rdata_files <- list.files(data_dir, pattern = glob2rx("*.cached.RData"))
+    uncached_rdata_files <- setdiff(rdata_files, cached_rdata_files)
+    unlink(file.path(data_dir, uncached_rdata_files))
+  }
+}
+
+
+# Read the labels of chunks which had cache=TRUE during the last render
+shiny_prerendred_cached_chunk_labels <- function(data_dir) {
+  chunk_labels <- character()
+  labels_file <- shiny_prerendred_cached_chunk_labels_file(data_dir)
+  if (file.exists(labels_file))
+    chunk_labels <- readLines(labels_file)
+  chunk_labels
+}
+
+# File used to store names of chunks which had cache=TRUE during the last render
+shiny_prerendred_cached_chunk_labels_file <- function(data_dir) {
+  file.path(data_dir, "cached_chunk_labels.txt")
 }
 
 
@@ -289,19 +345,41 @@ shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
   }
 }
 
-shiny_prerendered_data_dir <- function(input) {
-  paste0(tools::file_path_sans_ext(input), "_data")
+
+# Prerendred data_dir for a given Rmd input file
+shiny_prerendered_data_dir <- function(input, create = FALSE) {
+  data_dir <- paste0(tools::file_path_sans_ext(input), "_data")
+  if (create && !dir_exists(data_dir))
+    dir.create(data_dir)
+  data_dir
 }
 
+
+# Load prerendred data into the server environment. Some prerendered data
+# was created within code chunks with cache=TRUE. We explicitly don't
+# purge the cached data at the beginning of render because it won't
+# necessarily be recreated during the render. As a result we also need to
+# track which code chunks had cache=TRUE during the last render (done using
+# an option hook above) and then only load the data for those chunks.
 shiny_prerendered_data_load <- function(input_rmd, server_envir) {
   data_dir <- shiny_prerendered_data_dir(input_rmd)
   if (dir_exists(data_dir)) {
-    rdata_files <- list.files(data_dir,
-                              pattern = glob2rx("*.RData"),
-                              full.names = TRUE)
-    lapply(rdata_files, function(rdata_file) {
-      load(rdata_file, envir = server_envir)
-    })
+    cached_chunk_labels <- shiny_prerendred_cached_chunk_labels(data_dir)
+    rdata_files <- list.files(data_dir, pattern = glob2rx("*.RData"))
+    for (rdata_file in rdata_files) {
+      # if it's a cached chunk then only load it if was one of the
+      # chunks with cache=TRUE on the last render (note that we don't
+      # remove the cached file because knitr retains the cache for
+      # chunks even after you change to cache=FALSE, so the cache
+      # might still be needed later on)
+      if (ends_with_bytes(rdata_file, ".cached.RData")) {
+        chunk_label <- strsplit(rdata_file, ".cached.RData", fixed = TRUE)[[1]]
+        if (! chunk_label %in% cached_chunk_labels)
+          next
+      }
+
+      load(file.path(data_dir,rdata_file), envir = server_envir)
+    }
   }
 }
 

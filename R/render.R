@@ -358,11 +358,10 @@ render <- function(input,
     if (is_shiny_prerendered(runtime)) {
 
       # remove _data dir if it exists (will be recreated from context="data" chunks)
-      data_dir <- shiny_prerendered_data_dir(original_input)
-      if (dir_exists(data_dir))
-        unlink(data_dir, recursive = TRUE)
+      shiny_prerendered_remove_uncached_data(original_input)
 
-      # set the evaluate hook
+      # set the cache option hook and evaluate hook
+      knitr::opts_hooks$set(cache = shiny_prerendered_cache_option_hook(original_input))
       knitr::knit_hooks$set(evaluate = shiny_prerendered_evaluate_hook(original_input))
     }
 
