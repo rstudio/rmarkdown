@@ -232,7 +232,7 @@ shiny_prerendered_evaluate_hook <- function(input) {
       # to remove them at the beginning of render
       type <- ifelse(cache, ".cached", "")
       rdata_file <- file.path(data_dir,
-                              sprintf("%s%s.RData", label, type))
+                              shiny_prendered_data_file_name(label, cache))
       save(list = ls(data_env),
            file = rdata_file,
            envir = data_env,
@@ -381,5 +381,11 @@ shiny_prerendered_data_load <- function(input_rmd, server_envir) {
       load(file.path(data_dir,rdata_file), envir = server_envir)
     }
   }
+}
+
+# Form the name of a shiny_prerendered .RData file
+shiny_prendered_data_file_name <- function(label, cache) {
+  type <- ifelse(cache, ".cached", "")
+  sprintf("%s%s.RData", label, type)
 }
 
