@@ -355,8 +355,16 @@ render <- function(input,
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
     # install evaluate hook for shiny_prerendred
-    if (is_shiny_prerendered(runtime))
-      knitr::knit_hooks$set(evaluate = shiny_prerendered_evaluate_hook)
+    if (is_shiny_prerendered(runtime)) {
+
+      # remove _data dir if it exists (will be recreated from context="data" chunks)
+      data_dir <- shiny_prerendered_data_dir(original_input)
+      if (dir_exists(data_dir))
+        unlink(data_dir, recursive = TRUE)
+
+      # set the evaluate hook
+      knitr::knit_hooks$set(evaluate = shiny_prerendered_evaluate_hook(original_input))
+    }
 
     # install global chunk handling for runtime: shiny (evaluate the 'global'
     # chunk only once, and in the global environment)

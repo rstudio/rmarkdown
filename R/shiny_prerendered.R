@@ -13,6 +13,7 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
   server_start_context <- shiny_prerendered_extract_context(html_lines,
                                                             "server_start")
   onStart <- function() {
+    shiny_prerendered_data_load(input_rmd, server_envir)
     eval(parse(text = server_start_context), envir = server_envir)
   }
 
@@ -138,15 +139,20 @@ shiny_prerendered_clean <- function(input) {
   if (file.exists(html_file))
     file.remove(html_file)
 
+  # cache dir
+  cache_dir <- knitr_root_cache_dir(input)
+  if (dir_exists(cache_dir))
+    unlink(cache_dir, recursive = TRUE)
+
   # files dir
   files_dir <- knitr_files_dir(input)
   if (dir_exists(files_dir))
     unlink(files_dir, recursive = TRUE)
 
-  # cache dir
-  cache_dir <- knitr_root_cache_dir(input)
-  if (dir_exists(cache_dir))
-    unlink(cache_dir, recursive = TRUE)
+  # data dir
+  data_dir <- shiny_prerendered_data_dir(input)
+  if (dir_exists(data_dir))
+    unlink(data_dir, recursive = TRUE)
 }
 
 
@@ -172,33 +178,59 @@ shiny_prerendered_chunk <- function(context, code) {
 
 # Evaluate hook to capture chunks with e.g. context="server" and
 # append their code to the appropriate shiny_prerendered_context
-shiny_prerendered_evaluate_hook <- function(code, envir, ...) {
+shiny_prerendered_evaluate_hook <- function(input) {
 
-  # get the context (default to "render")
-  context <- knitr::opts_current$get("context")
-  if (is.null(context))
-    context <- "render"
+  function(code, envir, ...) {
 
-  # "global" is an alias for c("render", "server_start")
-  if ("global" %in% context) {
-    context <- c(context[!context == "global"], "render", "server_start")
-    context <- unique(context)
-  }
+    # get the context (default to "render")
+    context <- knitr::opts_current$get("context")
+    if (is.null(context))
+      context <- "render"
 
-  # if there are non-render contexts then emit knit_meta for them
-  for (name in context) {
-    if (!identical(name, "render"))
-      shiny_prerendered_chunk(name, code)
-  }
+    # "setup" is an alias for c("render", "server_start")
+    if ("setup" %in% context) {
+      context <- c(context[!context == "setup"], "render", "server_start")
+      context <- unique(context)
+    }
 
-  # evaluate if this is a render context
-  if ("render" %in% context) {
-    evaluate::evaluate(code, envir, ...)
-  }
-  # otherwise parse so we can throw an error for invalid code
-  else {
-    parse(text = code)
-    list()
+    # if there are server-side contexts then emit knit_meta for them
+    for (name in context) {
+      if (!name %in% c("render", "data"))
+        shiny_prerendered_chunk(name, code)
+    }
+
+    # capture and serialize data for context = "data"
+    if ("data" %in% context) {
+
+      # evaluate the chunk in a new environment parented by the default envoir
+      data_env <- new.env(parent = envir)
+      evaluate::evaluate(code, data_env, ...)
+
+      # save all of the created objects then move them back into the parent
+      data_dir <- shiny_prerendered_data_dir(input)
+      if (!dir_exists(data_dir))
+        dir.create(data_dir)
+      for (name in ls(data_env)) {
+        rdata_file <- tempfile("prerendered", tmpdir = data_dir, fileext = ".RData")
+        save(list = c(name),
+             file = rdata_file,
+             envir = data_env,
+             compress = FALSE)
+        assign(name, get(name, envir = data_env), envir = envir)
+        remove(name, envir = data_env)
+      }
+    }
+
+    # straight evaluate if this is a render context
+    else if ("render" %in% context) {
+      evaluate::evaluate(code, envir, ...)
+    }
+
+    # otherwise parse so we can throw an error for invalid code
+    else {
+      parse(text = code)
+      list()
+    }
   }
 }
 
@@ -257,5 +289,19 @@ shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
   }
 }
 
+shiny_prerendered_data_dir <- function(input) {
+  paste0(tools::file_path_sans_ext(input), "_data")
+}
 
+shiny_prerendered_data_load <- function(input_rmd, server_envir) {
+  data_dir <- shiny_prerendered_data_dir(input_rmd)
+  if (dir_exists(data_dir)) {
+    rdata_files <- list.files(data_dir,
+                              pattern = glob2rx("*.RData"),
+                              full.names = TRUE)
+    lapply(rdata_files, function(rdata_file) {
+      load(rdata_file, envir = server_envir)
+    })
+  }
+}
 
