@@ -172,10 +172,18 @@ shiny_prerendered_chunk <- function(context, code) {
 # append their code to the appropriate shiny_prerendered_context
 shiny_prerendered_evaluate_hook <- function(code, envir, ...) {
 
-  # if there are non-knit contexts then emit knit_meta for them
+  # get the context (default to "render")
   context <- knitr::opts_current$get("context")
   if (is.null(context))
     context <- "render"
+
+  # "global" is an alias for c("render", "server_start")
+  if ("global" %in% context) {
+    context <- c(context[!context == "global"], "render", "server_start")
+    context <- unique(context)
+  }
+
+  # if there are non-render contexts then emit knit_meta for them
   for (name in context) {
     if (!identical(name, "render"))
       shiny_prerendered_chunk(name, code)
