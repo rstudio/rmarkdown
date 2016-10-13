@@ -167,6 +167,31 @@ shiny_prerendered_chunk <- function(context, code) {
   invisible()
 }
 
+#' Clean prerendered content for the specified Rmd input file
+#'
+#' Remove the associated html file and supporting _files directory
+#' for a shiny_prerendered documet.
+#'
+#' @param input Rmd input file to clean content for
+#'
+#' @export
+shiny_prerendered_clean <- function(input) {
+
+  # html file
+  html_file <- file_with_ext(input, "html")
+  if (file.exists(html_file))
+    file.remove(html_file)
+
+  # files dir
+  files_dir <- knitr_files_dir(input)
+  if (dir_exists(files_dir))
+    unlink(files_dir, recursive = TRUE)
+
+  # cache dir
+  cache_dir <- knitr_root_cache_dir(input)
+  if (dir_exists(cache_dir))
+    unlink(cache_dir, recursive = TRUE)
+}
 
 # Evaluate hook to capture chunks with e.g. context="server" and
 # append their code to the appropriate shiny_prerendered_context
