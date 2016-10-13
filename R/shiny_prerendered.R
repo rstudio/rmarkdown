@@ -123,50 +123,6 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
 }
 
 
-# Extract application/shiny-prerendered script tags from an html document
-shiny_prerendered_extract_context <- function(html_lines, context) {
-
-  # look for lines that start the context
-  pattern <- paste0('<script type="application/shiny-prerendered" data-context="', context, '">')
-  matches <- regmatches(html_lines, regexec(pattern, html_lines))
-
-  # extract the code within the contexts
-  in_context <- FALSE
-  context_lines <- character()
-  for (i in 1:length(matches)) {
-    if (length(matches[[i]]) > 0) {
-      in_context <- TRUE
-      next
-    }
-    else if (in_context && identical(html_lines[[i]], "</script>")) {
-      in_context <- FALSE
-    }
-    if (in_context)
-      context_lines <- c(context_lines, html_lines[[i]])
-  }
-  context_lines
-}
-
-
-#' Add code to a shiny_prerendered context
-#'
-#' Programmatic equivalent to including a code chunk with a
-#' context in a runtime: shiny_prerendered document.
-#'
-#' @param context Context name (e.g. "server", "server_start")
-#' @param code Character vector with code
-#'
-#' @export
-shiny_prerendered_chunk <- function(context, code) {
-  knitr::knit_meta_add(list(
-    structure(class = "shiny_prerendered", list(
-      name = context,
-      code = code
-    ))
-  ))
-  invisible()
-}
-
 #' Clean prerendered content for the specified Rmd input file
 #'
 #' Remove the associated html file and supporting _files directory
@@ -192,6 +148,27 @@ shiny_prerendered_clean <- function(input) {
   if (dir_exists(cache_dir))
     unlink(cache_dir, recursive = TRUE)
 }
+
+
+#' Add code to a shiny_prerendered context
+#'
+#' Programmatic equivalent to including a code chunk with a
+#' context in a runtime: shiny_prerendered document.
+#'
+#' @param context Context name (e.g. "server", "server_start")
+#' @param code Character vector with code
+#'
+#' @export
+shiny_prerendered_chunk <- function(context, code) {
+  knitr::knit_meta_add(list(
+    structure(class = "shiny_prerendered", list(
+      name = context,
+      code = code
+    ))
+  ))
+  invisible()
+}
+
 
 # Evaluate hook to capture chunks with e.g. context="server" and
 # append their code to the appropriate shiny_prerendered_context
@@ -223,6 +200,31 @@ shiny_prerendered_evaluate_hook <- function(code, envir, ...) {
     parse(text = code)
     list()
   }
+}
+
+
+# Extract application/shiny-prerendered script tags from an html document
+shiny_prerendered_extract_context <- function(html_lines, context) {
+
+  # look for lines that start the context
+  pattern <- paste0('<script type="application/shiny-prerendered" data-context="', context, '">')
+  matches <- regmatches(html_lines, regexec(pattern, html_lines))
+
+  # extract the code within the contexts
+  in_context <- FALSE
+  context_lines <- character()
+  for (i in 1:length(matches)) {
+    if (length(matches[[i]]) > 0) {
+      in_context <- TRUE
+      next
+    }
+    else if (in_context && identical(html_lines[[i]], "</script>")) {
+      in_context <- FALSE
+    }
+    if (in_context)
+      context_lines <- c(context_lines, html_lines[[i]])
+  }
+  context_lines
 }
 
 
