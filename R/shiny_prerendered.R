@@ -108,7 +108,7 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
 
   # add some resource paths
   add_resource_path <- function(path) {
-    if (utils::file_test("-d", path))
+    if (dir_exists(path))
       shiny::addResourcePath(basename(path), path)
   }
   files_dir <- knitr_files_dir(rendered_html)
