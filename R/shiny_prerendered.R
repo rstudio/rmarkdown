@@ -284,7 +284,7 @@ shiny_prerendered_extract_context <- function(html_lines, context) {
 
   # look for lines that start the context
   pattern <- paste0('<script type="application/shiny-prerendered" data-context="', context, '">')
-  matches <- regmatches(html_lines, regexec(pattern, html_lines))
+  matches <- regmatches(html_lines, regexec(pattern, html_lines, fixed = TRUE))
 
   # extract the code within the contexts
   in_context <- FALSE
