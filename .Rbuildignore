@@ -10,4 +10,6 @@ PANDOC\.(Rmd|md|html)
 ^tests/testthat/site/_site/
 ^tests/testthat/site/lib/
 ^tests/testthat/site/.*_files/
+^revdep/
+
 
