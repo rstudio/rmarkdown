@@ -1,4 +1,4 @@
-rmarkdown 1.1 (unreleased)
+rmarkdown 1.1
 --------------------------------------------------------------------------------
 
 * Fixed an issue where attempts to render an R Notebook could fail if the
@@ -29,13 +29,13 @@ rmarkdown 1.1 (unreleased)
 
 * `pdf_document(keep_tex = TRUE)` will generate the .tex document even if PDF
   conversion fails (#779).
-  
+
 * Move latex header includes to just before \begin{document}
 
 * Special 'global' chunk label for runtime: shiny which designates
   a chunk to be run once and only once in the global environment
   (startup performance improvement for multi-user shiny documents)
-  
+
 * Ensure supporting files are writeable (#800)
 
 * Make the "show code" buttons more CSS-friendly (#795)
