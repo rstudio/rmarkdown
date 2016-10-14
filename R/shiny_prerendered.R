@@ -184,8 +184,8 @@ shiny_prerendered_chunk <- function(context, code) {
 shiny_prerendered_option_hook <- function(input) {
   function(options) {
     if (identical(options$context, "data")) {
-      data_file <- shiny_prendered_data_file_name(options$label,
-                                                  options$cache > 0)
+      data_file <- shiny_prerendered_data_file_name(options$label,
+                                                    options$cache > 0)
       data_dir <- shiny_prerendered_data_dir(input, create = TRUE)
       index_file <- shiny_prerendred_data_chunks_index(data_dir)
       cat(data_file, "\n", sep = "", file = index_file, append = TRUE)
@@ -234,7 +234,7 @@ shiny_prerendered_evaluate_hook <- function(input) {
       # use a special path prefix for cached chunks so we know not
       # to remove them at the beginning of render
       rdata_file <- file.path(data_dir,
-                              shiny_prendered_data_file_name(label, cache))
+                              shiny_prerendered_data_file_name(label, cache))
       save(list = ls(data_env),
            file = rdata_file,
            envir = data_env,
@@ -379,7 +379,7 @@ shiny_prerendred_data_chunks_index <- function(data_dir) {
 }
 
 # Form the name of a shiny_prerendered .RData file
-shiny_prendered_data_file_name <- function(label, cache) {
+shiny_prerendered_data_file_name <- function(label, cache) {
   type <- ifelse(cache, ".cached", "")
   sprintf("%s%s.RData", label, type)
 }
