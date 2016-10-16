@@ -181,14 +181,17 @@ shiny_prerendered_chunk <- function(context, code) {
 # We'll use this later to determine which .RData files in the _data
 # directory should actually be loaded (as some could be from chunks
 # that used to be cached / were cached under different names)
-shiny_prerendered_option_hook <- function(input) {
+shiny_prerendered_option_hook <- function(input, encoding) {
   function(options) {
     if (identical(options$context, "data")) {
       data_file <- shiny_prerendered_data_file_name(options$label,
                                                     options$cache > 0)
+      data_file <- to_utf8(data_file, encoding)
       data_dir <- shiny_prerendered_data_dir(input, create = TRUE)
       index_file <- shiny_prerendred_data_chunks_index(data_dir)
-      cat(data_file, "\n", sep = "", file = index_file, append = TRUE)
+      conn <- file(index_file, open = "ab", encoding = "UTF-8")
+      on.exit(close(conn), add = TRUE)
+      write(data_file, file = conn, append = TRUE)
     }
     options
   }
@@ -365,7 +368,7 @@ shiny_prerendered_data_load <- function(input_rmd, server_envir) {
     # read index of data files
     index_file <- shiny_prerendred_data_chunks_index(data_dir)
     if (file.exists(index_file)) {
-      rdata_files <- readLines(index_file)
+      rdata_files <- readLines(index_file, encoding = "UTF-8")
       # load each of the files in the index
       for (rdata_file in rdata_files)
         load(file.path(data_dir,rdata_file), envir = server_envir)
