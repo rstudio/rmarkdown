@@ -1,3 +1,11 @@
+rmarkdown 1.2 (unreleased)
+--------------------------------------------------------------------------------
+
+* Add new `runtime: shiny_prerendered` mode for interactive documents.
+
+* ioslides: check for null before concatenating attr["class"] (#836)
+
+
 rmarkdown 1.1
 --------------------------------------------------------------------------------
 

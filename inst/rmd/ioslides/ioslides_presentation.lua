@@ -228,7 +228,7 @@ function Header(lev, s, attr)
   end
 
   -- trick: as lev value 2 is used in code below to start a new slide
-  -- we force all lev <= slide_level as new slides 
+  -- we force all lev <= slide_level as new slides
   if lev > 2 and lev <= slide_level then
   	lev = 2
   end
@@ -238,7 +238,7 @@ function Header(lev, s, attr)
   if string.len(subtitle) > 0 then
     header = header .. "<h3>" .. subtitle .. "</h3>"
   end
-  
+
   -- treat level 2 headers as slides
   if lev == 2 then
 
@@ -257,7 +257,11 @@ function Header(lev, s, attr)
 
     -- add 'smaller' class if it was globally specified
     if smaller then
-      attr["class"] = "smaller " .. attr["class"]
+      if (attr["class"]) then
+        attr["class"] = "smaller " .. attr["class"]
+      else
+        attr["class"] = "smaller"
+      end
     end
 
     -- return the beginning of the slide

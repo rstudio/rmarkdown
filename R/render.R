@@ -17,7 +17,7 @@ render <- function(input,
                    output_dir = NULL,
                    output_options = NULL,
                    intermediates_dir = NULL,
-                   runtime = c("auto", "static", "shiny"),
+                   runtime =  c("auto", "static", "shiny", "shiny_prerendered"),
                    clean = TRUE,
                    params = NULL,
                    knit_meta = NULL,
@@ -96,6 +96,9 @@ render <- function(input,
       dir.create(output_dir, recursive = TRUE)
     output_dir <- normalize_path(output_dir)
   }
+
+  # check whether this document requires a knit
+  requires_knit <- tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")
 
   # remember the name of the original input document (we overwrite 'input' once
   # we've knitted)
@@ -180,6 +183,34 @@ render <- function(input,
   # read the yaml front matter
   yaml_front_matter <- parse_yaml_front_matter(input_lines)
 
+  # if this is shiny_prerendered then modify the output format to
+  # be single-page and to output dependencies to the shiny.dep file
+  shiny_prerendered_dependencies <- list()
+  if (requires_knit && is_shiny_prerendered(yaml_front_matter$runtime)) {
+
+    # first validate that the user hasn't passed an already created output_format
+    if (is_output_format(output_format)) {
+      stop("You cannot pass a fully constructed output_format to render when ",
+           "using runtime: shiny_prerendered")
+    }
+
+    # require shiny for the knit
+    if (requireNamespace("shiny")) {
+      if (!"package:shiny" %in% search())
+        attachNamespace("shiny")
+    }
+    else
+      stop("The shiny package is required for 'shiny_prerendered' documents")
+
+    # force various output options
+    output_options$self_contained <- FALSE
+    output_options$copy_resources <- TRUE
+    output_options$dependency_resolver <- function(deps) {
+      shiny_prerendered_dependencies <<- deps
+      list()
+    }
+  }
+
   # if we haven't been passed a fully formed output format then
   # resolve it by looking at the yaml
   if (!is_output_format(output_format)) {
@@ -260,7 +291,7 @@ render <- function(input,
   }
 
   # knit if necessary
-  if (tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")) {
+  if (requires_knit) {
 
     # restore options and hooks after knit
     optk <- knitr::opts_knit$get()
@@ -323,10 +354,20 @@ render <- function(input,
     # setting the runtime (static/shiny) type
     knitr::opts_knit$set(rmarkdown.runtime = runtime)
 
+    # install evaluate hook for shiny_prerendred
+    if (is_shiny_prerendered(runtime)) {
+
+      # remove uncached .RData (will be recreated from context="data" chunks)
+      shiny_prerendered_remove_uncached_data(original_input)
+
+      # set the cache option hook and evaluate hook
+      knitr::opts_hooks$set(label = shiny_prerendered_option_hook(original_input,encoding))
+      knitr::knit_hooks$set(evaluate = shiny_prerendered_evaluate_hook(original_input))
+    }
+
     # install global chunk handling for runtime: shiny (evaluate the 'global'
     # chunk only once, and in the global environment)
-    if (identical(runtime, "shiny") &&
-        !is.null(shiny::getDefaultReactiveDomain())) {
+    if (is_shiny_classic(runtime) && !is.null(shiny::getDefaultReactiveDomain())) {
 
       # install evaluate hook to ensure that the 'global' chunk for this source
       # file is evaluated only once and is run outside of a user reactive domain
@@ -432,6 +473,9 @@ render <- function(input,
       message("Warning: ", rmd_warning)
     }
 
+    # pull out shiny_prerendered_contexts and append them as script tags
+    shiny_prerendered_append_contexts(runtime, input, encoding)
+
     # collect remaining knit_meta
     knit_meta <- knit_meta_reset()
 
@@ -483,6 +527,24 @@ render <- function(input,
                                                 files_dir,
                                                 output_dir)
       output_format$pandoc$args <- c(output_format$pandoc$args, extra_args)
+    }
+
+    # write shiny_prerendered_dependencies if we have them
+    if (is_shiny_prerendered(runtime)) {
+
+      # first convert absolute file references into shiny style relative deps
+      dependencies <- lapply(shiny_prerendered_dependencies, function(dependency) {
+        src <- dependency$src
+        if (!is.null(src$file)) {
+          dependency <- htmltools::copyDependencyToDir(dependency, files_dir)
+          dependency <- htmltools::makeDependencyRelative(dependency, output_dir)
+          dependency$src = list(href = unname(dependency$src))
+        }
+        dependency
+      })
+
+      # write deps
+      write_shiny_deps(files_dir, dependencies)
     }
 
     perf_timer_stop("pre-processor")
