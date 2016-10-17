@@ -357,7 +357,7 @@ render <- function(input,
     # install evaluate hook for shiny_prerendred
     if (is_shiny_prerendered(runtime)) {
 
-      # remove _data dir if it exists (will be recreated from context="data" chunks)
+      # remove uncached .RData (will be recreated from context="data" chunks)
       shiny_prerendered_remove_uncached_data(original_input)
 
       # set the cache option hook and evaluate hook
