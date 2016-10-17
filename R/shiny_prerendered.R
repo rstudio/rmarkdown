@@ -273,8 +273,8 @@ shiny_prerendered_remove_uncached_data <- function(input) {
     index_file <- shiny_prerendred_data_chunks_index(data_dir)
     if (file.exists(index_file))
       unlink(index_file)
-    rdata_files <- list.files(data_dir, pattern = glob2rx("*.RData"))
-    cached_rdata_files <- list.files(data_dir, pattern = glob2rx("*.cached.RData"))
+    rdata_files <- list.files(data_dir, pattern = utils::glob2rx("*.RData"))
+    cached_rdata_files <- list.files(data_dir, pattern = utils::glob2rx("*.cached.RData"))
     uncached_rdata_files <- setdiff(rdata_files, cached_rdata_files)
     unlink(file.path(data_dir, uncached_rdata_files))
   }
