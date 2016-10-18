@@ -201,7 +201,7 @@ You can also publish `runtime: shiny_prerendered` documents to the [ShinyApps](h
 You can then deploy your `runtime: shiny_prerendered` document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute the `rsconnect::deployDoc` function. For example:
 
 ```r
-rsconnect::deployDoc(doc = "faithful.Rmd")
+rsconnect::deployDoc("faithful.Rmd")
 ```
 
 If you are using RStudio you can also use the **Publish** button available when working with a `runtime: shiny_prerendered` document:
