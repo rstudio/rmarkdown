@@ -443,8 +443,8 @@ function(input, output, session) {
 <li><p>The very latest development version of the <strong>rsconnect</strong> R package. You can install this as follows:</p>
 <pre class="r"><code>devtools::install_github(&quot;rstudio/rsconnect&quot;)</code></pre></li>
 </ol>
-<p>You can then deploy your <code>runtime: shiny_prerendered</code> document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute:</p>
-<pre class="r"><code>rsconnect::deployApp()</code></pre>
+<p>You can then deploy your <code>runtime: shiny_prerendered</code> document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute the <code>rsconnect::deployDoc</code> function. For example:</p>
+<pre class="r"><code>rsconnect::deployDoc(doc = &quot;faithful.Rmd&quot;)</code></pre>
 <p>If you are using RStudio you can also use the <strong>Publish</strong> button available when working with a <code>runtime: shiny_prerendered</code> document:</p>
 <div class="figure">
 <img src="images/shinyapps-deploy-faithful.png" style="margin-bottom: 12px;" width="619" height="421" />
