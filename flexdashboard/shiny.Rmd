@@ -51,10 +51,10 @@ As described above, you should perform any expensive loading of data within the 
 <div id="shinyglobal"></div>
 <script type="text/javascript">loadSnippet('shinyglobal')</script>
 
-Note that special handling of the `global` chunk is a feature currently only available within the development version of the **rmarkdown** package. You can install this version as follows:
+Note that special handling of the `global` chunk is a recently introduced feature of the **rmarkdown** package (v1.1 or later) so you should be sure to install the latest version of rmarkdown from CRAN before using it:
 
 ```{r, eval=FALSE}
-devtools::install_github("rstudio/rmarkdown")
+install.packages("rmarkdown", type = "source")
 ```
 
 ### Inputs & Outputs
