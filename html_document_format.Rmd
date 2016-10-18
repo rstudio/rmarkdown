@@ -200,6 +200,25 @@ For example:
         fig_caption: true
     ---
 
+## Data Frame Printing
+
+You can enhance the default display of data frames via the `df_print` option. Valid values include:
+
+| Option  | Description  |
+|------------|-------------------------------------------|
+| default  | Call the [`print.data.frame`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/print.dataframe.html) generic method   |
+| kable  | Use the [`knitr::kable`](https://www.rdocumentation.org/packages/knitr/versions/1.12.3/topics/kable) function. |
+| tibble  | Use the [`tibble::print.tbl_df`](https://www.rdocumentation.org/packages/tibble/versions/1.2/topics/print.tbl_df) function.  |
+| paged  |  Create a pageable HTML table |
+
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        df_print: paged
+    ---
 
 ## Code Folding
 

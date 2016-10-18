@@ -417,6 +417,43 @@ output:
     fig_caption: true
 ---</code></pre>
 </div>
+<div id="data-frame-printing" class="section level2">
+<h2>Data Frame Printing</h2>
+<p>You can enhance the default display of data frames via the <code>df_print</code> option. Valid values include:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>default</td>
+<td>Call the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/print.dataframe.html"><code>print.data.frame</code></a> generic method</td>
+</tr>
+<tr class="even">
+<td>kable</td>
+<td>Use the <a href="https://www.rdocumentation.org/packages/knitr/versions/1.12.3/topics/kable"><code>knitr::kable</code></a> function.</td>
+</tr>
+<tr class="odd">
+<td>tibble</td>
+<td>Use the <a href="https://www.rdocumentation.org/packages/tibble/versions/1.2/topics/print.tbl_df"><code>tibble::print.tbl_df</code></a> function.</td>
+</tr>
+<tr class="even">
+<td>paged</td>
+<td>Create a pageable HTML table</td>
+</tr>
+</tbody>
+</table>
+<p>For example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    df_print: paged
+---</code></pre>
+</div>
 <div id="mathjax-equations" class="section level2">
 <h2>MathJax Equations</h2>
 <p>By default <a href="http://www.mathjax.org/">MathJax</a> scripts are included in Slidy presentations for rendering LaTeX and MathML equations. You can use the <code>mathjax</code> option to control how MathJax is included:</p>
