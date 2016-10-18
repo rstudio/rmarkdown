@@ -166,13 +166,22 @@ shiny_prerendered_clean <- function(input) {
 #'
 #' @export
 shiny_prerendered_chunk <- function(context, code) {
+
+  # verify we are in runtime: shiny_prerendered
+  if (!identical(knitr::opts_knit$get("rmarkdown.runtime"),"shiny_prerendered"))
+      stop("The shiny_prerendered_chunk function can only be called from ",
+           "within runtime: shiny_prerenered")
+
+  # add the prerendered chunk to knit_meta
   knitr::knit_meta_add(list(
     structure(class = "shiny_prerendered", list(
       name = context,
       code = code
     ))
   ))
-  invisible()
+
+  # return NULL invisibly
+  invisible(NULL)
 }
 
 

@@ -319,7 +319,8 @@ render <- function(input,
       rmarkdown.pandoc.from = output_format$pandoc$from,
       rmarkdown.pandoc.to = pandoc_to,
       rmarkdown.keep_md = output_format$keep_md,
-      rmarkdown.version = 2
+      rmarkdown.version = 2,
+      rmarkdown.runtime = runtime
     )
 
     # trim whitespace from around source code
