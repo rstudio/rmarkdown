@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Prerendered Shiny Documents</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+
+<link rel="icon" type="image/png" href="images/favicon.png" />
+
+<script type="text/javascript" src="js/rmarkdown.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-20375833-14', 'auto');
+  ga('send', 'pageview');
+</script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="site_libs/highlight/textmate.css"
+      type="text/css" />
+<script src="site_libs/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/rmarkdown.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 10px;
+}
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div id="rStudioHeader" class="alwaysShrunk">
+  <div class="innards bandContent">
+    <div>
+      <a class="productName" href="index.html">R Markdown</a>
+      <div class="rStudio"><span class="light">from </span> <a href="https://www.rstudio.com/"><div class="logo"></div></a></div>
+    </div>
+
+    <div id="menu">
+      <div id="menuToggler"></div>
+      <div id="menuItems">
+        <a class="menuItem" href="lesson-1.html">Get Started</a>
+        <a class="menuItem" href="gallery.html">Gallery</a>
+        <a class="menuItem" href="formats.html">Formats</a>
+        <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
+        <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+#TOC {
+  margin-left: 35px;
+  margin-top: 90px;
+}
+</style>
+
+<script type="text/javascript">
+$(".main-container").removeClass("main-container").removeClass("container-fluid").addClass("footerPushDown");
+</script>
+
+
+<div id="pageContent" class="standardPadding">
+  <div class="articleBandContent">
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Prerendered Shiny Documents</h1>
+
+</div>
+
+
+<script src="flexdashboard/libs/ace-1.2.3/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="flexdashboard/libs/holder-2.9.0/holder.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="flexdashboard/snippets/snippets.js" type="text/javascript" charset="utf-8"></script>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>The traditional way to add Shiny components to an R Markdown document is through the use of <a href="authoring_shiny.html"><code>runtime: shiny</code></a>. This method provides a very straightforward development experience (you can use Shiny UI and server functions anywhere you like within the document). However, because it requires a full document render for each end user browser session it can perform poorly for documents that don't render quickly.</p>
+<p>Ideally, we could have interactive documents that are prerendered (i.e. render/knit a single time <em>prior to</em> their deployment) and as a result be very quick to load. It would also be beneficial to extend the notion of prerendering to data, so that expensive data import and manipulation tasks could be done up front and not slow down startup and load times. To address these requirements a new <code>runtime: shiny_prerendred</code> mode is currently under development.</p>
+<div id="prerequisties" class="section level3 toc-ignore">
+<h3>Prerequisties</h3>
+<p>To use <code>runtime: shiny_prerendred</code> you need to install the development version of the <a href="http://rmarkdown.rstudio.com">rmarkdown</a> package. You can do this as follows:</p>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
+<p>If you are running RStudio you should also download the daily build of RStudio (v1.0.102 or later) as it includes features that allow you easily run and preview <code>runtime: shiny_prerendered</code> documents within the IDE. Download links for the RStudio daily build are here:</p>
+<ul>
+<li><a href="https://s3.amazonaws.com/rstudio-dailybuilds/rstudio-1.0.102-amd64.deb">Ubuntu 12.04+</a></li>
+<li><a href="https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.dmg">Mac OS X 10.6+</a></li>
+<li><a href="https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.exe">Windows 7+</a></li>
+</ul>
+</div>
+</div>
+<div id="execution-contexts" class="section level2">
+<h2>Execution Contexts</h2>
+<p>The execution of documents with <code>runtime: shiny_prerendered</code> is divided into two main contexts:</p>
+<ol style="list-style-type: decimal">
+<li>Rendering of the user interface and data; and</li>
+<li>Serving of the document to end users.</li>
+</ol>
+<p>This provides a hybrid model of execution, where some code is run once when the document is rendered (like R Markdown) and some code is run for every user interaction (like Shiny).</p>
+<p>All code chunks within a <code>runtime: shiny_prerendered</code> document have a context attribute which indicates when they execute (the context is &quot;render&quot; by default).</p>
+<div id="context-render" class="section level3">
+<h3>context='render'</h3>
+<p>This is the default context for all R code chunks and encompasses the traditional <code>rmarkdown::render</code> step (using knitr to execute R code chunks and pandoc to generate an HTML document). This step is also used to generate Shiny UI elements (i.e. code traditionally included in a Shiny <code>ui.R</code> file). For example:</p>
+<div id="shiny_prerendered_render">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_render', 'r')</script>
+</div>
+<div id="context-server" class="section level3">
+<h3>context='server'</h3>
+<p>This is the code that runs when the interactive document is served, and includes Shiny server code (i.e. code traditionally included in a Shiny <code>server.R</code> file). For example:</p>
+<div id="shiny_prerendered_server">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_server', 'r')</script>
+</div>
+<div id="simple-example" class="section level3">
+<h3>Simple Example</h3>
+<p>Here's the two example chunks from above combined together into a complete document:</p>
+<div id="shiny_prerendered_simple">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_simple', 'r')</script>
+<p>Note that we've dropped the <code>context=&quot;render&quot;</code> from the first chunk since &quot;render&quot; is the default context.</p>
+<p>The output from normal R Markdown chunks creates the document's content and Shiny UI. R Markdown chunks with the <code>context=&quot;server&quot;</code> are combined to create the Shiny server function. You can have as many <code>&quot;server&quot;</code> chunks as you like, allowing you to co-locate server and UI code.</p>
+<p>Normal chunks that create the UI are processed during <code>rmarkdown::render</code>, and therefore execute prior to the deployment of your document. This means that unlike with <code>runtime: shiny</code>, the time required to render your document does not impact the startup or load time of the document for end users.</p>
+</div>
+<div id="context-separation" class="section level3">
+<h3>Context Separation</h3>
+<p>It's critical to understand that the <code>&quot;render&quot;</code> and <code>&quot;server&quot;</code> contexts are run in completely separate R sessions: <code>&quot;render&quot;</code> is run once during <code>rmarkdown::render</code>, and <code>&quot;server&quot;</code> is run many times by shiny. That means that you cannot access variables created in <code>&quot;render&quot;</code> chunks within <code>&quot;server&quot;</code> chunks, and vice-versa. For example, the following code won't work:</p>
+<div id="shiny_prerendered_execution_context">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_execution_context', 'r')</script>
+<p>This won't work because the <code>&quot;server&quot;</code> context can't see the definition of the variable <code>a</code> (since the two chunks will execute in entirely different R sessions).</p>
+<p>It is of course very convenient to be able to share values between execution contexts, and below we'll describe a couple of hybrid contexts that can be used accomplish this.</p>
+</div>
+</div>
+<div id="additional-contexts" class="section level2">
+<h2>Additional Contexts</h2>
+<p>The <code>&quot;render&quot;</code> and <code>&quot;server&quot;</code> contexts provide the basic framework for using <code>runtime: shiny_prerendered</code> and are sufficient for creating simple documents and applications. There are also a number of additional contexts which (among other things) enable you to share code and data between <code>&quot;render&quot;</code> and <code>&quot;server&quot;</code> contexts. These contexts are described below.</p>
+<div id="context-setup" class="section level3">
+<h3>context='setup'</h3>
+<p>Conventional Shiny applications can include a <code>global.R</code> file to define code which is shared between the UI and server. You can accomplish the same thing within <code>runtime: shiny_prerendered</code> documents by adding the <code>context=&quot;setup&quot;</code> attribute to an R code chunk. Code within the chunk will be executed both during render and during the startup of the Shiny server. For example:</p>
+<div id="shiny_prerendered_setup_context">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_setup_context', 'r')</script>
+</div>
+<div id="context-data" class="section level3">
+<h3>context='data'</h3>
+<p>The loading and manipulation of data often dominates the startup time of Shiny applications. Since <code>runtime: shiny_prerendered</code> documents are executed in two phases (the initial render and then the serving of the document to users) we can perform the expensive data manipulations during rendering and then simply load the data when starting up the application. This extends the concept of &quot;prerendering&quot; from document content and user-interface elements to data.</p>
+<p>You can define prerendered data by adding the <code>context=&quot;data&quot;</code> attribute to an R code chunk. The chunk will be executed during render and any R objects it creates will be saved to an .RData file, which will then be loaded during Shiny server startup. For example, we could take the the setup chunk illustrated above and factor out the data loading into it's own chunk:</p>
+<div id="shiny_prerendered_data_context">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_data_context', 'r')</script>
+<p>Note that R objects created within a <code>context=&quot;data&quot;</code> chunk are available to both the UI rendering and server contexts.</p>
+<div id="knitr-caching" class="section level4">
+<h4>Knitr Caching</h4>
+<p>You can further improve the performance of data rendering by adding the <code>cache=TRUE</code> attribute to the data chunk. This will cause the code chunk to be re-executed only when required. For example:</p>
+<div id="shiny_prerendered_data_caching">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_data_caching', 'r')</script>
+<p>For the above example the cache will be invalidated if either the code in the chunk changes or the modification time of the &quot;data.csv&quot; file changes (this is accomplished using the <code>cache.extra</code> option).</p>
+<p>You can also invalidate an existing cache by removing the <code>_cache</code> directory associated with your R Markdown document. There are many additional options available for controlling caching behavior, see the <a href="http://yihui.name/knitr/demo/cache/">knitr caching</a> documentation for details.</p>
+</div>
+</div>
+<div id="context-server-start" class="section level3">
+<h3>context='server_start'</h3>
+<p>We've discussed the two main execution contexts (<code>&quot;render&quot;</code> and <code>&quot;server&quot;</code>) as well as some hybrid contexts used for shared code and data. The <code>&quot;server_start&quot;</code> context executes once when the Shiny document is first run and is <em>not</em> re-executed for each new user of the document. Using <code>&quot;server_start&quot;</code> is appropriate for several scenarios including:</p>
+<ol style="list-style-type: decimal">
+<li><p>Establishing shared connections to remote servers (e.g. databases, Spark contexts, etc.).</p></li>
+<li><p>Creating reactive values intended to be shared across sessions (e.g. with <a href="http://shiny.rstudio.com/reference/shiny/latest/reactivePoll.html">reactivePoll</a> or <a href="http://shiny.rstudio.com/reference/shiny/latest/reactiveFileReader.html">reactiveFileReader</a>).</p></li>
+</ol>
+<p>You can add your own startup code explicitly by including chunks with the <code>context=&quot;server_start&quot;</code> attribute:</p>
+<div id="shiny_prerendered_server_start">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_server_start', 'r')</script>
+</div>
+</div>
+<div id="complete-example" class="section level2">
+<h2>Complete Example</h2>
+<p>Here's a complete example of a <a href="http://rmarkdown.rstudio.com/flexdashboard">flexdashboard</a> implemented with <code>runtime: shiny_prerendered</code>:</p>
+<div id="shiny_prerendered_complete">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_complete', 'r')</script>
+</div>
+<div id="execution-flow" class="section level2">
+<h2>Execution Flow</h2>
+<p>Now that we've seen some examples of the various contexts at work it's worth a re-cap of the overall execution flow for <code>runtime: shiny_prerendered</code>. If you are accustomed to thinking about Shiny applications in terms of ui.R and server.R here's how <code>runtime: shiny_prerendered</code> maps to the way code is executed in those files:</p>
+<p><strong>ui.R</strong></p>
+<pre><code>context=&quot;setup&quot;
+context=&quot;data&quot;
+context=&quot;render&quot;</code></pre>
+<p><strong>server.R</strong></p>
+<pre><code>context=&quot;setup&quot;
+context=&quot;data&quot;
+context=&quot;server_start&quot;
+
+function(input, output, session) {
+  context=&quot;server&quot;    
+}</code></pre>
+<p>Note that the default context for R code chunks is <code>&quot;render&quot;</code> so for chunks that render content and Shiny UI you can omit the <code>context</code> attribute entirely.</p>
+<p>Note also that in the case of the <code>&quot;data&quot;</code> context, the code isn't re-executed within the server but rather the objects created during rendering are simply loaded into the server context. This has the potential to make server startup dramatically faster because data import and preparation has already occurred during render.</p>
+<script type="text/javascript">
+$(document).ready(function() {
+  fixupQuotes = function() {$(this).text($(this).text().replace(/'/g, "\""))};
+  $('h3').each(fixupQuotes);
+  $('li.tocify-item').each(fixupQuotes);
+})
+</script>
+</div>
+
+  </div> <!-- articleBandContent -->
+</div> <!-- pageContent -->
+
+<div id="rStudioFooter" class="band full">
+<div class="bandContent">
+  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="logos">
+    <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
+    <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
+    <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
+    <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
+  </div>
+</div>
+</div>
+
+<!-- bizible -->
+<script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
+
+<!-- disqus -->
+ <div id="disqus_thread" class="standardPadding"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+
+</script>
+
+
+</body>
+</html>

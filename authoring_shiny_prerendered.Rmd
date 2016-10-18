@@ -1,0 +1,179 @@
+---
+title: "Prerendered Shiny Documents"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    smart: false
+---
+
+<script src="flexdashboard/libs/ace-1.2.3/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="flexdashboard/libs/holder-2.9.0/holder.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="flexdashboard/snippets/snippets.js" type="text/javascript" charset="utf-8"></script>
+
+## Overview
+
+The traditional way to add Shiny components to an R Markdown document is through the use of [`runtime: shiny`](authoring_shiny.html). This method provides a very straightforward development experience (you can use Shiny UI and server functions anywhere you like within the document). However, because it requires a full document render for each end user browser session it can perform poorly for documents that don't render quickly.
+
+Ideally, we could have interactive documents that are prerendered (i.e. render/knit a single time *prior to* their deployment) and as a result be very quick to load. It would also be beneficial to extend the notion of prerendering to data, so that expensive data import and manipulation tasks could be done up front and not slow down startup and load times. To address these requirements a new `runtime: shiny_prerendred` mode is currently under development.
+
+### Prerequisties {.toc-ignore}
+
+To use `runtime: shiny_prerendred` you need to install the development version of the [rmarkdown](http://rmarkdown.rstudio.com) package. You can do this as follows:
+
+```{r, eval=FALSE}
+devtools::install_github("rstudio/rmarkdown")
+```
+
+If you are running RStudio you should also download the daily build of RStudio (v1.0.102 or later) as it includes features that allow you easily run and preview `runtime: shiny_prerendered` documents within the IDE. Download links for the RStudio daily build are here:
+
+- [Ubuntu 12.04+](https://s3.amazonaws.com/rstudio-dailybuilds/rstudio-1.0.102-amd64.deb) 
+- [Mac OS X 10.6+](https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.dmg)
+- [Windows 7+](https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.exe)
+
+## Execution Contexts
+
+The execution of documents with `runtime: shiny_prerendered` is divided into two main contexts:
+
+1. Rendering of the user interface and data; and
+2. Serving of the document to end users. 
+
+This provides a hybrid model of execution, where some code is run once when the document is rendered (like R Markdown) and some code is run for every user interaction (like Shiny).
+
+All code chunks within a `runtime: shiny_prerendered` document have a context attribute which indicates when they execute (the context is "render" by default).
+
+### context='render' {#context-render}
+
+This is the default context for all R code chunks and encompasses the traditional `rmarkdown::render` step (using knitr to execute R code chunks and pandoc to generate an HTML document). This step is also used to generate Shiny UI elements (i.e. code traditionally included in a Shiny `ui.R` file). For example:
+
+<div id="shiny_prerendered_render"></div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_render', 'r')</script>
+
+
+### context='server' {#context-server}
+
+This is the code that runs when the interactive document is served, and includes Shiny server code (i.e. code traditionally included in a Shiny `server.R` file). For example:
+
+<div id="shiny_prerendered_server"></div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_server', 'r')</script>
+
+### Simple Example
+
+Here's the two example chunks from above combined together into a complete document:
+
+<div id="shiny_prerendered_simple"></div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_simple', 'r')</script>
+
+Note that we've dropped the `context="render"` from the first chunk since "render" is the default context.
+
+The output from normal R Markdown chunks creates the document's content and Shiny UI. R Markdown chunks with the `context="server"` are combined to create the Shiny server function. You can have as many `"server"` chunks as you like, allowing you to co-locate server and UI code.
+
+Normal chunks that create the UI are processed during `rmarkdown::render`, and therefore execute prior to the deployment of your document. This means that unlike with `runtime: shiny`, the time required to render your document does not impact the startup or load time of the document for end users.
+
+### Context Separation
+
+It's critical to understand that the `"render"` and `"server"` contexts are run in completely separate R sessions: `"render"` is run once during `rmarkdown::render`, and `"server"` is run many times by shiny. That means that you cannot access variables created in `"render"` chunks within `"server"` chunks, and vice-versa. For example, the following code won't work:
+
+<div id="shiny_prerendered_execution_context"></div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_execution_context', 'r')</script>
+
+
+This won't work because the `"server"` context can't see the definition of the variable `a` (since the two chunks will execute in entirely different R sessions).
+
+It is of course very convenient to be able to share values between execution contexts, and below we'll describe a couple of hybrid contexts that can be used accomplish this.
+
+## Additional Contexts
+
+The `"render"` and `"server"` contexts provide the basic framework for using `runtime: shiny_prerendered` and are sufficient for creating simple documents and applications. There are also a number of additional contexts which (among other things) enable you to share code and data between `"render"` and `"server"` contexts. These contexts are described below.
+
+### context='setup' {#context-setup}
+
+Conventional Shiny applications can include a `global.R` file to define code which is shared between the UI and server. You can accomplish the same thing within `runtime: shiny_prerendered` documents by adding the `context="setup"` attribute to an R code chunk. Code within the chunk will be executed both during render and during the startup of the Shiny server. For example:
+
+<div id="shiny_prerendered_setup_context"></div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_setup_context', 'r')</script>
+
+
+### context='data' {#context-data}
+
+The loading and manipulation of data often dominates the startup time of Shiny applications. Since `runtime: shiny_prerendered` documents are executed in two phases (the initial render and then the serving of the document to users) we can perform the expensive data manipulations during rendering and then simply load the data when starting up the application. This extends the concept of "prerendering" from document content and user-interface elements to data.
+
+You can define prerendered data by adding the `context="data"` attribute to an R code chunk. The chunk will be executed during render and any R objects it creates will be saved to an .RData file, which will then be loaded during Shiny server startup. For example, we could take the the setup chunk illustrated above and factor out the data loading into it's own chunk:
+
+<div id="shiny_prerendered_data_context"></div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_data_context', 'r')</script>
+
+Note that R objects created within a `context="data"` chunk are available to both the UI rendering and server contexts.
+
+#### Knitr Caching
+
+You can further improve the performance of data rendering by adding the `cache=TRUE` attribute to the data chunk. This will cause the code chunk to be re-executed only when required. For example:
+
+<div id="shiny_prerendered_data_caching"></div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_data_caching', 'r')</script>
+
+For the above example the cache will be invalidated if either the code in the chunk changes or the modification time of the "data.csv" file changes (this is accomplished using the `cache.extra` option).
+
+You can also invalidate an existing cache by removing the `_cache` directory associated with your R Markdown document. There are many additional options available for controlling caching behavior, see the [knitr caching](http://yihui.name/knitr/demo/cache/) documentation for details.
+
+### context='server_start' {#context-server-start}
+
+We've discussed the two main execution contexts (`"render"` and `"server"`) as well as some hybrid contexts used for shared code and data. The `"server_start"` context executes once when the Shiny document is first run and is *not* re-executed for each new user of the document. Using `"server_start"` is appropriate for several scenarios including:
+
+1. Establishing shared connections to remote servers (e.g. databases, Spark contexts, etc.).
+
+2. Creating reactive values intended to be shared across sessions (e.g. with [reactivePoll](http://shiny.rstudio.com/reference/shiny/latest/reactivePoll.html) or [reactiveFileReader](http://shiny.rstudio.com/reference/shiny/latest/reactiveFileReader.html)).
+
+You can add your own startup code explicitly by including chunks with the `context="server_start"` attribute:
+
+
+<div id="shiny_prerendered_server_start"></div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_server_start', 'r')</script>
+
+## Complete Example
+
+Here's a complete example of a [flexdashboard](http://rmarkdown.rstudio.com/flexdashboard) implemented with `runtime: shiny_prerendered`:
+
+<div id="shiny_prerendered_complete"></div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_complete', 'r')</script>
+
+## Execution Flow
+
+Now that we've seen some examples of the various contexts at work it's worth a re-cap of the overall execution flow for `runtime: shiny_prerendered`.  If you are accustomed to thinking about Shiny applications in terms of ui.R and server.R here's how `runtime: shiny_prerendered` maps to the way code is executed in those files:
+
+**ui.R**
+
+    context="setup"
+    context="data"
+    context="render"
+
+**server.R**
+
+    context="setup"
+    context="data"
+    context="server_start"
+
+    function(input, output, session) {
+      context="server"    
+    }
+
+
+Note that the default context for R code chunks is `"render"` so for chunks that render content and Shiny UI you can omit the `context` attribute entirely.
+
+Note also that in the case of the `"data"` context, the code isn't re-executed within the server but rather the objects created during rendering are simply loaded into the server context. This has the potential to make server startup dramatically faster because data import and preparation has already occurred during render.
+
+```{js}
+$(document).ready(function() {
+  fixupQuotes = function() {$(this).text($(this).text().replace(/'/g, "\""))};
+  $('h3').each(fixupQuotes);
+  $('li.tocify-item').each(fixupQuotes);
+})
+```
+
+
+
+
+
+
+
+
