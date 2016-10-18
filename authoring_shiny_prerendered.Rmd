@@ -80,7 +80,21 @@ It's critical to understand that the `"render"` and `"server"` contexts are run 
 
 This won't work because the `"server"` context can't see the definition of the variable `a` (since the two chunks will execute in entirely different R sessions).
 
-It is of course very convenient to be able to share values between execution contexts, and below we'll describe a couple of hybrid contexts that can be used accomplish this.
+It is of course very convenient to be able to share values between execution contexts. In the [Additional Contexts] section below we'll describe a couple of hybrid contexts that can be used accomplish this.
+
+## Running Documents
+
+Assuming you are using the current RStudio Daily Build ([Ubuntu](https://s3.amazonaws.com/rstudio-dailybuilds/rstudio-1.0.102-amd64.deb), [Mac OS X](https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.dmg), [Windows](https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.exe)) you can execute a `runtime: shiny_prerendered` document locally using the **Run Document** command on the editor toolbar, or use the keyboard shortcut Ctrl+Shift+K (Cmd+Shift+K on Mac):
+
+![](images/shiny-prerendered-rstudio.png){.screenshot style="margin-bottom: 12px;"}
+
+Note that this command runs the document in a separate R process, so you can continue to use the R console while the document is running. You can see any R console output from this separate process in the R Markdown console tab in RStudio. 
+
+If you're not using RStudio, or want to run the document in-process for troubleshooting, you can also run the document from the console using the `rmarkdown::run` function. 
+
+When a `runtime: shiny_prerendered` document is run, it will automatically call `rmarkdown::render` whenever necessary (i.e. when the Rmd file or any of it's dependent resource files are changed). If you want to force a render of the document (e.g. for a scheduled re-rendering) you can call `rmarkdown::render` directly.
+
+See the [Deployment] section below for details on deploying `runtime: shiny_prerendered` documents into various types of Shiny Server environments.
 
 ## Additional Contexts
 
@@ -161,6 +175,42 @@ Now that we've seen some examples of the various contexts at work it's worth a r
 Note that the default context for R code chunks is `"render"` so for chunks that render content and Shiny UI you can omit the `context` attribute entirely.
 
 Note also that in the case of the `"data"` context, the code isn't re-executed within the server but rather the objects created during rendering are simply loaded into the server context. This has the potential to make server startup dramatically faster because data import and preparation has already occurred during render.
+
+
+## Deployment
+
+### Shiny Server
+
+You can deploy `runtime: shiny_prerendered` documents using version 1.2 or later of [Shiny Server](http://www.rstudio.com/products/shiny/shiny-server/). 
+
+Shiny documents are deployed the same way that Shiny applications are, except rather than deploying ui.R and server.R files, you deploy an Rmd file along with it's required dependencies and pre-rendered HTML. 
+
+See the Shiny Server [documentation](http://docs.rstudio.com/shiny-server/#r-markdown) for more details on deploying `runtime: shiny_prerendered` documents.
+
+### ShinyApps
+
+You can also publish `runtime: shiny_prerendered` documents to the [ShinyApps](http://shinyapps.io) hosted service. To do this you should ensure that you have:
+
+1. An account on ShinyApps (use the [signup form](http://shinyapps.io) to request an account).
+
+2. The very latest development version of the **rsconnect** R package. You can install this as follows:
+
+    ```r
+    devtools::install_github("rstudio/rsconnect")
+    ```
+
+You can then deploy your `runtime: shiny_prerendered` document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute:
+
+```r
+rsconnect::deployApp()
+```
+
+If you are using RStudio you can also use the **Publish** button available when working with a `runtime: shiny_prerendered` document:
+
+![](images/shinyapps-deploy-faithful.png){style="margin-bottom: 12px;"}
+
+
+
 
 ```{js}
 $(document).ready(function() {

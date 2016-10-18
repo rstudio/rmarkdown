@@ -340,8 +340,20 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_execution_context', 'r')</script>
 <p>This won't work because the <code>&quot;server&quot;</code> context can't see the definition of the variable <code>a</code> (since the two chunks will execute in entirely different R sessions).</p>
-<p>It is of course very convenient to be able to share values between execution contexts, and below we'll describe a couple of hybrid contexts that can be used accomplish this.</p>
+<p>It is of course very convenient to be able to share values between execution contexts. In the <a href="#additional-contexts">Additional Contexts</a> section below we'll describe a couple of hybrid contexts that can be used accomplish this.</p>
 </div>
+</div>
+<div id="running-documents" class="section level2">
+<h2>Running Documents</h2>
+<p>Assuming you are using the current RStudio Daily Build (<a href="https://s3.amazonaws.com/rstudio-dailybuilds/rstudio-1.0.102-amd64.deb">Ubuntu</a>, <a href="https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.dmg">Mac OS X</a>, <a href="https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.exe">Windows</a>) you can execute a <code>runtime: shiny_prerendered</code> document locally using the <strong>Run Document</strong> command on the editor toolbar, or use the keyboard shortcut Ctrl+Shift+K (Cmd+Shift+K on Mac):</p>
+<div class="figure">
+<img src="images/shiny-prerendered-rstudio.png" class="screenshot" style="margin-bottom: 12px;" />
+
+</div>
+<p>Note that this command runs the document in a separate R process, so you can continue to use the R console while the document is running. You can see any R console output from this separate process in the R Markdown console tab in RStudio.</p>
+<p>If you're not using RStudio, or want to run the document in-process for troubleshooting, you can also run the document from the console using the <code>rmarkdown::run</code> function.</p>
+<p>When a <code>runtime: shiny_prerendered</code> document is run, it will automatically call <code>rmarkdown::render</code> whenever necessary (i.e. when the Rmd file or any of it's dependent resource files are changed). If you want to force a render of the document (e.g. for a scheduled re-rendering) you can call <code>rmarkdown::render</code> directly.</p>
+<p>See the <a href="#deployment">Deployment</a> section below for details on deploying <code>runtime: shiny_prerendered</code> documents into various types of Shiny Server environments.</p>
 </div>
 <div id="additional-contexts" class="section level2">
 <h2>Additional Contexts</h2>
@@ -413,6 +425,30 @@ function(input, output, session) {
 }</code></pre>
 <p>Note that the default context for R code chunks is <code>&quot;render&quot;</code> so for chunks that render content and Shiny UI you can omit the <code>context</code> attribute entirely.</p>
 <p>Note also that in the case of the <code>&quot;data&quot;</code> context, the code isn't re-executed within the server but rather the objects created during rendering are simply loaded into the server context. This has the potential to make server startup dramatically faster because data import and preparation has already occurred during render.</p>
+</div>
+<div id="deployment" class="section level2">
+<h2>Deployment</h2>
+<div id="shiny-server" class="section level3">
+<h3>Shiny Server</h3>
+<p>You can deploy <code>runtime: shiny_prerendered</code> documents using version 1.2 or later of <a href="http://www.rstudio.com/products/shiny/shiny-server/">Shiny Server</a>.</p>
+<p>Shiny documents are deployed the same way that Shiny applications are, except rather than deploying ui.R and server.R files, you deploy an Rmd file along with it's required dependencies and pre-rendered HTML.</p>
+<p>See the Shiny Server <a href="http://docs.rstudio.com/shiny-server/#r-markdown">documentation</a> for more details on deploying <code>runtime: shiny_prerendered</code> documents.</p>
+</div>
+<div id="shinyapps" class="section level3">
+<h3>ShinyApps</h3>
+<p>You can also publish <code>runtime: shiny_prerendered</code> documents to the <a href="http://shinyapps.io">ShinyApps</a> hosted service. To do this you should ensure that you have:</p>
+<ol style="list-style-type: decimal">
+<li><p>An account on ShinyApps (use the <a href="http://shinyapps.io">signup form</a> to request an account).</p></li>
+<li><p>The very latest development version of the <strong>rsconnect</strong> R package. You can install this as follows:</p>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/rsconnect&quot;)</code></pre></li>
+</ol>
+<p>You can then deploy your <code>runtime: shiny_prerendered</code> document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute:</p>
+<pre class="r"><code>rsconnect::deployApp()</code></pre>
+<p>If you are using RStudio you can also use the <strong>Publish</strong> button available when working with a <code>runtime: shiny_prerendered</code> document:</p>
+<div class="figure">
+<img src="images/shinyapps-deploy-faithful.png" style="margin-bottom: 12px;" />
+
+</div>
 <script type="text/javascript">
 $(document).ready(function() {
   fixupQuotes = function() {$(this).text($(this).text().replace(/'/g, "\""))};
@@ -420,6 +456,7 @@ $(document).ready(function() {
   $('li.tocify-item').each(fixupQuotes);
 })
 </script>
+</div>
 </div>
 
   </div> <!-- articleBandContent -->
