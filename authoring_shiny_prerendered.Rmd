@@ -112,9 +112,9 @@ You can further improve the performance of data rendering by adding the `cache=T
 <div id="shiny_prerendered_data_caching"></div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_data_caching', 'r')</script>
 
-For the above example the cache will be invalidated if either the code in the chunk changes or the modification time of the "data.csv" file changes (this is accomplished using the `cache.extra` option).
+For the above example the cache will be invalidated if either the code in the chunk changes or the modification time of the "data.csv" file changes (this is accomplished using the `cache.extra` option). You can also invalidate an existing cache by removing the `_cache` directory associated with your R Markdown document. 
 
-You can also invalidate an existing cache by removing the `_cache` directory associated with your R Markdown document. There are many additional options available for controlling caching behavior, see the [knitr caching](http://yihui.name/knitr/demo/cache/) documentation for details.
+Note that data caching isn't always appropriate. For example, if your data is constantly re-read from a URL or if you don't have a fully reliable way to invalidate the cache. There are many additional options available for controlling caching behavior, see the [knitr caching](http://yihui.name/knitr/demo/cache/) documentation for details.
 
 ### context='server_start' {#context-server-start}
 

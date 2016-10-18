@@ -370,8 +370,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 </div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_data_caching', 'r')</script>
-<p>For the above example the cache will be invalidated if either the code in the chunk changes or the modification time of the &quot;data.csv&quot; file changes (this is accomplished using the <code>cache.extra</code> option).</p>
-<p>You can also invalidate an existing cache by removing the <code>_cache</code> directory associated with your R Markdown document. There are many additional options available for controlling caching behavior, see the <a href="http://yihui.name/knitr/demo/cache/">knitr caching</a> documentation for details.</p>
+<p>For the above example the cache will be invalidated if either the code in the chunk changes or the modification time of the &quot;data.csv&quot; file changes (this is accomplished using the <code>cache.extra</code> option). You can also invalidate an existing cache by removing the <code>_cache</code> directory associated with your R Markdown document.</p>
+<p>Note that data caching isn't always appropriate. For example, if your data is constantly re-read from a URL or if you don't have a fully reliable way to invalidate the cache. There are many additional options available for controlling caching behavior, see the <a href="http://yihui.name/knitr/demo/cache/">knitr caching</a> documentation for details.</p>
 </div>
 </div>
 <div id="context-server-start" class="section level3">
