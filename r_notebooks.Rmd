@@ -92,7 +92,7 @@ You’ll get a warning if you try to change the working directory inside a noteb
 
 If it's necessary to execute notebook chunks in a different directory, you can change the working directory for **all** your chunks by using the knitr `root.dir` option. For instance, to execute all notebook chunks in the grandparent folder of the notebook:
 
-    knitr::opts_chunk$set(root.dir = normalizePath("..")) 
+    knitr::opts_knit$set(root.dir = normalizePath("..")) 
 
 This option is only effective when used inside the setup chunk. Note also that, as in knitr, the `root.dir` chunk option applies only to chunks; relative paths in Markdown are still relative to the notebook's parent folder.
 
