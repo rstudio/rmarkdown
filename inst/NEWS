@@ -3,6 +3,9 @@ rmarkdown 1.2 (unreleased)
 
 * Add new `runtime: shiny_prerendered` mode for interactive documents.
 
+* Prepend "section-" to ids in runtime: shiny[_prerendered] to eliminate
+  potential conflicts with shiny output ids
+
 * ioslides: check for null before concatenating attr["class"] (#836)
 
 

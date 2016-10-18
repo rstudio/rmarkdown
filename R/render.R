@@ -562,6 +562,12 @@ render <- function(input,
                                      rbind("--bibliography", pandoc_path_arg(bibliography)))
     }
 
+    # add an id-prefix if this is runtime: shiny
+    if (is_shiny(runtime) && (!"--id-prefix" %in% output_format$pandoc$args)) {
+      output_format$pandoc$args <- c(output_format$pandoc$args,
+                                     rbind("--id-prefix", "section-"))
+    }
+
     perf_timer_start("pandoc")
 
     convert <- function(output, citeproc = FALSE) {
