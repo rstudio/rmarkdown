@@ -288,11 +288,11 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <h3>Prerequisties</h3>
 <p>To use <code>runtime: shiny_prerendered</code> you need to install the development version of the <a href="http://rmarkdown.rstudio.com">rmarkdown</a> package. You can do this as follows:</p>
 <pre class="r"><code>devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
-<p>If you are running RStudio you should also download the daily build of RStudio (v1.0.102 or later) as it includes features that allow you easily run and preview <code>runtime: shiny_prerendered</code> documents within the IDE. Download links for the RStudio daily build are here:</p>
+<p>If you are running RStudio you should also download the Daily Build of RStudio (v1.0.103 or later) as it includes features that allow you easily run and preview <code>runtime: shiny_prerendered</code> documents within the IDE. Download links for the RStudio Daily Build are here:</p>
 <ul>
-<li><a href="https://s3.amazonaws.com/rstudio-dailybuilds/rstudio-1.0.102-amd64.deb">Ubuntu 12.04+</a></li>
-<li><a href="https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.dmg">Mac OS X 10.6+</a></li>
-<li><a href="https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.exe">Windows 7+</a></li>
+<li><a href="https://dailies.rstudio.com/rstudio/windows/">Windows 7+</a></li>
+<li><a href="https://dailies.rstudio.com/rstudio/mac/">Mac OS X 10.6+</a></li>
+<li><a href="https://dailies.rstudio.com/rstudio/ubuntu/amd64/">Ubuntu 12.04+</a></li>
 </ul>
 </div>
 </div>
@@ -370,7 +370,12 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 </div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_data_caching', 'r')</script>
-<p>For the above example the cache will be invalidated if either the code in the chunk changes or the modification time of the &quot;data.csv&quot; file changes (this is accomplished using the <code>cache.extra</code> option). You can also invalidate an existing cache by removing the <code>_cache</code> directory associated with your R Markdown document.</p>
+<p>In this example the cache will be invalidated if either the R code in the chunk changes or the modification time of the &quot;data.csv&quot; file changes (this is accomplished using the <code>cache.extra</code> option).</p>
+<p>You can also invalidate an existing cache by removing the <code>_cache</code> directory associated with your R Markdown document. A command for doing this is available from within the <strong>Run Document</strong> submenu:</p>
+<div class="figure">
+<img src="images/shiny-prerendered-clear-knitr-cache.png" class="screenshot" style="margin-bottom: 12px;" width="642" height="136" />
+
+</div>
 <p>Note that data caching isn't always appropriate. For example, if your data is constantly re-read from a URL or if you don't have a fully reliable way to invalidate the cache. There are many additional options available for controlling caching behavior, see the <a href="http://yihui.name/knitr/demo/cache/">knitr caching</a> documentation for details.</p>
 </div>
 </div>
@@ -418,14 +423,13 @@ function(input, output, session) {
 </div>
 <div id="running-documents" class="section level3">
 <h3>Running Documents</h3>
-<p>Assuming you are using the current RStudio Daily Build (<a href="https://s3.amazonaws.com/rstudio-dailybuilds/rstudio-1.0.102-amd64.deb">Ubuntu</a>, <a href="https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.dmg">Mac OS X</a>, <a href="https://s3.amazonaws.com/rstudio-dailybuilds/RStudio-1.0.102.exe">Windows</a>) you can execute a <code>runtime: shiny_prerendered</code> document locally using the <strong>Run Document</strong> command on the editor toolbar, or use the keyboard shortcut Ctrl+Shift+K (Cmd+Shift+K on Mac):</p>
+<p>Assuming you are using the current RStudio Daily Build (<a href="https://dailies.rstudio.com/rstudio/windows/">Windows</a>, <a href="https://dailies.rstudio.com/rstudio/mac/">Mac OS X</a>, (<a href="https://dailies.rstudio.com/rstudio/ubuntu/amd64/">Ubuntu</a>) you can execute a <code>runtime: shiny_prerendered</code> document locally using the <strong>Run Document</strong> command on the editor toolbar, or use the keyboard shortcut Ctrl+Shift+K (Cmd+Shift+K on Mac):</p>
 <div class="figure">
 <img src="images/shiny-prerendered-rstudio.png" class="screenshot" style="margin-bottom: 12px;" width="642" height="159" />
 
 </div>
 <p>Note that this command runs the document in a separate R process, so you can continue to use the R console while the document is running. You can see any R console output from this separate process in the R Markdown console tab in RStudio.</p>
-<p>If you're not using RStudio, or want to run the document in-process for troubleshooting, you can also run the document from the console using the <code>rmarkdown::run</code> function.</p>
-<p>When a <code>runtime: shiny_prerendered</code> document is run, it will automatically call <code>rmarkdown::render</code> whenever necessary (i.e. when the Rmd file or any of it's dependent resource files are changed). If you want to force a render of the document (e.g. for a scheduled re-rendering) you can call <code>rmarkdown::render</code> directly.</p>
+<p>If you're not using RStudio, or want to run the document in-process for troubleshooting, you can also run the document from the console using the <a href="https://www.rdocumentation.org/packages/rmarkdown/topics/run"><code>rmarkdown::run</code></a> function.</p>
 </div>
 <div id="deployment" class="section level3">
 <h3>Deployment</h3>
@@ -443,13 +447,89 @@ function(input, output, session) {
 <li><p>The very latest development version of the <strong>rsconnect</strong> R package. You can install this as follows:</p>
 <pre class="r"><code>devtools::install_github(&quot;rstudio/rsconnect&quot;)</code></pre></li>
 </ol>
-<p>You can then deploy your <code>runtime: shiny_prerendered</code> document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute the <code>rsconnect::deployDoc</code> function. For example:</p>
+<p>You can then deploy your <code>runtime: shiny_prerendered</code> document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute the <a href="https://www.rdocumentation.org/packages/rsconnect/topics/deployDoc"><code>rsconnect::deployDoc</code></a> function. For example:</p>
 <pre class="r"><code>rsconnect::deployDoc(&quot;faithful.Rmd&quot;)</code></pre>
 <p>If you are using RStudio you can also use the <strong>Publish</strong> button available when working with a <code>runtime: shiny_prerendered</code> document:</p>
 <div class="figure">
 <img src="images/shinyapps-deploy-faithful.png" style="margin-bottom: 12px;" width="619" height="421" />
 
 </div>
+</div>
+</div>
+</div>
+<div id="advanced-topics" class="section level2">
+<h2>Advanced Topics</h2>
+<p>This section covers advanced topics including gaining finer grained control over the rendering step and the creation of re-usable components for <code>runtime: shiny_prerendered</code> documents. Understanding these topics is not required for everyday usage so feel free to skip them now and return to them only if and when necessary.</p>
+<div id="rendering-step" class="section level3">
+<h3>Rendering Step</h3>
+<p>When a <code>runtime: shiny_prerendered</code> document is executed via <a href="https://www.rdocumentation.org/packages/rmarkdown/topics/run"><code>rmarkdown::run</code></a>, it will automatically determine whether it requires an <a href="https://www.rdocumentation.org/packages/rmarkdown/topics/render"><code>rmarkdown::render</code></a> prior to serving the document. It does this using the following criteria:</p>
+<ol style="list-style-type: decimal">
+<li>Has the document's generated HTML file changed since the last modified time of the Rmd file?</li>
+<li>Have any of the resources that the the Rmd file depends on (determined by calling <a href="https://www.rdocumentation.org/packages/rmarkdown/topics/find_external_resources"><code>rmarkdown::find_external_resources</code></a>) changed since the last modified time of the Rmd file?</li>
+</ol>
+<p>The automatic behavior is appropriate for most scenarios, however in some cases you may wish to ensure that a <code>render</code> <em>never occurs</em> or in other cases ensure that a <code>render</code> is <em>forced to occur</em>.</p>
+<div id="prevending-a-render" class="section level4">
+<h4>Prevending a Render</h4>
+<p>If you have deployed a <code>runtime: shiny_prerendered</code> document to a production server you may want to take additional measures to ensure that a render never occurs when an end user accesses the document. You can do this in one of two ways:</p>
+<ol style="list-style-type: decimal">
+<li>Set the file access privilege of the directory to which the Rmd is deployed to read-only.</li>
+<li>Set the <code>RMARKDOWN_RUN_PRERENDER</code> environment variable to <code>&quot;0&quot;</code>.</li>
+</ol>
+</div>
+<div id="forcing-a-render" class="section level4">
+<h4>Forcing a Render</h4>
+<p>In other cases you may want to force a re-rendering of a document (e.g. to update it with new data on a scheduled basis). You can do this in a couple of different ways:</p>
+<ol style="list-style-type: decimal">
+<li>Call <a href="https://www.rdocumentation.org/packages/rmarkdown/topics/render"><code>rmarkdown::render</code></a> on the Rmd file.</li>
+<li>Remove the HTML file previously generated by rendering the Rmd.</li>
+</ol>
+<p>Note that for both of these techniques if you are also using <a href="#knitr-caching">Knitr Caching</a> then invalidating the cache requires that you also remove the <code>_cache</code> directory for the Rmd.</p>
+<p>When working within RStudio you can remove all prerendered output (including the cache) using a command on the <strong>Run Document</strong> submenu:</p>
+<div class="figure">
+<img src="images/shiny-prerendered-clear-output.png" class="screenshot" style="margin-bottom: 15px;" width="642" height="157" />
+
+</div>
+<p>You can also call the <code>rmarkdown::shiny_prerendered_clean</code> function to accomplish the same task from outside of RStudio.</p>
+</div>
+</div>
+<div id="reusable-components" class="section level3">
+<h3>Reusable Components</h3>
+<p>You may have combinations of Shiny UI and server code that you use frequently and wish to either use multiple times within a document or share across multiple documents. For this scenario it is convenient to be able to create a single function call that injects both the Shiny UI and Shiny Server code required into the document. This section describes how to accomplish this.</p>
+<div id="shiny-modules" class="section level4">
+<h4>Shiny Modules</h4>
+<p>The starting point for creating components is <strong>Shiny Modules</strong>, which are pieces of a Shiny application can be easily reused, whether across different apps, or multiple times within in a single app. This article won't cover the basics of Shiny modules. Please see the <a href="http://shiny.rstudio.com/articles/modules.html">Shiny Modules</a> article and <a href="http://shiny.rstudio.com/gallery/module-example.html">example application</a> to learn more.</p>
+<p>Here's a very simple Shiny module that we'll demonstrate how to incorporate into a <code>runtime: shiny_prerendered</code> document:</p>
+<p><strong>worldPhones.R</strong></p>
+<div id="shiny-worldphones-module">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny-worldphones-module', 'r')</script>
+<p>Here is a simple <code>runtime: shiny_prerendered</code> document that does nothing but include the <code>world_phones.R</code> module:</p>
+<div id="shiny-worldphones-module-call">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny-worldphones-module-call', 'r')</script>
+<p>Here's what the resulting document looks like:</p>
+<div class="figure">
+<img src="images/shiny-prerendered-module.png" class="screenshot" style="margin-bottom: 20px;" width="638" height="574" />
+
+</div>
+</div>
+<div id="module-wrapper-functions" class="section level4">
+<h4>Module Wrapper Functions</h4>
+<p>In the previous example we invoked the Shiny module with a pair of calls: one in a rendering context for the UI and one in a server context for the Shiny server logic. Ideally, we could enable our users to invoke the module with a single function call.</p>
+<p>This is possible using the <code>rmarkdown::shiny_prerendered_chunk</code> function. This function enables you to emit a server-based chunk as a side effect, enabling you to include both UI and server components of a module within a single function call.</p>
+<p>Here's a new <code>worldPhones</code> function that demonstrates:</p>
+<div id="shiny-worldphones-component">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny-worldphones-component', 'r')</script>
+<p>Now we can re-write our document to exclude the <code>context=&quot;server&quot;</code> chunk entirely (since it's emitted automatically by the new <code>worldPhones</code> function):</p>
+<div id="shiny-worldphones-module-component-call">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny-worldphones-module-component-call', 'r')</script>
+<p>Note that the above examples demonstrate defining the Shiny module within an R script (worldPhones.R) that is sourced into the Rmd. It is naturally also possible (and even preferred for wider distribution) to define the module functions within an R package.</p>
 <script type="text/javascript">
 $(document).ready(function() {
   fixupQuotes = function() {$(this).text($(this).text().replace(/'/g, "\""))};
