@@ -697,6 +697,18 @@ quoted <- function(args) {
   args
 }
 
+find_pandoc_theme_variable <- function(args) {
+  range <- length(args) - 1
+  for (i in 1:range) {
+    if (args[[i]] == "--variable" && grepl("^theme:", args[[i+1]])) {
+      return(substring(args[[i+1]], nchar("theme:") + 1))
+    }
+  }
+  # none found, return NULL
+  NULL
+}
+
+
 # Environment used to cache the current pandoc directory and version
 .pandoc <- new.env()
 .pandoc$dir <- NULL

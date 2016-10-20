@@ -118,8 +118,17 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   add_resource_path(file.path(output_dir,"images"))
   add_resource_path(file.path(output_dir,"www"))
 
-  # generate html w/ dependencies
+  # read dependencies
   dependencies <- read_shiny_deps(files_dir)
+
+  # if we have shinythemes then attach shinythemes (will add the
+  # shinythemes resource path)
+  for (dep in dependencies) {
+    if (!identical(dep$name, "shinythemes"))
+      requireNamespace("shinythemes", quietly = TRUE)
+  }
+
+  # return html w/ dependencies
   shinyHTML_with_deps(rendered_html, dependencies)
 }
 
