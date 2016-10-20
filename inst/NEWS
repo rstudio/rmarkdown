@@ -10,6 +10,8 @@ rmarkdown 1.2 (unreleased)
 
 * Fix issue with positioning of show/hide code button (#839)
 
+* Add rmarkdown.onKnit/onKnitCompleted package hooks
+
 * Non-ASCII keys in yaml file should be marked to UTF8 as well, when read
   into R as the name of a list (#841)
 

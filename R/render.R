@@ -454,6 +454,16 @@ render <- function(input,
     }, add = TRUE)
     env$metadata <- yaml_front_matter
 
+    # call onKnit hooks (normalize to list)
+    sapply(as.list(getHook("rmarkdown.onKnit")), function(hook) {
+      hook(input = original_input)
+    })
+    on.exit({
+      sapply(as.list(getHook("rmarkdown.onKnitCompleted")), function(hook) {
+        hook(input = original_input)
+      })
+    }, add = TRUE)
+
     perf_timer_start("knitr")
 
     # perform the knit
