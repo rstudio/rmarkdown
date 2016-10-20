@@ -55,12 +55,6 @@ paged_table_html <- function(x) {
     paste0("<", summary, ">")
   })
 
-  if (length(columns) > 0) {
-    first_column = data[[1]]
-    if (is.numeric(first_column) && isTRUE(all(diff(first_column) == 1)))
-      columns[[1]]$align <- "left"
-  }
-
   data <- as.data.frame(
     lapply(
       data,
