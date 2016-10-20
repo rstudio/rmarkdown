@@ -380,13 +380,13 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 </div>
 <div id="context-server-start" class="section level3">
-<h3>context='server_start'</h3>
-<p>We've discussed the two main execution contexts (<code>&quot;render&quot;</code> and <code>&quot;server&quot;</code>) as well as some hybrid contexts used for shared code and data. The <code>&quot;server_start&quot;</code> context executes once when the Shiny document is first run and is <em>not</em> re-executed for each new user of the document. Using <code>&quot;server_start&quot;</code> is appropriate for several scenarios including:</p>
+<h3>context='server-start'</h3>
+<p>We've discussed the two main execution contexts (<code>&quot;render&quot;</code> and <code>&quot;server&quot;</code>) as well as some hybrid contexts used for shared code and data. The <code>&quot;server-start&quot;</code> context executes once when the Shiny document is first run and is <em>not</em> re-executed for each new user of the document. Using <code>&quot;server-start&quot;</code> is appropriate for several scenarios including:</p>
 <ol style="list-style-type: decimal">
 <li><p>Establishing shared connections to remote servers (e.g. databases, Spark contexts, etc.).</p></li>
 <li><p>Creating reactive values intended to be shared across sessions (e.g. with <a href="http://shiny.rstudio.com/reference/shiny/latest/reactivePoll.html">reactivePoll</a> or <a href="http://shiny.rstudio.com/reference/shiny/latest/reactiveFileReader.html">reactiveFileReader</a>).</p></li>
 </ol>
-<p>You can add your own startup code explicitly by including chunks with the <code>context=&quot;server_start&quot;</code> attribute:</p>
+<p>You can add your own startup code explicitly by including chunks with the <code>context=&quot;server-start&quot;</code> attribute:</p>
 <div id="shiny_prerendered_server_start">
 
 </div>
@@ -413,7 +413,7 @@ context=&quot;render&quot;</code></pre>
 <p><strong>server.R</strong></p>
 <pre><code>context=&quot;setup&quot;
 context=&quot;data&quot;
-context=&quot;server_start&quot;
+context=&quot;server-start&quot;
 
 function(input, output, session) {
   context=&quot;server&quot;    

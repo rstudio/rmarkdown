@@ -122,15 +122,15 @@ You can also invalidate an existing cache by removing the `_cache` directory ass
 
 Note that data caching isn't always appropriate. For example, if your data is constantly re-read from a URL or if you don't have a fully reliable way to invalidate the cache. There are many additional options available for controlling caching behavior, see the [knitr caching](http://yihui.name/knitr/demo/cache/) documentation for details.
 
-### context='server_start' {#context-server-start}
+### context='server-start' {#context-server-start}
 
-We've discussed the two main execution contexts (`"render"` and `"server"`) as well as some hybrid contexts used for shared code and data. The `"server_start"` context executes once when the Shiny document is first run and is *not* re-executed for each new user of the document. Using `"server_start"` is appropriate for several scenarios including:
+We've discussed the two main execution contexts (`"render"` and `"server"`) as well as some hybrid contexts used for shared code and data. The `"server-start"` context executes once when the Shiny document is first run and is *not* re-executed for each new user of the document. Using `"server-start"` is appropriate for several scenarios including:
 
 1. Establishing shared connections to remote servers (e.g. databases, Spark contexts, etc.).
 
 2. Creating reactive values intended to be shared across sessions (e.g. with [reactivePoll](http://shiny.rstudio.com/reference/shiny/latest/reactivePoll.html) or [reactiveFileReader](http://shiny.rstudio.com/reference/shiny/latest/reactiveFileReader.html)).
 
-You can add your own startup code explicitly by including chunks with the `context="server_start"` attribute:
+You can add your own startup code explicitly by including chunks with the `context="server-start"` attribute:
 
 
 <div id="shiny_prerendered_server_start"></div>
@@ -159,7 +159,7 @@ Now that we've seen some examples of the various contexts at work it's worth a r
 
     context="setup"
     context="data"
-    context="server_start"
+    context="server-start"
 
     function(input, output, session) {
       context="server"    
