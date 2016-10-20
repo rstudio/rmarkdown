@@ -392,6 +392,16 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_server_start', 'r')</script>
 </div>
+<div id="chunk-labels" class="section level3">
+<h3>Chunk Labels</h3>
+<p>Above we've shown the use of the <code>context</code> attribute to associate chunks with various execution contexts. The label of R chunks can also serve as a shorthand way of specifying a context (e.g. a chunk with label <code>setup</code> automatically gains the <code>context=&quot;setup&quot;</code> attribute).</p>
+<p>Within traditional R Markdown documents the use of a chunk with label <code>setup</code> is a strong convention for initialization code and automatically promoting chunk labels to context names allows us to carry this convention forward in <code>runtime: shiny_prerendered</code>. Using this technqiue the above example can be re-written as:</p>
+<div id="shiny_prerendered_labels">
+
+</div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_labels', 'r')</script>
+<p>Note that the use of chunk labels to specify contexts is inherently limited (since a given chunk label can appear only once within a document). As a result it's good practice to use chunk labels for contexts that are typically global singletons (e.g. <code>&quot;setup&quot;</code> and <code>&quot;data&quot;</code>) and an explicit <code>context</code> attribute for contexts which typically appear multiple times (e.g. <code>&quot;server&quot;</code>).</p>
+</div>
 </div>
 <div id="putting-it-all-together" class="section level2">
 <h2>Putting It All Together</h2>

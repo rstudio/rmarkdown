@@ -4,12 +4,12 @@ output: flexdashboard::flex_dashboard
 runtime: shiny_prerendered
 ---
 
-```{r, context="setup", include=FALSE}
+```{r setup, include=FALSE}
 library(dplyr)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-```{r, context="data", include=FALSE}
+```{r data, include=FALSE}
 faithful_data <- sample_n(faithful, 100)
 ```
 

@@ -136,6 +136,18 @@ You can add your own startup code explicitly by including chunks with the `conte
 <div id="shiny_prerendered_server_start"></div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_server_start', 'r')</script>
 
+### Chunk Labels
+
+Above we've shown the use of the `context` attribute to associate chunks with various execution contexts. The label of R chunks can also serve as a shorthand way of specifying a context (e.g. a chunk with label `setup` automatically gains the `context="setup"` attribute). 
+
+Within traditional R Markdown documents the use of a chunk with label `setup` is a strong convention for initialization code and automatically promoting chunk labels to context names allows us to carry this convention forward in `runtime: shiny_prerendered`. Using this technqiue the above example can be re-written as:
+
+<div id="shiny_prerendered_labels"></div>
+<script type="text/javascript">loadSnippet('shiny_prerendered_labels', 'r')</script>
+
+Note that the use of chunk labels to specify contexts is inherently limited (since a given chunk label can appear only once within a document). As a result it's good practice to use chunk labels for contexts that are typically global singletons (e.g. `"setup"` and `"data"`) and an explicit `context` attribute for contexts which typically appear multiple times (e.g. `"server"`).
+
+
 ## Putting It All Together
 
 ### Complete Example
