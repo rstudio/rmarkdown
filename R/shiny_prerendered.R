@@ -11,7 +11,7 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
   # extract the server-start context
   html_lines <- strsplit(html, "\\r?\\n")[[1]]
   server_start_context <- shiny_prerendered_extract_context(html_lines,
-                                                            "server_start")
+                                                            "server-start")
   onStart <- function() {
     shiny_prerendered_data_load(input_rmd, server_envir)
     eval(parse(text = server_start_context), envir = server_envir)
@@ -161,7 +161,7 @@ shiny_prerendered_clean <- function(input) {
 #' Programmatic equivalent to including a code chunk with a
 #' context in a runtime: shiny_prerendered document.
 #'
-#' @param context Context name (e.g. "server", "server_start")
+#' @param context Context name (e.g. "server", "server-start")
 #' @param code Character vector with code
 #'
 #' @export
@@ -217,9 +217,9 @@ shiny_prerendered_evaluate_hook <- function(input) {
     if (is.null(context))
       context <- "render"
 
-    # "setup" is an alias for c("render", "server_start")
+    # "setup" is an alias for c("render", "server-start")
     if ("setup" %in% context) {
-      context <- c(context[!context == "setup"], "render", "server_start")
+      context <- c(context[!context == "setup"], "render", "server-start")
       context <- unique(context)
     }
 

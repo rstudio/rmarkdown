@@ -7,7 +7,7 @@
 shiny_prerendered_chunk(context, code)
 }
 \arguments{
-\item{context}{Context name (e.g. "server", "server_start")}
+\item{context}{Context name (e.g. "server", "server-start")}
 
 \item{code}{Character vector with code}
 }
