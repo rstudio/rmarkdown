@@ -87,6 +87,7 @@ mark_utf8 <- function(x) {
   attrs <- attributes(x)
   res <- lapply(x, mark_utf8)
   attributes(res) <- attrs
+  names(res) <- mark_utf8(names(res))
   res
 }
 
