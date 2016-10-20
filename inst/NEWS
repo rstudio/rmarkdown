@@ -10,6 +10,8 @@ rmarkdown 1.2 (unreleased)
 
 * Fix issue with positioning of show/hide code button (#839)
 
+* Add rmarkdown.onKnit package hook
+
 
 rmarkdown 1.1
 --------------------------------------------------------------------------------
