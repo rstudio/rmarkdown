@@ -192,6 +192,11 @@ shiny_prerendered_chunk <- function(context, code) {
 # that used to be cached / were cached under different names)
 shiny_prerendered_option_hook <- function(input, encoding) {
   function(options) {
+
+    # convert chunk labels to contexts as necessary
+    if (options$label %in% c("setup", "data", "server_start", "server"))
+      options$context <- options$label
+
     if (identical(options$context, "data")) {
       data_file <- shiny_prerendered_data_file_name(options$label,
                                                     options$cache > 0)
