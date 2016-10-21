@@ -477,11 +477,7 @@ unix_mathjax_path <- function() {
 }
 
 
-pandoc_html_highlight_args <- function(highlight,
-                                       template,
-                                       self_contained,
-                                       files_dir,
-                                       output_dir) {
+pandoc_html_highlight_args <- function(template, highlight) {
 
   args <- c()
 
@@ -495,23 +491,9 @@ pandoc_html_highlight_args <- function(highlight,
   }
   else {
     highlight <- match.arg(highlight, html_highlighters())
-    if (highlight %in% c("default", "textmate")) {
-      highlight_path <- rmarkdown_system_file("rmd/h/highlight")
-      if (self_contained)
-        highlight_path <- pandoc_path_arg(highlight_path)
-      else
-      {
-        highlight_path <- normalized_relative_to(output_dir,
-          render_supporting_files(highlight_path, files_dir))
-      }
+    if (is_highlightjs(highlight)) {
       args <- c(args, "--no-highlight")
-      args <- c(args,
-                "--variable", paste("highlightjs=", highlight_path, sep=""))
-      if (identical(highlight, "textmate")) {
-        args <- c(args,
-                  "--variable",
-                  paste("highlightjs-theme=", highlight, sep=""))
-      }
+      args <- c(args, "--variable", "highlightjs=1")
     }
     else {
       args <- c(args, "--highlight-style", highlight)
@@ -521,6 +503,9 @@ pandoc_html_highlight_args <- function(highlight,
   args
 }
 
+is_highlightjs <- function(highlight) {
+  !is.null(highlight) && (highlight %in% c("default", "textmate"))
+}
 
 # Scan for a copy of pandoc and set the internal cache if it's found.
 find_pandoc <- function() {

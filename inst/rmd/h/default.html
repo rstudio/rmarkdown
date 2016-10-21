@@ -29,10 +29,6 @@ $endfor$
 
 $if(highlightjs)$
 <style type="text/css">code{white-space: pre;}</style>
-<link rel="stylesheet"
-      href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css"
-      $if(html5)$$else$type="text/css" $endif$/>
-<script src="$highlightjs$/highlight.js"></script>
 $if(theme)$
 <style type="text/css">
   pre:not([class]) {

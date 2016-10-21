@@ -284,6 +284,22 @@ html_document <- function(toc = FALSE,
     )
   }
 
+  # highlight
+  args <- c(args, pandoc_html_highlight_args(template, highlight))
+
+  # add highlight.js html_dependency if required
+  if (identical(template, "default") && is_highlightjs(highlight)) {
+    extra_dependencies <- append(extra_dependencies, list(
+      htmlDependency(
+        "highlightjs",
+        version = "1.1",
+        src = rmarkdown_system_file("rmd/h/highlightjs-1.1"),
+        script = "highlight.js",
+        stylesheet = paste0(highlight, ".css")
+      )
+    ))
+  }
+
   # numbered sections
   if (number_sections)
     args <- c(args, "--number-sections")
@@ -387,13 +403,6 @@ html_document <- function(toc = FALSE,
 
     # extra args
     args <- c()
-
-    # highlight
-    args <- c(args, pandoc_html_highlight_args(highlight,
-                                               template,
-                                               self_contained,
-                                               lib_dir,
-                                               output_dir))
 
     # track whether we have a code menu
     code_menu <- FALSE
