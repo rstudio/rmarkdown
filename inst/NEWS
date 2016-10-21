@@ -6,6 +6,9 @@ rmarkdown 1.2 (unreleased)
 * Prepend "section-" to ids in runtime: shiny[_prerendered] to eliminate
   potential conflicts with shiny output ids
 
+* Use html_dependencies for highlight.js, pagedtables, slidy, & navigation
+  (improved dependency copying behavior for runtime: shiny[_prerendered])
+
 * ioslides: check for null before concatenating attr["class"] (#836)
 
 * Add rmarkdown.onKnit/onKnitCompleted package hooks
