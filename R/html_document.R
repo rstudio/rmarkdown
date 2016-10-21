@@ -268,6 +268,22 @@ html_document <- function(toc = FALSE,
   else if (!is.null(template))
     args <- c(args, "--template", pandoc_path_arg(template))
 
+  # validate code_folding
+  code_folding <- match.arg(code_folding)
+
+  # navigation dependencies
+  if (!is.null(theme)) {
+    code_menu <- !identical(code_folding, "none") || code_download
+    source_embed <- code_download
+    extra_dependencies <- append(extra_dependencies,
+      list(
+        html_dependency_jquery(),
+        html_dependency_navigation(code_menu = code_menu,
+                                   source_embed = source_embed)
+      )
+    )
+  }
+
   # numbered sections
   if (number_sections)
     args <- c(args, "--number-sections")
@@ -275,9 +291,6 @@ html_document <- function(toc = FALSE,
   # additional css
   for (css_file in css)
     args <- c(args, "--css", pandoc_path_arg(css_file))
-
-  # validate code_folding
-  code_folding <- match.arg(code_folding)
 
   # manage list of exit_actions (backing out changes to knitr options)
   exit_actions <- list()
@@ -385,15 +398,6 @@ html_document <- function(toc = FALSE,
                                                self_contained,
                                                lib_dir,
                                                output_dir))
-
-    # bootstrap navigation (requires theme)
-    if (!is.null(theme)) {
-
-      # js for for code folding and tabsets
-      args <- c(args, pandoc_html_navigation_args(self_contained,
-                                                  lib_dir,
-                                                  output_dir))
-    }
 
     # track whether we have a code menu
     code_menu <- FALSE

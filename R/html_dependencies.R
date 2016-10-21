@@ -60,6 +60,22 @@ html_dependency_tocify <- function() {
                  stylesheet = "jquery.tocify.css")
 }
 
+html_dependency_navigation <- function(code_menu, source_embed) {
+
+  # dynamically build script list
+  script <- c("tabsets.js")
+  if (code_menu)
+    script <- c(script, "codefolding.js")
+  if (source_embed)
+    script <- c(script, "FileSaver.min.js", "sourceembed.js")
+
+  htmlDependency(name = "navigation",
+                 version = packageVersion("rmarkdown"),
+                 src = "rmd/h/navigation",
+                 script = script,
+                 package = "rmarkdown")
+}
+
 
 # create an html_dependency for font awesome
 #' @rdname html-dependencies

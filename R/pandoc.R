@@ -477,23 +477,6 @@ unix_mathjax_path <- function() {
 }
 
 
-pandoc_html_navigation_args <- function(self_contained,
-                                        files_dir,
-                                        output_dir) {
-  args <- c()
-  navigation_path <- rmarkdown_system_file("rmd/h/navigation-1.1")
-  if (self_contained) {
-    navigation_path <- pandoc_path_arg(navigation_path)
-  }
-  else {
-    navigation_path <- normalized_relative_to(output_dir,
-                                              render_supporting_files(
-                                               navigation_path, files_dir))
-  }
-  args <- c(args,
-            "--variable", paste("navigationjs=", navigation_path, sep=""))
-}
-
 pandoc_html_pagedtable_args <- function(df_print,
                                         template,
                                         self_contained,
