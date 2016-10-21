@@ -64,12 +64,13 @@ Imports:
     grDevices,
     knitr (>= 1.14),
     yaml (>= 2.1.5),
-    htmltools (>= 0.2.4),
+    htmltools (>= 0.3.5),
     caTools,
     evaluate (>= 0.8),
     base64enc,
     jsonlite,
-    tibble
+    tibble,
+    rprojroot
 Suggests:
     shiny (>= 0.11),
     shinythemes (>= 1.1.1),

@@ -134,6 +134,7 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
 
 
 # Write the dependencies for a shiny_prerendered document.
+#' @import rprojroot
 shiny_prerendered_write_dependencies <- function(shiny_prerendered_dependencies,
                                                  output_args,
                                                  files_dir,
@@ -163,9 +164,27 @@ shiny_prerendered_write_dependencies <- function(shiny_prerendered_dependencies,
       }
     }
 
-    # convert absolute file references into shiny style relative deps
-    src <- dependency$src
-    if (!is.null(src$file)) {
+    # see if we can convert absolute paths into package-aliased ones
+    if (is.null(dependency$package) && !is.null(dependency$src$file)) {
+
+      # check for a package directory parent
+      package_dir <- tryCatch(
+        find_root(is_r_package, path = dependency$src$file),
+        error = function(e) NULL
+      )
+      # if we have one then populate the package field and make the
+      # src$file relative to the package
+      if (!is.null(package_dir)) {
+        package_desc <- read.dcf(file.path(package_dir, "DESCRIPTION"),
+                                 all = TRUE)
+        dependency$package <- package_desc$Package
+        dependency$src$file <- normalized_relative_to(package_dir,
+                                                      dependency$src$file)
+      }
+    }
+
+    # if we couldn't resolve the src to a package then copy the files
+    if (is.null(dependency$package) && !is.null(dependency$src$file)) {
       dependency <- htmltools::copyDependencyToDir(dependency, files_dir)
       dependency <- htmltools::makeDependencyRelative(dependency, output_dir)
       dependency$src = list(href = unname(dependency$src))
