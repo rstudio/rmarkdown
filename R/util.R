@@ -582,22 +582,3 @@ shell_exec <- function(cmd, intern = FALSE, wait = TRUE, ...) {
     system(cmd, intern = intern, wait = wait, ...)
 }
 
-pagedtable_resource <- function(version = "0.0.1", resource) {
-  resourcePath <- system.file(
-    paste("rmd/h/pagedtable-", version, resource, sep = ""),
-    package = "rmarkdown")
-
-  resourceFile <- file(resourcePath)
-  contents <- readLines(resourceFile)
-  close(resourceFile)
-
-  paste(contents, collapse = "\n")
-}
-
-pagedtable_script <- function(version = "0.0.1") {
-  pagedtable_resource(version, "/js/pagedtable.js")
-}
-
-pagedtable_style <- function(version = "0.0.1") {
-  pagedtable_resource(version, "/css/pagedtable.css")
-}

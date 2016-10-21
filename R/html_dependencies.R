@@ -266,9 +266,10 @@ has_html_dependencies <- function(knit_meta) {
 html_dependency_pagedtable <- function() {
   htmlDependency(
     "pagedtable",
-    "0.0.1",
-    src = rmarkdown_system_file("rmd/h/pagedtable-0.0.1"),
+    version = packageVersion("rmarkdown"),
+    src = "rmd/h/pagedtable",
     script = "js/pagedtable.js",
-    stylesheet = "css/pagedtable.css"
+    stylesheet = "css/pagedtable.css",
+    package = "rmarkdown"
   )
 }

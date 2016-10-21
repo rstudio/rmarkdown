@@ -58,6 +58,7 @@ slidy_presentation <- function(incremental = FALSE,
                                lib_dir = NULL,
                                md_extensions = NULL,
                                pandoc_args = NULL,
+                               extra_dependencies = NULL,
                                ...) {
 
   # base pandoc options for all reveal.js output
@@ -93,11 +94,8 @@ slidy_presentation <- function(incremental = FALSE,
 
   # pagedtables
   if (identical(df_print, "paged")) {
-    pagedtable_path <- rmarkdown_system_file("rmd/h/pagedtable-0.0.1")
-    pagedtable_path <- pandoc_path_arg(pagedtable_path)
-
-    args <- c(args,
-              "--variable", paste("pagedtablejs=", pagedtable_path, sep=""))
+    extra_dependencies <- append(extra_dependencies,
+                                 list(html_dependency_pagedtable()))
   }
 
   # additional css
@@ -147,5 +145,7 @@ slidy_presentation <- function(incremental = FALSE,
                                      self_contained = self_contained,
                                      mathjax = mathjax,
                                      bootstrap_compatible = TRUE,
-                                     pandoc_args = pandoc_args, ...))
+                                     pandoc_args = pandoc_args,
+                                     extra_dependencies = extra_dependencies,
+                                     ...))
 }

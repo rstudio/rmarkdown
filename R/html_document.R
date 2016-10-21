@@ -312,7 +312,7 @@ html_document <- function(toc = FALSE,
     }
   }
 
-  # pagedtable global options
+  # pagedtable
   if (identical(df_print, "paged")) {
     options("dplyr.tibble.print" = function(x, n, width, ...) {
       isSQL <- "tbl_sql" %in% class(x)
@@ -321,6 +321,9 @@ html_document <- function(toc = FALSE,
       df <- as.data.frame(utils::head(x, n))
       print(df)
     })
+
+    extra_dependencies <- append(extra_dependencies,
+                                 list(html_dependency_pagedtable()))
   }
 
   # pre-processor for arguments that may depend on the name of the
@@ -387,13 +390,6 @@ html_document <- function(toc = FALSE,
 
     # highlight
     args <- c(args, pandoc_html_highlight_args(highlight,
-                                               template,
-                                               self_contained,
-                                               lib_dir,
-                                               output_dir))
-
-    # pagedtable
-    args <- c(args, pandoc_html_pagedtable_args(df_print,
                                                template,
                                                self_contained,
                                                lib_dir,
