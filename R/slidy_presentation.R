@@ -65,22 +65,10 @@ slidy_presentation <- function(incremental = FALSE,
   args <- c()
 
   # template path and assets
-  if (identical(template, "default")) {
-    # provide our template
+  if (identical(template, "default"))
     args <- c(args, "--template",
               pandoc_path_arg(rmarkdown_system_file(
                 "rmd/slidy/default.html")))
-
-    # provide html_dependency for slidy
-    extra_dependencies <- append(extra_dependencies, list(
-      htmlDependency(
-        "slidy",
-        version = "2",
-        src = rmarkdown_system_file("rmd/slidy/Slidy2"),
-        script = "scripts/slidy.js",
-        stylesheet = "styles/slidy.css")
-    ))
-  }
   else if (!is.null(template))
     args <- c(args, "--template", pandoc_path_arg(template))
 
@@ -126,18 +114,15 @@ slidy_presentation <- function(incremental = FALSE,
     # extra args
     args <- c()
 
-    # slidy (only specify when not using our template, which relies on
-    # html_dependency to inject)
-    if (!identical(template, "default")) {
-      slidy_path <- rmarkdown_system_file("rmd/slidy/Slidy2")
-      slidy_path <- if (self_contained) {
-        pandoc_path_arg(slidy_path)
-      } else {
-        normalized_relative_to(
-          output_dir, render_supporting_files(slidy_path, lib_dir))
-      }
-      args <- c(args, "--variable", paste("slidy-url=", slidy_path, sep=""))
+    # slidy
+    slidy_path <- rmarkdown_system_file("rmd/slidy/Slidy2")
+    slidy_path <- if (self_contained) {
+      pandoc_path_arg(slidy_path)
+    } else {
+      normalized_relative_to(
+        output_dir, render_supporting_files(slidy_path, lib_dir))
     }
+    args <- c(args, "--variable", paste("slidy-url=", slidy_path, sep=""))
 
     # highlight
     args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))
