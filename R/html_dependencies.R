@@ -71,9 +71,8 @@ html_dependency_navigation <- function(code_menu, source_embed) {
 
   htmlDependency(name = "navigation",
                  version = "1.1",
-                 src = "rmd/h/navigation-1.1",
-                 script = script,
-                 package = "rmarkdown")
+                 src = rmarkdown_system_file("rmd/h/navigation-1.1"),
+                 script = script)
 }
 
 
@@ -270,9 +269,8 @@ html_dependency_pagedtable <- function() {
   htmlDependency(
     "pagedtable",
     version = "1.1",
-    src = "rmd/h/pagedtable-1.1",
+    src = rmarkdown_system_file("rmd/h/pagedtable-1.1"),
     script = "js/pagedtable.js",
-    stylesheet = "css/pagedtable.css",
-    package = "rmarkdown"
+    stylesheet = "css/pagedtable.css"
   )
 }
