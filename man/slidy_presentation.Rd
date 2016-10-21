@@ -9,7 +9,8 @@ slidy_presentation(incremental = FALSE, duration = NULL, footer = NULL,
   fig_caption = TRUE, dev = "png", df_print = "default", smart = TRUE,
   self_contained = TRUE, highlight = "default", mathjax = "default",
   template = "default", css = NULL, includes = NULL, keep_md = FALSE,
-  lib_dir = NULL, md_extensions = NULL, pandoc_args = NULL, ...)
+  lib_dir = NULL, md_extensions = NULL, pandoc_args = NULL,
+  extra_dependencies = NULL, ...)
 }
 \arguments{
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note
@@ -93,6 +94,9 @@ default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
+
+\item{extra_dependencies}{Add \code{latex_dependency()} dependencies. It can
+can be used to add custom LaTeX packages to the .tex header.}
 
 \item{...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}

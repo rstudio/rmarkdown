@@ -70,8 +70,8 @@ html_dependency_navigation <- function(code_menu, source_embed) {
     script <- c(script, "FileSaver.min.js", "sourceembed.js")
 
   htmlDependency(name = "navigation",
-                 version = packageVersion("rmarkdown"),
-                 src = "rmd/h/navigation",
+                 version = "1.1",
+                 src = "rmd/h/navigation-1.1",
                  script = script,
                  package = "rmarkdown")
 }
@@ -232,8 +232,11 @@ validate_html_dependency <- function(list) {
     stop("version for html_dependency not provided", call. = FALSE)
   if (is.null(list$src$file))
     stop("path for html_dependency not provided", call. = FALSE)
-  if (!file.exists(list$src$file))
-    stop("path for html_dependency not found: ", list$src$file, call. = FALSE)
+  file <- list$src$file
+  if (!is.null(list$src$package))
+    file <- system.file(file, package = list$src$package)
+  if (!file.exists(file))
+    stop("path for html_dependency not found: ", file, call. = FALSE)
 
   list
 }
@@ -266,8 +269,8 @@ has_html_dependencies <- function(knit_meta) {
 html_dependency_pagedtable <- function() {
   htmlDependency(
     "pagedtable",
-    version = packageVersion("rmarkdown"),
-    src = "rmd/h/pagedtable",
+    version = "1.1",
+    src = "rmd/h/pagedtable-1.1",
     script = "js/pagedtable.js",
     stylesheet = "css/pagedtable.css",
     package = "rmarkdown"
