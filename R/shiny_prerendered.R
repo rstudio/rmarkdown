@@ -436,10 +436,12 @@ shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
 
     # append the contexts as script tags
     for (context in shiny_prerendered_contexts) {
-      lines <- c(paste0('<script type="application/shiny-prerendered" ',
+      lines <- c('<!--html_preserve-->',
+                 paste0('<script type="application/shiny-prerendered" ',
                         'data-context="', context$name ,'">'),
                  context$code,
-                 '</script>')
+                 '</script>',
+                 '<!--/html_preserve-->')
       writeLines(lines, con = con)
     }
   }
