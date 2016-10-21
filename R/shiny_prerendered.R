@@ -208,7 +208,7 @@ shiny_prerendered_write_dependencies <- function(shiny_prerendered_dependencies,
     # add dependency
     shinytheme_dep <- htmltools::htmlDependency(
       name = "shinythemes",
-      version = packageVersion("shinythemes"),
+      version = utils::packageVersion("shinythemes"),
       src = c(href = "shinythemes"),
       stylesheet = paste0("css/", shinytheme, ".min.css"))
     dependencies <- append(dependencies, list(shinytheme_dep))

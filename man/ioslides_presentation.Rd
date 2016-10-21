@@ -11,7 +11,7 @@ ioslides_presentation(logo = NULL,  slide_level = 2, incremental = FALSE,
   widescreen = FALSE, smaller = FALSE, transition = "default",
   mathjax = "default", analytics = NULL, template = NULL, css = NULL,
   includes = NULL, keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
-  pandoc_args = NULL, ...)
+  pandoc_args = NULL, extra_dependencies = NULL, ...)
 }
 \arguments{
   \item{logo}{Path to file that includes a logo for use in
@@ -105,8 +105,9 @@ ioslides_presentation(logo = NULL,  slide_level = 2, incremental = FALSE,
   \item{pandoc_args}{Additional command line options to
   pass to pandoc}
 
-  \item{...}{Additional function arguments to pass to the
-  base R Markdown HTML output formatter}
+  \item{extra_dependencies, ...}{Additional function arguments to pass to the
+  base R Markdown HTML output formatter \code{\link{html_document_base}}}
+
 
 }
 \value{
