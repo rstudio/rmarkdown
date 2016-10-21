@@ -519,17 +519,22 @@ is_shiny_prerendered <- function(runtime) {
 }
 
 write_shiny_deps <- function(files_dir, deps) {
-  deps_file <- base::file(file.path(files_dir, "shiny.dep"), open = "wb")
+  deps_file <- base::file(file.path(files_dir, "dependencies.json"),
+                          open = "wb", encoding = "UTF-8")
   on.exit(close(deps_file), add = TRUE)
-  serialize(deps, deps_file, ascii = FALSE)
+  deps_json <- jsonlite::serializeJSON(deps, pretty = TRUE)
+  write(deps_json, file = deps_file)
 }
 
 read_shiny_deps <- function(files_dir) {
-  deps_path <- file.path(files_dir, "shiny.dep")
+  deps_path <- file.path(files_dir, "dependencies.json")
   if (file.exists(deps_path)) {
     deps_file <- base::file(deps_path, open = "rb")
     on.exit(close(deps_file), add = TRUE)
-    unserialize(deps_file)
+    deps_json <- readChar(deps_file,
+                          nchars = file.info(deps_path)$size,
+                          useBytes = TRUE)
+    jsonlite::unserializeJSON(deps_json)
   }
   else {
     list()
