@@ -15,6 +15,8 @@ rmarkdown 1.2 (unreleased)
 * Non-ASCII keys in yaml file should be marked to UTF8 as well, when read
   into R as the name of a list (#841)
 
+* Remove key-column special-case left alignment in pagedtables (#829)
+
 
 rmarkdown 1.1
 --------------------------------------------------------------------------------
