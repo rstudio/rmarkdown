@@ -8,8 +8,6 @@ rmarkdown 1.2 (unreleased)
 
 * ioslides: check for null before concatenating attr["class"] (#836)
 
-* Fix issue with positioning of show/hide code button (#839)
-
 * Add rmarkdown.onKnit/onKnitCompleted package hooks
 
 * Non-ASCII keys in yaml file should be marked to UTF8 as well, when read
