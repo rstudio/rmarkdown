@@ -133,6 +133,73 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
 }
 
 
+# Write the dependencies for a shiny_prerendered document.
+shiny_prerendered_write_dependencies <- function(shiny_prerendered_dependencies,
+                                                 output_args,
+                                                 files_dir,
+                                                 output_dir) {
+  # transform dependencies
+  shinytheme <- NULL
+  dependencies <- lapply(shiny_prerendered_dependencies, function(dependency) {
+
+    # use shiny version of jquery
+    if (identical(dependency$name, "jquery")) {
+      dependency <- NULL
+      return(dependency)
+    }
+
+    # use shiny version of bootstrap
+    if (identical(dependency$name, "bootstrap")) {
+
+      # create bootstrap dependency and break the filesystem link
+      dependency <- shiny::bootstrapLib()
+      dependency$src$file <- NULL
+
+      # source non-default themes from the shinythemes package
+      theme <- find_pandoc_theme_variable(output_args)
+      if (!is.null(theme) && !identical(theme, "bootstrap")) {
+        shinytheme <<- theme
+        dependency$stylesheet <- NULL
+      }
+    }
+
+    # convert absolute file references into shiny style relative deps
+    src <- dependency$src
+    if (!is.null(src$file)) {
+      dependency <- htmltools::copyDependencyToDir(dependency, files_dir)
+      dependency <- htmltools::makeDependencyRelative(dependency, output_dir)
+      dependency$src = list(href = unname(dependency$src))
+    }
+
+    # return dependency
+    dependency
+  })
+
+  # remove NULLs (excluded dependencies)
+  dependencies <- dependencies[!sapply(dependencies, is.null)]
+
+  # add shinytheme dependency if necessary
+  if (!is.null(shinytheme)) {
+    # verify we have shinythemes
+    if (!requireNamespace("shinythemes", quietly = TRUE)) {
+      stop("Using themes with runtime: shiny_preredered requires the ",
+           "shinythemes package", call. = FALSE)
+    }
+
+    # add dependency
+    shinytheme_dep <- htmltools::htmlDependency(
+      name = "shinythemes",
+      version = packageVersion("shinythemes"),
+      src = c(href = "shinythemes"),
+      stylesheet = paste0("css/", shinytheme, ".min.css"))
+    dependencies <- append(dependencies, list(shinytheme_dep))
+  }
+
+  # write deps
+  write_shiny_deps(files_dir, dependencies)
+}
+
+
 #' Clean prerendered content for the specified Rmd input file
 #'
 #' Remove the associated html file and supporting _files directory
