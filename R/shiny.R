@@ -280,9 +280,12 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
         dir.create(resource_folder, recursive = TRUE)
       shiny::addResourcePath(basename(resource_folder), resource_folder)
 
-      # emit performance information collected during render
-      dependencies <- append(dependencies, list(
-        create_performance_dependency(resource_folder)))
+      # extra dependency: emit performance information collected during render
+      dependencies <- append(dependencies, list(create_performance_dependency(resource_folder)))
+
+      # extra dependency: rsiframe for RStudio
+      if (nzchar(Sys.getenv("RSTUDIO")))
+        dependencies <- append(dependencies, list(html_dependency_rsiframe()))
 
       # save the structured dependency information
       write_shiny_deps(resource_folder, dependencies)

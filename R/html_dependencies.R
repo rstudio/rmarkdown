@@ -274,3 +274,23 @@ html_dependency_pagedtable <- function() {
     stylesheet = "css/pagedtable.css"
   )
 }
+
+# create an html_dependency for rsiframe
+html_dependency_rsiframe <- function() {
+
+  # add session port to meta if we have it (note that RStudio will
+  # only provide this in desktop mode)
+  meta <- NULL
+  session_port <- Sys.getenv("RSTUDIO_SESSION_PORT")
+  if (nzchar(session_port))
+    meta <- list(rstudio_origin = paste0("127.0.0.1:", session_port))
+
+  htmlDependency(
+    "rstudio-iframe",
+    version = "1.1",
+    src = rmarkdown_system_file("rmd/h/rsiframe-1.1"),
+    script = "rsiframe.js",
+    meta = meta
+  )
+}
+

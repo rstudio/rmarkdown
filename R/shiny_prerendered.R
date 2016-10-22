@@ -214,6 +214,11 @@ shiny_prerendered_write_dependencies <- function(shiny_prerendered_dependencies,
     dependencies <- append(dependencies, list(shinytheme_dep))
   }
 
+  # extra dependency: rsiframe for RStudio
+  if (nzchar(Sys.getenv("RSTUDIO")))
+    dependencies <- append(dependencies, list(html_dependency_rsiframe()))
+
+
   # write deps
   write_shiny_deps(files_dir, dependencies)
 }
