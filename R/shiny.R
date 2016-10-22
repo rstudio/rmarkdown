@@ -283,10 +283,6 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
       # extra dependency: emit performance information collected during render
       dependencies <- append(dependencies, list(create_performance_dependency(resource_folder)))
 
-      # extra dependency: rsiframe for RStudio
-      if (nzchar(Sys.getenv("RSTUDIO")))
-        dependencies <- append(dependencies, list(html_dependency_rsiframe()))
-
       # save the structured dependency information
       write_shiny_deps(resource_folder, dependencies)
 
@@ -537,7 +533,14 @@ read_shiny_deps <- function(files_dir) {
     deps_json <- readChar(deps_file,
                           nchars = file.info(deps_path)$size,
                           useBytes = TRUE)
-    jsonlite::unserializeJSON(deps_json)
+    dependencies <- jsonlite::unserializeJSON(deps_json)
+
+    # attach rstudio rsiframe script if we are in rstudio
+    if (nzchar(Sys.getenv("RSTUDIO")))
+      dependencies <- append(dependencies, list(html_dependency_rsiframe()))
+
+    # return
+    dependencies
   }
   else {
     list()
