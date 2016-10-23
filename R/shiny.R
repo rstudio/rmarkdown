@@ -517,22 +517,16 @@ is_shiny_prerendered <- function(runtime) {
   identical(runtime, "shiny_prerendered")
 }
 
-write_shiny_deps <- function(files_dir, deps) {
-  deps_file <- base::file(file.path(files_dir, "dependencies.json"),
-                          open = "wb", encoding = "UTF-8")
-  on.exit(close(deps_file), add = TRUE)
+write_shiny_deps <- function (files_dir, deps) {
+  deps_file <- file.path(files_dir, "dependencies.json")
   deps_json <- jsonlite::serializeJSON(deps, pretty = TRUE)
-  write(deps_json, file = deps_file)
+  writeLines(deps_json, deps_file, useBytes = TRUE)
 }
 
-read_shiny_deps <- function(files_dir) {
+read_shiny_deps <- function (files_dir) {
   deps_path <- file.path(files_dir, "dependencies.json")
   if (file.exists(deps_path)) {
-    deps_file <- base::file(deps_path, open = "rb")
-    on.exit(close(deps_file), add = TRUE)
-    deps_json <- readChar(deps_file,
-                          nchars = file.info(deps_path)$size,
-                          useBytes = TRUE)
+    deps_json <- readLines(deps_path, encoding = 'UTF-8')
     dependencies <- jsonlite::unserializeJSON(deps_json)
 
     # attach rstudio rsiframe script if we are in rstudio
