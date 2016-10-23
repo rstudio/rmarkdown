@@ -348,10 +348,31 @@ rmarkdown_shiny_ui <- function(dir, file) {
 }
 
 shinyHTML_with_deps <- function(html_file, deps) {
+
+  # read the html_file
+  html <- readLines(html_file, encoding = "UTF-8", warn = FALSE)
+
+  # if we are running in RStudio and have local MathJax then serve locally
+  # (for static Rmds we do this substitution inside RStudio as we serve the
+  # html over our port, however these documents are served by Shiny so there
+  # is no opportunity to do the substituion)
+  if (nzchar(Sys.getenv("RSTUDIO"))) {
+    local_mathjax <- Sys.getenv("RMARKDOWN_MATHJAX_PATH")
+    if (nzchar(local_mathjax)) {
+      html <- gsub(pattern = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?",
+                   replacement = "mathjax-local/MathJax.js?",
+                   x = html,
+                   fixed = TRUE,
+                   useBytes = TRUE)
+      shiny::addResourcePath("mathjax-local", local_mathjax)
+    }
+  }
+
+  # attach dependencies and return HTML
   htmltools::attachDependencies(
-    htmltools::HTML(paste(readLines(html_file, encoding = "UTF-8", warn = FALSE),
-                          collapse = "\n")),
-    deps)
+    htmltools::HTML(paste(html, collapse = "\n")),
+    deps
+  )
 }
 
 # given an input file and its encoding, return a list with values indicating
