@@ -12,7 +12,7 @@ worldPhonesUI <- function(id, selected = "Europe", height = 600) {
 }
 
 # Server function
-worldPhonesServer <- function(input, output, session) {
+worldPhones <- function(input, output, session) {
   output$phonePlot <- renderPlot({
     barplot(WorldPhones[,input$region]*1000, 
             ylab = "Number of Telephones", xlab = "Year")

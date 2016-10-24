@@ -522,27 +522,13 @@ function(input, output, session) {
 
 </div>
 <script type="text/javascript">loadSnippet('shiny-worldphones-module-call', 'r')</script>
+<p>The call to the <code>rmarkdown::shiny_module</code> function will result in both the module's shiny UI function being called (and as a result the UI being rendered within the document) as well as the required call to the module's server function automatically being included in a <code>context=&quot;server&quot;</code> chunk within the rendered document.</p>
 <p>Here's what the resulting document looks like:</p>
 <div class="figure">
 <img src="images/shiny-prerendered-module.png" class="screenshot" style="margin-bottom: 20px;" width="638" height="574" />
 
 </div>
-</div>
-<div id="module-wrapper-functions" class="section level4">
-<h4>Module Wrapper Functions</h4>
-<p>In the previous example we invoked the Shiny module with a pair of calls: one in a rendering context for the UI and one in a server context for the Shiny server logic. Ideally, we could enable our users to invoke the module with a single function call.</p>
-<p>This is possible using the <code>rmarkdown::shiny_prerendered_chunk</code> function. This function enables you to emit a server-based chunk as a side effect, enabling you to include both UI and server components of a module within a single function call.</p>
-<p>Here's a new <code>worldPhones</code> function that demonstrates:</p>
-<div id="shiny-worldphones-component">
-
-</div>
-<script type="text/javascript">loadSnippet('shiny-worldphones-component', 'r')</script>
-<p>Now we can re-write our document to exclude the <code>context=&quot;server&quot;</code> chunk entirely (since it's emitted automatically by the new <code>worldPhones</code> function):</p>
-<div id="shiny-worldphones-module-component-call">
-
-</div>
-<script type="text/javascript">loadSnippet('shiny-worldphones-module-component-call', 'r')</script>
-<p>Note that the above examples demonstrate defining the Shiny module within an R script (worldPhones.R) that is sourced into the Rmd. It is naturally also possible (and even preferred for wider distribution) to define the module functions within an R package.</p>
+<p>Note that the above example demonstrates defining the Shiny module within an R script (worldPhones.R) that is sourced into the Rmd. It is naturally also possible (and even preferred for wider distribution) to define the module functions within an R package.</p>
 </div>
 </div>
 <div id="rendering-step" class="section level3">
