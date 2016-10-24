@@ -567,6 +567,7 @@ navbar_html_from_yaml <- function(navbar_yaml) {
 #' Create a navbar HTML file from a navbar definition
 #'
 #' @param navbar Navbar definition
+#' @param links List of navbar links
 #' @return Path to temporary file with navbar definition
 #'
 #' @keywords internal
@@ -595,6 +596,9 @@ navbar_html <- function(navbar) {
 }
 
 
+#' @keywords internal
+#' @name navbar_html
+#' @export
 navbar_links_html <- function(links) {
   as.character(navbar_links_tags(links))
 }

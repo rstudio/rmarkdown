@@ -2,12 +2,17 @@
 % Please edit documentation in R/html_document.R
 \name{navbar_html}
 \alias{navbar_html}
+\alias{navbar_links_html}
 \title{Create a navbar HTML file from a navbar definition}
 \usage{
 navbar_html(navbar)
+
+navbar_links_html(links)
 }
 \arguments{
 \item{navbar}{Navbar definition}
+
+\item{links}{List of navbar links}
 }
 \value{
 Path to temporary file with navbar definition
