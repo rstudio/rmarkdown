@@ -73,7 +73,6 @@ Imports:
     rprojroot
 Suggests:
     shiny (>= 0.11),
-    shinythemes (>= 1.1.1),
     tufte,
     testthat,
     digest

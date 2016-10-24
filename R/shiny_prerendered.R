@@ -121,13 +121,6 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   # read dependencies
   dependencies <- read_shiny_deps(files_dir)
 
-  # if we have shinythemes then attach shinythemes (will add the
-  # shinythemes resource path)
-  for (dep in dependencies) {
-    if (!identical(dep$name, "shinythemes"))
-      requireNamespace("shinythemes", quietly = TRUE)
-  }
-
   # return html w/ dependencies
   shinyHTML_with_deps(rendered_html, dependencies)
 }
@@ -140,29 +133,7 @@ shiny_prerendered_write_dependencies <- function(shiny_prerendered_dependencies,
                                                  files_dir,
                                                  output_dir) {
   # transform dependencies
-  shinytheme <- NULL
   dependencies <- lapply(shiny_prerendered_dependencies, function(dependency) {
-
-    # use shiny version of jquery
-    if (identical(dependency$name, "jquery")) {
-      dependency <- NULL
-      return(dependency)
-    }
-
-    # use shiny version of bootstrap
-    if (identical(dependency$name, "bootstrap")) {
-
-      # create bootstrap dependency and break the filesystem link
-      dependency <- shiny::bootstrapLib()
-      dependency$src$file <- NULL
-
-      # source non-default themes from the shinythemes package
-      theme <- find_pandoc_theme_variable(output_args)
-      if (!is.null(theme) && !identical(theme, "bootstrap")) {
-        shinytheme <<- theme
-        dependency$stylesheet <- NULL
-      }
-    }
 
     # see if we can convert absolute paths into package-aliased ones
     if (is.null(dependency$package) && !is.null(dependency$src$file)) {
@@ -196,23 +167,6 @@ shiny_prerendered_write_dependencies <- function(shiny_prerendered_dependencies,
 
   # remove NULLs (excluded dependencies)
   dependencies <- dependencies[!sapply(dependencies, is.null)]
-
-  # add shinytheme dependency if necessary
-  if (!is.null(shinytheme)) {
-    # verify we have shinythemes
-    if (!requireNamespace("shinythemes", quietly = TRUE)) {
-      stop("Using themes with runtime: shiny_preredered requires the ",
-           "shinythemes package", call. = FALSE)
-    }
-
-    # add dependency
-    shinytheme_dep <- htmltools::htmlDependency(
-      name = "shinythemes",
-      version = utils::packageVersion("shinythemes"),
-      src = c(href = "shinythemes"),
-      stylesheet = paste0("css/", shinytheme, ".min.css"))
-    dependencies <- append(dependencies, list(shinytheme_dep))
-  }
 
   # write deps
   write_shiny_deps(files_dir, dependencies)
