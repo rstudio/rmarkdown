@@ -456,11 +456,11 @@ render <- function(input,
 
     # call onKnit hooks (normalize to list)
     sapply(as.list(getHook("rmarkdown.onKnit")), function(hook) {
-      hook(input = original_input)
+      tryCatch(hook(input = original_input), error = function(e) NULL)
     })
     on.exit({
       sapply(as.list(getHook("rmarkdown.onKnitCompleted")), function(hook) {
-        hook(input = original_input)
+        tryCatch(hook(input = original_input), error = function(e) NULL)
       })
     }, add = TRUE)
 
