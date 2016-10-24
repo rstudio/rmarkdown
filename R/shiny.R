@@ -539,6 +539,8 @@ is_shiny_prerendered <- function(runtime) {
 }
 
 write_shiny_deps <- function (files_dir, deps) {
+  if (!dir_exists(files_dir))
+    dir.create(files_dir, recursive = TRUE)
   deps_file <- file.path(files_dir, "dependencies.json")
   deps_json <- jsonlite::serializeJSON(deps, pretty = TRUE)
   writeLines(deps_json, deps_file, useBytes = TRUE)
