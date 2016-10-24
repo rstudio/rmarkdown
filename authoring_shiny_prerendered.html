@@ -467,7 +467,7 @@ function(input, output, session) {
 </div>
 <div id="advanced-topics" class="section level2">
 <h2>Advanced Topics</h2>
-<p>This section covers advanced topics including conventions around referencing external web files (e.g. images, CSS stylesheets, etc.), the creation of re-usable components for <code>runtime: shiny_prerendered</code> documents, and gaining finer grained control over the rendering step. Understanding these topics is not required for everyday usage so feel free to skip them now and return to them only if and when necessary.</p>
+<p>This section covers advanced topics including conventions around referencing external web files (e.g. images, CSS stylesheets, etc.) and gaining finer grained control over the rendering step. Understanding these topics is not required for everyday usage so feel free to skip them now and return to them only if and when necessary.</p>
 <div id="external-resources" class="section level3">
 <h3>External Resources</h3>
 <p>There are two types of external resource files that might be referenced from a <code>runtime: shiny_prerendered</code> document:</p>
@@ -504,32 +504,6 @@ function(input, output, session) {
 </tbody>
 </table>
 <p>The reason that all files within the directory of the main Rmd can't be referenced from within the web document is that many of these files are application source code and data, which may not be something you want to be downloadable by end users. By restricting the files which can be referenced to the above directories you can control which files are downloadable and which are not.</p>
-</div>
-<div id="reusable-components" class="section level3">
-<h3>Reusable Components</h3>
-<p>You may have combinations of Shiny UI and server code that you use frequently and wish to either use multiple times within a document or share across multiple documents. For this scenario it is convenient to be able to create a single function call that injects both the Shiny UI and Shiny Server code required into the document. This section describes how to accomplish this.</p>
-<div id="shiny-modules" class="section level4">
-<h4>Shiny Modules</h4>
-<p>The starting point for creating components is <strong>Shiny Modules</strong>, which are pieces of a Shiny application can be easily reused, whether across different apps, or multiple times within in a single app. This article won't cover the basics of Shiny modules. Please see the <a href="http://shiny.rstudio.com/articles/modules.html">Shiny Modules</a> article and <a href="http://shiny.rstudio.com/gallery/module-example.html">example application</a> to learn more.</p>
-<p>Here's a very simple Shiny module that we'll demonstrate how to incorporate into a <code>runtime: shiny_prerendered</code> document:</p>
-<p><strong>worldPhones.R</strong></p>
-<div id="shiny-worldphones-module">
-
-</div>
-<script type="text/javascript">loadSnippet('shiny-worldphones-module', 'r')</script>
-<p>Here is a simple <code>runtime: shiny_prerendered</code> document that does nothing but include the <code>world_phones.R</code> module:</p>
-<div id="shiny-worldphones-module-call">
-
-</div>
-<script type="text/javascript">loadSnippet('shiny-worldphones-module-call', 'r')</script>
-<p>The call to the <code>rmarkdown::shiny_module</code> function will result in both the module's shiny UI function being called (and as a result the UI being rendered within the document) as well as the required call to the module's server function automatically being included in a <code>context=&quot;server&quot;</code> chunk within the rendered document.</p>
-<p>Here's what the resulting document looks like:</p>
-<div class="figure">
-<img src="images/shiny-prerendered-module.png" class="screenshot" style="margin-bottom: 20px;" width="638" height="574" />
-
-</div>
-<p>Note that the above example demonstrates defining the Shiny module within an R script (worldPhones.R) that is sourced into the Rmd. It is naturally also possible (and even preferred for wider distribution) to define the module functions within an R package.</p>
-</div>
 </div>
 <div id="rendering-step" class="section level3">
 <h3>Rendering Step</h3>

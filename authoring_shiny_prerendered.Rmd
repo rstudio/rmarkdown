@@ -227,7 +227,7 @@ If you are using RStudio you can also use the **Publish** button available when 
 
 ## Advanced Topics
 
-This section covers advanced topics including conventions around referencing external web files (e.g. images, CSS stylesheets, etc.), the creation of re-usable components for `runtime: shiny_prerendered` documents, and gaining finer grained control over the rendering step. Understanding these topics is not required for everyday usage so feel free to skip them now and return to them only if and when necessary.
+This section covers advanced topics including conventions around referencing external web files (e.g. images, CSS stylesheets, etc.) and gaining finer grained control over the rendering step. Understanding these topics is not required for everyday usage so feel free to skip them now and return to them only if and when necessary.
 
 ### External Resources
 
@@ -248,36 +248,6 @@ For files referenced from the web document however, you need to be sure to place
 | `www/`  | Any other files (e.g. downloadable datasets)  |
 
 The reason that all files within the directory of the main Rmd can't be referenced from within the web document is that many of these files are application source code and data, which may not be something you want to be downloadable by end users. By restricting the files which can be referenced to the above directories you can control which files are downloadable and which are not.
-
-
-### Reusable Components
-
-You may have combinations of Shiny UI and server code that you use frequently and wish to either use multiple times within a document or share across multiple documents. For this scenario it is convenient to be able to create a single function call that injects both the Shiny UI and Shiny Server code required into the document. This section describes how to accomplish this.
-
-#### Shiny Modules
-
-The starting point for creating components is **Shiny Modules**, which are pieces of a Shiny application can be easily reused, whether across different apps, or multiple times within in a single app. This article won't cover the basics of Shiny modules. Please see the [Shiny Modules](http://shiny.rstudio.com/articles/modules.html) article and [example application](http://shiny.rstudio.com/gallery/module-example.html) to learn more.
-
-Here's a very simple Shiny module that we'll demonstrate how to incorporate into a `runtime: shiny_prerendered` document:
-
-**worldPhones.R**
-
-<div id="shiny-worldphones-module"></div>
-<script type="text/javascript">loadSnippet('shiny-worldphones-module', 'r')</script>
-
-Here is a simple `runtime: shiny_prerendered` document that does nothing but include the `world_phones.R` module:
-
-<div id="shiny-worldphones-module-call"></div>
-<script type="text/javascript">loadSnippet('shiny-worldphones-module-call', 'r')</script>
-
-The call to the `rmarkdown::shiny_module` function will result in both the module's shiny UI function being called (and as a result the UI being rendered within the document) as well as the required call to the module's server function automatically being included in a `context="server"` chunk within the rendered document.
-
-Here's what the resulting document looks like:
-
-![](images/shiny-prerendered-module.png){.screenshot width=638 height=574 style="margin-bottom: 20px;"}
-
-Note that the above example demonstrates defining the Shiny module within an R script (worldPhones.R) that is sourced into the Rmd. It is naturally also possible (and even preferred for wider distribution) to define the module functions within an R package.
-
 
 ### Rendering Step
 

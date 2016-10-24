@@ -22,6 +22,9 @@
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
 
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
@@ -38,10 +41,6 @@
 </script>
 
 <style type="text/css">code{white-space: pre;}</style>
-<link rel="stylesheet"
-      href="site_libs/highlight/textmate.css"
-      type="text/css" />
-<script src="site_libs/highlight/highlight.js"></script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
@@ -117,7 +116,6 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -315,7 +313,7 @@ draft(&quot;my_handout.Rmd&quot;, template = &quot;tufte_html&quot;, package = &
 title: &quot;Tufte Handout&quot;
 subtitle: &quot;An implementation in R Markdown&quot;
 author: &quot;JJ Allaire and Yihui Xie&quot;
-date: &quot;2016-10-18&quot;
+date: &quot;2016-10-24&quot;
 output:
   tufte::tufte_html: default
   tufte::tufte_handout:
