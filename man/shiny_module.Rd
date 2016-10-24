@@ -19,4 +19,11 @@ a \code{runtime: shiny_prerendered} interactive document. Parameters passed
 to the function will be forwarded as appropriate to the respective UI
 and Server functions of the Shiny Module.
 }
+\details{
+The \code{module} parmaeter is the name of the module's server
+ function. The name of the module's UI function should use the server
+ function name as it's base and then append either a `\code{UI}` or
+ \code{_ui} suffix. For example, if the module server function is named
+ \code{worldPhones} the UI function could be named \code{worldPhonesUI}.
+}
 
