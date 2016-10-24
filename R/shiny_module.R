@@ -21,7 +21,9 @@
 shiny_module <- function(module, ...) {
 
   # capture module as a name (so we can look for an e.g. moduleUI funciton)
-  module_name <- as.character(substitute(module))
+  # (trim off any "Server" or "_server" suffix)
+  module_server_name <- as.character(substitute(module))
+  module_base_name <- sub("(Server|_server)$", "", module_server_name)
 
   # verify we were passed a function
   if (!is.function(module))
@@ -36,7 +38,7 @@ shiny_module <- function(module, ...) {
   # build server args (module + id + matching args from this call)
   server_formals <- formals(module)
   server_args <- args[names(args) %in% names(server_formals)]
-  server_args <- append(list(module = as.symbol(module_name), id = id), server_args)
+  server_args <- append(list(module = as.symbol(module_server_name), id = id), server_args)
 
   # construct a call to the server function and emit as a shiny_prerendered_chunk
   server_args <- append(as.symbol("callModule"), server_args)
@@ -46,14 +48,14 @@ shiny_module <- function(module, ...) {
   # lookup ui function
   ui_func <- NULL
   for (variant in c("UI", "_ui")) {
-    func_name <- paste0(module_name, variant)
+    func_name <- paste0(module_base_name, variant)
     if (exists(func_name, envir = environment(module))) {
       ui_func <- get(func_name, mode = "function", envir = environment(module))
       break
     }
   }
   if (is.null(ui_func))
-    stop("Unable to find module UI function for ", module_name)
+    stop("Unable to find module UI function for ", module_base_name)
 
   # build ui args (id + matching args from this call)
   ui_formals <- formals(ui_func)
