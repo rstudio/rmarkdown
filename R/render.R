@@ -204,7 +204,6 @@ render <- function(input,
 
     # force various output options
     output_options$self_contained <- FALSE
-    output_options$copy_resources <- TRUE
     output_options$dependency_resolver <- function(deps) {
       shiny_prerendered_dependencies <<- deps
       list()
