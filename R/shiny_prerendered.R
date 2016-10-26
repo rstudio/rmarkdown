@@ -13,8 +13,8 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
   server_start_context <- shiny_prerendered_extract_context(html_lines,
                                                             "server-start")
   onStart <- function() {
+    eval(parse(text = server_start_code), envir = server_envir)
     shiny_prerendered_data_load(input_rmd, server_envir)
-    eval(parse(text = server_start_context), envir = server_envir)
   }
 
   # extract the server context
