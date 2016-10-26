@@ -435,8 +435,11 @@ shiny_prerendered_data_load <- function(input_rmd, server_envir) {
     if (file.exists(index_file)) {
       rdata_files <- readLines(index_file, encoding = "UTF-8")
       # load each of the files in the index
-      for (rdata_file in rdata_files)
-        load(file.path(data_dir,rdata_file), envir = server_envir)
+      for (rdata_file in rdata_files) {
+        rdata_file <- file.path(data_dir,rdata_file)
+        if (file.exists(rdata_file)) # won't exist if the chunk has no code
+          load(rdata_file, envir = server_envir)
+      }
     }
   }
 }
