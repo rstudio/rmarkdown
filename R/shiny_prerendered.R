@@ -118,8 +118,14 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   add_resource_path(file.path(output_dir,"images"))
   add_resource_path(file.path(output_dir,"www"))
 
-  # read dependencies
-  dependencies <- read_shiny_deps(files_dir)
+  # extract dependencies from html
+  html_lines <- readLines(rendered_html, encoding = "UTF-8", warn = FALSE)
+  dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
+  dependencies <- jsonlite::unserializeJSON(dependencies_json)
+
+  # attach rstudio rsiframe script if we are in rstudio
+  if (nzchar(Sys.getenv("RSTUDIO")))
+    dependencies <- append(dependencies, list(html_dependency_rsiframe()))
 
   # return html w/ dependencies
   shinyHTML_with_deps(rendered_html, dependencies)
@@ -128,10 +134,10 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
 
 # Write the dependencies for a shiny_prerendered document.
 #' @import rprojroot
-shiny_prerendered_write_dependencies <- function(shiny_prerendered_dependencies,
-                                                 output_args,
-                                                 files_dir,
-                                                 output_dir) {
+shiny_prerendered_append_dependencies <- function(input, # always UTF-8
+                                                  shiny_prerendered_dependencies,
+                                                  files_dir,
+                                                  output_dir) {
   # transform dependencies
   dependencies <- lapply(shiny_prerendered_dependencies, function(dependency) {
 
@@ -168,8 +174,13 @@ shiny_prerendered_write_dependencies <- function(shiny_prerendered_dependencies,
   # remove NULLs (excluded dependencies)
   dependencies <- dependencies[!sapply(dependencies, is.null)]
 
-  # write deps
-  write_shiny_deps(files_dir, dependencies)
+  # append them to the file (guarnateed to be UTF-8)
+  con <- file(input, open="at", encoding = "UTF-8")
+  on.exit(close(con), add = TRUE)
+
+  # write deps to connection
+  dependencies_json <- jsonlite::serializeJSON(dependencies, pretty = TRUE)
+  shiny_prerendered_append_context(con, "dependencies", dependencies_json)
 }
 
 
@@ -389,16 +400,19 @@ shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
     on.exit(close(con), add = TRUE)
 
     # append the contexts as script tags
-    for (context in shiny_prerendered_contexts) {
-      lines <- c('<!--html_preserve-->',
-                 paste0('<script type="application/shiny-prerendered" ',
-                        'data-context="', context$name ,'">'),
-                 context$code,
-                 '</script>',
-                 '<!--/html_preserve-->')
-      writeLines(lines, con = con)
-    }
+    for (context in shiny_prerendered_contexts)
+      shiny_prerendered_append_context(con, context$name, context$code)
   }
+}
+
+shiny_prerendered_append_context <- function(con, name, code) {
+  lines <- c('<!--html_preserve-->',
+             paste0('<script type="application/shiny-prerendered" ',
+                    'data-context="', name ,'">'),
+             code,
+             '</script>',
+             '<!--/html_preserve-->')
+  writeLines(lines, con = con)
 }
 
 

@@ -542,10 +542,10 @@ render <- function(input,
 
     # write shiny_prerendered_dependencies if we have them
     if (is_shiny_prerendered(runtime)) {
-      shiny_prerendered_write_dependencies(shiny_prerendered_dependencies,
-                                           output_format$pandoc$args,
-                                           files_dir,
-                                           output_dir)
+      shiny_prerendered_append_dependencies(utf8_input,
+                                            shiny_prerendered_dependencies,
+                                            files_dir,
+                                            output_dir)
     }
 
     perf_timer_stop("pre-processor")
