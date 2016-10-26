@@ -12,9 +12,27 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
   html_lines <- strsplit(html, "\\r?\\n")[[1]]
   server_start_context <- shiny_prerendered_extract_context(html_lines,
                                                             "server-start")
+
+  # extract the code used for server startup (this encompasses both the
+  # context="server-start" code and the context="data" code). This can be
+  # retreived later via the shiny_prerendered_server_start_code function. The
+  # purpose of this is for appliations which want to run user in other
+  # processes while still duplicating the setup context (e.g. tutorials).
+  server_start_code <- paste(c(server_start_context,
+                               shiny_prerendered_extract_context(html_lines, "data")),
+                             collapse = "\n")
+
   onStart <- function() {
-    eval(parse(text = server_start_code), envir = server_envir)
+
+    # save the server_start_code
+    assign(".shiny_prerendered_server_start_code", server_start_code, envir = server_envir)
+
+    # execute the startup code (server_start_context + context="data" loading)
+    eval(parse(text = server_start_context), envir = server_envir)
     shiny_prerendered_data_load(input_rmd, server_envir)
+
+    # lock the environment to prevent inadvertant assignments
+    lockEnvironment(server_envir)
   }
 
   # extract the server context
@@ -23,7 +41,7 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
   server <- function(input, output, session) {
     eval(parse(text = server_context))
   }
-  environment(server) <- server_envir
+  environment(server) <- new.env(parent = server_envir)
 
   # create shiny app
   shiny::shinyApp(
@@ -179,7 +197,7 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
   on.exit(close(con), add = TRUE)
 
   # write deps to connection
-  dependencies_json <- jsonlite::serializeJSON(dependencies, pretty = TRUE)
+  dependencies_json <- jsonlite::serializeJSON(dependencies, pretty = FALSE)
   shiny_prerendered_append_context(con, "dependencies", dependencies_json)
 }
 
@@ -245,6 +263,20 @@ shiny_prerendered_chunk <- function(context, code) {
 }
 
 
+#' Get the server startup code for a shiny_prerendered server instance
+#'
+#' @param server_envir Shiny server environment to get code for
+#'
+#' @keywords internal
+#' @export
+shiny_prerendered_server_start_code <- function(server_envir) {
+  if (exists(".shiny_prerendered_server_start_code", envir = server_envir))
+    get(".shiny_prerendered_server_start_code", envir = server_envir)
+  else
+    ""
+}
+
+
 # Record which context="data" chunks are actually executed during
 # the current render as well as the file names they are saved with.
 # We'll use this later to determine which .RData files in the _data
@@ -290,7 +322,7 @@ shiny_prerendered_evaluate_hook <- function(input) {
 
     # if there are server-side contexts then emit knit_meta for them
     for (name in context) {
-      if (!name %in% c("render", "data"))
+      if (!name %in% c("render"))
         shiny_prerendered_chunk(name, code)
     }
 
