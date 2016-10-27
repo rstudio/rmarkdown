@@ -94,7 +94,7 @@ paged_table_html <- function(x) {
   )
 
   paste(
-    "<div data-pagedtable=\"true\">",
+    "<div data-pagedtable=\"false\">",
     "  <script data-pagedtable-source type=\"application/json\">",
     jsonlite::toJSON(pagedData),
     "  </script>",
