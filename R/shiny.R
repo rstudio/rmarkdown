@@ -286,6 +286,11 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
       # save the structured dependency information
       write_shiny_deps(resource_folder, dependencies)
 
+      # attach rstudio rsiframe script if we are in rstudio (we do this after
+      # persisting the dependencies since this dependency is ephemeral)
+      if (nzchar(Sys.getenv("RSTUDIO")))
+        dependencies <- append(dependencies, list(html_dependency_rsiframe()))
+
       # when the session ends, remove the rendered document and any supporting
       # files, if they're not cacheable
       if (!isTRUE(out$cacheable)) {
