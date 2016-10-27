@@ -269,7 +269,7 @@ render <- function(input,
 
   # set df_print
   context <- render_context()
-  context$df_print <- output_format$df_print
+  context$df_print <- resolve_df_print(output_format$df_print)
 
   # call any pre_knit handler
   if (!is.null(output_format$pre_knit)) {
@@ -318,6 +318,7 @@ render <- function(input,
       rmarkdown.pandoc.from = output_format$pandoc$from,
       rmarkdown.pandoc.to = pandoc_to,
       rmarkdown.keep_md = output_format$keep_md,
+      rmarkdown.df_print = output_format$df_print,
       rmarkdown.version = 2,
       rmarkdown.runtime = runtime
     )
