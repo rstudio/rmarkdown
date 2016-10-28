@@ -141,6 +141,17 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
   dependencies <- jsonlite::unserializeJSON(dependencies_json)
 
+  # resolve package paths (this will happen automatically for the
+  # development version of htmltools but this isn't on CRAN yet)
+  dependencies <- lapply(dependencies, function(dependency) {
+    if (!is.null(dependency$package) && !is.null(dependency$src$file)) {
+      dependency$src$file <- system.file(dependency$src$file,
+                                         package = dependency$package)
+      dependency$package <- NULL
+    }
+    dependency
+  })
+
   # attach rstudio rsiframe script if we are in rstudio
   if (nzchar(Sys.getenv("RSTUDIO")))
     dependencies <- append(dependencies, list(html_dependency_rsiframe()))
