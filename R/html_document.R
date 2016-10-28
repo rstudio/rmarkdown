@@ -385,7 +385,7 @@ html_document <- function(toc = FALSE,
         # navbar icon dependencies
         iconDeps <- navbar_icon_dependencies(navbar)
         if (length(iconDeps) > 0)
-          knit_meta_add(list(iconDeps))
+          knitr::knit_meta_add(list(iconDeps))
       }
     }
 

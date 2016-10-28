@@ -132,23 +132,6 @@ html_dependencies_fonts <- function(font_awesome, ionicons) {
   deps
 }
 
-# local implementation of knit_meta_add until we can depend on a later
-# version of knitr
-knit_meta_add = function(meta, label = '') {
-  # if (packageVersion("knitr") >= "1.12.20") {
-  #   knitr::knit_meta_add(meta, label)
-  # } else {
-  knitrNamespace <- asNamespace("knitr")
-  knitEnv <- get(".knitEnv", envir = knitrNamespace)
-  if (length(meta)) {
-    meta_id = attr(knitEnv$meta, 'knit_meta_id')
-    knitEnv$meta <- c(knitEnv$meta, meta)
-    attr(knitEnv$meta, "knit_meta_id") = c(meta_id, rep(label, length(meta)))
-  }
-  knitEnv$meta
-  # }
-}
-
 
 # flattens an arbitrarily nested list and returns all of the dependency
 # objects it contains
