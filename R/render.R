@@ -68,9 +68,11 @@ render <- function(input,
     return(invisible(outputs))
   }
 
-  # check for required version of pandoc
-  required_pandoc <- "1.12.3"
-  pandoc_available(required_pandoc, error = TRUE)
+  # check for required version of pandoc if we are running pandoc
+  if (run_pandoc) {
+    required_pandoc <- "1.12.3"
+    pandoc_available(required_pandoc, error = TRUE)
+  }
 
   # setup a cleanup function for intermediate files
   intermediates <- c()
