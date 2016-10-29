@@ -323,16 +323,6 @@ render <- function(input,
       rmarkdown.runtime = runtime
     )
 
-    # trim whitespace from around source code
-    if (utils::packageVersion("knitr") < "1.5.23") {
-      local({
-        hook_source = knitr::knit_hooks$get('source')
-        knitr::knit_hooks$set(source = function(x, options) {
-          hook_source(strip_white(x), options)
-        })
-      })
-    }
-
     # use filename based figure and cache directories
     figures_dir <- paste(files_dir, "/figure-", pandoc_to, "/", sep = "")
     knitr::opts_chunk$set(fig.path=figures_dir)
@@ -746,10 +736,7 @@ render_supporting_files <- function(from, files_dir, rename_to = NULL) {
 # reset knitr meta output (returns any meta output generated since the last
 # call to knit_meta_reset), optionally scoped to a specific output class
 knit_meta_reset <- function(class = NULL) {
-  if (utils::packageVersion("knitr") >= "1.5.26")
-    knitr::knit_meta(class, clean = TRUE)
-  else
-    NULL
+  knitr::knit_meta(class, clean = TRUE)
 }
 
 md_header_from_front_matter <- function(front_matter) {

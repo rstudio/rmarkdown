@@ -1,9 +1,5 @@
 
 knit_params_get <- function(input_lines, params) {
-  # check for recent enough knitr
-  if (utils::packageVersion("knitr") < "1.10") {
-    stop("knitr >= 1.10 required to use rmarkdown params")
-  }
 
   # read the default parameters and extract them into a named list
   knit_params <- mark_utf8(knitr::knit_params(input_lines))
@@ -208,9 +204,6 @@ knit_params_ask <- function(file = NULL,
                             shiny_args = NULL,
                             save_caption = "Save",
                             encoding = getOption("encoding")) {
-  if (utils::packageVersion("knitr") < "1.10.18") {
-    stop("knitr >= 1.10.18 required to use rmarkdown::knit_params_ask")
-  }
 
   if (is.null(input_lines)) {
     if (is.null(file)) {
