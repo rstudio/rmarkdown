@@ -1,1 +1,6 @@
+
+@media only screen and (max-device-width: 480px) {
+
 slides>slide{-webkit-transition:none !important;-webkit-transition:none !important;-moz-transition:none !important;-o-transition:none !important;transition:none !important}
+
+}
