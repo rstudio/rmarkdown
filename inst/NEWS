@@ -20,6 +20,8 @@ rmarkdown 1.2 (unreleased)
 
 * Remove key-column special-case left alignment in pagedtables (#829)
 
+* Replace backslashes in floating TOC headings (#849)
+
 
 rmarkdown 1.1
 --------------------------------------------------------------------------------
