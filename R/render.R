@@ -802,8 +802,12 @@ resolve_df_print <- function(df_print) {
   if (!is.function(df_print)) {
     if (df_print == "kable")
       df_print <- knitr::kable
-    else if (df_print == "tibble")
+    else if (df_print == "tibble") {
+      if (!requireNamespace("tibble", quietly = TRUE))
+        stop("Printing 'tibble' without 'tibble' package available")
+
       df_print <- function(x) print(tibble::as_tibble(x))
+    }
     else if (df_print == "paged")
       df_print <- function(x) knitr::asis_output(paged_table_html(x))
     else if (df_print == "default")
