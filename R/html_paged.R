@@ -38,14 +38,6 @@ paged_table_html <- function(x) {
     paste0(" [", dim_desc(x), "]" )
   }
 
-  obj_sum <- function(x) {
-    switch(class(x)[[1]],
-           POSIXlt = rep("POSIXlt", length(x)),
-           list = vapply(x, obj_sum, character(1L)),
-           paste0(.rs.dataCaptureFormatType(x), size_sum(x))
-    )
-  }
-
   type_sum <- function(x)
   {
     format_sum <- switch (class(x)[[1]],
@@ -76,6 +68,14 @@ paged_table_html <- function(x) {
     } else {
       paste0("S4: ", methods::is(x)[[1]])
     }
+  }
+
+  obj_sum <- function(x) {
+    switch(class(x)[[1]],
+           POSIXlt = rep("POSIXlt", length(x)),
+           list = vapply(x, obj_sum, character(1L)),
+           paste0(type_sum(x), size_sum(x))
+    )
   }
 
   addRowNames = .row_names_info(data, type = 1) > 0
