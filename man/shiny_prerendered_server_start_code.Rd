@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny_prerendered.R
 \name{shiny_prerendered_server_start_code}
 \alias{shiny_prerendered_server_start_code}
-\title{Get the initialization code for a shiny_prerendered server instance}
+\title{Get the server startup code for a shiny_prerendered server instance}
 \usage{
 shiny_prerendered_server_start_code(server_envir)
 }
@@ -10,7 +10,7 @@ shiny_prerendered_server_start_code(server_envir)
 \item{server_envir}{Shiny server environment to get code for}
 }
 \description{
-Get the initialization code for a shiny_prerendered server instance
+Get the server startup code for a shiny_prerendered server instance
 }
 \keyword{internal}
 

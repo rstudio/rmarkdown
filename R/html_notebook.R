@@ -16,7 +16,6 @@
 #'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_format.html}{http://rmarkdown.rstudio.com/r_notebook_format.html}.
 #'
 #' @importFrom evaluate evaluate
-#' @import tibble
 #' @export
 html_notebook <- function(toc = FALSE,
                           toc_depth = 3,
