@@ -1,3 +1,4 @@
+#' @import methods
 paged_table_html <- function(x) {
   "%||%" <- function(x, y) {
     if(is.null(x)) y else x
