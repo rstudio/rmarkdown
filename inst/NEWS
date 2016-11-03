@@ -22,6 +22,8 @@ rmarkdown 1.2 (unreleased)
 
 * Replace backslashes in floating TOC headings (#849)
 
+* Suggests rather than Imports for tibble (R 3.0 compatibility)
+
 
 rmarkdown 1.1
 --------------------------------------------------------------------------------
