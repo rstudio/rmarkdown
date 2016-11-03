@@ -61,14 +61,16 @@ paged_table_obj_sum <- function(x) {
     is_atomic(x) || is.list(x)
   }
 
-  paged_table_is_vector_s3 <- function(x) UseMethod("paged_table_is_vector_s3")
-  paged_table_is_vector_s3.ordered <- function(x) TRUE
-  paged_table_is_vector_s3.factor <- function(x) TRUE
-  paged_table_is_vector_s3.Date <- function(x) TRUE
-  paged_table_is_vector_s3.POSIXct <- function(x) TRUE
-  paged_table_is_vector_s3.difftime <- function(x) TRUE
-  paged_table_is_vector_s3.data.frame <- function(x) TRUE
-  paged_table_is_vector_s3.default <- function(x) !is.object(x) && is_vector(x)
+  paged_table_is_vector_s3 <- function(x) {
+    switch(class(x)[[1]],
+      ordered = TRUE,
+      factor = TRUE,
+      Date = TRUE,
+      POSIXct = TRUE,
+      difftime = TRUE,
+      data.frame = TRUE,
+      !is.object(x) && is_vector(x))
+  }
 
   size_sum <- function(x) {
     if (!paged_table_is_vector_s3(x)) return("")
