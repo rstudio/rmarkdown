@@ -1,5 +1,6 @@
-#' @import methods
-paged_table_html <- function(x) {
+# paged_table_type_sum and paged_table_obj_sum should be replaced
+# by tibble::type_sum once tibble supports R 3.0.0.
+paged_table_type_sum <- function(x) {
   "%||%" <- function(x, y) {
     if(is.null(x)) y else x
   }
@@ -71,14 +72,19 @@ paged_table_html <- function(x) {
     }
   }
 
-  obj_sum <- function(x) {
-    switch(class(x)[[1]],
-           POSIXlt = rep("POSIXlt", length(x)),
-           list = vapply(x, obj_sum, character(1L)),
-           paste0(type_sum(x), size_sum(x))
-    )
-  }
+  type_sum(x)
+}
 
+paged_table_obj_sum <- function(x) {
+  switch(class(x)[[1]],
+         POSIXlt = rep("POSIXlt", length(x)),
+         list = vapply(x, paged_table_obj_sum, character(1L)),
+         paste0(paged_table_type_sum(x), size_sum(x))
+  )
+}
+
+#' @import methods
+paged_table_html <- function(x) {
   addRowNames = .row_names_info(data, type = 1) > 0
 
   maxPrint <- getOption("max.print", 1000)
@@ -98,7 +104,7 @@ paged_table_html <- function(x) {
     function(columnIdx) {
       column <- data[[columnIdx]]
       baseType <- class(column)[[1]]
-      tibbleType <- type_sum(column)
+      tibbleType <- paged_table_type_sum(column)
 
       list(
         label = if (!is.null(columnNames)) columnNames[[columnIdx]] else "",
@@ -131,7 +137,7 @@ paged_table_html <- function(x) {
 
   is_list <- vapply(data, is.list, logical(1))
   data[is_list] <- lapply(data[is_list], function(x) {
-    summary <- obj_sum(x)
+    summary <- paged_table_obj_sum(x)
     paste0("<", summary, ">")
   })
 
