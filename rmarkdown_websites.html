@@ -169,7 +169,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
@@ -308,7 +308,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <p>You can render collections of R Markdown documents as a website using the <code>rmarkdown::render_site</code> function. This article describes the basics of creating websites with R Markdown and provides some examples which you can use as a starting point for your own websites.</p>
 <p>The features described here are available only within the most recent version of the <strong>rmarkdown</strong> package (v0.9.6) which you can install from CRAN as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;source&quot;</span>)</code></pre></div>
-<p>The RStudio IDE also includes integrated support for developing R Markdown websites. These features are available in the current Preview Release of RStudio which you can install from here: <a href="https://www.rstudio.com/products/rstudio/download/preview/">RStudio Preview Release</a>.</p>
+<p>The RStudio IDE also includes integrated support for developing R Markdown websites. These features are available in version 1.0 or higher of RStudio so you should be sure to update RStudio prior to using R Markdown websites. You can download the latest version of RStudio here: <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a>.</p>
 </div>
 <div id="simple-example" class="section level2">
 <h2>Simple Example</h2>
@@ -346,7 +346,7 @@ More about this website.</code></pre></div>
 <h2>Site Authoring</h2>
 <div id="rstudio" class="section level3">
 <h3>RStudio</h3>
-<p>RStudio includes a variety of features intended to make developing R Markdown websites more productive. These features are available only in the current <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release</a> of RStudio so you should download and install it before trying out the features described below.</p>
+<p>RStudio includes a variety of features intended to make developing R Markdown websites more productive. These features are available in version 1.0 or higher of RStudio so you should be sure to update RStudio prior to using R Markdown websites. You can download the latest version of RStudio here: <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a>.</p>
 <div id="website-project" class="section level4">
 <h4>Website Project</h4>
 <p>Note that all of the RStudio features for website authoring described below require the use of an RStudio Project tied to your website’s directory. See the documentation on <a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects">RStudio Projects</a> for additional information on how to create and use projects.</p>
@@ -693,8 +693,11 @@ thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

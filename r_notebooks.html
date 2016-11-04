@@ -141,7 +141,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
@@ -275,7 +275,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<p><strong>NOTE</strong>: R Notebooks are new feature of RStudio, and are currently available only in the <a href="https://www.rstudio.com/products/rstudio/download/preview/">RStudio Preview Release</a>. If you want to try out the features described below please install the preview release.</p>
+<p><strong>NOTE</strong>: R Notebooks are new feature of RStudio and are only available in version 1.0 or higher of RStudio. You can download the latest version of RStudio here: <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a>.</p>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
 <p>An R Notebook is an R Markdown document with chunks that can be executed independently and interactively, with output visible immediately beneath the input.</p>
@@ -476,8 +476,11 @@ output: html_notebook
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

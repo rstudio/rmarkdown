@@ -22,7 +22,7 @@ The features described here are available only within the most recent version of
 install.packages("rmarkdown", type = "source")
 ```
 
-The RStudio IDE also includes integrated support for developing R Markdown websites. These features are available in the current Preview Release of RStudio which you can install from here: [RStudio Preview Release](https://www.rstudio.com/products/rstudio/download/preview/).
+The RStudio IDE also includes integrated support for developing R Markdown websites. These features are available in version 1.0 or higher of RStudio so you should be sure to update RStudio prior to using R Markdown websites. You can download the latest version of RStudio here: <https://www.rstudio.com/products/rstudio/download/>.
 
 ## Simple Example
 
@@ -76,7 +76,7 @@ The full source code for simple example above can be found here: <https://github
 
 ### RStudio
 
-RStudio includes a variety of features intended to make developing R Markdown websites more productive. These features are available only in the current [Preview Release](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio so you should download and install it before trying out the features described below.
+RStudio includes a variety of features intended to make developing R Markdown websites more productive. These features are available in version 1.0 or higher of RStudio so you should be sure to update RStudio prior to using R Markdown websites. You can download the latest version of RStudio here: <https://www.rstudio.com/products/rstudio/download/>.
 
 #### Website Project
 

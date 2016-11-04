@@ -299,8 +299,11 @@ render(&quot;1-example.Rmd&quot;, output_format = &quot;word_document&quot;)</co
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

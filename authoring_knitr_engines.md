@@ -7,7 +7,7 @@ output:
     toc_float: true
 ---
 
-**NOTE**: Enhanced support for knitr language engines is currently available in the [RStudio Preview Release](https://www.rstudio.com/products/rstudio/download/preview/). If you want to try out the features described below please install the preview release.
+**NOTE**: Enhanced support for knitr language engines is currently available in version 1.0 or higher of RStudio so you should be sure to update RStudio prior to trying out these features. You can download the latest version of RStudio here: <https://www.rstudio.com/products/rstudio/download/>.
 
 ## Overview
 

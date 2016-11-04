@@ -240,7 +240,7 @@ cat(contents, sep = &quot;\n&quot;)</code></pre>
 <pre class="r"><code>parsed &lt;- rmarkdown::parse_html_notebook(output_file)
 str(parsed)</code></pre>
 <pre><code>## List of 4
-##  $ source     : chr [1:229] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&quot; &quot;&quot; ...
+##  $ source     : chr [1:232] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&quot; &quot;&quot; ...
 ##  $ rmd        : chr [1:8] &quot;---&quot; &quot;title: \&quot;R Notebook Stub\&quot;&quot; &quot;output: html_notebook&quot; &quot;---&quot; ...
 ##  $ header     : chr [1:74] &quot;&lt;head&gt;&quot; &quot;&quot; &quot;&lt;meta charset=\&quot;utf-8\&quot;&gt;&quot; &quot;&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html; charset=utf-8\&quot; /&gt;&quot; ...
 ##  $ annotations:List of 12
@@ -351,8 +351,11 @@ str(parsed)</code></pre>
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

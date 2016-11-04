@@ -24,8 +24,6 @@ Note that parameterized reports are a new feature of R Markdown and therefore re
 install.packages(c("knitr", "rmarkdown"))
 ```
 
-If you are using RStudio you should also download the [preview release](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio (as it has some additional changes required to support previewing reports with parameters).
-
 ## Declararing Parameters
 
 ### YAML Params Field

@@ -141,7 +141,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
@@ -286,7 +286,6 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <p>R Markdown parameter names, types, and default values are declared in the YAML section at the top of the document. To change these values for a given rendering you use the <code>params</code> argument to the <code>rmarkdown::render</code> function.</p>
 <p>Note that parameterized reports are a new feature of R Markdown and therefore require very recent versions of the <strong>knitr</strong> (v1.11) and <strong>rmarkdown</strong> (v0.8) packages. You can install the most up to date versions with the following command:</p>
 <pre class="r"><code>install.packages(c(&quot;knitr&quot;, &quot;rmarkdown&quot;))</code></pre>
-<p>If you are using RStudio you should also download the <a href="https://www.rstudio.com/products/rstudio/download/preview/">preview release</a> of RStudio (as it has some additional changes required to support previewing reports with parameters).</p>
 </div>
 <div id="declararing-parameters" class="section level2">
 <h2>Declararing Parameters</h2>
@@ -486,8 +485,11 @@ params:
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

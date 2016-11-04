@@ -453,11 +453,11 @@ obstacles to effective collaboration.</code></pre>
 ## [1] knitr_1.14
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] magrittr_1.5       assertthat_0.1     rprojroot_1.0-2   
+##  [1] backports_1.0.4    magrittr_1.5       rprojroot_1.1     
 ##  [4] formatR_1.4        tools_3.3.1        htmltools_0.3.6   
-##  [7] yaml_2.1.13        tibble_1.2         Rcpp_0.12.7       
-## [10] stringi_1.1.1      rmarkdown_1.1.9006 stringr_1.1.0     
-## [13] digest_0.6.10      evaluate_0.10</code></pre>
+##  [7] yaml_2.1.13        Rcpp_0.12.7        stringi_1.1.1     
+## [10] rmarkdown_1.1.9014 stringr_1.1.0      digest_0.6.10     
+## [13] evaluate_0.10</code></pre>
 <p><br></p>
 </div>
 <div id="image-credits" class="section level3">
@@ -510,8 +510,11 @@ obstacles to effective collaboration.</code></pre>
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 
