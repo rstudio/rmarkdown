@@ -809,7 +809,14 @@ resolve_df_print <- function(df_print) {
       df_print <- function(x) print(tibble::as_tibble(x))
     }
     else if (df_print == "paged")
-      df_print <- function(x) knitr::asis_output(paged_table_html(x))
+      df_print <- function(x) {
+        if (!identical(knitr::opts_current$get("paged.print"), FALSE)) {
+          knitr::asis_output(paged_table_html(x))
+        }
+        else {
+          print(x)
+        }
+      }
     else if (df_print == "default")
       df_print <- print
     else
