@@ -85,11 +85,18 @@ paged_table_obj_sum <- function(x) {
   )
 }
 
+paged_table_option <- function(option, default = NULL) {
+  if (is.null(knitr::opts_current$get(option)))
+    getOption(option, default)
+  else
+    knitr::opts_current$get(option)
+}
+
 #' @import methods
 paged_table_html <- function(x) {
   addRowNames = .row_names_info(data, type = 1) > 0
 
-  maxPrint <- getOption("max.print", 1000)
+  maxPrint <- paged_table_option("max.print", 1000)
 
   # hard stop at 10K items to print to prevent pandoc from failing
   maxPrint <- if (maxPrint > 10000) 10000 else maxPrint
@@ -161,18 +168,18 @@ paged_table_html <- function(x) {
     stringsAsFactors = FALSE,
     optional = TRUE)
 
-  rowCount <- if (is.null(getOption("rows.print"))) 10 else getOption("rows.print")
+  rowCount <- paged_table_option("rows.print", 10)
 
   pagedTableOptions <- list(
     columns = list(
-      min = getOption("cols.min.print"),
-      max = getOption("cols.print", 10)
+      min = paged_table_option("cols.min.print"),
+      max = paged_table_option("cols.print", 10)
     ),
     rows = list(
       min = rowCount,
       max = rowCount
     ),
-    pages = getOption("pages.print")
+    pages = paged_table_option("pages.print")
   )
 
   pagedData <- list(
