@@ -197,3 +197,22 @@ paged_table_html <- function(x) {
     sep = "\n"
   )
 }
+
+#' @export
+paged_table <- function(x) {
+  if (!is.data.frame(x)) {
+    stop("Only data frames can be used to create a paged_table.")
+  }
+
+  class(x) <- c("paged_df", "data.frame")
+  x
+}
+
+print.paged_df <- function(x) {
+  knitr::asis_output(
+    paged_table_html(x),
+    meta = list(
+      dependencies = html_dependency_pagedtable()
+    )
+  )
+}
