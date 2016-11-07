@@ -198,6 +198,10 @@ paged_table_html <- function(x) {
   )
 }
 
+#' Create a table in HTML with support for paging rows and columns
+#'
+#' @param x a data frame to be rendered as a paged table.
+#'
 #' @export
 paged_table <- function(x) {
   if (!is.data.frame(x)) {
