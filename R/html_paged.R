@@ -98,10 +98,14 @@ paged_table_html <- function(x) {
 
   maxPrint <- paged_table_option("max.print", 1000)
 
+  if ("tbl_sql" %in% class(x)) {
+    maxPrint <- paged_table_option("sql.max.print", 1000)
+  }
+
   # hard stop at 10K items to print to prevent pandoc from failing
   maxPrint <- if (maxPrint > 10000) 10000 else maxPrint
 
-  data <- utils::head(x, maxPrint)
+  data <- as.data.frame(utils::head(x, maxPrint))
 
   data <- if (is.null(data)) as.data.frame(list()) else data
 

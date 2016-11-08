@@ -330,14 +330,6 @@ html_document <- function(toc = FALSE,
 
   # pagedtable
   if (identical(df_print, "paged")) {
-    options("dplyr.tibble.print" = function(x, n, width, ...) {
-      isSQL <- "tbl_sql" %in% class(x)
-      n <- if (isSQL) getOption("sql.max.print", 1000) else getOption("max.print", 1000)
-
-      df <- as.data.frame(utils::head(x, n))
-      print(df)
-    })
-
     extra_dependencies <- append(extra_dependencies,
                                  list(html_dependency_pagedtable()))
   }
