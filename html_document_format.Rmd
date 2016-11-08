@@ -209,7 +209,7 @@ You can enhance the default display of data frames via the `df_print` option. Va
 | default  | Call the [`print.data.frame`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/print.dataframe.html) generic method   |
 | kable  | Use the [`knitr::kable`](https://www.rdocumentation.org/packages/knitr/versions/1.12.3/topics/kable) function. |
 | tibble  | Use the [`tibble::print.tbl_df`](https://www.rdocumentation.org/packages/tibble/versions/1.2/topics/print.tbl_df) function.  |
-| paged  |  Create a pageable HTML table |
+| paged  |  Use the `rmarkdown::print.paged_df` function which creates a pageable HTML table. |
 
 For example:
 
@@ -219,6 +219,20 @@ For example:
       html_document:
         df_print: paged
     ---
+
+### Paged Printing
+
+When the `df_print` option is set to `paged`, the following options are avaialble:
+
+| Option          | Description                                           |
+|-----------------|-------------------------------------------------------|
+| max.print       | The number of rows to print.                          |
+| rows.print      | The number of rows to display.                        |
+| cols.print      | The number of columns to display.                     |
+| cols.min.print  | The minimum number of columns to display.             |
+| pages.print     | The number of pages to display under page navigation. |
+| paged.print     | When set to `FALSE` turns off paged tables.           |
+
 
 ## Code Folding
 
