@@ -252,9 +252,11 @@ shiny_prerendered_clean <- function(input) {
 #'
 #' @param context Context name (e.g. "server", "server-start")
 #' @param code Character vector with code
+#' @param singleton Collapse multiple identical versions of this
+#'   chunk into a single chunk.
 #'
 #' @export
-shiny_prerendered_chunk <- function(context, code) {
+shiny_prerendered_chunk <- function(context, code, singleton = FALSE) {
 
   # verify we are in runtime: shiny_prerendered
   if (!identical(knitr::opts_knit$get("rmarkdown.runtime"),"shiny_prerendered"))
@@ -265,7 +267,8 @@ shiny_prerendered_chunk <- function(context, code) {
   knitr::knit_meta_add(list(
     structure(class = "shiny_prerendered", list(
       name = context,
-      code = code
+      code = code,
+      singleton = singleton
     ))
   ))
 
@@ -442,9 +445,30 @@ shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
     con <- file(file, open="at", encoding = encoding)
     on.exit(close(con), add = TRUE)
 
+    # track singletons
+    singletons <- list()
+
     # append the contexts as script tags
-    for (context in shiny_prerendered_contexts)
+    for (context in shiny_prerendered_contexts) {
+
+      # resovle singletons
+      if (isTRUE(context$singleton)) {
+        found_singleton <- FALSE
+        for (singleton in singletons) {
+          if (identical(context, singleton)) {
+            found_singleton <- TRUE
+            break
+          }
+        }
+        if (found_singleton)
+          next
+        else
+          singletons[[length(singletons)+1]] <- context
+      }
+
+      # append context
       shiny_prerendered_append_context(con, context$name, context$code)
+    }
   }
 }
 
