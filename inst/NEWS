@@ -1,6 +1,9 @@
 rmarkdown 1.2 (unreleased)
 --------------------------------------------------------------------------------
 
+* Add support for df_print to handle additional dplyr classes: grouped_df,
+  rowwise_df and tbl_sql.
+
 * Add new `runtime: shiny_prerendered` mode for interactive documents.
 
 * Prepend "section-" to ids in runtime: shiny[_prerendered] to eliminate
