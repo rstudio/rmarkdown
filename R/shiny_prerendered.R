@@ -167,8 +167,15 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
                                                   shiny_prerendered_dependencies,
                                                   files_dir,
                                                   output_dir) {
-  # transform dependencies
+
+
+
+  # transform dependencies (if we aren't in debug mode)
   dependencies <- lapply(shiny_prerendered_dependencies, function(dependency) {
+
+    # no transformation in live preview mode
+    if (nzchar(Sys.getenv("RMARKDOWN_SHINY_PRERENDERED_LIVE_PREVIEW")))
+      return(dependency)
 
     # see if we can convert absolute paths into package-aliased ones
     if (is.null(dependency$package) && !is.null(dependency$src$file)) {
