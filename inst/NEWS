@@ -29,6 +29,8 @@ rmarkdown 1.2 (unreleased)
 
 * Add `paged_table` function for printing paged tables within HTML documents
 
+* Support `{.active}` attribute for setting initially active tab (#789)
+
 
 rmarkdown 1.1
 --------------------------------------------------------------------------------
