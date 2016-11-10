@@ -173,8 +173,9 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
   # transform dependencies (if we aren't in debug mode)
   dependencies <- lapply(shiny_prerendered_dependencies, function(dependency) {
 
-    # no transformation in live preview mode
-    if (nzchar(Sys.getenv("RMARKDOWN_SHINY_PRERENDERED_LIVE_PREVIEW")))
+    # no transformation in dev mode (so browser dev tools can map directly
+    # to the locations of CSS and JS files in their pkg src directory)
+    if (nzchar(Sys.getenv("RMARKDOWN_SHINY_PRERENDERED_DEVMODE")))
       return(dependency)
 
     # see if we can convert absolute paths into package-aliased ones
