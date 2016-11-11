@@ -25,7 +25,7 @@ knit_params_ask(file = NULL, input_lines = NULL, params = NULL,
 
 \item{html_head_style}{a string or a list/vector of strings representing CSS style that will be injected in the HTML HEAD.}
 
-\item{html_head_script}{a string or a list/vector of strings represeting JS scripts that will be injected in the HTML HEAD.}
+\item{html_head_script}{a string or a list/vector of strings representing JS scripts that will be injected in the HTML HEAD.}
 
 \item{html_head_style_link}{same as above except that these are interpreted as HREF attributes in LINK tags.
 You must take care to unsure that the URL is absolute.}

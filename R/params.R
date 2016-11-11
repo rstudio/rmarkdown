@@ -245,7 +245,7 @@ params_html_head <- function(html_head_style = c(),
 #' @param save_caption Caption to use use for button that saves/confirms parameters.
 #' @param encoding The encoding of the input file; see \code{\link{file}}.
 #' @param html_head_style a string or a list/vector of strings representing CSS style that will be injected in the HTML HEAD.
-#' @param html_head_script a string or a list/vector of strings represeting JS scripts that will be injected in the HTML HEAD.
+#' @param html_head_script a string or a list/vector of strings representing JS scripts that will be injected in the HTML HEAD.
 #' @param html_head_style_link same as above except that these are interpreted as HREF attributes in LINK tags.
 #' You must take care to unsure that the URL is absolute.
 #' @param html_head_script_link same as above except that these are interpreted as SRC attributes in SCRIPT tags.
