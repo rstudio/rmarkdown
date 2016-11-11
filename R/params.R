@@ -187,7 +187,7 @@ params_namedList <- function() {
 }
 
 
-setup_html_head <- function(html_head_style = c(),
+params_html_head <- function(html_head_style = c(),
                             html_head_script = c(),
                             html_head_style_link = c(),
                             html_head_script_link = c()) {
@@ -225,10 +225,10 @@ setup_html_head <- function(html_head_style = c(),
     append(
       list(default_style, default_script),
       c(
-        custom_styles,
-        custom_scripts,
         custom_style_links,
-        custom_script_links
+        custom_styles,
+        custom_script_links,
+        custom_scripts
       )
     )
   ))
@@ -463,7 +463,7 @@ knit_params_ask <- function(file = NULL,
       class = "navbar navbar-default navbar-fixed-bottom")
 
   ui <- shiny::bootstrapPage(
-      setup_html_head(
+      params_html_head(
         html_head_style = html_head_style,
         html_head_script = html_head_script,
         html_head_style_link = html_head_style_link,
