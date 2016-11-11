@@ -194,9 +194,6 @@ params_namedList <- function() {
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
 #' @param save_caption Caption to use use for button that saves/confirms parameters.
 #' @param encoding The encoding of the input file; see \code{\link{file}}.
-#' @param a string or a list/vector of strings representing CSS style that will be injected in the HTML HEAD.
-#' @param a string or a list/vector of strings representing LINK URLs that will be injected in the HTML HEAD.
-#' @param a string or a list/vector of strings represeting JS scripts that will be injected in the HTML HEAD.
 #'
 #' @return named list with overridden parameter names and value.
 #'
@@ -206,10 +203,7 @@ knit_params_ask <- function(file = NULL,
                             params = NULL,
                             shiny_args = NULL,
                             save_caption = "Save",
-                            encoding = getOption("encoding"),
-                            html_head_style = c(),
-                            html_head_link = c(),
-                            html_head_script = c()) {
+                            encoding = getOption("encoding")) {
 
   if (is.null(input_lines)) {
     if (is.null(file)) {
@@ -408,34 +402,21 @@ knit_params_ask <- function(file = NULL,
           class = "container-fluid"),
       class = "navbar navbar-default navbar-fixed-bottom")
 
-  if (!is.list(html_head_style) && !is.vector(html_head_style)) {
-    html_head_style = c(html_head_style)
-  }
-  default_style <- c(
-    # Our controls are wiiiiide.
-    ".container-fluid .shiny-input-container { width: auto; }",
-    # Prevent the save/cancel buttons from squashing together.
-    ".navbar button { margin-left: 10px; }",
-    # Style for the navbar footer.
-    # http://getbootstrap.com/components/#navbar-fixed-bottom
-    "body { padding-bottom: 70px; }"
-  )
-  all_styles <- append(default_style, html_head_style)
-  style <- do.call(shiny::tags$style, as.list(all_styles))
-
-    ## Escape is "cancel" and Enter is "save".
-  if (!is.list(html_head_script) && !is.vector(html_head_script)) {
-    html_head_script = c(html_head_script)
-  }
-  default_script <- c(
-    "$(document).keyup(function(e) {\n",
-    "if (e.which == 13) { $('#save').click(); } // enter\n",
-    "if (e.which == 27) { $('#cancel').click(); } // esc\n",
-    "});\n"
-  )
-  all_scripts <- append(default_script, html_head_script)
-  script <- shiny::tags$script(do.call(shiny::HTML, as.list(all_scripts)))
-
+  style <- shiny::tags$style(
+      # Our controls are wiiiiide.
+      ".container-fluid .shiny-input-container { width: auto; }",
+      # Prevent the save/cancel buttons from squashing together.
+      ".navbar button { margin-left: 10px; }",
+      # Style for the navbar footer.
+      # http://getbootstrap.com/components/#navbar-fixed-bottom
+      "body { padding-bottom: 70px; }"
+                             )
+  ## Escape is "cancel" and Enter is "save".
+  script <- shiny::tags$script(shiny::HTML("$(document).keyup(function(e) {\n",
+                                           "if (e.which == 13) { $('#save').click(); } // enter\n",
+                                           "if (e.which == 27) { $('#cancel').click(); } // esc\n",
+                                           "});"
+                                           ))
   ui <- shiny::bootstrapPage(
       shiny::tags$head(style, script),
       contents,
