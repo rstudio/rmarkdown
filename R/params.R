@@ -12,7 +12,9 @@ knit_params_get <- function(input_lines, params) {
   if (!is.null(params)) {
 
     if (identical(params, "ask")) {
-      params <- knit_params_ask(input_lines = input_lines)
+      params <- knit_params_ask(
+        input_lines = input_lines, shiny_args = list(launch.browser = TRUE)
+      )
       if (is.null(params)) {
         stop("render parameter configuration canceled")
       }
