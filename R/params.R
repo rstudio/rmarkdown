@@ -12,10 +12,6 @@ knit_params_get <- function(input_lines, params) {
   if (!is.null(params)) {
 
     if (identical(params, "ask")) {
-      if (!interactive()) {
-        stop("render parameter configuration only allowed in an interactive environment")
-      }
-
       params <- knit_params_ask(input_lines = input_lines)
       if (is.null(params)) {
         stop("render parameter configuration canceled")
