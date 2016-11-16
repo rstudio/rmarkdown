@@ -31,6 +31,9 @@ rmarkdown 1.2 (unreleased)
 
 * Support `{.active}` attribute for setting initially active tab (#789)
 
+* Add `knit_root_dir` argument to `render()` and YAML header, a convenience
+  for setting knitr's root.dir option
+
 
 rmarkdown 1.1
 --------------------------------------------------------------------------------
