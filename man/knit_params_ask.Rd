@@ -8,7 +8,7 @@ knit_params_ask(file = NULL, input_lines = NULL, params = NULL,
   shiny_args = NULL, save_caption = "Save",
   encoding = getOption("encoding"), html_head_style = c(),
   html_head_script = c(), html_head_style_link = c(),
-  html_head_script_link = c())
+  html_head_script_link = c(), disable_bootstrap = FALSE)
 }
 \arguments{
 \item{file}{Path to the R Markdown document with configurable parameters.}
@@ -32,6 +32,8 @@ You must take care to unsure that the URL is absolute.}
 
 \item{html_head_script_link}{same as above except that these are interpreted as SRC attributes in SCRIPT tags.
 You must take care to unsure that the URL is absolute.}
+
+\item{disable_bootstrap}{if true, does not inject boostrap scripts and styles in the HTML HEAD.}
 }
 \value{
 named list with overridden parameter names and value.
