@@ -462,7 +462,7 @@ knit_params_ask <- function(file = NULL,
           class = "container-fluid"),
       class = "navbar navbar-default navbar-fixed-bottom")
 
-  ui <- shiny::bootstrapPage(
+  ui <- shiny::tagList(
       params_html_head(
         html_head_style = html_head_style,
         html_head_script = html_head_script,
