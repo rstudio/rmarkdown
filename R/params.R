@@ -250,6 +250,7 @@ params_html_head <- function(html_head_style = c(),
 #' You must take care to unsure that the URL is absolute.
 #' @param html_head_script_link same as above except that these are interpreted as SRC attributes in SCRIPT tags.
 #' You must take care to unsure that the URL is absolute.
+#' @param disable_bootstrap if true, does not inject boostrap scripts and styles in the HTML HEAD.
 #'
 #' @return named list with overridden parameter names and value.
 #'
@@ -263,7 +264,8 @@ knit_params_ask <- function(file = NULL,
                             html_head_style = c(),
                             html_head_script = c(),
                             html_head_style_link = c(),
-                            html_head_script_link = c()) {
+                            html_head_script_link = c(),
+                            disable_bootstrap = FALSE) {
 
   if (is.null(input_lines)) {
     if (is.null(file)) {
@@ -462,7 +464,9 @@ knit_params_ask <- function(file = NULL,
           class = "container-fluid"),
       class = "navbar navbar-default navbar-fixed-bottom")
 
-  ui <- shiny::tagList(
+  buildPage <- ifelse((is.null(disable_bootstrap) | !isTruthy(disable_bootstrap)), shiny::bootstrapPage, shiny::tagList)
+
+  ui <- buildPage(
       params_html_head(
         html_head_style = html_head_style,
         html_head_script = html_head_script,
