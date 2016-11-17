@@ -91,10 +91,11 @@ mark_utf8 <- function(x) {
   res
 }
 
-# TODO: remove this when fixed upstream https://github.com/viking/r-yaml/issues/6
+# originally written due to the bug https://github.com/viking/r-yaml/issues/6;
+# now no longer need the mark_utf8 trick
 yaml_load_utf8 <- function(string, ...) {
   string <- paste(string, collapse = '\n')
-  mark_utf8(yaml::yaml.load(enc2utf8(string), ...))
+  yaml::yaml.load(string, ...)
 }
 
 yaml_load_file_utf8 <- function(input, ...) {
