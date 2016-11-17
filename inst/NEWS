@@ -34,6 +34,8 @@ rmarkdown 1.2 (unreleased)
 * Add `knit_root_dir` argument to `render()` and YAML header, a convenience
   for setting knitr's root.dir option
 
+* Improve alignment of text in sub-topics for floating TOC
+
 
 rmarkdown 1.1
 --------------------------------------------------------------------------------
