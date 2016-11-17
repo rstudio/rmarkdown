@@ -17,6 +17,7 @@ render <- function(input,
                    output_dir = NULL,
                    output_options = NULL,
                    intermediates_dir = NULL,
+                   knit_root_dir = NULL,
                    runtime =  c("auto", "static", "shiny", "shiny_prerendered"),
                    clean = TRUE,
                    params = NULL,
@@ -51,6 +52,7 @@ render <- function(input,
                        output_dir = output_dir,
                        output_options = output_options,
                        intermediates_dir = intermediates_dir,
+                       knit_root_dir = knit_root_dir,
                        runtime = runtime,
                        clean = clean,
                        params = params,
@@ -134,6 +136,9 @@ render <- function(input,
         intermediates_dir <- NULL
     }
   }
+
+  # force evaluation of knitr root dir before we change directory context
+  force(knit_root_dir)
 
   # execute within the input file's directory
   oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
@@ -324,6 +329,13 @@ render <- function(input,
       rmarkdown.version = 2,
       rmarkdown.runtime = runtime
     )
+
+    # read root directory from argument (has precedence) or front matter
+    root_dir <- knit_root_dir
+    if (is.null(root_dir))
+      root_dir <- yaml_front_matter$knit_root_dir
+    if (!is.null(root_dir))
+      knitr::opts_knit$set(root.dir = root_dir)
 
     # use filename based figure and cache directories
     figures_dir <- paste(files_dir, "/figure-", pandoc_to, "/", sep = "")

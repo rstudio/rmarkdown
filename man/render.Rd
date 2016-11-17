@@ -4,6 +4,7 @@
 \usage{
 render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
        output_options = NULL, intermediates_dir = NULL,
+       knit_root_dir = NULL,
        runtime = c("auto", "static", "shiny", "shiny_prerendered"),
        clean = TRUE, params = NULL, knit_meta = NULL, envir = parent.frame(),
        run_pandoc = TRUE, quiet = FALSE, encoding = getOption("encoding"))
@@ -35,6 +36,10 @@ render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
   \item{intermediates_dir}{Intermediate files directory. If \code{NULL},
   intermediate files are written to the same directory as the input file;
   otherwise.}
+
+  \item{knit_root_dir}{The working directory in which to knit the document; uses
+  knitr's \code{root.dir} knit option. \code{NULL} means to follow the knitr
+  default, which is to use the parent directory of the document.}
 
   \item{runtime}{The runtime target for rendering. \code{static} produces output
   intended for static files; \code{shiny} produces output suitable for use in a
