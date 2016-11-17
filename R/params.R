@@ -2,7 +2,7 @@
 knit_params_get <- function(input_lines, params) {
 
   # read the default parameters and extract them into a named list
-  knit_params <- mark_utf8(knitr::knit_params(input_lines))
+  knit_params <- knitr::knit_params(input_lines)
   default_params <- list()
   for (param in knit_params) {
     default_params[[param$name]] <- param$value
@@ -210,7 +210,7 @@ knit_params_ask <- function(file = NULL,
     input_lines <- read_lines_utf8(file, encoding)
   }
 
-  knit_params <- mark_utf8(knitr::knit_params(input_lines))
+  knit_params <- knitr::knit_params(input_lines)
 
   ## Input validation on params (checks shared with render)
   if (!is.null(params)) {
