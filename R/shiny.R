@@ -181,7 +181,10 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
   # launch the app and open a browser to the requested page, if one was
   # specified
-  launch_browser <- (!is.null(file)) && interactive()
+  if (!is.null(shiny_args) && !is.null(shiny_args$launch_browser))
+    launch_browser <- shiny_args$launch_browser
+  else
+    launch_browser <- (!is.null(file)) && interactive()
   if (isTRUE(launch_browser)) {
     launch_browser <- function(url) {
       url <- paste(url, file_rel, sep = "/")
