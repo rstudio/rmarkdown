@@ -36,6 +36,8 @@ rmarkdown 1.2 (unreleased)
 
 * Improve alignment of text in sub-topics for floating TOC
 
+* Bibliography file paths in YAML containing forward slashes could not be
+  rendered (#875)
 
 rmarkdown 1.1
 --------------------------------------------------------------------------------

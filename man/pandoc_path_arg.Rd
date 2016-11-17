@@ -4,10 +4,13 @@
 \alias{pandoc_path_arg}
 \title{Transform path for passing to pandoc}
 \usage{
-pandoc_path_arg(path)
+pandoc_path_arg(path, backslash = TRUE)
 }
 \arguments{
 \item{path}{Path to transform}
+
+\item{backslash}{Whether to replace forward slashes in \code{path} with
+backslashes on Windows}
 }
 \value{
 Transformed path that can be passed to pandoc on the command line
