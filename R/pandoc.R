@@ -291,11 +291,13 @@ pandoc_toc_args <- function(toc, toc_depth = 3) {
 #' references)
 #'
 #' @param path Path to transform
+#' @param backslash Whether to replace forward slashes in \code{path} with
+#'   backslashes on Windows
 #'
 #' @return Transformed path that can be passed to pandoc on the command line
 #'
 #' @export
-pandoc_path_arg <- function(path) {
+pandoc_path_arg <- function(path, backslash = TRUE) {
 
   path <- path.expand(path)
 
@@ -306,7 +308,7 @@ pandoc_path_arg <- function(path) {
     i <- grep(' ', path)
     if (length(i))
       path[i] <- utils::shortPathName(path[i])
-    path <- gsub('/', '\\\\', path)
+    if (backslash) path <- gsub('/', '\\\\', path)
   }
 
   path

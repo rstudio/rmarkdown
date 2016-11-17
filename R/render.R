@@ -562,8 +562,10 @@ render <- function(input,
     if (!is.null(bibliography <- yaml_front_matter$bibliography)) {
       # remove the .bib extension since it does not work with MikTeX's BibTeX
       if (need_bibtex && is_windows()) bibliography <- sub('[.]bib$', '', bibliography)
-      output_format$pandoc$args <- c(output_format$pandoc$args,
-                                     rbind("--bibliography", pandoc_path_arg(bibliography)))
+      output_format$pandoc$args <- c(
+        output_format$pandoc$args,
+        rbind("--bibliography", pandoc_path_arg(bibliography, FALSE))
+      )
     }
 
     # add an id-prefix if this is runtime: shiny
