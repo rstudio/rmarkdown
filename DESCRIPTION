@@ -63,7 +63,7 @@ Imports:
     utils,
     grDevices,
     knitr (>= 1.14),
-    yaml (>= 2.1.5),
+    yaml (>= 2.1.14),
     htmltools (>= 0.3.5),
     caTools,
     evaluate (>= 0.8),
