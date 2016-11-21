@@ -1,4 +1,4 @@
-rmarkdown 1.2 (unreleased)
+rmarkdown 1.2
 --------------------------------------------------------------------------------
 
 * Add support for df_print to handle additional dplyr classes: grouped_df,
