@@ -2,12 +2,6 @@
 title: "R Notebook HTML Format"
 ---
 
-**NOTE:** The functions described in this article are available in the development version of the rmarkdown package. You can install the development version using the devtools package as follows:
-
-```{r, eval=FALSE}
-devtools::install_github("rstudio/rmarkdown")
-```
-
 ## Overview
 
 This article describes the HTML notebook format, and is primarily intended for

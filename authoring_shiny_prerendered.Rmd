@@ -19,10 +19,10 @@ Ideally, we could have interactive documents that are prerendered (i.e. render/k
 
 ### Prerequisties {.toc-ignore}
 
-To use `runtime: shiny_prerendered` you need to install the development version of the [rmarkdown](http://rmarkdown.rstudio.com) package. You can do this as follows:
+To use `runtime: shiny_prerendered` you need to install the very latest version (v1.2) of the [rmarkdown](http://rmarkdown.rstudio.com) package. You can do this as follows:
 
 ```{r, eval=FALSE}
-devtools::install_github("rstudio/rmarkdown")
+install.packages("rmarkdown", type = "source")
 ```
 
 If you are running RStudio you should also download the Daily Build of RStudio (v1.0.103 or later) as it includes features that allow you easily run and preview `runtime: shiny_prerendered` documents within the IDE. Download links for the RStudio Daily Build are here:
