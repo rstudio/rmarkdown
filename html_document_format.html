@@ -428,7 +428,11 @@ output:
 <div id="data-frame-printing" class="section level2">
 <h2>Data Frame Printing</h2>
 <p>You can enhance the default display of data frames via the <code>df_print</code> option. Valid values include:</p>
-<table>
+<table style="width:79%;">
+<colgroup>
+<col width="18%" />
+<col width="61%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Option</th>
@@ -450,7 +454,7 @@ output:
 </tr>
 <tr class="even">
 <td>paged</td>
-<td>Create a pageable HTML table</td>
+<td>Use the <code>rmarkdown::print.paged_df</code> function which creates a pageable HTML table.</td>
 </tr>
 </tbody>
 </table>
@@ -461,6 +465,44 @@ output:
   html_document:
     df_print: paged
 ---</code></pre>
+<div id="paged-printing" class="section level3">
+<h3>Paged Printing</h3>
+<p>When the <code>df_print</code> option is set to <code>paged</code>, the following options are avaialble:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>max.print</td>
+<td>The number of rows to print.</td>
+</tr>
+<tr class="even">
+<td>rows.print</td>
+<td>The number of rows to display.</td>
+</tr>
+<tr class="odd">
+<td>cols.print</td>
+<td>The number of columns to display.</td>
+</tr>
+<tr class="even">
+<td>cols.min.print</td>
+<td>The minimum number of columns to display.</td>
+</tr>
+<tr class="odd">
+<td>pages.print</td>
+<td>The number of pages to display under page navigation.</td>
+</tr>
+<tr class="even">
+<td>paged.print</td>
+<td>When set to <code>FALSE</code> turns off paged tables.</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="code-folding" class="section level2">
 <h2>Code Folding</h2>
