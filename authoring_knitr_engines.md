@@ -147,6 +147,24 @@ SELECT * FROM trials WHERE subjects >= ?subjects
 &#96;&#96;&#96;
 </code></pre>
 
+### Setting a Default Connection
+
+If you have many SQL chunks, it may be helpful to set a default for the `connection` chunk option in the setup chunk, so that it is not necessary to specify the connection on each individual chunk. You can do this as follows:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r setup}
+library(DBI)
+db <- dbConnect(RSQLite::SQLite(), dbname = "sql.sqlite")
+knitr::opts_chunk$set(connection = "db")
+&#96;&#96;&#96;
+</code></pre>
+
+Note that the `connection` parameter should contain a string naming the connection object (not the object itself). Once set, you can execute SQL chunks without naming an explicit connection:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{sql}
+SELECT * FROM trials
+&#96;&#96;&#96;
+</code></pre>
+
 ## Bash
 
 The [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) engine enables the execution of shell scripts via the bash interpreter (note that `sh` and `zsh` engines are also available). For example:
