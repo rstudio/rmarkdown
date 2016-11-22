@@ -91,10 +91,17 @@ mark_utf8 <- function(x) {
   res
 }
 
-# TODO: remove this when fixed upstream https://github.com/viking/r-yaml/issues/6
+# the yaml UTF-8 bug has been fixed https://github.com/viking/r-yaml/issues/6
+# but yaml >= 2.1.14 Win/Mac binaries are not available for R < 3.2.0, so we
+# still need the mark_utf8 trick
+#' @importFrom utils packageVersion
 yaml_load_utf8 <- function(string, ...) {
   string <- paste(string, collapse = '\n')
-  mark_utf8(yaml::yaml.load(enc2utf8(string), ...))
+  if (packageVersion('yaml') >= '2.1.14') {
+    yaml::yaml.load(string, ...)
+  } else {
+    mark_utf8(yaml::yaml.load(enc2utf8(string), ...))
+  }
 }
 
 yaml_load_file_utf8 <- function(input, ...) {

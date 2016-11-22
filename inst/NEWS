@@ -1,4 +1,4 @@
-rmarkdown 1.2 (unreleased)
+rmarkdown 1.2
 --------------------------------------------------------------------------------
 
 * Add support for df_print to handle additional dplyr classes: grouped_df,
@@ -31,6 +31,13 @@ rmarkdown 1.2 (unreleased)
 
 * Support `{.active}` attribute for setting initially active tab (#789)
 
+* Add `knit_root_dir` argument to `render()` and YAML header, a convenience
+  for setting knitr's root.dir option
+
+* Improve alignment of text in sub-topics for floating TOC
+
+* Bibliography file paths in YAML containing forward slashes could not be
+  rendered (#875)
 
 rmarkdown 1.1
 --------------------------------------------------------------------------------
