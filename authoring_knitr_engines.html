@@ -366,7 +366,7 @@ SELECT * FROM trials
 <div id="assigning-results-to-a-data-frame" class="section level3">
 <h3>Assigning Results to a Data Frame</h3>
 <p>If you want to assign the results of the SQL query to an R data frame, you can do this using the <code>output.var</code> option, for example:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, output.var=trials}
+<pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, output.var="trials"}
 SELECT * FROM trials
 &#96;&#96;&#96;
 </code></pre>

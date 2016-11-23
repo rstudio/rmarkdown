@@ -126,7 +126,7 @@ You can specify that you want no caption all via `tab.cap = NA`.
 
 If you want to assign the results of the SQL query to an R data frame, you can do this using the `output.var` option, for example:
 
-<pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, output.var=trials}
+<pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, output.var="trials"}
 SELECT * FROM trials
 &#96;&#96;&#96;
 </code></pre>
