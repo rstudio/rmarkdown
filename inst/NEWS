@@ -5,6 +5,8 @@ rmarkdown 1.3 (unreleased)
 
 * Fix rendering of pagedtables within html_notebook format.
 
+* Ensure that html_prerendered UI is never cached.
+
 
 rmarkdown 1.2
 --------------------------------------------------------------------------------

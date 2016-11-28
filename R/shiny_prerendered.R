@@ -45,7 +45,7 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
 
   # create shiny app
   shiny::shinyApp(
-    ui = html,
+    ui = function(req) html,
     server = server,
     onStart = onStart,
     uiPattern = "^/$|^(/.*\\.[Rr][Mm][Dd])$"
