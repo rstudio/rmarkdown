@@ -3,6 +3,8 @@ rmarkdown 1.3 (unreleased)
 
 * Fix v1.1 regression in ordering of CSS for ioslides_presentation.
 
+* Fix rendering of pagedtables within html_notebook format.
+
 
 rmarkdown 1.2
 --------------------------------------------------------------------------------
