@@ -424,9 +424,9 @@ output:
             var container = document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0];
 
             // append script tag enclosed by google indexing suppression comment
-            container.appendChild(document.createComment('googleoff: index'));
+            container.appendChild(document.createComment('googleoff: all'));
             container.appendChild(dsq);
-            container.appendChild(document.createComment('googleon: index'));
+            container.appendChild(document.createComment('googleon: all'));
         })();
       });
     </script>
