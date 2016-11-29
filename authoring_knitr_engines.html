@@ -368,7 +368,7 @@ SELECT * FROM trials
 <div id="assigning-results-to-a-data-frame" class="section level3">
 <h3>Assigning Results to a Data Frame</h3>
 <p>If you want to assign the results of the SQL query to an R data frame, you can do this using the <code>output.var</code> option, for example:</p>
-<pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, output.var=trials}
+<pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, output.var="trials"}
 SELECT * FROM trials
 &#96;&#96;&#96;
 </code></pre>
@@ -383,6 +383,21 @@ subjects <- 10
 </code></pre>
 <pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, output.var="trials"}
 SELECT * FROM trials WHERE subjects >= ?subjects
+&#96;&#96;&#96;
+</code></pre>
+</div>
+<div id="setting-a-default-connection" class="section level3">
+<h3>Setting a Default Connection</h3>
+<p>If you have many SQL chunks, it may be helpful to set a default for the <code>connection</code> chunk option in the setup chunk, so that it is not necessary to specify the connection on each individual chunk. You can do this as follows:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{r setup}
+library(DBI)
+db <- dbConnect(RSQLite::SQLite(), dbname = "sql.sqlite")
+knitr::opts_chunk$set(connection = "db")
+&#96;&#96;&#96;
+</code></pre>
+<p>Note that the <code>connection</code> parameter should contain a string naming the connection object (not the object itself). Once set, you can execute SQL chunks without naming an explicit connection:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{sql}
+SELECT * FROM trials
 &#96;&#96;&#96;
 </code></pre>
 </div>
