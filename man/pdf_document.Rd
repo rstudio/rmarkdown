@@ -107,7 +107,7 @@ customized using metadata. For example:
 Available metadata variables include:
 
 \describe{
-   \item{\code{lang}}{Document language code}
+   \item{\code{lang}}{Document language code (e.g. "es", "fr", "pt-BR")}
    \item{\code{fontsize}}{Font size (e.g. 10pt, 11pt, 12pt)}
    \item{\code{documentclass}}{LaTeX document class (e.g. article)}
    \item{\code{classoption}}{Option for \code{documentclass} (e.g. oneside); may be repeated}
