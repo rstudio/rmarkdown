@@ -1,11 +1,15 @@
 ---
 title: "Page B"
 output: html_document
+params:
+  var1: "default_val1"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+Parameter var1: `r params$var1`
 
 ## Section 1
 

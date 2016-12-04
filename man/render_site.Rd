@@ -21,7 +21,8 @@ site_config(input = ".", encoding = "UTF-8")
 default_site_generator(input, encoding = "UTF-8", ...)
 }
 \arguments{
-\item{input}{Website directory (or the name of a file within the directory).}
+\item{input}{Website directory (or the name of an html file within the
+directory to be rendered).}
 
 \item{output_format}{R Markdown format to convert to (defaults to "all").}
 
@@ -138,6 +139,27 @@ functions from different packages (namespaces) that share a common name, such
 as \code{here::here} and \code{lubridate::here} or \code{dplyr::filter} and
 \code{MASS::filter}. The default behaviour of \code{render_site} is to use a
 common R session.
+
+\code{autospin: true} causes \code{.R} files to be spinned and rendered
+(as well as \code{.Rmd} files). If \code{autospin} is set to false (the default),
+it is still possible to spin specific R files by using the \code{output_files} field.
+
+\code{output_files} can be used to describe which Rmd file is used to render
+each html file and, if necessary, pass R markdown parameters. If an html file does
+not appear in output files it will be rendered using the Rmd file with the same
+name. This is an example of how the \code{output_files} can be used to generate
+two html files from the same Rmd file (that accepts a parameter "flight_type"):
+
+\preformatted{output_files:
+ flights_domestic.html:
+   src: "flights_analysis.Rmd"
+   params:
+     flight_type: "domestic"
+ flights_international.html:
+   src: "flights_analysis.Rmd"
+   params:
+     flight_type: "international"
+}
 }
 
 \section{Custom Site Generation}{

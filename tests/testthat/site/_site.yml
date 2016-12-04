@@ -1,5 +1,6 @@
 name: "mysite"
 output_dir: "_site"
+autospin: false
 include: script.R
 exclude: docs.txt
 navbar:
@@ -11,9 +12,11 @@ navbar:
     - text: "More"
       menu:
         - { text: "Page B", href: PageB.html }
+        - { text: "Page B2", href: PageB2.html }
         - { text: "-----------------" }
         - { text: "Header" }
         - { text: "Page C", href: PageC.html }
+        - { text: "Page D", href: PageD.html }
   right:
     - text: "GitHub"
       href: https://github.com
@@ -21,3 +24,11 @@ output:
   html_document:
     css: styles.css
     theme: united
+
+output_files:
+  PageB2.html:
+    src: PageB.rmd
+    params:
+      var1: "value1"
+  PageD.html:
+    src: PageD.R

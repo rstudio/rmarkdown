@@ -91,6 +91,27 @@
 #' \code{MASS::filter}. The default behaviour of \code{render_site} is to use a
 #' common R session.
 #'
+#' \code{autospin: true} causes \code{.R} files to be spinned and rendered
+#' (as well as \code{.Rmd} files). If \code{autospin} is set to false (the default),
+#' it is still possible to spin specific R files by using the \code{output_files} field.
+#'
+#' \code{output_files} can be used to describe which Rmd file is used to render
+#' each html file and, if necessary, pass R markdown parameters. If an html file does
+#' not appear in output files it will be rendered using the Rmd file with the same
+#' name. This is an example of how the \code{output_files} can be used to generate
+#' two html files from the same Rmd file (that accepts a parameter "flight_type"):
+#'
+#' \preformatted{output_files:
+#'  flights_domestic.html:
+#'    src: "flights_analysis.Rmd"
+#'    params:
+#'      flight_type: "domestic"
+#'  flights_international.html:
+#'    src: "flights_analysis.Rmd"
+#'    params:
+#'      flight_type: "international"
+#' }
+#'
 #' @section Custom Site Generation:
 #' The behavior of the default site generation function
 #' (\code{rmarkdown::default_site}) is described above. It is also possible to
@@ -139,7 +160,8 @@
 #' See the source code of the \code{rmarkdown::default_site} function for a
 #' example of a site generation function.
 #'
-#' @param input Website directory (or the name of a file within the directory).
+#' @param input Website directory (or the name of an html file within the
+#'   directory to be rendered).
 #' @param output_format R Markdown format to convert to (defaults to "all").
 #' @param envir The environment in which the code chunks are to be evaluated
 #'   during knitting (can use \code{\link{new.env}} to guarantee an empty new
@@ -165,11 +187,13 @@ render_site <- function(input = ".",
   # normalize to a directory
   input <- input_as_dir(input)
 
-  # if it's a file then capture that and force output_format to be NULL
+  # input can be either the directory where all the files to be rendered are
+  # or the name of an HTML file to be rendered.
+  # if it's an HTML file then capture that and force output_format to be NULL
   # (to only render a single format for incremental/previewing)
-  input_file <- NULL
+  output_file <- NULL
   if (!dir_exists(original_input)) {
-    input_file <- original_input
+    output_file <- original_input
     if (output_format == "all")
       output_format <- NULL
   }
@@ -180,7 +204,7 @@ render_site <- function(input = ".",
     stop("No site generator found.")
 
   # execute it
-  generator$render(input_file = input_file,
+  generator$render(output_file = output_file,
                    output_format = output_format,
                    envir = envir,
                    quiet = quiet,
@@ -189,7 +213,7 @@ render_site <- function(input = ".",
   # compute the name of the output file. if the input was a filename
   # use that as a base (otherwise use index.html)
   if (!dir_exists(original_input))
-    output <- file_with_ext(basename(original_input), "html")
+    output <- output_file
   else
     output <- "index.html"
   output <- file.path(input, generator$output_dir, output)
@@ -328,11 +352,33 @@ default_site <- function(input, encoding = "UTF-8", ...) {
   # recursively because rmarkdown in general handles applying common
   # options/elements across subdirectories poorly)
   input_files <- function() {
-    list.files(input, pattern = "^[^_].*\\.[Rr]?md$")
+    if (isTRUE(config$autospin)) {
+      pattern <- "^[^_].*\\.[Rr]?(md)?$"
+    } else {
+      pattern <- "^[^_].*\\.[Rr]?md$"
+    }
+    list.files(input, pattern = pattern)
+  }
+
+  # Output files are by default based on the input files:
+  output_files <- function() {
+    all_input_files <- input_files()
+    output <- lapply(all_input_files,
+                     function(input_file) {
+                       list(src = input_file, params = NULL)
+                     })
+    names(output) <- file_with_ext(basename(all_input_files), "html")
+
+    # However the output files may be overriden in the _site.yml `output_files` field
+    if ("output_files" %in% names(config)) {
+      output_files_to_override <- names(config[["output_files"]])
+      output[output_files_to_override] <- config[["output_files"]]
+    }
+    output
   }
 
   # define render function (use ... to gracefully handle future args)
-  render <- function(input_file,
+  render <- function(output_file,
                      output_format,
                      envir,
                      quiet,
@@ -342,25 +388,41 @@ default_site <- function(input, encoding = "UTF-8", ...) {
     outputs <- c()
 
     # see if this is an incremental render
-    incremental <- !is.null(input_file)
+    incremental <- !is.null(output_file)
+
+    # An output_files_list example is:
+    # output_files_list <- list(`index.html` = list(src = "index.Rmd",
+    #                                               params = NULL),
+    #                           `about.html` = list(src = "about.Rmd",
+    #                                               params = NULL))
+    # so names(output_files_list) is the list of html files to generate
+    # and each element of the list describes the Rmd and parameters required
+    # for rendering.
+    output_files_list <- output_files()
 
     # files list is either a single file (for incremental) or all
     # file within the input directory
     if (incremental)
-      files <- input_file
+      files <- output_file
     else {
-      files <- file.path(input, input_files())
+      files <- file.path(input, names(output_files_list))
     }
+
     sapply(files, function(x) {
       render_one <- if (isTRUE(config$new_session)) {
         render_new_session
       } else {
         render_current_session
       }
-      output <- render_one(input = x,
+
+      basename_x <- basename(x)
+      output <- render_one(input = file.path(input, output_files_list[[basename_x]][["src"]]),
                            output_format = output_format,
+                           output_dir = dirname(x),
+                           output_file = basename_x,
                            output_options = list(lib_dir = "site_libs",
                                                  self_contained = FALSE),
+                           params = output_files_list[[basename_x]]$params,
                            envir = envir,
                            quiet = quiet,
                            encoding = encoding)
@@ -424,9 +486,9 @@ default_site <- function(input, encoding = "UTF-8", ...) {
     # Print output created for rstudio preview
     if (!quiet) {
       # determine output file
-      output_file <- ifelse(is.null(input_file),
+      output_file <- ifelse(is.null(output_file),
                             "index.html",
-                            file_with_ext(basename(input_file), "html"))
+                            output_file)
       if (config$output_dir != ".")
         output_file <- file.path(config$output_dir, output_file)
       message("\nOutput created: ", output_file)
@@ -443,7 +505,7 @@ default_site <- function(input, encoding = "UTF-8", ...) {
     files <- input_files()
 
     # get html files
-    html_files <- file_with_ext(files, "html")
+    html_files <- names(output_files())
 
     # _files peers are always removed (they could be here due to
     # output_dir == "." or due to a _cache existing for the page)
