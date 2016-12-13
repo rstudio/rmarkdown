@@ -62,13 +62,22 @@ rtf_document <- function(toc = FALSE,
 
   preserved_chunks <- character()
 
+  check_knitr_version <- function() {
+    if (packageVersion('knitr') < '1.15') {
+      warning('You need to install a newer version of the knitr package')
+      FALSE
+    } else TRUE
+  }
+
   pre_processor <- function(metadata, input_file, runtime, knit_meta,
                              files_dir, output_dir) {
+    if (!check_knitr_version()) return()
     preserved_chunks <<- extract_preserve_chunks(input_file, knitr::extract_raw_output)
     NULL
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+    if (!check_knitr_version()) return(output_file)
     output_str <- readLines(output_file, encoding = 'UTF-8')
     output_res <- knitr::restore_raw_output(output_str, preserved_chunks)
     if (!identical(output_str, output_res))
