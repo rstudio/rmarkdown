@@ -175,11 +175,21 @@ pdf_document <- function(toc = FALSE,
 
     format_deps <- list()
 
+    if(!is.null(extra_dependencies)){
+      if(is_latex_dependency(extra_dependencies)){
+        extra_dependencies <- list(extra_dependencies)
+      }
+      if(is.character(extra_dependencies)){
+        extra_dependencies <- string_to_latex_dependencies(extra_dependencies)
+      }
+    }
+
     format_deps <- append(format_deps, extra_dependencies)
     all_dependencies <- if (is.null(format_deps)) list() else format_deps
 
     if (has_latex_dependencies(knit_meta)) {
-      all_dependencies <- append(all_dependencies, flatten_latex_dependencies(knit_meta))
+      all_dependencies <- append(all_dependencies,
+                                 flatten_latex_dependencies(knit_meta))
     }
 
     filename <- tempfile()

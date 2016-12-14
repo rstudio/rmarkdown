@@ -60,3 +60,16 @@ validate_latex_dependency <- function(list) {
 has_latex_dependencies <- function(knit_meta) {
   has_dependencies(knit_meta, "latex_dependency")
 }
+
+# Convert a string to a list of basic latex dependencies (no options)
+string_to_latex_dependencies <- function(x){
+  if(grepl("\\[|\\]", x)){
+    x <- gsub("\\[(.*?)\\]", "", x)
+    warning("You have to use `latex_dependency` to set options for latex",
+            " dependencies. Options set here in the string will be",
+            " ignored. ")
+  }
+  latex_package_names <- strsplit(x, ",|\\s")[[1]]
+  latex_package_names <- latex_package_names[latex_package_names != ""]
+  lapply(latex_package_names, latex_dependency)
+}
