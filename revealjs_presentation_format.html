@@ -541,6 +541,10 @@ output:
 <td><a href="https://github.com/hakimel/reveal.js/blob/master/plugin/search/search.js">search</a></td>
 <td>Find a text string anywhere in the slides and show the next occurrence to the user.</td>
 </tr>
+<tr class="even">
+<td><a href="https://github.com/rajgoel/reveal.js-plugins/tree/master/chalkboard">chalkboard</a></td>
+<td>Include handwritten notes within a presentation.</td>
+</tr>
 </tbody>
 </table>
 <p>Note that the use of plugins requires that the <code>self_contained</code> option be set to false. For example, this presentation includes both the “notes” and “search” plugins:</p>
@@ -550,6 +554,18 @@ output:
   revealjs::revealjs_presentation:
     self_contained: false
     reveal_plugins: [&quot;notes&quot;, &quot;search&quot;]
+---</code></pre>
+<p>You can specify additional options for the <code>chalkboard</code> plugin using <code>reveal_options</code>, for example:</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  revealjs::revealjs_presentation:
+    self_contained: false
+    reveal_plugins: [&quot;chalkboard&quot;]
+    reveal_options:
+      chalkboard:
+        theme: whiteboard
+        toggleNotesButton: false
 ---</code></pre>
 </div>
 <div id="advanced-customization" class="section level2">
