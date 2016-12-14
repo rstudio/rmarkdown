@@ -106,13 +106,7 @@ html_document_base <- function(smart = TRUE,
                                         lib_dir,
                                         output_dir))
 
-    # The input file is converted to UTF-8 from its native encoding prior
-    # to calling the preprocessor (see ::render)
-    input_str <- readLines(input_file, warn = FALSE, encoding = "UTF-8")
-    preserve <- extractPreserveChunks(input_str)
-    if (!identical(preserve$value, input_str))
-      writeLines(preserve$value, input_file, useBytes = TRUE)
-    preserved_chunks <<- preserve$chunks
+    preserved_chunks <<- extract_preserve_chunks(input_file)
 
     args
   }
@@ -182,5 +176,15 @@ html_document_base <- function(smart = TRUE,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor
   )
+}
+
+extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks) {
+  # The input file is converted to UTF-8 from its native encoding prior
+  # to calling the preprocessor (see ::render)
+  input_str <- readLines(input_file, warn = FALSE, encoding = "UTF-8")
+  preserve <- extract(input_str)
+  if (!identical(preserve$value, input_str))
+    writeLines(enc2utf8(preserve$value), input_file, useBytes = TRUE)
+  preserve$chunks
 }
 
