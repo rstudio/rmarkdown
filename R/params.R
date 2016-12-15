@@ -1,4 +1,5 @@
-
+# Get the combined list of parameters given the defaults provided in the lines
+# of the RMD file and the list of overridden parameters passed in.
 knit_params_get <- function(input_lines, params) {
 
   # read the default parameters and extract them into a named list
@@ -6,7 +7,8 @@ knit_params_get <- function(input_lines, params) {
   if (packageVersion('yaml') < '2.1.14') knit_params <- mark_utf8(knit_params)
   default_params <- list()
   for (param in knit_params) {
-    default_params[[param$name]] <- param$value
+    # Obscure setting syntax allows for setting of NULL values.
+    default_params[param$name] <- list(param$value)
   }
 
   # validate params passed to render
