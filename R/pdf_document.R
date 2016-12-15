@@ -22,7 +22,9 @@
 #'   \href{http://pandoc.org/README.html}{pandoc online documentation}
 #'   for details on creating custom templates.
 #' @param extra_dependencies Add \code{latex_dependency()} dependencies. It can
-#'   can be used to add custom LaTeX packages to the .tex header.
+#'   can be used to add custom LaTeX packages to the .tex header. People also
+#'   has the option to put in latex package names as a string in the YAML
+#'   section in the format of "extra_dependencies: multirow, threeparttable".
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
