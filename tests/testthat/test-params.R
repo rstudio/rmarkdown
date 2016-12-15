@@ -46,3 +46,34 @@ test_that("params render their UI", {
   ui <- params_value_to_ui(NULL, myobj, TRUE)
   expect_equal(ui, myobj)
 })
+
+test_that("params hidden w/o show_default", {
+
+  skip_on_cran()
+
+  # file input is always NULL
+  ui <- params_value_to_ui(shiny::fileInput, "anything", FALSE)
+  expect_null(ui)
+
+  # text input suppressed
+  ui <- params_value_to_ui(shiny::textInput, "some char", FALSE)
+  expect_equal(ui, NULL)
+
+  # Date gets scrubbed
+  ui <- params_value_to_ui(shiny::textInput, dat, FALSE)
+  expect_equal(ui, NULL)
+
+  # Numeric -> 0
+  ui <- params_value_to_ui(shiny::numericInput, 13, FALSE)
+  expect_equal(ui, 0)
+
+  # Slider -> 0
+  # TODO: should this be MIN?
+  ui <- params_value_to_ui(shiny::sliderInput, 13, FALSE)
+  expect_equal(ui, 0)
+
+  # Everything else is scrubbed
+  myobj <- list(a=123, b=NULL, c="huh")
+  ui <- params_value_to_ui(function(){}, myobj, FALSE)
+  expect_equal(ui, NULL)
+})
