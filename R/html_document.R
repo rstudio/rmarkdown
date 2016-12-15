@@ -99,12 +99,12 @@
 #'  \preformatted{ title: "My Website"
 #'  type: default
 #'  left:
-#'    - title: "Home"
+#'    - text: "Home"
 #'      href: index.html
-#'    - title: "Other"
+#'    - text: "Other"
 #'      href: other.html
 #'  right:
-#'    - title: GitHub
+#'    - text: GitHub
 #'      href: https://github.com}
 #'  The \code{type} field is optional and can take the value "default" or "inverse" (which
 #'  provides a different color scheme for the navigation bar).
