@@ -10,7 +10,7 @@
 #'   within the \code{rmarkdown/templates} directory of a package.
 #' @param package (Optional) Name of package where the template is located.
 #' @param create_dir \code{TRUE} to create a new directory for the document
-#'   (the "default" setting leaves this beahvior up to the creator of the
+#'   (the "default" setting leaves this behavior up to the creator of the
 #'   template).
 #' @param edit \code{TRUE} to edit the template immediately
 #'
