@@ -6,7 +6,9 @@
 \usage{
 knit_params_ask(file = NULL, input_lines = NULL, params = NULL,
   shiny_args = NULL, save_caption = "Save",
-  encoding = getOption("encoding"))
+  encoding = getOption("encoding"), html_head_style = c(),
+  html_head_script = c(), html_head_style_link = c(),
+  html_head_script_link = c(), disable_bootstrap = FALSE)
 }
 \arguments{
 \item{file}{Path to the R Markdown document with configurable parameters.}
@@ -20,6 +22,18 @@ knit_params_ask(file = NULL, input_lines = NULL, params = NULL,
 \item{save_caption}{Caption to use use for button that saves/confirms parameters.}
 
 \item{encoding}{The encoding of the input file; see \code{\link{file}}.}
+
+\item{html_head_style}{a string or a list/vector of strings representing CSS style that will be injected in the HTML HEAD.}
+
+\item{html_head_script}{a string or a list/vector of strings representing JS scripts that will be injected in the HTML HEAD.}
+
+\item{html_head_style_link}{same as above except that these are interpreted as HREF attributes in LINK tags.
+You must take care to unsure that the URL is absolute.}
+
+\item{html_head_script_link}{same as above except that these are interpreted as SRC attributes in SCRIPT tags.
+You must take care to unsure that the URL is absolute.}
+
+\item{disable_bootstrap}{if true, does not inject boostrap scripts and styles in the HTML HEAD.}
 }
 \value{
 named list with overridden parameter names and value.

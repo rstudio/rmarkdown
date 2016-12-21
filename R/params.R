@@ -185,6 +185,56 @@ params_namedList <- function() {
   empty
 }
 
+
+params_html_head <- function(html_head_style = c(),
+                            html_head_script = c(),
+                            html_head_style_link = c(),
+                            html_head_script_link = c()) {
+
+  default_style <- shiny::tags$style(
+    # Our controls are wiiiiide.
+    ".container-fluid .shiny-input-container { width: auto; }",
+    # Prevent the save/cancel buttons from squashing together.
+    ".navbar button { margin-left: 10px; }",
+    # Style for the navbar footer.
+    # http://getbootstrap.com/components/#navbar-fixed-bottom
+    "body { padding-bottom: 70px; }"
+  )
+  ## Escape is "cancel" and Enter is "save".
+  default_script <- shiny::tags$script(shiny::HTML("$(document).keyup(function(e) {\n",
+                                           "if (e.which == 13) { $('#save').click(); } // enter\n",
+                                           "if (e.which == 27) { $('#cancel').click(); } // esc\n",
+                                           "});"
+  ))
+
+  html_head_style <- as.vector(html_head_style)
+  custom_styles <- lapply(html_head_style, shiny::tags$style)
+
+  html_head_script <- as.vector(html_head_script)
+  custom_scripts <- lapply(html_head_script, function(x) shiny::tags$script(shiny::HTML(x)))
+
+  html_head_style_link <- as.vector(html_head_style_link)
+  custom_style_links <- lapply(html_head_style_link, function(x) shiny::tags$link(href = x))
+
+  html_head_script_link <- as.vector(html_head_script_link)
+  custom_script_links <- lapply(html_head_script_link, function(x) shiny::tags$script(src = x))
+
+  return (do.call(
+    shiny::tags$head,
+    append(
+      list(default_style, default_script),
+      c(
+        custom_style_links,
+        custom_styles,
+        custom_script_links,
+        custom_scripts
+      )
+    )
+  ))
+  #  default_style, custom_styles[0], default_script))
+}
+
+
 #' Run a shiny application asking for parameter configuration for the given document.
 #'
 #' @param file Path to the R Markdown document with configurable parameters.
@@ -193,6 +243,13 @@ params_namedList <- function() {
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
 #' @param save_caption Caption to use use for button that saves/confirms parameters.
 #' @param encoding The encoding of the input file; see \code{\link{file}}.
+#' @param html_head_style a string or a list/vector of strings representing CSS style that will be injected in the HTML HEAD.
+#' @param html_head_script a string or a list/vector of strings representing JS scripts that will be injected in the HTML HEAD.
+#' @param html_head_style_link same as above except that these are interpreted as HREF attributes in LINK tags.
+#' You must take care to unsure that the URL is absolute.
+#' @param html_head_script_link same as above except that these are interpreted as SRC attributes in SCRIPT tags.
+#' You must take care to unsure that the URL is absolute.
+#' @param disable_bootstrap if true, does not inject boostrap scripts and styles in the HTML HEAD.
 #'
 #' @return named list with overridden parameter names and value.
 #'
@@ -202,7 +259,12 @@ knit_params_ask <- function(file = NULL,
                             params = NULL,
                             shiny_args = NULL,
                             save_caption = "Save",
-                            encoding = getOption("encoding")) {
+                            encoding = getOption("encoding"),
+                            html_head_style = c(),
+                            html_head_script = c(),
+                            html_head_style_link = c(),
+                            html_head_script_link = c(),
+                            disable_bootstrap = FALSE) {
 
   if (is.null(input_lines)) {
     if (is.null(file)) {
@@ -402,23 +464,15 @@ knit_params_ask <- function(file = NULL,
           class = "container-fluid"),
       class = "navbar navbar-default navbar-fixed-bottom")
 
-  style <- shiny::tags$style(
-      # Our controls are wiiiiide.
-      ".container-fluid .shiny-input-container { width: auto; }",
-      # Prevent the save/cancel buttons from squashing together.
-      ".navbar button { margin-left: 10px; }",
-      # Style for the navbar footer.
-      # http://getbootstrap.com/components/#navbar-fixed-bottom
-      "body { padding-bottom: 70px; }"
-                             )
-  ## Escape is "cancel" and Enter is "save".
-  script <- shiny::tags$script(shiny::HTML("$(document).keyup(function(e) {\n",
-                                           "if (e.which == 13) { $('#save').click(); } // enter\n",
-                                           "if (e.which == 27) { $('#cancel').click(); } // esc\n",
-                                           "});"
-                                           ))
-  ui <- shiny::bootstrapPage(
-      shiny::tags$head(style, script),
+  buildPage <- ifelse((is.null(disable_bootstrap) | !isTruthy(disable_bootstrap)), shiny::bootstrapPage, shiny::tagList)
+
+  ui <- buildPage(
+      params_html_head(
+        html_head_style = html_head_style,
+        html_head_script = html_head_script,
+        html_head_style_link = html_head_style_link,
+        html_head_script_link = html_head_script_link
+      ),
       contents,
       footer)
 
