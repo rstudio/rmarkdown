@@ -61,7 +61,6 @@ Depends:
 Imports:
     tools,
     utils,
-    grDevices,
     knitr (>= 1.14),
     yaml (>= 2.1.5),
     htmltools (>= 0.3.5),
