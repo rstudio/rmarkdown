@@ -25,7 +25,7 @@ To use `runtime: shiny_prerendered` you need to install the very latest version 
 install.packages("rmarkdown", type = "source")
 ```
 
-If you are running RStudio you should also download the [Preview Release](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio (v1.0.136 or later) as it includes features that allow you easily run and preview `runtime: shiny_prerendered` documents within the IDE. 
+If you are running RStudio you should also download the [latest release](https://www.rstudio.com/products/rstudio/download/) (v1.0.136 or later) as it includes features that allow you easily run and preview `runtime: shiny_prerendered` documents within the IDE. 
 
 ## Execution Contexts
 
@@ -180,7 +180,7 @@ Note also that in the case of the `"data"` context, the code isn't re-executed w
 
 ### Running Documents
 
-Assuming you are using the [Preview Release](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio (v1.0.136 or later) you can execute a `runtime: shiny_prerendered` document locally using the **Run Document** command on the editor toolbar, or use the keyboard shortcut Ctrl+Shift+K (Cmd+Shift+K on Mac):
+Assuming you are using the [latest release of RStudio](https://www.rstudio.com/products/rstudio/download/) (v1.0.136 or later) you can execute a `runtime: shiny_prerendered` document locally using the **Run Document** command on the editor toolbar, or use the keyboard shortcut Ctrl+Shift+K (Cmd+Shift+K on Mac):
 
 ![](images/shiny-prerendered-rstudio.png){.screenshot width=642 height=159 style="margin-bottom: 12px;"}
 
