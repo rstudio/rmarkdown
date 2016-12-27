@@ -229,10 +229,6 @@ render <- function(input,
   }
   pandoc_to <- output_format$pandoc$to
 
-  # determine whether we need to run citeproc (based on whether we
-  # have references in the input)
-  run_citeproc <- citeproc_required(yaml_front_matter, input_lines)
-
   # generate outpout file based on input filename
   if (is.null(output_file))
     output_file <- pandoc_output_file(input, output_format$pandoc)
@@ -559,7 +555,7 @@ render <- function(input,
     # if we are running citeproc then explicitly forward the bibliography
     # on the command line (works around pandoc-citeproc issue whereby yaml
     # strings that begin with numbers are interpreted as numbers)
-    if (!is.null(bibliography <- yaml_front_matter$bibliography)) {
+    if ((is.null(yaml_front_matter$citeproc) || yaml_front_matter$citeproc) && !is.null(bibliography <- yaml_front_matter$bibliography)) {
       # remove the .bib extension since it does not work with MikTeX's BibTeX
       if (need_bibtex && is_windows()) bibliography <- sub('[.]bib$', '', bibliography)
       output_format$pandoc$args <- c(
@@ -650,6 +646,9 @@ render <- function(input,
       if ((texfile != output_file) && !output_format$pandoc$keep_tex)
         on.exit(unlink(texfile), add = TRUE)
     } else {
+      # determine whether we need to run citeproc (based on whether we
+      # have references in the input)
+      run_citeproc <- citeproc_required(yaml_front_matter, input_lines)
       # generate .tex if we want to keep the tex source
       if (output_format$pandoc$keep_tex) convert(texfile, run_citeproc)
       # run the main conversion if the output file is not .tex
