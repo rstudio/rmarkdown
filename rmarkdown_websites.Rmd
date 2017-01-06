@@ -19,7 +19,7 @@ You can render collections of R Markdown documents as a website using the `rmark
 The features described here are available only within the most recent version of the **rmarkdown** package (v0.9.6) which you can install from CRAN as follows:
 
 ```r
-install.packages("rmarkdown", type = "source")
+install.packages("rmarkdown")
 ```
 
 The RStudio IDE also includes integrated support for developing R Markdown websites. These features are available in version 1.0 or higher of RStudio so you should be sure to update RStudio prior to using R Markdown websites. You can download the latest version of RStudio here: <https://www.rstudio.com/products/rstudio/download/>.

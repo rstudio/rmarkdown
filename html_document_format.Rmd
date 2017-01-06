@@ -76,7 +76,7 @@ For example:
 Support for floating table of contents is only available in very recent versions of the **rmarkdown** package. You can install the most current version as follows:
 
 ```r
-install.packages("rmarkdown", type = "source")
+install.packages("rmarkdown")
 ```
 
 ### Section Numbering
@@ -116,7 +116,7 @@ You can also specify two additional attributes to control the appearance and beh
 Support for tabsets is only available in very recent versions of the **rmarkdown** package. You can install the most current version as follows:
 
 ```r
-install.packages("rmarkdown", type = "source")
+install.packages("rmarkdown")
 ```
 
 ## Appearance and Style
@@ -255,7 +255,7 @@ You can specify `code_folding: show` to still show all R code by default but the
 Support for code folding is only available in very recent versions of the **rmarkdown** package. You can install the most current version as follows:
 
 ```r
-install.packages("rmarkdown", type = "source")
+install.packages("rmarkdown")
 ```
 
 ## MathJax Equations

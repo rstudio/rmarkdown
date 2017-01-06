@@ -112,7 +112,7 @@ You can also publish interactive documents to the [ShinyApps](http://shinyapps.i
 2. The very latest version of the **rsconnect** R package. You can install this as follows:
 
 ```r
-install.packages("rsconnect", type = "source")
+install.packages("rsconnect")
 ```
 
 You can then deploy an interactive document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute:

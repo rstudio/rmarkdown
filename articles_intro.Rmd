@@ -40,7 +40,7 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 
 R Markdown files are designed to be used with the `rmarkdown` package. `rmarkdown` comes installed with the RStudio IDE, but you can acquire your own copy of `rmarkdown` from CRAN with the command
 
-<pre class="r"><code>install.packages("rmarkdown", type = "source")</code></pre>
+<pre class="r"><code>install.packages("rmarkdown")</code></pre>
 
 R Markdown files are the source code for rich, reproducible documents. You can transform an R Markdown file in two ways.
 

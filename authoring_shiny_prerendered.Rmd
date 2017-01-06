@@ -22,7 +22,7 @@ Ideally, we could have interactive documents that are prerendered (i.e. render/k
 To use `runtime: shiny_prerendered` you need to install the very latest version (v1.2) of the [rmarkdown](http://rmarkdown.rstudio.com) package. You can do this as follows:
 
 ```{r, eval=FALSE}
-install.packages("rmarkdown", type = "source")
+install.packages("rmarkdown")
 ```
 
 If you are running RStudio you should also download the [latest release](https://www.rstudio.com/products/rstudio/download/) (v1.0.136 or later) as it includes features that allow you easily run and preview `runtime: shiny_prerendered` documents within the IDE. 

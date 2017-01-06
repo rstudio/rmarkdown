@@ -22,6 +22,9 @@
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <script src="libs/ace-1.2.3/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -40,10 +43,6 @@
 </script>
 
 <style type="text/css">code{white-space: pre;}</style>
-<link rel="stylesheet"
-      href="site_libs/highlight/textmate.css"
-      type="text/css" />
-<script src="site_libs/highlight/highlight.js"></script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
@@ -171,7 +170,6 @@ $(document).ready(function () {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
@@ -197,7 +195,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
@@ -256,8 +254,9 @@ div.tocify {
 }
 
 .tocify-subheader .tocify-item {
-  font-size: 0.9em;
-  padding-left: 5px;
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -269,7 +268,6 @@ div.tocify {
 }
 .tocify-subheader .tocify-item {
   font-size: 0.95em;
-  padding-left: 10px;
 }
 
 </style>
@@ -377,8 +375,8 @@ div.tocify {
 
 </div>
 <script type="text/javascript">loadSnippet('shinyglobal')</script>
-<p>Note that special handling of the <code>global</code> chunk is a feature currently only available within the development version of the <strong>rmarkdown</strong> package. You can install this version as follows:</p>
-<pre class="r"><code>devtools::install_github(&quot;rstudio/rmarkdown&quot;)</code></pre>
+<p>Note that special handling of the <code>global</code> chunk is a recently introduced feature of the <strong>rmarkdown</strong> package (v1.1 or later) so you should be sure to install the latest version of rmarkdown from CRAN before using it:</p>
+<pre class="r"><code>install.packages(&quot;rmarkdown&quot;, type = &quot;source&quot;)</code></pre>
 </div>
 <div id="inputs-outputs" class="section level3">
 <h3>Inputs &amp; Outputs</h3>
@@ -625,8 +623,11 @@ div.tocify {
 <script>
 
 // add bootstrap table styles to pandoc tables
-$(document).ready(function () {
+function bootstrapStylePandocTables() {
   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
 });
 
 

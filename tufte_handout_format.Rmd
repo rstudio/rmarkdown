@@ -31,7 +31,7 @@ These documents serve not only as examples but also documention of the various t
 Note that the `tufte_handout` format is not contained within the **rmarkdown** package but rather in a separate **tufte** package. You can use this format in R Markdown documents by installing this package as follows:
 
 ```r
-install.packages("tufte", type = "source")
+install.packages("tufte")
 ```
 
 ### Creating a Handout

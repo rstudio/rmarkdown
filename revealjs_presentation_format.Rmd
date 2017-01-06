@@ -13,7 +13,7 @@ output:
 Note that the `revealjs_presentation` format is not contained within the **rmarkdown** package but rather in a separate **revealjs** package. You can use this format in R Markdown documents by installing this package as follows:
 
 ```r
-install.packages("revealjs", type = "source")
+install.packages("revealjs")
 ```
 
 ## Overview
