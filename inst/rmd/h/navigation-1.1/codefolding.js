@@ -1,3 +1,6 @@
+// Variables defined in default.html.
+// var ShowCode = 'Show';
+// var HideCode = 'Hide';
 
 window.initializeCodeFolding = function(show) {
 
@@ -30,7 +33,7 @@ window.initializeCodeFolding = function(show) {
     $(this).detach().appendTo(div);
 
     // add a show code button right above
-    var showCodeText = $('<span>' + (show ? 'Hide' : 'Code') + '</span>');
+    var showCodeText = $('<span>' + (show ? HideCode : ShowCode) + '</span>');
     var showCodeButton = $('<button type="button" class="btn btn-default btn-xs code-folding-btn pull-right"></button>');
     showCodeButton.append(showCodeText);
     showCodeButton
@@ -49,10 +52,10 @@ window.initializeCodeFolding = function(show) {
 
     // update state of button on show/hide
     div.on('hidden.bs.collapse', function () {
-      showCodeText.text('Code');
+      showCodeText.text(ShowCode);
     });
     div.on('show.bs.collapse', function () {
-      showCodeText.text('Hide');
+      showCodeText.text(HideCode);
     });
   });
 
