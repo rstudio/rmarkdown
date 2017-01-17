@@ -329,7 +329,7 @@ discover_rmd_resources <- function(rmd_file, encoding,
                             perl = TRUE)
     for (idx in seq_along(chunk_lines)) {
       chunk_line <- chunk_lines[idx][[1]]
-      if (chunk_line < 0)
+      if (is.na(chunk_line) || chunk_line < 0)
         next
       chunk_start <- attr(chunk_line, "capture.start", exact = TRUE) + 1
       chunk_text <- substr(rmd_content[idx], chunk_start,
