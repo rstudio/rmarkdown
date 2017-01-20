@@ -1,11 +1,13 @@
-rmarkdown 1.3 (unreleased)
+rmarkdown 1.3
 --------------------------------------------------------------------------------
 
-* Fix v1.1 regression in ordering of CSS for ioslides_presentation.
+* Fix v1.2 regression in ordering of CSS for ioslides_presentation.
 
 * Fix rendering of pagedtables within html_notebook format.
 
 * Ensure that html_prerendered UI is never cached.
+
+* Add `citeproc` argument to YAML header; controls whether pandoc-citeproc is used (#831)
 
 
 rmarkdown 1.2

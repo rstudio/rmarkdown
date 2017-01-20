@@ -50,31 +50,54 @@ params_label <- function(inputControlFn, param) {
   label
 }
 
-params_value_to_ui <- function(inputControlFn, value) {
+params_value_to_ui <- function(inputControlFn, value, showDefault) {
+  if (is.null(showDefault)) {
+    showDefault <- TRUE
+  }
+
+  isNumericInput <- identical(inputControlFn, shiny::numericInput) ||
+    identical(inputControlFn, shiny::sliderInput)
+
   if (identical(inputControlFn, shiny::fileInput)) {
     NULL
   } else if (identical(inputControlFn, shiny::textInput)) {
     ## TODO: if long input, maybe truncate textInput values for display
 
-    classes <- class(value)
-    if ("POSIXct" %in% classes) {
-      as.character(value)
+    if (showDefault){
+      classes <- class(value)
+      if ("POSIXct" %in% classes) {
+        as.character(value)
+      } else {
+        value
+      }
     } else {
-      value
+      NULL
     }
   } else if (is.null(value)) {
-    numerics <- c(shiny::numericInput,
-                  shiny::sliderInput)
     # The numerics can't deal with a NULL value, but everything else is fine.
-    if (identical(inputControlFn, shiny::numericInput) ||
-        identical(inputControlFn, shiny::sliderInput)) {
+    if (isNumericInput) {
       0
     } else {
       value
     }
   } else {
-    ## A type/control that doesn't need special handling; just emit the value.
-    value
+    if (showDefault){
+      ## A type/control that doesn't need special handling; just emit the value.
+      value
+    } else {
+      if (isNumericInput){
+        0
+      } else if (identical(inputControlFn, shiny::dateInput)) {
+        # Use NA to clear date inputs:
+        # https://github.com/rstudio/shiny/pull/1299
+        NA
+      } else if (identical(inputControlFn, shiny::radioButtons)){
+        # As suggested in ?radioButtons
+        character(0)
+      } else {
+        NULL
+      }
+    }
   }
 }
 
@@ -84,7 +107,13 @@ params_value_from_ui <- function(inputControlFn, value, uivalue) {
   } else if (identical(inputControlFn, shiny::textInput)) {
     classes <- class(value)
     if ("POSIXct" %in% classes) {
-      as.POSIXct(uivalue)
+      if (identical(uivalue, "")){
+        # show_default: false produces this situation
+        # Empty POSIXct
+        Sys.time()[-1]
+      } else {
+        as.POSIXct(uivalue)
+      }
     } else {
       uivalue
     }
@@ -98,8 +127,6 @@ params_get_input <- function(param) {
   # Maps between value types and input: XXX
   default_inputs <- list(
       logical = "checkbox",
-      ## BUG: dateInput does not allow the user to not specify a value.
-      ##     https://github.com/rstudio/shiny/issues/896
       Date = "date",
       ## BUG: shiny does not support datetime selectors
       ##     https://github.com/rstudio/shiny/issues/897
@@ -273,7 +300,8 @@ knit_params_ask <- function(file = NULL,
             }
           }
           # Now, transform into something that the input control can handle.
-          current_value <- params_value_to_ui(inputControlFn, current_value)
+          current_value <- params_value_to_ui(inputControlFn, current_value,
+                                              param$show_default)
 
           # value maps to either "value" or "selected" depending on the control.
           if ("value" %in% inputControlFnFormals) {
@@ -281,6 +309,8 @@ knit_params_ask <- function(file = NULL,
           } else if ("selected" %in% inputControlFnFormals) {
             arguments$selected <<- current_value
           }
+        } else if (name == "show_default"){
+          # No-op
         } else {
           ## Not a special field. Blindly promote to the input control.
           arguments[[name]] <<- if (inherits(param[[name]], 'knit_param_expr')) {
@@ -292,7 +322,7 @@ knit_params_ask <- function(file = NULL,
       ## This is based on param$value not current_value because we want to
       ## understand deviation from the report default, not any (optional)
       ## call-time override.
-      uidefault <- params_value_to_ui(inputControlFn, param$value)
+      uidefault <- params_value_to_ui(inputControlFn, param$value, param$show_default)
       hasDefaultValue <- function(value) {
         identical(uidefault, value)
       }

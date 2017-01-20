@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 1.2.9000
+Version: 1.3
 Authors@R: c(
   person("JJ", "Allaire", role = c("aut", "cre"), email = "jj@rstudio.com"),
   person("Joe", "Cheng", role = "aut", email = "joe@rstudio.com"),
@@ -61,7 +61,6 @@ Depends:
 Imports:
     tools,
     utils,
-    grDevices,
     knitr (>= 1.14),
     yaml (>= 2.1.5),
     htmltools (>= 0.3.5),
