@@ -22,9 +22,7 @@
 #'   \href{http://pandoc.org/README.html}{pandoc online documentation}
 #'   for details on creating custom templates.
 #' @param extra_dependencies Add \code{latex_dependency()} dependencies. It can
-#'   can be used to add custom LaTeX packages to the .tex header. People also
-#'   has the option to put in latex package names as a string in the YAML
-#'   section in the format of "extra_dependencies: multirow, threeparttable".
+#'   can be used to add custom LaTeX packages to the .tex header.
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -182,7 +180,7 @@ pdf_document <- function(toc = FALSE,
         extra_dependencies <- list(extra_dependencies)
       }
       if(is.character(extra_dependencies)){
-        extra_dependencies <- string_to_latex_dependencies(extra_dependencies)
+        extra_dependencies <- yaml_to_latex_dependencies(extra_dependencies)
       }
     }
 
