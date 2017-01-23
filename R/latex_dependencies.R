@@ -60,3 +60,21 @@ validate_latex_dependency <- function(list) {
 has_latex_dependencies <- function(knit_meta) {
   has_dependencies(knit_meta, "latex_dependency")
 }
+
+# Convert a yaml structured input to a list of latex dependencies
+yaml_to_latex_dependencies <- function(x){
+  x_yaml <- try(yaml_load_utf8(x))
+  if(class(x_yaml) == "try-error"){
+    stop("Please check the yaml syntax of extra_dependencies.")
+  }
+  if(is.list(x_yaml)){
+    lapply(seq(length(x_yaml)), function(i){
+      latex_dependency(names(x_yaml)[i], x_yaml[[i]])
+      })
+  }else{
+    if(length(x_yaml) == 1 && grepl(",", x_yaml)){
+      x_yaml <- yaml_load_utf8(paste0("[", x_yaml, "]"))
+    }
+    lapply(x_yaml, latex_dependency)
+  }
+}
