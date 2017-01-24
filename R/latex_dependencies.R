@@ -8,6 +8,23 @@ latex_dependency <- function(name, options = NULL) {
   validate_latex_dependency(output)
 }
 
+latex_dependencies <- function(x = list()) {
+  if (length(x) == 0) return()
+  if (is_latex_dependency(x)) return(list(x))
+  nms <- names(x)
+  if (is.list(x)) {
+    if (is.null(nms)) return(x)  # assume it is just a list of latex_dependency()
+    # turn the named list to a named character vector
+    x <- unlist(lapply(x, paste, collapse = ', '))
+  }
+  if (is.character(x)) {
+    if (is.null(nms)) {
+      lapply(x, latex_dependency)
+    } else {
+      mapply(latex_dependency, nms, x, SIMPLIFY = FALSE, USE.NAMES = FALSE)
+    }
+  }
+}
 
 # Write the LaTeX dependencies to a text file, suitable for passing it
 # to an include LaTeX command
