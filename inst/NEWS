@@ -1,3 +1,14 @@
+rmarkdown 1.4 (unreleased)
+--------------------------------------------------------------------------------
+
+* Fix #910: the extra_dependencies argument of pdf_document() does not work when
+  no code chunks contain LaTeX dependencies.
+
+* The extra_dependencies of pdf_document() can also take a character vector of
+  LaTeX package names, or a named list of LaTeX package options (with names
+  being package names), which makes it much easier to express LaTeX dependencies
+  via YAML.
+
 rmarkdown 1.3
 --------------------------------------------------------------------------------
 

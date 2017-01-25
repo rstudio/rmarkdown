@@ -21,8 +21,12 @@
 #'   created.  See the documentation on
 #'   \href{http://pandoc.org/README.html}{pandoc online documentation}
 #'   for details on creating custom templates.
-#' @param extra_dependencies Add \code{latex_dependency()} dependencies. It can
-#'   can be used to add custom LaTeX packages to the .tex header.
+#' @param extra_dependencies A LaTeX dependency \code{latex_dependency()}, a
+#'   list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
+#'   \code{c("framed", "hyperref")}), or a named list of LaTeX package options
+#'   with the names being package names (e.g. \code{list(hypreref =
+#'   c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
+#'   add custom LaTeX packages to the .tex header.
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
@@ -173,12 +177,9 @@ pdf_document <- function(toc = FALSE,
     if (!has_geometry(readLines(input_file, warn = FALSE)))
       args <- c(args, "--variable", "geometry:margin=1in")
 
-    format_deps <- list()
-    format_deps <- append(format_deps, extra_dependencies)
-
-    if (has_latex_dependencies(knit_meta)) {
-      all_dependencies <- if (is.null(format_deps)) list() else format_deps
-      all_dependencies <- append(all_dependencies, flatten_latex_dependencies(knit_meta))
+    if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
+      extra_dependencies <- latex_dependencies(extra_dependencies)
+      all_dependencies <- append(extra_dependencies, flatten_latex_dependencies(knit_meta))
       filename <- tempfile()
       latex_dependencies_as_text_file(all_dependencies, filename)
       args <- c(args, includes_to_pandoc_args(includes(in_header = filename)))

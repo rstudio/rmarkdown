@@ -95,8 +95,12 @@ additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
-\item{extra_dependencies}{Add \code{latex_dependency()} dependencies. It can
-can be used to add custom LaTeX packages to the .tex header.}
+\item{extra_dependencies}{A LaTeX dependency \code{latex_dependency()}, a
+list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
+\code{c("framed", "hyperref")}), or a named list of LaTeX package options
+with the names being package names (e.g. \code{list(hypreref =
+c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
+add custom LaTeX packages to the .tex header.}
 
 \item{...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
