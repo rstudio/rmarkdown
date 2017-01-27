@@ -11,6 +11,8 @@ rmarkdown 1.4 (unreleased)
 
 * Automatically ignore packrat directory for render_site
 
+* Fix #943: escape end tags in shiny_prerendered code contexts
+
 
 rmarkdown 1.3
 --------------------------------------------------------------------------------
