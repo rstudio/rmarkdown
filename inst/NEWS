@@ -9,6 +9,9 @@ rmarkdown 1.4 (unreleased)
   being package names), which makes it much easier to express LaTeX dependencies
   via YAML.
 
+* Automatically ignore packrat directory for render_site
+
+
 rmarkdown 1.3
 --------------------------------------------------------------------------------
 
