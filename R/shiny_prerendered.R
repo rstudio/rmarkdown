@@ -433,7 +433,7 @@ shiny_prerendered_extract_context <- function(html_lines, context) {
   }
 
   # unescape code, see https://github.com/rstudio/rmarkdown/issues/943
-  context_lines <- gsub("<\\u002", "</", context_lines, fixed = TRUE)
+  context_lines <- gsub("<\\u002f", "</", context_lines, fixed = TRUE)
   context_lines
 }
 
@@ -488,7 +488,7 @@ shiny_prerendered_append_context <- function(con, name, code) {
              paste0('<script type="application/shiny-prerendered" ',
                     'data-context="', name ,'">'),
              # escape code, see https://github.com/rstudio/rmarkdown/issues/943
-             gsub("</", "<\\u002", code, fixed = TRUE),
+             gsub("</", "<\\u002f", code, fixed = TRUE),
              '</script>',
              '<!--/html_preserve-->')
   writeLines(lines, con = con)
