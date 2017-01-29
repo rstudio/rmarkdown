@@ -1,3 +1,49 @@
+/**
+ * jQuery Plugin: Sticky Tabs
+ *
+ * @author Aidan Lister <aidan@php.net>
+ * adapted by Ruben Arslan to activate parent tabs too
+ * http://www.aidanlister.com/2014/03/persisting-the-tab-state-in-bootstrap/
+ */
+(function($) {
+  "use strict";
+  $.fn.stickyStuff = function() {
+    var context = this;
+    // Show the tab corresponding with the hash in the URL, or the first tab
+    var showStuffFromHash = function() {
+      var hash = window.location.hash;
+      var selector = hash ? 'a[href="' + hash + '"]' : 'li.active > a';
+      var $selector = $(selector, context);
+      if($selector.data('toggle') === "tab") {
+        $selector.tab('show');
+        // walk up the ancestors of this element, show any hidden tabs
+        $selector.parents('.section.tabset').each(function(i, elm) {
+          var link = $('a[href="#' + $(elm).attr('id') + '"]');
+          if(link.data('toggle') === "tab") {
+            link.tab("show");
+          }
+        });
+      }
+    };
+
+
+    // Set the correct tab when the page loads
+    showStuffFromHash(context);
+
+    // Set the correct tab when a user uses their back/forward button
+    $(window).on('hashchange', function() {
+      showStuffFromHash(context);
+    });
+
+    // Change the URL when tabs are clicked
+    $('a', context).on('click', function(e) {
+      history.pushState(null, null, this.href);
+      showStuffFromHash(context);
+    });
+
+    return this;
+  };
+}(jQuery));
 
 
 window.buildTabsets = function(tocID) {
@@ -80,6 +126,8 @@ window.buildTabsets = function(tocID) {
     active.addClass('active');
     if (fade)
       active.addClass('in');
+
+    tabset.stickyStuff(); // ensure hash corresponds to active tab
   }
 
   // convert section divs with the .tabset class to tabsets
