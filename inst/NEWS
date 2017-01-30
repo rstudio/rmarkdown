@@ -13,6 +13,8 @@ rmarkdown 1.4 (unreleased)
 
 * Fix #943: escape end tags in shiny_prerendered code contexts
 
+* Add support for sticky tabs in html_document via tabset-sticky class
+
 
 rmarkdown 1.3
 --------------------------------------------------------------------------------

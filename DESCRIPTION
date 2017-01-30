@@ -12,6 +12,7 @@ Authors@R: c(
   person("Hadley", "Wickham", role = "aut", email = "hadley@rstudio.com"),
   person("Aron", "Atkins", role = "aut", email = "aron@rstudio.com"),
   person("Rob", "Hyndman", role = "aut", email = "Rob.Hyndman@monash.edu"),
+  person("Ruben", "Arslan", role = "aut", email = "ruben.arslan@uni-goettingen.de"),
   person(family = "RStudio, Inc.", role = "cph"),
   person(family = "jQuery Foundation", role = "cph",
          comment = "jQuery library"),
@@ -50,7 +51,9 @@ Authors@R: c(
   person("Ben", "Sperry", role = "ctb",
          comment = "Ionicons"),
   person(family = "Drifty", role = "cph",
-         comment = "Ionicons")
+         comment = "Ionicons"),
+  person("Aidan", "Lister", role = c("ctb", "cph"), 
+         comment = "jQuery StickyTabs")
   )
 Author: JJ Allaire, Jonathan McPherson, Yihui Xie, Hadley Wickham, Joe Cheng,
     Jeff Allen
