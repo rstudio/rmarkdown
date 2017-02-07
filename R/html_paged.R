@@ -8,7 +8,7 @@ paged_table_type_sum <- function(x) {
                           factor = "fctr",
                           POSIXt = "dttm",
                           difftime = "time",
-                          Date = date,
+                          Date = "date",
                           data.frame = class(x)[[1]],
                           tbl_df = "tibble",
                           NULL
