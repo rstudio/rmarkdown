@@ -38,6 +38,9 @@ rmarkdown_system_file <- function(file) {
   system.file(file, package = "rmarkdown")
 }
 
+
+#' @rdname rmarkdown_format
+#' @export
 from_rmarkdown <- function(implicit_figures = TRUE, extensions = NULL) {
 
   # paste extensions together and remove whitespace

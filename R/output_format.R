@@ -292,6 +292,8 @@ pandoc_options <- function(to,
 #' Compose a pandoc markdown input definition for R Markdown that can be
 #' passed as the \code{from} argument of \link{pandoc_options}.
 #'
+#'
+#' @param implicit_figures Automatically make figures from images (defaults to \code{TRUE}).
 #' @param extensions Markdown extensions to be added or removed from the
 #' default definition of R Markdown.
 #'
