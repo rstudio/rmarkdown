@@ -80,4 +80,3 @@ render("input.Rmd", word_document(highlight = "zenburn"))
 }
 
 }
-

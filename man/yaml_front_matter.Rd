@@ -15,4 +15,3 @@ yaml_front_matter(input, encoding = getOption("encoding"))
 Parse the YAML front matter from a file
 }
 \keyword{internal}
-

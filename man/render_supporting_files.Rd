@@ -21,4 +21,3 @@ for inclusion in HTML\code{href} and \code{src} attributes.
 Render (copy) required supporting files for an input document to the _files
 directory associated with the document.
 }
-

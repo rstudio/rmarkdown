@@ -57,4 +57,3 @@ pandoc_convert("input.md", to="pdf", options = c("--listings"))
 }
 
 }
-

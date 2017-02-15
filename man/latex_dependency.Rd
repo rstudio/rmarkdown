@@ -14,4 +14,3 @@ latex_dependency(name, options = NULL)
 \description{
 Define a LaTeX package dependency
 }
-

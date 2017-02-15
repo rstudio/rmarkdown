@@ -75,4 +75,3 @@ rmarkdown::draft("Q4Report.Rmd",
                  template="quarterly_report", package="pubtools")
 }
 }
-

@@ -131,4 +131,3 @@ render("pres.Rmd", slidy_presentation(incremental = TRUE))
 }
 
 }
-

@@ -33,4 +33,3 @@ Define the knitr options for an R Markdown output format.
 \seealso{
 \link{output_format}
 }
-

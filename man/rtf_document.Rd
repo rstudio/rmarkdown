@@ -56,4 +56,3 @@ render("input.Rmd", rtf_document(toc = TRUE))
 }
 
 }
-

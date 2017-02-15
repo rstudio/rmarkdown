@@ -2,10 +2,14 @@
 % Please edit documentation in R/html_notebook_output.R
 \name{html_notebook_output}
 \alias{html_notebook_output}
-\alias{html_notebook_output_code}
+\alias{html_notebook_output}
 \alias{html_notebook_output_html}
+\alias{html_notebook_output}
 \alias{html_notebook_output_img}
+\alias{html_notebook_output}
 \alias{html_notebook_output_png}
+\alias{html_notebook_output}
+\alias{html_notebook_output_code}
 \title{Generate R Notebook Output}
 \usage{
 html_notebook_output_html(html, meta = NULL)
@@ -46,4 +50,3 @@ through the \code{output_source} function attached to a
 For more details on the HTML file format produced by
  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_format.html}{http://rmarkdown.rstudio.com/r_notebook_format.html}.
 }
-

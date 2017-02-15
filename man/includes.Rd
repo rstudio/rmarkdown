@@ -45,4 +45,3 @@ pdf_document(includes = includes(after_body = "footer.tex"))
 
 }
 }
-

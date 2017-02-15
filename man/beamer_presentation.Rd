@@ -117,4 +117,3 @@ render("pres.Rmd", beamer_presentation(incremental = TRUE))
 }
 
 }
-

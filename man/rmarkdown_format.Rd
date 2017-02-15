@@ -40,4 +40,3 @@ rmarkdown_format("-implicit_figures")
 \seealso{
 \link{output_format}, \link{pandoc_options}
 }
-

@@ -41,4 +41,3 @@ The \code{from} argument should be used very cautiously as it's
 \seealso{
 \link{output_format}, \link{rmarkdown_format}
 }
-

@@ -41,4 +41,3 @@ additional details.}
 Template for creating a handout according to the style of
 Edward R. Tufte and Richard Feynman.
 }
-

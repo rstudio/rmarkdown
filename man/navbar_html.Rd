@@ -2,6 +2,7 @@
 % Please edit documentation in R/html_document.R
 \name{navbar_html}
 \alias{navbar_html}
+\alias{navbar_html}
 \alias{navbar_links_html}
 \title{Create a navbar HTML file from a navbar definition}
 \usage{
@@ -21,4 +22,3 @@ Path to temporary file with navbar definition
 Create a navbar HTML file from a navbar definition
 }
 \keyword{internal}
-

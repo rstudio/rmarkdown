@@ -16,4 +16,3 @@ have a YAML field named \code{foo}), etc.
 rmarkdown::metadata
 }
 \keyword{datasets}
-

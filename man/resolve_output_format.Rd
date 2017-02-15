@@ -31,4 +31,3 @@ passed to the \code{\link{render}} function.
 This function is useful for front-end tools that need to modify
 the default behavior of an output format.
 }
-

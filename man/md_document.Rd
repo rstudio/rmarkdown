@@ -86,4 +86,3 @@ render("input.Rmd", md_document(variant = "markdown_github"))
 }
 
 }
-

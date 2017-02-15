@@ -2,12 +2,12 @@
 % Please edit documentation in R/html_dependencies.R
 \name{html-dependencies}
 \alias{html-dependencies}
-\alias{html_dependency_bootstrap}
-\alias{html_dependency_font_awesome}
-\alias{html_dependency_ionicons}
 \alias{html_dependency_jquery}
+\alias{html_dependency_bootstrap}
 \alias{html_dependency_jqueryui}
 \alias{html_dependency_tocify}
+\alias{html_dependency_font_awesome}
+\alias{html_dependency_ionicons}
 \title{Provide common HTML dependencies for R Markdown formats}
 \usage{
 html_dependency_jquery()
@@ -32,4 +32,3 @@ use the \code{css} parameter to add your own styles).}
 These functions provide common HTML dependencies (e.g. jquery, bootstrap)
 for re-use by other R Markdown formats.
 }
-

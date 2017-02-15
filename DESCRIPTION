@@ -82,4 +82,4 @@ Suggests:
 SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
 URL: http://rmarkdown.rstudio.com
 License: GPL-3
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

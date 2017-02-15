@@ -44,4 +44,3 @@ if (pandoc_available("1.12.3"))
   cat("requried version of pandoc is available!\\n")
 }
 }
-

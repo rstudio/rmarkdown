@@ -70,4 +70,3 @@ render("input.Rmd", odt_document(highlight = "zenburn"))
 }
 
 }
-

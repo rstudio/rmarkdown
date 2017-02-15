@@ -12,4 +12,3 @@ paged_table(x)
 \description{
 Create a table in HTML with support for paging rows and columns
 }
-

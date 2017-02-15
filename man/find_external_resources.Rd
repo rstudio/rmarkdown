@@ -63,4 +63,3 @@ resource_files:
   In all cases, only resources that exist on disk and are contained in the
   document's directory (or a child thereof) are returned.
 }
-

@@ -13,4 +13,3 @@ shiny_prerendered_clean(input)
 Remove the associated html file and supporting _files directory
 for a shiny_prerendered documet.
 }
-

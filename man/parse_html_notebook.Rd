@@ -20,4 +20,3 @@ original R Markdown source document.
 For more details on the HTML file format produced by
  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_format.html}{http://rmarkdown.rstudio.com/r_notebook_format.html}.
 }
-

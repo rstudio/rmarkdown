@@ -18,4 +18,3 @@ chunk into a single chunk.}
 Programmatic equivalent to including a code chunk with a
 context in a runtime: shiny_prerendered document.
 }
-

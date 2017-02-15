@@ -26,4 +26,3 @@ Define knitr options for an R Markdown output format that creates PDF output.
 \seealso{
 \link{knitr_options}, \link{output_format}
 }
-

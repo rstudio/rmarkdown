@@ -32,4 +32,3 @@ HTML output.
 \seealso{
 \link{knitr_options}, \link{output_format}
 }
-

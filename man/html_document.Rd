@@ -227,6 +227,7 @@ and Citations} article in the online documentation.
  Due to the above restrictions, you might consider using the \code{includes}
  parameter as an alternative to providing a fully custom template.
 }
+
 \examples{
 \dontrun{
 
@@ -238,4 +239,3 @@ render("input.Rmd", html_document(toc = TRUE))
 }
 
 }
-

@@ -58,4 +58,3 @@ Compared to \code{html_document}, it:
 See the \href{http://rmarkdown.rstudio.com/package_vignette_format.html}{online
 documentation} for additional details on using the \code{html_vignette} format.
 }
-

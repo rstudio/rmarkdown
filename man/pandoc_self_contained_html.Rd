@@ -18,4 +18,3 @@ pandoc_self_contained_html(input, output)
 Create a self-contained HTML document by base64 encoding images,
 scripts, and stylesheets referended by the input document.
 }
-

@@ -14,4 +14,3 @@ A structured helper for the construction of metadata used by the
 R Notebook output functions. See \code{\link{html_notebook_output}} for
 more details.
 }
-

@@ -22,4 +22,3 @@ transform it to a short path name if it contains spaces, and then convert
 forward slashes to back slashes (as required by pandoc for some path
 references)
 }
-

@@ -23,4 +23,3 @@ executed.}
 Use the pandoc templating engine to render a text file. Substitutions are
 done using the \code{metadata} list passed to the function.
 }
-

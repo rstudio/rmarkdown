@@ -24,4 +24,3 @@ This function is useful for front-end tools that require additional
 knowledge of the output to be produced by \code{\link{render}} (e.g. to
 customize the preview experience).
 }
-

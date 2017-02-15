@@ -52,4 +52,3 @@ R Markdown output format to pass to \code{\link{render}}
 \description{
 Format for converting from R Markdown to GitHub Flavored Markdown.
 }
-

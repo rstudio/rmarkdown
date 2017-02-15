@@ -27,4 +27,3 @@ named list with overridden parameter names and value.
 \description{
 Run a shiny application asking for parameter configuration for the given document.
 }
-
