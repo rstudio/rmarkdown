@@ -8,6 +8,7 @@
 \alias{html_dependency_tocify}
 \alias{html_dependency_font_awesome}
 \alias{html_dependency_ionicons}
+\alias{html_dependency_pagedtable}
 \title{Provide common HTML dependencies for R Markdown formats}
 \usage{
 html_dependency_jquery()
@@ -21,6 +22,8 @@ html_dependency_tocify()
 html_dependency_font_awesome()
 
 html_dependency_ionicons()
+
+html_dependency_pagedtable()
 }
 \arguments{
 \item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",

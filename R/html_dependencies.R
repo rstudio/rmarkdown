@@ -248,6 +248,8 @@ has_html_dependencies <- function(knit_meta) {
 }
 
 # create an html_dependency for pagedtable
+#' @rdname html-dependencies
+#' @export
 html_dependency_pagedtable <- function() {
   htmlDependency(
     "pagedtable",
