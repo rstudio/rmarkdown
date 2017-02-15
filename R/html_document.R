@@ -289,15 +289,7 @@ html_document <- function(toc = FALSE,
 
   # add highlight.js html_dependency if required
   if (identical(template, "default") && is_highlightjs(highlight)) {
-    extra_dependencies <- append(extra_dependencies, list(
-      htmlDependency(
-        "highlightjs",
-        version = "1.1",
-        src = rmarkdown_system_file("rmd/h/highlightjs-1.1"),
-        script = "highlight.js",
-        stylesheet = paste0(highlight, ".css")
-      )
-    ))
+    extra_dependencies <- append(extra_dependencies, list(html_dependency_highlightjs(highlight)))
   }
 
   # numbered sections

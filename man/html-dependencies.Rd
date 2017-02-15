@@ -9,6 +9,7 @@
 \alias{html_dependency_font_awesome}
 \alias{html_dependency_ionicons}
 \alias{html_dependency_pagedtable}
+\alias{html_dependency_highlightjs}
 \title{Provide common HTML dependencies for R Markdown formats}
 \usage{
 html_dependency_jquery()
@@ -24,12 +25,16 @@ html_dependency_font_awesome()
 html_dependency_ionicons()
 
 html_dependency_pagedtable()
+
+html_dependency_highlightjs(highlight)
 }
 \arguments{
 \item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
 "readable", "spacelab", "united", "cosmo", "lumen", "paper", "sandstone",
 "simplex", or "yeti"). Pass \code{NULL} for no theme (in this case you can
 use the \code{css} parameter to add your own styles).}
+
+\item{highlight}{Highligher to use}
 }
 \description{
 These functions provide common HTML dependencies (e.g. jquery, bootstrap)

@@ -260,6 +260,21 @@ html_dependency_pagedtable <- function() {
   )
 }
 
+
+
+#' @param highlight Highligher to use
+#' @rdname html-dependencies
+#' @export
+html_dependency_highlightjs <- function(highlight) {
+  htmlDependency(
+    "highlightjs",
+    version = "1.1",
+    src = rmarkdown_system_file("rmd/h/highlightjs-1.1"),
+    script = "highlight.js",
+    stylesheet = paste0(highlight, ".css")
+  )
+}
+
 # create an html_dependency for rsiframe
 html_dependency_rsiframe <- function() {
 
