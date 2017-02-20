@@ -8,7 +8,7 @@ test_that("render_site", {
   site_dir <- tempfile()
   dir.create(site_dir)
   files <- c("_site.yml", "index.Rmd", "PageA.Rmd",
-             "PageB.Rmd", "PageC.md", "styles.css",
+             "PageB.rmd", "PageC.md", "styles.css",
              "script.R", "docs.txt")
   file.copy(file.path("site", files), site_dir, recursive = TRUE)
 

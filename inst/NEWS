@@ -15,6 +15,8 @@ rmarkdown 1.4 (unreleased)
 
 * Add support for sticky tabs in html_document via tabset-sticky class
 
+* Process Rmd files with lowercase extension (.rmd) in render_site
+
 
 rmarkdown 1.3
 --------------------------------------------------------------------------------

@@ -163,7 +163,7 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
   # recursively because rmarkdown in general handles applying common
   # options/elements across subdirectories poorly)
   input_files <- function() {
-    list.files(input, pattern = "^[^_].*\\.R?md$")
+    list.files(input, pattern = "^[^_].*\\.[Rr]?md$")
   }
 
   # define render function (use ... to gracefully handle future args)
