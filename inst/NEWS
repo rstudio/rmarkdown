@@ -17,6 +17,8 @@ rmarkdown 1.4 (unreleased)
 
 * Process Rmd files with lowercase extension (.rmd) in render_site
 
+* Fix stack space consumption issues with large JS payloads in chunks
+
 
 rmarkdown 1.3
 --------------------------------------------------------------------------------
