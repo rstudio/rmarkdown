@@ -9,7 +9,7 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
   server_envir = new.env(parent = globalenv())
 
   # extract the server-start context
-  html_lines <- strsplit(html, "\\r?\\n")[[1]]
+  html_lines <- strsplit(html, "\\n", fixed = TRUE)[[1]]
   server_start_context <- shiny_prerendered_extract_context(html_lines,
                                                             "server-start")
 
