@@ -307,11 +307,10 @@ html_document <- function(toc = FALSE,
       try(action())
   }
 
+  # capture the source code if requested
   source_code <- NULL
   source_file <- NULL
   pre_knit <- function(input, ...) {
-
-    # capture the source code if requested
     if (code_download) {
       source_file <<- basename(input)
       source_code <<- paste0(
@@ -319,22 +318,6 @@ html_document <- function(toc = FALSE,
         base64enc::base64encode(input),
         '</div>')
     }
-
-    # custom evaluate hook to ensure empty data.table outputs
-    # are removed
-    evaluate_hook <- knitr::knit_hooks$get("evaluate")
-    exit_actions <<- c(exit_actions, function() {
-      knitr::knit_hooks$set(evaluate = evaluate_hook)
-    })
-
-    knitr::knit_hooks$set(evaluate = function(...) {
-      result <- evaluate_hook(...)
-      if (is.list(result)) {
-        filter <- function(e) !inherits(e, "empty_output")
-        result <- Filter(filter, result)
-      }
-      result
-    })
   }
 
   # pagedtable
