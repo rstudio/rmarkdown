@@ -1,6 +1,9 @@
 rmarkdown 1.4 (unreleased)
 --------------------------------------------------------------------------------
 
+* `data.table` expressions involving `:=` are no longer automatically
+  printed within R Markdown documents. (#829)
+
 * Fix #910: the extra_dependencies argument of pdf_document() does not work when
   no code chunks contain LaTeX dependencies.
 
