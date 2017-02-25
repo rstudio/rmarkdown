@@ -15,7 +15,7 @@ knit_print.data.frame <- function(x, ...) {
   }
 
   if (!printable)
-    return()
+    return(invisible(NULL))
 
   if (!is.null(context$df_print)) {
     if (identical(context$df_print, knitr::kable)) {
