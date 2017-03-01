@@ -33,7 +33,7 @@ cat flights1.csv flights2.csv flights3.csv > flights.csv
 
 ## Python
 
-The [python](https://www.python.org/) engine enables execution of python code via an external python interpreter (the interpreter returned by `Sys.which("python")` is used to execute the code). Here's a simple example:
+The [python](https://www.python.org/) engine enables execution of python code via an external python interpreter. Here's a simple example:
 
 <pre class="markdown"><code>&#96;&#96;&#96;{python}
 x = 'hello, python world!'
@@ -42,6 +42,18 @@ print(x.split(' '))
 </code></pre>
 
 Note that chunk options like `echo` and `results` are all valid when using a language engine like python. If your python code is generating raw HTML or LaTeX then the `results='asis'` option will ensure that it's passed straight into the document's output stream.
+
+### Specifying a Python Interpreter 
+
+By default, the interpreter returned by `Sys.which("python")` is used to execute the code. However, if you would like to use a different python interpreter, you can specify one by setting the `engine.path` option to the path of your preferred executable. For instance:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{python, engine.path="/Users/me/anaconda/bin/python"}
+import sys
+print sys.version
+&#96;&#96;&#96;
+</code></pre>
+
+The `engine.path` option can also be used on other chunk types which use an external interpreter. 
 
 ### Data Exchange
 

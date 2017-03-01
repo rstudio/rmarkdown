@@ -293,13 +293,23 @@ cat flights1.csv flights2.csv flights3.csv > flights.csv
 </div>
 <div id="python" class="section level2">
 <h2>Python</h2>
-<p>The <a href="https://www.python.org/">python</a> engine enables execution of python code via an external python interpreter (the interpreter returned by <code>Sys.which(&quot;python&quot;)</code> is used to execute the code). Here’s a simple example:</p>
+<p>The <a href="https://www.python.org/">python</a> engine enables execution of python code via an external python interpreter. Here’s a simple example:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{python}
 x = 'hello, python world!'
 print(x.split(' '))
 &#96;&#96;&#96;
 </code></pre>
 <p>Note that chunk options like <code>echo</code> and <code>results</code> are all valid when using a language engine like python. If your python code is generating raw HTML or LaTeX then the <code>results='asis'</code> option will ensure that it’s passed straight into the document’s output stream.</p>
+<div id="specifying-a-python-interpreter" class="section level3">
+<h3>Specifying a Python Interpreter</h3>
+<p>By default, the interpreter returned by <code>Sys.which(&quot;python&quot;)</code> is used to execute the code. However, if you would like to use a different python interpreter, you can specify one by setting the <code>engine.path</code> option to the path of your preferred executable. For instance:</p>
+<pre class="markdown"><code>&#96;&#96;&#96;{python, engine.path="/Users/me/anaconda/bin/python"}
+import sys
+print sys.version
+&#96;&#96;&#96;
+</code></pre>
+<p>The <code>engine.path</code> option can also be used on other chunk types which use an external interpreter.</p>
+</div>
 <div id="data-exchange" class="section level3">
 <h3>Data Exchange</h3>
 <p>Since the python engine executes code in an external process, exchanging data between R chunks and python chunks is done via the file system. If you are exchanging data frames, you can use the <a href="https://blog.rstudio.org/2016/03/29/feather/">feather</a> package for very high performance transfer of even large data frames between python and R. Here’s an example that uses feather to transfer a data frame created with pandas to R for plotting with ggplot2:</p>
