@@ -47,6 +47,9 @@
 #'  the official MathJax CDN. The "local" option uses a local version of MathJax
 #'  (which is copied into the output directory). You can pass an alternate URL
 #'  or pass \code{NULL} to exclude MathJax entirely.
+#'@param section_divs Wrap sections in <div> tags (or <section> tags in HTML5),
+#'  and attach identifiers to the enclosing <div> (or <section>) rather than the
+#'  header itself.
 #'@param template Pandoc template to use for rendering. Pass "default" to use
 #'  the rmarkdown package default template; pass \code{NULL} to use pandoc's
 #'  built-in template; pass a path to use a custom template that you've created.
@@ -202,6 +205,7 @@ html_document <- function(toc = FALSE,
                           theme = "default",
                           highlight = "default",
                           mathjax = "default",
+                          section_divs = TRUE,
                           template = "default",
                           extra_dependencies = NULL,
                           css = NULL,
@@ -216,7 +220,8 @@ html_document <- function(toc = FALSE,
   args <- c("--standalone")
 
   # use section divs
-  args <- c(args, "--section-divs")
+  if (section_divs)
+    args <- c(args, "--section-divs")
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
