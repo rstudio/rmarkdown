@@ -9,10 +9,10 @@ html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   fig_retina = 2, fig_caption = TRUE, dev = "png", df_print = "default",
   code_folding = c("none", "show", "hide"), code_download = FALSE,
   smart = TRUE, self_contained = TRUE, theme = "default",
-  highlight = "default", mathjax = "default", template = "default",
-  extra_dependencies = NULL, css = NULL, includes = NULL,
-  keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
-  pandoc_args = NULL, ...)
+  highlight = "default", mathjax = "default", section_divs = TRUE,
+  template = "default", extra_dependencies = NULL, css = NULL,
+  includes = NULL, keep_md = FALSE, lib_dir = NULL,
+  md_extensions = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -84,6 +84,10 @@ use the \code{css} parameter to add your own styles).}
 the official MathJax CDN. The "local" option uses a local version of MathJax
 (which is copied into the output directory). You can pass an alternate URL
 or pass \code{NULL} to exclude MathJax entirely.}
+
+\item{section_divs}{Wrap sections in <div> tags (or <section> tags in HTML5),
+and attach identifiers to the enclosing <div> (or <section>) rather than the
+header itself.}
 
 \item{template}{Pandoc template to use for rendering. Pass "default" to use
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
