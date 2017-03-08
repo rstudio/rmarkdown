@@ -2,8 +2,9 @@
 # Create a shiny app object from an Rmd w/ runtime: shiny_prerendered
 shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
 
-  # get rendered html
+  # get rendered html and capture dependencies
   html <- shiny_prerendered_html(input_rmd, encoding, render_args)
+  deps <- attr(html, "html_dependencies")
 
   # create the server environment
   server_envir = new.env(parent = globalenv())
@@ -42,6 +43,12 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
     eval(parse(text = server_context))
   }
   environment(server) <- new.env(parent = server_envir)
+
+  # remove server code before serving
+  server_contexts <-  c("server-start", "data", "server")
+  html_lines <- shiny_prerendered_remove_contexts(html_lines, server_contexts)
+  html <- HTML(paste(html_lines, collapase = "\n"))
+  html <- htmltools::attachDependencies(html, deps)
 
   # create shiny app
   shiny::shinyApp(
@@ -436,6 +443,36 @@ shiny_prerendered_extract_context <- function(html_lines, context) {
   context_lines <- gsub("<\\u002f", "</", context_lines, fixed = TRUE)
   context_lines
 }
+
+shiny_prerendered_remove_contexts <- function(html_lines, contexts) {
+
+  # look for lines that start the contexts
+  pattern <- paste0('<script type="application/shiny-prerendered" data-context="')
+  matches <- regmatches(html_lines, regexec(pattern, html_lines, fixed = TRUE))
+
+  # create a regex pattern used for matching named contexts
+  contexts_pattern <- paste0(pattern, "(", paste(contexts, collapse = "|"), ")")
+
+  # new_html_lines to return
+  new_html_lines <- character()
+
+  # ignore the code within the contexts
+  in_context <- FALSE
+  for (i in 1:length(matches)) {
+    if (length(matches[[i]]) > 0 && grepl(contexts_pattern, html_lines[[i]])) {
+      in_context = TRUE
+    }
+    else if (in_context && identical(html_lines[[i]], "</script>")) {
+      in_context <- FALSE
+    }
+    else if (!in_context)
+      new_html_lines <- c(new_html_lines, html_lines[[i]])
+  }
+
+  # return
+  new_html_lines
+}
+
 
 
 # Gather shiny_prerendred contexts and append them as script tags to

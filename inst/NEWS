@@ -25,6 +25,9 @@ rmarkdown 1.4 (unreleased)
 * Add `section_divs` argument to html_document and html_fragment to control
   generation of section tags/divs.
 
+* Remove data-context="(data|server|server-start)" chunks from HTML served
+  to client in shiny_prerendered
+
 
 rmarkdown 1.3
 --------------------------------------------------------------------------------
