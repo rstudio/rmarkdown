@@ -20,6 +20,7 @@
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @export
 html_fragment <- function(number_sections = FALSE,
+                          section_divs = TRUE,
                           fig_width = 7,
                           fig_height = 5,
                           fig_retina = 2,
@@ -28,7 +29,6 @@ html_fragment <- function(number_sections = FALSE,
                           df_print = "default",
                           smart = TRUE,
                           mathjax = TRUE,
-                          section_divs = TRUE,
                           keep_md = FALSE,
                           md_extensions = NULL,
                           pandoc_args = NULL,

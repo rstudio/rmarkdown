@@ -22,6 +22,9 @@ rmarkdown 1.4 (unreleased)
 
 * Fix stack space consumption issues with large JS payloads in chunks
 
+* Add `section_divs` argument to html_document and html_fragment to control
+  generation of section tags/divs.
+
 
 rmarkdown 1.3
 --------------------------------------------------------------------------------

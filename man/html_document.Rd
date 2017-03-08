@@ -5,11 +5,11 @@
 \title{Convert to an HTML document}
 \usage{
 html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
-  number_sections = FALSE, fig_width = 7, fig_height = 5,
-  fig_retina = 2, fig_caption = TRUE, dev = "png", df_print = "default",
-  code_folding = c("none", "show", "hide"), code_download = FALSE,
-  smart = TRUE, self_contained = TRUE, theme = "default",
-  highlight = "default", mathjax = "default", section_divs = TRUE,
+  number_sections = FALSE, section_divs = TRUE, fig_width = 7,
+  fig_height = 5, fig_retina = 2, fig_caption = TRUE, dev = "png",
+  df_print = "default", code_folding = c("none", "show", "hide"),
+  code_download = FALSE, smart = TRUE, self_contained = TRUE,
+  theme = "default", highlight = "default", mathjax = "default",
   template = "default", extra_dependencies = NULL, css = NULL,
   includes = NULL, keep_md = FALSE, lib_dir = NULL,
   md_extensions = NULL, pandoc_args = NULL, ...)
@@ -25,6 +25,10 @@ options that control the behavior of the floating table of contents. See the
 \emph{Floating Table of Contents} section below for details.}
 
 \item{number_sections}{\code{TRUE} to number section headings}
+
+\item{section_divs}{Wrap sections in <div> tags (or <section> tags in HTML5),
+and attach identifiers to the enclosing <div> (or <section>) rather than the
+header itself.}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -84,10 +88,6 @@ use the \code{css} parameter to add your own styles).}
 the official MathJax CDN. The "local" option uses a local version of MathJax
 (which is copied into the output directory). You can pass an alternate URL
 or pass \code{NULL} to exclude MathJax entirely.}
-
-\item{section_divs}{Wrap sections in <div> tags (or <section> tags in HTML5),
-and attach identifiers to the enclosing <div> (or <section>) rather than the
-header itself.}
 
 \item{template}{Pandoc template to use for rendering. Pass "default" to use
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
