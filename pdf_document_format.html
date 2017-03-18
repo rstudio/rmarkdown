@@ -311,10 +311,10 @@ output:
 </div>
 <div id="figure-options" class="section level2">
 <h2>Figure Options</h2>
-<p>There are a number of options that affect the output of figures within PD documents:</p>
+<p>There are a number of options that affect the output of figures within PDF documents:</p>
 <ul>
 <li><p><code>fig_width</code> and <code>fig_height</code> can be used to control the default figure width and height (6 x 4.5 is used by default)</p></li>
-<li><p><code>fig_crop</code> controls whether the the pdfcrop utility (if available) is automatically applied to pdf figures (this is true by default).</p></li>
+<li><p><code>fig_crop</code> controls whether the the pdfcrop utility (if available) is automatically applied to pdf figures (this is true by default). If your graphics device is postscript, you are recommended to disable this feature (see more info <a href="https://github.com/yihui/knitr/issues/1365">here</a>).</p></li>
 <li><p><code>fig_caption</code> controls whether figures are rendered with captions (this is false by default).</p></li>
 <li><p><code>dev</code> controls the graphics device used to render figures (defaults to pdf)</p></li>
 </ul>
@@ -357,7 +357,7 @@ output:
 <pre><code>---
 title: &quot;Habits&quot;
 output:
-  html_document:
+  pdf_document:
     df_print: kable
 ---</code></pre>
 </div>
