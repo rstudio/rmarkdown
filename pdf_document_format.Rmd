@@ -83,7 +83,7 @@ For example:
     ---
     title: "Habits"
     output:
-      html_document:
+      pdf_document:
         df_print: kable
     ---
 
