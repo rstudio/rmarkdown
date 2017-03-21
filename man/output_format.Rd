@@ -59,7 +59,7 @@ any intermediate files required to render the \code{input_file}.}
 
 \item{post_processor}{An optional post-processor function that receives the
 \code{metadata}, \code{input_file}, \code{output_file}, \code{clean},
-and \code{verbose} parmaeters, and can return an alternative
+and \code{verbose} parameters, and can return an alternative
 \code{output_file}.}
 
 \item{on_exit}{A function to call when \code{rmarkdown::render()} finishes
