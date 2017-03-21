@@ -112,6 +112,28 @@ To execute an inline chunk in the notebook, put your cursor inside the chunk and
 
 In notebooks, inline R chunks can only produce text, not figures or other kinds of output. It's also important that R code run inside inline chunks executes quickly and does not have side effects, as it's executed whenever you save the notebook.
 
+#### Executing External Chunks
+
+Notebooks are typically self-contained. However, in some situations it's preferable to re-use code from an R script as a notebook chunk, as in knitr's [code externalization](https://yihui.name/knitr/demo/externalization/). This can be done by using `knitr::read_chunk` in your notebook's setup chunk, along with a special `## ---- chunkname` annotation in the R file from which you intend to read code. Here is a minimal example:
+
+**example.Rmd**
+
+<pre><code>&#96;&#96;&#96;{r setup}
+knitr::read_chunk("example.R")
+&#96;&#96;&#96;
+
+&#96;&#96;&#96;{r chunk}
+&#96;&#96;&#96;</code></pre>
+
+**example.R**
+
+    ## ---- chunk
+    1 + 1
+
+When you execute the empty chunk in the notebook, code from the external file will be inserted, and the results displayed inline, as though the chunk contained that code.
+
+![](images/notebook-external-code.png)
+
 ### Chunk Output
 
 #### Managing Output
