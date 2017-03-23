@@ -1,5 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^issues/
 ^tools/
 README\.(Rmd|md|html)
 CONTRIBUTING\.(Rmd|md|html)
