@@ -1,4 +1,4 @@
-rmarkdown 1.4 (unreleased)
+rmarkdown 1.4
 --------------------------------------------------------------------------------
 
 * `data.table` expressions involving `:=` are no longer automatically
