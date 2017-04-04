@@ -1,6 +1,9 @@
 rmarkdown 1.5 (unreleased)
 --------------------------------------------------------------------------------
 
+* Fixed an issue where code within Shiny pre-rendered documents was not
+  rendered correctly.
+
 * Add `includes` parameter to `html_fragment` format.
 
 
