@@ -299,7 +299,7 @@ html_document <- function(toc = FALSE,
 
   # numbered sections
   if (number_sections)
-    args <- c(args, "--number-sections")
+    args <- c(args, "--number-sections", "--number-offset=1")
 
   # additional css
   for (css_file in css)
