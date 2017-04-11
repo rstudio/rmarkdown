@@ -6,6 +6,8 @@ rmarkdown 1.5 (unreleased)
 
 * Add `includes` parameter to `html_fragment` format.
 
+* Use RStudio redirection URL to replace deprecated MathJax CDN
+
 
 rmarkdown 1.4
 --------------------------------------------------------------------------------

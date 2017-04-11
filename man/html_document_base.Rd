@@ -30,10 +30,10 @@ it's size).}
 bootstrap, etc.) into. By default this will be the name of the document with
 \code{_files} appended to it.}
 
-\item{mathjax}{Include mathjax. The "default" option uses an https URL from
-the official MathJax CDN. The "local" option uses a local version of MathJax
-(which is copied into the output directory). You can pass an alternate URL
-or pass \code{NULL} to exclude MathJax entirely.}
+\item{mathjax}{Include mathjax. The "default" option uses an https URL from a
+MathJax CDN. The "local" option uses a local version of MathJax (which is
+copied into the output directory). You can pass an alternate URL or pass
+\code{NULL} to exclude MathJax entirely.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 

@@ -367,7 +367,7 @@ shinyHTML_with_deps <- function(html_file, deps) {
   if (nzchar(Sys.getenv("RSTUDIO"))) {
     local_mathjax <- Sys.getenv("RMARKDOWN_MATHJAX_PATH")
     if (nzchar(local_mathjax)) {
-      html <- gsub(pattern = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?",
+      html <- gsub(pattern = "https://mathjax.rstudio.com/latest/MathJax.js?",
                    replacement = "mathjax-local/MathJax.js?",
                    x = html,
                    fixed = TRUE,
