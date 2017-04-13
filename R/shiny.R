@@ -137,6 +137,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       "UTF-8"
     else
       render_args$encoding
+  # default environmnet to compile Rmd
+  if (is.null(render_args$envir)) render_args$envir <- parent.frame()
 
   # determine the runtime of the target file
   target_file <- ifelse(!is.null(file), file, default_file)
