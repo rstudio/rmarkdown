@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 1.4.0.9001
+Version: 1.5
 Authors@R: c(
   person("JJ", "Allaire", role = c("aut", "cre"), email = "jj@rstudio.com"),
   person("Joe", "Cheng", role = "aut", email = "joe@rstudio.com"),
@@ -55,9 +55,6 @@ Authors@R: c(
   person("Aidan", "Lister", role = c("ctb", "cph"), 
          comment = "jQuery StickyTabs")
   )
-Author: JJ Allaire, Jonathan McPherson, Yihui Xie, Hadley Wickham, Joe Cheng,
-    Jeff Allen
-Maintainer: JJ Allaire <jj@rstudio.com>
 Description: Convert R Markdown documents into a variety of formats.
 Depends:
     R (>= 3.0)

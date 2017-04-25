@@ -1,4 +1,4 @@
-rmarkdown 1.5 (unreleased)
+rmarkdown 1.5
 --------------------------------------------------------------------------------
 
 * Fixed an issue where code within Shiny pre-rendered documents was not
