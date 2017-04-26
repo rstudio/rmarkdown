@@ -55,6 +55,9 @@ Authors@R: c(
   person("Aidan", "Lister", role = c("ctb", "cph"), 
          comment = "jQuery StickyTabs")
   )
+Author: JJ Allaire, Jonathan McPherson, Yihui Xie, Hadley Wickham, Joe Cheng,
+    Jeff Allen
+Maintainer: JJ Allaire <jj@rstudio.com>
 Description: Convert R Markdown documents into a variety of formats.
 Depends:
     R (>= 3.0)
