@@ -182,6 +182,9 @@ pdf_document <- function(toc = FALSE,
       all_dependencies <- append(extra_dependencies, flatten_latex_dependencies(knit_meta))
       filename <- tempfile()
       latex_dependencies_as_text_file(all_dependencies, filename)
+      if ("header-includes" %in% names(metadata)) {
+        cat(c("", metadata[["header-includes"]]), sep = "\n", file = filename, append = TRUE)
+      }
       args <- c(args, includes_to_pandoc_args(includes(in_header = filename)))
     }
     args
