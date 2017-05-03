@@ -266,7 +266,7 @@ knit_params_ask <- function(file = NULL,
   ## left to use the default.
   values <- params_namedList()
 
-  server <- function(input, output) {
+  server <- function(input, output, session) {
     param.ui <- function(param) {
       inputControlFn <- params_get_control(param)
       inputControlFnFormals <- names(formals(inputControlFn))
@@ -405,11 +405,17 @@ knit_params_ask <- function(file = NULL,
     })
 
     shiny::observeEvent(input$save, {
-      shiny::stopApp(values)
+      session$onFlushed(function() {
+        session$close()
+        shiny::stopApp(values)
+      })
     })
 
     shiny::observeEvent(input$cancel, {
-      shiny::stopApp(NULL)
+      session$onFlushed(function() {
+        session$close()
+        shiny::stopApp(NULL)
+      })
     })
   }
 
