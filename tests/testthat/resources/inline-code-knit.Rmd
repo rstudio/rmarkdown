@@ -1,0 +1,17 @@
+---
+title: "Bug"
+author: "Raniere"
+date: "3 May 2017"
+output: html_document
+---
+```{r}
+a <- TRUE
+```
+
+`a` is `r a`.
+
+```{r}
+a <- FALSE
+```
+
+Now `a` is `r a`.
