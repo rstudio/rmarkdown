@@ -80,6 +80,11 @@ html_notebook <- function(toc = FALSE,
         })
       }
 
+      # if our output_source comes with a pre_knit hook, evaluate that
+      output_source_pre_knit <- attr(output_source, "pre_knit", exact = TRUE)
+      if (is.function(output_source_pre_knit))
+        try(output_source_pre_knit())
+
       # track knit context
       chunk_options <- list()
 
