@@ -108,17 +108,12 @@ base64_encode_file <- function(in_file, encoder) {
 # instances of that resource
 process_html_res <- function(html, reg, processor) {
   html <- paste(html, collapse = "\n")
-  m <- gregexpr(reg, html, perl = TRUE)
-  if (m[[1]][1] != -1) {
-    process_img_src <- function(img_src) {
-      src <- sub(reg, '\\1', img_src)
-      in_file <- utils::URLdecode(src)
-      processor(img_src, src)
-    }
-    regmatches(html, m) <- list(unlist(lapply(regmatches(html, m)[[1]],
-                                              process_img_src)))
+  process_img_src <- function(img_src) {
+    src <- sub(reg, '\\1', img_src)
+    in_file <- utils::URLdecode(src)
+    processor(img_src, src)
   }
-
+  html <- stringr::str_replace_all(html, reg, process_img_src)
   strsplit(html, "\n", fixed = TRUE)[[1]]
 }
 
