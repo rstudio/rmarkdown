@@ -36,6 +36,10 @@ github_document <- function(toc = FALSE,
   variant <- "markdown_github"
   if (!hard_line_breaks)
     variant <- paste0(variant, "-hard_line_breaks")
+
+  # turn off ASCII identifiers
+  variant <- paste0(variant, "-ascii_identifiers")
+
   format <- md_document(variant = variant,
                         toc = toc,
                         toc_depth = toc_depth,
@@ -47,6 +51,10 @@ github_document <- function(toc = FALSE,
                         md_extensions = md_extensions,
                         pandoc_args = pandoc_args)
 
+  # remove 'ascii_identifiers' if necessary -- required to ensure that
+  # TOC links are correctly generated on GitHub
+  format$pandoc$from <-
+    gsub("+ascii_identifiers", "", format$pandoc$from, fixed = TRUE)
 
   # add a post processor for generating a preview if requested
   if (html_preview) {

@@ -1,3 +1,9 @@
+rmarkdown 1.6 (unreleased)
+--------------------------------------------------------------------------------
+
+* Fixed an issue where headers with non-ASCII text would not be linked
+  to correctly in the table of contents.
+
 rmarkdown 1.5
 --------------------------------------------------------------------------------
 
