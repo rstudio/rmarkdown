@@ -110,7 +110,6 @@ process_html_res <- function(html, reg, processor) {
   html <- paste(html, collapse = "\n")
   process_img_src <- function(img_src) {
     src <- sub(reg, '\\1', img_src)
-    in_file <- utils::URLdecode(src)
     processor(img_src, src)
   }
   html <- stringr::str_replace_all(html, reg, process_img_src)
