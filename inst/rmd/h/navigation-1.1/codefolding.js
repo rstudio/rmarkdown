@@ -16,8 +16,8 @@ window.initializeCodeFolding = function(show) {
   // index for unique code element ids
   var currentIndex = 1;
 
-  // select all R code blocks
-  var rCodeBlocks = $('pre.r');
+  // select all language code blocks
+  var rCodeBlocks = $('pre.sourceCode');
   rCodeBlocks.each(function() {
 
     // create a collapsable div to wrap the code in
