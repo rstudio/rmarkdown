@@ -591,4 +591,3 @@ shell_exec <- function(cmd, intern = FALSE, wait = TRUE, ...) {
   else
     system(cmd, intern = intern, wait = wait, ...)
 }
-

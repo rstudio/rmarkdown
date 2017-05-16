@@ -316,6 +316,8 @@ html_document <- function(toc = FALSE,
   source_code <- NULL
   source_file <- NULL
   pre_knit <- function(input, ...) {
+
+    # embed source code when requested
     if (code_download) {
       source_file <<- basename(input)
       source_code <<- paste0(
@@ -323,6 +325,14 @@ html_document <- function(toc = FALSE,
         base64enc::base64encode(input),
         '</div>')
     }
+
+    # provide a document hook that expands image links prefixed with
+    # a '~', so that pandoc will accept them
+    document_hook <- knitr::knit_hooks$get("document")
+    exit_actions <<- c(exit_actions, function() {
+      knitr::knit_hooks$set(document = document_hook)
+    })
+    knitr::knit_hooks$set(document = md_document_hook(document_hook))
   }
 
   # pagedtable
