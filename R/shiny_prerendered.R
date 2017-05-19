@@ -38,9 +38,9 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
 
   # extract the server context
   server_context <- shiny_prerendered_extract_context(html_lines, "server")
-  server_envir$server_context <- server_context
+  server_envir$.server_context <- server_context
   server <- function(input, output, session) {
-    eval(parse(text = server_context))
+    eval(parse(text = .server_context))
   }
   environment(server) <- new.env(parent = server_envir)
 
