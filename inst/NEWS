@@ -6,6 +6,9 @@ rmarkdown 1.6 (unreleased)
 
 * Support code folding for bash, python, sql, Rcpp, and Stan chunks.
 
+* Fixed two issue with `df_print: paged`, one would prevent rendering data with
+  lists of lists and the other where the column type would get cut off.
+
 
 rmarkdown 1.5
 --------------------------------------------------------------------------------
