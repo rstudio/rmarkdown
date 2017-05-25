@@ -9,6 +9,8 @@
 #' @param copy_resources Copy resources
 #' @param extra_dependencies Extra dependencies
 #' @param bootstrap_compatible Bootstrap compatible
+#' @param knitr Knitr options for an output format (see
+#'   \code{\link{knitr_options}})
 #' @param ... Ignored
 #'
 #' @return HTML base output format.
@@ -25,6 +27,7 @@ html_document_base <- function(smart = TRUE,
                                copy_resources = FALSE,
                                extra_dependencies = NULL,
                                bootstrap_compatible = FALSE,
+                               knitr = NULL,
                                ...) {
 
   # default for dependency_resovler
@@ -166,7 +169,7 @@ html_document_base <- function(smart = TRUE,
   }
 
   output_format(
-    knitr = NULL,
+    knitr = knitr,
     pandoc = pandoc_options(to = "html", from = NULL, args = args),
     keep_md = FALSE,
     clean_supporting = FALSE,
