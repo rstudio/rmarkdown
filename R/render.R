@@ -639,7 +639,7 @@ render <- function(input,
       convert(texfile)
       # manually compile tex if PDF output is expected
       if (grepl('[.]pdf$', output_file)) {
-        latexmk(texfile, output_format$pandoc$latex_engine)
+        latexmk(texfile, output_format$pandoc$latex_engine, '--biblatex' %in% output_format$pandoc$args)
         file.rename(file_with_ext(texfile, "pdf"), output_file)
       }
       # clean up the tex file if necessary
