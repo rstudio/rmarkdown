@@ -117,10 +117,14 @@ process_html_res <- function(html, reg, processor) {
 }
 
 process_images <- function(html, processor) {
-  process_html_res(
+  html <- process_html_res(
     html,
     "<\\s*[Ii][Mm][Gg]\\s+[Ss][Rr][Cc]\\s*=\\s*[\"']([^\"']+)[\"']",
     processor)
+  process_html_res(
+      html,
+      "<[^>]*style=\"[^\"]*url\\(([^\\)]+)\\)",
+      processor)
 }
 
 base64_encode_images <- function(html, encoder) {
