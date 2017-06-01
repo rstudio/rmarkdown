@@ -347,14 +347,10 @@ latexmk_emu <- function(file, engine, biblatex = FALSE) {
 
   fileq <- shQuote(file)
   run_engine <- function() {
-    res <- system2(
-      engine, c('-halt-on-error -interaction=batchmode', fileq), stdout = FALSE
-    )
-    if (res != 0) {
+    system2_quiet(engine, c('-halt-on-error -interaction=batchmode', fileq), error = {
       keep_log <<- TRUE
       show_latex_error(file)
-    }
-    invisible(res)
+    })
   }
   run_engine()
   # generate index
@@ -379,9 +375,11 @@ latexmk_emu <- function(file, engine, biblatex = FALSE) {
 }
 
 system2_quiet <- function(..., error = NULL) {
-  # run the command quietly
+  # run the command quietly if possible
   res <- system2(..., stdout = FALSE, stderr = FALSE)
-  # if failed, run the error callback
+  # if failed, use the normal mode
+  if (res != 0) res <- system2(...)
+  # if still fails, run the error callback
   if (res != 0) error  # lazy evaluation
   invisible(res)
 }
