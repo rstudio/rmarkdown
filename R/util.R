@@ -295,14 +295,14 @@ escape_regex_metas <- function(in_str) {
 }
 
 # call latexmk to compile tex to PDF; if not available, use a simple emulation
-latexmk <- function(file, engine) {
+latexmk <- function(file, engine, biblatex = FALSE) {
   if (!grepl('[.]tex$', file))
     stop("The input file '", file, "' does not appear to be a LaTeX document")
   engine <- find_latex_engine(engine)
   latexmk_path <- find_program('latexmk')
   if (latexmk_path == '') {
     # latexmk not found
-    latexmk_emu(file, engine)
+    latexmk_emu(file, engine, biblatex)
   } else if (find_program('perl') != '' && latexmk_installed(latexmk_path)) {
     system2_quiet(latexmk_path, c(
       '-pdf -latexoption=-halt-on-error -interaction=batchmode',
@@ -313,13 +313,13 @@ latexmk <- function(file, engine) {
     })
     system2(latexmk_path, '-c', stdout = FALSE)  # clean up nonessential files
   } else {
-    latexmk_emu(file, engine)
+    latexmk_emu(file, engine, biblatex)
   }
 }
 
 # a quick and dirty version of latexmk (should work reasonably well unless the
 # LaTeX document is extremely complicated)
-latexmk_emu <- function(file, engine) {
+latexmk_emu <- function(file, engine, biblatex = FALSE) {
   owd <- setwd(dirname(file))
   on.exit(setwd(owd), add = TRUE)
   # only use basename because bibtex may not work with full path
@@ -363,9 +363,16 @@ latexmk_emu <- function(file, engine) {
     system2_quiet(find_latex_engine('makeindex'), shQuote(idx))
   }
   # generate bibliography
-  aux <- sub('[.]tex$', '.aux', file)
+  if (biblatex) {
+    aux_ext <- '.bcf'
+    bib_engine <- 'biber'
+  } else {
+    aux_ext <- '.aux'
+    bib_engine <- 'bibtex'
+  }
+  aux <- sub('[.]tex$', aux_ext, file)
   if (file.exists(aux)) {
-    system2_quiet(find_latex_engine('bibtex'), shQuote(aux))
+    system2_quiet(find_latex_engine(bib_engine), shQuote(aux))
   }
   run_engine()
   run_engine()
