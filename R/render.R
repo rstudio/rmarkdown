@@ -292,11 +292,12 @@ render <- function(input,
     c(output_format$pandoc$args, post_knit_extra_args)
   }
 
-  # determine our id-prefix
+  # determine our id-prefix (add one if necessary for runtime: shiny)
   id_prefix <- id_prefix_from_args(output_format$pandoc$args)
-  if (!nzchar(id_prefix) && is_shiny(runtime))
+  if (!nzchar(id_prefix) && is_shiny(runtime)) {
     id_prefix <- "section-"
-
+    output_format$pandoc$args <- c(output_format$pandoc$args, rbind("--id-prefix", id_prefix))
+  }
 
   # knit if necessary
   if (requires_knit) {
@@ -570,10 +571,6 @@ render <- function(input,
         rbind("--bibliography", pandoc_path_arg(bibliography, FALSE))
       )
     }
-
-    # add an id-prefix if specified
-    if (nzchar(id_prefix))
-      output_format$pandoc$args <- c(output_format$pandoc$args, rbind("--id-prefix", id_prefix))
 
     perf_timer_start("pandoc")
 
