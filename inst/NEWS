@@ -6,6 +6,8 @@ rmarkdown 1.6 (unreleased)
 
 * Support code folding for bash, python, sql, Rcpp, and Stan chunks.
 
+* Provide rmarkdown.pandoc.id_prefix as Knit option
+
 
 rmarkdown 1.5
 --------------------------------------------------------------------------------
