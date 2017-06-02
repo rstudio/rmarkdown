@@ -78,9 +78,13 @@ paged_table_obj_sum <- function(x) {
     paste0(" [", dim_desc(x), "]" )
   }
 
+  obj_sum.default <- function(x) {
+    paste0(paged_table_type_sum(x), size_sum(x))
+  }
+
   switch(class(x)[[1]],
          POSIXlt = rep("POSIXlt", length(x)),
-         list = vapply(x, paged_table_obj_sum, character(1L)),
+         list = vapply(x, obj_sum.default, character(1L)),
          paste0(paged_table_type_sum(x), size_sum(x))
   )
 }
