@@ -9,6 +9,9 @@ rmarkdown 1.6 (unreleased)
 * Fixed two issue with `df_print: paged`, one would prevent rendering data with
   lists of lists and the other where the column type would get cut off.
 
+* Better support for `citation_package: biblatex` in `pdf_document()` (#1062).
+
+* On certain Windows platforms, compiling LaTeX to PDF may fail because `system2(stdout = FALSE)` is not supported, in which case the default `system2()` will be used (#1061).
 
 rmarkdown 1.5
 --------------------------------------------------------------------------------
