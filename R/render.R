@@ -292,6 +292,13 @@ render <- function(input,
     c(output_format$pandoc$args, post_knit_extra_args)
   }
 
+  # determine our id-prefix (add one if necessary for runtime: shiny)
+  id_prefix <- id_prefix_from_args(output_format$pandoc$args)
+  if (!nzchar(id_prefix) && is_shiny(runtime)) {
+    id_prefix <- "section-"
+    output_format$pandoc$args <- c(output_format$pandoc$args, rbind("--id-prefix", id_prefix))
+  }
+
   # knit if necessary
   if (requires_knit) {
 
@@ -320,6 +327,7 @@ render <- function(input,
     knitr::opts_knit$set(
       rmarkdown.pandoc.from = output_format$pandoc$from,
       rmarkdown.pandoc.to = pandoc_to,
+      rmarkdown.pandoc.id_prefix = id_prefix,
       rmarkdown.keep_md = output_format$keep_md,
       rmarkdown.df_print = output_format$df_print,
       rmarkdown.version = 2,
@@ -564,12 +572,6 @@ render <- function(input,
       )
     }
 
-    # add an id-prefix if this is runtime: shiny
-    if (is_shiny(runtime) && (!"--id-prefix" %in% output_format$pandoc$args)) {
-      output_format$pandoc$args <- c(output_format$pandoc$args,
-                                     rbind("--id-prefix", "section-"))
-    }
-
     perf_timer_start("pandoc")
 
     convert <- function(output, citeproc = FALSE) {
@@ -798,6 +800,21 @@ merge_render_context <- function(context) {
     context[[el]] <- get(el, envir = render_context())
   context
 }
+
+
+id_prefix_from_args <- function(args) {
+
+  # scan for id-prefix argument
+  for (i in 1:length(args)) {
+    arg <- args[[i]]
+    if (identical(arg, "--id-prefix") && (i < length(args)))
+      return (args[[i+1]])
+  }
+
+  # default to empty string
+  ""
+}
+
 
 resolve_df_print <- function(df_print) {
 
