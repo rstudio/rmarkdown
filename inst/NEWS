@@ -1,4 +1,4 @@
-rmarkdown 1.6 (unreleased)
+rmarkdown 1.6
 --------------------------------------------------------------------------------
 
 * Fixed an issue where headers with non-ASCII text would not be linked
