@@ -4,6 +4,7 @@ output:
   html_document:
     toc: true
     toc_depth: 3
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -211,18 +212,27 @@ You can enhance the default display of data frames via the `df_print` option. Va
 | tibble  | Use the [`tibble::print.tbl_df`](https://www.rdocumentation.org/packages/tibble/versions/1.2/topics/print.tbl_df) function.  |
 | paged  |  Use the `rmarkdown::print.paged_df` function which creates a pageable HTML table. |
 
-For example:
+### Paged Printing
+
+When the `df_print` option is set to `paged`, tables are printed as an html
+table with support for pagination over rows and columns. For instance,
 
     ---
-    title: "Habits"
+    title: "Motor Trend Car Road Tests"
     output:
       html_document:
         df_print: paged
     ---
+    
+<pre class="markdown"><code>&#96;&#96;&#96;{r}
+mtcars
+&#96;&#96;&#96;
+</code></pre>
+```{r echo=FALSE, rows.print=5}
+mtcars
+```
 
-### Paged Printing
-
-When the `df_print` option is set to `paged`, the following options are avaialble:
+The following options are avaialble:
 
 | Option          | Description                                           |
 |-----------------|-------------------------------------------------------|
@@ -232,7 +242,17 @@ When the `df_print` option is set to `paged`, the following options are avaialbl
 | cols.min.print  | The minimum number of columns to display.             |
 | pages.print     | The number of pages to display under page navigation. |
 | paged.print     | When set to `FALSE` turns off paged tables.           |
+| rownames.print  | When set to `FALSE` turns off row names.              | 
 
+These options are specified under each chunk as follows:
+
+<pre class="markdown"><code>&#96;&#96;&#96;{r cols.print=3, rows.print=3}
+mtcars
+&#96;&#96;&#96;
+</code></pre>
+```{r echo=FALSE, cols.print=3, rows.print=3}
+mtcars
+```
 
 ## Code Folding
 
