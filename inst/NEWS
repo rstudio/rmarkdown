@@ -1,6 +1,9 @@
 rmarkdown 1.6 (unreleased)
 --------------------------------------------------------------------------------
 
+* Fixed an issue with `df_print: paged` where row names where not printed and
+  added support for `rownames.print` option to control when they print.
+
 * Fixed an issue where headers with non-ASCII text would not be linked
   to correctly in the table of contents.
 
@@ -13,8 +16,8 @@ rmarkdown 1.6 (unreleased)
 
 * Better support for `citation_package: biblatex` in `pdf_document()` (#1062).
 
-* On certain Windows platforms, compiling LaTeX to PDF may fail because 
-  `system2(stdout = FALSE)` is not supported, in which case the default `system2()` 
+* On certain Windows platforms, compiling LaTeX to PDF may fail because
+  `system2(stdout = FALSE)` is not supported, in which case the default `system2()`
   will be used (#1061).
 
 
