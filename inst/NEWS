@@ -1,6 +1,9 @@
 rmarkdown 1.6
 --------------------------------------------------------------------------------
 
+* Fixed an issue with `df_print: paged` where row names where not printed and
+  added support for `rownames.print` option to control when they print.
+
 * Fixed an issue where headers with non-ASCII text would not be linked
   to correctly in the table of contents.
 

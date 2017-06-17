@@ -98,7 +98,8 @@ paged_table_option <- function(option, default = NULL) {
 
 #' @import methods
 paged_table_html <- function(x) {
-  addRowNames = .row_names_info(data, type = 1) > 0
+  addRowNames = paged_table_option("rownames.print")
+  addRowNames <- if (is.null(addRowNames)) (.row_names_info(x, type = 1) > 0) else addRowNames
 
   maxPrint <- paged_table_option("max.print", 1000)
 
