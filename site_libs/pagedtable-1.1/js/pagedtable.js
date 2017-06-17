@@ -897,16 +897,12 @@ var PagedTable = function (pagedTable) {
     me.render();
 
     // retry seizing columns later if the host has not provided space
-    var retries = 100;
     function retryFit() {
-      retries = retries - 1;
-      if (retries > 0) {
-        if (tableDiv.clientWidth <= 0) {
-          setTimeout(retryFit, 100);
-        } else {
-          me.render();
-          triggerOnChange();
-        }
+      if (tableDiv.clientWidth <= 0) {
+        setTimeout(retryFit, 100);
+      } else {
+        me.render();
+        triggerOnChange();
       }
     }
     if (tableDiv.clientWidth <= 0) {
