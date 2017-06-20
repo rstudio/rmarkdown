@@ -74,7 +74,7 @@ renderPlot({
 
 ![](images/shiny-hist-plot.gif)
 
-If you haven’t used Shiny before some of the above code will be unfamiliar to you. The [](http://shiny.rstudio.com/tutorial) is a good place to learn more.
+If you haven’t used Shiny before some of the above code will be unfamiliar to you. [This](http://shiny.rstudio.com/tutorial) is a good place to learn more.
 
 ### Embedded Applications
 
