@@ -4,6 +4,8 @@ rmarkdown 1.7 (unreleased)
 * Fixed an issue with `df_print: paged` where row names where not printed and
   added support for `rownames.print` option to control when they print.
 
+* Add `smart` option for `word_document()` format.
+
 
 rmarkdown 1.6
 --------------------------------------------------------------------------------

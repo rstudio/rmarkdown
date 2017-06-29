@@ -5,9 +5,9 @@
 \title{Convert to an MS Word document}
 \usage{
 word_document(toc = FALSE, toc_depth = 3, fig_width = 5, fig_height = 4,
-  fig_caption = TRUE, df_print = "default", highlight = "default",
-  reference_docx = "default", keep_md = FALSE, md_extensions = NULL,
-  pandoc_args = NULL)
+  fig_caption = TRUE, df_print = "default", smart = TRUE,
+  highlight = "default", reference_docx = "default", keep_md = FALSE,
+  md_extensions = NULL, pandoc_args = NULL)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -30,6 +30,10 @@ for formats that produce HTML). In addition
 to the named methods you can also pass an arbitrary function to be used
 for printing data frames. You can disable the df_print behavior entirely
 by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
+
+\item{smart}{Produce typographically correct output, converting straight
+quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
+ellipses.}
 
 \item{highlight}{Syntax highlighting style. Supported styles include
 "default", "tango", "pygments", "kate", "monochrome", "espresso",

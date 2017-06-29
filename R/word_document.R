@@ -45,6 +45,7 @@ word_document <- function(toc = FALSE,
                           fig_height = 4,
                           fig_caption = TRUE,
                           df_print = "default",
+                          smart = TRUE,
                           highlight = "default",
                           reference_docx = "default",
                           keep_md = FALSE,
@@ -61,6 +62,10 @@ word_document <- function(toc = FALSE,
 
   # base pandoc options for all docx output
   args <- c()
+
+  # smart quotes, etc.
+  if (smart)
+    args <- c(args, "--smart")
 
   # table of contents
   if (pandoc_available("1.14"))
