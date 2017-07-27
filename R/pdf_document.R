@@ -206,20 +206,8 @@ pdf_document <- function(toc = FALSE,
 
   intermediates_generator <- function(original_input, encoding,
                                       intermediates_dir) {
-    # copy all intermediates (pandoc will need to bundle them in the PDF)
-    intermediates <- copy_render_intermediates(original_input, encoding,
-                                               intermediates_dir, FALSE)
-
-    # we need figures from the supporting files dir to be available during
-    # render as well; if we have a files directory, copy its contents
-    if (!is.null(saved_files_dir) && dir_exists(saved_files_dir)) {
-      file.copy(saved_files_dir, intermediates_dir, recursive = TRUE)
-      intermediates <- c(intermediates, list.files(
-        path = file.path(intermediates_dir, basename(saved_files_dir)),
-        all.files = TRUE, recursive = TRUE, full.names = TRUE))
-    }
-
-    intermediates
+    return(pdf_intermediates_generator(saved_files_dir, original_input,
+                                        encoding, intermediates_dir))
   }
 
   # return format
@@ -235,4 +223,22 @@ pdf_document <- function(toc = FALSE,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator
   )
+}
+
+pdf_intermediates_generator <- function(saved_files_dir, original_input,
+                                        encoding, intermediates_dir) {
+  # copy all intermediates (pandoc will need to bundle them in the PDF)
+  intermediates <- copy_render_intermediates(original_input, encoding,
+                                             intermediates_dir, FALSE)
+
+  # we need figures from the supporting files dir to be available during
+  # render as well; if we have a files directory, copy its contents
+  if (!is.null(saved_files_dir) && dir_exists(saved_files_dir)) {
+    file.copy(saved_files_dir, intermediates_dir, recursive = TRUE)
+    intermediates <- c(intermediates, list.files(
+      path = file.path(intermediates_dir, basename(saved_files_dir)),
+      all.files = TRUE, recursive = TRUE, full.names = TRUE))
+  }
+
+  intermediates
 }
