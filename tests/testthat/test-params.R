@@ -16,6 +16,15 @@ test_that("setting of params works", {
 
   # Invalid
   expect_error(knit_params_get(params_sample, "new value"))
+
+  # NULL defaults
+  params_null <- '---\nparams:\n  field1:\n    value: NULL\n---'
+  params <- knit_params_get(params_null, NULL)
+  expect_equal(params, list(field1=NULL))
+
+  # NULL overrides
+  params <- knit_params_get(params_sample, list(field1=NULL))
+  expect_equal(params, list(field1=NULL))
 })
 
 test_that("params render their UI", {
