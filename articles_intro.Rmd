@@ -11,7 +11,7 @@ Interactive documents are a new way to build Shiny apps. An interactive document
 
 This article will show you how to write an R Markdown report.
 
-The companion article, [Introduction to interactive documents](interactive-docs.html), will show you how to turn an R Markdown report into an interactive document with Shiny components.
+The companion article, [Introduction to interactive documents](http://shiny.rstudio.com/articles/interactive-docs.html), will show you how to turn an R Markdown report into an interactive document with Shiny components.
 
 
 ## R Markdown
@@ -60,7 +60,7 @@ You can manually render an R Markdown file with `rmarkdown::render()`. This is w
 
 ![](articles/images/rmd-temp.png)
 
-In practice, you do not need to call `rmarkdown::render()`. You can use a button in the RStudio IDE to render your reprt. R Markdown is heavily [integrated into the RStudio IDE](../articles/rmd-integration.html).
+In practice, you do not need to call `rmarkdown::render()`. You can use a button in the RStudio IDE to render your reprt. R Markdown is heavily [integrated into the RStudio IDE](http://shiny.rstudio.com/articles/rmd-integration.html).
 
 ## Getting started
 
@@ -234,6 +234,6 @@ You can then convert your document into several common formats.
 
 R Markdown documents implement Donald's Knuth's idea of literate programming and take the manual labor out of writing and maintaining reports. Moreover, they are quick to learn. You already know ecnough about markdown, knitr, and YAML to begin writing your own R Markdown reports.
 
-In the next article, [Introduction to interactive documents](interactive-docs.html), you will learn how to add interactive Shiny components to an R Markdown report. This creates a quick workflow for writing light-weight Shiny apps.
+In the next article, [Introduction to interactive documents](http://shiny.rstudio.com/articles/interactive-docs.html), you will learn how to add interactive Shiny components to an R Markdown report. This creates a quick workflow for writing light-weight Shiny apps.
 
 To learn more about R Markdown and interactive documents, please visit [rmarkdown.rstudio.com](http://rmarkdown.rstudio.com).
