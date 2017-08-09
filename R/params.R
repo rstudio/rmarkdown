@@ -6,11 +6,7 @@ knit_params_get <- function(input_lines, params) {
   if (packageVersion('yaml') < '2.1.14') knit_params <- mark_utf8(knit_params)
   default_params <- list()
   for (param in knit_params) {
-    if (is.null(param$value)) {
-      default_params[param$name] <- list(NULL)
-    } else {
-      default_params[[param$name]] <- param$value
-    }
+    default_params[param$name] <- list(param$value)
   }
 
   # validate params passed to render
