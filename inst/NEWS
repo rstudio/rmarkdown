@@ -6,6 +6,8 @@ rmarkdown 1.7 (unreleased)
 
 * Add `smart` option for `word_document()` format.
 
+* Save render intermediates when generating beamer presentations (fixes #1106).
+
 * Fixed issues when specifying NULL/null/empty parameter values (#729 and #762).
 
 
