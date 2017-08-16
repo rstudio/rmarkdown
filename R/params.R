@@ -6,7 +6,7 @@ knit_params_get <- function(input_lines, params) {
   if (packageVersion('yaml') < '2.1.14') knit_params <- mark_utf8(knit_params)
   default_params <- list()
   for (param in knit_params) {
-    default_params[[param$name]] <- param$value
+    default_params[param$name] <- list(param$value)
   }
 
   # validate params passed to render
@@ -30,7 +30,7 @@ knit_params_get <- function(input_lines, params) {
     invalid_params <- setdiff(names(params), names(default_params))
     if (length(invalid_params) > 0) {
       stop("render params not declared in YAML: ",
-           paste(invalid_params, sep = ", "))
+           paste(invalid_params, collapse = ", "))
     }
   }
 
