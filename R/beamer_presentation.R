@@ -125,6 +125,25 @@ beamer_presentation <- function(toc = FALSE,
   # custom args
   args <- c(args, pandoc_args)
 
+  # initialize saved files dir
+  saved_files_dir <- NULL
+
+  pre_processor <- function(metadata, input_file, runtime, knit_meta,
+                                files_dir, output_dir) {
+    # save files dir (for generating intermediates)
+    saved_files_dir <<- files_dir
+
+    # no-op other than caching dir location
+    invisible(NULL)
+  }
+
+  # generate intermediates (required to make resources available for publish)
+  intermediates_generator <- function(original_input, encoding,
+                                      intermediates_dir) {
+    return(pdf_intermediates_generator(saved_files_dir, original_input,
+                                        encoding, intermediates_dir))
+  }
+
   # return format
   output_format(
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
@@ -133,6 +152,8 @@ beamer_presentation <- function(toc = FALSE,
                             args = args,
                             latex_engine = latex_engine,
                             keep_tex = keep_tex),
+    pre_processor = pre_processor,
+    intermediates_generator = intermediates_generator,
     clean_supporting = !keep_tex,
     df_print = df_print
   )
