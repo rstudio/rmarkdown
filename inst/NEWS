@@ -10,6 +10,8 @@ rmarkdown 1.7 (unreleased)
 
 * Fixed issues when specifying NULL/null/empty parameter values (#729 and #762).
 
+* Better error message when unable to prerender a document. (#1125)
+
 
 rmarkdown 1.6
 --------------------------------------------------------------------------------

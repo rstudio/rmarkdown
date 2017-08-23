@@ -77,6 +77,9 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   prerender_option <- tolower(Sys.getenv("RMARKDOWN_RUN_PRERENDER", "1"))
 
   if (file.access(output_dir, 2) != 0) {
+    if (!file.exists(rendered_html))
+      stop("Unable to write prerendered HTML file to ", rendered_html)
+
     prerender <- FALSE
   }
   else if (identical(prerender_option, "0")) {
@@ -125,6 +128,10 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
                              envir = new.env()),
                         render_args)
     rendered_html <- do.call(render, args)
+  }
+
+  if (!file.exists(rendered_html)) {
+    stop("Prerendered HTML file not found at ", rendered_html)
   }
 
   # normalize paths
