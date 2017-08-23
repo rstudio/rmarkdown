@@ -12,6 +12,8 @@ rmarkdown 1.7 (unreleased)
 
 * Better error message when unable to prerender a document. (#1125)
 
+# Execute prerender with globalenv as parent, rather than parent frame (#1124)
+
 
 rmarkdown 1.6
 --------------------------------------------------------------------------------

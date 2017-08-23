@@ -125,7 +125,7 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
     # execute the render
     args <- merge_lists(list(input = input_rmd,
                              encoding = encoding,
-                             envir = new.env()),
+                             envir = new.env(parent = globalenv())),
                         render_args)
     rendered_html <- do.call(render, args)
   }
