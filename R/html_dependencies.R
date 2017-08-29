@@ -107,12 +107,12 @@ navbar_icon_dependencies <- function(navbar) {
   source <- readLines(navbar)
 
   # find icon references
-  res <- regexec('<span class="(fa fa|ion ion)-', source)
+  res <- regexec('<(span|i) +class *= *("|\') *(fa fa|ion ion)-', source)
   matches <- regmatches(source, res)
   libs <- c()
   for (match in matches) {
     if (length(match) > 0)
-      libs <- c(libs, match[[2]])
+      libs <- c(libs, match[[4]])
   }
   libs <- unique(libs)
 
