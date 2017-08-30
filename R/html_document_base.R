@@ -132,9 +132,12 @@ html_document_base <- function(smart = TRUE,
     if (length(preserved_chunks) > 0) {
       # Pandoc adds an empty <p></p> around the IDs of preserved chunks, and we
       # need to remove these empty tags, otherwise we may have invalid HTML like
-      # <p><div>...</div></p>
+      # <p><div>...</div></p>. For the reason of the second gsub(), see
+      # https://github.com/rstudio/rmarkdown/issues/133.
       for (i in names(preserved_chunks)) {
         output_str <- gsub(paste0("<p>", i, "</p>"), i, output_str,
+                           fixed = TRUE, useBytes = TRUE)
+        output_str <- gsub(paste0(' id="section-', i, '" '), ' ', output_str,
                            fixed = TRUE, useBytes = TRUE)
       }
       output_str <- restorePreserveChunks(output_str, preserved_chunks)
