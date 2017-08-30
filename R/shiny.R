@@ -304,9 +304,28 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
       }
       shinyHTML_with_deps(result_path, dependencies)
     })
-    output$`__reactivedoc__` <- shiny::renderUI({
+
+    doc_ui <- shiny::renderUI({
       doc()
     })
+
+    # For test snapshots. (The snapshotPreprocessOutput function was added
+    # in shiny 1.0.4.)
+    if (exists("snapshotPreprocessOutput", asNamespace("shiny"))) {
+      doc_ui <- shiny::snapshotPreprocessOutput(
+        doc_ui,
+        function(value) {
+          # Since the html data can be very large, just record a hash of it.
+          value$html <- sprintf("[html data sha1: %s]",
+            digest::digest(value$html, algo = "sha1", serialize = FALSE)
+          )
+
+          value
+        }
+      )
+    }
+
+    output$`__reactivedoc__` <- doc_ui
   }
 }
 
