@@ -171,7 +171,7 @@ pandoc_version <- function() {
 #' @inheritParams includes
 #'
 #' @param name Name of template variable to set.
-#' @param value Value of template variable.
+#' @param value Value of template variable (defaults to \code{true} if missing).
 #' @param toc \code{TRUE} to include a table of contents in the output.
 #' @param toc_depth Depth of headers to include in table of contents.
 #' @param highlight The name of a pandoc syntax highlighting theme.
@@ -207,7 +207,7 @@ NULL
 #' @rdname pandoc_args
 #' @export
 pandoc_variable_arg <- function(name, value) {
-  c("--variable", paste(name, "=", value, sep = ""))
+  c("--variable", if (missing(value)) name else paste(name, "=", value, sep = ""))
 }
 
 

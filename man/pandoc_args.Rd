@@ -23,7 +23,7 @@ pandoc_toc_args(toc, toc_depth = 3)
 \arguments{
 \item{name}{Name of template variable to set.}
 
-\item{value}{Value of template variable.}
+\item{value}{Value of template variable (defaults to \code{true} if missing).}
 
 \item{in_header}{One or more files with content to be included in the
 header of the document.}
