@@ -14,6 +14,8 @@ rmarkdown 1.7 (unreleased)
 
 # Execute prerender with globalenv as parent, rather than parent frame (#1124)
 
+# `shiny::renderText()` does not work in Markdown section headings (#133).
+
 # The `value` argument of `pandoc_variable_arg()` can be missing now (#287).
 
 rmarkdown 1.6
