@@ -12,5 +12,5 @@ PANDOC\.(Rmd|md|html)
 ^tests/testthat/site/lib/
 ^tests/testthat/site/.*_files/
 ^revdep/
-
+^\.github$
 
