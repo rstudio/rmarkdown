@@ -22,7 +22,7 @@
 #' @inheritParams html_document
 #' @param ... Additional arguments passed to \code{\link{html_document}}. Please
 #'   note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
-#'   coded. They will be silently overwriten when set.
+#'   coded. Setting them will yield an error.
 #' @param readme Use this vignette as the package README.md file (i.e. render
 #'   it as README.md to the package root). Note that if there are image files
 #'   within your vignette you should be sure to add README_files to .Rbuildignore
@@ -52,21 +52,19 @@ html_vignette <- function(fig_width = 3,
                         quiet = TRUE)
     }
   }
-  dots <- list(...)
-  dots$theme <- NULL
-  dots$fig_width <- fig_width
-  dots$fig_height <- fig_height
-  dots$dev <- dev
-  dots$fig_retina <- NULL
-  dots$css <- css
-  dots$highlight <- "pygments"
-
   output_format(
     knitr = NULL,
     pandoc = NULL,
     df_print = df_print,
     pre_knit = pre_knit,
     keep_md = keep_md,
-    base_format = do.call(html_document, dots)
+    base_format = html_document(fig_width = fig_width,
+                                fig_height = fig_height,
+                                dev = dev,
+                                fig_retina = NULL,
+                                css = css,
+                                theme = NULL,
+                                highlight = "pygments",
+                                ...)
   )
 }
