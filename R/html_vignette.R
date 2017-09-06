@@ -11,6 +11,7 @@
 #'   \item never uses a theme
 #'   \item has a smaller default figure size
 #'   \item uses a custom css stylesheet
+#'   \item uses a custom highlight scheme
 #'  }
 #'
 #' @details
@@ -20,8 +21,8 @@
 #'
 #' @inheritParams html_document
 #' @param ... Additional arguments passed to \code{\link{html_document}}. Please
-#'   note that \code{theme} is hard coded to \code{NULL} in order to have a
-#'   smaller html file.
+#'   note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
+#'   coded. They will be silently overwriten when set.
 #' @param readme Use this vignette as the package README.md file (i.e. render
 #'   it as README.md to the package root). Note that if there are image files
 #'   within your vignette you should be sure to add README_files to .Rbuildignore
@@ -52,9 +53,6 @@ html_vignette <- function(fig_width = 3,
     }
   }
   dots <- list(...)
-  if ("theme" %in% names(dots)) {
-    warnings("theme is not available with html_vignette and will be ignored")
-  }
   dots$theme <- NULL
   dots$fig_width <- fig_width
   dots$fig_height <- fig_height

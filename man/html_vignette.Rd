@@ -35,8 +35,8 @@ it as README.md to the package root). Note that if there are image files
 within your vignette you should be sure to add README_files to .Rbuildignore}
 
 \item{...}{Additional arguments passed to \code{\link{html_document}}. Please
-note that \code{theme} is hard coded to \code{NULL} in order to have a
-smaller html file.}
+note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
+coded. They will be silently overwriten when set.}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}
@@ -54,6 +54,7 @@ Compared to \code{html_document}, it:
   \item never uses a theme
   \item has a smaller default figure size
   \item uses a custom css stylesheet
+  \item uses a custom highlight scheme
  }
 
 
