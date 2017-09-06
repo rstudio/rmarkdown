@@ -25,6 +25,7 @@ test_that("formats successfully produce a document", {
   testFormat(pdf_document(), df_print = "kable")
   testFormat(beamer_presentation(), df_print = "kable")
   testFormat(word_document(), df_print = "kable")
+  testFormat(html_vignette())
 
   if (requireNamespace("tufte", quietly = TRUE))
     testFormat(tufte_handout())
