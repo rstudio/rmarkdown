@@ -142,7 +142,7 @@ test_ioslides_presentation_css <- function() {
               "# Slide Four {data-background=#ABCDEF}\n"
               )
   mock <- mock_markdown(mdtext = mdtext, outputdir = outputdir, self_contained = FALSE)
-  html = mock$html_file
+  html <- mock$html_file
 
   slide_lines <-
     c(any(grepl('<slide[^>]*class="[^"]*\\bsegue\\b[^"]*".*<h2>Slide One</h2>', html, perl = TRUE))
@@ -171,7 +171,7 @@ test_ioslides_presentation_css <- function() {
   plot <- file.path(getwd(), 'resources', 'tinyplot.png')
   mdtext <- c(paste0("## BG Slide {data-background=", plot, "}\n"))
   mock <- mock_markdown(mdtext = mdtext, outputdir = outputdir, self_contained = TRUE)
-  html = mock$html_file
+  html <- mock$html_file
 
   slide_lines <-
     c(any(grepl('<slide[^>]*style="[^"]*background-image: url\\(data:image/png;base64,[^\\)]*);[^"]*".*<h2>BG Slide</h2>', html))

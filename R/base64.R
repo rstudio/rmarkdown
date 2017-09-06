@@ -117,14 +117,10 @@ process_html_res <- function(html, reg, processor) {
 }
 
 process_images <- function(html, processor) {
-  html <- process_html_res(
+  process_html_res(
     html,
     "<\\s*[Ii][Mm][Gg]\\s+[Ss][Rr][Cc]\\s*=\\s*[\"']([^\"']+)[\"']",
     processor)
-  process_html_res(
-      html,
-      "<[^>]*style=\"[^\"]*url\\(([^\\)]+)\\)",
-      processor)
 }
 
 base64_encode_images <- function(html, encoder) {
@@ -137,6 +133,7 @@ base64_encode_images <- function(html, encoder) {
     img_src
   }
   process_images(html, base64_encode_img)
+  process_html_res(html, "<[^>]*style=\"[^\"]*url\\(([^\\)]+)\\)", base64_encode_img)
 }
 
 # get a base64 image encoder based on caTools

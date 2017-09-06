@@ -18,6 +18,8 @@ rmarkdown 1.7 (unreleased)
 
 # The `value` argument of `pandoc_variable_arg()` can be missing now (#287).
 
+# Background colors and images are supported for ioslides presentations (#687).
+
 rmarkdown 1.6
 --------------------------------------------------------------------------------
 
