@@ -1,4 +1,3 @@
-
 ### Overview
 
 [![Build Status](https://travis-ci.org/rstudio/rmarkdown.svg?branch=master)](https://travis-ci.org/rstudio/rmarkdown)
@@ -23,7 +22,7 @@ If you are working within RStudio then you can simply install the [current relea
 
 If you want to use the rmarkdown package outside of RStudio then you can install the package from CRAN as follows:
 
-``` r
+```r
 install.packages("rmarkdown")
 ```
 
@@ -33,13 +32,13 @@ A recent version of pandoc (&gt;= 1.12.3) is also required. See the [pandoc inst
 
 The `render` function is used to convert R Markdown (Rmd) files into various output formats (the default is HTML). Calling `render` will knit the specified input document and then produce the final output document using pandoc:
 
-``` r
+```r
 render("input.Rmd")
 ```
 
 You can also specify a plain markdown file in which case knitting will be bypassed:
 
-``` r
+```r
 render("input.md")
 ```
 
@@ -47,7 +46,7 @@ render("input.md")
 
 R Markdown documents can contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:
 
-``` yaml
+```yaml
 ---
 title: "Sample Document"
 output:
@@ -59,7 +58,7 @@ output:
 
 R Markdown has built in support for several output formats (HTML, PDF, and MS Word documents as well as Beamer presentations). These formats can also be specified in metadata, for example:
 
-``` yaml
+```yaml
 ---
 title: "Sample Document"
 output:
@@ -71,7 +70,7 @@ output:
 
 If you aren't specifying format options you can also just use a simple format name:
 
-``` yaml
+```yaml
 ---
 title: "Sample Document"
 output: pdf_document
@@ -80,7 +79,7 @@ output: pdf_document
 
 Multiple formats can be specified in metadata:
 
-``` yaml
+```yaml
 ---
 title: "Sample Document"
 output:
@@ -95,13 +94,13 @@ output:
 
 To select from the various formats defined you can pass a format name to `render`. For example:
 
-``` r
+```r
 render("input.Rmd", "pdf_document")
 ```
 
 If no explicit format name is passed to `render` then the first one defined will be used. You can also render all formats defined in the file with:
 
-``` r
+```r
 render("input.Rmd", "all")
 ```
 
@@ -109,7 +108,7 @@ render("input.Rmd", "all")
 
 You can also define output formats externally in a file named `_output.yml` located in the same directory as the R Markdown source file. For example:
 
-``` yaml
+```yaml
 html_document:
   toc: true
   theme: united
@@ -134,7 +133,7 @@ Output formats need not be specified in metadata. In fact, metadata is just a co
 
 As you'd expect, these functions can also be invoked as part of the call to `render`, for example:
 
-``` r
+```r
 render("input.Rmd", html_document(toc = TRUE))
 render("input.Rmd", pdf_document(latex_engine = "lualatex"))
 render("input.Rmd", beamer_presentation(incremental = TRUE))

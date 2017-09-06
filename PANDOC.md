@@ -1,4 +1,3 @@
-
 ### Installing Pandoc
 
 #### Windows and Mac OS X

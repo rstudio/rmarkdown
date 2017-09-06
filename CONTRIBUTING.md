@@ -1,4 +1,3 @@
-
 We welcome contributions to the **rmarkdown** package. To submit a contribution:
 
 1.  [Fork](https://github.com/rstudio/rmarkdown/fork) the repository and make your changes.
