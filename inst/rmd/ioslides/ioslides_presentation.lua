@@ -41,6 +41,39 @@ local function attributes(attr)
   return table.concat(attr_table)
 end
 
+-- Helper function to split a string on spaces
+-- returns a table
+local function split(str)
+  local words = {}
+  for word in str:gmatch("%S+") do table.insert(words, word) end
+  return words
+end
+
+-- Helper function to remove duplicates
+-- returns a table http://stackoverflow.com/a/20067270
+local function uniq(t)
+  local seen = {}
+  local res = {}
+  for _,v in ipairs(t) do
+    if (not seen[v]) then
+      res[#res+1] = v
+      seen[v] = true
+    end
+  end
+  return res
+end
+
+-- Helper function to filter a list
+-- returns a table
+local function grep(f, l)
+  local res = {}
+  for _,v in ipairs(l) do
+    if (f(v)) then
+      res[#res+1] = v
+    end
+  end
+  return res
+end
 
 -- Blocksep is used to separate block elements.
 function Blocksep()
@@ -209,12 +242,37 @@ function Header(lev, s, attr)
   -- detect level 1 header and convert it to a segue slide
   local slide_class = ""
   local hgroup_class = ""
+  local slide_style = ""
+
   -- make all headers < slide_level as segue slides
   if lev < slide_level then
   	-- create a segue slide but add lev class for possible customization
     slide_class = "segue dark nobackground" .. " level" .. lev
     hgroup_class = " class = 'auto-fadein'"
     lev = 2
+  end
+
+  -- support for slide specific image backgrounds
+  -- alternative is this css
+  -- slide > slide [data-slide-num="7"] {
+  --   background-image: url("figures/xx.jpg");
+  -- }
+  if attr["data-background"] then
+    -- dark is incompatible with fill and let us uniquify nobackground
+    local slide = split(slide_class .. " fill nobackground")
+    slide = grep(function (v)
+      if v:match("^dark$") then return false else return true end
+    end, slide)
+    slide_class = table.concat(uniq(slide), " ")
+    if attr["data-background"]:match("^#") then
+      slide_style = 'background-color: ' .. attr["data-background"] .. ';'
+    else
+      -- assume url
+      slide_style = 'background-image: url(' .. attr["data-background"] .. ');'
+      slide_style = slide_style .. ' background-size: 100% 100%;'
+    end
+    -- remove noise attributes for article
+    attr["data-background"] = nil
   end
 
   -- extract optional subtitle
@@ -264,8 +322,12 @@ function Header(lev, s, attr)
       end
     end
 
+    if string.len(slide_style) > 0 then
+      slide_style = ' style="' .. slide_style .. '"'
+    end
+
     -- return the beginning of the slide
-    return preface .. "<slide class='" .. slide_class .. "'>" ..
+    return preface .. "<slide class=\"" .. slide_class .. "\"" .. slide_style .. ">" ..
            "<hgroup" .. hgroup_class .. ">" .. header ..  "</hgroup>" ..
            "<article " .. attributes(attr) .. ">"
   else
@@ -449,4 +511,3 @@ meta.__index =
     return function() return "" end
   end
 setmetatable(_G, meta)
-
