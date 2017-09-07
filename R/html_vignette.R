@@ -52,6 +52,7 @@ html_vignette <- function(fig_width = 3,
                         quiet = TRUE)
     }
   }
+
   output_format(
     knitr = NULL,
     pandoc = NULL,
