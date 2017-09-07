@@ -36,7 +36,7 @@ within your vignette you should be sure to add README_files to .Rbuildignore}
 
 \item{...}{Additional arguments passed to \code{\link{html_document}}. Please
 note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
-coded. Setting them will yield an error.}
+coded. Setting any of those will yield an error.}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}
