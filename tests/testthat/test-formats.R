@@ -25,6 +25,7 @@ test_that("formats successfully produce a document", {
   testFormat(pdf_document(), df_print = "kable")
   testFormat(beamer_presentation(), df_print = "kable")
   testFormat(word_document(), df_print = "kable")
+  testFormat(html_vignette())
 
   if (requireNamespace("tufte", quietly = TRUE))
     testFormat(tufte_handout())
@@ -52,5 +53,27 @@ test_that("documents with spaces in names can be rendered", {
                               quiet = TRUE)
 
   expect_true(file.exists(output))
+
+})
+
+test_that(
+  "setting theme, highlight or fig_retina yields an error on html_vignette",
+  {
+
+  skip_on_cran()
+
+  testFormat <- function(output_format) {
+    output_file <- tempfile()
+    expect_error(
+      render("test-formats.Rmd",
+           output_format = output_format,
+           output_file = output_file,
+           quiet = TRUE)
+    )
+  }
+
+  testFormat(html_vignette(theme = "z"))
+  testFormat(html_vignette(highlight = "z"))
+  testFormat(html_vignette(fig_retina = 2))
 
 })

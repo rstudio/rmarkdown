@@ -34,7 +34,9 @@ by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 it as README.md to the package root). Note that if there are image files
 within your vignette you should be sure to add README_files to .Rbuildignore}
 
-\item{...}{Additional arguments passed to \code{\link{html_document}}}
+\item{...}{Additional arguments passed to \code{\link{html_document}}. Please
+note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
+coded. Setting any of those will yield an error.}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}
@@ -49,8 +51,10 @@ Compared to \code{html_document}, it:
 
 \itemize{
   \item never uses retina figures
+  \item never uses a theme
   \item has a smaller default figure size
   \item uses a custom css stylesheet
+  \item uses a custom highlight scheme
  }
 
 

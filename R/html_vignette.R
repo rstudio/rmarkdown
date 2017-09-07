@@ -8,8 +8,10 @@
 #'
 #' \itemize{
 #'   \item never uses retina figures
+#'   \item never uses a theme
 #'   \item has a smaller default figure size
 #'   \item uses a custom css stylesheet
+#'   \item uses a custom highlight scheme
 #'  }
 #'
 #' @details
@@ -18,7 +20,9 @@
 #' documentation} for additional details on using the \code{html_vignette} format.
 #'
 #' @inheritParams html_document
-#' @param ... Additional arguments passed to \code{\link{html_document}}
+#' @param ... Additional arguments passed to \code{\link{html_document}}. Please
+#'   note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
+#'   coded. Setting any of those will yield an error.
 #' @param readme Use this vignette as the package README.md file (i.e. render
 #'   it as README.md to the package root). Note that if there are image files
 #'   within your vignette you should be sure to add README_files to .Rbuildignore
