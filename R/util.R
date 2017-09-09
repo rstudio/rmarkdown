@@ -597,3 +597,19 @@ shell_exec <- function(cmd, intern = FALSE, wait = TRUE, ...) {
     system(cmd, intern = intern, wait = wait, ...)
 }
 
+# Adjust the graphical device in chunk options: if the device from the output
+# format is png but knitr's global chunk option is not png, respect knitr's
+# option, because (1) users may knitr::opts_chunk$set(dev) (which usually means
+# they know what they are doing) before rmarkdown::render(), and we probably
+# should not override the user's choice; (2) the png device does not work on
+# certain platforms (e.g. headless servers without X11), in which case knitr
+# will set the device to svg instead of png by default in knitr:::set_html_dev,
+# and rmarkdown should also respect this setting, otherwise we will run into
+# issues like https://github.com/rstudio/rmarkdown/issues/1100
+adjust_dev <- function(opts) {
+  dev <- knitr::opts_chunk$get('dev')
+  if (identical(opts$dev, 'png') && length(dev) == 1 && dev != 'png') {
+    opts$dev <- dev
+  }
+  opts
+}

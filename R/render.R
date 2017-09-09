@@ -354,7 +354,7 @@ render <- function(input,
     # merge user options and hooks
     if (!is.null(output_format$knitr)) {
       knitr::opts_knit$set(as.list(output_format$knitr$opts_knit))
-      knitr::opts_chunk$set(as.list(output_format$knitr$opts_chunk))
+      knitr::opts_chunk$set(adjust_dev(as.list(output_format$knitr$opts_chunk)))
       knitr::opts_template$set(as.list(output_format$knitr$opts_template))
       knitr::knit_hooks$set(as.list(output_format$knitr$knit_hooks))
       knitr::opts_hooks$set(as.list(output_format$knitr$opts_hooks))
