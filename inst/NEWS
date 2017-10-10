@@ -12,13 +12,16 @@ rmarkdown 1.7 (unreleased)
 
 * Better error message when unable to prerender a document. (#1125)
 
-# Execute prerender with globalenv as parent, rather than parent frame (#1124)
+* Execute prerender with globalenv as parent, rather than parent frame (#1124)
 
-# `shiny::renderText()` does not work in Markdown section headings (#133).
+* `shiny::renderText()` does not work in Markdown section headings (#133).
 
-# The `value` argument of `pandoc_variable_arg()` can be missing now (#287).
+* The `value` argument of `pandoc_variable_arg()` can be missing now (#287).
 
-# Background colors and images are supported for ioslides presentations (#687).
+* Background colors and images are supported for ioslides presentations (#687).
+
+* HTML widgets in an Rmd document cannot be rendered if another Rmd document is
+  rendered via `rmarkdown::render()` in this document (#993).
 
 rmarkdown 1.6
 --------------------------------------------------------------------------------
