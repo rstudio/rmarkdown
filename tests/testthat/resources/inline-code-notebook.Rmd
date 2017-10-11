@@ -1,0 +1,15 @@
+---
+title: "Bug"
+output: html_notebook
+---
+```{r}
+a <- TRUE
+```
+
+`a` is `r a`.
+
+```{r}
+a <- FALSE
+```
+
+Now `a` is `r a`.
