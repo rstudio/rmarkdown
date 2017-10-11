@@ -257,8 +257,13 @@ render <- function(input,
   }
 
   # reset knit_meta (and ensure it's always reset before exiting render)
-  knit_meta_reset()
-  on.exit(knit_meta_reset(), add = TRUE)
+  old_knit_meta <- knit_meta_reset()
+  on.exit({
+    knit_meta_reset()
+    if (length(old_knit_meta)) {
+      knitr::knit_meta_add(old_knit_meta, attr(old_knit_meta, 'knit_meta_id'))
+    }
+  }, add = TRUE)
 
   # presume that we're rendering as a static document unless specified
   # otherwise in the parameters
