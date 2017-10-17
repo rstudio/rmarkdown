@@ -245,5 +245,5 @@ patch_beamer_template <- function() {
     return(NULL)
 
   # write and return path to template
-  as_tmpfile(enc2utf8(template), ".tex")
+  as_tmpfile(enc2utf8(template))
 }
