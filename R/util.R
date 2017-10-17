@@ -123,9 +123,9 @@ file_name_without_shell_chars <- function(file) {
 tmpfile_pattern <- "rmarkdown-str"
 
 # return a string as a tempfile
-as_tmpfile <- function(str) {
+as_tmpfile <- function(str, fileext = ".html") {
   if (length(str) > 0) {
-    str_tmpfile <- tempfile(tmpfile_pattern, fileext = ".html")
+    str_tmpfile <- tempfile(tmpfile_pattern, fileext = fileext)
     writeLines(str, str_tmpfile, useBytes =  TRUE)
     str_tmpfile
   } else {

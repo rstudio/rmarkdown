@@ -78,12 +78,7 @@ beamer_presentation <- function(toc = FALSE,
 
   # template path and assets
   if (!is.null(template)) {
-    if (identical(template, "default")) {
-      template <- patch_beamer_template()
-      # the default template could be a tempfile, which is a patched version of
-      # Pandoc's default template
-      if (!is.null(template)) on.exit(unlink(template), add = TRUE)
-    }
+    if (identical(template, "default")) template <- patch_beamer_template()
     if (!is.null(template))
       args <- c(args, "--template", pandoc_path_arg(template))
   }
@@ -250,8 +245,5 @@ patch_beamer_template <- function() {
     return(NULL)
 
   # write and return path to template
-  tempfile <- tempfile(fileext = ".tex")
-  template <- paste(template, collapse = "\n")
-  writeLines(enc2utf8(template), tempfile, useBytes = TRUE)
-  tempfile
+  as_tmpfile(enc2utf8(template), ".tex")
 }
