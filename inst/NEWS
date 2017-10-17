@@ -23,6 +23,8 @@ rmarkdown 1.7 (unreleased)
 * HTML widgets in an Rmd document cannot be rendered if another Rmd document is
   rendered via `rmarkdown::render()` in this document (#993).
 
+* Try harder to clean up temporary files created during `render()` (#820).
+
 rmarkdown 1.6
 --------------------------------------------------------------------------------
 
