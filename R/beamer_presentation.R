@@ -245,8 +245,5 @@ patch_beamer_template <- function() {
     return(NULL)
 
   # write and return path to template
-  tempfile <- tempfile(fileext = ".tex")
-  template <- paste(template, collapse = "\n")
-  writeLines(enc2utf8(template), tempfile, useBytes = TRUE)
-  tempfile
+  as_tmpfile(enc2utf8(template))
 }

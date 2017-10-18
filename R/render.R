@@ -32,6 +32,8 @@ render <- function(input,
   init_render_context()
   on.exit(clear_render_context(), add = TRUE)
 
+  on.exit(clean_tmpfiles(), add = TRUE)
+
   # check for "all" output formats
   if (identical(output_format, "all")) {
     output_format <- enumerate_output_formats(input, envir, encoding)
@@ -609,10 +611,7 @@ render <- function(input,
       pandoc_output_tmp <- basename(tempfile("pandoc", tmpdir = getwd(), fileext = ext))
 
       # clean up temporary file on exit
-      on.exit({
-        if (file.exists(pandoc_output_tmp))
-          unlink(pandoc_output_tmp)
-      }, add = TRUE)
+      on.exit(unlink(pandoc_output_tmp), add = TRUE)
 
       # call pandoc to render file
       status <- pandoc_convert(
