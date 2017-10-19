@@ -367,7 +367,9 @@ latexmk_emu <- function(file, engine, biblatex = FALSE) {
   # generate index
   idx <- sub('[.]tex$', '.idx', file)
   if (file.exists(idx)) {
-    system2_quiet(find_latex_engine('makeindex'), shQuote(idx))
+    system2_quiet(find_latex_engine('makeindex'), shQuote(idx), error = {
+      stop("Failed to build the index via makeindex", call. = FALSE)
+    })
   }
   # generate bibliography
   if (biblatex) {
@@ -380,7 +382,9 @@ latexmk_emu <- function(file, engine, biblatex = FALSE) {
   aux <- sub('[.]tex$', aux_ext, file)
   if (file.exists(aux)) {
     if (biblatex || length(grep('^\\\\citation\\{', readLines(aux))))
-      system2_quiet(find_latex_engine(bib_engine), shQuote(aux))
+      system2_quiet(find_latex_engine(bib_engine), shQuote(aux), error = {
+        stop("Failed to build the bibliography via ", bib_engine, call. = FALSE)
+      })
   }
   run_engine()
   run_engine()
