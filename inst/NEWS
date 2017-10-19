@@ -36,6 +36,7 @@ rmarkdown 1.7 (unreleased)
 * `beamer_presentation()` doesn't work when `citation_package != 'none'` (#1161).
 
 * rmarkdown is compatible with Pandoc 2.0 (not released yet) now (#1120).
+* File-based inputs don't work in parameterized documents (#919).
 
 rmarkdown 1.6
 --------------------------------------------------------------------------------

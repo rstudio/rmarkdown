@@ -101,7 +101,7 @@ params_value_to_ui <- function(inputControlFn, value, showDefault) {
 
 params_value_from_ui <- function(inputControlFn, value, uivalue) {
   if (identical(inputControlFn, shiny::fileInput)) {
-    uivalue$datapath
+    backup_file_input(uivalue$datapath)
   } else if (identical(inputControlFn, shiny::textInput)) {
     classes <- class(value)
     if ("POSIXct" %in% classes) {
@@ -119,6 +119,18 @@ params_value_from_ui <- function(inputControlFn, value, uivalue) {
     ## A type/control that doesn't need special handling; just emit the value.
     uivalue
   }
+}
+
+# Uploaded files will be deleted when the shiny UI is closed, so we need to back
+# them up to new temp files: https://github.com/rstudio/rmarkdown/issues/919
+backup_file_input <- function(files) {
+  files2 <- files
+  for (i in seq_along(files)) {
+    dir.create(d <- tempfile())
+    files2[i] <- file.path(d, basename(files[i]))
+  }
+  file.copy(files, files2)
+  files2
 }
 
 params_get_input <- function(param) {
