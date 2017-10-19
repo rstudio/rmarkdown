@@ -26,6 +26,10 @@ rmarkdown 1.7 (unreleased)
 * Wrong environment for evaluating R code chunks in Shiny R Markdown docs
   (#1162, #1124).
 
+* Do not call `bibtex` to create the bibliography when there are no citations in
+  the document and the output format is `pdf_document()` with `citation_package
+  = 'natbib'` (#1113).
+
 rmarkdown 1.6
 --------------------------------------------------------------------------------
 

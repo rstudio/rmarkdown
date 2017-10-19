@@ -379,7 +379,8 @@ latexmk_emu <- function(file, engine, biblatex = FALSE) {
   }
   aux <- sub('[.]tex$', aux_ext, file)
   if (file.exists(aux)) {
-    system2_quiet(find_latex_engine(bib_engine), shQuote(aux))
+    if (biblatex || length(grep('^\\\\citation\\{', readLines(aux))))
+      system2_quiet(find_latex_engine(bib_engine), shQuote(aux))
   }
   run_engine()
   run_engine()
