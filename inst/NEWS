@@ -12,8 +12,6 @@ rmarkdown 1.7 (unreleased)
 
 * Better error message when unable to prerender a document. (#1125)
 
-* Execute prerender with globalenv as parent, rather than parent frame (#1124)
-
 * `shiny::renderText()` does not work in Markdown section headings (#133).
 
 * The `value` argument of `pandoc_variable_arg()` can be missing now (#287).
@@ -24,6 +22,9 @@ rmarkdown 1.7 (unreleased)
   rendered via `rmarkdown::render()` in this document (#993).
 
 * Try harder to clean up temporary files created during `render()` (#820).
+
+* Wrong environment for evaluating R code chunks in Shiny R Markdown docs
+  (#1162, #1124).
 
 rmarkdown 1.6
 --------------------------------------------------------------------------------
