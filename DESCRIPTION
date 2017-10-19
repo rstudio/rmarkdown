@@ -4,15 +4,18 @@ Title: Dynamic Documents for R
 Version: 1.6.0.9005
 Authors@R: c(
   person("JJ", "Allaire", role = c("aut", "cre"), email = "jj@rstudio.com"),
-  person("Joe", "Cheng", role = "aut", email = "joe@rstudio.com"),
-  person("Yihui", "Xie", role = "aut", email = "yihui@rstudio.com"),
   person("Jonathan", "McPherson", role = "aut", email = "jonathan@rstudio.com"),
-  person("Winston", "Chang", role = "aut", email = "winston@rstudio.com"),
-  person("Jeff", "Allen", role = "aut", email = "jeff@rstudio.com"),
-  person("Hadley", "Wickham", role = "aut", email = "hadley@rstudio.com"),
+  person("Yihui", "Xie", role = "aut", email = "yihui@rstudio.com"),
+  person("Javier", "Luraschi", role = "aut", email = "javier@rstudio.com"),
+  person("Kevin", "Ushey", role = "aut", email = "kevin@rstudio.com"),
   person("Aron", "Atkins", role = "aut", email = "aron@rstudio.com"),
-  person("Rob", "Hyndman", role = "aut", email = "Rob.Hyndman@monash.edu"),
-  person("Ruben", "Arslan", role = "aut", email = "ruben.arslan@uni-goettingen.de"),
+  person("Hadley", "Wickham", role = "aut", email = "hadley@rstudio.com"),
+  person("Joe", "Cheng", role = "aut", email = "joe@rstudio.com"),
+  person("Winston", "Chang", role = "aut", email = "winston@rstudio.com"),
+  person("Jeff", "Allen", role = "ctb", email = "jeff@rstudio.com"),
+  person("Roy", "Storey", role = "ctb"),
+  person("Rob", "Hyndman", role = "ctb", email = "Rob.Hyndman@monash.edu"),
+  person("Ruben", "Arslan", role = "ctb", email = "ruben.arslan@uni-goettingen.de"),
   person(family = "RStudio, Inc.", role = "cph"),
   person(family = "jQuery Foundation", role = "cph",
          comment = "jQuery library"),
@@ -55,8 +58,6 @@ Authors@R: c(
   person("Aidan", "Lister", role = c("ctb", "cph"), 
          comment = "jQuery StickyTabs")
   )
-Author: JJ Allaire, Jonathan McPherson, Yihui Xie, Hadley Wickham, Joe Cheng,
-    Jeff Allen
 Maintainer: JJ Allaire <jj@rstudio.com>
 Description: Convert R Markdown documents into a variety of formats.
 Depends:
