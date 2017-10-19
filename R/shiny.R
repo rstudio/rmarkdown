@@ -138,6 +138,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     else
       render_args$encoding
 
+  if (is.null(render_args$envir)) render_args$envir <- parent.frame()
+
   # determine the runtime of the target file
   target_file <- ifelse(!is.null(file), file, default_file)
   if (!is.null(target_file))
@@ -273,8 +275,7 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
                                output_dir = dirname(output_dest),
                                output_options = output_opts,
                                intermediates_dir = dirname(output_dest),
-                               runtime = "shiny",
-                               envir = new.env()),
+                               runtime = "shiny"),
                           render_args)
       result_path <- shiny::maskReactiveContext(do.call(render, args))
 

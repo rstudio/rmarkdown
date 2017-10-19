@@ -25,6 +25,8 @@ rmarkdown 1.7 (unreleased)
 
 * Try harder to clean up temporary files created during `render()` (#820).
 
+* Wrong environment for evaluating R code chunks in Shiny R Markdown docs (#1162).
+
 rmarkdown 1.6
 --------------------------------------------------------------------------------
 
