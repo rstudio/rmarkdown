@@ -33,6 +33,8 @@ rmarkdown 1.7 (unreleased)
 * `render()` will stop if the output format is PDF but there are any errors
   during building the index or bibliography (#1166).
 
+* `beamer_presentation()` doesn't work when `citation_package != 'none'` (#1161).
+
 rmarkdown 1.6
 --------------------------------------------------------------------------------
 
