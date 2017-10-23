@@ -250,7 +250,8 @@ pandoc_highlight_args <- function(highlight, default = "tango") {
 #' @rdname pandoc_args
 #' @export
 pandoc_latex_engine_args <- function(latex_engine) {
-  c("--latex-engine", find_latex_engine(latex_engine))
+  c(if (pandoc_available('2.0')) "--pdf-engine" else "--latex-engine",
+    find_latex_engine(latex_engine))
 }
 
 find_latex_engine <- function(latex_engine) {
