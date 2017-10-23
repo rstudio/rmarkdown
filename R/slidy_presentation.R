@@ -3,9 +3,9 @@
 #'
 #' Format for converting from R Markdown to a slidy presentation.
 #'
-#' @inheritParams beamer_presentation
 #' @inheritParams pdf_document
 #' @inheritParams html_document
+#' @inheritParams beamer_presentation
 #'
 #' @param duration Duration (in minutes) of the slide deck. This value is used
 #'   to add a countdown timer to the slide footer.

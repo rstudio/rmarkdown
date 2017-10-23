@@ -20,13 +20,18 @@
 #' @param theme Beamer theme (e.g. "AnnArbor").
 #' @param colortheme Beamer color theme (e.g. "dolphin").
 #' @param fonttheme Beamer font theme (e.g. "structurebold").
+#' @param self_contained Whether to generate a full LaTeX document (\code{TRUE})
+#'   or just the body of a LaTeX document (\code{FALSE}). Note the LaTeX
+#'   document is an intermediate file unless \code{keep_tex = TRUE}.
 #'
 #' @return R Markdown output format to pass to \code{\link{render}}
 #'
 #' @details
 #'
-#' See the \href{http://rmarkdown.rstudio.com/beamer_presentation_format.html}{online
-#' documentation} for additional details on using the \code{beamer_presentation} format.
+#' See the
+#' \href{http://rmarkdown.rstudio.com/beamer_presentation_format.html}{online
+#' documentation} for additional details on using the \code{beamer_presentation}
+#' format.
 #'
 #' Creating Beamer output from R Markdown requires that LaTeX be installed.
 #'
@@ -69,6 +74,7 @@ beamer_presentation <- function(toc = FALSE,
                                 keep_tex = FALSE,
                                 latex_engine = "pdflatex",
                                 citation_package = c("none", "natbib", "biblatex"),
+                                self_contained = TRUE,
                                 includes = NULL,
                                 md_extensions = NULL,
                                 pandoc_args = NULL) {
@@ -115,6 +121,9 @@ beamer_presentation <- function(toc = FALSE,
   # citation package
   citation_package <- match.arg(citation_package)
   if (citation_package != "none") args <- c(args, paste0("--", citation_package))
+
+  # generate a self-contained LaTeX document (including preamble)
+  if (self_contained) args <- c(args, "--self-contained")
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
