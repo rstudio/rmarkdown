@@ -5,9 +5,8 @@ cache:
 pandoc_version: 1.19.2.1
 
 env:
-  global:
-    - PANDOC_VERSION=default
-    - PANDOC_VERSION=latest PATH=$HOME/bin:$PATH
+  - PANDOC_VERSION=default
+  - PANDOC_VERSION=latest PATH=$HOME/bin:$PATH
 
 before_install:
-  - "[[ ${PANDOC_VERSION} = latest ]] && ./install-pandoc.sh || true"
+  - "[[ ${PANDOC_VERSION} = latest ]] && ./tools/install-pandoc.sh || true"
