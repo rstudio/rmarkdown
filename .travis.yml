@@ -2,3 +2,4 @@ language: r
 sudo: false
 cache:
   packages: yes
+pandoc_version: 1.19.2.1
