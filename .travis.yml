@@ -10,4 +10,4 @@ env:
     - PANDOC_VERSION=latest PATH=$HOME/bin:$PATH
 
 before_install:
-  - [[ ${PANDOC_VERSION} = latest ]] && ./install-pandoc.sh || true
+  - "[[ ${PANDOC_VERSION} = latest ]] && ./install-pandoc.sh || true"
