@@ -583,6 +583,15 @@ render <- function(input,
 
     convert <- function(output, citeproc = FALSE) {
 
+      # temporarily move figures to the intermediate dir if specified:
+      # https://github.com/rstudio/rmarkdown/issues/500
+      figures_dir <- gsub('/$', '', knitr::opts_chunk$get("fig.path"))
+      if (!is.null(intermediates_dir) && dir_exists(figures_dir)) {
+        figures_dir_tmp <- intermediates_loc(figures_dir)
+        move_dir(figures_dir, figures_dir_tmp)
+        on.exit(move_dir(figures_dir_tmp, figures_dir), add = TRUE)
+      }
+
       # ensure we expand paths (for Windows where leading `~/` does
       # not get expanded by pandoc)
       utf8_input <- path.expand(utf8_input)
