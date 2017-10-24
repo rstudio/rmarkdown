@@ -37,6 +37,11 @@ rmarkdown 1.7 (unreleased)
 
 * rmarkdown is compatible with Pandoc 2.0 (not released yet) now (#1120).
 
+* The argument `keep_md = TRUE` actually preserves the Markdown output file from
+  `knitr::knit()` now (as documented). Previously, it generates a new Markdown
+  file by concatenating the YAML metadata (title, author, date) with the body of
+  the original Markdown output file (#450).
+
 rmarkdown 1.6
 --------------------------------------------------------------------------------
 

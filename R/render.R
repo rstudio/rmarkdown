@@ -694,11 +694,7 @@ render <- function(input,
 
   # write markdown output if requested
   if (output_format$keep_md && !md_input) {
-
-    md <- c(md_header_from_front_matter(yaml_front_matter),
-            partition_yaml_front_matter(input_text)$body)
-
-    writeLines(md, file_with_ext(output_file, "md"), useBytes = TRUE)
+    file.copy(input, file_with_ext(output_file, "md"), overwrite = TRUE)
   }
 
   if (run_pandoc) {
@@ -758,24 +754,6 @@ render_supporting_files <- function(from, files_dir, rename_to = NULL) {
 # call to knit_meta_reset), optionally scoped to a specific output class
 knit_meta_reset <- function(class = NULL) {
   knitr::knit_meta(class, clean = TRUE)
-}
-
-md_header_from_front_matter <- function(front_matter) {
-
-  md <- c()
-
-  if (!is.null(front_matter$title))
-    md <- c(md, paste("# ", front_matter$title, sep = ""))
-
-  if (is.character(front_matter$author)) {
-    authors <- paste(front_matter$author, "  ", sep = "")
-    md <- c(md, authors)
-  }
-
-  if (!is.null(front_matter$date))
-    md <- c(md, paste(front_matter$date, "  ", sep = ""))
-
-  md
 }
 
 # render context (render-related state can be stuffed here)
