@@ -64,8 +64,11 @@ word_document <- function(toc = FALSE,
   args <- c()
 
   # smart quotes, etc.
-  if (smart)
+  if (smart && !pandoc_available("2.0")) {
     args <- c(args, "--smart")
+  } else {
+    md_extensions <- smart_extension(smart, md_extensions)
+  }
 
   # table of contents
   if (pandoc_available("1.14"))

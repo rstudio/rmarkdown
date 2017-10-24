@@ -93,6 +93,8 @@ slidy_presentation <- function(incremental = FALSE,
     args <- c(args, pandoc_variable_arg("font-size-adjustment",
                                         font_adjustment))
 
+  md_extensions <- smart_extension(smart, md_extensions)
+
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
 
