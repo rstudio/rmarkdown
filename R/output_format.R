@@ -342,6 +342,11 @@ rmarkdown_format <- function(extensions = NULL) {
   paste(format, collapse = "")
 }
 
+# Add the +smart extension for Pandoc >= 2.0
+smart_extension <- function(smart, extension) {
+  c(extension, if (smart && pandoc_available("2.0")) "+smart")
+}
+
 #' Determine the default output format for an R Markdown document
 #'
 #' Read the YAML metadata (and any common _output.yml file) for the

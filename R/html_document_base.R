@@ -33,8 +33,9 @@ html_document_base <- function(smart = TRUE,
 
   args <- c()
 
+  pandoc2.0 <- pandoc_version() >= "2.0"
   # smart quotes, etc.
-  if (smart)
+  if (smart && !pandoc2.0)
     args <- c(args, "--smart")
 
   # no email obfuscation

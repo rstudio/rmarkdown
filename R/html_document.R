@@ -226,6 +226,8 @@ html_document <- function(toc = FALSE,
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
+  md_extensions <- smart_extension(smart, md_extensions)
+
   # toc_float
   if (toc && !identical(toc_float, FALSE)) {
 
