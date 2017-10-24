@@ -263,6 +263,11 @@ base_dir <- function(x) {
   base
 }
 
+move_dir <- function(from, to) {
+  dir.create(dirname(to), showWarnings = FALSE)
+  file.rename(from, to)
+}
+
 # Check if two paths are the same after being normalized
 same_path <- function(path1, path2, ...) {
   if (length(path1) * length(path2) != 1)
