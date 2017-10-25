@@ -2,7 +2,9 @@
 % Please edit documentation in R/pdf_document.R
 \name{pdf_document}
 \alias{pdf_document}
-\title{Convert to a PDF document}
+\alias{latex_document}
+\alias{latex_fragment}
+\title{Convert to a PDF/LaTeX document}
 \usage{
 pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   fig_width = 6.5, fig_height = 4.5, fig_crop = TRUE,
@@ -11,6 +13,10 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   latex_engine = "pdflatex", citation_package = c("none", "natbib",
   "biblatex"), includes = NULL, md_extensions = NULL, pandoc_args = NULL,
   extra_dependencies = NULL)
+
+latex_document(...)
+
+latex_fragment(...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -75,12 +81,14 @@ list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
 with the names being package names (e.g. \code{list(hypreref =
 c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
 add custom LaTeX packages to the .tex header.}
+
+\item{...}{Arguments passed to \code{pdf_document()}.}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}
 }
 \description{
-Format for converting from R Markdown to a PDF document.
+Formats for converting from R Markdown to a PDF or LaTeX document.
 }
 \details{
 See the \href{http://rmarkdown.rstudio.com/pdf_document_format.html}{online

@@ -1,6 +1,6 @@
-#' Convert to a PDF document
+#' Convert to a PDF/LaTeX document
 #'
-#' Format for converting from R Markdown to a PDF document.
+#' Formats for converting from R Markdown to a PDF or LaTeX document.
 #'
 #' @inheritParams html_document
 #'
@@ -240,4 +240,17 @@ pdf_intermediates_generator <- function(saved_files_dir, original_input,
   }
 
   intermediates
+}
+
+#' @param ... Arguments passed to \code{pdf_document()}.
+#' @rdname pdf_document
+#' @export
+latex_document <- function(...) {
+  merge_lists(pdf_document(...), list(pandoc = list(ext = ".tex", keep_tex = TRUE)))
+}
+
+#' @rdname pdf_document
+#' @export
+latex_fragment <- function(...) {
+  latex_document(..., template = rmarkdown_system_file("rmd/fragment/default.tex"))
 }
