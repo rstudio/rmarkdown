@@ -155,6 +155,8 @@ html_document_base <- function(smart = TRUE,
       # directory and replace them with relative ones
       image_relative <- function(img_src, src) {
         in_file <- utils::URLdecode(src)
+        # do not process paths that are already relative
+        if (grepl('^[.][.]', in_file)) return(img_src)
         if (length(in_file) && file.exists(in_file)) {
           img_src <- sub(
             src, utils::URLencode(normalized_relative_to(output_dir, in_file)),
