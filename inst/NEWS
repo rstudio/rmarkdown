@@ -39,6 +39,8 @@ rmarkdown 1.7 (unreleased)
 
 * `render()` with `intermediates_dir` fails with R plots (#500).
 
+* Added two new output formats `latex_document()` and `latex_fragment()` (#626).
+
 rmarkdown 1.6
 --------------------------------------------------------------------------------
 
