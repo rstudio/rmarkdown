@@ -665,7 +665,8 @@ render <- function(input,
       # have references in the input)
       run_citeproc <- citeproc_required(yaml_front_matter, input_lines)
       # generate .tex if we want to keep the tex source
-      if (output_format$pandoc$keep_tex) convert(texfile, run_citeproc)
+      if (texfile != output_file && output_format$pandoc$keep_tex)
+        convert(texfile, run_citeproc)
       # run the main conversion if the output file is not .tex
       convert(output_file, run_citeproc)
     }
