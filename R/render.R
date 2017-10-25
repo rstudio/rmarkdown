@@ -349,9 +349,10 @@ render <- function(input,
       knitr::opts_knit$set(root.dir = root_dir)
 
     # use filename based figure and cache directories
-    figures_dir <- paste(files_dir, "/figure-", pandoc_to, "/", sep = "")
+    base_pandoc_to <- gsub('[-+].*', '', pandoc_to)
+    figures_dir <- paste(files_dir, "/figure-", base_pandoc_to, "/", sep = "")
     knitr::opts_chunk$set(fig.path = figures_dir)
-    cache_dir <- knitr_cache_dir(input, pandoc_to)
+    cache_dir <- knitr_cache_dir(input, base_pandoc_to)
     knitr::opts_chunk$set(cache.path = cache_dir)
 
     # strip the trailing slash from cache_dir so that file.exists() and unlink()
