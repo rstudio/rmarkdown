@@ -269,7 +269,12 @@ function Header(lev, s, attr)
     else
       -- assume url
       slide_style = 'background-image: url(' .. attr["data-background"] .. ');'
-      slide_style = slide_style .. ' background-size: 100% 100%;'
+      local bg_size = attr["data-background-size"]
+      if not bg_size then bg_size = "contain" end
+      slide_style = slide_style .. ' background-size: ' .. bg_size .. ';'
+      local bg_position = attr["data-background-position"]
+      if not bg_position then bg_position = "center" end
+      slide_style = slide_style .. ' background-position: ' .. bg_position .. ';'
     end
     -- remove noise attributes for article
     attr["data-background"] = nil
