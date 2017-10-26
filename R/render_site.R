@@ -173,8 +173,9 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
                      quiet,
                      encoding, ...) {
 
-    site_yml <- patch_html_document_options(config, encoding)
-    on.exit(file.rename(site_yml, '_site.yml'), add = TRUE)
+    site_yml  <- file.path(input, '_site.yml')
+    site_yml2 <- patch_html_document_options(config, encoding, site_yml)
+    on.exit(file.rename(site_yml2, site_yml), add = TRUE)
 
     # track outputs
     outputs <- c()
@@ -420,7 +421,7 @@ site_config_file <- function(input) {
 }
 
 # make sure the html_document format has options `lib_dir` and `self_contained`
-patch_html_document_options <- function(config, encoding) {
+patch_html_document_options <- function(config, encoding, site_yml) {
   opts <- config$output[['html_document']]
   if (identical(opts, 'default')) opts <- list()
   opts <- merge_lists(as.list(opts), list(
@@ -428,8 +429,8 @@ patch_html_document_options <- function(config, encoding) {
   ))
   config$output[['html_document']] <- opts
   tmp <- tempfile()
-  file.rename('_site.yml', tmp)
-  con <- file('_site.yml', open = 'w', encoding = encoding)
+  file.rename(site_yml, tmp)
+  con <- file(site_yml, open = 'w', encoding = encoding)
   on.exit(close(con), add = TRUE)
   writeLines(yaml::as.yaml(config), con)
   tmp
