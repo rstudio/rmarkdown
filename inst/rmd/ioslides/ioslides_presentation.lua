@@ -278,6 +278,8 @@ function Header(lev, s, attr)
     end
     -- remove noise attributes for article
     attr["data-background"] = nil
+    attr["data-background-size"] = nil
+    attr["data-background-position"] = nil
   end
 
   -- extract optional subtitle
