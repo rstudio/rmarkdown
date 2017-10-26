@@ -39,8 +39,6 @@ Authors@R: c(
          comment = "highlight.js library"),
   person("Greg", "Franko", role = c("ctb", "cph"),
          comment = "tocify library"),
-  person("Eli", "Grey", role = c("ctb", "cph"),
-         comment = "FileSaver library"),
   person("John", "MacFarlane", role = c("ctb", "cph"),
          comment = "Pandoc templates"),
   person(family = "Google, Inc.", role = c("ctb", "cph"),

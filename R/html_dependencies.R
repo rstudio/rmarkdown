@@ -67,7 +67,7 @@ html_dependency_navigation <- function(code_menu, source_embed) {
   if (code_menu)
     script <- c(script, "codefolding.js")
   if (source_embed)
-    script <- c(script, "FileSaver.min.js", "sourceembed.js")
+    script <- c(script, "sourceembed.js")
 
   htmlDependency(name = "navigation",
                  version = "1.1",
