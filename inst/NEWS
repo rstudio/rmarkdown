@@ -41,6 +41,8 @@ rmarkdown 1.7 (unreleased)
 
 * Added two new output formats `latex_document()` and `latex_fragment()` (#626).
 
+* `render_site()` does not support multiple output formats for a single Rmd (#793).
+
 rmarkdown 1.6
 --------------------------------------------------------------------------------
 
