@@ -175,7 +175,7 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
 
     site_yml  <- file.path(input, '_site.yml')
     site_yml2 <- patch_html_document_options(config, encoding, site_yml)
-    on.exit(file.rename(site_yml2, site_yml), add = TRUE)
+    on.exit(file.copy(site_yml2, site_yml, overwrite = TRUE), add = TRUE)
 
     # track outputs
     outputs <- c()
@@ -429,7 +429,7 @@ patch_html_document_options <- function(config, encoding, site_yml) {
   ))
   config$output[['html_document']] <- opts
   tmp <- tempfile()
-  file.rename(site_yml, tmp)
+  file.copy(site_yml, tmp, overwrite = TRUE)
   con <- file(site_yml, open = 'w', encoding = encoding)
   on.exit(close(con), add = TRUE)
   writeLines(yaml::as.yaml(config), con)
