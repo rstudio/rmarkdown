@@ -254,17 +254,15 @@ pandoc_latex_engine_args <- function(latex_engine) {
     find_latex_engine(latex_engine))
 }
 
+# For macOS, use a full path to the latex engine since the stripping
+# of the PATH environment variable by OSX 10.10 Yosemite prevents
+# pandoc from finding the engine in e.g. /usr/texbin
 find_latex_engine <- function(latex_engine) {
-  # use a full path to the latex engine on OSX since the stripping
-  # of the PATH environment variable by OSX 10.10 Yosemite prevents
-  # pandoc from finding the engine in e.g. /usr/texbin
-  if (is_osx()) {
-    # resolve path if it's not already an absolute path
-    if (!grepl("/", latex_engine, fixed = TRUE))
-      program_path <- find_program(latex_engine)
-    if (nzchar(program_path))
-      latex_engine <- program_path
-  }
+  # do not need full path if latex_engine is available from PATH
+  if (!is_osx() || nzchar(Sys.which(latex_engine))) return(latex_engine)
+  # resolve path if it's not already an absolute path
+  if (!grepl("/", latex_engine) && nzchar(path <- find_program(latex_engine)))
+    latex_engine <- path
   latex_engine
 }
 
