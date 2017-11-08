@@ -268,8 +268,8 @@ html_dependency_pagedtable <- function() {
 html_dependency_highlightjs <- function(highlight) {
   htmlDependency(
     "highlightjs",
-    version = "1.1",
-    src = rmarkdown_system_file("rmd/h/highlightjs-1.1"),
+    version = "9.12.0",
+    src = rmarkdown_system_file("rmd/h/highlightjs"),
     script = "highlight.js",
     stylesheet = paste0(highlight, ".css")
   )
