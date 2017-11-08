@@ -4,8 +4,8 @@ Title: Dynamic Documents for R
 Version: 1.6.0.9009
 Authors@R: c(
   person("JJ", "Allaire", role = c("aut", "cre"), email = "jj@rstudio.com"),
-  person("Jonathan", "McPherson", role = "aut", email = "jonathan@rstudio.com"),
   person("Yihui", "Xie", role = "aut", email = "yihui@rstudio.com"),
+  person("Jonathan", "McPherson", role = "aut", email = "jonathan@rstudio.com"),
   person("Javier", "Luraschi", role = "aut", email = "javier@rstudio.com"),
   person("Kevin", "Ushey", role = "aut", email = "kevin@rstudio.com"),
   person("Aron", "Atkins", role = "aut", email = "aron@rstudio.com"),
