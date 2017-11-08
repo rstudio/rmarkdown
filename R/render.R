@@ -568,17 +568,6 @@ render <- function(input,
 
     need_bibtex <- grepl('[.](pdf|tex)$', output_file) &&
       any(c('--natbib', '--biblatex') %in% output_format$pandoc$args)
-    # if we are running citeproc then explicitly forward the bibliography
-    # on the command line (works around pandoc-citeproc issue whereby yaml
-    # strings that begin with numbers are interpreted as numbers)
-    if ((is.null(yaml_front_matter$citeproc) || yaml_front_matter$citeproc) && !is.null(bibliography <- yaml_front_matter$bibliography)) {
-      # remove the .bib extension since it does not work with MikTeX's BibTeX
-      if (need_bibtex && is_windows()) bibliography <- sub('[.]bib$', '', bibliography)
-      output_format$pandoc$args <- c(
-        output_format$pandoc$args,
-        rbind("--bibliography", pandoc_path_arg(bibliography, FALSE))
-      )
-    }
 
     perf_timer_start("pandoc")
 
