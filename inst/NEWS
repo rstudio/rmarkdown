@@ -43,6 +43,9 @@ rmarkdown 1.7 (unreleased)
 
 * Added two new output formats `latex_document()` and `latex_fragment()` (#626).
 
+* Relative paths of images in HTML output should not be resolved to absolute
+  paths (#808).
+
 * `render_site()` does not support multiple output formats for a single Rmd (#793).
 
 * Unicode characters may be scrambled when downloading the Rmd source file using
