@@ -48,6 +48,11 @@ rmarkdown 1.7 (unreleased)
 
 * Upgraded highlight.js from v1.1 to v9.12.0 (#988, #907).
 
+* The argument `keep_md = TRUE` actually preserves the Markdown output file from
+  `knitr::knit()` now (as documented). Previously, it generates a new Markdown
+  file by concatenating the YAML metadata (title, author, date) with the body of
+  the original Markdown output file (#450).
+
 rmarkdown 1.6
 --------------------------------------------------------------------------------
 
