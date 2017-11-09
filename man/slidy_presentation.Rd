@@ -23,9 +23,9 @@ to add a countdown timer to the slide footer.}
 
 \item{footer}{Footer text (e.g. organization name and/or copyright)}
 
-\item{font_adjustment}{Increase or decrease the default font size
-(e.g. -1 or +1). You can also manually adjust the font size during the
-presentation using the 'S' (smaller) and 'B' (bigger) keys.}
+\item{font_adjustment}{Increase or decrease the default font size (e.g. -1 or
++1). You can also manually adjust the font size during the presentation
+using the 'S' (smaller) and 'B' (bigger) keys.}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -102,8 +102,8 @@ with the names being package names (e.g. \code{list(hypreref =
 c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
 add custom LaTeX packages to the .tex header.}
 
-\item{...}{Additional function arguments to pass to the
-base R Markdown HTML output formatter \code{\link{html_document_base}}}
+\item{...}{Additional function arguments to pass to the base R Markdown HTML
+output formatter \code{\link{html_document_base}}}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}
@@ -112,8 +112,10 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to a slidy presentation.
 }
 \details{
-See the \href{http://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
-documentation} for additional details on using the \code{slidy_presentation} format.
+See the
+\href{http://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
+documentation} for additional details on using the \code{slidy_presentation}
+format.
 
 For more information on markdown syntax for presentations see the
 \href{http://pandoc.org/README.html}{pandoc online documentation}.
