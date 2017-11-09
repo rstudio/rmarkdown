@@ -386,13 +386,21 @@ latexmk_emu <- function(file, engine, biblatex = FALSE) {
   }
   aux <- sub('[.]tex$', aux_ext, file)
   if (file.exists(aux)) {
-    if (biblatex || length(grep('^\\\\citation\\{', readLines(aux))))
+    if (biblatex || require_bibtex(aux))
       system2_quiet(find_latex_engine(bib_engine), shQuote(aux), error = {
         stop("Failed to build the bibliography via ", bib_engine, call. = FALSE)
       })
   }
   run_engine()
   run_engine()
+}
+
+require_bibtex <- function(aux) {
+  x <- readLines(aux)
+  r = length(grep('^\\\\citation\\{', x)) && length(grep('^\\\\bibdata\\{', x)) &&
+    length(grep('^\\\\bibstyle\\{', x))
+  if (r) file.copy(aux, '~/Downloads/test.txt')
+  r
 }
 
 system2_quiet <- function(..., error = NULL) {
