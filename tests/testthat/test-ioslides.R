@@ -155,7 +155,7 @@ test_ioslides_presentation_css <- function() {
     , any(grepl('<slide[^>]*class="[^"]*\\bnobackground\\b[^"]*".*<h2>Slide Two</h2>', html, perl = TRUE))
     , any(grepl('<slide[^>]*class="[^"]*\\bfill\\b[^"]*".*<h2>Slide Two</h2>', html, perl = TRUE))
     , any(grepl('<slide[^>]*style="[^"]*background-image: url\\(img/test.png\\);[^"]*".*<h2>Slide Three</h2>', html))
-    , any(grepl('<slide[^>]*style="[^"]*background-size: 100% 100%;[^"]*".*<h2>Slide Three</h2>', html))
+    , any(grepl('<slide[^>]*style="[^"]*background-size: contain;[^"]*".*<h2>Slide Three</h2>', html))
 
     ## separated to be order agnostic
     , any(grepl('<slide[^>]*class="[^"]*\\bsegue\\b[^"]*".*<h2>Slide Four</h2>', html, perl = TRUE))
@@ -176,7 +176,7 @@ test_ioslides_presentation_css <- function() {
   slide_lines <-
     c(any(grepl('<slide[^>]*style="[^"]*background-image: url\\(data:image/png;base64,[^\\)]*);[^"]*".*<h2>BG Slide</h2>', html))
       ## still separate
-    , any(grepl('<slide[^>]*style="[^"]*background-size: 100% 100%;[^"]*".*<h2>BG Slide</h2>', html))
+    , any(grepl('<slide[^>]*style="[^"]*background-size: contain;[^"]*".*<h2>BG Slide</h2>', html))
     )
   expect_true(all(slide_lines), info = "slide lines - self contained image")
 }

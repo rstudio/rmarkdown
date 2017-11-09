@@ -61,7 +61,7 @@ md_document <- function(variant = "markdown_strict",
                         pandoc_args = NULL) {
 
   # base pandoc options for all markdown output
-  args <- c("--standalone")
+  args <- c(if (variant != "markdown" && !preserve_yaml) "--standalone")
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))

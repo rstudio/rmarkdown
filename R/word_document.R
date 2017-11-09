@@ -83,7 +83,7 @@ word_document <- function(toc = FALSE,
 
   # reference docx
   if (!is.null(reference_docx) && !identical(reference_docx, "default")) {
-    args <- c(args, "--reference-docx", pandoc_path_arg(reference_docx))
+    args <- c(args, reference_doc_arg("docx"), pandoc_path_arg(reference_docx))
   }
 
   # pandoc args
@@ -100,5 +100,9 @@ word_document <- function(toc = FALSE,
   )
 }
 
-
+reference_doc_arg <- function(type) {
+  paste0("--reference-", if (pandoc_available("2.0")) "doc" else {
+    match.arg(type, c("docx", "odt"))
+  })
+}
 
