@@ -53,6 +53,9 @@ rmarkdown 1.7 (unreleased)
   file by concatenating the YAML metadata (title, author, date) with the body of
   the original Markdown output file (#450).
 
+* For `md_document()`, when `variant == 'markdown'` and `perserve_yaml = TRUE`,
+  the Pandoc argument `--standalone` should not be used (#656).
+
 rmarkdown 1.6
 --------------------------------------------------------------------------------
 
