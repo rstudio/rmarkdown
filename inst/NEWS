@@ -5,6 +5,8 @@ rmarkdown 1.8 (unreleased)
 
 * `render_site()` does not work with `_site.yml` that does not have the `output` setting (#1189).
 
+* The variables `input` and `output` do not work in Shiny R Markdown documents (#1193).
+
 rmarkdown 1.7
 --------------------------------------------------------------------------------
 
