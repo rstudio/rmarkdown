@@ -740,7 +740,7 @@ merge_output_options <- function(base_options, overlay_options) {
     if (is.null(target)) {
       list()
     } else if (is.character(target)) {
-      setNames(vector('list', length(target)), target)
+      setNames(lapply(target, function(x) list()), target)
     } else {
       target[names(target) != "..."]  # remove symbols (...) from list
     }
