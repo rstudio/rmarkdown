@@ -422,7 +422,12 @@ site_config_file <- function(input) {
 
 # make sure the html_document format has options `lib_dir` and `self_contained`
 patch_html_document_options <- function(config, encoding, site_yml) {
-  opts <- config[['output']][['html_document']]
+  out <- as.list(config[['output']])
+  # when output is not a list, e.g., output: html_document
+  for (i in seq_along(out)) {
+    if (is.character(out[[i]])) out[[i]] = setNames(list('default'), out[[i]])
+  }
+  opts <- out[['html_document']]
   if (identical(opts, 'default')) opts <- list()
   opts <- merge_lists(as.list(opts), list(
     lib_dir = "site_libs", self_contained = FALSE
