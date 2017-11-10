@@ -16,7 +16,7 @@ registerMethods <- function(methods) {
     pkg <- method[[1]]
     generic <- method[[2]]
     class <- method[[3]]
-    func <- get(paste(generic, class, sep="."))
+    func <- get(paste(generic, class, sep = "."))
     if (pkg %in% loadedNamespaces()) {
       registerS3method(generic, class, func, envir = asNamespace(pkg))
     }

@@ -35,7 +35,7 @@ html_dependency_bootstrap <- function(theme) {
                    "shim/html5shiv.min.js",
                    "shim/respond.min.js"
                  ),
-                 stylesheet = paste("css/", theme, ".min.css", sep=""))
+                 stylesheet = paste0("css/", theme, ".min.css"))
 }
 
 # create an html_dependency for our embedded jqueryui

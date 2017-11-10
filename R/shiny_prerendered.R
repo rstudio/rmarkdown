@@ -223,7 +223,7 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
   dependencies <- dependencies[!sapply(dependencies, is.null)]
 
   # append them to the file (guarnateed to be UTF-8)
-  con <- file(input, open="at", encoding = "UTF-8")
+  con <- file(input, open = "at", encoding = "UTF-8")
   on.exit(close(con), add = TRUE)
 
   # write deps to connection
@@ -494,7 +494,7 @@ shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
     }
 
     # open the file
-    con <- file(file, open="at", encoding = encoding)
+    con <- file(file, open = "at", encoding = encoding)
     on.exit(close(con), add = TRUE)
 
     # track singletons
@@ -515,7 +515,7 @@ shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
         if (found_singleton)
           next
         else
-          singletons[[length(singletons)+1]] <- context
+          singletons[[length(singletons) + 1]] <- context
       }
 
       # append context

@@ -431,7 +431,7 @@ pandoc_mathjax_args <- function(mathjax,
 
     if (identical(template, "default")) {
       args <- c(args, "--mathjax")
-      args <- c(args, "--variable", paste("mathjax-url:", mathjax, sep=""))
+      args <- c(args, "--variable", paste0("mathjax-url:", mathjax))
     } else if (!self_contained) {
       args <- c(args, "--mathjax")
       if (!is.null(mathjax))
@@ -583,13 +583,13 @@ with_pandoc_safe_environment <- function(code) {
   if (Sys.info()['sysname'] == "Linux" &&
         is.na(Sys.getenv("LANG", unset = NA))) {
     # fill in a the LANG environment variable if it doesn't exist
-    Sys.setenv(LANG=detect_generic_lang())
+    Sys.setenv(LANG = detect_generic_lang())
     on.exit(Sys.unsetenv("LANG"), add = TRUE)
   }
   if (Sys.info()['sysname'] == "Linux" &&
     identical(Sys.getenv("LANG"), "en_US")) {
-    Sys.setenv(LANG="en_US.UTF-8")
-    on.exit(Sys.setenv(LANG="en_US"), add = TRUE)
+    Sys.setenv(LANG = "en_US.UTF-8")
+    on.exit(Sys.setenv(LANG = "en_US"), add = TRUE)
   }
   force(code)
 }
@@ -608,7 +608,7 @@ detect_generic_lang <- function() {
         strsplit(locales, split = "\n", fixed = TRUE)
     )
     if ("C.UTF-8" %in% locales)
-      return ("C.UTF-8")
+      return("C.UTF-8")
   }
 
   # default to en_US.UTF-8
@@ -646,8 +646,8 @@ quoted <- function(args) {
 find_pandoc_theme_variable <- function(args) {
   range <- length(args) - 1
   for (i in 1:range) {
-    if (args[[i]] == "--variable" && grepl("^theme:", args[[i+1]])) {
-      return(substring(args[[i+1]], nchar("theme:") + 1))
+    if (args[[i]] == "--variable" && grepl("^theme:", args[[i + 1]])) {
+      return(substring(args[[i + 1]], nchar("theme:") + 1))
     }
   }
   # none found, return NULL

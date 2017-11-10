@@ -72,7 +72,7 @@ github_document <- function(toc = FALSE,
                   "rmarkdown/templates/github_document/resources/preview.html")))
       css <- pandoc_path_arg(rmarkdown_system_file(
         "rmarkdown/templates/github_document/resources/github.css"))
-      args <- c(args, "--variable", paste("github-markdown-css:", css, sep=""))
+      args <- c(args, "--variable", paste0("github-markdown-css:", css))
 
       # no email obfuscation
       args <- c(args, "--email-obfuscation", "none")

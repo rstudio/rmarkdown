@@ -3,15 +3,10 @@
 paged_table_type_sum <- function(x) {
   type_sum <- function(x)
   {
-    format_sum <- switch (class(x)[[1]],
-                          ordered = "ord",
-                          factor = "fctr",
-                          POSIXt = "dttm",
-                          difftime = "time",
-                          Date = "date",
-                          data.frame = class(x)[[1]],
-                          tbl_df = "tibble",
-                          NULL
+    format_sum <- switch(
+      class(x)[[1]], ordered = "ord", factor = "fctr", POSIXt = "dttm",
+      difftime = "time", Date = "date", data.frame = class(x)[[1]],
+      tbl_df = "tibble", NULL
     )
     if (!is.null(format_sum)) {
       format_sum
@@ -38,7 +33,7 @@ paged_table_type_sum <- function(x) {
 
 paged_table_obj_sum <- function(x) {
   "%||%" <- function(x, y) {
-    if(is.null(x)) y else x
+    if (is.null(x)) y else x
   }
 
   big_mark <- function(x, ...) {
@@ -162,7 +157,7 @@ paged_table_html <- function(x) {
   data <- as.data.frame(
     lapply(
       data,
-      function (y) {
+      function(y) {
         # escape NAs from character columns
         if (typeof(y) == "character") {
           y[y == "NA"] <- "__NA__"

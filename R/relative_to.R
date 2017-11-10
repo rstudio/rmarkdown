@@ -15,7 +15,7 @@
 relative_to <- function(dir, file) {
   # ensure directory ends with a /
   if (!identical(substr(dir, nchar(dir), nchar(dir)), "/")) {
-    dir <- paste(dir, "/", sep="")
+    dir <- paste0(dir, "/")
   }
 
   # if the file is prefixed with the directory, return a relative path

@@ -455,7 +455,7 @@ discover_css_resources <- function(css_file, discover_single_resource) {
     discover_single_resource(res_file, FALSE, TRUE)
   }
 
-  call_css_resource_attrs(paste(css_lines, collapse="\n"),
+  call_css_resource_attrs(paste(css_lines, collapse = "\n"),
                                 discover_resource)
 }
 

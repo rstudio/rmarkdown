@@ -98,7 +98,7 @@ output_format <- function(knitr,
 }
 
 # merges two scalar values; picks the overlay if non-NULL and then the base
-merge_scalar <- function (base, overlay) {
+merge_scalar <- function(base, overlay) {
   if (is.null(base) && is.null(overlay))
     NULL
   else if (is.null(overlay))
@@ -109,9 +109,9 @@ merge_scalar <- function (base, overlay) {
 
 # merges two functions: if both are non-NULL, produces a new function that
 # invokes each and then uses the supplied operation to combine their outputs
-merge_function_outputs <- function (base, overlay, op) {
+merge_function_outputs <- function(base, overlay, op) {
   if (!is.null(base) && !is.null(overlay)) {
-    function (...) {
+    function(...) {
       op(base(...), overlay(...))
     }
   } else {
@@ -121,7 +121,7 @@ merge_function_outputs <- function (base, overlay, op) {
 
 # merges two post-processors; if both are non-NULL, produces a new function that
 # calls the overlay post-processor and then the base post-processor.
-merge_post_processors <- function (base, overlay) {
+merge_post_processors <- function(base, overlay) {
   if (!is.null(base) && !is.null(overlay)) {
     function(metadata, input_file, output_file, ...) {
       output_file <- overlay(metadata, input_file, output_file, ...)
@@ -422,9 +422,6 @@ resolve_output_format <- function(input,
   # read the input file
   input_lines <- read_lines_utf8(input, encoding)
 
-  # read the yaml front matter
-  yaml_front_matter <- parse_yaml_front_matter(input_lines)
-
   # validate that the output format is either NULL or a character vector
   if (!is.null(output_format) && !is.character(output_format))
     stop("output_format must be a character vector")
@@ -671,8 +668,8 @@ parse_yaml_front_matter <- function(input_lines) {
   if (!is.null(partitions$front_matter)) {
     front_matter <- partitions$front_matter
     if (length(front_matter) > 2) {
-      front_matter <- front_matter[2:(length(front_matter)-1)]
-      front_matter <- paste(front_matter, collapse="\n")
+      front_matter <- front_matter[2:(length(front_matter) - 1)]
+      front_matter <- paste(front_matter, collapse = "\n")
       validate_front_matter(front_matter)
       parsed_yaml <- yaml_load_utf8(front_matter)
       if (is.list(parsed_yaml))
@@ -705,7 +702,7 @@ partition_yaml_front_matter <- function(input_lines) {
       if (delimiters[1] == 1)
         TRUE
       else
-        is_blank(input_lines[1:delimiters[1]-1])
+        is_blank(input_lines[1:delimiters[1] - 1])
     } else {
       FALSE
     }
@@ -721,7 +718,7 @@ partition_yaml_front_matter <- function(input_lines) {
 
     if (delimiters[1] > 1)
       input_body <- c(input_body,
-                      input_lines[1:delimiters[1]-1])
+                      input_lines[1:delimiters[1] - 1])
 
     if (delimiters[2] < length(input_lines))
       input_body <- c(input_body,
@@ -739,25 +736,17 @@ partition_yaml_front_matter <- function(input_lines) {
 merge_output_options <- function(base_options, overlay_options) {
 
   # if either one of these is a character vector then normalize to a named list
-  normalize_list <- function(target_list) {
-    if (is.null(target_list))
+  normalize_list <- function(target) {
+    if (is.null(target)) {
       list()
-    else if (is.character(target_list)) {
-      new_list <- list()
-      for (name in target_list)
-        new_list[[name]] <- list()
-      new_list
+    } else if (is.character(target)) {
+      setNames(vector('list', length(target)), target)
     } else {
-      # remove symbols (...) from list
-      target_list <- target_list[names(target_list) != "..."]
-      target_list
+      target[names(target) != "..."]  # remove symbols (...) from list
     }
   }
 
-  base_options <- normalize_list(base_options)
-  overlay_options <- normalize_list(overlay_options)
-
-  merge_lists(base_options, overlay_options)
+  merge_lists(normalize_list(base_options), normalize_list(overlay_options))
 }
 
 is_pandoc_to_html <- function(options) {

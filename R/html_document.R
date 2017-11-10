@@ -508,8 +508,7 @@ html_highlighters <- function() {
 }
 
 default_mathjax <- function() {
-  paste("https://mathjax.rstudio.com/latest/",
-        mathjax_config(), sep="")
+  paste0("https://mathjax.rstudio.com/latest/", mathjax_config())
 }
 
 mathjax_config <- function() {

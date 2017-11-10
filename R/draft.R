@@ -152,7 +152,7 @@ list_template_dirs <- function() {
       # it does; list each template directory within the template folder
       template_dirs <- list.dirs(path = template_folder, recursive = FALSE)
       for (dir in template_dirs) {
-        cat(pkg, "|", dir, "\n", sep="")
+        cat(pkg, "|", dir, "\n", sep = "")
       }
     }
   }

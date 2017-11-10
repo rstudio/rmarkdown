@@ -1,7 +1,7 @@
 
 context("ioslides")
 
-.generate_markdown_for_test <- function (){
+.generate_markdown_for_test <- function() {
 
   c("# Header1\n",
     "## Header2\n",

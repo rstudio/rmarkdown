@@ -15,7 +15,7 @@ elapsed_ms <- function() {
 
 # clears all perf timer state
 perf_timer_reset_all <- function() {
-  .perf_timers <- new.env(parent = emptyenv())
+  .perf_timers <<- new.env(parent = emptyenv())
 }
 
 # record a start time for a perf timer
@@ -51,7 +51,7 @@ perf_timers_as_json <- function() {
                                 " elapsed: ", as.integer(summary[t,]), " }",
                                sep = "")
                          }),
-                collapse=", ")
+                collapse = ", ")
   json <- paste("[", json, "]")
   json
 }
