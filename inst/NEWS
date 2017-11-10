@@ -1,3 +1,10 @@
+rmarkdown 1.8 (unreleased)
+--------------------------------------------------------------------------------
+
+## BUG FIXES
+
+* `render_site()` does not work with `_site.yml` that does not have the `output` setting (#1189).
+
 rmarkdown 1.7
 --------------------------------------------------------------------------------
 
