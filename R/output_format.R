@@ -486,23 +486,19 @@ output_format_from_yaml_front_matter <- function(input_lines,
 
   # parse _site.yml output format if we have it
   config <- site_config(".", encoding = encoding)
-  if (!is.null(config) && !is.null(config[["output"]])) {
-    site_output_format_yaml <- config[["output"]]
-  } else {
-    site_output_format_yaml <- list()
-  }
+  site_output_format_yaml <- config[["output"]]
 
   # parse common _output.yml if we have it
-  if (file.exists("_output.yml"))
-    common_output_format_yaml <- yaml_load_file_utf8("_output.yml")
-  else if (file.exists("_output.yaml"))
-    common_output_format_yaml <- yaml_load_file_utf8("_output.yaml")
-  else
-    common_output_format_yaml <- list()
+  common_output_format_yaml <- if (file.exists("_output.yml")) {
+    yaml_load_file_utf8("_output.yml")
+  } else if (file.exists("_output.yaml")) {
+    yaml_load_file_utf8("_output.yaml")
+  }
 
   # merge _site.yml and _output.yml
-  common_output_format_yaml <- merge_output_options(site_output_format_yaml,
-                                                    common_output_format_yaml)
+  common_output_format_yaml <- merge_output_options(
+    site_output_format_yaml, common_output_format_yaml
+  )
 
   # parse output format from front-matter if we have it
   if (length(common_output_format_yaml) > 0 ||
