@@ -1,0 +1,17 @@
+---
+title: "Make sure input works"
+output: html_document
+runtime: shiny
+---
+
+```{r}
+textInput("days", "Days", 100)
+```
+
+In rmarkdown 1.7, the chunk below renders an error `object 'input' not found` instead of the expected `100`:
+
+```{r}
+renderPrint(input$days)
+```
+
+It was fixed via https://github.com/rstudio/rmarkdown/commit/67eaa7aa6.
