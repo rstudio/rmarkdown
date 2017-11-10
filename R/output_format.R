@@ -473,103 +473,95 @@ output_format_from_yaml_front_matter <- function(input_lines,
                                                  output_format_name = NULL,
                                                  encoding = getOption("encoding")) {
 
+  format_name <- output_format_name
   # ensure input is the correct data type
-  if (!is_null_or_string(output_format_name)) {
+  if (!is_null_or_string(format_name)) {
     stop("Unrecognized output format specified", call. = FALSE)
   }
 
   # parse the yaml
-  yaml_front_matter <- parse_yaml_front_matter(input_lines)
+  yaml_input <- parse_yaml_front_matter(input_lines)
 
   # default to no options
-  output_format_options <- list()
+  format_options <- list()
 
   # parse _site.yml output format if we have it
   config <- site_config(".", encoding = encoding)
-  site_output_format_yaml <- config[["output"]]
+  yaml_site <- config[["output"]]
 
   # parse common _output.yml if we have it
-  common_output_format_yaml <- if (file.exists("_output.yml")) {
+  yaml_common <- if (file.exists("_output.yml")) {
     yaml_load_file_utf8("_output.yml")
   } else if (file.exists("_output.yaml")) {
     yaml_load_file_utf8("_output.yaml")
   }
 
   # merge _site.yml and _output.yml
-  common_output_format_yaml <- merge_output_options(
-    site_output_format_yaml, common_output_format_yaml
-  )
+  yaml_common <- merge_output_options(yaml_site, yaml_common)
 
   # parse output format from front-matter if we have it
-  if (length(common_output_format_yaml) > 0 ||
-      length(yaml_front_matter[["output"]]) > 0) {
+  if (length(yaml_common) || length(yaml_input[["output"]])) {
 
     # alias the output format yaml
-    output_format_yaml <- yaml_front_matter[["output"]]
+    yaml_output <- yaml_input[["output"]]
 
     # merge against common _output.yml
-    output_format_yaml <- merge_output_options(common_output_format_yaml,
-                                               output_format_yaml)
+    yaml_output <- merge_output_options(yaml_common, yaml_output)
 
     # if a named format was provided then try to find it
-    if (!is.null(output_format_name)) {
+    if (!is.null(format_name)) {
 
       # if this is a named element of the list then use that
-      if (output_format_name %in% names(output_format_yaml)) {
+      if (format_name %in% names(yaml_output)) {
 
-        output_format_options <- output_format_yaml[[output_format_name]]
+        format_options <- yaml_output[[format_name]]
 
       # otherwise this could be a heterogeneous list of characters and
       # lists so scan for an embedded list
       } else {
-        for (format in output_format_yaml) {
-          if (is.list(format) && !is.null(format[[output_format_name]]))
-            output_format_options <- format[[output_format_name]]
+        for (format in yaml_output) {
+          if (is.list(format) && !is.null(format[[format_name]]))
+            format_options <- format[[format_name]]
         }
       }
 
       # if the options are just "default" then that's the same as empty list
-      if (identical(output_format_options, "default"))
-        output_format_options <- list()
+      if (identical(format_options, "default")) format_options <- list()
 
     # no named format passed so take the first element
     } else {
-      if (is.list(output_format_yaml[[1]])) {
+      if (is.list(yaml_output[[1]])) {
         # check for named list
-        if (nzchar(names(output_format_yaml)[[1]])) {
-          output_format_name <- names(output_format_yaml)[[1]]
-          output_format_options <- output_format_yaml[[1]]
+        if (nzchar(format_name <- names(yaml_output)[[1]])) {
+          format_options <- yaml_output[[1]]
         # nested named list
         } else {
-          output_format_name <- names(output_format_yaml[[1]])[[1]]
-          output_format_options <- output_format_yaml[[1]][[output_format_name]]
+          format_name <- names(yaml_output[[1]])[[1]]
+          format_options <- yaml_output[[1]][[format_name]]
         }
-      } else if (is.list(output_format_yaml) &&
-                   (is.null(output_format_yaml[[1]]) ||
-                      identical(output_format_yaml[[1]], "default"))) {
-        output_format_name <- names(output_format_yaml)[[1]]
+      } else if (is.list(yaml_output) &&
+                   (is.null(yaml_output[[1]]) ||
+                      identical(yaml_output[[1]], "default"))) {
+        format_name <- names(yaml_output)[[1]]
 
       } else {
-        output_format_name <- output_format_yaml[[1]]
+        format_name <- yaml_output[[1]]
       }
     }
 
   # no output formats defined in the file, just take the passed format
   # by name (or default to html_document if no named format was specified)
   } else {
-    if (is.null(output_format_name))
-      output_format_name <- "html_document"
+    if (is.null(format_name)) format_name <- "html_document"
   }
 
   # merge any output_options passed in the call to render
   if (!is.null(output_options)) {
-    output_format_options <- merge_output_options(output_format_options,
-                                                  output_options)
+    format_options <- merge_output_options(format_options, output_options)
   }
 
   # return the format name and options
-  list(name = output_format_name,
-       options = output_format_options)
+  list(name = format_name, options = format_options)
 }
 
 create_output_format <- function(name, options) {
