@@ -1,0 +1,28 @@
+---
+title: 'rm(list = ls())'
+output: html_document
+runtime: shiny
+---
+
+Before rmarkdown 0.9.2, an error would occur:
+
+> Error in dir.exists: object 'resource_folder' not found
+
+To repro:
+
+```r
+devtools::install_version('rmarkdown', '0.9.2')
+```
+
+And run this document.
+
+```{r}
+rm(list = ls())
+shinyApp(
+  ui = basicPage('Hello world'), 
+  server = function(input, output) {
+  }
+)
+```
+
+This issue was fixed in https://github.com/rstudio/rmarkdown/pull/624, and again in https://github.com/rstudio/rmarkdown/commit/67eaa7aa6a.
