@@ -1,4 +1,4 @@
-rmarkdown 1.7 (unreleased)
+rmarkdown 1.7
 --------------------------------------------------------------------------------
 
 * Fixed an issue with `df_print: paged` where row names where not printed and
