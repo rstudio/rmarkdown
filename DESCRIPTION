@@ -71,6 +71,7 @@ Imports:
     base64enc,
     jsonlite,
     rprojroot,
+    mime,
     methods,
     stringr (>= 1.2.0)
 Suggests:
