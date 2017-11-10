@@ -15,7 +15,11 @@ elapsed_ms <- function() {
 
 # clears all perf timer state
 perf_timer_reset_all <- function() {
-  .perf_timers <<- new.env(parent = emptyenv())
+  env <- environment(perf_timer_reset_all)
+  do.call("unlockBinding", list(".perf_timers", env))
+  env$.perf_timers <- new.env(parent = emptyenv())
+  lockBinding(".perf_timers", env)
+  invisible(.perf_timers)
 }
 
 # record a start time for a perf timer
