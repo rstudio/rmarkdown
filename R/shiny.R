@@ -225,6 +225,12 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
     else
       function() { file }
 
+    envir_global <- render_args[['envir']]
+    envir_server <- list2env(list(
+      input = input, output = output, session = session
+    ), parent = envir_global)
+    render_args$envir <- new.env(parent = envir_server)
+
     # when the file loads (or is changed), render to a temporary file, and
     # read the contents into a reactive value
     doc <- shiny::reactive({
