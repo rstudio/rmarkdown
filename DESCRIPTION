@@ -66,7 +66,6 @@ Imports:
     knitr (>= 1.14),
     yaml (>= 2.1.5),
     htmltools (>= 0.3.5),
-    caTools,
     evaluate (>= 0.8),
     base64enc,
     jsonlite,
