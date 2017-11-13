@@ -21,8 +21,8 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <meta name="description" content="Turn your analyses into high quality documents, reports, presentations and dashboards with R Markdown. Use a productive notebook interface to weave together narrative text and code to produce elegantly formatted output. Use multiple languages including R, Python, and SQL. R Markdown supports a reproducible workflow for dozens of static and dynamic output formats including HTML, PDF, MS Word, Beamer, HTML5 slides, Tufte-style handouts, books, dashboards, shiny applications, scientific articles, websites, and more." />
 
@@ -47,10 +47,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -444,9 +446,9 @@ obstacles to effective collaboration.</code></pre>
 </li>
 <li>Word 2013</li>
 </ul>
-<pre><code>## R version 3.4.0 (2017-04-21)
+<pre><code>## R version 3.4.2 (2017-09-28)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS Sierra 10.12.5
+## Running under: macOS Sierra 10.12.6
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
@@ -456,13 +458,13 @@ obstacles to effective collaboration.</code></pre>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] knitr_1.16
+## [1] knitr_1.18
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_3.4.0  backports_1.0.5 magrittr_1.5    rprojroot_1.2  
-##  [5] tools_3.4.0     htmltools_0.3.6 yaml_2.1.14     Rcpp_0.12.11   
-##  [9] stringi_1.1.5   rmarkdown_1.6   stringr_1.2.0   digest_0.6.12  
-## [13] evaluate_0.10</code></pre>
+##  [1] compiler_3.4.2  backports_1.1.1 magrittr_1.5    rprojroot_1.2  
+##  [5] tools_3.4.2     htmltools_0.3.6 yaml_2.1.14     Rcpp_0.12.13   
+##  [9] stringi_1.1.5   rmarkdown_1.7.5 stringr_1.2.0   digest_0.6.12  
+## [13] evaluate_0.10.1</code></pre>
 <p><br></p>
 </div>
 <div id="image-credits" class="section level3">

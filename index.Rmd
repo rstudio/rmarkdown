@@ -8,7 +8,7 @@ output:
 ---
 
 
-```{js}
+```{js, echo=FALSE}
 $("#rStudioHeader").removeClass("alwaysShrunk");
 $("#pageContent").removeClass("standardPadding");
 ```

@@ -277,7 +277,7 @@ When working within RStudio you can remove all prerendered output (including the
 You can also call the `rmarkdown::shiny_prerendered_clean` function to accomplish the same task from outside of RStudio.
 
 
-```{js}
+```{js, echo=FALSE}
 $(document).ready(function() {
   fixupQuotes = function() {$(this).text($(this).text().replace(/'/g, "\""))};
   $('h3').each(fixupQuotes);

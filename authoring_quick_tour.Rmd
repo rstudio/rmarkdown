@@ -6,7 +6,7 @@ output:
     toc_depth: 3
 ---
 
-```{css}
+```{css, echo=FALSE}
 img {
   margin-bottom: 15px;
 }
