@@ -7,6 +7,8 @@ rmarkdown 1.8 (unreleased)
 
 * The variables `input` and `output` do not work in Shiny R Markdown documents (#1193).
 
+* `ioslides_presentation` fails to embed images (#1197).
+
 rmarkdown 1.7
 --------------------------------------------------------------------------------
 
