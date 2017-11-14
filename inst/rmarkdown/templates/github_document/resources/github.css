@@ -657,33 +657,36 @@ kbd {
   border-color: #4078c0;
 }
 
+.sourceLine {
+  display: inline-block;
+}
 
-code > .kw { color: #000000; }
-code > .dt { color: #ed6a43; }
-code > .dv { color: #009999; }
-code > .bn { color: #009999; }
-code > .fl { color: #009999; }
-code > .ch { color: #009999; }
-code > .st { color: #183691; }
-code > .co { color: #969896; }
-code > .ot { color: #0086b3; }
-code > .al { color: #a61717; }
-code > .fu { color: #63a35c;  }
-code > .er { color: #a61717; background-color: #e3d2d2; }
-code > .wa { color: #000000; }
-code > .cn { color: #008080;  }
-code > .sc { color: #008080; }
-code > .vs { color: #183691; }
-code > .ss { color: #183691; }
-code > .im { color: #000000; }
-code > .va {color: #008080; }
-code > .cf { color: #000000;  }
-code > .op { color: #000000; }
-code > .bu { color: #000000; }
-code > .ex { color: #000000; }
-code > .pp { color: #999999; }
-code > .at { color: #008080; }
-code > .do { color: #969896; }
-code > .an { color: #008080; }
-code > .cv { color: #008080; }
-code > .in { color: #008080; }
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c;  }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080;  }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000;  }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }

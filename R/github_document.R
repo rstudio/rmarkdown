@@ -66,7 +66,7 @@ github_document <- function(toc = FALSE,
 
       # provide a preview that looks like github
       args <- c(args, "--standalone")
-      args <- c(args, "--self-contained")
+      args <- c(args, "--self-contained", if (pandoc2) c("--metadata", "pagetitle=PREVIEW"))
       args <- c(args, "--highlight-style", "pygments")
       args <- c(args, "--template",
                 pandoc_path_arg(rmarkdown_system_file(
