@@ -64,7 +64,7 @@ word_document <- function(toc = FALSE,
   args <- c()
 
   # smart quotes, etc.
-  if (smart && !pandoc_available("2.0")) {
+  if (smart && !pandoc2.0()) {
     args <- c(args, "--smart")
   } else {
     md_extensions <- smart_extension(smart, md_extensions)
@@ -101,7 +101,7 @@ word_document <- function(toc = FALSE,
 }
 
 reference_doc_arg <- function(type) {
-  paste0("--reference-", if (pandoc_available("2.0")) "doc" else {
+  paste0("--reference-", if (pandoc2.0()) "doc" else {
     match.arg(type, c("docx", "odt"))
   })
 }

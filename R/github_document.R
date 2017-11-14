@@ -32,8 +32,9 @@ github_document <- function(toc = FALSE,
                    pandoc_path_arg(rmarkdown_system_file(
                     "rmarkdown/templates/github_document/resources/default.md")))
 
+  pandoc2 <- pandoc2.0()
   # use md_document as base
-  variant <- if (pandoc_available("2.0")) "gfm" else "markdown_github"
+  variant <- if (pandoc2) "gfm" else "markdown_github"
   if (!hard_line_breaks)
     variant <- paste0(variant, "-hard_line_breaks")
 
