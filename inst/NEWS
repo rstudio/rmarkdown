@@ -9,6 +9,8 @@ rmarkdown 1.8 (unreleased)
 
 * `ioslides_presentation` fails to embed images (#1197).
 
+* With Pandoc 2.x, `github_document()` generates the wrong filename extension `.gfm-ascii_identifiers` instead of `.md`, and line height of code blocks in the HTML preview is too big (#1200).
+
 rmarkdown 1.7
 --------------------------------------------------------------------------------
 
