@@ -399,10 +399,8 @@ latexmk_emu <- function(file, engine, biblatex = FALSE) {
 
 require_bibtex <- function(aux) {
   x <- readLines(aux)
-  r = length(grep('^\\\\citation\\{', x)) && length(grep('^\\\\bibdata\\{', x)) &&
+  length(grep('^\\\\citation\\{', x)) && length(grep('^\\\\bibdata\\{', x)) &&
     length(grep('^\\\\bibstyle\\{', x))
-  if (r) file.copy(aux, '~/Downloads/test.txt')
-  r
 }
 
 system2_quiet <- function(..., error = NULL) {
