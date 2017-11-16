@@ -399,8 +399,19 @@ latexmk_emu <- function(file, engine, biblatex = FALSE) {
 
 require_bibtex <- function(aux) {
   x <- readLines(aux)
-  length(grep('^\\\\citation\\{', x)) && length(grep('^\\\\bibdata\\{', x)) &&
+  r <- length(grep('^\\\\citation\\{', x)) && length(grep('^\\\\bibdata\\{', x)) &&
     length(grep('^\\\\bibstyle\\{', x))
+  if (r && is_windows()) tweak_aux(aux, x)
+  r
+}
+
+# remove the .bib extension in \bibdata{} in the .aux file, because bibtex on
+# Windows requires no .bib extension (sigh)
+tweak_aux <- function(aux, x = readLines(aux)) {
+  r <- '^\\\\bibdata\\{.+\\}\\s*$'
+  if (length(i <- grep(r, x)) == 0) return()
+  x[i] = gsub('[.]bib([,}])', '\\1', x[i])
+  writeLines(x, aux)
 }
 
 system2_quiet <- function(..., error = NULL) {
