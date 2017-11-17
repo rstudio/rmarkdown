@@ -1,10 +1,10 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 1.7.8
+Version: 1.8
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
-    person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
+  person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
   person("Jonathan", "McPherson", role = "aut", email = "jonathan@rstudio.com"),
   person("Javier", "Luraschi", role = "aut", email = "javier@rstudio.com"),
   person("Kevin", "Ushey", role = "aut", email = "kevin@rstudio.com"),
