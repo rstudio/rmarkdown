@@ -750,7 +750,7 @@ merge_output_options <- function(base_options, overlay_options) {
 }
 
 is_pandoc_to_html <- function(options) {
-  identical(options$to, "html") || identical(options$to, "html5")
+  options$to %in% c("html", "html4", "html5")
 }
 
 citeproc_required <- function(yaml_front_matter, input_lines = NULL) {
