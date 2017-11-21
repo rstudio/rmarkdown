@@ -5,6 +5,8 @@ rmarkdown 1.9 (unreleased)
 
 * Temporary files created in `render()` may be cleaned up prematurely, which can cause problems with Shiny R Markdown documents (#1184).
 
+* Further improvements regarding compatibility with Pandoc 2.0, e.g. tabbed sections don't work.
+
 rmarkdown 1.8
 --------------------------------------------------------------------------------
 

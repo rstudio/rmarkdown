@@ -19,7 +19,7 @@ pandoc_output_file <- function(input, pandoc_options) {
     ext <- pandoc_options$ext
   else if (to %in% c("latex", "beamer"))
     ext <- ".pdf"
-  else if (to %in% c("html", "html5", "s5", "slidy",
+  else if (to %in% c("html", "html4", "html5", "s5", "slidy",
                      "slideous", "dzslides", "revealjs"))
     ext <- ".html"
   else if (grepl("^markdown", to)) {

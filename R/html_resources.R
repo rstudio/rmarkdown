@@ -359,7 +359,7 @@ discover_rmd_resources <- function(rmd_file, encoding,
   output_format <- output_format_from_yaml_front_matter(rmd_content,
                                                         encoding = encoding)
   output_format_function <- eval(parse(text = output_format$name))
-  override_output_format <- if (output_format_function()$pandoc$to == "html")
+  override_output_format <- if (is_pandoc_to_html(output_format_function()$pandoc))
                               NULL
                             else
                               "html_document"

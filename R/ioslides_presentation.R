@@ -225,7 +225,7 @@ ioslides_presentation <- function(logo = NULL,
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
-    pandoc = pandoc_options(to = "html",
+    pandoc = pandoc_options(to = "html4",
                             from = from_rmarkdown(fig_caption, md_extensions),
                             args = args),
     keep_md = keep_md,
