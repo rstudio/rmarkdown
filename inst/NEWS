@@ -1,7 +1,9 @@
 rmarkdown 1.9 (unreleased)
 --------------------------------------------------------------------------------
 
+## BUG FIXES
 
+* Temporary files created in `render()` may be cleaned up prematurely, which can cause problems with Shiny R Markdown documents (#1184).
 
 rmarkdown 1.8
 --------------------------------------------------------------------------------

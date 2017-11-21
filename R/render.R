@@ -32,7 +32,14 @@ render <- function(input,
   init_render_context()
   on.exit(clear_render_context(), add = TRUE)
 
-  on.exit(clean_tmpfiles(), add = TRUE)
+  # render() may call itself, e.g., in discover_rmd_resources(); in this case,
+  # we should not clean up temp files in the nested render() call, but wait
+  # until the top-level render() exits to clean up temp files
+  .globals$level <- .globals$level + 1L  # increment level in a nested render()
+  on.exit({
+    .globals$level <- .globals$level - 1L
+    if (.globals$level == 0) clean_tmpfiles()
+  }, add = TRUE)
 
   # check for "all" output formats
   if (identical(output_format, "all")) {
@@ -843,5 +850,5 @@ resolve_df_print <- function(df_print) {
 # package level globals
 .globals <- new.env(parent = emptyenv())
 .globals$evaluated_global_chunks <- character()
-
+.globals$level <- 0L
 
