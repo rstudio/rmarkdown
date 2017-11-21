@@ -357,6 +357,7 @@ render <- function(input,
 
     # use filename based figure and cache directories
     base_pandoc_to <- gsub('[-+].*', '', pandoc_to)
+    if (base_pandoc_to == 'html4') base_pandoc_to <- 'html'
     figures_dir <- paste(files_dir, "/figure-", base_pandoc_to, "/", sep = "")
     knitr::opts_chunk$set(fig.path = figures_dir)
     cache_dir <- knitr_cache_dir(input, base_pandoc_to)
