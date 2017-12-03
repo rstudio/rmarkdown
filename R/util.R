@@ -314,6 +314,10 @@ escape_regex_metas <- function(in_str) {
 
 # call latexmk to compile tex to PDF; if not available, use a simple emulation
 latexmk <- function(file, engine, biblatex = FALSE) {
+  if (requireNamespace('tinytex')) {
+    make <- getFromNamespace('latexmk', 'tinytex')
+    return(make(file, engine, if (biblatex) 'biber' else 'bibtex'))
+  }
   if (!grepl('[.]tex$', file))
     stop("The input file '", file, "' does not appear to be a LaTeX document")
   engine <- find_latex_engine(engine)
