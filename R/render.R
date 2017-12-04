@@ -647,25 +647,21 @@ render <- function(input,
       status
     }
     texfile <- file_with_ext(output_file, "tex")
-    # compile Rmd to tex when we need to generate bibliography with natbib/biblatex
-    if (need_bibtex) {
-      convert(texfile)
-      # manually compile tex if PDF output is expected
+    # determine whether we need to run citeproc (based on whether we have
+    # references in the input)
+    run_citeproc <- citeproc_required(yaml_front_matter, input_lines)
+    # generate .tex if we want to keep the tex source
+    output_latex <- output_format$pandoc$keep_tex || knitr:::is_latex_output()
+    if (output_latex) {
+      convert(texfile, run_citeproc && !need_bibtex)
       if (grepl('[.]pdf$', output_file)) {
         latexmk(texfile, output_format$pandoc$latex_engine, '--biblatex' %in% output_format$pandoc$args)
         file.rename(file_with_ext(texfile, "pdf"), output_file)
+        # clean up the tex file if necessary
+        if (!output_format$pandoc$keep_tex) on.exit(unlink(texfile), add = TRUE)
       }
-      # clean up the tex file if necessary
-      if ((texfile != output_file) && !output_format$pandoc$keep_tex)
-        on.exit(unlink(texfile), add = TRUE)
     } else {
-      # determine whether we need to run citeproc (based on whether we
-      # have references in the input)
-      run_citeproc <- citeproc_required(yaml_front_matter, input_lines)
-      # generate .tex if we want to keep the tex source
-      if (texfile != output_file && output_format$pandoc$keep_tex)
-        convert(texfile, run_citeproc)
-      # run the main conversion if the output file is not .tex
+      # run the main conversion if the output format is not LaTeX
       convert(output_file, run_citeproc)
     }
 
