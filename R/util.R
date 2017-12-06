@@ -314,7 +314,7 @@ escape_regex_metas <- function(in_str) {
 
 # call latexmk to compile tex to PDF; if not available, use a simple emulation
 latexmk <- function(file, engine, biblatex = FALSE) {
-  if (requireNamespace('tinytex')) {
+  if (requireNamespace('tinytex', quietly = TRUE)) {
     make <- getFromNamespace('latexmk', 'tinytex')
     return(make(file, engine, if (biblatex) 'biber' else 'bibtex'))
   }
