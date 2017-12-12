@@ -199,6 +199,11 @@ render <- function(input,
   # read the yaml front matter
   yaml_front_matter <- parse_yaml_front_matter(input_lines)
 
+  # metadata to be attached to the returned value of render() as an attribute
+  old_output_metadata <- output_metadata$get()
+  on.exit(output_metadata$restore(old_output_metadata), add = TRUE)
+  output_metadata$restore(as.list(yaml_front_matter[['rmd_output_metadata']]))
+
   # if this is shiny_prerendered then modify the output format to
   # be single-page and to output dependencies to the shiny.dep file
   shiny_prerendered_dependencies <- list()
@@ -707,7 +712,11 @@ render <- function(input,
 
   if (run_pandoc) {
     # return the full path to the output file
-    invisible(tools::file_path_as_absolute(output_file))
+    output_file <- tools::file_path_as_absolute(output_file)
+    # attach the metadata specified as rmd_output_metadata in YAML
+    if (length(output_meta <- output_metadata$get()))
+      attr(output_file, 'rmd_output_metadata') <- output_meta
+    invisible(output_file)
   } else {
     # did not run pandoc; returns the markdown output with attributes of the
     # knitr meta data and intermediate files
@@ -853,3 +862,18 @@ resolve_df_print <- function(df_print) {
 .globals$evaluated_global_chunks <- character()
 .globals$level <- 0L
 
+
+#' The output metadata object
+#'
+#' This object provides a mechanism for users to attach metadata as an attribute
+#' (named \code{rmd_output_metadata}) of the returned value of
+#' \code{\link{render}()}. The initial value of the metadata comes from in the
+#' \code{rmd_output_metadata} field of the YAML frontmatter of an R Markdown
+#' document. The metadata can be queried via the
+#' \code{output_metadata$get()} method, and modified via the
+#' \code{output_metadata$set()} method.
+#' @format NULL
+#' @usage NULL
+#' @keywords NULL
+#' @export
+output_metadata = knitr:::new_defaults()
