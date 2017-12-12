@@ -6,13 +6,10 @@
 #' @export
 #' @return R Markdown output format to pass to \code{\link{render}}
 powerpoint_presentation <- function(
-  toc = FALSE, toc_depth = 3, fig_width = 5, fig_height = 4, fig_caption = TRUE,
-  df_print = "default", smart = TRUE,
-                          highlight = "default",
-                          reference_docx = "default",
-                          keep_md = FALSE,
-                          md_extensions = NULL,
-                          pandoc_args = NULL) {
+  fig_width = 5, fig_height = 4, fig_caption = TRUE,
+  df_print = 'default', smart = TRUE, keep_md = FALSE, md_extensions = NULL,
+  pandoc_args = NULL
+) {
 
   # TODO: increase the version to 2.0.5 after it is released (using 2.0.4
   # because Pandoc does not bump the devel version number)
@@ -30,14 +27,8 @@ powerpoint_presentation <- function(
   if (smart) md_extensions <- c(md_extensions, '+smart')
 
   # TODO: table of contents
-  if (toc) warning('TOC is not supported')
 
   # TODO: highlighting
-  if (!is.null(highlight)) {
-    highlight <- match.arg(highlight, highlighters())
-    warning('Syntax highlighting is not supported. Using highlight: null.')
-    args <- c(args, pandoc_highlight_args(highlight))
-  }
 
   # pandoc args
   args <- c(args, pandoc_args)
@@ -46,7 +37,7 @@ powerpoint_presentation <- function(
   output_format(
     knitr = knitr,
     pandoc = pandoc_options(
-      to = "pptx",
+      to = 'pptx',
       from = from_rmarkdown(fig_caption, md_extensions),
       args = args
     ),
