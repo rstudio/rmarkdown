@@ -7,6 +7,8 @@ rmarkdown 1.9 (unreleased)
 
 * Further improvements regarding compatibility with Pandoc 2.0, e.g. tabbed sections don't work.
 
+* When `preserve_yaml = TRUE` in `md_document()`, `toc = TRUE` fails to create the table of contents (thanks, @stla, #1216).
+
 rmarkdown 1.8
 --------------------------------------------------------------------------------
 

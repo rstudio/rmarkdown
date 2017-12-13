@@ -61,7 +61,7 @@ md_document <- function(variant = "markdown_strict",
                         pandoc_args = NULL) {
 
   # base pandoc options for all markdown output
-  args <- c(if (variant != "markdown" || !preserve_yaml) "--standalone")
+  args <- c(if (variant != "markdown" || preserve_yaml) "--standalone")
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
@@ -73,7 +73,7 @@ md_document <- function(variant = "markdown_strict",
   args <- c(args, pandoc_args)
 
   # add post_processor for yaml preservation
-  if (preserve_yaml) {
+  if (preserve_yaml && variant != 'markdown') {
     post_processor <- function(metadata, input_file, output_file, clean, verbose) {
       input_lines <- readLines(input_file, warn = FALSE)
       partitioned <- partition_yaml_front_matter(input_lines)
