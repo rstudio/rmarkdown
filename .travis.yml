@@ -13,3 +13,4 @@ env:
 
 before_install:
   - "[[ ${PANDOC_VERSION} = latest ]] && ./tools/install-pandoc.sh || true"
+  - tlmgr install units
