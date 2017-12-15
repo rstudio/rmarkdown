@@ -650,9 +650,11 @@ render <- function(input,
     # determine whether we need to run citeproc (based on whether we have
     # references in the input)
     run_citeproc <- citeproc_required(yaml_front_matter, input_lines)
-    # generate .tex if we want to keep the tex source
-    output_latex <- output_format$pandoc$keep_tex || knitr:::is_latex_output()
-    if (output_latex) {
+    # if the output format is LaTeX, first convert .md to .tex, and then convert
+    # .tex to .pdf via latexmk() if PDF output is requested (in rmarkdown <=
+    # v1.8, we used to call Pandoc to convert .md to .tex and .pdf separately)
+    if (output_format$pandoc$keep_tex || knitr:::is_latex_output()) {
+      # do not use pandoc-citeproc if needs to build bibliography
       convert(texfile, run_citeproc && !need_bibtex)
       # unless the output file has the extension .tex, we assume it is PDF
       if (!grepl('[.]tex$', output_file)) {
@@ -662,7 +664,6 @@ render <- function(input,
         if (!output_format$pandoc$keep_tex) on.exit(unlink(texfile), add = TRUE)
       }
     } else {
-      # run the main conversion if the output format is not LaTeX
       convert(output_file, run_citeproc)
     }
 
