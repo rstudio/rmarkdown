@@ -74,6 +74,7 @@ Imports:
     methods,
     stringr (>= 1.2.0)
 Suggests:
+    tinytex,
     shiny (>= 0.11),
     tufte,
     testthat,
