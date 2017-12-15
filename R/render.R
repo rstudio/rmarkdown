@@ -654,7 +654,8 @@ render <- function(input,
     output_latex <- output_format$pandoc$keep_tex || knitr:::is_latex_output()
     if (output_latex) {
       convert(texfile, run_citeproc && !need_bibtex)
-      if (grepl('[.]pdf$', output_file)) {
+      # unless the output file has the extension .tex, we assume it is PDF
+      if (!grepl('[.]tex$', output_file)) {
         latexmk(texfile, output_format$pandoc$latex_engine, '--biblatex' %in% output_format$pandoc$args)
         file.rename(file_with_ext(texfile, "pdf"), output_file)
         # clean up the tex file if necessary
