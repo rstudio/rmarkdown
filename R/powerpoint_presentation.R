@@ -1,6 +1,7 @@
 #' Convert to a PowerPoint presentation
 #'
-#' Format for converting from R Markdown to a PowerPoint presentation.
+#' Format for converting from R Markdown to a PowerPoint presentation. Pandoc
+#' v2.0.5 or above is required.
 #' @inheritParams pdf_document
 #' @inheritParams html_document
 #' @export
@@ -11,9 +12,8 @@ powerpoint_presentation <- function(
   pandoc_args = NULL
 ) {
 
-  # TODO: increase the version to 2.0.5 after it is released (using 2.0.4
-  # because Pandoc does not bump the devel version number)
-  pandoc_available('2.0.4', error = TRUE)
+  # PowerPoint has been supported since Pandoc 2.0.5
+  pandoc_available('2.0.5', error = TRUE)
 
   # knitr options and hooks
   knitr <- knitr_options(opts_chunk = list(
@@ -28,7 +28,7 @@ powerpoint_presentation <- function(
 
   # TODO: table of contents
 
-  # TODO: highlighting
+  # TODO: syntax highlighting
 
   # pandoc args
   args <- c(args, pandoc_args)

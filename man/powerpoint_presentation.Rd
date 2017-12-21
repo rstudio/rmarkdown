@@ -42,5 +42,6 @@ additional details.}
 R Markdown output format to pass to \code{\link{render}}
 }
 \description{
-Format for converting from R Markdown to a PowerPoint presentation.
+Format for converting from R Markdown to a PowerPoint presentation. Pandoc
+v2.0.5 or above is required.
 }
