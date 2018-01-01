@@ -81,6 +81,7 @@ Suggests:
     digest,
     tibble
 SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
-URL: http://rmarkdown.rstudio.com
+URL: http://rmarkdown.rstudio.com, https://github.com/rstudio/rmarkdown
+BugReports: https://github.com/rstudio/rmarkdown/issues
 License: GPL-3
 RoxygenNote: 6.0.1
