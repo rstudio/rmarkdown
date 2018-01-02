@@ -658,7 +658,7 @@ render <- function(input,
     # if the output format is LaTeX, first convert .md to .tex, and then convert
     # .tex to .pdf via latexmk() if PDF output is requested (in rmarkdown <=
     # v1.8, we used to call Pandoc to convert .md to .tex and .pdf separately)
-    if (output_format$pandoc$keep_tex || knitr:::is_latex_output()) {
+    if (output_format$pandoc$keep_tex || knitr::is_latex_output()) {
       # do not use pandoc-citeproc if needs to build bibliography
       convert(texfile, run_citeproc && !need_bibtex)
       # unless the output file has the extension .tex, we assume it is PDF
