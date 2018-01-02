@@ -1,9 +1,11 @@
 context("notebook")
 
-# expect that the default evaluate hook points to the evaluate package
+# expect that the default evaluate hook is restored after the notebook is
+# rendered and parsed
+hook_evaluate_get <- function() knitr::knit_hooks$get("evaluate")
+hook_evaluate <- hook_evaluate_get()
 expect_default_evaluate_hook <- function() {
-  evaluate <- knitr::knit_hooks$get("evaluate")
-  expect_identical(environment(evaluate), asNamespace("evaluate"))
+  expect_identical(hook_evaluate_get(), hook_evaluate)
 }
 
 test_that("an example R Notebook document can be rendered and parsed", {
