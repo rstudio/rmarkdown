@@ -194,6 +194,7 @@ params_get_control <- function(param) {
       date     = shiny::dateInput,
       datetime = shiny::textInput, # placeholder for future datetime picker
       text     = shiny::textInput,
+      password = shiny::passwordInput,
       file     = shiny::fileInput,
       radio    = shiny::radioButtons,
       select   = shiny::selectInput
