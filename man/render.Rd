@@ -64,7 +64,7 @@ render(input, output_format = NULL, output_file = NULL, output_dir = NULL,
 
   \item{run_pandoc}{Whether to run Pandoc to convert Markdown output.}
 
-  \item{quiet}{\code{TRUE} to supress printing of the
+  \item{quiet}{\code{TRUE} to suppress printing of the
   pandoc command line.}
 
   \item{encoding}{The encoding of the input file; see

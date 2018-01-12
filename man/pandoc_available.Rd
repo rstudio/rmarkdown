@@ -3,7 +3,7 @@
 \name{pandoc_available}
 \alias{pandoc_available}
 \alias{pandoc_version}
-\title{Check pandoc availabilty and version}
+\title{Check pandoc availability and version}
 \usage{
 pandoc_available(version = NULL, error = FALSE)
 
@@ -31,7 +31,7 @@ shipped with RStudio (its location is set via the environment variable
 \samp{RSTUDIO_PANDOC} by RStudio products like the RStudio IDE, RStudio
 Server, Shiny Server, and RStudio Connect, etc) are scanned for pandoc and
 the highest version available is used. Please do not modify the environment
-varaible \samp{RSTUDIO_PANDOC} unless you know what it means.
+variable \samp{RSTUDIO_PANDOC} unless you know what it means.
 }
 \examples{
 \dontrun{
@@ -41,6 +41,6 @@ if (pandoc_available())
   cat("pandoc", as.character(pandoc_version()), "is available!\\n")
 
 if (pandoc_available("1.12.3"))
-  cat("requried version of pandoc is available!\\n")
+  cat("required version of pandoc is available!\\n")
 }
 }

@@ -103,7 +103,7 @@ pandoc_convert <- function(input,
   invisible(NULL)
 }
 
-#' Check pandoc availabilty and version
+#' Check pandoc availability and version
 #'
 #' Determine whether pandoc is currently available on the system (optionally
 #' checking for a specific version or greater). Determine the specific version
@@ -124,7 +124,7 @@ pandoc_convert <- function(input,
 #' \samp{RSTUDIO_PANDOC} by RStudio products like the RStudio IDE, RStudio
 #' Server, Shiny Server, and RStudio Connect, etc) are scanned for pandoc and
 #' the highest version available is used. Please do not modify the environment
-#' varaible \samp{RSTUDIO_PANDOC} unless you know what it means.
+#' variable \samp{RSTUDIO_PANDOC} unless you know what it means.
 #'
 #' @examples
 #' \dontrun{
@@ -134,7 +134,7 @@ pandoc_convert <- function(input,
 #'   cat("pandoc", as.character(pandoc_version()), "is available!\n")
 #'
 #' if (pandoc_available("1.12.3"))
-#'   cat("requried version of pandoc is available!\n")
+#'   cat("required version of pandoc is available!\n")
 #' }
 #' @export
 pandoc_available <- function(version = NULL, error = FALSE) {
@@ -347,7 +347,7 @@ pandoc_template <- function(metadata, template, output, verbose = FALSE) {
 #' Create a self-contained HTML document using pandoc.
 #'
 #' Create a self-contained HTML document by base64 encoding images,
-#' scripts, and stylesheets referended by the input document.
+#' scripts, and stylesheets referred by the input document.
 #'
 #' @param input Input html file to create self-contained version of.
 #' @param output Path to save output.

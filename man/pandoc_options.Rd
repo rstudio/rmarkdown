@@ -23,7 +23,7 @@ pandoc_options(to, from = rmarkdown_format(), args = NULL,
 
 \item{ext}{File extension (e.g. ".tex") for output file (if \code{NULL}
 chooses default based on \code{to}). This is typically used to force
-the final output of a latex or beamer converstion to be \code{.tex}
+the final output of a latex or beamer conversion to be \code{.tex}
 rather than \code{.pdf}.}
 }
 \value{
