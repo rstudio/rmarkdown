@@ -30,9 +30,9 @@ output:
           </div>
           <div class="linkSection">
             <div class="linkSectionTitle">Cheat Sheets</div>
-            <a href="http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf">Cheat Sheet [PDF]</a>
+            <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">Cheat Sheet [PDF]</a>
             <div class="articleBlurb">Admiral of the Black fluke snow maroon parrel belay run a rig. Haul wind take a caulk interloper jack scuppers hulk coffer.</div>
-            <a href="http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">Reference Guide [PDF]</a>
+            <a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">Reference Guide [PDF]</a>
             <div class="articleBlurb">Lanyard dance the hempen jig pink fire ship Plate Fleet mutiny killick. League ahoy broadside gangway handsomely crack Jennys tea cup chandler.</div>
           </div>
           <div class="linkSection">
