@@ -208,13 +208,21 @@ params_get_control <- function(param) {
 
 # Returns true if the parameter can be configurable with Shiny UI elements.
 params_configurable <- function(param) {
-  if (is.null(params_get_control(param))) {
+  inputControlFn <- params_get_control(param)
+  if (is.null(inputControlFn)) {
     return(FALSE)                       # no Shiny control
   }
+  # Some inputs (like selectInput) support the selection of
+  # multiple entries through a "multiple" argument.
   multiple_ok <- (!is.null(param$multiple) && param$multiple)
   if (multiple_ok) {
     return(TRUE)
   }
+  # sliderInput supports either one or two-value inputs.
+  if (identical(inputControlFn, shiny::sliderInput)) {
+    return(length(param$value) <= 2)
+  }
+  # Other inputs only support singular values.
   return(length(param$value) <= 1)     # multiple values only when multi-input controls
 }
 
