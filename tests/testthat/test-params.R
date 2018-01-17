@@ -58,6 +58,57 @@ test_that("params render their UI", {
   expect_equal(ui, myobj)
 })
 
+test_that("parameters are configurable", {
+  # Unknown input types are not configurable.
+  expect_error(params_configurable(list(
+      input = "unsupported")))
+
+  # Numeric (and most other controls) do not support multiple values.
+  expect_true(params_configurable(list(
+      input = "numeric",
+      value = 42)))
+  expect_false(params_configurable(list(
+      input = "numeric",
+      value = c(13, 42))))
+
+  # Selectors permit multiple values if explicitly enabled.
+  expect_true(params_configurable(list(
+      input = "select",
+      choices = c(1, 2, 3, 4),
+      value = 2)))
+  expect_true(params_configurable(list(
+      input = "select",
+      multiple = TRUE,
+      choices = c(1, 2, 3, 4),
+      value = c(2, 4))))
+  expect_false(params_configurable(list(
+      input = "select",
+      multiple = FALSE,
+      choices = c(1, 2, 3, 4),
+      value = c(2, 4))))
+  expect_false(params_configurable(list(
+      input = "select",
+      choices = c(1, 2, 3, 4),
+      value = c(2, 4))))
+
+  # Sliders permit either one or two values (singular or double-ended slider).
+  expect_true(params_configurable(list(
+      input = "slider",
+      min = 1,
+      max = 100,
+      value = 50)))
+  expect_true(params_configurable(list(
+      input = "slider",
+      min = 1,
+      max = 100,
+      value = c(45, 55))))
+  expect_false(params_configurable(list(
+      input = "slider",
+      min = 1,
+      max = 100,
+      value = c(10, 20, 30))))
+})
+
 test_that("params hidden w/o show_default", {
 
   skip_on_cran()
