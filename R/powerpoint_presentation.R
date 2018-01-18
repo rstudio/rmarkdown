@@ -7,7 +7,7 @@
 #' @export
 #' @return R Markdown output format to pass to \code{\link{render}}
 powerpoint_presentation <- function(
-  fig_width = 5, fig_height = 4, fig_caption = TRUE,
+  toc = FALSE, fig_width = 5, fig_height = 4, fig_caption = TRUE,
   df_print = 'default', smart = TRUE, keep_md = FALSE, md_extensions = NULL,
   pandoc_args = NULL
 ) {
@@ -26,7 +26,8 @@ powerpoint_presentation <- function(
   # smart quotes, etc.
   if (smart) md_extensions <- c(md_extensions, '+smart')
 
-  # TODO: table of contents
+  # table of contents
+  if (toc) args <- c(args, '--toc')
 
   # TODO: syntax highlighting
 

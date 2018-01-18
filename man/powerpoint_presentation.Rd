@@ -4,11 +4,13 @@
 \alias{powerpoint_presentation}
 \title{Convert to a PowerPoint presentation}
 \usage{
-powerpoint_presentation(fig_width = 5, fig_height = 4, fig_caption = TRUE,
-  df_print = "default", smart = TRUE, keep_md = FALSE,
-  md_extensions = NULL, pandoc_args = NULL)
+powerpoint_presentation(toc = FALSE, fig_width = 5, fig_height = 4,
+  fig_caption = TRUE, df_print = "default", smart = TRUE,
+  keep_md = FALSE, md_extensions = NULL, pandoc_args = NULL)
 }
 \arguments{
+\item{toc}{\code{TRUE} to include a table of contents in the output}
+
 \item{fig_width}{Default width (in inches) for figures}
 
 \item{fig_height}{Default width (in inches) for figures}
