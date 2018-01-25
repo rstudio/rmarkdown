@@ -379,7 +379,12 @@ discover_rmd_resources <- function(rmd_file, encoding,
   # if this is an R Markdown file, purl the file to extract just the R code
   if (tolower(tools::file_ext(rmd_file)) == "rmd") {
     r_file <- tempfile(fileext = ".R")
-    on.exit(unlink(r_file), add = TRUE)
+    # suppress possible try() errors https://github.com/rstudio/rmarkdown/issues/1247
+    try_file <- tempfile()
+    opts <- options(try.outFile = try_file)
+    on.exit({
+      unlink(c(r_file, try_file)); options(opts)
+    }, add = TRUE)
     knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0,
                 encoding = "UTF-8")
     temp_files <- c(temp_files, r_file)

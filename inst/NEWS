@@ -17,6 +17,8 @@ rmarkdown 1.9 (unreleased)
 
 * When `preserve_yaml = TRUE` in `md_document()`, `toc = TRUE` fails to create the table of contents (thanks, @stla, #1216).
 
+* Suppress confusing error messages from `knitr::purl()` during `rmarkdown::find_external_resources()` (thanks, @aronatkins #1247, and @paulobrecht #1154).
+
 rmarkdown 1.8
 --------------------------------------------------------------------------------
 
