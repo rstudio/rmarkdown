@@ -217,8 +217,10 @@ validate_html_dependency <- function(list) {
   file <- list$src$file
   if (!is.null(list$package))
     file <- system.file(file, package = list$package)
-  if (!file.exists(file))
+  if (!file.exists(file)) {
+    str(list)
     stop("path for html_dependency not found: ", file, call. = FALSE)
+  }
 
   list
 }
