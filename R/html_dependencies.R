@@ -166,7 +166,7 @@ html_dependency_resolver <- function(all_dependencies) {
   dependencies <- htmltools::resolveDependencies(all_dependencies)
 
   # validate each surviving dependency
-  lapply(dependencies, validate_html_dependency)
+  dependencies <- lapply(dependencies, validate_html_dependency)
 
   # return the consolidated dependencies
   dependencies
@@ -212,6 +212,7 @@ validate_html_dependency <- function(list) {
     stop("name for html_dependency not provided", call. = FALSE)
   if (is.null(list$version))
     stop("version for html_dependency not provided", call. = FALSE)
+  list <- fix_html_dependency(list)
   if (is.null(list$src$file))
     stop("path for html_dependency not provided", call. = FALSE)
   file <- list$src$file
@@ -223,6 +224,14 @@ validate_html_dependency <- function(list) {
   }
 
   list
+}
+
+# monkey patch HTML dependencies; currently only supports highlight.js
+fix_html_dependency <- function(list) {
+  if (!identical(list$name, 'highlightjs') || !identical(list$version, '1.1'))
+    return(list)
+  if (!identical(list$src$file, '')) return(list)
+  html_dependency_highlightjs(gsub('[.]css$', '', list$stylesheet))
 }
 
 # check if the passed knit_meta has any (e.g. html/latex) dependencies

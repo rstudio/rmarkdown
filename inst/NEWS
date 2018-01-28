@@ -19,6 +19,8 @@ rmarkdown 1.9 (unreleased)
 
 * Suppress confusing error messages from `knitr::purl()` during `rmarkdown::find_external_resources()` (thanks, @aronatkins #1247, and @paulobrecht #1154).
 
+* Fixed the obscure error `Error: path for html_dependency not found:`, which was due to the HTML dependency of highlight.js (thanks, @bborgesr, #1213).
+
 rmarkdown 1.8
 --------------------------------------------------------------------------------
 
