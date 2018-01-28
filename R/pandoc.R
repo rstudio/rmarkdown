@@ -62,8 +62,10 @@ pandoc_convert <- function(input,
 
   # input file and formats
   args <- c(input)
-  if (!is.null(to))
+  if (!is.null(to)) {
+    if (to == 'html') to <- 'html4'
     args <- c(args, "--to", to)
+  }
   if (!is.null(from))
     args <- c(args, "--from", from)
 

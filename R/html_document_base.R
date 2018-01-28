@@ -172,7 +172,7 @@ html_document_base <- function(smart = TRUE,
 
   output_format(
     knitr = NULL,
-    pandoc = pandoc_options(to = "html4", from = NULL, args = args),
+    pandoc = pandoc_options(to = "html", from = NULL, args = args),
     keep_md = FALSE,
     clean_supporting = FALSE,
     pre_knit = pre_knit,

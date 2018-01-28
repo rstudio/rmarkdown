@@ -13,7 +13,7 @@ rmarkdown 1.9 (unreleased)
 
 * Temporary files created in `render()` may be cleaned up prematurely, which can cause problems with Shiny R Markdown documents (#1184).
 
-* Further improvements regarding compatibility with Pandoc 2.0, e.g. tabbed sections don't work.
+* Further improvements regarding compatibility with Pandoc 2.0, e.g. tabbed sections don't work (https://community.rstudio.com/t/3019).
 
 * When `preserve_yaml = TRUE` in `md_document()`, `toc = TRUE` fails to create the table of contents (thanks, @stla, #1216).
 
