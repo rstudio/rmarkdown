@@ -24,7 +24,7 @@ Note that parameterized reports are a new feature of R Markdown and therefore re
 install.packages(c("knitr", "rmarkdown"))
 ```
 
-## Declararing Parameters
+## Declaring Parameters
 
 ### YAML Params Field
 
