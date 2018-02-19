@@ -4,12 +4,13 @@
 #' v2.0.5 or above is required.
 #' @inheritParams pdf_document
 #' @inheritParams html_document
+#' @param reference_doc Path to a PowerPoint template.
 #' @export
 #' @return R Markdown output format to pass to \code{\link{render}}
 powerpoint_presentation <- function(
   toc = FALSE, fig_width = 5, fig_height = 4, fig_caption = TRUE,
   df_print = 'default', smart = TRUE, keep_md = FALSE, md_extensions = NULL,
-  pandoc_args = NULL
+  reference_doc = 'default', pandoc_args = NULL
 ) {
 
   # PowerPoint has been supported since Pandoc 2.0.5
@@ -28,6 +29,11 @@ powerpoint_presentation <- function(
 
   # table of contents
   if (toc) args <- c(args, '--toc')
+
+  # ppt template
+  if (!is.null(reference_doc) && !identical(reference_doc, 'default')) {
+    args <- c(args, '--reference-doc', pandoc_path_arg(reference_doc))
+  }
 
   # TODO: syntax highlighting
 
