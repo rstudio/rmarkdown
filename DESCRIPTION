@@ -63,7 +63,7 @@ Depends:
 Imports:
     tools,
     utils,
-    knitr (>= 1.14),
+    knitr (>= 1.18),
     yaml (>= 2.1.5),
     htmltools (>= 0.3.5),
     evaluate (>= 0.8),
