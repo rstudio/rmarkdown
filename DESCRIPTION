@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 1.8.10
+Version: 1.9
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -81,7 +81,7 @@ Suggests:
     digest,
     tibble
 SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
-URL: http://rmarkdown.rstudio.com, https://github.com/rstudio/rmarkdown
+URL: https://rmarkdown.rstudio.com, https://github.com/rstudio/rmarkdown
 BugReports: https://github.com/rstudio/rmarkdown/issues
 License: GPL-3
 RoxygenNote: 6.0.1
