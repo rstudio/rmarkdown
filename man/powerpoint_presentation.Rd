@@ -6,8 +6,8 @@
 \usage{
 powerpoint_presentation(toc = FALSE, fig_width = 5, fig_height = 4,
   fig_caption = TRUE, df_print = "default", smart = TRUE,
-  keep_md = FALSE, md_extensions = NULL, reference_doc = "default",
-  pandoc_args = NULL)
+  keep_md = FALSE, md_extensions = NULL, slide_level = NULL,
+  reference_doc = "default", pandoc_args = NULL)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -38,6 +38,12 @@ ellipses.}
 \item{md_extensions}{Markdown extensions to be added or removed from the
 default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
+
+\item{slide_level}{The heading level which defines individual slides. By
+default this is the highest header level in the hierarchy that is followed
+immediately by content, and not another header, somewhere in the document.
+This default can be overridden by specifying an explicit
+\code{slide_level}.}
 
 \item{reference_doc}{Path to a PowerPoint template.}
 
