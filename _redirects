@@ -1,3 +1,4 @@
 http://rmarkdown.rstudio.com/*   https://rmarkdown.rstudio.com/:splat  301!
 https://rmarkdown.netlify.com/*  https://rmarkdown.rstudio.com/:splat  301!
 http://rmarkdown.netlify.com/*   https://rmarkdown.rstudio.com/:splat  301!
+/flexdashboard    /flexdashboard/   301!
