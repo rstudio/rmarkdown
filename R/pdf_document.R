@@ -170,12 +170,19 @@ pdf_document <- function(toc = FALSE,
 
     args <- c()
 
-    # set the margin to 1 inch if no other geometry options specified
-    has_geometry <- function(text) {
-      length(grep("^geometry:.*$", text)) > 0
+    has_yaml_parameter <- function(text, parameter) {
+      length(grep(paste0("^", parameter, "\\s*:.*$"), text)) > 0
     }
-    if (!has_geometry(readLines(input_file, warn = FALSE)))
+
+    input_test <- readLines(input_file, warn = FALSE)
+
+    # set the margin to 1 inch if no other geometry options specified
+    if (!has_yaml_parameter(input_test, "geometry"))
       args <- c(args, "--variable", "geometry:margin=1in")
+
+    # use titling package to change title format to be more compact by default
+    if (!has_yaml_parameter(input_test, "compact-title"))
+      args <- c(args, "--variable", "compact-title:yes")
 
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
       extra_dependencies <- latex_dependencies(extra_dependencies)

@@ -16,6 +16,7 @@ Authors@R: c(
   person("Roy", "Storey", role = "ctb"),
   person("Rob", "Hyndman", role = "ctb", email = "Rob.Hyndman@monash.edu"),
   person("Ruben", "Arslan", role = "ctb", email = "ruben.arslan@uni-goettingen.de"),
+  person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
   person(family = "RStudio, Inc.", role = "cph"),
   person(family = "jQuery Foundation", role = "cph",
          comment = "jQuery library"),
