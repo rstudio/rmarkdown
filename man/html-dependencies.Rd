@@ -34,7 +34,7 @@ html_dependency_highlightjs(highlight)
 "simplex", or "yeti"). Pass \code{NULL} for no theme (in this case you can
 use the \code{css} parameter to add your own styles).}
 
-\item{highlight}{Highligher to use}
+\item{highlight}{Highlighter to use}
 }
 \description{
 These functions provide common HTML dependencies (e.g. jquery, bootstrap)

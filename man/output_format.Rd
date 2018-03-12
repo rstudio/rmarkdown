@@ -34,11 +34,11 @@ to the named methods you can also pass an arbitrary function to be used
 for printing data frames. You can disable the df_print behavior entirely
 by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 
-\item{pre_knit}{An optional function that runs before kniting which
+\item{pre_knit}{An optional function that runs before knitting which
 receives the \code{input} (input filename passed to \code{render}) and
 \code{...} (for future expansion) arguments.}
 
-\item{post_knit}{An optional function that runs after kniting which
+\item{post_knit}{An optional function that runs after knitting which
 receives the \code{metadata}, \code{input_file}, \code{runtime}, and \code{...}
 (for future expansion) arguments. This function can return additional
 arguments to pass to pandoc and can call \code{knitr::knit_meta_add}

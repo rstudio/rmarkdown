@@ -19,9 +19,9 @@ the document body.}
 \item{after_body}{One or more files with content to be included after the
 document body.}
 
-\item{includes}{Includes to convert to pandoc ars}
+\item{includes}{Includes to convert to pandoc args.}
 
-\item{filter}{Filter to pre-process includes with}
+\item{filter}{Filter to pre-process includes with.}
 }
 \value{
 Includes list or pandoc args

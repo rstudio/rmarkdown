@@ -238,7 +238,7 @@ html_notebook <- function(toc = FALSE,
 #' original R Markdown source document.
 #'
 #' @param path The path to an R Notebook file (with extension \code{.nb.html}).
-#' @param encoding The document's encoding (assumend \code{"UTF-8"} by default).
+#' @param encoding The document's encoding (assumed as \code{"UTF-8"} by default).
 #'
 #' @details For more details on the HTML file format produced by
 #'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_format.html}{http://rmarkdown.rstudio.com/r_notebook_format.html}.

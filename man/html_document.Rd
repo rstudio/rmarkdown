@@ -146,7 +146,7 @@ and Citations} article in the online documentation.
 
  The "_navbar.yml" file includes \code{title}, \code{type}, \code{left}, and
  \code{right} fields (to define menu items for the left and right of the navbar
- resspectively). Menu items include \code{title} and \code{href} fields. For example:
+ respectively). Menu items include \code{title} and \code{href} fields. For example:
 
  \preformatted{ title: "My Website"
  type: default

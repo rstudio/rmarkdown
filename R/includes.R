@@ -8,8 +8,8 @@
 #'   the document body.
 #' @param after_body One or more files with content to be included after the
 #'   document body.
-#' @param includes Includes to convert to pandoc ars
-#' @param filter Filter to pre-process includes with
+#' @param includes Includes to convert to pandoc args.
+#' @param filter Filter to pre-process includes with.
 #'
 #' @return Includes list or pandoc args
 #'
