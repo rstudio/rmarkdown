@@ -439,7 +439,28 @@ rmd_cached_output <- function(input, encoding) {
     cacheable <- TRUE
     output_key <- digest::digest(paste(input, file.info(input)[4]),
                                  algo = "md5", serialize = FALSE)
-    output_dest <- paste(file.path(dirname(tempdir()), "rmarkdown", output_key,
+
+    basetmp <- tempdir()
+
+    # On some machines, the TMP directory is /tmp and shared by all users.
+    # Caching data under /tmp/rmarkdown would mean that multiple users
+    # would try to access that same folder, which probably has permissions
+    # 700 by default. So namespace by username.
+    username <- Sys.info()[c("effective_user", "user", "login")]
+    username <- ifelse(username != "unknown", username, NA_character_)
+    username <- na.omit(username)
+    username <- head(username, 1)
+    if (length(username) == 1) {
+      if (!grepl("^[a-z0-9\\-\\_]+$", username, perl = TRUE, ignore.case = TRUE)) {
+        # If the user has anything remotely suspicious in their username, use a
+        # digest of the username instead, to prevent any possibility of jumping
+        # outside of the temp directory.
+        username <- substr(digest::digest(username, "md5"), 1, 12)
+      }
+      basetmp <- file.path(dirname(tempdir()), username)
+    }
+
+    output_dest <- paste(file.path(basetmp, "rmarkdown", output_key,
                                    paste("rmd", output_key, sep = "_")),
                          "html", sep = ".")
 
