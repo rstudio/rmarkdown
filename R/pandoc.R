@@ -662,4 +662,6 @@ find_pandoc_theme_variable <- function(args) {
 .pandoc$dir <- NULL
 .pandoc$version <- NULL
 
-pandoc2.0 <- function() pandoc_available("2.0")
+pandoc2.0 <- function() {
+  pandoc_available("2.0")
+}
