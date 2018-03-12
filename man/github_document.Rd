@@ -38,7 +38,7 @@ document (typically created using the \code{\link{includes}} function).}
 default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
-\item{hard_line_breaks}{\code{TRUE} to genreate markdown that uses a simple
+\item{hard_line_breaks}{\code{TRUE} to generate markdown that uses a simple
 newline to represent a line break (as opposed to two-spaces and a newline).}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
