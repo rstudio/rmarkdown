@@ -72,7 +72,7 @@ assumes you will include the output into an existing document (e.g. a blog
 post).
 }
 \details{
-See the \href{http://rmarkdown.rstudio.com/html_document_format.html}{online
+See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
 documentation} for additional details on using the \code{html_fragment}
 format.
 }

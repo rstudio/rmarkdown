@@ -74,7 +74,7 @@
 #'
 #'@details
 #'
-#'See the \href{http://rmarkdown.rstudio.com/html_document_format.html}{online
+#'See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
 #'documentation} for additional details on using the \code{html_document}
 #'format.
 #'
@@ -84,7 +84,7 @@
 #'
 #'R Markdown documents also support citations. You can find more information on
 #'the markdown syntax for citations in the
-#'\href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#'\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #'and Citations} article in the online documentation.
 #'
 #'

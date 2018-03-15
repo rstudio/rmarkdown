@@ -42,8 +42,7 @@ Template for creating a handout according to the style of
 Edward R. Tufte and Richard Feynman.
 }
 \details{
-See the
-\href{https://rmarkdown.rstudio.com/tufte_handout_format.html}{online
+See the \href{https://rmarkdown.rstudio.com/tufte_handout_format.html}{online
 documentation} for additional details.
 
 Creating Tufte handout output from R Markdown requires that LaTeX be installed.
@@ -54,6 +53,6 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 and Citations} article in the online documentation.
 }
