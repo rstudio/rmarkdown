@@ -234,12 +234,10 @@ and Citations} article in the online documentation.
 
 \examples{
 \dontrun{
-
 library(rmarkdown)
 
 render("input.Rmd", html_document())
 
 render("input.Rmd", html_document(toc = TRUE))
 }
-
 }

@@ -31,17 +31,15 @@ Specify additional content to be included within an output document.
 }
 \details{
 Non-absolute paths for resources referenced from the
-  \code{in_header}, \code{before_body}, and \code{after_body}
-  parameters are resolved relative to the directory of the input document.
+\code{in_header}, \code{before_body}, and \code{after_body}
+parameters are resolved relative to the directory of the input document.
 }
 \examples{
 \dontrun{
-
 library(rmarkdown)
 
 html_document(includes = includes(before_body = "header.htm"))
 
 pdf_document(includes = includes(after_body = "footer.tex"))
-
 }
 }

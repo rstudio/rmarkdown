@@ -72,15 +72,14 @@ An R Markdown output format definition that can be passed to
   \code{\link{render}}.
 }
 \description{
-Define an R Markdown output format based on a combination of knitr and pandoc
-options.
+Define an R Markdown output format based on a combination of
+knitr and pandoc options.
 }
 \examples{
 \dontrun{
 output_format(knitr = knitr_options(opts_chunk = list(dev = 'png')),
               pandoc = pandoc_options(to = "html"))
 }
-
 }
 \seealso{
 \link{render}, \link{knitr_options}, \link{pandoc_options}

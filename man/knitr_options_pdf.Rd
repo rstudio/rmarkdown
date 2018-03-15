@@ -21,7 +21,8 @@ An list that can be passed as the \code{knitr} argument of the
   \code{\link{output_format}} function.
 }
 \description{
-Define knitr options for an R Markdown output format that creates PDF output.
+Define knitr options for an R Markdown output format
+that creates PDF output.
 }
 \seealso{
 \link{knitr_options}, \link{output_format}

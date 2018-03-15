@@ -1,9 +1,20 @@
-#'Convert to an HTML document
+#' Convert to an HTML document
 #'
-#'Format for converting from R Markdown to an HTML document.
+#' Format for converting from R Markdown to an HTML document.
 #'
-#' @inheritParams output_format
+#' See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
+#' documentation} for additional details on using the \code{html_document}
+#' format.
 #'
+#' R Markdown documents can have optional metadata that is used to generate a
+#' document header that includes the title, author, and date. For more details
+#' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
+#'
+#' R Markdown documents also support citations. You can find more information on
+#' the markdown syntax for citations in the
+#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' and Citations} article in the online documentation.
+#'@inheritParams output_format
 #'@param toc \code{TRUE} to include a table of contents in the output
 #'@param toc_depth Depth of headers to include in table of contents
 #'@param toc_float \code{TRUE} to float the table of contents to the left of the
@@ -69,25 +80,7 @@
 #'@param pandoc_args Additional command line options to pass to pandoc
 #'@param extra_dependencies,... Additional function arguments to pass to the
 #'  base R Markdown HTML output formatter \code{\link{html_document_base}}
-#'
 #'@return R Markdown output format to pass to \code{\link{render}}
-#'
-#'@details
-#'
-#'See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
-#'documentation} for additional details on using the \code{html_document}
-#'format.
-#'
-#'R Markdown documents can have optional metadata that is used to generate a
-#'document header that includes the title, author, and date. For more details
-#'see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
-#'
-#'R Markdown documents also support citations. You can find more information on
-#'the markdown syntax for citations in the
-#'\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-#'and Citations} article in the online documentation.
-#'
-#'
 #'@section Navigation Bars:
 #'
 #'  If you have a set of html documents which you'd like to provide a common
@@ -179,15 +172,13 @@
 #'
 #' @examples
 #' \dontrun{
-#'
 #' library(rmarkdown)
 #'
 #' render("input.Rmd", html_document())
 #'
 #' render("input.Rmd", html_document(toc = TRUE))
 #' }
-#'
-#'@export
+#' @export
 html_document <- function(toc = FALSE,
                           toc_depth = 3,
                           toc_float = FALSE,
@@ -466,14 +457,15 @@ html_document <- function(toc = FALSE,
 #' HTML output.
 #'
 #' @inheritParams html_document
-#'
 #' @return An list that can be passed as the \code{knitr} argument of the
 #'   \code{\link{output_format}} function.
-#'
 #' @seealso \link{knitr_options}, \link{output_format}
-#'
 #' @export
-knitr_options_html <- function(fig_width, fig_height, fig_retina, keep_md, dev = 'png') {
+knitr_options_html <- function(fig_width,
+                               fig_height,
+                               fig_retina,
+                               keep_md,
+                               dev = 'png') {
 
   opts_chunk <- list(dev = dev,
                      dpi = 96,
@@ -559,7 +551,6 @@ navbar_html_from_yaml <- function(navbar_yaml) {
 #' @param navbar Navbar definition
 #' @param links List of navbar links
 #' @return Path to temporary file with navbar definition
-#'
 #' @keywords internal
 #' @export
 navbar_html <- function(navbar) {
@@ -594,6 +585,7 @@ navbar_links_html <- function(links) {
 }
 
 navbar_links_tags <- function(links) {
+
   if (!is.null(links)) {
     tags <- lapply(links, function(x) {
 
@@ -628,6 +620,7 @@ navbar_links_tags <- function(links) {
 }
 
 navbar_link_text <- function(x, ...) {
+
   if (!is.null(x$icon)) {
     # find the iconset
     split <- strsplit(x$icon, "-")

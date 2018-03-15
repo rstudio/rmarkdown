@@ -1,9 +1,12 @@
-
 #' Create a new document based on a template
 #'
 #' Create (and optionally edit) a draft of an R Markdown document based on a
 #' template.
 #'
+#' The \code{draft} function creates new R Markdown documents based on
+#' templates that are either located on the filesystem or within an R package.
+#' The template and it's supporting files will be copied to the location
+#' specified by \code{file}.
 #' @param file File name for the draft
 #' @param template Template to use as the basis for the draft. This is either
 #'   the full path to a template directory or the name of a template directory
@@ -13,14 +16,7 @@
 #'   (the "default" setting leaves this behavior up to the creator of the
 #'   template).
 #' @param edit \code{TRUE} to edit the template immediately
-#'
-#' @return The file name of the new document (invisibly)
-#'
-#' @details The \code{draft} function creates new R Markdown documents based on
-#'   templates that are either located on the filesystem or within an R package.
-#'   The template and it's supporting files will be copied to the location
-#'   specified by \code{file}.
-#'
+#' @return The file name of the new document (invisibly).
 #' @note An R Markdown template consists of a directory that contains a
 #'   description of the template, a skeleton Rmd file used as the basis for new
 #'   documents, and optionally additional supporting files that are provided
@@ -50,11 +46,8 @@
 #'
 #'   These files will automatically be copied to the directory containing the
 #'   new R Markdown draft.
-#'
-#'
 #' @examples
 #' \dontrun{
-#'
 #' rmarkdown::draft("Q4Report.Rmd",
 #'                  template="/opt/rmd/templates/quarterly_report")
 #'
@@ -85,6 +78,7 @@ draft <- function(file,
   if (!file.exists(template_yaml)) {
     stop("No template.yaml file found for template '", template, "'")
   }
+
   template_meta <- yaml_load_file_utf8(template_yaml)
   if (is.null(template_meta$name) || is.null(template_meta$description)) {
     stop("template.yaml must contain name and description fields")

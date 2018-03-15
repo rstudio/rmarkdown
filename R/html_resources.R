@@ -3,20 +3,17 @@
 #' Given an R Markdown document or HTML file, attempt to determine the set of
 #' additional files needed in order to render and display the document.
 #'
-#' @param input_file path to the R Markdown document or HTML file to process
-#' @param encoding the encoding of the document
+#' This routine applies heuristics in order to scan a document for
+#' possible resource references.
 #'
-#' @details This routine applies heuristics in order to scan a document for
-#'   possible resource references.
+#' In R Markdown documents, it looks for references to files implicitly
+#' referenced in Markdown (e.g. \code{![alt](img.png)}), in the document's
+#' YAML header, in raw HTML chunks, and as quoted strings in R code chunks
+#' (e.g. \code{read.csv("data.csv")}).
 #'
-#'   In R Markdown documents, it looks for references to files implicitly
-#'   referenced in Markdown (e.g. \code{![alt](img.png)}), in the document's
-#'   YAML header, in raw HTML chunks, and as quoted strings in R code chunks
-#'   (e.g. \code{read.csv("data.csv")}).
-#'
-#'   Resources specified explicitly in the YAML header for R Markdown documents
-#'   are also returned. To specify resources in YAML, use the
-#'   \code{resource_files} key:
+#' Resources specified explicitly in the YAML header for R Markdown
+#' documents are also returned. To specify resources in YAML, use the
+#' \code{resource_files} key:
 #'
 #'   \preformatted{---
 #'title: My Document
@@ -26,23 +23,24 @@
 #'  - images/figure.png
 #'---}
 #'
-#'   Each item in the \code{resource_files} list can refer to:
-#'   \enumerate{
-#'   \item A single file, such as \code{images/figure.png}, or
-#'   \item A directory, such as \code{resources/data}, in which case all of the
-#'     directory's content will be recursively included, or
-#'   \item A wildcard pattern, such as \code{data/*.csv}, in which case all of
-#'     the files matching the pattern will be included. No recursion is done in
-#'     this case.
-#'   }
+#' Each item in the \code{resource_files} list can refer to:
+#' \enumerate{
+#' \item A single file, such as \code{images/figure.png}, or
+#' \item A directory, such as \code{resources/data}, in which case all of the
+#'   directory's content will be recursively included, or
+#' \item A wildcard pattern, such as \code{data/*.csv}, in which case all of
+#'   the files matching the pattern will be included. No recursion is done in
+#'   this case.
+#' }
 #'
-#'   In HTML files (and raw HTML chunks in R Markdown documents), this routine
-#'   searches for resources specified in common tag attributes, such as
-#'   \code{<img src="...">}, \code{<link href="...">}, etc.
+#' In HTML files (and raw HTML chunks in R Markdown documents), this routine
+#' searches for resources specified in common tag attributes, such as
+#' \code{<img src="...">}, \code{<link href="...">}, etc.
 #'
-#'   In all cases, only resources that exist on disk and are contained in the
-#'   document's directory (or a child thereof) are returned.
-#'
+#' In all cases, only resources that exist on disk and are contained in the
+#' document's directory (or a child thereof) are returned.
+#' @param input_file path to the R Markdown document or HTML file to process
+#' @param encoding the encoding of the document
 #' @return A data frame with the following columns:
 #'   \describe{
 #'    \item{path}{The relative path from the document to the resource}
@@ -51,16 +49,17 @@
 #'    \item{web}{Whether the resource is needed to display a Web page rendered
 #'      from the document}
 #'   }
-#'
 #' @export
 find_external_resources <- function(input_file,
                                     encoding = getOption("encoding")) {
+
   # ensure we're working with valid input
   ext <- tolower(tools::file_ext(input_file))
   if (!(ext %in% c("md", "rmd", "html", "htm", "r", "css"))) {
     stop("Resource discovery is only supported for R Markdown files or HTML ",
          "files.")
   }
+
   if (!file.exists(input_file)) {
     stop("The input file file '", input_file, "' does not exist.")
   }
@@ -70,17 +69,23 @@ find_external_resources <- function(input_file,
     path = character(0),
     explicit = logical(0),
     web = logical(0))
+
   input_dir <- dirname(normalize_path(input_file))
 
   # discover a single resource--tests a string to see if it corresponds to a
   # resource on disk; if so, adds it to the list of known resources and returns
   # TRUE
-  discover_single_resource <- function(path, explicit, web) {
+  discover_single_resource <- function(path,
+                                       explicit,
+                                       web) {
+
     if (is.character(path) &&
         length(path) == 1 &&
         path != "." && path != ".." &&
         file.exists(file.path(input_dir, path))) {
+
       ext <- tolower(tools::file_ext(file.path(input_dir, path)))
+
       if (identical(ext, "r")) {
         # if this is a .R script, look for resources it contains, too
         discover_r_resources(file.path(input_dir, path),
@@ -95,6 +100,7 @@ find_external_resources <- function(input_file,
       if (!explicit && dir_exists(file.path(input_dir, path))) {
         return(FALSE)
       }
+
       # this looks valid; remember it
       discovered_resources <<- rbind(discovered_resources, data.frame(
         path = path,
@@ -179,8 +185,10 @@ discover_html_resources <- function(html_file, encoding,
 }
 
 # discovers resources in a single R Markdown document
-discover_rmd_resources <- function(rmd_file, encoding,
+discover_rmd_resources <- function(rmd_file,
+                                   encoding,
                                    discover_single_resource) {
+
   # create a UTF-8 encoded Markdown file to serve as the resource discovery
   # source
   md_file <- tempfile(fileext = ".md")
@@ -189,8 +197,8 @@ discover_rmd_resources <- function(rmd_file, encoding,
   rmd_content <- read_lines_utf8(rmd_file, encoding)
   writeLines(rmd_content, md_file, useBytes = TRUE)
 
-  # create a vector of temporary files; anything in here will be cleaned up on
-  # exit
+  # create a vector of temporary files; anything in here
+  # will be cleaned up on exit
   temp_files <- md_file
   on.exit(unlink(temp_files, recursive = TRUE), add = TRUE)
 
@@ -358,7 +366,9 @@ discover_rmd_resources <- function(rmd_file, encoding,
   # html_document to pick up dependencies
   output_format <- output_format_from_yaml_front_matter(rmd_content,
                                                         encoding = encoding)
+
   output_format_function <- eval(parse(text = output_format$name))
+
   override_output_format <- if (is_pandoc_to_html(output_format_function()$pandoc))
                               NULL
                             else
@@ -393,6 +403,7 @@ discover_rmd_resources <- function(rmd_file, encoding,
 }
 
 discover_r_resources <- function(r_file, discover_single_resource) {
+
   # read the lines from the R file
   r_lines <- readLines(r_file, warn = FALSE, encoding = "UTF-8")
 
@@ -418,8 +429,11 @@ discover_r_resources <- function(r_file, discover_single_resource) {
 # copies the external resources needed to render original_input into
 # intermediates_dir; with skip_web, skips web resources. returns a character
 # vector containing paths to all resources copied.
-copy_render_intermediates <- function(original_input, encoding,
-                                      intermediates_dir, skip_web) {
+copy_render_intermediates <- function(original_input,
+                                      encoding,
+                                      intermediates_dir,
+                                      skip_web) {
+
   # start with an empty set of intermediates
   intermediates <- c()
 
@@ -452,10 +466,16 @@ copy_render_intermediates <- function(original_input, encoding,
   intermediates
 }
 
-discover_css_resources <- function(css_file, discover_single_resource) {
+discover_css_resources <- function(css_file,
+                                   discover_single_resource) {
+
   css_lines <- readLines(css_file, warn = FALSE, encoding = "UTF-8")
 
-  discover_resource <- function(node, att, val, idx) {
+  discover_resource <- function(node,
+                                att,
+                                val,
+                                idx) {
+
     res_file <- utils::URLdecode(val)
     discover_single_resource(res_file, FALSE, TRUE)
   }
@@ -466,6 +486,7 @@ discover_css_resources <- function(css_file, discover_single_resource) {
 
 # given a filename, return true if the file appears to be a web file
 is_web_file <- function(filename) {
+
   tolower(tools::file_ext(filename)) %in% c(
     "css",
     "gif",
@@ -479,4 +500,3 @@ is_web_file <- function(filename) {
     "png",
     "wav")
 }
-

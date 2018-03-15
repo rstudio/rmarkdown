@@ -27,18 +27,18 @@ additional files needed in order to render and display the document.
 }
 \details{
 This routine applies heuristics in order to scan a document for
-  possible resource references.
+possible resource references.
 
-  In R Markdown documents, it looks for references to files implicitly
-  referenced in Markdown (e.g. \code{![alt](img.png)}), in the document's
-  YAML header, in raw HTML chunks, and as quoted strings in R code chunks
-  (e.g. \code{read.csv("data.csv")}).
+In R Markdown documents, it looks for references to files implicitly
+referenced in Markdown (e.g. \code{![alt](img.png)}), in the document's
+YAML header, in raw HTML chunks, and as quoted strings in R code chunks
+(e.g. \code{read.csv("data.csv")}).
 
-  Resources specified explicitly in the YAML header for R Markdown documents
-  are also returned. To specify resources in YAML, use the
-  \code{resource_files} key:
+Resources specified explicitly in the YAML header for R Markdown
+documents are also returned. To specify resources in YAML, use the
+\code{resource_files} key:
 
-  \preformatted{---
+\preformatted{---
 title: My Document
 author: My Name
 resource_files:
@@ -46,20 +46,20 @@ resource_files:
  - images/figure.png
 ---}
 
-  Each item in the \code{resource_files} list can refer to:
-  \enumerate{
-  \item A single file, such as \code{images/figure.png}, or
-  \item A directory, such as \code{resources/data}, in which case all of the
-    directory's content will be recursively included, or
-  \item A wildcard pattern, such as \code{data/*.csv}, in which case all of
-    the files matching the pattern will be included. No recursion is done in
-    this case.
-  }
+Each item in the \code{resource_files} list can refer to:
+\enumerate{
+\item A single file, such as \code{images/figure.png}, or
+\item A directory, such as \code{resources/data}, in which case all of the
+  directory's content will be recursively included, or
+\item A wildcard pattern, such as \code{data/*.csv}, in which case all of
+  the files matching the pattern will be included. No recursion is done in
+  this case.
+}
 
-  In HTML files (and raw HTML chunks in R Markdown documents), this routine
-  searches for resources specified in common tag attributes, such as
-  \code{<img src="...">}, \code{<link href="...">}, etc.
+In HTML files (and raw HTML chunks in R Markdown documents), this routine
+searches for resources specified in common tag attributes, such as
+\code{<img src="...">}, \code{<link href="...">}, etc.
 
-  In all cases, only resources that exist on disk and are contained in the
-  document's directory (or a child thereof) are returned.
+In all cases, only resources that exist on disk and are contained in the
+document's directory (or a child thereof) are returned.
 }

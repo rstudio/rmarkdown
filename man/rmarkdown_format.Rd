@@ -19,8 +19,8 @@ default definition of R Markdown.}
 Pandoc markdown format specification
 }
 \description{
-Compose a pandoc markdown input definition for R Markdown that can be
-passed as the \code{from} argument of \link{pandoc_options}.
+Compose a pandoc markdown input definition for R Markdown
+that can be passed as the \code{from} argument of \link{pandoc_options}.
 }
 \details{
 By default R Markdown is defined as all pandoc markdown extensions with
@@ -33,14 +33,13 @@ the following tweaks for backward compatibility with the markdown package
 \code{+tex_math_single_backslash} \cr
 }
 
-
-For more on pandoc markdown see the \href{http://pandoc.org/README.html}{pandoc online documentation}.
+For more on pandoc markdown see the
+\href{http://pandoc.org/README.html}{pandoc online documentation}.
 }
 \examples{
 \dontrun{
 rmarkdown_format("-implicit_figures")
 }
-
 }
 \seealso{
 \link{output_format}, \link{pandoc_options}
