@@ -77,12 +77,10 @@ and Citations} article in the online documentation.
 }
 \examples{
 \dontrun{
-
 library(rmarkdown)
 
 render("input.Rmd", md_document())
 
 render("input.Rmd", md_document(variant = "markdown_github"))
 }
-
 }

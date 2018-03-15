@@ -2,6 +2,36 @@
 #'
 #' Start a Shiny server for the given document, and render it for display.
 #'
+#' The \code{run} function runs a Shiny document by starting a Shiny
+#' server associated with the document. The \code{shiny_args} parameter can be
+#' used to configure the server; see the \code{\link[shiny:runApp]{runApp}}
+#' documentation for details.
+#'
+#' Once the server is started, the document will be rendered using
+#' \code{\link{render}}. The server will initiate a render of the document
+#' whenever necessary, so it is not necessary to call \code{run} every time
+#' the document changes: if \code{auto_reload} is \code{TRUE}, saving the
+#' document will trigger a render. You can also manually trigger a render by
+#' reloading the document in a Web browser.
+#'
+#' The server will render any R Markdown (\code{.Rmd}) document in \code{dir};
+#' the \code{file} argument specifies only the initial document to be
+#' rendered and viewed. You can therefore link to other documents in the
+#' directory using standard Markdown syntax, e.g.
+#' \code{[Analysis Page 2](page2.Rmd)}.
+#'
+#' If \code{default_file} is not specified, nor is a file specified on the
+#' URL, then the default document to serve at \code{/} is chosen from (in
+#' order of preference):
+#' \itemize{
+#'   \item{If \code{dir} contains only one \code{Rmd}, that \code{Rmd}.}
+#'   \item{The file \code{index.Rmd}, if it exists in \code{dir}}
+#'   \item{The file \code{index.html}, if it exists in \code{dir}}
+#' }
+#'
+#' If you wish to share R code between your documents, place it in a file
+#' named \code{global.R} in \code{dir}; it will be sourced into the global
+#' environment.
 #' @param file Path to the R Markdown document to launch in a web browser.
 #'   Defaults to \code{index.Rmd} in the current working directory, but may be
 #'   \code{NULL} to skip launching a browser.
@@ -13,40 +43,7 @@
 #'   Shiny application when the file currently being viewed is changed on disk.
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
 #' @param render_args Additional arguments to \code{\link{render}}.
-#'
 #' @return Invisible NULL.
-#'
-#' @details The \code{run} function runs a Shiny document by starting a Shiny
-#'   server associated with the document. The \code{shiny_args} parameter can be
-#'   used to configure the server; see the \code{\link[shiny:runApp]{runApp}}
-#'   documentation for details.
-#'
-#'   Once the server is started, the document will be rendered using
-#'   \code{\link{render}}. The server will initiate a render of the document
-#'   whenever necessary, so it is not necessary to call \code{run} every time
-#'   the document changes: if \code{auto_reload} is \code{TRUE}, saving the
-#'   document will trigger a render. You can also manually trigger a render by
-#'   reloading the document in a Web browser.
-#'
-#'   The server will render any R Markdown (\code{.Rmd}) document in \code{dir};
-#'   the \code{file} argument specifies only the initial document to be
-#'   rendered and viewed. You can therefore link to other documents in the
-#'   directory using standard Markdown syntax, e.g.
-#'   \code{[Analysis Page 2](page2.Rmd)}.
-#'
-#'   If \code{default_file} is not specified, nor is a file specified on the
-#'   URL, then the default document to serve at \code{/} is chosen from (in
-#'   order of preference):
-#'   \itemize{
-#'     \item{If \code{dir} contains only one \code{Rmd}, that \code{Rmd}.}
-#'     \item{The file \code{index.Rmd}, if it exists in \code{dir}}
-#'     \item{The file \code{index.html}, if it exists in \code{dir}}
-#'   }
-#'
-#'   If you wish to share R code between your documents, place it in a file
-#'   named \code{global.R} in \code{dir}; it will be sourced into the global
-#'   environment.
-#'
 #' @note Unlike \code{\link{render}}, \code{run} does not render the document to
 #'   a file on disk. In most cases a Web browser will be started automatically
 #'   to view the document; see \code{launch.browser} in the
@@ -56,20 +53,21 @@
 #'   R Markdown file to view in the URL (e.g.
 #'   \code{http://127.0.0.1:1234/foo.Rmd}). A URL without a filename will show
 #'   the \code{default_file} as described above.
-#'
 #' @examples
 #' \dontrun{
-#'
 #' # Run the Shiny document "index.Rmd" in the current directory
 #' rmarkdown::run()
 #'
 #' # Run the Shiny document "shiny_doc.Rmd" on port 8241
 #' rmarkdown::run("shiny_doc.Rmd", shiny_args = list(port = 8241))
-#'
 #' }
 #' @export
-run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
-                auto_reload = TRUE, shiny_args = NULL, render_args = NULL) {
+run <- function(file = "index.Rmd",
+                dir = dirname(file),
+                default_file = NULL,
+                auto_reload = TRUE,
+                shiny_args = NULL,
+                render_args = NULL) {
 
   # select the document to serve at the root URL if not user-specified. We exclude
   # documents which start with a leading underscore (same pattern is used to
@@ -522,17 +520,14 @@ file.path.ci <- function(dir, name) {
 #' In a Shiny document, evaluate the given expression after the document has
 #' finished rendering, instead of during render.
 #'
+#' This function is useful inside Shiny documents. It delays the
+#' evaluation of its argument until the document has finished its initial
+#' render, so that the document can be viewed before the calculation is
+#' finished.
+#'
+#' Any expression that returns HTML can be wrapped in \code{render_delayed}.
 #' @param expr The expression to evaluate.
-#'
 #' @return An object representing the expression.
-#'
-#' @details This function is useful inside Shiny documents. It delays the
-#'   evaluation of its argument until the document has finished its initial
-#'   render, so that the document can be viewed before the calculation is
-#'   finished.
-#'
-#'   Any expression that returns HTML can be wrapped in \code{render_delayed}.
-#'
 #' @note \code{expr} is evaluated in a \strong{copy} of the environment in which
 #'   the \code{render_delayed} call appears. Consequently, no side effects
 #'   created by \code{expr} are visible in succeeding expressions, nor are
@@ -540,10 +535,8 @@ file.path.ci <- function(dir, name) {
 #'   to \code{expr}.
 #'
 #'   \code{expr} must be an expression that produces HTML.
-#'
 #' @examples
 #' \dontrun{
-#'
 #' # Add the following code to an R Markdown document
 #'
 #' div(Sys.time())
@@ -555,9 +548,9 @@ file.path.ci <- function(dir, name) {
 #'
 #' div(Sys.time())
 #' }
-#'
 #' @export
 render_delayed <- function(expr) {
+
   # take a snapshot of the environment in which the expr should be rendered
   env <- parent.frame()
   env_snapshot <- new.env(parent = parent.env(env))
@@ -593,7 +586,9 @@ is_shiny_prerendered <- function(runtime) {
   identical(runtime, "shiny_prerendered")
 }
 
-write_shiny_deps <- function(files_dir, deps) {
+write_shiny_deps <- function(files_dir,
+                             deps) {
+
   if (!dir_exists(files_dir))
     dir.create(files_dir, recursive = TRUE)
   deps_file <- file.path(files_dir, "dependencies.json")
@@ -613,8 +608,7 @@ read_shiny_deps <- function(files_dir) {
 
     # return
     dependencies
-  }
-  else {
+  } else {
     list()
   }
 }

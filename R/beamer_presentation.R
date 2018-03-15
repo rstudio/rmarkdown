@@ -2,10 +2,23 @@
 #'
 #' Format for converting from R Markdown to a Beamer presentation.
 #'
+#' See the \href{https://rmarkdown.rstudio.com/beamer_presentation_format.html}{online
+#' documentation} for additional details on using the \code{beamer_presentation}
+#' format.
+#'
+#' Creating Beamer output from R Markdown requires that LaTeX be installed.
+#'
+#' R Markdown documents can have optional metadata that is used to generate a
+#' document header that includes the title, author, and date. For more details
+#' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
+#'
+#' R Markdown documents also support citations. You can find more information on
+#' the markdown syntax for citations in the
+#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' and Citations} article in the online documentation.
 #' @inheritParams output_format
 #' @inheritParams pdf_document
 #' @inheritParams html_document
-#'
 #' @param toc \code{TRUE} to include a table of contents in the output (only
 #'   level 1 headers will be included in the table of contents).
 #' @param slide_level The heading level which defines individual slides. By
@@ -23,27 +36,7 @@
 #' @param self_contained Whether to generate a full LaTeX document (\code{TRUE})
 #'   or just the body of a LaTeX document (\code{FALSE}). Note the LaTeX
 #'   document is an intermediate file unless \code{keep_tex = TRUE}.
-#'
 #' @return R Markdown output format to pass to \code{\link{render}}
-#'
-#' @details
-#'
-#' See the
-#' \href{http://rmarkdown.rstudio.com/beamer_presentation_format.html}{online
-#' documentation} for additional details on using the \code{beamer_presentation}
-#' format.
-#'
-#' Creating Beamer output from R Markdown requires that LaTeX be installed.
-#'
-#' R Markdown documents can have optional metadata that is used to generate a
-#' document header that includes the title, author, and date. For more details
-#' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
-#'
-#' R Markdown documents also support citations. You can find more information on
-#' the markdown syntax for citations in the
-#' \href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-#' and Citations} article in the online documentation.
-#'
 #' @examples
 #' \dontrun{
 #'
@@ -55,7 +48,6 @@
 #' # specify an option for incremental rendering
 #' render("pres.Rmd", beamer_presentation(incremental = TRUE))
 #' }
-#'
 #' @export
 beamer_presentation <- function(toc = FALSE,
                                 slide_level = NULL,

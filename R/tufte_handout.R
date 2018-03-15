@@ -1,12 +1,9 @@
-
 #' Tufte handout format (PDF)
 #'
 #' Template for creating a handout according to the style of
 #' Edward R. Tufte and Richard Feynman.
-#' @inheritParams pdf_document
-#' @details
-#' See the
-#' \href{https://rmarkdown.rstudio.com/tufte_handout_format.html}{online
+#'
+#' See the \href{https://rmarkdown.rstudio.com/tufte_handout_format.html}{online
 #' documentation} for additional details.
 #'
 #' Creating Tufte handout output from R Markdown requires that LaTeX be installed.
@@ -17,8 +14,9 @@
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
+#' @inheritParams pdf_document
 #' @export
 tufte_handout <- function(fig_width = 4,
                           fig_height = 2.5,

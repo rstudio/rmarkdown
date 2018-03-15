@@ -33,35 +33,35 @@ Start a Shiny server for the given document, and render it for display.
 }
 \details{
 The \code{run} function runs a Shiny document by starting a Shiny
-  server associated with the document. The \code{shiny_args} parameter can be
-  used to configure the server; see the \code{\link[shiny:runApp]{runApp}}
-  documentation for details.
+server associated with the document. The \code{shiny_args} parameter can be
+used to configure the server; see the \code{\link[shiny:runApp]{runApp}}
+documentation for details.
 
-  Once the server is started, the document will be rendered using
-  \code{\link{render}}. The server will initiate a render of the document
-  whenever necessary, so it is not necessary to call \code{run} every time
-  the document changes: if \code{auto_reload} is \code{TRUE}, saving the
-  document will trigger a render. You can also manually trigger a render by
-  reloading the document in a Web browser.
+Once the server is started, the document will be rendered using
+\code{\link{render}}. The server will initiate a render of the document
+whenever necessary, so it is not necessary to call \code{run} every time
+the document changes: if \code{auto_reload} is \code{TRUE}, saving the
+document will trigger a render. You can also manually trigger a render by
+reloading the document in a Web browser.
 
-  The server will render any R Markdown (\code{.Rmd}) document in \code{dir};
-  the \code{file} argument specifies only the initial document to be
-  rendered and viewed. You can therefore link to other documents in the
-  directory using standard Markdown syntax, e.g.
-  \code{[Analysis Page 2](page2.Rmd)}.
+The server will render any R Markdown (\code{.Rmd}) document in \code{dir};
+the \code{file} argument specifies only the initial document to be
+rendered and viewed. You can therefore link to other documents in the
+directory using standard Markdown syntax, e.g.
+\code{[Analysis Page 2](page2.Rmd)}.
 
-  If \code{default_file} is not specified, nor is a file specified on the
-  URL, then the default document to serve at \code{/} is chosen from (in
-  order of preference):
-  \itemize{
-    \item{If \code{dir} contains only one \code{Rmd}, that \code{Rmd}.}
-    \item{The file \code{index.Rmd}, if it exists in \code{dir}}
-    \item{The file \code{index.html}, if it exists in \code{dir}}
-  }
+If \code{default_file} is not specified, nor is a file specified on the
+URL, then the default document to serve at \code{/} is chosen from (in
+order of preference):
+\itemize{
+  \item{If \code{dir} contains only one \code{Rmd}, that \code{Rmd}.}
+  \item{The file \code{index.Rmd}, if it exists in \code{dir}}
+  \item{The file \code{index.html}, if it exists in \code{dir}}
+}
 
-  If you wish to share R code between your documents, place it in a file
-  named \code{global.R} in \code{dir}; it will be sourced into the global
-  environment.
+If you wish to share R code between your documents, place it in a file
+named \code{global.R} in \code{dir}; it will be sourced into the global
+environment.
 }
 \note{
 Unlike \code{\link{render}}, \code{run} does not render the document to
@@ -76,12 +76,10 @@ Unlike \code{\link{render}}, \code{run} does not render the document to
 }
 \examples{
 \dontrun{
-
 # Run the Shiny document "index.Rmd" in the current directory
 rmarkdown::run()
 
 # Run the Shiny document "shiny_doc.Rmd" on port 8241
 rmarkdown::run("shiny_doc.Rmd", shiny_args = list(port = 8241))
-
 }
 }

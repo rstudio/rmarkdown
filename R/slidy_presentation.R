@@ -1,12 +1,16 @@
-
 #' Convert to a slidy presentation
 #'
 #' Format for converting from R Markdown to a slidy presentation.
 #'
+#' See the \href{https://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
+#' documentation} for additional details on using the \code{slidy_presentation}
+#' format.
+#'
+#' For more information on markdown syntax for presentations see the
+#' \href{https://pandoc.org/README.html}{pandoc online documentation}.
 #' @inheritParams pdf_document
 #' @inheritParams html_document
 #' @inheritParams beamer_presentation
-#'
 #' @param duration Duration (in minutes) of the slide deck. This value is used
 #'   to add a countdown timer to the slide footer.
 #' @param footer Footer text (e.g. organization name and/or copyright)
@@ -15,22 +19,9 @@
 #'   using the 'S' (smaller) and 'B' (bigger) keys.
 #' @param ... Additional function arguments to pass to the base R Markdown HTML
 #'   output formatter \code{\link{html_document_base}}
-#'
 #' @return R Markdown output format to pass to \code{\link{render}}
-#'
-#' @details
-#'
-#' See the
-#' \href{http://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
-#' documentation} for additional details on using the \code{slidy_presentation}
-#' format.
-#'
-#' For more information on markdown syntax for presentations see the
-#' \href{http://pandoc.org/README.html}{pandoc online documentation}.
-#'
 #' @examples
 #' \dontrun{
-#'
 #' library(rmarkdown)
 #'
 #' # simple invocation
@@ -39,7 +30,6 @@
 #' # specify an option for incremental rendering
 #' render("pres.Rmd", slidy_presentation(incremental = TRUE))
 #' }
-#'
 #' @export
 slidy_presentation <- function(incremental = FALSE,
                                duration = NULL,
@@ -150,7 +140,6 @@ slidy_presentation <- function(incremental = FALSE,
                                      ...))
 }
 
-
 html_dependency_slidy <- function() {
   htmlDependency(
     name = "slidy",
@@ -160,4 +149,3 @@ html_dependency_slidy <- function() {
     stylesheet = "styles/slidy.css"
   )
 }
-

@@ -9,7 +9,7 @@ all_output_formats(input, encoding = getOption("encoding"))
 \arguments{
 \item{input}{Input file (Rmd or plain markdown)}
 
-\item{encoding}{The encoding of the input file; see \code{\link{file}}}
+\item{encoding}{The encoding of the input file; see \code{\link{file}}.}
 }
 \value{
 A character vector with the names of all output formats.

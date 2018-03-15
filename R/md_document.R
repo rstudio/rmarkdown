@@ -3,27 +3,6 @@
 #' Format for converting from R Markdown to another variant of markdown (e.g.
 #' strict markdown or github flavored markdown)
 #'
-#' @inheritParams html_document
-#'
-#' @param variant Markdown variant to produce (defaults to "markdown_strict").
-#'   Other valid values are "markdown_github", "markdown_mmd",
-#'   markdown_phpextra", or even "markdown" (which produces pandoc markdown).
-#'   You can also compose custom markdown variants, see the
-#'   \href{http://pandoc.org/README.html}{pandoc online documentation}
-#'   for details.
-#'
-#' @param preserve_yaml Preserve YAML front matter in final document.
-#'
-#' @param fig_retina Scaling to perform for retina displays. Defaults to
-#'   \code{NULL} which performs no scaling. A setting of 2 will work for all
-#'   widely used retina displays, but will also result in the output of
-#'   \code{<img>} tags rather than markdown images due to the need to set the
-#'   width of the image explicitly.
-#'
-#' @return R Markdown output format to pass to \code{\link{render}}
-#'
-#' @details
-#'
 #' See the \href{http://rmarkdown.rstudio.com/markdown_document_format.html}{online
 #' documentation} for additional details on using the \code{md_document} format.
 #'
@@ -35,17 +14,28 @@
 #' the markdown syntax for citations in the
 #' \href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
-#'
+#' @inheritParams html_document
+#' @param variant Markdown variant to produce (defaults to "markdown_strict").
+#'   Other valid values are "markdown_github", "markdown_mmd",
+#'   markdown_phpextra", or even "markdown" (which produces pandoc markdown).
+#'   You can also compose custom markdown variants, see the
+#'   \href{http://pandoc.org/README.html}{pandoc online documentation}
+#'   for details.
+#' @param preserve_yaml Preserve YAML front matter in final document.
+#' @param fig_retina Scaling to perform for retina displays. Defaults to
+#'   \code{NULL} which performs no scaling. A setting of 2 will work for all
+#'   widely used retina displays, but will also result in the output of
+#'   \code{<img>} tags rather than markdown images due to the need to set the
+#'   width of the image explicitly.
+#' @return R Markdown output format to pass to \code{\link{render}}
 #' @examples
 #' \dontrun{
-#'
 #' library(rmarkdown)
 #'
 #' render("input.Rmd", md_document())
 #'
 #' render("input.Rmd", md_document(variant = "markdown_github"))
 #' }
-#'
 #' @export
 md_document <- function(variant = "markdown_strict",
                         preserve_yaml = FALSE,

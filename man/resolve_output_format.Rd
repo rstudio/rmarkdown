@@ -16,7 +16,7 @@ the default format for the input file).}
 \item{output_options}{List of output options that should override the
 options specified in metadata.}
 
-\item{encoding}{The encoding of the input file; see \code{\link{file}}}
+\item{encoding}{The encoding of the input file; see \code{\link{file}}.}
 }
 \value{
 An R Markdown output format definition that can be passed to
