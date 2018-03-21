@@ -77,6 +77,9 @@ pandoc_convert <- function(input,
   # additional command line options
   args <- c(args, options)
 
+  # Use metadata variable `pagetitle` to satisfy a Pandoc 2.0+ requirement
+  if (pandoc2.0()) args <- c(args, c("--metadata", "pagetitle=PREVIEW"))
+
   # citeproc filter if requested
   if (citeproc) {
     args <- c(args, "--filter", pandoc_citeproc())
