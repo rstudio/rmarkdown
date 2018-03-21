@@ -376,7 +376,9 @@ discover_rmd_resources <- function(rmd_file,
 
   html_file <- render(input = md_file, output_file = html_file,
                       output_format = override_output_format,
-                      output_options = list(self_contained = FALSE),
+                      output_options = list(
+                        self_contained = FALSE,
+                        pandoc_args = c("--metadata", "pagetitle=PREVIEW")),
                       quiet = TRUE,
                       encoding = "UTF-8")
 
