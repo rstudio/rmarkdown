@@ -77,6 +77,9 @@ pandoc_convert <- function(input,
   # additional command line options
   args <- c(args, options)
 
+  # Use `--quiet` arg to squelch warnings from 2.0+ Pandoc
+  if (pandoc2.0()) args <- c(args, "--quiet")
+
   # citeproc filter if requested
   if (citeproc) {
     args <- c(args, "--filter", pandoc_citeproc())
