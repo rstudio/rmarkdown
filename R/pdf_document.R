@@ -125,6 +125,8 @@ pdf_document <- function(toc = FALSE,
 
   } else if (!is.null(template)) {
     args <- c(args, "--template", pandoc_path_arg(template))
+  } else {
+    args <- c(args, "--self-contained")
   }
 
   # numbered sections

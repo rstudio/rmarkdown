@@ -5,6 +5,8 @@ rmarkdown 1.10 (unreleased)
 
 * The **tinytex** package has become a required dependency (to build R Markdown to PDF).
 
+* `pdf_document(template = NULL)` does not work (#1295).
+
 rmarkdown 1.9
 --------------------------------------------------------------------------------
 
