@@ -184,6 +184,7 @@ The type of Shiny control used is controlled by the `input` field. The following
 | file  |  [fileInput](http://shiny.rstudio.com/reference/shiny/latest/fileInput.html)  |
 | radio  |  [radioButtons](http://shiny.rstudio.com/reference/shiny/latest/radioButtons.html)  |
 | select  |  [selectInput](http://shiny.rstudio.com/reference/shiny/latest/selectInput.html)  |
+| password  |  [passwordInput](http://shiny.rstudio.com/reference/shiny/latest/passwordInput.html)  |
 
 Note that attributes provided for parameters are automatically passed as arguments to the respective Shiny input functions listed above.
 
