@@ -365,7 +365,8 @@ render <- function(input,
     base_pandoc_to <- gsub('[-+].*', '', pandoc_to)
     if (base_pandoc_to == 'html4') base_pandoc_to <- 'html'
     # remove absolute path to wd from unpandoced files_dir path
-    loc_files_dir <- sub(paste0("^", files_dir_un, "/"), "", oldwd)
+    files_dir_un <- file.path(output_dir, knitr_files_dir(basename(output_file)))
+    loc_files_dir <- sub(paste0("^", oldwd, "/"), "", files_dir_un)
     # add path to figure-*/ directory
     figures_dir <- paste0(loc_files_dir, "/figure-", base_pandoc_to, "/")
     knitr::opts_chunk$set(fig.path = figures_dir)
