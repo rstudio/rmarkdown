@@ -9,7 +9,7 @@
 #' @export
 #' @return R Markdown output format to pass to \code{\link{render}}
 powerpoint_presentation <- function(
-  toc = FALSE, fig_width = 5, fig_height = 4, fig_caption = TRUE,
+  toc = FALSE, toc_depth = 2, fig_width = 5, fig_height = 4, fig_caption = TRUE,
   df_print = 'default', smart = TRUE, keep_md = FALSE, md_extensions = NULL,
   slide_level = NULL, reference_doc = 'default', pandoc_args = NULL
 ) {
@@ -29,7 +29,7 @@ powerpoint_presentation <- function(
   if (smart) md_extensions <- c(md_extensions, '+smart')
 
   # table of contents
-  if (toc) args <- c(args, '--toc')
+  args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # ppt template
   if (!is.null(reference_doc) && !identical(reference_doc, 'default')) {
