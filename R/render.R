@@ -663,7 +663,7 @@ render <- function(input,
       convert(texfile, run_citeproc && !need_bibtex)
       # unless the output file has the extension .tex, we assume it is PDF
       if (!grepl('[.]tex$', output_file)) {
-        latexmk(texfile, output_format$pandoc$latex_engine, '--biblatex' %in% output_format$pandoc$args)
+        latexmk(texfile, output_format$pandoc$pdf_engine, '--biblatex' %in% output_format$pandoc$args)
         file.rename(file_with_ext(texfile, "pdf"), output_file)
         # clean up the tex file if necessary
         if (!output_format$pandoc$keep_tex) on.exit(unlink(texfile), add = TRUE)

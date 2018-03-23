@@ -172,7 +172,7 @@ pandoc_version <- function() {
 #' @param toc \code{TRUE} to include a table of contents in the output.
 #' @param toc_depth Depth of headers to include in table of contents.
 #' @param highlight The name of a pandoc syntax highlighting theme.
-#' @param latex_engine LaTeX engine for producing PDF output. Options are
+#' @param pdf_engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", and "xelatex".
 #' @param default The highlighting theme to use if "default"
 #'   is specified.
@@ -186,7 +186,7 @@ pandoc_version <- function() {
 #'
 #' pancoc_highlight_args("kate")
 #'
-#' pandoc_latex_engine_args("pdflatex")
+#' pandoc_pdf_engine_args("pdflatex")
 #'
 #' pandoc_toc_args(toc = TRUE, toc_depth = 2)
 #' }
@@ -241,23 +241,23 @@ pandoc_highlight_args <- function(highlight,
 
 #' @rdname pandoc_args
 #' @export
-pandoc_latex_engine_args <- function(latex_engine) {
+pandoc_pdf_engine_args <- function(pdf_engine) {
 
   c(if (pandoc2.0()) "--pdf-engine" else "--latex-engine",
-    find_latex_engine(latex_engine))
+    find_pdf_engine(pdf_engine))
 }
 
 # For macOS, use a full path to the latex engine since the stripping
 # of the PATH environment variable by OSX 10.10 Yosemite prevents
 # pandoc from finding the engine in e.g. /usr/texbin
-find_latex_engine <- function(latex_engine) {
+find_pdf_engine <- function(pdf_engine) {
 
-  # do not need full path if latex_engine is available from PATH
-  if (!is_osx() || nzchar(Sys.which(latex_engine))) return(latex_engine)
+  # do not need full path if pdf_engine is available from PATH
+  if (!is_osx() || nzchar(Sys.which(pdf_engine))) return(pdf_engine)
   # resolve path if it's not already an absolute path
-  if (!grepl("/", latex_engine) && nzchar(path <- find_program(latex_engine)))
-    latex_engine <- path
-  latex_engine
+  if (!grepl("/", pdf_engine) && nzchar(path <- find_program(pdf_engine)))
+    pdf_engine <- path
+  pdf_engine
 }
 
 #' @rdname pandoc_args
