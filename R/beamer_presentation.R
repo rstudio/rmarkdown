@@ -64,7 +64,7 @@ beamer_presentation <- function(toc = FALSE,
                                 highlight = "default",
                                 template = "default",
                                 keep_tex = FALSE,
-                                latex_engine = "pdflatex",
+                                pdf_engine = "pdflatex",
                                 citation_package = c("none", "natbib", "biblatex"),
                                 self_contained = TRUE,
                                 includes = NULL,
@@ -107,8 +107,8 @@ beamer_presentation <- function(toc = FALSE,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
-  latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
-  args <- c(args, pandoc_latex_engine_args(latex_engine))
+  pdf_engine = match.arg(pdf_engine, c("pdflatex", "lualatex", "xelatex"))
+  args <- c(args, pandoc_pdf_engine_args(pdf_engine))
 
   # citation package
   citation_package <- match.arg(citation_package)
@@ -151,7 +151,7 @@ beamer_presentation <- function(toc = FALSE,
     pandoc = pandoc_options(to = "beamer",
                             from = from_rmarkdown(fig_caption, md_extensions),
                             args = args,
-                            latex_engine = latex_engine,
+                            pdf_engine = pdf_engine,
                             keep_tex = keep_tex),
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,

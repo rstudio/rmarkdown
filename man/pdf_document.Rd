@@ -10,7 +10,7 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   fig_width = 6.5, fig_height = 4.5, fig_crop = TRUE,
   fig_caption = TRUE, dev = "pdf", df_print = "default",
   highlight = "default", template = "default", keep_tex = FALSE,
-  latex_engine = "pdflatex", citation_package = c("none", "natbib",
+  pdf_engine = "pdflatex", citation_package = c("none", "natbib",
   "biblatex"), includes = NULL, md_extensions = NULL, pandoc_args = NULL,
   extra_dependencies = NULL)
 
@@ -60,7 +60,7 @@ for details on creating custom templates.}
 
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
 
-\item{latex_engine}{LaTeX engine for producing PDF output. Options are
+\item{pdf_engine}{LaTeX engine for producing PDF output. Options are
 "pdflatex", "lualatex", and "xelatex".}
 
 \item{citation_package}{The LaTeX package to process citations, \code{natbib}
@@ -124,7 +124,7 @@ Available metadata variables include:
    \item{\code{documentclass}}{LaTeX document class (e.g. article)}
    \item{\code{classoption}}{Option for \code{documentclass} (e.g. oneside); may be repeated}
    \item{\code{geometry}}{Options for geometry class (e.g. margin=1in); may be repeated}
-   \item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{latex_engine} option)}
+   \item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{pdf_engine} option)}
    \item{\code{linkcolor, urlcolor, citecolor}}{Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)}
    \item{\code{linestretch}}{Options for line spacing (e.g. 1, 1.5, 3)}
 }
@@ -137,7 +137,7 @@ library(rmarkdown)
 render("input.Rmd", pdf_document())
 
 # specify an option for latex engine
-render("input.Rmd", pdf_document(latex_engine = "lualatex"))
+render("input.Rmd", pdf_document(pdf_engine = "lualatex"))
 
 # add a table of contents and pass an option to pandoc
 render("input.Rmd", pdf_document(toc = TRUE, "--listings"))

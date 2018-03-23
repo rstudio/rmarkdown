@@ -5,7 +5,7 @@
 \alias{pandoc_variable_arg}
 \alias{pandoc_include_args}
 \alias{pandoc_highlight_args}
-\alias{pandoc_latex_engine_args}
+\alias{pandoc_pdf_engine_args}
 \alias{pandoc_toc_args}
 \title{Functions for generating pandoc command line arguments}
 \usage{
@@ -16,7 +16,7 @@ pandoc_include_args(in_header = NULL, before_body = NULL,
 
 pandoc_highlight_args(highlight, default = "tango")
 
-pandoc_latex_engine_args(latex_engine)
+pandoc_pdf_engine_args(pdf_engine)
 
 pandoc_toc_args(toc, toc_depth = 3)
 }
@@ -39,7 +39,7 @@ document body.}
 \item{default}{The highlighting theme to use if "default"
 is specified.}
 
-\item{latex_engine}{LaTeX engine for producing PDF output. Options are
+\item{pdf_engine}{LaTeX engine for producing PDF output. Options are
 "pdflatex", "lualatex", and "xelatex".}
 
 \item{toc}{\code{TRUE} to include a table of contents in the output.}
@@ -68,7 +68,7 @@ pandoc_include_args(before_body = "header.tex")
 
 pancoc_highlight_args("kate")
 
-pandoc_latex_engine_args("pdflatex")
+pandoc_pdf_engine_args("pdflatex")
 
 pandoc_toc_args(toc = TRUE, toc_depth = 2)
 }

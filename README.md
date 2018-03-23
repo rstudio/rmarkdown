@@ -135,7 +135,7 @@ As you'd expect, these functions can also be invoked as part of the call to `ren
 
 ```r
 render("input.Rmd", html_document(toc = TRUE))
-render("input.Rmd", pdf_document(latex_engine = "lualatex"))
+render("input.Rmd", pdf_document(pdf_engine = "lualatex"))
 render("input.Rmd", beamer_presentation(incremental = TRUE))
 ```
 

@@ -516,7 +516,7 @@ rmarkdown 0.8
 rmarkdown 0.7
 --------------------------------------------------------------------------------
 
-* Add latex_engine option to beamer_presentation format
+* Add pdf_engine option to beamer_presentation format
 
 * Ensure that when LANG=en_US pandoc receives en_US.UTF-8 (prevent hang)
 

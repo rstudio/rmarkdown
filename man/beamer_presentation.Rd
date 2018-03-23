@@ -8,7 +8,7 @@ beamer_presentation(toc = FALSE, slide_level = NULL, incremental = FALSE,
   fig_width = 10, fig_height = 7, fig_crop = TRUE, fig_caption = TRUE,
   dev = "pdf", df_print = "default", theme = "default",
   colortheme = "default", fonttheme = "default", highlight = "default",
-  template = "default", keep_tex = FALSE, latex_engine = "pdflatex",
+  template = "default", keep_tex = FALSE, pdf_engine = "pdflatex",
   citation_package = c("none", "natbib", "biblatex"), self_contained = TRUE,
   includes = NULL, md_extensions = NULL, pandoc_args = NULL)
 }
@@ -68,7 +68,7 @@ for details on creating custom templates.}
 
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
 
-\item{latex_engine}{LaTeX engine for producing PDF output. Options are
+\item{pdf_engine}{LaTeX engine for producing PDF output. Options are
 "pdflatex", "lualatex", and "xelatex".}
 
 \item{citation_package}{The LaTeX package to process citations, \code{natbib}

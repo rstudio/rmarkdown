@@ -35,7 +35,7 @@
 #'    \item{\code{documentclass}}{LaTeX document class (e.g. article)}
 #'    \item{\code{classoption}}{Option for \code{documentclass} (e.g. oneside); may be repeated}
 #'    \item{\code{geometry}}{Options for geometry class (e.g. margin=1in); may be repeated}
-#'    \item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{latex_engine} option)}
+#'    \item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{pdf_engine} option)}
 #'    \item{\code{linkcolor, urlcolor, citecolor}}{Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)}
 #'    \item{\code{linestretch}}{Options for line spacing (e.g. 1, 1.5, 3)}
 #' }
@@ -47,7 +47,7 @@
 #'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
 #'   "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.
 #' @param keep_tex Keep the intermediate tex file used in the conversion to PDF
-#' @param latex_engine LaTeX engine for producing PDF output. Options are
+#' @param pdf_engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", and "xelatex".
 #' @param citation_package The LaTeX package to process citations, \code{natbib}
 #'   or \code{biblatex}. Use \code{none} if neither package is to be used.
@@ -72,7 +72,7 @@
 #' render("input.Rmd", pdf_document())
 #'
 #' # specify an option for latex engine
-#' render("input.Rmd", pdf_document(latex_engine = "lualatex"))
+#' render("input.Rmd", pdf_document(pdf_engine = "lualatex"))
 #'
 #' # add a table of contents and pass an option to pandoc
 #' render("input.Rmd", pdf_document(toc = TRUE, "--listings"))
@@ -90,7 +90,7 @@ pdf_document <- function(toc = FALSE,
                          highlight = "default",
                          template = "default",
                          keep_tex = FALSE,
-                         latex_engine = "pdflatex",
+                         pdf_engine = "pdflatex",
                          citation_package = c("none", "natbib", "biblatex"),
                          includes = NULL,
                          md_extensions = NULL,
@@ -139,8 +139,8 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
-  latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
-  args <- c(args, pandoc_latex_engine_args(latex_engine))
+  pdf_engine = match.arg(pdf_engine, c("pdflatex", "lualatex", "xelatex"))
+  args <- c(args, pandoc_pdf_engine_args(pdf_engine))
 
   # citation package
   citation_package <- match.arg(citation_package)
@@ -209,7 +209,7 @@ pdf_document <- function(toc = FALSE,
     pandoc = pandoc_options(to = "latex",
                             from = from_rmarkdown(fig_caption, md_extensions),
                             args = args,
-                            latex_engine = latex_engine,
+                            pdf_engine = pdf_engine,
                             keep_tex = keep_tex),
     clean_supporting = !keep_tex,
     df_print = df_print,

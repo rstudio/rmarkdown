@@ -25,7 +25,7 @@ You can also specify a plain markdown file in which case knitting will be bypass
 Additional options can be specified along with the output format:
 
 \preformatted{render("input.Rmd", html_document(toc = TRUE))
-render("input.Rmd", pdf_document(latex_engine = "lualatex"))
+render("input.Rmd", pdf_document(pdf_engine = "lualatex"))
 render("input.Rmd", beamer_presentation(incremental = TRUE))
 }
 

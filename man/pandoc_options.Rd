@@ -5,7 +5,7 @@
 \title{Pandoc options for an output format}
 \usage{
 pandoc_options(to, from = rmarkdown_format(), args = NULL,
-  keep_tex = FALSE, latex_engine = c("pdflatex", "lualatex", "xelatex"),
+  keep_tex = FALSE, pdf_engine = c("pdflatex", "lualatex", "xelatex"),
   ext = NULL)
 }
 \arguments{
@@ -18,7 +18,7 @@ pandoc_options(to, from = rmarkdown_format(), args = NULL,
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF
 (applies only to 'latex' and 'beamer' target formats)}
 
-\item{latex_engine}{LaTeX engine to producing PDF output (applies only to
+\item{pdf_engine}{LaTeX engine to producing PDF output (applies only to
 'latex' and 'beamer' target formats)}
 
 \item{ext}{File extension (e.g. ".tex") for output file (if \code{NULL}
