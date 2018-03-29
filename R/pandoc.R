@@ -288,8 +288,7 @@ pandoc_toc_args <- function(toc,
 #'   backslashes on Windows.
 #' @return Transformed path that can be passed to pandoc on the command line.
 #' @export
-pandoc_path_arg <- function(path,
-                            backslash = TRUE) {
+pandoc_path_arg <- function(path, backslash = TRUE) {
 
   path <- path.expand(path)
 
