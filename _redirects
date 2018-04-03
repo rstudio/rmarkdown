@@ -2,3 +2,15 @@ http://rmarkdown.rstudio.com/*   https://rmarkdown.rstudio.com/:splat  301!
 https://rmarkdown.netlify.com/*  https://rmarkdown.rstudio.com/:splat  301!
 http://rmarkdown.netlify.com/*   https://rmarkdown.rstudio.com/:splat  301!
 /flexdashboard    /flexdashboard/   301!
+
+/r_notebooks.html  https://bookdown.org/yihui/rmarkdown/notebook.html  301!
+/html_document_format.html https://bookdown.org/yihui/rmarkdown/html-document.html  301!
+/pdf_document_format.html  https://bookdown.org/yihui/rmarkdown/pdf-document.html  301!
+/word_document_format.html https://bookdown.org/yihui/rmarkdown/word-document.html  301!
+/odt_document_format.html  https://bookdown.org/yihui/rmarkdown/opendocument-text-document.html  301!
+/rtf_document_format.html  https://bookdown.org/yihui/rmarkdown/rich-text-format-document.html  301!
+/markdown_document_format.html https://bookdown.org/yihui/rmarkdown/markdown-document.html  301!
+/ioslides_presentation_format.html  https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html  301!
+/slidy_presentation_format.html https://bookdown.org/yihui/rmarkdown/slidy-presentation.html  301!
+/beamer_presentation_format.html  https://bookdown.org/yihui/rmarkdown/beamer-presentation.html  301!
+/package_vignette_format.html  https://bookdown.org/yihui/rmarkdown/r-package-vignette.html  301!
