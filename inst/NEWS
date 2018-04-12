@@ -5,7 +5,7 @@ rmarkdown 1.10 (unreleased)
 
 * The **tinytex** package has become a required dependency (to build R Markdown to PDF).
 
-* Added `compact-title` variable to the LaTeX default templates to control use of LaTeX `titling` package; defaults to `true`.
+* Added `compact-title` variable to the LaTeX default templates to control use of LaTeX `titling` package; defaults to `true` (#1284).
 
 * `pdf_document(template = NULL)` does not work (#1295).
 
