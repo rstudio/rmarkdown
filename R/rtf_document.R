@@ -2,15 +2,7 @@
 #'
 #' Format for converting from R Markdown to an RTF document.
 #'
-#' @inheritParams pdf_document
-#' @inheritParams html_document
-#' @inheritParams word_document
-#'
-#' @return R Markdown output format to pass to \code{\link{render}}
-#'
-#' @details
-#'
-#' See the \href{http://rmarkdown.rstudio.com/rtf_document_format.html}{online
+#' See the \href{https://rmarkdown.rstudio.com/rtf_document_format.html}{online
 #' documentation} for additional details on using the \code{rtf_document} format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
@@ -19,9 +11,12 @@
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
-#'
+#' @inheritParams pdf_document
+#' @inheritParams html_document
+#' @inheritParams word_document
+#' @return R Markdown output format to pass to \code{\link{render}}
 #' @examples
 #' \dontrun{
 #'
@@ -33,7 +28,6 @@
 #' # specify table of contents option
 #' render("input.Rmd", rtf_document(toc = TRUE))
 #' }
-#'
 #' @export
 rtf_document <- function(toc = FALSE,
                          toc_depth = 3,
@@ -62,22 +56,13 @@ rtf_document <- function(toc = FALSE,
 
   preserved_chunks <- character()
 
-  check_knitr_version <- function() {
-    if (packageVersion('knitr') < '1.15') {
-      warning('You need to install a newer version of the knitr package')
-      FALSE
-    } else TRUE
-  }
-
   pre_processor <- function(metadata, input_file, runtime, knit_meta,
                              files_dir, output_dir) {
-    if (!check_knitr_version()) return()
     preserved_chunks <<- extract_preserve_chunks(input_file, knitr::extract_raw_output)
     NULL
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
-    if (!check_knitr_version()) return(output_file)
     output_str <- readLines(output_file, encoding = 'UTF-8')
     output_res <- knitr::restore_raw_output(output_str, preserved_chunks)
     if (!identical(output_str, output_res))

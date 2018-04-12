@@ -19,9 +19,9 @@ the document body.}
 \item{after_body}{One or more files with content to be included after the
 document body.}
 
-\item{includes}{Includes to convert to pandoc ars}
+\item{includes}{Includes to convert to pandoc args.}
 
-\item{filter}{Filter to pre-process includes with}
+\item{filter}{Filter to pre-process includes with.}
 }
 \value{
 Includes list or pandoc args
@@ -31,17 +31,15 @@ Specify additional content to be included within an output document.
 }
 \details{
 Non-absolute paths for resources referenced from the
-  \code{in_header}, \code{before_body}, and \code{after_body}
-  parameters are resolved relative to the directory of the input document.
+\code{in_header}, \code{before_body}, and \code{after_body}
+parameters are resolved relative to the directory of the input document.
 }
 \examples{
 \dontrun{
-
 library(rmarkdown)
 
 html_document(includes = includes(before_body = "header.htm"))
 
 pdf_document(includes = includes(after_body = "footer.tex"))
-
 }
 }

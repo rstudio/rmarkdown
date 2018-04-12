@@ -273,7 +273,7 @@ html_dependency_pagedtable <- function() {
 
 
 
-#' @param highlight Highligher to use
+#' @param highlight Highlighter to use
 #' @rdname html-dependencies
 #' @export
 html_dependency_highlightjs <- function(highlight) {

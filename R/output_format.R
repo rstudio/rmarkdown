@@ -1,8 +1,7 @@
 #' Define an R Markdown output format
 #'
-#' Define an R Markdown output format based on a combination of knitr and pandoc
-#' options.
-#'
+#' Define an R Markdown output format based on a combination of
+#' knitr and pandoc options.
 #' @param knitr Knitr options for an output format (see
 #'   \code{\link{knitr_options}})
 #' @param pandoc Pandoc options for an output format (see
@@ -22,10 +21,10 @@
 #'   to the named methods you can also pass an arbitrary function to be used
 #'   for printing data frames. You can disable the df_print behavior entirely
 #'   by setting the option \code{rmarkdown.df_print} to \code{FALSE}.
-#' @param pre_knit An optional function that runs before kniting which
+#' @param pre_knit An optional function that runs before knitting which
 #'   receives the \code{input} (input filename passed to \code{render}) and
 #'   \code{...} (for future expansion) arguments.
-#' @param post_knit An optional function that runs after kniting which
+#' @param post_knit An optional function that runs after knitting which
 #'   receives the \code{metadata}, \code{input_file}, \code{runtime}, and \code{...}
 #'   (for future expansion) arguments. This function can return additional
 #'   arguments to pass to pandoc and can call \code{knitr::knit_meta_add}
@@ -48,18 +47,14 @@
 #' @param on_exit A function to call when \code{rmarkdown::render()} finishes
 #'   execution (as registered with a \code{\link{on.exit}} handler).
 #' @param base_format An optional format to extend.
-#'
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
-#'
 #' @seealso \link{render}, \link{knitr_options}, \link{pandoc_options}
-#'
 #' @examples
 #' \dontrun{
 #' output_format(knitr = knitr_options(opts_chunk = list(dev = 'png')),
 #'               pandoc = pandoc_options(to = "html"))
 #' }
-#'
 #' @export
 output_format <- function(knitr,
                           pandoc,
@@ -98,7 +93,9 @@ output_format <- function(knitr,
 }
 
 # merges two scalar values; picks the overlay if non-NULL and then the base
-merge_scalar <- function(base, overlay) {
+merge_scalar <- function(base,
+                         overlay) {
+
   if (is.null(base) && is.null(overlay))
     NULL
   else if (is.null(overlay))
@@ -109,7 +106,10 @@ merge_scalar <- function(base, overlay) {
 
 # merges two functions: if both are non-NULL, produces a new function that
 # invokes each and then uses the supplied operation to combine their outputs
-merge_function_outputs <- function(base, overlay, op) {
+merge_function_outputs <- function(base,
+                                   overlay,
+                                   op) {
+
   if (!is.null(base) && !is.null(overlay)) {
     function(...) {
       op(base(...), overlay(...))
@@ -121,7 +121,9 @@ merge_function_outputs <- function(base, overlay, op) {
 
 # merges two post-processors; if both are non-NULL, produces a new function that
 # calls the overlay post-processor and then the base post-processor.
-merge_post_processors <- function(base, overlay) {
+merge_post_processors <- function(base,
+                                  overlay) {
+
   if (!is.null(base) && !is.null(overlay)) {
     function(metadata, input_file, output_file, ...) {
       output_file <- overlay(metadata, input_file, output_file, ...)
@@ -134,7 +136,9 @@ merge_post_processors <- function(base, overlay) {
 }
 
 # merges two output formats
-merge_output_formats <- function(base, overlay)  {
+merge_output_formats <- function(base,
+                                 overlay) {
+
   structure(list(
     knitr = merge_lists(base$knitr, overlay$knitr),
     pandoc = merge_pandoc_options(base$pandoc, overlay$pandoc),
@@ -160,14 +164,18 @@ merge_output_formats <- function(base, overlay)  {
   ), class = "rmarkdown_output_format")
 }
 
-merge_on_exit <- function(base, overlay) {
+merge_on_exit <- function(base,
+                          overlay) {
+
   function() {
     if (is.function(base)) base()
     if (is.function(overlay)) overlay()
   }
 }
 
-merge_pandoc_options <- function(base, overlay) {
+merge_pandoc_options <- function(base,
+                                 overlay) {
+
   res <- merge_lists(base, overlay, recursive = FALSE)
   res$args <- c(base$args, overlay$args)
   res
@@ -176,7 +184,6 @@ merge_pandoc_options <- function(base, overlay) {
 #' Knitr options for an output format
 #'
 #' Define the knitr options for an R Markdown output format.
-#'
 #' @param opts_knit List of package level knitr options (see
 #'   \code{\link[knitr:opts_knit]{opts_knit}})
 #' @param opts_chunk List of chunk level knitr options (see
@@ -187,18 +194,16 @@ merge_pandoc_options <- function(base, overlay) {
 #'   (see \code{\link[knitr:opts_hooks]{opts_hooks}})
 #' @param opts_template List of templates for chunk level knitr options (see
 #'   \code{\link[knitr:opts_template]{opts_template}})
-#'
-#' @return An list that can be passed as the \code{knitr} argument of the
-#'   \code{\link{output_format}} function.
-#'
+#' @return An list that can be passed as the \code{knitr} argument
+#'   of the \code{\link{output_format}} function.
 #' @seealso \link{output_format}
-#'
 #' @export
 knitr_options <- function(opts_knit = NULL,
                           opts_chunk = NULL,
                           knit_hooks = NULL,
                           opts_hooks = NULL,
                           opts_template = NULL) {
+
   list(opts_knit = opts_knit,
        opts_chunk = opts_chunk,
        knit_hooks = knit_hooks,
@@ -208,18 +213,18 @@ knitr_options <- function(opts_knit = NULL,
 
 #' Knitr options for a PDF output format
 #'
-#' Define knitr options for an R Markdown output format that creates PDF output.
-#'
+#' Define knitr options for an R Markdown output format
+#' that creates PDF output.
 #' @inheritParams html_document
 #' @inheritParams pdf_document
-#'
 #' @return An list that can be passed as the \code{knitr} argument of the
 #'   \code{\link{output_format}} function.
-#'
 #' @seealso \link{knitr_options}, \link{output_format}
-#'
 #' @export
-knitr_options_pdf <- function(fig_width, fig_height, fig_crop, dev = 'pdf') {
+knitr_options_pdf <- function(fig_width,
+                              fig_height,
+                              fig_crop,
+                              dev = 'pdf') {
 
   # default options
   opts_knit <- NULL
@@ -251,6 +256,9 @@ knitr_options_pdf <- function(fig_width, fig_height, fig_crop, dev = 'pdf') {
 #'
 #' Define the pandoc options for an R Markdown output format.
 #'
+#' The \code{from} argument should be used very cautiously as it's
+#' important for users to be able to rely on a stable definition of supported
+#' markdown extensions.
 #' @param to Pandoc format to convert to
 #' @param from Pandoc format to convert from
 #' @param args Character vector of command line arguments to pass to pandoc
@@ -262,16 +270,9 @@ knitr_options_pdf <- function(fig_width, fig_height, fig_crop, dev = 'pdf') {
 #'   chooses default based on \code{to}). This is typically used to force
 #'   the final output of a latex or beamer conversion to be \code{.tex}
 #'   rather than \code{.pdf}.
-#'
 #' @return An list that can be passed as the \code{pandoc} argument of the
 #'   \code{\link{output_format}} function.
-#'
-#' @details The \code{from} argument should be used very cautiously as it's
-#'   important for users to be able to rely on a stable definition of supported
-#'   markdown extensions.
-#'
 #' @seealso \link{output_format}, \link{rmarkdown_format}
-#'
 #' @export
 pandoc_options <- function(to,
                            from = rmarkdown_format(),
@@ -289,17 +290,8 @@ pandoc_options <- function(to,
 
 #' R Markdown input format definition
 #'
-#' Compose a pandoc markdown input definition for R Markdown that can be
-#' passed as the \code{from} argument of \link{pandoc_options}.
-#'
-#'
-#' @param implicit_figures Automatically make figures from images (defaults to \code{TRUE}).
-#' @param extensions Markdown extensions to be added or removed from the
-#' default definition of R Markdown.
-#'
-#' @return Pandoc markdown format specification
-#'
-#' @details
+#' Compose a pandoc markdown input definition for R Markdown
+#' that can be passed as the \code{from} argument of \link{pandoc_options}.
 #'
 #' By default R Markdown is defined as all pandoc markdown extensions with
 #' the following tweaks for backward compatibility with the markdown package
@@ -311,16 +303,17 @@ pandoc_options <- function(to,
 #' \code{+tex_math_single_backslash} \cr
 #' }
 #'
-#'
-#' For more on pandoc markdown see the \href{http://pandoc.org/README.html}{pandoc online documentation}.
-#'
+#' For more on pandoc markdown see the
+#' \href{http://pandoc.org/README.html}{pandoc online documentation}.
+#' @param implicit_figures Automatically make figures from images (defaults to \code{TRUE}).
+#' @param extensions Markdown extensions to be added or removed from the
+#' default definition of R Markdown.
+#' @return Pandoc markdown format specification
 #' @examples
 #' \dontrun{
 #' rmarkdown_format("-implicit_figures")
 #' }
-#'
 #' @seealso \link{output_format}, \link{pandoc_options}
-#'
 #' @export
 rmarkdown_format <- function(extensions = NULL) {
 
@@ -353,22 +346,18 @@ smart_extension <- function(smart, extension) {
 #' document and return the output format that will be generated by
 #' a call to \code{\link{render}}.
 #'
+#' This function is useful for front-end tools that require additional
+#' knowledge of the output to be produced by \code{\link{render}} (e.g. to
+#' customize the preview experience).
 #' @param input Input file (Rmd or plain markdown)
 #' @param encoding The encoding of the input file; see \code{\link{file}}
-#'
 #' @return A named list with a \code{name} value containing the format
 #'   name and an \code{options} value that is a list containing all the options
 #'   for the format and their values. An option's default value will be returned
 #'   if the option isn't set explicitly in the document.
-#'
-#' @details
-#'
-#' This function is useful for front-end tools that require additional
-#' knowledge of the output to be produced by \code{\link{render}} (e.g. to
-#' customize the preview experience).
-#'
 #' @export
-default_output_format <- function(input, encoding = getOption("encoding")) {
+default_output_format <- function(input,
+                                  encoding = getOption("encoding")) {
 
   # execute within the input file's directory (this emulates the way
   # yaml front matter discovery is done within render)
@@ -398,21 +387,16 @@ default_output_format <- function(input, encoding = getOption("encoding")) {
 #' document and return an output format object that can be
 #' passed to the \code{\link{render}} function.
 #'
+#' This function is useful for front-end tools that need to modify
+#' the default behavior of an output format.
 #' @param input Input file (Rmd or plain markdown)
 #' @param output_format Name of output format (or \code{NULL} to use
 #'   the default format for the input file).
 #' @param output_options List of output options that should override the
 #'   options specified in metadata.
-#' @param encoding The encoding of the input file; see \code{\link{file}}
-#'
+#' @param encoding The encoding of the input file; see \code{\link{file}}.
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
-#'
-#' @details
-#'
-#' This function is useful for front-end tools that need to modify
-#' the default behavior of an output format.
-#'
 #' @export
 resolve_output_format <- function(input,
                                   output_format = NULL,
@@ -427,10 +411,12 @@ resolve_output_format <- function(input,
     stop("output_format must be a character vector")
 
   # resolve the output format by looking at the yaml
-  output_format <- output_format_from_yaml_front_matter(input_lines,
-                                                        output_options,
-                                                        output_format,
-                                                        encoding = encoding)
+  output_format <-
+    output_format_from_yaml_front_matter(
+      input_lines,
+      output_options,
+      output_format,
+      encoding = encoding)
 
   # return it
   create_output_format(output_format$name, output_format$options)
@@ -443,23 +429,20 @@ resolve_output_format <- function(input,
 #' document and return the output formats that will be generated by
 #' a call to \code{\link{render}}.
 #'
-#' @param input Input file (Rmd or plain markdown)
-#' @param encoding The encoding of the input file; see \code{\link{file}}
-#'
-#' @return A character vector with the names of all output formats.
-#'
-#' @details
-#'
 #' This function is useful for front-end tools that require additional
 #' knowledge of the output to be produced by \code{\link{render}} (e.g. to
 #' customize the preview experience).
-#'
+#' @param input Input file (Rmd or plain markdown)
+#' @param encoding The encoding of the input file; see \code{\link{file}}.
+#' @return A character vector with the names of all output formats.
 #' @export
-all_output_formats <- function(input, encoding = getOption("encoding")) {
-  enumerate_output_formats(input = input,
-                           envir = parent.frame(),
-                           encoding = encoding)
+all_output_formats <- function(input,
+                               encoding = getOption("encoding")) {
 
+  enumerate_output_formats(
+    input = input,
+    envir = parent.frame(),
+    encoding = encoding)
 }
 
 
@@ -471,6 +454,7 @@ output_format_from_yaml_front_matter <- function(input_lines,
                                                  encoding = getOption("encoding")) {
 
   format_name <- output_format_name
+
   # ensure input is the correct data type
   if (!is_null_or_string(format_name)) {
     stop("Unrecognized output format specified", call. = FALSE)
@@ -561,7 +545,8 @@ output_format_from_yaml_front_matter <- function(input_lines,
   list(name = format_name, options = format_options)
 }
 
-create_output_format <- function(name, options) {
+create_output_format <- function(name,
+                                 options) {
 
   # validate the name
   if (is.null(name))
@@ -588,7 +573,9 @@ is_output_format <- function(x) {
   inherits(x, "rmarkdown_output_format")
 }
 
-enumerate_output_formats <- function(input, envir, encoding) {
+enumerate_output_formats <- function(input,
+                                     envir,
+                                     encoding) {
 
   # read the input
   input_lines <- read_lines_utf8(input, encoding)
@@ -632,8 +619,7 @@ enumerate_output_formats <- function(input, envir, encoding) {
     # merge against common _output.yml
     output_format_yaml <- merge_output_options(common_output_format_yaml,
                                                output_format_yaml)
-  }
-  else {
+  } else {
     output_format_yaml <- NULL
   }
 
@@ -648,12 +634,11 @@ enumerate_output_formats <- function(input, envir, encoding) {
 }
 
 #' Parse the YAML front matter from a file
-#'
 #' @inheritParams default_output_format
-#'
 #' @keywords internal
 #' @export
-yaml_front_matter <- function(input, encoding = getOption("encoding")) {
+yaml_front_matter <- function(input,
+                              encoding = getOption("encoding")) {
 
    # read the input file
   input_lines <- read_lines_utf8(input, encoding)
@@ -689,7 +674,6 @@ validate_front_matter <- function(front_matter) {
   if (grepl(":$", front_matter))
     stop("Invalid YAML front matter (ends with ':')", call. = FALSE)
 }
-
 
 
 partition_yaml_front_matter <- function(input_lines) {
@@ -733,7 +717,8 @@ partition_yaml_front_matter <- function(input_lines) {
   }
 }
 
-merge_output_options <- function(base_options, overlay_options) {
+merge_output_options <- function(base_options,
+                                 overlay_options) {
 
   # if either one of these is a character vector then normalize to a named list
   normalize_list <- function(target) {
@@ -753,7 +738,8 @@ is_pandoc_to_html <- function(options) {
   options$to %in% c("html", "html4", "html5")
 }
 
-citeproc_required <- function(yaml_front_matter, input_lines = NULL) {
+citeproc_required <- function(yaml_front_matter,
+                              input_lines = NULL) {
   (
     is.null(yaml_front_matter$citeproc) ||
       yaml_front_matter$citeproc

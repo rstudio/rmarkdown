@@ -223,8 +223,7 @@ merge_lists <- function(base_list, overlay_list, recursive = TRUE) {
   }
 }
 
-strip_white <- function(x)
-{
+strip_white <- function(x) {
   if (!length(x))
     return(x)
   while (is_blank(x[1])) {
@@ -240,8 +239,7 @@ strip_white <- function(x)
   x
 }
 
-is_blank <- function(x)
-{
+is_blank <- function(x) {
   if (length(x))
     all(grepl("^\\s*$", x))
   else TRUE

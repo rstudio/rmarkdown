@@ -123,7 +123,7 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to an HTML document.
 }
 \details{
-See the \href{http://rmarkdown.rstudio.com/html_document_format.html}{online
+See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
 documentation} for additional details on using the \code{html_document}
 format.
 
@@ -133,7 +133,7 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 and Citations} article in the online documentation.
 }
 \section{Navigation Bars}{
@@ -146,7 +146,7 @@ and Citations} article in the online documentation.
 
  The "_navbar.yml" file includes \code{title}, \code{type}, \code{left}, and
  \code{right} fields (to define menu items for the left and right of the navbar
- resspectively). Menu items include \code{title} and \code{href} fields. For example:
+ respectively). Menu items include \code{title} and \code{href} fields. For example:
 
  \preformatted{ title: "My Website"
  type: default
@@ -234,12 +234,10 @@ and Citations} article in the online documentation.
 
 \examples{
 \dontrun{
-
 library(rmarkdown)
 
 render("input.Rmd", html_document())
 
 render("input.Rmd", html_document(toc = TRUE))
 }
-
 }

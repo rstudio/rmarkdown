@@ -7,6 +7,8 @@ rmarkdown 1.10 (unreleased)
 
 * Added `compact-title` variable to the LaTeX default templates to control use of LaTeX `titling` package; defaults to `true`.
 
+* `pdf_document(template = NULL)` does not work (#1295).
+
 rmarkdown 1.9
 --------------------------------------------------------------------------------
 

@@ -35,8 +35,8 @@ Define the pandoc options for an R Markdown output format.
 }
 \details{
 The \code{from} argument should be used very cautiously as it's
-  important for users to be able to rely on a stable definition of supported
-  markdown extensions.
+important for users to be able to rely on a stable definition of supported
+markdown extensions.
 }
 \seealso{
 \link{output_format}, \link{rmarkdown_format}

@@ -9,7 +9,7 @@ parse_html_notebook(path, encoding = "UTF-8")
 \arguments{
 \item{path}{The path to an R Notebook file (with extension \code{.nb.html}).}
 
-\item{encoding}{The document's encoding (assumend \code{"UTF-8"} by default).}
+\item{encoding}{The document's encoding (assumed as \code{"UTF-8"} by default).}
 }
 \description{
 Parse an HTML notebook, retrieving annotation information
@@ -17,6 +17,7 @@ related to generated outputs in the document, as well as the
 original R Markdown source document.
 }
 \details{
-For more details on the HTML file format produced by
- \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_format.html}{http://rmarkdown.rstudio.com/r_notebook_format.html}.
+See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online
+documentation} for additional details on using the \code{html_notebook}
+format.
 }

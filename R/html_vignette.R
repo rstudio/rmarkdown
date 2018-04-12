@@ -1,4 +1,4 @@
-#' Convert to an HTML vignette.
+#' Convert to an HTML vignette
 #'
 #' A HTML vignette is a lightweight alternative to \code{\link{html_document}}
 #' suitable for inclusion in packages to be released to CRAN. It reduces the
@@ -14,11 +14,8 @@
 #'   \item uses a custom highlight scheme
 #'  }
 #'
-#' @details
-#'
-#' See the \href{http://rmarkdown.rstudio.com/package_vignette_format.html}{online
+#' See the \href{https://rmarkdown.rstudio.com/package_vignette_format.html}{online
 #' documentation} for additional details on using the \code{html_vignette} format.
-#'
 #' @inheritParams html_document
 #' @param ... Additional arguments passed to \code{\link{html_document}}. Please
 #'   note that \code{theme}, \code{fig_retina} and \code{highlight} are hard

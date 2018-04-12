@@ -4,6 +4,9 @@
 #' through the \code{output_source} function attached to a
 #' \code{\link{output_format}}.
 #'
+#' See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online
+#' documentation} for additional details on using the \code{html_notebook}
+#' format.
 #' @param path  A path to a file. For functions accepting both \code{path}
 #'   and \code{bytes}, if \code{bytes} is \code{NULL}, the bytewise contents
 #'   will be obtained by reading the file.
@@ -15,10 +18,6 @@
 #' @param meta An \R list of arbitrary meta-data. The data will
 #'   be converted to JSON, base64-encoded, and injected into the header comment.
 #' @param format The image format; one of \code{"png"} or \code{"jpeg"}.
-#'
-#' @details For more details on the HTML file format produced by
-#'  \code{html_notebook}, see \href{http://rmarkdown.rstudio.com/r_notebook_format.html}{http://rmarkdown.rstudio.com/r_notebook_format.html}.
-#'
 #' @name html_notebook_output
 NULL
 
@@ -27,7 +26,6 @@ NULL
 #' A structured helper for the construction of metadata used by the
 #' R Notebook output functions. See \code{\link{html_notebook_output}} for
 #' more details.
-#'
 #' @param iframe Boolean; should output be shown in an \code{<iframe>}?
 #' @export
 html_notebook_metadata <- function(iframe = TRUE) {
@@ -37,8 +35,7 @@ html_notebook_metadata <- function(iframe = TRUE) {
 html_notebook_render_base64_data <- function(path = NULL,
                                              bytes = NULL,
                                              attributes = NULL,
-                                             format)
-{
+                                             format) {
   # read (if necessary) and encode data
   if (is.null(bytes))
     bytes <- read_file(path, binary = TRUE)
@@ -51,8 +48,7 @@ html_notebook_render_base64_data <- function(path = NULL,
 #' @name html_notebook_output
 #' @export
 html_notebook_output_html <- function(html,
-                                      meta = NULL)
-{
+                                      meta = NULL) {
   html_notebook_annotated_output(paste(html, collapse = "\n"), "html", meta)
 }
 
@@ -62,8 +58,7 @@ html_notebook_output_img <- function(path = NULL,
                                      bytes = NULL,
                                      attributes = NULL,
                                      meta = NULL,
-                                     format = c("png", "jpeg"))
-{
+                                     format = c("png", "jpeg")) {
   template <- paste0('<img%s src="data:image/', match.arg(format),
                      ';base64,%s" />')
   html <- html_notebook_render_base64_data(path, bytes, attributes, template)
@@ -78,8 +73,7 @@ html_notebook_output_png <- html_notebook_output_img
 #' @export
 html_notebook_output_code <- function(code,
                                       attributes = list(class = "r"),
-                                      meta = NULL)
-{
+                                      meta = NULL) {
   # generate code
   code <- sprintf(
     "```%s\n%s\n```",

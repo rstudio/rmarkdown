@@ -2,7 +2,7 @@
 % Please edit documentation in R/html_vignette.R
 \name{html_vignette}
 \alias{html_vignette}
-\title{Convert to an HTML vignette.}
+\title{Convert to an HTML vignette}
 \usage{
 html_vignette(fig_width = 3, fig_height = 3, dev = "png",
   df_print = "default", css = NULL, keep_md = FALSE, readme = FALSE,
@@ -57,8 +57,6 @@ Compared to \code{html_document}, it:
   \item uses a custom highlight scheme
  }
 
-
-
-See the \href{http://rmarkdown.rstudio.com/package_vignette_format.html}{online
+See the \href{https://rmarkdown.rstudio.com/package_vignette_format.html}{online
 documentation} for additional details on using the \code{html_vignette} format.
 }

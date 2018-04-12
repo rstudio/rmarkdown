@@ -34,11 +34,11 @@ to the named methods you can also pass an arbitrary function to be used
 for printing data frames. You can disable the df_print behavior entirely
 by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 
-\item{pre_knit}{An optional function that runs before kniting which
+\item{pre_knit}{An optional function that runs before knitting which
 receives the \code{input} (input filename passed to \code{render}) and
 \code{...} (for future expansion) arguments.}
 
-\item{post_knit}{An optional function that runs after kniting which
+\item{post_knit}{An optional function that runs after knitting which
 receives the \code{metadata}, \code{input_file}, \code{runtime}, and \code{...}
 (for future expansion) arguments. This function can return additional
 arguments to pass to pandoc and can call \code{knitr::knit_meta_add}
@@ -72,15 +72,14 @@ An R Markdown output format definition that can be passed to
   \code{\link{render}}.
 }
 \description{
-Define an R Markdown output format based on a combination of knitr and pandoc
-options.
+Define an R Markdown output format based on a combination of
+knitr and pandoc options.
 }
 \examples{
 \dontrun{
 output_format(knitr = knitr_options(opts_chunk = list(dev = 'png')),
               pandoc = pandoc_options(to = "html"))
 }
-
 }
 \seealso{
 \link{render}, \link{knitr_options}, \link{pandoc_options}

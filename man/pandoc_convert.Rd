@@ -18,28 +18,28 @@ pandoc_convert(input, to = NULL, from = NULL, output = NULL,
 determined based on the file extension of \code{input}).}
 
 \item{output}{Output file (if not specified then determined based on format
-being converted to)}
+being converted to).}
 
 \item{citeproc}{\code{TRUE} to run the pandoc-citeproc filter (for processing
-citations) as part of the conversion}
+citations) as part of the conversion.}
 
 \item{options}{Character vector of command line options to pass to pandoc.}
 
 \item{verbose}{\code{TRUE} to show the pandoc command line which was executed}
 
 \item{wd}{Working directory in which code will be executed. If not
-supplied, defaults to the common base directory of \code{input}}
+supplied, defaults to the common base directory of \code{input}.}
 }
 \description{
 Convert documents to and from various formats using the pandoc utility.
 }
 \details{
 Supported input and output formats are described in the
-  \href{http://johnmacfarlane.net/pandoc/README.html}{pandoc user guide}.
+\href{http://johnmacfarlane.net/pandoc/README.html}{pandoc user guide}.
 
-  The system path as well as the version of pandoc shipped with RStudio (if
-  running under RStudio) are scanned for pandoc and the highest version
-  available is used.
+The system path as well as the version of pandoc shipped with RStudio (if
+running under RStudio) are scanned for pandoc and the highest version
+available is used.
 }
 \examples{
 \dontrun{
@@ -55,5 +55,4 @@ pandoc_convert("input.md", to = "html", citeproc = TRUE)
 # add some pandoc options
 pandoc_convert("input.md", to="pdf", options = c("--listings"))
 }
-
 }

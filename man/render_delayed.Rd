@@ -18,11 +18,11 @@ finished rendering, instead of during render.
 }
 \details{
 This function is useful inside Shiny documents. It delays the
-  evaluation of its argument until the document has finished its initial
-  render, so that the document can be viewed before the calculation is
-  finished.
+evaluation of its argument until the document has finished its initial
+render, so that the document can be viewed before the calculation is
+finished.
 
-  Any expression that returns HTML can be wrapped in \code{render_delayed}.
+Any expression that returns HTML can be wrapped in \code{render_delayed}.
 }
 \note{
 \code{expr} is evaluated in a \strong{copy} of the environment in which
@@ -35,7 +35,6 @@ This function is useful inside Shiny documents. It delays the
 }
 \examples{
 \dontrun{
-
 # Add the following code to an R Markdown document
 
 div(Sys.time())
@@ -47,5 +46,4 @@ render_delayed({
 
 div(Sys.time())
 }
-
 }
