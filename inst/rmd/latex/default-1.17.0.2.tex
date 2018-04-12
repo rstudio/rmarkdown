@@ -190,6 +190,7 @@ $endif$
 \let\rmarkdownfootnote\footnote%
 \def\footnote{\protect\rmarkdownfootnote}
 
+$if(compact-title)$
 %%% Change title format to be more compact
 \usepackage{titling}
 
@@ -201,33 +202,47 @@ $endif$
 }
 
 \setlength{\droptitle}{-2em}
+$endif$
+
 $if(title)$
   \title{$title$}
+  $if(compact-title)$
   \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
+  $endif$
 $else$
   \title{}
+  $if(compact-title)$
   \pretitle{\vspace{\droptitle}}
   \posttitle{}
+  $endif$
 $endif$
 $if(subtitle)$
 \subtitle{$subtitle$}
 $endif$
 $if(author)$
   \author{$for(author)$$author$$sep$ \\ $endfor$}
+  $if(compact-title)$
   \preauthor{\centering\large\emph}
   \postauthor{\par}
+  $endif$
 $else$
   \author{}
+  $if(compact-title)$
   \preauthor{}\postauthor{}
+  $endif$
 $endif$
 $if(date)$
+  $if(compact-title)$
   \predate{\centering\large\emph}
   \postdate{\par}
+  $endif$
   \date{$date$}
 $else$
   \date{}
+  $if(compact-title)$
   \predate{}\postdate{}
+  $endif$
 $endif$
 
 $for(header-includes)$
