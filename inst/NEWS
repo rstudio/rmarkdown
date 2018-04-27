@@ -9,6 +9,9 @@ rmarkdown 1.10 (unreleased)
 
 * `pdf_document(template = NULL)` does not work (#1295).
 
+* Restore ability to use any HTML format with R Markdown Websites (#1328)
+
+
 rmarkdown 1.9
 --------------------------------------------------------------------------------
 
