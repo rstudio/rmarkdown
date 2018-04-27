@@ -538,6 +538,17 @@ output_format_from_yaml_front_matter <- function(input_lines,
 
   # merge any output_options passed in the call to render
   if (!is.null(output_options)) {
+
+    # create the output format function so we can check it's formals. strip options
+    # not within the formals
+    output_func <- create_output_format_function(format_name)
+    output_func_params <- names(formals(output_func))
+    if (!"..." %in% output_func_params) {
+      unsupported_options <- setdiff(names(output_options), output_func_params)
+      output_options[unsupported_options] <- NULL
+    }
+
+    # merge the output_options
     format_options <- merge_output_options(format_options, output_options)
   }
 
@@ -556,9 +567,7 @@ create_output_format <- function(name,
          "https://github.com/jjallaire/revealjs")
 
   # lookup the function
-  output_format_func <- eval(parse(text = name))
-  if (!is.function(output_format_func))
-    stop("YAML output format must evaluate to a function", call. = FALSE)
+  output_format_func <- create_output_format_function(name)
 
   # call the function
   output_format <- do.call(output_format_func, options)
@@ -567,6 +576,13 @@ create_output_format <- function(name,
 
   # return the format
   output_format
+}
+
+create_output_format_function <- function(name) {
+  output_format_func <- eval(parse(text = name))
+  if (!is.function(output_format_func))
+    stop("YAML output format must evaluate to a function", call. = FALSE)
+  output_format_func
 }
 
 is_output_format <- function(x) {
