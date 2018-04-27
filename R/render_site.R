@@ -169,8 +169,6 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
   # define render function (use ... to gracefully handle future args)
   render <- function(input_file,
                      output_format,
-                     output_options = list(lib_dir = "site_libs",
-                                           self_contained = FALSE),
                      envir,
                      quiet,
                      encoding, ...) {
@@ -194,6 +192,8 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       output <- suppressMessages(
         rmarkdown::render(x,
                           output_format = output_format,
+                          output_options = list(lib_dir = "site_libs",
+                                                self_contained = FALSE),
                           envir = envir,
                           quiet = quiet,
                           encoding = encoding)
