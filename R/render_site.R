@@ -119,8 +119,10 @@ site_generator <- function(input = ".",
   }
 }
 
-# helper function to get the site configuration as an R list
-site_config <- function(input, encoding = getOption("encoding")) {
+
+#' @noRd
+#' @export
+site_config <- function(input = ".", encoding = getOption("encoding")) {
 
   # normalize input
   input <- input_as_dir(input)

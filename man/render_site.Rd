@@ -12,6 +12,8 @@ render_site(input = ".", output_format = "all", envir = parent.frame(),
 clean_site(input = ".", preview = FALSE, quiet = FALSE,
   encoding = getOption("encoding"))
 
+site_config(input = ".", encoding = getOption("encoding"))
+
 site_generator(input = ".", output_format = NULL,
   encoding = getOption("encoding"))
 }
@@ -35,6 +37,7 @@ environment).}
 \value{
 \code{render_site} returns the name of the site output file (relative to the input directory).
 \code{clean_site} returns the names of the generated files removed during cleaning.
+\code{site_config} returns the contents of _site.yml as an R list
 }
 \description{
 Render all of the R Markdown documents within a directory as a website.
