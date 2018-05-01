@@ -4,10 +4,12 @@
 \alias{paged_table}
 \title{Create a table in HTML with support for paging rows and columns}
 \usage{
-paged_table(x)
+paged_table(x, options = NULL)
 }
 \arguments{
 \item{x}{a data frame to be rendered as a paged table.}
+
+\item{options}{options for printing the paged table}
 }
 \description{
 Create a table in HTML with support for paging rows and columns
