@@ -373,7 +373,7 @@ rmarkdown_shiny_ui <- function(dir, file) {
           id = "rmd_loader_wrapper",
           tags$div(id = "rmd_loader", style = "display: none",
                    tags$img(src = "rmd_resources/rmd_loader.gif"),
-                   tags$p("Loading")))),
+                   tags$p("Please wait...")))),
       shiny::uiOutput("__reactivedoc__")
     )
   }
