@@ -11,6 +11,8 @@ rmarkdown 1.10 (unreleased)
 
 * Restore ability to use any HTML format with R Markdown Websites (#1328)
 
+* Add `options` argument to `paged_table()` to enable explicit passing of display options
+
 
 rmarkdown 1.9
 --------------------------------------------------------------------------------

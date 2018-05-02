@@ -84,22 +84,26 @@ paged_table_obj_sum <- function(x) {
   )
 }
 
-paged_table_option <- function(option, default = NULL) {
-  if (is.null(knitr::opts_current$get(option)))
+paged_table_option <- function(option, options, default = NULL) {
+  if (is.null(options))
+    options <- list()
+  if (!is.null(options[[option]]))
+    options[[option]]
+  else if (is.null(knitr::opts_current$get(option)))
     getOption(option, default)
   else
     knitr::opts_current$get(option)
 }
 
 #' @import methods
-paged_table_html <- function(x) {
-  addRowNames = paged_table_option("rownames.print")
+paged_table_html <- function(x, options = NULL) {
+  addRowNames = paged_table_option("rownames.print", options)
   addRowNames <- if (is.null(addRowNames)) (.row_names_info(x, type = 1) > 0) else addRowNames
 
-  maxPrint <- paged_table_option("max.print", 1000)
+  maxPrint <- paged_table_option("max.print", options, 1000)
 
   if ("tbl_sql" %in% class(x)) {
-    maxPrint <- paged_table_option("sql.max.print", 1000)
+    maxPrint <- paged_table_option("sql.max.print", options, 1000)
   }
 
   # hard stop at 10K items to print to prevent pandoc from failing
@@ -172,18 +176,18 @@ paged_table_html <- function(x) {
     stringsAsFactors = FALSE,
     optional = TRUE)
 
-  rowCount <- paged_table_option("rows.print", 10)
+  rowCount <- paged_table_option("rows.print", options, 10)
 
   pagedTableOptions <- list(
     columns = list(
-      min = paged_table_option("cols.min.print"),
-      max = paged_table_option("cols.print", 10)
+      min = paged_table_option("cols.min.print", options),
+      max = paged_table_option("cols.print", options, 10)
     ),
     rows = list(
       min = rowCount,
       max = rowCount
     ),
-    pages = paged_table_option("pages.print")
+    pages = paged_table_option("pages.print", options)
   )
 
   pagedData <- list(
@@ -205,20 +209,22 @@ paged_table_html <- function(x) {
 #' Create a table in HTML with support for paging rows and columns
 #'
 #' @param x a data frame to be rendered as a paged table.
+#' @param options options for printing the paged table
 #'
 #' @export
-paged_table <- function(x) {
+paged_table <- function(x, options = NULL) {
   if (!is.data.frame(x)) {
     stop("Only data frames can be used to create a paged_table.")
   }
 
   class(x) <- c("paged_df", "data.frame")
+  attr(x, "options") <- options
   x
 }
 
 print.paged_df <- function(x) {
   knitr::asis_output(
-    paged_table_html(x),
+    paged_table_html(x, options = attr(x, "options")),
     meta = list(
       dependencies = html_dependency_pagedtable()
     )
