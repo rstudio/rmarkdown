@@ -120,8 +120,11 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
   # ensure we've scanned for pandoc
   find_pandoc()
 
+  # resolve type
+  type <- match.arg(type)
+
   # build the conversion command
-  conversion <- switch(match.arg(type),
+  conversion <- switch(type,
     list = "--bib2json",
     json = "--bib2json",
     yaml = "--bib2yaml"
