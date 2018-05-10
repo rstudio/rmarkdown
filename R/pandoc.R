@@ -102,6 +102,51 @@ pandoc_convert <- function(input,
   invisible(NULL)
 }
 
+
+#' Convert a bibliograpy file
+#'
+#' Convert a bibliography file (e.g. a BibTeX file) to an R list, JSON text,
+#'   or YAML text
+#'
+#' @param file Bibliography file
+#' @param type Conversion type
+#'
+#' @return For `type = "list"`, and R list. For `type = "json"` or `type = "yaml"`,
+#'   a character vector with the specified format.
+#'
+#' @export
+pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
+
+  # ensure we've scanned for pandoc
+  find_pandoc()
+
+  # build the conversion command
+  conversion <- switch(match.arg(type),
+    list = "--bib2json",
+    json = "--bib2json",
+    yaml = "--bib2yaml"
+  )
+  args <- c(conversion, file)
+  command <- paste(quoted(pandoc_citeproc()), paste(quoted(args), collapse = " "))
+
+  # run the conversion
+  with_pandoc_safe_environment({
+    result <- system(command, intern = TRUE)
+  })
+  status <- attr(result, "status")
+  if (!is.null(status)) {
+    cat(result, sep = "\n")
+    stop("Error ", status, " occurred building shared library.")
+  }
+
+  # convert the output if requested
+  if (type == "list") {
+    jsonlite::fromJSON(result, simplifyVector = FALSE)
+  } else {
+    result
+  }
+}
+
 #' Check pandoc availability and version
 #'
 #' Determine whether pandoc is currently available on the system (optionally

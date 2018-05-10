@@ -13,6 +13,8 @@ rmarkdown 1.10 (unreleased)
 
 * Add `options` argument to `paged_table()` to enable explicit passing of display options
 
+* Add `pandoc_citeproc_convert()` function for conversion of bibliography files (e.g. BibTeX files)
+
 
 rmarkdown 1.9
 --------------------------------------------------------------------------------
