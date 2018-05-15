@@ -15,6 +15,8 @@ rmarkdown 1.10 (unreleased)
 
 * Add `pandoc_citeproc_convert()` function for conversion of bibliography files (e.g. BibTeX files)
 
+* Update to Font Awesome version 5.0.13
+
 
 rmarkdown 1.9
 --------------------------------------------------------------------------------
