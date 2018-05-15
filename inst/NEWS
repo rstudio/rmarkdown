@@ -9,13 +9,13 @@ rmarkdown 1.10 (unreleased)
 
 * `pdf_document(template = NULL)` does not work (#1295).
 
-* Restore ability to use any HTML format with R Markdown Websites (#1328)
+* Restore ability to use any HTML format with R Markdown Websites (#1328).
 
-* Add `options` argument to `paged_table()` to enable explicit passing of display options
+* Add `options` argument to `paged_table()` to enable explicit passing of display options.
 
-* Add `pandoc_citeproc_convert()` function for conversion of bibliography files (e.g. BibTeX files)
+* Add `pandoc_citeproc_convert()` function for conversion of bibliography files (e.g. BibTeX files).
 
-* Update to Font Awesome version 5.0.13
+* Update to Font Awesome version 5.0.13 (#1340).
 
 
 rmarkdown 1.9
