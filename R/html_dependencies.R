@@ -82,7 +82,7 @@ html_dependency_font_awesome <- function() {
   htmlDependency(
     "font-awesome",
     "5.0.13",
-    src = rmarkdown_system_file("rmd/h/fontawesome-free-5.0.13"),
+    src = rmarkdown_system_file("rmd/h/fontawesome"),
     script = c(
       "js/fontawesome-all.min.js",
       "js/fa-v4-shims.min.js"),
