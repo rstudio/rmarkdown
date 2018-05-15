@@ -124,7 +124,7 @@ install.packages("rmarkdown")
 
 There are several options that control the appearance of HTML documents:
 
-* `theme` specifies the Bootstrap theme to use for the page (themes are drawn from the [Bootswatch](http://bootswatch.com/) theme library). Valid themes include `r paste_and(rmarkdown:::themes())`. Pass null for no theme (in this case you can use the `css` parameter to add your own styles).
+* `theme` specifies the Bootstrap theme to use for the page (themes are drawn from the [Bootswatch](http://bootswatch.com/3/) theme library). Valid themes include `r paste_and(rmarkdown:::themes())`. Pass null for no theme (in this case you can use the `css` parameter to add your own styles).
 
 * `highlight` specifies the syntax highlighting style. Supported styles include `r paste_and(rmarkdown:::html_highlighters())`. Pass null to prevent syntax highlighting.
 
