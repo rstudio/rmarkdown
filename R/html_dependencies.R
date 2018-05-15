@@ -10,7 +10,7 @@ NULL
 #' @name html-dependencies
 NULL
 
-# create an html dependency for our embedded jquery
+# Create an HTML dependency for our embedded jquery
 #' @rdname html-dependencies
 #' @export
 html_dependency_jquery <- function()  {
@@ -20,7 +20,7 @@ html_dependency_jquery <- function()  {
                  script = "jquery.min.js")
 }
 
-# create an html dependency for our embedded bootstrap
+# Create an HTML dependency for our embedded bootstrap
 #' @rdname html-dependencies
 #' @export
 html_dependency_bootstrap <- function(theme) {
@@ -38,7 +38,7 @@ html_dependency_bootstrap <- function(theme) {
                  stylesheet = paste0("css/", theme, ".min.css"))
 }
 
-# create an html_dependency for our embedded jqueryui
+# Create an HTML dependency for our embedded jqueryui
 #' @rdname html-dependencies
 #' @export
 html_dependency_jqueryui <- function() {
@@ -49,7 +49,7 @@ html_dependency_jqueryui <- function() {
   )
 }
 
-# create an html_dependency for tocify
+# Create an HTML dependency for tocify
 #' @rdname html-dependencies
 #' @export
 html_dependency_tocify <- function() {
@@ -75,20 +75,23 @@ html_dependency_navigation <- function(code_menu, source_embed) {
                  script = script)
 }
 
-
-# create an html_dependency for font awesome
+# Create an HTML dependency for Font Awesome
 #' @rdname html-dependencies
 #' @export
 html_dependency_font_awesome <- function() {
   htmlDependency(
     "font-awesome",
-    "4.5.0",
-    src = rmarkdown_system_file("rmd/h/font-awesome-4.5.0"),
-    stylesheet = "css/font-awesome.min.css"
+    "5.0.13",
+    src = rmarkdown_system_file("rmd/h/fontawesome"),
+    script = c(
+      "js/fontawesome-all.min.js",
+      "js/fa-v4-shims.min.js"),
+    stylesheet = "css/fa-svg-with-js.css"
   )
 }
 
-# create an html_dependency for ionicons
+
+# Create an HTML dependency for ionicons
 #' @rdname html-dependencies
 #' @export
 html_dependency_ionicons <- function() {
@@ -189,9 +192,9 @@ html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
     dependencies <- lapply(dependencies, makeDependencyRelative, output_dir)
   }
   return(renderDependencies(dependencies, "file", encodeFunc = identity,
-    hrefFilter = function(path) {
-      html_reference_path(path, lib_dir, output_dir)
-    })
+                            hrefFilter = function(path) {
+                              html_reference_path(path, lib_dir, output_dir)
+                            })
   )
 }
 
