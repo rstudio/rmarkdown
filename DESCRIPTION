@@ -80,6 +80,7 @@ Suggests:
     tufte,
     testthat,
     digest,
+    dygraphs,
     tibble
 SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
 URL: https://rmarkdown.rstudio.com, https://github.com/rstudio/rmarkdown
