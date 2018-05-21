@@ -308,6 +308,13 @@ discover_rmd_resources <- function(rmd_file,
     })
   }
 
+  # check for a 'preview' yaml metadata entry
+  if (!is.null(front_matter[["preview"]])) {
+    discover_single_resource(front_matter[["preview"]],
+                             explicit = FALSE,
+                             web = TRUE)
+  }
+
   # check for bibliography and csl files at the top level
   for (bibfile in c("bibliography", "csl")) {
     if (!is.null(front_matter[[bibfile]])) {
