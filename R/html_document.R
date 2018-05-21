@@ -46,7 +46,7 @@
 #'  dependencies, using data: URIs to incorporate the contents of linked
 #'  scripts, stylesheets, images, and videos. Note that even for self contained
 #'  documents MathJax is still loaded externally (this is necessary because of
-#'  it's size).
+#'  its size).
 #'@param theme Visual theme ("default", "cerulean", "journal", "flatly",
 #'  "readable", "spacelab", "united", "cosmo", "lumen", "paper", "sandstone",
 #'  "simplex", or "yeti"). Pass \code{NULL} for no theme (in this case you can
