@@ -31,7 +31,7 @@ template.
 \details{
 The \code{draft} function creates new R Markdown documents based on
 templates that are either located on the filesystem or within an R package.
-The template and it's supporting files will be copied to the location
+The template and its supporting files will be copied to the location
 specified by \code{file}.
 }
 \note{

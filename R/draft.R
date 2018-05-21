@@ -5,7 +5,7 @@
 #'
 #' The \code{draft} function creates new R Markdown documents based on
 #' templates that are either located on the filesystem or within an R package.
-#' The template and it's supporting files will be copied to the location
+#' The template and its supporting files will be copied to the location
 #' specified by \code{file}.
 #' @param file File name for the draft
 #' @param template Template to use as the basis for the draft. This is either

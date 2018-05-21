@@ -24,7 +24,7 @@ use the \code{css} parameter to add your own styles).}
 dependencies, using data: URIs to incorporate the contents of linked
 scripts, stylesheets, images, and videos. Note that even for self contained
 documents MathJax is still loaded externally (this is necessary because of
-it's size).}
+its size).}
 
 \item{lib_dir}{Directory to copy dependent HTML libraries (e.g. jquery,
 bootstrap, etc.) into. By default this will be the name of the document with
