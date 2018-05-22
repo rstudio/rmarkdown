@@ -339,13 +339,29 @@ copy_site_resources <- function(input, encoding = getOption("encoding")) {
   }
 }
 
-# utility function to list the files that should be copied
-copyable_site_resources <- function(input,
-                                    config = site_config(input, encoding),
-                                    encoding = getOption("encoding")) {
+
+
+#' Determine website resource files for a directory
+#'
+#' Determine which files within a given directory should be copied in
+#' order to serve a website from the directory. Attempts to automatically
+#' exclude source, data, hidden, and other files not required to serve
+#' website content.
+#'
+#' @inheritParams default_output_format
+#'
+#' @param site_dir Site directory to analyze
+#' @param include Additional files to include (glob wildcards supported)
+#' @param exclude Files to exclude  (glob wildcards supported)
+#'
+#' @return Character vector of top-level files and directories to copy
+#'
+#' @export
+site_resources <- function(site_dir, include = NULL, exclude = NULL,
+                           encoding = getOption("encoding")) {
 
   # get the original file list (we'll need it to apply includes)
-  all_files <- list.files(input, all.files = TRUE)
+  all_files <- list.files(site_dir, all.files = TRUE)
 
   # excludes:
   #   - known source/data extensions
@@ -359,23 +375,39 @@ copyable_site_resources <- function(input,
   extensions_regex <- utils::glob2rx(paste0("*.", extensions))
   excludes <- c("^rsconnect$", "^packrat$", "^\\..*$", "^_.*$", "^.*_cache$",
                 extensions_regex,
-                utils::glob2rx(config$exclude))
-  # add ouput_dir to excludes if it's not '.'
-  if (config$output_dir != '.')
-    excludes <- c(excludes, config$output_dir)
+                utils::glob2rx(exclude))
   files <- all_files
   for (exclude in excludes)
     files <- files[!grepl(exclude, files)]
 
   # allow back in anything specified as an explicit "include"
-  includes <- utils::glob2rx(config$include)
+  includes <- utils::glob2rx(include)
   for (include in includes) {
     include_files <- all_files[grepl(include, all_files)]
     files <- unique(c(files, include_files))
   }
 
   files
+
 }
+
+
+# utility function to list the files that should be copied
+copyable_site_resources <- function(input,
+                                    config = site_config(input, encoding),
+                                    encoding = getOption("encoding")) {
+
+  include <- config$include
+
+  exclude <- config$exclude
+  if (config$output_dir != ".")
+    exclude <- c(exclude, config$output_dir)
+
+  site_resources(input, include, exclude, encoding)
+}
+
+
+
 
 # utility function to ensure that 'input' is a valid directory
 # (converts from file to parent directory as necessary)

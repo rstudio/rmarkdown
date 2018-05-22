@@ -17,6 +17,8 @@ rmarkdown 1.10 (unreleased)
 
 * Update to Font Awesome version 5.0.13 (#1340).
 
+* Add `site_resources()` function for computing resource files required for a website
+
 
 rmarkdown 1.9
 --------------------------------------------------------------------------------
