@@ -329,7 +329,6 @@ copy_site_resources <- function(input, encoding = getOption("encoding")) {
     # get the list of files
     files <- copyable_site_resources(input = input,
                                      config = config,
-                                     recursive = FALSE,
                                      encoding = encoding)
 
     # perform the copy
@@ -343,7 +342,6 @@ copy_site_resources <- function(input, encoding = getOption("encoding")) {
 # utility function to list the files that should be copied
 copyable_site_resources <- function(input,
                                     config = site_config(input, encoding),
-                                    recursive = FALSE,
                                     encoding = getOption("encoding")) {
 
   # get the original file list (we'll need it to apply includes)
@@ -376,25 +374,7 @@ copyable_site_resources <- function(input,
     files <- unique(c(files, include_files))
   }
 
-  # if this is recursive then we need to blow out the directories
-  if (recursive) {
-    recursive_files <- c()
-    for (file in files) {
-      file_path <- file.path(input, file)
-      if (dir_exists(file_path)) {
-        dir_files <- file.path(list.files(file_path,
-                                          full.names = FALSE,
-                                          recursive = TRUE))
-        dir_files <- file.path(file, dir_files)
-        recursive_files <- c(recursive_files, dir_files)
-      } else {
-        recursive_files <- c(recursive_files, file)
-      }
-    }
-    recursive_files
-  } else {
-    files
-  }
+  files
 }
 
 # utility function to ensure that 'input' is a valid directory
