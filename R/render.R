@@ -293,9 +293,11 @@ render <- function(input,
   context <- render_context()
   context$df_print <- resolve_df_print(output_format$df_print)
 
-  # call any pre_knit handler
+  # call any pre_knit handler (allow override of knitr_options)
   if (!is.null(output_format$pre_knit)) {
-    output_format$pre_knit(input = original_input)
+    result <- output_format$pre_knit(input = original_input, encoding = encoding)
+    if (!is.null(result) && !is.null(result$opts_chunk))
+      output_format$knitr <- result
   }
 
   # function used to call post_knit handler

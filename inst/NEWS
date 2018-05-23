@@ -19,6 +19,8 @@ rmarkdown 1.10 (unreleased)
 
 * Add `site_resources()` function for computing resource files required for a website
 
+* Allow `pre_knit` hook to override knitr options
+
 
 rmarkdown 1.9
 --------------------------------------------------------------------------------
