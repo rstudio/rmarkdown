@@ -17,10 +17,11 @@ rmarkdown 1.10 (unreleased)
 
 * Update to Font Awesome version 5.0.13 (#1340).
 
-* Add `site_resources()` function for computing resource files required for a website
+* Add `site_resources()` function for computing resource files required for a website.
 
-* Allow `pre_knit` hook to override knitr options
+* Allow `pre_knit` hook to override knitr options.
 
+* The `latex_document()` format should not clean up the figure directory (thanks, @emiltb, rstudio/bookdown#582).
 
 rmarkdown 1.9
 --------------------------------------------------------------------------------

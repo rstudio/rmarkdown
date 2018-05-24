@@ -248,7 +248,7 @@ pdf_intermediates_generator <- function(saved_files_dir, original_input,
 #' @rdname pdf_document
 #' @export
 latex_document <- function(...) {
-  merge_lists(pdf_document(...), list(pandoc = list(ext = ".tex", keep_tex = TRUE)))
+  merge_lists(pdf_document(..., keep_tex = TRUE), list(pandoc = list(ext = ".tex")))
 }
 
 #' @rdname pdf_document
