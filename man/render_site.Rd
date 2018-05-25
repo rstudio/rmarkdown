@@ -4,6 +4,7 @@
 \alias{render_site}
 \alias{site_config}
 \alias{site_generator}
+\alias{default_site_generator}
 \title{Render multiple documents as a website}
 \usage{
 render_site(input = ".", output_format = "all", envir = parent.frame(),
@@ -16,6 +17,8 @@ site_config(input = ".", encoding = getOption("encoding"))
 
 site_generator(input = ".", output_format = NULL,
   encoding = getOption("encoding"))
+
+default_site_generator(input, encoding = getOption("encoding"), ...)
 }
 \arguments{
 \item{input}{Website directory (or the name of a file within the directory)}
@@ -38,6 +41,7 @@ environment).}
 \code{render_site} returns the name of the site output file (relative to the input directory).
 \code{clean_site} returns the names of the generated files removed during cleaning.
 \code{site_config} returns the contents of _site.yml as an R list
+\code{default_site_generator} returns the default site generator for R Markdown websites
 }
 \description{
 Render all of the R Markdown documents within a directory as a website.

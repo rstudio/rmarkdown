@@ -21,6 +21,8 @@ rmarkdown 1.10 (unreleased)
 
 * Allow `pre_knit` hook to override knitr options
 
+* Export `default_site_generator()` function
+
 
 rmarkdown 1.9
 --------------------------------------------------------------------------------

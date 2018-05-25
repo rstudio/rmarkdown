@@ -152,6 +152,12 @@ site_config <- function(input = ".", encoding = getOption("encoding")) {
   }
 }
 
+#' @noRd
+#' @export
+default_site_generator <- function(input, encoding = getOption("encoding"), ...) {
+  default_site(input, encoding, ...)
+}
+
 # default site implementation (can be overridden by custom site generators)
 default_site <- function(input, encoding = getOption("encoding"), ...) {
 
