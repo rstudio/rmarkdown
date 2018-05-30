@@ -363,8 +363,7 @@ copy_site_resources <- function(input, encoding = getOption("encoding")) {
 #' @return Character vector of top-level files and directories to copy
 #'
 #' @export
-site_resources <- function(site_dir, include = NULL, exclude = NULL,
-                           encoding = getOption("encoding")) {
+site_resources <- function(site_dir, include = NULL, exclude = NULL) {
 
   # get the original file list (we'll need it to apply includes)
   all_files <- list.files(site_dir, all.files = TRUE)

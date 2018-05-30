@@ -4,8 +4,7 @@
 \alias{site_resources}
 \title{Determine website resource files for a directory}
 \usage{
-site_resources(site_dir, include = NULL, exclude = NULL,
-  encoding = getOption("encoding"))
+site_resources(site_dir, include = NULL, exclude = NULL)
 }
 \arguments{
 \item{site_dir}{Site directory to analyze}
@@ -13,8 +12,6 @@ site_resources(site_dir, include = NULL, exclude = NULL,
 \item{include}{Additional files to include (glob wildcards supported)}
 
 \item{exclude}{Files to exclude  (glob wildcards supported)}
-
-\item{encoding}{The encoding of the input file; see \code{\link{file}}}
 }
 \value{
 Character vector of top-level files and directories to copy
