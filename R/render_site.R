@@ -359,11 +359,13 @@ copy_site_resources <- function(input, encoding = getOption("encoding")) {
 #' @param site_dir Site directory to analyze
 #' @param include Additional files to include (glob wildcards supported)
 #' @param exclude Files to exclude  (glob wildcards supported)
+#' @param recursive `TRUE` to return a full recursive file listing; `FALSE` to
+#'   just provide top-level files and directories.
 #'
-#' @return Character vector of top-level files and directories to copy
+#' @return Character vector of files and directories to copy
 #'
 #' @export
-site_resources <- function(site_dir, include = NULL, exclude = NULL) {
+site_resources <- function(site_dir, include = NULL, exclude = NULL, recursive = FALSE) {
 
   # get the original file list (we'll need it to apply includes)
   all_files <- list.files(site_dir, all.files = TRUE)
@@ -392,8 +394,25 @@ site_resources <- function(site_dir, include = NULL, exclude = NULL) {
     files <- unique(c(files, include_files))
   }
 
-  files
-
+  # if this is recursive then we need to blow out the directories
+  if (recursive) {
+    recursive_files <- c()
+    for (file in files) {
+      file_path <- file.path(site_dir, file)
+      if (dir_exists(file_path)) {
+        dir_files <- file.path(list.files(file_path,
+                                          full.names = FALSE,
+                                          recursive = TRUE))
+        dir_files <- file.path(file, dir_files)
+        recursive_files <- c(recursive_files, dir_files)
+      } else {
+        recursive_files <- c(recursive_files, file)
+      }
+    }
+    recursive_files
+  } else {
+    files
+  }
 }
 
 
@@ -408,7 +427,7 @@ copyable_site_resources <- function(input,
   if (config$output_dir != ".")
     exclude <- c(exclude, config$output_dir)
 
-  site_resources(input, include, exclude, encoding)
+  site_resources(input, include, exclude)
 }
 
 

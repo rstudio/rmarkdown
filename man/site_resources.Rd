@@ -4,7 +4,8 @@
 \alias{site_resources}
 \title{Determine website resource files for a directory}
 \usage{
-site_resources(site_dir, include = NULL, exclude = NULL)
+site_resources(site_dir, include = NULL, exclude = NULL,
+  recursive = FALSE)
 }
 \arguments{
 \item{site_dir}{Site directory to analyze}
@@ -12,9 +13,12 @@ site_resources(site_dir, include = NULL, exclude = NULL)
 \item{include}{Additional files to include (glob wildcards supported)}
 
 \item{exclude}{Files to exclude  (glob wildcards supported)}
+
+\item{recursive}{`TRUE` to return a full recursive file listing; `FALSE` to
+just provide top-level files and directories.}
 }
 \value{
-Character vector of top-level files and directories to copy
+Character vector of files and directories to copy
 }
 \description{
 Determine which files within a given directory should be copied in
