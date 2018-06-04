@@ -19,8 +19,6 @@ rmarkdown 1.10 (unreleased)
 
 * Add `site_resources()` function for computing resource files required for a website.
 
-* Allow `pre_knit` hook to override knitr options.
-
 * Export `default_site_generator()` function
 
 * The `latex_document()` format should not clean up the figure directory (thanks, @emiltb, rstudio/bookdown#582).
