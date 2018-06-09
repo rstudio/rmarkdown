@@ -126,7 +126,18 @@ merge_post_processors <- function(base,
 
   if (!is.null(base) && !is.null(overlay)) {
     function(metadata, input_file, output_file, ...) {
+
+      # record original output file
+      original_output_file <- output_file
+
+      # call overlay post processor
       output_file <- overlay(metadata, input_file, output_file, ...)
+
+      # also call base post processor on original file if requested
+      if (!is.null(attr(output_file, "post_process_original")))
+        base(metadata, input_file, original_output_file, ...)
+
+      # call base post processor
       base(metadata, input_file, output_file, ...)
     }
   }

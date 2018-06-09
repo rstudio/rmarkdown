@@ -23,6 +23,9 @@ rmarkdown 1.10 (unreleased)
 
 * The `latex_document()` format should not clean up the figure directory (thanks, @emiltb, rstudio/bookdown#582).
 
+* Enable post processors that change the output file to specify that the base post processor should still be applied to the original output file.
+
+
 rmarkdown 1.9
 --------------------------------------------------------------------------------
 
