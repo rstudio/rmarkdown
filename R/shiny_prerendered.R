@@ -280,7 +280,8 @@ shiny_prerendered_chunk <- function(context, code, singleton = FALSE) {
   # verify we are in runtime: shiny_prerendered
   if (!identical(knitr::opts_knit$get("rmarkdown.runtime"),"shiny_prerendered"))
       stop("The shiny_prerendered_chunk function can only be called from ",
-           "within runtime: shiny_prerenered")
+           "within runtime: shiny_prerendered",
+           call. = FALSE)
 
   # add the prerendered chunk to knit_meta
   knitr::knit_meta_add(list(
