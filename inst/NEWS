@@ -1,4 +1,4 @@
-rmarkdown 1.10 (unreleased)
+rmarkdown 1.10
 --------------------------------------------------------------------------------
 
 * Added a new argument `slide_level` to `powerpoint_presentation()` (#1270).
