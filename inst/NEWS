@@ -1,3 +1,8 @@
+rmarkdown 1.11 (unreleased)
+--------------------------------------------------------------------------------
+
+* Added the LaTeX command `\passthrough` in the default LaTeX template for the `--listings` flag of Pandoc (rstudio/bookdown#591).
+
 rmarkdown 1.10
 --------------------------------------------------------------------------------
 
