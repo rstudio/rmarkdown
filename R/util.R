@@ -496,3 +496,7 @@ adjust_dev <- function(opts) {
   }
   opts
 }
+
+xfun_session_info = function() {
+  paste('Pandoc version:', pandoc_version())
+}
