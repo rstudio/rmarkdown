@@ -81,15 +81,13 @@ html_dependency_navigation <- function(code_menu, source_embed) {
 html_dependency_font_awesome <- function() {
   htmlDependency(
     "font-awesome",
-    "5.0.13",
+    "5.1.0",
     src = rmarkdown_system_file("rmd/h/fontawesome"),
-    script = c(
-      "js/fontawesome-all.min.js",
-      "js/fa-v4-shims.min.js"),
-    stylesheet = "css/fa-svg-with-js.css"
+    stylesheet = c(
+      "css/all.css",
+      "css/v4-shims.css")
   )
 }
-
 
 # Create an HTML dependency for ionicons
 #' @rdname html-dependencies
