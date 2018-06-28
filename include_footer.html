@@ -23,6 +23,13 @@
         this.page.url = 'http://rmarkdown.rstudio.com' + location.pathname;
       };
       $(document).ready(function() {
+        var inIFrame = function() {
+          var iframe = true;
+          try { iframe = window.self !== window.top; } catch (e) {}
+          return iframe;
+        };
+        if (inIFrame()) return;
+
         // create disqus script tag
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//rmarkdown.disqus.com/embed.js';
