@@ -31,16 +31,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-20375833-14', 'auto');
-  ga('send', 'pageview');
-</script>
+<script type="text/javascript" src="js/ga.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -109,6 +100,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -283,10 +277,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <div id="overview" class="section level2">
 <h2>Overview</h2>
 <p>An R Notebook is an R Markdown document with chunks that can be executed independently and interactively, with output visible immediately beneath the input.</p>
-<div class="figure">
-<img src="images/notebook-demo.png" />
-
-</div>
+<p><img src="images/notebook-demo.png" /></p>
 <p>R Notebooks are a method of <a href="https://en.wikipedia.org/wiki/Literate_programming">literate programming</a> that allows for direct interaction with R while producing a reproducible document with publication-quality output.</p>
 <p>Any R Markdown document can be used as a notebook, and all R Notebooks can be rendered to other R Markdown document types. A notebook can therefore be thought of as a special execution mode for R Markdown documents. The immediacy of notebook mode makes it a good choice while authoring the R Markdown document and iterating on code; when you are ready to publish the document, you can share the notebook directly, or render it to a publication format with the <strong>Knit</strong> command.</p>
 </div>
@@ -300,25 +291,16 @@ title: &quot;My Notebook&quot;
 output: html_notebook
 ---</code></pre>
 <p>By default, RStudio enables inline output (notebook mode) on all R Markdown documents, so you can interact with any R Markdown document as though it were a notebook. If you have a document with which you prefer to use the traditional console method of interaction, you can disable notebook mode by clicking the gear in the editor toolbar and choosing <em>Chunk Output in Console</em>.</p>
-<div class="figure">
-<img src="images/notebook-console.png" class="notebook-screenshot" />
-
-</div>
+<p><img src="images/notebook-console.png" class="notebook-screenshot" /></p>
 <p>If you prefer to use the console by default for <em>all</em> your R Markdown documents (restoring the behavior in previous versions of RStudio), you can make <em>Chunk Output in Console</em> the default: <em>Tools -&gt; Options -&gt; R Markdown -&gt; Show output inline for all R Markdown documents</em>.</p>
 </div>
 <div id="inserting-chunks" class="section level3">
 <h3>Inserting Chunks</h3>
 <p>Notebook chunks can be inserted quickly using the keyboard shortcut <strong>Ctrl + Alt + I</strong> (OS X: <strong>Cmd + Option + I</strong>), or via the Add Chunk <img src="images/notebook-insert-chunk.png" /> command in the editor toolbar.</p>
 <p>Because all of a chunk’s output appears beneath the chunk (not alongside the statement which emitted the output, as it does in rendered R Markdown output), it’s often helpful to split chunks that produce multiple outputs into two or more chunks which each produce only one output. To do this, select the code to split into a new chunk:</p>
-<div class="figure">
-<img src="images/notebook-split-before.png" class="notebook-screenshot" />
-
-</div>
+<p><img src="images/notebook-split-before.png" class="notebook-screenshot" /></p>
 <p>Then, press <strong>Ctrl + Alt + I</strong> (OS X: <strong>Cmd + Option + I</strong>):</p>
-<div class="figure">
-<img src="images/notebook-split-after.png" class="notebook-screenshot" />
-
-</div>
+<p><img src="images/notebook-split-after.png" class="notebook-screenshot" /></p>
 </div>
 <div id="executing-code" class="section level3">
 <h3>Executing Code</h3>
@@ -333,10 +315,7 @@ output: html_notebook
 <div id="execution-queue" class="section level4">
 <h4>Execution Queue</h4>
 <p>When you execute code in a notebook, an indicator will appear in the gutter to show you execution progress.</p>
-<div class="figure">
-<img src="images/notebook-longrunning.png" />
-
-</div>
+<p><img src="images/notebook-longrunning.png" /></p>
 <p>Lines of code which have been sent to R are marked with dark green; lines which have not yet been sent to R are marked with light green.</p>
 <p>If at least one chunk is waiting to be executed, you’ll see a progress meter appear in the editor’s status bar indicating the number of chunks remaining to be executed. You can click on this meter at any time to jump to the currently executing chunk.</p>
 <p>When a chunk is waiting to execute, the Run button in its toolbar will change to a <img src="images/notebook-run-chunk-pending.png" /> Queued icon. If you don’t want the chunk to run, you can click on the Queued icon to remove it from the execution queue.</p>
@@ -358,10 +337,7 @@ output: html_notebook
 <h4>Executing Inline Chunks</h4>
 <p>An inline chunk is a chunk which is inline with the text rather than on its own line. For instance, “2 + 2 = <code>`r 2 + 2`</code>” will be rendered as “2 + 2 = 4”.</p>
 <p>To execute an inline chunk in the notebook, put your cursor inside the chunk and press <strong>Ctrl + Shift + Enter</strong> (OS X: <strong>Cmd + Shift + Enter</strong>). As in the execution of ordinary chunks, the content of the chunk will be sent to the R console for evaluation. The results will appear in a small pop-up window next to the code:</p>
-<div class="figure">
-<img src="images/notebook-inline-output.png" class="notebook-screenshot" />
-
-</div>
+<p><img src="images/notebook-inline-output.png" class="notebook-screenshot" /></p>
 <p>In notebooks, inline R chunks can only produce text, not figures or other kinds of output. It’s also important that R code run inside inline chunks executes quickly and does not have side effects, as it’s executed whenever you save the notebook.</p>
 </div>
 <div id="executing-external-chunks" class="section level4">
@@ -378,10 +354,7 @@ knitr::read_chunk("example.R")
 <pre><code>## ---- chunk
 1 + 1</code></pre>
 <p>When you execute the empty chunk in the notebook, code from the external file will be inserted, and the results displayed inline, as though the chunk contained that code.</p>
-<div class="figure">
-<img src="images/notebook-external-code.png" />
-
-</div>
+<p><img src="images/notebook-external-code.png" /></p>
 </div>
 </div>
 <div id="chunk-output" class="section level3">
@@ -390,10 +363,7 @@ knitr::read_chunk("example.R")
 <h4>Managing Output</h4>
 <p>When code is executed in the notebook, its output appears beneath the code chunk that produced it. You can clear an individual chunk’s output by clicking the <strong>X</strong> in the upper right corner of the output, or collapse it by clicking the chevron.</p>
 <p>It’s also possible to clear or collapse all of the output in the document at once using the <strong>Collapse All Output</strong> and <strong>Clear All Output</strong> commands; these commands are available on the gear menu in the editor toolbar.</p>
-<div class="figure">
-<img src="images/notebook-collapse-all-output.png" class="notebook-screenshot" />
-
-</div>
+<p><img src="images/notebook-collapse-all-output.png" class="notebook-screenshot" /></p>
 <p>If you want to fully reset the state of the notebook, the command <strong>Restart R and Clear All Output</strong> will do the job.</p>
 <p>See <a href="#output-storage">Output Storage</a> below for more information on where chunk output is saved.</p>
 </div>
@@ -401,19 +371,13 @@ knitr::read_chunk("example.R")
 <h4>Previewing Output</h4>
 <p>Ordinary R Markdown documents are “knit”, but notebooks are “previewed”. While the notebook preview looks similar to a rendered R Markdown document, the notebook preview does not execute any of your R code chunks; it simply shows you a rendered copy of the markdown in your document along with the most recent chunk output. This preview is generated automatically whenever you save the notebook (whether you are viewing it in RStudio or not); see the section beneath on the <em>.nb.html</em> file for details.</p>
 <p>When <code>html_notebook</code> is the topmost (default) format in your YAML header, you’ll see a <strong>Preview</strong> button in the editor toolbar. Clicking it will show you the notebook preview:</p>
-<div class="figure">
-<img src="images/notebook-preview.png" />
-
-</div>
+<p><img src="images/notebook-preview.png" /></p>
 <p>If you have configured R Markdown previewing to use the Viewer pane (as illustrated above) then the preview will be automatically updated whenever you save your notebook.</p>
 </div>
 <div id="handling-errors" class="section level4">
 <h4>Handling Errors</h4>
 <p>When an error occurs while a notebook chunk is executing:</p>
-<div class="figure">
-<img src="images/notebook-error.png" class="notebook-screenshot" />
-
-</div>
+<p><img src="images/notebook-error.png" class="notebook-screenshot" /></p>
 <ol style="list-style-type: decimal">
 <li>Execution will stop; the remaining lines of that chunk (and any chunks that have not yet been run) will not be executed.</li>
 <li>The editor will scroll to the error.</li>
@@ -461,7 +425,7 @@ knitr::read_chunk("example.R")
 
 <div id="rStudioFooter" class="band full">
 <div class="bandContent">
-  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="copyright">© Copyright 2016 - 2018 RStudio Inc.</div>
   <div id="logos">
     <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
     <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
@@ -475,27 +439,11 @@ knitr::read_chunk("example.R")
 <script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
 
 <!-- disqus -->
- <div id="disqus_thread" class="standardPadding"></div>
-    <script type="text/javascript">
-      var disqus_config = function () {
-        this.page.url = 'http://rmarkdown.rstudio.com' + location.pathname;
-      };
-      $(document).ready(function() {
-        // create disqus script tag
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//rmarkdown.disqus.com/embed.js';
+<div id="disqus_thread" class="standardPadding"></div>
+<script type="text/javascript" src="js/disqus.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-        // determine container
-        var container = document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0];
-
-        // append script tag enclosed by google indexing suppression comment
-        container.appendChild(document.createComment('googleoff: all'));
-        container.appendChild(dsq);
-        container.appendChild(document.createComment('googleon: all'));
-      });
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<script type="text/javascript" src="js/external-links.js"></script>
 
 
 </div>

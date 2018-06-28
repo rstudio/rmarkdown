@@ -28,16 +28,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-20375833-14', 'auto');
-  ga('send', 'pageview');
-</script>
+<script type="text/javascript" src="js/ga.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -106,6 +97,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -242,70 +236,70 @@ cat(contents, sep = &quot;\n&quot;)</code></pre>
 <pre class="r"><code>parsed &lt;- rmarkdown::parse_html_notebook(output_file)
 str(parsed)</code></pre>
 <pre><code>## List of 4
-##  $ source     : chr [1:233] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&quot; &quot;&quot; ...
+##  $ source     : chr [1:1759] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&quot; &quot;&quot; ...
 ##  $ rmd        : chr [1:8] &quot;---&quot; &quot;title: \&quot;R Notebook Stub\&quot;&quot; &quot;output: html_notebook&quot; &quot;---&quot; ...
-##  $ header     : chr [1:75] &quot;&lt;head&gt;&quot; &quot;&quot; &quot;&lt;meta charset=\&quot;utf-8\&quot; /&gt;&quot; &quot;&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html; charset=utf-8\&quot; /&gt;&quot; ...
+##  $ header     : chr [1:1598] &quot;&lt;head&gt;&quot; &quot;&quot; &quot;&lt;meta charset=\&quot;utf-8\&quot; /&gt;&quot; &quot;&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html; charset=utf-8\&quot; /&gt;&quot; ...
 ##  $ annotations:List of 12
 ##   ..$ :List of 4
-##   .. ..$ row  : int 175
+##   .. ..$ row  : int 1701
 ##   .. ..$ label: chr &quot;text&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 176
+##   .. ..$ row  : int 1702
 ##   .. ..$ label: chr &quot;text&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 177
+##   .. ..$ row  : int 1703
 ##   .. ..$ label: chr &quot;chunk&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 178
+##   .. ..$ row  : int 1704
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;```r\n# R Code\n```&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 180
+##   .. ..$ row  : int 1706
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 181
+##   .. ..$ row  : int 1707
 ##   .. ..$ label: chr &quot;output&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;Custom output for chunk: 1\n&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 183
+##   .. ..$ row  : int 1709
 ##   .. ..$ label: chr &quot;output&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 184
+##   .. ..$ row  : int 1710
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;```r\n# R Logo\n```&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 186
+##   .. ..$ row  : int 1712
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 187
+##   .. ..$ row  : int 1713
 ##   .. ..$ label: chr &quot;plot&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 189
+##   .. ..$ row  : int 1715
 ##   .. ..$ label: chr &quot;plot&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 190
+##   .. ..$ row  : int 1716
 ##   .. ..$ label: chr &quot;chunk&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL</code></pre>
@@ -317,7 +311,7 @@ str(parsed)</code></pre>
 
 <div id="rStudioFooter" class="band full">
 <div class="bandContent">
-  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="copyright">© Copyright 2016 - 2018 RStudio Inc.</div>
   <div id="logos">
     <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
     <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
@@ -331,27 +325,11 @@ str(parsed)</code></pre>
 <script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
 
 <!-- disqus -->
- <div id="disqus_thread" class="standardPadding"></div>
-    <script type="text/javascript">
-      var disqus_config = function () {
-        this.page.url = 'http://rmarkdown.rstudio.com' + location.pathname;
-      };
-      $(document).ready(function() {
-        // create disqus script tag
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//rmarkdown.disqus.com/embed.js';
+<div id="disqus_thread" class="standardPadding"></div>
+<script type="text/javascript" src="js/disqus.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-        // determine container
-        var container = document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0];
-
-        // append script tag enclosed by google indexing suppression comment
-        container.appendChild(document.createComment('googleoff: all'));
-        container.appendChild(dsq);
-        container.appendChild(document.createComment('googleon: all'));
-      });
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<script type="text/javascript" src="js/external-links.js"></script>
 
 
 

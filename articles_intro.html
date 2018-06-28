@@ -30,16 +30,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-20375833-14', 'auto');
-  ga('send', 'pageview');
-</script>
+<script type="text/javascript" src="js/ga.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -108,6 +99,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -216,24 +210,15 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 </ol>
 <p>In practice, authors almost always knit and convert their documents at the same time. In this article, I will use the term <em>render</em> to refer to the two step process of knitting and converting an R Markdown file.</p>
 <p>You can manually render an R Markdown file with <code>rmarkdown::render()</code>. This is what the above document looks like when rendered as a HTML file.</p>
-<div class="figure">
-<img src="articles/images/rmd-temp.png" />
-
-</div>
+<p><img src="articles/images/rmd-temp.png" /></p>
 <p>In practice, you do not need to call <code>rmarkdown::render()</code>. You can use a button in the RStudio IDE to render your reprt. R Markdown is heavily <a href="http://shiny.rstudio.com/articles/rmd-integration.html">integrated into the RStudio IDE</a>.</p>
 </div>
 <div id="getting-started" class="section level2">
 <h2>Getting started</h2>
 <p>To create an R Markdown report, open a plain text file and save it with the extension <em>.Rmd</em>. You can open a plain text file in your scripts editor by clicking File &gt; New File &gt; Text File in the RStudio toolbar.</p>
-<div class="figure">
-<img src="articles/images/rmd-file.png" />
-
-</div>
+<p><img src="articles/images/rmd-file.png" /></p>
 <p>Be sure to save the file with the extension <em>.Rmd</em>. The RStudio IDE enables several helpful buttons when you save the file with the .Rmd extension. You can save your file by clicking File &gt; Save in the RStudio toolbar.</p>
-<div class="figure">
-<img src="articles/images/rmd-save.png" />
-
-</div>
+<p><img src="articles/images/rmd-save.png" /></p>
 <p>R Markdown reports rely on three frameworks</p>
 <ol style="list-style-type: decimal">
 <li>markdown for formatted text</li>
@@ -268,33 +253,24 @@ Markdown is an **easy to use** format for writing reports. It resembles what you
 <li><strong>headers</strong> - Place one or more hashtags at the start of a line that will be a header (or sub-header). For example, <code># Say Hello to markdown</code>. A single hashtag creates a first level header. Two hashtags, <code>##</code>, creates a second level header, and so on.</li>
 <li><strong>italicized and bold text</strong> - Surround italicized text with asterisks, like this <code>*without realizing it*</code>. Surround bold text with two asterisks, like this <code>**easy to use**</code>.</li>
 <li><p><strong>lists</strong> - Group lines into bullet points that begin with asterisks. Leave a blank line before the first bullet, like this</p>
-<pre><code>This is a list
+<pre><code> This is a list
 
-* item 1
-* item 2
-* item 3</code></pre></li>
+ * item 1
+ * item 2
+ * item 3</code></pre></li>
 <li><p><strong>hyperlinks</strong> - Surround links with brackets, and then provide the link target in parentheses, like this <code>[Github](www.github.com)</code>.</p></li>
 </ol>
 <p>You can learn about more of markdown’s conventions in the <em>Markdown Quick Reference</em> guide, which comes with the RStudio IDE.</p>
 <p>To access the guide, open a <em>.md</em> or <em>.Rmd</em> file in RStudio. Then click the question mark that appears at the top of the scripts pane. Next, select “Markdown Quick Reference”. RStudio will open the <em>Markdown Quick Reference</em> guide in the Help pane.</p>
-<div class="figure">
-<img src="articles/images/rmd-ref.png" />
-
-</div>
+<p><img src="articles/images/rmd-ref.png" /></p>
 <div id="rendering" class="section level3">
 <h3>Rendering</h3>
 <p>To transform your markdown file into an HTML, PDF, or Word document, click the “Knit” icon that appears above your file in the scripts editor. A drop down menu will let you select the type of output that you want.</p>
-<div class="figure">
-<img src="articles/images/rmd-dropdown.png" />
-
-</div>
+<p><img src="articles/images/rmd-dropdown.png" /></p>
 <p>When you click the button, <code>rmarkdown</code> will duplicate your text in the new file format. <code>rmarkdown</code> will use the formatting instructions that you provided with markdown syntax.</p>
 <p>Once the file is rendered, RStudio will show you a preview of the new output and save the output file in your working directory.</p>
 <p>Here is how the markdown script above would look in each output format.</p>
-<div class="figure">
-<img src="articles/images/rmd-types.png" />
-
-</div>
+<p><img src="articles/images/rmd-types.png" /></p>
 <p><em>Note: RStudio does not build PDF and Word documents from scratch. You will need to have a distribution of Latex installed on your computer to make PDFs and Microsoft Word (or a similar program) installed to make Word files.</em></p>
 </div>
 </div>
@@ -316,25 +292,13 @@ dim(iris)
 </code></pre>
 <p>When you render your document, <code>knitr</code> will run the code and append the results to the code chunk. <code>knitr</code> will provide formatting and syntax highlighting to both the code and its results (where appropriate).</p>
 <p>As a result, the markdown snippet above will look like this when rendered (to HTML).</p>
-<div class="figure">
-<img src="articles/images/rmd-code.png" />
-
-</div>
+<p><img src="articles/images/rmd-code.png" /></p>
 <p>To omit the <em>results</em> from your final report (and not run the code) add the argument <code>eval = FALSE</code> inside the brackets and after <code>r</code>. This will place a copy of your code into the report.</p>
-<div class="figure">
-<img src="articles/images/rmd-eval.png" />
-
-</div>
+<p><img src="articles/images/rmd-eval.png" /></p>
 <p>To omit the <em>code</em> from the final report (while including the results) add the argument <code>echo = FALSE</code>. This will place a copy of the results into your report.</p>
-<div class="figure">
-<img src="articles/images/rmd-echo.png" />
-
-</div>
+<p><img src="articles/images/rmd-echo.png" /></p>
 <p><code>echo = FALSE</code> is very handy for adding plots to a report, since you usually do not want to see the code that generates the plot.</p>
-<div class="figure">
-<img src="articles/images/rmd-echo2.png" />
-
-</div>
+<p><img src="articles/images/rmd-echo2.png" /></p>
 <p><code>echo</code> and <code>eval</code> are not the only arguments that you can use to customize code chunks. You can learn more about formatting the output of code chunks at the <a href="http://rmarkdown.rstudio.com/authoring_rcodechunks.html">rmarkdown</a> and <a href="http://yihui.name/knitr/options">knitr</a> websites.</p>
 <div id="inline-code" class="section level3">
 <h3>Inline code</h3>
@@ -343,10 +307,7 @@ dim(iris)
 Two plus two equals 4.
 </code></pre>
 <p><code>knitr</code> will replace the inline code with its result in your final document (inline code is <em>always</em> replaced by its result). The result will appear as if it were part of the original text. For example, the snippet above will appear like this:</p>
-<div class="figure">
-<img src="articles/images/rmd-inline.png" />
-
-</div>
+<p><img src="articles/images/rmd-inline.png" /></p>
 </div>
 </div>
 <div id="yaml-for-render-parameters" class="section level2">
@@ -397,7 +358,7 @@ Some inline R code, 4.
 
 <div id="rStudioFooter" class="band full">
 <div class="bandContent">
-  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="copyright">© Copyright 2016 - 2018 RStudio Inc.</div>
   <div id="logos">
     <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
     <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
@@ -411,27 +372,11 @@ Some inline R code, 4.
 <script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
 
 <!-- disqus -->
- <div id="disqus_thread" class="standardPadding"></div>
-    <script type="text/javascript">
-      var disqus_config = function () {
-        this.page.url = 'http://rmarkdown.rstudio.com' + location.pathname;
-      };
-      $(document).ready(function() {
-        // create disqus script tag
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//rmarkdown.disqus.com/embed.js';
+<div id="disqus_thread" class="standardPadding"></div>
+<script type="text/javascript" src="js/disqus.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-        // determine container
-        var container = document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0];
-
-        // append script tag enclosed by google indexing suppression comment
-        container.appendChild(document.createComment('googleoff: all'));
-        container.appendChild(dsq);
-        container.appendChild(document.createComment('googleon: all'));
-      });
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<script type="text/javascript" src="js/external-links.js"></script>
 
 
 

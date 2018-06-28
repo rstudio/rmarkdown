@@ -31,16 +31,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-20375833-14', 'auto');
-  ga('send', 'pageview');
-</script>
+<script type="text/javascript" src="js/ga.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -109,6 +100,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -284,8 +278,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <script src="flexdashboard/snippets/snippets.js" type="text/javascript" charset="utf-8"></script>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>The traditional way to add Shiny components to an R Markdown document is through the use of <a href="authoring_shiny.html"><code>runtime: shiny</code></a>. This method provides a very straightforward development experience (you can use Shiny UI and server functions anywhere you like within the document). However, because it requires a full document render for each end user browser session it can perform poorly for documents that don't render quickly.</p>
-<p>Ideally, we could have interactive documents that are prerendered (i.e. render/knit a single time <em>prior to</em> their deployment) and as a result be very quick to load. It would also be beneficial to extend the notion of prerendering to data, so that expensive data import and manipulation tasks could be done up front and not slow down startup and load times. To address these requirements a new <code>runtime: shiny_prerendered</code> mode is currently under development.</p>
+<p>The traditional way to add Shiny components to an R Markdown document is through the use of <a href="authoring_shiny.html"><code>runtime: shiny</code></a>. This method provides a very straightforward development experience (you can use Shiny UI and server functions anywhere you like within the document). However, because it requires a full document render for each end user browser session it can perform poorly for documents that don’t render quickly.</p>
+<p>Ideally, we could have interactive documents that are prerendered (i.e. render/knit a single time <em>prior to</em> their deployment) and as a result be very quick to load. It would also be beneficial to extend the notion of prerendering to data, so that expensive data import and manipulation tasks could be done up front and not slow down startup and load times. To address these requirements a new <code>runtime: shiny_prerendered</code> mode is currently under development.</p>
 <div id="prerequisties" class="section level3 toc-ignore">
 <h3>Prerequisties</h3>
 <p>To use <code>runtime: shiny_prerendered</code> you need to install the very latest version (v1.2) of the <a href="http://rmarkdown.rstudio.com">rmarkdown</a> package. You can do this as follows:</p>
@@ -301,18 +295,18 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <li>Serving of the document to end users.</li>
 </ol>
 <p>This provides a hybrid model of execution, where some code is run once when the document is rendered (like R Markdown) and some code is run for every user interaction (like Shiny).</p>
-<p>All code chunks within a <code>runtime: shiny_prerendered</code> document have a context attribute which indicates when they execute (the context is &quot;render&quot; by default).</p>
+<p>All code chunks within a <code>runtime: shiny_prerendered</code> document have a context attribute which indicates when they execute (the context is “render” by default).</p>
 <div id="context-render" class="section level3">
-<h3>context='render'</h3>
-<p>This is the default context for all R code chunks and encompasses the traditional <code>rmarkdown::render</code> step (using knitr to execute R code chunks and pandoc to generate an HTML document). This step is also used to generate Shiny UI elements (i.e. code traditionally included in a Shiny <code>ui.R</code> file). For example:</p>
+<h3>context=‘render’</h3>
+<p>This is the default context for all R code chunks and encompasses the traditional <code>rmarkdown::render</code> step (using knitr to execute R code chunks and pandoc to generate an HTML document). This step is also used to generate Shiny UI elements (i.e. code traditionally included in a Shiny <code>ui.R</code> file). For example:</p>
 <div id="shiny_prerendered_render">
 
 </div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_render', 'r')</script>
 </div>
 <div id="context-server" class="section level3">
-<h3>context='server'</h3>
-<p>This is the code that runs when the interactive document is served, and includes Shiny server code (i.e. code traditionally included in a Shiny <code>server.R</code> file). For example:</p>
+<h3>context=‘server’</h3>
+<p>This is the code that runs when the interactive document is served, and includes Shiny server code (i.e. code traditionally included in a Shiny <code>server.R</code> file). For example:</p>
 <div id="shiny_prerendered_server">
 
 </div>
@@ -320,31 +314,31 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 <div id="simple-example" class="section level3">
 <h3>Simple Example</h3>
-<p>Here's the two example chunks from above combined together into a complete document:</p>
+<p>Here’s the two example chunks from above combined together into a complete document:</p>
 <div id="shiny_prerendered_simple">
 
 </div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_simple', 'r')</script>
-<p>Note that we've dropped the <code>context=&quot;render&quot;</code> from the first chunk since &quot;render&quot; is the default context.</p>
-<p>The output from normal R Markdown chunks creates the document's content and Shiny UI. R Markdown chunks with the <code>context=&quot;server&quot;</code> are combined to create the Shiny server function. You can have as many <code>&quot;server&quot;</code> chunks as you like, allowing you to co-locate server and UI code.</p>
+<p>Note that we’ve dropped the <code>context=&quot;render&quot;</code> from the first chunk since “render” is the default context.</p>
+<p>The output from normal R Markdown chunks creates the document’s content and Shiny UI. R Markdown chunks with the <code>context=&quot;server&quot;</code> are combined to create the Shiny server function. You can have as many <code>&quot;server&quot;</code> chunks as you like, allowing you to co-locate server and UI code.</p>
 <p>Normal chunks that create the UI are processed during <code>rmarkdown::render</code>, and therefore execute prior to the deployment of your document. This means that unlike with <code>runtime: shiny</code>, the time required to render your document does not impact the startup or load time of the document for end users.</p>
 </div>
 <div id="context-separation" class="section level3">
 <h3>Context Separation</h3>
-<p>It's critical to understand that the <code>&quot;render&quot;</code> and <code>&quot;server&quot;</code> contexts are run in completely separate R sessions: <code>&quot;render&quot;</code> is run once during <code>rmarkdown::render</code>, and <code>&quot;server&quot;</code> is run many times by shiny. That means that you cannot access variables created in <code>&quot;render&quot;</code> chunks within <code>&quot;server&quot;</code> chunks, and vice-versa. For example, the following code won't work:</p>
+<p>It’s critical to understand that the <code>&quot;render&quot;</code> and <code>&quot;server&quot;</code> contexts are run in completely separate R sessions: <code>&quot;render&quot;</code> is run once during <code>rmarkdown::render</code>, and <code>&quot;server&quot;</code> is run many times by shiny. That means that you cannot access variables created in <code>&quot;render&quot;</code> chunks within <code>&quot;server&quot;</code> chunks, and vice-versa. For example, the following code won’t work:</p>
 <div id="shiny_prerendered_execution_context">
 
 </div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_execution_context', 'r')</script>
-<p>This won't work because the <code>&quot;server&quot;</code> context can't see the definition of the variable <code>a</code> (since the two chunks will execute in entirely different R sessions).</p>
-<p>It is of course very convenient to be able to share values between execution contexts. In the <a href="#additional-contexts">Additional Contexts</a> section below we'll describe a couple of hybrid contexts that can be used accomplish this.</p>
+<p>This won’t work because the <code>&quot;server&quot;</code> context can’t see the definition of the variable <code>a</code> (since the two chunks will execute in entirely different R sessions).</p>
+<p>It is of course very convenient to be able to share values between execution contexts. In the <a href="#additional-contexts">Additional Contexts</a> section below we’ll describe a couple of hybrid contexts that can be used accomplish this.</p>
 </div>
 </div>
 <div id="additional-contexts" class="section level2">
 <h2>Additional Contexts</h2>
 <p>The <code>&quot;render&quot;</code> and <code>&quot;server&quot;</code> contexts provide the basic framework for using <code>runtime: shiny_prerendered</code> and are sufficient for creating simple documents and applications. There are also a number of additional contexts which (among other things) enable you to share code and data between <code>&quot;render&quot;</code> and <code>&quot;server&quot;</code> contexts. These contexts are described below.</p>
 <div id="context-setup" class="section level3">
-<h3>context='setup'</h3>
+<h3>context=‘setup’</h3>
 <p>Conventional Shiny applications can include a <code>global.R</code> file to define code which is shared between the UI and server. You can accomplish the same thing within <code>runtime: shiny_prerendered</code> documents by adding the <code>context=&quot;setup&quot;</code> attribute to an R code chunk. Code within the chunk will be executed both during render and during the startup of the Shiny server. For example:</p>
 <div id="shiny_prerendered_setup_context">
 
@@ -352,9 +346,9 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <script type="text/javascript">loadSnippet('shiny_prerendered_setup_context', 'r')</script>
 </div>
 <div id="context-data" class="section level3">
-<h3>context='data'</h3>
-<p>The loading and manipulation of data often dominates the startup time of Shiny applications. Since <code>runtime: shiny_prerendered</code> documents are executed in two phases (the initial render and then the serving of the document to users) we can perform the expensive data manipulations during rendering and then simply load the data when starting up the application. This extends the concept of &quot;prerendering&quot; from document content and user-interface elements to data.</p>
-<p>You can define prerendered data by adding the <code>context=&quot;data&quot;</code> attribute to an R code chunk. The chunk will be executed during render and any R objects it creates will be saved to an .RData file, which will then be loaded during Shiny server startup. For example, we could take the the setup chunk illustrated above and factor out the data loading into it's own chunk:</p>
+<h3>context=‘data’</h3>
+<p>The loading and manipulation of data often dominates the startup time of Shiny applications. Since <code>runtime: shiny_prerendered</code> documents are executed in two phases (the initial render and then the serving of the document to users) we can perform the expensive data manipulations during rendering and then simply load the data when starting up the application. This extends the concept of “prerendering” from document content and user-interface elements to data.</p>
+<p>You can define prerendered data by adding the <code>context=&quot;data&quot;</code> attribute to an R code chunk. The chunk will be executed during render and any R objects it creates will be saved to an .RData file, which will then be loaded during Shiny server startup. For example, we could take the the setup chunk illustrated above and factor out the data loading into it’s own chunk:</p>
 <div id="shiny_prerendered_data_context">
 
 </div>
@@ -367,21 +361,18 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 </div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_data_caching', 'r')</script>
-<p>In this example the cache will be invalidated if either the R code in the chunk changes or the modification time of the &quot;data.csv&quot; file changes (this is accomplished using the <code>cache.extra</code> option).</p>
+<p>In this example the cache will be invalidated if either the R code in the chunk changes or the modification time of the “data.csv” file changes (this is accomplished using the <code>cache.extra</code> option).</p>
 <p>You can also invalidate an existing cache by removing the <code>_cache</code> directory associated with your R Markdown document. A command for doing this is available from within the <strong>Run Document</strong> submenu:</p>
-<div class="figure">
-<img src="images/shiny-prerendered-clear-knitr-cache.png" class="screenshot" style="margin-bottom: 12px;" width="642" height="136" />
-
-</div>
-<p>Note that data caching isn't always appropriate. For example, if your data is constantly re-read from a URL or if you don't have a fully reliable way to invalidate the cache. There are many additional options available for controlling caching behavior, see the <a href="http://yihui.name/knitr/demo/cache/">knitr caching</a> documentation for details.</p>
+<p><img src="images/shiny-prerendered-clear-knitr-cache.png" class="screenshot" style="margin-bottom: 12px;" width="642" height="136" /></p>
+<p>Note that data caching isn’t always appropriate. For example, if your data is constantly re-read from a URL or if you don’t have a fully reliable way to invalidate the cache. There are many additional options available for controlling caching behavior, see the <a href="http://yihui.name/knitr/demo/cache/">knitr caching</a> documentation for details.</p>
 </div>
 </div>
 <div id="context-server-start" class="section level3">
-<h3>context='server-start'</h3>
-<p>We've discussed the two main execution contexts (<code>&quot;render&quot;</code> and <code>&quot;server&quot;</code>) as well as some hybrid contexts used for shared code and data. The <code>&quot;server-start&quot;</code> context executes once when the Shiny document is first run and is <em>not</em> re-executed for each new user of the document. Using <code>&quot;server-start&quot;</code> is appropriate for several scenarios including:</p>
+<h3>context=‘server-start’</h3>
+<p>We’ve discussed the two main execution contexts (<code>&quot;render&quot;</code> and <code>&quot;server&quot;</code>) as well as some hybrid contexts used for shared code and data. The <code>&quot;server-start&quot;</code> context executes once when the Shiny document is first run and is <em>not</em> re-executed for each new user of the document. Using <code>&quot;server-start&quot;</code> is appropriate for several scenarios including:</p>
 <ol style="list-style-type: decimal">
-<li><p>Establishing shared connections to remote servers (e.g. databases, Spark contexts, etc.).</p></li>
-<li><p>Creating reactive values intended to be shared across sessions (e.g. with <a href="http://shiny.rstudio.com/reference/shiny/latest/reactivePoll.html">reactivePoll</a> or <a href="http://shiny.rstudio.com/reference/shiny/latest/reactiveFileReader.html">reactiveFileReader</a>).</p></li>
+<li><p>Establishing shared connections to remote servers (e.g. databases, Spark contexts, etc.).</p></li>
+<li><p>Creating reactive values intended to be shared across sessions (e.g. with <a href="http://shiny.rstudio.com/reference/shiny/latest/reactivePoll.html">reactivePoll</a> or <a href="http://shiny.rstudio.com/reference/shiny/latest/reactiveFileReader.html">reactiveFileReader</a>).</p></li>
 </ol>
 <p>You can add your own startup code explicitly by including chunks with the <code>context=&quot;server-start&quot;</code> attribute:</p>
 <div id="shiny_prerendered_server_start">
@@ -391,20 +382,20 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 <div id="chunk-labels" class="section level3">
 <h3>Chunk Labels</h3>
-<p>Above we've shown the use of the <code>context</code> attribute to associate chunks with various execution contexts. The label of R chunks can also serve as a shorthand way of specifying a context (e.g. a chunk with label <code>setup</code> automatically gains the <code>context=&quot;setup&quot;</code> attribute).</p>
+<p>Above we’ve shown the use of the <code>context</code> attribute to associate chunks with various execution contexts. The label of R chunks can also serve as a shorthand way of specifying a context (e.g. a chunk with label <code>setup</code> automatically gains the <code>context=&quot;setup&quot;</code> attribute).</p>
 <p>Within traditional R Markdown documents the use of a chunk with label <code>setup</code> is a strong convention for initialization code and automatically promoting chunk labels to context names allows us to carry this convention forward in <code>runtime: shiny_prerendered</code>. Using this technqiue the above example can be re-written as:</p>
 <div id="shiny_prerendered_labels">
 
 </div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_labels', 'r')</script>
-<p>Note that the use of chunk labels to specify contexts is inherently limited (since a given chunk label can appear only once within a document). As a result it's good practice to use chunk labels for contexts that are typically global singletons (e.g. <code>&quot;setup&quot;</code> and <code>&quot;data&quot;</code>) and an explicit <code>context</code> attribute for contexts which typically appear multiple times (e.g. <code>&quot;server&quot;</code>).</p>
+<p>Note that the use of chunk labels to specify contexts is inherently limited (since a given chunk label can appear only once within a document). As a result it’s good practice to use chunk labels for contexts that are typically global singletons (e.g. <code>&quot;setup&quot;</code> and <code>&quot;data&quot;</code>) and an explicit <code>context</code> attribute for contexts which typically appear multiple times (e.g. <code>&quot;server&quot;</code>).</p>
 </div>
 </div>
 <div id="putting-it-all-together" class="section level2">
 <h2>Putting It All Together</h2>
 <div id="complete-example" class="section level3">
 <h3>Complete Example</h3>
-<p>Here's a complete example of a <a href="http://rmarkdown.rstudio.com/flexdashboard">flexdashboard</a> implemented with <code>runtime: shiny_prerendered</code>:</p>
+<p>Here’s a complete example of a <a href="http://rmarkdown.rstudio.com/flexdashboard">flexdashboard</a> implemented with <code>runtime: shiny_prerendered</code>:</p>
 <div id="shiny_prerendered_complete">
 
 </div>
@@ -412,7 +403,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 <div id="execution-flow" class="section level3">
 <h3>Execution Flow</h3>
-<p>Now that we've seen some examples of the various contexts at work it's worth a re-cap of the overall execution flow for <code>runtime: shiny_prerendered</code>. If you are accustomed to thinking about Shiny applications in terms of ui.R and server.R here's how <code>runtime: shiny_prerendered</code> maps to the way code is executed in those files:</p>
+<p>Now that we’ve seen some examples of the various contexts at work it’s worth a re-cap of the overall execution flow for <code>runtime: shiny_prerendered</code>. If you are accustomed to thinking about Shiny applications in terms of ui.R and server.R here’s how <code>runtime: shiny_prerendered</code> maps to the way code is executed in those files:</p>
 <p><strong>ui.R</strong></p>
 <pre><code>context=&quot;setup&quot;
 context=&quot;data&quot;
@@ -426,24 +417,21 @@ function(input, output, session) {
   context=&quot;server&quot;    
 }</code></pre>
 <p>Note that the default context for R code chunks is <code>&quot;render&quot;</code> so for chunks that render content and Shiny UI you can omit the <code>context</code> attribute entirely.</p>
-<p>Note also that in the case of the <code>&quot;data&quot;</code> context, the code isn't re-executed within the server but rather the objects created during rendering are simply loaded into the server context. This has the potential to make server startup dramatically faster because data import and preparation has already occurred during render.</p>
+<p>Note also that in the case of the <code>&quot;data&quot;</code> context, the code isn’t re-executed within the server but rather the objects created during rendering are simply loaded into the server context. This has the potential to make server startup dramatically faster because data import and preparation has already occurred during render.</p>
 </div>
 <div id="running-documents" class="section level3">
 <h3>Running Documents</h3>
 <p>Assuming you are using the <a href="https://www.rstudio.com/products/rstudio/download/">latest release of RStudio</a> (v1.0.136 or later) you can execute a <code>runtime: shiny_prerendered</code> document locally using the <strong>Run Document</strong> command on the editor toolbar, or use the keyboard shortcut Ctrl+Shift+K (Cmd+Shift+K on Mac):</p>
-<div class="figure">
-<img src="images/shiny-prerendered-rstudio.png" class="screenshot" style="margin-bottom: 12px;" width="642" height="159" />
-
-</div>
+<p><img src="images/shiny-prerendered-rstudio.png" class="screenshot" style="margin-bottom: 12px;" width="642" height="159" /></p>
 <p>Note that this command runs the document in a separate R process, so you can continue to use the R console while the document is running. You can see any R console output from this separate process in the R Markdown console tab in RStudio.</p>
-<p>If you're not using RStudio, or want to run the document in-process for troubleshooting, you can also run the document from the console using the <a href="https://www.rdocumentation.org/packages/rmarkdown/topics/run"><code>rmarkdown::run</code></a> function.</p>
+<p>If you’re not using RStudio, or want to run the document in-process for troubleshooting, you can also run the document from the console using the <a href="https://www.rdocumentation.org/packages/rmarkdown/topics/run"><code>rmarkdown::run</code></a> function.</p>
 </div>
 <div id="deployment" class="section level3">
 <h3>Deployment</h3>
 <div id="shiny-server" class="section level4">
 <h4>Shiny Server</h4>
 <p>You can deploy <code>runtime: shiny_prerendered</code> documents using version 1.2 or later of <a href="http://www.rstudio.com/products/shiny/shiny-server/">Shiny Server</a>.</p>
-<p>Shiny documents are deployed the same way that Shiny applications are, except rather than deploying ui.R and server.R files, you deploy an Rmd file along with it's required dependencies and pre-rendered HTML.</p>
+<p>Shiny documents are deployed the same way that Shiny applications are, except rather than deploying ui.R and server.R files, you deploy an Rmd file along with it’s required dependencies and pre-rendered HTML.</p>
 <p>See the Shiny Server <a href="http://docs.rstudio.com/shiny-server/#r-markdown">documentation</a> for more details on deploying <code>runtime: shiny_prerendered</code> documents.</p>
 </div>
 <div id="shinyapps" class="section level4">
@@ -457,22 +445,19 @@ function(input, output, session) {
 <p>You can then deploy your <code>runtime: shiny_prerendered</code> document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute the <a href="https://www.rdocumentation.org/packages/rsconnect/topics/deployDoc"><code>rsconnect::deployDoc</code></a> function. For example:</p>
 <pre class="r"><code>rsconnect::deployDoc(&quot;faithful.Rmd&quot;)</code></pre>
 <p>If you are using RStudio you can also use the <strong>Publish</strong> button available when working with a <code>runtime: shiny_prerendered</code> document:</p>
-<div class="figure">
-<img src="images/shinyapps-deploy-faithful.png" style="margin-bottom: 12px;" width="619" height="421" />
-
-</div>
+<p><img src="images/shinyapps-deploy-faithful.png" style="margin-bottom: 12px;" width="619" height="421" /></p>
 </div>
 </div>
 </div>
 <div id="advanced-topics" class="section level2">
 <h2>Advanced Topics</h2>
-<p>This section covers advanced topics including conventions around referencing external web files (e.g. images, CSS stylesheets, etc.) and gaining finer grained control over the rendering step. Understanding these topics is not required for everyday usage so feel free to skip them now and return to them only if and when necessary.</p>
+<p>This section covers advanced topics including conventions around referencing external web files (e.g. images, CSS stylesheets, etc.) and gaining finer grained control over the rendering step. Understanding these topics is not required for everyday usage so feel free to skip them now and return to them only if and when necessary.</p>
 <div id="external-resources" class="section level3">
 <h3>External Resources</h3>
 <p>There are two types of external resource files that might be referenced from a <code>runtime: shiny_prerendered</code> document:</p>
 <ol style="list-style-type: decimal">
-<li>Files referenced from R code (e.g. R scripts, datasets, configuration files, etc.); and</li>
-<li>Files referenced from the web document (e.g. CSS stylesheets, images, etc.)</li>
+<li>Files referenced from R code (e.g. R scripts, datasets, configuration files, etc.); and</li>
+<li>Files referenced from the web document (e.g. CSS stylesheets, images, etc.)</li>
 </ol>
 <p>For files referenced from R code, you can reference anything located within the directory of (or sub-directories of) the main Rmd file. This is no different than any other Rmd file or even R script.</p>
 <p>For files referenced from the web document however, you need to be sure to place them within one of the following specially named sub-directories to ensure they can be located by the Shiny web server:</p>
@@ -486,7 +471,7 @@ function(input, output, session) {
 <tbody>
 <tr class="odd">
 <td><code>images/</code></td>
-<td>Image files (e.g. PNG, JPEG, etc.)</td>
+<td>Image files (e.g. PNG, JPEG, etc.)</td>
 </tr>
 <tr class="even">
 <td><code>css/</code></td>
@@ -498,17 +483,17 @@ function(input, output, session) {
 </tr>
 <tr class="even">
 <td><code>www/</code></td>
-<td>Any other files (e.g. downloadable datasets)</td>
+<td>Any other files (e.g. downloadable datasets)</td>
 </tr>
 </tbody>
 </table>
-<p>The reason that all files within the directory of the main Rmd can't be referenced from within the web document is that many of these files are application source code and data, which may not be something you want to be downloadable by end users. By restricting the files which can be referenced to the above directories you can control which files are downloadable and which are not.</p>
+<p>The reason that all files within the directory of the main Rmd can’t be referenced from within the web document is that many of these files are application source code and data, which may not be something you want to be downloadable by end users. By restricting the files which can be referenced to the above directories you can control which files are downloadable and which are not.</p>
 </div>
 <div id="rendering-step" class="section level3">
 <h3>Rendering Step</h3>
 <p>When a <code>runtime: shiny_prerendered</code> document is executed via <a href="https://www.rdocumentation.org/packages/rmarkdown/topics/run"><code>rmarkdown::run</code></a>, it will automatically determine whether it requires an <a href="https://www.rdocumentation.org/packages/rmarkdown/topics/render"><code>rmarkdown::render</code></a> prior to serving the document. It does this using the following criteria:</p>
 <ol style="list-style-type: decimal">
-<li>Has the document's generated HTML file changed since the last modified time of the Rmd file?</li>
+<li>Has the document’s generated HTML file changed since the last modified time of the Rmd file?</li>
 <li>Have any of the resources that the the Rmd file depends on (determined by calling <a href="https://www.rdocumentation.org/packages/rmarkdown/topics/find_external_resources"><code>rmarkdown::find_external_resources</code></a>) changed since the last modified time of the Rmd file?</li>
 </ol>
 <p>The automatic behavior is appropriate for most scenarios, however in some cases you may wish to ensure that a <code>render</code> <em>never occurs</em> or in other cases ensure that a <code>render</code> is <em>forced to occur</em>.</p>
@@ -522,17 +507,14 @@ function(input, output, session) {
 </div>
 <div id="forcing-a-render" class="section level4">
 <h4>Forcing a Render</h4>
-<p>In other cases you may want to force a re-rendering of a document (e.g. to update it with new data on a scheduled basis). You can do this in a couple of different ways:</p>
+<p>In other cases you may want to force a re-rendering of a document (e.g. to update it with new data on a scheduled basis). You can do this in a couple of different ways:</p>
 <ol style="list-style-type: decimal">
 <li>Call <a href="https://www.rdocumentation.org/packages/rmarkdown/topics/render"><code>rmarkdown::render</code></a> on the Rmd file.</li>
 <li>Remove the HTML file previously generated by rendering the Rmd.</li>
 </ol>
 <p>Note that for both of these techniques if you are also using <a href="#knitr-caching">Knitr Caching</a> then invalidating the cache requires that you also remove the <code>_cache</code> directory for the Rmd.</p>
 <p>When working within RStudio you can remove all prerendered output (including the cache) using a command on the <strong>Run Document</strong> submenu:</p>
-<div class="figure">
-<img src="images/shiny-prerendered-clear-output.png" class="screenshot" style="margin-bottom: 15px;" width="642" height="157" />
-
-</div>
+<p><img src="images/shiny-prerendered-clear-output.png" class="screenshot" style="margin-bottom: 15px;" width="642" height="157" /></p>
 <p>You can also call the <code>rmarkdown::shiny_prerendered_clean</code> function to accomplish the same task from outside of RStudio.</p>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -550,7 +532,7 @@ $(document).ready(function() {
 
 <div id="rStudioFooter" class="band full">
 <div class="bandContent">
-  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="copyright">© Copyright 2016 - 2018 RStudio Inc.</div>
   <div id="logos">
     <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
     <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
@@ -564,27 +546,11 @@ $(document).ready(function() {
 <script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
 
 <!-- disqus -->
- <div id="disqus_thread" class="standardPadding"></div>
-    <script type="text/javascript">
-      var disqus_config = function () {
-        this.page.url = 'http://rmarkdown.rstudio.com' + location.pathname;
-      };
-      $(document).ready(function() {
-        // create disqus script tag
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//rmarkdown.disqus.com/embed.js';
+<div id="disqus_thread" class="standardPadding"></div>
+<script type="text/javascript" src="js/disqus.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-        // determine container
-        var container = document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0];
-
-        // append script tag enclosed by google indexing suppression comment
-        container.appendChild(document.createComment('googleoff: all'));
-        container.appendChild(dsq);
-        container.appendChild(document.createComment('googleon: all'));
-      });
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<script type="text/javascript" src="js/external-links.js"></script>
 
 
 </div>

@@ -30,16 +30,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-20375833-14', 'auto');
-  ga('send', 'pageview');
-</script>
+<script type="text/javascript" src="js/ga.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -108,6 +99,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -192,23 +186,14 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <li>Deploy to shinyapps.io</li>
 <li>The R Markdown console</li>
 </ol>
-<div class="figure">
-<img src="articles/images/rmdint-all.png" />
-
-</div>
+<p><img src="articles/images/rmdint-all.png" /></p>
 <p><br></p>
 <div id="file-templates" class="section level2">
 <h2>1. File templates</h2>
 <p>The RStudio IDE provides a template document when you open a new .Rmd file. To open a new file, click File &gt; New File &gt; R Markdown in the RStudio menu bar.</p>
-<div class="figure">
-<img src="articles/images/rmd-new.png" />
-
-</div>
+<p><img src="articles/images/rmd-new.png" /></p>
 <p>A window will pop up that helps you build the YAML frontmatter for the .Rmd file.</p>
-<div class="figure">
-<img src="articles/images/rmd-window.png" />
-
-</div>
+<p><img src="articles/images/rmd-window.png" /></p>
 <p>From the window’s sidebar, select the category of output that you plan to convert your .Rmd file into. You can select</p>
 <ul>
 <li><strong>Document</strong> - a static document</li>
@@ -221,19 +206,13 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <p>To make an interactive document, select Shiny from the sidebar and Shiny Document from the radio buttons. Then click OK.</p>
 <p>RStudio will open a new .Rmd file for you to use. The file will contain a YAML header that includes all of the parameters that your file will need to correctly render with <code>rmarkdown::render()</code>. You can manually change these parameters afterwords if you like.</p>
 <p>RStudio will fill the rest of the file with a template that demonstrates the basic features of .Rmd files. The templates work right out of the box, which means that you can immediately knit or run one. The image below shows the template for interactive documents.</p>
-<div class="figure">
-<img src="articles/images/rmdint-template.png" />
-
-</div>
+<p><img src="articles/images/rmdint-template.png" /></p>
 <p>Study the template as a refresher on R Markdown, or erase it and begin writing your own document.</p>
 </div>
 <div id="using-r-markdown" class="section level2">
 <h2>2. Using R Markdown</h2>
 <p>The IDE places a question mark icon in the scripts pane whenever you open a .Rmd file. The question mark opens a drop down menu with two helpful resources.</p>
-<div class="figure">
-<img src="articles/images/rmdint-question.png" />
-
-</div>
+<p><img src="articles/images/rmdint-question.png" /></p>
 <p>The first option, “Using R Markdown,” opens the development website for the <code>rmarkdown</code> package, <a href="http://rmarkdown.rstudio.com">rmarkdown.rstudio.com</a>. Here you can look up the many useful features of R Markdown.</p>
 </div>
 <div id="markdown-quick-reference" class="section level2">
@@ -244,32 +223,20 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <div id="the-run-document-button" class="section level2">
 <h2>4. The Run Document button</h2>
 <p>If your .Rmd file contains <code>runtime: shiny</code> in its YAML header, the RStudio IDE will display a “Run Document” button at the top of the scripts pane.</p>
-<div class="figure">
-<img src="articles/images/rmdint-run-button.png" />
-
-</div>
+<p><img src="articles/images/rmdint-run-button.png" /></p>
 <p>The “Run Document” button is a shortcut for the <code>rmarkdown::render</code> command. It let’s you quickly render your .Rmd file into an interactive document hosted locally on your computer. The RStudio IDE will diplay your document in a preview window.</p>
 <p>You can edit the .Rmd file while the preview is running. To see your changes, save the .Rmd file. Then click the refresh icon in the top left corner of the preview window.</p>
-<div class="figure">
-<img src="articles/images/rmdint-refresh.png" />
-
-</div>
+<p><img src="articles/images/rmdint-refresh.png" /></p>
 <p>If your .Rmd file does not contain <code>runtime: shiny</code>, the RStudio IDE will display a “Knit HTML” button in place of the “Run Document” button. The “Knit HTML” button works in the same way. It renders your .Rmd file and launches a preview of your output document.</p>
 <p>The Knit HTML button contains a dropdown menu that let’s you choose which type of output to knit your file into (this will override the output type specified in your file’s YAML header).</p>
-<div class="figure">
-<img src="articles/images/rmdint-dropdown.png" />
-
-</div>
+<p><img src="articles/images/rmdint-dropdown.png" /></p>
 </div>
 <div id="viewer-pane" class="section level2">
 <h2>5. Viewer Pane</h2>
 <p>By default, the RStudio IDE opens a preview window to display the output of your .Rmd file. However, you can choose to display the output in a dedicated viewer pane.</p>
 <p>To do this, select “View in Pane” for m the drop down menu that appears when you click on the “Run Document” button (or “Knit HTML” button).</p>
 <p>The viewer pane provides a side-by-side view that resembles some text and Latex editors.</p>
-<div class="figure">
-<img src="articles/images/rmdint-viewer.png" />
-
-</div>
+<p><img src="articles/images/rmdint-viewer.png" /></p>
 </div>
 <div id="document-options" class="section level2">
 <h2>6. Document options</h2>
@@ -283,29 +250,20 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <li>Size figures and add captions, and</li>
 <li>Tweak the render process</li>
 </ul>
-<div class="figure">
-<img src="articles/images/rmdint-gear.png" />
-
-</div>
+<p><img src="articles/images/rmdint-gear.png" /></p>
 <p>Set the features you like, and the RStudio IDE will apply them when you click “Run Document”.</p>
 </div>
 <div id="insert-chunk" class="section level2">
 <h2>7. Insert Chunk</h2>
 <p>The Chunks button in the top left corner of the Scripts pane opens a dropdown menu that you can use to manage code chunks in your .Rmd file.</p>
-<div class="figure">
-<img src="articles/images/rmdint-chunk.png" />
-
-</div>
+<p><img src="articles/images/rmdint-chunk.png" /></p>
 <p>The first option in the menu is the most useful. “Insert Chunk” will insert a blank code chunk into your .Rmd file at the location of your cursor. You can then fill this chunk with code.</p>
 <p>You can use basic RStudio tab completion to write arguments inside the <code>{r}</code> braces at the top of each code chunk.</p>
 </div>
 <div id="deploy-to-shinyapps.io" class="section level2">
 <h2>8. Deploy to shinyapps.io</h2>
 <p>If you’ve set up the <code>shinyapps</code> package as described in <a href="../articles/shinyapps.html">Getting started with shinyapps.io</a>, the RStudio IDE will place a deploy button at the top of your interactive document’s preview window.</p>
-<div class="figure">
-<img src="articles/images/rmdint-deploy.png" />
-
-</div>
+<p><img src="articles/images/rmdint-deploy.png" /></p>
 <p>You can click this button to deploy your document directly to your shinyapps.io account. Shinyapps.io will host the document at its own web URL for people to visit.</p>
 </div>
 <div id="the-r-markdown-console" class="section level2">
@@ -319,7 +277,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 <div id="rStudioFooter" class="band full">
 <div class="bandContent">
-  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="copyright">© Copyright 2016 - 2018 RStudio Inc.</div>
   <div id="logos">
     <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
     <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
@@ -333,27 +291,11 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
 
 <!-- disqus -->
- <div id="disqus_thread" class="standardPadding"></div>
-    <script type="text/javascript">
-      var disqus_config = function () {
-        this.page.url = 'http://rmarkdown.rstudio.com' + location.pathname;
-      };
-      $(document).ready(function() {
-        // create disqus script tag
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//rmarkdown.disqus.com/embed.js';
+<div id="disqus_thread" class="standardPadding"></div>
+<script type="text/javascript" src="js/disqus.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-        // determine container
-        var container = document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0];
-
-        // append script tag enclosed by google indexing suppression comment
-        container.appendChild(document.createComment('googleoff: all'));
-        container.appendChild(dsq);
-        container.appendChild(document.createComment('googleon: all'));
-      });
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<script type="text/javascript" src="js/external-links.js"></script>
 
 
 

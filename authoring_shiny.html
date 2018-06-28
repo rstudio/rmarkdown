@@ -31,16 +31,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png" />
 
 <script type="text/javascript" src="js/rmarkdown.js"></script>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-20375833-14', 'auto');
-  ga('send', 'pageview');
-</script>
+<script type="text/javascript" src="js/ga.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -109,6 +100,9 @@ img {
 }
 .tabbed-pane {
   padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
 }
 button.code-folding-btn:focus {
   outline: none;
@@ -283,21 +277,12 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <h2>Overview</h2>
 <p>R Markdown has been extended to support fully interactive documents. Unlike the more traditional workflow of creating static reports, you can now create documents that allow your readers to change the parameters underlying your analysis and see the results immediately.</p>
 <p>R Markdown leverages <a href="http://shiny.rstudio.com">Shiny</a> at its core to make this possible. Here is a simple example of an R Markdown document with an interactive plot:</p>
-<div class="figure">
-<img src="images/shiny-interactive-plot.png" />
-
-</div>
+<p><img src="images/shiny-interactive-plot.png" /></p>
 <p>Note that the reader of this document is able to manipulate the number of bins and bandwidth adjustment which in turn automatically updates the plot to reflect the changes.</p>
 <p>Adding an interactive plot to a document is straightfoward: simply wrap the code used to generate the plot in the <code>renderPlot</code> function and define the user inputs required to make the plot dynamic. For example, here’s what the code used to generate the document above looks like:</p>
-<div class="figure">
-<img src="images/shiny-code.png" />
-
-</div>
+<p><img src="images/shiny-code.png" /></p>
 <p>You can also embed Shiny components directly within HTML presentations:</p>
-<div class="figure">
-<img src="images/shiny-run-presentation.png" />
-
-</div>
+<p><img src="images/shiny-run-presentation.png" /></p>
 <p>These documents combine the expressiveness of R Markdown with the interactivity of Shiny. These documents can be run locally on the desktop or be deployed to <a href="http://shinyapps.io">ShinyApps</a> or Shiny Server v1.2 (see the <a href="#deployment">Deployment</a> section below for more details).</p>
 </div>
 <div id="getting-started" class="section level2">
@@ -305,15 +290,9 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <div id="creating-an-interactive-document" class="section level3">
 <h3>Creating an Interactive Document</h3>
 <p>To create a new interactive document open the <strong>New R Markdown</strong> dialog in RStudio and choose to create a document with the “Shiny Document” template:</p>
-<div class="figure">
-<img src="images/new-shiny-document.png" />
-
-</div>
+<p><img src="images/new-shiny-document.png" /></p>
 <p>You can run a document locally using the <strong>Run Document</strong> command on the editor toolbar, or use the keyboard shortcut Ctrl+Shift+K (Cmd+Shift+K on Mac):</p>
-<div class="figure">
-<img src="images/shiny-run-document.png" />
-
-</div>
+<p><img src="images/shiny-run-document.png" /></p>
 <p>Note that this command runs the document in a separate R process, so you can continue to use the R console while the document is running. You can see any R console output from this separate process in the R Markdown console tab in RStudio.</p>
 <p>If you’re not using RStudio, or want to run the document in-process for troubleshooting, you can also run the document from the console using the <code>rmarkdown::run</code> function.</p>
 </div>
@@ -328,10 +307,7 @@ renderTable({
 })
 &#96;&#96;&#96;
 </code></pre>
-<div class="figure">
-<img src="images/shiny-cars-table.gif" />
-
-</div>
+<p><img src="images/shiny-cars-table.gif" /></p>
 <p>In this example the output code was wrapped in a call to <code>renderTable</code>. There are many other render functions in Shiny that can be used for plots, printed R output, and more. This example uses <code>renderPlot</code> to create dynamic plot output:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo = FALSE}
 sliderInput("bins", "Number of bins:", min = 1, max = 50, value = 30)
@@ -345,10 +321,7 @@ renderPlot({
 })
 &#96;&#96;&#96;
 </code></pre>
-<div class="figure">
-<img src="images/shiny-hist-plot.gif" />
-
-</div>
+<p><img src="images/shiny-hist-plot.gif" /></p>
 <p>If you haven’t used Shiny before some of the above code will be unfamiliar to you. <a href="http://shiny.rstudio.com/tutorial">This</a> is a good place to learn more.</p>
 </div>
 <div id="embedded-applications" class="section level3">
@@ -386,10 +359,7 @@ kmeans_cluster(iris)
 <p>You can then deploy an interactive document the same way that you currently deploy Shiny applications. From the working directory containing the document(s) just execute:</p>
 <pre class="r"><code>rsconnect::deployApp()</code></pre>
 <p>If you are using RStudio you can also use the <strong>Deploy</strong> button available when working with an interactive document:</p>
-<div class="figure">
-<img src="images/shinyapps-deploy.png" />
-
-</div>
+<p><img src="images/shinyapps-deploy.png" /></p>
 </div>
 </div>
 <div id="learning-more" class="section level2">
@@ -408,7 +378,7 @@ kmeans_cluster(iris)
 
 <div id="rStudioFooter" class="band full">
 <div class="bandContent">
-  <div id="copyright">© Copyright 2016 RStudio Inc.</div>
+  <div id="copyright">© Copyright 2016 - 2018 RStudio Inc.</div>
   <div id="logos">
     <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
     <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
@@ -422,27 +392,11 @@ kmeans_cluster(iris)
 <script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
 
 <!-- disqus -->
- <div id="disqus_thread" class="standardPadding"></div>
-    <script type="text/javascript">
-      var disqus_config = function () {
-        this.page.url = 'http://rmarkdown.rstudio.com' + location.pathname;
-      };
-      $(document).ready(function() {
-        // create disqus script tag
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//rmarkdown.disqus.com/embed.js';
+<div id="disqus_thread" class="standardPadding"></div>
+<script type="text/javascript" src="js/disqus.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-        // determine container
-        var container = document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0];
-
-        // append script tag enclosed by google indexing suppression comment
-        container.appendChild(document.createComment('googleoff: all'));
-        container.appendChild(dsq);
-        container.appendChild(document.createComment('googleon: all'));
-      });
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<script type="text/javascript" src="js/external-links.js"></script>
 
 
 </div>
