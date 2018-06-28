@@ -17,40 +17,8 @@
 <script type="text/javascript" src="//cdn.bizible.com/scripts/bizible.js" async=""></script>
 
 <!-- disqus -->
- <div id="disqus_thread" class="standardPadding"></div>
-    <script type="text/javascript">
-      var disqus_config = function () {
-        this.page.url = 'http://rmarkdown.rstudio.com' + location.pathname;
-      };
-      $(document).ready(function() {
-        var inIFrame = function() {
-          var iframe = true;
-          try { iframe = window.self !== window.top; } catch (e) {}
-          return iframe;
-        };
-        if (inIFrame()) return;
+<div id="disqus_thread" class="standardPadding"></div>
+<script type="text/javascript" src="js/disqus.js"></script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-        // create disqus script tag
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//rmarkdown.disqus.com/embed.js';
-
-        // determine container
-        var container = document.getElementsByTagName('body')[0] || document.getElementsByTagName('head')[0];
-
-        // append script tag enclosed by google indexing suppression comment
-        container.appendChild(document.createComment('googleoff: all'));
-        container.appendChild(dsq);
-        container.appendChild(document.createComment('googleon: all'));
-      });
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-<script>
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) links[i].target = '_blank';
-  }
-})();
-</script>
+<script type="text/javascript" src="js/external-links.js"></script>
