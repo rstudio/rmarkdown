@@ -70,6 +70,10 @@ output:
           <div class="formatName">Beamer</div>
           <div class="formatDescription">PDF presentation with LaTeX Beamer</div>
         </a>
+        <a href="https://bookdown.org/yihui/rmarkdown/powerpoint-presentation.html" class="formatTableRow">
+          <div class="formatName">PowerPoint</div>
+          <div class="formatDescription">PowerPoint presentation</div>
+        </a>
       </div>
     </div>
 

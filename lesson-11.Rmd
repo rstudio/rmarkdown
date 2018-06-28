@@ -13,6 +13,7 @@ R Markdown renders to four presentation formats:
 * [beamer_presentation](http://rmarkdown.rstudio.com/beamer_presentation_format.html) - PDF presentations with beamer
 * [ioslides_presentation](http://rmarkdown.rstudio.com/ioslides_presentation_format.html) - HTML presentations with ioslides
 * [slidy_presentation](http://rmarkdown.rstudio.com/slidy_presentation_format.html) - HTML presentations with slidy
+* [powerpoint_presentation](https://bookdown.org/yihui/rmarkdown/powerpoint-presentation.html) - PowerPoint presentation
 * [revealjs::revealjs_presentation](http://rmarkdown.rstudio.com/revealjs_presentation_format.html) - HTML presentations with reveal.js
 
 Each format will intuitively divide your content into slides, with a new slide beginning at each first or second level header.
