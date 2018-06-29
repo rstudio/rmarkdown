@@ -1,4 +1,4 @@
-#' @import htmltools
+#' @import htmltools htmldeps
 NULL
 
 #' Provide common HTML dependencies for R Markdown formats
@@ -9,43 +9,6 @@ NULL
 #' @inheritParams html_document
 #' @name html-dependencies
 NULL
-
-# Create an HTML dependency for our embedded jquery
-#' @rdname html-dependencies
-#' @importFrom htmldeps html_dependency_jquery
-#' @export
-htmldeps::html_dependency_jquery
-
-# Create an HTML dependency for our embedded bootstrap
-#' @rdname html-dependencies
-#' @importFrom htmldeps html_dependency_bootstrap
-#' @export
-htmldeps::html_dependency_bootstrap
-
-# Create an HTML dependency for our embedded jqueryui
-#' @rdname html-dependencies
-#' @importFrom htmldeps html_dependency_jqueryui
-#' @export
-htmldeps::html_dependency_jqueryui
-
-# Create an HTML dependency for tocify
-#' @rdname html-dependencies
-#' @importFrom htmldeps html_dependency_tocify
-#' @export
-htmldeps::html_dependency_tocify
-
-# Create an HTML dependency for Font Awesome
-#' @rdname html-dependencies
-#' @importFrom htmldeps html_dependency_font_awesome
-#' @export
-htmldeps::html_dependency_font_awesome
-
-# Create an HTML dependency for ionicons
-#' @rdname html-dependencies
-#' @importFrom htmldeps html_dependency_ionicons
-#' @export
-htmldeps::html_dependency_ionicons
-
 
 html_dependency_navigation <- function(code_menu, source_embed) {
 
@@ -87,9 +50,9 @@ navbar_icon_dependencies <- function(navbar) {
 html_dependencies_fonts <- function(font_awesome, ionicons) {
   deps <- list()
   if (font_awesome)
-    deps <- append(deps, list(html_dependency_font_awesome()))
+    deps <- append(deps, list(htmldeps::html_dependency_font_awesome()))
   if (ionicons)
-    deps <- append(deps, list(html_dependency_ionicons()))
+    deps <- append(deps, list(htmldeps::html_dependency_ionicons()))
   deps
 }
 

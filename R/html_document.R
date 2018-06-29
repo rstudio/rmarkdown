@@ -239,9 +239,9 @@ html_document <- function(toc = FALSE,
 
     # dependencies
     extra_dependencies <- append(extra_dependencies,
-                                 list(html_dependency_jquery(),
-                                      html_dependency_jqueryui(),
-                                      html_dependency_tocify()))
+                                 list(htmldeps::html_dependency_jquery(),
+                                      htmldeps::html_dependency_jqueryui(),
+                                      htmldeps::html_dependency_tocify()))
 
     # flag for template
     args <- c(args, pandoc_variable_arg("toc_float", "1"))
