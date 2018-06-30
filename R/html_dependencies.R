@@ -10,6 +10,31 @@ NULL
 #' @name html-dependencies
 NULL
 
+#' @importFrom htmldeps html_dependency_jquery
+#' @export
+htmldeps::html_dependency_jquery
+
+#' @importFrom htmldeps html_dependency_bootstrap
+#' @export
+htmldeps::html_dependency_bootstrap
+
+#' @importFrom htmldeps html_dependency_jqueryui
+#' @export
+htmldeps::html_dependency_jqueryui
+
+#' @importFrom htmldeps html_dependency_tocify
+#' @export
+htmldeps::html_dependency_tocify
+
+#' @importFrom htmldeps html_dependency_font_awesome
+#' @export
+htmldeps::html_dependency_font_awesome
+
+#' @importFrom htmldeps html_dependency_ionicons
+#' @export
+htmldeps::html_dependency_ionicons
+
+
 html_dependency_navigation <- function(code_menu, source_embed) {
 
   # dynamically build script list
@@ -50,9 +75,9 @@ navbar_icon_dependencies <- function(navbar) {
 html_dependencies_fonts <- function(font_awesome, ionicons) {
   deps <- list()
   if (font_awesome)
-    deps <- append(deps, list(htmldeps::html_dependency_font_awesome()))
+    deps <- append(deps, list(html_dependency_font_awesome()))
   if (ionicons)
-    deps <- append(deps, list(htmldeps::html_dependency_ionicons()))
+    deps <- append(deps, list(html_dependency_ionicons()))
   deps
 }
 
