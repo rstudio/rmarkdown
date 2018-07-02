@@ -12,7 +12,7 @@ Authors@R: c(
   person("Hadley", "Wickham", role = "aut", email = "hadley@rstudio.com"),
   person("Joe", "Cheng", role = "aut", email = "joe@rstudio.com"),
   person("Winston", "Chang", role = "aut", email = "winston@rstudio.com"),
-  person("Richard", "Iannone", role = "aut", email = "rich@rstudio.com"),
+  person("Richard", "Iannone", role = "aut", email = "rich@rstudio.com", comment = c(ORCID = "0000-0003-3925-190X")),
   person("Jeff", "Allen", role = "ctb", email = "jeff@rstudio.com"),
   person("Roy", "Storey", role = "ctb"),
   person("Rob", "Hyndman", role = "ctb", email = "Rob.Hyndman@monash.edu"),
@@ -67,6 +67,7 @@ Imports:
     utils,
     knitr (>= 1.18),
     yaml (>= 2.1.5),
+    htmldeps,
     htmltools (>= 0.3.5),
     evaluate (>= 0.8),
     base64enc,
@@ -76,6 +77,8 @@ Imports:
     tinytex (>= 0.3),
     methods,
     stringr (>= 1.2.0)
+Remotes:
+    rstudio/htmldeps 
 Suggests:
     shiny (>= 0.11),
     tufte,
