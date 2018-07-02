@@ -7,17 +7,18 @@
 render_supporting_files(from, files_dir, rename_to = NULL)
 }
 \arguments{
-\item{from}{Directory to copy from}
+\item{from}{The directory from which the files should be copied.}
 
-\item{files_dir}{Directory to copy files into}
+\item{files_dir}{The directory that will receive the copied files.}
 
-\item{rename_to}{Optional rename of source directory after it is copied}
+\item{rename_to}{An option to rename the source directory after the copy
+operation is complete.}
 }
 \value{
 The relative path to the supporting files. This path is suitable
 for inclusion in HTML\code{href} and \code{src} attributes.
 }
 \description{
-Render (copy) required supporting files for an input document to the _files
-directory associated with the document.
+Render (copy) required supporting files for an input document to the
+\code{_files} directory that is associated with the document.
 }
