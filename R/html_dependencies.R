@@ -1,4 +1,4 @@
-#' @import htmltools htmldeps
+#' @import htmltools
 NULL
 
 #' Provide common HTML dependencies for R Markdown formats
