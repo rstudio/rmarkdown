@@ -591,10 +591,17 @@ get_pandoc_version <- function(pandoc_dir) {
   pandoc_path <- file.path(pandoc_dir, "pandoc")
   if (is_windows()) pandoc_path <- paste0(pandoc_path, ".exe")
   if (!utils::file_test("-x", pandoc_path)) return(numeric_version("0"))
-  with_pandoc_safe_environment({
-    version_info <- system(paste(shQuote(pandoc_path), "--version"),
-                           intern = TRUE)
-  })
+  version_info <- with_pandoc_safe_environment(
+    system(paste(shQuote(pandoc_path), "--version"), intern = TRUE)
+  )
+  # with_pandoc_safe_environment() could fail on certain platforms:
+  # https://github.com/rstudio/rmarkdown/issues/1256#issuecomment-375840095
+  if (length(version_info) == 0) version_info <- {
+    system(paste(shQuote(pandoc_path), "--version"), intern = TRUE)
+  }
+  if (length(version_info) == 0) stop(
+    "The command failed: ", shQuote(pandoc_path), " --version"
+  )
   version <- strsplit(version_info, "\n")[[1]][1]
   version <- strsplit(version, " ")[[1]][2]
   numeric_version(version)
