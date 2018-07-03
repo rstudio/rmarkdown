@@ -37,7 +37,7 @@ metadata <- list()
 #' output:
 #'   pdf_document:
 #'   toc: true
-#' highlight: zenburn
+#'   highlight: zenburn
 #' }
 #'
 #' Multiple formats can be specified in metadata. If no \code{output_format}
@@ -47,10 +47,10 @@ metadata <- list()
 #' output:
 #'   pdf_document:
 #'   toc: true
-#' highlight: zenburn
+#'   highlight: zenburn
 #' html_document:
 #'   toc: true
-#' theme: united
+#'   theme: united
 #' }
 #'
 #' Formats specified in metadata can be any one of the built in formats (e.g.

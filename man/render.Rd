@@ -115,7 +115,7 @@ Additional format options can also be specified in metadata. For example:
 output:
   pdf_document:
   toc: true
-highlight: zenburn
+  highlight: zenburn
 }
 
 Multiple formats can be specified in metadata. If no \code{output_format}
@@ -125,10 +125,10 @@ is passed to \code{render} then the first one defined will be used:
 output:
   pdf_document:
   toc: true
-highlight: zenburn
+  highlight: zenburn
 html_document:
   toc: true
-theme: united
+  theme: united
 }
 
 Formats specified in metadata can be any one of the built in formats (e.g.
