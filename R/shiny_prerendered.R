@@ -173,7 +173,7 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
 
 
 # Write the dependencies for a shiny_prerendered document.
-#' @import rprojroot
+#' @importFrom rprojroot find_root is_r_package
 shiny_prerendered_append_dependencies <- function(input, # always UTF-8
                                                   shiny_prerendered_dependencies,
                                                   files_dir,
