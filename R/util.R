@@ -497,6 +497,15 @@ adjust_dev <- function(opts) {
   opts
 }
 
-xfun_session_info = function() {
+xfun_session_info <- function() {
   paste('Pandoc version:', pandoc_version())
+}
+
+# given a path of a file in a potential R package, figure out the package root
+package_root <- function(path) {
+  dir <- dirname(path)
+  if (same_path(dir, file.path(dir, '..'))) return()
+  if (!file.exists(desc <- file.path(dir, 'DESCRIPTION')) ||
+      length(grep('^Package: ', readLines(desc))) == 0) return(package_root(dir))
+  dir
 }
