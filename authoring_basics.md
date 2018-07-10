@@ -7,7 +7,7 @@ output:
 
 This document provides quick references to the most commonly used R Markdown syntax. See the following articles for more in-depth treatment of all the capabilities of R Markdown:
 
-* [R Code Chunks](authoring_rcodechunks.html)
+* [R Code Chunks](https://bookdown.org/yihui/rmarkdown/r-code.html)
 
 * [Pandoc Markdown](authoring_pandoc_markdown.html)
 

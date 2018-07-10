@@ -31,7 +31,7 @@ To use `html_vignette` you specify it as the output format and add some addition
 
 Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your Vignette.
 
-All options support for `html_document` also work for `html_vignette`. See the [article on the html_document format](html_document_format.html) for additional details.
+All options support for `html_document` also work for `html_vignette`. See the [article on the html_document format](https://bookdown.org/yihui/rmarkdown/html-document.html) for additional details.
 
 ## Appearance and Style
 

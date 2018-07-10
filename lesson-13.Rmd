@@ -26,7 +26,7 @@ Better yet, create an [RStudio Project](https://support.rstudio.com/hc/en-us/art
 ![](lesson-images/websites-2-build.png)
 </br>
 
-Learn more about generating websites with R Markdown at [R Markdown Websites](/rmarkdown_websites.html).
+Learn more about generating websites with R Markdown at [R Markdown Websites](https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html).
 
 ****
 

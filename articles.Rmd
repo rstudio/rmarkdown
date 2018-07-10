@@ -19,9 +19,9 @@ output:
             <div class="articleBlurb">Bilge water bilge sutler list no prey, no pay pressgang fire ship. Chantey mizzenmast coxswain crack Jennys tea cup lee sutler crimp.</div>
             <a href="authoring_pandoc_markdown.html">Pandoc Markdown</a>
             <div class="articleBlurb">Gibbet reef draft parrel transom keelhaul quarter. Chantey case shot ahoy pressgang spike jolly boat six pounders.</div>
-            <a href="authoring_rcodechunks.html">R Code Chunks</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/r-code.html">R Code Chunks</a>
             <div class="articleBlurb">Grapple strike colors schooner shrouds rigging dance the hempen jig draft. Jack Tar run a rig main sheet case shot Davy Jones' Locker handsomely killick.</div>
-            <a href="authoring_knitr_engines.html">knitr Language Engines</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/language-engines.html">knitr Language Engines</a>
             <div class="articleBlurb"></div>
             <a href="authoring_bibliographies_and_citations.html">Bibliographies & Citations</a>
             <div class="articleBlurb">Reef sails rum booty run a shot across the bow aft Chain Shot chase guns. Crow's nest lugger topgallant barkadeer ye cable spanker.</div>
@@ -37,15 +37,15 @@ output:
           </div>
           <div class="linkSection">
             <div class="linkSectionTitle">Shiny</div>
-            <a href="authoring_shiny.html">Interactive Documents</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/shiny-documents.html">Interactive Documents</a>
             <div class="articleBlurb">Gibbet hogshead Arr scourge of the seven seas red ensign hempen halter Plate Fleet. Tack Sea Legs scallywag Plate Fleet Gold Road Corsair run a shot across the bow.</div>
-            <a href="authoring_embedded_shiny.html">Embedded Shiny Apps</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/shiny-embedded.html">Embedded Shiny Apps</a>
             <div class="articleBlurb">Take a caulk draught avast skysail fluke Sink me square-rigged. Bounty ballast Chain Shot stern loaded to the gunwalls knave coffer.</div>
-            <a href="authoring_shiny_widgets.html">Creating Shiny Widgets</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/shiny-widgets.html">Creating Shiny Widgets</a>
             <div class="articleBlurb">Yo-ho-ho bilge capstan case shot aft fire ship plunder. Gangway scallywag bilge reef sails mizzenmast belaying pin sheet.</div>
-            <a href="authoring_shiny_advanced.html">Advanced Topics</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/shiny-delay.html">Advanced Topics</a>
             <div class="articleBlurb">Port draft man-of-war black spot holystone matey topmast. Jib line prow weigh anchor bring a spring upon her cable list clipper.</div>
-            <a href="authoring_shiny_output.html">Setting Output args via Render functions</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/shiny-args.html">Setting Output args via Render functions</a>
             <div class="articleBlurb">Port draft man-of-war black spot holystone matey topmast. Jib line prow weigh anchor bring a spring upon her cable list clipper.</div>
           </div>
         </div>
@@ -64,20 +64,20 @@ output:
           </div>
           <div class="linkSection">
             <div class="linkSectionTitle">Websites</div>
-            <a href="rmarkdown_websites.html">R Markdown Websites</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html">R Markdown Websites</a>
             <div class="articleBlurb">blurb</div>
-            <a href="rmarkdown_site_generators.html">Custom Site Generators</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html">Custom Site Generators</a>
             <div class="articleBlurb">blurb</div>
           </div>
           <div class="linkSection">
             <div class="linkSectionTitle">Developer</div>
-            <a href="developer_html_widgets.html">HTML Widgets</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/html-widgets.html">HTML Widgets</a>
             <div class="articleBlurb">Hornswaggle Spanish Main brigantine skysail jury mast Letter of Marque tack. Code of conduct chandler grog draught starboard aye run a rig.</div>
-            <a href="developer_parameterized_reports.html">Parameterized Reports</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/parameterized-reports.html">Parameterized Reports</a>
             <div class="articleBlurb">Yellow Jack cog Sink me warp topsail take a caulk wench. Shiver me timbers handsomely gaff scallywag fire in the hole piracy hempen halter.</div>
-            <a href="developer_document_templates.html">Document Templates</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/document-templates.html">Document Templates</a>
             <div class="articleBlurb">League lugger six pounders snow hearties heave to Yellow Jack. Landlubber or just lubber transom list tackle gun lugger jib.</div>
-            <a href="developer_custom_formats.html">Creating New Formats</a>
+            <a href="https://bookdown.org/yihui/rmarkdown/new-formats.html">Creating New Formats</a>
             <div class="articleBlurb">Brig pressgang mizzen belay gabion landlubber or just lubber execution dock. Landlubber or just lubber knave Pieces of Eight parrel square-rigged pillage parley.</div>
             <a href="https://github.com/rstudio/rmarkdown">R Markdown on GitHub</a>
             <div class="articleBlurb">Hardtack schooner poop deck Jack Ketch warp marooned draft. Scuppers shrouds spanker Buccaneer splice the main brace quarter bilge water.</div>

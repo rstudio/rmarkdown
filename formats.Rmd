@@ -20,31 +20,31 @@ output:
     <div class="formatSection">
       <div class="formatSectionTitle">Documents</div>
       <div class="formatTable">
-        <a href="r_notebooks.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/notebook.html" class="formatTableRow">
           <div class="formatName">Notebook</div>
           <div class="formatDescription">Interactive R Notebooks</div>
         </a>
-        <a href="html_document_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/html-document.html" class="formatTableRow">
           <div class="formatName">HTML</div>
           <div class="formatDescription">HTML document w/ Bootstrap CSS</div>
         </a>
-        <a href="pdf_document_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/pdf-document.html" class="formatTableRow">
           <div class="formatName">PDF</div>
           <div class="formatDescription">PDF document (via LaTeX template)</div>
         </a>
-        <a href="word_document_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/word-document.html" class="formatTableRow">
           <div class="formatName">Word</div>
           <div class="formatDescription">Microsoft Word document (docx)</div>
         </a>
-        <a href="odt_document_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/opendocument-text-document.html" class="formatTableRow">
           <div class="formatName">ODT</div>
           <div class="formatDescription">OpenDocument Text document</div>
         </a>
-        <a href="rtf_document_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/rich-text-format-document.html" class="formatTableRow">
           <div class="formatName">RTF</div>
           <div class="formatDescription">Rich Text Format document</div>
         </a>
-        <a href="markdown_document_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/markdown-document.html" class="formatTableRow">
           <div class="formatName">Markdown</div>
           <div class="formatDescription">Markdown document (various flavors)</div>
         </a>
@@ -54,19 +54,19 @@ output:
     <div class="formatSection">
       <div class="formatSectionTitle">Presentations</div>
       <div class="formatTable">
-        <a href="ioslides_presentation_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html" class="formatTableRow">
           <div class="formatName">ioslides</div>
           <div class="formatDescription">HTML presentation with ioslides</div>
         </a>
-        <a href="revealjs_presentation_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/revealjs.html" class="formatTableRow">
           <div class="formatName">reveal.js</div>
           <div class="formatDescription">HTML presentation with reveal.js</div>
         </a>
-        <a href="slidy_presentation_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/slidy-presentation.html" class="formatTableRow">
           <div class="formatName">Slidy</div>
           <div class="formatDescription">HTML presentation with W3C Slidy</div>
         </a>
-        <a href="beamer_presentation_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/beamer-presentation.html" class="formatTableRow">
           <div class="formatName">Beamer</div>
           <div class="formatDescription">PDF presentation with LaTeX Beamer</div>
         </a>
@@ -118,15 +118,15 @@ output:
           <div class="formatName">bookdown</div>
           <div class="formatDescription">HTML, PDF, ePub, and Kindle books</div>
         </a>
-        <a href="rmarkdown_websites.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html" class="formatTableRow">
           <div class="formatName">Websites</div>
           <div class="formatDescription">Multi-page websites</div>
         </a>
-        <a href="tufte_handout_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/tufte-handouts.html" class="formatTableRow">
           <div class="formatName">Tufte Handout</div>
           <div class="formatDescription">Handouts in the style of Edward Tufte</div>
         </a>
-        <a href="package_vignette_format.html" class="formatTableRow">
+        <a href="https://bookdown.org/yihui/rmarkdown/r-package-vignette.html" class="formatTableRow">
           <div class="formatName">Package Vignette</div>
           <div class="formatDescription">R package vignette (HTML)</div>
         </a>

@@ -10,7 +10,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The behavior of the default site generation function (`rmarkdown::default_site`) is described in the article on [Creating a Website](rmarkdown_websites.html). It is also possible to define a custom site generator that has alternate behavior. 
+The behavior of the default site generation function (`rmarkdown::default_site`) is described in the article on [Creating a Website](https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html). It is also possible to define a custom site generator that has alternate behavior. 
 
 ## Site Generator Function
 

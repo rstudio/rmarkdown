@@ -100,7 +100,7 @@ Note the use of the `create_dir` field in the template definition to indicate th
 
 ## Custom Formats
 
-When creating a template it's also convenient to create a [custom format](developer_custom_formats.html) that is used by the template. Custom formats are useful when you have lots of supporting files or want to constrain the output options to a set of invariants established by the format. 
+When creating a template it's also convenient to create a [custom format](https://bookdown.org/yihui/rmarkdown/new-formats.html) that is used by the template. Custom formats are useful when you have lots of supporting files or want to constrain the output options to a set of invariants established by the format. 
 
 Here's an example of a custom format based on `html_document`:
 
@@ -130,13 +130,13 @@ output: mypackage::quarterly_report
 ---
 ```
 
-See the article on [Creating New Formats](developer_custom_formats.html) for additional details on custom formats.
+See the article on [Creating New Formats](https://bookdown.org/yihui/rmarkdown/new-formats.html) for additional details on custom formats.
 
 ## Examples
 
 ### Package Vignette
 
-The [Package Vignette](package_vignette_format.html) format provides an example of a format that customizes the base [`html_document`](html_document_format.html) format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette [format](https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R) and [custom template](https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette) are a good starting point for creating your own HTML based formats.
+The [Package Vignette](https://bookdown.org/yihui/rmarkdown/r-package-vignette.html) format provides an example of a format that customizes the base [`html_document`](https://bookdown.org/yihui/rmarkdown/html-document.html) format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette [format](https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R) and [custom template](https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette) are a good starting point for creating your own HTML based formats.
 
 ### rticles Package
 

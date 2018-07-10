@@ -32,7 +32,7 @@ To process a code chunk using an alternate language engine, replace the `r` at t
 
 Note that chunk options like `echo` and `results` are all valid when using a language engine like python. 
 
-Learn more about using other languages with R Markdown in [knitr Language Engines](authoring_knitr_engines.html).
+Learn more about using other languages with R Markdown in [knitr Language Engines](https://bookdown.org/yihui/rmarkdown/language-engines.html).
 
 ***
 

@@ -283,7 +283,7 @@ print(fit)
 
 ## JavaScript
 
-If you are using an R Markdown format that targets HTML output (e.g. [html_document](html_document_format), [ioslides_presenation](ioslides_presentation_format.html), etc.) then you can include JavaScript to be executed within the HTML page using the [JavaScript](https://en.wikipedia.org/wiki/JavaScript) engine.
+If you are using an R Markdown format that targets HTML output (e.g. [html_document](https://bookdown.org/yihui/rmarkdown/html-document.html), [ioslides_presenation](https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html), etc.) then you can include JavaScript to be executed within the HTML page using the [JavaScript](https://en.wikipedia.org/wiki/JavaScript) engine.
 
 For example, the following chunk uses [jQuery](https://jquery.com/) (which is included in most R Markdown HTML formats) to hide the document title:
 
@@ -296,7 +296,7 @@ Note that the JavaScript engine is specified using the abbreviation `js`.
 
 ## CSS
 
-If you are using an R Markdown format that targets HTML output (e.g. [html_document](html_document_format), [ioslides_presenation](ioslides_presentation_format.html), etc.) then you can include CSS to applied to the HTML page using the [CSS](https://en.wikipedia.org/wiki/CSS) engine.
+If you are using an R Markdown format that targets HTML output (e.g. [html_document](https://bookdown.org/yihui/rmarkdown/html-document.html), [ioslides_presenation](https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html), etc.) then you can include CSS to applied to the HTML page using the [CSS](https://en.wikipedia.org/wiki/CSS) engine.
 
 For example, the following code chunk turns text within the document body red:
 

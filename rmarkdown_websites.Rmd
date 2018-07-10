@@ -138,7 +138,7 @@ rmarkdown::clean_site()
 
 ### knitr Caching
 
-If your website is time consuming to render you may want to enable [knitr caching](authoring_rcodechunks.html#caching) during the development of the site so that you can more rapidly preview changes. To enable caching for an individual chunk just add the `cache = TRUE` chunk option:
+If your website is time consuming to render you may want to enable [knitr caching](https://bookdown.org/yihui/rmarkdown/r-code.html#caching) during the development of the site so that you can more rapidly preview changes. To enable caching for an individual chunk just add the `cache = TRUE` chunk option:
 
 <pre class="markdown"><code>&#96;&#96;&#96;{r, cache = TRUE}
 data <- longComputation()
@@ -196,7 +196,7 @@ blockquote {
 
 Note that we've included an `output` element within our **\_site.yml** file. This defines shared output options for all R Markdown documents within a site. Note that individual documents can also include their own output options, which will be merged with the common options at render time.
 
-As part of our common output options we've specified an HTML footer (via the `include: after-body:` option) and CSS stylesheet. Note that you can also include HTML before the body or in the document `<head>`, see the documentation on [includes](html_document_format.html#includes) for more details.
+As part of our common output options we've specified an HTML footer (via the `include: after-body:` option) and CSS stylesheet. Note that you can also include HTML before the body or in the document `<head>`, see the documentation on [includes](https://bookdown.org/yihui/rmarkdown/html-document.html#includes) for more details.
 
 
 In addition to whatever common options you define, the are two output options which are automatically set when rendering a site:

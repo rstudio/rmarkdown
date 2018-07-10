@@ -445,12 +445,12 @@ If want to create an HTML fragment rather than a full HTML document you can use 
 
 Note that there is no title or author because fragments don't contain the standard header content that HTML documents do. HTML fragments are typically used for including snippets of HTML within larger web sites (e.g. blogs).
 
-For additional information see the article on [HTML Fragments](html_fragment_format.html). Note that another good option for generating content to be included in larger websites is the [`md_document`](markdown_document_format.html) format, which generates markdown. For more information on this format see the article on [Markdown Documents](markdown_document_format.html).
+For additional information see the article on [HTML Fragments](html_fragment_format.html). Note that another good option for generating content to be included in larger websites is the [`md_document`](https://bookdown.org/yihui/rmarkdown/markdown-document.html) format, which generates markdown. For more information on this format see the article on [Markdown Documents](https://bookdown.org/yihui/rmarkdown/markdown-document.html).
 
 
 ## Creating a Website
 
-You can render collections of R Markdown documents as a website using the `rmarkdown::render_site` function. See the article on [R Markdown Websites](rmarkdown_websites.html) for additional details.
+You can render collections of R Markdown documents as a website using the `rmarkdown::render_site` function. See the article on [R Markdown Websites](https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html) for additional details.
 
 
 

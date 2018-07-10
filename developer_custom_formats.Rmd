@@ -57,7 +57,7 @@ Note that (3) and (4) are implemented using external files that are stored withi
 
 ### Package Vignette Example
 
-The [Package Vignette](package_vignette_format.html) format provides an example of a format that customizes the base [`html_document`](html_document_format.html) format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette [format](https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R) and [custom template](https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette) are a good starting point for creating your own HTML based formats.
+The [Package Vignette](https://bookdown.org/yihui/rmarkdown/r-package-vignette.html) format provides an example of a format that customizes the base [`html_document`](https://bookdown.org/yihui/rmarkdown/html-document.html) format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette [format](https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R) and [custom template](https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette) are a good starting point for creating your own HTML based formats.
 
 ## Fully Custom Formats
 

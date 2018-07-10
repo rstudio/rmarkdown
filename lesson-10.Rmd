@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-In [How It Works](lesson-2.html), you learned that R Markdown files provide a [notebook interface](/r_notebooks.html) that makes it easy to test and iterate when writing code. 
+In [How It Works](lesson-2.html), you learned that R Markdown files provide a [notebook interface](https://bookdown.org/yihui/rmarkdown/notebook.html) that makes it easy to test and iterate when writing code. 
 
 Share this experience by sharing your .Rmd file with colleagues for them to open in their RStudio IDE. Or recreate the notebook interface for non-R users by rendering your file to an HTML notebook with `output: html_notebook`, as in [this example](demos/9-notebook.Rmd).
 
@@ -23,7 +23,7 @@ You can view the .nb.html file in any ordinary web browser, or open it in RStudi
 
 One of the major advantages of R Notebooks compared to other notebook systems is that they are plain-text files and therefore work well with version control. We recommend checking in both the .Rmd and .nb.html files into version control so that both your source code and output are available to collaborators. However, you can choose to include only the .Rmd file (with a .gitignore that excludes the .nb.html) if you want each collaborator to work with their own private copies of the output.
 
-See [R Notebooks](/r_notebooks.html) to learn more about notebooks with R Markdown.
+See [R Notebooks](https://bookdown.org/yihui/rmarkdown/notebook.html) to learn more about notebooks with R Markdown.
 
 ***
 

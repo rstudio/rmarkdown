@@ -91,7 +91,7 @@ Which would result in the following inside the running document:
 
 ![Shiny Widget KMeans](images/shiny-widget-kmeans.png)
 
-To better understand how this works check out the [source code](https://github.com/rstudio/rmdexamples/blob/master/R/kmeans_cluster.R) for the `kmeans_cluster` function. The articles on [Embedded Shiny Apps](authoring_embedded_shiny.html) and [Shiny Widgets](authoring_shiny_widgets.html) also cover using the `shinyApp` function in more depth.
+To better understand how this works check out the [source code](https://github.com/rstudio/rmdexamples/blob/master/R/kmeans_cluster.R) for the `kmeans_cluster` function. The articles on [Embedded Shiny Apps](https://bookdown.org/yihui/rmarkdown/shiny-embedded.html) and [Shiny Widgets](https://bookdown.org/yihui/rmarkdown/shiny-widgets.html) also cover using the `shinyApp` function in more depth.
 
 ## Deployment
 
@@ -130,11 +130,11 @@ If you are using RStudio you can also use the **Deploy** button available when w
 
 This introduction just scratches the surface of the types of interactive documents you can create with R Markdown and Shiny. See the following resources to learn more:
 
-1. [Embedded Shiny Apps](authoring_embedded_shiny.html) describes how you can embed entire Shiny applications inside an R Markdown document.
+1. [Embedded Shiny Apps](https://bookdown.org/yihui/rmarkdown/shiny-embedded.html) describes how you can embed entire Shiny applications inside an R Markdown document.
 
-2. [Creating Shiny Widgets](authoring_shiny_widgets.html) covers creating re-usable Shiny widgets that enable others to embed interactive components in their documents with a single function call.
+2. [Creating Shiny Widgets](https://bookdown.org/yihui/rmarkdown/shiny-widgets.html) covers creating re-usable Shiny widgets that enable others to embed interactive components in their documents with a single function call.
 
-3. [Advanced Topics](authoring_shiny_advanced.html) includes details on converting static R Markdown documents to interactive and creating multiple-page interactive documents.
+3. [Advanced Topics](https://bookdown.org/yihui/rmarkdown/shiny-delay.html) includes details on converting static R Markdown documents to interactive and creating multiple-page interactive documents.
 
 4. Finally, the [Shiny Dev Center](http://shiny.rstudio.com) includes extensive articles, tutorials, and examples to help you learn more about Shiny.
 

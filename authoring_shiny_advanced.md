@@ -64,7 +64,7 @@ The getting started example demonstrated creating a brand new interactive docume
 
 - Render it with `rmarkdown::run` instead of `rmarkdown::render`. 
 
-For example, here's the front matter for a Shiny [html_document](html_document_format.html):
+For example, here's the front matter for a Shiny [html_document](https://bookdown.org/yihui/rmarkdown/html-document.html):
 
 ```yaml
 ---
@@ -74,7 +74,7 @@ runtime: shiny
 ---
 ```
 
-And here's the front matter for a Shiny [ioslides_presentation](ioslides_presentation_format.html):
+And here's the front matter for a Shiny [ioslides_presentation](https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html):
 
 ```yaml
 ---
