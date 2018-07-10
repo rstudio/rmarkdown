@@ -421,7 +421,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 <div id="knitr-caching" class="section level3">
 <h3>knitr Caching</h3>
-<p>If your website is time consuming to render you may want to enable <a href="authoring_rcodechunks.html#caching">knitr caching</a> during the development of the site so that you can more rapidly preview changes. To enable caching for an individual chunk just add the <code>cache = TRUE</code> chunk option:</p>
+<p>If your website is time consuming to render you may want to enable <a href="https://bookdown.org/yihui/rmarkdown/r-code.html#caching">knitr caching</a> during the development of the site so that you can more rapidly preview changes. To enable caching for an individual chunk just add the <code>cache = TRUE</code> chunk option:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, cache = TRUE}
 data <- longComputation()
 &#96;&#96;&#96;
@@ -462,7 +462,7 @@ knitr::opts_chunk$set(cache=TRUE)
 <a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="kw">font-style</span>: <span class="dv">italic</span></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">}</a></code></pre></div>
 <p>Note that we’ve included an <code>output</code> element within our <strong>_site.yml</strong> file. This defines shared output options for all R Markdown documents within a site. Note that individual documents can also include their own output options, which will be merged with the common options at render time.</p>
-<p>As part of our common output options we’ve specified an HTML footer (via the <code>include: after-body:</code> option) and CSS stylesheet. Note that you can also include HTML before the body or in the document <code>&lt;head&gt;</code>, see the documentation on <a href="html_document_format.html#includes">includes</a> for more details.</p>
+<p>As part of our common output options we’ve specified an HTML footer (via the <code>include: after-body:</code> option) and CSS stylesheet. Note that you can also include HTML before the body or in the document <code>&lt;head&gt;</code>, see the documentation on <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#includes">includes</a> for more details.</p>
 <p>In addition to whatever common options you define, the are two output options which are automatically set when rendering a site:</p>
 <ol style="list-style-type: decimal">
 <li><p>The <code>self_contained</code> option is set <code>FALSE</code>; and</p></li>

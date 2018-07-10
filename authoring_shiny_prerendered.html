@@ -279,7 +279,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <script src="flexdashboard/snippets/snippets.js" type="text/javascript" charset="utf-8"></script>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>The traditional way to add Shiny components to an R Markdown document is through the use of <a href="authoring_shiny.html"><code>runtime: shiny</code></a>. This method provides a very straightforward development experience (you can use Shiny UI and server functions anywhere you like within the document). However, because it requires a full document render for each end user browser session it can perform poorly for documents that don’t render quickly.</p>
+<p>The traditional way to add Shiny components to an R Markdown document is through the use of <a href="https://bookdown.org/yihui/rmarkdown/shiny-documents.html"><code>runtime: shiny</code></a>. This method provides a very straightforward development experience (you can use Shiny UI and server functions anywhere you like within the document). However, because it requires a full document render for each end user browser session it can perform poorly for documents that don’t render quickly.</p>
 <p>Ideally, we could have interactive documents that are prerendered (i.e. render/knit a single time <em>prior to</em> their deployment) and as a result be very quick to load. It would also be beneficial to extend the notion of prerendering to data, so that expensive data import and manipulation tasks could be done up front and not slow down startup and load times. To address these requirements a new <code>runtime: shiny_prerendered</code> mode is currently under development.</p>
 <div id="prerequisties" class="section level3 toc-ignore">
 <h3>Prerequisties</h3>
@@ -396,7 +396,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <h2>Putting It All Together</h2>
 <div id="complete-example" class="section level3">
 <h3>Complete Example</h3>
-<p>Here’s a complete example of a <a href="http://rmarkdown.rstudio.com/flexdashboard">flexdashboard</a> implemented with <code>runtime: shiny_prerendered</code>:</p>
+<p>Here’s a complete example of a <a href="/flexdashboard">flexdashboard</a> implemented with <code>runtime: shiny_prerendered</code>:</p>
 <div id="shiny_prerendered_complete">
 
 </div>

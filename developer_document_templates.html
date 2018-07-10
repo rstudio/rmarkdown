@@ -336,7 +336,7 @@ output:
 </div>
 <div id="custom-formats" class="section level2">
 <h2>Custom Formats</h2>
-<p>When creating a template it’s also convenient to create a <a href="developer_custom_formats.html">custom format</a> that is used by the template. Custom formats are useful when you have lots of supporting files or want to constrain the output options to a set of invariants established by the format.</p>
+<p>When creating a template it’s also convenient to create a <a href="https://bookdown.org/yihui/rmarkdown/new-formats.html">custom format</a> that is used by the template. Custom formats are useful when you have lots of supporting files or want to constrain the output options to a set of invariants established by the format.</p>
 <p>Here’s an example of a custom format based on <code>html_document</code>:</p>
 <pre class="r"><code>quarterly_report &lt;- function(toc = TRUE) {
 
@@ -357,13 +357,13 @@ output:
 title: &quot;Untitled&quot;
 output: mypackage::quarterly_report
 ---</code></pre>
-<p>See the article on <a href="developer_custom_formats.html">Creating New Formats</a> for additional details on custom formats.</p>
+<p>See the article on <a href="https://bookdown.org/yihui/rmarkdown/new-formats.html">Creating New Formats</a> for additional details on custom formats.</p>
 </div>
 <div id="examples" class="section level2">
 <h2>Examples</h2>
 <div id="package-vignette" class="section level3">
 <h3>Package Vignette</h3>
-<p>The <a href="package_vignette_format.html">Package Vignette</a> format provides an example of a format that customizes the base <a href="html_document_format.html"><code>html_document</code></a> format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette <a href="https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R">format</a> and <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette">custom template</a> are a good starting point for creating your own HTML based formats.</p>
+<p>The <a href="https://bookdown.org/yihui/rmarkdown/r-package-vignette.html">Package Vignette</a> format provides an example of a format that customizes the base <a href="https://bookdown.org/yihui/rmarkdown/html-document.html"><code>html_document</code></a> format with custom CSS and some other tweaks related to vignette authoring. The source code for the Package Vignette <a href="https://github.com/rstudio/rmarkdown/blob/master/R/html_vignette.R">format</a> and <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmarkdown/templates/html_vignette">custom template</a> are a good starting point for creating your own HTML based formats.</p>
 </div>
 <div id="rticles-package" class="section level3">
 <h3>rticles Package</h3>
