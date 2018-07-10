@@ -21,7 +21,7 @@ Flexdashboard makes it easy to organize your content into a visual layout:
 
 You can further modify elements with attributes, as in the `{.sidebar}` above.
 
-Flexdashboard also provides simple tools for creating tabsets, value boxes, and gauges. Learn more about flexdashboard at [flexdashboard: Easy interactive dashboards for R](http://rmarkdown.rstudio.com/flexdashboard/).
+Flexdashboard also provides simple tools for creating tabsets, value boxes, and gauges. Learn more about flexdashboard at [flexdashboard: Easy interactive dashboards for R](/flexdashboard/).
 
 ***
 

@@ -33,7 +33,7 @@ But R Markdown (v2) has given me  collaboration superpowers!
 I can do reproducible work in R (making me happy) and format the output report in Word (making my collaborators happy). This post is about how you can learn to do that too (making you happy).  
 
 **How to do it (briefly).** The first step towards developing your own Rmd-to-docx superpowers is to heed one sentence from the
-<a href="http://rmarkdown.rstudio.com/word_document_format.html" target="_blank">R Markdown  website</a>, "For best results, the reference docx should be a modified version of a docx file produced using R Markdown." In other words:
+<a href="/word_document_format.html" target="_blank">R Markdown  website</a>, "For best results, the reference docx should be a modified version of a docx file produced using R Markdown." In other words:
 
 - Use R Markdown to create a Word document  
 - Edit the Word styles you find there  

@@ -172,7 +172,7 @@ To omit the _code_ from the final report (while including the results) add the a
 
 ![](articles/images/rmd-echo2.png)
 
-`echo` and `eval` are not the only arguments that you can use to customize code chunks. You can learn more about formatting the output of code chunks at the [rmarkdown](http://rmarkdown.rstudio.com/authoring_rcodechunks.html) and [knitr](http://yihui.name/knitr/options) websites.
+`echo` and `eval` are not the only arguments that you can use to customize code chunks. You can learn more about formatting the output of code chunks at the [rmarkdown](/authoring_rcodechunks.html) and [knitr](http://yihui.name/knitr/options) websites.
 
 ### Inline code
 
@@ -222,7 +222,7 @@ _Note: The knit button in the RStudio IDE will update to show slideshow options 
 
 `rmarkdown` will convert your document into a slideshow by starting a new slide at each header or horizontal rule (e.g., `***`).
 
-Visit [rmakdown.rstudio.com](http://rmarkdown.rstudio.com/html_document_format.html) to learn about more YAML options that control the render process.
+Visit [rmakdown.rstudio.com](/html_document_format.html) to learn about more YAML options that control the render process.
 
 ## Recap
 

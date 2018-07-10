@@ -29,31 +29,31 @@ The following output formats are available to use with R Markdown.
 
 ### Documents
 
-* [html_notebook]( http://rmarkdown.rstudio.com/r_notebooks.html) - Interactive R Notebooks
-* [html_document](http://rmarkdown.rstudio.com/html_document_format.html) - HTML document w/ Bootstrap CSS
-* [pdf_document](http://rmarkdown.rstudio.com/pdf_document_format.html) - PDF document (via LaTeX template)
-* [word_document](http://rmarkdown.rstudio.com/word_document_format.html) - Microsoft Word document (docx)
-* [odt_document](http://rmarkdown.rstudio.com/odt_document_format.html) - OpenDocument Text document
-* [rtf_document](http://rmarkdown.rstudio.com/rtf_document_format.html) - Rich Text Format document
-* [md_document](http://rmarkdown.rstudio.com/markdown_document_format.html) - Markdown document (various flavors)
+* [html_notebook](/r_notebooks.html) - Interactive R Notebooks
+* [html_document](/html_document_format.html) - HTML document w/ Bootstrap CSS
+* [pdf_document](/pdf_document_format.html) - PDF document (via LaTeX template)
+* [word_document](/word_document_format.html) - Microsoft Word document (docx)
+* [odt_document](/odt_document_format.html) - OpenDocument Text document
+* [rtf_document](/rtf_document_format.html) - Rich Text Format document
+* [md_document](/markdown_document_format.html) - Markdown document (various flavors)
 
 ### Presentations (slides)
 
-* [ioslides_presentation](http://rmarkdown.rstudio.com/ioslides_presentation_format.html) - HTML presentation with ioslides
-* [revealjs::revealjs_presentation](http://rmarkdown.rstudio.com/revealjs_presentation_format.html) - HTML presentation with reveal.js
-* [slidy_presentation](http://rmarkdown.rstudio.com/slidy_presentation_format.html) - HTML presentation with W3C Slidy
-* [beamer_presentation](http://rmarkdown.rstudio.com/beamer_presentation_format.html) - PDF presentation with LaTeX Beamer
+* [ioslides_presentation](/ioslides_presentation_format.html) - HTML presentation with ioslides
+* [revealjs::revealjs_presentation](/revealjs_presentation_format.html) - HTML presentation with reveal.js
+* [slidy_presentation](/slidy_presentation_format.html) - HTML presentation with W3C Slidy
+* [beamer_presentation](/beamer_presentation_format.html) - PDF presentation with LaTeX Beamer
 
 ### More
 
-* [flexdashboard::flex_dashboard](http://rmarkdown.rstudio.com/flexdashboard/) - Interactive dashboards
-* [tufte::tufte_handout](http://rmarkdown.rstudio.com/tufte_handout_format.html) - PDF handouts in the style of Edward Tufte
-* [tufte::tufte_html](http://rmarkdown.rstudio.com/tufte_handout_format.html) - HTML handouts in the style of Edward Tufte
-* [tufte::tufte_book](http://rmarkdown.rstudio.com/tufte_handout_format.html) - PDF books in the style of Edward Tufte
-* [html_vignette](http://rmarkdown.rstudio.com/package_vignette_format.html) - R package vignette (HTML)
-* [github_document](http://rmarkdown.rstudio.com/github_document_format.html) - GitHub Flavored Markdown document
+* [flexdashboard::flex_dashboard](/flexdashboard/) - Interactive dashboards
+* [tufte::tufte_handout](/tufte_handout_format.html) - PDF handouts in the style of Edward Tufte
+* [tufte::tufte_html](/tufte_handout_format.html) - HTML handouts in the style of Edward Tufte
+* [tufte::tufte_book](/tufte_handout_format.html) - PDF books in the style of Edward Tufte
+* [html_vignette](/package_vignette_format.html) - R package vignette (HTML)
+* [github_document](/github_document_format.html) - GitHub Flavored Markdown document
 
-You can also build [books](https://bookdown.org/), [websites](http://rmarkdown.rstudio.com/rmarkdown_websites.html), and [interactive documents](http://rmarkdown.rstudio.com/authoring_shiny.html) with R Markdown.
+You can also build [books](https://bookdown.org/), [websites](/rmarkdown_websites.html), and [interactive documents](/authoring_shiny.html) with R Markdown.
 
 
 ## Output Options

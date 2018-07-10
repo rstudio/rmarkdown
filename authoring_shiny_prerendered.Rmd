@@ -148,7 +148,7 @@ Note that the use of chunk labels to specify contexts is inherently limited (sin
 
 ### Complete Example
 
-Here's a complete example of a [flexdashboard](http://rmarkdown.rstudio.com/flexdashboard) implemented with `runtime: shiny_prerendered`:
+Here's a complete example of a [flexdashboard](/flexdashboard) implemented with `runtime: shiny_prerendered`:
 
 <div id="shiny_prerendered_complete"></div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_complete', 'r')</script>

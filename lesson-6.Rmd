@@ -45,7 +45,7 @@ Parameters are useful when you want to re-render the same report with distinct v
 
 * Running multiple versions of a report for distinct sets of core assumptions.
 
-Learn more about parameters at [Paramaterized Reports](http://rmarkdown.rstudio.com/developer_parameterized_reports.html).
+Learn more about parameters at [Paramaterized Reports](/developer_parameterized_reports.html).
 
 ***
 

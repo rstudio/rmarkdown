@@ -46,7 +46,7 @@ That’s a lot of manual code for one little slide.
 
 I’ve known about [Markdown](http://en.wikipedia.org/wiki/Markdown) language (and [Pandoc](http://johnmacfarlane.net/pandoc/)) as a substitute for straight Beamer. Markdown language is simple and elegant. Pandoc allows for Markdown to be translated to TeX, and ultimately a Beamer PDF. However, Pandoc is something of a chore to render. [Look at all these extra commands](http://pandoc.org/README.html#templates) one needs in a terminal to make even minimal changes (e.g. a simple theme, let alone a custom one) to a Pandoc call. I don’t have time for all that when a simple Cmd-R in [Textmate](http://macromates.com/) (or F5 in [Gedit](https://wiki.gnome.org/Apps/Gedit)‘s [LaTeX plugin](https://wiki.gnome.org/Apps/Gedit/LaTeXPlugin)) will do the same thing when the appropriate markup is included in the preamble of the document.
 
-[R Markdown](http://rmarkdown.rstudio.com/) is the best of both worlds. R Markdown allows for elegant Markdown code and simple means of stylizing and rendering the slides without a ton of additional commands in the terminal. It took a while to get something that was exactly what I wanted (since R Markdown has its own peculiarities), but I did and offer what follows as a guide for those looking to take advantage of R Markdown.
+[R Markdown](/) is the best of both worlds. R Markdown allows for elegant Markdown code and simple means of stylizing and rendering the slides without a ton of additional commands in the terminal. It took a while to get something that was exactly what I wanted (since R Markdown has its own peculiarities), but I did and offer what follows as a guide for those looking to take advantage of R Markdown.
 
 ## Understanding Your Markdown Document
 

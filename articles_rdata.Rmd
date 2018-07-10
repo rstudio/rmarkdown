@@ -9,7 +9,7 @@ output:
 
 _This article is reposted from [bayesfactor.blogspot.com](http://bayesfactor.blogspot.com/2014/09/embedding-rdata-files-in-R Markdown.html) with the kind permission of Richard Morey._
 
-For those of us interested in reproducible analysis, [R Markdown](http://rmarkdown.rstudio.com/) is a great way of communicating our code to other researchers. [RStudio](http://www.rstudio.com/), in particular, makes it very easy to create attractive HTML document containing text, code, and figures, which can then be sent to colleagues or put on the internet for anyone to see. If you aren't using R Markdown for your statistical analyses, I recommend you start; you'll never go back to simple script files again (and your colleagues won't want you to). 
+For those of us interested in reproducible analysis, [R Markdown](/) is a great way of communicating our code to other researchers. [RStudio](http://www.rstudio.com/), in particular, makes it very easy to create attractive HTML document containing text, code, and figures, which can then be sent to colleagues or put on the internet for anyone to see. If you aren't using R Markdown for your statistical analyses, I recommend you start; you'll never go back to simple script files again (and your colleagues won't want you to). 
 
 In this post, I describe how to improve your R Markdown by embedding data that can be downloaded by anyone viewing the document in a modern browser with javascript enabled. For a quick look, see the [example Rmd file](http://drsmorey.org/Rmarkdown/download_RData.Rmd) and [resulting HTML file](http://drsmorey.org/Rmarkdown/download_RData.html). 
 

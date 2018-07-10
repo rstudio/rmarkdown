@@ -41,7 +41,7 @@ Htmlwidgets and Shiny elements rely on HTML and JavaScript. They will work in an
 
 If you include an interactive element in a static output format, like a PDF, R Markdown will embed a screenshot of the element.
 
-Learn more about interactive documents with R Markdown at [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html). 
+Learn more about interactive documents with R Markdown at [Interactive Documents](/authoring_shiny.html). 
 
 ****
 

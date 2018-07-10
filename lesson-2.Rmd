@@ -21,7 +21,7 @@ Notice that the file contains three types of content:
 
 ## A Notebook Interface
 
-When you open the file in the RStudio IDE, it becomes a [notebook interface for R](http://rmarkdown.rstudio.com/r_notebooks.html). You can run each code chunk by clicking the ![](images/notebook-run-chunk.png) icon. RStudio executes the code and display the results inline with your file.
+When you open the file in the RStudio IDE, it becomes a [notebook interface for R](/r_notebooks.html). You can run each code chunk by clicking the ![](images/notebook-run-chunk.png) icon. RStudio executes the code and display the results inline with your file.
 
 ![](lesson-images/how-2-chunk.png)
 </br>

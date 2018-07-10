@@ -79,7 +79,7 @@ You can also specify a document to be used as as a style reference in producing 
         reference_docx: mystyles.docx
     ---
     
-For more on this, see the article [here](http://rmarkdown.rstudio.com/articles_docx.html).
+For more on this, see the article [here](/articles_docx.html).
 
 ## Keeping Markdown
 
