@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 1.10.3
+Version: 1.10.7
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -72,7 +72,6 @@ Imports:
     evaluate (>= 0.8),
     base64enc,
     jsonlite,
-    rprojroot,
     mime,
     tinytex (>= 0.3),
     methods,

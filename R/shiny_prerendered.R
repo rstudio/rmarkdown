@@ -173,7 +173,6 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
 
 
 # Write the dependencies for a shiny_prerendered document.
-#' @import rprojroot
 shiny_prerendered_append_dependencies <- function(input, # always UTF-8
                                                   shiny_prerendered_dependencies,
                                                   files_dir,
@@ -190,13 +189,10 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
       return(dependency)
 
     # see if we can convert absolute paths into package-aliased ones
-    if (is.null(dependency$package) && !is.null(dependency$src$file)) {
+    if (is.null(dependency$package) && is.character(dependency$src$file)) {
 
       # check for a package directory parent
-      package_dir <- tryCatch(
-        find_root(is_r_package, path = dependency$src$file),
-        error = function(e) NULL
-      )
+      package_dir <- package_root(dependency$src$file)
       # if we have one then populate the package field and make the
       # src$file relative to the package
       if (!is.null(package_dir)) {

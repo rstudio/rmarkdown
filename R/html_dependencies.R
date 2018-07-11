@@ -1,4 +1,6 @@
-#' @import htmltools
+#' @importFrom htmltools htmlDependency copyDependencyToDir
+#'   makeDependencyRelative renderDependencies tagList tags
+#'   restorePreserveChunks extractPreserveChunks HTML
 NULL
 
 #' Provide common HTML dependencies for R Markdown formats
