@@ -330,6 +330,13 @@ render <- function(input,
   # read the input file
   input_lines <- read_lines_utf8(knit_input, encoding)
 
+  # Terminate the render process early if there are document
+  # chunk names found in `input_lines`
+  if (any_duplicate_chunk_names(input_lines = input_lines)) {
+    stop("Duplicate chunk names were found in the input document. ",
+         "Please correct this and `render()` again", call. = FALSE)
+  }
+
   # read the yaml front matter
   yaml_front_matter <- parse_yaml_front_matter(input_lines)
 
