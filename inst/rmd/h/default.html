@@ -234,56 +234,56 @@ $endif$
 <!-- tabsets -->
 
 <style type="text/css">
-  .tabset-dropdown > .nav-tabs {
-	display: inline-block;
-	max-height: 500px;
-	min-height: 44px;
-	overflow-y: auto;
-	background: white;
-	border: 1px solid #ddd;
-	border-radius: 4px;
+.tabset-dropdown > .nav-tabs {
+  display: inline-block;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 .tabset-dropdown > .nav-tabs > li.active:before {
-    content: "";
-    font-family: 'Glyphicons Halflings';
-    display: inline-block;
-    padding: 10px;
-    border-right: 1px solid #ddd;
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-	content: "&#xe258;";
-	border: none;
+  content: "&#xe258;";
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-	content: "";
-    font-family: 'Glyphicons Halflings';
-    display: inline-block;
-    padding: 10px;
-    border-right: 1px solid #ddd;
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
-	display: block;
+  display: block;
 }
 
 .tabset-dropdown > .nav-tabs > li > a,
 .tabset-dropdown > .nav-tabs > li > a:focus,
 .tabset-dropdown > .nav-tabs > li > a:hover {
-	border: none;
-	display: inline-block;
-	border-radius: 4px;
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-	display: block;
-	float: none;
+  display: block;
+  float: none;
 }
 
 .tabset-dropdown > .nav-tabs > li {
-	display: none;
+  display: none;
 }
 </style>
 
@@ -293,9 +293,9 @@ $$(document).ready(function () {
 });
 
 $$(document).ready(function () {
-	$$('.tabset-dropdown > .nav-tabs > li').click(function () {
-		$$(this).parent().toggleClass('nav-tabs-open')
-	});
+  $$('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $$(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
@@ -315,7 +315,6 @@ $endif$
 });
 </script>
 $endif$
-
 
 
 $if(toc_float)$
