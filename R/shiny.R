@@ -108,6 +108,13 @@ run <- function(file = "index.Rmd",
     }
   }
 
+  # If no `default_file` yet chosen but multiple .Rmd
+  # files exist in the directory, choose the first based
+  # on an alpha sort
+  if (is.null(default_file) && length(allRmds) > 1) {
+    default_file <- sort(allRmds)[1]
+  }
+
   # form and test locations
   dir <- normalize_path(dir)
   if (!dir_exists(dir))
