@@ -5,8 +5,7 @@ rmarkdown 1.11 (unreleased)
 
 * The icons in `flexdashboard::valueBox()` are not of the full sizes due to the upgrade of FontAwesome in #1340 in the previous version (#1388, rstudio/flexdashboard#189).
 
-* Fix for `run()` to work if `file = NULL` and multiple .Rmd files are present in the search
-path (#1406).
+* Fix for `run()` to work if `file = NULL` and multiple .Rmd files are present in the search path (#1406) (thanks, @aronatkins #906)
 
 rmarkdown 1.10
 --------------------------------------------------------------------------------
