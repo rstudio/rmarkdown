@@ -7,7 +7,7 @@ rmarkdown 1.11 (unreleased)
 
 * Added the ability to generate tabset dropdowns, usable by adding the `.tabset-dropdown` class to a header (e.g., `# Heading {.tabset .tabset-dropdown}`) (#1405). Thanks @stefanfritsch for contributing the necessary code for this (#1116).
 
-* The `darkly` theme (a darker variant of the Bootswatch `flatly` theme) has been added (#1409, #889).
+* The `darkly` theme (a darker variant of the Bootswatch `flatly` theme) has been added to `html_document` and `html_notebook` (#1409, #889).
 
 
 rmarkdown 1.10
