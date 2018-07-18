@@ -62,12 +62,8 @@
 #' rmarkdown::run("shiny_doc.Rmd", shiny_args = list(port = 8241))
 #' }
 #' @export
-run <- function(file = "index.Rmd",
-                dir = dirname(file),
-                default_file = NULL,
-                auto_reload = TRUE,
-                shiny_args = NULL,
-                render_args = NULL) {
+run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
+                auto_reload = TRUE, shiny_args = NULL, render_args = NULL) {
 
   # select the document to serve at the root URL if not user-specified. We exclude
   # documents which start with a leading underscore (same pattern is used to
@@ -82,9 +78,8 @@ run <- function(file = "index.Rmd",
       index <- which(tolower(allRmds) == "index.rmd")
       if (length(index) > 0) {
         default_file <- allRmds[index[1]]
-      }
-      # look for first one that has runtime: shiny
-      else {
+      } else {
+        # look for first one that has runtime: shiny
         for (rmd in allRmds) {
           encoding <- getOption("encoding")
           if (!is.null(render_args) && !is.null(render_args$encoding))
@@ -101,17 +96,13 @@ run <- function(file = "index.Rmd",
 
   if (is.null(default_file)) {
     # no R Markdown default found; how about an HTML?
-    indexHtml <- list.files(path = dir, pattern = "index.html?",
-                            ignore.case = TRUE)
-    if (length(indexHtml) > 0) {
-      default_file <- indexHtml[1]
-    }
+    indexHtml <- list.files(dir, "index.html?", ignore.case = TRUE)
+    if (length(indexHtml) > 0) default_file <- indexHtml[1]
   }
 
   # form and test locations
   dir <- normalize_path(dir)
-  if (!dir_exists(dir))
-    stop("The directory '", dir, "' does not exist")
+  if (!dir_exists(dir)) stop("The directory '", dir, "' does not exist")
 
   if (!is.null(file)) {
     # compute file path relative to directory (remove common directory prefix
@@ -130,30 +121,20 @@ run <- function(file = "index.Rmd",
   }
 
   # pick up encoding
-  encoding <-
-    if (is.null(render_args$encoding))
-      "UTF-8"
-    else
-      render_args$encoding
+  encoding <- if (is.null(render_args$encoding)) "UTF-8" else render_args$encoding
 
   if (is.null(render_args$envir)) render_args$envir <- parent.frame()
 
   # determine the runtime of the target file
   target_file <- ifelse(!is.null(file), file, default_file)
-  if (!is.null(target_file))
-    runtime <- yaml_front_matter(target_file, encoding)$runtime
-  else
-    runtime <- NULL
+  runtime <- if (!is.null(target_file)) yaml_front_matter(target_file, encoding)$runtime
 
   # run using the requested mode
   if (is_shiny_prerendered(runtime)) {
 
     # get the pre-rendered shiny app
-    app <- shiny_prerendered_app(target_file,
-                                 encoding = encoding,
-                                 render_args = render_args)
-  }
-  else {
+    app <- shiny_prerendered_app(target_file, encoding = encoding, render_args = render_args)
+  } else {
 
     # add rmd_resources handler on start
     onStart <- function() {
@@ -181,10 +162,10 @@ run <- function(file = "index.Rmd",
 
   # launch the app and open a browser to the requested page, if one was
   # specified
-  if (!is.null(shiny_args) && !is.null(shiny_args$launch.browser))
-    launch_browser <- shiny_args$launch.browser
+  launch_browser <- if (!is.null(shiny_args$launch.browser))
+    shiny_args$launch.browser
   else
-    launch_browser <- (!is.null(file)) && interactive()
+    (!is.null(file)) && interactive()
   if (isTRUE(launch_browser)) {
     launch_browser <- function(url) {
       url <- paste(url, file_rel, sep = "/")
@@ -197,8 +178,7 @@ run <- function(file = "index.Rmd",
     }
   }
 
-  shiny_args <- merge_lists(list(appDir = app,
-                                 launch.browser = launch_browser),
+  shiny_args <- merge_lists(list(appDir = app, launch.browser = launch_browser),
                             shiny_args)
   do.call(shiny::runApp, shiny_args)
   invisible(NULL)
