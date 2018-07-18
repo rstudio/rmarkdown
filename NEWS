@@ -7,6 +7,8 @@ rmarkdown 1.11 (unreleased)
 
 * Fix for `run()` to work if `file = NULL` and multiple .Rmd files are present in the search path (#1406) (thanks, @aronatkins #906)
 
+* Added the ability to generate tabset dropdowns, usable by adding the `.tabset-dropdown` class to a header (e.g., `# Heading {.tabset .tabset-dropdown}`) (#1405). Thanks @stefanfritsch for contributing the necessary code for this (#1116).
+
 
 rmarkdown 1.10
 --------------------------------------------------------------------------------
