@@ -48,9 +48,9 @@
 #'  documents MathJax is still loaded externally (this is necessary because of
 #'  its size).
 #'@param theme Visual theme ("default", "cerulean", "journal", "flatly",
-#'  "readable", "spacelab", "united", "cosmo", "lumen", "paper", "sandstone",
-#'  "simplex", or "yeti"). Pass \code{NULL} for no theme (in this case you can
-#'  use the \code{css} parameter to add your own styles).
+#'  "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
+#'  "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
+#'  case you can use the \code{css} parameter to add your own styles).
 #'@param highlight Syntax highlighting style. Supported styles include
 #'  "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'  "haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.
@@ -484,6 +484,7 @@ themes <- function() {
     "cerulean",
     "journal",
     "flatly",
+    "darkly",
     "readable",
     "spacelab",
     "united",
@@ -515,6 +516,7 @@ pandoc_body_padding_variable_args <- function(theme) {
                      "cerulean" = 51,
                      "journal" = 61 ,
                      "flatly" = 60,
+                     "darkly" = 60,
                      "readable" = 66,
                      "spacelab" = 52,
                      "united" = 51,
