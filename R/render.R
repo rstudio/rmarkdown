@@ -377,15 +377,22 @@ render <- function(input,
   }
   pandoc_to <- output_format$pandoc$to
 
-  # generate outpout file based on input filename
+  # generate output file based on input filename
   if (is.null(output_file))
     output_file <- pandoc_output_file(input, output_format$pandoc)
 
-  # if an output_dir was specified then concatenate it with the output file
+  # if an `output_dir` was specified then concatenate it with the output file
   if (!is.null(output_dir)) {
     output_file <- file.path(output_dir, basename(output_file))
   }
   output_dir <- dirname(output_file)
+
+  # Stop the render process early if the output directory does not exist
+  if (!dir.exists(output_dir)) {
+    stop("The directory specified in `output_file` (`", output_dir, "`) does ",
+         "not exist. Please ensure that this directory is available and then ",
+         "`render()` again.", call. = FALSE)
+  }
 
   # use output filename based files dir
   files_dir_slash <- file.path(output_dir, knitr_files_dir(basename(output_file)))
