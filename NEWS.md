@@ -7,6 +7,8 @@ rmarkdown 1.11 (unreleased)
 
 * Added the ability to generate tabset dropdowns, usable by adding the `.tabset-dropdown` class to a header (e.g., `# Heading {.tabset .tabset-dropdown}`) (#1405). Thanks @stefanfritsch for contributing the necessary code for this (#1116).
 
+* The `darkly` theme (a darker variant of the Bootswatch `flatly` theme) has been added to `html_document` and `html_notebook` (#1409, #889).
+
 
 rmarkdown 1.10
 ================================================================================
@@ -29,7 +31,7 @@ rmarkdown 1.10
 
 * Add `site_resources()` function for computing resource files required for a website.
 
-* Export `default_site_generator()` function
+* Export `default_site_generator()` function.
 
 * The `latex_document()` format should not clean up the figure directory (thanks, @emiltb, rstudio/bookdown#582).
 
