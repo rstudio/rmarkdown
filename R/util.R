@@ -73,6 +73,25 @@ read_lines_utf8 <- function(file, encoding) {
   to_utf8(lines, encoding)
 }
 
+# Determine if there are duplicate chunk names in the document's
+# `input_lines`; this allows the render process to terminate early
+# for any long-running rendering tasks
+any_duplicate_chunk_names <- function(input_lines) {
+
+  # Get only the lines related to chunk headers
+  chunk_headers <- input_lines[which(grepl("^```\\{\\w+?", input_lines))]
+
+  # Remove any components not related to the chunk names
+  chunk_names <-
+    gsub("^```\\{[a-zA-Z]+?\\s*\\}$|```\\{[a-zA-Z]+?\\s+?|\\}$|,.*|[a-zA-Z0-9 ]*?\\s*=\\s*.*|\\s*\\}", "",
+         chunk_headers, perl = TRUE)
+
+  # Remove remaining whitespace
+  chunk_names <- gsub("^\\s*", "\\s*$", chunk_names)
+
+  # Determine if there are duplicate chunk names
+  anyDuplicated(chunk_names[chunk_names != ""]) != 0
+}
 
 to_utf8 <- function(x, encoding) {
   # normalize encoding to iconv compatible form
