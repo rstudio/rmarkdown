@@ -12,6 +12,10 @@ is_osx <- function() {
   Sys.info()["sysname"] == "Darwin"
 }
 
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
+
 # determine the output file for a pandoc conversion
 pandoc_output_file <- function(input, pandoc_options) {
   to <- pandoc_options$to

@@ -32,10 +32,6 @@ paged_table_type_sum <- function(x) {
 }
 
 paged_table_obj_sum <- function(x) {
-  "%||%" <- function(x, y) {
-    if (is.null(x)) y else x
-  }
-
   big_mark <- function(x, ...) {
     mark <- if (identical(getOption("OutDec"), ",")) "." else ","
     formatC(x, big.mark = mark, ...)
