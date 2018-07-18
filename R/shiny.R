@@ -82,10 +82,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       } else {
         # look for first one that has runtime: shiny
         for (rmd in allRmds) {
-          encoding <- getOption("encoding")
-          if (!is.null(render_args) && !is.null(render_args$encoding))
-            encoding <- render_args$encoding
-          runtime <- yaml_front_matter(file.path(dir,rmd), encoding)$runtime
+          encoding <- render_args$encoding %||% getOption("encoding")
+          runtime <- yaml_front_matter(file.path(dir, rmd), encoding)$runtime
           if (is_shiny(runtime)) {
             default_file <- rmd
             break
@@ -122,12 +120,12 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   }
 
   # pick up encoding
-  encoding <- if (is.null(render_args$encoding)) "UTF-8" else render_args$encoding
+  encoding <- render_args$encoding %||% "UTF-8"
 
   if (is.null(render_args$envir)) render_args$envir <- parent.frame()
 
   # determine the runtime of the target file
-  target_file <- ifelse(!is.null(file), file, default_file)
+  target_file <- file %||% default_file
   runtime <- if (!is.null(target_file)) yaml_front_matter(target_file, encoding)$runtime
 
   # run using the requested mode
@@ -163,10 +161,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
   # launch the app and open a browser to the requested page, if one was
   # specified
-  launch_browser <- if (!is.null(shiny_args$launch.browser))
-    shiny_args$launch.browser
-  else
-    (!is.null(file)) && interactive()
+  launch_browser <- shiny_args$launch.browser %||% (!is.null(file) && interactive())
   if (isTRUE(launch_browser)) {
     launch_browser <- function(url) {
       url <- paste(url, file_rel, sep = "/")
