@@ -26,15 +26,15 @@ file (this defaults to HTML if no format is specified there).}
 \item{output_file}{The name of the output file. If using \code{NULL} then the
 output filename will be based on filename for the input file. If a filename
 is provided, a path to the output file can also be provided. Note that the
-\code{output_dir} option allows for specifying the output file path as well.
-Please also note that any directory path provided will create any necessary
-directories if they do not exist.}
+\code{output_dir} option allows for specifying the output file path as well,
+however, if also specifying the path, the directory must exist.}
 
 \item{output_dir}{The output directory for the rendered \code{output_file}.
 This allows for a choice of an alternate directory to which the output file
 should be written (the default output directory of that of the input file).
 If a path is provided with a filename in \code{output_file} the directory
-specified here will take precedence.}
+specified here will take precedence. Please note that any directory path
+provided will create any necessary directories if they do not exist.}
 
 \item{output_options}{List of output options that can override the options
 specified in metadata (e.g. could be used to force \code{self_contained} or

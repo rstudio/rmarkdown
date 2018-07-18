@@ -80,14 +80,14 @@ metadata <- list()
 #' @param output_file The name of the output file. If using \code{NULL} then the
 #' output filename will be based on filename for the input file. If a filename
 #' is provided, a path to the output file can also be provided. Note that the
-#' \code{output_dir} option allows for specifying the output file path as well.
-#' Please also note that any directory path provided will create any necessary
-#' directories if they do not exist.
+#' \code{output_dir} option allows for specifying the output file path as well,
+#' however, if also specifying the path, the directory must exist.
 #' @param output_dir The output directory for the rendered \code{output_file}.
 #' This allows for a choice of an alternate directory to which the output file
 #' should be written (the default output directory of that of the input file).
 #' If a path is provided with a filename in \code{output_file} the directory
-#' specified here will take precedence.
+#' specified here will take precedence. Please note that any directory path
+#' provided will create any necessary directories if they do not exist.
 #' @param output_options List of output options that can override the options
 #' specified in metadata (e.g. could be used to force \code{self_contained} or
 #' \code{mathjax = "local"}). Note that this is only valid when the output
@@ -377,15 +377,22 @@ render <- function(input,
   }
   pandoc_to <- output_format$pandoc$to
 
-  # generate outpout file based on input filename
+  # generate output file based on input filename
   if (is.null(output_file))
     output_file <- pandoc_output_file(input, output_format$pandoc)
 
-  # if an output_dir was specified then concatenate it with the output file
+  # if an `output_dir` was specified then concatenate it with the output file
   if (!is.null(output_dir)) {
     output_file <- file.path(output_dir, basename(output_file))
   }
   output_dir <- dirname(output_file)
+
+  # Stop the render process early if the output directory does not exist
+  if (!dir.exists(output_dir)) {
+    stop("The directory specified in `output_file` (`", output_dir, "`) does ",
+         "not exist. Please ensure that this directory is available and then ",
+         "`render()` again.", call. = FALSE)
+  }
 
   # use output filename based files dir
   files_dir_slash <- file.path(output_dir, knitr_files_dir(basename(output_file)))
