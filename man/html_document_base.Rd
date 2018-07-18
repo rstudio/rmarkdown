@@ -16,9 +16,9 @@ quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
 ellipses.}
 
 \item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
-"readable", "spacelab", "united", "cosmo", "lumen", "paper", "sandstone",
-"simplex", or "yeti"). Pass \code{NULL} for no theme (in this case you can
-use the \code{css} parameter to add your own styles).}
+"darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
+"sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
+case you can use the \code{css} parameter to add your own styles).}
 
 \item{self_contained}{Produce a standalone HTML file with no external
 dependencies, using data: URIs to incorporate the contents of linked
