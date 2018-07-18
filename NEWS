@@ -5,8 +5,6 @@ rmarkdown 1.11 (unreleased)
 
 * The icons in `flexdashboard::valueBox()` are not of the full sizes due to the upgrade of FontAwesome in #1340 in the previous version (#1388, rstudio/flexdashboard#189).
 
-* Fix for `run()` to work if `file = NULL` and multiple .Rmd files are present in the search path (#1406) (thanks, @aronatkins #906)
-
 * Added the ability to generate tabset dropdowns, usable by adding the `.tabset-dropdown` class to a header (e.g., `# Heading {.tabset .tabset-dropdown}`) (#1405). Thanks @stefanfritsch for contributing the necessary code for this (#1116).
 
 

@@ -25,10 +25,8 @@
 #' order of preference):
 #' \itemize{
 #'   \item{If \code{dir} contains only one \code{Rmd}, that \code{Rmd}.}
-#'   \item{The file \code{index.Rmd}, if it exists in \code{dir}.}
-#'   \item{The file \code{index.html}, if it exists in \code{dir}.}
-#'   \item{The first (based on alphabetical order) \code{Rmd} if multiple
-#'   \code{Rmd} files are present in \code{dir}.}
+#'   \item{The file \code{index.Rmd}, if it exists in \code{dir}}
+#'   \item{The file \code{index.html}, if it exists in \code{dir}}
 #' }
 #'
 #' If you wish to share R code between your documents, place it in a file
@@ -108,13 +106,6 @@ run <- function(file = "index.Rmd",
     if (length(indexHtml) > 0) {
       default_file <- indexHtml[1]
     }
-  }
-
-  # If no `default_file` yet chosen but multiple .Rmd
-  # files exist in the directory, choose the first based
-  # on an alpha sort
-  if (is.null(default_file) && length(allRmds) > 1) {
-    default_file <- sort(allRmds)[1]
   }
 
   # form and test locations
