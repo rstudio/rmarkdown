@@ -31,7 +31,7 @@ rmarkdown 1.10
 
 * Add `site_resources()` function for computing resource files required for a website.
 
-* Export `default_site_generator()` function
+* Export `default_site_generator()` function.
 
 * The `latex_document()` format should not clean up the figure directory (thanks, @emiltb, rstudio/bookdown#582).
 
