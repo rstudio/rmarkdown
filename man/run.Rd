@@ -57,7 +57,7 @@ order of preference):
   \item{If \code{dir} contains only one \code{Rmd}, that \code{Rmd}.}
   \item{The file \file{index.Rmd}, if it exists in \code{dir}.}
   \item{The first \code{Rmd} that has \code{runtime: shiny} in its YAML metadata.}
-  \item{The file \file{index.html} (or \file(index.htm)), if it exists in \code{dir}.}
+  \item{The file \file{index.html} (or \file{index.htm}), if it exists in \code{dir}.}
 }
 
 If you wish to share R code between your documents, place it in a file
