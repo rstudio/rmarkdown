@@ -9,6 +9,7 @@ rmarkdown 1.11 (unreleased)
 
 * The `darkly` theme (a darker variant of the Bootswatch `flatly` theme) has been added to `html_document` and `html_notebook` (#1409, #889).
 
+* Fixed a regression that caused scrollbars on code blocks when the syntax highlighting theme is not the default (#654, #1399).
 
 rmarkdown 1.10
 ================================================================================
