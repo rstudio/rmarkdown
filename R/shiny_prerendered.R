@@ -190,18 +190,24 @@ shiny_prerendered_prerender <- function(
 
   pkgsSeen <- list()
   for (dep in dependencies) {
-    if (is.null(dep$package)) next
-    depPkg <- dep$package
-    depVer <- dep$pkgVersion
-    if (is.null(pkgsSeen[[depPkg]])) {
-      # has not seen pkg
-
-      # depVer could be NULL, producing a logical(0)
-      if (!isTRUE(packageVersion(depPkg) == depVer)) {
-        # was not rendered with the same R package. must render again
-        return (TRUE)
+    if (is.null(dep$package)) {
+      # if the file doesn't exist at all, render again
+      if (!file.exists(dep$src$file)) {
+        return(TRUE)
       }
-      pkgsSeen[[depPkg]] <- depVer
+    } else {
+      depPkg <- dep$package
+      depVer <- dep$pkgVersion
+      if (is.null(pkgsSeen[[depPkg]])) {
+        # has not seen pkg
+
+        # depVer could be NULL, producing a logical(0)
+        if (!isTRUE(packageVersion(depPkg) == depVer)) {
+          # was not rendered with the same R package. must render again
+          return (TRUE)
+        }
+        pkgsSeen[[depPkg]] <- depVer
+      }
     }
   }
 
