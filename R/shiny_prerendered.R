@@ -199,6 +199,7 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
         package_desc <- read.dcf(file.path(package_dir, "DESCRIPTION"),
                                  all = TRUE)
         dependency$package <- package_desc$Package
+        dependency$pkgVersion <- package_desc$Version
         dependency$src$file <- normalized_relative_to(package_dir,
                                                       dependency$src$file)
       }
