@@ -324,7 +324,7 @@ shiny_prerendered_option_hook <- function(input, encoding) {
                                                     options$cache > 0)
       data_file <- to_utf8(data_file, encoding)
       data_dir <- shiny_prerendered_data_dir(input, create = TRUE)
-      index_file <- shiny_prerendred_data_chunks_index(data_dir)
+      index_file <- shiny_prerendered_data_chunks_index(data_dir)
       conn <- file(index_file, open = "ab", encoding = "UTF-8")
       on.exit(close(conn), add = TRUE)
       write(data_file, file = conn, append = TRUE)
@@ -406,7 +406,7 @@ shiny_prerendered_evaluate_hook <- function(input) {
 shiny_prerendered_remove_uncached_data <- function(input) {
   data_dir <- shiny_prerendered_data_dir(input)
   if (dir_exists(data_dir)) {
-    index_file <- shiny_prerendred_data_chunks_index(data_dir)
+    index_file <- shiny_prerendered_data_chunks_index(data_dir)
     if (file.exists(index_file))
       unlink(index_file)
     rdata_files <- list.files(data_dir, pattern = utils::glob2rx("*.RData"))
@@ -562,7 +562,7 @@ shiny_prerendered_data_load <- function(input_rmd, server_envir) {
   data_dir <- shiny_prerendered_data_dir(input_rmd)
   if (dir_exists(data_dir)) {
     # read index of data files
-    index_file <- shiny_prerendred_data_chunks_index(data_dir)
+    index_file <- shiny_prerendered_data_chunks_index(data_dir)
     if (file.exists(index_file)) {
       rdata_files <- readLines(index_file, encoding = "UTF-8")
       # load each of the files in the index
@@ -576,7 +576,7 @@ shiny_prerendered_data_load <- function(input_rmd, server_envir) {
 }
 
 # File used to store names of chunks which had cache=TRUE during the last render
-shiny_prerendred_data_chunks_index <- function(data_dir) {
+shiny_prerendered_data_chunks_index <- function(data_dir) {
   file.path(data_dir, "data_chunks_index.txt")
 }
 
