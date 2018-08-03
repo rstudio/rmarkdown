@@ -75,49 +75,13 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
 
   # determine whether we need to render the Rmd in advance
   prerender_option <- tolower(Sys.getenv("RMARKDOWN_RUN_PRERENDER", "1"))
-
-  if (file.access(output_dir, 2) != 0) {
-    if (!file.exists(rendered_html))
-      stop("Unable to write prerendered HTML file to ", rendered_html)
-
-    prerender <- FALSE
-  }
-  else if (identical(prerender_option, "0")) {
-    prerender <- FALSE
-  }
-  else if (identical(prerender_option, "1")) {
-
-    # determine the last modified time of the output file
-    if (file.exists(rendered_html))
-      output_last_modified <- as.integer(file.info(rendered_html)$mtime)
-    else
-      output_last_modified <- 0L
-
-    # short circuit for Rmd modified. if it hasn't been modified since the
-    # html was generated look at external resources
-    input_last_modified <- as.integer(file.info(input_rmd)$mtime)
-    if (input_last_modified > output_last_modified) {
-      prerender <- TRUE
-    }
-    else {
-      # find external resources referenced by the file
-      external_resources <- find_external_resources(input_rmd, encoding)
-
-      # get paths to external resources
-      input_files <- c(input_rmd,
-                       file.path(output_dir, external_resources$path))
-
-      # what's the maximum last_modified time of an input file
-      input_last_modified <- max(as.integer(file.info(input_files)$mtime),
-                                 na.rm = TRUE)
-
-      # render if an input file was modified after the output file
-      prerender <- input_last_modified > output_last_modified
-    }
-  }
-  else {
-    stop("Invalid value '", prerender_option, "' for RMARKDOWN_RUN_PRERENDER")
-  }
+  prerender <- shiny_prerendered_prerender(
+    input_rmd,
+    rendered_html,
+    output_dir,
+    encoding,
+    prerender_option
+  )
 
   # prerender if necessary
   if (prerender) {
@@ -169,6 +133,79 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
 
   # return html w/ dependencies
   shinyHTML_with_deps(rendered_html, dependencies)
+}
+
+shiny_prerendered_prerender <- function(
+  input_rmd,
+  rendered_html,
+  output_dir,
+  encoding,
+  prerender_option
+) {
+  if (file.access(output_dir, 2) != 0) {
+    if (!file.exists(rendered_html))
+      stop("Unable to write prerendered HTML file to ", rendered_html)
+    return(FALSE)
+  }
+
+  if (identical(prerender_option, "0")) {
+    return(FALSE)
+  }
+  if (!identical(prerender_option, "1")) {
+    stop("Invalid value '", prerender_option, "' for RMARKDOWN_RUN_PRERENDER")
+  }
+
+  # determine the last modified time of the output file
+  if (file.exists(rendered_html)) {
+    output_last_modified <- as.integer(file.info(rendered_html)$mtime)
+  } else {
+    output_last_modified <- 0L
+  }
+
+  # short circuit for Rmd modified. if it hasn't been modified since the
+  # html was generated look at external resources
+  input_last_modified <- as.integer(file.info(input_rmd)$mtime)
+  if (input_last_modified > output_last_modified) {
+    return(TRUE)
+  }
+
+  # find external resources referenced by the file
+  external_resources <- find_external_resources(input_rmd, encoding)
+
+  # get paths to external resources
+  input_files <- c(input_rmd, file.path(output_dir, external_resources$path))
+
+  # what's the maximum last_modified time of an input file
+  input_last_modified <- max(as.integer(file.info(input_files)$mtime), na.rm = TRUE)
+
+  # render if an input file was modified after the output file
+  if (input_last_modified > output_last_modified) {
+    return(TRUE)
+  }
+
+  message("look at packages used in dependencies")
+  html_lines <- readLines(rendered_html, encoding = "UTF-8", warn = FALSE)
+  dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
+  dependencies <- jsonlite::unserializeJSON(dependencies_json)
+
+  pkgsSeen <- list()
+  for (dep in dependencies) {
+    if (is.null(dep$package)) next
+    depPkg <- dep$package
+    depVer <- dep$pkgVersion
+    if (is.null(pkgsSeen[[depPkg]])) {
+      # has not seen pkg
+
+      # depVer could be NULL, producing a logical(0)
+      if (!isTRUE(packageVersion(depPkg) == depVer)) {
+        # was not rendered with the same R package. must render again
+        return (TRUE)
+      }
+      pkgsSeen[[depPkg]] <- depVer
+    }
+  }
+
+  return(FALSE)
 }
 
 
@@ -586,4 +623,3 @@ shiny_prerendered_data_file_name <- function(label, cache) {
   type <- ifelse(cache, ".cached", "")
   sprintf("%s%s.RData", label, type)
 }
-
