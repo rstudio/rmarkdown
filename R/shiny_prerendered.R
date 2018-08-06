@@ -183,7 +183,6 @@ shiny_prerendered_prerender <- function(
     return(TRUE)
   }
 
-  message("look at packages used in dependencies")
   html_lines <- readLines(rendered_html, encoding = "UTF-8", warn = FALSE)
   dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
   dependencies <- jsonlite::unserializeJSON(dependencies_json)
@@ -193,6 +192,8 @@ shiny_prerendered_prerender <- function(
     if (is.null(dep$package)) {
       # if the file doesn't exist at all, render again
       if (!file.exists(dep$src$file)) {
+        # might create a missing file compile-time error,
+        #   but that's better than a missing file prerendered error
         return(TRUE)
       }
     } else {
@@ -202,6 +203,7 @@ shiny_prerendered_prerender <- function(
         # has not seen pkg
 
         # depVer could be NULL, producing a logical(0)
+        #   means old prerender version, render again
         if (!isTRUE(packageVersion(depPkg) == depVer)) {
           # was not rendered with the same R package. must render again
           return (TRUE)
