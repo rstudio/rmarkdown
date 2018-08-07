@@ -141,8 +141,8 @@ html_document_base <- function(smart = TRUE,
       for (i in names(preserved_chunks)) {
         output_str <- gsub(paste0("<p>", i, "</p>"), i, output_str,
                            fixed = TRUE, useBytes = TRUE)
-        output_str <- gsub(paste0(' id="section-', i, '" '), ' ', output_str,
-                           fixed = TRUE, useBytes = TRUE)
+        output_str <- gsub(paste0(' id="[^"]*?', i, '[^"]*?" '), ' ', output_str,
+                           useBytes = TRUE)
       }
       output_str <- restorePreserveChunks(output_str, preserved_chunks)
     }

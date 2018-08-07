@@ -11,6 +11,8 @@ rmarkdown 1.11 (unreleased)
 
 * Fixed a regression that caused scrollbars on code blocks when the syntax highlighting theme is not the default (#654, #1399).
 
+* Fixed #1407: reactive expressions can break the section headers of Shiny R Markdown documents.
+
 rmarkdown 1.10
 ================================================================================
 
