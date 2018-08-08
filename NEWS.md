@@ -11,6 +11,9 @@ rmarkdown 1.11 (unreleased)
 
 * Fixed a regression that caused scrollbars on code blocks when the syntax highlighting theme is not the default (#654, #1399).
 
+* Added checks for shiny-prerendered documents to find all html dependencies, match all execution packages, and match the major R version (#1420).
+
+
 rmarkdown 1.10
 ================================================================================
 
@@ -543,4 +546,3 @@ rmarkdown 0.3.11
 ================================================================================
 
 Initial release to CRAN
-
