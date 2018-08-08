@@ -233,8 +233,13 @@ $$(document).ready(function () {
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
 });
-</script>
 
+// modify class of menu items with child elements
+$$(document).ready(function(){
+  $$('#navbar > ul:nth-child(1) > li.dropdown > ul > li.dropdown > ul').removeClass("dropdown-menu").addClass("dropdown-submenu");
+});
+
+</script>
 $endif$
 
 <div class="container-fluid main-container">
