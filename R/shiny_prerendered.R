@@ -184,6 +184,8 @@ shiny_prerendered_prerender <- function(
   }
 
   html_lines <- readLines(rendered_html, encoding = "UTF-8", warn = FALSE)
+
+  # check that all html dependencies exist
   dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
   dependencies <- jsonlite::unserializeJSON(dependencies_json)
 
@@ -204,7 +206,7 @@ shiny_prerendered_prerender <- function(
 
         # depVer could be NULL, producing a logical(0)
         #   means old prerender version, render again
-        if (!isTRUE(packageVersion(depPkg) == depVer)) {
+        if (!isTRUE(get_package_version_string(depPkg) == depVer)) {
           # was not rendered with the same R package. must render again
           return (TRUE)
         }
@@ -212,6 +214,29 @@ shiny_prerendered_prerender <- function(
       }
     }
   }
+  # all html dependencies are accounted for
+
+  execution_json <- shiny_prerendered_extract_context(html_lines, "execution_dependencies")
+  execution_info <- jsonlite::unserializeJSON(execution_json)
+
+  # check that the major R versions match
+  if (!identical(R.version$major, execution_info$rMajorVersion)) {
+    return(TRUE)
+  }
+
+  # check for execution package version differences
+  execution_pkgs <- execution_info$packages
+  versions_dont_match <- unlist(Map(
+    execution_pkgs$package,
+    execution_pkgs$version,
+    f = function(package, version) {
+      !identical(get_package_version_string(package), version)
+    }
+  ))
+  if (any(versions_dont_match)) {
+    return(TRUE)
+  }
+  # all execution packages match
 
   return(FALSE)
 }
@@ -223,10 +248,8 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
                                                   files_dir,
                                                   output_dir) {
 
-
-
   # transform dependencies (if we aren't in debug mode)
-  dependencies <- lapply(shiny_prerendered_dependencies, function(dependency) {
+  dependencies <- lapply(shiny_prerendered_dependencies$deps, function(dependency) {
 
     # no transformation in dev mode (so browser dev tools can map directly
     # to the locations of CSS and JS files in their pkg src directory)
@@ -244,6 +267,7 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
         package_desc <- read.dcf(file.path(package_dir, "DESCRIPTION"),
                                  all = TRUE)
         dependency$package <- package_desc$Package
+        # named to something that doesn't start with 'package' to deter lazy name matching
         dependency$pkgVersion <- package_desc$Version
         dependency$src$file <- normalized_relative_to(package_dir,
                                                       dependency$src$file)
@@ -271,6 +295,13 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
   # write deps to connection
   dependencies_json <- jsonlite::serializeJSON(dependencies, pretty = FALSE)
   shiny_prerendered_append_context(con, "dependencies", dependencies_json)
+
+  # write r major version and execution package dependencies
+  execution_json <- jsonlite::serializeJSON(
+    shiny_prerendered_dependencies[c("rMajorVersion", "packages")],
+    pretty = FALSE
+  )
+  shiny_prerendered_append_context(con, "execution_dependencies", execution_json)
 }
 
 
