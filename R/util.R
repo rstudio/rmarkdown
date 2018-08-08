@@ -528,11 +528,7 @@ get_package_version_string <- function(package) {
 # find all loaded packages.
 # May contain extra packages, but contains all packages used while knitting
 get_loaded_packages <- function() {
-  base_r_packages <- c(
-    "base", "compiler", "datasets", "graphics", "grDevices",
-    "grid", "methods", "parallel", "splines",
-    "stats", "stats4", "tcltk", "tools", "utils"
-  )
+  base_r_packages <- rownames(installed.packages(priority = 'base'))
 
   packages <- sort(setdiff(loadedNamespaces(), base_r_packages))
   version <- vapply(packages, get_package_version_string, character(1))
