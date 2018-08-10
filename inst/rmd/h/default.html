@@ -276,12 +276,6 @@ $$(document).ready(function () {
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
 });
-
-// modify class of menu items with child elements
- $$(document).ready(function(){
-   $$('#navbar > ul:nth-child(1) > li.dropdown > ul > li.dropdown').removeClass("dropdown").addClass("dropdown-submenu");
-   $$('#navbar > ul:nth-child(1) > li.dropdown > ul > li.dropdown-submenu > a > span').removeClass("caret");
- });
 </script>
 $endif$
 
