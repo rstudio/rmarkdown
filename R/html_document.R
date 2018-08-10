@@ -578,7 +578,6 @@ navbar_html <- function(navbar) {
   as_tmpfile(navbar_html)
 }
 
-
 #' @keywords internal
 #' @name navbar_html
 #' @export
@@ -586,31 +585,48 @@ navbar_links_html <- function(links) {
   as.character(navbar_links_tags(links))
 }
 
-navbar_links_tags <- function(links) {
+navbar_links_tags <- function(links, depth = 0L) {
 
   if (!is.null(links)) {
+
     tags <- lapply(links, function(x) {
 
-      # sub-menu
       if (!is.null(x$menu)) {
-        submenuLinks <- navbar_links_tags(x$menu)
-        tags$li(class = "dropdown",
-          tags$a(href = "#", class = "dropdown-toggle", `data-toggle` = "dropdown",
-                 role = "button", `aria-expanded` = "false",
-                   navbar_link_text(x, " ", tags$span(class = "caret"))),
-          tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
+
+        # sub-menu
+        is_submenu <- depth > 0L
+
+        if (is_submenu) {
+          menu_class <- "dropdown-submenu"
+          link_text <- navbar_link_text(x)
+        } else {
+          menu_class <- "dropdown"
+          link_text <- navbar_link_text(x, " ", tags$span(class = "caret"))
+        }
+
+        submenuLinks <- navbar_links_tags(x$menu, depth = depth + 1L)
+
+        tags$li(class = menu_class,
+                tags$a(
+                  href = "#", class = "dropdown-toggle",
+                  `data-toggle` = "dropdown", role = "button",
+                  `aria-expanded` = "false", link_text),
+                tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
         )
 
-      # divider
       } else if (!is.null(x$text) && grepl("^\\s*-{3,}\\s*$", x$text)) {
+
+        # divider
         tags$li(class = "divider")
 
-      # header
       } else if (!is.null(x$text) && is.null(x$href)) {
+
+        # header
         tags$li(class = "dropdown-header", x$text)
 
-      # standard menu item
       } else {
+
+        # standard menu item
         textTags <- navbar_link_text(x)
         tags$li(tags$a(href = x$href, textTags))
       }
