@@ -219,11 +219,6 @@ shiny_prerendered_prerender <- function(
   execution_json <- shiny_prerendered_extract_context(html_lines, "execution_dependencies")
   execution_info <- jsonlite::unserializeJSON(execution_json)
 
-  # check that the major R versions match
-  if (!identical(R.version$major, execution_info$rMajorVersion)) {
-    return(TRUE)
-  }
-
   # check for execution package version differences
   execution_pkgs <- execution_info$packages
   versions_dont_match <- unlist(Map(
@@ -298,7 +293,8 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
 
   # write r major version and execution package dependencies
   execution_json <- jsonlite::serializeJSON(
-    shiny_prerendered_dependencies[c("rMajorVersion", "packages")],
+    # visibly display what is being stored
+    shiny_prerendered_dependencies[c("packages")],
     pretty = FALSE
   )
   shiny_prerendered_append_context(con, "execution_dependencies", execution_json)
