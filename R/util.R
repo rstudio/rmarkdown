@@ -526,17 +526,14 @@ get_package_version_string <- function(package) {
   )
 }
 # find all loaded packages.
-# May contain extra packages, but contains all packages used while knitting
+# May contain extra packages, but will contain all packages used while knitting
 get_loaded_packages <- function() {
-  base_r_packages <- rownames(installed.packages(priority = 'base'))
-
-  packages <- sort(setdiff(loadedNamespaces(), base_r_packages))
+  packages <- sort(loadedNamespaces()
   version <- vapply(packages, get_package_version_string, character(1))
-  attached <- paste0("package:", packages) %in% search()
 
   data.frame(
-    packages = packages[attached],
-    version = version[attached],
+    packages = packages,
+    version = version,
     row.names = NULL, stringsAsFactors = FALSE
   )
 }
