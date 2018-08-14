@@ -216,20 +216,18 @@ shiny_prerendered_prerender <- function(
   }
   # all html dependencies are accounted for
 
+  # check for execution package version differences
   execution_json <- shiny_prerendered_extract_context(html_lines, "execution_dependencies")
   execution_info <- jsonlite::unserializeJSON(execution_json)
-
-  # check for execution package version differences
-  execution_pkgs <- execution_info$packages
-  versions_dont_match <- unlist(Map(
-    execution_pkgs$package,
-    execution_pkgs$version,
-    f = function(package, version) {
-      !identical(get_package_version_string(package), version)
+  execution_pkg_names <- execution_info$packages$package
+  execution_pkg_versions <- execution_info$packages$version
+  for (i in seq_len(nrow(execution_pkgs))) {
+    if (!identical(
+      get_package_version_string(execution_pkg_names[i]),
+      execution_pkg_versions[i]
+    )) {
+      return(TRUE)
     }
-  ))
-  if (any(versions_dont_match)) {
-    return(TRUE)
   }
   # all execution packages match
 
