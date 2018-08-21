@@ -139,3 +139,23 @@ test_that("params hidden w/o show_default", {
   ui <- params_value_to_ui(function(){}, myobj, FALSE)
   expect_equal(ui, NULL)
 })
+
+test_that("ui value conversion", {
+  skip_on_cran()
+
+  emptydt <- Sys.time()[-1]
+
+  # Sys.time() -> as.character loses sub-second precision
+  nows <- as.character(Sys.time())
+  now <- as.POSIXct(nows)
+  expect_null(params_value_from_ui(shiny::textInput, now, "not-a-datetime"),
+              "produce NULL when datetime cannot be parsed")
+  expect_identical(params_value_from_ui(shiny::textInput, now, nows), now,
+               "produce datetime from valid UI textual value")
+  expect_identical(params_value_from_ui(shiny::textInput, now, ""), emptydt,
+               "produce empty POSIXct on empty input")
+  expect_identical(params_value_from_ui(shiny::textInput, "not-a-datetime", "uivalue"), "uivalue",
+               "textInput unmodified when datetime not involved")
+  expect_identical(params_value_from_ui(shiny::numericInput, 13, 42), 42,
+               "numericInput values pass through")
+})

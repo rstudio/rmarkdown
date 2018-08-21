@@ -110,7 +110,13 @@ params_value_from_ui <- function(inputControlFn, value, uivalue) {
         # Empty POSIXct
         Sys.time()[-1]
       } else {
-        as.POSIXct(uivalue)
+        tryCatch({
+          as.POSIXct(uivalue)
+        }, error = function(e) {
+          # Unparseable time values produce NULL and float to the default.
+          # This happens most frequently when actively editing a date/time.
+          NULL
+        })
       }
     } else {
       uivalue
