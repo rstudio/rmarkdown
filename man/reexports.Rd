@@ -4,15 +4,10 @@
 \name{reexports}
 \alias{reexports}
 \alias{html_dependency_jquery}
-\alias{reexports}
 \alias{html_dependency_bootstrap}
-\alias{reexports}
 \alias{html_dependency_jqueryui}
-\alias{reexports}
 \alias{html_dependency_tocify}
-\alias{reexports}
 \alias{html_dependency_font_awesome}
-\alias{reexports}
 \alias{html_dependency_ionicons}
 \title{Objects exported from other packages}
 \keyword{internal}
