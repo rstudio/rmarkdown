@@ -484,6 +484,8 @@ render <- function(input,
     # default rendering and chunk options
     knitr::render_markdown()
     knitr::opts_chunk$set(tidy = FALSE, error = FALSE)
+    # the retina option does not make sense to non-HTML output formats
+    if (!grepl('[.]html$', output_file)) knitr::opts_chunk$set(fig.retina = NULL)
 
     # store info about the final output format in opts_knit
     knitr::opts_knit$set(

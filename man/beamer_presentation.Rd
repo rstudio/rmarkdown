@@ -4,13 +4,15 @@
 \alias{beamer_presentation}
 \title{Convert to a Beamer presentation}
 \usage{
-beamer_presentation(toc = FALSE, slide_level = NULL, incremental = FALSE,
-  fig_width = 10, fig_height = 7, fig_crop = TRUE, fig_caption = TRUE,
-  dev = "pdf", df_print = "default", theme = "default",
-  colortheme = "default", fonttheme = "default", highlight = "default",
-  template = "default", keep_tex = FALSE, latex_engine = "pdflatex",
-  citation_package = c("none", "natbib", "biblatex"), self_contained = TRUE,
-  includes = NULL, md_extensions = NULL, pandoc_args = NULL)
+beamer_presentation(toc = FALSE, slide_level = NULL,
+  incremental = FALSE, fig_width = 10, fig_height = 7,
+  fig_crop = TRUE, fig_caption = TRUE, dev = "pdf",
+  df_print = "default", theme = "default", colortheme = "default",
+  fonttheme = "default", highlight = "default", template = "default",
+  keep_tex = FALSE, latex_engine = "pdflatex",
+  citation_package = c("none", "natbib", "biblatex"),
+  self_contained = TRUE, includes = NULL, md_extensions = NULL,
+  pandoc_args = NULL)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output (only

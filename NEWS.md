@@ -13,6 +13,8 @@ rmarkdown 1.11 (unreleased)
 
 * Fixed #1407: reactive expressions can break the section headers of Shiny R Markdown documents.
 
+* Fixed the website navbar not being able to display submenus properly (#721, #1426).
+
 * Added checks for shiny-prerendered documents to find all html dependencies, match all execution packages, and match the major R version (#1420).
 
 
