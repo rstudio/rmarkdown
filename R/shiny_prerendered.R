@@ -292,7 +292,7 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
   # write r major version and execution package dependencies
   execution_json <- jsonlite::serializeJSON(
     # visibly display what is being stored
-    shiny_prerendered_dependencies[c("packages")],
+    shiny_prerendered_dependencies["packages"],
     pretty = FALSE
   )
   shiny_prerendered_append_context(con, "execution_dependencies", execution_json)
