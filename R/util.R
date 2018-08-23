@@ -528,7 +528,7 @@ get_package_version_string <- function(package) {
 # find all loaded packages.
 # May contain extra packages, but will contain all packages used while knitting
 get_loaded_packages <- function() {
-  packages <- sort(loadedNamespaces()
+  packages <- sort(loadedNamespaces())
   version <- vapply(packages, get_package_version_string, character(1))
 
   data.frame(
