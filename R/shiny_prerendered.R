@@ -221,7 +221,7 @@ shiny_prerendered_prerender <- function(
   execution_info <- jsonlite::unserializeJSON(execution_json)
   execution_pkg_names <- execution_info$packages$package
   execution_pkg_versions <- execution_info$packages$version
-  for (i in seq_len(nrow(execution_pkgs))) {
+  for (i in seq_along(execution_pkg_names)) {
     if (!identical(
       get_package_version_string(execution_pkg_names[i]),
       execution_pkg_versions[i]
