@@ -109,7 +109,7 @@ html_document_base <- function(smart = TRUE,
     preserved_chunks <<- extract_preserve_chunks(input_file)
 
     # Avoid pagetitle warning from pandoc2.0 when title is missing
-    if (pandoc2.0() && is.null(metadata$title))
+    if (pandoc2.0() && is.null(metadata$title) && is.null(metadata$pagetitle))
       args <- c(args, "--metadata", paste0("pagetitle=", input_file))
 
     args
