@@ -198,13 +198,23 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       # we suppress messages so that "Output created" isn't emitted
       # (which could result in RStudio previewing the wrong file)
       output <- suppressMessages(
-        rmarkdown::render(x,
-                          output_format = output_format,
-                          output_options = list(lib_dir = "site_libs",
-                                                self_contained = FALSE),
-                          envir = envir,
-                          quiet = quiet,
-                          encoding = encoding)
+        callr::r(
+          function(input, output_format, envir, quiet, encoding) {
+            rmarkdown::render(input = input,
+                              output_format = output_format,
+                              output_options = list(lib_dir = "site_libs",
+                                                    self_contained = FALSE),
+                              envir = envir,
+                              quiet = quiet,
+                              encoding = encoding)
+          },
+          args = list(input = x,
+                      output_format = output_format,
+                      envir = envir,
+                      quiet = quiet,
+                      encoding = encoding),
+          spinner = interactive()
+        )
       )
 
       # add to global list of outputs

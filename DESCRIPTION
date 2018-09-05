@@ -75,7 +75,8 @@ Imports:
     mime,
     tinytex (>= 0.3),
     methods,
-    stringr (>= 1.2.0)
+    stringr (>= 1.2.0),
+    callr
 Remotes:
     rstudio/htmldeps 
 Suggests:
