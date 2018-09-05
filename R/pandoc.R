@@ -249,6 +249,12 @@ pandoc_variable_arg <- function(name,
   c("--variable", if (missing(value)) name else paste(name, "=", value, sep = ""))
 }
 
+#' @rdname pandoc_args
+#' @export
+pandoc_metadata_arg <- function(name,
+                                value) {
+  c("-M", paste0("^", name, "=", value))
+}
 
 #' @rdname pandoc_args
 #' @export
@@ -684,12 +690,15 @@ pandoc_citeproc <- function() {
 
 # quote args if they need it
 quoted <- function(args) {
-
   # some characters are legal in filenames but without quoting are likely to be
   # interpreted by the shell (e.g. redirection, wildcard expansion, etc.) --
   # wrap arguments containing these characters in quotes.
+  # note: starting an arg with ^ flags it as not-to-be-quoted
+  unquote_flagged <- grepl("^\\^", args)
   shell_chars <- grepl(.shell_chars_regex, args)
-  args[shell_chars] <- shQuote(args[shell_chars])
+  need_quoted <- shell_chars & !unquote_flagged
+  if (any(need_quoted)) args[need_quoted] <- shQuote(args[need_quoted])
+  args[unquote_flagged] <- sub("^\\^", "", args[unquote_flagged])
   args
 }
 
