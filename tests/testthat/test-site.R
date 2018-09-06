@@ -33,3 +33,23 @@ test_that("render_site", {
   excluded <- "docs.txt"
   expect_true(all(!file.exists(file.path(site_dir, "_site", excluded))))
 })
+
+test_that("render_site does not leak search path across files", {
+
+  skip_on_cran()
+
+  # copy parts of our demo site to a tempdir
+  site_dir <- tempfile()
+  dir.create(site_dir)
+  files <- c("_site.yml", "index.Rmd", "PageA.Rmd", "PageB.rmd")
+  file.copy(file.path("site", files), site_dir, recursive = TRUE)
+
+  # render it
+  capture.output(render_site(site_dir))
+
+  # does a pkg (stringr) loaded in PageA show up in search path of PageB?
+  a <- readLines(file.path(site_dir, "_site", "PageA.html"))
+  b <- readLines(file.path(site_dir, "_site", "PageB.html"))
+  expect_match(a, "library(stringr)", fixed = TRUE, all = FALSE)
+  expect_false(any(grepl("stringr", b, fixed = TRUE)))
+})
