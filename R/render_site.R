@@ -338,12 +338,16 @@ render_new_session <- function(input, output_format, output_options,
   }
   callr::r(
     function(input, output_format, output_options, envir, quiet, encoding) {
-      rmarkdown::render(input = input,
-                        output_format = output_format,
-                        output_options = output_options,
-                        envir = envir,
-                        quiet = quiet,
-                        encoding = encoding)
+      # we suppress messages so that "Output created" isn't emitted
+      # (which could result in RStudio previewing the wrong file)
+      suppressMessages(
+        rmarkdown::render(input = input,
+                          output_format = output_format,
+                          output_options = output_options,
+                          envir = envir,
+                          quiet = quiet,
+                          encoding = encoding)
+      )
     },
     args = list(input = input,
                 output_format = output_format,
@@ -351,7 +355,7 @@ render_new_session <- function(input, output_format, output_options,
                 envir = envir,
                 quiet = quiet,
                 encoding = encoding),
-    spinner = interactive()
+    block_callback = function(x) cat(x)
   )
 }
 
