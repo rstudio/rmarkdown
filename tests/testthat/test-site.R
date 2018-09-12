@@ -34,7 +34,7 @@ test_that("render_site", {
   expect_true(all(!file.exists(file.path(site_dir, "_site", excluded))))
 })
 
-test_that("render_site does not leak search path across files", {
+test_that("render_site respects 'new_session' in the config", {
 
   skip_on_cran()
 
@@ -44,12 +44,23 @@ test_that("render_site does not leak search path across files", {
   files <- c("_site.yml", "index.Rmd", "PageA.Rmd", "PageB.rmd")
   file.copy(file.path("site", files), site_dir, recursive = TRUE)
 
-  # render it
+  # default behaviour --> new_session: false
   capture.output(render_site(site_dir))
-
-  # does a pkg (stringr) loaded in PageA show up in search path of PageB?
   a <- readLines(file.path(site_dir, "_site", "PageA.html"))
   b <- readLines(file.path(site_dir, "_site", "PageB.html"))
+
+  # pkg loaded in PageA (stringr) should show up in search path of PageB
+  expect_match(a, "library(stringr)", fixed = TRUE, all = FALSE)
+  expect_true(any(grepl("stringr", b, fixed = TRUE)))
+
+  # edit config --> new_session: true
+  cat("new_session: true", file = file.path(site_dir, "_site.yml"), append = TRUE)
+
+  capture.output(render_site(site_dir))
+  a <- readLines(file.path(site_dir, "_site", "PageA.html"))
+  b <- readLines(file.path(site_dir, "_site", "PageB.html"))
+
+  # pkg loaded in PageA (stringr) should NOT show up in search path of PageB
   expect_match(a, "library(stringr)", fixed = TRUE, all = FALSE)
   expect_false(any(grepl("stringr", b, fixed = TRUE)))
 })

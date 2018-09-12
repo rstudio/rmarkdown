@@ -142,6 +142,8 @@ site_config <- function(input = ".", encoding = getOption("encoding")) {
       config$name <- basename(normalize_path(input))
     if (is.null(config$output_dir))
       config$output_dir <- "_site"
+    if (is.null(config$new_session))
+      config$new_session <- FALSE
 
     # return config
     config
@@ -195,26 +197,21 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       files <- file.path(input, input_files())
     }
     sapply(files, function(x) {
+      render_one <- if(isTRUE(config$new_session)) {
+        render_new_session
+      } else {
+        rmarkdown::render
+      }
       # we suppress messages so that "Output created" isn't emitted
       # (which could result in RStudio previewing the wrong file)
       output <- suppressMessages(
-        callr::r(
-          function(input, output_format, envir, quiet, encoding) {
-            rmarkdown::render(input = input,
-                              output_format = output_format,
-                              output_options = list(lib_dir = "site_libs",
-                                                    self_contained = FALSE),
-                              envir = envir,
-                              quiet = quiet,
-                              encoding = encoding)
-          },
-          args = list(input = x,
-                      output_format = output_format,
-                      envir = envir,
-                      quiet = quiet,
-                      encoding = encoding),
-          spinner = interactive()
-        )
+        render_one(x,
+                   output_format = output_format,
+                   output_options = list(lib_dir = "site_libs",
+                                         self_contained = FALSE),
+                   envir = envir,
+                   quiet = quiet,
+                   encoding = encoding)
       )
 
       # add to global list of outputs
@@ -331,6 +328,27 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
     output_dir = config$output_dir,
     render = render,
     clean = clean
+  )
+}
+
+render_new_session <- function(input, output_format, output_options,
+                               envir, quiet, encoding) {
+  callr::r(
+    function(input, output_format, output_options, envir, quiet, encoding) {
+      rmarkdown::render(input = input,
+                        output_format = output_format,
+                        output_options = output_options,
+                        envir = envir,
+                        quiet = quiet,
+                        encoding = encoding)
+    },
+    args = list(input = input,
+                output_format = output_format,
+                output_options = output_options,
+                envir = envir,
+                quiet = quiet,
+                encoding = encoding),
+    spinner = interactive()
   )
 }
 
