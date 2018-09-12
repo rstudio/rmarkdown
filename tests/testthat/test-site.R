@@ -37,6 +37,7 @@ test_that("render_site", {
 test_that("render_site respects 'new_session' in the config", {
 
   skip_on_cran()
+  skip_if_not_installed("callr", "2.0.0")
 
   # copy parts of our demo site to a tempdir
   site_dir <- tempfile()

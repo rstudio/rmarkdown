@@ -333,6 +333,9 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
 
 render_new_session <- function(input, output_format, output_options,
                                envir, quiet, encoding) {
+  if (!requireNamespace("callr", quietly = TRUE)) {
+    stop("The callr package must be installed when `new_session: true`.")
+  }
   callr::r(
     function(input, output_format, output_options, envir, quiet, encoding) {
       rmarkdown::render(input = input,
