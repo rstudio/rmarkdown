@@ -200,19 +200,15 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       render_one <- if(isTRUE(config$new_session)) {
         render_new_session
       } else {
-        rmarkdown::render
+        render_current_session
       }
-      # we suppress messages so that "Output created" isn't emitted
-      # (which could result in RStudio previewing the wrong file)
-      output <- suppressMessages(
-        render_one(x,
-                   output_format = output_format,
-                   output_options = list(lib_dir = "site_libs",
-                                         self_contained = FALSE),
-                   envir = envir,
-                   quiet = quiet,
-                   encoding = encoding)
-      )
+      output <- render_one(input = x,
+                           output_format = output_format,
+                           output_options = list(lib_dir = "site_libs",
+                                                 self_contained = FALSE),
+                           envir = envir,
+                           quiet = quiet,
+                           encoding = encoding)
 
       # add to global list of outputs
       outputs <<- c(outputs, output)
@@ -331,30 +327,17 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
   )
 }
 
-render_new_session <- function(input, output_format, output_options,
-                               envir, quiet, encoding) {
+# we suppress messages during render so that "Output created" isn't emitted
+# (which could result in RStudio previewing the wrong file)
+render_current_session <- function(...) suppressMessages(rmarkdown::render(...))
+
+render_new_session <- function(...) {
   if (!requireNamespace("callr", quietly = TRUE)) {
     stop("The callr package must be installed when `new_session: true`.")
   }
   callr::r(
-    function(input, output_format, output_options, envir, quiet, encoding) {
-      # we suppress messages so that "Output created" isn't emitted
-      # (which could result in RStudio previewing the wrong file)
-      suppressMessages(
-        rmarkdown::render(input = input,
-                          output_format = output_format,
-                          output_options = output_options,
-                          envir = envir,
-                          quiet = quiet,
-                          encoding = encoding)
-      )
-    },
-    args = list(input = input,
-                output_format = output_format,
-                output_options = output_options,
-                envir = envir,
-                quiet = quiet,
-                encoding = encoding),
+    function(...) { suppressMessages(rmarkdown::render(...)) },
+    args = list(...),
     block_callback = function(x) cat(x)
   )
 }
