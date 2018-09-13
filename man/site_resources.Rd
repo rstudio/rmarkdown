@@ -14,8 +14,8 @@ site_resources(site_dir, include = NULL, exclude = NULL,
 
 \item{exclude}{Files to exclude  (glob wildcards supported)}
 
-\item{recursive}{`TRUE` to return a full recursive file listing; `FALSE` to
-just provide top-level files and directories.}
+\item{recursive}{\code{TRUE} to return a full recursive file listing;
+\code{FALSE} to just provide top-level files and directories.}
 }
 \value{
 Character vector of files and directories to copy

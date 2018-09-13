@@ -507,8 +507,8 @@ copy_site_resources <- function(input, encoding = getOption("encoding")) {
 #' @param site_dir Site directory to analyze
 #' @param include Additional files to include (glob wildcards supported)
 #' @param exclude Files to exclude  (glob wildcards supported)
-#' @param recursive `TRUE` to return a full recursive file listing; `FALSE` to
-#'   just provide top-level files and directories.
+#' @param recursive \code{TRUE} to return a full recursive file listing;
+#'   \code{FALSE} to just provide top-level files and directories.
 #'
 #' @return Character vector of files and directories to copy
 #'
