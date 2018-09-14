@@ -133,6 +133,13 @@ based on the \code{\link{html_document}} format.
 Finally, the \code{output} field enables you to specify output options that
 are common to all documents within the website (you can also still provide
 local options within each document that override any common options).
+
+\code{new_session: true} causes each file to be rendered in a new R session.
+This prevents the masking problem that arises when different files use
+functions from different packages (namespaces) that share a common name, such
+as \code{here::here} and \code{lubridate::here} or \code{dplyr::filter} and
+\code{MASS::filter}. The default behaviour of \code{render_site} is to use a
+common R session.
 }
 
 \section{Custom Site Generation}{

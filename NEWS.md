@@ -1,6 +1,8 @@
 rmarkdown 1.11 (unreleased)
 ================================================================================
 
+* `new_session: true` in `_site.yml` causes `render_site()` to render each file in a new R session, eliminating some cross-file difficulties, such as function masking (#1326, #1443 @jennybc).
+
 * Added the LaTeX command `\passthrough` in the default LaTeX template for the `--listings` flag of Pandoc (rstudio/bookdown#591).
 
 * The icons in `flexdashboard::valueBox()` are not of the full sizes due to the upgrade of FontAwesome in #1340 in the previous version (#1388, rstudio/flexdashboard#189).

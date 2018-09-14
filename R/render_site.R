@@ -84,6 +84,13 @@
 #' are common to all documents within the website (you can also still provide
 #' local options within each document that override any common options).
 #'
+#' \code{new_session: true} causes each file to be rendered in a new R session.
+#' This prevents the masking problem that arises when different files use
+#' functions from different packages (namespaces) that share a common name, such
+#' as \code{here::here} and \code{lubridate::here} or \code{dplyr::filter} and
+#' \code{MASS::filter}. The default behaviour of \code{render_site} is to use a
+#' common R session.
+#'
 #' @section Custom Site Generation:
 #' The behavior of the default site generation function
 #' (\code{rmarkdown::default_site}) is described above. It is also possible to
@@ -289,6 +296,8 @@ site_config <- function(input = ".", encoding = getOption("encoding")) {
       config$name <- basename(normalize_path(input))
     if (is.null(config$output_dir))
       config$output_dir <- "_site"
+    if (is.null(config$new_session))
+      config$new_session <- FALSE
 
     # return config
     config
@@ -343,17 +352,18 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       files <- file.path(input, input_files())
     }
     sapply(files, function(x) {
-      # we suppress messages so that "Output created" isn't emitted
-      # (which could result in RStudio previewing the wrong file)
-      output <- suppressMessages(
-        rmarkdown::render(x,
-                          output_format = output_format,
-                          output_options = list(lib_dir = "site_libs",
-                                                self_contained = FALSE),
-                          envir = envir,
-                          quiet = quiet,
-                          encoding = encoding)
-      )
+      render_one <- if (isTRUE(config$new_session)) {
+        render_new_session
+      } else {
+        render_current_session
+      }
+      output <- render_one(input = x,
+                           output_format = output_format,
+                           output_options = list(lib_dir = "site_libs",
+                                                 self_contained = FALSE),
+                           envir = envir,
+                           quiet = quiet,
+                           encoding = encoding)
 
       # add to global list of outputs
       outputs <<- c(outputs, output)
@@ -469,6 +479,21 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
     output_dir = config$output_dir,
     render = render,
     clean = clean
+  )
+}
+
+# we suppress messages during render so that "Output created" isn't emitted
+# (which could result in RStudio previewing the wrong file)
+render_current_session <- function(...) suppressMessages(rmarkdown::render(...))
+
+render_new_session <- function(...) {
+  if (!requireNamespace("callr", quietly = TRUE)) {
+    stop("The callr package must be installed when `new_session: true`.")
+  }
+  callr::r(
+    function(...) { suppressMessages(rmarkdown::render(...)) },
+    args = list(...),
+    block_callback = function(x) cat(x)
   )
 }
 

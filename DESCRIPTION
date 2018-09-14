@@ -84,7 +84,8 @@ Suggests:
     testthat,
     digest,
     dygraphs,
-    tibble
+    tibble,
+    callr (>= 2.0.0)
 SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
 URL: https://rmarkdown.rstudio.com, https://github.com/rstudio/rmarkdown
 BugReports: https://github.com/rstudio/rmarkdown/issues
