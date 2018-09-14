@@ -352,7 +352,7 @@ default_site <- function(input, encoding = getOption("encoding"), ...) {
       files <- file.path(input, input_files())
     }
     sapply(files, function(x) {
-      render_one <- if(isTRUE(config$new_session)) {
+      render_one <- if (isTRUE(config$new_session)) {
         render_new_session
       } else {
         render_current_session
