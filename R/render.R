@@ -604,11 +604,13 @@ render <- function(input,
       assign("params", params, envir = envir)
       lockBinding("params", envir)
       on.exit({
-        do.call("unlockBinding", list("params", envir))
-        if (hasParams)
-          assign("params", envirParams, envir = envir)
-        else
-          remove("params", envir = envir)
+        if ('params' %in% ls(envir = envir)) {
+            do.call("unlockBinding", list("params", envir))
+          if (hasParams)
+            assign("params", envirParams, envir = envir)
+          else
+            remove("params", envir = envir)
+        }
       }, add = TRUE)
     }
 
