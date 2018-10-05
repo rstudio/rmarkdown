@@ -604,7 +604,7 @@ render <- function(input,
       assign("params", params, envir = envir)
       lockBinding("params", envir)
       on.exit({
-        if ('params' %in% ls(envir = envir)) {
+        if (exists("params", envir = envir, inherits = FALSE)) {
             do.call("unlockBinding", list("params", envir))
           if (hasParams)
             assign("params", envirParams, envir = envir)
