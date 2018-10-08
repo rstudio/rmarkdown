@@ -513,3 +513,27 @@ package_root <- function(path) {
       length(grep('^Package: ', readLines(desc))) == 0) return(package_root(dir))
   dir
 }
+
+
+# retrieve package version without fear of error
+# loading namespace is ok as these packages have been or will be used
+get_package_version_string <- function(package) {
+  tryCatch(
+    as.character(getNamespaceVersion(package)),
+    error = function(e) {
+      NULL
+    }
+  )
+}
+# find all loaded packages.
+# May contain extra packages, but will contain all packages used while knitting
+get_loaded_packages <- function() {
+  packages <- sort(loadedNamespaces())
+  version <- vapply(packages, get_package_version_string, character(1))
+
+  data.frame(
+    packages = packages,
+    version = version,
+    row.names = NULL, stringsAsFactors = FALSE
+  )
+}

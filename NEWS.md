@@ -17,6 +17,9 @@ rmarkdown 1.11 (unreleased)
 
 * Fixed the website navbar not being able to display submenus properly (#721, #1426).
 
+* Added checks for shiny-prerendered documents to find all html dependencies, match all execution packages, and match the major R version (#1420).
+
+
 rmarkdown 1.10
 ================================================================================
 
@@ -549,4 +552,3 @@ rmarkdown 0.3.11
 ================================================================================
 
 Initial release to CRAN
-

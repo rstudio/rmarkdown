@@ -360,7 +360,10 @@ render <- function(input,
     # force various output options
     output_options$self_contained <- FALSE
     output_options$dependency_resolver <- function(deps) {
-      shiny_prerendered_dependencies <<- deps
+      shiny_prerendered_dependencies <<- list(
+        deps = deps,
+        packages = get_loaded_packages()
+      )
       list()
     }
   }
