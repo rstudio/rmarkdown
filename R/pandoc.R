@@ -716,3 +716,16 @@ find_pandoc_theme_variable <- function(args) {
 pandoc2.0 <- function() {
   pandoc_available("2.0")
 }
+
+#' Get the path of the pandoc executable
+#'
+#' Returns the path of the pandoc executable used by functions in the the
+#' \pkg{rmarkdown} package. This is the most recent version of pandoc found in
+#' either the system path or shipped with RStudio.
+#'
+#' See the
+#' \href{http://pandoc.org/MANUAL.html}{pandoc manual}
+#' for pandoc commands.
+#'
+#' @export
+pandoc_exec <- pandoc
