@@ -491,6 +491,7 @@ render <- function(input,
     knitr::opts_knit$set(
       rmarkdown.pandoc.from = output_format$pandoc$from,
       rmarkdown.pandoc.to = pandoc_to,
+      rmarkdown.pandoc.args = output_format$pandoc$args,
       rmarkdown.pandoc.id_prefix = id_prefix,
       rmarkdown.keep_md = output_format$keep_md,
       rmarkdown.df_print = output_format$df_print,
