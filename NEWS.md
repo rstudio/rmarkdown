@@ -1,7 +1,7 @@
 rmarkdown 1.11 (unreleased)
 ================================================================================
 
-* Provided `rmarkdown.pandoc.args` as a knit option (#1468, @noamross).
+* Provided `rmarkdown.pandoc.args` as a **knitr** package option in `knitr::opts_knit` (#1468, @noamross).
 
 * Added the exported function `pandoc_exec()`, which returns the path of the pandoc binary used by the package (#1465, #1466 @noamross).
 
