@@ -1,6 +1,8 @@
 rmarkdown 1.11 (unreleased)
 ================================================================================
 
+* Added the exported function `pandoc_exec()`, which returns the path of the pandoc binary used by the package (#1465, #1466 @noamross).
+
 * `new_session: true` in `_site.yml` causes `render_site()` to render each file in a new R session, eliminating some cross-file difficulties, such as function masking (#1326, #1443 @jennybc).
 
 * Added the LaTeX command `\passthrough` in the default LaTeX template for the `--listings` flag of Pandoc (rstudio/bookdown#591).
