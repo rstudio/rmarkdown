@@ -20,7 +20,7 @@ html_dependency_jquery <- function()  {
   htmltools::htmlDependency(
     name = "jquery",
     version = "1.11.3",
-    src = system_file(file = "rmd/h/jquery"),
+    src = rmarkdown_system_file(file = "rmd/h/jquery"),
     script = "jquery.min.js")
 }
 
@@ -32,7 +32,7 @@ html_dependency_jqueryui <- function() {
   htmltools::htmlDependency(
     name = "jqueryui",
     version = "1.11.4",
-    src = system_file(file = "rmd/h/jqueryui"),
+    src = rmarkdown_system_file(file = "rmd/h/jqueryui"),
     script = "jquery-ui.min.js")
 }
 
@@ -48,7 +48,7 @@ html_dependency_bootstrap <- function(theme) {
   htmltools::htmlDependency(
     name = "bootstrap",
     version = "3.3.5",
-    src = system_file(file = "rmd/h/bootstrap"),
+    src = rmarkdown_system_file(file = "rmd/h/bootstrap"),
     meta = list(viewport = "width=device-width, initial-scale=1"),
     script = c(
       "js/bootstrap.min.js",
@@ -66,7 +66,7 @@ html_dependency_tocify <- function() {
   htmltools::htmlDependency(
     name = "tocify",
     version = "1.9.1",
-    src = system_file(file = "rmd/h/tocify"),
+    src = rmarkdown_system_file(file = "rmd/h/tocify"),
     script = "jquery.tocify.js",
     stylesheet = "jquery.tocify.css")
 }
@@ -79,7 +79,7 @@ html_dependency_font_awesome <- function() {
   htmltools::htmlDependency(
     "font-awesome",
     "5.1.0",
-    src = system_file("rmd/h/fontawesome"),
+    src = rmarkdown_system_file("rmd/h/fontawesome"),
     stylesheet = c(
       "css/all.css",
       "css/v4-shims.css")
@@ -94,7 +94,7 @@ html_dependency_ionicons <- function() {
   htmltools::htmlDependency(
     name = "ionicons",
     version = "2.0.1",
-    src = system_file(file = "rmd/h/ionicons"),
+    src = rmarkdown_system_file(file = "rmd/h/ionicons"),
     stylesheet = "css/ionicons.min.css")
 }
 
