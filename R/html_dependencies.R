@@ -12,9 +12,17 @@ NULL
 #' @name html-dependencies
 NULL
 
-#' @importFrom htmldeps html_dependency_jquery
+# Create an HTML dependency for jQuery
+#' @rdname html-dependencies
 #' @export
-htmldeps::html_dependency_jquery
+html_dependency_jquery <- function()  {
+
+  htmltools::htmlDependency(
+    name = "jquery",
+    version = "1.11.3",
+    src = system_file(file = "rmd/h/jquery"),
+    script = "jquery.min.js")
+}
 
 #' @importFrom htmldeps html_dependency_bootstrap
 #' @export
