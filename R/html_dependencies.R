@@ -24,13 +24,24 @@ html_dependency_jquery <- function()  {
     script = "jquery.min.js")
 }
 
+# Create an HTML dependency for jQuery UI
+#' @rdname html-dependencies
+#' @export
+html_dependency_jqueryui <- function() {
+
+  htmltools::htmlDependency(
+    name = "jqueryui",
+    version = "1.11.4",
+    src = system_file(file = "rmd/h/jqueryui"),
+    script = "jquery-ui.min.js")
+}
+
+# Create an HTML dependency for Bootstrap
 #' @importFrom htmldeps html_dependency_bootstrap
 #' @export
 htmldeps::html_dependency_bootstrap
 
-#' @importFrom htmldeps html_dependency_jqueryui
-#' @export
-htmldeps::html_dependency_jqueryui
+
 
 #' @importFrom htmldeps html_dependency_tocify
 #' @export
