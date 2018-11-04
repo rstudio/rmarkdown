@@ -76,8 +76,6 @@ Imports:
     tinytex (>= 0.3),
     methods,
     stringr (>= 1.2.0)
-Remotes:
-    rstudio/htmldeps 
 Suggests:
     shiny (>= 0.11),
     tufte,
