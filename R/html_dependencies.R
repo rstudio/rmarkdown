@@ -71,9 +71,20 @@ html_dependency_tocify <- function() {
     stylesheet = "jquery.tocify.css")
 }
 
-#' @importFrom htmldeps html_dependency_font_awesome
+# Create an HTML dependency for FontAwesome
+#' @rdname html-dependencies
 #' @export
-htmldeps::html_dependency_font_awesome
+html_dependency_font_awesome <- function() {
+
+  htmltools::htmlDependency(
+    "font-awesome",
+    "5.1.0",
+    src = system_file("rmd/h/fontawesome"),
+    stylesheet = c(
+      "css/all.css",
+      "css/v4-shims.css")
+  )
+}
 
 #' @importFrom htmldeps html_dependency_ionicons
 #' @export
