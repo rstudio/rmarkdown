@@ -86,10 +86,17 @@ html_dependency_font_awesome <- function() {
   )
 }
 
-#' @importFrom htmldeps html_dependency_ionicons
+# Create an HTML dependency for Ionicons
+#' @rdname html-dependencies
 #' @export
-htmldeps::html_dependency_ionicons
+html_dependency_ionicons <- function() {
 
+  htmltools::htmlDependency(
+    name = "ionicons",
+    version = "2.0.1",
+    src = system_file(file = "rmd/h/ionicons"),
+    stylesheet = "css/ionicons.min.css")
+}
 
 html_dependency_navigation <- function(code_menu, source_embed) {
 
