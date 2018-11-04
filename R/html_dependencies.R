@@ -58,10 +58,18 @@ html_dependency_bootstrap <- function(theme) {
     stylesheet = paste0("css/", theme, ".min.css"))
 }
 
-
-#' @importFrom htmldeps html_dependency_tocify
+# Create an HTML dependency for tocify
+#' @rdname html-dependencies
 #' @export
-htmldeps::html_dependency_tocify
+html_dependency_tocify <- function() {
+
+  htmltools::htmlDependency(
+    name = "tocify",
+    version = "1.9.1",
+    src = system_file(file = "rmd/h/tocify"),
+    script = "jquery.tocify.js",
+    stylesheet = "jquery.tocify.css")
+}
 
 #' @importFrom htmldeps html_dependency_font_awesome
 #' @export
