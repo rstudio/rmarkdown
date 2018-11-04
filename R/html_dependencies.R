@@ -37,10 +37,26 @@ html_dependency_jqueryui <- function() {
 }
 
 # Create an HTML dependency for Bootstrap
-#' @importFrom htmldeps html_dependency_bootstrap
+#' @rdname html-dependencies
 #' @export
-htmldeps::html_dependency_bootstrap
+html_dependency_bootstrap <- function(theme) {
 
+  if (identical(theme, "default")) {
+    theme <- "bootstrap"
+  }
+
+  htmltools::htmlDependency(
+    name = "bootstrap",
+    version = "3.3.5",
+    src = system_file(file = "rmd/h/bootstrap"),
+    meta = list(viewport = "width=device-width, initial-scale=1"),
+    script = c(
+      "js/bootstrap.min.js",
+      # These shims are necessary for IE 8 compatibility
+      "shim/html5shiv.min.js",
+      "shim/respond.min.js"),
+    stylesheet = paste0("css/", theme, ".min.css"))
+}
 
 
 #' @importFrom htmldeps html_dependency_tocify
