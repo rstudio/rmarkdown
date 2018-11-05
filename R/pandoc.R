@@ -232,7 +232,7 @@ pandoc_version <- function() {
 #' pandoc_include_args(before_body = "header.htm")
 #' pandoc_include_args(before_body = "header.tex")
 #'
-#' pancoc_highlight_args("kate")
+#' pandoc_highlight_args("kate")
 #'
 #' pandoc_latex_engine_args("pdflatex")
 #'
