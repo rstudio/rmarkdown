@@ -68,7 +68,6 @@ Imports:
     utils,
     knitr (>= 1.18),
     yaml (>= 2.1.5),
-    htmldeps (>= 0.1.1),
     htmltools (>= 0.3.5),
     evaluate (>= 0.8),
     base64enc,
@@ -77,8 +76,6 @@ Imports:
     tinytex (>= 0.3),
     methods,
     stringr (>= 1.2.0)
-Remotes:
-    rstudio/htmldeps 
 Suggests:
     shiny (>= 0.11),
     tufte,
