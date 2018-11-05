@@ -17,7 +17,7 @@ NULL
 #' @export
 html_dependency_jquery <- function()  {
 
-  htmltools::htmlDependency(
+  htmlDependency(
     name = "jquery",
     version = "1.11.3",
     src = rmarkdown_system_file(file = "rmd/h/jquery"),
@@ -29,7 +29,7 @@ html_dependency_jquery <- function()  {
 #' @export
 html_dependency_jqueryui <- function() {
 
-  htmltools::htmlDependency(
+  htmlDependency(
     name = "jqueryui",
     version = "1.11.4",
     src = rmarkdown_system_file(file = "rmd/h/jqueryui"),
@@ -45,7 +45,7 @@ html_dependency_bootstrap <- function(theme) {
     theme <- "bootstrap"
   }
 
-  htmltools::htmlDependency(
+  htmlDependency(
     name = "bootstrap",
     version = "3.3.5",
     src = rmarkdown_system_file(file = "rmd/h/bootstrap"),
@@ -63,7 +63,7 @@ html_dependency_bootstrap <- function(theme) {
 #' @export
 html_dependency_tocify <- function() {
 
-  htmltools::htmlDependency(
+  htmlDependency(
     name = "tocify",
     version = "1.9.1",
     src = rmarkdown_system_file(file = "rmd/h/tocify"),
@@ -76,7 +76,7 @@ html_dependency_tocify <- function() {
 #' @export
 html_dependency_font_awesome <- function() {
 
-  htmltools::htmlDependency(
+  htmlDependency(
     "font-awesome",
     "5.1.0",
     src = rmarkdown_system_file("rmd/h/fontawesome"),
@@ -91,7 +91,7 @@ html_dependency_font_awesome <- function() {
 #' @export
 html_dependency_ionicons <- function() {
 
-  htmltools::htmlDependency(
+  htmlDependency(
     name = "ionicons",
     version = "2.0.1",
     src = rmarkdown_system_file(file = "rmd/h/ionicons"),
