@@ -12,7 +12,7 @@ NULL
 #' @name html-dependencies
 NULL
 
-# Create an HTML dependency for jQuery
+# Create an HTML dependency for our embedded jquery
 #' @rdname html-dependencies
 #' @export
 html_dependency_jquery <- function()  {
@@ -24,7 +24,7 @@ html_dependency_jquery <- function()  {
     script = "jquery.min.js")
 }
 
-# Create an HTML dependency for jQuery UI
+# Create an HTML dependency for our embedded bootstrap
 #' @rdname html-dependencies
 #' @export
 html_dependency_jqueryui <- function() {
@@ -36,7 +36,7 @@ html_dependency_jqueryui <- function() {
     script = "jquery-ui.min.js")
 }
 
-# Create an HTML dependency for Bootstrap
+# Create an HTML dependency for our embedded jqueryui
 #' @rdname html-dependencies
 #' @export
 html_dependency_bootstrap <- function(theme) {
@@ -62,7 +62,6 @@ html_dependency_bootstrap <- function(theme) {
 #' @rdname html-dependencies
 #' @export
 html_dependency_tocify <- function() {
-
   htmlDependency(
     name = "tocify",
     version = "1.9.1",
@@ -71,11 +70,10 @@ html_dependency_tocify <- function() {
     stylesheet = "jquery.tocify.css")
 }
 
-# Create an HTML dependency for FontAwesome
+# Create an HTML dependency for Font Awesome
 #' @rdname html-dependencies
 #' @export
 html_dependency_font_awesome <- function() {
-
   htmlDependency(
     "font-awesome",
     "5.1.0",
@@ -86,7 +84,7 @@ html_dependency_font_awesome <- function() {
   )
 }
 
-# Create an HTML dependency for Ionicons
+# Create an HTML dependency for ionicons
 #' @rdname html-dependencies
 #' @export
 html_dependency_ionicons <- function() {
@@ -133,6 +131,7 @@ navbar_icon_dependencies <- function(navbar) {
   html_dependencies_fonts("fa fa" %in% libs, "ion ion" %in% libs)
 }
 
+
 # utilty function to return a list of font dependencies based
 # whether we are including font_awesome and/or iconicons
 html_dependencies_fonts <- function(font_awesome, ionicons) {
@@ -143,6 +142,7 @@ html_dependencies_fonts <- function(font_awesome, ionicons) {
     deps <- append(deps, list(html_dependency_ionicons()))
   deps
 }
+
 
 # flattens an arbitrarily nested list and returns all of the dependency
 # objects it contains
@@ -281,6 +281,8 @@ html_dependency_pagedtable <- function() {
     stylesheet = "css/pagedtable.css"
   )
 }
+
+
 
 #' @param highlight Highlighter to use
 #' @rdname html-dependencies

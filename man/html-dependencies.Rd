@@ -3,8 +3,8 @@
 \name{html-dependencies}
 \alias{html-dependencies}
 \alias{html_dependency_jquery}
-\alias{html_dependency_jqueryui}
 \alias{html_dependency_bootstrap}
+\alias{html_dependency_jqueryui}
 \alias{html_dependency_tocify}
 \alias{html_dependency_font_awesome}
 \alias{html_dependency_ionicons}
@@ -14,9 +14,9 @@
 \usage{
 html_dependency_jquery()
 
-html_dependency_jqueryui()
-
 html_dependency_bootstrap(theme)
+
+html_dependency_jqueryui()
 
 html_dependency_tocify()
 
