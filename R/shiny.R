@@ -378,7 +378,7 @@ shinyHTML_with_deps <- function(html_file, deps) {
 
   # attach dependencies and return HTML
   htmltools::attachDependencies(
-    htmltools::HTML(paste(html, collapse = "\n")),
+    HTML(paste(html, collapse = "\n")),
     deps
   )
 }
@@ -544,8 +544,7 @@ render_delayed <- function(expr) {
   shiny::renderUI(quote({
     knitr::opts_current$restore(knitr_cached_chunk_opts)
     knitr::opts_knit$restore(knitr_cached_knit_opts)
-    shiny::HTML(knitr::knit_print(eval(knitr_orig_expr),
-                                  knitr::opts_current$get()))
+    HTML(knitr::knit_print(eval(knitr_orig_expr), knitr::opts_current$get()))
   }),
   env = env_snapshot,
   quoted = TRUE)

@@ -269,8 +269,8 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
 
     # if we couldn't resolve the src to a package then copy the files
     if (is.null(dependency$package) && !is.null(dependency$src$file)) {
-      dependency <- htmltools::copyDependencyToDir(dependency, files_dir)
-      dependency <- htmltools::makeDependencyRelative(dependency, output_dir)
+      dependency <- copyDependencyToDir(dependency, files_dir)
+      dependency <- makeDependencyRelative(dependency, output_dir)
       dependency$src = list(href = unname(dependency$src))
     }
 

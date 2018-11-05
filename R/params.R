@@ -446,26 +446,28 @@ knit_params_ask <- function(file = NULL,
     })
   }
 
-  contents <- shiny::tags$div(
+  contents <- tags$div(
       shiny::fluidRow(shiny::column(12, lapply(configurable, function(param) {
         shiny::uiOutput(paste0("ui_", param$name))
       }))), class = "container-fluid")
 
   if (length(unconfigurable) > 0) {
-    skipped <- shiny::tags$div(shiny::tags$strong("Note:"),
-                            "The following parameters cannot be customized:",
-                            paste(lapply(unconfigurable, function(param) { param$name }), collapse = ", "))
+    skipped <- tags$div(tags$strong("Note:"),
+                        "The following parameters cannot be customized:",
+                        paste(lapply(unconfigurable, function(param) param$name), collapse = ", "))
     contents <- shiny::tagAppendChildren(contents, shiny::fluidRow(shiny::column(12, skipped)))
   }
-  footer <- shiny::tags$div(
-      shiny::tags$div(
-          shiny::fluidRow(shiny::column(12,
-                                        shiny::actionButton("save", save_caption, class = "btn-primary navbar-btn pull-right"),
-                                        shiny::actionButton("cancel","Cancel", class = "navbar-btn pull-right"))),
-          class = "container-fluid"),
-      class = "navbar navbar-default navbar-fixed-bottom")
+  footer <- tags$div(
+    tags$div(
+      shiny::fluidRow(shiny::column(
+        12,
+        shiny::actionButton("save", save_caption, class = "btn-primary navbar-btn pull-right"),
+        shiny::actionButton("cancel","Cancel", class = "navbar-btn pull-right")
+      )),
+      class = "container-fluid"),
+    class = "navbar navbar-default navbar-fixed-bottom")
 
-  style <- shiny::tags$style(
+  style <- tags$style(
       # Our controls are wiiiiide.
       ".container-fluid .shiny-input-container { width: auto; }",
       # Prevent the save/cancel buttons from squashing together.
@@ -475,13 +477,13 @@ knit_params_ask <- function(file = NULL,
       "body { padding-bottom: 70px; }"
                              )
   ## Escape is "cancel" and Enter is "save".
-  script <- shiny::tags$script(shiny::HTML("$(document).keyup(function(e) {\n",
-                                           "if (e.which == 13) { $('#save').click(); } // enter\n",
-                                           "if (e.which == 27) { $('#cancel').click(); } // esc\n",
-                                           "});"
-                                           ))
+  script <- tags$script(HTML("$(document).keyup(function(e) {\n",
+                             "if (e.which == 13) { $('#save').click(); } // enter\n",
+                             "if (e.which == 27) { $('#cancel').click(); } // esc\n",
+                             "});"
+  ))
   ui <- shiny::bootstrapPage(
-      shiny::tags$head(style, script),
+      tags$head(style, script),
       contents,
       footer)
 
