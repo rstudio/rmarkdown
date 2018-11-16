@@ -65,12 +65,8 @@ is_null_or_string <- function(text) {
 }
 
 read_lines_utf8 <- function(file, encoding) {
-
-  # read the file
-  lines <- readLines(file, warn = FALSE)
-
-  # convert to utf8
-  to_utf8(lines, encoding)
+  con <- base::file(file, encoding = encoding); on.exit(close(con), add = TRUE)
+  enc2utf8(readLines(con, warn = FALSE))
 }
 
 
