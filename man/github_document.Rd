@@ -16,7 +16,7 @@ github_document(toc = FALSE, toc_depth = 3, fig_width = 7,
 
 \item{fig_width}{Default width (in inches) for figures}
 
-\item{fig_height}{Default width (in inches) for figures}
+\item{fig_height}{Default height (in inches) for figures}
 
 \item{dev}{Graphics device to use for figure output (defaults to png)}
 

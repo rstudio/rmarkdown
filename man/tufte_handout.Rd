@@ -12,7 +12,7 @@ tufte_handout(fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}
 
-\item{fig_height}{Default width (in inches) for figures}
+\item{fig_height}{Default height (in inches) for figures}
 
 \item{fig_crop}{\code{TRUE} to automatically apply the \code{pdfcrop} utility
 (if available) to pdf figures}

@@ -11,7 +11,7 @@ html_vignette(fig_width = 3, fig_height = 3, dev = "png",
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}
 
-\item{fig_height}{Default width (in inches) for figures}
+\item{fig_height}{Default height (in inches) for figures}
 
 \item{dev}{Graphics device to use for figure output (defaults to png)}
 

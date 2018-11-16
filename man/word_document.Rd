@@ -16,7 +16,7 @@ word_document(toc = FALSE, toc_depth = 3, fig_width = 5,
 
 \item{fig_width}{Default width (in inches) for figures}
 
-\item{fig_height}{Default width (in inches) for figures}
+\item{fig_height}{Default height (in inches) for figures}
 
 \item{fig_caption}{\code{TRUE} to render figures with captions}
 
