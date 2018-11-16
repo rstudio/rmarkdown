@@ -23,7 +23,7 @@
 #'  \emph{Floating Table of Contents} section below for details.
 #'@param number_sections \code{TRUE} to number section headings
 #'@param fig_width Default width (in inches) for figures
-#'@param fig_height Default width (in inches) for figures
+#'@param fig_height Default height (in inches) for figures
 #'@param fig_retina Scaling to perform for retina displays (defaults to 2, which
 #'  currently works for all widely used retina displays). Set to \code{NULL} to
 #'  prevent retina scaling. Note that this will always be \code{NULL} when
