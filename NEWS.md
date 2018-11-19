@@ -1,6 +1,8 @@
 rmarkdown 1.11 (unreleased)
 ================================================================================
 
+* Fixed #1483, which prevented the triangle to be displayed in Firefox when `<details><summary>...</summary></details>` was used (#1485, @bisaloo)
+
 * Provided `rmarkdown.pandoc.args` as a **knitr** package option in `knitr::opts_knit` (#1468, @noamross).
 
 * Added the exported function `pandoc_exec()`, which returns the path of the pandoc binary used by the package (#1465, #1466 @noamross).
