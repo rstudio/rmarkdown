@@ -628,3 +628,11 @@ input_as_dir <- function(input) {
 site_config_file <- function(input) {
   file.path(input, "_site.yml")
 }
+
+site_skeleton <- function(path, ...) {
+  dir.create(path, recursive = TRUE, showWarnings = FALSE)
+  file.copy(
+    list.files(rmarkdown_system_file('rmd', 'site'), full.names = TRUE),
+    path, overwrite = TRUE
+  )
+}

@@ -27,6 +27,8 @@ rmarkdown 1.11 (unreleased)
 
 * Added an argument `cache = TRUE` to the internal function `rmarkdown:::find_pandoc()`, so that users can invalidate the cached path of Pandoc via `rmarkdown:::find_pandoc(cache = FALSE)` (thanks, @hammer, #1482).
 
+* Added an RStudio project template for simple R Markdown websites, so that users can create such websites from RStudio: `New Project -> New Directory -> Simple R Markdown Website` (thanks, @kevinushey, #1470).
+
 
 rmarkdown 1.10
 ================================================================================
