@@ -45,7 +45,9 @@ window.initializeCodeFolding = function(show) {
     buttonCol.append(showCodeButton);
     buttonRow.append(buttonCol);
 
-    div.before(buttonRow);
+    var sourceCodeBlock = $('div.sourceCode');
+
+    sourceCodeBlock.before(buttonRow);
 
     // update state of button on show/hide
     div.on('hidden.bs.collapse', function () {
