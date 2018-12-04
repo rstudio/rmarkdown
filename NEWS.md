@@ -25,6 +25,7 @@ rmarkdown 1.11 (unreleased)
 
 * Added checks for shiny-prerendered documents to find all html dependencies, match all execution packages, and match the major R version (#1420).
 
+* Added an argument `cache = TRUE` to the internal function `rmarkdown:::find_pandoc()`, so that users can invalidate the cached path of Pandoc via `rmarkdown:::find_pandoc(cache = FALSE)` (thanks, @hammer, #1482).
 
 rmarkdown 1.10
 ================================================================================

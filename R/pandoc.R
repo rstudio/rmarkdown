@@ -547,9 +547,9 @@ is_highlightjs <- function(highlight) {
 }
 
 # Scan for a copy of pandoc and set the internal cache if it's found.
-find_pandoc <- function() {
+find_pandoc <- function(cache = TRUE) {
 
-  if (is.null(.pandoc$dir)) {
+  if (is.null(.pandoc$dir) || !cache) {
 
     # define potential sources
     sys_pandoc <- find_program("pandoc")
