@@ -27,6 +27,7 @@ rmarkdown 1.11 (unreleased)
 
 * Added an argument `cache = TRUE` to the internal function `rmarkdown:::find_pandoc()`, so that users can invalidate the cached path of Pandoc via `rmarkdown:::find_pandoc(cache = FALSE)` (thanks, @hammer, #1482).
 
+
 rmarkdown 1.10
 ================================================================================
 
