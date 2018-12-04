@@ -298,6 +298,10 @@ html_document <- function(toc = FALSE,
   for (css_file in css)
     args <- c(args, "--css", pandoc_path_arg(css_file))
 
+  # deal with pandoc > 2 features in template
+  if (isTRUE(pandoc2.0()))
+    args <- c(args, pandoc_variable_arg("ispandoc2", "1"))
+
   # manage list of exit_actions (backing out changes to knitr options)
   exit_actions <- list()
   on_exit <- function() {

@@ -63,10 +63,12 @@ $if(code_folding)$
   margin-right: 0px;
 }
 
+$if(ispandoc2)$
 div.row {
   /* to reduce the space introduce in pandoc div.sourceCode */
-  margin-bottom: -0.8em;
+  margin-bottom: -0.9em;
 }
+$endif$
 $endif$
 
 </style>
@@ -123,10 +125,12 @@ $if(source_embed)$
   display: none;
 }
 $endif$
+$if(ispandoc2)$
 pre.sourceCode  {
   color: inherit;
   background-color: transparent;
 }
+$endif$
 </style>
 $endif$
 
