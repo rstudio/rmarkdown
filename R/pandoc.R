@@ -549,40 +549,36 @@ is_highlightjs <- function(highlight) {
 # Scan for a copy of pandoc and set the internal cache if it's found.
 find_pandoc <- function(cache = TRUE) {
 
-  if (is.null(.pandoc$dir) || !cache) {
+  if (!is.null(.pandoc$dir) && cache) return(invisible(as.list(.pandoc)))
 
-    # define potential sources
-    sys_pandoc <- find_program("pandoc")
-    sources <- c(Sys.getenv("RSTUDIO_PANDOC"),
-                 ifelse(nzchar(sys_pandoc), dirname(sys_pandoc), ""))
-    if (!is_windows())
-      sources <- c(sources, path.expand("~/opt/pandoc"))
+  # define potential sources
+  sys_pandoc <- find_program("pandoc")
+  sources <- c(Sys.getenv("RSTUDIO_PANDOC"), if (nzchar(sys_pandoc)) dirname(sys_pandoc))
+  if (!is_windows()) sources <- c(sources, path.expand("~/opt/pandoc"))
 
-    # determine the versions of the sources
-    versions <- lapply(sources, function(src) {
-      if (dir_exists(src))
-        get_pandoc_version(src)
-      else
-        numeric_version("0")
-    })
+  # determine the versions of the sources
+  versions <- lapply(sources, function(src) {
+    if (dir_exists(src)) get_pandoc_version(src) else numeric_version("0")
+  })
 
-    # find the maximum version
-    found_src <- NULL
-    found_ver <- numeric_version("0")
-    for (i in 1:length(sources)) {
-      ver <- versions[[i]]
-      if (ver > found_ver) {
-        found_ver <- ver
-        found_src <- sources[[i]]
-      }
-    }
-
-    # did we find a version?
-    if (!is.null(found_src)) {
-      .pandoc$dir <- found_src
-      .pandoc$version <- found_ver
+  # find the maximum version
+  found_src <- NULL
+  found_ver <- numeric_version("0")
+  for (i in seq_along(sources)) {
+    ver <- versions[[i]]
+    if (ver > found_ver) {
+      found_ver <- ver
+      found_src <- sources[[i]]
     }
   }
+
+  # did we find a version?
+  if (!is.null(found_src)) {
+    .pandoc$dir <- found_src
+    .pandoc$version <- found_ver
+  }
+
+  invisible(as.list(.pandoc))
 }
 
 # Get an S3 numeric_version for the pandoc utility at the specified path
