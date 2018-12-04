@@ -266,6 +266,10 @@ html_document <- function(toc = FALSE,
   else if (!is.null(template))
     args <- c(args, "--template", pandoc_path_arg(template))
 
+  # activate pandoc > 2 features in template
+  if (isTRUE(pandoc2.0()))
+    args <- c(args, pandoc_variable_arg("ispandoc2", "1"))
+
   # validate code_folding
   code_folding <- match.arg(code_folding)
 
@@ -297,10 +301,6 @@ html_document <- function(toc = FALSE,
   # additional css
   for (css_file in css)
     args <- c(args, "--css", pandoc_path_arg(css_file))
-
-  # deal with pandoc > 2 features in template
-  if (isTRUE(pandoc2.0()))
-    args <- c(args, pandoc_variable_arg("ispandoc2", "1"))
 
   # manage list of exit_actions (backing out changes to knitr options)
   exit_actions <- list()
