@@ -536,10 +536,25 @@ pandoc_html_highlight_args <- function(template,
     }
     else {
       args <- c(args, "--highlight-style", highlight)
+      higlight_properties <- get_highlight_properties(highlight)
+      if(!higlight_properties$no_background)
+        args <- c(args, pandoc_variable_arg("highlight-backgroundcol", "1"))
+      if(!higlight_properties$no_color)
+        args <- c(args, pandoc_variable_arg("highlight-color", "1"))
     }
   }
 
   args
+}
+
+# get highligh property from pandoc
+get_highlight_properties <- function(pandoc_highlight) {
+  no_background_pandoc_highlight <- c("pygments", "haddock", "monochrome")
+  no_color_pandoc_highlight <- c("pygments", "tango", "haddock", "monochrome")
+  list(
+    no_background = pandoc_highlight %in% no_background_pandoc_highlight,
+    no_color =  pandoc_highlight %in% no_color_pandoc_highlight
+  )
 }
 
 is_highlightjs <- function(highlight) {

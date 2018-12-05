@@ -54,8 +54,12 @@ $highlighting-css$
 
 $if(ispandoc2)$
 pre.sourceCode  {
+  $if(highlight-color)$
   color: inherit;
+  $endif$
+  $if(highlight-backgroundcol)$
   background-color: transparent;
+  $endif$
 }
 $endif$
 
