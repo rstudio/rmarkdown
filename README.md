@@ -1,6 +1,7 @@
 ### Overview
 
 [![Build Status](https://travis-ci.org/rstudio/rmarkdown.svg?branch=master)](https://travis-ci.org/rstudio/rmarkdown)
+[![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/rmarkdown)](https://cran.r-project.org/package=rmarkdown)
 
 The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
 
