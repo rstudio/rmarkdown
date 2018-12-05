@@ -45,7 +45,7 @@ powerpoint_presentation <- function(
 
   saved_files_dir <- NULL
 
-  pre_processor <- function(...) {
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir, output_dir) {
     saved_files_dir <<- files_dir
     NULL
   }
