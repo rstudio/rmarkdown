@@ -74,9 +74,7 @@ word_document <- function(toc = FALSE,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # reference docx
-  if (!is.null(reference_docx) && !identical(reference_docx, "default")) {
-    args <- c(args, reference_doc_arg("docx"), pandoc_path_arg(reference_docx))
-  }
+  args <- c(args, reference_doc_args("docx", reference_docx))
 
   # pandoc args
   args <- c(args, pandoc_args)
@@ -92,9 +90,10 @@ word_document <- function(toc = FALSE,
   )
 }
 
-reference_doc_arg <- function(type) {
-  paste0("--reference-", if (pandoc2.0()) "doc" else {
-    match.arg(type, c("docx", "odt"))
-  })
+reference_doc_args <- function(type, doc) {
+  if (!is.null(doc) && !identical(doc, "default")) return()
+  c(paste0("--reference-", if (pandoc2.0()) "doc" else {
+    match.arg(type, c("docx", "odt", "doc"))
+  }), pandoc_path_arg(doc))
 }
 

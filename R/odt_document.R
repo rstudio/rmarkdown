@@ -60,9 +60,7 @@ odt_document <- function(fig_width = 5,
   args <- c(args, includes_to_pandoc_args(includes))
 
   # reference odt
-  if (!is.null(reference_odt) && !identical(reference_odt, "default")) {
-    args <- c(args, reference_doc_arg("odt"), pandoc_path_arg(reference_odt))
-  }
+  args <- c(args, reference_doc_args("odt", reference_odt))
 
   # pandoc args
   args <- c(args, pandoc_args)

@@ -32,9 +32,7 @@ powerpoint_presentation <- function(
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # ppt template
-  if (!is.null(reference_doc) && !identical(reference_doc, 'default')) {
-    args <- c(args, '--reference-doc', pandoc_path_arg(reference_doc))
-  }
+  args <- c(args, reference_doc_args("doc", reference_doc))
 
   # slide level
   if (!is.null(slide_level))
