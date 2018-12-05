@@ -267,7 +267,7 @@ html_document <- function(toc = FALSE,
     args <- c(args, "--template", pandoc_path_arg(template))
 
   # activate pandoc > 2 features in template
-  if (isTRUE(pandoc2.0()))
+  if (pandoc2.0())
     args <- c(args, pandoc_variable_arg("ispandoc2", "1"))
 
   # validate code_folding
