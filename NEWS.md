@@ -21,7 +21,7 @@ rmarkdown 1.11 (unreleased)
 
 * Fixed #1407: reactive expressions can break the section headers of Shiny R Markdown documents.
 
-# Fixed #1431: using the `intermediates_dir` with the Powerpoint output results in an error.
+# Fixed #1431: `render()` with the `intermediates_dir` argument when the output format is `powerpoint_presentation` with a custom `reference_doc` fails to find the reference document.
 
 * Fixed the website navbar not being able to display submenus properly (#721, #1426).
 
