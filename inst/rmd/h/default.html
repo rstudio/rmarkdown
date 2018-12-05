@@ -52,6 +52,13 @@ $if(highlighting-css)$
 <style type="text/css">
 $highlighting-css$
 
+$if(ispandoc2)$
+pre.sourceCode  {
+  color: inherit;
+  background-color: transparent;
+}
+$endif$
+
 $if(code_folding)$
 .sourceCode .row {
   width: 100%;
@@ -62,7 +69,6 @@ $if(code_folding)$
 .code-folding-btn {
   margin-right: 0px;
 }
-
 $if(ispandoc2)$
 div.row {
   /* to reduce the space introduce in pandoc div.sourceCode */
@@ -70,7 +76,6 @@ div.row {
 }
 $endif$
 $endif$
-
 </style>
 $if(theme)$
 <style type="text/css">
@@ -123,12 +128,6 @@ h6 {
 $if(source_embed)$
 #rmd-source-code {
   display: none;
-}
-$endif$
-$if(ispandoc2)$
-pre.sourceCode  {
-  color: inherit;
-  background-color: transparent;
 }
 $endif$
 </style>
