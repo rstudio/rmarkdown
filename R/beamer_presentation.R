@@ -139,10 +139,8 @@ beamer_presentation <- function(toc = FALSE,
   }
 
   # generate intermediates (required to make resources available for publish)
-  intermediates_generator <- function(original_input, encoding,
-                                      intermediates_dir) {
-    return(pdf_intermediates_generator(saved_files_dir, original_input,
-                                        encoding, intermediates_dir))
+  intermediates_generator <- function(...) {
+    general_intermediates_generator(saved_files_dir, ...)
   }
 
   # return format

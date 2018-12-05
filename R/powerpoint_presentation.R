@@ -32,9 +32,7 @@ powerpoint_presentation <- function(
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # ppt template
-  if (!is.null(reference_doc) && !identical(reference_doc, 'default')) {
-    args <- c(args, '--reference-doc', pandoc_path_arg(reference_doc))
-  }
+  args <- c(args, reference_doc_args("doc", reference_doc))
 
   # slide level
   if (!is.null(slide_level))
@@ -45,6 +43,17 @@ powerpoint_presentation <- function(
   # pandoc args
   args <- c(args, pandoc_args)
 
+  saved_files_dir <- NULL
+
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir, output_dir) {
+    saved_files_dir <<- files_dir
+    NULL
+  }
+
+  intermediates_generator <- function(...) {
+    reference_intermediates_generator(saved_files_dir, ..., reference_doc)
+  }
+
   # return output format
   output_format(
     knitr = knitr,
@@ -54,6 +63,22 @@ powerpoint_presentation <- function(
       args = args
     ),
     keep_md = keep_md,
-    df_print = df_print
+    df_print = df_print,
+    pre_processor = pre_processor,
+    intermediates_generator = intermediates_generator
   )
+}
+
+# copy the reference doc to the intermediate dir when the dir is specified
+reference_intermediates_generator <- function(
+  saved_files_dir, original_input, encoding, intermediates_dir, reference_doc
+) {
+  res <- general_intermediates_generator(saved_files_dir,  original_input, encoding, intermediates_dir)
+  if (is.null(reference_doc) || identical(reference_doc, 'default')) return(res)
+  if (dirname(reference_doc) != '.') stop(
+    'The reference document ', reference_doc, 'must be under the directory ', getwd(),
+    ' and its path must be ', basename(reference_doc)
+  )
+  file.copy(reference_doc, intermediates_dir)
+  c(res, file.path(intermediates_dir, basename(reference_doc)))
 }
