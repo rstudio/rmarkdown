@@ -45,9 +45,12 @@ window.initializeCodeFolding = function(show) {
     buttonCol.append(showCodeButton);
     buttonRow.append(buttonCol);
 
-    var sourceCodeBlock = $('div.sourceCode');
-
-    sourceCodeBlock.before(buttonRow);
+    if (div.parent('div.sourceCode').length === 0) {
+      // if there is no parent div inserted by pandoc
+      div.before(buttonRow);
+    } else {
+      div.parent('div.sourceCode').before(buttonRow);
+    }
 
     // update state of button on show/hide
     div.on('hidden.bs.collapse', function () {
