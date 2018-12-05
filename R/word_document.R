@@ -79,6 +79,16 @@ word_document <- function(toc = FALSE,
   # pandoc args
   args <- c(args, pandoc_args)
 
+  saved_files_dir <- NULL
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir, output_dir) {
+    saved_files_dir <<- files_dir
+    NULL
+  }
+
+  intermediates_generator <- function(...) {
+    reference_intermediates_generator(saved_files_dir, ..., reference_docx)
+  }
+
   # return output format
   output_format(
     knitr = knitr,
@@ -86,7 +96,9 @@ word_document <- function(toc = FALSE,
                             from = from_rmarkdown(fig_caption, md_extensions),
                             args = args),
     keep_md = keep_md,
-    df_print = df_print
+    df_print = df_print,
+    pre_processor = pre_processor,
+    intermediates_generator = intermediates_generator
   )
 }
 

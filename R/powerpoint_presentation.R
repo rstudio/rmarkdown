@@ -51,7 +51,7 @@ powerpoint_presentation <- function(
   }
 
   intermediates_generator <- function(...) {
-    general_intermediates_generator(saved_files_dir, ...)
+    reference_intermediates_generator(saved_files_dir, ..., reference_doc)
   }
 
   # return output format
@@ -67,4 +67,18 @@ powerpoint_presentation <- function(
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator
   )
+}
+
+# copy the reference doc to the intermediate dir when the dir is specified
+reference_intermediates_generator <- function(
+  saved_files_dir, original_input, encoding, intermediates_dir, reference_doc
+) {
+  res <- general_intermediates_generator(saved_files_dir,  original_input, encoding, intermediates_dir)
+  if (is.null(reference_doc) || identical(reference_doc, 'default')) return(res)
+  if (dirname(reference_doc) != '.') stop(
+    'The reference document ', reference_doc, 'must be under the directory ', getwd(),
+    ' and its path must be ', basename(reference_doc)
+  )
+  file.copy(reference_doc, intermediates_dir)
+  c(res, file.path(intermediates_dir, basename(reference_doc)))
 }
