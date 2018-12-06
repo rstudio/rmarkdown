@@ -33,6 +33,8 @@ rmarkdown 1.11 (unreleased)
 
 * Fixed #1471: Pandoc's (version 2.x) syntax highlighting themes don't work well with the Bootstrap style (thanks, @gponce-ars #1471, @cderv #1489).
 
+* Fixed the warnings in #1224 and #1288 when calling `render()` with an absolute `output_dir` or `intermediates_dir`.
+
 
 rmarkdown 1.10
 ================================================================================

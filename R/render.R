@@ -737,9 +737,11 @@ render <- function(input,
     convert <- function(output, citeproc = FALSE) {
 
       # temporarily move figures to the intermediate dir if specified:
-      # https://github.com/rstudio/rmarkdown/issues/500
+      # https://github.com/rstudio/rmarkdown/issues/500, but should not do it if
+      # output_dir is an absolute dir (hence figures_dir will be absolute):
+      # https://github.com/rstudio/rmarkdown/issues/1224 and 1288
       figures_dir <- gsub('/$', '', knitr::opts_chunk$get("fig.path"))
-      if (!is.null(intermediates_dir) && dir_exists(figures_dir)) {
+      if (!is.null(intermediates_dir) && dir_exists(figures_dir) && !knitr:::is_abs_path(figures_dir)) {
         figures_dir_tmp <- intermediates_loc(figures_dir)
         move_dir(figures_dir, figures_dir_tmp)
         on.exit(move_dir(figures_dir_tmp, figures_dir), add = TRUE)
