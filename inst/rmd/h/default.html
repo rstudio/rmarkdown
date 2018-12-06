@@ -613,5 +613,28 @@ $if(mathjax-url)$
 </script>
 $endif$
 
+<!-- apply pandoc div.sourceCode style to pre.sourceCode instead -->
+<script>
+  (function() {
+    var stylesheets = document.styleSheets;
+    for(var i=0; i<stylesheets.length; i++){
+      var rules = stylesheets[i].cssRules;
+      for(var j=0; j<rules.length; j++){
+        var rule = rules[j];
+        // check if there is a div.sourceCode rule
+        if(rule.STYLE_RULE == 1 && rule.selectorText == "div.sourceCode"){
+          var style = rule.style.cssText;
+          // check if color or background-color is set
+          if(style.match('color|background-color')){
+            // replace div.sourceCode by a pre.sourceCode rule
+            stylesheets[i].deleteRule(j);
+            stylesheets[i].insertRule('pre.sourceCode{'+style+'}', j);
+          }
+        }
+      }
+    }
+  })();
+</script>
+
 </body>
 </html>
