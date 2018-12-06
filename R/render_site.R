@@ -287,7 +287,7 @@ site_config <- function(input = ".", encoding = getOption("encoding")) {
 
     # parse the yaml
     config_lines <- read_lines_utf8(config_file, encoding)
-    config <- yaml_load_utf8(config_lines)
+    config <- yaml_load(config_lines)
     if (!is.list(config))
       config <- list()
 

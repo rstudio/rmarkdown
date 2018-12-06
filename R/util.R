@@ -98,10 +98,10 @@ mark_utf8 <- function(x) {
 
 # in a future version of yaml, it will disable the evaluation of !expr but we
 # still need it (https://github.com/rstudio/rmarkdown/issues/1387)
-yaml_load_utf8 <- function(...) yaml::yaml.load(..., eval.expr = TRUE)
+yaml_load <- function(...) yaml::yaml.load(..., eval.expr = TRUE)
 
-yaml_load_file_utf8 <- function(input, ...) {
-  yaml_load_utf8(readLines(input, encoding = 'UTF-8'), ...)
+yaml_load_file <- function(input, ...) {
+  yaml_load(readLines(input, encoding = 'UTF-8'), ...)
 }
 
 file_name_without_shell_chars <- function(file) {

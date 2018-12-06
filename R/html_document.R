@@ -541,7 +541,7 @@ pandoc_body_padding_variable_args <- function(theme) {
 navbar_html_from_yaml <- function(navbar_yaml) {
 
   # parse the yaml
-  navbar <- yaml_load_file_utf8(navbar_yaml)
+  navbar <- yaml_load_file(navbar_yaml)
 
   # generate the html
   navbar_html(navbar)

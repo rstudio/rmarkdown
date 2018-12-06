@@ -79,7 +79,7 @@ draft <- function(file,
     stop("No template.yaml file found for template '", template, "'")
   }
 
-  template_meta <- yaml_load_file_utf8(template_yaml)
+  template_meta <- yaml_load_file(template_yaml)
   if (is.null(template_meta$name) || is.null(template_meta$description)) {
     stop("template.yaml must contain name and description fields")
   }

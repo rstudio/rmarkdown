@@ -483,9 +483,9 @@ output_format_from_yaml_front_matter <- function(input_lines,
 
   # parse common _output.yml if we have it
   yaml_common <- if (file.exists("_output.yml")) {
-    yaml_load_file_utf8("_output.yml")
+    yaml_load_file("_output.yml")
   } else if (file.exists("_output.yaml")) {
-    yaml_load_file_utf8("_output.yaml")
+    yaml_load_file("_output.yaml")
   }
 
   # merge _site.yml and _output.yml
@@ -626,9 +626,9 @@ enumerate_output_formats <- function(input,
   output_yml <- file.path(dirname(input), "_output.yml")
   output_yaml <- file.path(dirname(input), "_output.yaml")
   if (file.exists(output_yml))
-    common_output_format_yaml <- yaml_load_file_utf8(output_yml)
+    common_output_format_yaml <- yaml_load_file(output_yml)
   else if (file.exists(output_yaml))
-    common_output_format_yaml <- yaml_load_file_utf8(output_yaml)
+    common_output_format_yaml <- yaml_load_file(output_yaml)
   else
     common_output_format_yaml <- list()
 
@@ -683,7 +683,7 @@ parse_yaml_front_matter <- function(input_lines) {
       front_matter <- front_matter[2:(length(front_matter) - 1)]
       front_matter <- paste(front_matter, collapse = "\n")
       validate_front_matter(front_matter)
-      parsed_yaml <- yaml_load_utf8(front_matter)
+      parsed_yaml <- yaml_load(front_matter)
       if (is.list(parsed_yaml))
         parsed_yaml
       else
