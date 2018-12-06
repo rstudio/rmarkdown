@@ -70,30 +70,14 @@ read_lines_utf8 <- function(file, encoding) {
 }
 
 
+# convert to utf8
 to_utf8 <- function(x, encoding) {
   # normalize encoding to iconv compatible form
-  if (identical(encoding, "native.enc"))
-    encoding <- ""
-
-  # convert to utf8
-  if (!identical(encoding, "UTF-8"))
-    iconv(x, from = encoding, to = "UTF-8")
-  else
-    mark_utf8(x)
-}
-
-# mark the encoding of character vectors as UTF-8
-mark_utf8 <- function(x) {
-  if (is.character(x)) {
-    Encoding(x) <- 'UTF-8'
-    return(x)
+  if (identical(encoding, "native.enc")) encoding <- ""
+  if (identical(encoding, "UTF-8")) Encoding(x) <- "UTF-8" else {
+    x <- iconv(x, from = encoding, to = "UTF-8")
   }
-  if (!is.list(x)) return(x)
-  attrs <- attributes(x)
-  res <- lapply(x, mark_utf8)
-  attributes(res) <- attrs
-  names(res) <- mark_utf8(names(res))
-  res
+  x
 }
 
 # in a future version of yaml, it will disable the evaluation of !expr but we
