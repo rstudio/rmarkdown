@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/rstudio/rmarkdown.svg?branch=master)](https://travis-ci.org/rstudio/rmarkdown)
 [![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/rmarkdown)](https://cran.r-project.org/package=rmarkdown)
 
-The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
+The **rmarkdown** package is a next generation implementation of R Markdown based on [Pandoc](http://johnmacfarlane.net/Pandoc/). This implementation brings many enhancements to R Markdown, including:
 
 -   Create HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home), [ioslides](https://code.google.com/p/io-2012-slides/), and [Slidy](http://www.w3.org/Talks/Tools/Slidy2/) presentations.
 -   New markdown syntax including expanded support for tables, definition lists, and bibliographies.
@@ -15,23 +15,24 @@ The **rmarkdown** package is a next generation implementation of R Markdown base
 
 Note that PDF output (including Beamer slides) requires an installation of TeX.
 
-See the [R Markdown documentation](http://rmarkdown.rstudio.com/) for full details.
+See the [R Markdown documentation](https://rmarkdown.rstudio.com) for full details.
 
 ### Installation
 
-If you are working within RStudio then you can simply install the [current release](http://www.rstudio.com/ide/download/preview) of RStudio (both the rmarkdown package and pandoc are included).
+If you are working within RStudio then you can simply install the [current release](http://www.rstudio.com/ide/download/preview) of RStudio (both the rmarkdown package and Pandoc are included).
 
 If you want to use the rmarkdown package outside of RStudio then you can install the package from CRAN as follows:
 
 ```r
 install.packages("rmarkdown")
+# or install the dev version via remotes::install_github('rstudio/rmarkdown')
 ```
 
-A recent version of pandoc (&gt;= 1.12.3) is also required. See the [pandoc installation instructions](PANDOC.md) for details on installing pandoc for your platform.
+A recent version of Pandoc (&gt;= 1.12.3) is also required. See the [Pandoc installation instructions](Pandoc.md) for details on installing Pandoc for your platform.
 
 ### Usage
 
-The `render` function is used to convert R Markdown (Rmd) files into various output formats (the default is HTML). Calling `render` will knit the specified input document and then produce the final output document using pandoc:
+The `render` function is used to convert R Markdown (Rmd) files into various output formats (the default is HTML). Calling `render` will knit the specified input document and then produce the final output document using Pandoc:
 
 ```r
 render("input.Rmd")
