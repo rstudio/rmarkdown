@@ -52,17 +52,6 @@ $if(highlighting-css)$
 <style type="text/css">
 $highlighting-css$
 
-$if(ispandoc2)$
-pre.sourceCode  {
-  $if(highlight-color)$
-  color: inherit;
-  $endif$
-  $if(highlight-backgroundcol)$
-  background-color: transparent;
-  $endif$
-}
-$endif$
-
 $if(code_folding)$
 .sourceCode .row {
   width: 100%;
@@ -70,14 +59,11 @@ $if(code_folding)$
 .sourceCode {
   overflow-x: auto;
 }
-
-$if(ispandoc2)$
-div.row {
-  /* to reduce the space introduce in pandoc div.sourceCode */
-  margin-bottom: -0.9em;
+.code-folding-btn {
+  margin-right: -30px;
 }
 $endif$
-$endif$
+
 </style>
 $if(theme)$
 <style type="text/css">
