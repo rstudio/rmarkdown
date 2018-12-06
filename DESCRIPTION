@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 1.10.17
+Version: 1.10.18
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -19,6 +19,7 @@ Authors@R: c(
   person("Rob", "Hyndman", role = "ctb", email = "Rob.Hyndman@monash.edu"),
   person("Ruben", "Arslan", role = "ctb", email = "ruben.arslan@uni-goettingen.de"),
   person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
+  person("Christophe", "Dervieux", role = "ctb"),
   person(family = "RStudio, Inc.", role = "cph"),
   person(family = "jQuery Foundation", role = "cph",
          comment = "jQuery library"),

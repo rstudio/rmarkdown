@@ -31,6 +31,8 @@ rmarkdown 1.11 (unreleased)
 
 * Added an RStudio project template for simple R Markdown websites, so that users can create such websites from RStudio: `New Project -> New Directory -> Simple R Markdown Website` (thanks, @kevinushey, #1470).
 
+* Fixed #1471: Pandoc's (version 2.x) syntax highlighting themes don't work well with the Bootstrap style (thanks, @gponce-ars #1471, @cderv #1489).
+
 
 rmarkdown 1.10
 ================================================================================
