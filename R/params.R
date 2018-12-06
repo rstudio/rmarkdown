@@ -3,7 +3,6 @@ knit_params_get <- function(input_lines, params) {
 
   # read the default parameters and extract them into a named list
   knit_params <- knitr::knit_params(input_lines)
-  if (packageVersion('yaml') < '2.1.14') knit_params <- mark_utf8(knit_params)
   default_params <- list()
   for (param in knit_params) {
     default_params[param$name] <- list(param$value)
@@ -266,7 +265,6 @@ knit_params_ask <- function(file = NULL,
   }
 
   knit_params <- knitr::knit_params(input_lines)
-  if (packageVersion('yaml') < '2.1.14') knit_params <- mark_utf8(knit_params)
 
   ## Input validation on params (checks shared with render)
   if (!is.null(params)) {
