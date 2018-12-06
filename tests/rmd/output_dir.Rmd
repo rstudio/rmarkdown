@@ -1,0 +1,9 @@
+---
+title: "Warning in file.rename(from, to)"
+---
+
+See https://github.com/rstudio/rmarkdown/issues/1224 for details.
+
+```{r}
+plot(1)
+```
