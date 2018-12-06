@@ -265,7 +265,9 @@ base_dir <- function(x) {
 
 move_dir <- function(from, to) {
   dir.create(dirname(to), showWarnings = FALSE)
-  file.rename(from, to)
+  suppressWarnings(file.rename(from, to)) || {
+    file.copy(from, dirname(to), recursive = TRUE) && unlink(from, recursive = TRUE)
+  }
 }
 
 # Check if two paths are the same after being normalized

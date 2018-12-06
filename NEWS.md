@@ -35,6 +35,8 @@ rmarkdown 1.11 (unreleased)
 
 * Fixed the warnings in #1224 and #1288 when calling `render()` with an absolute `output_dir` or `intermediates_dir`.
 
+* Fixed #1300: calling `render()` with `intermediates_dir` may fail when the intermediate dir is on a difference device or filesystem.
+
 
 rmarkdown 1.10
 ================================================================================
