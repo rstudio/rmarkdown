@@ -50,14 +50,12 @@
 #'      from the document}
 #'   }
 #' @export
-find_external_resources <- function(input_file,
-                                    encoding = getOption("encoding")) {
+find_external_resources <- function(input_file, encoding = getOption("encoding")) {
 
   # ensure we're working with valid input
   ext <- tolower(tools::file_ext(input_file))
   if (!(ext %in% c("md", "rmd", "html", "htm", "r", "css"))) {
-    stop("Resource discovery is only supported for R Markdown files or HTML ",
-         "files.")
+    stop("Resource discovery is only supported for R Markdown files or HTML files.")
   }
 
   if (!file.exists(input_file)) {
@@ -66,51 +64,40 @@ find_external_resources <- function(input_file,
 
   # set up the frame we'll use to report results
   discovered_resources <- data.frame(
-    path = character(0),
-    explicit = logical(0),
-    web = logical(0))
+    path = character(0), explicit = logical(0), web = logical(0)
+  )
 
   input_dir <- dirname(normalize_path(input_file))
 
   # discover a single resource--tests a string to see if it corresponds to a
   # resource on disk; if so, adds it to the list of known resources and returns
   # TRUE
-  discover_single_resource <- function(path,
-                                       explicit,
-                                       web) {
+  discover_single_resource <- function(path, explicit, web) {
 
-    if (is.character(path) &&
-        length(path) == 1 &&
-        path != "." && path != ".." &&
-        file.exists(file.path(input_dir, path))) {
+    if (!(is.character(path) && length(path) == 1 && path != "." && path != ".." &&
+          file.exists(file.path(input_dir, path))))
+      return(FALSE)
 
-      ext <- tolower(tools::file_ext(file.path(input_dir, path)))
+    ext <- tolower(tools::file_ext(file.path(input_dir, path)))
 
-      if (identical(ext, "r")) {
-        # if this is a .R script, look for resources it contains, too
-        discover_r_resources(file.path(input_dir, path),
-                             discover_single_resource)
-      } else if (identical(ext, "css")) {
-        # if it's a CSS file, look for files it references (e.g. fonts/images)
-        discover_css_resources(file.path(input_dir, path),
-                               discover_single_resource)
-      }
-      # if this is an implicitly discovered resource, it needs to refer to
-      # a file rather than a directory
-      if (!explicit && dir_exists(file.path(input_dir, path))) {
-        return(FALSE)
-      }
-
-      # this looks valid; remember it
-      discovered_resources <<- rbind(discovered_resources, data.frame(
-        path = path,
-        explicit = explicit,
-        web = web,
-        stringsAsFactors = FALSE))
-      TRUE
-    } else {
-      FALSE
+    if (identical(ext, "r")) {
+      # if this is a .R script, look for resources it contains, too
+      discover_r_resources(file.path(input_dir, path), discover_single_resource)
+    } else if (identical(ext, "css")) {
+      # if it's a CSS file, look for files it references (e.g. fonts/images)
+      discover_css_resources(file.path(input_dir, path), discover_single_resource)
     }
+    # if this is an implicitly discovered resource, it needs to refer to
+    # a file rather than a directory
+    if (!explicit && dir_exists(file.path(input_dir, path))) {
+      return(FALSE)
+    }
+
+    # this looks valid; remember it
+    discovered_resources <<- rbind(discovered_resources, data.frame(
+      path = path, explicit = explicit, web = web, stringsAsFactors = FALSE
+    ))
+    TRUE
   }
 
   # run the main resource discovery appropriate to the file type
@@ -131,17 +118,16 @@ find_external_resources <- function(input_file,
       # we probably auto-discovered some resources from _files--exclude those
       # since they'll be covered by the directory
       files_dir_prefix <- file.path(basename(sidecar_files_dir), "")
-      files_dir_matches <- substr(discovered_resources$path, 1,
-                                  nchar(files_dir_prefix)) == files_dir_prefix
-      discovered_resources <- discovered_resources[!files_dir_matches, ,
-                                                   drop = FALSE]
+      files_dir_matches <- substr(
+        discovered_resources$path, 1, nchar(files_dir_prefix)
+      ) == files_dir_prefix
+      discovered_resources <- discovered_resources[!files_dir_matches, , drop = FALSE]
 
       # add the directory itself
       discovered_resources <- rbind(discovered_resources, data.frame(
-        path = files_dir_prefix,
-        explicit = FALSE,
-        web = TRUE,
-        stringsAsFactors = FALSE))
+        path = files_dir_prefix, explicit = FALSE, web = TRUE,
+        stringsAsFactors = FALSE)
+      )
     }
   } else if (ext == "r") {
     discover_r_resources(input_file, discover_single_resource)
@@ -155,15 +141,13 @@ find_external_resources <- function(input_file,
   # convert paths from factors if necssary, and clean any redundant ./ leaders
   discovered_resources$path <- as.character(discovered_resources$path)
   has_prefix <- grepl("^\\./", discovered_resources$path)
-  discovered_resources$path[has_prefix] <- substring(
-    discovered_resources$path[has_prefix], 3)
+  discovered_resources$path[has_prefix] <- substring(discovered_resources$path[has_prefix], 3)
 
   discovered_resources
 }
 
 # discovers resources in a single HTML file with the given encoding
-discover_html_resources <- function(html_file, encoding,
-                                    discover_single_resource) {
+discover_html_resources <- function(html_file, encoding, discover_single_resource) {
   # resource accumulator
   discover_resource <- function(node, att, val, idx) {
     res_file <- utils::URLdecode(val)
@@ -171,23 +155,18 @@ discover_html_resources <- function(html_file, encoding,
   }
 
   # create a single string with all of the lines in the document
-  html_lines <- paste(
-      readLines(html_file, warn = FALSE, encoding = encoding), collapse = "\n")
+  html_lines <- paste(readLines(html_file, warn = FALSE, encoding = encoding), collapse = "\n")
 
   # if the lines aren't encoded in UTF-8, re-encode them to UTF-8; this is
   # necessary since we presume the encoding when parsing the HTML
-  if (encoding != "UTF-8") {
-    html_lines <- enc2utf8(html_lines)
-  }
+  if (encoding != "UTF-8") html_lines <- enc2utf8(html_lines)
 
   # parse the HTML and invoke our resource discovery callbacks
   call_resource_attrs(html_lines, discover_resource)
 }
 
 # discovers resources in a single R Markdown document
-discover_rmd_resources <- function(rmd_file,
-                                   encoding,
-                                   discover_single_resource) {
+discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource) {
 
   # create a UTF-8 encoded Markdown file to serve as the resource discovery
   # source
@@ -213,13 +192,11 @@ discover_rmd_resources <- function(rmd_file,
       # prior to render
       output_target_file <- file.path(output_dir, output_render_file)
       if (!file.exists(dirname(output_target_file))) {
-        dir.create(dirname(output_target_file), showWarnings = FALSE,
-                   recursive = TRUE)
+        dir.create(dirname(output_target_file), showWarnings = FALSE, recursive = TRUE)
       }
 
       # copy the original resource to the temporary render folder
-      file.copy(file.path(input_dir, output_render_file),
-                output_target_file)
+      file.copy(file.path(input_dir, output_render_file), output_target_file)
 
       # clean up this file when we're done
       temp_files <<- c(temp_files, output_target_file)
@@ -227,8 +204,7 @@ discover_rmd_resources <- function(rmd_file,
   }
 
   # parse the YAML front matter to discover resources named there
-  front_matter <- parse_yaml_front_matter(
-    readLines(md_file, warn = FALSE, encoding = "UTF-8"))
+  front_matter <- parse_yaml_front_matter(readLines(md_file, warn = FALSE, encoding = "UTF-8"))
 
   # Check for content referred to by output format calls to the includes
   # function (for generating headers/footers/etc. at render time), and for
@@ -241,9 +217,7 @@ discover_rmd_resources <- function(rmd_file,
   if (is.list(output_formats)) {
     for (output_format in output_formats) {
       if (is.list(output_format)) {
-        output_render_files <- c(output_format$includes,
-                                 output_format$pandoc_args,
-                                 output_format$logo)
+        output_render_files <- c(output_format$includes, output_format$pandoc_args, output_format$logo)
         for (output_render_file in output_render_files) {
           discover_render_resource(output_render_file)
         }
@@ -261,9 +235,6 @@ discover_rmd_resources <- function(rmd_file,
         list(path = names(res)[[1]],
              explicit = TRUE,
              web = if (is.null(res$web)) is_web_file(res) else res$web)
-      } else  {
-        # no idea what this is, skip it
-        NULL
       }
 
       # check the extracted filename to see if it exists
@@ -272,14 +243,12 @@ discover_rmd_resources <- function(rmd_file,
           # if the resource file spec includes a wildcard, list the files
           # that match the pattern
           files <- list.files(
-            path = file.path(input_dir, dirname(explicit_res$path)),
-            pattern = utils::glob2rx(basename(explicit_res$path)),
-            recursive = FALSE,
-            include.dirs = FALSE)
-          lapply(files, function(f) {
-            discover_single_resource(file.path(dirname(explicit_res$path), f),
-                                     TRUE, web = is_web_file(f))
-           })
+            file.path(input_dir, dirname(explicit_res$path)),
+            utils::glob2rx(basename(explicit_res$path))
+          )
+          lapply(files, function(f) discover_single_resource(
+            file.path(dirname(explicit_res$path), f), TRUE, web = is_web_file(f)
+          ))
         } else {
           # no wildcard, see whether this resource refers to a directory or to
           # an individual file
@@ -291,31 +260,25 @@ discover_rmd_resources <- function(rmd_file,
             # if the resource file spec is a directory, include all the files in
             # the directory, recursively
             files <- list.files(
-              path = file.path(input_dir, explicit_res$path),
-              recursive = TRUE,
-              include.dirs = FALSE)
-            lapply(files, function(f) {
-              discover_single_resource(file.path(explicit_res$path, f), TRUE,
-                   web = is_web_file(f))
-            })
+              file.path(input_dir, explicit_res$path), recursive = TRUE
+            )
+            lapply(files, function(f) discover_single_resource(
+              file.path(explicit_res$path, f), TRUE, web = is_web_file(f)
+            ))
           } else {
             # isdir is false--this is an individual file; return it
-            discover_single_resource(explicit_res$path, explicit_res$explicit,
-                                     explicit_res$web)
+            discover_single_resource(explicit_res$path, explicit_res$explicit, explicit_res$web)
           }
         }
       } else {
-        discover_single_resource(explicit_res$path, explicit_res$explicit,
-                                 explicit_res$web)
+        discover_single_resource(explicit_res$path, explicit_res$explicit, explicit_res$web)
       }
     })
   }
 
   # check for a 'preview' yaml metadata entry
   if (!is.null(front_matter[["preview"]])) {
-    discover_single_resource(front_matter[["preview"]],
-                             explicit = FALSE,
-                             web = TRUE)
+    discover_single_resource(front_matter[["preview"]], explicit = FALSE, web = TRUE)
   }
 
   # check for bibliography and csl files at the top level
@@ -341,24 +304,23 @@ discover_rmd_resources <- function(rmd_file,
 
   # check for knitr child documents in R Markdown documents
   if (tolower(tools::file_ext(rmd_file)) == "rmd") {
-    chunk_lines <- gregexpr(knitr::all_patterns$md$chunk.begin, rmd_content,
-                            perl = TRUE)
+    chunk_lines <- gregexpr(knitr::all_patterns$md$chunk.begin, rmd_content, perl = TRUE)
     for (idx in seq_along(chunk_lines)) {
       chunk_line <- chunk_lines[idx][[1]]
-      if (is.na(chunk_line) || chunk_line < 0)
-        next
+      if (is.na(chunk_line) || chunk_line < 0) next
       chunk_start <- attr(chunk_line, "capture.start", exact = TRUE) + 1
-      chunk_text <- substr(rmd_content[idx], chunk_start,
-                           chunk_start + attr(chunk_line, "capture.length",
-                                              exact = TRUE) - 2)
-      for (child_expr in c("\\bchild\\s*=\\s*'([^']+)'",
-                           "\\bchild\\s*=\\s*\"([^\"]+)\"")) {
+      chunk_text <- substr(
+        rmd_content[idx], chunk_start,
+        chunk_start + attr(chunk_line, "capture.length", exact = TRUE) - 2
+      )
+      for (child_expr in c("\\bchild\\s*=\\s*'([^']+)'", "\\bchild\\s*=\\s*\"([^\"]+)\"")) {
         child_match <- gregexpr(child_expr, chunk_text, perl = TRUE)[[1]]
         if (child_match > 0) {
           child_start <- attr(child_match, "capture.start", exact = TRUE)
-          child_text <- substr(chunk_text, child_start,
-                               child_start + attr(child_match, "capture.length",
-                                                  exact = TRUE) - 1)
+          child_text <- substr(
+            chunk_text, child_start,
+            child_start + attr(child_match, "capture.length", exact = TRUE) - 1
+          )
           discover_render_resource(child_text)
         }
       }
@@ -372,22 +334,16 @@ discover_rmd_resources <- function(rmd_file,
   # check to see what format this document is going to render as; if it's a
   # format that produces HTML, let it render as-is, but if it isn't, render as
   # html_document to pick up dependencies
-  output_format <- output_format_from_yaml_front_matter(rmd_content,
-                                                        encoding = encoding)
+  output_format <- output_format_from_yaml_front_matter(rmd_content, encoding = encoding)
 
   output_format_function <- eval(parse(text = output_format$name))
 
-  override_output_format <- if (is_pandoc_to_html(output_format_function()$pandoc))
-                              NULL
-                            else
-                              "html_document"
+  override_output_format <- if (!is_pandoc_to_html(output_format_function()$pandoc)) "html_document"
 
-  html_file <- render(input = md_file, output_file = html_file,
-                      output_format = override_output_format,
-                      output_options = list(
-                        self_contained = FALSE),
-                      quiet = TRUE,
-                      encoding = "UTF-8")
+  html_file <- render(
+    md_file, override_output_format, html_file, quiet = TRUE,
+    output_options = list(self_contained = FALSE), encoding = "UTF-8"
+  )
 
   # clean up output file and its supporting files directory
   temp_files <- c(temp_files, html_file, knitr_files_dir(md_file))
@@ -404,8 +360,7 @@ discover_rmd_resources <- function(rmd_file,
     on.exit({
       unlink(c(r_file, try_file)); options(opts)
     }, add = TRUE)
-    knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0,
-                encoding = "UTF-8")
+    knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0, encoding = "UTF-8")
     temp_files <- c(temp_files, r_file)
     discover_r_resources(r_file, discover_single_resource)
   }
@@ -438,10 +393,7 @@ discover_r_resources <- function(r_file, discover_single_resource) {
 # copies the external resources needed to render original_input into
 # intermediates_dir; with skip_web, skips web resources. returns a character
 # vector containing paths to all resources copied.
-copy_render_intermediates <- function(original_input,
-                                      encoding,
-                                      intermediates_dir,
-                                      skip_web) {
+copy_render_intermediates <- function(original_input, encoding, intermediates_dir, skip_web) {
 
   # start with an empty set of intermediates
   intermediates <- c()
@@ -457,9 +409,7 @@ copy_render_intermediates <- function(original_input,
   # process each returned reosurce
   by(resources, seq_len(nrow(resources)), function(res) {
     # skip web resources if requested
-    if (skip_web && res$web)
-      return()
-
+    if (skip_web && res$web) return()
     dest <- copy_file_with_dir(res$path, dest_dir, source_dir)
     intermediates <<- c(intermediates, dest)
   })
@@ -480,37 +430,21 @@ copy_file_with_dir <- function(path, dest, from = '.') {
   dest
 }
 
-discover_css_resources <- function(css_file,
-                                   discover_single_resource) {
+discover_css_resources <- function(css_file, discover_single_resource) {
 
   css_lines <- readLines(css_file, warn = FALSE, encoding = "UTF-8")
 
-  discover_resource <- function(node,
-                                att,
-                                val,
-                                idx) {
-
+  discover_resource <- function(node, att, val, idx) {
     res_file <- utils::URLdecode(val)
     discover_single_resource(res_file, FALSE, TRUE)
   }
 
-  call_css_resource_attrs(paste(css_lines, collapse = "\n"),
-                                discover_resource)
+  call_css_resource_attrs(paste(css_lines, collapse = "\n"), discover_resource)
 }
 
 # given a filename, return true if the file appears to be a web file
 is_web_file <- function(filename) {
-
   tolower(tools::file_ext(filename)) %in% c(
-    "css",
-    "gif",
-    "htm",
-    "html",
-    "jpeg",
-    "jpg",
-    "js",
-    "mp3",
-    "mp4",
-    "png",
-    "wav")
+    "css", "gif", "htm", "html", "jpeg", "jpg", "js", "mp3", "mp4", "png", "wav"
+  )
 }
