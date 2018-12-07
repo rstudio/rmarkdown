@@ -31,7 +31,7 @@ test_that("an example R Notebook document can be rendered and parsed", {
 
   # try parsing and validating the parse format
   parsed <- parse_html_notebook(file)
-  expect_identical(parsed$rmd, read_lines_utf8(path, encoding = "UTF-8"))
+  expect_identical(parsed$rmd, read_utf8(path, encoding = "UTF-8"))
 })
 
 test_that("a custom output_source can be used on render", {
