@@ -69,6 +69,11 @@ read_utf8 <- function(file, encoding = 'UTF-8') {
   enc2utf8(readLines(con, warn = FALSE))
 }
 
+write_utf8 <- function (text, con, ...) {
+  opts <- options(encoding = "native.enc"); on.exit(options(opts), add = TRUE)
+  writeLines(enc2utf8(text), con, ..., useBytes = TRUE)
+}
+
 file_string <- function(path, encoding = 'UTF-8') {
   one_string(read_utf8(path, encoding))
 }
@@ -104,13 +109,10 @@ tmpfile_pattern <- "rmarkdown-str"
 
 # return a string as a tempfile
 as_tmpfile <- function(str) {
-  if (length(str) > 0) {
-    str_tmpfile <- tempfile(tmpfile_pattern, fileext = ".html")
-    writeLines(str, str_tmpfile, useBytes =  TRUE)
-    str_tmpfile
-  } else {
-    NULL
-  }
+  if (length(str) == 0) return()
+  f <- tempfile(tmpfile_pattern, fileext = ".html")
+  write_utf8(str, f)
+  f
 }
 
 # temp files created by as_tmpfile() cannot be immediately removed because they

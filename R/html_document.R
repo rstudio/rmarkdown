@@ -404,7 +404,7 @@ html_document <- function(toc = FALSE,
         stop("You must use a theme when specifying the 'code_download' option")
       args <- c(args, pandoc_variable_arg("source_embed", source_file))
       sourceCodeFile <- tempfile(fileext = ".html")
-      writeLines(source_code, sourceCodeFile)
+      write_utf8(source_code, sourceCodeFile)
       args <- c(args, pandoc_include_args(after_body = sourceCodeFile))
       code_menu <- TRUE
     }

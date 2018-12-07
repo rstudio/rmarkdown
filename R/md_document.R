@@ -63,20 +63,16 @@ md_document <- function(variant = "markdown_strict",
   args <- c(args, pandoc_args)
 
   # add post_processor for yaml preservation
-  if (preserve_yaml && variant != 'markdown') {
-    post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+  post_processor <- if (preserve_yaml && variant != 'markdown') {
+    function(metadata, input_file, output_file, clean, verbose) {
       input_lines <- read_utf8(input_file)
       partitioned <- partition_yaml_front_matter(input_lines)
       if (!is.null(partitioned$front_matter)) {
-        output_lines <- c(partitioned$front_matter,
-                          "",
-                          read_utf8(output_file))
-        writeLines(output_lines, output_file, useBytes = TRUE)
+        output_lines <- c(partitioned$front_matter, "", read_utf8(output_file))
+        write_utf8(output_lines, output_file)
       }
       output_file
     }
-  } else {
-    post_processor <- NULL
   }
 
   # return format

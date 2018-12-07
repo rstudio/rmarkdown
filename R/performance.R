@@ -68,7 +68,7 @@ create_performance_dependency <- function(files_dir) {
   js_lines <- gsub("RMARKDOWN_PERFORMANCE_TIMINGS", perf_timers_as_json(),
                    read_utf8(performance_js), fixed = TRUE)
   perf_js_file <- file.path(files_dir, "rmd_perf.js")
-  writeLines(js_lines, perf_js_file)
+  write_utf8(js_lines, perf_js_file)
   file.copy(rmarkdown_system_file("rmd/h/rmarkdown/rmd_perf.css"),
             file.path(files_dir, "rmd_perf.css"))
   htmlDependency(

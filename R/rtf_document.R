@@ -65,8 +65,7 @@ rtf_document <- function(toc = FALSE,
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
     output_str <- read_utf8(output_file)
     output_res <- knitr::restore_raw_output(output_str, preserved_chunks)
-    if (!identical(output_str, output_res))
-      writeLines(enc2utf8(output_res), output_file, useBytes = TRUE)
+    if (!identical(output_str, output_res)) write_utf8(output_res, output_file)
     output_file
   }
 

@@ -403,7 +403,7 @@ pandoc_self_contained_html <- function(input, output) {
   # create a simple body-only template
   template <- tempfile(fileext = ".html")
   on.exit(unlink(template), add = TRUE)
-  writeLines("$body$", template)
+  write_utf8("$body$", template)
 
   # convert from markdown to html to get base64 encoding
   # (note there is no markdown in the source document but

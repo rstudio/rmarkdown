@@ -579,10 +579,8 @@ shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
             break
           }
         }
-        if (found_singleton)
-          next
-        else
-          singletons[[length(singletons) + 1]] <- context
+        if (found_singleton) next
+        singletons[[length(singletons) + 1]] <- context
       }
 
       # append context

@@ -18,7 +18,7 @@ copy_html_resources <- function(html_str, lib_dir, output_dir) {
         css_content <- copy_resources(
           file_string(res_path), lib_dir, lib_dir, call_css_resource_attrs
         )
-        writeLines(css_content, res_path)
+        write_utf8(css_content, res_path)
       }
     })
   }

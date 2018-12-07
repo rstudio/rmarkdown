@@ -158,7 +158,7 @@ ioslides_presentation <- function(logo = NULL,
 
     # Set level of slide header (used by ioslides_presentation.lua)
     settings <- c(settings, sprintf("local slide_level = %s", slide_level))
-    writeLines(settings, lua_writer, useBytes = TRUE)
+    write_utf8(settings, lua_writer)
 
     # For consistency add as pandoc argument
     args <- c(args, "--slide-level", as.character(slide_level))
@@ -213,7 +213,7 @@ ioslides_presentation <- function(logo = NULL,
       preface_lines <- c(output_lines[1:sentinel_line[1] - 1])
       suffix_lines <- c(output_lines[-(1:sentinel_line[1])])
       output_lines <- c(preface_lines, slides_lines, suffix_lines)
-      writeLines(output_lines, output_file, useBytes = TRUE)
+      write_utf8(output_lines, output_file)
     } else {
       stop("Slides placeholder not found in slides HTML", call. = FALSE)
     }

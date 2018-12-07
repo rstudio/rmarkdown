@@ -173,7 +173,7 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
   if (length(i <- grep('^---\\s*$', rmd_content)) >= 2 && i[1] == 1) {
     rmd_content <- append(rmd_content, 'citeproc: false', i[2] - 1)
   }
-  writeLines(rmd_content, md_file, useBytes = TRUE)
+  write_utf8(rmd_content, md_file)
 
   # create a vector of temporary files; anything in here
   # will be cleaned up on exit

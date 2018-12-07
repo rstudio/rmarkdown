@@ -169,7 +169,7 @@ html_document_base <- function(smart = TRUE,
       output_str <- process_images(output_str, image_relative)
     }
 
-    writeLines(output_str, output_file, useBytes = TRUE)
+    write_utf8(output_str, output_file)
     output_file
   }
 
@@ -191,8 +191,7 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
   # to calling the preprocessor (see ::render)
   input_str <- read_utf8(input_file)
   preserve <- extract(input_str)
-  if (!identical(preserve$value, input_str))
-    writeLines(enc2utf8(preserve$value), input_file, useBytes = TRUE)
+  if (!identical(preserve$value, input_str)) write_utf8(preserve$value, input_file)
   preserve$chunks
 }
 

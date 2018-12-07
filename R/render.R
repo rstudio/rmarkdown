@@ -702,7 +702,7 @@ render <- function(input,
 
   # read the input text as UTF-8 then write it back out
   input_text <- read_utf8(input, encoding)
-  writeLines(input_text, utf8_input, useBytes = TRUE)
+  write_utf8(input_text, utf8_input)
 
   if (run_pandoc) {
 
