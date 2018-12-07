@@ -155,11 +155,7 @@ discover_html_resources <- function(html_file, encoding, discover_single_resourc
   }
 
   # create a single string with all of the lines in the document
-  html_lines <- paste(readLines(html_file, warn = FALSE, encoding = encoding), collapse = "\n")
-
-  # if the lines aren't encoded in UTF-8, re-encode them to UTF-8; this is
-  # necessary since we presume the encoding when parsing the HTML
-  if (encoding != "UTF-8") html_lines <- enc2utf8(html_lines)
+  html_lines <- file_string(html_file, encoding)
 
   # parse the HTML and invoke our resource discovery callbacks
   call_resource_attrs(html_lines, discover_resource)
@@ -204,7 +200,7 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
   }
 
   # parse the YAML front matter to discover resources named there
-  front_matter <- parse_yaml_front_matter(readLines(md_file, warn = FALSE, encoding = "UTF-8"))
+  front_matter <- parse_yaml_front_matter(read_utf8(md_file))
 
   # Check for content referred to by output format calls to the includes
   # function (for generating headers/footers/etc. at render time), and for
@@ -369,7 +365,7 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
 discover_r_resources <- function(r_file, discover_single_resource) {
 
   # read the lines from the R file
-  r_lines <- readLines(r_file, warn = FALSE, encoding = "UTF-8")
+  r_lines <- read_utf8(r_file)
 
   # clean comments from the R code (simply; consider: # inside strings)
   r_lines <- sub("#.*$", "", r_lines)
@@ -432,7 +428,7 @@ copy_file_with_dir <- function(path, dest, from = '.') {
 
 discover_css_resources <- function(css_file, discover_single_resource) {
 
-  css_lines <- readLines(css_file, warn = FALSE, encoding = "UTF-8")
+  css_lines <- read_utf8(css_file)
 
   discover_resource <- function(node, att, val, idx) {
     res_file <- utils::URLdecode(val)

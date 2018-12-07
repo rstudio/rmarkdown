@@ -130,7 +130,7 @@ html_document_base <- function(smart = TRUE,
       return(output_file)
 
     # read the output file
-    output_str <- readLines(output_file, warn = FALSE, encoding = "UTF-8")
+    output_str <- read_utf8(output_file)
 
     # if we preserved chunks, restore them
     if (length(preserved_chunks) > 0) {
@@ -190,7 +190,7 @@ html_document_base <- function(smart = TRUE,
 extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks) {
   # The input file is converted to UTF-8 from its native encoding prior
   # to calling the preprocessor (see ::render)
-  input_str <- readLines(input_file, warn = FALSE, encoding = "UTF-8")
+  input_str <- read_utf8(input_file)
   preserve <- extract(input_str)
   if (!identical(preserve$value, input_str))
     writeLines(enc2utf8(preserve$value), input_file, useBytes = TRUE)

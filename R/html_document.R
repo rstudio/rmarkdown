@@ -558,23 +558,16 @@ navbar_html_from_yaml <- function(navbar_yaml) {
 navbar_html <- function(navbar) {
 
   # title and type
-  if (is.null(navbar$title))
-    navbar$title <- ""
-  if (is.null(navbar$type))
-    navbar$type <- "default"
+  if (is.null(navbar$title)) navbar$title <- ""
+  if (is.null(navbar$type)) navbar$type <- "default"
 
   # menu entries
   left <- navbar_links_html(navbar$left)
   right <- navbar_links_html(navbar$right)
 
   # build the navigation bar and return it as a temp file
-  template_file <- rmarkdown_system_file("rmd/h/_navbar.html")
-  template <- paste(readLines(template_file), collapse = "\n")
-  navbar_html <- sprintf(template,
-                         navbar$type,
-                         navbar$title,
-                         left,
-                         right)
+  template <- file_string(rmarkdown_system_file("rmd/h/_navbar.html"))
+  navbar_html <- sprintf(template, navbar$type, navbar$title, left, right)
   as_tmpfile(navbar_html)
 }
 

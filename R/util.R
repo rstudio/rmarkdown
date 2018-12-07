@@ -69,6 +69,9 @@ read_utf8 <- function(file, encoding = 'UTF-8') {
   enc2utf8(readLines(con, warn = FALSE))
 }
 
+file_string <- function(path, encoding = 'UTF-8') {
+  paste(read_utf8(path, encoding), collapse = '\n')
+}
 
 # convert to utf8
 to_utf8 <- function(x, encoding) {
@@ -84,9 +87,7 @@ to_utf8 <- function(x, encoding) {
 # still need it (https://github.com/rstudio/rmarkdown/issues/1387)
 yaml_load <- function(...) yaml::yaml.load(..., eval.expr = TRUE)
 
-yaml_load_file <- function(input, ...) {
-  yaml_load(readLines(input, encoding = 'UTF-8'), ...)
-}
+yaml_load_file <- function(input, ...) yaml_load(read_utf8(input), ...)
 
 file_name_without_shell_chars <- function(file) {
   name <- gsub(.shell_chars_regex, '_', basename(file))
@@ -483,7 +484,7 @@ package_root <- function(path) {
   dir <- dirname(path)
   if (same_path(dir, file.path(dir, '..'))) return()
   if (!file.exists(desc <- file.path(dir, 'DESCRIPTION')) ||
-      length(grep('^Package: ', readLines(desc))) == 0) return(package_root(dir))
+      length(grep('^Package: ', read_utf8(desc))) == 0) return(package_root(dir))
   dir
 }
 

@@ -112,7 +112,7 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   add_resource_path(file.path(output_dir,"www"))
 
   # extract dependencies from html
-  html_lines <- readLines(rendered_html, encoding = "UTF-8", warn = FALSE)
+  html_lines <- read_utf8(rendered_html)
   dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
   dependencies <- jsonlite::unserializeJSON(dependencies_json)
 
@@ -183,7 +183,7 @@ shiny_prerendered_prerender <- function(
     return(TRUE)
   }
 
-  html_lines <- readLines(rendered_html, encoding = "UTF-8", warn = FALSE)
+  html_lines <- read_utf8(rendered_html)
 
   # check that all html dependencies exist
   dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
@@ -635,7 +635,7 @@ shiny_prerendered_data_load <- function(input_rmd, server_envir) {
     # read index of data files
     index_file <- shiny_prerendered_data_chunks_index(data_dir)
     if (file.exists(index_file)) {
-      rdata_files <- readLines(index_file, encoding = "UTF-8")
+      rdata_files <- read_utf8(index_file)
       # load each of the files in the index
       for (rdata_file in rdata_files) {
         rdata_file <- file.path(data_dir,rdata_file)

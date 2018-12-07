@@ -358,7 +358,7 @@ rmarkdown_shiny_ui <- function(dir, file) {
 shinyHTML_with_deps <- function(html_file, deps) {
 
   # read the html_file
-  html <- readLines(html_file, encoding = "UTF-8", warn = FALSE)
+  html <- read_utf8(html_file)
 
   # if we are running in RStudio and have local MathJax then serve locally
   # (for static Rmds we do this substitution inside RStudio as we serve the
@@ -575,7 +575,7 @@ write_shiny_deps <- function(files_dir,
 read_shiny_deps <- function(files_dir) {
   deps_path <- file.path(files_dir, "dependencies.json")
   if (file.exists(deps_path)) {
-    deps_json <- readLines(deps_path, encoding = 'UTF-8')
+    deps_json <- read_utf8(deps_path)
     dependencies <- jsonlite::unserializeJSON(deps_json)
 
     # attach rstudio rsiframe script if we are in rstudio

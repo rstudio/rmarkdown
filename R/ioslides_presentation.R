@@ -142,8 +142,7 @@ ioslides_presentation <- function(logo = NULL,
     on.exit(unlink(lua_writer), add = TRUE)
 
     # determine whether we need to run citeproc
-    input_lines <- readLines(input_file, warn = FALSE)
-    run_citeproc <- citeproc_required(metadata, input_lines)
+    run_citeproc <- citeproc_required(metadata, read_utf8(input_file))
 
     # write settings to file
     settings <- c()
@@ -198,7 +197,7 @@ ioslides_presentation <- function(logo = NULL,
                    verbose = verbose)
 
     # read the slides
-    slides_lines <- readLines(output_tmpfile, warn = FALSE, encoding = "UTF-8")
+    slides_lines <- read_utf8(output_tmpfile)
 
     # base64 encode if needed
     if (self_contained) {
@@ -206,7 +205,7 @@ ioslides_presentation <- function(logo = NULL,
     }
 
     # read the output file
-    output_lines <- readLines(output_file, warn = FALSE, encoding = "UTF-8")
+    output_lines <- read_utf8(output_file)
 
     # substitute slides for the sentinel line
     sentinel_line <- grep("^RENDERED_SLIDES$", output_lines)

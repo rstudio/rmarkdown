@@ -117,7 +117,7 @@ html_dependency_navigation <- function(code_menu, source_embed) {
 navbar_icon_dependencies <- function(navbar) {
 
   # read the navbar source
-  source <- readLines(navbar)
+  source <- read_utf8(navbar)
 
   # find icon references
   res <- regexec('<(span|i) +class *= *("|\') *(fa fa|ion ion)-', source)

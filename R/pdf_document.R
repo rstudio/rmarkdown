@@ -168,7 +168,7 @@ pdf_document <- function(toc = FALSE,
       length(grep(paste0("^", parameter, "\\s*:.*$"), text)) > 0
     }
 
-    input_test <- readLines(input_file, warn = FALSE)
+    input_test <- read_utf8(input_file)
 
     # set the margin to 1 inch if no other geometry options specified
     if (!has_yaml_parameter(input_test, "geometry"))
