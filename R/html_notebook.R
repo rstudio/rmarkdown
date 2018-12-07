@@ -245,7 +245,7 @@ html_notebook <- function(toc = FALSE,
 parse_html_notebook <- function(path,
                                 encoding = "UTF-8") {
 
-  contents <- read_lines_utf8(path, encoding = encoding)
+  contents <- read_utf8(path, encoding = encoding)
 
   re_comment  <- "^\\s*<!--\\s*rnb-([^-]+)-(begin|end)\\s*([^\\s-]+)?\\s*-->\\s*$"
   re_document <- "^<div id=\"rmd-source-code\">([^<]+)<\\/div>$"

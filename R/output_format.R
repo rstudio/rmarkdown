@@ -380,7 +380,7 @@ default_output_format <- function(input,
   input <- basename(input)
 
   # parse the YAML and front matter and get the explicitly set options
-  input_lines <- read_lines_utf8(input, encoding)
+  input_lines <- read_utf8(input, encoding)
   format <- output_format_from_yaml_front_matter(input_lines, encoding = encoding)
 
   # look up the formals of the output function to get the full option list and
@@ -415,7 +415,7 @@ resolve_output_format <- function(input,
                                   encoding = getOption("encoding")) {
 
   # read the input file
-  input_lines <- read_lines_utf8(input, encoding)
+  input_lines <- read_utf8(input, encoding)
 
   # validate that the output format is either NULL or a character vector
   if (!is.null(output_format) && !is.character(output_format))
@@ -605,7 +605,7 @@ enumerate_output_formats <- function(input,
                                      encoding) {
 
   # read the input
-  input_lines <- read_lines_utf8(input, encoding)
+  input_lines <- read_utf8(input, encoding)
 
   # if this is an R file then spin it
   if (identical(tolower(tools::file_ext(input)), "r"))
@@ -668,7 +668,7 @@ yaml_front_matter <- function(input,
                               encoding = getOption("encoding")) {
 
    # read the input file
-  input_lines <- read_lines_utf8(input, encoding)
+  input_lines <- read_utf8(input, encoding)
 
   # parse the yaml front matter
   parse_yaml_front_matter(input_lines)

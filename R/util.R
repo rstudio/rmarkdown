@@ -64,7 +64,7 @@ is_null_or_string <- function(text) {
   is.null(text) || (is.character(text) && (length(text) == 1))
 }
 
-read_lines_utf8 <- function(file, encoding) {
+read_utf8 <- function(file, encoding = 'UTF-8') {
   con <- base::file(file, encoding = encoding); on.exit(close(con), add = TRUE)
   enc2utf8(readLines(con, warn = FALSE))
 }

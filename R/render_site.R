@@ -248,7 +248,7 @@ site_generator <- function(input = ".",
   if (file.exists(index)) {
 
     # read index.Rmd and extract the front matter
-    index_lines <- read_lines_utf8(index, encoding)
+    index_lines <- read_utf8(index, encoding)
     front_matter <- parse_yaml_front_matter(index_lines)
 
     # is there a custom site generator function?
@@ -286,7 +286,7 @@ site_config <- function(input = ".", encoding = getOption("encoding")) {
   if (file.exists(config_file)) {
 
     # parse the yaml
-    config_lines <- read_lines_utf8(config_file, encoding)
+    config_lines <- read_utf8(config_file, encoding)
     config <- yaml_load(config_lines)
     if (!is.list(config))
       config <- list()
