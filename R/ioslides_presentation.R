@@ -126,19 +126,13 @@ ioslides_presentation <- function(logo = NULL,
     # add any custom pandoc args
     args <- c(args, pandoc_args)
 
-    # attempt to create the output writer alongside input file
     lua_writer <- file.path(dirname(input_file), "ioslides_presentation.lua")
-    tryCatch({
-      suppressWarnings(writeLines("", lua_writer, useBytes = TRUE))
-    },
-    error = function(...) {
-      # The input directory may not be writable (on e.g. Shiny Server), so write
-      # to the output directory in this case. We don't always do this since
-      # supplying a fully qualified path to the writer can trigger a bug on some
-      # Linux configurations.
-      lua_writer <<- file.path(dirname(output_file),
-                               "ioslides_presentation.lua")
-    })
+    # The input directory may not be writable (on e.g. Shiny Server), so write
+    # to the output directory in this case. We don't always do this since
+    # supplying a fully qualified path to the writer can trigger a bug on some
+    # Linux configurations.
+    if (!file.create(lua_writer, showWarnings = FALSE))
+      lua_writer <- file.path(dirname(output_file), basename(lua_writer))
     on.exit(unlink(lua_writer), add = TRUE)
 
     # determine whether we need to run citeproc
