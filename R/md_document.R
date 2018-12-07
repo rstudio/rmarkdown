@@ -9,11 +9,6 @@
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. For more details
 #' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
-#'
-#' R Markdown documents also support citations. You can find more information on
-#' the markdown syntax for citations in the
-#' \href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-#' and Citations} article in the online documentation.
 #' @inheritParams html_document
 #' @param variant Markdown variant to produce (defaults to "markdown_strict").
 #'   Other valid values are "markdown_github", "markdown_mmd",

@@ -5,7 +5,7 @@
 
 \description{
 
-Rmd files include a metadata section (typically located at the top of the file) that can specify (among other things) the title, author, and date of the document. Metadata adheres to the \href{http://www.yaml.org/}{YAML} format and is delimited by lines containing three dashes (\code{---}). Here is an example metadata section:
+Rmd files include a metadata section (typically located at the top of the file) that can specify (among other things) the title, author, and date of the document. Metadata adheres to the \href{https://yaml.org}{YAML} format and is delimited by lines containing three dashes (\code{---}). Here is an example metadata section:
 
 \preformatted{---
 title: "Crop Analysis Q3 2013"
