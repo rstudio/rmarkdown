@@ -459,19 +459,24 @@ copy_render_intermediates <- function(original_input,
     if (skip_web && res$web)
       return()
 
-    # compute the new path to this file in the intermediates folder, and
-    # create the hosting folder if it doesn't exist
-    dest <- file.path(dest_dir, res$path)
-    if (!file.exists(dirname(dest)))
-      dir.create(dirname(dest), recursive = TRUE)
-
-    # copy and remember to clean up this file later
-    file.copy(file.path(source_dir, res$path), dest)
+    dest <- copy_file_with_dir(res$path, dest_dir, source_dir)
     intermediates <<- c(intermediates, dest)
   })
 
   # return the list of files we generated
   intermediates
+}
+
+# copy a file from a relative path to a destination dir, and preserve its
+# original dir structure, e.g., if we copy foo/bar.txt to /tmp, the destination
+# file should be /tmp/foo/bar.txt instead of /tmp/bar.txt
+copy_file_with_dir <- function(path, dest, from = '.') {
+  dest <- file.path(dest, path)
+  path <- file.path(from, path)
+  if (!file.exists(path)) return()
+  if (!dir_exists(dirname(dest))) dir.create(dirname(dest), recursive = TRUE)
+  file.copy(path, dest)
+  dest
 }
 
 discover_css_resources <- function(css_file,
