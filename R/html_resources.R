@@ -195,6 +195,9 @@ discover_rmd_resources <- function(rmd_file,
   input_dir <- dirname(normalize_path(rmd_file))
   output_dir <- dirname(md_file)
   rmd_content <- read_lines_utf8(rmd_file, encoding)
+  if (length(i <- grep('^---\\s*$', rmd_content)) >= 2 && i[1] == 1) {
+    rmd_content <- append(rmd_content, 'citeproc: false', i[2] - 1)
+  }
   writeLines(rmd_content, md_file, useBytes = TRUE)
 
   # create a vector of temporary files; anything in here

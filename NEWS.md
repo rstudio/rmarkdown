@@ -37,6 +37,8 @@ rmarkdown 1.11 (unreleased)
 
 * Fixed #1300: calling `render()` with `intermediates_dir` may fail when the intermediate dir is on a difference device or filesystem.
 
+* Fixed #1358: calling `render()` with `intermediates_dir` will fail if the Rmd document contains bibliography files that are dynamically generated.
+
 
 rmarkdown 1.10
 ================================================================================
