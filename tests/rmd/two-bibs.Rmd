@@ -1,0 +1,16 @@
+---
+title: "Two bibliography entries"
+output: rmarkdown::html_vignette
+bibliography:
+  - one.bib
+  - two.bib
+---
+
+This document should render successfully with `rmarkdown::render('two-bibs.Rmd', intermediates_dir = tempdir())`: https://github.com/rstudio/rmarkdown/issues/1358
+
+```{r}
+knitr::write_bib('base', 'one.bib')
+knitr::write_bib('rmarkdown', 'two.bib')
+```
+
+@R-base and @R-rmarkdown
