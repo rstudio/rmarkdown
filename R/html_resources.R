@@ -320,9 +320,7 @@ discover_rmd_resources <- function(rmd_file,
 
   # check for bibliography and csl files at the top level
   for (bibfile in c("bibliography", "csl")) {
-    if (!is.null(front_matter[[bibfile]])) {
-      discover_render_resource(front_matter[[bibfile]])
-    }
+    lapply(front_matter[[bibfile]], discover_render_resource)
   }
 
   # check for parameter values that look like files.
