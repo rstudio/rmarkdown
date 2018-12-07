@@ -173,7 +173,7 @@ patch_beamer_template_pagenumber <- function(template) {
     sep = "\n"
   )
 
-  pasted <- paste(template, collapse = "\n")
+  pasted <- one_string(template)
   patched <- sub(patch, "", pasted, fixed = TRUE)
   strsplit(patched, "\n", fixed = TRUE)[[1]]
 }

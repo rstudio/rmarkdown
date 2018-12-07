@@ -377,10 +377,7 @@ shinyHTML_with_deps <- function(html_file, deps) {
   }
 
   # attach dependencies and return HTML
-  htmltools::attachDependencies(
-    HTML(paste(html, collapse = "\n")),
-    deps
-  )
+  htmltools::attachDependencies(HTML(one_string(html)), deps)
 }
 
 # given an input file and its encoding, return a list with values indicating

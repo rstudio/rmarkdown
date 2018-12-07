@@ -35,7 +35,7 @@ latex_dependencies_as_string <- function(dependencies) {
     # \\usepackage[opt1,opt2]{pkgname}
     paste0("\\usepackage", opts, "{", dep$name, "}")
   })
-  paste(unique(lines), collapse = "\n")
+  one_string(unique(lines))
 }
 
 

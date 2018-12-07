@@ -151,8 +151,7 @@ html_document_base <- function(smart = TRUE,
       # The copy_resources flag copies all the resources referenced in the
       # document to its supporting files directory, and rewrites the document to
       # use the copies from that directory.
-      output_str <- copy_html_resources(paste(output_str, collapse = "\n"),
-                                              lib_dir, output_dir)
+      output_str <- copy_html_resources(one_string(output_str), lib_dir, output_dir)
     } else if (!self_contained) {
       # if we're not self-contained, find absolute references to the output
       # directory and replace them with relative ones

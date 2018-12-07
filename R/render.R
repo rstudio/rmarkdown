@@ -555,7 +555,7 @@ render <- function(input,
         if (identical(knitr::opts_current$get("label"), "global")) {
 
           # check list of previously evaludated global chunks
-          code_string <- paste(code, collapse = '\n')
+          code_string <- one_string(code)
           if (!code_string %in% .globals$evaluated_global_chunks) {
 
             # save it in our list of evaluated global chunks

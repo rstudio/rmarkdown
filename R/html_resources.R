@@ -372,7 +372,7 @@ discover_r_resources <- function(r_file, discover_single_resource) {
 
   # find quoted strings in the code and attempt to ascertain whether they are
   # files on disk
-  r_lines <- paste(r_lines, collapse = "\n")
+  r_lines <- one_string(r_lines)
   quoted_strs <- Reduce(c, lapply(c("\"[^\"\n]*\"", "'[^'\n]*'"), function(pat) {
     matches <- unlist(regmatches(r_lines, gregexpr(pat, r_lines)))
     substr(matches, 2, nchar(matches) - 1)
@@ -435,7 +435,7 @@ discover_css_resources <- function(css_file, discover_single_resource) {
     discover_single_resource(res_file, FALSE, TRUE)
   }
 
-  call_css_resource_attrs(paste(css_lines, collapse = "\n"), discover_resource)
+  call_css_resource_attrs(one_string(css_lines), discover_resource)
 }
 
 # given a filename, return true if the file appears to be a web file

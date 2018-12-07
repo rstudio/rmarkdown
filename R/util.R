@@ -70,8 +70,10 @@ read_utf8 <- function(file, encoding = 'UTF-8') {
 }
 
 file_string <- function(path, encoding = 'UTF-8') {
-  paste(read_utf8(path, encoding), collapse = '\n')
+  one_string(read_utf8(path, encoding))
 }
+
+one_string <- function(x) paste(x, collapse = '\n')
 
 # convert to utf8
 to_utf8 <- function(x, encoding) {

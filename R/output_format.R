@@ -681,7 +681,7 @@ parse_yaml_front_matter <- function(input_lines) {
     front_matter <- partitions$front_matter
     if (length(front_matter) > 2) {
       front_matter <- front_matter[2:(length(front_matter) - 1)]
-      front_matter <- paste(front_matter, collapse = "\n")
+      front_matter <- one_string(front_matter)
       validate_front_matter(front_matter)
       parsed_yaml <- yaml_load(front_matter)
       if (is.list(parsed_yaml))

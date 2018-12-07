@@ -49,7 +49,7 @@ html_notebook_render_base64_data <- function(path = NULL,
 #' @export
 html_notebook_output_html <- function(html,
                                       meta = NULL) {
-  html_notebook_annotated_output(paste(html, collapse = "\n"), "html", meta)
+  html_notebook_annotated_output(one_string(html), "html", meta)
 }
 
 #' @name html_notebook_output
@@ -75,11 +75,7 @@ html_notebook_output_code <- function(code,
                                       attributes = list(class = "r"),
                                       meta = NULL) {
   # generate code
-  code <- sprintf(
-    "```%s\n%s\n```",
-    attributes$class,
-    paste(code, collapse = "\n")
-  )
+  code <- sprintf("```%s\n%s\n```", attributes$class, one_string(code))
 
   # update metadata
   meta$data <- code

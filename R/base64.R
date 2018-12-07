@@ -13,7 +13,7 @@ base64_encode_file <- function(in_file, encoder) {
 # processes an HTML resource, given a regular expression that locates
 # instances of that resource
 process_html_res <- function(html, reg, processor) {
-  html <- paste(html, collapse = "\n")
+  html <- one_string(html)
   process_img_src <- function(img_src) {
     src <- sub(reg, '\\1', img_src)
     processor(img_src, src)

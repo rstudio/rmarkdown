@@ -19,9 +19,8 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
   # retreived later via the shiny_prerendered_server_start_code function. The
   # purpose of this is for appliations which want to run user in other
   # processes while still duplicating the setup context (e.g. tutorials).
-  server_start_code <- paste(c(server_start_context,
-                               shiny_prerendered_extract_context(html_lines, "data")),
-                             collapse = "\n")
+  server_start_code <- one_string(c(server_start_context,
+                               shiny_prerendered_extract_context(html_lines, "data")))
 
   onStart <- function() {
 
@@ -47,7 +46,7 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
   # remove server code before serving
   server_contexts <-  c("server-start", "data", "server")
   html_lines <- shiny_prerendered_remove_contexts(html_lines, server_contexts)
-  html <- HTML(paste(html_lines, collapse = "\n"))
+  html <- HTML(one_string(html_lines))
   html <- htmltools::attachDependencies(html, deps)
 
   # create shiny app
