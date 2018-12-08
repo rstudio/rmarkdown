@@ -1,4 +1,4 @@
-rmarkdown 1.11 (unreleased)
+rmarkdown 1.11
 ================================================================================
 
 * Fixed #1483, which prevented the triangle to be displayed in Firefox when `<details><summary>...</summary></details>` was used (#1485, @bisaloo)
