@@ -241,8 +241,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <h3>Markdown Syntax</h3>
 <p>The following changes to markdown syntax were made in R Markdown v2:</p>
 <ol style="list-style-type: decimal">
-<li>The syntax for superscript now requires a closing ^ (e.g. <code>superscript^2^</code>).</li>
-<li>The WordPress-style LaTeX equation syntax (e.g. <code>$latex &lt;equation&gt;$</code>) is no longer supported.</li>
+<li>The syntax for superscript now requires a closing ^ (e.g. <code>superscript^2^</code>).</li>
+<li>The WordPress-style LaTeX equation syntax (e.g. <code>$latex &lt;equation&gt;$</code>) is no longer supported.</li>
 <li>Markdown is rendered even if it’s contained within HTML tags.</li>
 </ol>
 </div>
@@ -266,11 +266,11 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 <div id="the-knitr-package" class="section level3">
 <h3>The knitr Package</h3>
-<p>R Markdown v2 no longer attaches the <strong>knitr</strong> package by default, i.e. it does not do <code>library(knitr)</code> before an R Markdown document is compiled (whereas v1 does), and <strong>knitr</strong> is only <em>loaded</em> but not <em>attached</em>. As a result, you may see an error message like <code>object 'opts_chunk' not found</code> (or other objects in <strong>knitr</strong> not found). Not attaching a package makes the work space cleaner. If you only need to use a small number of objects in a package occasionally, you are recommended to use the <code>::</code> operator, e.g. <code>knitr::opts_chunk</code>. However, sometimes we may need to a lot of objects in a package, and it will be cumbersome to type <code>package::</code> again and again. In this case, you can attach the package to the current R session explicitly, e.g. <code>library(knitr)</code>.</p>
+<p>R Markdown v2 no longer attaches the <strong>knitr</strong> package by default, i.e. it does not do <code>library(knitr)</code> before an R Markdown document is compiled (whereas v1 does), and <strong>knitr</strong> is only <em>loaded</em> but not <em>attached</em>. As a result, you may see an error message like <code>object 'opts_chunk' not found</code> (or other objects in <strong>knitr</strong> not found). Not attaching a package makes the work space cleaner. If you only need to use a small number of objects in a package occasionally, you are recommended to use the <code>::</code> operator, e.g. <code>knitr::opts_chunk</code>. However, sometimes we may need to a lot of objects in a package, and it will be cumbersome to type <code>package::</code> again and again. In this case, you can attach the package to the current R session explicitly, e.g. <code>library(knitr)</code>.</p>
 </div>
 <div id="knitr-caching" class="section level3">
 <h3>Knitr Caching</h3>
-<p>One other important change relates to the use of the <a href="http://yihui.name/knitr/demo/cache/">knitr cache</a>. When R Markdown knits documents it explicitly configures the knitr cache to use a directory based on the name of the input file (e.g. <code>inputfile_cache</code>). If you are setting an explicit cache directory within your document (e.g. via <code>opts_chunk$set(cache.path = ...))</code>) you should remove this code and rely on R Markdown to set the cache directory.</p>
+<p>One other important change relates to the use of the <a href="http://yihui.name/knitr/demo/cache/">knitr cache</a>. When R Markdown knits documents it explicitly configures the knitr cache to use a directory based on the name of the input file (e.g. <code>inputfile_cache</code>). If you are setting an explicit cache directory within your document (e.g. via <code>opts_chunk$set(cache.path = ...))</code>) you should remove this code and rely on R Markdown to set the cache directory.</p>
 </div>
 <div id="other-knitr-options" class="section level3">
 <h3>Other knitr Options</h3>

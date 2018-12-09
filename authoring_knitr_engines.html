@@ -363,7 +363,7 @@ print(x.split(' '))
 <p>Note that chunk options like <code>echo</code> and <code>results</code> are all valid when using a language engine like python. If your python code is generating raw HTML or LaTeX then the <code>results='asis'</code> option will ensure that it’s passed straight into the document’s output stream.</p>
 <div id="specifying-a-python-interpreter" class="section level3">
 <h3>Specifying a Python Interpreter</h3>
-<p>By default, the interpreter returned by <code>Sys.which(&quot;python&quot;)</code> is used to execute the code. However, if you would like to use a different python interpreter, you can specify one by setting the <code>engine.path</code> option to the path of your preferred executable. For instance:</p>
+<p>By default, the interpreter returned by <code>Sys.which("python")</code> is used to execute the code. However, if you would like to use a different python interpreter, you can specify one by setting the <code>engine.path</code> option to the path of your preferred executable. For instance:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{python, engine.path="/Users/me/anaconda/bin/python"}
 import sys
 print sys.version
@@ -420,7 +420,7 @@ SELECT * FROM trials
 <p>By default <code>SELECT</code> queries will display the first 10 records of their results within the document.</p>
 <div id="number-of-records-displayed" class="section level3">
 <h3>Number of Records Displayed</h3>
-<p>The number of records displayed is controlled by the <code>max.print</code> option, which is turn derived from the global knitr option <code>sql.max.print</code> (i.e. <code>opts_knit$set(sql.max.print = 10)</code>). For example, the following code chunk displays the first 20 records:</p>
+<p>The number of records displayed is controlled by the <code>max.print</code> option, which is turn derived from the global knitr option <code>sql.max.print</code> (i.e. <code>opts_knit$set(sql.max.print = 10)</code>). For example, the following code chunk displays the first 20 records:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{sql, connection=db, max.print = 20}
 SELECT * FROM trials
 &#96;&#96;&#96;
@@ -557,7 +557,7 @@ print(fit)
 </div>
 <div id="javascript" class="section level2">
 <h2>JavaScript</h2>
-<p>If you are using an R Markdown format that targets HTML output (e.g. <a href="https://bookdown.org/yihui/rmarkdown/html-document.html">html_document</a>, <a href="https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html">ioslides_presenation</a>, etc.) then you can include JavaScript to be executed within the HTML page using the <a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a> engine.</p>
+<p>If you are using an R Markdown format that targets HTML output (e.g. <a href="https://bookdown.org/yihui/rmarkdown/html-document.html">html_document</a>, <a href="https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html">ioslides_presenation</a>, etc.) then you can include JavaScript to be executed within the HTML page using the <a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a> engine.</p>
 <p>For example, the following chunk uses <a href="https://jquery.com/">jQuery</a> (which is included in most R Markdown HTML formats) to hide the document title:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{js}
 $('.title').remove()
@@ -567,7 +567,7 @@ $('.title').remove()
 </div>
 <div id="css" class="section level2">
 <h2>CSS</h2>
-<p>If you are using an R Markdown format that targets HTML output (e.g. <a href="https://bookdown.org/yihui/rmarkdown/html-document.html">html_document</a>, <a href="https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html">ioslides_presenation</a>, etc.) then you can include CSS to applied to the HTML page using the <a href="https://en.wikipedia.org/wiki/CSS">CSS</a> engine.</p>
+<p>If you are using an R Markdown format that targets HTML output (e.g. <a href="https://bookdown.org/yihui/rmarkdown/html-document.html">html_document</a>, <a href="https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html">ioslides_presenation</a>, etc.) then you can include CSS to applied to the HTML page using the <a href="https://en.wikipedia.org/wiki/CSS">CSS</a> engine.</p>
 <p>For example, the following code chunk turns text within the document body red:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{css}
 body {

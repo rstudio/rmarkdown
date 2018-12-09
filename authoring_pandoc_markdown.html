@@ -1074,7 +1074,7 @@ is *emphasized with asterisks*.</code></pre>
 <dd>It will be rendered inside <code>&lt;math&gt;</code> tags.
 </dd>
 <dt>Textile</dt>
-<dd>It will be rendered inside <code>&lt;span class=&quot;math&quot;&gt;</code> tags.
+<dd>It will be rendered inside <code>&lt;span class="math"&gt;</code> tags.
 </dd>
 <dt>RTF, OpenDocument, ODT</dt>
 <dd>It will be rendered, if possible, using unicode characters, and will otherwise appear verbatim.
@@ -1091,7 +1091,7 @@ is *emphasized with asterisks*.</code></pre>
 <dt>HTML, Slidy, DZSlides, S5, EPUB</dt>
 <dd><p>The way math is rendered in HTML will depend on the command-line options selected:</p>
 <ol style="list-style-type: decimal">
-<li><p>The default is to render TeX math as far as possible using unicode characters, as with RTF, DocBook, and OpenDocument output. Formulas are put inside a <code>span</code> with <code>class=&quot;math&quot;</code>, so that they may be styled differently from the surrounding text if needed.</p></li>
+<li><p>The default is to render TeX math as far as possible using unicode characters, as with RTF, DocBook, and OpenDocument output. Formulas are put inside a <code>span</code> with <code>class="math"</code>, so that they may be styled differently from the surrounding text if needed.</p></li>
 <li><p>If the <code>--latexmathml</code> option is used, TeX math will be displayed between <code>$</code> or <code>$$</code> characters and put in <code>&lt;span&gt;</code> tags with class <code>LaTeX</code>. The [LaTeXMathML] script will be used to render it as formulas. (This trick does not work in all browsers, but it works in Firefox. In browsers that do not support LaTeXMathML, TeX math will appear verbatim between <code>$</code> characters.)</p></li>
 <li><p>If the <code>--jsmath</code> option is used, TeX math will be put inside <code>&lt;span&gt;</code> tags (for inline math) or <code>&lt;div&gt;</code> tags (for display math) with class <code>math</code>. The [jsMath] script will be used to render it.</p></li>
 <li><p>If the <code>--mimetex</code> option is used, the [mimeTeX] CGI script will be called to generate images for each TeX formula. This should work in all browsers. The <code>--mimetex</code> option takes an optional URL as argument. If no URL is specified, it will be assumed that the mimeTeX CGI script is at <code>/cgi-bin/mimetex.cgi</code>.</p></li>
@@ -1262,7 +1262,7 @@ and a reference ![image][ref] with attributes.
 <pre><code>![](file.jpg){ width=50% }</code></pre>
 <ul>
 <li>Dimensions are converted to inches for output in page-based formats like LaTeX. Dimensions are converted to pixels for output in HTML-like formats. Use the <code>--dpi</code> option to specify the number of pixels per inch. The default is 96dpi.</li>
-<li>The <code>%</code> unit is generally relative to some available space. For example the above example will render to <code>&lt;img href=&quot;file.jpg&quot; style=&quot;width: 50%;&quot; /&gt;</code> (HTML), <code>\includegraphics[width=0.5\textwidth]{file.jpg}</code> (LaTeX), or <code>\externalfigure[file.jpg][width=0.5\textwidth]</code> (ConTeXt).</li>
+<li>The <code>%</code> unit is generally relative to some available space. For example the above example will render to <code>&lt;img href="file.jpg" style="width: 50%;" /&gt;</code> (HTML), <code>\includegraphics[width=0.5\textwidth]{file.jpg}</code> (LaTeX), or <code>\externalfigure[file.jpg][width=0.5\textwidth]</code> (ConTeXt).</li>
 <li>Some output formats have a notion of a class (<a href="http://wiki.contextgarden.net/Using_Graphics#Multiple_Image_Settings">ConTeXt</a>) or a unique identifier (LaTeX <code>\caption</code>), or both (HTML).</li>
 <li>When no <code>width</code> or <code>height</code> attributes are specified, the fallback is to look at the image resolution and the dpi metadata embedded in the image file.</li>
 </ul>
@@ -1373,7 +1373,7 @@ note.]</code></pre>
 <dt><code>&lt;b&gt;...&lt;/b&gt;</code></dt>
 <dd>bold
 </dd>
-<dt><code>&lt;span style=&quot;font-variant:small-caps;&quot;&gt;...&lt;/span&gt;</code> or <code>&lt;sc&gt;...&lt;/sc&gt;</code></dt>
+<dt><code>&lt;span style="font-variant:small-caps;"&gt;...&lt;/span&gt;</code> or <code>&lt;sc&gt;...&lt;/sc&gt;</code></dt>
 <dd>small capitals
 </dd>
 <dt><code>&lt;sub&gt;...&lt;/sub&gt;</code></dt>
@@ -1382,7 +1382,7 @@ note.]</code></pre>
 <dt><code>&lt;sup&gt;...&lt;/sup&gt;</code></dt>
 <dd>superscript
 </dd>
-<dt><code>&lt;span class=&quot;nocase&quot;&gt;...&lt;/span&gt;</code></dt>
+<dt><code>&lt;span class="nocase"&gt;...&lt;/span&gt;</code></dt>
 <dd>prevent a phrase from being capitalized as title case
 </dd>
 </dl>
@@ -1728,7 +1728,7 @@ rights: © 2007 John Smith, CC BY-NC
 </div>
 <div id="linked-media" class="section level2">
 <h2>Linked media</h2>
-<p>By default, pandoc will download linked media (including audio and video) and include it in the EPUB container, yielding a completely self-contained EPUB. If you want to link to external media resources instead, use raw HTML in your source and add <code>data-external=&quot;1&quot;</code> to the tag with the <code>src</code> attribute. For example:</p>
+<p>By default, pandoc will download linked media (including audio and video) and include it in the EPUB container, yielding a completely self-contained EPUB. If you want to link to external media resources instead, use raw HTML in your source and add <code>data-external="1"</code> to the tag with the <code>src</code> attribute. For example:</p>
 <pre><code>&lt;audio controls=&quot;1&quot;&gt;
   &lt;source src=&quot;http://example.com/music/toccata.mp3&quot;
           data-external=&quot;1&quot; type=&quot;audio/mpeg&quot;&gt;
