@@ -18,23 +18,20 @@ is_osx <- function() {
 
 # determine the output file for a pandoc conversion
 pandoc_output_file <- function(input, pandoc_options) {
-  to <- strsplit(pandoc_options$to, "[\\+\\-]")[[1]][[1]]
-  if (!is.null(pandoc_options$ext))
-    ext <- pandoc_options$ext
-  else if (to %in% c("latex", "beamer"))
-    ext <- ".pdf"
-  else if (to %in% c("html", "html4", "html5", "s5", "slidy",
-                     "slideous", "dzslides", "revealjs"))
-    ext <- ".html"
-  else if (to == "markdown" &&
-           !identical(tolower(tools::file_ext(input)), "md"))
-      ext <- ".md"
-  else
-    ext <- paste(".", to, sep = "")
-  output <- paste(tools::file_path_sans_ext(input), ext, sep = "")
+  to <- strsplit(pandoc_options$to, "[+-]")[[1]][[1]]
+  ext <- pandoc_output_ext(pandoc_options$ext, to, input)
+  output <- paste0(tools::file_path_sans_ext(input), ext)
   basename(output)
 }
 
+pandoc_output_ext <- function(ext, to, input) {
+  if (!is.null(ext)) return(ext)
+  if (to %in% c("latex", "beamer")) return(".pdf")
+  if (to %in% c("html", "html4", "html5", "s5", "slidy", "slideous", "dzslides", "revealjs"))
+    return(".html")
+  if (to == "markdown" && tolower(tools::file_ext(input)) != "md") return(".md")
+  paste0(".", to)
+}
 
 rmarkdown_system_file <- function(...) {
   system.file(..., package = "rmarkdown")
