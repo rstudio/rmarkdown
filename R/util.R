@@ -18,7 +18,7 @@ is_osx <- function() {
 
 # determine the output file for a pandoc conversion
 pandoc_output_file <- function(input, pandoc_options) {
-  to <- pandoc_options$to
+  to <- strsplit(pandoc_options$to, "[\\+\\-]")[[1]][[1]]
   if (!is.null(pandoc_options$ext))
     ext <- pandoc_options$ext
   else if (to %in% c("latex", "beamer"))
@@ -26,13 +26,9 @@ pandoc_output_file <- function(input, pandoc_options) {
   else if (to %in% c("html", "html4", "html5", "s5", "slidy",
                      "slideous", "dzslides", "revealjs"))
     ext <- ".html"
-  else if (grepl("^markdown", to)) {
-    if (!identical(tolower(tools::file_ext(input)), "md"))
+  else if (to == "markdown" &&
+           !identical(tolower(tools::file_ext(input)), "md"))
       ext <- ".md"
-    else {
-      ext <- paste(".", strsplit(to, "[\\+\\-]")[[1]][[1]], sep = "")
-    }
-  }
   else
     ext <- paste(".", to, sep = "")
   output <- paste(tools::file_path_sans_ext(input), ext, sep = "")

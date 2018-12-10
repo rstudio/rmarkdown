@@ -1,7 +1,8 @@
 rmarkdown 1.12
 ================================================================================
 
-
+* Fixed file extensions of output files when using non-markdown pandoc
+  extensions such as `docx+styles` (#1494, @noamross)
 
 rmarkdown 1.11
 ================================================================================
