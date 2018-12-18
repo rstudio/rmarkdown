@@ -9,6 +9,25 @@ latex_dependency <- function(name, options = NULL, extra_lines = NULL) {
   validate_latex_dependency(output)
 }
 
+#' Provide common LaTeX dependencies
+#'
+#' These functions provide common LaTeX dependencies (e.g. tikz)
+#' for R Markdown formats that use LaTeX.
+#'
+#' @inheritParams latex_dependency
+#' @name latex-dependencies
+NULL
+
+# Create an LaTeX dependency for tikz
+#' @rdname latex-dependencies
+#' @param libraries A character vector of tikz libraries to load
+#' @export
+latex_dependency_tikz <- function(libraries, options = NULL, extra_lines = NULL) {
+  libraries <- paste(libraries, collapse = ", ")
+  tikz_libraries <- paste0("\\usetikzlibrary{", libraries, "}")
+  latex_dependency("tikz", options = options, extra_lines = c(tikz_libraries, extra_lines))
+}
+
 latex_dependencies <- function(x = list()) {
   if (length(x) == 0) return()
   if (is_latex_dependency(x)) return(list(x))
