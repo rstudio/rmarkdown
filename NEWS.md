@@ -1,8 +1,9 @@
 rmarkdown 1.12
 ================================================================================
 
-* Fixed file extensions of output files when using non-markdown pandoc
-  extensions such as `docx+styles` (#1494, @noamross)
+* Fixed file extensions of output files when using non-markdown Pandoc extensions such as `docx+styles` (#1494, @noamross).
+
+* Added a new argument `extra_lines` to `latex_dependency()` to allow users to add extra lines of LaTeX code after `\usepackage{}`. Also added a helper function `latex_dependency_tikz()` based on `latex_dependency()` (#1502, @malcolmbarrett).
 
 rmarkdown 1.11
 ================================================================================
