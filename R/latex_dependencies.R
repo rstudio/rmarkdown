@@ -1,7 +1,7 @@
 #' Define a LaTeX package dependency
 #' @param name The LaTeX package name
 #' @param options The LaTeX options for the package
-#' @param ... Extra LaTeX code related to the package added to the preamble
+#' @param extra_lines LaTeX code related to the package added to the preamble
 #' @export
 latex_dependency <- function(name, options = NULL, extra_lines = NULL) {
   output <- list(name = name, options = options, extra_lines = extra_lines)
