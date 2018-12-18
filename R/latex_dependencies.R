@@ -23,9 +23,8 @@ NULL
 #' @param libraries A character vector of tikz libraries to load
 #' @export
 latex_dependency_tikz <- function(libraries, options = NULL, extra_lines = NULL) {
-  libraries <- paste(libraries, collapse = ", ")
-  tikz_libraries <- paste0("\\usetikzlibrary{", libraries, "}")
-  latex_dependency("tikz", options = options, extra_lines = c(tikz_libraries, extra_lines))
+  libraries <- sprintf("\\usetikzlibrary{%s}", paste(libraries, collapse = ", "))
+  latex_dependency("tikz", options = options, extra_lines = c(libraries, extra_lines))
 }
 
 latex_dependencies <- function(x = list()) {
