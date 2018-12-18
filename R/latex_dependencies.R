@@ -1,9 +1,10 @@
 #' Define a LaTeX package dependency
 #' @param name The LaTeX package name
 #' @param options The LaTeX options for the package
+#' @param ... Extra LaTeX code related to the package added to the preamble
 #' @export
-latex_dependency <- function(name, options = NULL) {
-  output <- list(name = name, options = options)
+latex_dependency <- function(name, options = NULL, ...) {
+  output <- list(name = name, options = options, extra_lines = c(...))
   class(output) <- "latex_dependency"
   validate_latex_dependency(output)
 }
@@ -30,10 +31,12 @@ latex_dependencies <- function(x = list()) {
 # in the head of a document
 latex_dependencies_as_string <- function(dependencies) {
   lines <- sapply(dependencies, function(dep) {
+    extra_lines <- paste(dep$extra_lines, collapse = ",")
     opts <- paste(dep$options, collapse = ",")
     if (opts != "") opts <- paste0("[", opts, "]")
     # \\usepackage[opt1,opt2]{pkgname}
-    paste0("\\usepackage", opts, "{", dep$name, "}")
+    pkg <- paste0("\\usepackage", opts, "{", dep$name, "}")
+    one_string(c(pkg, extra_lines))
   })
   one_string(unique(lines))
 }
