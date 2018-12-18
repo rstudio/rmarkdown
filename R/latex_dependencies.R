@@ -50,12 +50,11 @@ latex_dependencies <- function(x = list()) {
 # in the head of a document
 latex_dependencies_as_string <- function(dependencies) {
   lines <- sapply(dependencies, function(dep) {
-    extra_lines <- one_string(dep$extra_lines)
     opts <- paste(dep$options, collapse = ",")
     if (opts != "") opts <- paste0("[", opts, "]")
     # \\usepackage[opt1,opt2]{pkgname}
     pkg <- paste0("\\usepackage", opts, "{", dep$name, "}")
-    one_string(c(pkg, extra_lines))
+    one_string(c(pkg, dep$extra_lines))
   })
   one_string(unique(lines))
 }
