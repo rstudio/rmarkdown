@@ -1,11 +1,30 @@
 #' Define a LaTeX package dependency
 #' @param name The LaTeX package name
 #' @param options The LaTeX options for the package
+#' @param extra_lines LaTeX code related to the package added to the preamble
 #' @export
-latex_dependency <- function(name, options = NULL) {
-  output <- list(name = name, options = options)
+latex_dependency <- function(name, options = NULL, extra_lines = NULL) {
+  output <- list(name = name, options = options, extra_lines = extra_lines)
   class(output) <- "latex_dependency"
   validate_latex_dependency(output)
+}
+
+#' Provide common LaTeX dependencies
+#'
+#' These functions provide common LaTeX dependencies (e.g. tikz)
+#' for R Markdown formats that use LaTeX.
+#'
+#' @inheritParams latex_dependency
+#' @name latex-dependencies
+NULL
+
+# Create an LaTeX dependency for tikz
+#' @rdname latex-dependencies
+#' @param libraries A character vector of tikz libraries to load
+#' @export
+latex_dependency_tikz <- function(libraries, options = NULL, extra_lines = NULL) {
+  libraries <- sprintf("\\usetikzlibrary{%s}", paste(libraries, collapse = ", "))
+  latex_dependency("tikz", options = options, extra_lines = c(libraries, extra_lines))
 }
 
 latex_dependencies <- function(x = list()) {
@@ -33,7 +52,8 @@ latex_dependencies_as_string <- function(dependencies) {
     opts <- paste(dep$options, collapse = ",")
     if (opts != "") opts <- paste0("[", opts, "]")
     # \\usepackage[opt1,opt2]{pkgname}
-    paste0("\\usepackage", opts, "{", dep$name, "}")
+    pkg <- paste0("\\usepackage", opts, "{", dep$name, "}")
+    one_string(c(pkg, dep$extra_lines))
   })
   one_string(unique(lines))
 }

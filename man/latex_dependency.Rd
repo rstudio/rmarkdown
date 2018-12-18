@@ -4,12 +4,14 @@
 \alias{latex_dependency}
 \title{Define a LaTeX package dependency}
 \usage{
-latex_dependency(name, options = NULL)
+latex_dependency(name, options = NULL, extra_lines = NULL)
 }
 \arguments{
 \item{name}{The LaTeX package name}
 
 \item{options}{The LaTeX options for the package}
+
+\item{extra_lines}{LaTeX code related to the package added to the preamble}
 }
 \description{
 Define a LaTeX package dependency
