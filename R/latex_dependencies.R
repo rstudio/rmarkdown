@@ -31,7 +31,7 @@ latex_dependencies <- function(x = list()) {
 # in the head of a document
 latex_dependencies_as_string <- function(dependencies) {
   lines <- sapply(dependencies, function(dep) {
-    extra_lines <- paste(dep$extra_lines, collapse = "\n")
+    extra_lines <- one_string(dep$extra_lines)
     opts <- paste(dep$options, collapse = ",")
     if (opts != "") opts <- paste0("[", opts, "]")
     # \\usepackage[opt1,opt2]{pkgname}
