@@ -176,7 +176,7 @@ pdf_document <- function(toc = FALSE,
 
     # use titling package to change title format to be more compact by default
     if (!has_yaml_parameter(input_test, "compact-title"))
-      args <- c(args, "--variable", "compact-title:no")
+      args <- c(args, "--variable", "compact-title:yes")
 
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
       extra_dependencies <- latex_dependencies(extra_dependencies)

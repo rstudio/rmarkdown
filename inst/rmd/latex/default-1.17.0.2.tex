@@ -196,7 +196,7 @@ $if(compact-title)$
 \usepackage{titling}
 
 % Create subtitle command for use in maketitle
-\newcommand{\subtitle}[1]{
+\providecommand{\subtitle}[1]{
   \posttitle{
     \begin{center}\large#1\end{center}
     }
