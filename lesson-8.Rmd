@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-Format the text in your R Markdown file with [Pandoc's Markdown](authoring_pandoc_markdown.html), a set of markup annotations for plain text files. When you render your file, Pandoc transforms the [marked up text](demos/7-Markdown.Rmd) into formatted text in your final file format:
+Format the text in your R Markdown file with [Pandoc's Markdown](authoring_pandoc_markdown.html), a set of markup annotations for plain text files. When you render your file, Pandoc transforms the marked up text into formatted text in your final file format, as below. Try it out with [this file](https://rstudio.cloud/project/181948) on RStudio Cloud.
 
 ![](lesson-images/markdown-1-markup.png)
 </br>

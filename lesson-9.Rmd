@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-Set the `output_format` argument of `render` to render your .Rmd file into any of R Markdown's supported formats. For example, the code below renders [1-example.Rmd](demos/1-example.Rmd) to a Microsoft Word document: 
+Set the `output_format` argument of `render` to render your .Rmd file into any of R Markdown's supported formats. For example, the code below renders 1-example.Rmd to a Microsoft Word document. You can try it out [here](https://rstudio.cloud/project/181952) on RStudio Cloud. 
 
 ```{r eval = FALSE}
 library(rmarkdown)
@@ -59,7 +59,7 @@ You can also build [books](https://bookdown.org/), [websites](https://bookdown.o
 
 ## Output Options
 
-Each output format is implemented as a function in R. You can customize the output by passing arguments to the function as sub-values of the `output` field. For example, [8-outputs.Rmd](demos/8-outputs.Rmd) would render with a floating table of contents.
+Each output format is implemented as a function in R. You can customize the output by passing arguments to the function as sub-values of the `output` field. For example, [8-outputs.Rmd](https://rstudio.cloud/project/181952) would render with a floating table of contents.
 
 ![](lesson-images/outputs-3-toc.png)
 </br>

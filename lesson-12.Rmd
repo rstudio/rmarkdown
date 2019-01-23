@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-Dashboards are a useful way to communicate large amounts of information visually and quickly. Create one with the `flexdashboard::flex_dashboard` output format, as in the [.Rmd file below](demos/11-dashboard.Rmd):
+Dashboards are a useful way to communicate large amounts of information visually and quickly. Create one with the `flexdashboard::flex_dashboard` output format, as in the .Rmd file below (available [here](https://rstudio.cloud/project/181966) on RStudio Cloud):
 
 ![](lesson-images/dashboards-1-dashboard.png)
 </br>

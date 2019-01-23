@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-R Markdown documents can include one or more parameters whose values can be set when you render the report. For example, the [file below](demos/5-parameters.Rmd) uses a `data` parameter that determines which data set to plot.
+R Markdown documents can include one or more parameters whose values can be set when you render the report. For example, the file below, available [here](https://rstudio.cloud/project/181942), uses a `data` parameter that determines which data set to plot.
 
 ![](lesson-images/params-1-hawaii.png)
 </br>

@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-This is an R Markdown file, a plain text file that has the extension `.Rmd`. You can download a copy [here](demos/1-example.Rmd).
+This is an R Markdown file, a plain text file that has the extension `.Rmd`. You can open a copy [here](https://rstudio.cloud/project/181856) on RStudio Cloud.
 
 ![](lesson-images/how-1-file.png)
 </br>

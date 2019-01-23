@@ -10,7 +10,7 @@ output:
 
 In [How It Works](lesson-2.html), you learned that R Markdown files provide a [notebook interface](https://bookdown.org/yihui/rmarkdown/notebook.html) that makes it easy to test and iterate when writing code. 
 
-Share this experience by sharing your .Rmd file with colleagues for them to open in their RStudio IDE. Or recreate the notebook interface for non-R users by rendering your file to an HTML notebook with `output: html_notebook`, as in [this example](demos/9-notebook.Rmd).
+Share this experience by sharing your .Rmd file with colleagues for them to open in their RStudio IDE. Or recreate the notebook interface for non-R users by rendering your file to an HTML notebook with `output: html_notebook`, as in [this example](https://rstudio.cloud/project/181957).
 
 ![](lesson-images/notebooks-1-notebook.png)
 </br>

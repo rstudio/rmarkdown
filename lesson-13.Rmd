@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-Render collections of R Markdown documents into a website with the `rmarkdown::render_site` function. Each .Rmd file becomes a page of the site. Here we build a website from [these files](demos/12-website.zip).
+Render collections of R Markdown documents into a website with the `rmarkdown::render_site` function. Each .Rmd file becomes a page of the site. Here we build a website from [these files](https://rstudio.cloud/project/181978) available on RStudio Cloud.
 
 
 ![](lesson-images/websites-1-render.png)

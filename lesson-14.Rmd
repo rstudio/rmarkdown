@@ -15,7 +15,7 @@ R Markdown documents are a perfect platform for interactive content. To make you
 
 ## htmlwidgets
 
-[Htmlwidgets](http://www.htmlwidgets.org/) are R functions that return JavaScript visualizations. The [document below](demos/13-htmlwidget.Rmd) uses a [leaflet](http://rstudio.github.io/leaflet/) htmlwidget to create an interactive map. 
+[Htmlwidgets](http://www.htmlwidgets.org/) are R functions that return JavaScript visualizations. The document below uses a [leaflet](http://rstudio.github.io/leaflet/) htmlwidget to create an interactive map. You can access the document [here](https://rstudio.cloud/project/181983) on RStudio Cloud.
 
 ![](lesson-images/interactive-1-htmlwidget.png)
 </br>
@@ -26,7 +26,7 @@ Learn more about packages that build htmlwidgets at [www.htmlwidgets.org](http:/
 
 ## Shiny
 
-The [Shiny](http://shiny.rstudio.com/) package builds interactive web apps powered by R. To call Shiny code from an R Markdown document, add `runtime: shiny` to the header, like in [this document](demos/14-shiny.Rmd).
+The [Shiny](http://shiny.rstudio.com/) package builds interactive web apps powered by R. To call Shiny code from an R Markdown document, add `runtime: shiny` to the header, like in [this document](https://rstudio.cloud/project/181983), which is also available on RStudio Cloud.
 
 ![](lesson-images/interactive-2-shiny.png)
 </br>

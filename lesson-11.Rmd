@@ -18,7 +18,7 @@ R Markdown renders to four presentation formats:
 
 Each format will intuitively divide your content into slides, with a new slide beginning at each first or second level header.
 
-Insert a horizontal rule (`***`) into your document to create a manual slide break. Create incremental bullets with `>-`, as in the [.Rmd file below](demos/10-presentation.Rmd).
+Insert a horizontal rule (`***`) into your document to create a manual slide break. Create incremental bullets with `>-`, as in the .Rmd file below, which is available [here](https://rstudio.cloud/project/181959) on RStudio Cloud.
 
 ![](lesson-images/slides-1-slideshow.png)
 </br>
