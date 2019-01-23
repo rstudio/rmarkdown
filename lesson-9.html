@@ -105,6 +105,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -112,14 +115,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -139,6 +202,7 @@ $(document).ready(function () {
         <a class="menuItem" href="gallery.html">Gallery</a>
         <a class="menuItem" href="formats.html">Formats</a>
         <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem" href="https://bookdown.org/yihui/rmarkdown/">Book</a>
         <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
         <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
       </div>
@@ -235,7 +299,7 @@ render(&quot;1-example.Rmd&quot;, output_format = &quot;word_document&quot;)</co
 <h2>Output Options</h2>
 <p>Each output format is implemented as a function in R. You can customize the output by passing arguments to the function as sub-values of the <code>output</code> field. For example, <a href="demos/8-outputs.Rmd">8-outputs.Rmd</a> would render with a floating table of contents.</p>
 <p><img src="lesson-images/outputs-3-toc.png" /> </br></p>
-<p>To learn which arguments a format takes, read the format’s help page in R, e.g. <code>?html_document</code>.</p>
+<p>To learn which arguments a format takes, read the format’s help page in R, e.g. <code>?html_document</code>.</p>
 <hr />
 </div>
 <div id="continue-to-notebooks" class="section level2">

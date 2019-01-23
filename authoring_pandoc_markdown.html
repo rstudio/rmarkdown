@@ -108,6 +108,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -115,14 +118,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -243,6 +306,7 @@ div.tocify {
         <a class="menuItem" href="gallery.html">Gallery</a>
         <a class="menuItem" href="formats.html">Formats</a>
         <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem" href="https://bookdown.org/yihui/rmarkdown/">Book</a>
         <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
         <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
       </div>
@@ -1010,7 +1074,7 @@ is *emphasized with asterisks*.</code></pre>
 <dd>It will be rendered inside <code>&lt;math&gt;</code> tags.
 </dd>
 <dt>Textile</dt>
-<dd>It will be rendered inside <code>&lt;span class=&quot;math&quot;&gt;</code> tags.
+<dd>It will be rendered inside <code>&lt;span class="math"&gt;</code> tags.
 </dd>
 <dt>RTF, OpenDocument, ODT</dt>
 <dd>It will be rendered, if possible, using unicode characters, and will otherwise appear verbatim.
@@ -1027,7 +1091,7 @@ is *emphasized with asterisks*.</code></pre>
 <dt>HTML, Slidy, DZSlides, S5, EPUB</dt>
 <dd><p>The way math is rendered in HTML will depend on the command-line options selected:</p>
 <ol style="list-style-type: decimal">
-<li><p>The default is to render TeX math as far as possible using unicode characters, as with RTF, DocBook, and OpenDocument output. Formulas are put inside a <code>span</code> with <code>class=&quot;math&quot;</code>, so that they may be styled differently from the surrounding text if needed.</p></li>
+<li><p>The default is to render TeX math as far as possible using unicode characters, as with RTF, DocBook, and OpenDocument output. Formulas are put inside a <code>span</code> with <code>class="math"</code>, so that they may be styled differently from the surrounding text if needed.</p></li>
 <li><p>If the <code>--latexmathml</code> option is used, TeX math will be displayed between <code>$</code> or <code>$$</code> characters and put in <code>&lt;span&gt;</code> tags with class <code>LaTeX</code>. The [LaTeXMathML] script will be used to render it as formulas. (This trick does not work in all browsers, but it works in Firefox. In browsers that do not support LaTeXMathML, TeX math will appear verbatim between <code>$</code> characters.)</p></li>
 <li><p>If the <code>--jsmath</code> option is used, TeX math will be put inside <code>&lt;span&gt;</code> tags (for inline math) or <code>&lt;div&gt;</code> tags (for display math) with class <code>math</code>. The [jsMath] script will be used to render it.</p></li>
 <li><p>If the <code>--mimetex</code> option is used, the [mimeTeX] CGI script will be called to generate images for each TeX formula. This should work in all browsers. The <code>--mimetex</code> option takes an optional URL as argument. If no URL is specified, it will be assumed that the mimeTeX CGI script is at <code>/cgi-bin/mimetex.cgi</code>.</p></li>
@@ -1198,7 +1262,7 @@ and a reference ![image][ref] with attributes.
 <pre><code>![](file.jpg){ width=50% }</code></pre>
 <ul>
 <li>Dimensions are converted to inches for output in page-based formats like LaTeX. Dimensions are converted to pixels for output in HTML-like formats. Use the <code>--dpi</code> option to specify the number of pixels per inch. The default is 96dpi.</li>
-<li>The <code>%</code> unit is generally relative to some available space. For example the above example will render to <code>&lt;img href=&quot;file.jpg&quot; style=&quot;width: 50%;&quot; /&gt;</code> (HTML), <code>\includegraphics[width=0.5\textwidth]{file.jpg}</code> (LaTeX), or <code>\externalfigure[file.jpg][width=0.5\textwidth]</code> (ConTeXt).</li>
+<li>The <code>%</code> unit is generally relative to some available space. For example the above example will render to <code>&lt;img href="file.jpg" style="width: 50%;" /&gt;</code> (HTML), <code>\includegraphics[width=0.5\textwidth]{file.jpg}</code> (LaTeX), or <code>\externalfigure[file.jpg][width=0.5\textwidth]</code> (ConTeXt).</li>
 <li>Some output formats have a notion of a class (<a href="http://wiki.contextgarden.net/Using_Graphics#Multiple_Image_Settings">ConTeXt</a>) or a unique identifier (LaTeX <code>\caption</code>), or both (HTML).</li>
 <li>When no <code>width</code> or <code>height</code> attributes are specified, the fallback is to look at the image resolution and the dpi metadata embedded in the image file.</li>
 </ul>
@@ -1309,7 +1373,7 @@ note.]</code></pre>
 <dt><code>&lt;b&gt;...&lt;/b&gt;</code></dt>
 <dd>bold
 </dd>
-<dt><code>&lt;span style=&quot;font-variant:small-caps;&quot;&gt;...&lt;/span&gt;</code> or <code>&lt;sc&gt;...&lt;/sc&gt;</code></dt>
+<dt><code>&lt;span style="font-variant:small-caps;"&gt;...&lt;/span&gt;</code> or <code>&lt;sc&gt;...&lt;/sc&gt;</code></dt>
 <dd>small capitals
 </dd>
 <dt><code>&lt;sub&gt;...&lt;/sub&gt;</code></dt>
@@ -1318,7 +1382,7 @@ note.]</code></pre>
 <dt><code>&lt;sup&gt;...&lt;/sup&gt;</code></dt>
 <dd>superscript
 </dd>
-<dt><code>&lt;span class=&quot;nocase&quot;&gt;...&lt;/span&gt;</code></dt>
+<dt><code>&lt;span class="nocase"&gt;...&lt;/span&gt;</code></dt>
 <dd>prevent a phrase from being capitalized as title case
 </dd>
 </dl>
@@ -1664,7 +1728,7 @@ rights: © 2007 John Smith, CC BY-NC
 </div>
 <div id="linked-media" class="section level2">
 <h2>Linked media</h2>
-<p>By default, pandoc will download linked media (including audio and video) and include it in the EPUB container, yielding a completely self-contained EPUB. If you want to link to external media resources instead, use raw HTML in your source and add <code>data-external=&quot;1&quot;</code> to the tag with the <code>src</code> attribute. For example:</p>
+<p>By default, pandoc will download linked media (including audio and video) and include it in the EPUB container, yielding a completely self-contained EPUB. If you want to link to external media resources instead, use raw HTML in your source and add <code>data-external="1"</code> to the tag with the <code>src</code> attribute. For example:</p>
 <pre><code>&lt;audio controls=&quot;1&quot;&gt;
   &lt;source src=&quot;http://example.com/music/toccata.mp3&quot;
           data-external=&quot;1&quot; type=&quot;audio/mpeg&quot;&gt;
@@ -1674,7 +1738,7 @@ rights: © 2007 John Smith, CC BY-NC
 </div>
 <div id="authors" class="section level1">
 <h1>Authors</h1>
-<p>© 2006-2015 John MacFarlane (<a href="mailto:jgm@berkeley.edu">jgm@berkeley.edu</a>). Released under the <a href="http://www.gnu.org/copyleft/gpl.html" title="GNU General Public License">GPL</a>, version 2 or greater. This software carries no warranty of any kind. (See COPYRIGHT for full copyright and warranty notices.)</p>
+<p>© 2006-2015 John MacFarlane (<a href="mailto:jgm@berkeley.edu" class="email">jgm@berkeley.edu</a>). Released under the <a href="http://www.gnu.org/copyleft/gpl.html" title="GNU General Public License">GPL</a>, version 2 or greater. This software carries no warranty of any kind. (See COPYRIGHT for full copyright and warranty notices.)</p>
 <p>Contributors include Aaron Wolen, Albert Krewinkel, Alexander Kondratskiy, Alexander Sulfrian, Alexander V Vershilov, Alfred Wechselberger, Andreas Lööw, Andrew Dunning, Antoine Latter, Arata Mizuki, Arlo O’Keeffe, Artyom Kazak, Ben Gamari, Beni Cherniavsky-Paskin, Bjorn Buckwalter, Bradley Kuhn, Brent Yorgey, Bryan O’Sullivan, B. Scott Michel, Caleb McDaniel, Calvin Beck, Christoffer Ackelman, Christoffer Sawicki, Clare Macrae, Clint Adams, Conal Elliott, Craig S. Bosma, Daniel Bergey, Daniel T. Staal, David Lazar, David Röthlisberger, Denis Laxalde, Douglas Calvert, Douglas F. Calvert, Eric Kow, Eric Seidel, Florian Eitel, François Gannaz, Freiric Barral, Fyodor Sheremetyev, Gabor Pali, Gavin Beatty, Greg Maslov, Grégory Bataille, Greg Rundlett, gwern, Gwern Branwen, Hans-Peter Deifel, Henry de Valence, Ilya V. Portnov, infinity0x, Jaime Marquínez Ferrándiz, James Aspnes, Jamie F. Olson, Jan Larres, Jason Ronallo, Jeff Arnold, Jeff Runningen, Jens Petersen, Jérémy Bobbio, Jesse Rosenthal, J. Lewis Muir, Joe Hillenbrand, John MacFarlane, Jonas Smedegaard, Jonathan Daugherty, Josef Svenningsson, Jose Luis Duran, Julien Cretel, Justin Bogner, Kelsey Hightower, Konstantin Zudov, Lars-Dominik Braun, Luke Plant, Mark Szepieniec, Mark Wright, Masayoshi Takahashi, Matej Kollar, Mathias Schenner, Matthew Pickering, Matthias C. M. Troffaes, Mauro Bieg, Max Bolingbroke, Max Rydahl Andersen, Merijn Verstraaten, Michael Snoyman, Michael Thompson, MinRK, Nathan Gass, Neil Mayhew, Nick Bart, Nicolas Kaiser, Nikolay Yakimov, nkalvi, Paulo Tanimoto, Paul Rivier, Peter Wang, Philippe Ombredanne, Phillip Alday, Puneeth Chaganti, qerub, Ralf Stephan, Recai Oktaş, rodja.trappe, RyanGlScott, Scott Morrison, Sergei Trofimovich, Sergey Astanin, Shahbaz Youssefi, Shaun Attfield, shreevatsa.public, Simon Hengel, Sumit Sahrawat, takahashim, thsutton, Tim Lin, Timothy Humphries, Todd Sifleet, Tom Leese, Uli Köhler, Václav Zeman, Viktor Kronvall, Vincent, Wikiwide, and Xavier Olive.</p>
 </div>
 <div class="footnotes">

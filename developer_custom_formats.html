@@ -105,6 +105,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -112,14 +115,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -139,6 +202,7 @@ $(document).ready(function () {
         <a class="menuItem" href="gallery.html">Gallery</a>
         <a class="menuItem" href="formats.html">Formats</a>
         <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem" href="https://bookdown.org/yihui/rmarkdown/">Book</a>
         <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
         <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
       </div>
@@ -229,7 +293,7 @@ output:
 <p>Of course, knitr and pandoc options can get considerabiy more complicated (see the <code>knitr_options</code> and <code>pandoc_options</code> functions for details). The <code>clean_supporting</code> option indicates that you aren’t creating self contained output (like a PDF or HTML document with base64 encoded resources) and therefore want to preserve supporting files like plot images generated during knitting.</p>
 <p>You can also pass a <code>base_format</code> to the <code>output_format</code> function if you want to inherit all of the behavior of an existing format but tweak a subset of it’s options.</p>
 <p>If there are supporting files required for your format (e.g. HTML/CSS/JS) then you’ll also need to use the other arguments to <code>output_format</code> to ensure they are handled correctly (e.g. copying them into place alongside the generated document).</p>
-<p>The best way to learn about creating fully custom formats is to study the <a href="https://github.com/rstudio/rmarkdown/tree/master/R">source code</a> of the existing built-in formats (e.g. <code>html_document</code> and <code>pdf_document</code>). In some cases a custom format will define it’s own <a href="http://pandoc.org/README.html#templates">pandoc template</a>. You can see the default pandoc templates used by the rmarkdown package by looking in the <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmd"><code>inst/rmd</code></a> directory of the package.</p>
+<p>The best way to learn about creating fully custom formats is to study the <a href="https://github.com/rstudio/rmarkdown/tree/master/R">source code</a> of the existing built-in formats (e.g. <code>html_document</code> and <code>pdf_document</code>). In some cases a custom format will define it’s own <a href="http://pandoc.org/README.html#templates">pandoc template</a>. You can see the default pandoc templates used by the rmarkdown package by looking in the <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmd"><code>inst/rmd</code></a> directory of the package.</p>
 </div>
 
   </div> <!-- articleBandContent -->

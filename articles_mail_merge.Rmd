@@ -70,7 +70,7 @@ See you then!
 
 Save the Rmd file and the R script in the same folder (or specify the path to the Rmd file accordingly in the R script), and then run the R script. This will call the Rmd file within the loop and output 20 PDF files to the handouts directory. Each of these files look something like this
 
-![](http://citizen-statistician.org/wp-content/uploads/2015/06/mail_merge_sample1.png)
+![A sample mail](https://user-images.githubusercontent.com/163582/49693700-e3504480-fb3f-11e8-9ff0-e26b6d4c1673.png)
 
 with the name and date field being different in each one.
 

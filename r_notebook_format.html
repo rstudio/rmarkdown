@@ -105,6 +105,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -112,14 +115,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -139,6 +202,7 @@ $(document).ready(function () {
         <a class="menuItem" href="gallery.html">Gallery</a>
         <a class="menuItem" href="formats.html">Formats</a>
         <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem" href="https://bookdown.org/yihui/rmarkdown/">Book</a>
         <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
         <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
       </div>
@@ -237,70 +301,70 @@ cat(contents, sep = &quot;\n&quot;)</code></pre>
 <pre class="r"><code>parsed &lt;- rmarkdown::parse_html_notebook(output_file)
 str(parsed)</code></pre>
 <pre><code>## List of 4
-##  $ source     : chr [1:1759] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&quot; &quot;&quot; ...
+##  $ source     : chr [1:1822] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&quot; &quot;&quot; ...
 ##  $ rmd        : chr [1:8] &quot;---&quot; &quot;title: \&quot;R Notebook Stub\&quot;&quot; &quot;output: html_notebook&quot; &quot;---&quot; ...
 ##  $ header     : chr [1:1598] &quot;&lt;head&gt;&quot; &quot;&quot; &quot;&lt;meta charset=\&quot;utf-8\&quot; /&gt;&quot; &quot;&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html; charset=utf-8\&quot; /&gt;&quot; ...
 ##  $ annotations:List of 12
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1701
+##   .. ..$ row  : int 1764
 ##   .. ..$ label: chr &quot;text&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1702
+##   .. ..$ row  : int 1765
 ##   .. ..$ label: chr &quot;text&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1703
+##   .. ..$ row  : int 1766
 ##   .. ..$ label: chr &quot;chunk&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1704
+##   .. ..$ row  : int 1767
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;```r\n# R Code\n```&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1706
+##   .. ..$ row  : int 1769
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1707
+##   .. ..$ row  : int 1770
 ##   .. ..$ label: chr &quot;output&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;Custom output for chunk: 1\n&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1709
+##   .. ..$ row  : int 1772
 ##   .. ..$ label: chr &quot;output&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1710
+##   .. ..$ row  : int 1773
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;```r\n# R Logo\n```&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1712
+##   .. ..$ row  : int 1775
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1713
+##   .. ..$ row  : int 1776
 ##   .. ..$ label: chr &quot;plot&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1715
+##   .. ..$ row  : int 1778
 ##   .. ..$ label: chr &quot;plot&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1716
+##   .. ..$ row  : int 1779
 ##   .. ..$ label: chr &quot;chunk&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL</code></pre>

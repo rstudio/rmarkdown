@@ -110,6 +110,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -117,14 +120,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -245,6 +308,7 @@ div.tocify {
         <a class="menuItem" href="gallery.html">Gallery</a>
         <a class="menuItem" href="formats.html">Formats</a>
         <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem" href="https://bookdown.org/yihui/rmarkdown/">Book</a>
         <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
         <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
       </div>
@@ -365,8 +429,8 @@ output:
 <h2>Appearance and Style</h2>
 <p>There are several options that control the appearance of HTML documents:</p>
 <ul>
-<li><p><code>theme</code> specifies the Bootstrap theme to use for the page (themes are drawn from the <a href="http://bootswatch.com/3/">Bootswatch</a> theme library). Valid themes include <code>&quot;default&quot;</code>, <code>&quot;cerulean&quot;</code>, <code>&quot;journal&quot;</code>, <code>&quot;flatly&quot;</code>, <code>&quot;readable&quot;</code>, <code>&quot;spacelab&quot;</code>, <code>&quot;united&quot;</code>, <code>&quot;cosmo&quot;</code>, <code>&quot;lumen&quot;</code>, <code>&quot;paper&quot;</code>, <code>&quot;sandstone&quot;</code>, <code>&quot;simplex&quot;</code>, and <code>&quot;yeti&quot;</code>. Pass null for no theme (in this case you can use the <code>css</code> parameter to add your own styles).</p></li>
-<li><p><code>highlight</code> specifies the syntax highlighting style. Supported styles include <code>&quot;default&quot;</code>, <code>&quot;tango&quot;</code>, <code>&quot;pygments&quot;</code>, <code>&quot;kate&quot;</code>, <code>&quot;monochrome&quot;</code>, <code>&quot;espresso&quot;</code>, <code>&quot;zenburn&quot;</code>, <code>&quot;haddock&quot;</code>, and <code>&quot;textmate&quot;</code>. Pass null to prevent syntax highlighting.</p></li>
+<li><p><code>theme</code> specifies the Bootstrap theme to use for the page (themes are drawn from the <a href="http://bootswatch.com/3/">Bootswatch</a> theme library). Valid themes include <code>"default"</code>, <code>"cerulean"</code>, <code>"journal"</code>, <code>"flatly"</code>, <code>"darkly"</code>, <code>"readable"</code>, <code>"spacelab"</code>, <code>"united"</code>, <code>"cosmo"</code>, <code>"lumen"</code>, <code>"paper"</code>, <code>"sandstone"</code>, <code>"simplex"</code>, and <code>"yeti"</code>. Pass null for no theme (in this case you can use the <code>css</code> parameter to add your own styles).</p></li>
+<li><p><code>highlight</code> specifies the syntax highlighting style. Supported styles include <code>"default"</code>, <code>"tango"</code>, <code>"pygments"</code>, <code>"kate"</code>, <code>"monochrome"</code>, <code>"espresso"</code>, <code>"zenburn"</code>, <code>"haddock"</code>, and <code>"textmate"</code>. Pass null to prevent syntax highlighting.</p></li>
 <li><p><code>smart</code> indicates whether to produce typographically correct output, converting straight quotes to curly quotes, <code>---</code> to em-dashes, <code>--</code> to en-dashes, and <code>...</code> to ellipses. Note that <code>smart</code> is enabled by default.</p></li>
 </ul>
 <p>For example:</p>

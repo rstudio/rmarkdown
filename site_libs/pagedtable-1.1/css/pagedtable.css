@@ -33,7 +33,7 @@
 }
 
 .pagedtable .even {
-  background-color: #fcfcfc;
+  background-color: rgba(140, 140, 140, 0.1);
 }
 
 .pagedtable-padding-col {

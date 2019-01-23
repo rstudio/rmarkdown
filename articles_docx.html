@@ -106,6 +106,9 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
@@ -113,14 +116,74 @@ button.code-folding-btn:focus {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -140,6 +203,7 @@ $(document).ready(function () {
         <a class="menuItem" href="gallery.html">Gallery</a>
         <a class="menuItem" href="formats.html">Formats</a>
         <a class="menuItem" href="articles.html">Articles</a>
+        <a class="menuItem" href="https://bookdown.org/yihui/rmarkdown/">Book</a>
         <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
         <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
       </div>
@@ -331,7 +395,7 @@ And I have this next subsection. </code></pre>
 </div>
 <div id="tables-using-kable" class="section level3">
 <h3>Tables using <em>kable()</em></h3>
-<p>In Ch. 8 of (Stodden, Leisch, &amp; Peng, ed. 2014), Hoefling &amp; Rossini note that support for tables is one of the impediments to reproducibility. Packages <em>knitr</em> and <em>pander</em> have made some progress in this area.</p>
+<p>In Ch. 8 of (Stodden, Leisch, &amp; Peng, ed. 2014), Hoefling &amp; Rossini note that support for tables is one of the impediments to reproducibility. Packages <em>knitr</em> and <em>pander</em> have made some progress in this area.</p>
 <p>The <em>knitr</em> package provides a <em>kable()</em> function for creating tables with a minimum of fuss but with limited control of formatting. However, the default alignments are good, making this a useful function for initial drafts.</p>
 <p>Returning to the <em>test-report.Rmd</em> file, at the end of the current file add some text,</p>
 <pre class="r"><code># Make a table
@@ -443,7 +507,7 @@ obstacles to effective collaboration.</code></pre>
 </ul>
 <pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.5
+## Running under: macOS  10.14.1
 ## 
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
@@ -453,13 +517,12 @@ obstacles to effective collaboration.</code></pre>
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] knitr_1.20.7
+## [1] knitr_1.20.24
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_3.5.1   magrittr_1.5     htmltools_0.3.6  tools_3.5.1     
-##  [5] yaml_2.1.19      Rcpp_0.12.17     stringi_1.2.3    rmarkdown_1.10.7
-##  [9] htmldeps_0.1.0   xfun_0.3.5       digest_0.6.15    stringr_1.3.1   
-## [13] evaluate_0.10.1</code></pre>
+##  [1] compiler_3.5.1  magrittr_1.5    tools_3.5.1     htmltools_0.3.6
+##  [5] yaml_2.2.0      Rcpp_1.0.0      stringi_1.2.4   rmarkdown_1.11 
+##  [9] stringr_1.3.1   xfun_0.4.6      digest_0.6.18   evaluate_0.12</code></pre>
 <p><br></p>
 </div>
 <div id="image-credits" class="section level3">
@@ -468,7 +531,7 @@ obstacles to effective collaboration.</code></pre>
 </div>
 <div id="references" class="section level3">
 <h3>References</h3>
-<p>Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. 2014. <em>Implementing Reproducible Research</em>. Boca Raton, FL: Taylor &amp; Francis Group LLC.</p>
+<p>Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. 2014. <em>Implementing Reproducible Research</em>. Boca Raton, FL: Taylor &amp; Francis Group LLC.</p>
 </div>
 
   </div> <!-- articleBandContent -->
