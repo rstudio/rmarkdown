@@ -105,9 +105,6 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
-summary {
-  display: list-item;
-}
 </style>
 
 
@@ -115,74 +112,14 @@ summary {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
 </script>
 
 <!-- code folding -->
+
 
 
 
@@ -254,7 +191,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 
 <p>In <a href="lesson-2.html">How It Works</a>, you learned that R Markdown files provide a <a href="https://bookdown.org/yihui/rmarkdown/notebook.html">notebook interface</a> that makes it easy to test and iterate when writing code.</p>
-<p>Share this experience by sharing your .Rmd file with colleagues for them to open in their RStudio IDE. Or recreate the notebook interface for non-R users by rendering your file to an HTML notebook with <code>output: html_notebook</code>, as in <a href="demos/9-notebook.Rmd">this example</a>.</p>
+<p>Share this experience by sharing your .Rmd file with colleagues for them to open in their RStudio IDE. Or recreate the notebook interface for non-R users by rendering your file to an HTML notebook with <code>output: html_notebook</code>, as in <a href="https://rstudio.cloud/project/181957">this example</a>.</p>
 <p><img src="lesson-images/notebooks-1-notebook.png" /> </br></p>
 <p>R Markdown will create a <code>nb.html</code> version of your file: a self-contained HTML file that contains both a rendered copy of the notebook with all current chunk outputs (suitable for display on a website) and a copy of the notebook .Rmd itself.</p>
 <p>You can view the .nb.html file in any ordinary web browser, or open it in RStudio. In this case, RStudio will extract and open the .Rmd file that underlies the nb.html file.</p>

@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-By default, R Markdown displays data frames and matrixes as they would be in the R terminal (in a monospaced font). If you prefer that data be displayed with additional formatting you can use the `knitr::kable` function, as in the [.Rmd file below](demos/6-tables.Rmd). 
+By default, R Markdown displays data frames and matrixes as they would be in the R terminal (in a monospaced font). If you prefer that data be displayed with additional formatting you can use the `knitr::kable` function, as in the .Rmd file below. This file is available [here](https://rstudio.cloud/project/181946) on RStudio Cloud. 
 
 ![](lesson-images/tables-1-kable.png)
 

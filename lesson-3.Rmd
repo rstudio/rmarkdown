@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-The R Markdown file [below](demos/2-chunks.Rmd) contains three code chunks.
+The R Markdown file below contains three code chunks. You can open it [here](https://rstudio.cloud/project/181911) in RStudio Cloud.
 
 ![](lesson-images/code-1-options.png)
 </br>

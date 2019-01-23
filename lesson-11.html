@@ -105,9 +105,6 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
-summary {
-  display: list-item;
-}
 </style>
 
 
@@ -115,74 +112,14 @@ summary {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
 </script>
 
 <!-- code folding -->
+
 
 
 
@@ -262,7 +199,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <li><a href="https://bookdown.org/yihui/rmarkdown/revealjs.html">revealjs::revealjs_presentation</a> - HTML presentations with reveal.js</li>
 </ul>
 <p>Each format will intuitively divide your content into slides, with a new slide beginning at each first or second level header.</p>
-<p>Insert a horizontal rule (<code>***</code>) into your document to create a manual slide break. Create incremental bullets with <code>&gt;-</code>, as in the <a href="demos/10-presentation.Rmd">.Rmd file below</a>.</p>
+<p>Insert a horizontal rule (<code>***</code>) into your document to create a manual slide break. Create incremental bullets with <code>&gt;-</code>, as in the .Rmd file below, which is available <a href="https://rstudio.cloud/project/181959">here</a> on RStudio Cloud.</p>
 <p><img src="lesson-images/slides-1-slideshow.png" /> </br></p>
 <hr />
 <div id="continue-to-dashboards" class="section level2">

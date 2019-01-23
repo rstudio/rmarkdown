@@ -105,9 +105,6 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
-summary {
-  display: list-item;
-}
 </style>
 
 
@@ -115,74 +112,14 @@ summary {
 <div class="container-fluid main-container">
 
 <!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
 </script>
 
 <!-- code folding -->
+
 
 
 
@@ -253,9 +190,9 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<p>Code results can be inserted directly into the text of a .Rmd file by enclosing the code with <code>`r `</code>. The <a href="demos/3-inline.Rmd">file below</a> uses <code>`r `</code> twice to call <code>colorFunc</code>, which returns “heat.colors.”</p>
+<p>Code results can be inserted directly into the text of a .Rmd file by enclosing the code with <code>`r `</code>. The file below uses <code>`r `</code> twice to call <code>colorFunc</code>, which returns “heat.colors.” You can open the file <a href="https://rstudio.cloud/project/181921">here</a> in RStudio Cloud.</p>
 <p><img src="lesson-images/inline-1-heat.png" /> </br></p>
-<p>This makes it easy to update the report to refer to another function.</p>
+<p>Using <code>`r `</code> makes it easy to update the report to refer to another function.</p>
 <p><img src="lesson-images/inline-2-terrain.png" /> </br></p>
 <p>R Markdown will always</p>
 <ul>

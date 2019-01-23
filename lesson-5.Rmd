@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-Notice how [this .Rmd file](demos/4-languages.Rmd) executes code in bash and python.
+Notice how this .Rmd file executes code in bash and python. You can open the file [here](https://rstudio.cloud/project/181938) in RStudio Cloud.
 
 ![](lesson-images/languages-1-demos.png)
 </br>
