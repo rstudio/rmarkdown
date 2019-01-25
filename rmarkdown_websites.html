@@ -52,7 +52,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(title);
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -415,36 +415,36 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <h2>Overview</h2>
 <p>You can render collections of R Markdown documents as a website using the <code>rmarkdown::render_site</code> function. This article describes the basics of creating websites with R Markdown and provides some examples which you can use as a starting point for your own websites.</p>
 <p>The features described here are available only within the most recent version of the <strong>rmarkdown</strong> package (v0.9.6) which you can install from CRAN as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>)</a></code></pre></div>
 <p>The RStudio IDE also includes integrated support for developing R Markdown websites. These features are available in version 1.0 or higher of RStudio so you should be sure to update RStudio prior to using R Markdown websites. You can download the latest version of RStudio here: <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a>.</p>
 </div>
 <div id="simple-example" class="section level2">
 <h2>Simple Example</h2>
 <p>To start with let’s walk through a very simple example, a website that includes two pages (Home and About) and a navigation bar to switch between them:</p>
 <p><strong>_site.yml</strong></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb2-1" title="1"><span class="fu">name:</span><span class="at"> </span><span class="st">&quot;my-website&quot;</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="fu">navbar:</span></a>
-<a class="sourceLine" id="cb2-3" title="3">  <span class="fu">title:</span><span class="at"> </span><span class="st">&quot;My Website&quot;</span></a>
-<a class="sourceLine" id="cb2-4" title="4">  <span class="fu">left:</span></a>
-<a class="sourceLine" id="cb2-5" title="5">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Home&quot;</span></a>
-<a class="sourceLine" id="cb2-6" title="6">      <span class="fu">href:</span><span class="at"> index.html</span></a>
-<a class="sourceLine" id="cb2-7" title="7">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;About&quot;</span></a>
-<a class="sourceLine" id="cb2-8" title="8">      <span class="fu">href:</span><span class="at"> about.html</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">name:</span><span class="at"> </span><span class="st">&quot;my-website&quot;</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="fu">navbar:</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="fu">title:</span><span class="at"> </span><span class="st">&quot;My Website&quot;</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="fu">left:</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Home&quot;</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">      <span class="fu">href:</span><span class="at"> index.html</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;About&quot;</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">      <span class="fu">href:</span><span class="at"> about.html</span></a></code></pre></div>
 <p><strong>index.Rmd</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb3-1" title="1">---</a>
-<a class="sourceLine" id="cb3-2" title="2">title: &quot;My Website&quot;</a>
-<a class="sourceLine" id="cb3-3" title="3">---</a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5">Hello, Website!</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb3-1" data-line-number="1">---</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">title: &quot;My Website&quot;</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">---</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">Hello, Website!</a></code></pre></div>
 <p><strong>about.Rmd</strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb4-1" title="1">---</a>
-<a class="sourceLine" id="cb4-2" title="2">title: &quot;About This Website&quot;</a>
-<a class="sourceLine" id="cb4-3" title="3">---</a>
-<a class="sourceLine" id="cb4-4" title="4"></a>
-<a class="sourceLine" id="cb4-5" title="5">More about this website.</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb4-1" data-line-number="1">---</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">title: &quot;About This Website&quot;</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">---</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">More about this website.</a></code></pre></div>
 <p>Note that the minimum requirement for any website is that it have an <code>index.Rmd</code> file as well as a <code>_site.yml</code> file. If you execute the <code>rmarkdown::render_site</code> function from within the directory containing the website the following will occur:</p>
 <ol style="list-style-type: decimal">
-<li><p>All of the Rmd and md files in the root website directory will be rendered into HTML. Note however that markdown files beginning with "_" are not rendered (this is a convention to designate files that are included by top level documents).</p></li>
+<li><p>All of the Rmd and md files in the root website directory will be rendered into HTML. Note however that markdown files beginning with &quot;_&quot; are not rendered (this is a convention to designate files that are included by top level documents).</p></li>
 <li><p>The generated HTML files and any supporting files (e.g. CSS and JavaScript) are copied into an output directory (<code>_site</code> by default).</p></li>
 </ol>
 <p>The HTML files within the <code>_site</code> directory are now ready to deploy as a standalone static website.</p>
@@ -487,20 +487,20 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <div id="rendering" class="section level4">
 <h4>Rendering</h4>
 <p>If you aren’t working within RStudio and/or want to build sites from the command line you can call the <code>render_site</code> function directly from within the website directory. Pass no arguments to render the entire site or a single file in order to render just that file:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># render the entire site</span></a>
-<a class="sourceLine" id="cb5-2" title="2">rmarkdown<span class="op">::</span><span class="kw">render_site</span>()</a>
-<a class="sourceLine" id="cb5-3" title="3"></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co"># render a single file only</span></a>
-<a class="sourceLine" id="cb5-5" title="5">rmarkdown<span class="op">::</span><span class="kw">render_site</span>(<span class="st">&quot;about.Rmd&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># render the entire site</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">rmarkdown<span class="op">::</span><span class="kw">render_site</span>()</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># render a single file only</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">rmarkdown<span class="op">::</span><span class="kw">render_site</span>(<span class="st">&quot;about.Rmd&quot;</span>)</a></code></pre></div>
 </div>
 <div id="cleaning-up" class="section level4">
 <h4>Cleaning Up</h4>
 <p>To clean up all of the files generated via <code>render_site</code> you can call the <code>clean_site</code> function, which will remove all files generated by rendering your site’s markdown documents including knitr <code>_cache</code> directories. You can specify the <code>preview = FALSE</code> option to just list the files to be removed rather than actually removing them:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># list which files will be removed</span></a>
-<a class="sourceLine" id="cb6-2" title="2">rmarkdown<span class="op">::</span><span class="kw">clean_site</span>(<span class="dt">preview =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb6-3" title="3"></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="co"># actually remove the files</span></a>
-<a class="sourceLine" id="cb6-5" title="5">rmarkdown<span class="op">::</span><span class="kw">clean_site</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># list which files will be removed</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">rmarkdown<span class="op">::</span><span class="kw">clean_site</span>(<span class="dt">preview =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># actually remove the files</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">rmarkdown<span class="op">::</span><span class="kw">clean_site</span>()</a></code></pre></div>
 </div>
 </div>
 <div id="knitr-caching" class="section level3">
@@ -524,27 +524,27 @@ knitr::opts_chunk$set(cache=TRUE)
 <h3>Content</h3>
 <p>Typically when creating a website there are various common elements you want to include in all pages (e.g. output options, CSS styles, header and footer elements, etc.). Here’s some additions to the example above that makes use of common elements:</p>
 <p><strong>_site.yml</strong></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb7-1" title="1"><span class="fu">name:</span><span class="at"> </span><span class="st">&quot;my-website&quot;</span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="fu">navbar:</span></a>
-<a class="sourceLine" id="cb7-3" title="3">  <span class="fu">title:</span><span class="at"> </span><span class="st">&quot;My Website&quot;</span></a>
-<a class="sourceLine" id="cb7-4" title="4">  <span class="fu">left:</span></a>
-<a class="sourceLine" id="cb7-5" title="5">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Home&quot;</span></a>
-<a class="sourceLine" id="cb7-6" title="6">      <span class="fu">href:</span><span class="at"> index.html</span></a>
-<a class="sourceLine" id="cb7-7" title="7">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;About&quot;</span></a>
-<a class="sourceLine" id="cb7-8" title="8">      <span class="fu">href:</span><span class="at"> about.html</span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="fu">output:</span></a>
-<a class="sourceLine" id="cb7-10" title="10">  <span class="fu">html_document:</span></a>
-<a class="sourceLine" id="cb7-11" title="11">    <span class="fu">theme:</span><span class="at"> cosmo</span></a>
-<a class="sourceLine" id="cb7-12" title="12">    <span class="fu">highlight:</span><span class="at"> textmate</span></a>
-<a class="sourceLine" id="cb7-13" title="13">    <span class="fu">include:</span></a>
-<a class="sourceLine" id="cb7-14" title="14">      <span class="fu">after_body:</span><span class="at"> footer.html</span></a>
-<a class="sourceLine" id="cb7-15" title="15">    <span class="fu">css:</span><span class="at"> styles.css</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="fu">name:</span><span class="at"> </span><span class="st">&quot;my-website&quot;</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="fu">navbar:</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="fu">title:</span><span class="at"> </span><span class="st">&quot;My Website&quot;</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="fu">left:</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Home&quot;</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">      <span class="fu">href:</span><span class="at"> index.html</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;About&quot;</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">      <span class="fu">href:</span><span class="at"> about.html</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="fu">output:</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">  <span class="fu">html_document:</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">    <span class="fu">theme:</span><span class="at"> cosmo</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">    <span class="fu">highlight:</span><span class="at"> textmate</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">    <span class="fu">include:</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">      <span class="fu">after_body:</span><span class="at"> footer.html</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">    <span class="fu">css:</span><span class="at"> styles.css</span></a></code></pre></div>
 <p><strong>footer.html</strong></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">&lt;p&gt;</span>Copyright <span class="dv">&amp;copy;</span> 2016 Skynet, Inc. All rights reserved.<span class="kw">&lt;/p&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">&lt;p&gt;</span>Copyright <span class="dv">&amp;copy;</span> 2016 Skynet, Inc. All rights reserved.<span class="kw">&lt;/p&gt;</span></a></code></pre></div>
 <p><strong>styles.css</strong></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb9-1" title="1">blockquote {</a>
-<a class="sourceLine" id="cb9-2" title="2">  <span class="kw">font-style</span>: <span class="dv">italic</span></a>
-<a class="sourceLine" id="cb9-3" title="3">}</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb9-1" data-line-number="1">blockquote {</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="kw">font-style</span>: <span class="dv">italic</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">}</a></code></pre></div>
 <p>Note that we’ve included an <code>output</code> element within our <strong>_site.yml</strong> file. This defines shared output options for all R Markdown documents within a site. Note that individual documents can also include their own output options, which will be merged with the common options at render time.</p>
 <p>As part of our common output options we’ve specified an HTML footer (via the <code>include: after-body:</code> option) and CSS stylesheet. Note that you can also include HTML before the body or in the document <code>&lt;head&gt;</code>, see the documentation on <a href="https://bookdown.org/yihui/rmarkdown/html-document.html#includes">includes</a> for more details.</p>
 <p>In addition to whatever common options you define, the are two output options which are automatically set when rendering a site:</p>
@@ -556,7 +556,7 @@ knitr::opts_chunk$set(cache=TRUE)
 </div>
 <div id="r-scripts" class="section level3">
 <h3>R Scripts</h3>
-<p>If you have R code that you’d like to share across multiple R Markdown documents within your site you can simply create an R script (e.g. “utils.R”) and then source it within your Rmd files. For example:</p>
+<p>If you have R code that you’d like to share across multiple R Markdown documents within your site you can simply create an R script (e.g. “utils.R”) and then source it within your Rmd files. For example:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r}
 source("utils.R")
 &#96;&#96;&#96;
@@ -591,39 +591,39 @@ sessionInfo()
 <p>The <code>navbar</code> element of <strong>_site.yml</strong> can be used to define a common navigation bar for your website. You can include internal and external links on the navigation bar as well as drop-down menus for sites with a large number of pages.</p>
 <p>Here’s a navigation bar definition that makes use of a variety of features:</p>
 <p><strong>_site.yml</strong></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb10-1" title="1"><span class="fu">name:</span><span class="at"> </span><span class="st">&quot;my-website&quot;</span></a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="fu">navbar:</span></a>
-<a class="sourceLine" id="cb10-3" title="3">  <span class="fu">title:</span><span class="at"> </span><span class="st">&quot;My Website&quot;</span></a>
-<a class="sourceLine" id="cb10-4" title="4">  <span class="fu">type:</span><span class="at"> inverse</span></a>
-<a class="sourceLine" id="cb10-5" title="5">  <span class="fu">left:</span></a>
-<a class="sourceLine" id="cb10-6" title="6">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Home&quot;</span></a>
-<a class="sourceLine" id="cb10-7" title="7">      <span class="fu">icon:</span><span class="at"> fa-home</span></a>
-<a class="sourceLine" id="cb10-8" title="8">      <span class="fu">href:</span><span class="at"> index.html</span></a>
-<a class="sourceLine" id="cb10-9" title="9">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;About&quot;</span></a>
-<a class="sourceLine" id="cb10-10" title="10">      <span class="fu">icon:</span><span class="at"> fa-info</span></a>
-<a class="sourceLine" id="cb10-11" title="11">      <span class="fu">href:</span><span class="at"> about.html</span></a>
-<a class="sourceLine" id="cb10-12" title="12">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;More&quot;</span></a>
-<a class="sourceLine" id="cb10-13" title="13">      <span class="fu">icon:</span><span class="at"> fa-gear</span></a>
-<a class="sourceLine" id="cb10-14" title="14">      <span class="fu">menu:</span></a>
-<a class="sourceLine" id="cb10-15" title="15">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Heading 1&quot;</span></a>
-<a class="sourceLine" id="cb10-16" title="16">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Page A&quot;</span></a>
-<a class="sourceLine" id="cb10-17" title="17">          <span class="fu">href:</span><span class="at"> page_a.html</span></a>
-<a class="sourceLine" id="cb10-18" title="18">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Page B&quot;</span></a>
-<a class="sourceLine" id="cb10-19" title="19">          <span class="fu">href:</span><span class="at"> page_b.html</span></a>
-<a class="sourceLine" id="cb10-20" title="20">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;---------&quot;</span></a>
-<a class="sourceLine" id="cb10-21" title="21">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Heading 2&quot;</span></a>
-<a class="sourceLine" id="cb10-22" title="22">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Page C&quot;</span></a>
-<a class="sourceLine" id="cb10-23" title="23">          <span class="fu">href:</span><span class="at"> page_c.html</span></a>
-<a class="sourceLine" id="cb10-24" title="24">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Page D&quot;</span></a>
-<a class="sourceLine" id="cb10-25" title="25">          <span class="fu">href:</span><span class="at"> page_d.html</span></a>
-<a class="sourceLine" id="cb10-26" title="26">  <span class="fu">right:</span></a>
-<a class="sourceLine" id="cb10-27" title="27">    <span class="kw">-</span> <span class="fu">icon:</span><span class="at"> fa-question fa-lg</span></a>
-<a class="sourceLine" id="cb10-28" title="28">      <span class="fu">href:</span><span class="at"> https://example.com</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="fu">name:</span><span class="at"> </span><span class="st">&quot;my-website&quot;</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="fu">navbar:</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">  <span class="fu">title:</span><span class="at"> </span><span class="st">&quot;My Website&quot;</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">  <span class="fu">type:</span><span class="at"> inverse</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">  <span class="fu">left:</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Home&quot;</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">      <span class="fu">icon:</span><span class="at"> fa-home</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">      <span class="fu">href:</span><span class="at"> index.html</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;About&quot;</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">      <span class="fu">icon:</span><span class="at"> fa-info</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">      <span class="fu">href:</span><span class="at"> about.html</span></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">    <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;More&quot;</span></a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">      <span class="fu">icon:</span><span class="at"> fa-gear</span></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14">      <span class="fu">menu:</span></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Heading 1&quot;</span></a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Page A&quot;</span></a>
+<a class="sourceLine" id="cb10-17" data-line-number="17">          <span class="fu">href:</span><span class="at"> page_a.html</span></a>
+<a class="sourceLine" id="cb10-18" data-line-number="18">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Page B&quot;</span></a>
+<a class="sourceLine" id="cb10-19" data-line-number="19">          <span class="fu">href:</span><span class="at"> page_b.html</span></a>
+<a class="sourceLine" id="cb10-20" data-line-number="20">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;---------&quot;</span></a>
+<a class="sourceLine" id="cb10-21" data-line-number="21">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Heading 2&quot;</span></a>
+<a class="sourceLine" id="cb10-22" data-line-number="22">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Page C&quot;</span></a>
+<a class="sourceLine" id="cb10-23" data-line-number="23">          <span class="fu">href:</span><span class="at"> page_c.html</span></a>
+<a class="sourceLine" id="cb10-24" data-line-number="24">        <span class="kw">-</span> <span class="fu">text:</span><span class="at"> </span><span class="st">&quot;Page D&quot;</span></a>
+<a class="sourceLine" id="cb10-25" data-line-number="25">          <span class="fu">href:</span><span class="at"> page_d.html</span></a>
+<a class="sourceLine" id="cb10-26" data-line-number="26">  <span class="fu">right:</span></a>
+<a class="sourceLine" id="cb10-27" data-line-number="27">    <span class="kw">-</span> <span class="fu">icon:</span><span class="at"> fa-question fa-lg</span></a>
+<a class="sourceLine" id="cb10-28" data-line-number="28">      <span class="fu">href:</span><span class="at"> https://example.com</span></a></code></pre></div>
 <p>This example demonstrates a number of capabilities of navigation bars:</p>
 <ol style="list-style-type: decimal">
 <li><p>You can use the <code>type</code> field to choose between the “default” and “inverse” navigation bar style (each theme includes distinct colors for “default” and “inverse” navigation bars).</p></li>
 <li><p>You can align navigational items either to the <code>left</code> or to the <code>right</code>.</p></li>
-<li><p>You can include menus on the navigation bar, and those menus can have separators (<code>text: "--------------"</code>) and internal headings (<code>text</code> without a corresponding <code>href</code>).</p></li>
+<li><p>You can include menus on the navigation bar, and those menus can have separators (<code>text: &quot;--------------&quot;</code>) and internal headings (<code>text</code> without a corresponding <code>href</code>).</p></li>
 <li><p>You can include both internal and external links on the navigation bar.</p></li>
 <li>You can use icons on the navigation bar. Icons from three different icon sets are available.
 <ul>
@@ -631,7 +631,7 @@ sessionInfo()
 <li><a href="http://ionicons.com/">Ionicons</a></li>
 <li><a href="https://getbootstrap.com/components/#glyphicons">Bootstrap Glyphicons</a></li>
 </ul>
-<p>When referring to an icon you should use it’s full name including the icon set prefix (e.g. “fa-github”, “ion-social-twitter”, “glyphicon-time”, etc.).</p></li>
+<p>When referring to an icon you should use it’s full name including the icon set prefix (e.g. “fa-github”, “ion-social-twitter”, “glyphicon-time”, etc.).</p></li>
 </ol>
 <div id="html-navigation-bar" class="section level3 toc-ignore">
 <h3>HTML Navigation Bar</h3>
@@ -652,17 +652,17 @@ sessionInfo()
 <h3>htmltools Package</h3>
 <p>If the facilities described above don’t meet your requirements, you can also generate custom HTML from your R code using the <strong>htmltools</strong> package. The <strong>htmltools</strong> package enables you to write HTML using a convenient R based syntax (this is the same core HTML generation facility used by the <a href="http://shiny.rstudio.com">shiny</a> package).</p>
 <p>Here’s an example of an R function that creates a <a href="https://getbootstrap.com">Bootstrap</a> thumbnail div:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">library</span>(htmltools)</a>
-<a class="sourceLine" id="cb11-2" title="2">thumbnail &lt;-<span class="st"> </span><span class="cf">function</span>(title, img, href, <span class="dt">caption =</span> <span class="ot">TRUE</span>) {</a>
-<a class="sourceLine" id="cb11-3" title="3">  <span class="kw">div</span>(<span class="dt">class =</span> <span class="st">&quot;col-sm-4&quot;</span>,</a>
-<a class="sourceLine" id="cb11-4" title="4">      <span class="kw">a</span>(<span class="dt">class =</span> <span class="st">&quot;thumbnail&quot;</span>, <span class="dt">title =</span> title, <span class="dt">href =</span> href,</a>
-<a class="sourceLine" id="cb11-5" title="5">        <span class="kw">img</span>(<span class="dt">src =</span> img),</a>
-<a class="sourceLine" id="cb11-6" title="6">        <span class="kw">div</span>(<span class="dt">class =</span> <span class="kw">ifelse</span>(caption, <span class="st">&quot;caption&quot;</span>, <span class="st">&quot;&quot;</span>),</a>
-<a class="sourceLine" id="cb11-7" title="7">          <span class="kw">ifelse</span>(caption, title, <span class="st">&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb11-8" title="8">        )</a>
-<a class="sourceLine" id="cb11-9" title="9">      )</a>
-<a class="sourceLine" id="cb11-10" title="10">  )</a>
-<a class="sourceLine" id="cb11-11" title="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">library</span>(htmltools)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">thumbnail &lt;-<span class="st"> </span><span class="cf">function</span>(title, img, href, <span class="dt">caption =</span> <span class="ot">TRUE</span>) {</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">  <span class="kw">div</span>(<span class="dt">class =</span> <span class="st">&quot;col-sm-4&quot;</span>,</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">      <span class="kw">a</span>(<span class="dt">class =</span> <span class="st">&quot;thumbnail&quot;</span>, <span class="dt">title =</span> title, <span class="dt">href =</span> href,</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">        <span class="kw">img</span>(<span class="dt">src =</span> img),</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">        <span class="kw">div</span>(<span class="dt">class =</span> <span class="kw">ifelse</span>(caption, <span class="st">&quot;caption&quot;</span>, <span class="st">&quot;&quot;</span>),</a>
+<a class="sourceLine" id="cb11-7" data-line-number="7">          <span class="kw">ifelse</span>(caption, title, <span class="st">&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8">        )</a>
+<a class="sourceLine" id="cb11-9" data-line-number="9">      )</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">  )</a>
+<a class="sourceLine" id="cb11-11" data-line-number="11">}</a></code></pre></div>
 <p>You can write functions which build HTML like the one above then call them from other R code which combines them with your data to produce dynamic HTML. An R code chunk that makes use of this function might look like this:</p>
 <pre class="markdown"><code>&#96;&#96;&#96;{r, echo=FALSE}
 thumbnail("Apple", "images/apple.png", "https://en.wikipedia.org/wiki/Apple")
@@ -675,19 +675,19 @@ thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
 <div id="site-configuration" class="section level2">
 <h2>Site Configuration</h2>
 <p>The <strong>_site.yml</strong> file has a number of options that affect site output including where it is written and what files are included and excluded from the site. Here’s an example that makes use of a few of these options:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb12-1" title="1"><span class="fu">name:</span><span class="at"> </span><span class="st">&quot;my-website&quot;</span></a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="fu">output_dir:</span><span class="at"> </span><span class="st">&quot;_site&quot;</span></a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="fu">include:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;import.R&quot;</span><span class="kw">]</span></a>
-<a class="sourceLine" id="cb12-4" title="4"><span class="fu">exclude:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;docs.txt&quot;</span><span class="kw">,</span> <span class="st">&quot;*.csv&quot;</span><span class="kw">]</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="fu">name:</span><span class="at"> </span><span class="st">&quot;my-website&quot;</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="fu">output_dir:</span><span class="at"> </span><span class="st">&quot;_site&quot;</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="fu">include:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;import.R&quot;</span><span class="kw">]</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="fu">exclude:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;docs.txt&quot;</span><span class="kw">,</span> <span class="st">&quot;*.csv&quot;</span><span class="kw">]</span></a></code></pre></div>
 <p>The <code>name</code> field provides a suggested URL path for your website when it is published (by default this is just the name of the directory containing the site).</p>
-<p>The <code>output_dir</code> field indicates which directory to copy site content into ("_site" is the default if none is specified). Note that this can be “.” to keep all content within the root website directory alongside the source code.</p>
+<p>The <code>output_dir</code> field indicates which directory to copy site content into (&quot;_site&quot; is the default if none is specified). Note that this can be “.” to keep all content within the root website directory alongside the source code.</p>
 <div id="included-files" class="section level3 toc-ignore">
 <h3>Included Files</h3>
-<p>The <code>include</code> and <code>exclude</code> fields enable you to override the default behavior visa-vi what files are copied into the output directory. By default, all files within the website directory are copied into the output directory (e.g. "_site") save for the following:</p>
+<p>The <code>include</code> and <code>exclude</code> fields enable you to override the default behavior visa-vi what files are copied into the output directory. By default, all files within the website directory are copied into the output directory (e.g. &quot;_site&quot;) save for the following:</p>
 <ol style="list-style-type: decimal">
 <li><p>Files beginning with “.” (hidden files).</p></li>
-<li><p>Files beginning with "_"</p></li>
-<li><p>Files known to contain R source code (e.g. “.R”, “.s”, “.Rmd”), R data (e.g. “.RData”, “.rds”), or configuration data (e.g. “.Rproj”, “rsconnect”)).</p></li>
+<li><p>Files beginning with &quot;_&quot;</p></li>
+<li><p>Files known to contain R source code (e.g. “.R”, “.s”, “.Rmd”), R data (e.g. “.RData”, “.rds”), or configuration data (e.g. “.Rproj”, “rsconnect”)).</p></li>
 </ol>
 <p>The <code>include</code> and <code>exclude</code> fields of <strong>_site.yml</strong> can be used to override this default behavior (wildcards can be used to specify groups of files to be included or excluded).</p>
 <p>Note that <code>include</code> and <code>exclude</code> are <em>not</em> used to determine which Rmd files are rendered (all of them in the root directory save for those named with the <code>_</code> prefix will be rendered).</p>

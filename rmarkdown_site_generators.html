@@ -49,7 +49,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(title);
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -312,18 +312,18 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <h2>Site Generator Function</h2>
 <p>A site generator is an R function that is bound to by including it in the “site:” field of the “index.Rmd” or “index.md” file. For example:</p>
 <p><strong>index.Rmd</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb1-1" title="1">---</a>
-<a class="sourceLine" id="cb1-2" title="2">title: &quot;My Book&quot;</a>
-<a class="sourceLine" id="cb1-3" title="3">output: bookdown::gitbook</a>
-<a class="sourceLine" id="cb1-4" title="4">site: bookdown::bookdown_site</a>
-<a class="sourceLine" id="cb1-5" title="5">---</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb1-1" data-line-number="1">---</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">title: &quot;My Book&quot;</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">output: bookdown::gitbook</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">site: bookdown::bookdown_site</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">---</a></code></pre></div>
 <p>A site generation function should return a list with the following elements:</p>
 <dl>
 <dt>name</dt>
 <dd><p>The name for the website (e.g. the parent directory name).</p>
 </dd>
 <dt>output_dir</dt>
-<dd><p>The directory where the website output is written to. This path should be relative to the site directory (e.g. “.” or "_site")</p>
+<dd><p>The directory where the website output is written to. This path should be relative to the site directory (e.g. “.” or &quot;_site&quot;)</p>
 </dd>
 <dt>render</dt>
 <dd><p>An R function that can be called to generate the site. The function should accept the <code>input_file</code>, <code>output_format</code>, <code>envir</code>, <code>quiet</code>, and <code>encoding</code> arguments.</p>
@@ -334,8 +334,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </dl>
 <p>Note that the <code>input_file</code> argument will be NULL when the entire site is being generated. It will be set to a specific file name if a front-end tool is attempting to preview it (e.g. RStudio IDE via the Knit button).</p>
 <p>When <code>quiet = FALSE</code> the <code>render</code> function should also print a line of output using the <code>message</code> function indicating which output file should be previewed, for example:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="cf">if</span> (<span class="op">!</span>quiet)</a>
-<a class="sourceLine" id="cb2-2" title="2">  <span class="kw">message</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Output created: &quot;</span>, output)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span>quiet)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">message</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Output created: &quot;</span>, output)</a></code></pre></div>
 <p>Emitting this line enables front-ends like RStudio to determine which file they should open to preview the website.</p>
 </div>
 <div id="examples" class="section level2">
