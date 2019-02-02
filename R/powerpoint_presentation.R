@@ -75,10 +75,6 @@ reference_intermediates_generator <- function(
 ) {
   res <- general_intermediates_generator(saved_files_dir,  original_input, encoding, intermediates_dir)
   if (is.null(reference_doc) || identical(reference_doc, 'default')) return(res)
-  if (dirname(reference_doc) != '.') stop(
-    'The reference document ', reference_doc, 'must be under the directory ', getwd(),
-    ' and its path must be ', basename(reference_doc)
-  )
   file.copy(reference_doc, intermediates_dir)
   c(res, file.path(intermediates_dir, basename(reference_doc)))
 }
