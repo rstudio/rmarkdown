@@ -173,17 +173,17 @@ function Link(s, src, tit)
          escape(tit,true) .. "'>" .. s .. "</a>"
 end
 
-function Image(s, src, tit)
-  return "<img src='" .. escape(src,true) .. "' title='" ..
+function Image(s, src, tit, attr)
+  return "<img" .. attributes(attr) .. " src='" .. escape(src,true) .. "' title='" ..
          escape(tit,true) .. "'/>"
 end
 
-function CaptionedImage(src, tit, s)
+function CaptionedImage(src, tit, s, attr)
   local caption = ""
   if fig_caption and (string.len(s) > 0) then
     caption = "<p class='caption'>" .. s .. "</p>"
   end
-  return Image(s, src, tit) .. caption
+  return Image(s, src, tit, attr) .. caption
 end
 
 function Code(s, attr)
