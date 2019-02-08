@@ -34,9 +34,15 @@ p {
   height: 520px;
 }
 
+.band.full.fourth {
+  height: 520px;
+  overflow: hidden;
+}
+
 .bandContent, .standardPadding .articleBandContent {
   margin: 0 auto;
   max-width: 1140px;
+  z-index: 2;
 }
 
 .vCenter {
@@ -80,6 +86,14 @@ p {
   z-index: 5;
 }
 
+.band .imageFour {
+  position: absolute;
+  width: auto;
+  height: auto;
+  right: 0px;
+  bottom: 0px;
+  z-index:1;
+}
 
 #rStudioHeader {
   position: fixed;
@@ -435,6 +449,10 @@ p {
 
 #homeContent .band.gray1 {
   background-color: #f8f8f8;
+}
+
+#homeContent .band.gray2 {
+  background-color: #f0f0f0;
 }
 
 #homeContent .band.blue {
