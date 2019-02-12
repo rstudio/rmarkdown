@@ -227,14 +227,11 @@ trim_trailing_ws <- function(x) {
 
 # Find common base directory, throw error if it doesn't exist
 base_dir <- function(x) {
-  abs <- vapply(x, tools::file_path_as_absolute, character(1))
-
-  base <- unique(dirname(abs))
+  base <- unique(dirname(x))
   if (length(base) > 1) {
     stop("Input files not all in same directory, please supply explicit wd",
       call. = FALSE)
   }
-
   base
 }
 

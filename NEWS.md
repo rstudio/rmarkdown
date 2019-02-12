@@ -5,6 +5,9 @@ rmarkdown 1.12
 
 * Added a new argument `extra_lines` to `latex_dependency()` to allow users to add extra lines of LaTeX code after `\usepackage{}`. Also added a helper function `latex_dependency_tikz()` based on `latex_dependency()` (#1502, @malcolmbarrett).
 
+* Fixed #1529: when the path of an Rmd file contains Unicode characters that cannot be represented in the system native encoding (especially on Windows), `rmarkdown::render()` may fail.
+
+
 rmarkdown 1.11
 ================================================================================
 
