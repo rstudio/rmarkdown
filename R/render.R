@@ -863,7 +863,7 @@ render <- function(input,
 
   if (run_pandoc) {
     # return the full path to the output file
-    output_file <- tools::file_path_as_absolute(output_file)
+    output_file <- abs_path(output_file)
     # attach the metadata specified as rmd_output_metadata in YAML
     if (length(output_meta <- output_metadata$get()))
       attr(output_file, 'rmd_output_metadata') <- output_meta

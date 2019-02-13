@@ -249,6 +249,18 @@ same_path <- function(path1, path2, ...) {
   normalize_path(path1, ...) == normalize_path(path2, ...)
 }
 
+# normalizePath() doesn't work if the path contains Unicode characters that
+# cannot be represented in the current system locale, even if the file exists
+abs_path <- function(x) {
+  if (!file.exists(x)) stop("The file '", x, "' does not exist.")
+  res <- normalize_path(x, mustWork = FALSE)
+  if (file.exists(res)) return(res)
+  if (!requireNamespace('gs')) warning(
+    'normalizePath() cannot make the path(s) absolute. The fs package is required.'
+  )
+  as.character(fs::path_abs(x))
+}
+
 # Regular expression representing characters likely to be considered special by
 # the shell (require quoting/escaping)
 .shell_chars_regex <- '[ <>()|\\:&;#?*\']'
