@@ -255,7 +255,7 @@ abs_path <- function(x) {
   if (!file.exists(x)) stop("The file '", x, "' does not exist.")
   res <- normalize_path(x, mustWork = FALSE)
   if (file.exists(res)) return(res)
-  if (!requireNamespace('gs')) warning(
+  if (!requireNamespace('fs')) warning(
     'normalizePath() cannot make the path(s) absolute. The fs package is required.'
   )
   as.character(fs::path_abs(x))
