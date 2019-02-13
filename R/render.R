@@ -284,7 +284,7 @@ render <- function(input,
   force(knit_root_dir)
 
   # execute within the input file's directory
-  oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
+  oldwd <- setwd(dirname(abs_path(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
   # reset the name of the input file to be relative and calculate variations

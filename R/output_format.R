@@ -372,7 +372,7 @@ default_output_format <- function(input,
 
   # execute within the input file's directory (this emulates the way
   # yaml front matter discovery is done within render)
-  oldwd <- setwd(dirname(tools::file_path_as_absolute(input)))
+  oldwd <- setwd(dirname(abs_path(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
   # because we're now within the same directory as the input file,
