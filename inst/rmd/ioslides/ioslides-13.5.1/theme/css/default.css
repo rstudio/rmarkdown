@@ -1410,6 +1410,15 @@ aside.gdbar img {
   display: none;
 }
 
+slides > slide {
+  background: linear-gradient(#ffffff, #ffffff 85%, #e6e6e6);
+  background-color: white;
+}
+slides > slide {
+  display: block;
+  opacity: 0;
+}
+
 @media print {
   /* line 978, ../scss/default.scss */
   slides slide {
