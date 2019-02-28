@@ -239,7 +239,6 @@ body {
 
 /* line 62, ../scss/default.scss */
 slides > slide {
-  display: none;
   font-family: 'Open Sans', Arial, sans-serif;
   font-size: 26px;
   color: #797979;
@@ -260,11 +259,9 @@ slides > slide {
 }
 /* line 83, ../scss/default.scss */
 slides > slide.far-past {
-  display: none;
 }
 /* line 90, ../scss/default.scss */
 slides > slide.past {
-  display: block;
   opacity: 0;
 }
 /* line 97, ../scss/default.scss */
@@ -289,13 +286,11 @@ slides > slide.current .gdbar {
 }
 /* line 112, ../scss/default.scss */
 slides > slide.next {
-  display: block;
   opacity: 0;
   pointer-events: none;
 }
 /* line 120, ../scss/default.scss */
 slides > slide.far-next {
-  display: none;
 }
 /* line 127, ../scss/default.scss */
 slides > slide.dark {
@@ -370,8 +365,6 @@ slides.layout-faux-widescreen > slide {
 /* line 217, ../scss/default.scss */
 slides.layout-widescreen > slide.far-past,
 slides.layout-faux-widescreen > slide.far-past {
-  display: block;
-  display: none;
   -webkit-transform: translate(-2260px);
   -moz-transform: translate(-2260px);
   -ms-transform: translate(-2260px);
@@ -405,8 +398,6 @@ slides.layout-faux-widescreen > slide.next {
 /* line 246, ../scss/default.scss */
 slides.layout-widescreen > slide.far-next,
 slides.layout-faux-widescreen > slide.far-next {
-  display: block;
-  display: none;
   -webkit-transform: translate(2260px);
   -moz-transform: translate(2260px);
   -ms-transform: translate(2260px);
@@ -1419,7 +1410,6 @@ slides > slide {
   background-color: white;
 }
 slides > slide {
-  display: block;
   opacity: 0;
 }
 
