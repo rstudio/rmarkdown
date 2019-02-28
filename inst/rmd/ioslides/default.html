@@ -90,6 +90,10 @@ $endfor$
       transition: opacity 0.6s ease-in $transition$s;
       opacity: 0;
     }
+/* https://github.com/ropensci/plotly/pull/524#issuecomment-468142578 */
+slide:not(.current) .plotly.html-widget{
+  display: block;
+}
 
 $if(logo)$
     slides > slide:not(.nobackground):before {
