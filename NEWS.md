@@ -7,6 +7,7 @@ rmarkdown 1.12
 
 * Fixed #1529: when the path of an Rmd file contains Unicode characters that cannot be represented in the system native encoding (especially on Windows), `rmarkdown::render()` may fail.
 
+* Applied a correct fix to an old **plotly** issue ropensci/plotly#463.
 
 rmarkdown 1.11
 ================================================================================

@@ -271,6 +271,10 @@ slides > slide.past {
 slides > slide.current {
   display: block;
   opacity: 1;
+  z-index: 1;
+}
+slides > slide:not(.current) {
+  z-index: 0;
 }
 /* line 103, ../scss/default.scss */
 slides > slide.current .auto-fadein {
