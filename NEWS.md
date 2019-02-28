@@ -9,6 +9,9 @@ rmarkdown 1.12
 
 * Applied a correct fix to an old **plotly** issue ropensci/plotly#463.
 
+* HTML widgets used to be hidden when printing ioslides to PDF in Chrome. Now they will be printed correctly.
+
+
 rmarkdown 1.11
 ================================================================================
 
