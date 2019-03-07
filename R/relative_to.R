@@ -35,3 +35,8 @@ normalized_relative_to <- function(dir, file) {
     normalize_path(dir, mustWork = FALSE),
     normalize_path(file, mustWork = FALSE))
 }
+
+# If a path is a relative path, it should be the same as ./path
+is_relative <- function(path) {
+  same_path(path, file.path('.', path), mustWork = FALSE)
+}
