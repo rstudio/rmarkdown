@@ -539,11 +539,11 @@ $endif$
 $if(title)$
 <h1 class="title toc-ignore">$title$</h1>
 $if(subtitle)$
-<h3 class="subtitle"><em>$subtitle$</em></h3>
+<h3 class="subtitle">$subtitle$</h3>
 $endif$
 $for(author)$
 $if(author.name)$
-<h4 class="author"><em>$author.name$</em></h4>
+<h4 class="author">$author.name$</h4>
 $if(author.affiliation)$
 <address class="author_afil">
 $author.affiliation$<br>$endif$
@@ -552,11 +552,11 @@ $if(author.email)$
 </address>
 $endif$
 $else$
-<h4 class="author"><em>$author$</em></h4>
+<h4 class="author">$author$</h4>
 $endif$
 $endfor$
 $if(date)$
-<h4 class="date"><em>$date$</em></h4>
+<h4 class="date">$date$</h4>
 $endif$
 $if(abstract)$
 <div class="abstract">
