@@ -697,7 +697,7 @@ render <- function(input,
 
   # clean the files_dir if we've either been asking to clean supporting files or
   # the knitr cache is active
-  if (output_format$clean_supporting && (is.null(cache_dir) || !dir_exists(cache_dir)))
+  if (output_format$clean_supporting && !dir_exists(cache_dir))
       intermediates <- c(intermediates, files_dir)
 
   # read the input text as UTF-8 then write it back out

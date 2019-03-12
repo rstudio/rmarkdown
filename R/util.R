@@ -120,7 +120,7 @@ clean_tmpfiles <- function() {
 }
 
 dir_exists <- function(x) {
-  utils::file_test('-d', x)
+  length(x) > 0 && utils::file_test('-d', x)
 }
 
 file_with_ext <- function(file, ext) {
