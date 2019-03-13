@@ -13,6 +13,8 @@ rmarkdown 1.12
 
 * `render(output_format = 'all')` may delete the figure directories that are still needed by certain output formats when one output format doesn't need its figure directory (thanks, @rmcd1024 #1472, @cderv #1503).
 
+* The `<em>` tags in the subtitle, date, and author are removed from the default HTML template (thanks, @royfrancis, #1544).
+
 
 rmarkdown 1.11
 ================================================================================
