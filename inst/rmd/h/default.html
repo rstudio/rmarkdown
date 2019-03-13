@@ -145,9 +145,7 @@ $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
 
-</head>
 
-<body>
 
 $if(theme)$
 <style type = "text/css">
@@ -294,8 +292,6 @@ $$(document).ready(function () {
 });
 </script>
 $endif$
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -494,6 +490,20 @@ $else$
 $endif$
 
 </style>
+
+$endif$
+
+$endif$
+
+</head>
+
+<body>
+
+$if(theme)$
+
+<div class="container-fluid main-container">
+
+$if(toc_float)$
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
