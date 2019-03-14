@@ -255,7 +255,7 @@ knit_params_ask <- function(file = NULL,
                             params = NULL,
                             shiny_args = NULL,
                             save_caption = "Save",
-                            encoding = getOption("encoding")) {
+                            encoding = "UTF-8") {
 
   if (is.null(input_lines)) {
     if (is.null(file)) {

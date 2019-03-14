@@ -5,8 +5,7 @@
 \title{Run a shiny application asking for parameter configuration for the given document.}
 \usage{
 knit_params_ask(file = NULL, input_lines = NULL, params = NULL,
-  shiny_args = NULL, save_caption = "Save",
-  encoding = getOption("encoding"))
+  shiny_args = NULL, save_caption = "Save", encoding = "UTF-8")
 }
 \arguments{
 \item{file}{Path to the R Markdown document with configurable parameters.}

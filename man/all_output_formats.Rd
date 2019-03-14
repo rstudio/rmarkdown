@@ -4,7 +4,7 @@
 \alias{all_output_formats}
 \title{Determine all output formats for an R Markdown document}
 \usage{
-all_output_formats(input, encoding = getOption("encoding"))
+all_output_formats(input, encoding = "UTF-8")
 }
 \arguments{
 \item{input}{Input file (Rmd or plain markdown)}

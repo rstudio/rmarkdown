@@ -159,7 +159,7 @@ render <- function(input,
                    envir = parent.frame(),
                    run_pandoc = TRUE,
                    quiet = FALSE,
-                   encoding = getOption("encoding")) {
+                   encoding = "UTF-8") {
 
   perf_timer_start("render")
 

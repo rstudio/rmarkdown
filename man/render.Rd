@@ -9,7 +9,7 @@ render(input, output_format = NULL, output_file = NULL,
   knit_root_dir = NULL, runtime = c("auto", "static", "shiny",
   "shiny_prerendered"), clean = TRUE, params = NULL,
   knit_meta = NULL, envir = parent.frame(), run_pandoc = TRUE,
-  quiet = FALSE, encoding = getOption("encoding"))
+  quiet = FALSE, encoding = "UTF-8")
 }
 \arguments{
 \item{input}{The input file to be rendered. This can be an R script (.R),

@@ -157,7 +157,7 @@ render_site <- function(input = ".",
                         output_format = "all",
                         envir = parent.frame(),
                         quiet = FALSE,
-                        encoding = getOption("encoding")) {
+                        encoding = "UTF-8") {
 
   # capture original input
   original_input <- input
@@ -204,7 +204,7 @@ render_site <- function(input = ".",
 #'   removing them.
 #' @export
 clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
-                       encoding = getOption("encoding")) {
+                       encoding = "UTF-8") {
 
   # normalize to a directory
   input <- input_as_dir(input)
@@ -236,7 +236,7 @@ clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
 #' @export
 site_generator <- function(input = ".",
                            output_format = NULL,
-                           encoding = getOption("encoding")) {
+                           encoding = "UTF-8") {
 
   # normalize input
   input <- input_as_dir(input)
@@ -276,7 +276,7 @@ site_generator <- function(input = ".",
 
 #' @rdname render_site
 #' @export
-site_config <- function(input = ".", encoding = getOption("encoding")) {
+site_config <- function(input = ".", encoding = "UTF-8") {
 
   # normalize input
   input <- input_as_dir(input)
@@ -311,12 +311,12 @@ site_config <- function(input = ".", encoding = getOption("encoding")) {
 #' @rdname render_site
 #' @param ... Currently unused.
 #' @export
-default_site_generator <- function(input, encoding = getOption("encoding"), ...) {
+default_site_generator <- function(input, encoding = "UTF-8", ...) {
   default_site(input, encoding, ...)
 }
 
 # default site implementation (can be overridden by custom site generators)
-default_site <- function(input, encoding = getOption("encoding"), ...) {
+default_site <- function(input, encoding = "UTF-8", ...) {
 
   # get the site config
   config <- site_config(input, encoding)
@@ -498,7 +498,7 @@ render_new_session <- function(...) {
 }
 
 # utility function to copy all files into the _site directory
-copy_site_resources <- function(input, encoding = getOption("encoding")) {
+copy_site_resources <- function(input, encoding = "UTF-8") {
 
   # get the site config
   config <- site_config(input, encoding)
@@ -592,7 +592,7 @@ site_resources <- function(site_dir, include = NULL, exclude = NULL, recursive =
 # utility function to list the files that should be copied
 copyable_site_resources <- function(input,
                                     config = site_config(input, encoding),
-                                    encoding = getOption("encoding")) {
+                                    encoding = "UTF-8") {
 
   include <- config$include
 

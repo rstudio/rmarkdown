@@ -9,18 +9,16 @@
 \title{Render multiple documents as a website}
 \usage{
 render_site(input = ".", output_format = "all",
-  envir = parent.frame(), quiet = FALSE,
-  encoding = getOption("encoding"))
+  envir = parent.frame(), quiet = FALSE, encoding = "UTF-8")
 
 clean_site(input = ".", preview = FALSE, quiet = FALSE,
-  encoding = getOption("encoding"))
+  encoding = "UTF-8")
 
-site_generator(input = ".", output_format = NULL,
-  encoding = getOption("encoding"))
+site_generator(input = ".", output_format = NULL, encoding = "UTF-8")
 
-site_config(input = ".", encoding = getOption("encoding"))
+site_config(input = ".", encoding = "UTF-8")
 
-default_site_generator(input, encoding = getOption("encoding"), ...)
+default_site_generator(input, encoding = "UTF-8", ...)
 }
 \arguments{
 \item{input}{Website directory (or the name of a file within the directory).}

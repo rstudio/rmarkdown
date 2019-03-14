@@ -4,7 +4,7 @@
 \alias{default_output_format}
 \title{Determine the default output format for an R Markdown document}
 \usage{
-default_output_format(input, encoding = getOption("encoding"))
+default_output_format(input, encoding = "UTF-8")
 }
 \arguments{
 \item{input}{Input file (Rmd or plain markdown)}

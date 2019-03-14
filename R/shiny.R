@@ -82,7 +82,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       } else {
         # look for first one that has runtime: shiny
         for (rmd in allRmds) {
-          encoding <- render_args$encoding %||% getOption("encoding")
+          encoding <- render_args$encoding %||% "UTF-8"
           runtime <- yaml_front_matter(file.path(dir, rmd), encoding)$runtime
           if (is_shiny(runtime)) {
             default_file <- rmd

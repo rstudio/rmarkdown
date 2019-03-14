@@ -50,7 +50,7 @@
 #'      from the document}
 #'   }
 #' @export
-find_external_resources <- function(input_file, encoding = getOption("encoding")) {
+find_external_resources <- function(input_file, encoding = "UTF-8") {
 
   # ensure we're working with valid input
   ext <- tolower(tools::file_ext(input_file))
