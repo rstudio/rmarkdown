@@ -171,7 +171,7 @@ pdf_document <- function(toc = FALSE,
     input_test <- read_utf8(input_file)
 
     # set the margin to 1 inch if no geometry options or document class specified
-    if (!has_yaml_parameter(input_test, "geometry") || !has_yaml_parameter(input_test, "documentclass"))
+    if (!has_yaml_parameter(input_test, "(geometry|documentclass)"))
       args <- c(args, "--variable", "geometry:margin=1in")
 
     # use titling package to change title format to be more compact by default
