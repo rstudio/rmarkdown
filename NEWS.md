@@ -5,6 +5,7 @@ rmarkdown 1.13
 
 - The default value of the `encoding` argument in all functions in this package (such as `render()` and `render_site()`) has been changed from `getOption("encoding")` to `UTF-8`. We have been hoping to support UTF-8 only in **rmarkdown**, **knitr**, and other related packages in the future. For more info, you may read https://yihui.name/en/2018/11/biggest-regret-knitr/.
 
+- The `toc_float = yes` now preserves the text formatting (@codetrainee, #1548).
 
 rmarkdown 1.12
 ================================================================================
