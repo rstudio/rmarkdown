@@ -81,7 +81,11 @@ metadata <- list()
 #' output filename will be based on filename for the input file. If a filename
 #' is provided, a path to the output file can also be provided. Note that the
 #' \code{output_dir} option allows for specifying the output file path as well,
-#' however, if also specifying the path, the directory must exist.
+#' however, if also specifying the path, the directory must exist. If
+#' \code{output_file} is specified but does not have a file extension, an
+#' extension will be automatically added according to the output format. To
+#' avoid the automatic file extension, put the \code{output_file} value in
+#' \code{\link{I}()}, e.g., \code{I('my-output')}.
 #' @param output_dir The output directory for the rendered \code{output_file}.
 #' This allows for a choice of an alternate directory to which the output file
 #' should be written (the default output directory of that of the input file).
@@ -186,12 +190,12 @@ render <- function(input,
   # then recursively call this function with each format by name
   if (is.character(output_format) && length(output_format) > 1) {
     outputs <- character()
-    for (format in output_format) {
+    for (i in seq_along(output_format)) {
       # the output_file argument is intentionally ignored (we can't give
       # the same name to each rendered output); copy the rest by name
       output <- render(input = input,
-                       output_format = format,
-                       output_file = NULL,
+                       output_format = output_format[i],
+                       output_file = output_file[i],
                        output_dir = output_dir,
                        output_options = output_options,
                        intermediates_dir = intermediates_dir,
@@ -205,10 +209,6 @@ render <- function(input,
                        quiet = quiet,
                        encoding = encoding)
       outputs <- c(outputs, output)
-    }
-    if (length(output_file) > 1) {
-      file.rename(outputs, output_file)
-      outputs <- output_file
     }
     return(invisible(outputs))
   }
@@ -381,8 +381,11 @@ render <- function(input,
   pandoc_to <- output_format$pandoc$to
 
   # generate outpout file based on input filename
-  if (is.null(output_file))
-    output_file <- pandoc_output_file(input, output_format$pandoc)
+  output_auto <- pandoc_output_file(input, output_format$pandoc)
+  if (is.null(output_file) || is.na(output_file)) output_file <- output_auto else {
+    if (!inherits(output_file, "AsIs") && xfun::file_ext(output_file) == "")
+      output_file <- paste(output_file, xfun::file_ext(output_auto), sep = ".")
+  }
 
   # if an output_dir was specified then concatenate it with the output file
   if (!is.null(output_dir)) {

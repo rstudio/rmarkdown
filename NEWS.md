@@ -7,6 +7,8 @@ rmarkdown 1.13
 
 - The option `toc_float: true` for `html_document` now preserves the text formatting (thanks, @codetrainee, #1548).
 
+- For the `output_file` argument of `render()`, a file extension will be automatically added if the filename does not contain an extension (e.g., `render('foo.Rmd', 'html_document', output_file = 'bar')` will generate `bar.html`); see the help page `?rmarkdown::render` for details (thanks, @apreshill, #1551).
+
 rmarkdown 1.12
 ================================================================================
 
