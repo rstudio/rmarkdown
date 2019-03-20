@@ -5,7 +5,7 @@ test_that("formats successfully produce a document", {
   skip_on_cran()
 
   testFormat <- function(output_format, df_print = NULL) {
-    output_file <- tempfile()
+    output_file <- I(tempfile())
     render("test-formats.Rmd",
            output_format = output_format,
            output_file = output_file,
