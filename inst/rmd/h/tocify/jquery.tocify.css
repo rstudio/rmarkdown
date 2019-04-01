@@ -43,10 +43,14 @@
 .tocify-subheader .tocify-subheader {
     text-indent: 30px;
 }
-
-/* Further indents third level subheader elements. You can continue this pattern if you have more nested elements. */
 .tocify-subheader .tocify-subheader .tocify-subheader {
     text-indent: 40px;
+}
+.tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader {
+    text-indent: 50px;
+}
+.tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader {
+    text-indent: 60px;
 }
 
 /* Twitter Bootstrap Override Style */
