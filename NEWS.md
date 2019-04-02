@@ -9,7 +9,7 @@ rmarkdown 1.13
 
 - For the `output_file` argument of `render()`, a file extension will be automatically added if the filename does not contain an extension (e.g., `render('foo.Rmd', 'html_document', output_file = 'bar')` will generate `bar.html`); see the help page `?rmarkdown::render` for details (thanks, @apreshill, #1551).
 
-- TOC items are not correctedly indented when `toc_float` is enabled for the `html_document` format (thanks, @carolynwclayton #1235 and @RLesur #1243).
+- TOC items are not correctly indented when `toc_float` is enabled for the `html_document` format (thanks, @carolynwclayton #1235 and @RLesur #1243).
 
 
 rmarkdown 1.12
