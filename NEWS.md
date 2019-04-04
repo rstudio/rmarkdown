@@ -71,6 +71,8 @@ rmarkdown 1.14
 rmarkdown 1.13
 ================================================================================
 
+- For `pdf_document()`, P=patch the pandoc LaTeX template to include the document subtitle (unnecessary with pandoc 2.6 onwards) using `--include-in-header` rather than overwriting its built-in template, avoiding compability problems with newer versions of pandoc (thanks, @adunning, #1563)
+
 - For `pdf_document()`, do not override margins to 1 inch when a custom document class or geometry settings are specified in the YAML front matter (thanks, @adunning, #1550)
 
 - The default value of the `encoding` argument in all functions in this package (such as `render()` and `render_site()`) has been changed from `getOption("encoding")` to `UTF-8`. We have been hoping to support UTF-8 only in **rmarkdown**, **knitr**, and other related packages in the future. For more info, you may read https://yihui.org/en/2018/11/biggest-regret-knitr/.
