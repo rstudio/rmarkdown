@@ -1,6 +1,8 @@
 rmarkdown 1.13
 ================================================================================
 
+- Fixed [rstudio/shiny#2307](https://github.com/rstudio/shiny/issues/2307) where the second execution of a shiny_prerendred document with href dependencies would cause a prerender check error. (#1562, @schloerke)
+
 - For `pdf_document()`, do not override margins to 1 inch when a custom document class or geometry settings are specified in the YAML front matter (thanks, @adunning, #1550)
 
 - The default value of the `encoding` argument in all functions in this package (such as `render()` and `render_site()`) has been changed from `getOption("encoding")` to `UTF-8`. We have been hoping to support UTF-8 only in **rmarkdown**, **knitr**, and other related packages in the future. For more info, you may read https://yihui.name/en/2018/11/biggest-regret-knitr/.
