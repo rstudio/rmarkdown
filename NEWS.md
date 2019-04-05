@@ -11,6 +11,8 @@ rmarkdown 1.13
 
 - TOC items are not correctly indented when `toc_float` is enabled for the `html_document` format (thanks, @carolynwclayton #1235 and @RLesur #1243).
 
+- Fixed rstudio/shiny#2307 where the second execution of a `shiny_prerendred` document with `href` dependencies would cause a prerender check error (thanks, @schloerke, #1562).
+
 
 rmarkdown 1.12
 ================================================================================

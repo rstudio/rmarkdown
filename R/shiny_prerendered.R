@@ -191,12 +191,17 @@ shiny_prerendered_prerender <- function(
   pkgsSeen <- list()
   for (dep in dependencies) {
     if (is.null(dep$package)) {
-      # if the file doesn't exist at all, render again
-      if (!file.exists(dep$src$file)) {
-        # might create a missing file compile-time error,
-        #   but that's better than a missing file prerendered error
-        return(TRUE)
+      src_file <- dep$src$file
+      if (!is.null(src_file)) {
+        if (!file.exists(src_file)) {
+          # might create a missing file compile-time error,
+          #   but that's better than a missing file prerendered error
+          return(TRUE)
+        }
       }
+      # if there is a dep$src$href but no dep$package,
+      # then we can't determine where the file came from.
+      # Ignore checking for the href files for now, as pkg versions are checked below
     } else {
       depPkg <- dep$package
       depVer <- dep$pkgVersion
