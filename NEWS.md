@@ -11,6 +11,8 @@ rmarkdown 1.13
 
 - TOC items are not correctly indented when `toc_float` is enabled for the `html_document` format (thanks, @carolynwclayton #1235 and @RLesur #1243).
 
+- `render_site` can spin R source files. Use `autospin: true` in the `_site.yml`.
+  (#892, @zeehio)
 
 rmarkdown 1.12
 ================================================================================

@@ -1,5 +1,7 @@
 name: "mysite"
 output_dir: "_site"
+autospin:
+  "PageD.R"
 include: script.R
 exclude: docs.txt
 navbar:
@@ -14,6 +16,7 @@ navbar:
         - { text: "-----------------" }
         - { text: "Header" }
         - { text: "Page C", href: PageC.html }
+        - { text: "Page D", href: PageD.html }
   right:
     - text: "GitHub"
       href: https://github.com
