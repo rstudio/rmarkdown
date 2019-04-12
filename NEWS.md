@@ -13,6 +13,8 @@ rmarkdown 1.13
 
 - Fixed rstudio/shiny#2307 where the second execution of a `shiny_prerendred` document with `href` dependencies would cause a prerender check error (thanks, @schloerke, #1562).
 
+- The `*_files` directory is not properly cleared due to the inappropriate fix for #1503 and #1472 in the last version (thanks, @wxli0 #1553, @cderv #1566).
+
 
 rmarkdown 1.12
 ================================================================================
