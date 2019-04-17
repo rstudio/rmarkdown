@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      
+      <small>Source: <a href='https://github.com/rstudio/rmarkdown/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="rmarkdown-1-13" class="section level1">
@@ -109,13 +109,13 @@
 <a href="#rmarkdown-1-13" class="anchor"></a>rmarkdown 1.13<small> Unreleased </small>
 </h1>
 <ul>
-<li><p>For <code><a href="../reference/pdf_document.html">pdf_document()</a></code>, do not override margins to 1 inch when a custom document class or geometry settings are specified in the YAML front matter (thanks, <a href='https://github.com/adunning'>@adunning</a>, #1550)</p></li>
+<li><p>For <code><a href="../reference/pdf_document.html">pdf_document()</a></code>, do not override margins to 1 inch when a custom document class or geometry settings are specified in the YAML front matter (thanks, <a href='https://github.com/adunning'>@adunning</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1550'>#1550</a>)</p></li>
 <li><p>The default value of the <code>encoding</code> argument in all functions in this package (such as <code><a href="../reference/render.html">render()</a></code> and <code><a href="../reference/render_site.html">render_site()</a></code>) has been changed from <code><a href="https://www.rdocumentation.org/packages/base/topics/options">getOption("encoding")</a></code> to <code>UTF-8</code>. We have been hoping to support UTF-8 only in <strong>rmarkdown</strong>, <strong>knitr</strong>, and other related packages in the future. For more info, you may read <a href="https://yihui.name/en/2018/11/biggest-regret-knitr/" class="uri">https://yihui.name/en/2018/11/biggest-regret-knitr/</a>.</p></li>
-<li><p>The option <code>toc_float: true</code> for <code>html_document</code> now preserves the text formatting (thanks, <a href='https://github.com/codetrainee'>@codetrainee</a>, #1548).</p></li>
-<li><p>For the <code>output_file</code> argument of <code><a href="../reference/render.html">render()</a></code>, a file extension will be automatically added if the filename does not contain an extension (e.g., <code><a href="../reference/render.html">render('foo.Rmd', 'html_document', output_file = 'bar')</a></code> will generate <code>bar.html</code>); see the help page <code><a href="../reference/render.html">?rmarkdown::render</a></code> for details (thanks, <a href='https://github.com/apreshill'>@apreshill</a>, #1551).</p></li>
-<li><p>TOC items are not correctly indented when <code>toc_float</code> is enabled for the <code>html_document</code> format (thanks, <a href='https://github.com/carolynwclayton'>@carolynwclayton</a> #1235 and <a href='https://github.com/RLesur'>@RLesur</a> #1243).</p></li>
-<li><p>Fixed rstudio/shiny#2307 where the second execution of a <code>shiny_prerendred</code> document with <code>href</code> dependencies would cause a prerender check error (thanks, <a href='https://github.com/schloerke'>@schloerke</a>, #1562).</p></li>
-<li><p>The <code>*_files</code> directory is not properly cleared due to the inappropriate fix for #1503 and #1472 in the last version (thanks, <a href='https://github.com/wxli0'>@wxli0</a> #1553, <a href='https://github.com/cderv'>@cderv</a> #1566).</p></li>
+<li><p>The option <code>toc_float: true</code> for <code>html_document</code> now preserves the text formatting (thanks, <a href='https://github.com/codetrainee'>@codetrainee</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1548'>#1548</a>).</p></li>
+<li><p>For the <code>output_file</code> argument of <code><a href="../reference/render.html">render()</a></code>, a file extension will be automatically added if the filename does not contain an extension (e.g., <code><a href="../reference/render.html">render('foo.Rmd', 'html_document', output_file = 'bar')</a></code> will generate <code>bar.html</code>); see the help page <code><a href="../reference/render.html">?rmarkdown::render</a></code> for details (thanks, <a href='https://github.com/apreshill'>@apreshill</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1551'>#1551</a>).</p></li>
+<li><p>TOC items are not correctly indented when <code>toc_float</code> is enabled for the <code>html_document</code> format (thanks, <a href='https://github.com/carolynwclayton'>@carolynwclayton</a> <a href='https://github.com/rstudio/rmarkdown/issues/1235'>#1235</a> and <a href='https://github.com/RLesur'>@RLesur</a> <a href='https://github.com/rstudio/rmarkdown/issues/1243'>#1243</a>).</p></li>
+<li><p>Fixed rstudio/shiny<a href='https://github.com/rstudio/rmarkdown/issues/2307'>#2307</a> where the second execution of a <code>shiny_prerendred</code> document with <code>href</code> dependencies would cause a prerender check error (thanks, <a href='https://github.com/schloerke'>@schloerke</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1562'>#1562</a>).</p></li>
+<li><p>The <code>*_files</code> directory is not properly cleared due to the inappropriate fix for <a href='https://github.com/rstudio/rmarkdown/issues/1503'>#1503</a> and <a href='https://github.com/rstudio/rmarkdown/issues/1472'>#1472</a> in the last version (thanks, <a href='https://github.com/wxli0'>@wxli0</a> <a href='https://github.com/rstudio/rmarkdown/issues/1553'>#1553</a>, <a href='https://github.com/cderv'>@cderv</a> <a href='https://github.com/rstudio/rmarkdown/issues/1566'>#1566</a>).</p></li>
 </ul>
 </div>
     <div id="rmarkdown-1-12" class="section level1">
@@ -123,13 +123,13 @@
 <a href="#rmarkdown-1-12" class="anchor"></a>rmarkdown 1.12<small> 2019-03-14 </small>
 </h1>
 <ul>
-<li><p>Fixed file extensions of output files when using non-markdown Pandoc extensions such as <code>docx+styles</code> (#1494, <a href='https://github.com/noamross'>@noamross</a>).</p></li>
-<li><p>Added a new argument <code>extra_lines</code> to <code><a href="../reference/latex_dependency.html">latex_dependency()</a></code> to allow users to add extra lines of LaTeX code after <code>\usepackage{}</code>. Also added a helper function <code><a href="../reference/latex-dependencies.html">latex_dependency_tikz()</a></code> based on <code><a href="../reference/latex_dependency.html">latex_dependency()</a></code> (#1502, <a href='https://github.com/malcolmbarrett'>@malcolmbarrett</a>).</p></li>
-<li><p>Fixed #1529: when the path of an Rmd file contains Unicode characters that cannot be represented in the system native encoding (especially on Windows), <code><a href="../reference/render.html">rmarkdown::render()</a></code> may fail.</p></li>
-<li><p>Applied a correct fix to an old <strong>plotly</strong> issue ropensci/plotly#463.</p></li>
+<li><p>Fixed file extensions of output files when using non-markdown Pandoc extensions such as <code>docx+styles</code> (<a href='https://github.com/rstudio/rmarkdown/issues/1494'>#1494</a>, <a href='https://github.com/noamross'>@noamross</a>).</p></li>
+<li><p>Added a new argument <code>extra_lines</code> to <code><a href="../reference/latex_dependency.html">latex_dependency()</a></code> to allow users to add extra lines of LaTeX code after <code>\usepackage{}</code>. Also added a helper function <code><a href="../reference/latex-dependencies.html">latex_dependency_tikz()</a></code> based on <code><a href="../reference/latex_dependency.html">latex_dependency()</a></code> (<a href='https://github.com/rstudio/rmarkdown/issues/1502'>#1502</a>, <a href='https://github.com/malcolmbarrett'>@malcolmbarrett</a>).</p></li>
+<li><p>Fixed <a href='https://github.com/rstudio/rmarkdown/issues/1529'>#1529</a>: when the path of an Rmd file contains Unicode characters that cannot be represented in the system native encoding (especially on Windows), <code><a href="../reference/render.html">rmarkdown::render()</a></code> may fail.</p></li>
+<li><p>Applied a correct fix to an old <strong>plotly</strong> issue ropensci/plotly<a href='https://github.com/rstudio/rmarkdown/issues/463'>#463</a>.</p></li>
 <li><p>HTML widgets used to be hidden when printing ioslides to PDF in Chrome. Now they will be printed correctly.</p></li>
-<li><p><code><a href="../reference/render.html">render(output_format = 'all')</a></code> may delete the figure directories that are still needed by certain output formats when one output format doesn’t need its figure directory (thanks, <a href='https://github.com/rmcd1024'>@rmcd1024</a> #1472, <a href='https://github.com/cderv'>@cderv</a> #1503).</p></li>
-<li><p>The <code>&lt;em&gt;</code> tags in the subtitle, date, and author are removed from the default HTML template (thanks, <a href='https://github.com/royfrancis'>@royfrancis</a>, #1544).</p></li>
+<li><p><code><a href="../reference/render.html">render(output_format = 'all')</a></code> may delete the figure directories that are still needed by certain output formats when one output format doesn’t need its figure directory (thanks, <a href='https://github.com/rmcd1024'>@rmcd1024</a> <a href='https://github.com/rstudio/rmarkdown/issues/1472'>#1472</a>, <a href='https://github.com/cderv'>@cderv</a> <a href='https://github.com/rstudio/rmarkdown/issues/1503'>#1503</a>).</p></li>
+<li><p>The <code>&lt;em&gt;</code> tags in the subtitle, date, and author are removed from the default HTML template (thanks, <a href='https://github.com/royfrancis'>@royfrancis</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1544'>#1544</a>).</p></li>
 </ul>
 </div>
     <div id="rmarkdown-1-11" class="section level1">
@@ -137,25 +137,25 @@
 <a href="#rmarkdown-1-11" class="anchor"></a>rmarkdown 1.11<small> 2018-12-08 </small>
 </h1>
 <ul>
-<li><p>Fixed #1483, which prevented the triangle to be displayed in Firefox when <code>&lt;details&gt;&lt;summary&gt;...&lt;/summary&gt;&lt;/details&gt;</code> was used (#1485, <a href='https://github.com/bisaloo'>@bisaloo</a>)</p></li>
-<li><p>Provided <code>rmarkdown.pandoc.args</code> as a <strong>knitr</strong> package option in <code><a href="https://www.rdocumentation.org/packages/knitr/topics/opts_knit">knitr::opts_knit</a></code> (#1468, <a href='https://github.com/noamross'>@noamross</a>).</p></li>
-<li><p>Added the exported function <code><a href="../reference/pandoc_exec.html">pandoc_exec()</a></code>, which returns the path of the pandoc binary used by the package (#1465, #1466 <a href='https://github.com/noamross'>@noamross</a>).</p></li>
-<li><p><code>new_session: true</code> in <code>_site.yml</code> causes <code><a href="../reference/render_site.html">render_site()</a></code> to render each file in a new R session, eliminating some cross-file difficulties, such as function masking (#1326, #1443 <a href='https://github.com/jennybc'>@jennybc</a>).</p></li>
-<li><p>Added the LaTeX command <code>\passthrough</code> in the default LaTeX template for the <code>--listings</code> flag of Pandoc (rstudio/bookdown#591).</p></li>
-<li><p>The icons in <code><a href="https://www.rdocumentation.org/packages/flexdashboard/topics/valueBox">flexdashboard::valueBox()</a></code> are not of the full sizes due to the upgrade of FontAwesome in #1340 in the previous version (#1388, rstudio/flexdashboard#189).</p></li>
-<li><p>Added the ability to generate tabset dropdowns, usable by adding the <code>.tabset-dropdown</code> class to a header (e.g., <code># Heading {.tabset .tabset-dropdown}</code>) (#1405). Thanks <a href='https://github.com/stefanfritsch'>@stefanfritsch</a> for contributing the necessary code for this (#1116).</p></li>
-<li><p>The <code>darkly</code> theme (a darker variant of the Bootswatch <code>flatly</code> theme) has been added to <code>html_document</code> and <code>html_notebook</code> (#1409, #889).</p></li>
-<li><p>Fixed a regression that caused scrollbars on code blocks when the syntax highlighting theme is not the default (#654, #1399).</p></li>
-<li><p>Fixed #1407: reactive expressions can break the section headers of Shiny R Markdown documents.</p></li>
-<li><p>Fixed #1431: <code><a href="../reference/render.html">render()</a></code> with the <code>intermediates_dir</code> argument when the output format is <code>powerpoint_presentation</code> with a custom <code>reference_doc</code> fails to find the reference document.</p></li>
-<li><p>Fixed the website navbar not being able to display submenus properly (#721, #1426).</p></li>
-<li><p>Added checks for shiny-prerendered documents to find all html dependencies, match all execution packages, and match the major R version (#1420).</p></li>
-<li><p>Added an argument <code>cache = TRUE</code> to the internal function <code>rmarkdown:::find_pandoc()</code>, so that users can invalidate the cached path of Pandoc via <code>rmarkdown:::find_pandoc(cache = FALSE)</code> (thanks, <a href='https://github.com/hammer'>@hammer</a>, #1482).</p></li>
-<li><p>Added an RStudio project template for simple R Markdown websites, so that users can create such websites from RStudio: <code>New Project -&gt; New Directory -&gt; Simple R Markdown Website</code> (thanks, <a href='https://github.com/kevinushey'>@kevinushey</a>, #1470).</p></li>
-<li><p>Fixed #1471: Pandoc’s (version 2.x) syntax highlighting themes don’t work well with the Bootstrap style (thanks, <a href='https://github.com/gponce-ars'>@gponce-ars</a> #1471, <a href='https://github.com/cderv'>@cderv</a> #1489).</p></li>
-<li><p>Fixed the warnings in #1224 and #1288 when calling <code><a href="../reference/render.html">render()</a></code> with an absolute <code>output_dir</code> or <code>intermediates_dir</code>.</p></li>
-<li><p>Fixed #1300: calling <code><a href="../reference/render.html">render()</a></code> with <code>intermediates_dir</code> may fail when the intermediate dir is on a difference device or filesystem.</p></li>
-<li><p>Fixed #1358: calling <code><a href="../reference/render.html">render()</a></code> with <code>intermediates_dir</code> will fail if the Rmd document contains bibliography files that are dynamically generated.</p></li>
+<li><p>Fixed <a href='https://github.com/rstudio/rmarkdown/issues/1483'>#1483</a>, which prevented the triangle to be displayed in Firefox when <code>&lt;details&gt;&lt;summary&gt;...&lt;/summary&gt;&lt;/details&gt;</code> was used (<a href='https://github.com/rstudio/rmarkdown/issues/1485'>#1485</a>, <a href='https://github.com/bisaloo'>@bisaloo</a>)</p></li>
+<li><p>Provided <code>rmarkdown.pandoc.args</code> as a <strong>knitr</strong> package option in <code><a href="https://www.rdocumentation.org/packages/knitr/topics/opts_knit">knitr::opts_knit</a></code> (<a href='https://github.com/rstudio/rmarkdown/issues/1468'>#1468</a>, <a href='https://github.com/noamross'>@noamross</a>).</p></li>
+<li><p>Added the exported function <code><a href="../reference/pandoc_exec.html">pandoc_exec()</a></code>, which returns the path of the pandoc binary used by the package (<a href='https://github.com/rstudio/rmarkdown/issues/1465'>#1465</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1466'>#1466</a> <a href='https://github.com/noamross'>@noamross</a>).</p></li>
+<li><p><code>new_session: true</code> in <code>_site.yml</code> causes <code><a href="../reference/render_site.html">render_site()</a></code> to render each file in a new R session, eliminating some cross-file difficulties, such as function masking (<a href='https://github.com/rstudio/rmarkdown/issues/1326'>#1326</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1443'>#1443</a> <a href='https://github.com/jennybc'>@jennybc</a>).</p></li>
+<li><p>Added the LaTeX command <code>\passthrough</code> in the default LaTeX template for the <code>--listings</code> flag of Pandoc (rstudio/bookdown<a href='https://github.com/rstudio/rmarkdown/issues/591'>#591</a>).</p></li>
+<li><p>The icons in <code><a href="https://www.rdocumentation.org/packages/flexdashboard/topics/valueBox">flexdashboard::valueBox()</a></code> are not of the full sizes due to the upgrade of FontAwesome in <a href='https://github.com/rstudio/rmarkdown/issues/1340'>#1340</a> in the previous version (<a href='https://github.com/rstudio/rmarkdown/issues/1388'>#1388</a>, rstudio/flexdashboard<a href='https://github.com/rstudio/rmarkdown/issues/189'>#189</a>).</p></li>
+<li><p>Added the ability to generate tabset dropdowns, usable by adding the <code>.tabset-dropdown</code> class to a header (e.g., <code># Heading {.tabset .tabset-dropdown}</code>) (<a href='https://github.com/rstudio/rmarkdown/issues/1405'>#1405</a>). Thanks <a href='https://github.com/stefanfritsch'>@stefanfritsch</a> for contributing the necessary code for this (<a href='https://github.com/rstudio/rmarkdown/issues/1116'>#1116</a>).</p></li>
+<li><p>The <code>darkly</code> theme (a darker variant of the Bootswatch <code>flatly</code> theme) has been added to <code>html_document</code> and <code>html_notebook</code> (<a href='https://github.com/rstudio/rmarkdown/issues/1409'>#1409</a>, <a href='https://github.com/rstudio/rmarkdown/issues/889'>#889</a>).</p></li>
+<li><p>Fixed a regression that caused scrollbars on code blocks when the syntax highlighting theme is not the default (<a href='https://github.com/rstudio/rmarkdown/issues/654'>#654</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1399'>#1399</a>).</p></li>
+<li><p>Fixed <a href='https://github.com/rstudio/rmarkdown/issues/1407'>#1407</a>: reactive expressions can break the section headers of Shiny R Markdown documents.</p></li>
+<li><p>Fixed <a href='https://github.com/rstudio/rmarkdown/issues/1431'>#1431</a>: <code><a href="../reference/render.html">render()</a></code> with the <code>intermediates_dir</code> argument when the output format is <code>powerpoint_presentation</code> with a custom <code>reference_doc</code> fails to find the reference document.</p></li>
+<li><p>Fixed the website navbar not being able to display submenus properly (<a href='https://github.com/rstudio/rmarkdown/issues/721'>#721</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1426'>#1426</a>).</p></li>
+<li><p>Added checks for shiny-prerendered documents to find all html dependencies, match all execution packages, and match the major R version (<a href='https://github.com/rstudio/rmarkdown/issues/1420'>#1420</a>).</p></li>
+<li><p>Added an argument <code>cache = TRUE</code> to the internal function <code>rmarkdown:::find_pandoc()</code>, so that users can invalidate the cached path of Pandoc via <code>rmarkdown:::find_pandoc(cache = FALSE)</code> (thanks, <a href='https://github.com/hammer'>@hammer</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1482'>#1482</a>).</p></li>
+<li><p>Added an RStudio project template for simple R Markdown websites, so that users can create such websites from RStudio: <code>New Project -&gt; New Directory -&gt; Simple R Markdown Website</code> (thanks, <a href='https://github.com/kevinushey'>@kevinushey</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1470'>#1470</a>).</p></li>
+<li><p>Fixed <a href='https://github.com/rstudio/rmarkdown/issues/1471'>#1471</a>: Pandoc’s (version 2.x) syntax highlighting themes don’t work well with the Bootstrap style (thanks, <a href='https://github.com/gponce-ars'>@gponce-ars</a> <a href='https://github.com/rstudio/rmarkdown/issues/1471'>#1471</a>, <a href='https://github.com/cderv'>@cderv</a> <a href='https://github.com/rstudio/rmarkdown/issues/1489'>#1489</a>).</p></li>
+<li><p>Fixed the warnings in <a href='https://github.com/rstudio/rmarkdown/issues/1224'>#1224</a> and <a href='https://github.com/rstudio/rmarkdown/issues/1288'>#1288</a> when calling <code><a href="../reference/render.html">render()</a></code> with an absolute <code>output_dir</code> or <code>intermediates_dir</code>.</p></li>
+<li><p>Fixed <a href='https://github.com/rstudio/rmarkdown/issues/1300'>#1300</a>: calling <code><a href="../reference/render.html">render()</a></code> with <code>intermediates_dir</code> may fail when the intermediate dir is on a difference device or filesystem.</p></li>
+<li><p>Fixed <a href='https://github.com/rstudio/rmarkdown/issues/1358'>#1358</a>: calling <code><a href="../reference/render.html">render()</a></code> with <code>intermediates_dir</code> will fail if the Rmd document contains bibliography files that are dynamically generated.</p></li>
 </ul>
 </div>
     <div id="rmarkdown-1-10" class="section level1">
@@ -163,17 +163,17 @@
 <a href="#rmarkdown-1-10" class="anchor"></a>rmarkdown 1.10<small> 2018-06-11 </small>
 </h1>
 <ul>
-<li><p>Added a new argument <code>slide_level</code> to <code><a href="../reference/powerpoint_presentation.html">powerpoint_presentation()</a></code> (#1270).</p></li>
+<li><p>Added a new argument <code>slide_level</code> to <code><a href="../reference/powerpoint_presentation.html">powerpoint_presentation()</a></code> (<a href='https://github.com/rstudio/rmarkdown/issues/1270'>#1270</a>).</p></li>
 <li><p>The <strong>tinytex</strong> package has become a required dependency (to build R Markdown to PDF).</p></li>
-<li><p>Added <code>compact-title</code> variable to the LaTeX default templates to control use of LaTeX <code>titling</code> package; defaults to <code>true</code> (#1284).</p></li>
-<li><p><code><a href="../reference/pdf_document.html">pdf_document(template = NULL)</a></code> does not work (#1295).</p></li>
-<li><p>Restore ability to use any HTML format with R Markdown Websites (#1328).</p></li>
+<li><p>Added <code>compact-title</code> variable to the LaTeX default templates to control use of LaTeX <code>titling</code> package; defaults to <code>true</code> (<a href='https://github.com/rstudio/rmarkdown/issues/1284'>#1284</a>).</p></li>
+<li><p><code><a href="../reference/pdf_document.html">pdf_document(template = NULL)</a></code> does not work (<a href='https://github.com/rstudio/rmarkdown/issues/1295'>#1295</a>).</p></li>
+<li><p>Restore ability to use any HTML format with R Markdown Websites (<a href='https://github.com/rstudio/rmarkdown/issues/1328'>#1328</a>).</p></li>
 <li><p>Add <code>options</code> argument to <code><a href="../reference/paged_table.html">paged_table()</a></code> to enable explicit passing of display options.</p></li>
 <li><p>Add <code><a href="../reference/pandoc_citeproc_convert.html">pandoc_citeproc_convert()</a></code> function for conversion of bibliography files (e.g. BibTeX files).</p></li>
-<li><p>Update to Font Awesome version 5.0.13 (#1340).</p></li>
+<li><p>Update to Font Awesome version 5.0.13 (<a href='https://github.com/rstudio/rmarkdown/issues/1340'>#1340</a>).</p></li>
 <li><p>Add <code><a href="../reference/site_resources.html">site_resources()</a></code> function for computing resource files required for a website.</p></li>
 <li><p>Export <code><a href="../reference/render_site.html">default_site_generator()</a></code> function.</p></li>
-<li><p>The <code><a href="../reference/pdf_document.html">latex_document()</a></code> format should not clean up the figure directory (thanks, <a href='https://github.com/emiltb'>@emiltb</a>, rstudio/bookdown#582).</p></li>
+<li><p>The <code><a href="../reference/pdf_document.html">latex_document()</a></code> format should not clean up the figure directory (thanks, <a href='https://github.com/emiltb'>@emiltb</a>, rstudio/bookdown<a href='https://github.com/rstudio/rmarkdown/issues/582'>#582</a>).</p></li>
 <li><p>Enable post processors that change the output file to specify that the base post processor should still be applied to the original output file.</p></li>
 </ul>
 </div>
@@ -185,25 +185,25 @@
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>NEW FEATURES</h2>
 <ul>
-<li>Added a new (experimental) output format <code>powerpoint_presentation</code>. If you want to test it, you will need Pandoc &gt;= 2.1 (#1231).</li>
+<li>Added a new (experimental) output format <code>powerpoint_presentation</code>. If you want to test it, you will need Pandoc &gt;= 2.1 (<a href='https://github.com/rstudio/rmarkdown/issues/1231'>#1231</a>).</li>
 </ul>
 </div>
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>MAJOR CHANGES</h2>
 <ul>
-<li>If the <strong>tinytex</strong> package is installed, PDF output is built through <code><a href="https://www.rdocumentation.org/packages/tinytex/topics/latexmk">tinytex::latexmk()</a></code>, otherwise it is generated by <code>rmarkdown:::latexmk()</code>, which has been factored out and improved in the <strong>tinytex</strong> package, so it is recommended that you install the <strong>tinytex</strong> package (#1222).</li>
+<li>If the <strong>tinytex</strong> package is installed, PDF output is built through <code><a href="https://www.rdocumentation.org/packages/tinytex/topics/latexmk">tinytex::latexmk()</a></code>, otherwise it is generated by <code>rmarkdown:::latexmk()</code>, which has been factored out and improved in the <strong>tinytex</strong> package, so it is recommended that you install the <strong>tinytex</strong> package (<a href='https://github.com/rstudio/rmarkdown/issues/1222'>#1222</a>).</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>BUG FIXES</h2>
 <ul>
-<li><p>Temporary files created in <code><a href="../reference/render.html">render()</a></code> may be cleaned up prematurely, which can cause problems with Shiny R Markdown documents (#1184).</p></li>
+<li><p>Temporary files created in <code><a href="../reference/render.html">render()</a></code> may be cleaned up prematurely, which can cause problems with Shiny R Markdown documents (<a href='https://github.com/rstudio/rmarkdown/issues/1184'>#1184</a>).</p></li>
 <li><p>Further improvements regarding compatibility with Pandoc 2.0, e.g. tabbed sections don’t work (<a href="https://community.rstudio.com/t/3019" class="uri">https://community.rstudio.com/t/3019</a>).</p></li>
-<li><p>When <code>preserve_yaml = TRUE</code> in <code><a href="../reference/md_document.html">md_document()</a></code>, <code>toc = TRUE</code> fails to create the table of contents (thanks, <a href='https://github.com/stla'>@stla</a>, #1216).</p></li>
-<li><p>Suppress confusing error messages from <code><a href="https://www.rdocumentation.org/packages/knitr/topics/knit">knitr::purl()</a></code> during <code><a href="../reference/find_external_resources.html">rmarkdown::find_external_resources()</a></code> (thanks, <a href='https://github.com/aronatkins'>@aronatkins</a> #1247, and <a href='https://github.com/paulobrecht'>@paulobrecht</a> #1154).</p></li>
-<li><p>Fixed the obscure error <code>Error: path for html_dependency not found:</code>, which was due to the HTML dependency of highlight.js (thanks, <a href='https://github.com/bborgesr'>@bborgesr</a>, #1213).</p></li>
+<li><p>When <code>preserve_yaml = TRUE</code> in <code><a href="../reference/md_document.html">md_document()</a></code>, <code>toc = TRUE</code> fails to create the table of contents (thanks, <a href='https://github.com/stla'>@stla</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1216'>#1216</a>).</p></li>
+<li><p>Suppress confusing error messages from <code><a href="https://www.rdocumentation.org/packages/knitr/topics/knit">knitr::purl()</a></code> during <code><a href="../reference/find_external_resources.html">rmarkdown::find_external_resources()</a></code> (thanks, <a href='https://github.com/aronatkins'>@aronatkins</a> <a href='https://github.com/rstudio/rmarkdown/issues/1247'>#1247</a>, and <a href='https://github.com/paulobrecht'>@paulobrecht</a> <a href='https://github.com/rstudio/rmarkdown/issues/1154'>#1154</a>).</p></li>
+<li><p>Fixed the obscure error <code>Error: path for html_dependency not found:</code>, which was due to the HTML dependency of highlight.js (thanks, <a href='https://github.com/bborgesr'>@bborgesr</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1213'>#1213</a>).</p></li>
 </ul>
 </div>
 </div>
@@ -215,10 +215,10 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-1" class="anchor"></a>BUG FIXES</h2>
 <ul>
-<li><p><code><a href="../reference/render_site.html">render_site()</a></code> does not work with <code>_site.yml</code> that does not have the <code>output</code> setting (#1189).</p></li>
-<li><p>The variables <code>input</code> and <code>output</code> do not work in Shiny R Markdown documents (#1193).</p></li>
-<li><p><code>ioslides_presentation</code> fails to embed images (#1197).</p></li>
-<li><p>With Pandoc 2.x, <code><a href="../reference/github_document.html">github_document()</a></code> generates the wrong filename extension <code>.gfm-ascii_identifiers</code> instead of <code>.md</code>, and line height of code blocks in the HTML preview is too big (#1200).</p></li>
+<li><p><code><a href="../reference/render_site.html">render_site()</a></code> does not work with <code>_site.yml</code> that does not have the <code>output</code> setting (<a href='https://github.com/rstudio/rmarkdown/issues/1189'>#1189</a>).</p></li>
+<li><p>The variables <code>input</code> and <code>output</code> do not work in Shiny R Markdown documents (<a href='https://github.com/rstudio/rmarkdown/issues/1193'>#1193</a>).</p></li>
+<li><p><code>ioslides_presentation</code> fails to embed images (<a href='https://github.com/rstudio/rmarkdown/issues/1197'>#1197</a>).</p></li>
+<li><p>With Pandoc 2.x, <code><a href="../reference/github_document.html">github_document()</a></code> generates the wrong filename extension <code>.gfm-ascii_identifiers</code> instead of <code>.md</code>, and line height of code blocks in the HTML preview is too big (<a href='https://github.com/rstudio/rmarkdown/issues/1200'>#1200</a>).</p></li>
 </ul>
 </div>
 </div>
@@ -229,28 +229,28 @@
 <ul>
 <li><p>Fixed an issue with <code>df_print: paged</code> where row names where not printed and added support for <code>rownames.print</code> option to control when they print.</p></li>
 <li><p>Add <code>smart</code> option for <code><a href="../reference/word_document.html">word_document()</a></code> format.</p></li>
-<li><p>Save render intermediates when generating beamer presentations (fixes #1106).</p></li>
-<li><p>Fixed issues when specifying NULL/null/empty parameter values (#729 and #762).</p></li>
-<li><p>Better error message when unable to prerender a document. (#1125)</p></li>
-<li><p><code><a href="https://www.rdocumentation.org/packages/shiny/topics/renderText">shiny::renderText()</a></code> does not work in Markdown section headings (#133).</p></li>
-<li><p>The <code>value</code> argument of <code><a href="../reference/pandoc_args.html">pandoc_variable_arg()</a></code> can be missing now (#287).</p></li>
-<li><p>Background colors and images are supported for ioslides presentations (#687).</p></li>
-<li><p>HTML widgets in an Rmd document cannot be rendered if another Rmd document is rendered via <code><a href="../reference/render.html">rmarkdown::render()</a></code> in this document (#993).</p></li>
-<li><p>Try harder to clean up temporary files created during <code><a href="../reference/render.html">render()</a></code> (#820).</p></li>
-<li><p>Wrong environment for evaluating R code chunks in Shiny R Markdown docs (#1162, #1124).</p></li>
-<li><p>Do not call <code>bibtex</code> to create the bibliography when there are no citations in the document and the output format is <code><a href="../reference/pdf_document.html">pdf_document()</a></code> with <code>citation_package = 'natbib'</code> (#1113).</p></li>
-<li><p><code><a href="../reference/render.html">render()</a></code> will stop if the output format is PDF but there are any errors during building the index or bibliography (#1166).</p></li>
-<li><p><code><a href="../reference/beamer_presentation.html">beamer_presentation()</a></code> doesn’t work when <code>citation_package != 'none'</code> (#1161).</p></li>
-<li><p>File-based inputs don’t work in parameterized documents (#919).</p></li>
-<li><p>rmarkdown is compatible with Pandoc 2.0 now (#1120).</p></li>
-<li><p><code><a href="../reference/render.html">render()</a></code> with <code>intermediates_dir</code> fails with R plots (#500).</p></li>
-<li><p>Added two new output formats <code><a href="../reference/pdf_document.html">latex_document()</a></code> and <code><a href="../reference/pdf_document.html">latex_fragment()</a></code> (#626).</p></li>
-<li><p>Relative paths of images in HTML output should not be resolved to absolute paths (#808).</p></li>
-<li><p><code><a href="../reference/render_site.html">render_site()</a></code> does not support multiple output formats for a single Rmd (#793).</p></li>
-<li><p>Unicode characters may be scrambled when downloading the Rmd source file using the download button generated by <code><a href="../reference/html_document.html">html_document(code_download = TRUE)</a></code> (#722).</p></li>
-<li><p>Upgraded highlight.js from v1.1 to v9.12.0 (#988, #907).</p></li>
-<li><p>The argument <code>keep_md = TRUE</code> actually preserves the Markdown output file from <code><a href="https://www.rdocumentation.org/packages/knitr/topics/knit">knitr::knit()</a></code> now (as documented). Previously, it generates a new Markdown file by concatenating the YAML metadata (title, author, date) with the body of the original Markdown output file (#450).</p></li>
-<li><p>For <code><a href="../reference/md_document.html">md_document()</a></code>, when <code>variant == 'markdown'</code> and <code>perserve_yaml = TRUE</code>, the Pandoc argument <code>--standalone</code> should not be used (#656).</p></li>
+<li><p>Save render intermediates when generating beamer presentations (fixes <a href='https://github.com/rstudio/rmarkdown/issues/1106'>#1106</a>).</p></li>
+<li><p>Fixed issues when specifying NULL/null/empty parameter values (<a href='https://github.com/rstudio/rmarkdown/issues/729'>#729</a> and <a href='https://github.com/rstudio/rmarkdown/issues/762'>#762</a>).</p></li>
+<li><p>Better error message when unable to prerender a document. (<a href='https://github.com/rstudio/rmarkdown/issues/1125'>#1125</a>)</p></li>
+<li><p><code><a href="https://www.rdocumentation.org/packages/shiny/topics/renderText">shiny::renderText()</a></code> does not work in Markdown section headings (<a href='https://github.com/rstudio/rmarkdown/issues/133'>#133</a>).</p></li>
+<li><p>The <code>value</code> argument of <code><a href="../reference/pandoc_args.html">pandoc_variable_arg()</a></code> can be missing now (<a href='https://github.com/rstudio/rmarkdown/issues/287'>#287</a>).</p></li>
+<li><p>Background colors and images are supported for ioslides presentations (<a href='https://github.com/rstudio/rmarkdown/issues/687'>#687</a>).</p></li>
+<li><p>HTML widgets in an Rmd document cannot be rendered if another Rmd document is rendered via <code><a href="../reference/render.html">rmarkdown::render()</a></code> in this document (<a href='https://github.com/rstudio/rmarkdown/issues/993'>#993</a>).</p></li>
+<li><p>Try harder to clean up temporary files created during <code><a href="../reference/render.html">render()</a></code> (<a href='https://github.com/rstudio/rmarkdown/issues/820'>#820</a>).</p></li>
+<li><p>Wrong environment for evaluating R code chunks in Shiny R Markdown docs (<a href='https://github.com/rstudio/rmarkdown/issues/1162'>#1162</a>, <a href='https://github.com/rstudio/rmarkdown/issues/1124'>#1124</a>).</p></li>
+<li><p>Do not call <code>bibtex</code> to create the bibliography when there are no citations in the document and the output format is <code><a href="../reference/pdf_document.html">pdf_document()</a></code> with <code>citation_package = 'natbib'</code> (<a href='https://github.com/rstudio/rmarkdown/issues/1113'>#1113</a>).</p></li>
+<li><p><code><a href="../reference/render.html">render()</a></code> will stop if the output format is PDF but there are any errors during building the index or bibliography (<a href='https://github.com/rstudio/rmarkdown/issues/1166'>#1166</a>).</p></li>
+<li><p><code><a href="../reference/beamer_presentation.html">beamer_presentation()</a></code> doesn’t work when <code>citation_package != 'none'</code> (<a href='https://github.com/rstudio/rmarkdown/issues/1161'>#1161</a>).</p></li>
+<li><p>File-based inputs don’t work in parameterized documents (<a href='https://github.com/rstudio/rmarkdown/issues/919'>#919</a>).</p></li>
+<li><p>rmarkdown is compatible with Pandoc 2.0 now (<a href='https://github.com/rstudio/rmarkdown/issues/1120'>#1120</a>).</p></li>
+<li><p><code><a href="../reference/render.html">render()</a></code> with <code>intermediates_dir</code> fails with R plots (<a href='https://github.com/rstudio/rmarkdown/issues/500'>#500</a>).</p></li>
+<li><p>Added two new output formats <code><a href="../reference/pdf_document.html">latex_document()</a></code> and <code><a href="../reference/pdf_document.html">latex_fragment()</a></code> (<a href='https://github.com/rstudio/rmarkdown/issues/626'>#626</a>).</p></li>
+<li><p>Relative paths of images in HTML output should not be resolved to absolute paths (<a href='https://github.com/rstudio/rmarkdown/issues/808'>#808</a>).</p></li>
+<li><p><code><a href="../reference/render_site.html">render_site()</a></code> does not support multiple output formats for a single Rmd (<a href='https://github.com/rstudio/rmarkdown/issues/793'>#793</a>).</p></li>
+<li><p>Unicode characters may be scrambled when downloading the Rmd source file using the download button generated by <code><a href="../reference/html_document.html">html_document(code_download = TRUE)</a></code> (<a href='https://github.com/rstudio/rmarkdown/issues/722'>#722</a>).</p></li>
+<li><p>Upgraded highlight.js from v1.1 to v9.12.0 (<a href='https://github.com/rstudio/rmarkdown/issues/988'>#988</a>, <a href='https://github.com/rstudio/rmarkdown/issues/907'>#907</a>).</p></li>
+<li><p>The argument <code>keep_md = TRUE</code> actually preserves the Markdown output file from <code><a href="https://www.rdocumentation.org/packages/knitr/topics/knit">knitr::knit()</a></code> now (as documented). Previously, it generates a new Markdown file by concatenating the YAML metadata (title, author, date) with the body of the original Markdown output file (<a href='https://github.com/rstudio/rmarkdown/issues/450'>#450</a>).</p></li>
+<li><p>For <code><a href="../reference/md_document.html">md_document()</a></code>, when <code>variant == 'markdown'</code> and <code>perserve_yaml = TRUE</code>, the Pandoc argument <code>--standalone</code> should not be used (<a href='https://github.com/rstudio/rmarkdown/issues/656'>#656</a>).</p></li>
 </ul>
 </div>
     <div id="rmarkdown-1-6" class="section level1">
@@ -262,8 +262,8 @@
 <li><p>Support code folding for bash, python, sql, Rcpp, and Stan chunks.</p></li>
 <li><p>Provide rmarkdown.pandoc.id_prefix as Knit option</p></li>
 <li><p>Fixed two issue with <code>df_print: paged</code>, one would prevent rendering data with lists of lists and the other where the column type would get cut off.</p></li>
-<li><p>Better support for <code>citation_package: biblatex</code> in <code><a href="../reference/pdf_document.html">pdf_document()</a></code> (#1062).</p></li>
-<li><p>On certain Windows platforms, compiling LaTeX to PDF may fail because <code><a href="https://www.rdocumentation.org/packages/base/topics/system2">system2(stdout = FALSE)</a></code> is not supported, in which case the default <code><a href="https://www.rdocumentation.org/packages/base/topics/system2">system2()</a></code> will be used (#1061).</p></li>
+<li><p>Better support for <code>citation_package: biblatex</code> in <code><a href="../reference/pdf_document.html">pdf_document()</a></code> (<a href='https://github.com/rstudio/rmarkdown/issues/1062'>#1062</a>).</p></li>
+<li><p>On certain Windows platforms, compiling LaTeX to PDF may fail because <code><a href="https://www.rdocumentation.org/packages/base/topics/system2">system2(stdout = FALSE)</a></code> is not supported, in which case the default <code><a href="https://www.rdocumentation.org/packages/base/topics/system2">system2()</a></code> will be used (<a href='https://github.com/rstudio/rmarkdown/issues/1061'>#1061</a>).</p></li>
 <li><p>Allow paged tables to render even when page load / visibility has a long delay</p></li>
 </ul>
 </div>
@@ -282,11 +282,11 @@
 <a href="#rmarkdown-1-4" class="anchor"></a>rmarkdown 1.4<small> 2017-03-24 </small>
 </h1>
 <ul>
-<li><p><code>data.table</code> expressions involving <code>:=</code> are no longer automatically printed within R Markdown documents. (#829)</p></li>
-<li><p>Fix #910: the extra_dependencies argument of pdf_document() does not work when no code chunks contain LaTeX dependencies.</p></li>
+<li><p><code>data.table</code> expressions involving <code>:=</code> are no longer automatically printed within R Markdown documents. (<a href='https://github.com/rstudio/rmarkdown/issues/829'>#829</a>)</p></li>
+<li><p>Fix <a href='https://github.com/rstudio/rmarkdown/issues/910'>#910</a>: the extra_dependencies argument of pdf_document() does not work when no code chunks contain LaTeX dependencies.</p></li>
 <li><p>The extra_dependencies of pdf_document() can also take a character vector of LaTeX package names, or a named list of LaTeX package options (with names being package names), which makes it much easier to express LaTeX dependencies via YAML.</p></li>
 <li><p>Automatically ignore packrat directory for render_site</p></li>
-<li><p>Fix #943: escape end tags in shiny_prerendered code contexts</p></li>
+<li><p>Fix <a href='https://github.com/rstudio/rmarkdown/issues/943'>#943</a>: escape end tags in shiny_prerendered code contexts</p></li>
 <li><p>Add support for sticky tabs in html_document via tabset-sticky class</p></li>
 <li><p>Process Rmd files with lowercase extension (.rmd) in render_site</p></li>
 <li><p>Fix stack space consumption issues with large JS payloads in chunks</p></li>
@@ -302,7 +302,7 @@
 <li><p>Fix v1.2 regression in ordering of CSS for ioslides_presentation.</p></li>
 <li><p>Fix rendering of pagedtables within html_notebook format.</p></li>
 <li><p>Ensure that html_prerendered UI is never cached.</p></li>
-<li><p>Add <code>citeproc</code> argument to YAML header; controls whether pandoc-citeproc is used (#831)</p></li>
+<li><p>Add <code>citeproc</code> argument to YAML header; controls whether pandoc-citeproc is used (<a href='https://github.com/rstudio/rmarkdown/issues/831'>#831</a>)</p></li>
 </ul>
 </div>
     <div id="rmarkdown-1-2" class="section level1">
@@ -315,17 +315,17 @@
 <li><p>Prepend “section-” to ids in runtime: shiny[_prerendered] to eliminate potential conflicts with shiny output ids</p></li>
 <li><p>Use html_dependencies for highlight.js, pagedtables, slidy, ioslides, &amp; navigation (improved dependency behavior for runtime: shiny[_prerendered])</p></li>
 <li><p>Serialize runtime: shiny[_prerendered] dependencies to JSON rather than .rds</p></li>
-<li><p>ioslides: check for null before concatenating attr[“class”] (#836)</p></li>
+<li><p>ioslides: check for null before concatenating attr[“class”] (<a href='https://github.com/rstudio/rmarkdown/issues/836'>#836</a>)</p></li>
 <li><p>Add rmarkdown.onKnit/onKnitCompleted package hooks</p></li>
-<li><p>Non-ASCII keys in yaml file should be marked to UTF8 as well, when read into R as the name of a list (#841)</p></li>
-<li><p>Remove key-column special-case left alignment in pagedtables (#829)</p></li>
-<li><p>Replace backslashes in floating TOC headings (#849)</p></li>
+<li><p>Non-ASCII keys in yaml file should be marked to UTF8 as well, when read into R as the name of a list (<a href='https://github.com/rstudio/rmarkdown/issues/841'>#841</a>)</p></li>
+<li><p>Remove key-column special-case left alignment in pagedtables (<a href='https://github.com/rstudio/rmarkdown/issues/829'>#829</a>)</p></li>
+<li><p>Replace backslashes in floating TOC headings (<a href='https://github.com/rstudio/rmarkdown/issues/849'>#849</a>)</p></li>
 <li><p>Suggests rather than Imports for tibble (R 3.0 compatibility)</p></li>
 <li><p>Add <code>paged_table</code> function for printing paged tables within HTML documents</p></li>
-<li><p>Support <code>{.active}</code> attribute for setting initially active tab (#789)</p></li>
+<li><p>Support <code>{.active}</code> attribute for setting initially active tab (<a href='https://github.com/rstudio/rmarkdown/issues/789'>#789</a>)</p></li>
 <li><p>Add <code>knit_root_dir</code> argument to <code><a href="../reference/render.html">render()</a></code> and YAML header, a convenience for setting knitr’s root.dir option</p></li>
 <li><p>Improve alignment of text in sub-topics for floating TOC</p></li>
-<li><p>Bibliography file paths in YAML containing forward slashes could not be rendered (#875)</p></li>
+<li><p>Bibliography file paths in YAML containing forward slashes could not be rendered (<a href='https://github.com/rstudio/rmarkdown/issues/875'>#875</a>)</p></li>
 </ul>
 </div>
     <div id="rmarkdown-1-1" class="section level1">
@@ -342,13 +342,13 @@
 <li><p>Parameter editing: don’t allow NULL to overwrite previous state</p></li>
 <li><p>Parameter editing: fix incorrect name for parameters with expressions</p></li>
 <li><p>Parameter editing: allow multiple values when the parameter is configured to use a “multiple” selector</p></li>
-<li><p>Switched the order in which format dependencies are added for <code>html_document</code> so that <code>extra_dependencies</code> are added at the end, after bootstrap, etc. (#737)</p></li>
-<li><p><code><a href="../reference/pdf_document.html">pdf_document(keep_tex = TRUE)</a></code> will generate the .tex document even if PDF conversion fails (#779).</p></li>
+<li><p>Switched the order in which format dependencies are added for <code>html_document</code> so that <code>extra_dependencies</code> are added at the end, after bootstrap, etc. (<a href='https://github.com/rstudio/rmarkdown/issues/737'>#737</a>)</p></li>
+<li><p><code><a href="../reference/pdf_document.html">pdf_document(keep_tex = TRUE)</a></code> will generate the .tex document even if PDF conversion fails (<a href='https://github.com/rstudio/rmarkdown/issues/779'>#779</a>).</p></li>
 <li><p>Move latex header includes to just before \begin{document}</p></li>
 <li><p>Special ‘global’ chunk label for runtime: shiny which designates a chunk to be run once and only once in the global environment (startup performance improvement for multi-user shiny documents)</p></li>
-<li><p>Ensure supporting files are writeable (#800)</p></li>
-<li><p>Make the “show code” buttons more CSS-friendly (#795)</p></li>
-<li><p>Exclude <code>output_dir</code> from site files (#803)</p></li>
+<li><p>Ensure supporting files are writeable (<a href='https://github.com/rstudio/rmarkdown/issues/800'>#800</a>)</p></li>
+<li><p>Make the “show code” buttons more CSS-friendly (<a href='https://github.com/rstudio/rmarkdown/issues/795'>#795</a>)</p></li>
+<li><p>Exclude <code>output_dir</code> from site files (<a href='https://github.com/rstudio/rmarkdown/issues/803'>#803</a>)</p></li>
 <li><p>Export <code>navbar_html</code> and <code>yaml_front_matter</code> functions</p></li>
 </ul>
 </div>
@@ -377,30 +377,30 @@
 <a href="#rmarkdown-0-9-6" class="anchor"></a>rmarkdown 0.9.6<small> 2016-05-01 </small>
 </h1>
 <ul>
-<li><p>Ability to set <code>opts_hooks</code> in <code><a href="../reference/knitr_options.html">knitr_options()</a></code> (#672)</p></li>
+<li><p>Ability to set <code>opts_hooks</code> in <code><a href="../reference/knitr_options.html">knitr_options()</a></code> (<a href='https://github.com/rstudio/rmarkdown/issues/672'>#672</a>)</p></li>
 <li><p>Added <code>render_site</code> and related functions for rendering collections of documents within a directory as a website.</p></li>
 <li><p>Ability to define html_document navigation bar using simple yaml format.</p></li>
 <li><p>Added <code>pre_knit</code> and <code>post_knit</code> hooks for output formats.</p></li>
-<li><p>Discover <code>LaTeX</code> dependencies and add them to the <code>.tex</code> preamble (#647)</p></li>
+<li><p>Discover <code>LaTeX</code> dependencies and add them to the <code>.tex</code> preamble (<a href='https://github.com/rstudio/rmarkdown/issues/647'>#647</a>)</p></li>
 <li><p>Added new <code>all_output_formats</code> function to enumerate all output formats registered for an Rmd.</p></li>
 <li><p>Change <code>fig_caption</code> default to TRUE for all formats</p></li>
 <li><p>Change <code>fig_retina</code> to 2 for HTML formats (no longer contingent on <code>fig_caption</code>)</p></li>
-<li><p>Ensure pandoc binary exists before binding to pandoc directory (#632)</p></li>
-<li><p>Handle relative paths for ‘default_output_format’ (#638)</p></li>
+<li><p>Ensure pandoc binary exists before binding to pandoc directory (<a href='https://github.com/rstudio/rmarkdown/issues/632'>#632</a>)</p></li>
+<li><p>Handle relative paths for ‘default_output_format’ (<a href='https://github.com/rstudio/rmarkdown/issues/638'>#638</a>)</p></li>
 <li><p>Eliminate duplicate viewport meta tag from html_document</p></li>
-<li><p>Added biblatex biblio-style support to the LaTeX template for Pandoc 1.15.2 (#643)</p></li>
-<li><p>Allow override of header font-size in html_document custom css (#652)</p></li>
-<li><p>Fix for horizontal scrollbars appearing w/ code folding (#654)</p></li>
+<li><p>Added biblatex biblio-style support to the LaTeX template for Pandoc 1.15.2 (<a href='https://github.com/rstudio/rmarkdown/issues/643'>#643</a>)</p></li>
+<li><p>Allow override of header font-size in html_document custom css (<a href='https://github.com/rstudio/rmarkdown/issues/652'>#652</a>)</p></li>
+<li><p>Fix for horizontal scrollbars appearing w/ code folding (<a href='https://github.com/rstudio/rmarkdown/issues/654'>#654</a>)</p></li>
 <li><p>Specifying <code>toc_float</code> in <code>html_document</code> now automatically sets <code>toc = TRUE</code></p></li>
 <li><p>Enable per-header opt-out of <code>toc-float</code> via {.toc-ignore} attribute</p></li>
-<li><p>Correctly handle soft line breaks in ioslides_presentation (#661)</p></li>
+<li><p>Correctly handle soft line breaks in ioslides_presentation (<a href='https://github.com/rstudio/rmarkdown/issues/661'>#661</a>)</p></li>
 <li><p>Don’t use text-muted for code folding btns (text visibility in non-default themes)</p></li>
 <li><p>Fix for rendering non-HTML formats from .md files (resolve runtime before knit)</p></li>
 <li><p><code>html_dependency_bootstrap</code> now accepts theme = “default” argument</p></li>
 <li><p>Use pandoc 1.17.0.2 compatible LaTeX template when pandoc &gt;= 1.17.0.2</p></li>
 <li><p>Support custom template for <code>ioslides_presentation</code></p></li>
 <li><p>Added <code>analytics</code> option for <code>ioslides_presentation</code> for Google Analytics</p></li>
-<li><p>Removed the extra tag <code>&lt;p&gt;&lt;/p&gt;</code> around HTML output (typically generated by htmltools) from code chunks, to avoid invalid HTML like <code>&lt;p&gt;&lt;div&gt;...&lt;/div&gt;&lt;p&gt;</code> (#685)</p></li>
+<li><p>Removed the extra tag <code>&lt;p&gt;&lt;/p&gt;</code> around HTML output (typically generated by htmltools) from code chunks, to avoid invalid HTML like <code>&lt;p&gt;&lt;div&gt;...&lt;/div&gt;&lt;p&gt;</code> (<a href='https://github.com/rstudio/rmarkdown/issues/685'>#685</a>)</p></li>
 </ul>
 </div>
     <div id="rmarkdown-0-9-5" class="section level1">
@@ -411,11 +411,11 @@
 <li><p>Added odt_document format for OpenDocument Text output</p></li>
 <li><p>Added rtf_document format for Rich Text Format output</p></li>
 <li><p>Added github_document format for GitHub Flavored Markdown output</p></li>
-<li><p>Only apply white background for themed HTML documents (#588)</p></li>
-<li><p>Added <meta name="viewport" content="width=device-width, initial-scale=1"> to the default HTML template to make it work better with mobile browsers. (#589)</p></li>
+<li><p>Only apply white background for themed HTML documents (<a href='https://github.com/rstudio/rmarkdown/issues/588'>#588</a>)</p></li>
+<li><p>Added <meta name="viewport" content="width=device-width, initial-scale=1"> to the default HTML template to make it work better with mobile browsers. (<a href='https://github.com/rstudio/rmarkdown/issues/589'>#589</a>)</p></li>
 <li><p>Specify –filter pandoc-citeproc after custom pandoc args</p></li>
-<li><p>Long lines in code blocks will be wrapped in the <code><a href="../reference/html_vignette.html">html_vignette()</a></code> output (#595)</p></li>
-<li><p>Added new arguments <code>run_pandoc = TRUE</code> and <code>knit_meta = NULL</code> to <code><a href="../reference/render.html">render()</a></code>. See the help page of <code>render</code> for details. (#594)</p></li>
+<li><p>Long lines in code blocks will be wrapped in the <code><a href="../reference/html_vignette.html">html_vignette()</a></code> output (<a href='https://github.com/rstudio/rmarkdown/issues/595'>#595</a>)</p></li>
+<li><p>Added new arguments <code>run_pandoc = TRUE</code> and <code>knit_meta = NULL</code> to <code><a href="../reference/render.html">render()</a></code>. See the help page of <code>render</code> for details. (<a href='https://github.com/rstudio/rmarkdown/issues/594'>#594</a>)</p></li>
 <li><p>The <code>tufte_handout</code> format now delegates to the <code>tufte</code> package and no longer provides a base template.</p></li>
 <li><p>Use pandoc 1.15.2 compatible LaTeX template when pandoc &gt;= 1.15.2</p></li>
 <li><p>Fix issue with Beamer template and pandoc 1.15.2</p></li>
@@ -430,7 +430,7 @@
 <li><p>Support <code>url</code> references in CSS files for <code>runtime: shiny</code></p></li>
 <li><p>Change name of common options file to <code>_output.yml</code></p></li>
 <li><p>Tweak pandoc conversion used in <code>pandoc_self_contained_html</code> to prevent hanging with large script elements (use “markdown” rather than “markdown-strict” as input format)</p></li>
-<li><p>The filename extension .bib will be removed before bibliography files are passed to Pandoc when the output is LaTeX/PDF and the citation package natbib or biblatex is used on Windows. This is because bibtex in MikTeX will always add the extension .bib to bibliography files, e.g. it treats foo.bib as foo.bib.bib. (#623)</p></li>
+<li><p>The filename extension .bib will be removed before bibliography files are passed to Pandoc when the output is LaTeX/PDF and the citation package natbib or biblatex is used on Windows. This is because bibtex in MikTeX will always add the extension .bib to bibliography files, e.g. it treats foo.bib as foo.bib.bib. (<a href='https://github.com/rstudio/rmarkdown/issues/623'>#623</a>)</p></li>
 <li><p>Render Shiny documents in a clean environment; fixes issue in which code in Shiny documents could access internal R Markdown state</p></li>
 </ul>
 </div>
@@ -439,7 +439,7 @@
 <a href="#rmarkdown-0-9-2" class="anchor"></a>rmarkdown 0.9.2<small> 2016-01-01 </small>
 </h1>
 <ul>
-<li>Added a fix to #580 for Windows users.</li>
+<li>Added a fix to <a href='https://github.com/rstudio/rmarkdown/issues/580'>#580</a> for Windows users.</li>
 </ul>
 </div>
     <div id="rmarkdown-0-9-1" class="section level1">
@@ -447,8 +447,8 @@
 <a href="#rmarkdown-0-9-1" class="anchor"></a>rmarkdown 0.9.1<small> 2015-12-31 </small>
 </h1>
 <ul>
-<li><p>Fix for a bug causing certain files to be deleted as intermediate files. (#580)</p></li>
-<li><p>PDF/LaTeX output no longer uses natbib as the citation package by default. If you do want to use natbib or biblatex, you may still use the argument citation_package = ‘natbib’ or ‘biblatex’. (#577)</p></li>
+<li><p>Fix for a bug causing certain files to be deleted as intermediate files. (<a href='https://github.com/rstudio/rmarkdown/issues/580'>#580</a>)</p></li>
+<li><p>PDF/LaTeX output no longer uses natbib as the citation package by default. If you do want to use natbib or biblatex, you may still use the argument citation_package = ‘natbib’ or ‘biblatex’. (<a href='https://github.com/rstudio/rmarkdown/issues/577'>#577</a>)</p></li>
 </ul>
 </div>
     <div id="rmarkdown-0-9" class="section level1">
@@ -461,8 +461,8 @@
 <li><p>Fix for missing resources when rendering a filename with shell characters</p></li>
 <li><p>For PDF/LaTeX output, citations are processed via natbib or biblatex instead of pandoc-citeproc. The ciation package natbib or biblatex can be chosen using the argument <code>citation_package</code> in <code><a href="../reference/pdf_document.html">pdf_document()</a></code>, <code><a href="../reference/beamer_presentation.html">beamer_presentation()</a></code>, and <code><a href="../reference/tufte_handout.html">tufte_handout()</a></code>. LaTeX is compiled to PDF via latexmk (<a href="https://www.ctan.org/pkg/latexmk/" class="uri">https://www.ctan.org/pkg/latexmk/</a>); if it is not installed, a simple emulation will be used (run pdflatex/xelatex/lualatex, bibtex, and makeindex a few times). You are recommended to install latexmk, and please note latexmk requires a Perl installation (this is important especially for Windows users).</p></li>
 <li><p>Always use the graphics package for PDF output</p></li>
-<li><p>Fix for the error “cannot change value of locked binding for ‘metadata’” when one call of rmarkdown::render() is nested in another one (#248)</p></li>
-<li><p>Fix for an issue causing image paths to be rendered incorrectly in Windows when rendering an <code>html_document</code> with <code>self_contained: false</code> and a path is passed in argument <code>output_dir</code>. (#551)</p></li>
+<li><p>Fix for the error “cannot change value of locked binding for ‘metadata’” when one call of rmarkdown::render() is nested in another one (<a href='https://github.com/rstudio/rmarkdown/issues/248'>#248</a>)</p></li>
+<li><p>Fix for an issue causing image paths to be rendered incorrectly in Windows when rendering an <code>html_document</code> with <code>self_contained: false</code> and a path is passed in argument <code>output_dir</code>. (<a href='https://github.com/rstudio/rmarkdown/issues/551'>#551</a>)</p></li>
 <li><p>Add always_allow_html option for preventing errors when html_dependencies are rendered in non-HTML formats (e.g. pdf_document or word_document).</p></li>
 <li><p>Fix for an issue causing resources not to be discovered in some documents containing an empty quoted string (<code>""</code>) in an R chunk.</p></li>
 </ul>
@@ -520,7 +520,7 @@
 <li><p>Added pandoc_version function.</p></li>
 <li><p>Use VignetteEncoding directive in html_vignette format</p></li>
 <li><p>Fix issues related to use of non-ASCII characters in ioslides_presentation</p></li>
-<li><p>Non-ASCII characters in the YAML data are not marked with the UTF-8 encoding when they are read into R, so character strings in <code><a href="../reference/metadata.html">rmarkdown::metadata</a></code> may be displayed incorrectly (#420)</p></li>
+<li><p>Non-ASCII characters in the YAML data are not marked with the UTF-8 encoding when they are read into R, so character strings in <code><a href="../reference/metadata.html">rmarkdown::metadata</a></code> may be displayed incorrectly (<a href='https://github.com/rstudio/rmarkdown/issues/420'>#420</a>)</p></li>
 <li><p>Various improvements to tufte_handout format</p></li>
 </ul>
 </div>
