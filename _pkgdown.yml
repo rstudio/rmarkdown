@@ -1,0 +1,93 @@
+destination: docs
+
+template:
+  params:
+    bootswatch: simplex
+
+home:
+  strip_header: true
+
+navbar:
+  title: "R Markdown"
+  type: inverse
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/rstudio/rmarkdown
+
+reference:
+- title: Output formats
+  desc: >
+    The following can be specified in your document's YAML frontmatter.
+    Each output format has different arguments available; for example,
+    to view the arguments for `html_document` in your console,
+    you may use `str(rmarkdown::html_document())`.
+  contents:
+  - ends_with("_presentation")
+  - ends_with("_document")
+  - '`html_vignette`'
+  - '`tufte_handout`'
+  - '`html_notebook`'
+
+- title: Helper functions for working with R Markdown documents
+  desc: These functions are useful when...
+  contents:
+  - '`metadata`'
+
+- title: Rendering documents
+  desc: These functions can be used to render or "compile" an R Markdown document.
+  contents:
+  - '`compile_notebook`'
+
+  - '`default_output_format`'
+  - '`draft`'
+  - '`find_external_resources`'
+  - '`html-dependencies`'
+  - '`html_document_base`'
+  - '`html_fragment`'
+
+  - '`html_notebook_metadata`'
+  - '`html_notebook_output`'
+  - '`includes`'
+
+- title: knitr options
+  desc: ~
+  contents:
+  - starts_with("knitr_")
+  - '`latex-dependencies`'
+  - '`latex_dependency`'
+  - '`rmd_metadata`'
+  - '`output_metadata`'
+  - '`paged_table`'
+
+- title: pandoc options
+  desc: ~
+  contents:
+  - starts_with("pandoc_")
+  - '`parse_html_notebook`'
+  - '`relative_to`'
+  - '`render`'
+  - '`render_delayed`'
+  - '`render_site`'
+  - '`render_supporting_files`'
+
+  - '`rmarkdown-package`'
+
+
+
+- title: Including Shiny
+  desc: ~
+  contents:
+  - '`shiny_prerendered_chunk`'
+  - '`shiny_prerendered_clean`'
+  - '`site_resources`'
+  - '`run`'
+
+- title: Customizing & Extending Output Formats
+  desc: ~
+  contents:
+  - '`all_output_formats`'
+  - '`output_format`'
+  - '`resolve_output_format`'
+  - '`rmarkdown_format`'
+
+
