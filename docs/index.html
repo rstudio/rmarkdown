@@ -10,7 +10,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Dynamic Documents for R">
+<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<meta property="og:title" content="Dynamic Documents for R">
 <meta property="og:description" content="Convert R Markdown documents into a variety of formats.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -37,23 +38,102 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Get started
      
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+<li class="dropdown-header">Using</li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-1.html">Introduction</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-2.html">How It Works</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Code</li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-3.html">Code Chunks</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-4.html">Inline Code</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-5.html">Code Languages</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-6.html">Parameters</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Basics</li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-7.html">Tables</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-8.html">Markdown Basics</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-9.html">Output Formats</a>
+    </li>
+    <li class="divider">
+    <li class="dropdown-header">Additional Output Formats</li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-10.html">Notebooks</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-11.html">Slide Presentations</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-12.html">Dashboards</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-13.html">Websites</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-14.html">Interactive Documents</a>
+    </li>
+  </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/rmarkdown.html">Learn R Markdown</a>
+    </li>
+    <li>
+      <a href="articles/pandoc.html">Install Pandoc</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/rstudio/rmarkdown">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://community.rstudio.com/c/R-Markdown?allTags=1">
+    <span class="fab fa fab fa-discourse fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -69,128 +149,57 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="rmarkdown" class="section level3">
+<div id="overview" class="section level3">
 <h3 class="hasAnchor">
-<a href="#rmarkdown" class="anchor"></a>rmarkdown <img src="https://bookdown.org/yihui/rmarkdown/images/hex-rmarkdown.png" align="right" alt="" width="120">
-</h3>
+<a href="#overview" class="anchor"></a>Overview</h3>
 
-<p>The <strong>rmarkdown</strong> package helps you create dynamic analysis documents that combine code, rendered output (including figures), and prose. You provide the data, code, and narrative, and R Markdown renders your content into an output format that can be used to:</p>
+<p>The <strong>rmarkdown</strong> package helps you create dynamic analysis documents that combine code, rendered output (such as figures), and prose. You bring your data, code, and ideas, and R Markdown renders your content into a polished document that can be used to:</p>
+<p><img src="https://bookdown.org/yihui/rmarkdown/images/hex-rmarkdown.png" width="200" style="padding: 0 15px; float: right;"></p>
 <ul>
-<li>Do data science interactively within the RStudio IDE,</li>
-<li>Reproduce your analyses,</li>
-<li>Collaborate and share code with others (including yourself), and</li>
-<li>Communicate your results with others.</li>
+<li><p>Do data science interactively within the RStudio IDE,</p></li>
+<li><p>Reproduce your analyses,</p></li>
+<li><p>Collaborate and share code with others, and</p></li>
+<li><p>Communicate your results with others.</p></li>
 </ul>
 <p>R Markdown documents can be rendered to many output formats including HTML documents, PDFs, Word files, slideshows, and more, allowing you to focus on the content while R Markdown takes care of your presentation.</p>
-</div>
-<div id="how-it-works" class="section level3">
-<h3 class="hasAnchor">
-<a href="#how-it-works" class="anchor"></a>How it works</h3>
-<p>\is a next generation implementation of R Markdown based on <a href="http://johnmacfarlane.net/Pandoc/">Pandoc</a>. This implementation brings many enhancements to R Markdown, including:</p>
-<ul>
-<li>Create HTML, PDF, and MS Word documents as well as <a href="https://bitbucket.org/rivanvx/beamer/wiki/Home">Beamer</a>, <a href="https://code.google.com/p/io-2012-slides/">ioslides</a>, and <a href="http://www.w3.org/Talks/Tools/Slidy2/">Slidy</a> presentations.</li>
-<li>New markdown syntax including expanded support for tables, definition lists, and bibliographies.</li>
-<li>Hooks for customizing HTML and PDF output (include CSS, headers, and footers).</li>
-<li>Include raw LaTeX within markdown for advanced customization of PDF output.</li>
-<li>Compile HTML, PDF, or MS Word notebooks from R scripts.</li>
-<li>Extensibility: easily define new formats for custom publishing requirements.</li>
-<li>Create interactive R Markdown documents using Shiny.</li>
-</ul>
-<p>Note that PDF output (including Beamer slides) requires an installation of TeX.</p>
-<p>See the <a href="https://rmarkdown.rstudio.com">R Markdown documentation</a> for full details.</p>
 </div>
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
-<p>First, install R (<a href="https://www.r-project.org" class="uri">https://www.r-project.org</a>) and the <a href="http://www.rstudio.com/ide/download/preview">current release of the RStudio IDE</a>. The easiest way to use the rmarkdown package is from within the RStudio IDE, but you don’t need to explicitly install it or load it, as RStudio automatically does both when needed. RStudio also includes a recent version of Pandoc for you (&gt;= 1.12.3).</p>
-<p>If you want to use the rmarkdown package outside of RStudio then you can install the package from CRAN as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"rmarkdown"</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># or install the dev version via remotes::install_github('rstudio/rmarkdown')</span></a></code></pre></div>
-<p>A recent version of Pandoc (&gt;= 1.12.3) is also required. If using the RStudio IDE you don’t need to install or load this package either, as Pandoc is included. If not using the RStudio IDE, see the <a href="Pandoc.html">Pandoc installation instructions</a> for details on installing Pandoc for your platform.</p>
+<p>The easiest way to use the rmarkdown package is from within the <a href="http://www.rstudio.com/ide/download/preview">RStudio IDE</a>, but you don’t need to explicitly install it or load it, as RStudio automatically does both when needed. A recent version of Pandoc (&gt;= 1.12.3) is also required; RStudio also automatically includes this too so you do not need to download Pandoc if you plan to use rmarkdown from the <a href="http://www.rstudio.com/ide/download/preview">RStudio IDE</a>.</p>
+<p>If you want to use the rmarkdown package outside of RStudio, you can install the package from CRAN as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"rmarkdown"</span>)</a></code></pre></div>
+<p>If you want to use the development version of the rmarkdown package (either with or without RStudio), you can install the package from GitHub via the <a href="https://remotes.r-lib.org/"><code>remotes</code> package</a>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">'rstudio/rmarkdown'</span>)</a></code></pre></div>
+<p>If not using the RStudio IDE, you’ll need to install a recent version of Pandoc (&gt;= 1.12.3); see the <a href="articles/pandoc.html">Pandoc installation instructions</a> for help.</p>
 </div>
 <div id="usage" class="section level3">
 <h3 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h3>
-<p>The <code>render</code> function is used to convert R Markdown (Rmd) files into various output formats (the default is HTML). Calling <code>render</code> will knit the specified input document and then produce the final output document using Pandoc:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="reference/render.html">render</a></span>(<span class="st">"input.Rmd"</span>)</a></code></pre></div>
-<p>You can also specify a plain markdown file in which case knitting will be bypassed:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/render.html">render</a></span>(<span class="st">"input.md"</span>)</a></code></pre></div>
-<div id="output-formats" class="section level4">
-<h4 class="hasAnchor">
-<a href="#output-formats" class="anchor"></a>Output Formats</h4>
-<p>R Markdown documents can contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="fu">title:</span><span class="at"> </span><span class="st">"Sample Document"</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="fu">output:</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="fu">html_document:</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">    <span class="fu">toc:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">    <span class="fu">theme:</span><span class="at"> united</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="ot">---</span></a></code></pre></div>
-<p>R Markdown has built in support for several output formats (HTML, PDF, and MS Word documents as well as Beamer presentations). These formats can also be specified in metadata, for example:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="fu">title:</span><span class="at"> </span><span class="st">"Sample Document"</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="fu">output:</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="fu">pdf_document:</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="fu">toc:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">    <span class="fu">highlight:</span><span class="at"> zenburn</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="ot">---</span></a></code></pre></div>
-<p>If you aren’t specifying format options you can also just use a simple format name:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="fu">title:</span><span class="at"> </span><span class="st">"Sample Document"</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="fu">output:</span><span class="at"> pdf_document</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="ot">---</span></a></code></pre></div>
-<p>Multiple formats can be specified in metadata:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="fu">title:</span><span class="at"> </span><span class="st">"Sample Document"</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="fu">output:</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="fu">html_document:</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">    <span class="fu">toc:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="fu">theme:</span><span class="at"> united</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">  <span class="fu">pdf_document:</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">    <span class="fu">toc:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">    <span class="fu">highlight:</span><span class="at"> zenburn</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="ot">---</span></a></code></pre></div>
-<p>To select from the various formats defined you can pass a format name to <code>render</code>. For example:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="reference/render.html">render</a></span>(<span class="st">"input.Rmd"</span>, <span class="st">"pdf_document"</span>)</a></code></pre></div>
-<p>If no explicit format name is passed to <code>render</code> then the first one defined will be used. You can also render all formats defined in the file with:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/render.html">render</a></span>(<span class="st">"input.Rmd"</span>, <span class="st">"all"</span>)</a></code></pre></div>
-</div>
-<div id="shared-output-formats" class="section level4">
-<h4 class="hasAnchor">
-<a href="#shared-output-formats" class="anchor"></a>Shared Output Formats</h4>
-<p>You can also define output formats externally in a file named <code>_output.yml</code> located in the same directory as the R Markdown source file. For example:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="fu">html_document:</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">  <span class="fu">toc:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">  <span class="fu">theme:</span><span class="at"> united</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="fu">pdf_document:</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">  <span class="fu">toc:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">  <span class="fu">highlight:</span><span class="at"> zenburn</span></a></code></pre></div>
-<p>Using an <code>_output.yml</code> file is a good way to share output settings across multiple R Markdown files in the same directory.</p>
-</div>
-<div id="output-format-functions" class="section level4">
-<h4 class="hasAnchor">
-<a href="#output-format-functions" class="anchor"></a>Output Format Functions</h4>
-<p>Output formats need not be specified in metadata. In fact, metadata is just a convenient way to invoke functions that implement output formats. There are seven built-in output formats each exported as a function from the package:</p>
+<p>The easiest way to make a new R Markdown document is from within RStudio. Go to <em>File &gt; New File &gt; R Markdown</em>. From the new file wizard, you may:</p>
 <ul>
-<li><code>html_document</code></li>
-<li><code>pdf_document</code></li>
-<li><code>word_document</code></li>
-<li><code>md_document</code></li>
-<li><code>beamer_presentation</code></li>
-<li><code>ioslides_presentation</code></li>
-<li><code>slidy_presentation</code></li>
+<li>Provide a document title (<em>optional but recommended</em>),</li>
+<li>Provide an author name (<em>optional but recommended</em>),</li>
+<li>Select a default output format- HTML is the recommended format for authoring, and you can switch the output format anytime (<em>required</em>),</li>
+<li>Click <strong>OK</strong> (<em>required</em>).</li>
 </ul>
-<p>As you’d expect, these functions can also be invoked as part of the call to <code>render</code>, for example:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="reference/render.html">render</a></span>(<span class="st">"input.Rmd"</span>, <span class="kw"><a href="reference/html_document.html">html_document</a></span>(<span class="dt">toc =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="reference/render.html">render</a></span>(<span class="st">"input.Rmd"</span>, <span class="kw"><a href="reference/pdf_document.html">pdf_document</a></span>(<span class="dt">latex_engine =</span> <span class="st">"lualatex"</span>))</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw"><a href="reference/render.html">render</a></span>(<span class="st">"input.Rmd"</span>, <span class="kw"><a href="reference/beamer_presentation.html">beamer_presentation</a></span>(<span class="dt">incremental =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
-<p>For more details on the options available for each format see their respective help topics.</p>
+<p>Once inside your new <code>.Rmd</code> file, you should see some boilerplate text that includes code chunks. Use the “Knit” button in the RStudio IDE to render the file and preview the output with a single click or use the keyboard shortcut Cmd/Ctrl + Shift + K.</p>
+<p>You can also delete all the text below the YAML frontmatter and fill in your own <code>.Rmd</code> by:</p>
+<ul>
+<li>Adding code chunks (keyboard shortcut: Ctrl + Alt + I; OS X: Cmd + Option + I),</li>
+<li>Writing prose with <a href="https://www.markdowntutorial.com/">Markdown formatting</a>, and</li>
+<li>Running each code chunk interactively by clicking the <img src="https://raw.githubusercontent.com/rstudio/rmarkdown/gh-pages/images/notebook-run-chunk.png"> icon within RStudio.</li>
+</ul>
+<p>You can also click “Knit to HTML” again to render the full document with all code chunks. For more help getting started in R Markdown, please see the <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown website</a> or use the <strong>“Get Started”</strong> links at the top of this page.</p>
 </div>
-</div>
-<div id="license" class="section level3">
+<div id="getting-help" class="section level3">
 <h3 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h3>
-<p>The <strong>rmarkdown</strong> package is licensed under the GPLv3 (<a href="http://www.gnu.org/licenses/gpl.html" class="uri">http://www.gnu.org/licenses/gpl.html</a>).</p>
+<a href="#getting-help" class="anchor"></a>Getting help</h3>
+<p>There are two main places to get help:</p>
+<ol>
+<li><p>The <a href="https://community.rstudio.com/c/R-Markdown">RStudio community</a> is a friendly place to ask any questions about rmarkdown and the R Markdown family of packages.</p></li>
+<li><p><a href="https://stackoverflow.com/questions/tagged/r-markdown">Stack Overflow</a> is a great source of answers to common rmarkdown questions. It is also a great place to get help, once you have created a reproducible example that illustrates your problem.</p></li>
+</ol>
 </div>
 
   </div>
@@ -204,6 +213,10 @@
 <li>Browse source code at <br><a href="https://github.com/rstudio/rmarkdown">https://​github.com/​rstudio/​rmarkdown</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/rstudio/rmarkdown/issues">https://​github.com/​rstudio/​rmarkdown/​issues</a>
+</li>
+<li>Learn more at <br><a href="https://rmarkdown.rstudio.com/">https://​rmarkdown.rstudio.com/​</a>
+</li>
+<li>Read more at <br><a href="https://bookdown.org/yihui/rmarkdown/">https://​bookdown.org/​yihui/​rmarkdown/​</a>
 </li>
 </ul>
 </div>

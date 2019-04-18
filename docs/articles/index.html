@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert to GitHub Flavored Markdown — github_document • rmarkdown</title>
+<title>Articles • rmarkdown</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -33,10 +33,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Convert to GitHub Flavored Markdown — github_document" />
-
-<meta property="og:description" content="Format for converting from R Markdown to GitHub Flavored Markdown." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Articles" />
 
 
 
@@ -53,7 +50,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-article-index">
       <header>
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -184,107 +181,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Convert to GitHub Flavored Markdown</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rstudio/rmarkdown/blob/master/R/github_document.R'><code>R/github_document.R</code></a></small>
-    <div class="hidden name"><code>github_document.Rd</code></div>
+      <h1>Articles</h1>
     </div>
 
-    <div class="ref-description">
-    
-    <p>Format for converting from R Markdown to GitHub Flavored Markdown.</p>
-    
+    <div class="section ">
+      <h3>All vignettes</h3>
+      <p class="section-desc"></p>
+
+      <ul>
+        <li><a href="pandoc.html">Install Pandoc</a></li>
+        <li><a href="rmarkdown.html">Learn R Markdown</a></li>
+      </ul>
     </div>
-
-    <pre class="usage"><span class='fu'>github_document</span>(<span class='kw'>toc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>toc_depth</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>fig_width</span> <span class='kw'>=</span> <span class='fl'>7</span>,
-  <span class='kw'>fig_height</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>dev</span> <span class='kw'>=</span> <span class='st'>"png"</span>, <span class='kw'>df_print</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>includes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>md_extensions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hard_line_breaks</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>pandoc_args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>html_preview</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>toc</th>
-      <td><p><code>TRUE</code> to include a table of contents in the output</p></td>
-    </tr>
-    <tr>
-      <th>toc_depth</th>
-      <td><p>Depth of headers to include in table of contents</p></td>
-    </tr>
-    <tr>
-      <th>fig_width</th>
-      <td><p>Default width (in inches) for figures</p></td>
-    </tr>
-    <tr>
-      <th>fig_height</th>
-      <td><p>Default height (in inches) for figures</p></td>
-    </tr>
-    <tr>
-      <th>dev</th>
-      <td><p>Graphics device to use for figure output (defaults to png)</p></td>
-    </tr>
-    <tr>
-      <th>df_print</th>
-      <td><p>Method to be used for printing data frames. Valid values
-include "default", "kable", "tibble", and "paged". The "default" method uses
-<code>print.data.frame</code>. The "kable" method uses the
-<code><a href='https://www.rdocumentation.org/packages/knitr/topics/kable'>knitr::kable</a></code> function. The "tibble" method uses
-the <span class="pkg">tibble</span> package to print a summary of the data frame. The "paged"
-method creates a paginated HTML table (note that this method is only valid
-for formats that produce HTML). In addition
-to the named methods you can also pass an arbitrary function to be used
-for printing data frames. You can disable the df_print behavior entirely
-by setting the option <code>rmarkdown.df_print</code> to <code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>includes</th>
-      <td><p>Named list of additional content to include within the
-document (typically created using the <code><a href='includes.html'>includes</a></code> function).</p></td>
-    </tr>
-    <tr>
-      <th>md_extensions</th>
-      <td><p>Markdown extensions to be added or removed from the
-default definition or R Markdown. See the <code><a href='rmarkdown_format.html'>rmarkdown_format</a></code> for
-additional details.</p></td>
-    </tr>
-    <tr>
-      <th>hard_line_breaks</th>
-      <td><p><code>TRUE</code> to generate markdown that uses a simple
-newline to represent a line break (as opposed to two-spaces and a newline).</p></td>
-    </tr>
-    <tr>
-      <th>pandoc_args</th>
-      <td><p>Additional command line options to pass to pandoc</p></td>
-    </tr>
-    <tr>
-      <th>html_preview</th>
-      <td><p><code>TRUE</code> to also generate an HTML file for the purpose of
-locally previewing what the document will look like on GitHub.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>R Markdown output format to pass to <code><a href='render.html'>render</a></code></p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>See the <a href='https://rmarkdown.rstudio.com/github_document_format.html'>online
-documentation</a> for additional details on using the <code>github_document</code>
-format.</p>
-    
-
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-          </ul>
-
   </div>
 </div>
 

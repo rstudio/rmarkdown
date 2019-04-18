@@ -31,6 +31,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Function reference" />
 
 
@@ -67,24 +69,103 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Get started
      
+    <span class="caret"></span>
   </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Using</li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-1.html">Introduction</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-2.html">How It Works</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Code</li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-3.html">Code Chunks</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-4.html">Inline Code</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-5.html">Code Languages</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-6.html">Parameters</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Basics</li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-7.html">Tables</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-8.html">Markdown Basics</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-9.html">Output Formats</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Additional Output Formats</li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-10.html">Notebooks</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-11.html">Slide Presentations</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-12.html">Dashboards</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-13.html">Websites</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-14.html">Interactive Documents</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/rmarkdown.html">Learn R Markdown</a>
+    </li>
+    <li>
+      <a href="../articles/pandoc.html">Install Pandoc</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
+<li>
   <a href="https://github.com/rstudio/rmarkdown">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://community.rstudio.com/c/R-Markdown?allTags=1">
+    <span class="fab fa fab fa-discourse fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -115,7 +196,7 @@
       <tr>
         <th colspan="2">
           <h2 id="section-output-formats" class="hasAnchor"><a href="#section-output-formats" class="anchor"></a>Output formats</h2>
-          <p class="section-desc"><p>The following can be specified in your document’s YAML frontmatter. Each output format has different arguments available; for example, to view the arguments for <code>html_document</code> in your console, you may use <code><a href="https://www.rdocumentation.org/packages/utils/topics/str">str(rmarkdown::html_document())</a></code>.</p></p>
+          <p class="section-desc"><p>These output formats can be specified in your document’s YAML frontmatter. Each output format has different arguments available which you can see in their respective docs; to view the available arguments in your R console, for <code>html_document</code> for example, you may use <code><a href="https://www.rdocumentation.org/packages/utils/topics/str">str(rmarkdown::html_document())</a></code>.</p></p>
         </th>
       </tr>
       <tr>
@@ -202,20 +283,12 @@
           <p><code><a href="html_notebook.html">html_notebook()</a></code> </p>
         </td>
         <td><p>Convert to an HTML notebook</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-helper-functions-for-working-with-r-markdown-documents" class="hasAnchor"><a href="#section-helper-functions-for-working-with-r-markdown-documents" class="anchor"></a>Helper functions for working with R Markdown documents</h2>
-          <p class="section-desc"><p>These functions are useful when…</p></p>
-        </th>
-      </tr>
-      <tr>
+      </tr><tr>
         
         <td>
-          <p><code><a href="metadata.html">metadata</a></code> </p>
+          <p><code><a href="html_fragment.html">html_fragment()</a></code> </p>
         </td>
-        <td><p>The YAML metadata of the current R Markdown document</p></td>
+        <td><p>Convert to an HTML fragment.</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -233,10 +306,36 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="default_output_format.html">default_output_format()</a></code> </p>
+          <p><code><a href="render.html">render()</a></code> </p>
         </td>
-        <td><p>Determine the default output format for an R Markdown document</p></td>
+        <td><p>Render R Markdown</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="render_delayed.html">render_delayed()</a></code> </p>
+        </td>
+        <td><p>Delay Rendering for an Expression</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="render_site.html">render_site()</a></code> <code><a href="render_site.html">clean_site()</a></code> <code><a href="render_site.html">site_generator()</a></code> <code><a href="render_site.html">site_config()</a></code> <code><a href="render_site.html">default_site_generator()</a></code> </p>
+        </td>
+        <td><p>Render multiple documents as a website</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="render_supporting_files.html">render_supporting_files()</a></code> </p>
+        </td>
+        <td><p>Render supporting files for an input document</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-helper-functions" class="hasAnchor"><a href="#section-helper-functions" class="anchor"></a>Helper functions</h2>
+          <p class="section-desc"><p>These functions are useful when working with R Markdown documents.</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="draft.html">draft()</a></code> </p>
@@ -251,22 +350,42 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="html-dependencies.html">html_dependency_jquery()</a></code> <code><a href="html-dependencies.html">html_dependency_jqueryui()</a></code> <code><a href="html-dependencies.html">html_dependency_bootstrap()</a></code> <code><a href="html-dependencies.html">html_dependency_tocify()</a></code> <code><a href="html-dependencies.html">html_dependency_font_awesome()</a></code> <code><a href="html-dependencies.html">html_dependency_ionicons()</a></code> <code><a href="html-dependencies.html">html_dependency_pagedtable()</a></code> <code><a href="html-dependencies.html">html_dependency_highlightjs()</a></code> </p>
+          <p><code><a href="includes.html">includes()</a></code> <code><a href="includes.html">includes_to_pandoc_args()</a></code> </p>
         </td>
-        <td><p>Provide common HTML dependencies for R Markdown formats</p></td>
+        <td><p>Include content within output</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="html_document_base.html">html_document_base()</a></code> </p>
+          <p><code><a href="metadata.html">metadata</a></code> </p>
         </td>
-        <td><p>Base output format for HTML-based output formats</p></td>
+        <td><p>The YAML metadata of the current R Markdown document</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="html_fragment.html">html_fragment()</a></code> </p>
+          <p><code><a href="paged_table.html">paged_table()</a></code> </p>
         </td>
-        <td><p>Convert to an HTML fragment.</p></td>
+        <td><p>Create a table in HTML with support for paging rows and columns</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="relative_to.html">relative_to()</a></code> </p>
+        </td>
+        <td><p>Relative path utility function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="knit_params_ask.html">knit_params_ask()</a></code> </p>
+        </td>
+        <td><p>Run a shiny application asking for parameter configuration for the given document.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-html-notebooks" class="hasAnchor"><a href="#section-html-notebooks" class="anchor"></a>HTML notebooks</h2>
+          <p class="section-desc"><p>Functions for parsing and generating output for the <a href="https://rmarkdown.rstudio.com/lesson-10.html"><code>html_notebook</code> output format</a>.</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="html_notebook_metadata.html">html_notebook_metadata()</a></code> </p>
@@ -281,70 +400,66 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="includes.html">includes()</a></code> <code><a href="includes.html">includes_to_pandoc_args()</a></code> </p>
+          <p><code><a href="parse_html_notebook.html">parse_html_notebook()</a></code> </p>
         </td>
-        <td><p>Include content within output</p></td>
+        <td><p>Parse an HTML Notebook</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="convert_ipynb.html">convert_ipynb()</a></code> </p>
+        </td>
+        <td><p>Convert a Jupyter/IPython notebook to an R Markdown document</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-knitr-options" class="hasAnchor"><a href="#section-knitr-options" class="anchor"></a>knitr options</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-r-markdown-websites" class="hasAnchor"><a href="#section-r-markdown-websites" class="anchor"></a>R Markdown websites</h2>
+          <p class="section-desc"><p>Functions for rendering collections of R Markdown documents as a <a href="https://rmarkdown.rstudio.com/lesson-13.html">website</a>. Note that extension packages like <a href="https://github.com/rstudio/bookdown">bookdown</a>, <a href="https://github.com/rstudio/blogdown">blogdown</a>, and <a href="https://github.com/rstudio/distill">distill</a> also render multiple R Markdown files.</p></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="knitr_options.html">knitr_options()</a></code> </p>
+          <p><code><a href="render_site.html">render_site()</a></code> <code><a href="render_site.html">clean_site()</a></code> <code><a href="render_site.html">site_generator()</a></code> <code><a href="render_site.html">site_config()</a></code> <code><a href="render_site.html">default_site_generator()</a></code> </p>
         </td>
-        <td><p>Knitr options for an output format</p></td>
+        <td><p>Render multiple documents as a website</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="knitr_options_html.html">knitr_options_html()</a></code> </p>
+          <p><code><a href="site_resources.html">site_resources()</a></code> </p>
         </td>
-        <td><p>Knitr options for an HTML output format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="knitr_options_pdf.html">knitr_options_pdf()</a></code> </p>
-        </td>
-        <td><p>Knitr options for a PDF output format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="latex-dependencies.html">latex_dependency_tikz()</a></code> </p>
-        </td>
-        <td><p>Provide common LaTeX dependencies</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="latex_dependency.html">latex_dependency()</a></code> </p>
-        </td>
-        <td><p>Define a LaTeX package dependency</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rmd_metadata.html">rmd_metadata</a></code> </p>
-        </td>
-        <td><p>R Markdown Metadata</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="output_metadata.html">output_metadata</a></code> </p>
-        </td>
-        <td><p>The output metadata object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="paged_table.html">paged_table()</a></code> </p>
-        </td>
-        <td><p>Create a table in HTML with support for paging rows and columns</p></td>
+        <td><p>Determine website resource files for a directory</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-pandoc-options" class="hasAnchor"><a href="#section-pandoc-options" class="anchor"></a>pandoc options</h2>
+          <h2 id="section-interactive-documents" class="hasAnchor"><a href="#section-interactive-documents" class="anchor"></a>Interactive documents</h2>
+          <p class="section-desc"><p>These functions add <a href="https://rmarkdown.rstudio.com/lesson-14.html">interactivity</a> to R Markdown documents by adding reactive components made with <a href="http://shiny.rstudio.com/">Shiny</a>.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="shiny_prerendered_chunk.html">shiny_prerendered_chunk()</a></code> </p>
+        </td>
+        <td><p>Add code to a shiny_prerendered context</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="shiny_prerendered_clean.html">shiny_prerendered_clean()</a></code> </p>
+        </td>
+        <td><p>Clean prerendered content for the specified Rmd input file</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="run.html">run()</a></code> </p>
+        </td>
+        <td><p>Run a Shiny document</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-pandoc" class="hasAnchor"><a href="#section-pandoc" class="anchor"></a>Pandoc</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -402,85 +517,11 @@
           <p><code><a href="pandoc_template.html">pandoc_template()</a></code> </p>
         </td>
         <td><p>Render a pandoc template.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="parse_html_notebook.html">parse_html_notebook()</a></code> </p>
-        </td>
-        <td><p>Parse an HTML Notebook</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="relative_to.html">relative_to()</a></code> </p>
-        </td>
-        <td><p>Relative path utility function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="render.html">render()</a></code> </p>
-        </td>
-        <td><p>Render R Markdown</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="render_delayed.html">render_delayed()</a></code> </p>
-        </td>
-        <td><p>Delay Rendering for an Expression</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="render_site.html">render_site()</a></code> <code><a href="render_site.html">clean_site()</a></code> <code><a href="render_site.html">site_generator()</a></code> <code><a href="render_site.html">site_config()</a></code> <code><a href="render_site.html">default_site_generator()</a></code> </p>
-        </td>
-        <td><p>Render multiple documents as a website</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="render_supporting_files.html">render_supporting_files()</a></code> </p>
-        </td>
-        <td><p>Render supporting files for an input document</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rmarkdown-package.html">rmarkdown-package</a></code> </p>
-        </td>
-        <td><p>R Markdown Document Conversion</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-including-shiny" class="hasAnchor"><a href="#section-including-shiny" class="anchor"></a>Including Shiny</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="shiny_prerendered_chunk.html">shiny_prerendered_chunk()</a></code> </p>
-        </td>
-        <td><p>Add code to a shiny_prerendered context</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="shiny_prerendered_clean.html">shiny_prerendered_clean()</a></code> </p>
-        </td>
-        <td><p>Clean prerendered content for the specified Rmd input file</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="site_resources.html">site_resources()</a></code> </p>
-        </td>
-        <td><p>Determine website resource files for a directory</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="run.html">run()</a></code> </p>
-        </td>
-        <td><p>Run a Shiny document</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-customizing-extending-output-formats" class="hasAnchor"><a href="#section-customizing-extending-output-formats" class="anchor"></a>Customizing &amp; Extending Output Formats</h2>
+          <h2 id="section-customizing-extending-output-formats" class="hasAnchor"><a href="#section-customizing-extending-output-formats" class="anchor"></a>Customizing &amp; extending output formats</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -493,15 +534,75 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="default_output_format.html">default_output_format()</a></code> </p>
+        </td>
+        <td><p>Determine the default output format for an R Markdown document</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="html-dependencies.html">html_dependency_jquery()</a></code> <code><a href="html-dependencies.html">html_dependency_jqueryui()</a></code> <code><a href="html-dependencies.html">html_dependency_bootstrap()</a></code> <code><a href="html-dependencies.html">html_dependency_tocify()</a></code> <code><a href="html-dependencies.html">html_dependency_font_awesome()</a></code> <code><a href="html-dependencies.html">html_dependency_ionicons()</a></code> <code><a href="html-dependencies.html">html_dependency_pagedtable()</a></code> <code><a href="html-dependencies.html">html_dependency_highlightjs()</a></code> </p>
+        </td>
+        <td><p>Provide common HTML dependencies for R Markdown formats</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="latex-dependencies.html">latex_dependency_tikz()</a></code> </p>
+        </td>
+        <td><p>Provide common LaTeX dependencies</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="latex_dependency.html">latex_dependency()</a></code> </p>
+        </td>
+        <td><p>Define a LaTeX package dependency</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="html_document_base.html">html_document_base()</a></code> </p>
+        </td>
+        <td><p>Base output format for HTML-based output formats</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="knitr_options.html">knitr_options()</a></code> </p>
+        </td>
+        <td><p>Knitr options for an output format</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="knitr_options_html.html">knitr_options_html()</a></code> </p>
+        </td>
+        <td><p>Knitr options for an HTML output format</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="knitr_options_pdf.html">knitr_options_pdf()</a></code> </p>
+        </td>
+        <td><p>Knitr options for a PDF output format</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="output_format.html">output_format()</a></code> </p>
         </td>
         <td><p>Define an R Markdown output format</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="output_metadata.html">output_metadata</a></code> </p>
+        </td>
+        <td><p>The output metadata object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="resolve_output_format.html">resolve_output_format()</a></code> </p>
         </td>
         <td><p>Resolve the output format for an R Markdown document</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rmd_metadata.html">rmd_metadata</a></code> </p>
+        </td>
+        <td><p>R Markdown Metadata</p></td>
       </tr><tr>
         
         <td>
@@ -517,12 +618,13 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#section-output-formats">Output formats</a></li>
-      <li><a href="#section-helper-functions-for-working-with-r-markdown-documents">Helper functions for working with R Markdown documents</a></li>
       <li><a href="#section-rendering-documents">Rendering documents</a></li>
-      <li><a href="#section-knitr-options">knitr options</a></li>
-      <li><a href="#section-pandoc-options">pandoc options</a></li>
-      <li><a href="#section-including-shiny">Including Shiny</a></li>
-      <li><a href="#section-customizing-extending-output-formats">Customizing &amp; Extending Output Formats</a></li>
+      <li><a href="#section-helper-functions">Helper functions</a></li>
+      <li><a href="#section-html-notebooks">HTML notebooks</a></li>
+      <li><a href="#section-r-markdown-websites">R Markdown websites</a></li>
+      <li><a href="#section-interactive-documents">Interactive documents</a></li>
+      <li><a href="#section-pandoc">Pandoc</a></li>
+      <li><a href="#section-customizing-extending-output-formats">Customizing &amp; extending output formats</a></li>
     </ul>
   </div>
 </div>
