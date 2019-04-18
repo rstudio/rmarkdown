@@ -20,7 +20,7 @@ R Markdown documents can be rendered to many output formats including HTML docum
 
 ### Installation
 
-The easiest way to use the rmarkdown package is from within the [RStudio IDE](http://www.rstudio.com/ide/download/preview), but you don’t need to explicitly install it or load it, as RStudio automatically does both when needed. A recent version of Pandoc (>= 1.12.3) is also required; RStudio also automatically includes this too so you do not need to download Pandoc if you plan to use rmarkdown from the [RStudio IDE](http://www.rstudio.com/ide/download/preview).
+The easiest way to install the rmarkdown package is from within the [RStudio IDE](http://www.rstudio.com/ide/download/preview), but you don’t need to explicitly install it or load it, as RStudio automatically does both when needed. A recent version of Pandoc (>= 1.12.3) is also required; RStudio also automatically includes this too so you do not need to download Pandoc if you plan to use rmarkdown from the [RStudio IDE](http://www.rstudio.com/ide/download/preview).
 
 If you want to use the rmarkdown package outside of RStudio, you can install the package from CRAN as follows:
 
