@@ -4,7 +4,6 @@
 .DS_Store
 README.html
 CONTRIBUTING.html
-PANDOC.html
 issues/
 inst/doc
 vignettes/*.R
