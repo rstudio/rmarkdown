@@ -14,7 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
+A recent version of Pandoc (>= 1.12.3) is required to use the rmarkdown package. RStudio also automatically includes this so you do not need to download Pandoc if you plan to use rmarkdown from the [RStudio IDE](http://www.rstudio.com/ide/download/preview).
 
+If not using the RStudio IDE, you'll need to install Pandoc for your platform.
 
 ## Windows and Mac OS X
 
