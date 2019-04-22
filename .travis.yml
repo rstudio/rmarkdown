@@ -30,7 +30,7 @@ matrix:
     - Rscript -e 'pkgdown::build_site(".", document = FALSE, preview = FALSE, ...)'
     deploy:
       provider: script
-      script: netlify deploy --prod --dir=docs
+      script: netlify deploy --prod --dir docs
       skip_cleanup: true
       on:
         all_branches: true
