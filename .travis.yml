@@ -14,17 +14,18 @@ before_install:
   - "[[ ${PANDOC_VERSION} = latest ]] && ./tools/install-pandoc.sh || true"
   - tlmgr install units
 
+r_github_packages:
+  - r-lib/pkgdown
+
 matrix:
   include:
   - r: release
     env: rlang='CRAN'
-    before_deploy:
-    - Rscript -e 'remotes::install_cran("pkgdown")'
     after_success:
     - nvm install stable
     - npm install netlify-cli -g
     - Rscript -e 'pkgdown::build_site(".", document = FALSE, preview = FALSE, ...)'
     deploy:
       provider: script
-      script: netlify deploy --prod --dir _docs
+      script: netlify deploy --prod --dir docs
       skip_cleanup: true
