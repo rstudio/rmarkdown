@@ -4,6 +4,8 @@ cache:
 pandoc_version: 1.19.2.1
 
 env:
+  - NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
+  # NETLIFY_AUTH_TOKEN set in travis settings
   global:
     - _R_CHECK_TESTS_NLINES_=0
   matrix:
