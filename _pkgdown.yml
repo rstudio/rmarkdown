@@ -1,4 +1,5 @@
 destination: docs
+
 template:
   params:
     bootswatch: simplex
@@ -43,7 +44,7 @@ navbar:
       href: https://github.com/rstudio/rmarkdown
     community:
       icon: fab fa-discourse fa-lg
-      href: https://community.rstudio.com/c/R-Markdown?allTags=1
+      href: https://community.rstudio.com/c/R-Markdown
     home:
       icon: fas fa-home fa-lg
       href: index.html
