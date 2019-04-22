@@ -1,5 +1,4 @@
 destination: docs
-
 template:
   params:
     bootswatch: simplex
