@@ -9,8 +9,6 @@ env:
   matrix:
     - PANDOC_VERSION=default
     - PANDOC_VERSION=latest PATH=$HOME/bin:$PATH
-    - NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
-    # NETLIFY_AUTH_TOKEN set in travis settings
 
 before_install:
   - "[[ ${PANDOC_VERSION} = latest ]] && ./tools/install-pandoc.sh || true"
@@ -22,12 +20,17 @@ r_github_packages:
 matrix:
   include:
   - r: release
-    env: rlang='CRAN'
+    env:
+    - rlang='CRAN'
+    - NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
+    # NETLIFY_AUTH_TOKEN set in travis settings
     after_success:
     - nvm install stable
     - npm install netlify-cli -g
     - Rscript -e 'pkgdown::build_site(".", document = FALSE, preview = FALSE, ...)'
     deploy:
       provider: script
-      script: netlify deploy --prod --dir docs
+      script: netlify deploy --prod --dir=docs
       skip_cleanup: true
+      on:
+        all_branches: true
