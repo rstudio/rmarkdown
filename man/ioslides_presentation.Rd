@@ -50,8 +50,8 @@ to the named methods you can also pass an arbitrary function to be used for
 printing data frames.}
 
 \item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
-ellipses.}
+quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes,
+and \code{...} to ellipses.}
 
 \item{self_contained}{Produce a standalone HTML file with no external
 dependencies, using data: URIs to incorporate the contents of linked
