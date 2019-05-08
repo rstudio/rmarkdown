@@ -40,8 +40,8 @@
 #'@param code_download Embed the Rmd source code within the document and provide
 #'  a link that can be used by readers to download the code.
 #'@param smart Produce typographically correct output, converting straight
-#'  quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
-#'  ellipses.
+#'  quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
+#'  \code{...} to ellipses.
 #'@param self_contained Produce a standalone HTML file with no external
 #'  dependencies, using data: URIs to incorporate the contents of linked
 #'  scripts, stylesheets, images, and videos. Note that even for self contained
