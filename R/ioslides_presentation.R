@@ -24,6 +24,9 @@
 #'   See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
 #'   online documentation} for additional details on using the
 #'   \code{ioslides_presentation} format.
+#'
+#'   Note that, if a \code{before_body} include is specified in \code{includes},
+#'   then it will replace the standard title slide entirely.
 #' @section Slide Basics:
 #'   You can create a slide show broken up into sections by using the # and ##
 #'   heading tags (you can also create a new slide without a header using a

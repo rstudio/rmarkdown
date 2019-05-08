@@ -118,6 +118,9 @@ Format for converting from R Markdown to an
 See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
   online documentation} for additional details on using the
   \code{ioslides_presentation} format.
+
+  Note that, if a \code{before_body} include is specified in \code{includes},
+  then it will replace the standard title slide entirely.
 }
 \section{Slide Basics}{
 
