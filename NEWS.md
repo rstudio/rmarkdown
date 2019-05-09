@@ -15,6 +15,8 @@ rmarkdown 1.13
 
 - The `*_files` directory is not properly cleared due to the inappropriate fix for #1503 and #1472 in the last version (thanks, @wxli0 #1553, @cderv #1566).
 
+- Added an `output_extensions` argument to `pdf_document()` to make it possible to enable/disable Pandoc extensions for the LaTeX output format (thanks, @hongyuanjia, rstudio/bookdown#687).
+
 
 rmarkdown 1.12
 ================================================================================

@@ -57,6 +57,9 @@
 #'   created.  See the documentation on
 #'   \href{http://pandoc.org/README.html}{pandoc online documentation}
 #'   for details on creating custom templates.
+#' @param output_extensions Pandoc extensions to be added or removed from the
+#'   output format, e.g., \code{"-smart"} means the output format will be
+#'   \code{latex-smart}.
 #' @param extra_dependencies A LaTeX dependency \code{latex_dependency()}, a
 #'   list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
 #'   \code{c("framed", "hyperref")}), or a named list of LaTeX package options
@@ -94,6 +97,7 @@ pdf_document <- function(toc = FALSE,
                          citation_package = c("none", "natbib", "biblatex"),
                          includes = NULL,
                          md_extensions = NULL,
+                         output_extensions = NULL,
                          pandoc_args = NULL,
                          extra_dependencies = NULL) {
 
@@ -211,7 +215,7 @@ pdf_document <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
-    pandoc = pandoc_options(to = "latex",
+    pandoc = pandoc_options(to = paste(c("latex", output_extensions), collapse = ""),
                             from = from_rmarkdown(fig_caption, md_extensions),
                             args = args,
                             latex_engine = latex_engine,
