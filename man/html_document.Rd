@@ -163,9 +163,9 @@ and Citations} article in the online documentation.
 
  Alternatively, you can include a "_navbar.html" file which is a full HTML definition
  of a bootstrap navigation bar. For a simple example of including a navigation bar see
- \href{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
+ \url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
   For additional documentation on creating Bootstrap navigation bars see
- \href{http://getbootstrap.com/components/#navbar}{http://getbootstrap.com/components/#navbar}.
+ \url{http://getbootstrap.com/components/#navbar}.
 }
 
 \section{Floating Table of Contents}{

@@ -55,11 +55,10 @@ rmarkdown::render("analysis.R", "pdf_document")
 
   Here's an example of a script that uses the various features of \code{spin}:
 
-  \href{https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R}{
-    https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R}
+  \url{https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R}
 
   For more details on \code{knitr::spin} see the following documentation:
 
-  \href{http://yihui.name/knitr/demo/stitch/}{http://yihui.name/knitr/demo/stitch/}
+  \url{http://yihui.name/knitr/demo/stitch/}
 }
 
