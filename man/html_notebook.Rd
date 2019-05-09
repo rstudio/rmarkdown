@@ -44,8 +44,8 @@ individually or document-wide). Specify \code{"show"} to show all R code
 chunks by default.}
 
 \item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
-ellipses.}
+quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
+\code{...} to ellipses.}
 
 \item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
 "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",

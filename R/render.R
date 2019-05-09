@@ -1,3 +1,32 @@
+#' R Markdown Metadata
+#'
+#' Rmd files include a metadata section (typically located at the top of the
+#' file) that can specify (among other things) the title, author, and date of
+#' the document. Metadata adheres to the \href{https://yaml.org}{YAML} format
+#' and is delimited by lines containing three dashes (\code{---}). Here is an
+#' example metadata section:
+#' \preformatted{---
+#' title: "Crop Analysis Q3 2013"
+#' author: Martha Smith
+#' date: October 23rd, 2013
+#' ---
+#' }
+#' Note that the \code{title} field is quoted. This is because titles often
+#' contained embedded colons (\code{:}) and colons followed by a space need to
+#' be quoted in YAML.
+#' @details When title, author, and date metadata is provided it's used to
+#'   automatically create a title section within output documents. If you don't
+#'   want this section included in your document then you should remove the
+#'   corresponding metadata fields.
+#'
+#'   When generating PDF and Beamer output there are also a number of other
+#'   metadata fields that can be included to customize the appearance and theme
+#'   of PDF output. For more details see the documentation for
+#'   \code{\link{pdf_document}} and \code{\link{beamer_presentation}}.
+#' @name rmd_metadata
+NULL
+
+
 #' The YAML metadata of the current R Markdown document
 #'
 #' The object \code{metadata} stores the YAML metadata of the current R Markdown
@@ -9,6 +38,63 @@
 #' @examples rmarkdown::metadata
 #' @export
 metadata <- list()
+
+
+#' Compiling R scripts to a notebook
+#'
+#' R Markdown can also compile R scripts to a notebook which includes
+#' commentary, source code, and script output. Notebooks can be compiled to any
+#' output format including HTML, PDF, and MS Word.
+#'
+#' @section Overview:
+#'   To compile a notebook from an R script you simply pass the script to
+#'   \code{\link{render}}. For example:
+#'   \preformatted{
+#' rmarkdown::render("analysis.R")
+#' rmarkdown::render("analysis.R", "pdf_document")
+#' }
+#'   The first call to \code{\link{render}} creates an HTML document, whereas
+#'   the second creates a PDF document.
+#'
+#'   By default the name of the script, username, and current date and time are
+#'   included in the header of the generated notebook. You can override this
+#'   default behavior by including explicit metadata in a specially formatted R
+#'   comment:
+#'   \preformatted{
+#' #' ---
+#' #' title: "Crop Analysis Q3 2013"
+#' #' author: "John Smith"
+#' #' date: "May 3rd, 2014"
+#' #' ---
+#' }
+#' @section Including Markdown:
+#'   Note that the R comment used above to add a title, author, and date
+#'   includes a single-quote as a special prefix character. This is a
+#'   \pkg{roxygen2} style comment, and it's actually possible to include many
+#'   such comments in an R script, all of which will be converted to markdown
+#'   content within the generated notebook. For example:
+#'   \preformatted{#' A script comment that includes **markdown** formatting.}
+#'   Rather than displaying as an R comment in the compiled notebook any
+#'   \pkg{roxygen2} style comment will be treated as markdown and rendered
+#'   accordingly.
+#' @section knitr Spin:
+#'   Including markdown within R comments is possible because \code{\link{render}}
+#'   calls the \code{\link[knitr:spin]{knitr spin}} function to convert the R
+#'   script to an Rmd file. The \code{spin} function also enables you to add
+#'    knitr
+#'   chunk options with another special comment prefix (\code{#+}).
+#'
+#'   Here's an example of a script that uses the various features of \code{spin}:
+#'
+#'   \href{https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R}{
+#'     https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R}
+#'
+#'   For more details on \code{knitr::spin} see the following documentation:
+#'
+#'   \href{http://yihui.name/knitr/demo/stitch/}{http://yihui.name/knitr/demo/stitch/}
+#' @name compile_notebook
+NULL
+
 
 #' Render R Markdown
 #'
