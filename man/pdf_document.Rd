@@ -12,7 +12,8 @@ pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
   highlight = "default", template = "default", keep_tex = FALSE,
   latex_engine = "pdflatex", citation_package = c("none", "natbib",
   "biblatex"), includes = NULL, md_extensions = NULL,
-  pandoc_args = NULL, extra_dependencies = NULL)
+  output_extensions = NULL, pandoc_args = NULL,
+  extra_dependencies = NULL)
 
 latex_document(...)
 
@@ -72,6 +73,10 @@ document (typically created using the \code{\link{includes}} function).}
 \item{md_extensions}{Markdown extensions to be added or removed from the
 default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
+
+\item{output_extensions}{Pandoc extensions to be added or removed from the
+output format, e.g., \code{"-smart"} means the output format will be
+\code{latex-smart}.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
