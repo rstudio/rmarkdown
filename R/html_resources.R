@@ -16,12 +16,12 @@
 #' \code{resource_files} key:
 #'
 #'   \preformatted{---
-#'title: My Document
-#'author: My Name
-#'resource_files:
-#'  - data/mydata.csv
-#'  - images/figure.png
-#'---}
+#' title: My Document
+#' author: My Name
+#' resource_files:
+#'   - data/mydata.csv
+#'   - images/figure.png
+#' ---}
 #'
 #' Each item in the \code{resource_files} list can refer to:
 #' \enumerate{

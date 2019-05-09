@@ -42,8 +42,8 @@ documents are also returned. To specify resources in YAML, use the
 title: My Document
 author: My Name
 resource_files:
- - data/mydata.csv
- - images/figure.png
+  - data/mydata.csv
+  - images/figure.png
 ---}
 
 Each item in the \code{resource_files} list can refer to:

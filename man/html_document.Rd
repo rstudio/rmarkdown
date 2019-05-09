@@ -148,16 +148,16 @@ and Citations} article in the online documentation.
  \code{right} fields (to define menu items for the left and right of the navbar
  respectively). Menu items include \code{title} and \code{href} fields. For example:
 
- \preformatted{ title: "My Website"
- type: default
- left:
-   - text: "Home"
-     href: index.html
-   - text: "Other"
-     href: other.html
- right:
-   - text: GitHub
-     href: https://github.com}
+ \preformatted{title: "My Website"
+type: default
+left:
+  - text: "Home"
+    href: index.html
+  - text: "Other"
+    href: other.html
+right:
+  - text: GitHub
+    href: https://github.com}
  The \code{type} field is optional and can take the value "default" or "inverse" (which
  provides a different color scheme for the navigation bar).
 
@@ -191,11 +191,11 @@ and Citations} article in the online documentation.
  the header with the \code{.tabset} attribute to appear within tabs rather
  than as standalone sections. For example:
 
- \preformatted{ ## Quarterly Results {.tabset}
+ \preformatted{## Quarterly Results {.tabset}
 
- ### By Product
+### By Product
 
- ### By Region }
+### By Region }
 
  You can also specify two additional attributes to control the appearance and
  behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
@@ -203,7 +203,7 @@ and Citations} article in the online documentation.
  the visual appearance of the tabs to be "pill" rather than traditional tabs.
  For example:
 
- \preformatted{ ## Quarterly Results {.tabset .tabset-fade .tabset-pills} }
+ \preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
 }
 
 \section{Templates}{
