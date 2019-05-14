@@ -53,7 +53,7 @@ convert_ipynb <- function(input, output = xfun::with_ext(input, 'Rmd')) {
     )
     res <- c(res, src, '')
   }
-  res <- c('---', ipynb_yaml(json$metadata), '---\n', res)
+  res <- c('---', ipynb_yaml(json$metadata, input), '---\n', res)
   xfun::write_utf8(res, output)
   invisible(output)
 }
@@ -117,10 +117,14 @@ adjust_lang <- function(x) {
 }
 
 # convert .ipynb metadata to YAML frontmatter in .Rmd
-ipynb_yaml <- function(meta) {
+ipynb_yaml <- function(meta, input) {
+  # default title and output format
+  res <- list(
+    title = paste0('An R Markdown document converted from "', input, '"'),
+    output = 'html_document'
+  )
   # currently only the `authors` field is supported
   authors <- unlist(lapply(meta$authors, `[[`, 'name'))
-  res = if (length(authors) > 0) paste0('author: ', paste(authors, collapse = ', '))
-  # default to html_document output
-  c('title: Welcome to the R Markdown ecosystem!', res, 'output: html_document')
+  if (length(authors) > 0) res[['author']] <- paste(authors, collapse = ', ')
+  gsub('\n+$', '', yaml::as.yaml(res))
 }
