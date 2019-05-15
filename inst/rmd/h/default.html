@@ -375,6 +375,18 @@ $if(code_folding)$
   window.initializeCodeFolding("$code_folding$" === "show");
 $endif$
 });
+// Show/Hide button names internationalization.
+// Variables used in codefolding.js.
+$if(code_folding_show_btn)$
+var ShowCode = $code_folding_show_btn$;
+$else$
+var ShowCode = 'Show';
+$endif$
+$if(code_folding_hide_btn)$
+var HideCode = $code_folding_hide_btn$;
+$else$
+var HideCode = 'Hide';
+$endif$
 </script>
 $endif$
 
@@ -525,11 +537,18 @@ $if(theme)$
 
 $if(code_menu)$
 <div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	<span>$if(code_folding_button)$$code_folding_button$$else$Code$endif$</span>
+	<span class="caret"></span>
+</button>
 <ul class="dropdown-menu" style="min-width: 50px;">
 $if(code_folding)$
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li><a id="rmd-show-all-code" href="#">
+	$if(code_folding_show)$$code_folding_show$$else$Show All Code$endif$
+</a></li>
+<li><a id="rmd-hide-all-code" href="#">
+	$if(code_folding_hide)$$code_folding_hide$$else$Hide All Code$endif$
+</a></li>
 $if(source_embed)$
 <li role="separator" class="divider"></li>
 $endif$
@@ -539,11 +558,8 @@ $if(source_embed)$
 $endif$
 </ul>
 </div>
-
 $endif$
-
 $endif$
-
 $if(title)$
 <h1 class="title toc-ignore">$title$</h1>
 $if(subtitle)$
