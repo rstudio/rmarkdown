@@ -3,7 +3,7 @@
 #' Format for converting from R Markdown to an RTF document.
 #'
 #' See the \href{https://rmarkdown.rstudio.com/rtf_document_format.html}{online
-#' documentation} for additional details on using the \code{rtf_document} format.
+#' documentation} for additional details on using the `rtf_document` format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. For more details

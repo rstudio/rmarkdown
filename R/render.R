@@ -3,7 +3,7 @@
 #' Rmd files include a metadata section (typically located at the top of the
 #' file) that can specify (among other things) the title, author, and date of
 #' the document. Metadata adheres to the \href{https://yaml.org}{YAML} format
-#' and is delimited by lines containing three dashes (\code{---}). Here is an
+#' and is delimited by lines containing three dashes (`---`). Here is an
 #' example metadata section:
 #' \preformatted{---
 #' title: "Crop Analysis Q3 2013"
@@ -11,8 +11,8 @@
 #' date: October 23rd, 2013
 #' ---
 #' }
-#' Note that the \code{title} field is quoted. This is because titles often
-#' contained embedded colons (\code{:}) and colons followed by a space need to
+#' Note that the `title` field is quoted. This is because titles often
+#' contained embedded colons (`:`) and colons followed by a space need to
 #' be quoted in YAML.
 #' @details When title, author, and date metadata is provided it's used to
 #'   automatically create a title section within output documents. If you don't
@@ -29,11 +29,11 @@ NULL
 
 #' The YAML metadata of the current R Markdown document
 #'
-#' The object \code{metadata} stores the YAML metadata of the current R Markdown
+#' The object `metadata` stores the YAML metadata of the current R Markdown
 #' document as a list, which you may use in the R code chunks, e.g.
-#' \code{rmarkdown::metadata$title} (the title of the document),
-#' \code{rmarkdown::metadata$author}, and \code{rmarkdown::metadata$foo} (if you
-#' have a YAML field named \code{foo}), etc.
+#' `rmarkdown::metadata$title` (the title of the document),
+#' `rmarkdown::metadata$author`, and `rmarkdown::metadata$foo` (if you
+#' have a YAML field named `foo`), etc.
 #' @usage NULL
 #' @examples rmarkdown::metadata
 #' @export
@@ -80,17 +80,17 @@ metadata <- list()
 #' @section knitr Spin:
 #'   Including markdown within R comments is possible because \code{\link{render}}
 #'   calls the \code{\link[knitr:spin]{knitr spin}} function to convert the R
-#'   script to an Rmd file. The \code{spin} function also enables you to add
+#'   script to an Rmd file. The `spin` function also enables you to add
 #'    knitr
-#'   chunk options with another special comment prefix (\code{#+}).
+#'   chunk options with another special comment prefix (`#+`).
 #'
-#'   Here's an example of a script that uses the various features of \code{spin}:
+#'   Here's an example of a script that uses the various features of `spin`:
 #'
-#'   \url{https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R}
+#'   <https://github.com/yihui/knitr/blob/master/inst/examples/knitr-spin.R>
 #'
-#'   For more details on \code{knitr::spin} see the following documentation:
+#'   For more details on `knitr::spin` see the following documentation:
 #'
-#'   \url{http://yihui.name/knitr/demo/stitch/}
+#'   <http://yihui.name/knitr/demo/stitch/>
 #' @name compile_notebook
 NULL
 
@@ -101,14 +101,14 @@ NULL
 #' input requires knitting then \code{\link[knitr:knit]{knit}} is called prior
 #' to pandoc.
 #'
-#' Note that the \pkg{knitr} \code{error} option is set to \code{FALSE} during
+#' Note that the \pkg{knitr} `error` option is set to `FALSE` during
 #' rendering (which is different from the \pkg{knitr} default value of
-#' \code{TRUE}).
+#' `TRUE`).
 #'
 #' For additional details on rendering R scripts see
 #' \link[=compile_notebook]{Compiling R scripts to a notebook}.
 #'
-#' If no \code{output_format} parameter is specified then the output format is
+#' If no `output_format` parameter is specified then the output format is
 #' read from the YAML front-matter of the input file. For example, the
 #' following YAML would yield a PDF document:
 #'
@@ -125,8 +125,8 @@ NULL
 #'     highlight: zenburn
 #' }
 #'
-#' Multiple formats can be specified in metadata. If no \code{output_format}
-#' is passed to \code{render} then the first one defined will be used:
+#' Multiple formats can be specified in metadata. If no `output_format`
+#' is passed to `render` then the first one defined will be used:
 #'
 #' \preformatted{
 #' output:
@@ -140,7 +140,7 @@ NULL
 #'
 #' Formats specified in metadata can be any one of the built in formats (e.g.
 #' \code{\link{html_document}}, \code{\link{pdf_document}}) or a format defined
-#' in another package (e.g. \code{pkg::custom_format}).
+#' in another package (e.g. `pkg::custom_format`).
 #'
 #' If there is no format defined in the YAML then
 #' \code{\link{html_document}} will be used.
@@ -155,50 +155,50 @@ NULL
 #' @param input The input file to be rendered. This can be an R script (.R),
 #' an R Markdown document (.Rmd), or a plain markdown document.
 #' @param output_format The R Markdown output format to convert to. The option
-#' \code{"all"} will render all formats defined within the file. The option can
-#' be the name of a format (e.g. \code{"html_document"}) and that will render
+#' `"all"` will render all formats defined within the file. The option can
+#' be the name of a format (e.g. `"html_document"`) and that will render
 #' the document to that single format. One can also use a vector of format
 #' names to render to multiple formats. Alternatively, you can pass an output
-#' format object (e.g. \code{html_document()}). If using \code{NULL} then the
+#' format object (e.g. `html_document()`). If using `NULL` then the
 #' output format is the first one defined in the YAML frontmatter in the input
 #' file (this defaults to HTML if no format is specified there).
-#' @param output_file The name of the output file. If using \code{NULL} then the
+#' @param output_file The name of the output file. If using `NULL` then the
 #' output filename will be based on filename for the input file. If a filename
 #' is provided, a path to the output file can also be provided. Note that the
-#' \code{output_dir} option allows for specifying the output file path as well,
+#' `output_dir` option allows for specifying the output file path as well,
 #' however, if also specifying the path, the directory must exist. If
-#' \code{output_file} is specified but does not have a file extension, an
+#' `output_file` is specified but does not have a file extension, an
 #' extension will be automatically added according to the output format. To
-#' avoid the automatic file extension, put the \code{output_file} value in
-#' \code{\link{I}()}, e.g., \code{I('my-output')}.
-#' @param output_dir The output directory for the rendered \code{output_file}.
+#' avoid the automatic file extension, put the `output_file` value in
+#' \code{\link{I}()}, e.g., `I('my-output')`.
+#' @param output_dir The output directory for the rendered `output_file`.
 #' This allows for a choice of an alternate directory to which the output file
 #' should be written (the default output directory of that of the input file).
-#' If a path is provided with a filename in \code{output_file} the directory
+#' If a path is provided with a filename in `output_file` the directory
 #' specified here will take precedence. Please note that any directory path
 #' provided will create any necessary directories if they do not exist.
 #' @param output_options List of output options that can override the options
-#' specified in metadata (e.g. could be used to force \code{self_contained} or
-#' \code{mathjax = "local"}). Note that this is only valid when the output
+#' specified in metadata (e.g. could be used to force `self_contained` or
+#' `mathjax = "local"`). Note that this is only valid when the output
 #' format is read from metadata (i.e. not a custom format object passed to
-#' \code{output_format}).
+#' `output_format`).
 #' @param intermediates_dir Intermediate files directory. If a path is specified
-#' then intermediate files will be written to that path. If \code{NULL},
+#' then intermediate files will be written to that path. If `NULL`,
 #' intermediate files are written to the same directory as the input file.
 #' @param knit_root_dir The working directory in which to knit the document;
-#' uses knitr's \code{root.dir} knit option. If \code{NULL} then the behavior
+#' uses knitr's `root.dir` knit option. If `NULL` then the behavior
 #' will follow the knitr default, which is to use the parent directory of the
 #' document.
-#' @param runtime The runtime target for rendering. The \code{static} option
-#' produces output intended for static files; \code{shiny} produces output
+#' @param runtime The runtime target for rendering. The `static` option
+#' produces output intended for static files; `shiny` produces output
 #' suitable for use in a Shiny document (see \code{\link{run}}). The default,
-#' \code{auto}, allows the \code{runtime} target specified in the YAML metadata
-#' to take precedence, and renders for a \code{static} runtime target otherwise.
-#' @param clean Using \code{TRUE} will clean intermediate files that are created
+#' `auto`, allows the `runtime` target specified in the YAML metadata
+#' to take precedence, and renders for a `static` runtime target otherwise.
+#' @param clean Using `TRUE` will clean intermediate files that are created
 #' during rendering.
 #' @param params A list of named parameters that override custom params
 #' specified within the YAML front-matter (e.g. specifying a dataset to read or
-#' a date range to confine output to). Pass \code{"ask"} to start an
+#' a date range to confine output to). Pass `"ask"` to start an
 #' application that helps guide parameter configuration.
 #' @param knit_meta (This option is reserved for expert use.) Metadata
 #' generated by \pkg{knitr}.
@@ -211,12 +211,12 @@ NULL
 #' @param encoding The encoding of the input file. See \code{\link{file}} for
 #' more information.
 #' @return
-#'   When \code{run_pandoc = TRUE}, the compiled document is written into
+#'   When `run_pandoc = TRUE`, the compiled document is written into
 #'   the output file, and the path of the output file is returned. When
-#'   \code{run_pandoc = FALSE}, the path of the Markdown output file, with
-#'   attributes \code{knit_meta} (the \pkg{knitr} meta data collected from code
-#'   chunks) and \code{intermediates} (the intermediate files/directories
-#'   generated by \code{render()}).
+#'   `run_pandoc = FALSE`, the path of the Markdown output file, with
+#'   attributes `knit_meta` (the \pkg{knitr} meta data collected from code
+#'   chunks) and `intermediates` (the intermediate files/directories
+#'   generated by `render()`).
 #' @examples
 #' \dontrun{
 #' library(rmarkdown)
@@ -979,14 +979,14 @@ render <- function(input,
 #' Render supporting files for an input document
 #'
 #' Render (copy) required supporting files for an input document to the
-#' \code{_files} directory that is associated with the document.
+#' `_files` directory that is associated with the document.
 #'
 #' @param from The directory from which the files should be copied.
 #' @param files_dir The directory that will receive the copied files.
 #' @param rename_to An option to rename the source directory after the copy
 #' operation is complete.
 #' @return The relative path to the supporting files. This path is suitable
-#' for inclusion in HTML\code{href} and \code{src} attributes.
+#' for inclusion in HTML`href` and `src` attributes.
 #' @export
 render_supporting_files <- function(from, files_dir, rename_to = NULL) {
 
@@ -1116,12 +1116,12 @@ resolve_df_print <- function(df_print) {
 #' The output metadata object
 #'
 #' This object provides a mechanism for users to attach metadata as an attribute
-#' (named \code{rmd_output_metadata}) of the returned value of
+#' (named `rmd_output_metadata`) of the returned value of
 #' \code{\link{render}()}. The initial value of the metadata comes from in the
-#' \code{rmd_output_metadata} field of the YAML frontmatter of an R Markdown
+#' `rmd_output_metadata` field of the YAML frontmatter of an R Markdown
 #' document. The metadata can be queried via the
-#' \code{output_metadata$get()} method, and modified via the
-#' \code{output_metadata$set()} method.
+#' `output_metadata$get()` method, and modified via the
+#' `output_metadata$set()` method.
 #' @format NULL
 #' @usage NULL
 #' @keywords NULL

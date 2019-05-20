@@ -3,7 +3,7 @@
 #' Specify additional content to be included within an output document.
 #'
 #' Non-absolute paths for resources referenced from the
-#' \code{in_header}, \code{before_body}, and \code{after_body}
+#' `in_header`, `before_body`, and `after_body`
 #' parameters are resolved relative to the directory of the input document.
 #' @param in_header One or more files with content to be included in the
 #'   header of the document.

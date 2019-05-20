@@ -8,14 +8,14 @@
 #'   (should be square and at least 128x128).
 #' @param slide_level Header level to consider as slide separator (Defaults to
 #'   header 2).
-#' @param incremental \code{TRUE} to render slide bullets incrementally.
+#' @param incremental `TRUE` to render slide bullets incrementally.
 #'   Note that if you want to reverse the default incremental behavior for an
-#'   individual bullet you can preceded it with \code{>}.
-#'   For example: \emph{\code{> - Bullet Text}}.
+#'   individual bullet you can preceded it with `>`.
+#'   For example: *`> - Bullet Text`*.
 #' @param widescreen Display presentation with wider dimensions.
 #' @param smaller Use smaller text on all slides. You can also enable this for
-#'   individual slides by adding the \code{.smaller} attribute to the slide
-#'   header (see \emph{Presentation Size} below for details).
+#'   individual slides by adding the `.smaller` attribute to the slide
+#'   header (see *Presentation Size* below for details).
 #' @param transition Speed of slide transitions. This can be "default",
 #'   "slower", "faster", or a numeric value with a number of seconds (e.g. 0.5).
 #' @param analytics A Google analytics property ID.
@@ -23,14 +23,14 @@
 #' @details
 #'   See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
 #'   online documentation} for additional details on using the
-#'   \code{ioslides_presentation} format.
+#'   `ioslides_presentation` format.
 #'
-#'   Note that, if a \code{before_body} include is specified in \code{includes},
+#'   Note that, if a `before_body` include is specified in `includes`,
 #'   then it will replace the standard title slide entirely.
 #' @section Slide Basics:
 #'   You can create a slide show broken up into sections by using the # and ##
 #'   heading tags (you can also create a new slide without a header using a
-#'   horizontal rule (\code{----------}). For example here's a simple slide show:
+#'   horizontal rule (`----------`). For example here's a simple slide show:
 #'   \preformatted{
 #' ---
 #' title: "Habits"
@@ -75,18 +75,18 @@
 #'   The following single character keyboard shortcuts enable alternate display
 #'   modes:
 #'   \itemize{
-#'     \item{\code{'f'}      }{enable fullscreen mode}
-#'     \item{\code{'w'}      }{toggle widescreen mode}
-#'     \item{\code{'o'}      }{enable overview mode}
-#'     \item{\code{'h'}      }{enable code highlight mode}
-#'     \item{\code{'p'}      }{show presenter notes}
+#'     \item{`'f'`      }{enable fullscreen mode}
+#'     \item{`'w'`      }{toggle widescreen mode}
+#'     \item{`'o'`      }{enable overview mode}
+#'     \item{`'h'`      }{enable code highlight mode}
+#'     \item{`'p'`      }{show presenter notes}
 #'   }
-#'   Pressing \code{Esc} exits all of these modes. See the sections below on
-#'   \emph{Code Highlighting} and \emph{Presenter Mode} for additional
+#'   Pressing `Esc` exits all of these modes. See the sections below on
+#'   *Code Highlighting* and *Presenter Mode* for additional
 #'   detail on those modes.
 #'
 #' @section Incremental Bullets:
-#'   You can render bullets incrementally by adding the \code{incremental}
+#'   You can render bullets incrementally by adding the `incremental`
 #'   option:
 #'   \preformatted{
 #' ---
@@ -103,8 +103,8 @@
 #' }
 #' @section Presentation Size:
 #'   You can display the presentation using a wider form factor using the
-#'   \code{widescreen} option. You can specify that smaller text be used with
-#'   the \code{smaller} option. For example:
+#'   `widescreen` option. You can specify that smaller text be used with
+#'   the `smaller` option. For example:
 #'   \preformatted{
 #' ---
 #' output:
@@ -113,11 +113,11 @@
 #'     smaller: true
 #' ---
 #' }
-#'   You can also enable the \code{smaller} option on a slide-by-slide basis
-#'   by adding the \code{.smaller} attibute to the slide header:
+#'   You can also enable the `smaller` option on a slide-by-slide basis
+#'   by adding the `.smaller` attibute to the slide header:
 #'   \preformatted{## Getting up {.smaller}}
 #' @section Adding a Logo:
-#'   You can add a logo to the presentation using the \code{logo} option (the
+#'   You can add a logo to the presentation using the `logo` option (the
 #'   logo should be square and at least 128x128). For example:
 #'   \preformatted{
 #' ---
@@ -130,7 +130,7 @@
 #'   an icon version of the logo will be included in the bottom-left footer of
 #'   each slide.
 #' @section Build Slides:
-#'   Slides can also have a \code{.build} attribute that indicate that their
+#'   Slides can also have a `.build` attribute that indicate that their
 #'   content should be displayed incrementally. For example:
 #'   \preformatted{## Getting up {.build}}
 #'   Slide attributes can be combined if you need to specify more than one,
@@ -147,7 +147,7 @@
 #' }
 #'   The highlighted region will be displayed with a bold font. When you want to
 #'   help the audience focus exclusively on the highlighted region press the
-#'   \code{'h'} key and the rest of the code will fade away.
+#'   `'h'` key and the rest of the code will fade away.
 #' @section Tables:
 #'   The ioslides template has an attractive default style for tables so you
 #'   shouldn't hesitate to add tables for presenting more complex sets of
@@ -155,17 +155,17 @@
 #'   tables which are described in the
 #'   \href{http://pandoc.org/README.html}{pandoc online documentation}.
 #' @section Advanced Layout:
-#'   You can center content on a slide by adding the \code{.flexbox}
-#'   and \code{.vcenter} attributes to the slide title. For example:
+#'   You can center content on a slide by adding the `.flexbox`
+#'   and `.vcenter` attributes to the slide title. For example:
 #'   \preformatted{## Dinner {.flexbox .vcenter}}
-#'   You can horizontally center content by enclosing it in a \code{div} tag
-#'   with class \code{centered}. For example:
+#'   You can horizontally center content by enclosing it in a `div` tag
+#'   with class `centered`. For example:
 #'   \preformatted{
 #' <div class="centered">
 #' This text is centered.
 #' </div>
 #' }
-#'   You can do a two-column layout using the \code{columns-2} class.
+#'   You can do a two-column layout using the `columns-2` class.
 #'   For example:
 #'   \preformatted{
 #' <div class="columns-2">
@@ -194,14 +194,14 @@
 #'   presenting on one screen but have another screen that's private to you).
 #'   The window stays in sync with the main presentation window and also
 #'   shows presenter notes and a thumbnail of the next slide. To enable
-#'   presenter mode add \code{?presentme=true} to the URL of the presentation,
+#'   presenter mode add `?presentme=true` to the URL of the presentation,
 #'   for example:
 #'   \preformatted{mypresentation.html?presentme=true}
 #'   The presenter mode window will open and will always re-open with the
 #'   presentation until it's disabled with:
 #'   \preformatted{mypresentation.html?presentme=false}
 #'   To add presenter notes to a slide you include it within a "notes"
-#'   \code{div}. For example:
+#'   `div`. For example:
 #'   \preformatted{
 #' <div class="notes">
 #' This is my *note*.

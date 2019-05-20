@@ -3,7 +3,7 @@
 #' Format for converting from R Markdown to a slidy presentation.
 #'
 #' See the \href{https://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
-#' documentation} for additional details on using the \code{slidy_presentation}
+#' documentation} for additional details on using the `slidy_presentation`
 #' format.
 #'
 #' For more information on markdown syntax for presentations see the

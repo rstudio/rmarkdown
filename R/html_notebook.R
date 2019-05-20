@@ -3,7 +3,7 @@
 #' Format for converting from R Markdown to an HTML notebook.
 #'
 #' See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online
-#' documentation} for additional details on using the \code{html_notebook}
+#' documentation} for additional details on using the `html_notebook`
 #' format.
 #' @inheritParams html_document
 #' @param output_source Define an output source for \R chunks (ie,
@@ -11,8 +11,8 @@
 #'   underlying \R code). See \code{\link{html_notebook_output}} for
 #'   more details.
 #' @param self_contained Produce a standalone HTML file with no external
-#'   dependencies. Defaults to \code{TRUE}. In notebooks, setting this to
-#'   \code{FALSE} is not recommended, since the setting does not apply to
+#'   dependencies. Defaults to `TRUE`. In notebooks, setting this to
+#'   `FALSE` is not recommended, since the setting does not apply to
 #'   embedded notebook output such as plots and HTML widgets.
 #' @importFrom evaluate evaluate
 #' @export
@@ -237,10 +237,10 @@ html_notebook <- function(toc = FALSE,
 #' original R Markdown source document.
 #'
 #' See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online
-#' documentation} for additional details on using the \code{html_notebook}
+#' documentation} for additional details on using the `html_notebook`
 #' format.
-#' @param path The path to an R Notebook file (with extension \code{.nb.html}).
-#' @param encoding The document's encoding (assumed as \code{"UTF-8"} by default).
+#' @param path The path to an R Notebook file (with extension `.nb.html`).
+#' @param encoding The document's encoding (assumed as `"UTF-8"` by default).
 #' @export
 parse_html_notebook <- function(path,
                                 encoding = "UTF-8") {

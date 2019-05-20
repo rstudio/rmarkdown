@@ -6,9 +6,9 @@
 #' post).
 #'
 #' See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
-#' documentation} for additional details on using the \code{html_fragment}
+#' documentation} for additional details on using the `html_fragment`
 #' format.
-#' @param mathjax \code{TRUE} to convert $ and $$ math blocks into MathJax
+#' @param mathjax `TRUE` to convert $ and $$ math blocks into MathJax
 #'   compatible output. Note that you'll still need to ensure that the page
 #'   where the fragment is included loads the required MathJax scripts.
 #' @inheritParams html_document

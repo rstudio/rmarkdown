@@ -3,7 +3,7 @@
 #' Formats for converting from R Markdown to a PDF or LaTeX document.
 #'
 #' See the \href{https://rmarkdown.rstudio.com/pdf_document_format.html}{online
-#' documentation} for additional details on using the \code{pdf_document} format.
+#' documentation} for additional details on using the `pdf_document` format.
 #'
 #' Creating PDF output from R Markdown requires that LaTeX be installed.
 #'
@@ -20,52 +20,52 @@
 #' customized using metadata. For example:
 #'
 #' \tabular{l}{
-#' \code{---} \cr
-#' \code{title: "Crop Analysis Q3 2013"} \cr
-#' \code{fontsize: 11pt} \cr
-#' \code{geometry: margin=1in} \cr
-#' \code{---}
+#' `---` \cr
+#' `title: "Crop Analysis Q3 2013"` \cr
+#' `fontsize: 11pt` \cr
+#' `geometry: margin=1in` \cr
+#' `---`
 #' }
 #'
 #' Available metadata variables include:
 #'
 #' \describe{
-#'    \item{\code{lang}}{Document language code (e.g. "es", "fr", "pt-BR")}
-#'    \item{\code{fontsize}}{Font size (e.g. 10pt, 11pt, 12pt)}
-#'    \item{\code{documentclass}}{LaTeX document class (e.g. article)}
-#'    \item{\code{classoption}}{Option for \code{documentclass} (e.g. oneside); may be repeated}
-#'    \item{\code{geometry}}{Options for geometry class (e.g. margin=1in); may be repeated}
-#'    \item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{latex_engine} option)}
-#'    \item{\code{linkcolor, urlcolor, citecolor}}{Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)}
-#'    \item{\code{linestretch}}{Options for line spacing (e.g. 1, 1.5, 3)}
+#'    \item{`lang`}{Document language code (e.g. "es", "fr", "pt-BR")}
+#'    \item{`fontsize`}{Font size (e.g. 10pt, 11pt, 12pt)}
+#'    \item{`documentclass`}{LaTeX document class (e.g. article)}
+#'    \item{`classoption`}{Option for `documentclass` (e.g. oneside); may be repeated}
+#'    \item{`geometry`}{Options for geometry class (e.g. margin=1in); may be repeated}
+#'    \item{`mainfont, sansfont, monofont, mathfont`}{Document fonts (works only with xelatex and lualatex, see the `latex_engine` option)}
+#'    \item{`linkcolor, urlcolor, citecolor`}{Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)}
+#'    \item{`linestretch`}{Options for line spacing (e.g. 1, 1.5, 3)}
 #' }
 #' @inheritParams html_document
-#' @param fig_crop \code{TRUE} to automatically apply the \code{pdfcrop} utility
+#' @param fig_crop `TRUE` to automatically apply the `pdfcrop` utility
 #'   (if available) to pdf figures
 #' @param dev Graphics device to use for figure output (defaults to pdf)
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
-#'   "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.
+#'   "zenburn", and "haddock". Pass `NULL` to prevent syntax highlighting.
 #' @param keep_tex Keep the intermediate tex file used in the conversion to PDF
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", and "xelatex".
-#' @param citation_package The LaTeX package to process citations, \code{natbib}
-#'   or \code{biblatex}. Use \code{none} if neither package is to be used.
+#' @param citation_package The LaTeX package to process citations, `natbib`
+#'   or `biblatex`. Use `none` if neither package is to be used.
 #' @param template Pandoc template to use for rendering. Pass "default" to use
-#'   the rmarkdown package default template; pass \code{NULL} to use pandoc's
+#'   the rmarkdown package default template; pass `NULL` to use pandoc's
 #'   built-in template; pass a path to use a custom template that you've
 #'   created.  See the documentation on
 #'   \href{http://pandoc.org/README.html}{pandoc online documentation}
 #'   for details on creating custom templates.
 #' @param output_extensions Pandoc extensions to be added or removed from the
-#'   output format, e.g., \code{"-smart"} means the output format will be
-#'   \code{latex-smart}.
-#' @param extra_dependencies A LaTeX dependency \code{latex_dependency()}, a
+#'   output format, e.g., `"-smart"` means the output format will be
+#'   `latex-smart`.
+#' @param extra_dependencies A LaTeX dependency `latex_dependency()`, a
 #'   list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
-#'   \code{c("framed", "hyperref")}), or a named list of LaTeX package options
-#'   with the names being package names (e.g. \code{list(hypreref =
-#'   c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
-#'   add custom LaTeX packages to the .tex header.
+#'   `c("framed", "hyperref")`), or a named list of LaTeX package options
+#'   with the names being package names (e.g.
+#'   `list(hyperref = c("unicode=true", "breaklinks=true"), lmodern = NULL)`).
+#'   It can be used to add custom LaTeX packages to the .tex header.
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @examples
 #' \dontrun{
@@ -246,7 +246,7 @@ general_intermediates_generator <- function(
   intermediates
 }
 
-#' @param ... Arguments passed to \code{pdf_document()}.
+#' @param ... Arguments passed to `pdf_document()`.
 #' @rdname pdf_document
 #' @export
 latex_document <- function(...) {

@@ -70,7 +70,7 @@ are not rendered (this is a convention to designate files that are included
 by top level documents).}
 \item{All output and supporting files are copied to a \code{_site} subdirectory
 of the website directory (this is configurable, see discussion below).}
-\item{The following files are \bold{not} copied to the \code{_site}
+\item{The following files are \strong{not} copied to the \code{_site}
 sub-directory:
 \itemize{
 \item{Files beginning with \code{.} (hidden files).}

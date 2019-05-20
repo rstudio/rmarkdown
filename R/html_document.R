@@ -3,7 +3,7 @@
 #' Format for converting from R Markdown to an HTML document.
 #'
 #' See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
-#' documentation} for additional details on using the \code{html_document}
+#' documentation} for additional details on using the `html_document`
 #' format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
@@ -15,33 +15,33 @@
 #' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
 #'@inheritParams output_format
-#'@param toc \code{TRUE} to include a table of contents in the output
+#'@param toc `TRUE` to include a table of contents in the output
 #'@param toc_depth Depth of headers to include in table of contents
-#'@param toc_float \code{TRUE} to float the table of contents to the left of the
-#'  main document content. Rather than \code{TRUE} you may also pass a list of
+#'@param toc_float `TRUE` to float the table of contents to the left of the
+#'  main document content. Rather than `TRUE` you may also pass a list of
 #'  options that control the behavior of the floating table of contents. See the
-#'  \emph{Floating Table of Contents} section below for details.
-#'@param number_sections \code{TRUE} to number section headings
+#'  *Floating Table of Contents* section below for details.
+#'@param number_sections `TRUE` to number section headings
 #'@param fig_width Default width (in inches) for figures
 #'@param fig_height Default height (in inches) for figures
 #'@param fig_retina Scaling to perform for retina displays (defaults to 2, which
-#'  currently works for all widely used retina displays). Set to \code{NULL} to
-#'  prevent retina scaling. Note that this will always be \code{NULL} when
-#'  \code{keep_md} is specified (this is because \code{fig_retina} relies on
+#'  currently works for all widely used retina displays). Set to `NULL` to
+#'  prevent retina scaling. Note that this will always be `NULL` when
+#'  `keep_md` is specified (this is because `fig_retina` relies on
 #'  outputting HTML directly into the markdown document).
-#'@param fig_caption \code{TRUE} to render figures with captions
+#'@param fig_caption `TRUE` to render figures with captions
 #'@param dev Graphics device to use for figure output (defaults to png)
 #'@param code_folding Enable document readers to toggle the display of R code
-#'  chunks. Specify \code{"none"} to display all code chunks (assuming
-#'  they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
+#'  chunks. Specify `"none"` to display all code chunks (assuming
+#'  they were knit with `echo = TRUE`). Specify `"hide"` to hide all R
 #'  code chunks by default (users can show hidden code chunks either
-#'  individually or document-wide). Specify \code{"show"} to show all R code
+#'  individually or document-wide). Specify `"show"` to show all R code
 #'  chunks by default.
 #'@param code_download Embed the Rmd source code within the document and provide
 #'  a link that can be used by readers to download the code.
 #'@param smart Produce typographically correct output, converting straight
-#'  quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
-#'  \code{...} to ellipses.
+#'  quotes to curly quotes, `---` to em-dashes, `--` to en-dashes, and
+#'  `...` to ellipses.
 #'@param self_contained Produce a standalone HTML file with no external
 #'  dependencies, using data: URIs to incorporate the contents of linked
 #'  scripts, stylesheets, images, and videos. Note that even for self contained
@@ -49,23 +49,23 @@
 #'  its size).
 #'@param theme Visual theme ("default", "cerulean", "journal", "flatly",
 #'  "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
-#'  "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-#'  case you can use the \code{css} parameter to add your own styles).
+#'  "sandstone", "simplex", or "yeti"). Pass `NULL` for no theme (in this
+#'  case you can use the `css` parameter to add your own styles).
 #'@param highlight Syntax highlighting style. Supported styles include
 #'  "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
-#'  "haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.
+#'  "haddock", and "textmate". Pass `NULL` to prevent syntax highlighting.
 #'@param mathjax Include mathjax. The "default" option uses an https URL from a
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
 #'  copied into the output directory). You can pass an alternate URL or pass
-#'  \code{NULL} to exclude MathJax entirely.
+#'  `NULL` to exclude MathJax entirely.
 #'@param section_divs Wrap sections in <div> tags (or <section> tags in HTML5),
 #'  and attach identifiers to the enclosing <div> (or <section>) rather than the
 #'  header itself.
 #'@param template Pandoc template to use for rendering. Pass "default" to use
-#'  the rmarkdown package default template; pass \code{NULL} to use pandoc's
+#'  the rmarkdown package default template; pass `NULL` to use pandoc's
 #'  built-in template; pass a path to use a custom template that you've created.
 #'  Note that if you don't use the "default" template then some features of
-#'  \code{html_document} won't be available (see the Templates section below for
+#'  `html_document` won't be available (see the Templates section below for
 #'  more details).
 #'@param css One or more css files to include
 #'@param includes Named list of additional content to include within the
@@ -73,7 +73,7 @@
 #'@param keep_md Keep the markdown file generated by knitting.
 #'@param lib_dir Directory to copy dependent HTML libraries (e.g. jquery,
 #'  bootstrap, etc.) into. By default this will be the name of the document with
-#'  \code{_files} appended to it.
+#'  `_files` appended to it.
 #'@param md_extensions Markdown extensions to be added or removed from the
 #'  default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
 #'  additional details.
@@ -88,9 +88,9 @@
 #'  file within the same directory as your html document and it will automatically
 #'  be included at the top of the document.
 #'
-#'  The "_navbar.yml" file includes \code{title}, \code{type}, \code{left}, and
-#'  \code{right} fields (to define menu items for the left and right of the navbar
-#'  respectively). Menu items include \code{title} and \code{href} fields. For example:
+#'  The "_navbar.yml" file includes `title`, `type`, `left`, and
+#'  `right` fields (to define menu items for the left and right of the navbar
+#'  respectively). Menu items include `title` and `href` fields. For example:
 #'
 #'  \preformatted{title: "My Website"
 #' type: default
@@ -102,34 +102,34 @@
 #' right:
 #'   - text: GitHub
 #'     href: https://github.com}
-#'  The \code{type} field is optional and can take the value "default" or "inverse" (which
+#'  The `type` field is optional and can take the value "default" or "inverse" (which
 #'  provides a different color scheme for the navigation bar).
 #'
 #'  Alternatively, you can include a "_navbar.html" file which is a full HTML definition
 #'  of a bootstrap navigation bar. For a simple example of including a navigation bar see
-#'  \url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
+#'  <https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html>.
 #'   For additional documentation on creating Bootstrap navigation bars see
-#'  \url{http://getbootstrap.com/components/#navbar}.
+#'  <http://getbootstrap.com/components/#navbar>.
 #'
 #'
 #'@section Floating Table of Contents:
 #'
-#'  You may specify a list of options for the \code{toc_float} parameter which
+#'  You may specify a list of options for the `toc_float` parameter which
 #'  control the behavior of the floating table of contents. Options include:
 #'
-#'  \itemize{ \item{\code{collapsed} (defaults to \code{TRUE}) controls whether
+#'  \itemize{ \item{`collapsed` (defaults to `TRUE`) controls whether
 #'  the table of contents appears with only the top-level (H2) headers. When
 #'  collapsed the table of contents is automatically expanded inline when
-#'  necessary.} \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls
+#'  necessary.} \item{`smooth_scroll` (defaults to `TRUE`) controls
 #'  whether page scrolls are animated when table of contents items are navigated
-#'  to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
+#'  to via mouse clicks.} \item{`print` (defaults to `TRUE`) controls
 #'  whether the table of contents appears when user prints out the HTML page.}}
 #'
 #'@section Tabbed Sections:
 #'
-#'  You can organize content using tabs by applying the \code{.tabset} class
+#'  You can organize content using tabs by applying the `.tabset` class
 #'  attribute to headers within a document. This will cause all sub-headers of
-#'  the header with the \code{.tabset} attribute to appear within tabs rather
+#'  the header with the `.tabset` attribute to appear within tabs rather
 #'  than as standalone sections. For example:
 #'
 #'  \preformatted{## Quarterly Results {.tabset}
@@ -139,8 +139,8 @@
 #' ### By Region }
 #'
 #'  You can also specify two additional attributes to control the appearance and
-#'  behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
-#'  fade in and out when switching. The \code{.tabset-pills} attribute causes
+#'  behavior of the tabs. The `.tabset-fade` attributes causes the tabs to
+#'  fade in and out when switching. The `.tabset-pills` attribute causes
 #'  the visual appearance of the tabs to be "pill" rather than traditional tabs.
 #'  For example:
 #'
@@ -151,23 +151,23 @@
 #'  You can provide a custom HTML template to be used for rendering. The syntax
 #'  for templates is described in the
 #'  \href{http://pandoc.org/README.html}{pandoc documentation}. You can also use
-#'  the basic pandoc template by passing \code{template = NULL}.
+#'  the basic pandoc template by passing `template = NULL`.
 #'
 #'  Note however that if you choose not to use the "default" HTML template then
 #'  several aspects of HTML document rendering will behave differently:
 #'
-#'  \itemize{ \item{The \code{theme} parameter does not work (you can still
-#'  provide styles using the \code{css} parameter). } \item{For the
-#'  \code{highlight} parameter, the default highlighting style will resolve to
+#'  \itemize{ \item{The `theme` parameter does not work (you can still
+#'  provide styles using the `css` parameter). } \item{For the
+#'  `highlight` parameter, the default highlighting style will resolve to
 #'  "pygments" and the "textmate" highlighting style is not available }
-#'  \item{The \code{toc_float} parameter will not work. } \item{The
-#'  \code{code_folding} parameter will not work. } \item{Tabbed sections (as
+#'  \item{The `toc_float` parameter will not work. } \item{The
+#'  `code_folding` parameter will not work. } \item{Tabbed sections (as
 #'  described above) will not work.} \item{Navigation bars (as described above)
-#'  will not work. }\item{MathJax will not work if \code{self_contained} is
-#'  \code{TRUE} (these two options can't be used together in normal pandoc
+#'  will not work. }\item{MathJax will not work if `self_contained` is
+#'  `TRUE` (these two options can't be used together in normal pandoc
 #'  templates). } }
 #'
-#'  Due to the above restrictions, you might consider using the \code{includes}
+#'  Due to the above restrictions, you might consider using the `includes`
 #'  parameter as an alternative to providing a fully custom template.
 #'
 #' @examples
@@ -457,7 +457,7 @@ html_document <- function(toc = FALSE,
 #' HTML output.
 #'
 #' @inheritParams html_document
-#' @return An list that can be passed as the \code{knitr} argument of the
+#' @return An list that can be passed as the `knitr` argument of the
 #'   \code{\link{output_format}} function.
 #' @seealso \link{knitr_options}, \link{output_format}
 #' @export

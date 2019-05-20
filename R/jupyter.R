@@ -1,7 +1,7 @@
 #' Convert a Jupyter/IPython notebook to an R Markdown document
 #'
 #' Read a Jupyter/IPython notebook file (\file{.ipynb}) via
-#' \code{jsonlite::fromJSON()}, convert its code cells to R Markdown code
+#' `jsonlite::fromJSON()`, convert its code cells to R Markdown code
 #' chunks, preserve Markdown cells, and write out the results to an Rmd file.
 #'
 #' This simple converter may have some rough edges, depending on how many
@@ -9,7 +9,7 @@
 #' are not automatically converted (warnings will be issued if line magics are
 #' detected), but you may consider using or writing R functions to replace them
 #' in R Markdown (e.g., the \command{\%load} magic may be replaced by
-#' \code{reticulate::source_python()}). Cell magics will be converted to code
+#' `reticulate::source_python()`). Cell magics will be converted to code
 #' chunks with the (\pkg{knitr}) language engine names being the magic names.
 #' For example, the cell magic \command{\%\%js} is converted to \verb{```{js}}
 #' in R Markdown. This does not always work because not all IPython cell magics

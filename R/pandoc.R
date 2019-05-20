@@ -11,17 +11,17 @@
 #' @param input Character vector containing paths to input files
 #'   (files must be UTF-8 encoded)
 #' @param to Format to convert to (if not specified, you must specify
-#'   \code{output})
+#'   `output`)
 #' @param from Format to convert from (if not specified then the format is
-#'   determined based on the file extension of \code{input}).
+#'   determined based on the file extension of `input`).
 #' @param output Output file (if not specified then determined based on format
 #'   being converted to).
-#' @param citeproc \code{TRUE} to run the pandoc-citeproc filter (for processing
+#' @param citeproc `TRUE` to run the pandoc-citeproc filter (for processing
 #'   citations) as part of the conversion.
 #' @param options Character vector of command line options to pass to pandoc.
-#' @param verbose \code{TRUE} to show the pandoc command line which was executed
+#' @param verbose `TRUE` to show the pandoc command line which was executed
 #' @param wd Working directory in which code will be executed. If not
-#'   supplied, defaults to the common base directory of \code{input}.
+#'   supplied, defaults to the common base directory of `input`.
 #' @examples
 #' \dontrun{
 #' library(rmarkdown)
@@ -165,8 +165,8 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
 #' @param version Required version of pandoc
 #' @param error Whether to signal an error if pandoc with the required version
 #'   is not found
-#' @return \code{pandoc_available} returns a logical indicating whether the
-#'   required version of pandoc is available. \code{pandoc_version} returns a
+#' @return `pandoc_available` returns a logical indicating whether the
+#'   required version of pandoc is available. `pandoc_version` returns a
 #'   \code{\link[base]{numeric_version}} with the version of pandoc found.
 #' @examples
 #' \dontrun{
@@ -212,12 +212,12 @@ pandoc_version <- function() {
 #' includes).
 #'
 #' Non-absolute paths for resources referenced from the
-#' \code{in_header}, \code{before_body}, and \code{after_body}
+#' `in_header`, `before_body`, and `after_body`
 #' parameters are resolved relative to the directory of the input document.
 #' @inheritParams includes
 #' @param name Name of template variable to set.
-#' @param value Value of template variable (defaults to \code{true} if missing).
-#' @param toc \code{TRUE} to include a table of contents in the output.
+#' @param value Value of template variable (defaults to `true` if missing).
+#' @param toc `TRUE` to include a table of contents in the output.
 #' @param toc_depth Depth of headers to include in table of contents.
 #' @param highlight The name of a pandoc syntax highlighting theme.
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
@@ -332,7 +332,7 @@ pandoc_toc_args <- function(toc,
 #' forward slashes to back slashes (as required by pandoc for some path
 #' references).
 #' @param path Path to transform
-#' @param backslash Whether to replace forward slashes in \code{path} with
+#' @param backslash Whether to replace forward slashes in `path` with
 #'   backslashes on Windows.
 #' @return Transformed path that can be passed to pandoc on the command line.
 #' @export
@@ -357,11 +357,11 @@ pandoc_path_arg <- function(path, backslash = TRUE) {
 #' Render a pandoc template.
 #'
 #' Use the pandoc templating engine to render a text file. Substitutions are
-#' done using the \code{metadata} list passed to the function.
+#' done using the `metadata` list passed to the function.
 #' @param metadata A named list containing metadata to pass to template.
 #' @param template Path to a pandoc template.
 #' @param output Path to save output.
-#' @param verbose \code{TRUE} to show the pandoc command line which was
+#' @param verbose `TRUE` to show the pandoc command line which was
 #'   executed.
 #' @return (Invisibly) The path of the generated file.
 #' @export
