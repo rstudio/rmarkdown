@@ -13,9 +13,9 @@ default_output_format(input, encoding = "UTF-8")
 }
 \value{
 A named list with a \code{name} value containing the format
-  name and an \code{options} value that is a list containing all the options
-  for the format and their values. An option's default value will be returned
-  if the option isn't set explicitly in the document.
+name and an \code{options} value that is a list containing all the options
+for the format and their values. An option's default value will be returned
+if the option isn't set explicitly in the document.
 }
 \description{
 Read the YAML metadata (and any common _output.yml file) for the

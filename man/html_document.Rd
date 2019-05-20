@@ -139,16 +139,16 @@ and Citations} article in the online documentation.
 \section{Navigation Bars}{
 
 
- If you have a set of html documents which you'd like to provide a common
- global navigation bar for, you can include a "_navbar.yml" or "_navbar.html"
- file within the same directory as your html document and it will automatically
- be included at the top of the document.
+If you have a set of html documents which you'd like to provide a common
+global navigation bar for, you can include a "_navbar.yml" or "_navbar.html"
+file within the same directory as your html document and it will automatically
+be included at the top of the document.
 
- The "_navbar.yml" file includes \code{title}, \code{type}, \code{left}, and
- \code{right} fields (to define menu items for the left and right of the navbar
- respectively). Menu items include \code{title} and \code{href} fields. For example:
+The "_navbar.yml" file includes \code{title}, \code{type}, \code{left}, and
+\code{right} fields (to define menu items for the left and right of the navbar
+respectively). Menu items include \code{title} and \code{href} fields. For example:
 
- \preformatted{title: "My Website"
+\preformatted{title: "My Website"
 type: default
 left:
   - text: "Home"
@@ -158,78 +158,78 @@ left:
 right:
   - text: GitHub
     href: https://github.com}
- The \code{type} field is optional and can take the value "default" or "inverse" (which
- provides a different color scheme for the navigation bar).
+The \code{type} field is optional and can take the value "default" or "inverse" (which
+provides a different color scheme for the navigation bar).
 
- Alternatively, you can include a "_navbar.html" file which is a full HTML definition
- of a bootstrap navigation bar. For a simple example of including a navigation bar see
- \url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
-  For additional documentation on creating Bootstrap navigation bars see
- \url{http://getbootstrap.com/components/#navbar}.
+Alternatively, you can include a "_navbar.html" file which is a full HTML definition
+of a bootstrap navigation bar. For a simple example of including a navigation bar see
+\url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
+For additional documentation on creating Bootstrap navigation bars see
+\url{http://getbootstrap.com/components/#navbar}.
 }
 
 \section{Floating Table of Contents}{
 
 
- You may specify a list of options for the \code{toc_float} parameter which
- control the behavior of the floating table of contents. Options include:
+You may specify a list of options for the \code{toc_float} parameter which
+control the behavior of the floating table of contents. Options include:
 
- \itemize{ \item{\code{collapsed} (defaults to \code{TRUE}) controls whether
- the table of contents appears with only the top-level (H2) headers. When
- collapsed the table of contents is automatically expanded inline when
- necessary.} \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls
- whether page scrolls are animated when table of contents items are navigated
- to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
- whether the table of contents appears when user prints out the HTML page.}}
+\itemize{ \item{\code{collapsed} (defaults to \code{TRUE}) controls whether
+the table of contents appears with only the top-level (H2) headers. When
+collapsed the table of contents is automatically expanded inline when
+necessary.} \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls
+whether page scrolls are animated when table of contents items are navigated
+to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
+whether the table of contents appears when user prints out the HTML page.}}
 }
 
 \section{Tabbed Sections}{
 
 
- You can organize content using tabs by applying the \code{.tabset} class
- attribute to headers within a document. This will cause all sub-headers of
- the header with the \code{.tabset} attribute to appear within tabs rather
- than as standalone sections. For example:
+You can organize content using tabs by applying the \code{.tabset} class
+attribute to headers within a document. This will cause all sub-headers of
+the header with the \code{.tabset} attribute to appear within tabs rather
+than as standalone sections. For example:
 
- \preformatted{## Quarterly Results {.tabset}
+\preformatted{## Quarterly Results {.tabset}
 
 ### By Product
 
 ### By Region }
 
- You can also specify two additional attributes to control the appearance and
- behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
- fade in and out when switching. The \code{.tabset-pills} attribute causes
- the visual appearance of the tabs to be "pill" rather than traditional tabs.
- For example:
+You can also specify two additional attributes to control the appearance and
+behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
+fade in and out when switching. The \code{.tabset-pills} attribute causes
+the visual appearance of the tabs to be "pill" rather than traditional tabs.
+For example:
 
- \preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
+\preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
 }
 
 \section{Templates}{
 
 
- You can provide a custom HTML template to be used for rendering. The syntax
- for templates is described in the
- \href{http://pandoc.org/README.html}{pandoc documentation}. You can also use
- the basic pandoc template by passing \code{template = NULL}.
+You can provide a custom HTML template to be used for rendering. The syntax
+for templates is described in the
+\href{http://pandoc.org/README.html}{pandoc documentation}. You can also use
+the basic pandoc template by passing \code{template = NULL}.
 
- Note however that if you choose not to use the "default" HTML template then
- several aspects of HTML document rendering will behave differently:
+Note however that if you choose not to use the "default" HTML template then
+several aspects of HTML document rendering will behave differently:
 
- \itemize{ \item{The \code{theme} parameter does not work (you can still
- provide styles using the \code{css} parameter). } \item{For the
- \code{highlight} parameter, the default highlighting style will resolve to
- "pygments" and the "textmate" highlighting style is not available }
- \item{The \code{toc_float} parameter will not work. } \item{The
- \code{code_folding} parameter will not work. } \item{Tabbed sections (as
- described above) will not work.} \item{Navigation bars (as described above)
- will not work. }\item{MathJax will not work if \code{self_contained} is
- \code{TRUE} (these two options can't be used together in normal pandoc
- templates). } }
+\itemize{ \item{The \code{theme} parameter does not work (you can still
+provide styles using the \code{css} parameter). } \item{For the
+\code{highlight} parameter, the default highlighting style will resolve to
+"pygments" and the "textmate" highlighting style is not available }
+\item{The \code{toc_float} parameter will not work. } \item{The
+\code{code_folding} parameter will not work. } \item{Tabbed sections (as
+described above) will not work.} \item{Navigation bars (as described above)
+will not work. }\item{MathJax will not work if \code{self_contained} is
+\code{TRUE} (these two options can't be used together in normal pandoc
+templates). } }
 
- Due to the above restrictions, you might consider using the \code{includes}
- parameter as an alternative to providing a fully custom template.
+Due to the above restrictions, you might consider using the \code{includes}
+parameter as an alternative to providing a fully custom template.
 }
 
 \examples{

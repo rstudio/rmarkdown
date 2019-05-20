@@ -94,3 +94,4 @@ BugReports: https://github.com/rstudio/rmarkdown/issues
 License: GPL-3
 RoxygenNote: 6.1.1
 Encoding: UTF-8
+Roxygen: list(markdown = TRUE)

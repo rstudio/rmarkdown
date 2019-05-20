@@ -84,7 +84,7 @@ output format, e.g., \code{"-smart"} means the output format will be
 list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
 \code{c("framed", "hyperref")}), or a named list of LaTeX package options
 with the names being package names (e.g. \code{list(hypreref =
-c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
+  c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
 add custom LaTeX packages to the .tex header.}
 
 \item{...}{Arguments passed to \code{pdf_document()}.}
@@ -124,14 +124,14 @@ customized using metadata. For example:
 Available metadata variables include:
 
 \describe{
-   \item{\code{lang}}{Document language code (e.g. "es", "fr", "pt-BR")}
-   \item{\code{fontsize}}{Font size (e.g. 10pt, 11pt, 12pt)}
-   \item{\code{documentclass}}{LaTeX document class (e.g. article)}
-   \item{\code{classoption}}{Option for \code{documentclass} (e.g. oneside); may be repeated}
-   \item{\code{geometry}}{Options for geometry class (e.g. margin=1in); may be repeated}
-   \item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{latex_engine} option)}
-   \item{\code{linkcolor, urlcolor, citecolor}}{Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)}
-   \item{\code{linestretch}}{Options for line spacing (e.g. 1, 1.5, 3)}
+\item{\code{lang}}{Document language code (e.g. "es", "fr", "pt-BR")}
+\item{\code{fontsize}}{Font size (e.g. 10pt, 11pt, 12pt)}
+\item{\code{documentclass}}{LaTeX document class (e.g. article)}
+\item{\code{classoption}}{Option for \code{documentclass} (e.g. oneside); may be repeated}
+\item{\code{geometry}}{Options for geometry class (e.g. margin=1in); may be repeated}
+\item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{latex_engine} option)}
+\item{\code{linkcolor, urlcolor, citecolor}}{Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)}
+\item{\code{linestretch}}{Options for line spacing (e.g. 1, 1.5, 3)}
 }
 }
 \examples{

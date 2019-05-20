@@ -100,7 +100,7 @@ additional details.}
 list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
 \code{c("framed", "hyperref")}), or a named list of LaTeX package options
 with the names being package names (e.g. \code{list(hypreref =
-c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
+  c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
 add custom LaTeX packages to the .tex header.}
 
 \item{...}{Additional function arguments to pass to the base R Markdown HTML

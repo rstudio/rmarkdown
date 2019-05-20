@@ -25,7 +25,7 @@ knitr_options(opts_knit = NULL, opts_chunk = NULL, knit_hooks = NULL,
 }
 \value{
 An list that can be passed as the \code{knitr} argument
-  of the \code{\link{output_format}} function.
+of the \code{\link{output_format}} function.
 }
 \description{
 Define the knitr options for an R Markdown output format.

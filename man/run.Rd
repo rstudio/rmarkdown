@@ -54,10 +54,10 @@ If \code{default_file} is not specified, nor is a file specified on the
 URL, then the default document to serve at \code{/} is chosen from (in
 order of preference):
 \itemize{
-  \item{If \code{dir} contains only one \code{Rmd}, that \code{Rmd}.}
-  \item{The file \file{index.Rmd}, if it exists in \code{dir}.}
-  \item{The first \code{Rmd} that has \code{runtime: shiny} in its YAML metadata.}
-  \item{The file \file{index.html} (or \file{index.htm}), if it exists in \code{dir}.}
+\item{If \code{dir} contains only one \code{Rmd}, that \code{Rmd}.}
+\item{The file \file{index.Rmd}, if it exists in \code{dir}.}
+\item{The first \code{Rmd} that has \code{runtime: shiny} in its YAML metadata.}
+\item{The file \file{index.html} (or \file{index.htm}), if it exists in \code{dir}.}
 }
 
 If you wish to share R code between your documents, place it in a file
@@ -66,14 +66,14 @@ environment.
 }
 \note{
 Unlike \code{\link{render}}, \code{run} does not render the document to
-  a file on disk. In most cases a Web browser will be started automatically
-  to view the document; see \code{launch.browser} in the
-  \code{\link[shiny:runApp]{runApp}} documentation for details.
+a file on disk. In most cases a Web browser will be started automatically
+to view the document; see \code{launch.browser} in the
+\code{\link[shiny:runApp]{runApp}} documentation for details.
 
-  When using an external web browser with the server, specify the name of the
-  R Markdown file to view in the URL (e.g.
-  \code{http://127.0.0.1:1234/foo.Rmd}). A URL without a filename will show
-  the \code{default_file} as described above.
+When using an external web browser with the server, specify the name of the
+R Markdown file to view in the URL (e.g.
+\code{http://127.0.0.1:1234/foo.Rmd}). A URL without a filename will show
+the \code{default_file} as described above.
 }
 \examples{
 \dontrun{

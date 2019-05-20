@@ -18,7 +18,7 @@ knitr_options_pdf(fig_width, fig_height, fig_crop, dev = "pdf")
 }
 \value{
 An list that can be passed as the \code{knitr} argument of the
-  \code{\link{output_format}} function.
+\code{\link{output_format}} function.
 }
 \description{
 Define knitr options for an R Markdown output format

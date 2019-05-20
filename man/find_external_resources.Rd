@@ -13,13 +13,13 @@ find_external_resources(input_file, encoding = "UTF-8")
 }
 \value{
 A data frame with the following columns:
-  \describe{
-   \item{path}{The relative path from the document to the resource}
-   \item{explicit}{Whether the resource was specified explicitly
-     (\code{TRUE}) or discovered implicitly (\code{FALSE})}
-   \item{web}{Whether the resource is needed to display a Web page rendered
-     from the document}
-  }
+\describe{
+\item{path}{The relative path from the document to the resource}
+\item{explicit}{Whether the resource was specified explicitly
+(\code{TRUE}) or discovered implicitly (\code{FALSE})}
+\item{web}{Whether the resource is needed to display a Web page rendered
+from the document}
+}
 }
 \description{
 Given an R Markdown document or HTML file, attempt to determine the set of
@@ -50,10 +50,10 @@ Each item in the \code{resource_files} list can refer to:
 \enumerate{
 \item A single file, such as \code{images/figure.png}, or
 \item A directory, such as \code{resources/data}, in which case all of the
-  directory's content will be recursively included, or
+directory's content will be recursively included, or
 \item A wildcard pattern, such as \code{data/*.csv}, in which case all of
-  the files matching the pattern will be included. No recursion is done in
-  this case.
+the files matching the pattern will be included. No recursion is done in
+this case.
 }
 
 In HTML files (and raw HTML chunks in R Markdown documents), this routine

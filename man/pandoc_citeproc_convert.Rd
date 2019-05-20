@@ -12,10 +12,10 @@ pandoc_citeproc_convert(file, type = c("list", "json", "yaml"))
 \item{type}{Conversion type}
 }
 \value{
-For `type = "list"`, and R list. For `type = "json"` or `type = "yaml"`,
-  a character vector with the specified format.
+For \code{type = "list"}, and R list. For \code{type = "json"} or \code{type = "yaml"},
+a character vector with the specified format.
 }
 \description{
 Convert a bibliography file (e.g. a BibTeX file) to an R list, JSON text,
-  or YAML text
+or YAML text
 }

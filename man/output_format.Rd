@@ -69,7 +69,7 @@ execution (as registered with a \code{\link{on.exit}} handler).}
 }
 \value{
 An R Markdown output format definition that can be passed to
-  \code{\link{render}}.
+\code{\link{render}}.
 }
 \description{
 Define an R Markdown output format based on a combination of

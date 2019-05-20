@@ -24,7 +24,7 @@ outputting HTML directly into the markdown document).}
 }
 \value{
 An list that can be passed as the \code{knitr} argument of the
-  \code{\link{output_format}} function.
+\code{\link{output_format}} function.
 }
 \description{
 Define knitr options for an R Markdown output format that creates

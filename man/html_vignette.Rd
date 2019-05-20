@@ -50,12 +50,12 @@ size of a basic vignette from 100k to around 10k.
 Compared to \code{html_document}, it:
 
 \itemize{
-  \item never uses retina figures
-  \item never uses a theme
-  \item has a smaller default figure size
-  \item uses a custom css stylesheet
-  \item uses a custom highlight scheme
- }
+\item never uses retina figures
+\item never uses a theme
+\item has a smaller default figure size
+\item uses a custom css stylesheet
+\item uses a custom highlight scheme
+}
 
 See the \href{https://rmarkdown.rstudio.com/package_vignette_format.html}{online
 documentation} for additional details on using the \code{html_vignette} format.

@@ -20,7 +20,7 @@ options specified in metadata.}
 }
 \value{
 An R Markdown output format definition that can be passed to
-  \code{\link{render}}.
+\code{\link{render}}.
 }
 \description{
 Read the YAML metadata (and any common _output.yml file) for the

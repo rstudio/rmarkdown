@@ -21,12 +21,12 @@ be quoted in YAML.
 }
 \details{
 When title, author, and date metadata is provided it's used to
-  automatically create a title section within output documents. If you don't
-  want this section included in your document then you should remove the
-  corresponding metadata fields.
+automatically create a title section within output documents. If you don't
+want this section included in your document then you should remove the
+corresponding metadata fields.
 
-  When generating PDF and Beamer output there are also a number of other
-  metadata fields that can be included to customize the appearance and theme
-  of PDF output. For more details see the documentation for
-  \code{\link{pdf_document}} and \code{\link{beamer_presentation}}.
+When generating PDF and Beamer output there are also a number of other
+metadata fields that can be included to customize the appearance and theme
+of PDF output. For more details see the documentation for
+\code{\link{pdf_document}} and \code{\link{beamer_presentation}}.
 }
