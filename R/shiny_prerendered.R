@@ -98,13 +98,13 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   rendered_html <- normalize_path(rendered_html, winslash = "/")
   output_dir <- dirname(rendered_html)
 
-  # runtime: shiny_prerendered auto-magically
-  # registers css/js/images/www subdirs as shiny resources.
+  # Register css/js/images/www subdirs as shiny resources.
   # https://rmarkdown.rstudio.com/authoring_shiny_prerendered.html#advanced_topics
-  # However, due to the new fallthrough behavior
-  # in shiny's static file serving (introduced in v1.3.0),
-  # these resource could easily conflict with resources of
-  # a shiny app that is run after this document is run (#1579)
+  # Due to the new fallthrough behavior in shiny's static file serving
+  # (introduced in v1.3.0), these resource could easily conflict with
+  # www/ subdirs of a shiny app that is run after this document is run,
+  # so we give a more unique prefix here, then adjust the prefix paths
+  # in the HTML document later on (#1579)
   add_resource_path <- function(path) {
     if (dir_exists(path)) {
       prefix <- paste0("shiny_prerendered_", basename(path))
@@ -112,7 +112,7 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
     }
   }
   files_dir <- knitr_files_dir(rendered_html)
-  add_resource_path(files_dir)
+  if (dir_exists(path)) shiny::addResourcePath(basename(files_dir), files_dir)
   add_resource_path(file.path(output_dir,"css"))
   add_resource_path(file.path(output_dir,"js"))
   add_resource_path(file.path(output_dir,"images"))
