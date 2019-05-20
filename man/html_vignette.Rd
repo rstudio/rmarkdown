@@ -18,7 +18,7 @@ html_vignette(fig_width = 3, fig_height = 3, dev = "png",
 \item{df_print}{Method to be used for printing data frames. Valid values
 include "default", "kable", "tibble", and "paged". The "default" method uses
 \code{print.data.frame}. The "kable" method uses the
-\code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+\code{\link[knitr:kable]{knitr::kable()}} function. The "tibble" method uses
 the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition
@@ -34,15 +34,15 @@ by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 it as README.md to the package root). Note that if there are image files
 within your vignette you should be sure to add README_files to .Rbuildignore}
 
-\item{...}{Additional arguments passed to \code{\link{html_document}}. Please
+\item{...}{Additional arguments passed to \code{\link[=html_document]{html_document()}}. Please
 note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
 coded. Setting any of those will yield an error.}
 }
 \value{
-R Markdown output format to pass to \code{\link{render}}
+R Markdown output format to pass to \code{\link[=render]{render()}}
 }
 \description{
-A HTML vignette is a lightweight alternative to \code{\link{html_document}}
+A HTML vignette is a lightweight alternative to \code{\link[=html_document]{html_document()}}
 suitable for inclusion in packages to be released to CRAN. It reduces the
 size of a basic vignette from 100k to around 10k.
 }

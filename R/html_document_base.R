@@ -1,7 +1,7 @@
 #' Base output format for HTML-based output formats
 #'
 #' Creates an HTML base output format suitable for passing as the
-#' `base_format` argument of the \code{\link{output_format}} function.
+#' `base_format` argument of the [output_format()] function.
 #'
 #' @inheritParams html_document
 #'

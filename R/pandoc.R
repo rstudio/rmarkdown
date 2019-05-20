@@ -167,7 +167,7 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
 #'   is not found
 #' @return `pandoc_available` returns a logical indicating whether the
 #'   required version of pandoc is available. `pandoc_version` returns a
-#'   \code{\link[base]{numeric_version}} with the version of pandoc found.
+#'   [base::numeric_version()] with the version of pandoc found.
 #' @examples
 #' \dontrun{
 #' library(rmarkdown)
@@ -327,7 +327,7 @@ pandoc_toc_args <- function(toc,
 #' Transform path for passing to pandoc
 #'
 #' Transform a path for passing to pandoc on the command line. Calls
-#' \code{\link[base:path.expand]{path.expand}} on all platforms. On Windows,
+#' [base:path.expand::path.expand()] on all platforms. On Windows,
 #' transform it to a short path name if it contains spaces, and then convert
 #' forward slashes to back slashes (as required by pandoc for some path
 #' references).

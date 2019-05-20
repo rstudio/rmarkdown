@@ -17,7 +17,7 @@ Transformed path that can be passed to pandoc on the command line.
 }
 \description{
 Transform a path for passing to pandoc on the command line. Calls
-\code{\link[base:path.expand]{path.expand}} on all platforms. On Windows,
+\code{\link[base:path.expand:path.expand]{base:path.expand::path.expand()}} on all platforms. On Windows,
 transform it to a short path name if it contains spaces, and then convert
 forward slashes to back slashes (as required by pandoc for some path
 references).

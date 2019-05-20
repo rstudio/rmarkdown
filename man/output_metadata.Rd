@@ -7,7 +7,7 @@
 \description{
 This object provides a mechanism for users to attach metadata as an attribute
 (named \code{rmd_output_metadata}) of the returned value of
-\code{\link{render}()}. The initial value of the metadata comes from in the
+\code{\link[=render]{render()}}. The initial value of the metadata comes from in the
 \code{rmd_output_metadata} field of the YAML frontmatter of an R Markdown
 document. The metadata can be queried via the
 \code{output_metadata$get()} method, and modified via the

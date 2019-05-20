@@ -62,22 +62,22 @@ copied into the output directory). You can pass an alternate URL or pass
 \code{NULL} to exclude MathJax entirely.}
 
 \item{extra_dependencies}{Additional function arguments to pass to the
-base R Markdown HTML output formatter \code{\link{html_document_base}}}
+base R Markdown HTML output formatter \code{\link[=html_document_base]{html_document_base()}}}
 
 \item{css}{One or more css files to include}
 
 \item{includes}{Named list of additional content to include within the
-document (typically created using the \code{\link{includes}} function).}
+document (typically created using the \code{\link[=includes]{includes()}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition or R Markdown. See the \code{\link[=rmarkdown_format]{rmarkdown_format()}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
 \item{output_source}{Define an output source for \R chunks (ie,
 outputs to use instead of those produced by evaluating the
-underlying \R code). See \code{\link{html_notebook_output}} for
+underlying \R code). See \code{\link[=html_notebook_output]{html_notebook_output()}} for
 more details.}
 
 \item{self_contained}{Produce a standalone HTML file with no external
@@ -86,7 +86,7 @@ dependencies. Defaults to \code{TRUE}. In notebooks, setting this to
 embedded notebook output such as plots and HTML widgets.}
 
 \item{...}{Additional function arguments to pass to the
-base R Markdown HTML output formatter \code{\link{html_document_base}}}
+base R Markdown HTML output formatter \code{\link[=html_document_base]{html_document_base()}}}
 }
 \description{
 Format for converting from R Markdown to an HTML notebook.

@@ -18,8 +18,8 @@
 #'   +1). You can also manually adjust the font size during the presentation
 #'   using the 'S' (smaller) and 'B' (bigger) keys.
 #' @param ... Additional function arguments to pass to the base R Markdown HTML
-#'   output formatter \code{\link{html_document_base}}
-#' @return R Markdown output format to pass to \code{\link{render}}
+#'   output formatter [html_document_base()]
+#' @return R Markdown output format to pass to [render()]
 #' @examples
 #' \dontrun{
 #' library(rmarkdown)

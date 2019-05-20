@@ -12,7 +12,7 @@
 #'   newline to represent a line break (as opposed to two-spaces and a newline).
 #' @param html_preview `TRUE` to also generate an HTML file for the purpose of
 #'   locally previewing what the document will look like on GitHub.
-#' @return R Markdown output format to pass to \code{\link{render}}
+#' @return R Markdown output format to pass to [render()]
 #' @export
 github_document <- function(toc = FALSE,
                             toc_depth = 3,

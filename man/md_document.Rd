@@ -38,7 +38,7 @@ width of the image explicitly.}
 \item{df_print}{Method to be used for printing data frames. Valid values
 include "default", "kable", "tibble", and "paged". The "default" method uses
 \code{print.data.frame}. The "kable" method uses the
-\code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+\code{\link[knitr:kable]{knitr::kable()}} function. The "tibble" method uses
 the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition
@@ -47,16 +47,16 @@ for printing data frames. You can disable the \code{df_print} behavior entirely
 by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 
 \item{includes}{Named list of additional content to include within the
-document (typically created using the \code{\link{includes}} function).}
+document (typically created using the \code{\link[=includes]{includes()}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition or R Markdown. See the \code{\link[=rmarkdown_format]{rmarkdown_format()}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 }
 \value{
-R Markdown output format to pass to \code{\link{render}}
+R Markdown output format to pass to \code{\link[=render]{render()}}
 }
 \description{
 Format for converting from R Markdown to another variant of markdown (e.g.
@@ -68,7 +68,7 @@ documentation} for additional details on using the \code{md_document} format.
 
 R Markdown documents can have optional metadata that is used to generate a
 document header that includes the title, author, and date. For more details
-see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
+see the documentation on R Markdown \link[=metadata]{rmd_metadata}.
 }
 \examples{
 \dontrun{

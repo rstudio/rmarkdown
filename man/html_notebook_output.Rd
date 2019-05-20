@@ -41,7 +41,7 @@ escaped and inserted into the generated HTML as appropriate.}
 \description{
 Utilities for generating output for the \code{html_notebook} format,
 through the \code{output_source} function attached to a
-\code{\link{output_format}}.
+\code{\link[=output_format]{output_format()}}.
 }
 \details{
 See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online

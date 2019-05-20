@@ -21,8 +21,8 @@
 #'   \preformatted{
 #' render("input.Rmd", pdf_document(toc = TRUE, pandoc_args = "--listings"))
 #' }
-#' @seealso \link{render}, \link{html_document}, \link{pdf_document},
-#'   \link{word_document}, \link{beamer_presentation}
+#' @seealso [render], [html_document], [pdf_document],
+#'   [word_document], [beamer_presentation]
 #' @name rmarkdown-package
 #' @aliases rmarkdown
 #' @docType package

@@ -7,7 +7,7 @@
 #' @inheritParams beamer_presentation
 #' @param reference_doc Path to a PowerPoint template.
 #' @export
-#' @return R Markdown output format to pass to \code{\link{render}}
+#' @return R Markdown output format to pass to [render()]
 powerpoint_presentation <- function(
   toc = FALSE, toc_depth = 2, fig_width = 5, fig_height = 4, fig_caption = TRUE,
   df_print = 'default', smart = TRUE, keep_md = FALSE, md_extensions = NULL,

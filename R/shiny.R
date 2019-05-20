@@ -4,11 +4,11 @@
 #'
 #' The `run` function runs a Shiny document by starting a Shiny
 #' server associated with the document. The `shiny_args` parameter can be
-#' used to configure the server; see the \code{\link[shiny:runApp]{runApp}}
+#' used to configure the server; see the [shiny:runApp::runApp()]
 #' documentation for details.
 #'
 #' Once the server is started, the document will be rendered using
-#' \code{\link{render}}. The server will initiate a render of the document
+#' [render()]. The server will initiate a render of the document
 #' whenever necessary, so it is not necessary to call `run` every time
 #' the document changes: if `auto_reload` is `TRUE`, saving the
 #' document will trigger a render. You can also manually trigger a render by
@@ -42,13 +42,13 @@
 #'   `NULL` (the default), a sensible default is chosen (see Details)
 #' @param auto_reload If `TRUE` (the default), automatically reload the
 #'   Shiny application when the file currently being viewed is changed on disk.
-#' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
-#' @param render_args Additional arguments to \code{\link{render}}.
+#' @param shiny_args Additional arguments to [shiny:runApp::runApp()].
+#' @param render_args Additional arguments to [render()].
 #' @return Invisible NULL.
-#' @note Unlike \code{\link{render}}, `run` does not render the document to
+#' @note Unlike [render()], `run` does not render the document to
 #'   a file on disk. In most cases a Web browser will be started automatically
 #'   to view the document; see `launch.browser` in the
-#'   \code{\link[shiny:runApp]{runApp}} documentation for details.
+#'   [shiny:runApp::runApp()] documentation for details.
 #'
 #'   When using an external web browser with the server, specify the name of the
 #'   R Markdown file to view in the URL (e.g.

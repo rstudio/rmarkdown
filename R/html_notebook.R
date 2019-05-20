@@ -8,7 +8,7 @@
 #' @inheritParams html_document
 #' @param output_source Define an output source for \R chunks (ie,
 #'   outputs to use instead of those produced by evaluating the
-#'   underlying \R code). See \code{\link{html_notebook_output}} for
+#'   underlying \R code). See [html_notebook_output()] for
 #'   more details.
 #' @param self_contained Produce a standalone HTML file with no external
 #'   dependencies. Defaults to `TRUE`. In notebooks, setting this to

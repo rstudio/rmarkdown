@@ -28,7 +28,7 @@ rather than \code{.pdf}.}
 }
 \value{
 An list that can be passed as the \code{pandoc} argument of the
-\code{\link{output_format}} function.
+\code{\link[=output_format]{output_format()}} function.
 }
 \description{
 Define the pandoc options for an R Markdown output format.

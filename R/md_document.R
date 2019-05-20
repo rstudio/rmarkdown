@@ -8,7 +8,7 @@
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. For more details
-#' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
+#' see the documentation on R Markdown [rmd_metadata][metadata].
 #' @inheritParams html_document
 #' @param variant Markdown variant to produce (defaults to "markdown_strict").
 #'   Other valid values are "markdown_github", "markdown_mmd",
@@ -22,7 +22,7 @@
 #'   widely used retina displays, but will also result in the output of
 #'   `<img>` tags rather than markdown images due to the need to set the
 #'   width of the image explicitly.
-#' @return R Markdown output format to pass to \code{\link{render}}
+#' @return R Markdown output format to pass to [render()]
 #' @examples
 #' \dontrun{
 #' library(rmarkdown)

@@ -28,5 +28,5 @@ corresponding metadata fields.
 When generating PDF and Beamer output there are also a number of other
 metadata fields that can be included to customize the appearance and theme
 of PDF output. For more details see the documentation for
-\code{\link{pdf_document}} and \code{\link{beamer_presentation}}.
+\code{\link[=pdf_document]{pdf_document()}} and \code{\link[=beamer_presentation]{beamer_presentation()}}.
 }

@@ -2,7 +2,7 @@
 #'
 #' Utilities for generating output for the `html_notebook` format,
 #' through the `output_source` function attached to a
-#' \code{\link{output_format}}.
+#' [output_format()].
 #'
 #' See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online
 #' documentation} for additional details on using the `html_notebook`
@@ -24,7 +24,7 @@ NULL
 #' Generate R Notebook Metadata
 #'
 #' A structured helper for the construction of metadata used by the
-#' R Notebook output functions. See \code{\link{html_notebook_output}} for
+#' R Notebook output functions. See [html_notebook_output()] for
 #' more details.
 #' @param iframe Boolean; should output be shown in an `<iframe>`?
 #' @export

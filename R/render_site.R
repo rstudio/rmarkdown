@@ -78,7 +78,7 @@
 #' (wildcards can be used as in the above example).
 #'
 #' The `navbar` field can be used to define a navigation bar for websites
-#' based on the \code{\link{html_document}} format.
+#' based on the [html_document()] format.
 #'
 #' Finally, the `output` field enables you to specify output options that
 #' are common to all documents within the website (you can also still provide
@@ -126,7 +126,7 @@
 #' button).
 #'
 #' When `quiet = FALSE` the `render` function should also print a line
-#' of output using the \code{\link{message}} function indicating which output
+#' of output using the [message()] function indicating which output
 #' file should be previewed, for example:
 #'
 #' \preformatted{if (!quiet)
@@ -142,10 +142,10 @@
 #' @param input Website directory (or the name of a file within the directory).
 #' @param output_format R Markdown format to convert to (defaults to "all").
 #' @param envir The environment in which the code chunks are to be evaluated
-#'   during knitting (can use \code{\link{new.env}} to guarantee an empty new
+#'   during knitting (can use [new.env()] to guarantee an empty new
 #'   environment).
 #' @param quiet `TRUE` to suppress messages and other output.
-#' @param encoding The encoding of the input file; see \code{\link{file}}.
+#' @param encoding The encoding of the input file; see [file()].
 #'
 #' @return `render_site` returns the name of the site output file (relative
 #'   to the input directory). `clean_site` returns the names of the

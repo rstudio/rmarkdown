@@ -26,12 +26,12 @@ default_site_generator(input, encoding = "UTF-8", ...)
 \item{output_format}{R Markdown format to convert to (defaults to "all").}
 
 \item{envir}{The environment in which the code chunks are to be evaluated
-during knitting (can use \code{\link{new.env}} to guarantee an empty new
+during knitting (can use \code{\link[=new.env]{new.env()}} to guarantee an empty new
 environment).}
 
 \item{quiet}{\code{TRUE} to suppress messages and other output.}
 
-\item{encoding}{The encoding of the input file; see \code{\link{file}}.}
+\item{encoding}{The encoding of the input file; see \code{\link[=file]{file()}}.}
 
 \item{preview}{Whether to list the files to be removed rather than actually
 removing them.}
@@ -126,7 +126,7 @@ default behavior vis-a-vis what files are copied into the \code{_site} directory
 (wildcards can be used as in the above example).
 
 The \code{navbar} field can be used to define a navigation bar for websites
-based on the \code{\link{html_document}} format.
+based on the \code{\link[=html_document]{html_document()}} format.
 
 Finally, the \code{output} field enables you to specify output options that
 are common to all documents within the website (you can also still provide
@@ -176,7 +176,7 @@ front-end tool is attempting to preview it (e.g. RStudio IDE via the Knit
 button).
 
 When \code{quiet = FALSE} the \code{render} function should also print a line
-of output using the \code{\link{message}} function indicating which output
+of output using the \code{\link[=message]{message()}} function indicating which output
 file should be previewed, for example:
 
 \preformatted{if (!quiet)

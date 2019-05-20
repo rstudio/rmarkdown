@@ -11,12 +11,12 @@ output format including HTML, PDF, and MS Word.
 \section{Overview}{
 
 To compile a notebook from an R script you simply pass the script to
-\code{\link{render}}. For example:
+\code{\link[=render]{render()}}. For example:
 \preformatted{
 rmarkdown::render("analysis.R")
 rmarkdown::render("analysis.R", "pdf_document")
 }
-The first call to \code{\link{render}} creates an HTML document, whereas
+The first call to \code{\link[=render]{render()}} creates an HTML document, whereas
 the second creates a PDF document.
 
 By default the name of the script, username, and current date and time are
@@ -47,8 +47,8 @@ accordingly.
 
 \section{knitr Spin}{
 
-Including markdown within R comments is possible because \code{\link{render}}
-calls the \code{\link[knitr:spin]{knitr spin}} function to convert the R
+Including markdown within R comments is possible because \code{\link[=render]{render()}}
+calls the \code{\link[knitr:spin:knitr spin]{knitr:spin::knitr spin()}} function to convert the R
 script to an Rmd file. The \code{spin} function also enables you to add
 knitr
 chunk options with another special comment prefix (\code{#+}).

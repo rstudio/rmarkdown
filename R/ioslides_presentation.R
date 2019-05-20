@@ -19,7 +19,7 @@
 #' @param transition Speed of slide transitions. This can be "default",
 #'   "slower", "faster", or a numeric value with a number of seconds (e.g. 0.5).
 #' @param analytics A Google analytics property ID.
-#' @return R Markdown output format to pass to \code{\link{render}}.
+#' @return R Markdown output format to pass to [render()].
 #' @details
 #'   See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
 #'   online documentation} for additional details on using the

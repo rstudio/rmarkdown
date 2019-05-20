@@ -29,10 +29,10 @@ tufte_handout(fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
 or \code{biblatex}. Use \code{none} if neither package is to be used.}
 
 \item{includes}{Named list of additional content to include within the
-document (typically created using the \code{\link{includes}} function).}
+document (typically created using the \code{\link[=includes]{includes()}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition or R Markdown. See the \code{\link[=rmarkdown_format]{rmarkdown_format()}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
@@ -49,7 +49,7 @@ Creating Tufte handout output from R Markdown requires that LaTeX be installed.
 
 R Markdown documents can have optional metadata that is used to generate a
 document header that includes the title, author, and date. For more details
-see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
+see the documentation on R Markdown \link[=metadata]{rmd_metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the

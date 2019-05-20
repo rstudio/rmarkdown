@@ -18,7 +18,7 @@ is not found}
 \value{
 \code{pandoc_available} returns a logical indicating whether the
 required version of pandoc is available. \code{pandoc_version} returns a
-\code{\link[base]{numeric_version}} with the version of pandoc found.
+\code{\link[base:numeric_version]{base::numeric_version()}} with the version of pandoc found.
 }
 \description{
 Determine whether pandoc is currently available on the system (optionally
