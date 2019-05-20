@@ -98,7 +98,13 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   rendered_html <- normalize_path(rendered_html, winslash = "/")
   output_dir <- dirname(rendered_html)
 
-  # add some resource paths
+  # runtime: shiny_prerendered auto-magically
+  # registers css/js/images/www subdirs as shiny resources.
+  # https://rmarkdown.rstudio.com/authoring_shiny_prerendered.html#advanced_topics
+  # However, due to the new fallthrough behavior
+  # in shiny's static file serving (introduced in v1.3.0),
+  # these resource could easily conflict with resources of
+  # a shiny app that is run after this document is run (#1579)
   add_resource_path <- function(path) {
     if (dir_exists(path)) {
       prefix <- paste0("shiny_prerendered_", basename(path))
@@ -112,8 +118,20 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   add_resource_path(file.path(output_dir,"images"))
   add_resource_path(file.path(output_dir,"www"))
 
-  # extract dependencies from html
+  # Find all the external resources that fall under these special
+  # resource paths conditions in the rendered html and adjust
+  # their path, if necessary
+  prerender_resource_paths <- find_external_resources(rendered_html)$path
+  prerender_resource_paths <- grep("^images/|^js/^css/|^www/", prerender_resource_paths, value = TRUE)
+
+  # Prefix 'shiny_prerendered_' in the rendered html
   html_lines <- read_utf8(rendered_html)
+  for (path in prerender_resource_paths) {
+    html_lines <- stringr::str_replace_all(html_lines, paste0("(", stringr::fixed(path), ")"), "shiny_prerendered_\\1")
+  }
+  write_utf8(html_lines, rendered_html)
+
+  # extract dependencies from html
   dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
   dependencies <- jsonlite::unserializeJSON(dependencies_json)
 
