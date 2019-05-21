@@ -79,7 +79,7 @@ metadata <- list()
 #'   accordingly.
 #' @section knitr Spin:
 #'   Including markdown within R comments is possible because [render()]
-#'   calls the [knitr:spin::knitr spin()] function to convert the R
+#'   calls the [knitr::spin()] function to convert the R
 #'   script to an Rmd file. The `spin` function also enables you to add
 #'    knitr
 #'   chunk options with another special comment prefix (`#+`).
@@ -98,7 +98,7 @@ NULL
 #' Render R Markdown
 #'
 #' Render the input file to the specified output format using pandoc. If the
-#' input requires knitting then [knitr:knit::knit()] is called prior
+#' input requires knitting then [knitr::knit()] is called prior
 #' to pandoc.
 #'
 #' Note that the \pkg{knitr} `error` option is set to `FALSE` during
@@ -150,7 +150,7 @@ NULL
 #' previous versions of R Markdown were based on). See
 #' [rmarkdown_format()] for details.
 #' @seealso
-#' \link[knitr:knit]{knit}, [output_format],
+#' [knitr::knit()], [output_format()],
 #' \href{http://johnmacfarlane.net/pandoc}{pandoc}
 #' @param input The input file to be rendered. This can be an R script (.R),
 #' an R Markdown document (.Rmd), or a plain markdown document.

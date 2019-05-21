@@ -459,7 +459,7 @@ html_document <- function(toc = FALSE,
 #' @inheritParams html_document
 #' @return An list that can be passed as the `knitr` argument of the
 #'   [output_format()] function.
-#' @seealso [knitr_options], [output_format]
+#' @seealso [knitr_options()], [output_format()]
 #' @export
 knitr_options_html <- function(fig_width,
                                fig_height,

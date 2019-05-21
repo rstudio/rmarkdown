@@ -243,7 +243,7 @@ params_namedList <- function() {
 #' @param file Path to the R Markdown document with configurable parameters.
 #' @param input_lines Content of the R Markdown document. If `NULL`, the contents of `file` will be read.
 #' @param params A named list of optional parameter overrides used in place of the document defaults.
-#' @param shiny_args Additional arguments to [shiny:runApp::runApp()].
+#' @param shiny_args Additional arguments to [shiny::runApp()].
 #' @param save_caption Caption to use use for button that saves/confirms parameters.
 #' @param encoding The encoding of the input file; see [file()].
 #'

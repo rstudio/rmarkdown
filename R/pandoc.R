@@ -327,7 +327,7 @@ pandoc_toc_args <- function(toc,
 #' Transform path for passing to pandoc
 #'
 #' Transform a path for passing to pandoc on the command line. Calls
-#' [base:path.expand::path.expand()] on all platforms. On Windows,
+#' [base::path.expand()] on all platforms. On Windows,
 #' transform it to a short path name if it contains spaces, and then convert
 #' forward slashes to back slashes (as required by pandoc for some path
 #' references).

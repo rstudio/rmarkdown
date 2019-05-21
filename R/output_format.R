@@ -49,7 +49,7 @@
 #' @param base_format An optional format to extend.
 #' @return An R Markdown output format definition that can be passed to
 #'   [render()].
-#' @seealso [render], [knitr_options], [pandoc_options]
+#' @seealso [render()], [knitr_options()], [pandoc_options()]
 #' @examples
 #' \dontrun{
 #' output_format(knitr = knitr_options(opts_chunk = list(dev = 'png')),
