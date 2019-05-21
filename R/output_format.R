@@ -196,15 +196,15 @@ merge_pandoc_options <- function(base,
 #'
 #' Define the knitr options for an R Markdown output format.
 #' @param opts_knit List of package level knitr options (see
-#'   [knitr:opts_knit::opts_knit()])
+#'   [knitr::opts_knit()])
 #' @param opts_chunk List of chunk level knitr options (see
-#'   [knitr:opts_chunk::opts_chunk()])
+#'   [knitr::opts_chunk()])
 #' @param knit_hooks List of hooks for R code chunks, inline R code, and output
-#'   (see [knitr:knit_hooks::knit_hooks()])
+#'   (see [knitr::knit_hooks()])
 #' @param opts_hooks List of hooks for code chunk options
-#'   (see [knitr:opts_hooks::opts_hooks()])
+#'   (see [knitr::opts_hooks()])
 #' @param opts_template List of templates for chunk level knitr options (see
-#'   [knitr:opts_template::opts_template()])
+#'   [knitr::opts_template()])
 #' @return An list that can be passed as the `knitr` argument
 #'   of the [output_format()] function.
 #' @seealso [output_format]

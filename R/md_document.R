@@ -8,7 +8,7 @@
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. For more details
-#' see the documentation on R Markdown [rmd_metadata][metadata].
+#' see the documentation on R Markdown [metadata][rmd_metadata].
 #' @inheritParams html_document
 #' @param variant Markdown variant to produce (defaults to "markdown_strict").
 #'   Other valid values are "markdown_github", "markdown_mmd",

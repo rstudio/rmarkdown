@@ -14,7 +14,7 @@ knit_params_ask(file = NULL, input_lines = NULL, params = NULL,
 
 \item{params}{A named list of optional parameter overrides used in place of the document defaults.}
 
-\item{shiny_args}{Additional arguments to \code{\link[shiny:runApp:runApp]{shiny:runApp::runApp()}}.}
+\item{shiny_args}{Additional arguments to \code{\link[shiny:runApp]{shiny::runApp()}}.}
 
 \item{save_caption}{Caption to use use for button that saves/confirms parameters.}
 

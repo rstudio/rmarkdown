@@ -106,7 +106,7 @@ NULL
 #' `TRUE`).
 #'
 #' For additional details on rendering R scripts see
-#' [compile_notebook][Compiling R scripts to a notebook].
+#' [Compiling R scripts to a notebook][compile_notebook].
 #'
 #' If no `output_format` parameter is specified then the output format is
 #' read from the YAML front-matter of the input file. For example, the

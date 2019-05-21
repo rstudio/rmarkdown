@@ -21,7 +21,7 @@ the parent directory of \code{file}.}
 \item{auto_reload}{If \code{TRUE} (the default), automatically reload the
 Shiny application when the file currently being viewed is changed on disk.}
 
-\item{shiny_args}{Additional arguments to \code{\link[shiny:runApp:runApp]{shiny:runApp::runApp()}}.}
+\item{shiny_args}{Additional arguments to \code{\link[shiny:runApp]{shiny::runApp()}}.}
 
 \item{render_args}{Additional arguments to \code{\link[=render]{render()}}.}
 }
@@ -34,7 +34,7 @@ Start a Shiny server for the given document, and render it for display.
 \details{
 The \code{run} function runs a Shiny document by starting a Shiny
 server associated with the document. The \code{shiny_args} parameter can be
-used to configure the server; see the \code{\link[shiny:runApp:runApp]{shiny:runApp::runApp()}}
+used to configure the server; see the \code{\link[shiny:runApp]{shiny::runApp()}}
 documentation for details.
 
 Once the server is started, the document will be rendered using
@@ -68,7 +68,7 @@ environment.
 Unlike \code{\link[=render]{render()}}, \code{run} does not render the document to
 a file on disk. In most cases a Web browser will be started automatically
 to view the document; see \code{launch.browser} in the
-\code{\link[shiny:runApp:runApp]{shiny:runApp::runApp()}} documentation for details.
+\code{\link[shiny:runApp]{shiny::runApp()}} documentation for details.
 
 When using an external web browser with the server, specify the name of the
 R Markdown file to view in the URL (e.g.

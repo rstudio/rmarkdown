@@ -48,7 +48,7 @@ accordingly.
 \section{knitr Spin}{
 
 Including markdown within R comments is possible because \code{\link[=render]{render()}}
-calls the \code{\link[knitr:spin:knitr spin]{knitr:spin::knitr spin()}} function to convert the R
+calls the [knitr::spin()] function to convert the R
 script to an Rmd file. The \code{spin} function also enables you to add
 knitr
 chunk options with another special comment prefix (\code{#+}).
