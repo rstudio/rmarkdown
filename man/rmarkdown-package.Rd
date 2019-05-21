@@ -31,6 +31,6 @@ render("input.Rmd", pdf_document(toc = TRUE, pandoc_args = "--listings"))
 }
 }
 \seealso{
-\link{render}, \link{html_document}, \link{pdf_document},
-\link{word_document}, \link{beamer_presentation}
+\code{\link[=render]{render()}}, \code{\link[=html_document]{html_document()}}, \code{\link[=pdf_document]{pdf_document()}},
+\code{\link[=word_document]{word_document()}}, \code{\link[=beamer_presentation]{beamer_presentation()}}
 }

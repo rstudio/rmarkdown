@@ -82,5 +82,5 @@ output_format(knitr = knitr_options(opts_chunk = list(dev = 'png')),
 }
 }
 \seealso{
-\link{render}, \link{knitr_options}, \link{pandoc_options}
+\code{\link[=render]{render()}}, \code{\link[=knitr_options]{knitr_options()}}, \code{\link[=pandoc_options]{pandoc_options()}}
 }

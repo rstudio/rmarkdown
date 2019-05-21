@@ -129,7 +129,7 @@ format.
 
 R Markdown documents can have optional metadata that is used to generate a
 document header that includes the title, author, and date. For more details
-see the documentation on R Markdown \link[=metadata]{rmd_metadata}.
+see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the

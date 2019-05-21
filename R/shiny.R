@@ -502,7 +502,7 @@ file.path.ci <- function(dir, name) {
 #' Any expression that returns HTML can be wrapped in `render_delayed`.
 #' @param expr The expression to evaluate.
 #' @return An object representing the expression.
-#' @note `expr` is evaluated in a \strong{copy} of the environment in which
+#' @note `expr` is evaluated in a **copy** of the environment in which
 #'   the `render_delayed` call appears. Consequently, no side effects
 #'   created by `expr` are visible in succeeding expressions, nor are
 #'   changes to the environment after the call to `render_delayed` visible

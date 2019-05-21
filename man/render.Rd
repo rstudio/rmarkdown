@@ -104,7 +104,7 @@ rendering (which is different from the \pkg{knitr} default value of
 \code{TRUE}).
 
 For additional details on rendering R scripts see
-\link[=Compiling R scripts to a notebook]{compile_notebook}.
+\link[=compile_notebook]{Compiling R scripts to a notebook}.
 
 If no \code{output_format} parameter is specified then the output format is
 read from the YAML front-matter of the input file. For example, the
@@ -169,6 +169,6 @@ render("input.Rmd", c("html_document", "pdf_document"))
 }
 }
 \seealso{
-\link[knitr:knit]{knit}, \link{output_format},
+\code{\link[knitr:knit]{knitr::knit()}}, \code{\link[=output_format]{output_format()}},
 \href{http://johnmacfarlane.net/pandoc}{pandoc}
 }
