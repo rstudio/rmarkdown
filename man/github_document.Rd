@@ -53,7 +53,6 @@ R Markdown output format to pass to \code{\link[=render]{render()}}
 Format for converting from R Markdown to GitHub Flavored Markdown.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online
-documentation} for additional details on using the \code{github_document}
+See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online documentation} for additional details on using the \code{github_document}
 format.
 }

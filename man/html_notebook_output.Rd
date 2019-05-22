@@ -44,7 +44,6 @@ through the \code{output_source} function attached to a
 \code{\link[=output_format]{output_format()}}.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online
-documentation} for additional details on using the \code{html_notebook}
+See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online documentation} for additional details on using the \code{html_notebook}
 format.
 }

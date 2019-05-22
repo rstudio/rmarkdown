@@ -2,8 +2,8 @@
 #'
 #' Format for converting from R Markdown to GitHub Flavored Markdown.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online
-#' documentation} for additional details on using the `github_document`
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/github_document_format.html) for additional details on using the `github_document`
 #' format.
 #' @inheritParams output_format
 #' @inheritParams html_document

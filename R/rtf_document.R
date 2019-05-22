@@ -2,8 +2,8 @@
 #'
 #' Format for converting from R Markdown to an RTF document.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/rtf_document_format.html}{online
-#' documentation} for additional details on using the `rtf_document` format.
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/rtf_document_format.html) for additional details on using the `rtf_document` format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. For more details
@@ -11,8 +11,8 @@
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-#' and Citations} article in the online documentation.
+#' [Bibliographies
+#' and Citations](https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html) article in the online documentation.
 #' @inheritParams pdf_document
 #' @inheritParams html_document
 #' @inheritParams word_document

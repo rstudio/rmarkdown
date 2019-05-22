@@ -2,12 +2,12 @@
 #'
 #' Format for converting from R Markdown to a slidy presentation.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
-#' documentation} for additional details on using the `slidy_presentation`
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/slidy_presentation_format.html) for additional details on using the `slidy_presentation`
 #' format.
 #'
 #' For more information on markdown syntax for presentations see the
-#' \href{https://pandoc.org/README.html}{pandoc online documentation}.
+#' [pandoc online documentation](https://pandoc.org/README.html).
 #' @inheritParams pdf_document
 #' @inheritParams html_document
 #' @inheritParams beamer_presentation

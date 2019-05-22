@@ -2,8 +2,8 @@
 #'
 #' Format for converting from R Markdown to a Beamer presentation.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/beamer_presentation_format.html}{online
-#' documentation} for additional details on using the `beamer_presentation`
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/beamer_presentation_format.html) for additional details on using the `beamer_presentation`
 #' format.
 #'
 #' Creating Beamer output from R Markdown requires that LaTeX be installed.
@@ -14,8 +14,8 @@
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-#' and Citations} article in the online documentation.
+#' [Bibliographies
+#' and Citations](https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html) article in the online documentation.
 #' @inheritParams output_format
 #' @inheritParams pdf_document
 #' @inheritParams html_document

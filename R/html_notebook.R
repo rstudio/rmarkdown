@@ -2,8 +2,8 @@
 #'
 #' Format for converting from R Markdown to an HTML notebook.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online
-#' documentation} for additional details on using the `html_notebook`
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/r_notebook_format.html) for additional details on using the `html_notebook`
 #' format.
 #' @inheritParams html_document
 #' @param output_source Define an output source for \R chunks (ie,
@@ -236,8 +236,8 @@ html_notebook <- function(toc = FALSE,
 #' related to generated outputs in the document, as well as the
 #' original R Markdown source document.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online
-#' documentation} for additional details on using the `html_notebook`
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/r_notebook_format.html) for additional details on using the `html_notebook`
 #' format.
 #' @param path The path to an R Notebook file (with extension `.nb.html`).
 #' @param encoding The document's encoding (assumed as `"UTF-8"` by default).

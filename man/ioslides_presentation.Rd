@@ -115,8 +115,7 @@ Format for converting from R Markdown to an
 \href{https://code.google.com/p/io-2012-slides/}{ioslides} presentation.
 }
 \details{
-See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
-online documentation} for additional details on using the
+See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{ online documentation} for additional details on using the
 \code{ioslides_presentation} format.
 
 Note that, if a \code{before_body} include is specified in \code{includes},

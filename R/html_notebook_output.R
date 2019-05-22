@@ -4,8 +4,8 @@
 #' through the `output_source` function attached to a
 #' [output_format()].
 #'
-#' See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online
-#' documentation} for additional details on using the `html_notebook`
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/r_notebook_format.html) for additional details on using the `html_notebook`
 #' format.
 #' @param path  A path to a file. For functions accepting both `path`
 #'   and `bytes`, if `bytes` is `NULL`, the bytewise contents

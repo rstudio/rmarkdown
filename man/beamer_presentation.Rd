@@ -96,8 +96,7 @@ R Markdown output format to pass to \code{\link[=render]{render()}}
 Format for converting from R Markdown to a Beamer presentation.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/beamer_presentation_format.html}{online
-documentation} for additional details on using the \code{beamer_presentation}
+See the \href{https://rmarkdown.rstudio.com/beamer_presentation_format.html}{online documentation} for additional details on using the \code{beamer_presentation}
 format.
 
 Creating Beamer output from R Markdown requires that LaTeX be installed.
@@ -108,8 +107,7 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-and Citations} article in the online documentation.
+\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies and Citations} article in the online documentation.
 }
 \examples{
 \dontrun{

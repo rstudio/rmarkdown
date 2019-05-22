@@ -1,7 +1,7 @@
 #' Convert to an ioslides Presentation
 #'
 #' Format for converting from R Markdown to an
-#' \href{https://code.google.com/p/io-2012-slides/}{ioslides} presentation.
+#' [ioslides](https://code.google.com/p/io-2012-slides/) presentation.
 #'
 #' @inheritParams html_document
 #' @param logo Path to file that includes a logo for use in the presentation
@@ -21,8 +21,8 @@
 #' @param analytics A Google analytics property ID.
 #' @return R Markdown output format to pass to [render()].
 #' @details
-#'   See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
-#'   online documentation} for additional details on using the
+#'   See the [
+#'   online documentation](http://rmarkdown.rstudio.com/ioslides_presentation_format.html) for additional details on using the
 #'   `ioslides_presentation` format.
 #'
 #'   Note that, if a `before_body` include is specified in `includes`,
@@ -153,7 +153,7 @@
 #'   shouldn't hesitate to add tables for presenting more complex sets of
 #'   information. Pandoc markdown supports several syntaxes for defining
 #'   tables which are described in the
-#'   \href{http://pandoc.org/README.html}{pandoc online documentation}.
+#'   [pandoc online documentation](http://pandoc.org/README.html).
 #' @section Advanced Layout:
 #'   You can center content on a slide by adding the `.flexbox`
 #'   and `.vcenter` attributes to the slide title. For example:

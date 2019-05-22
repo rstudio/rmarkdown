@@ -59,8 +59,7 @@ R Markdown output format to pass to \code{\link[=render]{render()}}
 Format for converting from R Markdown to an MS Word document.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/word_document_format.html}{online
-documentation} for additional details on using the \code{word_document} format.
+See the \href{https://rmarkdown.rstudio.com/word_document_format.html}{online documentation} for additional details on using the \code{word_document} format.
 
 R Markdown documents can have optional metadata that is used to generate a
 document header that includes the title, author, and date. For more details
@@ -68,8 +67,7 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-and Citations} article in the online documentation.
+\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies and Citations} article in the online documentation.
 }
 \examples{
 \dontrun{

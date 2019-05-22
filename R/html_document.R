@@ -2,8 +2,8 @@
 #'
 #' Format for converting from R Markdown to an HTML document.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
-#' documentation} for additional details on using the `html_document`
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/html_document_format.html) for additional details on using the `html_document`
 #' format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
@@ -12,8 +12,8 @@
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-#' and Citations} article in the online documentation.
+#' [Bibliographies
+#' and Citations](https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html) article in the online documentation.
 #'@inheritParams output_format
 #'@param toc `TRUE` to include a table of contents in the output
 #'@param toc_depth Depth of headers to include in table of contents
@@ -150,7 +150,7 @@
 #'
 #'  You can provide a custom HTML template to be used for rendering. The syntax
 #'  for templates is described in the
-#'  \href{http://pandoc.org/README.html}{pandoc documentation}. You can also use
+#'  [pandoc documentation](http://pandoc.org/README.html). You can also use
 #'  the basic pandoc template by passing `template = NULL`.
 #'
 #'  Note however that if you choose not to use the "default" HTML template then

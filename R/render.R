@@ -2,7 +2,7 @@
 #'
 #' Rmd files include a metadata section (typically located at the top of the
 #' file) that can specify (among other things) the title, author, and date of
-#' the document. Metadata adheres to the \href{https://yaml.org}{YAML} format
+#' the document. Metadata adheres to the [YAML](https://yaml.org) format
 #' and is delimited by lines containing three dashes (`---`). Here is an
 #' example metadata section:
 #' \preformatted{---
@@ -151,7 +151,7 @@ NULL
 #' [rmarkdown_format()] for details.
 #' @seealso
 #' [knitr::knit()], [output_format()],
-#' \href{http://johnmacfarlane.net/pandoc}{pandoc}
+#' [pandoc](http://johnmacfarlane.net/pandoc)
 #' @param input The input file to be rendered. This can be an R script (.R),
 #' an R Markdown document (.Rmd), or a plain markdown document.
 #' @param output_format The R Markdown output format to convert to. The option

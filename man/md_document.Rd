@@ -63,8 +63,7 @@ Format for converting from R Markdown to another variant of markdown (e.g.
 strict markdown or github flavored markdown)
 }
 \details{
-See the \href{http://rmarkdown.rstudio.com/markdown_document_format.html}{online
-documentation} for additional details on using the \code{md_document} format.
+See the \href{http://rmarkdown.rstudio.com/markdown_document_format.html}{online documentation} for additional details on using the \code{md_document} format.
 
 R Markdown documents can have optional metadata that is used to generate a
 document header that includes the title, author, and date. For more details

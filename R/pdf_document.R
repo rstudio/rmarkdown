@@ -2,8 +2,8 @@
 #'
 #' Formats for converting from R Markdown to a PDF or LaTeX document.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/pdf_document_format.html}{online
-#' documentation} for additional details on using the `pdf_document` format.
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/pdf_document_format.html) for additional details on using the `pdf_document` format.
 #'
 #' Creating PDF output from R Markdown requires that LaTeX be installed.
 #'
@@ -13,8 +13,8 @@
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-#' and Citations} article in the online documentation.
+#' [Bibliographies
+#' and Citations](https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html) article in the online documentation.
 #'
 #' Many aspects of the LaTeX template used to create PDF documents can be
 #' customized using metadata. For example:
@@ -55,7 +55,7 @@
 #'   the rmarkdown package default template; pass `NULL` to use pandoc's
 #'   built-in template; pass a path to use a custom template that you've
 #'   created.  See the documentation on
-#'   \href{http://pandoc.org/README.html}{pandoc online documentation}
+#'   [pandoc online documentation](http://pandoc.org/README.html)
 #'   for details on creating custom templates.
 #' @param output_extensions Pandoc extensions to be added or removed from the
 #'   output format, e.g., `"-smart"` means the output format will be

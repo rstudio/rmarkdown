@@ -3,8 +3,8 @@
 #' Format for converting from R Markdown to another variant of markdown (e.g.
 #' strict markdown or github flavored markdown)
 #'
-#' See the \href{http://rmarkdown.rstudio.com/markdown_document_format.html}{online
-#' documentation} for additional details on using the `md_document` format.
+#' See the [online
+#' documentation](http://rmarkdown.rstudio.com/markdown_document_format.html) for additional details on using the `md_document` format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. For more details
@@ -14,7 +14,7 @@
 #'   Other valid values are "markdown_github", "markdown_mmd",
 #'   markdown_phpextra", or even "markdown" (which produces pandoc markdown).
 #'   You can also compose custom markdown variants, see the
-#'   \href{http://pandoc.org/README.html}{pandoc online documentation}
+#'   [pandoc online documentation](http://pandoc.org/README.html)
 #'   for details.
 #' @param preserve_yaml Preserve YAML front matter in final document.
 #' @param fig_retina Scaling to perform for retina displays. Defaults to

@@ -17,7 +17,6 @@ related to generated outputs in the document, as well as the
 original R Markdown source document.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online
-documentation} for additional details on using the \code{html_notebook}
+See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online documentation} for additional details on using the \code{html_notebook}
 format.
 }

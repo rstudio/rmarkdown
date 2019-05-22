@@ -96,8 +96,7 @@ R Markdown output format to pass to \code{\link[=render]{render()}}
 Formats for converting from R Markdown to a PDF or LaTeX document.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/pdf_document_format.html}{online
-documentation} for additional details on using the \code{pdf_document} format.
+See the \href{https://rmarkdown.rstudio.com/pdf_document_format.html}{online documentation} for additional details on using the \code{pdf_document} format.
 
 Creating PDF output from R Markdown requires that LaTeX be installed.
 
@@ -107,8 +106,7 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-and Citations} article in the online documentation.
+\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies and Citations} article in the online documentation.
 
 Many aspects of the LaTeX template used to create PDF documents can be
 customized using metadata. For example:

@@ -123,8 +123,7 @@ R Markdown output format to pass to \code{\link[=render]{render()}}
 Format for converting from R Markdown to an HTML document.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
-documentation} for additional details on using the \code{html_document}
+See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online documentation} for additional details on using the \code{html_document}
 format.
 
 R Markdown documents can have optional metadata that is used to generate a
@@ -133,8 +132,7 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-and Citations} article in the online documentation.
+\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies and Citations} article in the online documentation.
 }
 \section{Navigation Bars}{
 

@@ -3,7 +3,7 @@
 #' Convert documents to and from various formats using the pandoc utility.
 #'
 #' Supported input and output formats are described in the
-#' \href{http://johnmacfarlane.net/pandoc/README.html}{pandoc user guide}.
+#' [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html).
 #'
 #' The system path as well as the version of pandoc shipped with RStudio (if
 #' running under RStudio) are scanned for pandoc and the highest version
@@ -718,7 +718,7 @@ pandoc2.0 <- function() {
 #' either the system path or shipped with RStudio.
 #'
 #' See the
-#' \href{http://pandoc.org/MANUAL.html}{pandoc manual}
+#' [pandoc manual](http://pandoc.org/MANUAL.html)
 #' for pandoc commands.
 #'
 #' @export

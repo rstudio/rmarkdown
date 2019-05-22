@@ -14,8 +14,8 @@
 #'   \item uses a custom highlight scheme
 #'  }
 #'
-#' See the \href{https://rmarkdown.rstudio.com/package_vignette_format.html}{online
-#' documentation} for additional details on using the `html_vignette` format.
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/package_vignette_format.html) for additional details on using the `html_vignette` format.
 #' @inheritParams html_document
 #' @param ... Additional arguments passed to [html_document()]. Please
 #'   note that `theme`, `fig_retina` and `highlight` are hard
