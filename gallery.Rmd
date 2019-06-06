@@ -76,11 +76,6 @@ output:
         <div class="galleryItemDescription">Add interactive graphics to a dashboard with htmlwidgets.</div>
       </div>
       <div class="galleryItem">
-        <a href="https://walkerke.shinyapps.io/neighborhood_diversity/"><img class="galleryItemImage" src="galleryImages/dashboard3.png"/></a>
-        <a href="https://walkerke.shinyapps.io/neighborhood_diversity/" class="galleryItemLabel">Dashboard with Shiny</a>
-        <div class="galleryItemDescription">Add interactive analysis to a dashboard with Shiny.</div>
-      </div>
-      <div class="galleryItem">
         <a href="https://beta.rstudioconnect.com/jjallaire/htmlwidgets-showcase-storyboard/"><img class="galleryItemImage" src="galleryImages/dashboard4.png"/></a>
         <a href="https://beta.rstudioconnect.com/jjallaire/htmlwidgets-showcase-storyboard/" class="galleryItemLabel">Dashboard with storyboard</a>
         <div class="galleryItemDescription">Organize dashboards around a storyboard.</div>
