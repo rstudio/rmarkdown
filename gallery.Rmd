@@ -54,11 +54,6 @@ output:
         <div class="galleryItemDescription">Embed htmlwidgets such as dygraphs and datatables directly into your reports.</div>
       </div>
       <div class="galleryItem">
-        <a href="https://uasnap.shinyapps.io/ex_leaflet/"><img class="galleryItemImage" src="galleryImages/shiny1.png"/></a>
-        <a href="https://uasnap.shinyapps.io/ex_leaflet/" class="galleryItemLabel">Shiny</a>
-        <div class="galleryItemDescription">Add interactive analysis with shiny, which lets your user rerun the actual analysis within your report.</div>
-      </div>
-      <div class="galleryItem">
         <a href="https://bookdown.org/csgillespie/shiny_components/"><img class="galleryItemImage" src="galleryImages/shiny2.png"/></a>
         <a href="https://bookdown.org/csgillespie/shiny_components/" class="galleryItemLabel">Shiny</a>
         <div class="galleryItemDescription">Shiny components and htmlwidgets will work in any HTML based output, such as a file, slide show or dashboard.</div>
