@@ -149,7 +149,7 @@ test_ioslides_presentation_css <- function() {
     ## separated to be order agnostic
     , any(grepl('<slide[^>]*class="[^"]*\\bnobackground\\b[^"]*".*<h2>Slide Two</h2>', html, perl = TRUE))
     , any(grepl('<slide[^>]*class="[^"]*\\bfill\\b[^"]*".*<h2>Slide Two</h2>', html, perl = TRUE))
-    , any(grepl('<slide[^>]*style="background-color: #CCC;".*<h2>Slide Two</h2>', html, perl = TRUE))
+    , any(grepl('<slide[^>]*style="background: #CCC;".*<h2>Slide Two</h2>', html, perl = TRUE))
 
     ## separated to be order agnostic - within values of attributes also (hence [^"]*)
     , any(grepl('<slide[^>]*class="[^"]*\\bnobackground\\b[^"]*".*<h2>Slide Two</h2>', html, perl = TRUE))
@@ -162,7 +162,7 @@ test_ioslides_presentation_css <- function() {
     , any(grepl('<slide[^>]*class="[^"]*\\bnobackground\\b[^"]*".*<h2>Slide Four</h2>', html, perl = TRUE))
     , any(grepl('<slide[^>]*class="[^"]*\\bfill\\b[^"]*".*<h2>Slide Four</h2>', html, perl = TRUE))
     , any(grepl('<slide[^>]*class="[^"]*\\blevel1\\b[^"]*".*<h2>Slide Four</h2>', html, perl = TRUE))
-    , any(grepl('<slide[^>]*style="background-color: #ABCDEF;".*<h2>Slide Four</h2>', html, perl = TRUE))
+    , any(grepl('<slide[^>]*style="background: #ABCDEF;".*<h2>Slide Four</h2>', html, perl = TRUE))
 
   )
   expect_true(all(slide_lines), info = "slide lines - style attribute")
