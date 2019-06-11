@@ -265,7 +265,7 @@ function Header(lev, s, attr)
     end, slide)
     slide_class = table.concat(uniq(slide), " ")
     if attr["data-background"]:match("^#") then
-      slide_style = 'background-color: ' .. attr["data-background"] .. ';'
+      slide_style = 'background: ' .. attr["data-background"] .. ';'
     else
       -- assume url
       slide_style = 'background-image: url(' .. attr["data-background"] .. ');'

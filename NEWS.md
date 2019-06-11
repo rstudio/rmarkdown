@@ -1,7 +1,7 @@
 rmarkdown 1.14
 ================================================================================
 
-
+- Fixed a regression in `ioslides_presentation` that background colors via the `data-background` attribute on slides stopped working (thanks, @ShKlinkenberg, #1265).
 
 
 rmarkdown 1.13
