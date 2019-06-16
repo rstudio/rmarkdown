@@ -349,18 +349,6 @@ $endif$
 }
 </style>
 
-<script>
-$$(document).ready(function () {
-  window.buildTabsets("$idprefix$TOC");
-});
-
-$$(document).ready(function () {
-  $$('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $$(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 $if(code_menu)$
 <style type="text/css">
@@ -628,6 +616,20 @@ $endif$
 
 </script>
 $endif$
+
+<!-- tabsets -->
+
+<script>
+$$(document).ready(function () {
+  window.buildTabsets("$idprefix$TOC");
+});
+
+$$(document).ready(function () {
+  $$('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $$(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
 
 $if(mathjax-url)$
 <!-- dynamically load mathjax for compatibility with self-contained -->
