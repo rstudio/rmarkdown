@@ -369,41 +369,6 @@ $endif$
 
 $if(toc_float)$
 
-<script>
-$$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $$('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "$toc_selectors$",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-$if(toc_collapsed)$
-    options.showAndHide = true;
-$else$
-    options.showAndHide = false;
-$endif$
-$if(toc_smooth_scroll)$
-    options.smoothScroll = true;
-$else$
-    options.smoothScroll = false;
-$endif$
-
-    // tocify
-    var toc = $$("#$idprefix$TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
 <style type="text/css">
 
 #$idprefix$TOC {
@@ -630,6 +595,43 @@ $$(document).ready(function () {
   });
 });
 </script>
+
+$if(toc_float)$
+<script>
+$$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $$('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "$toc_selectors$",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+$if(toc_collapsed)$
+    options.showAndHide = true;
+$else$
+    options.showAndHide = false;
+$endif$
+$if(toc_smooth_scroll)$
+    options.smoothScroll = true;
+$else$
+    options.smoothScroll = false;
+$endif$
+
+    // tocify
+    var toc = $$("#$idprefix$TOC").tocify(options).data("toc-tocify");
+});
+</script>
+$endif$
 
 $if(mathjax-url)$
 <!-- dynamically load mathjax for compatibility with self-contained -->
