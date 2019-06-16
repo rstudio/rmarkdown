@@ -354,16 +354,6 @@ $if(code_menu)$
 <style type="text/css">
 .code-folding-btn { margin-bottom: 4px; }
 </style>
-<script>
-$$(document).ready(function () {
-$if(source_embed)$
-  window.initializeSourceEmbed("$source_embed$");
-$endif$
-$if(code_folding)$
-  window.initializeCodeFolding("$code_folding$" === "show");
-$endif$
-});
-</script>
 $endif$
 
 
@@ -595,6 +585,20 @@ $$(document).ready(function () {
   });
 });
 </script>
+
+<!-- code folding -->
+$if(code_menu)$
+<script>
+$$(document).ready(function () {
+$if(source_embed)$
+  window.initializeSourceEmbed("$source_embed$");
+$endif$
+$if(code_folding)$
+  window.initializeCodeFolding("$code_folding$" === "show");
+$endif$
+});
+</script>
+$endif$
 
 $if(toc_float)$
 <script>
