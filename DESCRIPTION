@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 1.13.3
+Version: 1.13.4
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -13,15 +13,19 @@ Authors@R: c(
   person("Joe", "Cheng", role = "aut", email = "joe@rstudio.com"),
   person("Winston", "Chang", role = "aut", email = "winston@rstudio.com"),
   person("Richard", "Iannone", role = "aut", email = "rich@rstudio.com", comment = c(ORCID = "0000-0003-3925-190X")),
-  person("Jeff", "Allen", role = "ctb", email = "jeff@rstudio.com"),
+  #
+  # Contributors, ordered alphabetically by first name
   person("Barret", "Schloerke", role = "ctb"),
-  person("Roy", "Storey", role = "ctb"),
-  person("Rob", "Hyndman", role = "ctb", email = "Rob.Hyndman@monash.edu"),
-  person("Ruben", "Arslan", role = "ctb", email = "ruben.arslan@uni-goettingen.de"),
-  person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
   person("Christophe", "Dervieux", role = "ctb"),
+  person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
+  person("Jeff", "Allen", role = "ctb", email = "jeff@rstudio.com"),
   person("Malcolm", "Barrett", role = "ctb"),
+  person("Rob", "Hyndman", role = "ctb", email = "Rob.Hyndman@monash.edu"),
   person("Romain", "Lesur", role = "ctb"),
+  person("Roy", "Storey", role = "ctb"),
+  person("Ruben", "Arslan", role = "ctb", email = "ruben.arslan@uni-goettingen.de"),
+  #
+  # Copyright holders
   person(family = "RStudio, Inc.", role = "cph"),
   person(family = "jQuery Foundation", role = "cph",
          comment = "jQuery library"),
