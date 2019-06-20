@@ -2,12 +2,12 @@
 #'
 #' Format for converting from R Markdown to a slidy presentation.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
-#' documentation} for additional details on using the \code{slidy_presentation}
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/slidy_presentation_format.html) for additional details on using the `slidy_presentation`
 #' format.
 #'
 #' For more information on markdown syntax for presentations see the
-#' \href{https://pandoc.org/README.html}{pandoc online documentation}.
+#' [pandoc online documentation](https://pandoc.org/README.html).
 #' @inheritParams pdf_document
 #' @inheritParams html_document
 #' @inheritParams beamer_presentation
@@ -18,8 +18,8 @@
 #'   +1). You can also manually adjust the font size during the presentation
 #'   using the 'S' (smaller) and 'B' (bigger) keys.
 #' @param ... Additional function arguments to pass to the base R Markdown HTML
-#'   output formatter \code{\link{html_document_base}}
-#' @return R Markdown output format to pass to \code{\link{render}}
+#'   output formatter [html_document_base()]
+#' @return R Markdown output format to pass to [render()]
 #' @examples
 #' \dontrun{
 #' library(rmarkdown)

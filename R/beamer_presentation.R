@@ -2,41 +2,41 @@
 #'
 #' Format for converting from R Markdown to a Beamer presentation.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/beamer_presentation_format.html}{online
-#' documentation} for additional details on using the \code{beamer_presentation}
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/beamer_presentation_format.html) for additional details on using the `beamer_presentation`
 #' format.
 #'
 #' Creating Beamer output from R Markdown requires that LaTeX be installed.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. For more details
-#' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
+#' see the documentation on R Markdown [metadata][rmd_metadata].
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-#' and Citations} article in the online documentation.
+#' [Bibliographies
+#' and Citations](https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html) article in the online documentation.
 #' @inheritParams output_format
 #' @inheritParams pdf_document
 #' @inheritParams html_document
-#' @param toc \code{TRUE} to include a table of contents in the output (only
+#' @param toc `TRUE` to include a table of contents in the output (only
 #'   level 1 headers will be included in the table of contents).
 #' @param slide_level The heading level which defines individual slides. By
 #'   default this is the highest header level in the hierarchy that is followed
 #'   immediately by content, and not another header, somewhere in the document.
 #'   This default can be overridden by specifying an explicit
-#'   \code{slide_level}.
-#' @param incremental \code{TRUE} to render slide bullets incrementally. Note
+#'   `slide_level`.
+#' @param incremental `TRUE` to render slide bullets incrementally. Note
 #'   that if you want to reverse the default incremental behavior for an
-#'   individual bullet you can precede it with \code{>}. For example:
-#'   \emph{\code{> - Bullet Text}}
+#'   individual bullet you can precede it with `>`. For example:
+#'   *`> - Bullet Text`*
 #' @param theme Beamer theme (e.g. "AnnArbor").
 #' @param colortheme Beamer color theme (e.g. "dolphin").
 #' @param fonttheme Beamer font theme (e.g. "structurebold").
-#' @param self_contained Whether to generate a full LaTeX document (\code{TRUE})
-#'   or just the body of a LaTeX document (\code{FALSE}). Note the LaTeX
-#'   document is an intermediate file unless \code{keep_tex = TRUE}.
-#' @return R Markdown output format to pass to \code{\link{render}}
+#' @param self_contained Whether to generate a full LaTeX document (`TRUE`)
+#'   or just the body of a LaTeX document (`FALSE`). Note the LaTeX
+#'   document is an intermediate file unless `keep_tex = TRUE`.
+#' @return R Markdown output format to pass to [render()]
 #' @examples
 #' \dontrun{
 #'

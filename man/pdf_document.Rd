@@ -40,7 +40,7 @@ latex_fragment(...)
 \item{df_print}{Method to be used for printing data frames. Valid values
 include "default", "kable", "tibble", and "paged". The "default" method uses
 \code{print.data.frame}. The "kable" method uses the
-\code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
+\code{\link[knitr:kable]{knitr::kable()}} function. The "tibble" method uses
 the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition
@@ -68,10 +68,10 @@ for details on creating custom templates.}
 or \code{biblatex}. Use \code{none} if neither package is to be used.}
 
 \item{includes}{Named list of additional content to include within the
-document (typically created using the \code{\link{includes}} function).}
+document (typically created using the \code{\link[=includes]{includes()}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition or R Markdown. See the \code{\link[=rmarkdown_format]{rmarkdown_format()}} for
 additional details.}
 
 \item{output_extensions}{Pandoc extensions to be added or removed from the
@@ -83,21 +83,20 @@ output format, e.g., \code{"-smart"} means the output format will be
 \item{extra_dependencies}{A LaTeX dependency \code{latex_dependency()}, a
 list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
 \code{c("framed", "hyperref")}), or a named list of LaTeX package options
-with the names being package names (e.g. \code{list(hypreref =
-c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
-add custom LaTeX packages to the .tex header.}
+with the names being package names (e.g.
+\code{list(hyperref = c("unicode=true", "breaklinks=true"), lmodern = NULL)}).
+It can be used to add custom LaTeX packages to the .tex header.}
 
 \item{...}{Arguments passed to \code{pdf_document()}.}
 }
 \value{
-R Markdown output format to pass to \code{\link{render}}
+R Markdown output format to pass to \code{\link[=render]{render()}}
 }
 \description{
 Formats for converting from R Markdown to a PDF or LaTeX document.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/pdf_document_format.html}{online
-documentation} for additional details on using the \code{pdf_document} format.
+See the \href{https://rmarkdown.rstudio.com/pdf_document_format.html}{online documentation} for additional details on using the \code{pdf_document} format.
 
 Creating PDF output from R Markdown requires that LaTeX be installed.
 
@@ -107,8 +106,7 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-and Citations} article in the online documentation.
+\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies and Citations} article in the online documentation.
 
 Many aspects of the LaTeX template used to create PDF documents can be
 customized using metadata. For example:
@@ -124,14 +122,14 @@ customized using metadata. For example:
 Available metadata variables include:
 
 \describe{
-   \item{\code{lang}}{Document language code (e.g. "es", "fr", "pt-BR")}
-   \item{\code{fontsize}}{Font size (e.g. 10pt, 11pt, 12pt)}
-   \item{\code{documentclass}}{LaTeX document class (e.g. article)}
-   \item{\code{classoption}}{Option for \code{documentclass} (e.g. oneside); may be repeated}
-   \item{\code{geometry}}{Options for geometry class (e.g. margin=1in); may be repeated}
-   \item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{latex_engine} option)}
-   \item{\code{linkcolor, urlcolor, citecolor}}{Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)}
-   \item{\code{linestretch}}{Options for line spacing (e.g. 1, 1.5, 3)}
+\item{\code{lang}}{Document language code (e.g. "es", "fr", "pt-BR")}
+\item{\code{fontsize}}{Font size (e.g. 10pt, 11pt, 12pt)}
+\item{\code{documentclass}}{LaTeX document class (e.g. article)}
+\item{\code{classoption}}{Option for \code{documentclass} (e.g. oneside); may be repeated}
+\item{\code{geometry}}{Options for geometry class (e.g. margin=1in); may be repeated}
+\item{\code{mainfont, sansfont, monofont, mathfont}}{Document fonts (works only with xelatex and lualatex, see the \code{latex_engine} option)}
+\item{\code{linkcolor, urlcolor, citecolor}}{Color for internal, external, and citation links (red, green, magenta, cyan, blue, black)}
+\item{\code{linestretch}}{Options for line spacing (e.g. 1, 1.5, 3)}
 }
 }
 \examples{

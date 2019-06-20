@@ -37,34 +37,34 @@ specified by \code{file}.
 }
 \note{
 An R Markdown template consists of a directory that contains a
-  description of the template, a skeleton Rmd file used as the basis for new
-  documents, and optionally additional supporting files that are provided
-  along with the skeleton (e.g. a logo graphic).
+description of the template, a skeleton Rmd file used as the basis for new
+documents, and optionally additional supporting files that are provided
+along with the skeleton (e.g. a logo graphic).
 
-  If the template directory is contained within a package then it should be
-  located at \code{inst/rmarkdown/templates}. For example, a package named
-  \pkg{pubtools} that wanted to provide a template named
-  \code{quarterly_report} would need to provide the following files within
-  the \code{pubtools/inst/rmarkdown/templates} directory:
+If the template directory is contained within a package then it should be
+located at \code{inst/rmarkdown/templates}. For example, a package named
+\pkg{pubtools} that wanted to provide a template named
+\code{quarterly_report} would need to provide the following files within
+the \code{pubtools/inst/rmarkdown/templates} directory:
 
-  \code{quarterly_report/template.yaml} \cr
-  \code{quarterly_report/skeleton/skeleton.Rmd} \cr
+\code{quarterly_report/template.yaml} \cr
+\code{quarterly_report/skeleton/skeleton.Rmd} \cr
 
-  The \code{template.yaml} file should include a \code{name} field. If you
-  want to ensure that a new directory is always created for a given template,
-  then you can add the \code{create_dir} field to the \code{template.yaml}
-  file. For example:
+The \code{template.yaml} file should include a \code{name} field. If you
+want to ensure that a new directory is always created for a given template,
+then you can add the \code{create_dir} field to the \code{template.yaml}
+file. For example:
 
-  \code{create_dir: true} \cr
+\code{create_dir: true} \cr
 
-  The \code{skeleton/skeleton.Rmd} file should include the initial contents
-  you want for files created from this template. Additional files can be
-  added to the \code{skeleton} directory, for example:
+The \code{skeleton/skeleton.Rmd} file should include the initial contents
+you want for files created from this template. Additional files can be
+added to the \code{skeleton} directory, for example:
 
-  \code{skeleton/logo.png} \cr
+\code{skeleton/logo.png} \cr
 
-  These files will automatically be copied to the directory containing the
-  new R Markdown draft.
+These files will automatically be copied to the directory containing the
+new R Markdown draft.
 }
 \examples{
 \dontrun{

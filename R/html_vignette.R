@@ -1,10 +1,10 @@
 #' Convert to an HTML vignette
 #'
-#' A HTML vignette is a lightweight alternative to \code{\link{html_document}}
+#' A HTML vignette is a lightweight alternative to [html_document()]
 #' suitable for inclusion in packages to be released to CRAN. It reduces the
 #' size of a basic vignette from 100k to around 10k.
 #'
-#' Compared to \code{html_document}, it:
+#' Compared to `html_document`, it:
 #'
 #' \itemize{
 #'   \item never uses retina figures
@@ -14,16 +14,16 @@
 #'   \item uses a custom highlight scheme
 #'  }
 #'
-#' See the \href{https://rmarkdown.rstudio.com/package_vignette_format.html}{online
-#' documentation} for additional details on using the \code{html_vignette} format.
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/package_vignette_format.html) for additional details on using the `html_vignette` format.
 #' @inheritParams html_document
-#' @param ... Additional arguments passed to \code{\link{html_document}}. Please
-#'   note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
+#' @param ... Additional arguments passed to [html_document()]. Please
+#'   note that `theme`, `fig_retina` and `highlight` are hard
 #'   coded. Setting any of those will yield an error.
 #' @param readme Use this vignette as the package README.md file (i.e. render
 #'   it as README.md to the package root). Note that if there are image files
 #'   within your vignette you should be sure to add README_files to .Rbuildignore
-#' @return R Markdown output format to pass to \code{\link{render}}
+#' @return R Markdown output format to pass to [render()]
 #' @export
 html_vignette <- function(fig_width = 3,
                           fig_height = 3,

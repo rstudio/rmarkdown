@@ -1,19 +1,19 @@
 #' Convert to an HTML fragment.
 #'
 #' An html fragment is suitable for inclusion into an external html page. See
-#' \code{\link{html_document}} for full details - this is a minor variation that
+#' [html_document()] for full details - this is a minor variation that
 #' assumes you will include the output into an existing document (e.g. a blog
 #' post).
 #'
-#' See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
-#' documentation} for additional details on using the \code{html_fragment}
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/html_document_format.html) for additional details on using the `html_fragment`
 #' format.
-#' @param mathjax \code{TRUE} to convert $ and $$ math blocks into MathJax
+#' @param mathjax `TRUE` to convert $ and $$ math blocks into MathJax
 #'   compatible output. Note that you'll still need to ensure that the page
 #'   where the fragment is included loads the required MathJax scripts.
 #' @inheritParams html_document
-#' @param ... Additional arguments passed to \code{\link{html_document}}
-#' @return R Markdown output format to pass to \code{\link{render}}
+#' @param ... Additional arguments passed to [html_document()]
+#' @return R Markdown output format to pass to [render()]
 #' @export
 html_fragment <- function(number_sections = FALSE,
                           section_divs = TRUE,

@@ -3,19 +3,19 @@
 #' Template for creating a handout according to the style of
 #' Edward R. Tufte and Richard Feynman.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/tufte_handout_format.html}{online
-#' documentation} for additional details.
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/tufte_handout_format.html) for additional details.
 #'
 #' Creating Tufte handout output from R Markdown requires that LaTeX be installed.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. For more details
-#' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
+#' see the documentation on R Markdown [metadata][rmd_metadata].
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-#' and Citations} article in the online documentation.
+#' [Bibliographies
+#' and Citations](https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html) article in the online documentation.
 #' @inheritParams pdf_document
 #' @export
 tufte_handout <- function(fig_width = 4,

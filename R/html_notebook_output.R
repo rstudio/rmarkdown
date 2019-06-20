@@ -1,14 +1,14 @@
 #' Generate R Notebook Output
 #'
-#' Utilities for generating output for the \code{html_notebook} format,
-#' through the \code{output_source} function attached to a
-#' \code{\link{output_format}}.
+#' Utilities for generating output for the `html_notebook` format,
+#' through the `output_source` function attached to a
+#' [output_format()].
 #'
-#' See the \href{https://rmarkdown.rstudio.com/r_notebook_format.html}{online
-#' documentation} for additional details on using the \code{html_notebook}
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/r_notebook_format.html) for additional details on using the `html_notebook`
 #' format.
-#' @param path  A path to a file. For functions accepting both \code{path}
-#'   and \code{bytes}, if \code{bytes} is \code{NULL}, the bytewise contents
+#' @param path  A path to a file. For functions accepting both `path`
+#'   and `bytes`, if `bytes` is `NULL`, the bytewise contents
 #'   will be obtained by reading the file.
 #' @param bytes The bytewise representation of content.
 #' @param html Arbitrary HTML content to insert.
@@ -17,16 +17,16 @@
 #' @param code Source code.
 #' @param meta An \R list of arbitrary meta-data. The data will
 #'   be converted to JSON, base64-encoded, and injected into the header comment.
-#' @param format The image format; one of \code{"png"} or \code{"jpeg"}.
+#' @param format The image format; one of `"png"` or `"jpeg"`.
 #' @name html_notebook_output
 NULL
 
 #' Generate R Notebook Metadata
 #'
 #' A structured helper for the construction of metadata used by the
-#' R Notebook output functions. See \code{\link{html_notebook_output}} for
+#' R Notebook output functions. See [html_notebook_output()] for
 #' more details.
-#' @param iframe Boolean; should output be shown in an \code{<iframe>}?
+#' @param iframe Boolean; should output be shown in an `<iframe>`?
 #' @export
 html_notebook_metadata <- function(iframe = TRUE) {
   list(iframe = iframe)
