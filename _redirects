@@ -3,6 +3,7 @@ https://rmarkdown.netlify.com/*  https://rmarkdown.rstudio.com/:splat  301!
 http://rmarkdown.netlify.com/*   https://rmarkdown.rstudio.com/:splat  301!
 /flexdashboard    /flexdashboard/   301!
 
+/docs    /docs/
 /docs/*  https://rmarkdown-docs.netlify.com/:splat   200
 
 /r_notebooks.html  https://bookdown.org/yihui/rmarkdown/notebook.html  301!
