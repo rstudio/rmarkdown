@@ -9,7 +9,7 @@ home:
   links:
   - text: Learn more
     href: https://rmarkdown.rstudio.com/
-  - text: Read more
+  - text: Read the book
     href: https://bookdown.org/yihui/rmarkdown/
 
 navbar:
