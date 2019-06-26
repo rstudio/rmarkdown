@@ -1,7 +1,7 @@
 language: r
 cache:
   packages: yes
-pandoc_version: 1.19.2.1
+pandoc_version: 2.3.1
 
 env:
   global:
