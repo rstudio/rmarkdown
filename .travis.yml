@@ -2,6 +2,7 @@ language: r
 cache:
   packages: yes
 pandoc_version: 2.3.1
+cran: https://cran.rstudio.com
 
 env:
   global:
