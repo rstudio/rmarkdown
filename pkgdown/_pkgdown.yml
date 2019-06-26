@@ -166,3 +166,9 @@ reference:
   - '`resolve_output_format`'
   - '`rmd_metadata`'
   - '`rmarkdown_format`'
+
+authors:
+  "Yihui Xie":
+    href: https://yihui.name
+  "Kevin Ushey":
+    href: https://kevinushey.github.io
