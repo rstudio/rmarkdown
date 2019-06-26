@@ -15,8 +15,8 @@ before_install:
   - tlmgr install units
 
 after_success:
-  - "[[ ${TRAVIS_BRANCH}  = master ]] || exit 0"
-  - "[[ ${PANDOC_VERSION} = latest ]] || exit 0"
+  - "[[ ${TRAVIS_BRANCH}  = master  ]] || exit 0"
+  - "[[ ${PANDOC_VERSION} = default ]] || exit 0"
   - nvm install stable
   - npm install netlify-cli -g
   - Rscript -e 'xfun::pkg_load2("pkgdown")'
