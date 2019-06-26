@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 # Overview
 
-<a href="https://r4ds.had.co.nz/"><img src="https://r4ds.had.co.nz/cover.png" alt="" width="250" style="padding: 0 15px; float: right;"/></a>
+<a href="https://r4ds.had.co.nz/"><img src="https://r4ds.had.co.nz/cover.png" alt="R for Data Science" width="250" style="padding: 0 15px; float: right;"/></a>
 
 If you are new to using R Markdown, we encourage you to start with a systematic overview, rather than diving right in to reading documentation pages. The best place to start is the ["Communication" section](https://r4ds.had.co.nz/communicate-intro.html) in the book [R for Data Science](https://r4ds.had.co.nz/) (R4DS for short), an O’Reilly book written by Hadley Wickham and Garrett Grolemund. You can read it [online for free](https://r4ds.had.co.nz/), or [buy a physical copy](https://www.amazon.com/R-Data-Science-Hadley-Wickham/dp/1491910399/ref=as_li_ss_tl?ie=UTF8&qid=1469550189&sr=8-1&keywords=R+for+data+science&linkCode=sl1&tag=devtools-20&linkId=6fe0069f9605cf847ed96c191f4e84dd).
 
