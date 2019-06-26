@@ -13,4 +13,4 @@ PANDOC\.(Rmd|md|html)
 ^tests/testthat/site/.*_files/
 ^revdep/
 ^\.github$
-
+^pkgdown$

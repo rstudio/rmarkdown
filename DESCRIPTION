@@ -94,8 +94,9 @@ Suggests:
     fs,
     callr (>= 2.0.0)
 SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
-URL: https://rmarkdown.rstudio.com
+URL: https://github.com/rstudio/rmarkdown
 BugReports: https://github.com/rstudio/rmarkdown/issues
 License: GPL-3
 RoxygenNote: 6.1.1
 Encoding: UTF-8
+VignetteBuilder: knitr
