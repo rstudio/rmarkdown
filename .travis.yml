@@ -19,6 +19,5 @@ after_success:
   - "[[ ${PANDOC_VERSION} = default ]] || exit 0"
   - nvm install stable
   - npm install netlify-cli -g
-  - Rscript -e 'xfun::pkg_load2("pkgdown")'
   - Rscript -e 'pkgdown::build_site(".", document = FALSE, preview = FALSE)'
   - netlify deploy --prod --dir docs

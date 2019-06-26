@@ -92,6 +92,7 @@ Suggests:
     dygraphs,
     tibble,
     fs,
+    pkgdown,
     callr (>= 2.0.0)
 SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
 URL: https://github.com/rstudio/rmarkdown
