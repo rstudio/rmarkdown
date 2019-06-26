@@ -5,7 +5,7 @@
 
 The **rmarkdown** package helps you create dynamic analysis documents that combine code, rendered output (such as figures), and prose. You bring your data, code, and ideas, and R Markdown renders your content into a polished document that can be used to:
 
-<img src="https://bookdown.org/yihui/rmarkdown/images/hex-rmarkdown.png" width="200" style="padding: 0 15px; float: right;"/>
+<img src="https://bookdown.org/yihui/rmarkdown/images/hex-rmarkdown.png" alt="The rmarkddown hex sticker" width="200" style="padding: 0 15px; float: right;"/>
 
 - Do data science interactively within the RStudio IDE,
 
@@ -20,7 +20,7 @@ R Markdown documents can be rendered to many output formats including HTML docum
 
 ### Installation
 
-The easiest way to install the rmarkdown package is from within the [RStudio IDE](http://www.rstudio.com/ide/download/preview), but you don’t need to explicitly install it or load it, as RStudio automatically does both when needed. A recent version of Pandoc (>= 1.12.3) is also required; RStudio also automatically includes this too so you do not need to download Pandoc if you plan to use rmarkdown from the [RStudio IDE](http://www.rstudio.com/ide/download/preview).
+The easiest way to install the **rmarkdown** package is from within the [RStudio IDE](http://www.rstudio.com/ide/download/preview), but you don't need to explicitly install it or load it, as RStudio automatically does both when needed. A recent version of Pandoc (>= 1.12.3) is also required; RStudio also automatically includes this too so you do not need to download Pandoc if you plan to use rmarkdown from the RStudio IDE.
 
 If you want to use the rmarkdown package outside of RStudio, you can install the package from CRAN as follows:
 
@@ -28,13 +28,13 @@ If you want to use the rmarkdown package outside of RStudio, you can install the
 install.packages("rmarkdown")
 ```
 
-If you want to use the development version of the rmarkdown package (either with or without RStudio), you can install the package from GitHub via the [`remotes` package](https://remotes.r-lib.org/):
+If you want to use the development version of the rmarkdown package (either with or without RStudio), you can install the package from GitHub via the [**remotes** package](https://remotes.r-lib.org):
 
 ```r
 remotes::install_github('rstudio/rmarkdown')
 ```
 
-If not using the RStudio IDE, you'll need to install a recent version of Pandoc (&gt;= 1.12.3); see the [Pandoc installation instructions](articles/pandoc.html) for help.
+If not using the RStudio IDE, you'll need to install a recent version of Pandoc (>= 1.12.3); see the [Pandoc installation instructions](https://rmarkdown.rstudio.com/docs/articles/pandoc.html) for help.
 
 ### Usage
 
@@ -49,9 +49,9 @@ Once inside your new `.Rmd` file, you should see some boilerplate text that incl
 
 You can also delete all the text below the YAML frontmatter and fill in your own `.Rmd` by:
 
-+ Adding code chunks (keyboard shortcut: Ctrl + Alt + I; OS X: Cmd + Option + I),
++ Adding code chunks (keyboard shortcut: `Ctrl + Alt + I`; OS X: `Cmd + Option + I`),
 + Writing prose with [Markdown formatting](https://www.markdowntutorial.com/), and
-+ Running each code chunk interactively by clicking the ![](https://raw.githubusercontent.com/rstudio/rmarkdown/gh-pages/images/notebook-run-chunk.png) icon within RStudio. 
++ Running each code chunk interactively by clicking the ![The run button](https://rmarkdown.rstudio.com/images/notebook-run-chunk.png) icon within RStudio. 
 
 You can also click "Knit to HTML" again to render the full document with all code chunks. For more help getting started in R Markdown, please see the [R Markdown website](https://rmarkdown.rstudio.com/lesson-1.html) or use the **"Get Started"** links at the top of this page.
 
