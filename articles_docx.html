@@ -79,9 +79,7 @@ h6 {
 
 <link rel="stylesheet" href="css/rmarkdown.css" type="text/css" />
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -112,8 +110,6 @@ summary {
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -171,20 +167,17 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -204,6 +197,7 @@ $(document).ready(function () {
         <a class="menuItem" href="formats.html">Formats</a>
         <a class="menuItem" href="articles.html">Articles</a>
         <a class="menuItem" href="https://bookdown.org/yihui/rmarkdown/">Book</a>
+        <a class="menuItem" href="docs/">References</a>
         <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
         <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
       </div>
@@ -231,8 +225,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 
 <h1 class="title toc-ignore">Happy collaboration with Rmd to docx</h1>
-<h4 class="author"><em>Richard Layton</em></h4>
-<h4 class="date"><em>July 21st, 2015</em></h4>
+<h4 class="author">Richard Layton</h4>
+<h4 class="date">July 21st, 2015</h4>
 
 </div>
 
@@ -505,24 +499,24 @@ obstacles to effective collaboration.</code></pre>
 </li>
 <li>Word 2013</li>
 </ul>
-<pre><code>## R version 3.5.2 (2018-12-20)
+<pre><code>## R version 3.6.0 (2019-04-26)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS Mojave 10.14.2
+## Running under: macOS Mojave 10.14.5
 ## 
 ## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] knitr_1.21.7
+## [1] knitr_1.23.2
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_3.5.2  magrittr_1.5    tools_3.5.2     htmltools_0.3.6
-##  [5] yaml_2.2.0      Rcpp_1.0.0      stringi_1.2.4   rmarkdown_1.11 
-##  [9] stringr_1.3.1   xfun_0.4.11     digest_0.6.18   evaluate_0.12</code></pre>
+##  [1] compiler_3.6.0   magrittr_1.5     tools_3.6.0      htmltools_0.3.6 
+##  [5] yaml_2.2.0       Rcpp_1.0.1       stringi_1.4.3    rmarkdown_1.13.4
+##  [9] stringr_1.4.0    xfun_0.7.4       digest_0.6.19    evaluate_0.14</code></pre>
 <p><br></p>
 </div>
 <div id="image-credits" class="section level3">
@@ -575,6 +569,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 
 </body>
