@@ -2,10 +2,3 @@
 .Rhistory
 .RData
 .DS_Store
-README.html
-CONTRIBUTING.html
-issues/
-inst/doc
-vignettes/*.R
-vignettes/*.html
-revdep
