@@ -5,6 +5,8 @@ rmarkdown 1.14
 
 - Fixed the bug #1577 introduced in **rmarkdown** v1.12: tabsets, floating TOC, and code folding in the `html_document` format no longer work with the `shiny` runtime (thanks, @RLesur for the fix #1587, and @fawda123 @ColinChisholm @JasonAizkalns for the bug report).
 
+- Added the `keep_md` argument to `pdf_document()` to keep the intermediate `.md` output file (thanks, @broomej, #1001).
+
 - For `render()`, if the input filename contains special characters such as spaces or question marks (as defined in `rmarkdown:::.shell_chars_regex`), the file will be temporarily renamed with the special characters replaced by `-` (dash) instead of `_` (underscore, as in previous versions of **rmarkdown**). This change will affect users who render such files with caching (cache will be invalidated and regenerated). The change is due to the fact that `-` is generally a safer character than `_`, especially for LaTeX output (#1396).
 
 - Added a **pkgdown** site for the **rmarkdown** package: https://rmarkdown.rstudio.com/docs/ (thanks, @apreshill, #1574).
