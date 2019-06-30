@@ -11,6 +11,8 @@ rmarkdown 1.14
 
 - Added a **pkgdown** site for the **rmarkdown** package: https://rmarkdown.rstudio.com/docs/ (thanks, @apreshill, #1574).
 
+- Fixed the bug #1593: in HTML documents, when a MathJax URL is used with `self_contained = FALSE`, the source code of the MathJax library is included in the document. This bug was first declared in **bookdown** (thanks, @topepo for the bug report rstudio/bookdown#683, and @RLesur for the fix #1594).
+
 
 rmarkdown 1.13
 ================================================================================
