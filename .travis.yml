@@ -18,6 +18,7 @@ before_install:
 after_success:
   - "[[ ${TRAVIS_BRANCH}  = master  ]] || exit 0"
   - "[[ ${PANDOC_VERSION} = default ]] || exit 0"
+  - "[[ -z ${NETLIFY_AUTH_TOKEN} ]] && exit 0"
   - nvm install stable
   - npm install netlify-cli -g
   - Rscript -e 'pkgdown::build_site(".", document = FALSE, preview = FALSE)' && netlify deploy --prod --dir docs
