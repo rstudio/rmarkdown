@@ -468,9 +468,7 @@ pandoc_mathjax_args <- function(mathjax,
       args <- c(args, "--mathjax")
       args <- c(args, "--variable", paste0("mathjax-url:", mathjax))
     } else if (!self_contained) {
-      args <- c(args, "--mathjax")
-      if (!is.null(mathjax))
-        args <- c(args, mathjax)
+      args <- c(args, paste(c("--mathjax", mathjax), collapse = "="))
     } else {
       warning("MathJax doesn't work with self_contained when not ",
               "using the rmarkdown \"default\" template.", call. = FALSE)
