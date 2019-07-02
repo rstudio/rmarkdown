@@ -205,8 +205,6 @@ pdf_document <- function(toc = FALSE,
     if (identical(template, "default"))
       pdf_pre_processor(metadata, input_file, runtime, knit_meta, files_dir,
                         output_dir)
-    else
-      invisible(NULL)
   }
 
   intermediates_generator <- function(...) {
