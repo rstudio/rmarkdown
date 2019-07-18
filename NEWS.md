@@ -1,6 +1,7 @@
 rmarkdown 1.15
 ================================================================================
 
+- Exclude README.R?md from files processed by render site 
 
 
 rmarkdown 1.14
