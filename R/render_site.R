@@ -330,7 +330,7 @@ default_site <- function(input, encoding = "UTF-8", ...) {
   # README.R?md as those files are intended for GitHub
   input_files <- function() {
     files <- list.files(input, pattern = "^[^_].*\\.[Rr]?md$")
-    files[!grepl("README\\.R?md", files)]
+    files[!grepl("^README\\.R?md$", files)]
   }
 
   # define render function (use ... to gracefully handle future args)

@@ -1,7 +1,7 @@
 rmarkdown 1.15
 ================================================================================
 
-- Exclude README.R?md from files processed by render site 
+- Exclude `README.R?md` from files processed by `render_site()`,
 
 - `html_document` with `code_folding: hide` supports showing individual source code chunks if they are assigned the `fold-show` class via the chunk option `class.source="fold-show"` (thanks, @atusy, #1602).
 
