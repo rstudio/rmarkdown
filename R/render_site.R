@@ -359,6 +359,10 @@ default_site <- function(input, encoding = "UTF-8", ...) {
       } else {
         render_current_session
       }
+
+      # log the file being rendered
+      if (!quiet) message("\nRendering: ", x)
+
       output <- render_one(input = x,
                            output_format = output_format,
                            output_options = list(lib_dir = "site_libs",
