@@ -1,7 +1,7 @@
 rmarkdown 1.15
 ================================================================================
 
-
+- `html_document` with `code_folding: hide` supports showing specific source codes if they have `fold-show` class (e.g., `class.source="fold-show"` in chunk options) (thanks, @atusy, #1602).
 
 rmarkdown 1.14
 ================================================================================
