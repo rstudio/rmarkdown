@@ -326,9 +326,11 @@ default_site <- function(input, encoding = "UTF-8", ...) {
   # helper function to get all input files. includes all .Rmd and
   # .md files that don't start with "_" (note that we don't do this
   # recursively because rmarkdown in general handles applying common
-  # options/elements across subdirectories poorly)
+  # options/elements across subdirectories poorly). Also excludes
+  # README.R?md as those files are intended for GitHub
   input_files <- function() {
-    list.files(input, pattern = "^[^_].*\\.[Rr]?md$")
+    files <- list.files(input, pattern = "^[^_].*\\.[Rr]?md$")
+    files[!grepl("README\\.R?md", files)]
   }
 
   # define render function (use ... to gracefully handle future args)
@@ -357,6 +359,10 @@ default_site <- function(input, encoding = "UTF-8", ...) {
       } else {
         render_current_session
       }
+
+      # log the file being rendered
+      if (!quiet) message("\nRendering: ", x)
+
       output <- render_one(input = x,
                            output_format = output_format,
                            output_options = list(lib_dir = "site_libs",
