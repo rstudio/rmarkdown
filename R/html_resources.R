@@ -402,7 +402,7 @@ copy_render_intermediates <- function(original_input, encoding, intermediates_di
   dest_dir <- normalize_path(intermediates_dir)
   source_dir <- dirname(normalize_path(original_input))
 
-  # process each returned reosurce
+  # process each returned resource
   by(resources, seq_len(nrow(resources)), function(res) {
     # skip web resources if requested
     if (skip_web && res$web) return()
