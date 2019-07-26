@@ -55,6 +55,8 @@ html_document_base <- function(smart = TRUE,
 
   output_dir <- ""
 
+  metadata_tmp_file <- ""
+
   # dummy pre_knit and post_knit functions so that merging of outputs works
   pre_knit <- function(input, ...) {}
   post_knit <- function(metadata, input_file, runtime, ...) {}
@@ -109,8 +111,11 @@ html_document_base <- function(smart = TRUE,
     preserved_chunks <<- extract_preserve_chunks(input_file)
 
     # Avoid pagetitle warning from pandoc2.0 when title is missing
-    if (pandoc2.0() && is.null(metadata$title) && is.null(metadata$pagetitle))
-      args <- c(args, "--metadata", paste0("pagetitle=", input_file))
+    if (pandoc2.0() && is.null(metadata$title) && is.null(metadata$pagetitle)) {
+      metadata_tmp_file <<- tempfile("yaml-metadata", fileext = ".yml")
+      write_utf8(paste0("pagetitle: ", input_file), metadata_tmp_file)
+      args <- c(args, "--metadata-file", pandoc_path_arg(metadata_tmp_file))
+    }
 
     args
   }
@@ -124,6 +129,9 @@ html_document_base <- function(smart = TRUE,
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+    # if a yaml file for metadata has been created, delete it
+    if (clean && nzchar(metadata_tmp_file)) unlink(metadata_tmp_file)
+
     # if there are no preserved chunks to restore and no resource to copy then no
     # post-processing is necessary
     if (length(preserved_chunks) == 0 && !isTRUE(copy_resources) && self_contained)
