@@ -173,15 +173,18 @@ pdf_document <- function(toc = FALSE,
       length(grep(paste0("^", parameter, "\\s*:.*$"), text)) > 0
     }
 
-    input_test <- read_utf8(input_file)
+    # use a geometry filter when we are using the "default" template
+    if (identical(template, "default")) {
+      input_test <- read_utf8(input_file)
 
-    # set the margin to 1 inch if no geometry options or document class specified
-    if (!has_yaml_parameter(input_test, "(geometry|documentclass)"))
-      args <- c(args, "--variable", "geometry:margin=1in")
+      # set the margin to 1 inch if no geometry options or document class specified
+      if (!has_yaml_parameter(input_test, "(geometry|documentclass)"))
+        args <- c(args, "--variable", "geometry:margin=1in")
 
-    # use titling package to change title format to be more compact by default
-    if (!has_yaml_parameter(input_test, "compact-title"))
-      args <- c(args, "--variable", "compact-title:yes")
+      # use titling package to change title format to be more compact by default
+      if (!has_yaml_parameter(input_test, "compact-title"))
+        args <- c(args, "--variable", "compact-title:yes")
+    }
 
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
       extra_dependencies <- latex_dependencies(extra_dependencies)
@@ -201,10 +204,8 @@ pdf_document <- function(toc = FALSE,
     # save files dir (for generating intermediates)
     saved_files_dir <<- files_dir
 
-    # use a geometry filter when we are using the "default" template
-    if (identical(template, "default"))
-      pdf_pre_processor(metadata, input_file, runtime, knit_meta, files_dir,
-                        output_dir)
+    pdf_pre_processor(metadata, input_file, runtime, knit_meta, files_dir,
+                      output_dir)
   }
 
   intermediates_generator <- function(...) {

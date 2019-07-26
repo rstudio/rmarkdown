@@ -5,6 +5,8 @@ rmarkdown 1.15
 
 - `html_document` with `code_folding: hide` supports showing individual source code chunks if they are assigned the `fold-show` class via the chunk option `class.source="fold-show"` (thanks, @atusy, #1602).
 
+- The `extra_dependencies` argument only works with `template: default` in `pdf_document`. Now it works with any Pandoc LaTeX templates as long as the template uses the `header-includes` variable.
+
 rmarkdown 1.14
 ================================================================================
 
