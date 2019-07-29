@@ -112,13 +112,8 @@ html_document_base <- function(smart = TRUE,
     if (pandoc2.0() && is.null(metadata$title) && is.null(metadata$pagetitle))
       args <- c(args, "--metadata", paste0("pagetitle=", input_file))
 
-    if (pandoc2.0()) {
-      args <- c(
-        args,
-        "--lua-filter",
-        rmarkdown_system_file("rmd/lua/pagebreak.lua")
-      )
-    }
+    # a lua filters added if pandoc2.0
+    args <- c(args, pandoc_lua_filters("pagebreak.lua"))
 
     args
   }
