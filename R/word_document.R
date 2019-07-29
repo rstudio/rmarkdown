@@ -76,6 +76,9 @@ word_document <- function(toc = FALSE,
   # reference docx
   args <- c(args, reference_doc_args("docx", reference_docx))
 
+  # lua filters (added if pandoc > 2)
+  args <- c(args, pandoc_lua_filters("pagebreak.lua"))
+
   # pandoc args
   args <- c(args, pandoc_args)
 
