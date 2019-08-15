@@ -173,7 +173,8 @@ highlighters <- function() {
     "monochrome",
     "espresso",
     "zenburn",
-    "haddock")
+    "haddock",
+    "breezedark")
 }
 
 merge_lists <- function(base_list, overlay_list, recursive = TRUE) {
