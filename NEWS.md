@@ -1,7 +1,7 @@
 rmarkdown 1.15
 ================================================================================
 
-- It is now possible to add pagebreak in html, word, latex and odt documents using `\newpage` or `\pagebreak` command in a Rmd file. This is possible thanks to [_pandoc's pagebreak lua filter_](https://github.com/pandoc/lua-filters/tree/master/pagebreak).
+- It is now possible to add pagebreak in html, word, latex and odt documents using `\newpage` or `\pagebreak` command in a Rmd file. This is possible thanks to [_pandoc's pagebreak lua filter_](https://github.com/pandoc/lua-filters/tree/master/pagebreak). See `vignette("pagebreak", package = "rmarkdown")`
 
 - Exclude `README.R?md` from files processed by `render_site()`,
 
