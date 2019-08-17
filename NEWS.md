@@ -1,6 +1,8 @@
 rmarkdown 1.15
 ================================================================================
 
+- It is now possible to add pagebreak in html, word, latex and odt documents using `\newpage` or `\pagebreak` command in a Rmd file. This is possible thanks to [_pandoc's pagebreak lua filter_](https://github.com/pandoc/lua-filters/tree/master/pagebreak).
+
 - Exclude `README.R?md` from files processed by `render_site()`,
 
 - `html_document` with `code_folding: hide` supports showing individual source code chunks if they are assigned the `fold-show` class via the chunk option `class.source="fold-show"` (thanks, @atusy, #1602).
