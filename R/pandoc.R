@@ -673,14 +673,14 @@ pandoc_citeproc <- function() {
     "pandoc-citeproc"
 }
 
-pandoc_lua_filters <- function(lua_files) {
+pandoc_lua_filters <- function(...) {
   args <- c()
   # lua filters was introduced in pandoc 2.0
   if (pandoc2.0()) {
     args <- c(
       rbind(
         "--lua-filter",
-        rmarkdown_system_file(file.path("rmd/lua", lua_files))
+        rmarkdown_system_file(file.path("rmd/lua", c(...)))
       )
     )
   }
