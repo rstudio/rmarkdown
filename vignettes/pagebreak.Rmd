@@ -1,0 +1,20 @@
+---
+title: "Add a pagebreak in Rmarkdown document"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pagebreak}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# About lua filters
+
+Since pandoc 2.0, it is possible to use lua filters to add some extra functionality to pandoc document conversion. Adding a pagebreak command in markdown to be compatible with several output document is one of them. You can find some more informations about lua filters in [pandoc's documentation](https://pandoc.org/lua-filters.html) and also [a collection of lua filters for pandoc](https://github.com/pandoc/lua-filters) you can use in your Rmarkdown document 
