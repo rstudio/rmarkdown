@@ -27,6 +27,7 @@ local pagebreak = {
   html = '<div style="page-break-after: always;"></div>',
   latex = '\\newpage{}',
   ooxml = '<w:p><w:r><w:br w:type="page"/></w:r></w:p>',
+  odt = '<text:p text:style-name="Pagebreak"/>'
 }
 
 local function pagebreaks_from_config (meta)
@@ -51,6 +52,8 @@ local function newpage(format)
     return pandoc.RawBlock('openxml', pagebreak.ooxml)
   elseif format:match 'latex' then
     return pandoc.RawBlock('tex', pagebreak.latex)
+  elseif format:match 'odt' then
+    return pandoc.RawBlock('opendocument', pagebreak.odt)
   elseif format:match 'html.*' then
     return pandoc.RawBlock('html', pagebreak.html)
   elseif format:match 'epub' then
