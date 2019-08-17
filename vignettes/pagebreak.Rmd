@@ -39,11 +39,11 @@ Some other text
 
 rmarkdown will convert those commands in the correct output format syntax using a [lua filter](#lua-filter) during pandoc conversion. 
 
-# pagebreak with PDF/ latex documents {#pdf}
+# Using with PDF/ latex documents {#pdf}
 
 As the commands are the ones already used in latex syntax, this works as expected in a tex output document. Adding a pagebreak was already possible with rmarkdown when output is `pdf_document()` or `latex_document()`, without any restriction about the version of pandoc.
 
-# pagebreak with HTML documents {#html}
+# Using with HTML documents {#html}
 
 A `\newpage` or `\pagebreak` commands in a rmarkdown document with output as HTML will be converted by default in this html code with inline style using CSS rule [`page-break-after`](https://www.w3schools.com/cssref/pr_print_pageba.asp)
 
@@ -80,7 +80,6 @@ newpage_html_class: page-break
 }
 ```
 
-
 # Header 1
 
 Some text
@@ -94,7 +93,7 @@ Some other text
 
 This can also be achieved by setting the environnement variable `PANDOC_NEWPAGE_HTML_CLASS` in the R session that will render the document (or in `.Renviron` for example)
 
-# pagebreak with Word documents {#word}
+# Using with Word documents {#word}
 
 A `\newpage` or `\pagebreak` commands in a rmarkdown document with output as Word document will be converted in a pagebreak for word document. Manually, this would mean adding this in your rmarkdown
 
@@ -117,11 +116,11 @@ output: word_document
 # First Header
 ````
 
-# pagebreak with ODT documents {#odt}
+# Using with ODT documents {#odt}
 
 To use the pagebreak feature with `odt_document()`, you need to provide a reference document that includes a paragraph style with the name _Pagebreak_. This named paragraph style should have no extra space before or after and have a pagebreak after it. (see [libre office documentation](https://help.libreoffice.org/Writer/Text_Flow)). 
 
-The name of the named paragrah style could be customized using `newpage_odt_style` metadata in yaml header or `PANDOC_NEWPAGE_ODT_STYLE` environment variable (as in [word document](#word)).
+The name of the named paragrah style could be customized using `newpage_odt_style` metadata in yaml header or `PANDOC_NEWPAGE_ODT_STYLE` environment variable (as in [html document](#html)).
 
 ````md
 ---
