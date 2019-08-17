@@ -9,3 +9,5 @@
 ^tests/testthat/site/.*_files/
 ^\.github$
 ^pkgdown$
+^doc$
+^Meta$
