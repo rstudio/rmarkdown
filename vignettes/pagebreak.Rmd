@@ -45,7 +45,7 @@ As the commands are the ones already used in latex syntax, this works as expecte
 
 # Using with HTML documents {#html}
 
-A `\newpage` or `\pagebreak` command in a rmarkdown document with output as HTML will be converted by default in this html code with inline style using CSS rule [`page-break-after`](https://www.w3schools.com/cssref/pr_print_pageba.asp)
+A `\newpage` or `\pagebreak` command in a rmarkdown document with output as HTML will be converted by default in this html code with inline style using CSS rule [`page-break-after`](https://developer.mozilla.org/en-US/docs/Web/CSS/page-break-after)
 
 ```html
 <div style="page-break-after: always;"></div>
