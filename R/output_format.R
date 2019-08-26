@@ -368,6 +368,7 @@ smart_extension <- function(smart, extension) {
 #'   if the option isn't set explicitly in the document.
 #' @export
 default_output_format <- function(input,
+                                  output_yaml = NULL,
                                   encoding = "UTF-8") {
 
   # execute within the input file's directory (this emulates the way
@@ -381,7 +382,8 @@ default_output_format <- function(input,
 
   # parse the YAML and front matter and get the explicitly set options
   input_lines <- read_utf8(input, encoding)
-  format <- output_format_from_yaml_front_matter(input_lines, encoding = encoding)
+  format <- output_format_from_yaml_front_matter(
+    input_lines, output_yaml = output_yaml, encoding = encoding)
 
   # look up the formals of the output function to get the full option list and
   # merge against the explicitly set list
