@@ -53,7 +53,7 @@ A `\newpage` or `\pagebreak` command in a rmarkdown document with output as HTML
 
 This will always insert a pagebreak after this div. 
 
-To get more flexibility, you can use a HTML class and some custom CSS instead of an inline style. You need to add a metadata filed `newpage_html_class` in your yaml header to set the class.
+To get more flexibility, you can use a HTML class and some custom CSS instead of an inline style. You need to add a metadata field `newpage_html_class` in your yaml header to set the class.
 
 Then you can control the behavior using custom css as in this example
 
@@ -64,13 +64,13 @@ output:
 newpage_html_class: page-break
 ---
 
-```{css, include = FALSE}`r ''`
+```{css, echo = FALSE}`r ''`
 // display the pagebreak only when printing the html page
 @media all {
     .page-break	{ display: none; }
 }
 @media print {
-    .page-break	{ display: block; page-break-before: always; }
+    .page-break	{ display: block; break-after: page; }
 }
 ```
 
@@ -91,7 +91,16 @@ Some other text
 <div class="page-break"></div>
 ```
 
+and the style will be applied to this class from the CSS included in the chunk. 
+
 This customisation can also be achieved by setting the environnement variable `PANDOC_NEWPAGE_HTML_CLASS` in the R session that will render the document (or in `.Renviron` for example)
+
+> Let's note we use [`break-after`
+property](https://developer.mozilla.org/en-US/docs/Web/CSS/break-after) here
+instead of `page-break-after` as it is recommended now to use the former which
+will be the replacement. The latter is kept around for [compatibility reason
+with browsers](https://caniuse.com/#search=page-break).
+
 
 # Using with Word documents {#word}
 
