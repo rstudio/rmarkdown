@@ -430,6 +430,7 @@ resolve_output_format <- function(input,
       input_lines,
       output_options,
       output_format,
+      output_yaml,
       encoding = encoding)
 
   # return it
