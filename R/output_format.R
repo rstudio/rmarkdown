@@ -412,6 +412,7 @@ default_output_format <- function(input,
 resolve_output_format <- function(input,
                                   output_format = NULL,
                                   output_options = NULL,
+                                  output_yaml = NULL,
                                   encoding = "UTF-8") {
 
   # read the input file
@@ -448,11 +449,13 @@ resolve_output_format <- function(input,
 #' @return A character vector with the names of all output formats.
 #' @export
 all_output_formats <- function(input,
+                               output_yaml = NULL,
                                encoding = "UTF-8") {
 
   enumerate_output_formats(
     input = input,
     envir = parent.frame(),
+    output_yaml = output_yaml,
     encoding = encoding)
 }
 
@@ -462,6 +465,7 @@ all_output_formats <- function(input,
 output_format_from_yaml_front_matter <- function(input_lines,
                                                  output_options = NULL,
                                                  output_format_name = NULL,
+                                                 output_yaml = NULL,
                                                  encoding = "UTF-8") {
 
   format_name <- output_format_name
@@ -482,11 +486,9 @@ output_format_from_yaml_front_matter <- function(input_lines,
   yaml_site <- config[["output"]]
 
   # parse common _output.yml if we have it
-  yaml_common <- if (file.exists("_output.yml")) {
-    yaml_load_file("_output.yml")
-  } else if (file.exists("_output.yaml")) {
-    yaml_load_file("_output.yaml")
-  }
+  output_yaml <- c(output_yaml, yaml_input$output_yaml, "_output.yml", "_output.yaml")
+  output_yaml <- output_yaml[file.exists(output_yaml)][1L]
+  yaml_common <- if (!is.na(output_yaml)) yaml_load_file(output_yaml)
 
   # merge _site.yml and _output.yml
   yaml_common <- merge_output_options(yaml_site, yaml_common)
@@ -602,6 +604,7 @@ is_output_format <- function(x) {
 
 enumerate_output_formats <- function(input,
                                      envir,
+                                     output_yaml = NULL,
                                      encoding) {
 
   # read the input
@@ -623,14 +626,16 @@ enumerate_output_formats <- function(input,
   yaml_front_matter <- parse_yaml_front_matter(input_lines)
 
   # read any _output.yml
-  output_yml <- file.path(dirname(input), "_output.yml")
-  output_yaml <- file.path(dirname(input), "_output.yaml")
-  if (file.exists(output_yml))
-    common_output_format_yaml <- yaml_load_file(output_yml)
-  else if (file.exists(output_yaml))
-    common_output_format_yaml <- yaml_load_file(output_yaml)
-  else
-    common_output_format_yaml <- list()
+  output_yaml <- file.path(
+    dirname(input),
+    c(output_yaml, yaml_front_matter$output_yaml, "_output.yml", "_output.yaml")
+  )
+  output_yaml <- output_yaml[file.exists(output_yaml)][1L]
+  common_output_format_yaml <- if (is.na(output_yaml)) {
+    list()
+  } else {
+    yaml_load_file(output_yaml)
+  }
 
   # merge site and common
   common_output_format_yaml <- merge_output_options(site_output_format_yaml,
