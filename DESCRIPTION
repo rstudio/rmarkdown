@@ -65,7 +65,11 @@ Authors@R: c(
   person(family = "Drifty", role = "cph",
          comment = "Ionicons"),
   person("Aidan", "Lister", role = c("ctb", "cph"), 
-         comment = "jQuery StickyTabs")
+         comment = "jQuery StickyTabs"),
+  person("Benct Philip", "Jonsson", role = c("ctb", "cph"), 
+         comment = "pagebreak lua filter"),
+  person("Albert", "Krewinkel", role = c("ctb", "cph"), 
+         comment = "pagebreak lua filter")
   )
 Maintainer: Yihui Xie <xie@yihui.name>
 Description: Convert R Markdown documents into a variety of formats.

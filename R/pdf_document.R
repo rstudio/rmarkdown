@@ -157,6 +157,9 @@ pdf_document <- function(toc = FALSE,
   # make sure the graphics package is always loaded
   if (identical(template, "default")) args <- c(args, "--variable", "graphics=yes")
 
+  # lua filters (added if pandoc > 2)
+  args <- c(args, pandoc_lua_filters("pagebreak.lua"))
+
   # args args
   args <- c(args, pandoc_args)
 
