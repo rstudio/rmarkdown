@@ -98,11 +98,17 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   rendered_html <- normalize_path(rendered_html, winslash = "/")
   output_dir <- dirname(rendered_html)
 
-  # add some resource paths
-  add_resource_path <- function(path) {
-    if (dir_exists(path))
-      shiny::addResourcePath(basename(path), path)
+  add_resource_path <- function(path, prefix = basename(path), temporary = TRUE) {
+    if (dir_exists(path)) {
+      shiny::addResourcePath(prefix, path)
+      # Remove resource paths so they don't clash with 'down-stream' resources
+      removeResourcePath <- getFromNamespace("removeResourcePath", "shiny")
+      if (temporary && is.function(removeResourcePath)) {
+        shiny::onStop(function() { removeResourcePath(prefix) }, NULL)
+      }
+    }
   }
+
   files_dir <- knitr_files_dir(rendered_html)
   add_resource_path(files_dir)
   add_resource_path(file.path(output_dir,"css"))
