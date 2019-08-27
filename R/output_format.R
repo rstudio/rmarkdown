@@ -373,8 +373,8 @@ smart_extension <- function(smart, extension) {
 #'   if the option isn't set explicitly in the document.
 #' @export
 default_output_format <- function(input,
-                                  output_yaml = NULL,
-                                  encoding = "UTF-8") {
+                                  encoding = "UTF-8",
+                                  output_yaml = NULL) {
 
   # execute within the input file's directory (this emulates the way
   # yaml front matter discovery is done within render)
@@ -459,8 +459,8 @@ resolve_output_format <- function(input,
 #' @return A character vector with the names of all output formats.
 #' @export
 all_output_formats <- function(input,
-                               output_yaml = NULL,
-                               encoding = "UTF-8") {
+                               encoding = "UTF-8",
+                               output_yaml = NULL) {
 
   enumerate_output_formats(
     input = input,
@@ -614,8 +614,8 @@ is_output_format <- function(x) {
 
 enumerate_output_formats <- function(input,
                                      envir,
-                                     output_yaml = NULL,
-                                     encoding) {
+                                     encoding,
+                                     output_yaml = NULL) {
 
   # read the input
   input_lines <- read_utf8(input, encoding)
