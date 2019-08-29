@@ -4,18 +4,18 @@
 \alias{all_output_formats}
 \title{Determine all output formats for an R Markdown document}
 \usage{
-all_output_formats(input, output_yaml = NULL, encoding = "UTF-8")
+all_output_formats(input, encoding = "UTF-8", output_yaml = NULL)
 }
 \arguments{
 \item{input}{Input file (Rmd or plain markdown)}
+
+\item{encoding}{The encoding of the input file; see \code{\link{file}}.}
 
 \item{output_yaml}{Paths to yaml files specifying output formats and their
 configurations. The first existing one is used. If none are found, then
 the function searches yaml files specified to the \code{output_yaml} variable
 in the YAML front matter, _output.yml or _output.yaml, and then uses the
 first existing one.}
-
-\item{encoding}{The encoding of the input file; see \code{\link{file}}.}
 }
 \value{
 A character vector with the names of all output formats.
