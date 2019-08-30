@@ -16,11 +16,11 @@ the default format for the input file).}
 \item{output_options}{List of output options that should override the
 options specified in metadata.}
 
-\item{output_yaml}{Paths to yaml files specifying output formats and their
+\item{output_yaml}{Paths to YAML files specifying output formats and their
 configurations. The first existing one is used. If none are found, then
-the function searches yaml files specified to the \code{output_yaml} variable
-in the YAML front matter, _output.yml or _output.yaml, and then uses the
-first existing one.}
+the function searches YAML files specified to the \code{output_yaml} top-level
+parameter in the YAML front matter, _output.yml or _output.yaml, and then uses
+the first existing one.}
 
 \item{encoding}{The encoding of the input file; see \code{\link{file}}.}
 }
@@ -29,7 +29,7 @@ An R Markdown output format definition that can be passed to
   \code{\link{render}}.
 }
 \description{
-Read the YAML metadata (and any common output yaml file) for the
+Read the YAML metadata (and any common output YAML file) for the
 document and return an output format object that can be
 passed to the \code{\link{render}} function.
 }
