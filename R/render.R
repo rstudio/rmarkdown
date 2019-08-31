@@ -152,6 +152,7 @@ NULL
 #' @seealso
 #' \link[knitr:knit]{knit}, \link{output_format},
 #' \href{http://johnmacfarlane.net/pandoc}{pandoc}
+#' @inheritParams default_output_format
 #' @param input The input file to be rendered. This can be an R script (.R),
 #' an R Markdown document (.Rmd), or a plain markdown document.
 #' @param output_format The R Markdown output format to convert to. The option
@@ -239,6 +240,7 @@ render <- function(input,
                    output_file = NULL,
                    output_dir = NULL,
                    output_options = NULL,
+                   output_yaml = NULL,
                    intermediates_dir = NULL,
                    knit_root_dir = NULL,
                    runtime =  c("auto", "static", "shiny", "shiny_prerendered"),
@@ -459,6 +461,7 @@ render <- function(input,
     output_format <- output_format_from_yaml_front_matter(input_lines,
                                                           output_options,
                                                           output_format,
+                                                          output_yaml,
                                                           encoding = encoding)
     output_format <- create_output_format(output_format$name,
                                           output_format$options)

@@ -5,9 +5,9 @@
 \title{Render R Markdown}
 \usage{
 render(input, output_format = NULL, output_file = NULL,
-  output_dir = NULL, output_options = NULL, intermediates_dir = NULL,
-  knit_root_dir = NULL, runtime = c("auto", "static", "shiny",
-  "shiny_prerendered"), clean = TRUE, params = NULL,
+  output_dir = NULL, output_options = NULL, output_yaml = NULL,
+  intermediates_dir = NULL, knit_root_dir = NULL, runtime = c("auto",
+  "static", "shiny", "shiny_prerendered"), clean = TRUE, params = NULL,
   knit_meta = NULL, envir = parent.frame(), run_pandoc = TRUE,
   quiet = FALSE, encoding = "UTF-8")
 }
@@ -46,6 +46,12 @@ specified in metadata (e.g. could be used to force \code{self_contained} or
 \code{mathjax = "local"}). Note that this is only valid when the output
 format is read from metadata (i.e. not a custom format object passed to
 \code{output_format}).}
+
+\item{output_yaml}{Paths to YAML files specifying output formats and their
+configurations. The first existing one is used. If none are found, then
+the function searches YAML files specified to the \code{output_yaml} top-level
+parameter in the YAML front matter, _output.yml or _output.yaml, and then uses
+the first existing one.}
 
 \item{intermediates_dir}{Intermediate files directory. If a path is specified
 then intermediate files will be written to that path. If \code{NULL},
