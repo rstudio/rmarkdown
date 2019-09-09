@@ -3,7 +3,7 @@ rmarkdown 1.16
 
 - Added `self_contained` argument to `html_vignette` to keep intermediate directory if `self_contained = FALSE` (thanks, @cderv, #1641)
 
-- It is now possible to add pagebreak in html, word, latex and odt documents using `\newpage` or `\pagebreak` command in a Rmd file. This is possible thanks to [_pandoc's pagebreak lua filter_](https://github.com/pandoc/lua-filters/tree/master/pagebreak). See `vignette("pagebreak", package = "rmarkdown")`
+- It is now possible to add pagebreak in html, word, latex and odt documents using `\newpage` or `\pagebreak` command in a Rmd file. This is possible thanks to [_pandoc's pagebreak lua filter_](https://github.com/pandoc/lua-filters/tree/master/pagebreak). See `vignette("pagebreak", package = "rmarkdown")` (thanks, @cderv, #1626)
 
 - Output formats can be configured by arbitrary YAML files, which used to be restricted to `_output.yml` or `_output.yaml`. They can be specified via the `output_yaml` argument of `render()` or the `output_yaml` top-level parameter of YAML front matter, and the first existing one will be used. If `output_yaml` is specified both for `render()` and YAML front matter, then `render()` has the priority. If none are found, then `_output.yml` or `_output.yaml` will be used if they exist (thanks, @atusy, #1634).
 
