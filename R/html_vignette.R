@@ -32,6 +32,7 @@ html_vignette <- function(fig_width = 3,
                           css = NULL,
                           keep_md = FALSE,
                           readme = FALSE,
+                          self_contained = TRUE,
                           ...) {
 
   if (is.null(css)) {
@@ -56,6 +57,7 @@ html_vignette <- function(fig_width = 3,
     df_print = df_print,
     pre_knit = pre_knit,
     keep_md = keep_md,
+    clean_supporting = self_contained,
     base_format = html_document(fig_width = fig_width,
                                 fig_height = fig_height,
                                 dev = dev,

@@ -6,7 +6,7 @@
 \usage{
 html_vignette(fig_width = 3, fig_height = 3, dev = "png",
   df_print = "default", css = NULL, keep_md = FALSE,
-  readme = FALSE, ...)
+  readme = FALSE, self_contained = TRUE, ...)
 }
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}
@@ -33,6 +33,12 @@ by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 \item{readme}{Use this vignette as the package README.md file (i.e. render
 it as README.md to the package root). Note that if there are image files
 within your vignette you should be sure to add README_files to .Rbuildignore}
+
+\item{self_contained}{Produce a standalone HTML file with no external
+dependencies, using data: URIs to incorporate the contents of linked
+scripts, stylesheets, images, and videos. Note that even for self contained
+documents MathJax is still loaded externally (this is necessary because of
+its size).}
 
 \item{...}{Additional arguments passed to \code{\link{html_document}}. Please
 note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
