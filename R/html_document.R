@@ -78,6 +78,8 @@
 #'  default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
 #'  additional details.
 #'@param pandoc_args Additional command line options to pass to pandoc
+#'@param include_base_dependencies Include the base dependencies added by
+#'rmarkdown (currently jquery, jqueryui, tocify, and navigation)
 #'@param extra_dependencies,... Additional function arguments to pass to the
 #'  base R Markdown HTML output formatter \code{\link{html_document_base}}
 #'@return R Markdown output format to pass to \code{\link{render}}
@@ -198,6 +200,7 @@ html_document <- function(toc = FALSE,
                           highlight = "default",
                           mathjax = "default",
                           template = "default",
+                          include_base_dependencies = TRUE,
                           extra_dependencies = NULL,
                           css = NULL,
                           includes = NULL,
@@ -324,6 +327,10 @@ html_document <- function(toc = FALSE,
                                  list(html_dependency_pagedtable()))
   }
 
+  if (!include_base_dependencies){
+    extra_dependencies <- list()
+  }
+
   # pre-processor for arguments that may depend on the name of the
   # the input file AND which need to inject html dependencies
   # (otherwise we could just call the pre_processor)
@@ -445,6 +452,7 @@ html_document <- function(toc = FALSE,
                                      lib_dir = lib_dir, mathjax = mathjax,
                                      template = template,
                                      pandoc_args = pandoc_args,
+                                     include_base_dependencies = include_base_dependencies,
                                      extra_dependencies = extra_dependencies,
                                      ...)
   )

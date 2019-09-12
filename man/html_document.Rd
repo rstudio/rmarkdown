@@ -10,9 +10,10 @@ html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
   df_print = "default", code_folding = c("none", "show", "hide"),
   code_download = FALSE, smart = TRUE, self_contained = TRUE,
   theme = "default", highlight = "default", mathjax = "default",
-  template = "default", extra_dependencies = NULL, css = NULL,
-  includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  md_extensions = NULL, pandoc_args = NULL, ...)
+  template = "default", include_base_dependencies = TRUE,
+  extra_dependencies = NULL, css = NULL, includes = NULL,
+  keep_md = FALSE, lib_dir = NULL, md_extensions = NULL,
+  pandoc_args = NULL, ...)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -95,6 +96,9 @@ built-in template; pass a path to use a custom template that you've created.
 Note that if you don't use the "default" template then some features of
 \code{html_document} won't be available (see the Templates section below for
 more details).}
+
+\item{include_base_dependencies}{Include the base dependencies added by
+rmarkdown (currently jquery, jqueryui, tocify, and navigation)}
 
 \item{extra_dependencies, ...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}

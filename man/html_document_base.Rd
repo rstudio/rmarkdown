@@ -7,8 +7,8 @@
 html_document_base(smart = TRUE, theme = NULL, self_contained = TRUE,
   lib_dir = NULL, mathjax = "default", pandoc_args = NULL,
   template = "default", dependency_resolver = NULL,
-  copy_resources = FALSE, extra_dependencies = NULL,
-  bootstrap_compatible = FALSE, ...)
+  copy_resources = FALSE, include_base_dependencies = TRUE,
+  extra_dependencies = NULL, bootstrap_compatible = FALSE, ...)
 }
 \arguments{
 \item{smart}{Produce typographically correct output, converting straight
@@ -47,6 +47,9 @@ more details).}
 \item{dependency_resolver}{A dependency resolver}
 
 \item{copy_resources}{Copy resources}
+
+\item{include_base_dependencies}{Include the base dependencies added by
+rmarkdown (currently jquery, jqueryui, tocify, and navigation)}
 
 \item{extra_dependencies}{Extra dependencies}
 
