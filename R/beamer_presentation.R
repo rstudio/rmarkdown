@@ -16,7 +16,6 @@
 #' the markdown syntax for citations in the
 #' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
-#' @inheritParams output_format
 #' @inheritParams pdf_document
 #' @inheritParams html_document
 #' @param toc \code{TRUE} to include a table of contents in the output (only
