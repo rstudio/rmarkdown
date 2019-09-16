@@ -64,6 +64,7 @@ beamer_presentation <- function(toc = FALSE,
                                 highlight = "default",
                                 template = "default",
                                 keep_tex = FALSE,
+                                keep_md = FALSE,
                                 latex_engine = "pdflatex",
                                 citation_package = c("none", "natbib", "biblatex"),
                                 self_contained = TRUE,
@@ -154,6 +155,7 @@ beamer_presentation <- function(toc = FALSE,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     clean_supporting = !keep_tex,
+    keep_md = keep_md,
     df_print = df_print
   )
 }
