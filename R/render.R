@@ -774,7 +774,7 @@ render <- function(input,
              "of this document to HTML. Alternatively, you can allow\n",
              "HTML output in non-HTML formats by adding this option to the YAML front",
              "-matter of\nyour rmarkdown file:\n\n",
-             "  always_allow_html: yes\n\n",
+             "  always_allow_html: true\n\n",
              "Note however that the HTML output will not be visible in non-HTML formats.\n\n",
              call. = FALSE)
       }
