@@ -1,8 +1,8 @@
 ---
-title: "Add a pagebreak in Rmarkdown document"
+title: "Lua filters in R Markdown"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{pagebreak}
+  %\VignetteIndexEntry{lua-filters}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Usage
+## Pagebreaks
 
 Adding a pagebreak in document was always possible using custom output specific syntax in a rmarkdown file but one drawback was the compatibility with several output format.
 
