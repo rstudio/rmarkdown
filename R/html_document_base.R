@@ -113,7 +113,7 @@ html_document_base <- function(smart = TRUE,
       args <- c(args, "--metadata", paste0("pagetitle=", input_file))
 
     # a lua filters added if pandoc2.0
-    args <- c(args, pandoc_lua_filters("pagebreak.lua"))
+    args <- c(args, pandoc_lua_filters(c("pagebreak.lua", "latex-div.lua")))
 
     args
   }
