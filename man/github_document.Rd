@@ -7,7 +7,7 @@
 github_document(toc = FALSE, toc_depth = 3, fig_width = 7,
   fig_height = 5, dev = "png", df_print = "default",
   includes = NULL, md_extensions = NULL, hard_line_breaks = TRUE,
-  pandoc_args = NULL, html_preview = TRUE)
+  pandoc_args = NULL, html_preview = TRUE, keep_html = FALSE)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -45,6 +45,9 @@ newline to represent a line break (as opposed to two-spaces and a newline).}
 
 \item{html_preview}{\code{TRUE} to also generate an HTML file for the purpose of
 locally previewing what the document will look like on GitHub.}
+
+\item{keep_html}{\code{TRUE} to keep the preview HTML file in the working
+directory. Default is \code{FALSE}.}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}
