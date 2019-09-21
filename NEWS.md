@@ -9,6 +9,7 @@ rmarkdown 1.16
 
 - Added a Pandoc lua filter to convert fenced Divs to LaTeX environments when the output format is `latex` or `beamer`. Basically a fenced Div `::: {.NAME data-latex="[OPTIONS]"}` is converted to `\begin{NAME}[OPTIONS] \end{NAME}` in LaTeX. The attribute `data-latex` must be provided, even if it is an empty string (meaning that the LaTeX environment does not have any optional arguments). For example, `::: {.verbatim data-latex=""}` generates a `verbatim` environment, and `::: {.minipage data-latex="{.5\textwidth}"}` generates `\begin{minipage}{.5\textwidth}`. This lua filter was originally written by @RLesur at https://github.com/yihui/bookdown-crc/issues/1. It will allow users to create custom blocks that work for both HTML and LaTeX output (e.g., info boxes or warning boxes).
 
+- Added `keep_html` argument to `github_document` so to save a preview HTML file in a working directory (thanks, @atusy, #1650).
 
 rmarkdown 1.15
 ================================================================================
