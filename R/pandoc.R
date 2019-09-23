@@ -656,9 +656,9 @@ detect_generic_lang <- function() {
 
 # get the path to the pandoc binary
 pandoc <- function() {
-
   find_pandoc()
-  file.path(.pandoc$dir, "pandoc")
+  bin <- xfun::with_ext("pandoc", if (xfun::is_windows()) "exe")
+  file.path(.pandoc$dir, bin)
 }
 
 
