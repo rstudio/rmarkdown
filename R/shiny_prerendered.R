@@ -102,8 +102,9 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
     if (dir_exists(path)) {
       shiny::addResourcePath(prefix, path)
       # Remove resource paths so they don't clash with 'down-stream' resources
-      removeResourcePath <- getFromNamespace("removeResourcePath", "shiny")
-      if (temporary && is.function(removeResourcePath)) {
+      removeResourcePath <- if (temporary)
+        try(getFromNamespace("removeResourcePath", "shiny"), silent = TRUE)
+      if (is.function(removeResourcePath)) {
         shiny::onStop(function() { removeResourcePath(prefix) }, NULL)
       }
     }
