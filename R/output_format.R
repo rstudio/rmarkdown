@@ -310,7 +310,6 @@ pandoc_options <- function(to,
 #'
 #' \tabular{l}{
 #' \code{+autolink_bare_uris} \cr
-#' \code{+ascii_identifier} \cr
 #' \code{+tex_math_single_backslash} \cr
 #' }
 #'
@@ -338,7 +337,6 @@ rmarkdown_format <- function(extensions = NULL) {
   }
 
   addExtension("autolink_bare_uris")
-  addExtension("ascii_identifiers")
   addExtension("tex_math_single_backslash")
 
   format <- c(format, extensions, recursive = TRUE)
