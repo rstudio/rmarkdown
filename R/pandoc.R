@@ -665,8 +665,8 @@ pandoc <- function() {
 # get the path to the pandoc-citeproc binary
 pandoc_citeproc <- function() {
   find_pandoc()
-  bin = xfun::with_ext("pandoc-citeproc", if (xfun::is_windows()) "exe")
-  citeproc_path = file.path(.pandoc$dir, bin)
+  bin <- xfun::with_ext("pandoc-citeproc", if (xfun::is_windows()) "exe")
+  citeproc_path <- file.path(.pandoc$dir, bin)
   if (file.exists(citeproc_path))
     citeproc_path
   else
