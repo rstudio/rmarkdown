@@ -383,7 +383,7 @@ shinyHTML_with_deps <- function(html_file, deps) {
 # given an input file and its encoding, return a list with values indicating
 # whether the input file's Shiny document can be cached and, if so, its cached
 # representation if available
-#' @importFrom utils head
+#' @import utils
 rmd_cached_output <- function(input, encoding) {
   # init return values
   cacheable <- FALSE
