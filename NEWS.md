@@ -1,7 +1,7 @@
 rmarkdown 1.16
 ================================================================================
 
-- Pandoc and Pandoc citeproc binaries are now found correctly on Windows. This fixes an issue with `pandoc_citeproc_convert()` (thanks @cderv, #1651).
+- The `pandoc-citeproc` binary can now be found correctly on Windows. This fixes an issue with `pandoc_citeproc_convert()` (thanks @cderv, #1651).
 
 - Added `self_contained` argument to `html_vignette` to keep intermediate directory if `self_contained = FALSE` (thanks, @cderv, #1641).
 
