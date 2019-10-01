@@ -156,4 +156,4 @@ output:
 
 The package [rmdfiltr](https://github.com/crsh/rmdfiltr) provides a collection of lua filters and helpers functions to use them.
 
-Before pandoc 2.0, [using filter](https://pandoc.org/filters.html) with pandoc was already available through programs that modifies the AST. `pandoc-citeproc` is an example used to deal with citations. The package [pandocfilter](https://cran.r-project.org/web/packages/pandocfilters/) is useful to create filters using R.
+Before pandoc 2.0, [using filter](https://pandoc.org/filters.html) with pandoc was already available through programs that modifies the AST. `pandoc-citeproc` is an example used to deal with citations. The package [pandocfilter](https://cran.r-project.org/package=pandocfilters) is useful to create filters using R.
