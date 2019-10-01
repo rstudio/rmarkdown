@@ -657,20 +657,17 @@ detect_generic_lang <- function() {
 # get the path to the pandoc binary
 pandoc <- function() {
   find_pandoc()
-  bin <- xfun::with_ext("pandoc", if (xfun::is_windows()) "exe")
-  file.path(.pandoc$dir, bin)
+  file.path(.pandoc$dir, "pandoc")
 }
 
 
 # get the path to the pandoc-citeproc binary
 pandoc_citeproc <- function() {
   find_pandoc()
-  bin <- xfun::with_ext("pandoc-citeproc", if (xfun::is_windows()) "exe")
-  citeproc_path <- file.path(.pandoc$dir, bin)
-  if (file.exists(citeproc_path))
-    citeproc_path
-  else
-    bin
+  bin <- "pandoc-citeproc"
+  p <- file.path(.pandoc$dir, bin)
+  if (xfun::is_windows()) p <- xfun::with_ext(p, "exe")
+  if (file.exists(p)) p else bin
 }
 
 pandoc_lua_filters <- function(...) {
