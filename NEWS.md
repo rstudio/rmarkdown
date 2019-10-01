@@ -15,6 +15,7 @@ rmarkdown 1.16
 
 - Added `keep_html` argument to `github_document` so to save a preview HTML file in a working directory (thanks, @atusy, #1650).
 
+
 rmarkdown 1.15
 ================================================================================
 
