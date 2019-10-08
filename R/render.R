@@ -793,9 +793,14 @@ render <- function(input,
   if (output_format$clean_supporting && !dir_exists(cache_dir)) {
     # unlink does not support / at the end of file path
     fig_path <- gsub("/$", "", knitr::opts_chunk$get('fig.path'))
+
+    # existing figure folder(s), can be character(0)
+    # if no figure is generated, clean the whole files_dir (#1664)
+    files_dir_fig <- list.files(files_dir, '^figure-.+')
+
     intermediates <- c(
       intermediates,
-      if (identical(list.files(files_dir, '^figure-.+'), basename(fig_path))) {
+      if (length(files_dir_fig) < 1 || identical(files_dir_fig, basename(fig_path))) {
         files_dir
       } else {
         fig_path

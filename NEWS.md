@@ -1,6 +1,7 @@
 rmarkdown 1.17
 ================================================================================
 
+- `render(..., clean = TRUE)` may fail to clean the `*_files` directory when the output format is `prettydoc::html_pretty` (thanks, @yixuan, #1664).
 
 rmarkdown 1.16
 ================================================================================
