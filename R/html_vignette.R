@@ -65,6 +65,7 @@ html_vignette <- function(fig_width = 3,
                                 css = css,
                                 theme = NULL,
                                 highlight = "pygments",
+                                self_contained = self_contained,
                                 ...)
   )
 }
