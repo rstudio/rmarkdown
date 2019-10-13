@@ -1,6 +1,10 @@
 rmarkdown 1.17
 ================================================================================
 
+- `html_vignette()` passes `self_contained` argument value to base format (thanks, @cderv, #1668).
+
+- `find_external_resources()` works for the `html_vignette` type again, this fixes rendering vignettes with external resources in pkgdown (regression introduced in rmarkdown 1.16, #1668).
+
 - `render(..., clean = TRUE)` may fail to clean the `*_files` directory when the output format is `prettydoc::html_pretty` (thanks, @yixuan, #1664).
 
 rmarkdown 1.16
