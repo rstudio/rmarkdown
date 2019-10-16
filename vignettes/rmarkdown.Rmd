@@ -2,7 +2,7 @@
 title: "Learn R Markdown"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{rmarkdown}
+  %\VignetteIndexEntry{Learn R Markdown}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

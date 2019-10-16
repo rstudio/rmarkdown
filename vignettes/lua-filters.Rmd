@@ -2,7 +2,7 @@
 title: "Lua filters in R Markdown"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{lua-filters}
+  %\VignetteIndexEntry{Lua filters in R Markdown}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

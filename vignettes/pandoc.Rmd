@@ -2,7 +2,7 @@
 title: "Install Pandoc"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{pandoc}
+  %\VignetteIndexEntry{Install Pandoc}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
