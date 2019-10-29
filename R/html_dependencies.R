@@ -51,10 +51,8 @@ html_dependency_bootstrap <- function(theme) {
     src = rmarkdown_system_file(file = "rmd/h/bootstrap"),
     meta = list(viewport = "width=device-width, initial-scale=1"),
     script = c(
-      "js/bootstrap.min.js",
-      # These shims are necessary for IE 8 compatibility
-      "shim/html5shiv.min.js",
-      "shim/respond.min.js"),
+      "js/bootstrap.min.js"
+    ),
     stylesheet = paste0("css/", theme, ".min.css"))
 }
 

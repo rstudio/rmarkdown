@@ -1,6 +1,8 @@
 rmarkdown 1.17
 ================================================================================
 
+- Upgraded Bootstrap v3.3.5 to v4.3.1 for HTML output formats. The support for IE 8 has been dropped.
+
 - `html_vignette()` passes `self_contained` argument value to base format (thanks, @cderv, #1668).
 
 - `find_external_resources()` works for the `html_vignette` type again, this fixes rendering vignettes with external resources in pkgdown (regression introduced in rmarkdown 1.16, #1668).
