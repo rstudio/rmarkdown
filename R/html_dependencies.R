@@ -47,7 +47,7 @@ html_dependency_bootstrap <- function(theme) {
 
   htmlDependency(
     name = "bootstrap",
-    version = "3.3.5",
+    version = "4.3.1",
     src = rmarkdown_system_file(file = "rmd/h/bootstrap"),
     meta = list(viewport = "width=device-width, initial-scale=1"),
     script = c(
