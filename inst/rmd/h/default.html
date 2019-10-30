@@ -30,13 +30,6 @@ $endfor$
 
 $if(highlightjs)$
 <style type="text/css">code{white-space: pre;}</style>
-$if(theme)$
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
-$endif$
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -86,13 +79,6 @@ $endif$
   }
 })();
 </script>
-$if(theme)$
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
-$endif$
 $endif$
 
 $if(abstract)$

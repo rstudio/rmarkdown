@@ -1,0 +1,12 @@
+pre {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: .5rem;
+}
+pre:not([class]) {
+  background-color: white;
+}
+pre code {
+  background-color: transparent;
+}

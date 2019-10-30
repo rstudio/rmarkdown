@@ -53,7 +53,8 @@ html_dependency_bootstrap <- function(theme) {
     script = c(
       "js/bootstrap.min.js"
     ),
-    stylesheet = paste0("css/", theme, ".min.css"))
+    stylesheet = c(paste0("css/", theme, ".min.css"), "css/bootstrap.extra.css")
+  )
 }
 
 # Create an HTML dependency for tocify
