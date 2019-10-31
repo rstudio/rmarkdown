@@ -126,7 +126,7 @@ window.buildTabsets = function(tocID) {
     var active = $(tabContent.children('div.section')[activeTab]);
     active.addClass('active');
     if (fade)
-      active.addClass('in');
+      active.addClass('show');
 
     if (tabset.hasClass("tabset-sticky"))
       tabset.rmarkdownStickyTabs();
