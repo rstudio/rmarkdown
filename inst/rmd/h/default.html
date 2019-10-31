@@ -437,8 +437,8 @@ $if(theme)$
 $if(toc_float)$
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
 <div class="col-xs-12 col-sm-4 col-md-3">
+<div class="row">
 <div id="$idprefix$TOC" class="tocify">
 </div>
 </div>
@@ -454,7 +454,7 @@ $include-before$
 $endfor$
 
 $if(theme)$
-<div class="fluid-row" id="$idprefix$header">
+<div id="$idprefix$header">
 
 $if(code_menu)$
 <div class="btn-group pull-right">
