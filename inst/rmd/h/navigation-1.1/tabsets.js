@@ -106,6 +106,7 @@ window.buildTabsets = function(tocID) {
       var a = $('<a class="nav-link" role="tab" data-toggle="tab">' + headingText + '</a>');
       a.attr('href', '#' + id);
       a.attr('aria-controls', id);
+      if (activeTab === i) a.addClass('active');
       var li = $('<li class="nav-item" role="presentation"></li>');
       li.append(a);
       tabList.append(li);
@@ -122,7 +123,6 @@ window.buildTabsets = function(tocID) {
     });
 
     // set active tab
-    $(tabList.children('li')[activeTab]).addClass('active');
     var active = $(tabContent.children('div.section')[activeTab]);
     active.addClass('active');
     if (fade)
