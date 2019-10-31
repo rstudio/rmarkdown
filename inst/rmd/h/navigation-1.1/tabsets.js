@@ -103,10 +103,10 @@ window.buildTabsets = function(tocID) {
       heading.remove();
 
       // build and append the tab list item
-      var a = $('<a role="tab" data-toggle="tab">' + headingText + '</a>');
+      var a = $('<a class="nav-link" role="tab" data-toggle="tab">' + headingText + '</a>');
       a.attr('href', '#' + id);
       a.attr('aria-controls', id);
-      var li = $('<li role="presentation"></li>');
+      var li = $('<li class="nav-item" role="presentation"></li>');
       li.append(a);
       tabList.append(li);
 
