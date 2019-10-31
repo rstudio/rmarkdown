@@ -41,9 +41,10 @@ html_dependency_jqueryui <- function() {
 #' @export
 html_dependency_bootstrap <- function(theme) {
 
-  if (identical(theme, "default")) {
-    theme <- "bootstrap"
-  }
+  # Bootswatch renamed a few themes when upgrading to Bootstrap 4
+  theme <- switch(
+    theme, default = "bootstrap", paper = "materia", readable = "litera", theme
+  )
 
   htmlDependency(
     name = "bootstrap",
