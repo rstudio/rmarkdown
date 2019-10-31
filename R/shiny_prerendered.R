@@ -230,7 +230,7 @@ shiny_prerendered_prerender <- function(
   # check for execution package version differences
   execution_json <- shiny_prerendered_extract_context(html_lines, "execution_dependencies")
   execution_info <- jsonlite::unserializeJSON(execution_json)
-  execution_pkg_names <- execution_info$packages$package
+  execution_pkg_names <- execution_info$packages$packages
   execution_pkg_versions <- execution_info$packages$version
   for (i in seq_along(execution_pkg_names)) {
     if (!identical(
