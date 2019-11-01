@@ -1,7 +1,7 @@
 rmarkdown 1.17
 ================================================================================
 
-- Upgraded Bootstrap v3.3.5 to v4.3.1 for HTML output formats. The support for IE 8 has been dropped.
+- Upgraded Bootstrap v3.3.5 to v4.3.1 for HTML output formats (#1260). The support for IE 8 has been dropped. Added these new Bootstrap themes from Bootswatch.com: `cyborg`, `litera`, `lux`, `materia`, `minty`, `pulse`, `sketchy`, `slate`, `solar`, and `superhero`.
 
 - `html_vignette()` passes `self_contained` argument value to base format (thanks, @cderv, #1668).
 

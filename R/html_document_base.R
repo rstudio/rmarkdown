@@ -74,9 +74,8 @@ html_document_base <- function(smart = TRUE,
 
     # handle theme
     if (!is.null(theme)) {
+      if (theme == "default") theme <- "bootstrap"
       theme <- match.arg(theme, themes())
-      if (identical(theme, "default"))
-        theme <- "bootstrap"
       args <- c(args, "--variable", paste0("theme:", theme))
     }
 

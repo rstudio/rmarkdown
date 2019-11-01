@@ -480,20 +480,9 @@ knitr_options_html <- function(fig_width,
 }
 
 themes <- function() {
-  c("default",
-    "cerulean",
-    "journal",
-    "flatly",
-    "darkly",
-    "readable",
-    "spacelab",
-    "united",
-    "cosmo",
-    "lumen",
-    "paper",
-    "sandstone",
-    "simplex",
-    "yeti")
+  r <- '[.]min[.]css$'
+  x <- list.files(rmarkdown_system_file('rmd/h/bootstrap/css'), r)
+  gsub(r, '', x)
 }
 
 html_highlighters <- function() {
