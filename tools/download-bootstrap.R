@@ -2,15 +2,10 @@ owd <- setwd('inst/rmd/h/bootstrap/css/')
 unlink('*.min.css')
 
 local({
-  r <- '^\\s*<a class="dropdown-item" href="[.]/([^/]+)/">.+</a>\\s*$'
-  txt <- readLines('https://bootswatch.com')
-  themes <- setdiff(gsub(r, '\\1', grep(r, txt, value = TRUE)), 'default')
-  for (thm in themes) {
-    xfun::download_file(
-      sprintf('https://bootswatch.com/4/%s/bootstrap.min.css', thm),
-      paste0(thm, '.min.css')
-    )
-  }
+  themes <- jsonlite::fromJSON('https://bootswatch.com/api/4.json')$themes
+  for (i in seq_len(nrow(themes))) xfun::download_file(
+    themes[i, 'cssMin'], paste0(tolower(themes[i, 'name']), '.min.css')
+  )
 })
 
 cdn <- function(...) paste(
