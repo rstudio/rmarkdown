@@ -574,20 +574,15 @@ navbar_links_html <- function(links) {
 navbar_links_tags <- function(links, depth = 0L) {
   if (is.null(links)) return(tagList())
   tags <- lapply(links, function(x) {
+    # sub-menu
+    link_class <- if (is_submenu <- depth > 0) "dropdown-item" else "nav-link"
     if (!is.null(x$menu)) {
-      # sub-menu
-      is_submenu <- depth > 0L
-      if (is_submenu) {
-        menu_class <- "dropdown-submenu"
-        link_text <- navbar_link_text(x)
-      } else {
-        menu_class <- "dropdown"
-        link_text <- navbar_link_text(x, " ", tags$span(class = "caret"))
-      }
+      link_text <- navbar_link_text(x)
+      menu_class <- if (is_submenu) "dropdown-submenu" else "dropdown"
       submenuLinks <- navbar_links_tags(x$menu, depth = depth + 1L)
-      tags$li(class = menu_class,
+      tags$li(class = paste("nav-item", menu_class),
               tags$a(
-                href = "#", class = "dropdown-toggle",
+                href = "#", class = paste(link_class, "dropdown-toggle"),
                 `data-toggle` = "dropdown", role = "button",
                 `aria-expanded` = "false", link_text),
               tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
@@ -601,7 +596,8 @@ navbar_links_tags <- function(links, depth = 0L) {
     } else {
       # standard menu item
       textTags <- navbar_link_text(x)
-      tags$li(tags$a(href = x$href, textTags))
+      link <- tags$a(class = link_class, href = x$href, textTags)
+      if (is_submenu) link else tags$li(class = "nav-item", link)
     }
   })
   tagList(tags)
