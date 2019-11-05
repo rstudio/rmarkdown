@@ -548,7 +548,10 @@ navbar_html <- function(navbar) {
 
   # title and type
   if (is.null(navbar$title)) navbar$title <- ""
-  if (is.null(navbar$type)) navbar$type <- "default"
+  if (is.null(navbar$type)) navbar$type <- "light"
+  navbar$type <- switch(
+    navbar$type, default = "light", inverse = "dark", navbar$type
+  )
 
   # menu entries
   left <- navbar_links_html(navbar$left)
