@@ -571,71 +571,45 @@ navbar_links_html <- function(links) {
 }
 
 navbar_links_tags <- function(links, depth = 0L) {
-
-  if (!is.null(links)) {
-
-    tags <- lapply(links, function(x) {
-
-      if (!is.null(x$menu)) {
-
-        # sub-menu
-        is_submenu <- depth > 0L
-
-        if (is_submenu) {
-          menu_class <- "dropdown-submenu"
-          link_text <- navbar_link_text(x)
-        } else {
-          menu_class <- "dropdown"
-          link_text <- navbar_link_text(x, " ", tags$span(class = "caret"))
-        }
-
-        submenuLinks <- navbar_links_tags(x$menu, depth = depth + 1L)
-
-        tags$li(class = menu_class,
-                tags$a(
-                  href = "#", class = "dropdown-toggle",
-                  `data-toggle` = "dropdown", role = "button",
-                  `aria-expanded` = "false", link_text),
-                tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
-        )
-
-      } else if (!is.null(x$text) && grepl("^\\s*-{3,}\\s*$", x$text)) {
-
-        # divider
-        tags$li(class = "divider")
-
-      } else if (!is.null(x$text) && is.null(x$href)) {
-
-        # header
-        tags$li(class = "dropdown-header", x$text)
-
+  if (is.null(links)) return(tagList())
+  tags <- lapply(links, function(x) {
+    if (!is.null(x$menu)) {
+      # sub-menu
+      is_submenu <- depth > 0L
+      if (is_submenu) {
+        menu_class <- "dropdown-submenu"
+        link_text <- navbar_link_text(x)
       } else {
-
-        # standard menu item
-        textTags <- navbar_link_text(x)
-        tags$li(tags$a(href = x$href, textTags))
+        menu_class <- "dropdown"
+        link_text <- navbar_link_text(x, " ", tags$span(class = "caret"))
       }
-    })
-    tagList(tags)
-  } else {
-    tagList()
-  }
+      submenuLinks <- navbar_links_tags(x$menu, depth = depth + 1L)
+      tags$li(class = menu_class,
+              tags$a(
+                href = "#", class = "dropdown-toggle",
+                `data-toggle` = "dropdown", role = "button",
+                `aria-expanded` = "false", link_text),
+              tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
+      )
+    } else if (!is.null(x$text) && grepl("^\\s*-{3,}\\s*$", x$text)) {
+      # divider
+      tags$li(class = "divider")
+    } else if (!is.null(x$text) && is.null(x$href)) {
+      # header
+      tags$li(class = "dropdown-header", x$text)
+    } else {
+      # standard menu item
+      textTags <- navbar_link_text(x)
+      tags$li(tags$a(href = x$href, textTags))
+    }
+  })
+  tagList(tags)
 }
 
 navbar_link_text <- function(x, ...) {
-
-  if (!is.null(x$icon)) {
-    # find the iconset
-    split <- strsplit(x$icon, "-")
-    if (length(split[[1]]) > 1)
-      iconset <- split[[1]][[1]]
-    else
-      iconset <- ""
-    tagList(tags$span(class = paste(iconset, x$icon)), " ", x$text, ...)
-  }
-  else
-    tagList(x$text, ...)
+  if (is.null(x$icon)) return(tagList(x$text, ...))
+  # find the iconset
+  split <- strsplit(x$icon, "-")[[1]]
+  iconset <- if (length(split) > 1) split[[1]] else ""
+  tagList(tags$span(class = paste(iconset, x$icon)), " ", x$text, ...)
 }
-
-
-
