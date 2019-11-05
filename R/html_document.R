@@ -548,10 +548,11 @@ navbar_html <- function(navbar) {
 
   # title and type
   if (is.null(navbar$title)) navbar$title <- ""
-  if (is.null(navbar$type)) navbar$type <- "light"
-  navbar$type <- switch(
-    navbar$type, default = "light", inverse = "dark", navbar$type
+  if (length(navbar$type) == 0) navbar$type <- "light"
+  navbar$type[1] <- switch(
+    navbar$type[1], default = "light", inverse = "dark", navbar$type[1]
   )
+  navbar$type <- rep(navbar$type, length.out = 2)
 
   # menu entries
   left <- navbar_links_html(navbar$left)
@@ -559,7 +560,7 @@ navbar_html <- function(navbar) {
 
   # build the navigation bar and return it as a temp file
   template <- file_string(rmarkdown_system_file("rmd/h/_navbar.html"))
-  navbar_html <- sprintf(template, navbar$type, navbar$title, left, right)
+  navbar_html <- sprintf(template, navbar$type[1], navbar$type[2], navbar$title, left, right)
   as_tmpfile(navbar_html)
 }
 
