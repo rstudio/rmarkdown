@@ -165,7 +165,7 @@ right:
  of a bootstrap navigation bar. For a simple example of including a navigation bar see
  \url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
   For additional documentation on creating Bootstrap navigation bars see
- \url{http://getbootstrap.com/components/#navbar}.
+ \url{https://getbootstrap.com/docs/4.3/components/navbar/}.
 }
 
 \section{Floating Table of Contents}{
