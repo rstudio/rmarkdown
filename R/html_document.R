@@ -593,7 +593,7 @@ navbar_links_tags <- function(links, depth = 0L) {
       )
     } else if (!is.null(x$text) && grepl("^\\s*-{3,}\\s*$", x$text)) {
       # divider
-      tags$li(class = "divider")
+      tags$div(class = "dropdown-divider")
     } else if (!is.null(x$text) && is.null(x$href)) {
       # header
       tags$li(class = "dropdown-header", x$text)
