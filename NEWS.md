@@ -7,6 +7,8 @@ rmarkdown 1.17
 
 - `render(..., clean = TRUE)` may fail to clean the `*_files` directory when the output format is `prettydoc::html_pretty` (thanks, @yixuan, #1664).
 
+- For `ioslides_presentation`, images with atributes (e.g., `![](sample.png){width=80%}`) can be correctly embedded in the self-contained mode now (thanks, @hadley, #1687).
+
 rmarkdown 1.16
 ================================================================================
 

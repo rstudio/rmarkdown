@@ -25,7 +25,7 @@ process_html_res <- function(html, reg, processor) {
 process_images <- function(html, processor) {
   process_html_res(
     html,
-    "<\\s*[Ii][Mm][Gg]\\s+[Ss][Rr][Cc]\\s*=\\s*[\"']([^\"']+)[\"']",
+    "<\\s*[Ii][Mm][Gg]\\s+.*?[Ss][Rr][Cc]\\s*=\\s*[\"']([^\"']+)[\"']",
     processor)
 }
 
