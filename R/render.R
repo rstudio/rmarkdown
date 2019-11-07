@@ -483,7 +483,7 @@ render <- function(input,
 
   # Stop the render process early if the output directory does not exist
   if (!dir_exists(output_dir)) {
-    stop("The directory '", output_dir, "') does not not exist.",
+    stop("The directory '", output_dir, "' does not not exist.",
          call. = FALSE)
   }
 
