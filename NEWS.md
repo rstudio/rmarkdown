@@ -9,6 +9,9 @@ rmarkdown 1.17
 
 - For `ioslides_presentation`, images with atributes (e.g., `![](sample.png){width=80%}`) can be correctly embedded in the self-contained mode now (thanks, @hadley, #1687).
 
+- Fixed the Pandoc LaTeX templates to avoid the error `File `grffile.sty' not found`. This is because the LaTeX **grffile** is no longer available in TeX Live (thanks, @cderv #1691, @smmurphy #1692, @JacobD05 https://github.com/yihui/tinytex/issues/152).
+
+
 rmarkdown 1.16
 ================================================================================
 
