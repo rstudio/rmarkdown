@@ -114,6 +114,9 @@ pdf_document <- function(toc = FALSE,
     pandoc_available(error = TRUE)
     # choose the right template
     version <- pandoc_version()
+    if (latex_engine == "xelatex")
+      latex_template <- "default.tex"
+    else
     if (version >= "1.17.0.2")
       latex_template <- "default-1.17.0.2.tex"
     else if (version >= "1.15.2")
