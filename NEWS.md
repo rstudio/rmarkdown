@@ -3,6 +3,8 @@ rmarkdown 1.18
 
 - `find_external_resources()` works now when multiple files are specified in the `includes` option of the output format (thanks, @andrie, #1677).
 
+- `find_external_resources()` can find external resources specified in the output format's `reference_doc` or `reference_docx` option now (thanks, @jmcphers, #1696).
+
 
 rmarkdown 1.17
 ================================================================================
