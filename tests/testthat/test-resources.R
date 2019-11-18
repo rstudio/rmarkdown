@@ -212,3 +212,16 @@ test_that("resources are discovered in notebook files", {
   expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
   expect_equal(resources, expected)
 })
+
+test_that("multiple resources in the includes option can be discovered", {
+  skip_on_cran()
+
+  resources <- find_external_resources("resources/multi-includes.Rmd")
+  expected <- data.frame(
+    path = c("dep1.html", "dep2.html"),
+    explicit = FALSE,
+    web      = FALSE,
+    stringsAsFactors = FALSE)
+
+  expect_equal(resources, expected)
+})
