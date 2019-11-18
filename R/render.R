@@ -90,7 +90,7 @@ metadata <- list()
 #'
 #'   For more details on \code{knitr::spin} see the following documentation:
 #'
-#'   \url{http://yihui.name/knitr/demo/stitch/}
+#'   \url{http://yihui.org/knitr/demo/stitch/}
 #' @name compile_notebook
 NULL
 
