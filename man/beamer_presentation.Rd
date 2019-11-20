@@ -4,15 +4,31 @@
 \alias{beamer_presentation}
 \title{Convert to a Beamer presentation}
 \usage{
-beamer_presentation(toc = FALSE, slide_level = NULL,
-  incremental = FALSE, fig_width = 10, fig_height = 7,
-  fig_crop = TRUE, fig_caption = TRUE, dev = "pdf",
-  df_print = "default", theme = "default", colortheme = "default",
-  fonttheme = "default", highlight = "default", template = "default",
-  keep_tex = FALSE, keep_md = FALSE, latex_engine = "pdflatex",
+beamer_presentation(
+  toc = FALSE,
+  slide_level = NULL,
+  number_sections = FALSE,
+  incremental = FALSE,
+  fig_width = 10,
+  fig_height = 7,
+  fig_crop = TRUE,
+  fig_caption = TRUE,
+  dev = "pdf",
+  df_print = "default",
+  theme = "default",
+  colortheme = "default",
+  fonttheme = "default",
+  highlight = "default",
+  template = "default",
+  keep_tex = FALSE,
+  keep_md = FALSE,
+  latex_engine = "pdflatex",
   citation_package = c("none", "natbib", "biblatex"),
-  self_contained = TRUE, includes = NULL, md_extensions = NULL,
-  pandoc_args = NULL)
+  self_contained = TRUE,
+  includes = NULL,
+  md_extensions = NULL,
+  pandoc_args = NULL
+)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output (only
@@ -23,6 +39,8 @@ default this is the highest header level in the hierarchy that is followed
 immediately by content, and not another header, somewhere in the document.
 This default can be overridden by specifying an explicit
 \code{slide_level}.}
+
+\item{number_sections}{\code{TRUE} to number section headings}
 
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note
 that if you want to reverse the default incremental behavior for an

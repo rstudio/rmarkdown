@@ -4,10 +4,20 @@
 \alias{output_format}
 \title{Define an R Markdown output format}
 \usage{
-output_format(knitr, pandoc, keep_md = FALSE, clean_supporting = TRUE,
-  df_print = NULL, pre_knit = NULL, post_knit = NULL,
-  pre_processor = NULL, intermediates_generator = NULL,
-  post_processor = NULL, on_exit = NULL, base_format = NULL)
+output_format(
+  knitr,
+  pandoc,
+  keep_md = FALSE,
+  clean_supporting = TRUE,
+  df_print = NULL,
+  pre_knit = NULL,
+  post_knit = NULL,
+  pre_processor = NULL,
+  intermediates_generator = NULL,
+  post_processor = NULL,
+  on_exit = NULL,
+  base_format = NULL
+)
 }
 \arguments{
 \item{knitr}{Knitr options for an output format (see

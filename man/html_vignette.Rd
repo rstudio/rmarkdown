@@ -4,9 +4,17 @@
 \alias{html_vignette}
 \title{Convert to an HTML vignette}
 \usage{
-html_vignette(fig_width = 3, fig_height = 3, dev = "png",
-  df_print = "default", css = NULL, keep_md = FALSE,
-  readme = FALSE, self_contained = TRUE, ...)
+html_vignette(
+  fig_width = 3,
+  fig_height = 3,
+  dev = "png",
+  df_print = "default",
+  css = NULL,
+  keep_md = FALSE,
+  readme = FALSE,
+  self_contained = TRUE,
+  ...
+)
 }
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}

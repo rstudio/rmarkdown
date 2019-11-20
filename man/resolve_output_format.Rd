@@ -4,8 +4,13 @@
 \alias{resolve_output_format}
 \title{Resolve the output format for an R Markdown document}
 \usage{
-resolve_output_format(input, output_format = NULL,
-  output_options = NULL, output_yaml = NULL, encoding = "UTF-8")
+resolve_output_format(
+  input,
+  output_format = NULL,
+  output_options = NULL,
+  output_yaml = NULL,
+  encoding = "UTF-8"
+)
 }
 \arguments{
 \item{input}{Input file (Rmd or plain markdown)}

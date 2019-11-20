@@ -6,14 +6,28 @@
 \alias{latex_fragment}
 \title{Convert to a PDF/LaTeX document}
 \usage{
-pdf_document(toc = FALSE, toc_depth = 2, number_sections = FALSE,
-  fig_width = 6.5, fig_height = 4.5, fig_crop = TRUE,
-  fig_caption = TRUE, dev = "pdf", df_print = "default",
-  highlight = "default", template = "default", keep_tex = FALSE,
-  keep_md = FALSE, latex_engine = "pdflatex",
-  citation_package = c("none", "natbib", "biblatex"), includes = NULL,
-  md_extensions = NULL, output_extensions = NULL, pandoc_args = NULL,
-  extra_dependencies = NULL)
+pdf_document(
+  toc = FALSE,
+  toc_depth = 2,
+  number_sections = FALSE,
+  fig_width = 6.5,
+  fig_height = 4.5,
+  fig_crop = TRUE,
+  fig_caption = TRUE,
+  dev = "pdf",
+  df_print = "default",
+  highlight = "default",
+  template = "default",
+  keep_tex = FALSE,
+  keep_md = FALSE,
+  latex_engine = "pdflatex",
+  citation_package = c("none", "natbib", "biblatex"),
+  includes = NULL,
+  md_extensions = NULL,
+  output_extensions = NULL,
+  pandoc_args = NULL,
+  extra_dependencies = NULL
+)
 
 latex_document(...)
 
