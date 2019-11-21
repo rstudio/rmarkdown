@@ -19,7 +19,7 @@ html_dependency_jquery <- function()  {
 
   htmlDependency(
     name = "jquery",
-    version = "1.11.3",
+    version = "3.4.1",
     src = rmarkdown_system_file(file = "rmd/h/jquery"),
     script = "jquery.min.js")
 }
@@ -38,24 +38,65 @@ html_dependency_jqueryui <- function() {
 
 # Create an HTML dependency for Bootstrap
 #' @rdname html-dependencies
+#' @inheritParams html_document
+#' @param version Bootstrap version. See `bootstrap_version` in [html_document]
 #' @export
-html_dependency_bootstrap <- function(theme) {
+html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
 
+  version <- as.character(version)
+  version <- match.arg(version)
+
+  # theme of "default" or "bootstrap" means vanilla bootstrap
   if (identical(theme, "default")) {
     theme <- "bootstrap"
   }
 
-  htmlDependency(
-    name = "bootstrap",
-    version = "3.3.5",
-    src = rmarkdown_system_file(file = "rmd/h/bootstrap"),
-    meta = list(viewport = "width=device-width, initial-scale=1"),
-    script = c(
-      "js/bootstrap.min.js",
-      # These shims are necessary for IE 8 compatibility
-      "shim/html5shiv.min.js",
-      "shim/respond.min.js"),
-    stylesheet = paste0("css/", theme, ".min.css"))
+  if (identical(version, "3")) {
+    return(
+      list(htmlDependency(
+        name = "bootstrap",
+        version = "3.3.5",
+        src = rmarkdown_system_file(file = "rmd/h/bootstrap"),
+        meta = list(viewport = "width=device-width, initial-scale=1"),
+        script = c(
+          "js/bootstrap.min.js",
+          # These shims are necessary for IE 8 compatibility
+          "shim/html5shiv.min.js",
+          "shim/respond.min.js"
+        ),
+        stylesheet = paste0("css/", theme, ".min.css")))
+    )
+  }
+
+  # Bootswatch renamed a few themes when upgrading to Bootstrap 4
+  theme <- switch(theme, paper = "materia", readable = "litera", theme)
+
+  if (grepl("^4", version)) {
+
+    if (system.file(package = "bootscss") == "") {
+      stop(
+        "Bootstrap 4 requires the bootscss R package. ",
+        "Install it via `install.packages('bootscss')`.",
+        call. = FALSE
+      )
+    }
+
+    if (identical(theme, "bootstrap")) {
+      theme <- NULL
+    }
+
+    # At this point, if theme is a string, it should be a bootswatch theme
+    theme <- if (is.character(theme)) bootscss::bs4_theme_bootswatch(theme) else theme
+
+    if (identical(version, "4-3")) {
+      theme <- bootscss::bs4_themes(theme, bootscss::bs4_theme_bs3compat())
+    }
+
+    return(bootscss::bs4_sass(theme = theme))
+  }
+
+
+  stop("Unrecognized Bootstrap version: ", version, call. = FALSE)
 }
 
 # Create an HTML dependency for tocify

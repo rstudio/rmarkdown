@@ -16,6 +16,7 @@ html_document_base(
   copy_resources = FALSE,
   extra_dependencies = NULL,
   bootstrap_compatible = FALSE,
+  bootstrap_version = c("3", "4", "4-3"),
   ...
 )
 }
@@ -27,7 +28,11 @@ quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
 \item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
 "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
 "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-case you can use the \code{css} parameter to add your own styles).}
+case you can use the \code{css} parameter to add your own styles).
+If Bootstrap 4 is used (see \code{bootstrap_version} argument),
+a handful of other themes are available ("cyborg", "lux", "minty", "pulse",
+"slate", "solar", and "superhero"). Moreover, with Bootstrap 4,
+theming can be further customized via \code{bootscss::theme_variables()}.}
 
 \item{self_contained}{Produce a standalone HTML file with no external
 dependencies, using data: URIs to incorporate the contents of linked
@@ -60,6 +65,15 @@ more details).}
 \item{extra_dependencies}{Extra dependencies}
 
 \item{bootstrap_compatible}{Bootstrap compatible}
+
+\item{bootstrap_version}{version of Bootstrap to use (relevant if `theme`
+is not `NULL`). Currently three options are supported:
+ * `"3"`: Bootstrap version 3.x.
+ * `"4"`: Bootstrap version 4.x.
+ * `"4-3"`: Bootstrap version 4.x with additional JS/CSS to support BS3 style
+ nav, navbar, and other component styling. Use this version if you want to upgrade
+ to Bootstrap 4 while maintaining the functionality and of a document written
+ for Bootstrap 3.}
 
 \item{...}{Ignored}
 }

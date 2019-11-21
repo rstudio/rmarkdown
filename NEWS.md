@@ -9,6 +9,8 @@ rmarkdown 1.18
 rmarkdown 1.17
 ================================================================================
 
+- Rudimentary support for Bootstrap 4 has been added to `html_document()` and `html_document_base()` via a new argument (`bootstrap_version`). For this release, these formats default to Bootstrap 3, but a future release will change the default to 4 (opt-in now via `bootstrap_version = 4`). 
+
 - `html_vignette()` passes `self_contained` argument value to base format (thanks, @cderv, #1668).
 
 - `find_external_resources()` works for the `html_vignette` type again, this fixes rendering vignettes with external resources in pkgdown (regression introduced in rmarkdown 1.16, #1668).

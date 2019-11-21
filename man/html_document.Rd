@@ -31,6 +31,7 @@ html_document(
   lib_dir = NULL,
   md_extensions = NULL,
   pandoc_args = NULL,
+  bootstrap_version = c("3", "4", "4-3"),
   ...
 )
 }
@@ -98,7 +99,11 @@ its size).}
 \item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
 "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
 "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-case you can use the \code{css} parameter to add your own styles).}
+case you can use the \code{css} parameter to add your own styles).
+If Bootstrap 4 is used (see \code{bootstrap_version} argument),
+a handful of other themes are available ("cyborg", "lux", "minty", "pulse",
+"slate", "solar", and "superhero"). Moreover, with Bootstrap 4,
+theming can be further customized via \code{bootscss::theme_variables()}.}
 
 \item{highlight}{Syntax highlighting style. Supported styles include
 "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
@@ -135,6 +140,15 @@ default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
+
+\item{bootstrap_version}{version of Bootstrap to use (relevant if `theme`
+is not `NULL`). Currently three options are supported:
+ * `"3"`: Bootstrap version 3.x.
+ * `"4"`: Bootstrap version 4.x.
+ * `"4-3"`: Bootstrap version 4.x with additional JS/CSS to support BS3 style
+ nav, navbar, and other component styling. Use this version if you want to upgrade
+ to Bootstrap 4 while maintaining the functionality and of a document written
+ for Bootstrap 3.}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

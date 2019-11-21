@@ -25,6 +25,7 @@ html_document_base <- function(smart = TRUE,
                                copy_resources = FALSE,
                                extra_dependencies = NULL,
                                bootstrap_compatible = FALSE,
+                               bootstrap_version = c("3", "4", "4-3"),
                                ...) {
 
   # default for dependency_resovler
@@ -74,7 +75,7 @@ html_document_base <- function(smart = TRUE,
 
     # handle theme
     if (!is.null(theme)) {
-      theme <- match.arg(theme, themes())
+      theme <- match.arg(theme, themes(bootstrap_version))
       if (identical(theme, "default"))
         theme <- "bootstrap"
       args <- c(args, "--variable", paste0("theme:", theme))
@@ -84,13 +85,12 @@ html_document_base <- function(smart = TRUE,
     # and dependencies specified by the user (via extra_dependencies)
     format_deps <- list()
     if (!is.null(theme)) {
-      format_deps <- append(format_deps, list(html_dependency_jquery(),
-                                              html_dependency_bootstrap(theme)))
+      format_deps <- append(format_deps, list(html_dependency_jquery()))
+      format_deps <- append(format_deps, html_dependency_bootstrap(theme, bootstrap_version))
     }
     else if (isTRUE(bootstrap_compatible) && is_shiny(runtime)) {
       # If we can add bootstrap for Shiny, do it
-      format_deps <- append(format_deps,
-                            list(html_dependency_bootstrap("bootstrap")))
+      format_deps <- append(format_deps, html_dependency_bootstrap("bootstrap", bootstrap_version))
     }
     format_deps <- append(format_deps, extra_dependencies)
 
@@ -174,6 +174,14 @@ html_document_base <- function(smart = TRUE,
 
     write_utf8(output_str, output_file)
     output_file
+  }
+
+  if (!is.null(theme)) {
+    if (bootstrap_version == 4) {
+      args <- c(args, pandoc_variable_arg("bs4", TRUE))
+    } else if (bootstrap_version == 3) {
+      args <- c(args, pandoc_variable_arg("bs3", TRUE))
+    }
   }
 
   output_format(

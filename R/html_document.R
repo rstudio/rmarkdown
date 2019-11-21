@@ -51,6 +51,10 @@
 #'  "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
 #'  "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
 #'  case you can use the \code{css} parameter to add your own styles).
+#'  If Bootstrap 4 is used (see \code{bootstrap_version} argument),
+#'  a handful of other themes are available ("cyborg", "lux", "minty", "pulse",
+#'  "slate", "solar", and "superhero"). Moreover, with Bootstrap 4,
+#'  theming can be further customized via \code{bootscss::theme_variables()}.
 #'@param highlight Syntax highlighting style. Supported styles include
 #'  "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'  "haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.
@@ -80,6 +84,14 @@
 #'@param pandoc_args Additional command line options to pass to pandoc
 #'@param extra_dependencies,... Additional function arguments to pass to the
 #'  base R Markdown HTML output formatter \code{\link{html_document_base}}
+#'@param bootstrap_version version of Bootstrap to use (relevant if `theme`
+#'  is not `NULL`). Currently three options are supported:
+#'   * `"3"`: Bootstrap version 3.x.
+#'   * `"4"`: Bootstrap version 4.x.
+#'   * `"4-3"`: Bootstrap version 4.x with additional JS/CSS to support BS3 style
+#'   nav, navbar, and other component styling. Use this version if you want to upgrade
+#'   to Bootstrap 4 while maintaining the functionality and of a document written
+#'   for Bootstrap 3.
 #'@return R Markdown output format to pass to \code{\link{render}}
 #'@section Navigation Bars:
 #'
@@ -205,6 +217,7 @@ html_document <- function(toc = FALSE,
                           lib_dir = NULL,
                           md_extensions = NULL,
                           pandoc_args = NULL,
+                          bootstrap_version = c("3", "4", "4-3"),
                           ...) {
 
   # build pandoc args
@@ -342,11 +355,11 @@ html_document <- function(toc = FALSE,
       if (!file.exists(navbar)) {
         navbar_yaml <- file.path(dirname(navbar), "_navbar.yml")
         if (file.exists(navbar_yaml))
-          navbar <- navbar_html_from_yaml(navbar_yaml)
+          navbar <- navbar_html_from_yaml(navbar_yaml, bootstrap_version = bootstrap_version)
         # if there is no _navbar.yml then look in site config (if we have it)
         config <- site_config(input_file, encoding)
         if (!is.null(config) && !is.null(config$navbar))
-          navbar <- navbar_html(config$navbar)
+          navbar <- navbar_html(config$navbar, bootstrap_version = bootstrap_version)
       }
 
       if (file.exists(navbar)) {
@@ -362,7 +375,7 @@ html_document <- function(toc = FALSE,
         # flag indicating we need extra navbar css and js
         args <- c(args, pandoc_variable_arg("navbar", "1"))
         # variables controlling padding from navbar
-        args <- c(args, pandoc_body_padding_variable_args(theme))
+        args <- c(args, pandoc_body_padding_variable_args(theme, bootstrap_version))
 
         # navbar icon dependencies
         iconDeps <- navbar_icon_dependencies(navbar)
@@ -446,6 +459,7 @@ html_document <- function(toc = FALSE,
                                      template = template,
                                      pandoc_args = pandoc_args,
                                      extra_dependencies = extra_dependencies,
+                                     bootstrap_version = bootstrap_version,
                                      ...)
   )
 }
@@ -479,21 +493,14 @@ knitr_options_html <- function(fig_width,
   knitr_options(opts_chunk = opts_chunk)
 }
 
-themes <- function() {
-  c("default",
-    "cerulean",
-    "journal",
-    "flatly",
-    "darkly",
-    "readable",
-    "spacelab",
-    "united",
-    "cosmo",
-    "lumen",
-    "paper",
-    "sandstone",
-    "simplex",
-    "yeti")
+themes <- function(bootstrap_version = 3) {
+  if (bootstrap_version == 3) {
+    return(c("default", "cerulean", "journal", "flatly", "darkly",
+             "readable", "spacelab", "united", "cosmo", "lumen",
+             "paper", "sandstone", "simplex", "yeti"))
+  }
+
+  c("default", "paper", "readable", bootscss::bootswatch_themes())
 }
 
 html_highlighters <- function() {
@@ -509,26 +516,31 @@ mathjax_config <- function() {
 }
 
 # variable which controls body offset (depends on height of navbar in theme)
-pandoc_body_padding_variable_args <- function(theme) {
+pandoc_body_padding_variable_args <- function(theme, version) {
+
+  # If we don't recognize the theme, assume the default navbar height
+  # TODO: could we make this configurable? Or maybe make a dynamic adjustment in JS?
+  theme <- if (!is.character(theme)) "default" else theme
 
   # height of navbar in bootstrap 3.3.5
-  navbarHeights <- c("default" = 51,
-                     "cerulean" = 51,
-                     "journal" = 61 ,
-                     "flatly" = 60,
-                     "darkly" = 60,
-                     "readable" = 66,
-                     "spacelab" = 52,
-                     "united" = 51,
-                     "cosmo" = 51,
-                     "lumen" = 54,
-                     "paper" = 64,
-                     "sandstone" = 61,
-                     "simplex" = 41,
-                     "yeti" = 45)
-
-  # body padding is navbar height
-  bodyPadding <- navbarHeights[[theme]]
+  # TODO: do the same for Bootstrap 4?
+  bodyPadding <- switch(theme,
+    journal = 61,
+    flatly = 60,
+    darkly = 60,
+    readable = 66,
+    spacelab = 52,
+    lumen = 54,
+    paper = 64,
+    sandstone = 61,
+    simplex = if (version == 3) 41 else 65,
+    yeti = 45,
+    # BS4 themes
+    lux = 85,
+    materia = 75,
+    pulse = 70,
+    51
+  )
 
   # header padding is bodyPadding + 5
   headerPadding <- bodyPadding + 5
@@ -538,47 +550,76 @@ pandoc_body_padding_variable_args <- function(theme) {
     pandoc_variable_arg("header_padding", headerPadding))
 }
 
-navbar_html_from_yaml <- function(navbar_yaml) {
+navbar_html_from_yaml <- function(navbar_yaml, bootstrap_version = 3) {
 
   # parse the yaml
   navbar <- yaml_load_file(navbar_yaml)
 
   # generate the html
-  navbar_html(navbar)
+  navbar_html(navbar, bootstrap_version = bootstrap_version)
 }
 
 
 #' Create a navbar HTML file from a navbar definition
 #'
 #' @param navbar Navbar definition
+#' @param bootstrap_version major version of Bootstrap. Currently only 3 or 4 are supported.
 #' @param links List of navbar links
 #' @return Path to temporary file with navbar definition
 #' @keywords internal
 #' @export
-navbar_html <- function(navbar) {
+navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4-3")) {
 
   # title and type
   if (is.null(navbar$title)) navbar$title <- ""
   if (is.null(navbar$type)) navbar$type <- "default"
 
   # menu entries
-  left <- navbar_links_html(navbar$left)
-  right <- navbar_links_html(navbar$right)
+  left <- navbar_links_html(navbar$left, bootstrap_version)
+  right <- navbar_links_html(navbar$right, bootstrap_version)
 
-  # build the navigation bar and return it as a temp file
-  template <- file_string(rmarkdown_system_file("rmd/h/_navbar.html"))
-  navbar_html <- sprintf(template, navbar$type, navbar$title, left, right)
+  # build the navigation HTML
+  navbar_html <- if (is_bs3_compatible(bootstrap_version)) {
+    # BS4 -> BS3
+    navbar$type[1] <- switch(
+      navbar$type[1],
+      light = "default",
+      dark = "inverse",
+      navbar$type[1]
+    )
+    template <- file_string(rmarkdown_system_file("rmd/h/_navbar3.html"))
+    sprintf(template, navbar$type[1], navbar$title, left, right)
+  } else {
+    # BS3 -> BS4
+    navbar$type[1] <- switch(
+      navbar$type[1],
+      default = "light",
+      inverse = "dark",
+      navbar$type[1]
+    )
+    navbar$type <- rep(navbar$type, length.out = 2)
+    template <- file_string(rmarkdown_system_file("rmd/h/_navbar.html"))
+    sprintf(template, navbar$type[1], navbar$type[2], navbar$title, left, right)
+  }
+
   as_tmpfile(navbar_html)
 }
 
 #' @keywords internal
 #' @name navbar_html
 #' @export
-navbar_links_html <- function(links) {
-  as.character(navbar_links_tags(links))
+navbar_links_html <- function(links, bootstrap_version = c("3", "4", "4-3")) {
+  as.character(navbar_links_tags(links, version = bootstrap_version))
 }
 
-navbar_links_tags <- function(links, depth = 0L) {
+navbar_links_tags <- function(links, depth = 0L, version) {
+
+  bs3_nav <- is_bs3_compatible(version)
+
+  nav_link_class <- function(bs3_nav, depth) {
+    if (bs3_nav) return(NULL)
+    if (depth > 0) "dropdown-item" else "nav-link"
+  }
 
   if (!is.null(links)) {
 
@@ -597,20 +638,26 @@ navbar_links_tags <- function(links, depth = 0L) {
           link_text <- navbar_link_text(x, " ", tags$span(class = "caret"))
         }
 
-        submenuLinks <- navbar_links_tags(x$menu, depth = depth + 1L)
+        submenuLinks <- navbar_links_tags(x$menu, depth = depth + 1L, version)
 
-        tags$li(class = menu_class,
-                tags$a(
-                  href = "#", class = "dropdown-toggle",
-                  `data-toggle` = "dropdown", role = "button",
-                  `aria-expanded` = "false", link_text),
-                tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
+        tags$li(
+          class = menu_class,
+          class = if (!bs3_nav) "nav-item",
+          tags$a(
+            href = "#",
+            class = "dropdown-toggle",
+            class = nav_link_class(bs3_nav, depth),
+            `data-toggle` = "dropdown",
+            role = "button",
+            `aria-expanded` = "false",
+            link_text
+          ),
+          tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
         )
 
       } else if (!is.null(x$text) && grepl("^\\s*-{3,}\\s*$", x$text)) {
 
-        # divider
-        tags$li(class = "divider")
+        tags$li(class = if (bs3_nav) "divider" else "dropdown-divider")
 
       } else if (!is.null(x$text) && is.null(x$href)) {
 
@@ -621,7 +668,14 @@ navbar_links_tags <- function(links, depth = 0L) {
 
         # standard menu item
         textTags <- navbar_link_text(x)
-        tags$li(tags$a(href = x$href, textTags))
+        tags$li(
+          class = if (!bs3_nav) "nav-item",
+          tags$a(
+            class = nav_link_class(bs3_nav, depth),
+            href = x$href,
+            textTags
+          )
+        )
       }
     })
     tagList(tags)
@@ -646,4 +700,8 @@ navbar_link_text <- function(x, ...) {
 }
 
 
-
+is_bs3_compatible <- function(version = c("3", "4", "4-3")) {
+  version <- as.character(version)
+  version <- match.arg(version)
+  version %in% c("3", "4-3")
+}

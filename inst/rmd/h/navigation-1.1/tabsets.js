@@ -1,3 +1,7 @@
+// Nav markup changed considerably from BS3 -> BS4. To ease migration,
+// bootscss has additional JS/CSS which allows us to use BS3-style nav in BS4,
+// so we use BS4 markup only if we're running BS4 or higher without bootscss' compatibility shim
+window.BS3_NAV = window.BS3_COMPAT || !!$.fn.tab.Constructor.VERSION.match(/^3\./);
 
 
 /**
@@ -14,7 +18,8 @@
     // Show the tab corresponding with the hash in the URL, or the first tab
     var showStuffFromHash = function() {
       var hash = window.location.hash;
-      var selector = hash ? 'a[href="' + hash + '"]' : 'li.active > a';
+      var selector = hash ? 'a[href="' + hash + '"]' :
+        window.BS3_NAV ? 'li.active > a' : '.nav-link.active';
       var $selector = $(selector, context);
       if($selector.data('toggle') === "tab") {
         $selector.tab('show');
@@ -106,7 +111,9 @@ window.buildTabsets = function(tocID) {
       var a = $('<a role="tab" data-toggle="tab">' + headingText + '</a>');
       a.attr('href', '#' + id);
       a.attr('aria-controls', id);
+      if (!window.BS3_NAV) a.addClass("nav-link");
       var li = $('<li role="presentation"></li>');
+      if (!window.BS3_NAV) li.addClass("nav-item");
       li.append(a);
       tabList.append(li);
 
@@ -121,12 +128,15 @@ window.buildTabsets = function(tocID) {
       tab.detach().appendTo(tabContent);
     });
 
-    // set active tab
-    $(tabList.children('li')[activeTab]).addClass('active');
+    // activate tab (note users can add an .active class)
+    var navLinks = window.BS3_NAV ? tabList.children('li') : tabList.find(".nav-link");
+    $(navLinks[activeTab]).tab("show");
+
+    // make sure active content is shown on load
     var active = $(tabContent.children('div.section')[activeTab]);
     active.addClass('active');
     if (fade)
-      active.addClass('in');
+      active.addClass(window.BS3_NAV ? 'in' : 'show');
 
     if (tabset.hasClass("tabset-sticky"))
       tabset.rmarkdownStickyTabs();

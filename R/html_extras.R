@@ -8,8 +8,7 @@ html_extras_for_document <- function(knit_meta, runtime, dependency_resolver,
 
   # merge the dependencies discovered with the dependencies of this format and
   # dependencies discovered in knit_meta
-  all_dependencies <- if (is.null(format_deps)) list() else format_deps
-  all_dependencies <- append(all_dependencies, flatten_html_dependencies(knit_meta))
+  all_dependencies <- append(format_deps %||% list(), flatten_html_dependencies(knit_meta))
   extras$dependencies <- dependency_resolver(all_dependencies)
 
   # return extras

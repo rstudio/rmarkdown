@@ -98,7 +98,8 @@ Suggests:
     tibble,
     fs,
     pkgdown,
-    callr (>= 2.0.0)
+    callr (>= 2.0.0),
+    bootscss
 SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
 URL: https://github.com/rstudio/rmarkdown
 BugReports: https://github.com/rstudio/rmarkdown/issues

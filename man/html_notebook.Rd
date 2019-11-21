@@ -66,7 +66,11 @@ quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
 \item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
 "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
 "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-case you can use the \code{css} parameter to add your own styles).}
+case you can use the \code{css} parameter to add your own styles).
+If Bootstrap 4 is used (see \code{bootstrap_version} argument),
+a handful of other themes are available ("cyborg", "lux", "minty", "pulse",
+"slate", "solar", and "superhero"). Moreover, with Bootstrap 4,
+theming can be further customized via \code{bootscss::theme_variables()}.}
 
 \item{highlight}{Syntax highlighting style. Supported styles include
 "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",

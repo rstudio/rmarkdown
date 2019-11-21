@@ -32,8 +32,17 @@ $if(highlightjs)$
 <style type="text/css">code{white-space: pre;}</style>
 $if(theme)$
 <style type="text/css">
+  pre {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: .5rem;
+  }
   pre:not([class]) {
     background-color: white;
+  }
+  pre code {
+    background-color: transparent;
   }
 </style>
 $endif$
@@ -86,13 +95,6 @@ $endif$
   }
 })();
 </script>
-$if(theme)$
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
-$endif$
 $endif$
 
 $if(abstract)$
@@ -110,6 +112,7 @@ $endif$
 
 $if(theme)$
 <style type="text/css">
+$if(bs3)$
 h1 {
   font-size: 34px;
 }
@@ -131,6 +134,7 @@ h5 {
 h6 {
   font-size: 12px;
 }
+$endif$
 .table th:not([align]) {
   text-align: left;
 }
@@ -285,7 +289,7 @@ $$(document).ready(function () {
   var menuAnchor = $$('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
@@ -293,8 +297,11 @@ $$(document).ready(function () {
 </script>
 $endif$
 
-<!-- tabsets -->
-
+<!--
+  Note that .tabset-dropdown was initially implemented using Glyphicons, which were dropped
+  in BS4. The idea behind the "equivalent" BS4 CSS derives from how carets are implemented
+  https://github.com/twbs/bootstrap/blob/099860/scss/mixins/_caret.scss#L1
+-->
 <style type="text/css">
 .tabset-dropdown > .nav-tabs {
   display: inline-table;
@@ -306,6 +313,7 @@ $endif$
   border-radius: 4px;
 }
 
+$if(bs3)$
 .tabset-dropdown > .nav-tabs > li.active:before {
   content: "";
   font-family: 'Glyphicons Halflings';
@@ -326,6 +334,40 @@ $endif$
   padding: 10px;
   border-right: 1px solid #ddd;
 }
+$else$
+.tabset-dropdown > .nav-tabs > li.active:before {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid transparent;
+  border-right: 0;
+  border-bottom: 0.3em solid transparent;
+  border-left: 0.3em solid;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+$endif$
 
 .tabset-dropdown > .nav-tabs > li.active {
   display: block;
@@ -452,13 +494,21 @@ $if(theme)$
 $if(toc_float)$
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
+$if(bs3)$
 <div class="col-xs-12 col-sm-4 col-md-3">
+$else$
+<div class="col-sm-12 col-md-4 col-lg-3">
+$endif$
 <div id="$idprefix$TOC" class="tocify">
 </div>
 </div>
 
+$if(bs3)$
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+$else$
 <div class="toc-content col-xs-12 col-sm-8 col-md-9">
+$endif$
 
 $endif$
 
@@ -469,15 +519,20 @@ $include-before$
 $endfor$
 
 $if(theme)$
-<div class="fluid-row" id="$idprefix$header">
+$if(bs3)$
+<div id="$idprefix$header">
+$else$
+<!-- bs4 removed margin-top on h1, h2, ..., h6 -->
+<div id="$idprefix$header" style="margin-top: 20px">
+$endif$
 
 $if(code_menu)$
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu" style="min-width: 50px;">
 $if(code_folding)$
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li><a class="dropdown-item" id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a class="dropdown-item" id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 $if(source_embed)$
 <li role="separator" class="divider"></li>
 $endif$
