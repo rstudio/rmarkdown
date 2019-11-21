@@ -11,8 +11,7 @@
 \usage{
 pandoc_variable_arg(name, value)
 
-pandoc_include_args(in_header = NULL, before_body = NULL,
-  after_body = NULL)
+pandoc_include_args(in_header = NULL, before_body = NULL, after_body = NULL)
 
 pandoc_highlight_args(highlight, default = "tango")
 

@@ -4,10 +4,18 @@
 \alias{tufte_handout}
 \title{Tufte handout format (PDF)}
 \usage{
-tufte_handout(fig_width = 4, fig_height = 2.5, fig_crop = TRUE,
-  dev = "pdf", highlight = "default", keep_tex = FALSE,
-  citation_package = c("none", "natbib", "biblatex"), includes = NULL,
-  md_extensions = NULL, pandoc_args = NULL)
+tufte_handout(
+  fig_width = 4,
+  fig_height = 2.5,
+  fig_crop = TRUE,
+  dev = "pdf",
+  highlight = "default",
+  keep_tex = FALSE,
+  citation_package = c("none", "natbib", "biblatex"),
+  includes = NULL,
+  md_extensions = NULL,
+  pandoc_args = NULL
+)
 }
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}

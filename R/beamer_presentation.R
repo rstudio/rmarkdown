@@ -50,6 +50,7 @@
 #' @export
 beamer_presentation <- function(toc = FALSE,
                                 slide_level = NULL,
+                                number_sections = FALSE,
                                 incremental = FALSE,
                                 fig_width = 10,
                                 fig_height = 7,
@@ -88,6 +89,9 @@ beamer_presentation <- function(toc = FALSE,
   # slide level
   if (!is.null(slide_level))
     args <- c(args, "--slide-level", as.character(slide_level))
+
+  if (number_sections)
+    args <- c(args, "--number-sections")
 
   # incremental
   if (incremental)

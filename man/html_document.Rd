@@ -4,15 +4,35 @@
 \alias{html_document}
 \title{Convert to an HTML document}
 \usage{
-html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
-  number_sections = FALSE, section_divs = TRUE, fig_width = 7,
-  fig_height = 5, fig_retina = 2, fig_caption = TRUE, dev = "png",
-  df_print = "default", code_folding = c("none", "show", "hide"),
-  code_download = FALSE, smart = TRUE, self_contained = TRUE,
-  theme = "default", highlight = "default", mathjax = "default",
-  template = "default", extra_dependencies = NULL, css = NULL,
-  includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  md_extensions = NULL, pandoc_args = NULL, ...)
+html_document(
+  toc = FALSE,
+  toc_depth = 3,
+  toc_float = FALSE,
+  number_sections = FALSE,
+  section_divs = TRUE,
+  fig_width = 7,
+  fig_height = 5,
+  fig_retina = 2,
+  fig_caption = TRUE,
+  dev = "png",
+  df_print = "default",
+  code_folding = c("none", "show", "hide"),
+  code_download = FALSE,
+  smart = TRUE,
+  self_contained = TRUE,
+  theme = "default",
+  highlight = "default",
+  mathjax = "default",
+  template = "default",
+  extra_dependencies = NULL,
+  css = NULL,
+  includes = NULL,
+  keep_md = FALSE,
+  lib_dir = NULL,
+  md_extensions = NULL,
+  pandoc_args = NULL,
+  ...
+)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}

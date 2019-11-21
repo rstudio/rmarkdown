@@ -4,14 +4,31 @@
 \alias{slidy_presentation}
 \title{Convert to a slidy presentation}
 \usage{
-slidy_presentation(incremental = FALSE, duration = NULL,
-  footer = NULL, font_adjustment = 0, fig_width = 8,
-  fig_height = 6, fig_retina = 2, fig_caption = TRUE, dev = "png",
-  df_print = "default", smart = TRUE, self_contained = TRUE,
-  highlight = "default", mathjax = "default", template = "default",
-  css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  md_extensions = NULL, pandoc_args = NULL,
-  extra_dependencies = NULL, ...)
+slidy_presentation(
+  incremental = FALSE,
+  duration = NULL,
+  footer = NULL,
+  font_adjustment = 0,
+  fig_width = 8,
+  fig_height = 6,
+  fig_retina = 2,
+  fig_caption = TRUE,
+  dev = "png",
+  df_print = "default",
+  smart = TRUE,
+  self_contained = TRUE,
+  highlight = "default",
+  mathjax = "default",
+  template = "default",
+  css = NULL,
+  includes = NULL,
+  keep_md = FALSE,
+  lib_dir = NULL,
+  md_extensions = NULL,
+  pandoc_args = NULL,
+  extra_dependencies = NULL,
+  ...
+)
 }
 \arguments{
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note

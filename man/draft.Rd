@@ -4,8 +4,7 @@
 \alias{draft}
 \title{Create a new document based on a template}
 \usage{
-draft(file, template, package = NULL, create_dir = "default",
-  edit = TRUE)
+draft(file, template, package = NULL, create_dir = "default", edit = TRUE)
 }
 \arguments{
 \item{file}{File name for the draft}

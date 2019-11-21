@@ -4,15 +4,33 @@
 \alias{ioslides_presentation}
 \title{Convert to an ioslides Presentation}
 \usage{
-ioslides_presentation(logo = NULL, slide_level = 2,
-  incremental = FALSE, fig_width = 7.5, fig_height = 4.5,
-  fig_retina = 2, fig_caption = TRUE, dev = "png",
-  df_print = "default", smart = TRUE, self_contained = TRUE,
-  widescreen = FALSE, smaller = FALSE, transition = "default",
-  mathjax = "default", analytics = NULL, template = NULL,
-  css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  md_extensions = NULL, pandoc_args = NULL,
-  extra_dependencies = NULL, ...)
+ioslides_presentation(
+  logo = NULL,
+  slide_level = 2,
+  incremental = FALSE,
+  fig_width = 7.5,
+  fig_height = 4.5,
+  fig_retina = 2,
+  fig_caption = TRUE,
+  dev = "png",
+  df_print = "default",
+  smart = TRUE,
+  self_contained = TRUE,
+  widescreen = FALSE,
+  smaller = FALSE,
+  transition = "default",
+  mathjax = "default",
+  analytics = NULL,
+  template = NULL,
+  css = NULL,
+  includes = NULL,
+  keep_md = FALSE,
+  lib_dir = NULL,
+  md_extensions = NULL,
+  pandoc_args = NULL,
+  extra_dependencies = NULL,
+  ...
+)
 }
 \arguments{
 \item{logo}{Path to file that includes a logo for use in the presentation

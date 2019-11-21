@@ -8,11 +8,15 @@
 \alias{default_site_generator}
 \title{Render multiple documents as a website}
 \usage{
-render_site(input = ".", output_format = "all",
-  envir = parent.frame(), quiet = FALSE, encoding = "UTF-8")
+render_site(
+  input = ".",
+  output_format = "all",
+  envir = parent.frame(),
+  quiet = FALSE,
+  encoding = "UTF-8"
+)
 
-clean_site(input = ".", preview = FALSE, quiet = FALSE,
-  encoding = "UTF-8")
+clean_site(input = ".", preview = FALSE, quiet = FALSE, encoding = "UTF-8")
 
 site_generator(input = ".", output_format = NULL, encoding = "UTF-8")
 

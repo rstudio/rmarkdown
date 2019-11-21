@@ -4,10 +4,20 @@
 \alias{powerpoint_presentation}
 \title{Convert to a PowerPoint presentation}
 \usage{
-powerpoint_presentation(toc = FALSE, toc_depth = 2, fig_width = 5,
-  fig_height = 4, fig_caption = TRUE, df_print = "default",
-  smart = TRUE, keep_md = FALSE, md_extensions = NULL,
-  slide_level = NULL, reference_doc = "default", pandoc_args = NULL)
+powerpoint_presentation(
+  toc = FALSE,
+  toc_depth = 2,
+  fig_width = 5,
+  fig_height = 4,
+  fig_caption = TRUE,
+  df_print = "default",
+  smart = TRUE,
+  keep_md = FALSE,
+  md_extensions = NULL,
+  slide_level = NULL,
+  reference_doc = "default",
+  pandoc_args = NULL
+)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
