@@ -43,12 +43,10 @@ html_dependency_jqueryui <- function() {
 #' @export
 html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
 
-  version <- as.character(version)
-  version <- match.arg(version)
-
+  version <- bootstrap_version_normalize(version)
   theme <- bootswatch_theme_normalize(theme, version)
 
-  if (identical(version, "3")) {
+  if (version == 3) {
     return(
       list(htmlDependency(
         name = "bootstrap",

@@ -230,6 +230,7 @@ html_document <- function(toc = FALSE,
 
   md_extensions <- smart_extension(smart, md_extensions)
 
+  bootstrap_version <- bootstrap_version_normalize(bootstrap_version)
   theme <- bootswatch_theme_normalize(theme, bootstrap_version)
 
   # toc_float
@@ -734,9 +735,12 @@ navbar_link_text <- function(x, ...) {
     tagList(x$text, ...)
 }
 
-
-is_bs3_compatible <- function(version = c("3", "4", "4-3")) {
+# allows users to pass in integers for the version as well
+bootstrap_version_normalize <- function(version = c("3", "4", "4-3")) {
   version <- as.character(version)
-  version <- match.arg(version)
+  match.arg(version)
+}
+
+is_bs3_compatible <- function(version) {
   version %in% c("3", "4-3")
 }

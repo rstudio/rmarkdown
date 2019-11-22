@@ -32,6 +32,8 @@ html_document_base <- function(smart = TRUE,
   if (is.null(dependency_resolver))
     dependency_resolver <- html_dependency_resolver
 
+  bootstrap_version <- bootstrap_version_normalize(bootstrap_version)
+
   args <- c()
 
   # smart quotes, etc.
