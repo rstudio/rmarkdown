@@ -65,10 +65,10 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
 
   if (grepl("^4", version)) {
 
-    if (system.file(package = "bootscss") == "") {
+    if (system.file(package = "bootsass") == "") {
       stop(
-        "Bootstrap 4 requires the bootscss R package. ",
-        "Install it via `install.packages('bootscss')`.",
+        "Bootstrap 4 requires the bootsass R package. ",
+        "Install it via `install.packages('bootsass')`.",
         call. = FALSE
       )
     }
@@ -78,18 +78,18 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
     }
 
     # At this point, if theme is a string, it should be a bootswatch theme
-    theme <- if (is.character(theme)) bootscss::bs4_theme_bootswatch(theme) else theme
+    theme <- if (is.character(theme)) bootsass::bs4_theme_bootswatch(theme) else theme
 
     if (identical(version, "4-3")) {
-      theme <- bootscss::bs4_themes(theme, bootscss::bs4_theme_bs3compat())
+      theme <- bootsass::bs4_themes(theme, bootsass::bs4_theme_bs3compat())
     }
 
     # Default to a base font size of 14px (instead of 16px)
-    theme_vars <- bootscss::theme_variables()
-    on.exit(bootscss::theme_variables(theme_vars), add = TRUE)
+    theme_vars <- bootsass::theme_variables()
+    on.exit(bootsass::theme_variables(theme_vars), add = TRUE)
     theme_vars[["font-size-base"]] <- theme_vars[["font-size-base"]] %||% "0.875rem"
 
-    return(bootscss::bs4_sass(theme_vars, theme))
+    return(bootsass::bs4_sass(theme_vars, theme))
   }
 
 
