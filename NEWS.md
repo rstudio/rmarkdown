@@ -5,6 +5,8 @@ rmarkdown 1.18
 
 - `find_external_resources()` can find external resources specified in the output format's `reference_doc` or `reference_docx` option now (thanks, @jmcphers, #1696).
 
+- `rmarkdown::run(file = NULL, dir = "foo/")` failed to run Rmd files under the `foo/` directory (thanks, @jenzopr, #1703).
+
 
 rmarkdown 1.17
 ================================================================================
