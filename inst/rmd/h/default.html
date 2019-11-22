@@ -640,7 +640,9 @@ $$(document).ready(function () {
 
 $$(document).ready(function () {
   $$('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $$(this).parent().toggleClass('nav-tabs-open')
+    $$(this).parent().toggleClass('nav-tabs-open');
+    $$(this).siblings().removeClass("active");
+    $$(this).addClass("active");
   });
 });
 </script>
