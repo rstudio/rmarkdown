@@ -635,7 +635,7 @@ navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4-3")) {
     )
     navbar$type <- rep(navbar$type, length.out = 2)
     template <- file_string(rmarkdown_system_file("rmd/h/_navbar.html"))
-    sprintf(template, navbar$type[1], navbar$type[2], navbar$title, left, right)
+    sprintf(template, navbar$expand %||% "lg", navbar$type[1], navbar$type[2], navbar$title, left, right)
   }
 
   as_tmpfile(navbar_html)
