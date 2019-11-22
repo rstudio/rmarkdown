@@ -355,11 +355,11 @@ html_document <- function(toc = FALSE,
       if (!file.exists(navbar)) {
         navbar_yaml <- file.path(dirname(navbar), "_navbar.yml")
         if (file.exists(navbar_yaml))
-          navbar <- navbar_html_from_yaml(navbar_yaml, bootstrap_version = bootstrap_version)
+          navbar <- navbar_html_from_yaml(navbar_yaml, bootstrap_version)
         # if there is no _navbar.yml then look in site config (if we have it)
         config <- site_config(input_file, encoding)
         if (!is.null(config) && !is.null(config$navbar))
-          navbar <- navbar_html(config$navbar, bootstrap_version = bootstrap_version)
+          navbar <- navbar_html(config$navbar, bootstrap_version)
       }
 
       if (file.exists(navbar)) {
@@ -532,8 +532,6 @@ mathjax_config <- function() {
 # variable which controls body offset (depends on height of navbar in theme)
 pandoc_body_padding_variable_args <- function(theme, version) {
 
-  theme <- bootswatch_theme_normalize(theme, version)
-
   # Height of the navbar in each theme
   bodyPadding <- if (version == 3) {
     switch(theme,
@@ -586,13 +584,13 @@ pandoc_body_padding_variable_args <- function(theme, version) {
     pandoc_variable_arg("header_padding", headerPadding))
 }
 
-navbar_html_from_yaml <- function(navbar_yaml, bootstrap_version = 3) {
+navbar_html_from_yaml <- function(navbar_yaml, version = 3) {
 
   # parse the yaml
   navbar <- yaml_load_file(navbar_yaml)
 
   # generate the html
-  navbar_html(navbar, bootstrap_version = bootstrap_version)
+  navbar_html(navbar, version)
 }
 
 

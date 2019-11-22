@@ -74,7 +74,10 @@ html_document_base <- function(smart = TRUE,
     output_dir <<- output_dir
 
     theme <- bootswatch_theme_normalize(theme, bootstrap_version)
-    args <- c(args, "--variable", paste0("theme:", theme))
+    if (!is.null(theme)) {
+      args <- c(args, "--variable", paste0("theme:", theme))
+    }
+
 
     # resolve and inject extras, including dependencies specified by the format
     # and dependencies specified by the user (via extra_dependencies)
