@@ -1,6 +1,8 @@
 rmarkdown 1.18
 ================================================================================
 
+- Support for Bootstrap 4 has been added to `html_document` and `html_document_base` via a new argument (`bootstrap_version`). For this release, these formats default to Bootstrap 3, but a future release will change the default to 4 (opt-in now via `bootstrap_version = 4`). In addition to this "strict" Bootstrap 4 mode, there is "compatible" Bootstrap 4 mode (i.e., `bootstrap_version = "4-3"`), which allows you to use BS3 style nav/navbars. Only use this compatible mode if you have existing `html_document`/`html_document_base` output formats that rely on BS3 markup (but is no longer supported in BS4). Thanks, @cpsievert and @jcheng5, #1260.
+
 - `find_external_resources()` works now when multiple files are specified in the `includes` option of the output format (thanks, @andrie, #1677).
 
 - `find_external_resources()` can find external resources specified in the output format's `reference_doc` or `reference_docx` option now (thanks, @jmcphers, #1696).
@@ -8,8 +10,6 @@ rmarkdown 1.18
 
 rmarkdown 1.17
 ================================================================================
-
-- Rudimentary support for Bootstrap 4 has been added to `html_document()` and `html_document_base()` via a new argument (`bootstrap_version`). For this release, these formats default to Bootstrap 3, but a future release will change the default to 4 (opt-in now via `bootstrap_version = 4`). 
 
 - `html_vignette()` passes `self_contained` argument value to base format (thanks, @cderv, #1668).
 

@@ -84,14 +84,12 @@
 #'@param pandoc_args Additional command line options to pass to pandoc
 #'@param extra_dependencies,... Additional function arguments to pass to the
 #'  base R Markdown HTML output formatter \code{\link{html_document_base}}
-#'@param bootstrap_version version of Bootstrap to use (relevant if `theme`
-#'  is not `NULL`). Currently three options are supported:
-#'   * `"3"`: Bootstrap version 3.x.
-#'   * `"4"`: Bootstrap version 4.x.
-#'   * `"4-3"`: Bootstrap version 4.x with additional JS/CSS to support BS3 style
-#'   nav, navbar, and other component styling. Use this version if you want to upgrade
-#'   to Bootstrap 4 while maintaining the functionality and of a document written
-#'   for Bootstrap 3.
+#'@param bootstrap_version version of Bootstrap to use (relevant if \code{theme}
+#'  is not \code{NULL}). Currently three options are supported: Bootstrap version
+#'  3.x (\code{3}), Bootstrap version 4.x (\code{4}), and Bootstrap version 4.x
+#'  with additional JS/CSS to support BS3 style nav, navbar, and other component
+#'  styling (\code{"4-3"}). Use this version if you want to upgrade to Bootstrap 4
+#'  while maintaining the functionality and of a document written for Bootstrap 3.
 #'@return R Markdown output format to pass to \code{\link{render}}
 #'@section Navigation Bars:
 #'
@@ -601,7 +599,8 @@ navbar_html_from_yaml <- function(navbar_yaml, bootstrap_version = 3) {
 #' Create a navbar HTML file from a navbar definition
 #'
 #' @param navbar Navbar definition
-#' @param bootstrap_version major version of Bootstrap. Currently only 3 or 4 are supported.
+#' @param bootstrap_version major version of Bootstrap.
+#' See \code{bootstrap_version} argument on [html_document].
 #' @param links List of navbar links
 #' @return Path to temporary file with navbar definition
 #' @keywords internal

@@ -12,7 +12,8 @@ navbar_links_html(links, bootstrap_version = c("3", "4", "4-3"))
 \arguments{
 \item{navbar}{Navbar definition}
 
-\item{bootstrap_version}{major version of Bootstrap. Currently only 3 or 4 are supported.}
+\item{bootstrap_version}{major version of Bootstrap.
+See \code{bootstrap_version} argument on [html_document].}
 
 \item{links}{List of navbar links}
 }

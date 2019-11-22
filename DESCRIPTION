@@ -17,6 +17,7 @@ Authors@R: c(
   # Contributors, ordered alphabetically by first name
   person("Atsushi", "Yasumoto", role = "ctb", comment = c(ORCID = "0000-0002-8335-495X")),
   person("Barret", "Schloerke", role = "ctb"),
+  person("Carson", "Sievert", role = "ctb", comment = c(ORCID = "0000-0002-4958-2844")),
   person("Christophe", "Dervieux", role = "ctb"),
   person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
   person("Jeff", "Allen", role = "ctb", email = "jeff@rstudio.com"),
