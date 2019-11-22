@@ -138,6 +138,17 @@ $endif$
 .table th:not([align]) {
   text-align: left;
 }
+$if(bs4)$
+.table th[align=left] {
+  text-align: left;
+}
+.table th[align=right] {
+  text-align: right;
+}
+.table th[align=center] {
+  text-align: center;
+}
+$endif$
 $if(source_embed)$
 #rmd-source-code {
   display: none;
