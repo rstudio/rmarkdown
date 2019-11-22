@@ -534,30 +534,51 @@ mathjax_config <- function() {
 # variable which controls body offset (depends on height of navbar in theme)
 pandoc_body_padding_variable_args <- function(theme, version) {
 
-  # If we don't recognize the theme, assume the default navbar height
-  # TODO: could we make this configurable? Or maybe make a dynamic adjustment in JS?
-  theme <- if (!is.character(theme)) "default" else theme
+  theme <- bootswatch_theme_normalize(theme, version)
 
-  # height of navbar in bootstrap 3.3.5
-  # TODO: do the same for Bootstrap 4?
-  bodyPadding <- switch(theme,
-    journal = 61,
-    flatly = 60,
-    darkly = 60,
-    readable = 66,
-    spacelab = 52,
-    lumen = 54,
-    paper = 64,
-    sandstone = 61,
-    simplex = if (version == 3) 41 else 65,
-    yeti = 45,
-    # BS4 themes
-    # TODO: respect the relevant SASS variable ($navbar-padding-y)?
-    lux = 85,
-    materia = 75,
-    pulse = 70,
-    51
-  )
+  # Height of the navbar in each theme
+  bodyPadding <- if (version == 3) {
+    switch(theme,
+           journal = 61,
+           flatly = 60,
+           darkly = 60,
+           readable = 66,
+           spacelab = 52,
+           united = 51,
+           cosmo = 51,
+           lumen = 54,
+           paper = 64,
+           sandstone = 61,
+           simplex = 41,
+           yeti = 45,
+           51)
+  } else {
+    # TODO: it'd be great if, someday, this took into account SASS variables,
+    # but it's not immediately obvious what the model for that should be
+    switch(theme,
+           cerulean = 56,
+           cosmo = 54.5,
+           cyborg = 53,
+           darkly = 70.5,
+           flatly = 70.5,
+           journal = 61,
+           litera = 59.5,
+           lumen = 57,
+           lux = 91.25,
+           materia = 80.3,
+           minty = 56,
+           pulse = 75.4,
+           sandstone = 54,
+           simplex = 66.3,
+           sketchy = 58,
+           slate = 56.5,
+           solar = 56,
+           spacelab = 58,
+           superhero = 48,
+           united = 56,
+           yeti = 54.5,
+           60)
+  }
 
   # header padding is bodyPadding + 5
   headerPadding <- bodyPadding + 5
