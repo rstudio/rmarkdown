@@ -232,6 +232,8 @@ html_document <- function(toc = FALSE,
 
   md_extensions <- smart_extension(smart, md_extensions)
 
+  theme <- bootswatch_theme_normalize(theme, bootstrap_version)
+
   # toc_float
   if (toc && !identical(toc_float, FALSE)) {
 
@@ -493,14 +495,28 @@ knitr_options_html <- function(fig_width,
   knitr_options(opts_chunk = opts_chunk)
 }
 
-themes <- function(bootstrap_version = 3) {
-  if (bootstrap_version == 3) {
-    return(c("default", "cerulean", "journal", "flatly", "darkly",
-             "readable", "spacelab", "united", "cosmo", "lumen",
-             "paper", "sandstone", "simplex", "yeti"))
+bootswatch_theme_normalize <- function(theme, version = 3) {
+  # NULL means no bootstrap
+  if (is.null(theme)) return(NULL)
+  # "bootstrap" (or "default") means vanilla Bootstrap
+  theme <- switch(theme, default = "bootstrap", theme)
+  # Bootswatch renamed a few themes when upgrading to Bootstrap 4
+  if (version != 3) {
+    theme <- switch(theme, paper = "materia", readable = "litera", theme)
   }
+  if (theme %in% c("bootstrap", bootswatch_themes(version))) {
+    return(theme)
+  }
+  stop("Unrecognized bootswatch theme: '", theme, "'", call. = FALSE)
+}
 
-  c("default", "paper", "readable", bootscss::bootswatch_themes())
+bootswatch_themes <- function(version = 3) {
+  if (version == 3) {
+    c("cerulean", "journal", "flatly", "darkly", "readable", "spacelab",
+      "united", "cosmo", "lumen", "paper", "sandstone", "simplex", "yeti")
+  } else {
+    bootscss::bootswatch_themes()
+  }
 }
 
 html_highlighters <- function() {
@@ -536,6 +552,7 @@ pandoc_body_padding_variable_args <- function(theme, version) {
     simplex = if (version == 3) 41 else 65,
     yeti = 45,
     # BS4 themes
+    # TODO: respect the relevant SASS variable ($navbar-padding-y)?
     lux = 85,
     materia = 75,
     pulse = 70,

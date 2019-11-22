@@ -46,10 +46,7 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
   version <- as.character(version)
   version <- match.arg(version)
 
-  # theme of "default" or "bootstrap" means vanilla bootstrap
-  if (identical(theme, "default")) {
-    theme <- "bootstrap"
-  }
+  theme <- bootswatch_theme_normalize(theme, version)
 
   if (identical(version, "3")) {
     return(
@@ -67,9 +64,6 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
         stylesheet = paste0("css/", theme, ".min.css")))
     )
   }
-
-  # Bootswatch renamed a few themes when upgrading to Bootstrap 4
-  theme <- switch(theme, paper = "materia", readable = "litera", theme)
 
   if (grepl("^4", version)) {
 
