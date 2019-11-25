@@ -60,10 +60,8 @@ slidy_presentation <- function(incremental = FALSE,
 
   # template path and assets
   if (identical(template, "default"))
-    args <- c(args, "--template",
-              pandoc_path_arg(rmarkdown_system_file(
-                "rmd/slidy/default.html")))
-  else if (!is.null(template))
+    template <- rmarkdown_system_file("rmd/slidy/default.html")
+  if (!is.null(template))
     args <- c(args, "--template", pandoc_path_arg(template))
 
   # html dependency for slidy

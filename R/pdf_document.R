@@ -114,10 +114,9 @@ pdf_document <- function(toc = FALSE,
     pandoc_available(error = TRUE)
     # patch pandoc template if necessary
     version <- pandoc_version()
-    if (version <= "2.5")
-      args <- c(args, "--include-in-header",
-                pandoc_path_arg(rmarkdown_system_file(paste0("rmd/latex/",
-                                                             "subtitle.tex"))))
+    if (version <= "2.5") args <- c(
+      args, "--include-in-header", system_file_arg("rmd/latex/subtitle.tex")
+    )
 
   } else if (!is.null(template)) {
     args <- c(args, "--template", pandoc_path_arg(template))
