@@ -281,12 +281,9 @@ ioslides_presentation <- function(logo = NULL,
   args <- c(args, includes_to_pandoc_args(includes))
 
   # template path and assets
-  if (!is.null(template) && file.exists(template))
-    args <- c(args, "--template", template)
-  else
-    args <- c(args,
-              "--template",
-              pandoc_path_arg(rmarkdown_system_file("rmd/ioslides/default.html")))
+  if (is.null(template) || !file.exists(template))
+    template <- rmarkdown_system_file("rmd/ioslides/default.html")
+  args <- c(args, "--template", pandoc_path_arg(template))
 
   # html dependency for ioslides
   extra_dependencies <- append(extra_dependencies,

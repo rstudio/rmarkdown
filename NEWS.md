@@ -1,6 +1,8 @@
 rmarkdown 1.18
 ================================================================================
 
+- For `pdf_document()`, now we patch Pandoc's built-in LaTeX template to include the document subtitle (unnecessary with pandoc 2.6 onwards) and reduce the vertical spacing before title using `--include-in-header` rather than overwriting the built-in template, avoiding compability problems with newer versions of Pandoc (thanks, @adunning, #1563).
+
 - `find_external_resources()` works now when multiple files are specified in the `includes` option of the output format (thanks, @andrie, #1677).
 
 - `find_external_resources()` can find external resources specified in the output format's `reference_doc` or `reference_docx` option now (thanks, @jmcphers, #1696).

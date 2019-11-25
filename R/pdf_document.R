@@ -103,7 +103,7 @@ pdf_document <- function(toc = FALSE,
                          extra_dependencies = NULL) {
 
   # base pandoc options for all PDF output
-  args <- c()
+  args <- c("--self-contained")
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
@@ -112,26 +112,14 @@ pdf_document <- function(toc = FALSE,
   if (identical(template, "default")) {
 
     pandoc_available(error = TRUE)
-    # choose the right template
+    # patch pandoc template if necessary
     version <- pandoc_version()
-    if (version >= "1.17.0.2")
-      latex_template <- "default-1.17.0.2.tex"
-    else if (version >= "1.15.2")
-      latex_template <- "default-1.15.2.tex"
-    else if (version >= "1.14")
-      latex_template <- "default-1.14.tex"
-    else
-      latex_template <- "default.tex"
-
-    # add to args
-    args <- c(args, "--template",
-              pandoc_path_arg(rmarkdown_system_file(paste0("rmd/latex/",
-                                                           latex_template))))
+    if (version <= "2.5") args <- c(
+      args, "--include-in-header", system_file_arg("rmd/latex/subtitle.tex")
+    )
 
   } else if (!is.null(template)) {
     args <- c(args, "--template", pandoc_path_arg(template))
-  } else {
-    args <- c(args, "--self-contained")
   }
 
   # numbered sections
@@ -144,7 +132,7 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
-  latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
+  latex_engine <- match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
   args <- c(args, pandoc_latex_engine_args(latex_engine))
 
   # citation package
@@ -155,7 +143,7 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, includes_to_pandoc_args(includes))
 
   # make sure the graphics package is always loaded
-  if (identical(template, "default")) args <- c(args, "--variable", "graphics=yes")
+  if (identical(template, "default")) args <- c(args, "--variable", "graphics")
 
   # lua filters (added if pandoc > 2)
   args <- c(args, pandoc_lua_filters(c("pagebreak.lua", "latex-div.lua")))
@@ -185,8 +173,9 @@ pdf_document <- function(toc = FALSE,
         args <- c(args, "--variable", "geometry:margin=1in")
 
       # use titling package to change title format to be more compact by default
-      if (!has_yaml_parameter(input_test, "compact-title"))
-        args <- c(args, "--variable", "compact-title:yes")
+      if (!has_yaml_parameter(input_test, "compact-title")) args <- c(
+        args, "--include-in-header", system_file_arg("rmd/latex/compact-title.tex")
+      )
     }
 
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {

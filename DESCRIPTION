@@ -15,6 +15,7 @@ Authors@R: c(
   person("Richard", "Iannone", role = "aut", email = "rich@rstudio.com", comment = c(ORCID = "0000-0003-3925-190X")),
   #
   # Contributors, ordered alphabetically by first name
+  person("Andrew", "Dunning", role = "ctb"),
   person("Atsushi", "Yasumoto", role = "ctb", comment = c(ORCID = "0000-0002-8335-495X")),
   person("Barret", "Schloerke", role = "ctb"),
   person("Christophe", "Dervieux", role = "ctb"),

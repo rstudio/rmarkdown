@@ -37,6 +37,9 @@ rmarkdown_system_file <- function(...) {
   system.file(..., package = "rmarkdown")
 }
 
+system_file_arg <- function(...) {
+  pandoc_path_arg(rmarkdown_system_file(...))
+}
 
 #' @rdname rmarkdown_format
 #' @export
