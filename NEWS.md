@@ -7,6 +7,8 @@ rmarkdown 1.18
 
 - `rmarkdown::run(file = NULL, dir = "foo/")` failed to run Rmd files under the `foo/` directory (thanks, @jenzopr, #1703).
 
+- Reverted the fix for #1692 since it is no longer necessary (https://github.com/yihui/tinytex/issues/152#issuecomment-552796864).
+
 
 rmarkdown 1.17
 ================================================================================
