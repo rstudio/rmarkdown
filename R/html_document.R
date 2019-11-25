@@ -260,10 +260,11 @@ html_document <- function(toc = FALSE,
   }
 
   # template path and assets
-  if (identical(template, "default"))
-    template <- rmarkdown_system_file("rmd/h/default.html")
-  if (!is.null(template))
-    args <- c(args, "--template", pandoc_path_arg(template))
+  template_file <- if (identical(template, "default")) {
+    rmarkdown_system_file("rmd/h/default.html")
+  } else template
+  if (!is.null(template_file))
+    args <- c(args, "--template", pandoc_path_arg(template_file))
 
   # validate code_folding
   code_folding <- match.arg(code_folding)
