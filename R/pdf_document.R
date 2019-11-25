@@ -118,7 +118,7 @@ pdf_document <- function(toc = FALSE,
       args <- c(args, "--include-in-header",
                 pandoc_path_arg(rmarkdown_system_file(paste0("rmd/latex/",
                                                              "subtitle.tex"))))
-    else 
+    else
       args <- c(args, "--self-contained")
 
   } else if (!is.null(template)) {
@@ -137,7 +137,7 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
-  latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
+  latex_engine <- match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
   args <- c(args, pandoc_latex_engine_args(latex_engine))
 
   # citation package
