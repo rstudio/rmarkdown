@@ -173,8 +173,9 @@ pdf_document <- function(toc = FALSE,
         args <- c(args, "--variable", "geometry:margin=1in")
 
       # use titling package to change title format to be more compact by default
-      if (!has_yaml_parameter(input_test, "compact-title"))
-        args <- c(args, "--variable", "compact-title:yes")
+      if (!has_yaml_parameter(input_test, "compact-title")) args <- c(
+        args, "--include-in-header", system_file_arg("rmd/latex/compact-title.tex")
+      )
     }
 
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
