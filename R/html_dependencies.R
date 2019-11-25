@@ -63,7 +63,7 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
     )
   }
 
-  if (grepl("^4", version)) {
+  if (grepl("^4\\b", version)) {
 
     if (system.file(package = "bootsass") == "") {
       stop(
@@ -351,4 +351,3 @@ html_dependency_rsiframe <- function() {
     meta = meta
   )
 }
-
