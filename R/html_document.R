@@ -274,11 +274,11 @@ html_document <- function(toc = FALSE,
   }
 
   # template path and assets
-  if (identical(template, "default"))
-    args <- c(args, "--template",
-              pandoc_path_arg(rmarkdown_system_file("rmd/h/default.html")))
-  else if (!is.null(template))
-    args <- c(args, "--template", pandoc_path_arg(template))
+  template_file <- if (identical(template, "default")) {
+    pkg_file("rmd/h/default.html")
+  } else template
+  if (!is.null(template_file))
+    args <- c(args, "--template", pandoc_path_arg(template_file))
 
   # validate code_folding
   code_folding <- match.arg(code_folding)
@@ -599,7 +599,7 @@ navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4-3")) {
       dark = "inverse",
       navbar$type[1]
     )
-    template <- file_string(rmarkdown_system_file("rmd/h/_navbar3.html"))
+    template <- file_string(pkg_file("rmd/h/_navbar3.html"))
     sprintf(template, navbar$type[1], navbar$title, left, right)
   } else {
     # BS3 -> BS4
@@ -610,7 +610,7 @@ navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4-3")) {
       navbar$type[1]
     )
     navbar$type <- rep(navbar$type, length.out = 2)
-    template <- file_string(rmarkdown_system_file("rmd/h/_navbar.html"))
+    template <- file_string(pkg_file("rmd/h/_navbar.html"))
     sprintf(template, navbar$expand %||% "lg", navbar$type[1], navbar$type[2], navbar$title, left, right)
   }
 

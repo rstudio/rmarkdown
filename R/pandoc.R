@@ -677,7 +677,7 @@ pandoc_lua_filters <- function(...) {
     args <- c(
       rbind(
         "--lua-filter",
-        rmarkdown_system_file("rmd", "lua", ...)
+        pkg_file("rmd", "lua", ...)
       )
     )
   }

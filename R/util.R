@@ -33,10 +33,13 @@ pandoc_output_ext <- function(ext, to, input) {
   paste0(".", to)
 }
 
-rmarkdown_system_file <- function(...) {
+pkg_file <- function(...) {
   system.file(..., package = "rmarkdown")
 }
 
+pkg_file_arg <- function(...) {
+  pandoc_path_arg(pkg_file(...))
+}
 
 #' @rdname rmarkdown_format
 #' @export

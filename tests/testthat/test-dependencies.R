@@ -28,14 +28,14 @@ test_that("dependency merge is correct", {
       htmlDependency(
         name = "foo",
         version = "1.1.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "foo.js")),
     # output
     list(
       htmlDependency(
         name = "foo",
         version = "1.1.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "foo.js")))
 
   # don't replace a higher version with a lower one
@@ -45,19 +45,19 @@ test_that("dependency merge is correct", {
       htmlDependency(
         name = "foo",
         version = "1.2.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "foo.js"),
       htmlDependency(
         name = "foo",
         version = "1.1.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "foo.js")),
     # output
     list(
       htmlDependency(
         name = "foo",
         version = "1.2.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "foo.js")))
 
   # preserve dependency order on replacement
@@ -67,39 +67,39 @@ test_that("dependency merge is correct", {
       htmlDependency(
         name = "foo",
         version = "1.1.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "foo.js"),
       htmlDependency(
         name = "bar",
         version = "1.1.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "foo.js"),
       htmlDependency(
         name = "baz",
         version = "1.1.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "baz.js"),
       htmlDependency(
         name = "bar",
         version = "1.2.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "foo.js")),
     # output
     list(
     htmlDependency(
       name = "foo",
       version = "1.1.0",
-      src = rmarkdown_system_file("rmd/h"),
+      src = pkg_file("rmd/h"),
       script = "foo.js"),
     htmlDependency(
       name = "bar",
       version = "1.2.0",
-      src = rmarkdown_system_file("rmd/h"),
+      src = pkg_file("rmd/h"),
       script = "foo.js"),
     htmlDependency(
       name = "baz",
       version = "1.1.0",
-      src = rmarkdown_system_file("rmd/h"),
+      src = pkg_file("rmd/h"),
       script = "baz.js")))
 
   # support nested dependency lists
@@ -109,30 +109,30 @@ test_that("dependency merge is correct", {
       htmlDependency(
         name = "bar",
         version = "1.1.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "foo.js"),
       list(
         htmlDependency(
           name = "baz",
           version = "1.1.0",
-          src = rmarkdown_system_file("rmd/h"),
+          src = pkg_file("rmd/h"),
           script = "baz.js"),
         htmlDependency(
           name = "bar",
           version = "1.2.0",
-          src = rmarkdown_system_file("rmd/h"),
+          src = pkg_file("rmd/h"),
           script = "foo.js"))),
     # output
     list(
       htmlDependency(
         name = "bar",
         version = "1.2.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "foo.js"),
       htmlDependency(
         name = "baz",
         version = "1.1.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "baz.js")))
 
   # ignore knit_meta information other than html_dependency
@@ -144,14 +144,14 @@ test_that("dependency merge is correct", {
         htmlDependency(
           name = "baz",
           version = "1.1.0",
-          src = rmarkdown_system_file("rmd/h"),
+          src = pkg_file("rmd/h"),
           script = "baz.js"))),
     # output
     list(
       htmlDependency(
         name = "baz",
         version = "1.1.0",
-        src = rmarkdown_system_file("rmd/h"),
+        src = pkg_file("rmd/h"),
         script = "baz.js")))
 
   })

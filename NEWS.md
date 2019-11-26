@@ -3,9 +3,17 @@ rmarkdown 1.18
 
 - Support for Bootstrap 4 has been added to `html_document` and `html_document_base` via a new argument (`bootstrap_version`). For this release, these formats default to Bootstrap 3, but a future release will change the default to 4 (opt-in now via `bootstrap_version = 4`). In addition to this "strict" Bootstrap 4 mode, there is "compatible" Bootstrap 4 mode (i.e., `bootstrap_version = "4-3"`), which allows you to use BS3 style nav/navbars. Only use this compatible mode if you have existing `html_document`/`html_document_base` output formats that rely on BS3 markup (but is no longer supported in BS4). Thanks, @cpsievert and @jcheng5, #1260.
 
+- For `pdf_document()`, now we patch Pandoc's built-in LaTeX template to include the document subtitle (unnecessary with pandoc 2.6 onwards) and reduce the vertical spacing before title using `--include-in-header` rather than overwriting the built-in template, avoiding compability problems with newer versions of Pandoc (thanks, @adunning, #1563).
+
 - `find_external_resources()` works now when multiple files are specified in the `includes` option of the output format (thanks, @andrie, #1677).
 
 - `find_external_resources()` can find external resources specified in the output format's `reference_doc` or `reference_docx` option now (thanks, @jmcphers, #1696).
+
+- `rmarkdown::run(file = NULL, dir = "foo/")` failed to run Rmd files under the `foo/` directory (thanks, @jenzopr, #1703).
+
+- Reverted the fix for #1692 since it is no longer necessary (https://github.com/yihui/tinytex/issues/152#issuecomment-552796864).
+
+- The `header-includes` field in the YAML metadata will no longer be overwritten by the command-line option `--include-in-header` (thanks, @crsh @mnazarov, #1359).
 
 
 rmarkdown 1.17

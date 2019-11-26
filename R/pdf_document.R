@@ -103,35 +103,27 @@ pdf_document <- function(toc = FALSE,
                          extra_dependencies = NULL) {
 
   # base pandoc options for all PDF output
-  args <- c()
+  args <- c("--self-contained")
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
+
+  append_in_header <- function(text, file = as_tmpfile(text)) {
+    includes_to_pandoc_args(includes(in_header = file))
+  }
 
   # template path and assets
   if (identical(template, "default")) {
 
     pandoc_available(error = TRUE)
-    # choose the right template
+    # patch pandoc template if necessary
     version <- pandoc_version()
-    if (version >= "1.17.0.2")
-      latex_template <- "default-1.17.0.2.tex"
-    else if (version >= "1.15.2")
-      latex_template <- "default-1.15.2.tex"
-    else if (version >= "1.14")
-      latex_template <- "default-1.14.tex"
-    else
-      latex_template <- "default.tex"
-
-    # add to args
-    args <- c(args, "--template",
-              pandoc_path_arg(rmarkdown_system_file(paste0("rmd/latex/",
-                                                           latex_template))))
+    if (version <= "2.5") args <- c(
+      args, append_in_header(file = pkg_file("rmd/latex/subtitle.tex"))
+    )
 
   } else if (!is.null(template)) {
     args <- c(args, "--template", pandoc_path_arg(template))
-  } else {
-    args <- c(args, "--self-contained")
   }
 
   # numbered sections
@@ -144,7 +136,7 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
-  latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
+  latex_engine <- match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
   args <- c(args, pandoc_latex_engine_args(latex_engine))
 
   # citation package
@@ -155,7 +147,7 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, includes_to_pandoc_args(includes))
 
   # make sure the graphics package is always loaded
-  if (identical(template, "default")) args <- c(args, "--variable", "graphics=yes")
+  if (identical(template, "default")) args <- c(args, "--variable", "graphics")
 
   # lua filters (added if pandoc > 2)
   args <- c(args, pandoc_lua_filters(c("pagebreak.lua", "latex-div.lua")))
@@ -170,33 +162,27 @@ pdf_document <- function(toc = FALSE,
   pdf_pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
                                 output_dir) {
 
-    args <- c()
-
-    has_yaml_parameter <- function(text, parameter) {
-      length(grep(paste0("^", parameter, "\\s*:.*$"), text)) > 0
-    }
+    # make sure --include-in-header from command line will not completely
+    # override header-includes in metadata but give the latter lower precedence:
+    # https://github.com/rstudio/rmarkdown/issues/1359
+    args <- append_in_header(metadata[["header-includes"]])
 
     # use a geometry filter when we are using the "default" template
     if (identical(template, "default")) {
-      input_test <- read_utf8(input_file)
-
       # set the margin to 1 inch if no geometry options or document class specified
-      if (!has_yaml_parameter(input_test, "(geometry|documentclass)"))
+      if (!any(c("geometry", "documentclass") %in% names(metadata)))
         args <- c(args, "--variable", "geometry:margin=1in")
 
       # use titling package to change title format to be more compact by default
-      if (!has_yaml_parameter(input_test, "compact-title"))
-        args <- c(args, "--variable", "compact-title:yes")
+      if (!xfun::isFALSE(metadata[["compact-title"]])) args <- c(
+        args, append_in_header(file = pkg_file("rmd/latex/compact-title.tex"))
+      )
     }
 
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
       extra_dependencies <- latex_dependencies(extra_dependencies)
       all_dependencies <- append(extra_dependencies, flatten_latex_dependencies(knit_meta))
-      filename <- as_tmpfile(latex_dependencies_as_string(all_dependencies))
-      if ("header-includes" %in% names(metadata)) {
-        cat(c("", metadata[["header-includes"]]), sep = "\n", file = filename, append = TRUE)
-      }
-      args <- c(args, includes_to_pandoc_args(includes(in_header = filename)))
+      args <- c(args, append_in_header(latex_dependencies_as_string(all_dependencies)))
     }
     args
   }
@@ -260,5 +246,5 @@ latex_document <- function(...) {
 #' @rdname pdf_document
 #' @export
 latex_fragment <- function(...) {
-  latex_document(..., template = rmarkdown_system_file("rmd/fragment/default.tex"))
+  latex_document(..., template = pkg_file("rmd/fragment/default.tex"))
 }

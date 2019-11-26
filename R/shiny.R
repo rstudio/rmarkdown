@@ -73,19 +73,19 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     allRmds <- list.files(path = dir, pattern = "^[^_].*\\.[Rr][Mm][Dd]$")
     if (length(allRmds) == 1) {
       # just one R Markdown document
-      default_file <- allRmds
+      default_file <- file.path(dir, allRmds)
     } else {
       # more than one: look for an index
       index <- which(tolower(allRmds) == "index.rmd")
       if (length(index) > 0) {
-        default_file <- allRmds[index[1]]
+        default_file <- file.path(dir, allRmds[index[1]])
       } else {
         # look for first one that has runtime: shiny
         for (rmd in allRmds) {
           encoding <- render_args$encoding %||% "UTF-8"
           runtime <- yaml_front_matter(file.path(dir, rmd), encoding)$runtime
           if (is_shiny(runtime)) {
-            default_file <- rmd
+            default_file <- file.path(dir, rmd)
             break
           }
         }
@@ -96,7 +96,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   if (is.null(default_file)) {
     # no R Markdown default found; how about an HTML?
     indexHtml <- list.files(dir, "index.html?", ignore.case = TRUE)
-    if (length(indexHtml) > 0) default_file <- indexHtml[1]
+    if (length(indexHtml) > 0) default_file <- file.path(dir, indexHtml[1])
   }
 
   # form and test locations
@@ -141,7 +141,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       if (file.exists(global_r)) {
         source(global_r, local = FALSE)
       }
-      shiny::addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
+      shiny::addResourcePath("rmd_resources", pkg_file("rmd/h/rmarkdown"))
     }
 
     # combine the user-supplied list of Shiny arguments with our own and start
