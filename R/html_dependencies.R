@@ -48,7 +48,7 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
 
   if (version == 3) {
     return(
-      list(htmlDependency(
+      htmlDependency(
         name = "bootstrap",
         version = "3.3.5",
         src = pkg_file("rmd/h/bootstrap"),
@@ -58,7 +58,7 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
           # These shims are necessary for IE 8 compatibility
           "shim/html5shiv.min.js",
           "shim/respond.min.js"),
-        stylesheet = paste0("css/", theme, ".min.css")))
+        stylesheet = paste0("css/", theme, ".min.css"))
     )
   }
 
@@ -90,6 +90,13 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
 
     return(bootsass::bs4_sass(theme_vars, theme))
   }
+}
+
+# an internal version html_dependency_bootstrap() that always returns
+# a list of html dependencies
+html_dependency_bootstrap_list <- function(theme, version) {
+  dep <- html_dependency_bootstrap(theme, version)
+  if (inherits(dep, "html_dependency")) list(dep) else dep
 }
 
 # Create an HTML dependency for tocify

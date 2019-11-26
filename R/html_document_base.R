@@ -86,11 +86,11 @@ html_document_base <- function(smart = TRUE,
     format_deps <- list()
     if (!is.null(theme)) {
       format_deps <- append(format_deps, list(html_dependency_jquery()))
-      format_deps <- append(format_deps, html_dependency_bootstrap(theme, bootstrap_version))
+      format_deps <- append(format_deps, html_dependency_bootstrap_list(theme, bootstrap_version))
     }
     else if (isTRUE(bootstrap_compatible) && is_shiny(runtime)) {
       # If we can add bootstrap for Shiny, do it
-      format_deps <- append(format_deps, html_dependency_bootstrap("bootstrap", bootstrap_version))
+      format_deps <- append(format_deps, html_dependency_bootstrap_list("bootstrap", bootstrap_version))
     }
     format_deps <- append(format_deps, extra_dependencies)
 
