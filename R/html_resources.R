@@ -338,7 +338,10 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
 
   html_file <- render(
     md_file, override_output_format, html_file, quiet = TRUE,
-    output_options = list(self_contained = FALSE), encoding = "UTF-8"
+    encoding = "UTF-8", output_options = list(
+      self_contained = FALSE,
+      pandoc_args = c("--metadata", "pagetitle=PREVIEW")
+    )
   )
 
   # clean up output file and its supporting files directory
