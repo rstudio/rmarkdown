@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -33,6 +33,8 @@
 <script type="text/javascript" src="js/redirect.js"></script>
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 <script type="text/javascript" src="js/ga.js"></script>
+
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -95,7 +97,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -157,6 +158,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -185,6 +187,12 @@ summary {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -327,7 +335,7 @@ renderPlot({
 </div>
 <div id="multiple-pages" class="section level2">
 <h2>Multiple Pages</h2>
-<p>You can link to other interactive documents by using the markdown link syntax and specifying the <em>relative</em> path to the document, e.g. <code>[Another Shiny Document](another.Rmd)</code>.</p>
+<p>You can link to other interactive documents by using the markdown link syntax and specifying the <em>relative</em> path to the document, e.g. <code>[Another Shiny Document](another.Rmd)</code>.</p>
 <p>Currently, only one document can be active at a time, so documents can’t easily share state (although some primitive global sharing is possible via <code>global.R</code>; see the help for <code>rmarkdown::run</code>).</p>
 <p>By default it’s only possible to link to R Markdown files in the same directory subtree as the file on which <code>rmarkdown::run</code> was invoked (i.e you can’t link to <code>../foo.rmd</code>.) You can use the <code>dir</code> argument to <code>rmarkdown::run</code> to indicate the directory to treat as the root.</p>
 </div>

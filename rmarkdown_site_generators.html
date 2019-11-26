@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -30,28 +30,31 @@
 <script type="text/javascript" src="js/ga.js"></script>
 
 
+
+
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -60,9 +63,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -107,7 +110,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -165,7 +168,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -227,6 +229,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -306,18 +309,18 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <h2>Site Generator Function</h2>
 <p>A site generator is an R function that is bound to by including it in the “site:” field of the “index.Rmd” or “index.md” file. For example:</p>
 <p><strong>index.Rmd</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb1-1" data-line-number="1">---</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">title: &quot;My Book&quot;</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">output: bookdown::gitbook</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">site: bookdown::bookdown_site</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">---</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a>---</span>
+<span id="cb1-2"><a href="#cb1-2"></a>title: &quot;My Book&quot;</span>
+<span id="cb1-3"><a href="#cb1-3"></a>output: bookdown::gitbook</span>
+<span id="cb1-4"><a href="#cb1-4"></a>site: bookdown::bookdown_site</span>
+<span id="cb1-5"><a href="#cb1-5"></a>---</span></code></pre></div>
 <p>A site generation function should return a list with the following elements:</p>
 <dl>
 <dt>name</dt>
 <dd><p>The name for the website (e.g. the parent directory name).</p>
 </dd>
 <dt>output_dir</dt>
-<dd><p>The directory where the website output is written to. This path should be relative to the site directory (e.g. “.” or &quot;_site&quot;)</p>
+<dd><p>The directory where the website output is written to. This path should be relative to the site directory (e.g. “.” or "_site")</p>
 </dd>
 <dt>render</dt>
 <dd><p>An R function that can be called to generate the site. The function should accept the <code>input_file</code>, <code>output_format</code>, <code>envir</code>, <code>quiet</code>, and <code>encoding</code> arguments.</p>
@@ -328,8 +331,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </dl>
 <p>Note that the <code>input_file</code> argument will be NULL when the entire site is being generated. It will be set to a specific file name if a front-end tool is attempting to preview it (e.g. RStudio IDE via the Knit button).</p>
 <p>When <code>quiet = FALSE</code> the <code>render</code> function should also print a line of output using the <code>message</code> function indicating which output file should be previewed, for example:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span>quiet)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">message</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Output created: &quot;</span>, output)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="cf">if</span> (<span class="op">!</span>quiet)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="kw">message</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Output created: &quot;</span>, output)</span></code></pre></div>
 <p>Emitting this line enables front-ends like RStudio to determine which file they should open to preview the website.</p>
 </div>
 <div id="examples" class="section level2">

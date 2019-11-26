@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -33,6 +33,8 @@
 <script type="text/javascript" src="js/redirect.js"></script>
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 <script type="text/javascript" src="js/ga.js"></script>
+
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -95,7 +97,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -157,6 +158,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -185,6 +187,12 @@ summary {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -365,7 +373,7 @@ kmeans_cluster(iris)
 </code></pre>
 <p>Which would result in the following inside the running document:</p>
 <div class="figure">
-<img src="images/shiny-widget-kmeans.png" alt="Shiny Widget KMeans" />
+<img src="images/shiny-widget-kmeans.png" alt="" />
 <p class="caption">Shiny Widget KMeans</p>
 </div>
 <p>To better understand how this works check out the <a href="https://github.com/rstudio/rmdexamples/blob/master/R/kmeans_cluster.R">source code</a> for the <code>kmeans_cluster</code> function. The articles on <a href="https://bookdown.org/yihui/rmarkdown/shiny-embedded.html">Embedded Shiny Apps</a> and <a href="https://bookdown.org/yihui/rmarkdown/shiny-widgets.html">Shiny Widgets</a> also cover using the <code>shinyApp</code> function in more depth.</p>

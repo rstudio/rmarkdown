@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -33,6 +33,8 @@
 <script type="text/javascript" src="js/redirect.js"></script>
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 <script type="text/javascript" src="js/ga.js"></script>
+
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -95,7 +97,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -157,6 +158,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -185,6 +187,12 @@ summary {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -384,7 +392,7 @@ params$start
 <div id="parameter-user-interfaces" class="section level3">
 <h3>Parameter User Interfaces</h3>
 <p>In the <a href="#passing-parameters">Passing Parameters</a> section above we described wrapping the invocation of a report in an R funtion to allow customization of it’s parameters. It’s also possible to provide a user-interface for specifying parameter values.</p>
-<p>If your document contains parameters and you specify the <code>params = &quot;ask&quot;</code> argument to the <code>render</code> function then a user-interface is provided to specify the parameter values. For example, consider the following parameter declarations:</p>
+<p>If your document contains parameters and you specify the <code>params = "ask"</code> argument to the <code>render</code> function then a user-interface is provided to specify the parameter values. For example, consider the following parameter declarations:</p>
 <pre class="yaml"><code>---
 title: &quot;My Document&quot;
 output: html_document

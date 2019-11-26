@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Richard Layton" />
@@ -31,6 +31,8 @@
 <script type="text/javascript" src="js/redirect.js"></script>
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 <script type="text/javascript" src="js/ga.js"></script>
+
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -93,7 +95,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -155,6 +156,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -389,7 +391,7 @@ And I have this next subsection. </code></pre>
 </div>
 <div id="tables-using-kable" class="section level3">
 <h3>Tables using <em>kable()</em></h3>
-<p>In Ch. 8 of (Stodden, Leisch, &amp; Peng, ed. 2014), Hoefling &amp; Rossini note that support for tables is one of the impediments to reproducibility. Packages <em>knitr</em> and <em>pander</em> have made some progress in this area.</p>
+<p>In Ch. 8 of (Stodden, Leisch, &amp; Peng, ed. 2014), Hoefling &amp; Rossini note that support for tables is one of the impediments to reproducibility. Packages <em>knitr</em> and <em>pander</em> have made some progress in this area.</p>
 <p>The <em>knitr</em> package provides a <em>kable()</em> function for creating tables with a minimum of fuss but with limited control of formatting. However, the default alignments are good, making this a useful function for initial drafts.</p>
 <p>Returning to the <em>test-report.Rmd</em> file, at the end of the current file add some text,</p>
 <pre class="r"><code># Make a table
@@ -499,24 +501,25 @@ obstacles to effective collaboration.</code></pre>
 </li>
 <li>Word 2013</li>
 </ul>
-<pre><code>## R version 3.6.0 (2019-04-26)
+<pre><code>## R version 3.6.1 (2019-07-05)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS Mojave 10.14.5
+## Running under: macOS Catalina 10.15.1
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
 ## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] knitr_1.23.2
+## [1] knitr_1.26.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_3.6.0   magrittr_1.5     tools_3.6.0      htmltools_0.3.6 
-##  [5] yaml_2.2.0       Rcpp_1.0.1       stringi_1.4.3    rmarkdown_1.13.4
-##  [9] stringr_1.4.0    xfun_0.7.4       digest_0.6.19    evaluate_0.14</code></pre>
+##  [1] compiler_3.6.1   magrittr_1.5     htmltools_0.4.0  tools_3.6.1     
+##  [5] yaml_2.2.0       Rcpp_1.0.3       stringi_1.4.3    rmarkdown_1.17.7
+##  [9] stringr_1.4.0    xfun_0.11.2      digest_0.6.23    packrat_0.5.0   
+## [13] rlang_0.4.2      evaluate_0.14</code></pre>
 <p><br></p>
 </div>
 <div id="image-credits" class="section level3">
@@ -525,7 +528,7 @@ obstacles to effective collaboration.</code></pre>
 </div>
 <div id="references" class="section level3">
 <h3>References</h3>
-<p>Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. 2014. <em>Implementing Reproducible Research</em>. Boca Raton, FL: Taylor &amp; Francis Group LLC.</p>
+<p>Stodden, Victoria, Friedrich Leisch, and Roger D. Peng, eds. 2014. <em>Implementing Reproducible Research</em>. Boca Raton, FL: Taylor &amp; Francis Group LLC.</p>
 </div>
 
   </div> <!-- articleBandContent -->

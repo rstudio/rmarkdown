@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -33,6 +33,8 @@
 <script type="text/javascript" src="js/redirect.js"></script>
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 <script type="text/javascript" src="js/ga.js"></script>
+
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -95,7 +97,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -157,6 +158,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -185,6 +187,12 @@ summary {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -1040,7 +1048,7 @@ is *emphasized with asterisks*.</code></pre>
 <dd>It will be rendered inside <code>&lt;math&gt;</code> tags.
 </dd>
 <dt>Textile</dt>
-<dd>It will be rendered inside <code>&lt;span class=&quot;math&quot;&gt;</code> tags.
+<dd>It will be rendered inside <code>&lt;span class="math"&gt;</code> tags.
 </dd>
 <dt>RTF, OpenDocument, ODT</dt>
 <dd>It will be rendered, if possible, using unicode characters, and will otherwise appear verbatim.
@@ -1057,7 +1065,7 @@ is *emphasized with asterisks*.</code></pre>
 <dt>HTML, Slidy, DZSlides, S5, EPUB</dt>
 <dd><p>The way math is rendered in HTML will depend on the command-line options selected:</p>
 <ol style="list-style-type: decimal">
-<li><p>The default is to render TeX math as far as possible using unicode characters, as with RTF, DocBook, and OpenDocument output. Formulas are put inside a <code>span</code> with <code>class=&quot;math&quot;</code>, so that they may be styled differently from the surrounding text if needed.</p></li>
+<li><p>The default is to render TeX math as far as possible using unicode characters, as with RTF, DocBook, and OpenDocument output. Formulas are put inside a <code>span</code> with <code>class="math"</code>, so that they may be styled differently from the surrounding text if needed.</p></li>
 <li><p>If the <code>--latexmathml</code> option is used, TeX math will be displayed between <code>$</code> or <code>$$</code> characters and put in <code>&lt;span&gt;</code> tags with class <code>LaTeX</code>. The [LaTeXMathML] script will be used to render it as formulas. (This trick does not work in all browsers, but it works in Firefox. In browsers that do not support LaTeXMathML, TeX math will appear verbatim between <code>$</code> characters.)</p></li>
 <li><p>If the <code>--jsmath</code> option is used, TeX math will be put inside <code>&lt;span&gt;</code> tags (for inline math) or <code>&lt;div&gt;</code> tags (for display math) with class <code>math</code>. The [jsMath] script will be used to render it.</p></li>
 <li><p>If the <code>--mimetex</code> option is used, the [mimeTeX] CGI script will be called to generate images for each TeX formula. This should work in all browsers. The <code>--mimetex</code> option takes an optional URL as argument. If no URL is specified, it will be assumed that the mimeTeX CGI script is at <code>/cgi-bin/mimetex.cgi</code>.</p></li>
@@ -1228,7 +1236,7 @@ and a reference ![image][ref] with attributes.
 <pre><code>![](file.jpg){ width=50% }</code></pre>
 <ul>
 <li>Dimensions are converted to inches for output in page-based formats like LaTeX. Dimensions are converted to pixels for output in HTML-like formats. Use the <code>--dpi</code> option to specify the number of pixels per inch. The default is 96dpi.</li>
-<li>The <code>%</code> unit is generally relative to some available space. For example the above example will render to <code>&lt;img href=&quot;file.jpg&quot; style=&quot;width: 50%;&quot; /&gt;</code> (HTML), <code>\includegraphics[width=0.5\textwidth]{file.jpg}</code> (LaTeX), or <code>\externalfigure[file.jpg][width=0.5\textwidth]</code> (ConTeXt).</li>
+<li>The <code>%</code> unit is generally relative to some available space. For example the above example will render to <code>&lt;img href="file.jpg" style="width: 50%;" /&gt;</code> (HTML), <code>\includegraphics[width=0.5\textwidth]{file.jpg}</code> (LaTeX), or <code>\externalfigure[file.jpg][width=0.5\textwidth]</code> (ConTeXt).</li>
 <li>Some output formats have a notion of a class (<a href="http://wiki.contextgarden.net/Using_Graphics#Multiple_Image_Settings">ConTeXt</a>) or a unique identifier (LaTeX <code>\caption</code>), or both (HTML).</li>
 <li>When no <code>width</code> or <code>height</code> attributes are specified, the fallback is to look at the image resolution and the dpi metadata embedded in the image file.</li>
 </ul>
@@ -1339,7 +1347,7 @@ note.]</code></pre>
 <dt><code>&lt;b&gt;...&lt;/b&gt;</code></dt>
 <dd>bold
 </dd>
-<dt><code>&lt;span style=&quot;font-variant:small-caps;&quot;&gt;...&lt;/span&gt;</code> or <code>&lt;sc&gt;...&lt;/sc&gt;</code></dt>
+<dt><code>&lt;span style="font-variant:small-caps;"&gt;...&lt;/span&gt;</code> or <code>&lt;sc&gt;...&lt;/sc&gt;</code></dt>
 <dd>small capitals
 </dd>
 <dt><code>&lt;sub&gt;...&lt;/sub&gt;</code></dt>
@@ -1348,7 +1356,7 @@ note.]</code></pre>
 <dt><code>&lt;sup&gt;...&lt;/sup&gt;</code></dt>
 <dd>superscript
 </dd>
-<dt><code>&lt;span class=&quot;nocase&quot;&gt;...&lt;/span&gt;</code></dt>
+<dt><code>&lt;span class="nocase"&gt;...&lt;/span&gt;</code></dt>
 <dd>prevent a phrase from being capitalized as title case
 </dd>
 </dl>
@@ -1694,7 +1702,7 @@ rights: © 2007 John Smith, CC BY-NC
 </div>
 <div id="linked-media" class="section level2">
 <h2>Linked media</h2>
-<p>By default, pandoc will download linked media (including audio and video) and include it in the EPUB container, yielding a completely self-contained EPUB. If you want to link to external media resources instead, use raw HTML in your source and add <code>data-external=&quot;1&quot;</code> to the tag with the <code>src</code> attribute. For example:</p>
+<p>By default, pandoc will download linked media (including audio and video) and include it in the EPUB container, yielding a completely self-contained EPUB. If you want to link to external media resources instead, use raw HTML in your source and add <code>data-external="1"</code> to the tag with the <code>src</code> attribute. For example:</p>
 <pre><code>&lt;audio controls=&quot;1&quot;&gt;
   &lt;source src=&quot;http://example.com/music/toccata.mp3&quot;
           data-external=&quot;1&quot; type=&quot;audio/mpeg&quot;&gt;
@@ -1717,16 +1725,16 @@ rights: © 2007 John Smith, CC BY-NC
 <pre><code>(C) 2007 Joe Smith</code></pre>
 <p>from being interpreted as a list item. In this case, a backslash escape can be used:</p>
 <pre><code>(C\) 2007 Joe Smith</code></pre>
-<a href="#fnref1" class="footnote-back">↩</a></li>
-<li id="fn2"><p>I have been influenced by the suggestions of <a href="http://www.justatheory.com/computers/markup/modest-markdown-proposal.html">David Wheeler</a>.<a href="#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>This scheme is due to Michel Fortin, who proposed it on the <a href="http://six.pairlist.net/pipermail/markdown-discuss/2005-March/001097.html">Markdown discussion list</a>.<a href="#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>This feature is not yet implemented for RTF, OpenDocument, or ODT. In those formats, you’ll just get an image in a paragraph by itself, with no caption.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+<a href="#fnref1" class="footnote-back">↩︎</a></li>
+<li id="fn2"><p>I have been influenced by the suggestions of <a href="http://www.justatheory.com/computers/markup/modest-markdown-proposal.html">David Wheeler</a>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>This scheme is due to Michel Fortin, who proposed it on the <a href="http://six.pairlist.net/pipermail/markdown-discuss/2005-March/001097.html">Markdown discussion list</a>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>This feature is not yet implemented for RTF, OpenDocument, or ODT. In those formats, you’ll just get an image in a paragraph by itself, with no caption.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
 <li id="fn5"><p>To see why laziness is incompatible with relaxing the requirement of a blank line between items, consider the following example:</p>
 <pre><code>bar
 :    definition
 foo
 :    definition</code></pre>
-<p>Is this a single list item with two definitions of “bar,” the first of which is lazily wrapped, or two list items? To remove the ambiguity we must either disallow lazy wrapping or require a blank line between list items.<a href="#fnref5" class="footnote-back">↩</a></p></li>
+<p>Is this a single list item with two definitions of “bar,” the first of which is lazily wrapped, or two list items? To remove the ambiguity we must either disallow lazy wrapping or require a blank line between list items.<a href="#fnref5" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 

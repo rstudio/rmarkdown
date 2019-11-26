@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -33,6 +33,8 @@
 <script type="text/javascript" src="js/redirect.js"></script>
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 <script type="text/javascript" src="js/ga.js"></script>
+
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -95,7 +97,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -157,6 +158,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -185,6 +187,12 @@ summary {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -428,7 +436,7 @@ knitr::read_chunk("example.R")
 <div id="notebook-file" class="section level3">
 <h3>Notebook File</h3>
 <p>When a notebook .Rmd is saved, an <code>.nb.html</code> file is created alongside it. This file is a self-contained HTML file which contains both a rendered copy of the notebook with all current chunk outputs (suitable for display on a website) and a copy of the notebook .Rmd itself.</p>
-<p>You can view the <code>.nb.html</code> file in any ordinary web browser. It can also be opened in RStudio; when you open there (using e.g. <em>File -&gt; Open</em>), RStudio will do the following:</p>
+<p>You can view the <code>.nb.html</code> file in any ordinary web browser. It can also be opened in RStudio; when you open there (using e.g. <em>File -&gt; Open</em>), RStudio will do the following:</p>
 <ol style="list-style-type: decimal">
 <li>Extract the bundled .Rmd file and place it alongside the <em>.nb.html</em> file</li>
 <li>Open the .Rmd file in a new RStudio editor tab</li>

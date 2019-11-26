@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -30,6 +30,8 @@
 <script type="text/javascript" src="js/redirect.js"></script>
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 <script type="text/javascript" src="js/ga.js"></script>
+
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -92,7 +94,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -154,6 +155,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -251,7 +253,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <p><img src="lesson-images/params-1-hawaii.png" /> </br></p>
 <div id="declaring-parameters" class="section level2">
 <h2>Declaring Parameters</h2>
-<p>Parameters are declared using the <code>params</code> field within the YAML header of the document. For example, the file above creates the parameter <code>data</code> and assigns it the default value <code>&quot;hawaii&quot;</code>.</p>
+<p>Parameters are declared using the <code>params</code> field within the YAML header of the document. For example, the file above creates the parameter <code>data</code> and assigns it the default value <code>"hawaii"</code>.</p>
 </div>
 <div id="using-parameters-in-code" class="section level2">
 <h2>Using Parameters in Code</h2>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -30,6 +30,8 @@
 <script type="text/javascript" src="js/redirect.js"></script>
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 <script type="text/javascript" src="js/ga.js"></script>
+
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -92,7 +94,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -154,6 +155,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -295,9 +297,9 @@ cat(contents, sep = &quot;\n&quot;)</code></pre>
 <pre class="r"><code>parsed &lt;- rmarkdown::parse_html_notebook(output_file)
 str(parsed)</code></pre>
 <pre><code>## List of 4
-##  $ source     : chr [1:1832] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot;&gt;&quot; &quot;&quot; ...
+##  $ source     : chr [1:1832] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html&gt;&quot; &quot;&quot; ...
 ##  $ rmd        : chr [1:8] &quot;---&quot; &quot;title: \&quot;R Notebook Stub\&quot;&quot; &quot;output: html_notebook&quot; &quot;---&quot; ...
-##  $ header     : chr [1:1718] &quot;&lt;head&gt;&quot; &quot;&quot; &quot;&lt;meta charset=\&quot;utf-8\&quot; /&gt;&quot; &quot;&lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html; charset=utf-8\&quot; /&gt;&quot; ...
+##  $ header     : chr [1:1718] &quot;&lt;head&gt;&quot; &quot;&quot; &quot;&lt;meta charset=\&quot;utf-8\&quot; /&gt;&quot; &quot;&lt;meta name=\&quot;generator\&quot; content=\&quot;pandoc\&quot; /&gt;&quot; ...
 ##  $ annotations:List of 12
 ##   ..$ :List of 4
 ##   .. ..$ row  : int 1751
