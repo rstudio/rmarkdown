@@ -34,7 +34,7 @@ output:
       <div class="galleryItem">
         <a href="https://rstudio.github.io/tufte/"><img class="galleryItemImage" src="galleryImages/tufte.png"/></a>
         <a href="https://rstudio.github.io/tufte/" class="galleryItemLabel">Handouts</a>
-        <div class="galleryItemDescription">Tufte styled documents for handouts. <a href="https://raw.githubusercontent.com/rstudio/tufte/master/inst/rmarkdown/templates/tufte_html/skeleton/skeleton.Rmd">Example Code</a></div>
+        <div class="galleryItemDescription">Tufte styled documents for handouts. <a href="https://github.com/rstudio/tufte/tree/master/inst/rmarkdown/templates/tufte_html/skeleton/skeleton.Rmd">Example Code</a></div>
       </div>
     </div>
   </div>
