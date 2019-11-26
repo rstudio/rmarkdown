@@ -13,6 +13,8 @@ rmarkdown 1.18
 
 - The `header-includes` field in the YAML metadata will no longer be overwritten by the command-line option `--include-in-header` (thanks, @crsh @mnazarov, #1359).
 
+- Removed the `xmlns` attribute in the `<html>` tag in the default HTML template (thanks, @grady #1640, @spgarbet #995).
+
 
 rmarkdown 1.17
 ================================================================================
