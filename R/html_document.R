@@ -657,7 +657,6 @@ navbar_links_tags <- function(links, depth = 0L, version) {
 
         tags$li(
           class = menu_class,
-          class = if (!bs3_nav) "nav-item",
           tags$a(
             href = "#",
             class = "dropdown-toggle",
@@ -684,7 +683,8 @@ navbar_links_tags <- function(links, depth = 0L, version) {
         # standard menu item
         textTags <- navbar_link_text(x)
         tags$li(
-          class = if (!bs3_nav) "nav-item",
+          # https://getbootstrap.com/docs/4.4/components/navs/#tabs-with-dropdowns
+          class = if (!bs3_nav && depth == 0) "nav-item",
           tags$a(
             class = nav_link_class(bs3_nav, depth),
             href = x$href,
