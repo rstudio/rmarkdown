@@ -141,15 +141,10 @@ window.buildTabsets = function(tocID) {
     if (tabset.hasClass("tabset-sticky"))
       tabset.rmarkdownStickyTabs();
 
-    // .tabset-dropdown's CSS model relies on BS3 style nav
-    // (i.e., .active residing on <li>, not <a>)
-    // https://github.com/rstudio/rmarkdown/blob/1e0964c/inst/rmd/h/default.html#L298-L351
-    // This logic is to make sure that CSS still works when we
-    // have BS4 style markup. Note there is also a bit of JS
-    // to add/remove li.active in the HTML template
-    if (tabset.hasClass("tabset-dropdown") && !window.BS3_NAV) {
-      var nav_link = $(".tabset-dropdown > .nav-tabs .nav-link.active");
-      nav_link.parent().addClass("active");
+    // .tabset-dropdown is not an official bootstrap thing
+    // but relies on some custom CSS within default.html
+    if (tabset.hasClass("tabset-dropdown")) {
+      $(tabList.children('li')[activeTab]).addClass("active-dropdown-tab");
     }
   }
 

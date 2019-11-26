@@ -324,7 +324,7 @@ $endif$
 }
 
 $if(bs3)$
-.tabset-dropdown > .nav-tabs > li.active:before {
+.tabset-dropdown > .nav-tabs > li.active-dropdown-tab:before {
   content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
@@ -332,7 +332,7 @@ $if(bs3)$
   border-right: 1px solid #ddd;
 }
 
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active-dropdown-tab:before {
   content: "&#xe258;";
   border: none;
 }
@@ -345,7 +345,7 @@ $if(bs3)$
   border-right: 1px solid #ddd;
 }
 $else$
-.tabset-dropdown > .nav-tabs > li.active:before {
+.tabset-dropdown > .nav-tabs > li.active-dropdown-tab:before {
   display: inline-block;
   margin-left: 0.255em;
   vertical-align: 0.255em;
@@ -356,7 +356,7 @@ $else$
   border-left: 0.3em solid transparent;
 }
 
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active-dropdown-tab:before {
   display: inline-block;
   margin-left: 0.255em;
   vertical-align: 0.255em;
@@ -379,7 +379,7 @@ $else$
 }
 $endif$
 
-.tabset-dropdown > .nav-tabs > li.active {
+.tabset-dropdown > .nav-tabs > li.active-dropdown-tab {
   display: block;
 }
 
@@ -651,8 +651,8 @@ $$(document).ready(function () {
 $$(document).ready(function () {
   $$('.tabset-dropdown > .nav-tabs > li').click(function () {
     $$(this).parent().toggleClass('nav-tabs-open');
-    $$(this).siblings().removeClass("active");
-    $$(this).addClass("active");
+    $$(this).siblings().removeClass("active-dropdown-tab");
+    $$(this).addClass("active-dropdown-tab");
   });
 });
 </script>
