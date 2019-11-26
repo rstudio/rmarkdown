@@ -550,7 +550,7 @@ pandoc_body_padding_variable_args <- function(theme, version) {
            yeti = 45,
            51)
   } else {
-    bootsass::bootswatch_theme_navbar_height(theme)
+    bootsass::navbar_height(theme)
   }
 
   # header padding is bodyPadding + 5
