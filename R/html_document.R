@@ -582,6 +582,8 @@ navbar_html_from_yaml <- function(navbar_yaml, version = 3) {
 #' @export
 navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4-3")) {
 
+  bootstrap_version <- bootstrap_version_normalize(bootstrap_version)
+
   # title and type
   if (is.null(navbar$title)) navbar$title <- ""
   if (is.null(navbar$type)) navbar$type <- "default"
@@ -621,6 +623,7 @@ navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4-3")) {
 #' @name navbar_html
 #' @export
 navbar_links_html <- function(links, bootstrap_version = c("3", "4", "4-3")) {
+  bootstrap_version <- bootstrap_version_normalize(bootstrap_version)
   as.character(navbar_links_tags(links, version = bootstrap_version))
 }
 
