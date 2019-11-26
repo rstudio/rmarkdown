@@ -175,7 +175,7 @@ pdf_document <- function(toc = FALSE,
 
       # use titling package to change title format to be more compact by default
       if (!xfun::isFALSE(metadata[["compact-title"]])) args <- c(
-        args, "--include-in-header", system_file_arg("rmd/latex/compact-title.tex")
+        args, "--include-in-header", pkg_file_arg("rmd/latex/compact-title.tex")
       )
     }
 

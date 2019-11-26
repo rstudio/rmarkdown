@@ -37,7 +37,7 @@ pkg_file <- function(...) {
   system.file(..., package = "rmarkdown")
 }
 
-system_file_arg <- function(...) {
+pkg_file_arg <- function(...) {
   pandoc_path_arg(pkg_file(...))
 }
 

@@ -31,7 +31,7 @@ github_document <- function(toc = FALSE,
 
   # add special markdown rendering template to ensure we include the title fields
   pandoc_args <- c(
-    pandoc_args, "--template", system_file_arg(
+    pandoc_args, "--template", pkg_file_arg(
       "rmarkdown/templates/github_document/resources/default.md")
   )
 
@@ -51,12 +51,12 @@ github_document <- function(toc = FALSE,
   if (html_preview) {
     format$post_processor <- function(metadata, input_file, output_file, clean, verbose) {
 
-      css <- system_file_arg(
+      css <- pkg_file_arg(
         "rmarkdown/templates/github_document/resources/github.css")
       # provide a preview that looks like github
       args <- c(
         "--standalone", "--self-contained", "--highlight-style", "pygments",
-        "--template", system_file_arg(
+        "--template", pkg_file_arg(
           "rmarkdown/templates/github_document/resources/preview.html"),
         "--variable", paste0("github-markdown-css:", css),
         "--email-obfuscation", "none", # no email obfuscation
