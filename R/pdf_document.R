@@ -162,8 +162,8 @@ pdf_document <- function(toc = FALSE,
       includes_to_pandoc_args(includes(in_header = as_tmpfile(text)))
     }
 
-    # make sure --header-includes from command line will not completely override
-    # header-includes in metadata but give the latter lower precedence:
+    # make sure --include-in-header from command line will not completely
+    # override header-includes in metadata but give the latter lower precedence:
     # https://github.com/rstudio/rmarkdown/issues/1359
     args <- append_in_header(metadata[["header-includes"]])
 
