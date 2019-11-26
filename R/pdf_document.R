@@ -108,6 +108,10 @@ pdf_document <- function(toc = FALSE,
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
+  append_in_header <- function(text, file = as_tmpfile(text)) {
+    includes_to_pandoc_args(includes(in_header = file))
+  }
+
   # template path and assets
   if (identical(template, "default")) {
 
@@ -115,7 +119,7 @@ pdf_document <- function(toc = FALSE,
     # patch pandoc template if necessary
     version <- pandoc_version()
     if (version <= "2.5") args <- c(
-      args, "--include-in-header", system_file_arg("rmd/latex/subtitle.tex")
+      args, append_in_header(file = rmarkdown_system_file("rmd/latex/subtitle.tex"))
     )
 
   } else if (!is.null(template)) {
@@ -157,10 +161,6 @@ pdf_document <- function(toc = FALSE,
   # any geometry settings already specified by the user)
   pdf_pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
                                 output_dir) {
-
-    append_in_header <- function(text) {
-      includes_to_pandoc_args(includes(in_header = as_tmpfile(text)))
-    }
 
     # make sure --include-in-header from command line will not completely
     # override header-includes in metadata but give the latter lower precedence:
