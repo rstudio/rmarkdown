@@ -158,7 +158,14 @@ pdf_document <- function(toc = FALSE,
   pdf_pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
                                 output_dir) {
 
-    args <- c()
+    append_in_header <- function(text) {
+      includes_to_pandoc_args(includes(in_header = as_tmpfile(text)))
+    }
+
+    # make sure --header-includes from command line will not completely override
+    # header-includes in metadata but give the latter lower precedence:
+    # https://github.com/rstudio/rmarkdown/issues/1359
+    args <- append_in_header(metadata[["header-includes"]])
 
     # use a geometry filter when we are using the "default" template
     if (identical(template, "default")) {
@@ -175,11 +182,7 @@ pdf_document <- function(toc = FALSE,
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
       extra_dependencies <- latex_dependencies(extra_dependencies)
       all_dependencies <- append(extra_dependencies, flatten_latex_dependencies(knit_meta))
-      filename <- as_tmpfile(latex_dependencies_as_string(all_dependencies))
-      if ("header-includes" %in% names(metadata)) {
-        cat(c("", metadata[["header-includes"]]), sep = "\n", file = filename, append = TRUE)
-      }
-      args <- c(args, includes_to_pandoc_args(includes(in_header = filename)))
+      args <- c(args, append_in_header(latex_dependencies_as_string(all_dependencies)))
     }
     args
   }

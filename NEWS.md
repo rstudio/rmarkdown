@@ -11,6 +11,8 @@ rmarkdown 1.18
 
 - Reverted the fix for #1692 since it is no longer necessary (https://github.com/yihui/tinytex/issues/152#issuecomment-552796864).
 
+- The `header-includes` field in the YAML metadata will no longer be overwritten by the command-line option `--include-in-header` (thanks, @crsh @mnazarov, #1359).
+
 
 rmarkdown 1.17
 ================================================================================
