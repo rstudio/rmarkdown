@@ -22,13 +22,13 @@ output:
         <div class="galleryItemDescription">HTML documents for web publishing.</div>
       </div>
       <div class="galleryItem">
-        <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/svm-rmarkdown-article-example.pdf"><img class="galleryItemImage" src="galleryImages/pdf.png"/></a>
-        <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/svm-rmarkdown-article-example.pdf" class="galleryItemLabel">PDF</a>
-        <div class="galleryItemDescription">PDF documents for printing. <a href="https://raw.githubusercontent.com/svmiller/svm-r-markdown-templates/master/svm-rmarkdown-article-example.Rmd">Example Code</a></div>
+        <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/article-example/svm-rmarkdown-article-example.pdf"><img class="galleryItemImage" src="galleryImages/pdf.png"/></a>
+        <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/article-example/svm-rmarkdown-article-example.pdf" class="galleryItemLabel">PDF</a>
+        <div class="galleryItemDescription">PDF documents for printing. <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/article-example/svm-rmarkdown-article-example.Rmd">Example Code</a></div>
       </div>
       <div class="galleryItem">
         <img class="galleryItemImage" src="galleryImages/word.png"/>
-        <a class="galleryItemLabel">Microsoft Word</a>
+        <a href="https://github.com/svmiller/svm-r-markdown-templates/tree/master/word-example" class="galleryItemLabel">Microsoft Word</a>
         <div class="galleryItemDescription">Microsoft Word documents for Office workflows.</div>
       </div>
       <div class="galleryItem">
