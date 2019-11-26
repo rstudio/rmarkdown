@@ -20,7 +20,7 @@ html_dependency_jquery <- function()  {
   htmlDependency(
     name = "jquery",
     version = "1.11.3",
-    src = rmarkdown_system_file(file = "rmd/h/jquery"),
+    src = pkg_file("rmd/h/jquery"),
     script = "jquery.min.js")
 }
 
@@ -32,7 +32,7 @@ html_dependency_jqueryui <- function() {
   htmlDependency(
     name = "jqueryui",
     version = "1.11.4",
-    src = rmarkdown_system_file(file = "rmd/h/jqueryui"),
+    src = pkg_file("rmd/h/jqueryui"),
     script = "jquery-ui.min.js")
 }
 
@@ -48,7 +48,7 @@ html_dependency_bootstrap <- function(theme) {
   htmlDependency(
     name = "bootstrap",
     version = "3.3.5",
-    src = rmarkdown_system_file(file = "rmd/h/bootstrap"),
+    src = pkg_file("rmd/h/bootstrap"),
     meta = list(viewport = "width=device-width, initial-scale=1"),
     script = c(
       "js/bootstrap.min.js",
@@ -66,7 +66,7 @@ html_dependency_tocify <- function() {
   htmlDependency(
     name = "tocify",
     version = "1.9.1",
-    src = rmarkdown_system_file(file = "rmd/h/tocify"),
+    src = pkg_file("rmd/h/tocify"),
     script = "jquery.tocify.js",
     stylesheet = "jquery.tocify.css")
 }
@@ -79,7 +79,7 @@ html_dependency_font_awesome <- function() {
   htmlDependency(
     "font-awesome",
     "5.1.0",
-    src = rmarkdown_system_file("rmd/h/fontawesome"),
+    src = pkg_file("rmd/h/fontawesome"),
     stylesheet = c(
       "css/all.css",
       "css/v4-shims.css")
@@ -94,7 +94,7 @@ html_dependency_ionicons <- function() {
   htmlDependency(
     name = "ionicons",
     version = "2.0.1",
-    src = rmarkdown_system_file(file = "rmd/h/ionicons"),
+    src = pkg_file("rmd/h/ionicons"),
     stylesheet = "css/ionicons.min.css")
 }
 
@@ -109,7 +109,7 @@ html_dependency_navigation <- function(code_menu, source_embed) {
 
   htmlDependency(name = "navigation",
                  version = "1.1",
-                 src = rmarkdown_system_file("rmd/h/navigation-1.1"),
+                 src = pkg_file("rmd/h/navigation-1.1"),
                  script = script)
 }
 
@@ -276,7 +276,7 @@ html_dependency_pagedtable <- function() {
   htmlDependency(
     "pagedtable",
     version = "1.1",
-    src = rmarkdown_system_file("rmd/h/pagedtable-1.1"),
+    src = pkg_file("rmd/h/pagedtable-1.1"),
     script = "js/pagedtable.js",
     stylesheet = "css/pagedtable.css"
   )
@@ -289,7 +289,7 @@ html_dependency_highlightjs <- function(highlight) {
   htmlDependency(
     "highlightjs",
     version = "9.12.0",
-    src = rmarkdown_system_file("rmd/h/highlightjs"),
+    src = pkg_file("rmd/h/highlightjs"),
     script = "highlight.js",
     stylesheet = paste0(highlight, ".css")
   )
@@ -308,7 +308,7 @@ html_dependency_rsiframe <- function() {
   htmlDependency(
     "rstudio-iframe",
     version = "1.1",
-    src = rmarkdown_system_file("rmd/h/rsiframe-1.1"),
+    src = pkg_file("rmd/h/rsiframe-1.1"),
     script = "rsiframe.js",
     meta = meta
   )

@@ -261,7 +261,7 @@ html_document <- function(toc = FALSE,
 
   # template path and assets
   template_file <- if (identical(template, "default")) {
-    rmarkdown_system_file("rmd/h/default.html")
+    pkg_file("rmd/h/default.html")
   } else template
   if (!is.null(template_file))
     args <- c(args, "--template", pandoc_path_arg(template_file))
@@ -566,7 +566,7 @@ navbar_html <- function(navbar) {
   right <- navbar_links_html(navbar$right)
 
   # build the navigation bar and return it as a temp file
-  template <- file_string(rmarkdown_system_file("rmd/h/_navbar.html"))
+  template <- file_string(pkg_file("rmd/h/_navbar.html"))
   navbar_html <- sprintf(template, navbar$type, navbar$title, left, right)
   as_tmpfile(navbar_html)
 }

@@ -141,7 +141,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       if (file.exists(global_r)) {
         source(global_r, local = FALSE)
       }
-      shiny::addResourcePath("rmd_resources", rmarkdown_system_file("rmd/h/rmarkdown"))
+      shiny::addResourcePath("rmd_resources", pkg_file("rmd/h/rmarkdown"))
     }
 
     # combine the user-supplied list of Shiny arguments with our own and start

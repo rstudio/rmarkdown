@@ -282,7 +282,7 @@ ioslides_presentation <- function(logo = NULL,
 
   # template path and assets
   if (is.null(template) || !file.exists(template))
-    template <- rmarkdown_system_file("rmd/ioslides/default.html")
+    template <- pkg_file("rmd/ioslides/default.html")
   args <- c(args, "--template", pandoc_path_arg(template))
 
   # html dependency for ioslides
@@ -373,7 +373,7 @@ ioslides_presentation <- function(logo = NULL,
 
     # append main body of script
     file.append(lua_writer,
-                rmarkdown_system_file("rmd/ioslides/ioslides_presentation.lua"))
+                pkg_file("rmd/ioslides/ioslides_presentation.lua"))
 
     output_tmpfile <- tempfile("ioslides-output", fileext = ".html")
     on.exit(unlink(output_tmpfile), add = TRUE)
@@ -453,7 +453,7 @@ html_dependency_ioslides <- function() {
   htmlDependency(
     name = "ioslides",
     version = "13.5.1",
-    src = rmarkdown_system_file("rmd/ioslides/ioslides-13.5.1"),
+    src = pkg_file("rmd/ioslides/ioslides-13.5.1"),
     script = c(
       "js/modernizr.custom.45394.js",
       "js/prettify/prettify.js",

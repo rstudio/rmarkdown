@@ -119,7 +119,7 @@ pdf_document <- function(toc = FALSE,
     # patch pandoc template if necessary
     version <- pandoc_version()
     if (version <= "2.5") args <- c(
-      args, append_in_header(file = rmarkdown_system_file("rmd/latex/subtitle.tex"))
+      args, append_in_header(file = pkg_file("rmd/latex/subtitle.tex"))
     )
 
   } else if (!is.null(template)) {
@@ -246,5 +246,5 @@ latex_document <- function(...) {
 #' @rdname pdf_document
 #' @export
 latex_fragment <- function(...) {
-  latex_document(..., template = rmarkdown_system_file("rmd/fragment/default.tex"))
+  latex_document(..., template = pkg_file("rmd/fragment/default.tex"))
 }
