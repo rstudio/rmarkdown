@@ -160,20 +160,14 @@ pdf_document <- function(toc = FALSE,
 
     args <- c()
 
-    has_yaml_parameter <- function(text, parameter) {
-      length(grep(paste0("^", parameter, "\\s*:.*$"), text)) > 0
-    }
-
     # use a geometry filter when we are using the "default" template
     if (identical(template, "default")) {
-      input_test <- read_utf8(input_file)
-
       # set the margin to 1 inch if no geometry options or document class specified
-      if (!has_yaml_parameter(input_test, "(geometry|documentclass)"))
+      if (!any(c("geometry", "documentclass") %in% names(metadata)))
         args <- c(args, "--variable", "geometry:margin=1in")
 
       # use titling package to change title format to be more compact by default
-      if (!has_yaml_parameter(input_test, "compact-title")) args <- c(
+      if (!xfun::isFALSE(metadata[["compact-title"]])) args <- c(
         args, "--include-in-header", system_file_arg("rmd/latex/compact-title.tex")
       )
     }
