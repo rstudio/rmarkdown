@@ -404,7 +404,6 @@ shiny_prerendered_option_hook <- function(input, encoding) {
     if (identical(options$context, "data")) {
       data_file <- shiny_prerendered_data_file_name(options$label,
                                                     options$cache > 0)
-      data_file <- to_utf8(data_file, encoding)
       data_dir <- shiny_prerendered_data_dir(input, create = TRUE)
       index_file <- shiny_prerendered_data_chunks_index(data_dir)
       conn <- file(index_file, open = "ab", encoding = "UTF-8")
