@@ -245,7 +245,7 @@ params_namedList <- function() {
 #' @param params A named list of optional parameter overrides used in place of the document defaults.
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
 #' @param save_caption Caption to use use for button that saves/confirms parameters.
-#'
+#' @inheritParams render
 #' @return named list with overridden parameter names and value.
 #'
 #' @export
@@ -253,7 +253,8 @@ knit_params_ask <- function(file = NULL,
                             input_lines = NULL,
                             params = NULL,
                             shiny_args = NULL,
-                            save_caption = "Save") {
+                            save_caption = "Save",
+                            encoding = "UTF-8") {
 
   if (is.null(input_lines)) {
     if (is.null(file)) {
