@@ -20,7 +20,7 @@ clean_site(input = ".", preview = FALSE, quiet = FALSE, encoding = "UTF-8")
 
 site_generator(input = ".", output_format = NULL, encoding = "UTF-8")
 
-site_config(input = ".", encoding = "UTF-8")
+site_config(input = ".")
 
 default_site_generator(input, encoding = "UTF-8", ...)
 }

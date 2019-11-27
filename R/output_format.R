@@ -386,7 +386,7 @@ default_output_format <- function(input,
   # parse the YAML and front matter and get the explicitly set options
   input_lines <- read_utf8(input)
   format <- output_format_from_yaml_front_matter(
-    input_lines, output_yaml = output_yaml, encoding = encoding)
+    input_lines, output_yaml = output_yaml)
 
   # look up the formals of the output function to get the full option list and
   # merge against the explicitly set list
@@ -453,18 +453,10 @@ resolve_output_format <- function(input,
 #' customize the preview experience).
 #' @inheritParams default_output_format
 #' @param input Input file (Rmd or plain markdown)
-#' @param encoding The encoding of the input file; see \code{\link{file}}.
 #' @return A character vector with the names of all output formats.
 #' @export
-all_output_formats <- function(input,
-                               encoding = "UTF-8",
-                               output_yaml = NULL) {
-
-  enumerate_output_formats(
-    input = input,
-    envir = parent.frame(),
-    output_yaml = output_yaml,
-    encoding = encoding)
+all_output_formats <- function(input, encoding = "UTF-8", output_yaml = NULL) {
+  enumerate_output_formats(input, output_yaml)
 }
 
 
@@ -490,7 +482,7 @@ output_format_from_yaml_front_matter <- function(input_lines,
   format_options <- list()
 
   # parse _site.yml output format if we have it
-  config <- site_config(".", encoding = encoding)
+  config <- site_config(".")
   yaml_site <- config[["output"]]
 
   # parse common output yaml file if we have it
@@ -610,20 +602,17 @@ is_output_format <- function(x) {
   inherits(x, "rmarkdown_output_format")
 }
 
-enumerate_output_formats <- function(input,
-                                     envir,
-                                     encoding,
-                                     output_yaml = NULL) {
+enumerate_output_formats <- function(input, output_yaml = NULL) {
 
   # read the input
   input_lines <- read_utf8(input)
 
   # if this is an R file then spin it
   if (identical(tolower(tools::file_ext(input)), "r"))
-    input_lines <- knitr::spin(text = input_lines, knit = FALSE, envir = envir)
+    input_lines <- knitr::spin(text = input_lines, knit = FALSE)
 
   # parse _site.yml output format if we have it
-  config <- site_config(input, encoding = encoding)
+  config <- site_config(input)
   if (!is.null(config) && !is.null(config[["output"]])) {
     site_output_format_yaml <- config[["output"]]
   } else {

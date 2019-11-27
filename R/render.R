@@ -267,7 +267,7 @@ render <- function(input,
 
   # check for "all" output formats
   if (identical(output_format, "all")) {
-    output_format <- enumerate_output_formats(input, envir, encoding)
+    output_format <- enumerate_output_formats(input)
     if (is.null(output_format))
       output_format <- "html_document"
   }
