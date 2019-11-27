@@ -218,11 +218,11 @@ pdf_document <- function(toc = FALSE,
 }
 
 general_intermediates_generator <- function(
-  saved_files_dir, original_input, encoding, intermediates_dir
+  saved_files_dir, original_input, intermediates_dir
 ) {
 
   # copy all intermediates (pandoc will need to bundle them in the PDF)
-  intermediates <- copy_render_intermediates(original_input, encoding, intermediates_dir, FALSE)
+  intermediates <- copy_render_intermediates(original_input, intermediates_dir, FALSE)
 
   # we need figures from the supporting files dir to be available during
   # render as well; if we have a files directory, copy its contents

@@ -392,7 +392,7 @@ discover_r_resources <- function(r_file, discover_single_resource) {
 # copies the external resources needed to render original_input into
 # intermediates_dir; with skip_web, skips web resources. returns a character
 # vector containing paths to all resources copied.
-copy_render_intermediates <- function(original_input, encoding, intermediates_dir, skip_web) {
+copy_render_intermediates <- function(original_input, intermediates_dir, skip_web) {
 
   # start with an empty set of intermediates
   intermediates <- c()
@@ -401,7 +401,7 @@ copy_render_intermediates <- function(original_input, encoding, intermediates_di
   # runs another (non-knitting) render, and that recursion is avoided because
   # we explicitly render with self-contained = FALSE while discovering
   # resources
-  resources <- find_external_resources(original_input, encoding)
+  resources <- find_external_resources(original_input)
   dest_dir <- normalize_path(intermediates_dir)
   source_dir <- dirname(normalize_path(original_input))
 

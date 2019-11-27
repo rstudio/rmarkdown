@@ -114,12 +114,10 @@ html_document_base <- function(smart = TRUE,
     args
   }
 
-  intermediates_generator <- function(original_input, encoding,
-                                      intermediates_dir) {
+  intermediates_generator <- function(original_input, intermediates_dir) {
     # copy intermediates; skip web resources if not self contained (pandoc can
     # create references to web resources without the file present)
-    return(copy_render_intermediates(original_input, encoding,
-                                     intermediates_dir, !self_contained))
+    copy_render_intermediates(original_input, intermediates_dir, !self_contained)
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {

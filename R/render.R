@@ -496,7 +496,6 @@ render <- function(input,
       !is.null(output_format$intermediates_generator)) {
     intermediates <- c(intermediates,
                        output_format$intermediates_generator(original_input,
-                                                             'UTF-8',
                                                              intermediates_dir))
   }
 
