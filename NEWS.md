@@ -5,6 +5,8 @@ rmarkdown 1.19
 
 - The `encoding` argument is no longer passed to the `render` element of the site generator (see `?rmarkdown::render_site).
 
+- The `encoding` argument has been removed from many of the internal functions in the **rmarkdown** package. Now all input files are assumed to be encoded in UTF-8. If you see an error message like "Error in `FUN(arg = ...)`: unused argument (`arg = ...`)", please file an issue (with a reproducible example) to https://github.com/rstudio/rmarkdown.
+
 - `render_site()` can render R scripts in addition to Rmd files if you set `autospin: true` in `_site.yml` (thanks, @zeehio, #1564).
 
 
