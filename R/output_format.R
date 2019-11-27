@@ -450,7 +450,7 @@ resolve_output_format <- function(input,
 #' @return A character vector with the names of all output formats.
 #' @export
 all_output_formats <- function(input, output_yaml = NULL) {
-  enumerate_output_formats(input, output_yaml)
+  enumerate_output_formats(input, output_yaml = output_yaml)
 }
 
 
@@ -595,7 +595,7 @@ is_output_format <- function(x) {
   inherits(x, "rmarkdown_output_format")
 }
 
-enumerate_output_formats <- function(input, output_yaml = NULL) {
+enumerate_output_formats <- function(input, envir, encoding, output_yaml = NULL) {
 
   # read the input
   input_lines <- read_utf8(input)
