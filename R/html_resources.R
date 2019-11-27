@@ -169,7 +169,7 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
   md_file <- tempfile(fileext = ".md")
   input_dir <- dirname(normalize_path(rmd_file))
   output_dir <- dirname(md_file)
-  rmd_content <- read_utf8(rmd_file, encoding)
+  rmd_content <- read_utf8(rmd_file)
   if (length(i <- grep('^---\\s*$', rmd_content)) >= 2 && i[1] == 1) {
     rmd_content <- append(rmd_content, 'citeproc: false', i[2] - 1)
   }

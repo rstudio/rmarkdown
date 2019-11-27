@@ -415,7 +415,7 @@ render <- function(input,
   }
 
   # read the input file
-  input_lines <- read_utf8(knit_input, encoding)
+  input_lines <- read_utf8(knit_input)
 
   # read the yaml front matter
   yaml_front_matter <- parse_yaml_front_matter(input_lines)
@@ -809,7 +809,7 @@ render <- function(input,
   }
 
   # read the input text as UTF-8 then write it back out
-  input_text <- read_utf8(input, encoding)
+  input_text <- read_utf8(input)
   write_utf8(input_text, utf8_input)
 
   if (run_pandoc) {

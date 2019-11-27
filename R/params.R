@@ -261,7 +261,7 @@ knit_params_ask <- function(file = NULL,
     if (is.null(file)) {
       stop("knit_params_ask must have a non-NULL file or input_lines parameter")
     }
-    input_lines <- read_utf8(file, encoding)
+    input_lines <- read_utf8(file)
   }
 
   knit_params <- knitr::knit_params(input_lines)
