@@ -36,10 +36,10 @@
 #'   \code{files_dir}, and \code{output_dir} and can return additional arguments
 #'   to pass to pandoc.
 #' @param intermediates_generator An optional function that receives the
-#'   original \code{input_file}, its \code{encoding}, and the intermediates
-#'   directory (i.e. the \code{intermediates_dir} argument to
-#'   \code{\link{render}}). The function should generate and return the names of
-#'   any intermediate files required to render the \code{input_file}.
+#'   original \code{input_file}, and the intermediates directory (i.e. the
+#'   \code{intermediates_dir} argument to \code{\link{render}}). The function
+#'   should generate and return the names of any intermediate files required to
+#'   render the \code{input_file}.
 #' @param post_processor An optional post-processor function that receives the
 #'   \code{metadata}, \code{input_file}, \code{output_file}, \code{clean},
 #'   and \code{verbose} parameters, and can return an alternative
