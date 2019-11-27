@@ -33,10 +33,13 @@ pandoc_output_ext <- function(ext, to, input) {
   paste0(".", to)
 }
 
-rmarkdown_system_file <- function(...) {
+pkg_file <- function(...) {
   system.file(..., package = "rmarkdown")
 }
 
+pkg_file_arg <- function(...) {
+  pandoc_path_arg(pkg_file(...))
+}
 
 #' @rdname rmarkdown_format
 #' @export
@@ -75,16 +78,6 @@ file_string <- function(path, encoding = 'UTF-8') {
 
 one_string <- function(x) paste(x, collapse = '\n')
 
-# convert to utf8
-to_utf8 <- function(x, encoding) {
-  # normalize encoding to iconv compatible form
-  if (identical(encoding, "native.enc")) encoding <- ""
-  if (identical(encoding, "UTF-8")) Encoding(x) <- "UTF-8" else {
-    x <- iconv(x, from = encoding, to = "UTF-8")
-  }
-  x
-}
-
 # in a future version of yaml, it will disable the evaluation of !expr but we
 # still need it (https://github.com/rstudio/rmarkdown/issues/1387)
 yaml_load <- function(...) yaml::yaml.load(..., eval.expr = TRUE)
@@ -92,7 +85,7 @@ yaml_load <- function(...) yaml::yaml.load(..., eval.expr = TRUE)
 yaml_load_file <- function(input, ...) yaml_load(read_utf8(input), ...)
 
 file_name_without_shell_chars <- function(file) {
-  name <- gsub(.shell_chars_regex, '_', basename(file))
+  name <- gsub(.shell_chars_regex, '-', basename(file))
   dir <- dirname(file)
   if (nzchar(dir) && !identical(dir, "."))
     file.path(dir, name)
@@ -173,7 +166,8 @@ highlighters <- function() {
     "monochrome",
     "espresso",
     "zenburn",
-    "haddock")
+    "haddock",
+    "breezedark")
 }
 
 merge_lists <- function(base_list, overlay_list, recursive = TRUE) {

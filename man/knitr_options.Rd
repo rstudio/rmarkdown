@@ -4,8 +4,13 @@
 \alias{knitr_options}
 \title{Knitr options for an output format}
 \usage{
-knitr_options(opts_knit = NULL, opts_chunk = NULL, knit_hooks = NULL,
-  opts_hooks = NULL, opts_template = NULL)
+knitr_options(
+  opts_knit = NULL,
+  opts_chunk = NULL,
+  knit_hooks = NULL,
+  opts_hooks = NULL,
+  opts_template = NULL
+)
 }
 \arguments{
 \item{opts_knit}{List of package level knitr options (see

@@ -468,9 +468,7 @@ pandoc_mathjax_args <- function(mathjax,
       args <- c(args, "--mathjax")
       args <- c(args, "--variable", paste0("mathjax-url:", mathjax))
     } else if (!self_contained) {
-      args <- c(args, "--mathjax")
-      if (!is.null(mathjax))
-        args <- c(args, mathjax)
+      args <- c(args, paste(c("--mathjax", mathjax), collapse = "="))
     } else {
       warning("MathJax doesn't work with self_contained when not ",
               "using the rmarkdown \"default\" template.", call. = FALSE)
@@ -658,7 +656,6 @@ detect_generic_lang <- function() {
 
 # get the path to the pandoc binary
 pandoc <- function() {
-
   find_pandoc()
   file.path(.pandoc$dir, "pandoc")
 }
@@ -666,13 +663,25 @@ pandoc <- function() {
 
 # get the path to the pandoc-citeproc binary
 pandoc_citeproc <- function() {
-
   find_pandoc()
-  citeproc_path = file.path(.pandoc$dir, "pandoc-citeproc")
-  if (file.exists(citeproc_path))
-    citeproc_path
-  else
-    "pandoc-citeproc"
+  bin <- "pandoc-citeproc"
+  p <- file.path(.pandoc$dir, bin)
+  if (xfun::is_windows()) p <- xfun::with_ext(p, "exe")
+  if (file.exists(p)) p else bin
+}
+
+pandoc_lua_filters <- function(...) {
+  args <- c()
+  # lua filters was introduced in pandoc 2.0
+  if (pandoc2.0()) {
+    args <- c(
+      rbind(
+        "--lua-filter",
+        pkg_file("rmd", "lua", ...)
+      )
+    )
+  }
+  args
 }
 
 

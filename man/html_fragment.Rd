@@ -4,11 +4,23 @@
 \alias{html_fragment}
 \title{Convert to an HTML fragment.}
 \usage{
-html_fragment(number_sections = FALSE, section_divs = TRUE,
-  fig_width = 7, fig_height = 5, fig_retina = 2,
-  fig_caption = TRUE, dev = "png", df_print = "default",
-  smart = TRUE, mathjax = TRUE, includes = NULL, keep_md = FALSE,
-  md_extensions = NULL, pandoc_args = NULL, ...)
+html_fragment(
+  number_sections = FALSE,
+  section_divs = TRUE,
+  fig_width = 7,
+  fig_height = 5,
+  fig_retina = 2,
+  fig_caption = TRUE,
+  dev = "png",
+  df_print = "default",
+  smart = TRUE,
+  mathjax = TRUE,
+  includes = NULL,
+  keep_md = FALSE,
+  md_extensions = NULL,
+  pandoc_args = NULL,
+  ...
+)
 }
 \arguments{
 \item{number_sections}{\code{TRUE} to number section headings}
@@ -39,12 +51,12 @@ the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition
 to the named methods you can also pass an arbitrary function to be used
-for printing data frames. You can disable the df_print behavior entirely
+for printing data frames. You can disable the \code{df_print} behavior entirely
 by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 
 \item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
-ellipses.}
+quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
+\code{...} to ellipses.}
 
 \item{mathjax}{\code{TRUE} to convert $ and $$ math blocks into MathJax
 compatible output. Note that you'll still need to ensure that the page

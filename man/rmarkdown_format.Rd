@@ -29,7 +29,6 @@ the following tweaks for backward compatibility with the markdown package
 
 \tabular{l}{
 \code{+autolink_bare_uris} \cr
-\code{+ascii_identifier} \cr
 \code{+tex_math_single_backslash} \cr
 }
 

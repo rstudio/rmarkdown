@@ -4,14 +4,31 @@
 \alias{slidy_presentation}
 \title{Convert to a slidy presentation}
 \usage{
-slidy_presentation(incremental = FALSE, duration = NULL,
-  footer = NULL, font_adjustment = 0, fig_width = 8,
-  fig_height = 6, fig_retina = 2, fig_caption = TRUE, dev = "png",
-  df_print = "default", smart = TRUE, self_contained = TRUE,
-  highlight = "default", mathjax = "default", template = "default",
-  css = NULL, includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  md_extensions = NULL, pandoc_args = NULL,
-  extra_dependencies = NULL, ...)
+slidy_presentation(
+  incremental = FALSE,
+  duration = NULL,
+  footer = NULL,
+  font_adjustment = 0,
+  fig_width = 8,
+  fig_height = 6,
+  fig_retina = 2,
+  fig_caption = TRUE,
+  dev = "png",
+  df_print = "default",
+  smart = TRUE,
+  self_contained = TRUE,
+  highlight = "default",
+  mathjax = "default",
+  template = "default",
+  css = NULL,
+  includes = NULL,
+  keep_md = FALSE,
+  lib_dir = NULL,
+  md_extensions = NULL,
+  pandoc_args = NULL,
+  extra_dependencies = NULL,
+  ...
+)
 }
 \arguments{
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note
@@ -50,12 +67,12 @@ the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition
 to the named methods you can also pass an arbitrary function to be used
-for printing data frames. You can disable the df_print behavior entirely
+for printing data frames. You can disable the \code{df_print} behavior entirely
 by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 
 \item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
-ellipses.}
+quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
+\code{...} to ellipses.}
 
 \item{self_contained}{Produce a standalone HTML file with no external
 dependencies, using data: URIs to incorporate the contents of linked

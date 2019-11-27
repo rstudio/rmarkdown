@@ -1,9 +1,91 @@
+rmarkdown 1.19
+================================================================================
+
+- `render_site()` can render R scripts in addition to Rmd files if you set `autospin: true` in `_site.yml` (thanks, @zeehio, #1564).
+
+
+rmarkdown 1.18
+================================================================================
+
+- For `pdf_document()`, now we patch Pandoc's built-in LaTeX template to include the document subtitle (unnecessary with pandoc 2.6 onwards) and reduce the vertical spacing before title using `--include-in-header` rather than overwriting the built-in template, avoiding compability problems with newer versions of Pandoc (thanks, @adunning, #1563).
+
+- `find_external_resources()` works now when multiple files are specified in the `includes` option of the output format (thanks, @andrie, #1677).
+
+- `find_external_resources()` can find external resources specified in the output format's `reference_doc` or `reference_docx` option now (thanks, @jmcphers, #1696).
+
+- `rmarkdown::run(file = NULL, dir = "foo/")` failed to run Rmd files under the `foo/` directory (thanks, @jenzopr, #1703).
+
+- Reverted the fix for #1692 since it is no longer necessary (https://github.com/yihui/tinytex/issues/152#issuecomment-552796864).
+
+- The `header-includes` field in the YAML metadata will no longer be overwritten by the command-line option `--include-in-header` (thanks, @crsh @mnazarov, #1359).
+
+- Removed the `xmlns` attribute in the `<html>` tag in the default HTML template (thanks, @grady #1640, @spgarbet #995).
+
+
+rmarkdown 1.17
+================================================================================
+
+- `html_vignette()` passes `self_contained` argument value to base format (thanks, @cderv, #1668).
+
+- `find_external_resources()` works for the `html_vignette` type again, this fixes rendering vignettes with external resources in pkgdown (regression introduced in rmarkdown 1.16, #1668).
+
+- `render(..., clean = TRUE)` may fail to clean the `*_files` directory when the output format is `prettydoc::html_pretty` (thanks, @yixuan, #1664).
+
+- For `ioslides_presentation`, images with atributes (e.g., `![](sample.png){width=80%}`) can be correctly embedded in the self-contained mode now (thanks, @hadley, #1687).
+
+- Fixed the Pandoc LaTeX templates to avoid the error `File `grffile.sty' not found`. This is because the LaTeX **grffile** is no longer available in TeX Live (thanks, @cderv #1691, @smmurphy #1692, @JacobD05 https://github.com/yihui/tinytex/issues/152).
+
+
+rmarkdown 1.16
+================================================================================
+
+- The `pandoc-citeproc` binary can now be found correctly on Windows. This fixes an issue with `pandoc_citeproc_convert()` (thanks @cderv, #1651).
+
+- Added `self_contained` argument to `html_vignette` to keep intermediate directory if `self_contained = FALSE` (thanks, @cderv, #1641).
+
+- It is now possible to add pagebreak in HTML, Word, LaTeX, and ODT documents using the `\newpage` or `\pagebreak` command in an Rmd file. This is possible thanks to the [Pandoc's pagebreak lua filter](https://github.com/pandoc/lua-filters/tree/master/pagebreak). See `vignette("lua-filters", package = "rmarkdown")` (thanks, @cderv, #1626).
+
+- The Pandoc extension `ascii_identifiers` is no longer enabled by default. If you still need it, you may use the argument `md_extensions = "+ascii_identifiers"` in the output format function. However, please note that this will trigger an error in a future version of Pandoc.
+
+- Output formats can be configured by arbitrary YAML files, which used to be restricted to `_output.yml` or `_output.yaml`. They can be specified via the `output_yaml` argument of `render()` or the `output_yaml` top-level parameter of YAML front matter, and the first existing one will be used. If `output_yaml` is specified both for `render()` and YAML front matter, then `render()` has the priority. If none are found, then `_output.yml` or `_output.yaml` will be used if they exist (thanks, @atusy, #1634).
+
+- Added a Pandoc lua filter to convert fenced Divs to LaTeX environments when the output format is `latex` or `beamer`. Basically a fenced Div `::: {.NAME data-latex="[OPTIONS]"}` is converted to `\begin{NAME}[OPTIONS] \end{NAME}` in LaTeX. The attribute `data-latex` must be provided, even if it is an empty string (meaning that the LaTeX environment does not have any optional arguments). For example, `::: {.verbatim data-latex=""}` generates a `verbatim` environment, and `::: {.minipage data-latex="{.5\textwidth}"}` generates `\begin{minipage}{.5\textwidth}`. This lua filter was originally written by @RLesur at https://github.com/yihui/bookdown-crc/issues/1. It will allow users to create custom blocks that work for both HTML and LaTeX output (e.g., info boxes or warning boxes).
+
+- Added `keep_html` argument to `github_document` so to save a preview HTML file in a working directory (thanks, @atusy, #1650).
+
+
+rmarkdown 1.15
+================================================================================
+
+- Exclude `README.R?md` from files processed by `render_site()`,
+
+- `html_document` with `code_folding: hide` supports showing individual source code chunks if they are assigned the `fold-show` class via the chunk option `class.source="fold-show"` (thanks, @atusy, #1602).
+
+- The `extra_dependencies` argument only works with `template: default` in `pdf_document`. Now it works with any Pandoc LaTeX templates as long as the template uses the `header-includes` variable.
+
+
+rmarkdown 1.14
+================================================================================
+
+- Fixed a regression in `ioslides_presentation` that background colors via the `data-background` attribute on slides stopped working (thanks, @ShKlinkenberg, #1265).
+
+- Fixed the bug #1577 introduced in **rmarkdown** v1.12: tabsets, floating TOC, and code folding in the `html_document` format no longer work with the `shiny` runtime (thanks, @RLesur for the fix #1587, and @fawda123 @ColinChisholm @JasonAizkalns for the bug report).
+
+- Added the `keep_md` argument to `pdf_document()` to keep the intermediate `.md` output file (thanks, @broomej, #1001).
+
+- For `render()`, if the input filename contains special characters such as spaces or question marks (as defined in `rmarkdown:::.shell_chars_regex`), the file will be temporarily renamed with the special characters replaced by `-` (dash) instead of `_` (underscore, as in previous versions of **rmarkdown**). This change will affect users who render such files with caching (cache will be invalidated and regenerated). The change is due to the fact that `-` is generally a safer character than `_`, especially for LaTeX output (#1396).
+
+- Added a **pkgdown** site for the **rmarkdown** package: https://rmarkdown.rstudio.com/docs/ (thanks, @apreshill, #1574).
+
+- Fixed the bug #1593: in HTML documents, when a MathJax URL is used with a custom template, the source code of the MathJax library is included in the document. This bug was first declared in **bookdown** (thanks, @topepo for the bug report rstudio/bookdown#683, and @RLesur for the fix #1594).
+
+
 rmarkdown 1.13
 ================================================================================
 
 - For `pdf_document()`, do not override margins to 1 inch when a custom document class or geometry settings are specified in the YAML front matter (thanks, @adunning, #1550)
 
-- The default value of the `encoding` argument in all functions in this package (such as `render()` and `render_site()`) has been changed from `getOption("encoding")` to `UTF-8`. We have been hoping to support UTF-8 only in **rmarkdown**, **knitr**, and other related packages in the future. For more info, you may read https://yihui.name/en/2018/11/biggest-regret-knitr/.
+- The default value of the `encoding` argument in all functions in this package (such as `render()` and `render_site()`) has been changed from `getOption("encoding")` to `UTF-8`. We have been hoping to support UTF-8 only in **rmarkdown**, **knitr**, and other related packages in the future. For more info, you may read https://yihui.org/en/2018/11/biggest-regret-knitr/.
 
 - The option `toc_float: true` for `html_document` now preserves the text formatting (thanks, @codetrainee, #1548).
 
@@ -11,8 +93,12 @@ rmarkdown 1.13
 
 - TOC items are not correctly indented when `toc_float` is enabled for the `html_document` format (thanks, @carolynwclayton #1235 and @RLesur #1243).
 
-- `render_site` can spin R source files. Use `autospin: true` in the `_site.yml`.
-  (#892, @zeehio)
+- Fixed rstudio/shiny#2307 where the second execution of a `shiny_prerendred` document with `href` dependencies would cause a prerender check error (thanks, @schloerke, #1562).
+
+- The `*_files` directory is not properly cleared due to the inappropriate fix for #1503 and #1472 in the last version (thanks, @wxli0 #1553, @cderv #1566).
+
+- Added an `output_extensions` argument to `pdf_document()` to make it possible to enable/disable Pandoc extensions for the LaTeX output format (thanks, @hongyuanjia, rstudio/bookdown#687).
+
 
 rmarkdown 1.12
 ================================================================================

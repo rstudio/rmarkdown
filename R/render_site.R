@@ -331,25 +331,20 @@ default_site <- function(input, encoding = "UTF-8", ...) {
   # helper function to get all input files. includes all .Rmd and
   # .md files that don't start with "_" (note that we don't do this
   # recursively because rmarkdown in general handles applying common
-  # options/elements across subdirectories poorly).
-  # If config$autospin is set to TRUE, then we spin and render .R files as well.
+  # options/elements across subdirectories poorly). Also excludes
+  # README.R?md as those files are intended for GitHub. If
+  # config$autospin is TRUE, we also spin and render .R files.
   input_files <- function() {
-    if (isTRUE(config$autospin)) {
-      pattern <- "^[^_].*\\.[Rr]?(md)?$"
-    } else {
-      pattern <- "^[^_].*\\.[Rr]?md$"
-    }
-    in_files <- list.files(input, pattern = pattern)
-    if (is.character(config$autospin)) {
-      autospin_src <- file.path(input, config$autospin)
-      missing_autospin_src <- autospin_src[!file.exists(autospin_src)]
-      if (length(missing_autospin_src) > 0) {
-        stop("Missing files in _site.yml: ",
-             paste0(missing_autospin_src, collapse = ", "))
+    pattern <- sprintf(
+      "^[^_].*\\.%s$", if (isTRUE(config$autospin)) {
+        "([Rr]|[Rr]?md)"
+      } else {
+        "[Rr]?md"
       }
-      in_files <- c(in_files, config$autospin)
-    }
-    in_files
+    )
+    files <- list.files(input, pattern)
+    if (is.character(config$autospin)) files <- c(files, config$autospin)
+    files[!grepl("^README\\.R?md$", files)]
   }
 
   # define render function (use ... to gracefully handle future args)
@@ -378,6 +373,10 @@ default_site <- function(input, encoding = "UTF-8", ...) {
       } else {
         render_current_session
       }
+
+      # log the file being rendered
+      if (!quiet) message("\nRendering: ", x)
+
       output <- render_one(input = x,
                            output_format = output_format,
                            output_options = list(lib_dir = "site_libs",
@@ -548,8 +547,6 @@ copy_site_resources <- function(input, encoding = "UTF-8") {
 #' exclude source, data, hidden, and other files not required to serve
 #' website content.
 #'
-#' @inheritParams default_output_format
-#'
 #' @param site_dir Site directory to analyze
 #' @param include Additional files to include (glob wildcards supported)
 #' @param exclude Files to exclude  (glob wildcards supported)
@@ -653,7 +650,7 @@ site_config_file <- function(input) {
 site_skeleton <- function(path, ...) {
   dir.create(path, recursive = TRUE, showWarnings = FALSE)
   file.copy(
-    list.files(rmarkdown_system_file('rmd', 'site'), full.names = TRUE),
+    list.files(pkg_file('rmd', 'site'), full.names = TRUE),
     path, overwrite = TRUE
   )
 }

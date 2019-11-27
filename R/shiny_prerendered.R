@@ -98,11 +98,18 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   rendered_html <- normalize_path(rendered_html, winslash = "/")
   output_dir <- dirname(rendered_html)
 
-  # add some resource paths
-  add_resource_path <- function(path) {
-    if (dir_exists(path))
-      shiny::addResourcePath(basename(path), path)
+  add_resource_path <- function(path, prefix = basename(path), temporary = TRUE) {
+    if (dir_exists(path)) {
+      shiny::addResourcePath(prefix, path)
+      # Remove resource paths so they don't clash with 'down-stream' resources
+      removeResourcePath <- if (temporary)
+        try(getFromNamespace("removeResourcePath", "shiny"), silent = TRUE)
+      if (is.function(removeResourcePath)) {
+        shiny::onStop(function() { removeResourcePath(prefix) }, NULL)
+      }
+    }
   }
+
   files_dir <- knitr_files_dir(rendered_html)
   add_resource_path(files_dir)
   add_resource_path(file.path(output_dir,"css"))
@@ -191,12 +198,17 @@ shiny_prerendered_prerender <- function(
   pkgsSeen <- list()
   for (dep in dependencies) {
     if (is.null(dep$package)) {
-      # if the file doesn't exist at all, render again
-      if (!file.exists(dep$src$file)) {
-        # might create a missing file compile-time error,
-        #   but that's better than a missing file prerendered error
-        return(TRUE)
+      src_file <- dep$src$file
+      if (!is.null(src_file)) {
+        if (!file.exists(src_file)) {
+          # might create a missing file compile-time error,
+          #   but that's better than a missing file prerendered error
+          return(TRUE)
+        }
       }
+      # if there is a dep$src$href but no dep$package,
+      # then we can't determine where the file came from.
+      # Ignore checking for the href files for now, as pkg versions are checked below
     } else {
       depPkg <- dep$package
       depVer <- dep$pkgVersion
@@ -218,7 +230,7 @@ shiny_prerendered_prerender <- function(
   # check for execution package version differences
   execution_json <- shiny_prerendered_extract_context(html_lines, "execution_dependencies")
   execution_info <- jsonlite::unserializeJSON(execution_json)
-  execution_pkg_names <- execution_info$packages$package
+  execution_pkg_names <- execution_info$packages$packages
   execution_pkg_versions <- execution_info$packages$version
   for (i in seq_along(execution_pkg_names)) {
     if (!identical(
@@ -392,7 +404,6 @@ shiny_prerendered_option_hook <- function(input, encoding) {
     if (identical(options$context, "data")) {
       data_file <- shiny_prerendered_data_file_name(options$label,
                                                     options$cache > 0)
-      data_file <- to_utf8(data_file, encoding)
       data_dir <- shiny_prerendered_data_dir(input, create = TRUE)
       index_file <- shiny_prerendered_data_chunks_index(data_dir)
       conn <- file(index_file, open = "ab", encoding = "UTF-8")

@@ -4,14 +4,24 @@
 \alias{md_document}
 \title{Convert to a markdown document}
 \usage{
-md_document(variant = "markdown_strict", preserve_yaml = FALSE,
-  toc = FALSE, toc_depth = 3, fig_width = 7, fig_height = 5,
-  fig_retina = NULL, dev = "png", df_print = "default",
-  includes = NULL, md_extensions = NULL, pandoc_args = NULL)
+md_document(
+  variant = "markdown_strict",
+  preserve_yaml = FALSE,
+  toc = FALSE,
+  toc_depth = 3,
+  fig_width = 7,
+  fig_height = 5,
+  fig_retina = NULL,
+  dev = "png",
+  df_print = "default",
+  includes = NULL,
+  md_extensions = NULL,
+  pandoc_args = NULL
+)
 }
 \arguments{
 \item{variant}{Markdown variant to produce (defaults to "markdown_strict").
-Other valid values are "markdown_github", "markdown_mmd",
+Other valid values are "commonmark", "markdown_github", "markdown_mmd",
 markdown_phpextra", or even "markdown" (which produces pandoc markdown).
 You can also compose custom markdown variants, see the
 \href{http://pandoc.org/README.html}{pandoc online documentation}
@@ -43,7 +53,7 @@ the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition
 to the named methods you can also pass an arbitrary function to be used
-for printing data frames. You can disable the df_print behavior entirely
+for printing data frames. You can disable the \code{df_print} behavior entirely
 by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 
 \item{includes}{Named list of additional content to include within the

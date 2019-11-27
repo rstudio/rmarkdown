@@ -1,15 +1,24 @@
 language: r
 cache:
   packages: yes
-pandoc_version: 1.19.2.1
+pandoc_version: 2.3.1
+cran: https://cran.rstudio.com
 
 env:
   global:
     - _R_CHECK_TESTS_NLINES_=0
   matrix:
-    - PANDOC_VERSION=default
+    - PANDOC_VERSION=default NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
     - PANDOC_VERSION=latest PATH=$HOME/bin:$PATH
 
 before_install:
   - "[[ ${PANDOC_VERSION} = latest ]] && ./tools/install-pandoc.sh || true"
   - tlmgr install units
+
+after_success:
+  - "[[ ${TRAVIS_BRANCH}  = master  ]] || exit 0"
+  - "[[ ${PANDOC_VERSION} = default ]] || exit 0"
+  - "[[ -z ${NETLIFY_AUTH_TOKEN} ]] && exit 0"
+  - nvm install stable
+  - npm install netlify-cli -g
+  - Rscript -e 'pkgdown::build_site(".", document = FALSE, preview = FALSE)' && netlify deploy --prod --dir docs

@@ -4,10 +4,20 @@
 \alias{output_format}
 \title{Define an R Markdown output format}
 \usage{
-output_format(knitr, pandoc, keep_md = FALSE, clean_supporting = TRUE,
-  df_print = NULL, pre_knit = NULL, post_knit = NULL,
-  pre_processor = NULL, intermediates_generator = NULL,
-  post_processor = NULL, on_exit = NULL, base_format = NULL)
+output_format(
+  knitr,
+  pandoc,
+  keep_md = FALSE,
+  clean_supporting = TRUE,
+  df_print = NULL,
+  pre_knit = NULL,
+  post_knit = NULL,
+  pre_processor = NULL,
+  intermediates_generator = NULL,
+  post_processor = NULL,
+  on_exit = NULL,
+  base_format = NULL
+)
 }
 \arguments{
 \item{knitr}{Knitr options for an output format (see
@@ -31,7 +41,7 @@ the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition
 to the named methods you can also pass an arbitrary function to be used
-for printing data frames. You can disable the df_print behavior entirely
+for printing data frames. You can disable the \code{df_print} behavior entirely
 by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 
 \item{pre_knit}{An optional function that runs before knitting which

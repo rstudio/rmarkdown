@@ -4,9 +4,15 @@
 \alias{rtf_document}
 \title{Convert to an RTF document}
 \usage{
-rtf_document(toc = FALSE, toc_depth = 3, fig_width = 5,
-  fig_height = 4, keep_md = FALSE, md_extensions = NULL,
-  pandoc_args = NULL)
+rtf_document(
+  toc = FALSE,
+  toc_depth = 3,
+  fig_width = 5,
+  fig_height = 4,
+  keep_md = FALSE,
+  md_extensions = NULL,
+  pandoc_args = NULL
+)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}

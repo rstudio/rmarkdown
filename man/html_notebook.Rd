@@ -4,13 +4,29 @@
 \alias{html_notebook}
 \title{Convert to an HTML notebook}
 \usage{
-html_notebook(toc = FALSE, toc_depth = 3, toc_float = FALSE,
-  number_sections = FALSE, fig_width = 7, fig_height = 5,
-  fig_retina = 2, fig_caption = TRUE, code_folding = "show",
-  smart = TRUE, theme = "default", highlight = "textmate",
-  mathjax = "default", extra_dependencies = NULL, css = NULL,
-  includes = NULL, md_extensions = NULL, pandoc_args = NULL,
-  output_source = NULL, self_contained = TRUE, ...)
+html_notebook(
+  toc = FALSE,
+  toc_depth = 3,
+  toc_float = FALSE,
+  number_sections = FALSE,
+  fig_width = 7,
+  fig_height = 5,
+  fig_retina = 2,
+  fig_caption = TRUE,
+  code_folding = "show",
+  smart = TRUE,
+  theme = "default",
+  highlight = "textmate",
+  mathjax = "default",
+  extra_dependencies = NULL,
+  css = NULL,
+  includes = NULL,
+  md_extensions = NULL,
+  pandoc_args = NULL,
+  output_source = NULL,
+  self_contained = TRUE,
+  ...
+)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -44,8 +60,8 @@ individually or document-wide). Specify \code{"show"} to show all R code
 chunks by default.}
 
 \item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
-ellipses.}
+quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
+\code{...} to ellipses.}
 
 \item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
 "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",

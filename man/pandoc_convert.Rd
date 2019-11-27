@@ -4,8 +4,16 @@
 \alias{pandoc_convert}
 \title{Convert a document with pandoc}
 \usage{
-pandoc_convert(input, to = NULL, from = NULL, output = NULL,
-  citeproc = FALSE, options = NULL, verbose = FALSE, wd = NULL)
+pandoc_convert(
+  input,
+  to = NULL,
+  from = NULL,
+  output = NULL,
+  citeproc = FALSE,
+  options = NULL,
+  verbose = FALSE,
+  wd = NULL
+)
 }
 \arguments{
 \item{input}{Character vector containing paths to input files

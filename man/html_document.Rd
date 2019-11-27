@@ -4,15 +4,35 @@
 \alias{html_document}
 \title{Convert to an HTML document}
 \usage{
-html_document(toc = FALSE, toc_depth = 3, toc_float = FALSE,
-  number_sections = FALSE, section_divs = TRUE, fig_width = 7,
-  fig_height = 5, fig_retina = 2, fig_caption = TRUE, dev = "png",
-  df_print = "default", code_folding = c("none", "show", "hide"),
-  code_download = FALSE, smart = TRUE, self_contained = TRUE,
-  theme = "default", highlight = "default", mathjax = "default",
-  template = "default", extra_dependencies = NULL, css = NULL,
-  includes = NULL, keep_md = FALSE, lib_dir = NULL,
-  md_extensions = NULL, pandoc_args = NULL, ...)
+html_document(
+  toc = FALSE,
+  toc_depth = 3,
+  toc_float = FALSE,
+  number_sections = FALSE,
+  section_divs = TRUE,
+  fig_width = 7,
+  fig_height = 5,
+  fig_retina = 2,
+  fig_caption = TRUE,
+  dev = "png",
+  df_print = "default",
+  code_folding = c("none", "show", "hide"),
+  code_download = FALSE,
+  smart = TRUE,
+  self_contained = TRUE,
+  theme = "default",
+  highlight = "default",
+  mathjax = "default",
+  template = "default",
+  extra_dependencies = NULL,
+  css = NULL,
+  includes = NULL,
+  keep_md = FALSE,
+  lib_dir = NULL,
+  md_extensions = NULL,
+  pandoc_args = NULL,
+  ...
+)
 }
 \arguments{
 \item{toc}{\code{TRUE} to include a table of contents in the output}
@@ -52,7 +72,7 @@ the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition
 to the named methods you can also pass an arbitrary function to be used
-for printing data frames. You can disable the df_print behavior entirely
+for printing data frames. You can disable the \code{df_print} behavior entirely
 by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
@@ -66,8 +86,8 @@ chunks by default.}
 a link that can be used by readers to download the code.}
 
 \item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
-ellipses.}
+quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
+\code{...} to ellipses.}
 
 \item{self_contained}{Produce a standalone HTML file with no external
 dependencies, using data: URIs to incorporate the contents of linked
@@ -148,24 +168,24 @@ and Citations} article in the online documentation.
  \code{right} fields (to define menu items for the left and right of the navbar
  respectively). Menu items include \code{title} and \code{href} fields. For example:
 
- \preformatted{ title: "My Website"
- type: default
- left:
-   - text: "Home"
-     href: index.html
-   - text: "Other"
-     href: other.html
- right:
-   - text: GitHub
-     href: https://github.com}
+ \preformatted{title: "My Website"
+type: default
+left:
+  - text: "Home"
+    href: index.html
+  - text: "Other"
+    href: other.html
+right:
+  - text: GitHub
+    href: https://github.com}
  The \code{type} field is optional and can take the value "default" or "inverse" (which
  provides a different color scheme for the navigation bar).
 
  Alternatively, you can include a "_navbar.html" file which is a full HTML definition
  of a bootstrap navigation bar. For a simple example of including a navigation bar see
- \href{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
+ \url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
   For additional documentation on creating Bootstrap navigation bars see
- \href{http://getbootstrap.com/components/#navbar}{http://getbootstrap.com/components/#navbar}.
+ \url{http://getbootstrap.com/components/#navbar}.
 }
 
 \section{Floating Table of Contents}{
@@ -191,11 +211,11 @@ and Citations} article in the online documentation.
  the header with the \code{.tabset} attribute to appear within tabs rather
  than as standalone sections. For example:
 
- \preformatted{ ## Quarterly Results {.tabset}
+ \preformatted{## Quarterly Results {.tabset}
 
- ### By Product
+### By Product
 
- ### By Region }
+### By Region }
 
  You can also specify two additional attributes to control the appearance and
  behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
@@ -203,7 +223,7 @@ and Citations} article in the online documentation.
  the visual appearance of the tabs to be "pill" rather than traditional tabs.
  For example:
 
- \preformatted{ ## Quarterly Results {.tabset .tabset-fade .tabset-pills} }
+ \preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
 }
 
 \section{Templates}{

@@ -40,6 +40,6 @@ html_fragment <- function(number_sections = FALSE,
     dev = dev, df_print = df_print, smart = smart, keep_md = keep_md,
     md_extensions = md_extensions, pandoc_args = pandoc_args, includes = includes,
     mathjax = NULL, section_divs = section_divs, highlight = NULL, theme = NULL, ...,
-    template = rmarkdown_system_file("rmd/fragment/default.html")
+    template = pkg_file("rmd/fragment/default.html")
   )
 }

@@ -4,16 +4,25 @@
 \alias{html_document_base}
 \title{Base output format for HTML-based output formats}
 \usage{
-html_document_base(smart = TRUE, theme = NULL, self_contained = TRUE,
-  lib_dir = NULL, mathjax = "default", pandoc_args = NULL,
-  template = "default", dependency_resolver = NULL,
-  copy_resources = FALSE, extra_dependencies = NULL,
-  bootstrap_compatible = FALSE, ...)
+html_document_base(
+  smart = TRUE,
+  theme = NULL,
+  self_contained = TRUE,
+  lib_dir = NULL,
+  mathjax = "default",
+  pandoc_args = NULL,
+  template = "default",
+  dependency_resolver = NULL,
+  copy_resources = FALSE,
+  extra_dependencies = NULL,
+  bootstrap_compatible = FALSE,
+  ...
+)
 }
 \arguments{
 \item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, --- to em-dashes, -- to en-dashes, and ... to
-ellipses.}
+quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
+\code{...} to ellipses.}
 
 \item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
 "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",

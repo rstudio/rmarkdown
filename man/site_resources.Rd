@@ -4,8 +4,7 @@
 \alias{site_resources}
 \title{Determine website resource files for a directory}
 \usage{
-site_resources(site_dir, include = NULL, exclude = NULL,
-  recursive = FALSE)
+site_resources(site_dir, include = NULL, exclude = NULL, recursive = FALSE)
 }
 \arguments{
 \item{site_dir}{Site directory to analyze}

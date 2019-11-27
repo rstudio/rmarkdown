@@ -16,7 +16,6 @@
 #' the markdown syntax for citations in the
 #' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
-#' @inheritParams output_format
 #' @inheritParams pdf_document
 #' @inheritParams html_document
 #' @param toc \code{TRUE} to include a table of contents in the output (only
@@ -51,6 +50,7 @@
 #' @export
 beamer_presentation <- function(toc = FALSE,
                                 slide_level = NULL,
+                                number_sections = FALSE,
                                 incremental = FALSE,
                                 fig_width = 10,
                                 fig_height = 7,
@@ -64,6 +64,7 @@ beamer_presentation <- function(toc = FALSE,
                                 highlight = "default",
                                 template = "default",
                                 keep_tex = FALSE,
+                                keep_md = FALSE,
                                 latex_engine = "pdflatex",
                                 citation_package = c("none", "natbib", "biblatex"),
                                 self_contained = TRUE,
@@ -89,6 +90,9 @@ beamer_presentation <- function(toc = FALSE,
   if (!is.null(slide_level))
     args <- c(args, "--slide-level", as.character(slide_level))
 
+  if (number_sections)
+    args <- c(args, "--number-sections")
+
   # incremental
   if (incremental)
     args <- c(args, "--incremental")
@@ -107,7 +111,7 @@ beamer_presentation <- function(toc = FALSE,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
-  latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
+  latex_engine <- match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
   args <- c(args, pandoc_latex_engine_args(latex_engine))
 
   # citation package
@@ -154,6 +158,7 @@ beamer_presentation <- function(toc = FALSE,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     clean_supporting = !keep_tex,
+    keep_md = keep_md,
     df_print = df_print
   )
 }

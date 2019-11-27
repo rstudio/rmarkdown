@@ -1,0 +1,11 @@
+---
+title: "Multiple includes"
+output: 
+  html_document:
+    includes:
+      after_body: 
+      - dep1.html
+      - dep2.html
+---
+
+This document doesn't do anything, other than import two dependencies.

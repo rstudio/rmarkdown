@@ -4,9 +4,14 @@
 \alias{pandoc_options}
 \title{Pandoc options for an output format}
 \usage{
-pandoc_options(to, from = rmarkdown_format(), args = NULL,
-  keep_tex = FALSE, latex_engine = c("pdflatex", "lualatex",
-  "xelatex"), ext = NULL)
+pandoc_options(
+  to,
+  from = rmarkdown_format(),
+  args = NULL,
+  keep_tex = FALSE,
+  latex_engine = c("pdflatex", "lualatex", "xelatex"),
+  ext = NULL
+)
 }
 \arguments{
 \item{to}{Pandoc format to convert to}

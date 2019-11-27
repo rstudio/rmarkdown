@@ -4,9 +4,17 @@
 \alias{html_vignette}
 \title{Convert to an HTML vignette}
 \usage{
-html_vignette(fig_width = 3, fig_height = 3, dev = "png",
-  df_print = "default", css = NULL, keep_md = FALSE,
-  readme = FALSE, ...)
+html_vignette(
+  fig_width = 3,
+  fig_height = 3,
+  dev = "png",
+  df_print = "default",
+  css = NULL,
+  keep_md = FALSE,
+  readme = FALSE,
+  self_contained = TRUE,
+  ...
+)
 }
 \arguments{
 \item{fig_width}{Default width (in inches) for figures}
@@ -23,7 +31,7 @@ the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition
 to the named methods you can also pass an arbitrary function to be used
-for printing data frames. You can disable the df_print behavior entirely
+for printing data frames. You can disable the \code{df_print} behavior entirely
 by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 
 \item{css}{One or more css files to include}
@@ -33,6 +41,12 @@ by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
 \item{readme}{Use this vignette as the package README.md file (i.e. render
 it as README.md to the package root). Note that if there are image files
 within your vignette you should be sure to add README_files to .Rbuildignore}
+
+\item{self_contained}{Produce a standalone HTML file with no external
+dependencies, using data: URIs to incorporate the contents of linked
+scripts, stylesheets, images, and videos. Note that even for self contained
+documents MathJax is still loaded externally (this is necessary because of
+its size).}
 
 \item{...}{Additional arguments passed to \code{\link{html_document}}. Please
 note that \code{theme}, \code{fig_retina} and \code{highlight} are hard

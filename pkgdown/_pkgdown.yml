@@ -1,0 +1,174 @@
+destination: docs
+
+template:
+  params:
+    bootswatch: simplex
+
+home:
+  strip_header: true
+  links:
+  - text: Learn more
+    href: https://rmarkdown.rstudio.com/
+  - text: Read the book
+    href: https://bookdown.org/yihui/rmarkdown/
+
+navbar:
+  title: "R Markdown"
+  type: inverse
+  structure:
+    left:
+    - intro
+    - articles
+    right:
+    - reference
+    - news
+    - github
+    - community
+    - home
+  components:
+    reference:
+      text: Reference
+      href: reference/index.html
+    articles:
+      text: Articles
+      menu:
+        - text: "Learn R Markdown"
+          href: articles/rmarkdown.html
+        - text: "Install Pandoc"
+          href: articles/pandoc.html
+    news:
+      text: Changelog
+      href: news/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/rstudio/rmarkdown
+    community:
+      icon: fab fa-discourse fa-lg
+      href: https://community.rstudio.com/c/R-Markdown
+    home:
+      icon: fas fa-home fa-lg
+      href: index.html
+    intro:
+      text: Get started
+      menu:
+        - text: Using
+        - text: "Introduction"
+          href: https://rmarkdown.rstudio.com/lesson-1.html
+        - text: "How It Works"
+          href: https://rmarkdown.rstudio.com/lesson-2.html
+        - text: "---"
+        - text: Code
+        - text: "Code Chunks"
+          href: https://rmarkdown.rstudio.com/lesson-3.html
+        - text: "Inline Code"
+          href: https://rmarkdown.rstudio.com/lesson-4.html
+        - text: "Code Languages"
+          href: https://rmarkdown.rstudio.com/lesson-5.html
+        - text: "Parameters"
+          href: https://rmarkdown.rstudio.com/lesson-6.html
+        - text: "---"
+        - text: Basics
+        - text: "Tables"
+          href: https://rmarkdown.rstudio.com/lesson-7.html
+        - text: "Markdown Basics"
+          href: https://rmarkdown.rstudio.com/lesson-8.html
+        - text: "Output Formats"
+          href: https://rmarkdown.rstudio.com/lesson-9.html
+        - text: "---"
+        - text: "Additional Output Formats"
+        - text: "Notebooks"
+          href: https://rmarkdown.rstudio.com/lesson-10.html
+        - text: "Slide Presentations"
+          href: https://rmarkdown.rstudio.com/lesson-11.html
+        - text: "Dashboards"
+          href: https://rmarkdown.rstudio.com/lesson-12.html
+        - text: "Websites"
+          href: https://rmarkdown.rstudio.com/lesson-13.html
+        - text: "Interactive Documents"
+          href: https://rmarkdown.rstudio.com/lesson-14.html
+
+
+reference:
+- title: Output formats
+  desc: >
+    These output formats can be specified in your document's YAML frontmatter.
+    Each output format has different arguments available which you can see in
+    their respective docs; to view the available arguments in your R console,
+    for `html_document` for example, you may use
+    `str(rmarkdown::html_document())`.
+  contents:
+  - ends_with("_presentation")
+  - ends_with("_document")
+  - '`html_vignette`'
+  - '`tufte_handout`'
+  - '`html_notebook`'
+  - '`html_fragment`'
+
+- title: Rendering documents
+  desc: These functions can be used to render or "compile" an R Markdown document.
+  contents:
+  - starts_with("compile")
+  - starts_with("render")
+
+- title: Helper functions
+  desc: These functions are useful when working with R Markdown documents.
+  contents:
+  - '`draft`'
+  - '`find_external_resources`'
+  - '`includes`'
+  - '`metadata`'
+  - '`paged_table`'
+  - '`relative_to`'
+  - contains("params")
+
+- title: HTML notebooks
+  desc: >
+    Functions for parsing and generating output for the [`html_notebook`
+    output format](https://rmarkdown.rstudio.com/lesson-10.html).
+  contents:
+  - starts_with("html_notebook_")
+  - ends_with("_html_notebook")
+  - '`convert_ipynb`'
+
+- title: R Markdown websites
+  desc: >
+    Functions for rendering collections of R Markdown documents as a [website](https://rmarkdown.rstudio.com/lesson-13.html).
+    Note that extension packages like [bookdown](https://github.com/rstudio/bookdown),
+    [blogdown](https://github.com/rstudio/blogdown), and
+    [distill](https://github.com/rstudio/distill) also render multiple
+    R Markdown files.
+  contents:
+  - contains("site")
+
+- title: Interactive documents
+  desc: >
+    These functions add [interactivity](https://rmarkdown.rstudio.com/lesson-14.html)
+    to R Markdown documents by adding reactive components made with [Shiny](http://shiny.rstudio.com/).
+  contents:
+  - contains("shiny")
+  - '`run`'
+
+- title: Pandoc
+  desc: ~
+  contents:
+  - starts_with("pandoc_")
+
+- title: Customizing & extending output formats
+  desc: ~
+  contents:
+  - '`all_output_formats`'
+  - '`default_output_format`'
+  - contains("dependen")
+  - '`html_document_base`'
+  - starts_with("knitr_")
+  - '`output_format`'
+  - '`output_metadata`'
+  - '`resolve_output_format`'
+  - '`rmd_metadata`'
+  - '`rmarkdown_format`'
+
+authors:
+  "Yihui Xie":
+    href: https://yihui.org
+  "Kevin Ushey":
+    href: https://kevinushey.github.io

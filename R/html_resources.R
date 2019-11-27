@@ -16,12 +16,12 @@
 #' \code{resource_files} key:
 #'
 #'   \preformatted{---
-#'title: My Document
-#'author: My Name
-#'resource_files:
-#'  - data/mydata.csv
-#'  - images/figure.png
-#'---}
+#' title: My Document
+#' author: My Name
+#' resource_files:
+#'   - data/mydata.csv
+#'   - images/figure.png
+#' ---}
 #'
 #' Each item in the \code{resource_files} list can refer to:
 #' \enumerate{
@@ -213,10 +213,10 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
   if (is.list(output_formats)) {
     for (output_format in output_formats) {
       if (is.list(output_format)) {
-        output_render_files <- c(output_format$includes, output_format$pandoc_args, output_format$logo)
-        for (output_render_file in output_render_files) {
-          discover_render_resource(output_render_file)
-        }
+        output_render_files <- unlist(output_format[c(
+          'includes', 'pandoc_args', 'logo', 'reference_doc', 'reference_docx'
+        )])
+        lapply(output_render_files, discover_render_resource)
       }
     }
   }
@@ -338,7 +338,10 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
 
   html_file <- render(
     md_file, override_output_format, html_file, quiet = TRUE,
-    output_options = list(self_contained = FALSE), encoding = "UTF-8"
+    encoding = "UTF-8", output_options = list(
+      self_contained = FALSE,
+      pandoc_args = c("--metadata", "pagetitle=PREVIEW")
+    )
   )
 
   # clean up output file and its supporting files directory

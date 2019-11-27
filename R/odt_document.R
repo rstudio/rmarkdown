@@ -62,6 +62,9 @@ odt_document <- function(fig_width = 5,
   # reference odt
   args <- c(args, reference_doc_args("odt", reference_odt))
 
+  # lua filters (added if pandoc > 2)
+  args <- c(args, pandoc_lua_filters("pagebreak.lua"))
+
   # pandoc args
   args <- c(args, pandoc_args)
 

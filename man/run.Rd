@@ -4,8 +4,14 @@
 \alias{run}
 \title{Run a Shiny document}
 \usage{
-run(file = "index.Rmd", dir = dirname(file), default_file = NULL,
-  auto_reload = TRUE, shiny_args = NULL, render_args = NULL)
+run(
+  file = "index.Rmd",
+  dir = dirname(file),
+  default_file = NULL,
+  auto_reload = TRUE,
+  shiny_args = NULL,
+  render_args = NULL
+)
 }
 \arguments{
 \item{file}{Path to the R Markdown document to launch in a web browser.

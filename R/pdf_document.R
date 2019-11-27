@@ -57,6 +57,9 @@
 #'   created.  See the documentation on
 #'   \href{http://pandoc.org/README.html}{pandoc online documentation}
 #'   for details on creating custom templates.
+#' @param output_extensions Pandoc extensions to be added or removed from the
+#'   output format, e.g., \code{"-smart"} means the output format will be
+#'   \code{latex-smart}.
 #' @param extra_dependencies A LaTeX dependency \code{latex_dependency()}, a
 #'   list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
 #'   \code{c("framed", "hyperref")}), or a named list of LaTeX package options
@@ -90,43 +93,37 @@ pdf_document <- function(toc = FALSE,
                          highlight = "default",
                          template = "default",
                          keep_tex = FALSE,
+                         keep_md = FALSE,
                          latex_engine = "pdflatex",
                          citation_package = c("none", "natbib", "biblatex"),
                          includes = NULL,
                          md_extensions = NULL,
+                         output_extensions = NULL,
                          pandoc_args = NULL,
                          extra_dependencies = NULL) {
 
   # base pandoc options for all PDF output
-  args <- c()
+  args <- c("--self-contained")
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
+
+  append_in_header <- function(text, file = as_tmpfile(text)) {
+    includes_to_pandoc_args(includes(in_header = file))
+  }
 
   # template path and assets
   if (identical(template, "default")) {
 
     pandoc_available(error = TRUE)
-    # choose the right template
+    # patch pandoc template if necessary
     version <- pandoc_version()
-    if (version >= "1.17.0.2")
-      latex_template <- "default-1.17.0.2.tex"
-    else if (version >= "1.15.2")
-      latex_template <- "default-1.15.2.tex"
-    else if (version >= "1.14")
-      latex_template <- "default-1.14.tex"
-    else
-      latex_template <- "default.tex"
-
-    # add to args
-    args <- c(args, "--template",
-              pandoc_path_arg(rmarkdown_system_file(paste0("rmd/latex/",
-                                                           latex_template))))
+    if (version <= "2.5") args <- c(
+      args, append_in_header(file = pkg_file("rmd/latex/subtitle.tex"))
+    )
 
   } else if (!is.null(template)) {
     args <- c(args, "--template", pandoc_path_arg(template))
-  } else {
-    args <- c(args, "--self-contained")
   }
 
   # numbered sections
@@ -139,7 +136,7 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
-  latex_engine = match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
+  latex_engine <- match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
   args <- c(args, pandoc_latex_engine_args(latex_engine))
 
   # citation package
@@ -150,7 +147,10 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, includes_to_pandoc_args(includes))
 
   # make sure the graphics package is always loaded
-  if (identical(template, "default")) args <- c(args, "--variable", "graphics=yes")
+  if (identical(template, "default")) args <- c(args, "--variable", "graphics")
+
+  # lua filters (added if pandoc > 2)
+  args <- c(args, pandoc_lua_filters(c("pagebreak.lua", "latex-div.lua")))
 
   # args args
   args <- c(args, pandoc_args)
@@ -162,30 +162,27 @@ pdf_document <- function(toc = FALSE,
   pdf_pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
                                 output_dir) {
 
-    args <- c()
+    # make sure --include-in-header from command line will not completely
+    # override header-includes in metadata but give the latter lower precedence:
+    # https://github.com/rstudio/rmarkdown/issues/1359
+    args <- append_in_header(metadata[["header-includes"]])
 
-    has_yaml_parameter <- function(text, parameter) {
-      length(grep(paste0("^", parameter, "\\s*:.*$"), text)) > 0
+    # use a geometry filter when we are using the "default" template
+    if (identical(template, "default")) {
+      # set the margin to 1 inch if no geometry options or document class specified
+      if (!any(c("geometry", "documentclass") %in% names(metadata)))
+        args <- c(args, "--variable", "geometry:margin=1in")
+
+      # use titling package to change title format to be more compact by default
+      if (!xfun::isFALSE(metadata[["compact-title"]])) args <- c(
+        args, append_in_header(file = pkg_file("rmd/latex/compact-title.tex"))
+      )
     }
-
-    input_test <- read_utf8(input_file)
-
-    # set the margin to 1 inch if no geometry options or document class specified
-    if (!has_yaml_parameter(input_test, "(geometry|documentclass)"))
-      args <- c(args, "--variable", "geometry:margin=1in")
-
-    # use titling package to change title format to be more compact by default
-    if (!has_yaml_parameter(input_test, "compact-title"))
-      args <- c(args, "--variable", "compact-title:yes")
 
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
       extra_dependencies <- latex_dependencies(extra_dependencies)
       all_dependencies <- append(extra_dependencies, flatten_latex_dependencies(knit_meta))
-      filename <- as_tmpfile(latex_dependencies_as_string(all_dependencies))
-      if ("header-includes" %in% names(metadata)) {
-        cat(c("", metadata[["header-includes"]]), sep = "\n", file = filename, append = TRUE)
-      }
-      args <- c(args, includes_to_pandoc_args(includes(in_header = filename)))
+      args <- c(args, append_in_header(latex_dependencies_as_string(all_dependencies)))
     }
     args
   }
@@ -196,12 +193,8 @@ pdf_document <- function(toc = FALSE,
     # save files dir (for generating intermediates)
     saved_files_dir <<- files_dir
 
-    # use a geometry filter when we are using the "default" template
-    if (identical(template, "default"))
-      pdf_pre_processor(metadata, input_file, runtime, knit_meta, files_dir,
-                        output_dir)
-    else
-      invisible(NULL)
+    pdf_pre_processor(metadata, input_file, runtime, knit_meta, files_dir,
+                      output_dir)
   }
 
   intermediates_generator <- function(...) {
@@ -211,12 +204,13 @@ pdf_document <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
-    pandoc = pandoc_options(to = "latex",
+    pandoc = pandoc_options(to = paste(c("latex", output_extensions), collapse = ""),
                             from = from_rmarkdown(fig_caption, md_extensions),
                             args = args,
                             latex_engine = latex_engine,
                             keep_tex = keep_tex),
     clean_supporting = !keep_tex,
+    keep_md = keep_md,
     df_print = df_print,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator
@@ -252,5 +246,5 @@ latex_document <- function(...) {
 #' @rdname pdf_document
 #' @export
 latex_fragment <- function(...) {
-  latex_document(..., template = rmarkdown_system_file("rmd/fragment/default.tex"))
+  latex_document(..., template = pkg_file("rmd/fragment/default.tex"))
 }

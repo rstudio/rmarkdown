@@ -38,9 +38,9 @@ variable \samp{RSTUDIO_PANDOC} unless you know what it means.
 library(rmarkdown)
 
 if (pandoc_available())
-  cat("pandoc", as.character(pandoc_version()), "is available!\\n")
+  cat("pandoc", as.character(pandoc_version()), "is available!\n")
 
 if (pandoc_available("1.12.3"))
-  cat("required version of pandoc is available!\\n")
+  cat("required version of pandoc is available!\n")
 }
 }

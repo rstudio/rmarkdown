@@ -2,7 +2,7 @@
 
 mkdir -p $HOME/bin
 cd $HOME/bin
-curl -LO https://travis-bin.yihui.name/pandoc.tar.gz
+curl -LO https://travis-bin.yihui.org/pandoc.tar.gz
 tar zxf pandoc.tar.gz
 rm pandoc.tar.gz
 chmod +x pandoc*
