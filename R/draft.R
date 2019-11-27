@@ -141,13 +141,13 @@ list_template_dirs <- function() {
 
     # check to see if the package includes a template folder
     template_folder <- system.file("rmarkdown", "templates", package = pkg)
-    if (dir_exists(template_folder)) {
+    if (fs::dir_exists(template_folder)) {
 
       # it does; list each template directory within the template folder
       template_dirs <- list.dirs(path = template_folder, recursive = FALSE)
-      for (dir in template_dirs) {
+      lapply(template_dirs, function(dir) {
         cat(pkg, "|", dir, "\n", sep = "")
-      }
+      })
     }
   }
 }

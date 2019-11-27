@@ -21,6 +21,7 @@ Authors@R: c(
   person("Christophe", "Dervieux", role = "ctb"),
   person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
   person("Jeff", "Allen", role = "ctb", email = "jeff@rstudio.com"),
+  person("JooYoung", "Seo", role="ctb", comment = c(ORCID = "0000-0002-4064-6012")),
   person("Malcolm", "Barrett", role = "ctb"),
   person("Rob", "Hyndman", role = "ctb", email = "Rob.Hyndman@monash.edu"),
   person("Romain", "Lesur", role = "ctb"),

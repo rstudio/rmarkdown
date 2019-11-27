@@ -15,6 +15,8 @@ rmarkdown 1.18
 
 - Removed the `xmlns` attribute in the `<html>` tag in the default HTML template (thanks, @grady #1640, @spgarbet #995).
 
+- Made `rmarkdown:::list_template_dirs()` a little bit faster.
+
 
 rmarkdown 1.17
 ================================================================================
