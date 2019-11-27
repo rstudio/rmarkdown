@@ -184,8 +184,6 @@ html_document_base <- function(smart = TRUE,
 }
 
 extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks) {
-  # The input file is converted to UTF-8 from its native encoding prior
-  # to calling the preprocessor (see ::render)
   input_str <- read_utf8(input_file)
   preserve <- extract(input_str)
   if (!identical(preserve$value, input_str)) write_utf8(preserve$value, input_file)

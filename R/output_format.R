@@ -370,9 +370,7 @@ smart_extension <- function(smart, extension) {
 #'   for the format and their values. An option's default value will be returned
 #'   if the option isn't set explicitly in the document.
 #' @export
-default_output_format <- function(input,
-                                  encoding = "UTF-8",
-                                  output_yaml = NULL) {
+default_output_format <- function(input, output_yaml = NULL) {
 
   # execute within the input file's directory (this emulates the way
   # yaml front matter discovery is done within render)
@@ -411,15 +409,13 @@ default_output_format <- function(input,
 #'   the default format for the input file).
 #' @param output_options List of output options that should override the
 #'   options specified in metadata.
-#' @param encoding The encoding of the input file; see \code{\link{file}}.
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
 #' @export
 resolve_output_format <- function(input,
                                   output_format = NULL,
                                   output_options = NULL,
-                                  output_yaml = NULL,
-                                  encoding = "UTF-8") {
+                                  output_yaml = NULL) {
 
   # read the input file
   input_lines <- read_utf8(input)
@@ -434,8 +430,7 @@ resolve_output_format <- function(input,
       input_lines,
       output_options,
       output_format,
-      output_yaml,
-      encoding = encoding)
+      output_yaml)
 
   # return it
   create_output_format(output_format$name, output_format$options)
@@ -455,7 +450,7 @@ resolve_output_format <- function(input,
 #' @param input Input file (Rmd or plain markdown)
 #' @return A character vector with the names of all output formats.
 #' @export
-all_output_formats <- function(input, encoding = "UTF-8", output_yaml = NULL) {
+all_output_formats <- function(input, output_yaml = NULL) {
   enumerate_output_formats(input, output_yaml)
 }
 
@@ -465,8 +460,7 @@ all_output_formats <- function(input, encoding = "UTF-8", output_yaml = NULL) {
 output_format_from_yaml_front_matter <- function(input_lines,
                                                  output_options = NULL,
                                                  output_format_name = NULL,
-                                                 output_yaml = NULL,
-                                                 encoding = "UTF-8") {
+                                                 output_yaml = NULL) {
 
   format_name <- output_format_name
 
@@ -666,14 +660,8 @@ enumerate_output_formats <- function(input, output_yaml = NULL) {
 #' @inheritParams default_output_format
 #' @keywords internal
 #' @export
-yaml_front_matter <- function(input,
-                              encoding = "UTF-8") {
-
-   # read the input file
-  input_lines <- read_utf8(input)
-
-  # parse the yaml front matter
-  parse_yaml_front_matter(input_lines)
+yaml_front_matter <- function(input) {
+  parse_yaml_front_matter(read_utf8(input))
 }
 
 parse_yaml_front_matter <- function(input_lines) {

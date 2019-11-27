@@ -40,7 +40,6 @@
 #' In all cases, only resources that exist on disk and are contained in the
 #' document's directory (or a child thereof) are returned.
 #' @param input_file path to the R Markdown document or HTML file to process
-#' @param encoding the encoding of the document
 #' @return A data frame with the following columns:
 #'   \describe{
 #'    \item{path}{The relative path from the document to the resource}
@@ -50,7 +49,7 @@
 #'      from the document}
 #'   }
 #' @export
-find_external_resources <- function(input_file, encoding = "UTF-8") {
+find_external_resources <- function(input_file) {
 
   # ensure we're working with valid input
   ext <- tolower(tools::file_ext(input_file))
