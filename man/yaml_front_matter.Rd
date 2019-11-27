@@ -4,12 +4,10 @@
 \alias{yaml_front_matter}
 \title{Parse the YAML front matter from a file}
 \usage{
-yaml_front_matter(input, encoding = "UTF-8")
+yaml_front_matter(input)
 }
 \arguments{
 \item{input}{Input file (Rmd or plain markdown)}
-
-\item{encoding}{Ignored. The encoding is always assumed to be UTF-8.}
 }
 \description{
 Parse the YAML front matter from a file

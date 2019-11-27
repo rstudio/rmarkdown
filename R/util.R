@@ -1,4 +1,4 @@
-#' @import stats
+#' @import stats utils
 
 createUniqueId <- function(bytes) {
   paste(as.hexmode(sample(256, bytes) - 1), collapse = "")

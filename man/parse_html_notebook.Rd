@@ -4,12 +4,10 @@
 \alias{parse_html_notebook}
 \title{Parse an HTML Notebook}
 \usage{
-parse_html_notebook(path, encoding = "UTF-8")
+parse_html_notebook(path)
 }
 \arguments{
 \item{path}{The path to an R Notebook file (with extension \code{.nb.html}).}
-
-\item{encoding}{The document's encoding (assumed as \code{"UTF-8"} by default).}
 }
 \description{
 Parse an HTML notebook, retrieving annotation information

@@ -8,8 +8,7 @@ resolve_output_format(
   input,
   output_format = NULL,
   output_options = NULL,
-  output_yaml = NULL,
-  encoding = "UTF-8"
+  output_yaml = NULL
 )
 }
 \arguments{
@@ -26,8 +25,6 @@ configurations. The first existing one is used. If none are found, then
 the function searches YAML files specified to the \code{output_yaml} top-level
 parameter in the YAML front matter, _output.yml or _output.yaml, and then uses
 the first existing one.}
-
-\item{encoding}{The encoding of the input file; see \code{\link{file}}.}
 }
 \value{
 An R Markdown output format definition that can be passed to

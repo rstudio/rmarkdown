@@ -364,7 +364,6 @@ smart_extension <- function(smart, extension) {
 #' the function searches YAML files specified to the \code{output_yaml} top-level
 #' parameter in the YAML front matter, _output.yml or _output.yaml, and then uses
 #' the first existing one.
-#' @inheritParams render
 #' @return A named list with a \code{name} value containing the format
 #'   name and an \code{options} value that is a list containing all the options
 #'   for the format and their values. An option's default value will be returned

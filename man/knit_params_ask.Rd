@@ -9,8 +9,7 @@ knit_params_ask(
   input_lines = NULL,
   params = NULL,
   shiny_args = NULL,
-  save_caption = "Save",
-  encoding = "UTF-8"
+  save_caption = "Save"
 )
 }
 \arguments{
@@ -23,8 +22,6 @@ knit_params_ask(
 \item{shiny_args}{Additional arguments to \code{\link[shiny:runApp]{runApp}}.}
 
 \item{save_caption}{Caption to use use for button that saves/confirms parameters.}
-
-\item{encoding}{The encoding of the input file; see \code{\link{file}}.}
 }
 \value{
 named list with overridden parameter names and value.
