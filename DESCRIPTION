@@ -26,6 +26,7 @@ Authors@R: c(
   person("Romain", "Lesur", role = "ctb"),
   person("Roy", "Storey", role = "ctb"),
   person("Ruben", "Arslan", role = "ctb", email = "ruben.arslan@uni-goettingen.de"),
+  person("Sergio", "Oller", role = "ctb"),
   #
   # Copyright holders
   person(family = "RStudio, Inc.", role = "cph"),
