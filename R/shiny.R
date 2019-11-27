@@ -398,7 +398,7 @@ rmd_cached_output <- function(input) {
   }
 
   # check to see if the file is a Shiny document
-  front_matter <- parse_yaml_front_matter(read_utf8(input))
+  front_matter <- yaml_front_matter(input)
   if (!is_shiny_classic(front_matter$runtime)) {
 
     # If it's not a Shiny document, then its output is cacheable. Hash the file

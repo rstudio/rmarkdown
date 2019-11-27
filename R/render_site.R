@@ -247,8 +247,7 @@ site_generator <- function(input = ".", output_format = NULL) {
   if (file.exists(index)) {
 
     # read index.Rmd and extract the front matter
-    index_lines <- read_utf8(index)
-    front_matter <- parse_yaml_front_matter(index_lines)
+    front_matter <- yaml_front_matter(index)
 
     # is there a custom site generator function?
     if (!is.null(front_matter$site)) {

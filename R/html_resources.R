@@ -199,7 +199,7 @@ discover_rmd_resources <- function(rmd_file, discover_single_resource) {
   }
 
   # parse the YAML front matter to discover resources named there
-  front_matter <- parse_yaml_front_matter(read_utf8(md_file))
+  front_matter <- yaml_front_matter(md_file)
 
   # Check for content referred to by output format calls to the includes
   # function (for generating headers/footers/etc. at render time), and for
