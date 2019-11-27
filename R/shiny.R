@@ -119,9 +119,6 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     }
   }
 
-  # pick up encoding
-  encoding <- render_args$encoding %||% "UTF-8"
-
   if (is.null(render_args$envir)) render_args$envir <- parent.frame()
 
   # determine the runtime of the target file
@@ -132,7 +129,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   if (is_shiny_prerendered(runtime)) {
 
     # get the pre-rendered shiny app
-    app <- shiny_prerendered_app(target_file, encoding = encoding, render_args = render_args)
+    app <- shiny_prerendered_app(target_file, render_args = render_args)
   } else {
 
     # add rmd_resources handler on start
