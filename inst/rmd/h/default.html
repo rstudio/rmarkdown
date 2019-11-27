@@ -134,6 +134,13 @@ h5 {
 h6 {
   font-size: 12px;
 }
+$else$
+/*
+BS3 -> BS4 saw a removal of margin-top which is a pretty jarring change for Rmd
+https://github.com/twbs/bootstrap/blob/f17f882d/dist/css/bootstrap.css#L1219-L1250
+https://github.com/twbs/bootstrap/blob/4de4874e/scss/_reboot.scss#L82-L89 */
+h1, h2, h3 { margin-top: 20px; }
+h4, h5, h6 { margin-top: 10px; }
 $endif$
 .table th:not([align]) {
   text-align: left;
@@ -529,12 +536,7 @@ $include-before$
 $endfor$
 
 $if(theme)$
-$if(bs3)$
 <div id="$idprefix$header">
-$else$
-<!-- bs4 removed margin-top on h1, h2, ..., h6 -->
-<div id="$idprefix$header" style="margin-top: 20px">
-$endif$
 
 $if(code_menu)$
 <div class="btn-group pull-right float-right">
