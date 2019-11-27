@@ -209,8 +209,7 @@ NULL
 #' @param run_pandoc An option for whether to run pandoc to convert Markdown
 #' output.
 #' @param quiet An option to suppress printing of the pandoc command line.
-#' @param encoding The encoding of the input file. See \code{\link{file}} for
-#' more information.
+#' @param encoding Ignored. The encoding is always assumed to be UTF-8.
 #' @return
 #'   When \code{run_pandoc = TRUE}, the compiled document is written into
 #'   the output file, and the path of the output file is returned. When

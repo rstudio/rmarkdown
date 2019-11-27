@@ -150,7 +150,7 @@
 #'   during knitting (can use \code{\link{new.env}} to guarantee an empty new
 #'   environment).
 #' @param quiet \code{TRUE} to suppress messages and other output.
-#' @param encoding The encoding of the input file; see \code{\link{file}}.
+#' @inheritParams render
 #'
 #' @return \code{render_site} returns the name of the site output file (relative
 #'   to the input directory). \code{clean_site} returns the names of the

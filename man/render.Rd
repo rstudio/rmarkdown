@@ -100,8 +100,7 @@ output.}
 
 \item{quiet}{An option to suppress printing of the pandoc command line.}
 
-\item{encoding}{The encoding of the input file. See \code{\link{file}} for
-more information.}
+\item{encoding}{Ignored. The encoding is always assumed to be UTF-8.}
 }
 \value{
 When \code{run_pandoc = TRUE}, the compiled document is written into

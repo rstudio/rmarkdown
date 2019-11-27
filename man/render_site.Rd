@@ -35,7 +35,7 @@ environment).}
 
 \item{quiet}{\code{TRUE} to suppress messages and other output.}
 
-\item{encoding}{The encoding of the input file; see \code{\link{file}}.}
+\item{encoding}{Ignored. The encoding is always assumed to be UTF-8.}
 
 \item{preview}{Whether to list the files to be removed rather than actually
 removing them.}

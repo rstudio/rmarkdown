@@ -9,7 +9,7 @@ yaml_front_matter(input, encoding = "UTF-8")
 \arguments{
 \item{input}{Input file (Rmd or plain markdown)}
 
-\item{encoding}{The encoding of the input file; see \code{\link{file}}}
+\item{encoding}{Ignored. The encoding is always assumed to be UTF-8.}
 }
 \description{
 Parse the YAML front matter from a file
