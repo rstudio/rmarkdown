@@ -394,7 +394,7 @@ shiny_prerendered_server_start_code <- function(server_envir) {
 # We'll use this later to determine which .RData files in the _data
 # directory should actually be loaded (as some could be from chunks
 # that used to be cached / were cached under different names)
-shiny_prerendered_option_hook <- function(input, encoding) {
+shiny_prerendered_option_hook <- function(input) {
   function(options) {
 
     # convert chunk labels to contexts as necessary
@@ -559,7 +559,7 @@ shiny_prerendered_remove_contexts <- function(html_lines, contexts) {
 
 # Gather shiny_prerendred contexts and append them as script tags to
 # the passed file
-shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
+shiny_prerendered_append_contexts <- function(runtime, file) {
 
   # collect contexts
   shiny_prerendered_contexts <- knit_meta_reset(class = "shiny_prerendered")
@@ -572,7 +572,7 @@ shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
     }
 
     # open the file
-    con <- file(file, open = "at", encoding = encoding)
+    con <- file(file, open = "at", encoding = 'UTF-8')
     on.exit(close(con), add = TRUE)
 
     # track singletons

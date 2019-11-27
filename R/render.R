@@ -292,8 +292,7 @@ render <- function(input,
                        knit_meta = knit_meta,
                        envir = envir,
                        run_pandoc = run_pandoc,
-                       quiet = quiet,
-                       encoding = encoding)
+                       quiet = quiet)
       outputs <- c(outputs, output)
     }
     return(invisible(outputs))
@@ -408,9 +407,8 @@ render <- function(input,
       'date: "', Sys.Date(), '"\n',
       '---\n'
     , sep = "")
-    if (!identical(encoding, "native.enc"))
-      metadata <- iconv(metadata, to = encoding)
-    cat(metadata, file = knit_input, append = TRUE)
+    input_lines <- read_utf8(knit_input)
+    write_utf8(c(input_lines, metadata), knit_input)
   }
 
   # read the input file
@@ -460,8 +458,7 @@ render <- function(input,
     output_format <- output_format_from_yaml_front_matter(input_lines,
                                                           output_options,
                                                           output_format,
-                                                          output_yaml,
-                                                          encoding = encoding)
+                                                          output_yaml)
     output_format <- create_output_format(output_format$name,
                                           output_format$options)
   }
@@ -499,7 +496,7 @@ render <- function(input,
       !is.null(output_format$intermediates_generator)) {
     intermediates <- c(intermediates,
                        output_format$intermediates_generator(original_input,
-                                                             encoding,
+                                                             'UTF-8',
                                                              intermediates_dir))
   }
 
@@ -536,8 +533,7 @@ render <- function(input,
     if (!is.null(output_format$post_knit)) {
       post_knit_extra_args <- output_format$post_knit(yaml_front_matter,
                                                       knit_input,
-                                                      runtime,
-                                                      encoding = encoding)
+                                                      runtime)
     } else {
       post_knit_extra_args <- NULL
     }
@@ -629,7 +625,7 @@ render <- function(input,
       shiny_prerendered_remove_uncached_data(original_input)
 
       # set the cache option hook and evaluate hook
-      knitr::opts_hooks$set(label = shiny_prerendered_option_hook(original_input,encoding))
+      knitr::opts_hooks$set(label = shiny_prerendered_option_hook(original_input))
       knitr::knit_hooks$set(evaluate = shiny_prerendered_evaluate_hook(original_input))
     }
 
@@ -739,8 +735,7 @@ render <- function(input,
     input <- knitr::knit(knit_input,
                          knit_output,
                          envir = envir,
-                         quiet = quiet,
-                         encoding = encoding)
+                         quiet = quiet)
 
     perf_timer_stop("knitr")
 
@@ -754,7 +749,7 @@ render <- function(input,
     }
 
     # pull out shiny_prerendered_contexts and append them as script tags
-    shiny_prerendered_append_contexts(runtime, input, encoding)
+    shiny_prerendered_append_contexts(runtime, input)
 
     # collect remaining knit_meta
     knit_meta <- knit_meta_reset()
