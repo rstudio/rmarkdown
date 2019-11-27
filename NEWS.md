@@ -1,6 +1,7 @@
 rmarkdown 1.19
 ================================================================================
 
+- `render_site()` can render R scripts in addition to Rmd files if you set `autospin: true` in `_site.yml` (thanks, @zeehio, #1564).
 
 
 rmarkdown 1.18

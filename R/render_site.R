@@ -91,6 +91,11 @@
 #' \code{MASS::filter}. The default behaviour of \code{render_site} is to use a
 #' common R session.
 #'
+#' \code{autospin: true} causes \code{.R} files to be spinned and rendered
+#' (as well as \code{.Rmd} files). If \code{autospin} is set to false (the default),
+#' \code{.R} files will not be spinned nor rendered. \code{autospin} can also
+#' enumerate a list of .R files to be spinned and rendered.
+#'
 #' @section Custom Site Generation:
 #' The behavior of the default site generation function
 #' (\code{rmarkdown::default_site}) is described above. It is also possible to
@@ -327,9 +332,18 @@ default_site <- function(input, encoding = "UTF-8", ...) {
   # .md files that don't start with "_" (note that we don't do this
   # recursively because rmarkdown in general handles applying common
   # options/elements across subdirectories poorly). Also excludes
-  # README.R?md as those files are intended for GitHub
+  # README.R?md as those files are intended for GitHub. If
+  # config$autospin is TRUE, we also spin and render .R files.
   input_files <- function() {
-    files <- list.files(input, pattern = "^[^_].*\\.[Rr]?md$")
+    pattern <- sprintf(
+      "^[^_].*\\.%s$", if (isTRUE(config$autospin)) {
+        "([Rr]|[Rr]?md)"
+      } else {
+        "[Rr]?md"
+      }
+    )
+    files <- list.files(input, pattern)
+    if (is.character(config$autospin)) files <- c(files, config$autospin)
     files[!grepl("^README\\.R?md$", files)]
   }
 

@@ -142,6 +142,11 @@ functions from different packages (namespaces) that share a common name, such
 as \code{here::here} and \code{lubridate::here} or \code{dplyr::filter} and
 \code{MASS::filter}. The default behaviour of \code{render_site} is to use a
 common R session.
+
+\code{autospin: true} causes \code{.R} files to be spinned and rendered
+(as well as \code{.Rmd} files). If \code{autospin} is set to false (the default),
+\code{.R} files will not be spinned nor rendered. \code{autospin} can also
+enumerate a list of .R files to be spinned and rendered.
 }
 
 \section{Custom Site Generation}{
