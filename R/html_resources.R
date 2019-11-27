@@ -105,10 +105,10 @@ find_external_resources <- function(input_file, encoding = "UTF-8") {
     # discover R Markdown doc resources--scans the document itself as described
     # in comments above, renders as Markdown, and invokes HTML discovery
     # on the result
-    discover_rmd_resources(input_file, encoding, discover_single_resource)
+    discover_rmd_resources(input_file, discover_single_resource)
   } else if (ext %in% c("htm", "html")) {
     # discover HTML resources
-    discover_html_resources(input_file, encoding, discover_single_resource)
+    discover_html_resources(input_file, discover_single_resource)
 
     # if the HTML file represents a rendered R Markdown document, it may have a
     # sidecar _files folder; include that if it's present
@@ -146,8 +146,8 @@ find_external_resources <- function(input_file, encoding = "UTF-8") {
   discovered_resources
 }
 
-# discovers resources in a single HTML file with the given encoding
-discover_html_resources <- function(html_file, encoding, discover_single_resource) {
+# discovers resources in a single HTML file
+discover_html_resources <- function(html_file, discover_single_resource) {
   # resource accumulator
   discover_resource <- function(node, att, val, idx) {
     res_file <- utils::URLdecode(val)
@@ -155,14 +155,14 @@ discover_html_resources <- function(html_file, encoding, discover_single_resourc
   }
 
   # create a single string with all of the lines in the document
-  html_lines <- file_string(html_file, encoding)
+  html_lines <- file_string(html_file)
 
   # parse the HTML and invoke our resource discovery callbacks
   call_resource_attrs(html_lines, discover_resource)
 }
 
 # discovers resources in a single R Markdown document
-discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource) {
+discover_rmd_resources <- function(rmd_file, discover_single_resource) {
 
   # create a UTF-8 encoded Markdown file to serve as the resource discovery
   # source
@@ -330,7 +330,7 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
   # check to see what format this document is going to render as; if it's a
   # format that produces HTML, let it render as-is, but if it isn't, render as
   # html_document to pick up dependencies
-  output_format <- output_format_from_yaml_front_matter(rmd_content, encoding = encoding)
+  output_format <- output_format_from_yaml_front_matter(rmd_content)
 
   output_format_function <- eval(parse(text = output_format$name))
 
@@ -338,7 +338,7 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
 
   html_file <- render(
     md_file, override_output_format, html_file, quiet = TRUE,
-    encoding = "UTF-8", output_options = list(
+    output_options = list(
       self_contained = FALSE,
       pandoc_args = c("--metadata", "pagetitle=PREVIEW")
     )
@@ -348,7 +348,7 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
   temp_files <- c(temp_files, html_file, knitr_files_dir(md_file))
 
   # run the HTML resource discovery mechanism on the rendered output
-  discover_html_resources(html_file, "UTF-8", discover_single_resource)
+  discover_html_resources(html_file, discover_single_resource)
 
   # if this is an R Markdown file, purl the file to extract just the R code
   if (tolower(tools::file_ext(rmd_file)) == "rmd") {
@@ -359,7 +359,7 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
     on.exit({
       unlink(c(r_file, try_file)); options(opts)
     }, add = TRUE)
-    knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0, encoding = "UTF-8")
+    knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0)
     temp_files <- c(temp_files, r_file)
     discover_r_resources(r_file, discover_single_resource)
   }

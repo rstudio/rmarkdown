@@ -265,7 +265,7 @@ site_generator <- function(input = ".",
     # is there a "_site.yml"?
     } else if (file.exists(site_config_file(input))) {
 
-      default_site(input, encoding)
+      default_site(input)
 
     # no custom site generator or "_site.yml"
     } else {
@@ -321,10 +321,10 @@ default_site_generator <- function(input, encoding = "UTF-8", ...) {
 }
 
 # default site implementation (can be overridden by custom site generators)
-default_site <- function(input, encoding = "UTF-8", ...) {
+default_site <- function(input, ...) {
 
   # get the site config
-  config <- site_config(input, encoding)
+  config <- site_config(input)
   if (is.null(config))
     stop("No site configuration (_site.yml) file found.")
 
@@ -352,7 +352,7 @@ default_site <- function(input, encoding = "UTF-8", ...) {
                      output_format,
                      envir,
                      quiet,
-                     encoding, ...) {
+                     ...) {
 
     # track outputs
     outputs <- c()
@@ -382,8 +382,7 @@ default_site <- function(input, encoding = "UTF-8", ...) {
                            output_options = list(lib_dir = "site_libs",
                                                  self_contained = FALSE),
                            envir = envir,
-                           quiet = quiet,
-                           encoding = encoding)
+                           quiet = quiet)
 
       # add to global list of outputs
       outputs <<- c(outputs, output)
@@ -438,7 +437,7 @@ default_site <- function(input, encoding = "UTF-8", ...) {
       unlink(lib_dir, recursive = TRUE)
 
       # copy other files
-      copy_site_resources(input, encoding)
+      copy_site_resources(input)
     }
 
     # Print output created for rstudio preview
@@ -518,17 +517,15 @@ render_new_session <- function(...) {
 }
 
 # utility function to copy all files into the _site directory
-copy_site_resources <- function(input, encoding = "UTF-8") {
+copy_site_resources <- function(input) {
 
   # get the site config
-  config <- site_config(input, encoding)
+  config <- site_config(input)
 
   if (config$output_dir != ".") {
 
     # get the list of files
-    files <- copyable_site_resources(input = input,
-                                     config = config,
-                                     encoding = encoding)
+    files <- copyable_site_resources(input = input, config = config)
 
     # perform the copy
     output_dir <- file.path(input, config$output_dir)
@@ -608,9 +605,7 @@ site_resources <- function(site_dir, include = NULL, exclude = NULL, recursive =
 
 
 # utility function to list the files that should be copied
-copyable_site_resources <- function(input,
-                                    config = site_config(input, encoding),
-                                    encoding = "UTF-8") {
+copyable_site_resources <- function(input, config = site_config(input)) {
 
   include <- config$include
 
