@@ -1,7 +1,9 @@
 rmarkdown 1.19
 ================================================================================
 
-- The `encoding` argument is no longer passed to the `intermediates_generator` of R Markdown output formats. The `intermediates_generator` function can only accept arguments `input_file` and `intermediates_dir` now. This is a breaking change to developers. If you are an output format developer, you have to remove the `encoding` argument in your `intermediates_generator` if your output format uses this function.
+- The `encoding` argument is no longer passed to the `intermediates_generator` of R Markdown output formats. The `intermediates_generator` function can only accept arguments `input_file` and `intermediates_dir` now (see `?rmarkdown::output_format`). This is a breaking change to developers. If you are an output format developer, you have to remove the `encoding` argument in your `intermediates_generator` if your output format uses this function.
+
+- The `encoding` argument is no longer passed to the `render` element of the site generator (see `?rmarkdown::render_site).
 
 - `render_site()` can render R scripts in addition to Rmd files if you set `autospin: true` in `_site.yml` (thanks, @zeehio, #1564).
 
