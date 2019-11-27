@@ -81,7 +81,10 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
 
     # Override Bootstrap's `$font-size-base: 1rem` (which increased the
     # based font size from 14px to 16px), but allow themes to override that default
-    font_size_14px <- bootsass::bs4_theme(pre = "$font-size-base: 0.875rem !default;")
+    font_size_14px <- bootsass::bs4_theme(
+      pre = "$font-size-base: 0.875rem !default;",
+      post = "h1.title { @include font-size(1.15 * $h1-font-size) }"
+    )
     theme <- bootsass::bs4_themes(font_size_14px, theme)
 
     if (identical(version, "4-3")) {
