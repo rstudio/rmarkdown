@@ -82,8 +82,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       } else {
         # look for first one that has runtime: shiny
         for (rmd in allRmds) {
-          encoding <- render_args$encoding %||% "UTF-8"
-          runtime <- yaml_front_matter(file.path(dir, rmd), encoding)$runtime
+          runtime <- yaml_front_matter(file.path(dir, rmd))$runtime
           if (is_shiny(runtime)) {
             default_file <- file.path(dir, rmd)
             break
@@ -119,20 +118,17 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     }
   }
 
-  # pick up encoding
-  encoding <- render_args$encoding %||% "UTF-8"
-
   if (is.null(render_args$envir)) render_args$envir <- parent.frame()
 
   # determine the runtime of the target file
   target_file <- file %||% default_file
-  runtime <- if (!is.null(target_file)) yaml_front_matter(target_file, encoding)$runtime
+  runtime <- if (!is.null(target_file)) yaml_front_matter(target_file)$runtime
 
   # run using the requested mode
   if (is_shiny_prerendered(runtime)) {
 
     # get the pre-rendered shiny app
-    app <- shiny_prerendered_app(target_file, encoding = encoding, render_args = render_args)
+    app <- shiny_prerendered_app(target_file, render_args = render_args)
   } else {
 
     # add rmd_resources handler on start
@@ -151,7 +147,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
                            uiPattern = "^/$|^/index\\.html?$|^(/.*\\.[Rr][Mm][Dd])$",
                            onStart = onStart,
                            server = rmarkdown_shiny_server(
-                             dir, default_file, encoding, auto_reload, render_args))
+                             dir, default_file, auto_reload, render_args))
 
     # cleanup evaluated cache when the current shiny app exits
     on.exit({
@@ -181,7 +177,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 }
 
 # create the Shiny server function
-rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args) {
+rmarkdown_shiny_server <- function(dir, file, auto_reload, render_args) {
   function(input, output, session) {
     path_info <- utils::URLdecode(session$request$PATH_INFO)
     # strip /websocket/ from the end of the request path if present
@@ -209,7 +205,7 @@ rmarkdown_shiny_server <- function(dir, file, encoding, auto_reload, render_args
     # read the contents into a reactive value
     doc <- shiny::reactive({
       # check to see whether we have cached output for this file
-      out <- rmd_cached_output(file, encoding)
+      out <- rmd_cached_output(file)
       output_dest <- out$dest
 
       # if output is cached, return it directly
@@ -380,11 +376,10 @@ shinyHTML_with_deps <- function(html_file, deps) {
   htmltools::attachDependencies(HTML(one_string(html)), deps)
 }
 
-# given an input file and its encoding, return a list with values indicating
-# whether the input file's Shiny document can be cached and, if so, its cached
-# representation if available
-#' @import utils
-rmd_cached_output <- function(input, encoding) {
+#given an input file, return a list with values indicating whether the input
+#file's Shiny document can be cached and, if so, its cached representation if
+#available ' @import utils
+rmd_cached_output <- function(input) {
   # init return values
   cacheable <- FALSE
   cached <- FALSE
@@ -403,7 +398,7 @@ rmd_cached_output <- function(input, encoding) {
   }
 
   # check to see if the file is a Shiny document
-  front_matter <- parse_yaml_front_matter(read_utf8(input, encoding))
+  front_matter <- yaml_front_matter(input)
   if (!is_shiny_classic(front_matter$runtime)) {
 
     # If it's not a Shiny document, then its output is cacheable. Hash the file

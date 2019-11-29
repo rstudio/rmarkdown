@@ -4,12 +4,10 @@
 \alias{default_output_format}
 \title{Determine the default output format for an R Markdown document}
 \usage{
-default_output_format(input, encoding = "UTF-8", output_yaml = NULL)
+default_output_format(input, output_yaml = NULL)
 }
 \arguments{
 \item{input}{Input file (Rmd or plain markdown)}
-
-\item{encoding}{The encoding of the input file; see \code{\link{file}}}
 
 \item{output_yaml}{Paths to YAML files specifying output formats and their
 configurations. The first existing one is used. If none are found, then

@@ -2,7 +2,7 @@
   input_file <- tempfile(fileext = ".Rmd")
   output_file <- tempfile()
   on.exit(unlink(c(input_file, output_file)), add = TRUE)
-  xfun::write_utf8(content, input_file)
+  xfun::write_utf8(c("---\ntitle: Test\n---\n", content), input_file)
   res <- rmarkdown::render(input_file, output_format = output_format, output_file = output_file, quiet = TRUE)
   xfun::read_utf8(res)
 }

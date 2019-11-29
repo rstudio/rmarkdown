@@ -71,9 +71,9 @@ powerpoint_presentation <- function(
 
 # copy the reference doc to the intermediate dir when the dir is specified
 reference_intermediates_generator <- function(
-  saved_files_dir, original_input, encoding, intermediates_dir, reference_doc
+  saved_files_dir, original_input, intermediates_dir, reference_doc
 ) {
-  res <- general_intermediates_generator(saved_files_dir,  original_input, encoding, intermediates_dir)
+  res <- general_intermediates_generator(saved_files_dir,  original_input, intermediates_dir)
   if (is.null(reference_doc) || identical(reference_doc, 'default')) return(res)
   if (!is_relative(reference_doc)) return(res)  # an absolute path was provided; no need to copy
   doc  <- normalize_path(reference_doc, mustWork = TRUE)

@@ -1,9 +1,9 @@
 
 # Create a shiny app object from an Rmd w/ runtime: shiny_prerendered
-shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
+shiny_prerendered_app <- function(input_rmd, render_args) {
 
   # get rendered html and capture dependencies
-  html <- shiny_prerendered_html(input_rmd, encoding, render_args)
+  html <- shiny_prerendered_html(input_rmd, render_args)
   deps <- attr(html, "html_dependencies")
 
   # create the server environment
@@ -61,7 +61,7 @@ shiny_prerendered_app <- function(input_rmd, encoding, render_args) {
 
 # Generate the html for a runtime: shiny_prerendered Rmd (attempts to use
 # an existing rendering of the html if it's still valid)
-shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
+shiny_prerendered_html <- function(input_rmd, render_args) {
 
   # determine the path to the rendered_html
   output_file <- render_args$output_file
@@ -78,7 +78,6 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
     input_rmd,
     rendered_html,
     output_dir,
-    encoding,
     prerender_option
   )
 
@@ -86,7 +85,7 @@ shiny_prerendered_html <- function(input_rmd, encoding, render_args) {
   if (prerender) {
 
     # execute the render
-    args <- merge_lists(list(input = input_rmd, encoding = encoding), render_args)
+    args <- merge_lists(list(input = input_rmd), render_args)
     rendered_html <- do.call(render, args)
   }
 
@@ -145,7 +144,6 @@ shiny_prerendered_prerender <- function(
   input_rmd,
   rendered_html,
   output_dir,
-  encoding,
   prerender_option
 ) {
   if (file.access(output_dir, 2) != 0) {
@@ -176,7 +174,7 @@ shiny_prerendered_prerender <- function(
   }
 
   # find external resources referenced by the file
-  external_resources <- find_external_resources(input_rmd, encoding)
+  external_resources <- find_external_resources(input_rmd)
 
   # get paths to external resources
   input_files <- c(input_rmd, file.path(output_dir, external_resources$path))
@@ -219,7 +217,7 @@ shiny_prerendered_prerender <- function(
         #   means old prerender version, render again
         if (!isTRUE(get_package_version_string(depPkg) == depVer)) {
           # was not rendered with the same R package. must render again
-          return (TRUE)
+          return(TRUE)
         }
         pkgsSeen[[depPkg]] <- depVer
       }
@@ -394,7 +392,7 @@ shiny_prerendered_server_start_code <- function(server_envir) {
 # We'll use this later to determine which .RData files in the _data
 # directory should actually be loaded (as some could be from chunks
 # that used to be cached / were cached under different names)
-shiny_prerendered_option_hook <- function(input, encoding) {
+shiny_prerendered_option_hook <- function(input) {
   function(options) {
 
     # convert chunk labels to contexts as necessary
@@ -404,7 +402,6 @@ shiny_prerendered_option_hook <- function(input, encoding) {
     if (identical(options$context, "data")) {
       data_file <- shiny_prerendered_data_file_name(options$label,
                                                     options$cache > 0)
-      data_file <- to_utf8(data_file, encoding)
       data_dir <- shiny_prerendered_data_dir(input, create = TRUE)
       index_file <- shiny_prerendered_data_chunks_index(data_dir)
       conn <- file(index_file, open = "ab", encoding = "UTF-8")
@@ -560,7 +557,7 @@ shiny_prerendered_remove_contexts <- function(html_lines, contexts) {
 
 # Gather shiny_prerendred contexts and append them as script tags to
 # the passed file
-shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
+shiny_prerendered_append_contexts <- function(runtime, file) {
 
   # collect contexts
   shiny_prerendered_contexts <- knit_meta_reset(class = "shiny_prerendered")
@@ -573,7 +570,7 @@ shiny_prerendered_append_contexts <- function(runtime, file, encoding) {
     }
 
     # open the file
-    con <- file(file, open = "at", encoding = encoding)
+    con <- file(file, open = "at", encoding = 'UTF-8')
     on.exit(close(con), add = TRUE)
 
     # track singletons

@@ -1,5 +1,6 @@
 ---
 title: "Untitled"
+author: "John Doe"
 output: 
   html_document:
     md_extensions: -autolink_bare_uris

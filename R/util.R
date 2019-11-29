@@ -1,4 +1,4 @@
-#' @import stats
+#' @import stats utils
 
 createUniqueId <- function(bytes) {
   paste(as.hexmode(sample(256, bytes) - 1), collapse = "")
@@ -60,33 +60,21 @@ is_null_or_string <- function(text) {
   is.null(text) || (is.character(text) && (length(text) == 1))
 }
 
-read_utf8 <- function(file, encoding = 'UTF-8') {
+read_utf8 <- function(file) {
   if (inherits(file, 'connection')) con <- file else {
-    con <- base::file(file, encoding = encoding); on.exit(close(con), add = TRUE)
+    con <- base::file(file, encoding = 'UTF-8'); on.exit(close(con), add = TRUE)
   }
   enc2utf8(readLines(con, warn = FALSE))
 }
 
-write_utf8 <- function (text, con, ...) {
+write_utf8 <- function(text, con, ...) {
   opts <- options(encoding = "native.enc"); on.exit(options(opts), add = TRUE)
   writeLines(enc2utf8(text), con, ..., useBytes = TRUE)
 }
 
-file_string <- function(path, encoding = 'UTF-8') {
-  one_string(read_utf8(path, encoding))
-}
+file_string <- function(path) one_string(read_utf8(path))
 
 one_string <- function(x) paste(x, collapse = '\n')
-
-# convert to utf8
-to_utf8 <- function(x, encoding) {
-  # normalize encoding to iconv compatible form
-  if (identical(encoding, "native.enc")) encoding <- ""
-  if (identical(encoding, "UTF-8")) Encoding(x) <- "UTF-8" else {
-    x <- iconv(x, from = encoding, to = "UTF-8")
-  }
-  x
-}
 
 # in a future version of yaml, it will disable the evaluation of !expr but we
 # still need it (https://github.com/rstudio/rmarkdown/issues/1387)

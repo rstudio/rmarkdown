@@ -108,22 +108,16 @@ html_document_base <- function(smart = TRUE,
 
     preserved_chunks <<- extract_preserve_chunks(input_file)
 
-    # Avoid pagetitle warning from pandoc2.0 when title is missing
-    if (pandoc2.0() && is.null(metadata$title) && is.null(metadata$pagetitle))
-      args <- c(args, "--metadata", paste0("pagetitle=", input_file))
-
     # a lua filters added if pandoc2.0
     args <- c(args, pandoc_lua_filters(c("pagebreak.lua", "latex-div.lua")))
 
     args
   }
 
-  intermediates_generator <- function(original_input, encoding,
-                                      intermediates_dir) {
+  intermediates_generator <- function(original_input, intermediates_dir) {
     # copy intermediates; skip web resources if not self contained (pandoc can
     # create references to web resources without the file present)
-    return(copy_render_intermediates(original_input, encoding,
-                                     intermediates_dir, !self_contained))
+    copy_render_intermediates(original_input, intermediates_dir, !self_contained)
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
@@ -198,8 +192,6 @@ html_document_base <- function(smart = TRUE,
 }
 
 extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks) {
-  # The input file is converted to UTF-8 from its native encoding prior
-  # to calling the preprocessor (see ::render)
   input_str <- read_utf8(input_file)
   preserve <- extract(input_str)
   if (!identical(preserve$value, input_str)) write_utf8(preserve$value, input_file)

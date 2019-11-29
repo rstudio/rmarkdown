@@ -209,8 +209,7 @@ NULL
 #' @param run_pandoc An option for whether to run pandoc to convert Markdown
 #' output.
 #' @param quiet An option to suppress printing of the pandoc command line.
-#' @param encoding The encoding of the input file. See \code{\link{file}} for
-#' more information.
+#' @param encoding Ignored. The encoding is always assumed to be UTF-8.
 #' @return
 #'   When \code{run_pandoc = TRUE}, the compiled document is written into
 #'   the output file, and the path of the output file is returned. When
@@ -268,7 +267,7 @@ render <- function(input,
 
   # check for "all" output formats
   if (identical(output_format, "all")) {
-    output_format <- enumerate_output_formats(input, envir, encoding)
+    output_format <- enumerate_output_formats(input)
     if (is.null(output_format))
       output_format <- "html_document"
   }
@@ -293,8 +292,7 @@ render <- function(input,
                        knit_meta = knit_meta,
                        envir = envir,
                        run_pandoc = run_pandoc,
-                       quiet = quiet,
-                       encoding = encoding)
+                       quiet = quiet)
       outputs <- c(outputs, output)
     }
     return(invisible(outputs))
@@ -409,13 +407,12 @@ render <- function(input,
       'date: "', Sys.Date(), '"\n',
       '---\n'
     , sep = "")
-    if (!identical(encoding, "native.enc"))
-      metadata <- iconv(metadata, to = encoding)
-    cat(metadata, file = knit_input, append = TRUE)
+    input_lines <- read_utf8(knit_input)
+    write_utf8(c(input_lines, metadata), knit_input)
   }
 
   # read the input file
-  input_lines <- read_utf8(knit_input, encoding)
+  input_lines <- read_utf8(knit_input)
 
   # read the yaml front matter
   yaml_front_matter <- parse_yaml_front_matter(input_lines)
@@ -461,8 +458,7 @@ render <- function(input,
     output_format <- output_format_from_yaml_front_matter(input_lines,
                                                           output_options,
                                                           output_format,
-                                                          output_yaml,
-                                                          encoding = encoding)
+                                                          output_yaml)
     output_format <- create_output_format(output_format$name,
                                           output_format$options)
   }
@@ -500,7 +496,6 @@ render <- function(input,
       !is.null(output_format$intermediates_generator)) {
     intermediates <- c(intermediates,
                        output_format$intermediates_generator(original_input,
-                                                             encoding,
                                                              intermediates_dir))
   }
 
@@ -537,8 +532,7 @@ render <- function(input,
     if (!is.null(output_format$post_knit)) {
       post_knit_extra_args <- output_format$post_knit(yaml_front_matter,
                                                       knit_input,
-                                                      runtime,
-                                                      encoding = encoding)
+                                                      runtime)
     } else {
       post_knit_extra_args <- NULL
     }
@@ -630,7 +624,7 @@ render <- function(input,
       shiny_prerendered_remove_uncached_data(original_input)
 
       # set the cache option hook and evaluate hook
-      knitr::opts_hooks$set(label = shiny_prerendered_option_hook(original_input,encoding))
+      knitr::opts_hooks$set(label = shiny_prerendered_option_hook(original_input))
       knitr::knit_hooks$set(evaluate = shiny_prerendered_evaluate_hook(original_input))
     }
 
@@ -740,8 +734,7 @@ render <- function(input,
     input <- knitr::knit(knit_input,
                          knit_output,
                          envir = envir,
-                         quiet = quiet,
-                         encoding = encoding)
+                         quiet = quiet)
 
     perf_timer_stop("knitr")
 
@@ -755,7 +748,7 @@ render <- function(input,
     }
 
     # pull out shiny_prerendered_contexts and append them as script tags
-    shiny_prerendered_append_contexts(runtime, input, encoding)
+    shiny_prerendered_append_contexts(runtime, input)
 
     # collect remaining knit_meta
     knit_meta <- knit_meta_reset()
@@ -809,7 +802,7 @@ render <- function(input,
   }
 
   # read the input text as UTF-8 then write it back out
-  input_text <- read_utf8(input, encoding)
+  input_text <- read_utf8(input)
   write_utf8(input_text, utf8_input)
 
   if (run_pandoc) {

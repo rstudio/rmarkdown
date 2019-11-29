@@ -50,6 +50,7 @@ test_that("documents with spaces in names can be rendered", {
   output <- rmarkdown::render(with_spaces,
                               output_format = "html_notebook",
                               output_file = output_file,
+                              output_options = list(pandoc_args = c('--metadata', 'pagetitle=Test')),
                               quiet = TRUE)
 
   expect_true(file.exists(output))

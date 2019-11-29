@@ -40,7 +40,6 @@
 #' In all cases, only resources that exist on disk and are contained in the
 #' document's directory (or a child thereof) are returned.
 #' @param input_file path to the R Markdown document or HTML file to process
-#' @param encoding the encoding of the document
 #' @return A data frame with the following columns:
 #'   \describe{
 #'    \item{path}{The relative path from the document to the resource}
@@ -50,7 +49,7 @@
 #'      from the document}
 #'   }
 #' @export
-find_external_resources <- function(input_file, encoding = "UTF-8") {
+find_external_resources <- function(input_file) {
 
   # ensure we're working with valid input
   ext <- tolower(tools::file_ext(input_file))
@@ -105,10 +104,10 @@ find_external_resources <- function(input_file, encoding = "UTF-8") {
     # discover R Markdown doc resources--scans the document itself as described
     # in comments above, renders as Markdown, and invokes HTML discovery
     # on the result
-    discover_rmd_resources(input_file, encoding, discover_single_resource)
+    discover_rmd_resources(input_file, discover_single_resource)
   } else if (ext %in% c("htm", "html")) {
     # discover HTML resources
-    discover_html_resources(input_file, encoding, discover_single_resource)
+    discover_html_resources(input_file, discover_single_resource)
 
     # if the HTML file represents a rendered R Markdown document, it may have a
     # sidecar _files folder; include that if it's present
@@ -146,8 +145,8 @@ find_external_resources <- function(input_file, encoding = "UTF-8") {
   discovered_resources
 }
 
-# discovers resources in a single HTML file with the given encoding
-discover_html_resources <- function(html_file, encoding, discover_single_resource) {
+# discovers resources in a single HTML file
+discover_html_resources <- function(html_file, discover_single_resource) {
   # resource accumulator
   discover_resource <- function(node, att, val, idx) {
     res_file <- utils::URLdecode(val)
@@ -155,21 +154,21 @@ discover_html_resources <- function(html_file, encoding, discover_single_resourc
   }
 
   # create a single string with all of the lines in the document
-  html_lines <- file_string(html_file, encoding)
+  html_lines <- file_string(html_file)
 
   # parse the HTML and invoke our resource discovery callbacks
   call_resource_attrs(html_lines, discover_resource)
 }
 
 # discovers resources in a single R Markdown document
-discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource) {
+discover_rmd_resources <- function(rmd_file, discover_single_resource) {
 
   # create a UTF-8 encoded Markdown file to serve as the resource discovery
   # source
   md_file <- tempfile(fileext = ".md")
   input_dir <- dirname(normalize_path(rmd_file))
   output_dir <- dirname(md_file)
-  rmd_content <- read_utf8(rmd_file, encoding)
+  rmd_content <- read_utf8(rmd_file)
   if (length(i <- grep('^---\\s*$', rmd_content)) >= 2 && i[1] == 1) {
     rmd_content <- append(rmd_content, 'citeproc: false', i[2] - 1)
   }
@@ -200,7 +199,7 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
   }
 
   # parse the YAML front matter to discover resources named there
-  front_matter <- parse_yaml_front_matter(read_utf8(md_file))
+  front_matter <- yaml_front_matter(md_file)
 
   # Check for content referred to by output format calls to the includes
   # function (for generating headers/footers/etc. at render time), and for
@@ -330,7 +329,7 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
   # check to see what format this document is going to render as; if it's a
   # format that produces HTML, let it render as-is, but if it isn't, render as
   # html_document to pick up dependencies
-  output_format <- output_format_from_yaml_front_matter(rmd_content, encoding = encoding)
+  output_format <- output_format_from_yaml_front_matter(rmd_content)
 
   output_format_function <- eval(parse(text = output_format$name))
 
@@ -338,14 +337,17 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
 
   html_file <- render(
     md_file, override_output_format, html_file, quiet = TRUE,
-    output_options = list(self_contained = FALSE), encoding = "UTF-8"
+    output_options = list(
+      self_contained = FALSE,
+      pandoc_args = c("--metadata", "pagetitle=PREVIEW")
+    )
   )
 
   # clean up output file and its supporting files directory
   temp_files <- c(temp_files, html_file, knitr_files_dir(md_file))
 
   # run the HTML resource discovery mechanism on the rendered output
-  discover_html_resources(html_file, "UTF-8", discover_single_resource)
+  discover_html_resources(html_file, discover_single_resource)
 
   # if this is an R Markdown file, purl the file to extract just the R code
   if (tolower(tools::file_ext(rmd_file)) == "rmd") {
@@ -356,7 +358,7 @@ discover_rmd_resources <- function(rmd_file, encoding, discover_single_resource)
     on.exit({
       unlink(c(r_file, try_file)); options(opts)
     }, add = TRUE)
-    knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0, encoding = "UTF-8")
+    knitr::purl(md_file, output = r_file, quiet = TRUE, documentation = 0)
     temp_files <- c(temp_files, r_file)
     discover_r_resources(r_file, discover_single_resource)
   }
@@ -389,7 +391,7 @@ discover_r_resources <- function(r_file, discover_single_resource) {
 # copies the external resources needed to render original_input into
 # intermediates_dir; with skip_web, skips web resources. returns a character
 # vector containing paths to all resources copied.
-copy_render_intermediates <- function(original_input, encoding, intermediates_dir, skip_web) {
+copy_render_intermediates <- function(original_input, intermediates_dir, skip_web) {
 
   # start with an empty set of intermediates
   intermediates <- c()
@@ -398,7 +400,7 @@ copy_render_intermediates <- function(original_input, encoding, intermediates_di
   # runs another (non-knitting) render, and that recursion is avoided because
   # we explicitly render with self-contained = FALSE while discovering
   # resources
-  resources <- find_external_resources(original_input, encoding)
+  resources <- find_external_resources(original_input)
   dest_dir <- normalize_path(intermediates_dir)
   source_dir <- dirname(normalize_path(original_input))
 

@@ -20,7 +20,7 @@ mock_markdown <- function(mdtext = NULL,  outputdir = NULL, ... ) {
   mdfile <- tempfile(pattern = "mock_XXXXX",
                      tmpdir = outputdir,
                      fileext = ".Rmd")
-  cat(mdtext, file = mdfile, sep = "\n", append = FALSE)
+  cat(c("---\ntitle: Test\n---\n", mdtext), file = mdfile, sep = "\n", append = FALSE)
 
   # output file name
   outfile <- basename(

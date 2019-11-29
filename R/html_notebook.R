@@ -240,12 +240,10 @@ html_notebook <- function(toc = FALSE,
 #' documentation} for additional details on using the \code{html_notebook}
 #' format.
 #' @param path The path to an R Notebook file (with extension \code{.nb.html}).
-#' @param encoding The document's encoding (assumed as \code{"UTF-8"} by default).
 #' @export
-parse_html_notebook <- function(path,
-                                encoding = "UTF-8") {
+parse_html_notebook <- function(path) {
 
-  contents <- read_utf8(path, encoding = encoding)
+  contents <- read_utf8(path)
 
   re_comment  <- "^\\s*<!--\\s*rnb-([^-]+)-(begin|end)\\s*([^\\s-]+)?\\s*-->\\s*$"
   re_document <- "^<div id=\"rmd-source-code\">([^<]+)<\\/div>$"

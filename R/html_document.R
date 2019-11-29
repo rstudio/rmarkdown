@@ -341,7 +341,7 @@ html_document <- function(toc = FALSE,
   # pre-processor for arguments that may depend on the name of the
   # the input file AND which need to inject html dependencies
   # (otherwise we could just call the pre_processor)
-  post_knit <- function(metadata, input_file, runtime, encoding, ...) {
+  post_knit <- function(metadata, input_file, runtime, ...) {
 
     # extra args
     args <- c()
@@ -358,7 +358,7 @@ html_document <- function(toc = FALSE,
         if (file.exists(navbar_yaml))
           navbar <- navbar_html_from_yaml(navbar_yaml, bootstrap_version)
         # if there is no _navbar.yml then look in site config (if we have it)
-        config <- site_config(input_file, encoding)
+        config <- site_config(input_file)
         if (!is.null(config) && !is.null(config$navbar))
           navbar <- navbar_html(config$navbar, bootstrap_version)
       }

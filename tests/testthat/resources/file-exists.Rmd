@@ -1,3 +1,6 @@
+---
+title: Test
+---
 
 ```{r}
 if (!file.exists("empty.csv"))

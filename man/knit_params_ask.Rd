@@ -24,7 +24,7 @@ knit_params_ask(
 
 \item{save_caption}{Caption to use use for button that saves/confirms parameters.}
 
-\item{encoding}{The encoding of the input file; see \code{\link{file}}.}
+\item{encoding}{Ignored. The encoding is always assumed to be UTF-8.}
 }
 \value{
 named list with overridden parameter names and value.

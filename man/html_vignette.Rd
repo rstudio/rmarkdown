@@ -24,15 +24,15 @@ html_vignette(
 \item{dev}{Graphics device to use for figure output (defaults to png)}
 
 \item{df_print}{Method to be used for printing data frames. Valid values
-include "default", "kable", "tibble", and "paged". The "default" method uses
-\code{print.data.frame}. The "kable" method uses the
+include "default", "kable", "tibble", and "paged". The "default" method
+uses \code{print.data.frame}. The "kable" method uses the
 \code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
 the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid
-for formats that produce HTML). In addition
-to the named methods you can also pass an arbitrary function to be used
-for printing data frames. You can disable the \code{df_print} behavior entirely
-by setting the option \code{rmarkdown.df_print} to \code{FALSE}.}
+for formats that produce HTML). In addition to the named methods you can
+also pass an arbitrary function to be used for printing data frames. You
+can disable the \code{df_print} behavior entirely by setting the option
+\code{rmarkdown.df_print} to \code{FALSE}.}
 
 \item{css}{One or more css files to include}
 
