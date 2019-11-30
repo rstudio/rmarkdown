@@ -108,11 +108,7 @@ pdf_document <- function(toc = FALSE,
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
-  append_in_header <- function(text, file = as_tmpfile(text), knit = FALSE) {
-    if (knit) {
-      # if text contains R inline code
-      knitr::knit(text = xfun::read_utf8(file), output = file, quiet = TRUE)
-    }
+  append_in_header <- function(text, file = as_tmpfile(text)) {
     includes_to_pandoc_args(includes(in_header = file))
   }
 
@@ -160,7 +156,9 @@ pdf_document <- function(toc = FALSE,
     # make sure --include-in-header from command line will not completely
     # override header-includes in metadata but give the latter lower precedence:
     # https://github.com/rstudio/rmarkdown/issues/1359
-    args <- append_in_header(metadata[["header-includes"]], knit = TRUE)
+    args <- append_in_header(
+      knitr::knit(text = metadata[["header-includes"]], quiet = TRUE)
+    )
 
     # use a geometry filter when we are using the "default" template
     if (identical(template, "default")) {
