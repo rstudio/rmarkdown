@@ -109,7 +109,8 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   append_in_header <- function(text, file = as_tmpfile(text), knit = FALSE) {
-    if (!is.null(file) && knit) {
+    if (knit && !is.null(file)) {
+      # Rmd yaml header can contains some R code to be knitted
       knitr::knit(text = xfun::read_utf8(file), output = file, quiet = TRUE)
     }
     includes_to_pandoc_args(includes(in_header = file))
