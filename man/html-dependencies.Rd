@@ -36,7 +36,7 @@ case you can use the \code{css} parameter to add your own styles).
 If Bootstrap 4 is used (see \code{bootstrap_version} argument),
 a handful of other themes are available ("cyborg", "lux", "minty", "pulse",
 "slate", "solar", and "superhero"). Moreover, with Bootstrap 4,
-theming can be further customized via \code{bootsass::theme_variables()}.}
+theming can be further customized via \code{bootstraplib::theme_variables()}.}
 
 \item{version}{Bootstrap version. See `bootstrap_version` in [html_document]}
 

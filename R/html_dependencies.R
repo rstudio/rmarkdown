@@ -64,10 +64,10 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
 
   if (grepl("^4\\b", version)) {
 
-    if (system.file(package = "bootsass") == "") {
+    if (system.file(package = "bootstraplib") == "") {
       stop(
-        "Bootstrap 4 requires the bootsass R package. ",
-        "Install it via `install.packages('bootsass')`.",
+        "Bootstrap 4 requires the bootstraplib R package. ",
+        "Install it via `install.packages('bootstraplib')`.",
         call. = FALSE
       )
     }
@@ -77,21 +77,21 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
     }
 
     # At this point, if theme is a string, it should be a bootswatch theme
-    theme <- if (is.character(theme)) bootsass::bs4_theme_bootswatch(theme) else theme
+    theme <- if (is.character(theme)) bootstraplib::theme_bootswatch(theme) else theme
 
     # Override Bootstrap's `$font-size-base: 1rem` (which increased the
     # based font size from 14px to 16px), but allow themes to override that default
-    font_size_14px <- bootsass::bs4_theme(
+    font_size_14px <- bootstraplib::bs_theme(
       pre = "$font-size-base: 0.875rem !default;",
       post = "h1.title { @include font-size(1.15 * $h1-font-size) }"
     )
-    theme <- bootsass::bs4_themes(font_size_14px, theme)
+    theme <- bootstraplib::bs_themes(font_size_14px, theme)
 
     if (identical(version, "4-3")) {
-      theme <- bootsass::bs4_themes(bootsass::bs4_theme_bs3compat(), theme)
+      theme <- bootstraplib::bs_themes(bootstraplib::theme_bs3compat(), theme)
     }
 
-    return(bootsass::bs4_sass(theme = theme))
+    return(bootstraplib::bs_sass(theme = theme))
   }
 }
 

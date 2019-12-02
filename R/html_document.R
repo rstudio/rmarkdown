@@ -54,7 +54,7 @@
 #'  If Bootstrap 4 is used (see \code{bootstrap_version} argument),
 #'  a handful of other themes are available ("cyborg", "lux", "minty", "pulse",
 #'  "slate", "solar", and "superhero"). Moreover, with Bootstrap 4,
-#'  theming can be further customized via \code{bootsass::theme_variables()}.
+#'  theming can be further customized via \code{bootstraplib::theme_variables()}.
 #'@param highlight Syntax highlighting style. Supported styles include
 #'  "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'  "haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.
@@ -514,7 +514,7 @@ bootswatch_themes <- function(version = 3) {
     c("cerulean", "journal", "flatly", "darkly", "readable", "spacelab",
       "united", "cosmo", "lumen", "paper", "sandstone", "simplex", "yeti")
   } else {
-    bootsass::bootswatch_themes()
+    bootstraplib::bootswatch_themes()
   }
 }
 
@@ -550,7 +550,7 @@ pandoc_body_padding_variable_args <- function(theme, version) {
            yeti = 45,
            51)
   } else {
-    bootsass::navbar_height(theme)
+    bootstraplib::navbar_height(theme)
   }
 
   # header padding is bodyPadding + 5
