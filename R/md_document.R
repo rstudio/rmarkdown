@@ -22,6 +22,7 @@
 #'   widely used retina displays, but will also result in the output of
 #'   \code{<img>} tags rather than markdown images due to the need to set the
 #'   width of the image explicitly.
+#' @param ext Extention of the output document (defaults to ".md").
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @examples
 #' \dontrun{
@@ -43,7 +44,8 @@ md_document <- function(variant = "markdown_strict",
                         df_print = "default",
                         includes = NULL,
                         md_extensions = NULL,
-                        pandoc_args = NULL) {
+                        pandoc_args = NULL,
+                        ext = ".md") {
 
   # base pandoc options for all markdown output
   args <- c(if (variant != "markdown" || preserve_yaml) "--standalone")
@@ -76,7 +78,7 @@ md_document <- function(variant = "markdown_strict",
     pandoc = pandoc_options(to = variant,
                             from = from_rmarkdown(extensions = md_extensions),
                             args = args,
-                            ext = '.md'),
+                            ext = ext),
     clean_supporting = FALSE,
     df_print = df_print,
     post_processor = post_processor
