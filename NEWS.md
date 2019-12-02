@@ -9,7 +9,7 @@ rmarkdown 1.19
 
 - `render_site()` can render R scripts in addition to Rmd files if you set `autospin: true` in `_site.yml` (thanks, @zeehio, #1564).
 
-- Added `ext` argument to `md_document()`. Its default value is ".md". This argument is intended to be used together with `variant` argument (e.g., `variant = "context"` and `ext = ".pdf"`).
+- Added `ext` argument to `md_document()`. Its default value is ".md". This argument is intended to be used together with `variant` argument (e.g., `variant = "context"` and `ext = ".pdf"`) (thanks, @atusy, #1715).
 
 rmarkdown 1.18
 ================================================================================
