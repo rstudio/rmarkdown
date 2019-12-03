@@ -65,8 +65,10 @@ slidy_presentation <- function(incremental = FALSE,
     args <- c(args, "--template", pandoc_path_arg(template))
 
   # html dependency for slidy
-  extra_dependencies <- append(extra_dependencies,
-                               list(html_dependency_slidy()))
+  extra_dependencies <- append(
+    extra_dependencies,
+    list(html_dependency_slidy(),
+         html_dependency_slidy_shiny()))
 
   # incremental
   if (incremental)
@@ -145,5 +147,15 @@ html_dependency_slidy <- function() {
     src = pkg_file("rmd/slidy/Slidy2"),
     script = "scripts/slidy.js",
     stylesheet = "styles/slidy.css"
+  )
+}
+
+html_dependency_slidy_shiny <- function() {
+  htmlDependency(
+    name = "slidy_shiny",
+    version = "1",
+    src = pkg_file("rmd/slidy/"),
+    script = "slidy_shiny.js",
+    all_files = FALSE
   )
 }
