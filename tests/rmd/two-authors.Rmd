@@ -1,0 +1,9 @@
+---
+title: "Two authors"
+output: pdf_document
+author:
+  - John Doe
+  - Jane Doe
+---
+
+The default LaTeX template should work with multiple authors: https://github.com/rstudio/rmarkdown/issues/1716

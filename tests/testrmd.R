@@ -22,4 +22,8 @@ if (.Platform$OS.type == 'unix' && !is.na(Sys.getenv('CI', NA))) {
       }
     }
   )
+
+  # the default LaTeX template should work with multiple authors:
+  # https://github.com/rstudio/rmarkdown/issues/1716
+  rmarkdown::render('rmd/two-authors.Rmd')
 }
