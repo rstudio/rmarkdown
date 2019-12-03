@@ -172,11 +172,6 @@ pdf_document <- function(toc = FALSE,
       # set the margin to 1 inch if no geometry options or document class specified
       if (!any(c("geometry", "documentclass") %in% names(metadata)))
         args <- c(args, "--variable", "geometry:margin=1in")
-
-      # use titling package to change title format to be more compact by default
-      if (!xfun::isFALSE(metadata[["compact-title"]])) args <- c(
-        args, append_in_header(file = pkg_file("rmd/latex/compact-title.tex"))
-      )
     }
 
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
