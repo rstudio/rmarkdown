@@ -738,6 +738,8 @@ render <- function(input,
 
     perf_timer_stop("knitr")
 
+    yaml_front_matter <- yaml_front_matter(input)
+
     # call post_knit handler
     output_format$pandoc$args <- call_post_knit_handler()
 
