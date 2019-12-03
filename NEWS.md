@@ -15,6 +15,8 @@ rmarkdown 1.19
 
 - Added `ext` argument to `md_document()`. Its default value is ".md". This argument is intended to be used together with `variant` argument (e.g., `variant = "context"` and `ext = ".pdf"`) (thanks, @atusy, #1715).
 
+- `ioslides_presentation()` stylesheet is updated for printing. Browsers are notified that the presentation should preferentially be printed in landscape orientation and without margin (thanks, @RLesur, #1718).
+
 rmarkdown 1.18
 ================================================================================
 
