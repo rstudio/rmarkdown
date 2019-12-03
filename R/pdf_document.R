@@ -156,10 +156,7 @@ pdf_document <- function(toc = FALSE,
     # make sure --include-in-header from command line will not completely
     # override header-includes in metadata but give the latter lower precedence:
     # https://github.com/rstudio/rmarkdown/issues/1359
-    # be sure to get the knitted metadata as it will be passed to pandoc as-is:
-    # https://github.com/rstudio/rmarkdown/issues/1709
-    knitted_metadata <- yaml_front_matter(input_file)
-    args <- append_in_header(knitted_metadata[["header-includes"]])
+    args <- append_in_header(metadata[["header-includes"]])
 
     # use a geometry filter when we are using the "default" template
     if (identical(template, "default")) {
