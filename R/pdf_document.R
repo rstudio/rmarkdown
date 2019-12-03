@@ -113,16 +113,7 @@ pdf_document <- function(toc = FALSE,
   }
 
   # template path and assets
-  if (identical(template, "default")) {
-
-    pandoc_available(error = TRUE)
-    # patch pandoc template if necessary
-    version <- pandoc_version()
-    if (version <= "2.5") args <- c(
-      args, append_in_header(file = pkg_file("rmd/latex/subtitle.tex"))
-    )
-
-  } else if (!is.null(template)) {
+  if (!is.null(template) && !identical(template, "default")) {
     args <- c(args, "--template", pandoc_path_arg(template))
   }
 
@@ -172,6 +163,10 @@ pdf_document <- function(toc = FALSE,
       # set the margin to 1 inch if no geometry options or document class specified
       if (!any(c("geometry", "documentclass") %in% names(metadata)))
         args <- c(args, "--variable", "geometry:margin=1in")
+      # support subtitle for Pandoc < 2.6
+      if (("subtitle" %in% names(metadata)) && !pandoc_available("2.6")) args <- c(
+        args, append_in_header(file = pkg_file("rmd/latex/subtitle.tex"))
+      )
     }
 
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
