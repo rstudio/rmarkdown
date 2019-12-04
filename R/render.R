@@ -909,6 +909,8 @@ render <- function(input,
     if (output_format$pandoc$keep_tex || knitr::is_latex_output()) {
       # do not use pandoc-citeproc if needs to build bibliography
       convert(texfile, run_citeproc && !need_bibtex)
+      # patch the .tex output generated from the default Pandoc LaTeX template
+      if (!("--template" %in% output_format$pandoc$args)) patch_tex_output(texfile)
       # unless the output file has the extension .tex, we assume it is PDF
       if (!grepl('[.]tex$', output_file)) {
         latexmk(texfile, output_format$pandoc$latex_engine, '--biblatex' %in% output_format$pandoc$args)

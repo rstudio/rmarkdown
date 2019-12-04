@@ -226,6 +226,25 @@ general_intermediates_generator <- function(
   intermediates
 }
 
+patch_tex_output <- function(file) {
+  x <- read_utf8(file)
+  if (length(i <- which(x == '\\begin{document}')) == 0) return()
+  if (length(i <- grep('^\\\\date\\{', head(x, i[1]))) == 0) return()
+
+  i <- i[1]
+  # add \author{} if missing: https://github.com/jgm/pandoc/pull/5961
+  if (length(grep('^\\\\author\\{', head(x, i))) == 0) {
+    x <- append(x, '\\author{}', i - 1)
+    i <- i + 1
+  }
+  # reduce the vertical spacing in \date{} if no author is given
+  if (any(head(x, i) == '\\author{}')) {
+    x[i] <- paste0('\\date{\\vspace{-2.5em}', sub('^\\\\date\\{', '', x[i]))
+  }
+  write_utf8(x, file)
+}
+
+
 #' @param ... Arguments passed to \code{pdf_document()}.
 #' @rdname pdf_document
 #' @export
