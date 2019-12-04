@@ -534,24 +534,7 @@ mathjax_config <- function() {
 pandoc_body_padding_variable_args <- function(theme, version) {
 
   # Height of the navbar in each theme
-  bodyPadding <- if (version == 3) {
-    switch(theme,
-           journal = 61,
-           flatly = 60,
-           darkly = 60,
-           readable = 66,
-           spacelab = 52,
-           united = 51,
-           cosmo = 51,
-           lumen = 54,
-           paper = 64,
-           sandstone = 61,
-           simplex = 41,
-           yeti = 45,
-           51)
-  } else {
-    bootstraplib::navbar_height(theme)
-  }
+  bodyPadding <- bootstraplib::navbar_height(theme, version)
 
   # header padding is bodyPadding + 5
   headerPadding <- bodyPadding + 5

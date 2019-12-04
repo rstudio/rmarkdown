@@ -1,6 +1,6 @@
 // Nav markup changed considerably from BS3 -> BS4. To ease migration,
 // bootstraplib has additional JS/CSS which allows us to use BS3-style nav in BS4,
-// so we use BS4 markup only if we're running BS4 or higher without bootscss' compatibility shim
+// so we use BS4 markup only if we're running BS4 or higher without bootstraplib's compatibility shim
 window.BS3_NAV = window.BS3_COMPAT || !!$.fn.tab.Constructor.VERSION.match(/^3\./);
 
 

@@ -75,9 +75,8 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
     if (identical(theme, "bootstrap")) {
       theme <- NULL
     }
-
     # At this point, if theme is a string, it should be a bootswatch theme
-    theme <- if (is.character(theme)) bootstraplib::theme_bootswatch(theme) else theme
+    is_bootswatch_theme <- isTRUE(theme %in% bootstraplib::bootswatch_themes(4))
 
     # Override Bootstrap's `$font-size-base: 1rem` (which increased the
     # based font size from 14px to 16px), but allow themes to override that default
@@ -85,13 +84,13 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
       pre = "$font-size-base: 0.875rem !default;",
       post = "h1.title { @include font-size(1.15 * $h1-font-size) }"
     )
-    theme <- bootstraplib::bs_themes(font_size_14px, theme)
 
-    if (identical(version, "4-3")) {
-      theme <- bootstraplib::bs_themes(bootstraplib::theme_bs3compat(), theme)
+    if (is_bootswatch_theme) {
+      bootstraplib::bs_sass(font_size_14px, bootswatch = theme, version = version)
+    } else {
+      bootstraplib::bs_sass(font_size_14px, theme, version = version)
     }
 
-    return(bootstraplib::bs_sass(theme = theme))
   }
 }
 
