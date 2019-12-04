@@ -181,13 +181,8 @@ rmarkdown_shiny_server <- function(dir, file, auto_reload, render_args) {
   function(input, output, session) {
     path_info <- utils::URLdecode(session$request$PATH_INFO)
     # strip /websocket/ from the end of the request path if present
-    if (identical(substr(path_info, nchar(path_info) - 10, nchar(path_info)),
-                  "/websocket/")) {
-      path_info <- substr(path_info, 1, nchar(path_info) - 11)
-    }
-    if (!nzchar(path_info)) {
-      path_info <- file
-    }
+    path_info <- sub("/websocket/$", "", path_info)
+    if (path_info == "") path_info <- file
 
     file <- resolve_relative(dir, path_info)
     reactive_file <- if (auto_reload)
