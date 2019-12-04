@@ -313,11 +313,7 @@ rmarkdown_shiny_ui <- function(dir, file) {
 
     # request must be for an R Markdown or HTML document
     ext <- tolower(tools::file_ext(req_path))
-    if (!identical(ext, "rmd") &&
-        !identical(ext, "htm") &&
-        !identical(ext, "html")) {
-      return(NULL)
-    }
+    if (!(ext %in% c("rmd", "htm", "html"))) return(NULL)
 
     # document must exist
     target_file <- resolve_relative(dir, req_path)
@@ -382,8 +378,7 @@ rmd_cached_output <- function(input) {
   resource_folder <- ""
 
   # if the file is raw HTML, return it directly
-  if (identical(tolower(tools::file_ext(input)), "htm") ||
-      identical(tolower(tools::file_ext(input)), "html")) {
+  if (tolower(tools::file_ext(input)) %in% c("htm", "html")) {
     return(list(
       cacheable = TRUE,
       cached = TRUE,
