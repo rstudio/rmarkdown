@@ -17,6 +17,9 @@ rmarkdown 1.19
 
 - `ioslides_presentation()` stylesheet is updated for printing. Browsers are notified that the presentation should preferentially be printed in landscape orientation and without margin (thanks, @RLesur, #1718).
 
+- Reverted the fix #1703 and applied an alternative fix to #1700, because the original fix brought a new bug #1714 (thanks, @pablobernabeu @cderv @everron @aronatkins).
+
+
 rmarkdown 1.18
 ================================================================================
 

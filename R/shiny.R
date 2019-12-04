@@ -73,18 +73,18 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     allRmds <- list.files(path = dir, pattern = "^[^_].*\\.[Rr][Mm][Dd]$")
     if (length(allRmds) == 1) {
       # just one R Markdown document
-      default_file <- file.path(dir, allRmds)
+      default_file <- allRmds
     } else {
       # more than one: look for an index
       index <- which(tolower(allRmds) == "index.rmd")
       if (length(index) > 0) {
-        default_file <- file.path(dir, allRmds[index[1]])
+        default_file <- allRmds[index[1]]
       } else {
         # look for first one that has runtime: shiny
         for (rmd in allRmds) {
           runtime <- yaml_front_matter(file.path(dir, rmd))$runtime
           if (is_shiny(runtime)) {
-            default_file <- file.path(dir, rmd)
+            default_file <- rmd
             break
           }
         }
@@ -95,7 +95,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   if (is.null(default_file)) {
     # no R Markdown default found; how about an HTML?
     indexHtml <- list.files(dir, "index.html?", ignore.case = TRUE)
-    if (length(indexHtml) > 0) default_file <- file.path(dir, indexHtml[1])
+    if (length(indexHtml) > 0) default_file <- indexHtml[1]
   }
 
   # form and test locations
@@ -121,8 +121,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   if (is.null(render_args$envir)) render_args$envir <- parent.frame()
 
   # determine the runtime of the target file
-  target_file <- file %||% default_file
-  runtime <- if (!is.null(target_file)) yaml_front_matter(target_file)$runtime
+  target_file <- file %||% file.path(dir, default_file)
+  runtime <- if (length(target_file)) yaml_front_matter(target_file)$runtime
 
   # run using the requested mode
   if (is_shiny_prerendered(runtime)) {
