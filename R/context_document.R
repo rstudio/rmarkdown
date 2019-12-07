@@ -1,0 +1,129 @@
+#' Convert to a ConTeXt document
+#'
+#' Format for converting from R Markdown to PDF using
+#' \href{https://wiki.contextgarden.net/}{ConTeXt}.
+#'
+#' ConTeXt needs to be installed: to install the most recent version, see
+#' \href{https://wiki.contextgarden.net/Installation}. ConTeXt is also available
+#' in TeX Live, you can install the TeX Live version with
+#' \code{tinytex::tlmgr_install("context")}.
+#'
+#' R Markdown documents can have optional metadata that is used to generate a
+#' document header that includes the title, author, and date. For more details
+#' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
+#'
+#' R Markdown documents also support citations. You can find more information on
+#' the markdown syntax for citations in the
+#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' and Citations} article in the online documentation.
+#' @inheritParams pdf_document
+#' @param context_args Command line arguments passed to ConTeXt.
+#' @param ext Format of the output document (defaults to ".pdf").
+#' @return R Markdown output format to pass to \code{\link{render}}.
+#' @examples
+#' \dontrun{
+#' library(rmarkdown)
+#'
+#' # simple invocation
+#' render("input.Rmd", context_document())
+#' }
+#' @export
+context_document <- function(toc = FALSE,
+                             toc_depth = 2,
+                             number_sections = FALSE,
+                             fig_width = 6.5,
+                             fig_height = 4.5,
+                             fig_crop = TRUE,
+                             fig_caption = TRUE,
+                             dev = "pdf",
+                             df_print = "default",
+                             template = NULL,
+                             keep_tex = FALSE,
+                             keep_md = FALSE,
+                             citation_package = c("none", "natbib", "biblatex"),
+                             includes = NULL,
+                             md_extensions = NULL,
+                             output_extensions = NULL,
+                             pandoc_args = NULL,
+                             context_args = NULL,
+                             ext = c(".pdf", ".tex")) {
+  # Install ConTeXt if not available
+  if (!nzchar(Sys.which("context"))) {
+    message("Trying to install ConTeXt using TinyTeX.")
+    tinytex::tlmgr_install("context")
+  }
+
+  # base pandoc options for all ConTeXt output
+  args <- c("--standalone", "--pdf-engine", "context")
+
+  # context command line arguments
+  if (length(context_args))
+    args <- c(args, paste("--pdf-engine-opt", context_args, sep = "="))
+
+  # table of contents
+  args <- c(args, pandoc_toc_args(toc, toc_depth))
+
+  # numbered sections
+  if (number_sections)
+    args <- c(args, "--number-sections")
+
+  # template
+  if (!is.null(template)  && file.exists(template))
+    args <- c(args, "--template", pandoc_path_arg(template))
+
+  # citation package
+  citation_package <- match.arg(citation_package)
+  if (citation_package != "none") args <- c(args, paste0("--", citation_package))
+
+  # content includes
+  args <- c(args, includes_to_pandoc_args(includes))
+
+  # lua filters (added if pandoc > 2)
+  # TODO modify the filter
+  args <- c(args, pandoc_lua_filters("pagebreak.lua"))
+
+  # args args
+  args <- c(args, pandoc_args)
+
+  ext <- match.arg(ext)
+  clean_supporting <- identical(ext, ".pdf") && !isTRUE(keep_tex)
+
+  # post processor
+  post_processor <- NULL
+  # if keep_tex=TRUE, generate the ConTeXt file with Pandoc
+  # and call ConTeXt using a post processor to generate the PDF file
+  if (identical(ext, ".pdf") && isTRUE(keep_tex)) {
+    ext <- ".tex" # Pandoc only generates the ConTeXt file
+    post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+      # Pandoc runs ConteXt with "--batchmode" option.
+      # ConTeXt produces some auxiliary files:
+      # direct PDF generation by Pandoc never produces these auxiliary files
+      # because Pandoc runs ConTeXt in a temporary directory.
+      # Replicate Pandoc's behavior using "--purgeall" option
+      context_args <- unique(c(context_args, "--purgeall", "--batchmode"))
+
+      # ConTeXt is extremely verbose
+      # Pandoc output these informations when run in its verbose mode
+      # Replicate Pandoc's behavior
+      is_pandoc_verbose <- !is.na(match("--verbose", pandoc_args))
+      stdout <- if (is_pandoc_verbose) "" else FALSE
+      system2("context", c(output_file, context_args), stdout = stdout)
+      xfun::with_ext(output_file, "pdf")
+    }
+  }
+
+  # return format
+  output_format(
+    knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
+    pandoc = pandoc_options(to = paste(c("context", output_extensions), collapse = ""),
+                            from = from_rmarkdown(fig_caption, md_extensions),
+                            args = args,
+                            keep_tex = FALSE,
+                            ext = ext),
+    clean_supporting = !isTRUE(keep_tex),
+    keep_md = keep_md,
+    df_print = df_print,
+    intermediates_generator = general_intermediates_generator,
+    post_processor = post_processor
+  )
+}
