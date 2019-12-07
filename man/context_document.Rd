@@ -22,6 +22,7 @@ context_document(
   md_extensions = NULL,
   output_extensions = NULL,
   pandoc_args = NULL,
+  context_path = NULL,
   context_args = NULL,
   ext = c(".pdf", ".tex")
 )
@@ -82,6 +83,9 @@ output format, e.g., \code{"-smart"} means the output format will be
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
+\item{context_path}{Path of the ConTeXt executable. If not provided, ConTeXt has
+to be available from the \code{PATH} environment variable.}
+
 \item{context_args}{Command line arguments passed to ConTeXt.}
 
 \item{ext}{Format of the output document (defaults to ".pdf").}
@@ -94,9 +98,9 @@ Format for converting from R Markdown to PDF using
 \href{https://wiki.contextgarden.net/}{ConTeXt}.
 }
 \details{
-ConTeXt needs to be installed: to install the most recent version, see
-\url{https://wiki.contextgarden.net/Installation}. ConTeXt is also available
-in TeX Live, you can install the TeX Live version with
+ConTeXt needs to be installed. To install the most recent version, see
+\url{https://wiki.contextgarden.net/Installation}. A less recent version is
+also available in TeX Live, you can install it with
 \code{tinytex::tlmgr_install("context")}.
 
 R Markdown documents can have optional metadata that is used to generate a

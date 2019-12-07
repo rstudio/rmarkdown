@@ -17,6 +17,8 @@
 #' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
 #' @inheritParams pdf_document
+#' @param context_path Path of the ConTeXt executable. If not provided, ConTeXt has
+#'   to be available from the \code{PATH} environment variable.
 #' @param context_args Command line arguments passed to ConTeXt.
 #' @param ext Format of the output document (defaults to ".pdf").
 #' @return R Markdown output format to pass to \code{\link{render}}.
@@ -45,10 +47,14 @@ context_document <- function(toc = FALSE,
                              md_extensions = NULL,
                              output_extensions = NULL,
                              pandoc_args = NULL,
+                             context_path = NULL,
                              context_args = NULL,
                              ext = c(".pdf", ".tex")) {
+  if (!is.null(context_path)) {
+    context_path <- normalizePath(context_path, mustWork = TRUE)
+  }
+  sys_context <- if (is.null(context_path)) find_program("context") else context_path
   ext <- match.arg(ext)
-  sys_context <- find_program("context")
   if (identical(ext, ".pdf") && !nzchar(sys_context))
     stop("Cannot find ConTeXt.\n",
          "Please, check that ConTeXt is installed.\n",
@@ -56,7 +62,12 @@ context_document <- function(toc = FALSE,
          call. = FALSE)
 
   # base pandoc options for all ConTeXt output
-  args <- c("--standalone", "--pdf-engine", "context")
+  args <- c("--standalone")
+
+  # Pass the path of ConTeXt
+  if (!is.null(context_path)) {
+    args <- c(args, pandoc_latex_engine_args(context_path))
+  }
 
   # context command line arguments
   if (length(context_args))
