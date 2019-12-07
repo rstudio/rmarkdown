@@ -4,7 +4,7 @@
 #' \href{https://wiki.contextgarden.net/}{ConTeXt}.
 #'
 #' ConTeXt needs to be installed: to install the most recent version, see
-#' \href{https://wiki.contextgarden.net/Installation}. ConTeXt is also available
+#' \url{https://wiki.contextgarden.net/Installation}. ConTeXt is also available
 #' in TeX Live, you can install the TeX Live version with
 #' \code{tinytex::tlmgr_install("context")}.
 #'
