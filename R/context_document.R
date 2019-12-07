@@ -3,9 +3,9 @@
 #' Format for converting from R Markdown to PDF using
 #' \href{https://wiki.contextgarden.net/}{ConTeXt}.
 #'
-#' ConTeXt needs to be installed: to install the most recent version, see
-#' \url{https://wiki.contextgarden.net/Installation}. ConTeXt is also available
-#' in TeX Live, you can install the TeX Live version with
+#' ConTeXt needs to be installed. To install the most recent version, see
+#' \url{https://wiki.contextgarden.net/Installation}. A less recent version is
+#' also available in TeX Live, you can install it with
 #' \code{tinytex::tlmgr_install("context")}.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
@@ -47,11 +47,13 @@ context_document <- function(toc = FALSE,
                              pandoc_args = NULL,
                              context_args = NULL,
                              ext = c(".pdf", ".tex")) {
-  # Install ConTeXt if not available
-  if (!nzchar(Sys.which("context"))) {
-    message("Trying to install ConTeXt using TinyTeX.")
-    tinytex::tlmgr_install("context")
-  }
+  ext <- match.arg(ext)
+  sys_context <- find_program("context")
+  if (identical(ext, ".pdf") && !nzchar(sys_context))
+    stop("Cannot find ConTeXt.\n",
+         "Please, check that ConTeXt is installed.\n",
+         "For more information, see the help page '?context_document'.",
+         call. = FALSE)
 
   # base pandoc options for all ConTeXt output
   args <- c("--standalone", "--pdf-engine", "context")
@@ -79,13 +81,11 @@ context_document <- function(toc = FALSE,
   args <- c(args, includes_to_pandoc_args(includes))
 
   # lua filters (added if pandoc > 2)
-  # TODO modify the filter
   args <- c(args, pandoc_lua_filters("pagebreak.lua"))
 
   # args args
   args <- c(args, pandoc_args)
 
-  ext <- match.arg(ext)
   clean_supporting <- identical(ext, ".pdf") && !isTRUE(keep_tex)
 
   # post processor
@@ -93,21 +93,25 @@ context_document <- function(toc = FALSE,
   # if keep_tex=TRUE, generate the ConTeXt file with Pandoc
   # and call ConTeXt using a post processor to generate the PDF file
   if (identical(ext, ".pdf") && isTRUE(keep_tex)) {
-    ext <- ".tex" # Pandoc only generates the ConTeXt file
+    ext <- ".tex" # Use Pandoc to generate the ConTeXt file
     post_processor <- function(metadata, input_file, output_file, clean, verbose) {
-      # Pandoc runs ConteXt with "--batchmode" option.
-      # ConTeXt produces some auxiliary files:
-      # direct PDF generation by Pandoc never produces these auxiliary files
-      # because Pandoc runs ConTeXt in a temporary directory.
-      # Replicate Pandoc's behavior using "--purgeall" option
-      context_args <- unique(c(context_args, "--purgeall", "--batchmode"))
+      context_args <- unique(c(
+        context_args,
+        # ConTeXt produces some auxiliary files:
+        # direct PDF generation by Pandoc never produces these auxiliary
+        # files because Pandoc runs ConTeXt in a temporary directory.
+        # Replicate Pandoc's behavior using "--purgeall" option
+        "--purgeall",
+        # Pandoc runs ConteXt with "--batchmode" option. Do the same.
+        "--batchmode"
+      ))
 
       # ConTeXt is extremely verbose
       # Pandoc output these informations when run in its verbose mode
       # Replicate Pandoc's behavior
       is_pandoc_verbose <- !is.na(match("--verbose", pandoc_args))
       stdout <- if (is_pandoc_verbose) "" else FALSE
-      system2("context", c(output_file, context_args), stdout = stdout)
+      system2(sys_context, c(output_file, context_args), stdout = stdout)
       xfun::with_ext(output_file, "pdf")
     }
   }
