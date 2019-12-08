@@ -909,7 +909,7 @@ render <- function(input,
       # see: https://github.com/rstudio/rmarkdown/issues/705
       if (!all(renamed)) {
         copied <- file.copy(
-          pandoc_output_tmp_path[!renamed], output[!renamed], overwrite = TRUE)
+          pandoc_output_tmp_path[!renamed], output[!renamed], overwrite = TRUE
         )
         if (!copied) {
           stop("failed to copy rendered pandoc artefact to '", output, "'")
