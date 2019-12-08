@@ -908,7 +908,9 @@ render <- function(input,
       # lie on different volumes; in such a case attempt a file copy
       # see: https://github.com/rstudio/rmarkdown/issues/705
       if (!all(renamed)) {
-        copied <- file.copy(pandoc_output_tmp_path, output, overwrite = TRUE)
+        copied <- file.copy(
+          pandoc_output_tmp_path[!renamed], output[!renamed], overwrite = TRUE)
+        )
         if (!copied) {
           stop("failed to copy rendered pandoc artefact to '", output, "'")
         }
