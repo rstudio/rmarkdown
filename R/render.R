@@ -848,9 +848,20 @@ render <- function(input,
       utf8_input <- path.expand(utf8_input)
       output     <- path.expand(output)
 
+      convert_to_native <- function(output) {
+        pandoc_convert(
+          utf8_input, 'native', output_format$pandoc$from, output,
+          citeproc, output_format$pandoc$args, !quiet
+        )
+      }
+
       # if we don't detect any invalid shell characters in the
       # target path, then just call pandoc directly
       if (!grepl(.shell_chars_regex, output) && !grepl(.shell_chars_regex, utf8_input)) {
+        if (output_format$keep_native) {
+          convert_to_native(file_with_ext(output, "hs"))
+        }
+
         return(pandoc_convert(
           utf8_input, pandoc_to, output_format$pandoc$from, output,
           citeproc, output_format$pandoc$args, !quiet
@@ -868,14 +879,21 @@ render <- function(input,
 
       # render to a path in the current working directory
       # (avoid passing invalid characters to shell)
-      pandoc_output_tmp <- basename(tempfile("pandoc", tmpdir = getwd(), fileext = ext))
+      pandoc_output_tmp <- basename(tempfile("pandoc", tmpdir = getwd(), fileext = c(ext, ".hs")))
 
       # clean up temporary file on exit
       on.exit(unlink(pandoc_output_tmp), add = TRUE)
 
       # call pandoc to render file
+      if (output_format$keep_native) {
+        convert_to_native(pandoc_output_tmp[2L])
+        output <- c(output, file_with_ext(output, "hs"))
+      } else {
+        pandoc_output_tmp <- pandoc_output_tmp[1L]
+      }
+
       status <- pandoc_convert(
-        utf8_input, pandoc_to, output_format$pandoc$from, pandoc_output_tmp,
+        utf8_input, pandoc_to, output_format$pandoc$from, pandoc_output_tmp[1L],
         citeproc, output_format$pandoc$args, !quiet
       )
 
@@ -889,7 +907,7 @@ render <- function(input,
       # rename can fail if the temporary directory and output path
       # lie on different volumes; in such a case attempt a file copy
       # see: https://github.com/rstudio/rmarkdown/issues/705
-      if (!renamed) {
+      if (!all(renamed)) {
         copied <- file.copy(pandoc_output_tmp_path, output, overwrite = TRUE)
         if (!copied) {
           stop("failed to copy rendered pandoc artefact to '", output, "'")
