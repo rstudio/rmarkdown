@@ -44,9 +44,9 @@ html_dependency_jqueryui <- function() {
 html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
 
   version <- bootstrap_version_normalize(version)
-  theme <- bootswatch_theme_normalize(theme, version)
+  theme <- theme_normalize(theme, version)
 
-  if (version == 3) {
+  if (version %in% "3") {
     return(
       htmlDependency(
         name = "bootstrap",
@@ -62,36 +62,17 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
     )
   }
 
-  if (grepl("^4\\b", version)) {
-
-    if (system.file(package = "bootstraplib") == "") {
-      stop(
-        "Bootstrap 4 requires the bootstraplib R package. ",
-        "Install it via `install.packages('bootstraplib')`.",
-        call. = FALSE
-      )
-    }
-
-    if (identical(theme, "bootstrap")) {
-      theme <- NULL
-    }
-    # At this point, if theme is a string, it should be a bootswatch theme
-    is_bootswatch_theme <- isTRUE(theme %in% bootstraplib::bootswatch_themes(4))
-
-    # Override Bootstrap's `$font-size-base: 1rem` (which increased the
+  if (version %in% c("4", "4-3")) {
+    # Override Bootstrap 4's `$font-size-base: 1rem` (which increased the
     # based font size from 14px to 16px), but allow themes to override that default
-    font_size_14px <- bootstraplib::bs_theme(
+    font_size_14px <- bootstraplib::theme_layer(
       pre = "$font-size-base: 0.875rem !default;",
       post = "h1.title { @include font-size(1.15 * $h1-font-size) }"
     )
-
-    if (is_bootswatch_theme) {
-      bootstraplib::bs_sass(font_size_14px, bootswatch = theme, version = version)
-    } else {
-      bootstraplib::bs_sass(font_size_14px, theme, version = version)
-    }
-
+    return(bootstraplib::bs_sass(theme, font_size_14px, version = version))
   }
+
+  stop("Unknown Bootstrap version:", version, call. = FALSE)
 }
 
 # an internal version html_dependency_bootstrap() that always returns

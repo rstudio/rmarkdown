@@ -75,9 +75,8 @@ html_document_base <- function(smart = TRUE,
     # copy supplied output_dir (for use in post-processor)
     output_dir <<- output_dir
 
-    theme <- bootswatch_theme_normalize(theme, bootstrap_version)
     if (!is.null(theme)) {
-      args <- c(args, "--variable", paste0("theme:", theme))
+      args <- c(args, "--variable", paste0("theme:", if (!is.character(theme)) "bootstrap" else theme))
     }
 
 
@@ -171,9 +170,9 @@ html_document_base <- function(smart = TRUE,
   }
 
   if (!is.null(theme)) {
-    if (bootstrap_version == 4) {
+    if (bootstrap_version %in% "4") {
       args <- c(args, pandoc_variable_arg("bs4", TRUE))
-    } else if (bootstrap_version == 3) {
+    } else if (bootstrap_version %in% "3") {
       args <- c(args, pandoc_variable_arg("bs3", TRUE))
     }
   }

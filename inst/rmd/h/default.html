@@ -140,11 +140,8 @@ https://github.com/twbs/bootstrap/blob/f17f882d/dist/css/bootstrap.css#L1219-L12
 https://github.com/twbs/bootstrap/blob/4de4874e/scss/_reboot.scss#L82-L89 */
 h1, h2, h3 { margin-top: 20px; }
 h4, h5, h6 { margin-top: 10px; }
-$endif$
-.table th:not([align]) {
-  text-align: left;
-}
-$if(bs4)$
+
+/* Pandoc uses align attribute to align content but BS4 squashes that */
 .table th[align=left] {
   text-align: left;
 }
@@ -155,6 +152,10 @@ $if(bs4)$
   text-align: center;
 }
 $endif$
+
+.table th:not([align]) {
+  text-align: left;
+}
 $if(source_embed)$
 #rmd-source-code {
   display: none;
@@ -226,6 +227,8 @@ $endif$
 
 $if(navbar)$
 <style type="text/css">
+$if(bs3)$
+/* TODO: remove this padding CSS when we drop BS3 */
 /* padding for bootstrap navbar */
 body {
   padding-top: $body_padding$px;
@@ -256,6 +259,8 @@ body {
   padding-top: $header_padding$px;
   margin-top: -$header_padding$px;
 }
+$endif$
+
 .dropdown-submenu {
   position: relative;
 }

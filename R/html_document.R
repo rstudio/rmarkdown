@@ -54,7 +54,10 @@
 #'  If Bootstrap 4 is used (see \code{bootstrap_version} argument),
 #'  a handful of other themes are available ("cyborg", "lux", "minty", "pulse",
 #'  "slate", "solar", and "superhero"). Moreover, with Bootstrap 4,
-#'  theming can be further customized via \code{bootstraplib::theme_variables()}.
+#'  if `theme` is something other than a bootswatch theme, then it's
+#'  considered arbitrary sass passed to \code{bootstraplib::bs_sass()}
+#'  (it should also be noted than theming can also be controlled via
+#'  \code{bootstraplib::theme_variables()}).
 #'@param highlight Syntax highlighting style. Supported styles include
 #'  "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'  "haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.
@@ -231,7 +234,7 @@ html_document <- function(toc = FALSE,
   md_extensions <- smart_extension(smart, md_extensions)
 
   bootstrap_version <- bootstrap_version_normalize(bootstrap_version)
-  theme <- bootswatch_theme_normalize(theme, bootstrap_version)
+  theme <- theme_normalize(theme, bootstrap_version)
 
   # toc_float
   if (toc && !identical(toc_float, FALSE)) {
@@ -375,8 +378,20 @@ html_document <- function(toc = FALSE,
 
         # flag indicating we need extra navbar css and js
         args <- c(args, pandoc_variable_arg("navbar", "1"))
-        # variables controlling padding from navbar
-        args <- c(args, pandoc_body_padding_variable_args(theme, bootstrap_version))
+
+        # navbar padding
+        if (bootstrap_version %in% "3") {
+          # TODO: remove this approach when we drop BS3 support
+          # and use the SASS based approach instead
+          args <- c(args, pandoc_body_padding_variable_args(theme))
+        } else {
+          # The $navbar-height SASS var is set by theme_layer_bootswatch()
+          padding <- sass::sass_file(pkg_file("rmd/h/scss/navbar-padding.scss"))
+          padding_css <- bootstraplib::bs_sass_partial(padding, theme)
+          css_file <- tempfile(fileext = ".css")
+          write_utf8(padding_css, css_file)
+          args <- c(args, "--css", pandoc_path_arg(css_file))
+        }
 
         # navbar icon dependencies
         iconDeps <- navbar_icon_dependencies(navbar)
@@ -494,29 +509,45 @@ knitr_options_html <- function(fig_width,
   knitr_options(opts_chunk = opts_chunk)
 }
 
-bootswatch_theme_normalize <- function(theme, version = 3) {
-  # NULL means no bootstrap
+theme_normalize <- function(theme, version) {
+  # If theme is explicitly NULL, that means no bootstrap
   if (is.null(theme)) return(NULL)
-  # "bootstrap" (or "default") means vanilla Bootstrap
-  theme <- switch(theme, default = "bootstrap", theme)
-  # Bootswatch renamed a few themes when upgrading to Bootstrap 4
-  if (version != 3) {
-    theme <- switch(theme, paper = "materia", readable = "litera", theme)
+  # If BS3, we always deal with a Bootswatch theme as a string
+  if (version %in% "3") {
+    # bootstrap or default means vanilla Bootstrap
+    if (theme %in% c("bootstrap", "default")) {
+      return("bootstrap")
+    }
+    return(match.arg(theme, bootstraplib::bootswatch_themes(version)))
   }
-  if (theme %in% c("bootstrap", bootswatch_themes(version))) {
-    return(theme)
+  if (!version %in% c("4", "4-3")) {
+    stop("Don't recognize Bootstrap version: ", version, call. = FALSE)
   }
-  stop("Unrecognized bootswatch theme: '", theme, "'", call. = FALSE)
+  # In BS4+, things get a bit more complicated...
+  # If theme is a string, then it should be a Bootswatch theme name
+  # However, we want to also accept arbitrary sass input.
+  # Unfortunately, this means users can't pass arbitrary SASS as a string,
+  # but they could use a list instead
+  if (is.character(theme) && length(theme) == 1) {
+    # Vanilla Bootstrap
+    if (theme %in% c("bootstrap", "default", "")) return("")
+    theme <- tryCatch(
+      # Note that this includes a navbar-height SASS variable
+      bootstraplib::theme_layer_bootswatch(theme, version),
+      error = function(e) {
+        stop(
+          "Didn't recognize the theme name: '", theme, "'. ",
+          "If you're trying to provide SASS code, wrap it in a list() ",
+          "or bootstraplib::theme_layer().",
+          call. = FALSE
+        )
+      }
+    )
+  }
+
+  theme
 }
 
-bootswatch_themes <- function(version = 3) {
-  if (version == 3) {
-    c("cerulean", "journal", "flatly", "darkly", "readable", "spacelab",
-      "united", "cosmo", "lumen", "paper", "sandstone", "simplex", "yeti")
-  } else {
-    bootstraplib::bootswatch_themes()
-  }
-}
 
 html_highlighters <- function() {
   c(highlighters(), "textmate")
@@ -531,10 +562,26 @@ mathjax_config <- function() {
 }
 
 # variable which controls body offset (depends on height of navbar in theme)
-pandoc_body_padding_variable_args <- function(theme, version) {
+# TODO: remove me when if and when we drop BS3 support
+pandoc_body_padding_variable_args <- function(theme) {
 
   # Height of the navbar in each theme
-  bodyPadding <- bootstraplib::navbar_height(theme, version)
+  bodyPadding <- switch(
+    theme,
+    journal = 61,
+    flatly = 60,
+    darkly = 60,
+    readable = 66,
+    spacelab = 52,
+    united = 51,
+    cosmo = 51,
+    lumen = 54,
+    paper = 64,
+    sandstone = 61,
+    simplex = 41,
+    yeti = 45,
+    51
+  )
 
   # header padding is bodyPadding + 5
   headerPadding <- bodyPadding + 5

@@ -1,0 +1,17 @@
+$navbar-height: 51 !default;
+$body-padding-top: $navbar-height !default;
+$body-padding-bottom: 40 !default;
+$section-padding-top: ($navbar-height + 5) !default;
+$section-margin-top: -($navbar-height + 5) !default;
+
+body {
+  padding-top: $body-padding-top + px;
+  padding-bottom: $body-padding-bottom + px;
+}
+
+.section {
+  h1, h2, h3, h4, h5, h6 {
+    padding-top: $section-padding-top + px;
+    margin-top: $section-margin-top + px;
+  }
+}
