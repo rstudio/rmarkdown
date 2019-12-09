@@ -92,7 +92,8 @@
 #'  3.x (\code{3}), Bootstrap version 4.x (\code{4}), and Bootstrap version 4.x
 #'  with additional JS/CSS to support BS3 style nav, navbar, and other component
 #'  styling (\code{"4-3"}). Use this version if you want to upgrade to Bootstrap 4
-#'  while maintaining the functionality and of a document written for Bootstrap 3.
+#'  while maintaining the functionality of a document already written with
+#'  Bootstrap 3 in mind.
 #'@return R Markdown output format to pass to \code{\link{render}}
 #'@section Navigation Bars:
 #'
@@ -518,7 +519,7 @@ theme_normalize <- function(theme, version) {
     if (theme %in% c("bootstrap", "default")) {
       return("bootstrap")
     }
-    return(match.arg(theme, bootstraplib::bootswatch_themes(version)))
+    return(match.arg(theme, bootswatch_themes(version)))
   }
   if (!version %in% c("4", "4-3")) {
     stop("Don't recognize Bootstrap version: ", version, call. = FALSE)
@@ -548,6 +549,16 @@ theme_normalize <- function(theme, version) {
   theme
 }
 
+# This function isn't really needed but is here to avoid
+# a bootstraplib dependency for BS3
+bootswatch_themes <- function(version) {
+  if (version %in% "3") {
+    c("cerulean", "cosmo", "cyborg", "darkly", "flatly", "journal", "lumen", "paper",
+      "readable", "sandstone", "simplex", "slate", "spacelab", "superhero", "united", "yeti")
+  } else {
+    bootstraplib::bootswatch_themes(version)
+  }
+}
 
 html_highlighters <- function() {
   c(highlighters(), "textmate")
