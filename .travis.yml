@@ -1,3 +1,4 @@
+dist: bionic
 language: r
 cache:
   packages: yes
