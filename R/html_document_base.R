@@ -169,12 +169,8 @@ html_document_base <- function(smart = TRUE,
     output_file
   }
 
-  if (!is.null(theme)) {
-    if (bootstrap_version %in% "4") {
-      args <- c(args, pandoc_variable_arg("bs4", TRUE))
-    } else if (bootstrap_version %in% "3") {
-      args <- c(args, pandoc_variable_arg("bs3", TRUE))
-    }
+  if (!is.null(theme) && bootstrap_version %in% "3") {
+    args <- c(args, pandoc_variable_arg("bs3", TRUE))
   }
 
   output_format(
