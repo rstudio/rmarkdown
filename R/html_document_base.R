@@ -76,7 +76,8 @@ html_document_base <- function(smart = TRUE,
     output_dir <<- output_dir
 
     if (!is.null(theme)) {
-      args <- c(args, "--variable", paste0("theme:", if (!is.character(theme)) "bootstrap" else theme))
+      theme_var <- if (!is.character(theme) || identical(theme, "")) "bootstrap" else theme
+      args <- c(args, "--variable", paste0("theme:", theme_var))
     }
 
 
