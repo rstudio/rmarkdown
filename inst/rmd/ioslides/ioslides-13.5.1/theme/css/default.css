@@ -1414,6 +1414,12 @@ slides > slide {
 }
 
 @media print {
+  /* Additions for printing with Headless Chrome using pagedown::chrome_print() */
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+
   /* line 978, ../scss/default.scss */
   slides slide {
     display: block !important;

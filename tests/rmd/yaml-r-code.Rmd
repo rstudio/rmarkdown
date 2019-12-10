@@ -1,0 +1,8 @@
+---
+title: "Inline R code in YAML"
+output: pdf_document
+header-includes:
+  - \usepackage{`r "ae"`}
+---
+
+R code in YAML should be evaluated before YAML is passed to Pandoc: https://github.com/rstudio/rmarkdown/issues/1709

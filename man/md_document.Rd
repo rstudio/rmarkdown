@@ -16,7 +16,8 @@ md_document(
   df_print = "default",
   includes = NULL,
   md_extensions = NULL,
-  pandoc_args = NULL
+  pandoc_args = NULL,
+  ext = ".md"
 )
 }
 \arguments{
@@ -64,6 +65,8 @@ default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
+
+\item{ext}{Extention of the output document (defaults to ".md").}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

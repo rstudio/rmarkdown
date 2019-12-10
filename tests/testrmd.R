@@ -22,4 +22,12 @@ if (.Platform$OS.type == 'unix' && !is.na(Sys.getenv('CI', NA))) {
       }
     }
   )
+
+  # the default LaTeX template should work with multiple authors:
+  # https://github.com/rstudio/rmarkdown/issues/1716
+  rmarkdown::render('rmd/two-authors.Rmd')
+
+  # R code in YAML should be evaluated before YAML is passed to Pandoc:
+  # https://github.com/rstudio/rmarkdown/issues/1709
+  rmarkdown::render('rmd/yaml-r-code.Rmd')
 }

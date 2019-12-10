@@ -148,6 +148,15 @@ window.buildTabsets = function(tocID) {
     }
   }
 
+  // Pandoc 2.8 adds attributes on headers instead of their parent divs, and we
+  // need to move the 'class' attribute from header to div (#1723)
+  $('.tabset').filter(':header').each(function(i, el) {
+    var $el = $(el), p = $el.parent('div.section');
+    if (p.length === 0) return;
+    p.addClass($el.attr('class'));
+    $el.removeAttr('class');
+  });
+
   // convert section divs with the .tabset class to tabsets
   var tabsets = $("div.section.tabset");
   tabsets.each(function(i) {
