@@ -81,7 +81,7 @@ context_document <- function(toc = FALSE,
     args <- c(args, "--number-sections")
 
   # template
-  if (!is.null(template)  && file.exists(template))
+  if (!is.null(template))
     args <- c(args, "--template", pandoc_path_arg(template))
 
   # citation package
