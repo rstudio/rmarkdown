@@ -19,6 +19,8 @@ rmarkdown 1.19
 
 - Reverted the fix #1703 and applied an alternative fix to #1700, because the original fix brought a new bug #1714 (thanks, @pablobernabeu @cderv @everron @aronatkins).
 
+- Tabsets don't work with Pandoc 2.8 (thanks, @mnazarov, #1723).
+
 
 rmarkdown 1.18
 ================================================================================
