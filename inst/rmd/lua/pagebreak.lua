@@ -27,7 +27,8 @@ local pagebreak = {
   html = '<div style="page-break-after: always;"></div>',
   latex = '\\newpage{}',
   ooxml = '<w:p><w:r><w:br w:type="page"/></w:r></w:p>',
-  odt = '<text:p text:style-name="Pagebreak"/>'
+  odt = '<text:p text:style-name="Pagebreak"/>',
+  context = '\\page'
 }
 
 local function pagebreaks_from_config (meta)
@@ -58,6 +59,8 @@ local function newpage(format)
     return pandoc.RawBlock('html', pagebreak.html)
   elseif format:match 'epub' then
     return pandoc.RawBlock('html', pagebreak.epub)
+  elseif format:match 'context' then
+    return pandoc.RawBlock('context', pagebreak.context)
   else
     -- fall back to insert a form feed character
     return pandoc.Para{pandoc.Str '\f'}

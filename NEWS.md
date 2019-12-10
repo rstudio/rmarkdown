@@ -11,6 +11,8 @@ rmarkdown 1.19
 
 - The `encoding` argument has been removed from many of the internal functions in the **rmarkdown** package. Now all input files are assumed to be encoded in UTF-8. If you see an error message like "Error in `FUN(arg = ...)`: unused argument (`arg = ...`)", please file an issue (with a reproducible example) to https://github.com/rstudio/rmarkdown.
 
+- Added a new output format `context_document()` to support ConTeXT output (thanks, @RLesur #1725, @jooyoungseo #1713).
+
 - `render_site()` can render R scripts in addition to Rmd files if you set `autospin: true` in `_site.yml` (thanks, @zeehio, #1564).
 
 - Added `ext` argument to `md_document()`. Its default value is ".md". This argument is intended to be used together with `variant` argument (e.g., `variant = "context"` and `ext = ".pdf"`) (thanks, @atusy, #1715).
