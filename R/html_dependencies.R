@@ -319,8 +319,6 @@ html_dependency_rsiframe <- function() {
 html_dependency_elevate_section_attrs <- function() {
   if (!rmarkdown::pandoc_available()) return(NULL)
   if (pandoc_version() < "2.8.0") return(NULL)
-  # TODO: we probably won't need this patch in future releases of pandoc
-  # https://github.com/jgm/pandoc/issues/5965
 
   list(
     html_dependency_jquery(),
