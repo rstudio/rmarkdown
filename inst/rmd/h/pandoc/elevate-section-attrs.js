@@ -7,7 +7,7 @@ $(function() {
     for (var a = 0; a < attrs.length; a++) {
       var nm = attrs[a].name;
       var val = attrs[a].value;
-      if (nm == "class") {
+      if (nm === "class") {
         $section.addClass(val);
         $header.removeClass(val);
         continue;
