@@ -1,10 +1,9 @@
 $(function() {
   $("div.section[class*='level'], section[class*='level']").each(function(i, el) {
     var $section = $(el);
-    var headers = $section.children().filter(":header");
-    if (headers.length === 0) return;
-    var $header = $(headers[0]);
-    var attrs = headers[0].attributes;
+    var $header = $section.children().filter(":header").first();
+    if ($header.length === 0) return;
+    var attrs = $header[0].attributes;
     for (var a = 0; a < attrs.length; a++) {
       var nm = attrs[a].name;
       var val = attrs[a].value;
