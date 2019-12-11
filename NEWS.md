@@ -23,6 +23,8 @@ rmarkdown 1.19
 
 - Tabsets don't work with Pandoc 2.8 (thanks, @mnazarov, #1723).
 
+- The `pdf_document` format failed to work if the `header-includes` field in YAML is an empty list (thanks, @cderv, #1728).
+
 
 rmarkdown 1.18
 ================================================================================
