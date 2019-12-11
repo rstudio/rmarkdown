@@ -527,7 +527,8 @@ render <- function(input,
     if (!is.null(output_format$post_knit)) {
       post_knit_extra_args <- output_format$post_knit(front_matter,
                                                       knit_input,
-                                                      runtime)
+                                                      runtime,
+                                                      encoding = 'UTF-8')
     } else {
       post_knit_extra_args <- NULL
     }

@@ -657,9 +657,10 @@ enumerate_output_formats <- function(input, envir, encoding, output_yaml = NULL)
 
 #' Parse the YAML front matter from a file
 #' @inheritParams default_output_format
+#' @inheritParams render
 #' @keywords internal
 #' @export
-yaml_front_matter <- function(input) {
+yaml_front_matter <- function(input, encoding = 'UTF-8') {
   parse_yaml_front_matter(read_utf8(input))
 }
 

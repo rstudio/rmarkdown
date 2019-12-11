@@ -274,7 +274,7 @@ site_generator <- function(input = ".", output_format = NULL) {
 
 #' @rdname render_site
 #' @export
-site_config <- function(input = ".") {
+site_config <- function(input = ".", encoding = "UTF-8") {
 
   # normalize input
   input <- input_as_dir(input)
