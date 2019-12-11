@@ -156,7 +156,7 @@ pdf_document <- function(toc = FALSE,
     # make sure --include-in-header from command line will not completely
     # override header-includes in metadata but give the latter lower precedence:
     # https://github.com/rstudio/rmarkdown/issues/1359
-    args <- append_in_header(metadata[["header-includes"]])
+    args <- append_in_header(unlist(metadata[["header-includes"]]))
 
     # use a geometry filter when we are using the "default" template
     if (identical(template, "default")) {
