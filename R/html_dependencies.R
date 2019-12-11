@@ -316,19 +316,19 @@ html_dependency_rsiframe <- function() {
 
 # Pandoc 2.8 added attributes on headers instead of their parent divs, and we
 # need to move the 'class' attribute from header to div (#1723)
-html_dependency_pandoc_section_patch <- function() {
+html_dependency_elevate_section_attrs <- function() {
   if (!rmarkdown::pandoc_available()) return(NULL)
   if (pandoc_version() < "2.8.0") return(NULL)
   # TODO: we probably won't need this patch in future releases of pandoc
   # https://github.com/jgm/pandoc/issues/5965
 
   list(
-   html_dependency_jquery(),
-   htmlDependency(
-    "pandoc-section-class-patch",
-    version = packageVersion("rmarkdown"),
-    src = pkg_file("rmd/h/pandoc"),
-    script = "section-class-patch.js"
-   )
+    html_dependency_jquery(),
+    htmlDependency(
+      "elevate-section-attrs",
+      version = packageVersion("rmarkdown"),
+      src = pkg_file("rmd/h/pandoc"),
+      script = "elevate-section-attrs.js"
+    )
   )
 }
