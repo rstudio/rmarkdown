@@ -6,7 +6,9 @@ $(function() {
       var header = headers[h];
       var attrs = header.attributes;
       for (var a = 0; a < attrs.length; a++) {
-        $el.attr(attrs[a].name, attrs[a].value);
+        var nm = attrs[a].name;
+        var val = attrs[a].value;
+        nm == "class" ? $el.addClass(val) : $el.attr(nm, val);
       }
     }
   });
