@@ -30,4 +30,8 @@ if (.Platform$OS.type == 'unix' && !is.na(Sys.getenv('CI', NA))) {
   # R code in YAML should be evaluated before YAML is passed to Pandoc:
   # https://github.com/rstudio/rmarkdown/issues/1709
   rmarkdown::render('rmd/yaml-r-code.Rmd')
+
+  # raw blocks in header-includes should work:
+  # https://github.com/rstudio/rmarkdown/issues/1729
+  rmarkdown::render('rmd/raw-header.Rmd')
 }
