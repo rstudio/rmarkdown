@@ -3,6 +3,8 @@ rmarkdown 2.1
 
 - `ioslides_presentation` template no longer generates an empty `<h2>` tag when `subtitle` is not specified in YAML (thanks, @jooyoungseo #1735, @cgrudz #1663).
 
+- Ensure the `tempdir()` exists (via `tempdir(TRUE)`) when writing HTML dependencies to a temporary file, because this directory might be erased by accident (thanks, Kurt Hornik).
+
 
 rmarkdown 2.0
 ================================================================================
