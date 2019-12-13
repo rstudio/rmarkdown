@@ -139,7 +139,7 @@ $else$
     <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
     <hgroup class="auto-fadein">
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
-      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      $if(subtitle)$<h2 data-config-subtitle><!-- populated from slide_config.json --></h2>$endif$
       <p data-config-presenter><!-- populated from slide_config.json --></p>
       $if(date)$
       <p style="margin-top: 6px; margin-left: -2px;">$date$</p>
