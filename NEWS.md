@@ -1,6 +1,7 @@
 rmarkdown 2.1
 ================================================================================
 
+- `ioslides_presentation` template no longer generates an empty `<h2>` tag when `subtitle` is not specified in YAML.
 
 
 rmarkdown 2.0
