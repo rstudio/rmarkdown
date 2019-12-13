@@ -91,12 +91,16 @@ file_name_without_shell_chars <- function(file) {
     name
 }
 
+tempfile <- function(tmpdir = tempdir(TRUE), ...) {
+  base::tempfile(tmpdir = tmpdir, ...)
+}
+
 tmpfile_pattern <- "rmarkdown-str"
 
 # return a string as a tempfile
 as_tmpfile <- function(str) {
   if (length(str) == 0) return()
-  f <- tempfile(tmpfile_pattern, tempdir(TRUE), fileext = ".html")
+  f <- tempfile(tmpfile_pattern, fileext = ".html")
   write_utf8(str, f)
   f
 }
