@@ -4,13 +4,16 @@
 \alias{pandoc_copy_data}
 \title{Copy a Pandoc's data file}
 \usage{
-pandoc_copy_data(data, output = data)
+pandoc_copy_data(data, output = data, overwrite = FALSE)
 }
 \arguments{
 \item{data}{The name of Pandoc's data file (e.g., "reference.docx")}
 
 \item{output}{The name of the output file. If \code{NULL} (default), the name
 will be same as the \code{data} argument.}
+
+\item{overwrite}{Whether or not to overwrite the existing file. Default to
+\code{FALSE}.}
 }
 \value{
 The name of the output file.

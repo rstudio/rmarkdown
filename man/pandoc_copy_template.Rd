@@ -4,7 +4,7 @@
 \alias{pandoc_copy_template}
 \title{Copy a template file for Pandoc}
 \usage{
-pandoc_copy_template(format, output = NULL, ...)
+pandoc_copy_template(format, output = NULL, overwrite = FALSE)
 }
 \arguments{
 \item{format}{To copy R Markdown's template, specify a result of a formatting
@@ -14,8 +14,8 @@ specify the format as a character (e.g., "html").}
 \item{output}{The name of the output file. If using \code{NULL} then the
 output filename will be based on the \code{format} argument.}
 
-\item{...}{Arguments passed to \code{file.copy()} when \format is a result of
-a formatting function. Otherwise, they are ignored.}
+\item{overwrite}{Whether or not to overwrite the existing file. Default to
+\code{FALSE}.}
 }
 \value{
 The name of the output file.

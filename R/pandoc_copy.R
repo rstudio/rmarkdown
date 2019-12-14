@@ -3,6 +3,8 @@
 #' @param data The name of Pandoc's data file (e.g., "reference.docx")
 #' @param output The name of the output file. If \code{NULL} (default), the name
 #' will be same as the \code{data} argument.
+#' @param overwrite Whether or not to overwrite the existing file. Default to
+#' \code{FALSE}.
 #'
 #' @return The name of the output file.
 #'
@@ -14,7 +16,12 @@
 #' }
 #'
 #' @export
-pandoc_copy_data <- function(data, output = data) {
+pandoc_copy_data <- function(data, output = data, overwrite = FALSE) {
+  if (file.exists(output)) {
+    message(output, "already exists.")
+    return(output)
+  }
+
   system(paste(
     quoted(pandoc()), "-o", output, "--print-default-data-file", data,
     collapse = " "
@@ -29,8 +36,7 @@ pandoc_copy_data <- function(data, output = data) {
 #' specify the format as a character (e.g., "html").
 #' @param output The name of the output file. If using \code{NULL} then the
 #' output filename will be based on the \code{format} argument.
-#' @param ... Arguments passed to \code{file.copy()} when \format is a result of
-#' a formatting function. Otherwise, they are ignored.
+#' @inheritParams pandoc_copy_data
 #'
 #' @return The name of the output file.
 #'
@@ -46,13 +52,20 @@ pandoc_copy_data <- function(data, output = data) {
 #' }
 #'
 #' @export
-pandoc_copy_template <- function(format, output = NULL, ...) {
+pandoc_copy_template <- function(format, output = NULL, overwrite = FALSE) {
   UseMethod("pandoc_copy_template")
 }
 
 #' @export
-pandoc_copy_template.character <- function(format, output = NULL, ...) {
+pandoc_copy_template.character <- function(
+  format, output = NULL, overwrite = FALSE
+) {
   if (is.null(output)) output <- paste0("template.", format)
+  if (file.exists(output)) {
+    message(output, "already exists.")
+    return(output)
+  }
+
   system(paste(
     quoted(pandoc()), "-o", output, "--print-default-template", format,
     collapse = " "
@@ -61,10 +74,17 @@ pandoc_copy_template.character <- function(format, output = NULL, ...) {
 }
 
 #' @export
-pandoc_copy_template.rmarkdown_output_format <- function(format, output = NULL, ...) {
-  args <- format$pandoc$args
-  template <- args[which(args == "--template") + 1L]
+pandoc_copy_template.rmarkdown_output_format <- function(
+  format, output = NULL, overwrite = FALSE
+) {
+  template <- format$pandoc$args[which(format$pandoc$args == "--template") + 1L]
   if (is.null(output)) output <- sub(".*[\\/]", "", template)
-  file.copy(template, output, ...)
+
+  if (file.exists(output)) {
+    message(output, "already exists.")
+    return(output)
+  }
+
+  file.copy(template, output, overwrite = overwrite)
   output
 }
