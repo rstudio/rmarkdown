@@ -18,7 +18,7 @@
 #' @export
 pandoc_copy_data <- function(data, output = data, overwrite = FALSE) {
   if (file.exists(output)) {
-    message(output, "already exists.")
+    message(output, " already exists.")
     return(output)
   }
 
@@ -62,7 +62,7 @@ pandoc_copy_template.character <- function(
 ) {
   if (is.null(output)) output <- paste0("template.", format)
   if (file.exists(output)) {
-    message(output, "already exists.")
+    message(output, " already exists.")
     return(output)
   }
 
@@ -81,7 +81,7 @@ pandoc_copy_template.rmarkdown_output_format <- function(
   if (is.null(output)) output <- sub(".*[\\/]", "", template)
 
   if (file.exists(output)) {
-    message(output, "already exists.")
+    message(output, " already exists.")
     return(output)
   }
 
