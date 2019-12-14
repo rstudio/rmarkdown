@@ -5,6 +5,11 @@ rmarkdown 2.1
 
 - Ensure the `tempdir()` exists (via `tempdir(TRUE)`) when writing HTML dependencies to a temporary file, because this directory might be erased by accident (thanks, Kurt Hornik).
 
+- Add `pandoc_copy_data` to copy data files provided by Pandoc
+  (e.g, `pandoc_copy_data("reference.docx")`) (thanks, @atusy #1738)
+
+- Add `pandoc_copy_template` to copy templates provided by R Markdown or Pandoc.
+  (e.g., `pandoc_copy_template(html_document()`) (thanks, @atusy #1738)
 
 rmarkdown 2.0
 ================================================================================
