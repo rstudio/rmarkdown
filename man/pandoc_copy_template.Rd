@@ -7,8 +7,9 @@
 pandoc_copy_template(format, output = NULL, ...)
 }
 \arguments{
-\item{format}{A format of the template file as a character (e.g.,
-\code{html}) or as a result of a formatting function (e.g., \code{html_document()}).}
+\item{format}{To copy R Markdown's template, specify a result of a formatting
+function (e.g., \code{html_document()}). To copy Pandoc's original template,
+specify the format as a character (e.g., "html").}
 
 \item{output}{The name of the output file. If using \code{NULL} then the
 output filename will be based on the \code{format} argument.}
@@ -21,4 +22,17 @@ The name of the output file.
 }
 \description{
 Copy a template file for Pandoc
+}
+\examples{
+\dontrun{
+# Copy the html_document's template
+pandoc_copy_template(html_document())
+
+# Copy the Pandoc's html template
+pandoc_copy_template("html")
+}
+
+}
+\seealso{
+\url{https://pandoc.org/MANUAL.html#templates}
 }

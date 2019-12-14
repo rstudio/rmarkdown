@@ -6,6 +6,13 @@
 #'
 #' @return The name of the output file.
 #'
+#' @seealso \url{https://pandoc.org/MANUAL.html#option--print-default-data-file}
+#'
+#' @examples
+#' \dontrun{
+#' pandoc_copy_data("reference.docx")
+#' }
+#'
 #' @export
 pandoc_copy_data <- function(data, output = data) {
   system(paste(
@@ -17,16 +24,26 @@ pandoc_copy_data <- function(data, output = data) {
 
 #' Copy a template file for Pandoc
 #'
-#'
-#'
-#' @param format A format of the template file as a character (e.g.,
-#' \code{html}) or as a result of a formatting function (e.g., \code{html_document()}).
+#' @param format To copy R Markdown's template, specify a result of a formatting
+#' function (e.g., \code{html_document()}). To copy Pandoc's original template,
+#' specify the format as a character (e.g., "html").
 #' @param output The name of the output file. If using \code{NULL} then the
 #' output filename will be based on the \code{format} argument.
 #' @param ... Arguments passed to \code{file.copy()} when \format is a result of
 #' a formatting function. Otherwise, they are ignored.
 #'
 #' @return The name of the output file.
+#'
+#' @seealso \url{https://pandoc.org/MANUAL.html#templates}
+#'
+#' @examples
+#' \dontrun{
+#' # Copy the html_document's template
+#' pandoc_copy_template(html_document())
+#'
+#' # Copy the Pandoc's html template
+#' pandoc_copy_template("html")
+#' }
 #'
 #' @export
 pandoc_copy_template <- function(format, output = NULL, ...) {

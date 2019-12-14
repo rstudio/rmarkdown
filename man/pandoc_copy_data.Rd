@@ -18,3 +18,12 @@ The name of the output file.
 \description{
 Copy a Pandoc's data file
 }
+\examples{
+\dontrun{
+pandoc_copy_data("reference.docx")
+}
+
+}
+\seealso{
+\url{https://pandoc.org/MANUAL.html#option--print-default-data-file}
+}
