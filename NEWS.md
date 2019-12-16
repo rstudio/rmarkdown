@@ -25,6 +25,8 @@ rmarkdown 2.2
 
 - `pdf_document()` should not specify the `geometry` variable when the `documentclass` variable is passed to Pandoc (thanks, @jpcirrus, #1782).
 
+- `render()` now respects the YAML metadata in the R script when rendering the script with Pandoc 2.8 or later (thanks, @nsoranzo #1740, @cderv #1741).
+
 
 rmarkdown 2.1
 ================================================================================
