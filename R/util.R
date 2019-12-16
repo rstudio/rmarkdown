@@ -91,6 +91,10 @@ file_name_without_shell_chars <- function(file) {
     name
 }
 
+tempfile <- function(pattern = 'file', tmpdir = tempdir(TRUE), ...) {
+  base::tempfile(pattern = pattern, tmpdir = tmpdir, ...)
+}
+
 tmpfile_pattern <- "rmarkdown-str"
 
 # return a string as a tempfile
