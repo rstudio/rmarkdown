@@ -10,10 +10,6 @@ body {
   line-height: 1.35;
 }
 
-#header {
-  text-align: center;
-}
-
 #TOC {
   clear: both;
   margin: 0 0 10px 10px;
@@ -201,6 +197,6 @@ code > span.st { color: #d14; } /* String */
 code > span.co { color: #888888; font-style: italic; } /* Comment */
 code > span.ot { color: #007020; } /* OtherToken */
 code > span.al { color: #ff0000; font-weight: bold; } /* AlertToken */
-code > span.fu { color: #900; font-weight: bold; } /* Function calls */ 
+code > span.fu { color: #900; font-weight: bold; } /* Function calls */
 code > span.er { color: #a61717; background-color: #e3d2d2; } /* ErrorTok */
 
