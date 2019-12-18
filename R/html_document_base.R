@@ -175,6 +175,16 @@ html_document_base <- function(smart = TRUE,
     args <- c(args, pandoc_variable_arg("bs3", TRUE))
   }
 
+  # Inform the world that a bootswatch theme is being used so that
+  # widgets like DT can take advantage of that information
+  # (https://github.com/rstudio/DT/pull/740)
+  opts <- options(bootswatch.theme = bootstraplib::bootswatch_detect(theme))
+  exit_actions <- list(function() { options(opts) })
+  on_exit <- function() {
+    for (action in exit_actions)
+      try(action())
+  }
+
   output_format(
     knitr = NULL,
     pandoc = pandoc_options(to = "html", from = NULL, args = args),
@@ -182,6 +192,7 @@ html_document_base <- function(smart = TRUE,
     clean_supporting = FALSE,
     pre_knit = pre_knit,
     post_knit = post_knit,
+    on_exit = on_exit,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor
