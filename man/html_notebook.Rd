@@ -69,7 +69,7 @@ quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
 case you can use the \code{css} parameter to add your own styles).
 If Bootstrap 4 is used (see \code{bootstrap_version} argument),
 a handful of other themes are available ("cyborg", "lux", "minty", "pulse",
-"slate", "solar", and "superhero"). Moreover, with Bootstrap 4,
+"sketchy", "slate", "solar", and "superhero"). Moreover, with Bootstrap 4,
 if `theme` is something other than a bootswatch theme, then it's
 considered arbitrary sass passed to \code{bootstraplib::bs_sass()}
 (it should also be noted than theming can also be controlled via

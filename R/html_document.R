@@ -47,13 +47,13 @@
 #'  scripts, stylesheets, images, and videos. Note that even for self contained
 #'  documents MathJax is still loaded externally (this is necessary because of
 #'  its size).
-#'@param theme Visual theme ("default", "cerulean", "journal", "flatly",
-#'  "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
-#'  "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-#'  case you can use the \code{css} parameter to add your own styles).
+#'@param theme Visual theme ("default", "cerulean", "cosmo", "cyborg", "darkly",
+#'  "flatly", "journal", "lumen", "readable", "sandstone", "simplex", "slate",
+#'  "spacelab", "superhero", "united", or "yeti"). Pass \code{NULL} for no
+#'  theme (in this case you can use the \code{css} parameter to add your own styles).
 #'  If Bootstrap 4 is used (see \code{bootstrap_version} argument),
-#'  a handful of other themes are available ("cyborg", "lux", "minty", "pulse",
-#'  "slate", "solar", and "superhero"). Moreover, with Bootstrap 4,
+#'  a handful of other themes are available ("lux", "minty", "pulse",
+#'  "sketchy", and "solar"). Moreover, with Bootstrap 4,
 #'  if `theme` is something other than a bootswatch theme, then it's
 #'  considered arbitrary sass passed to \code{bootstraplib::bs_sass()}
 #'  (it should also be noted than theming can also be controlled via
