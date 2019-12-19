@@ -91,7 +91,9 @@ file_name_without_shell_chars <- function(file) {
     name
 }
 
-tempfile <- function(pattern = 'file', tmpdir = tempdir(TRUE), ...) {
+# make sure the tempdir exists
+tempfile <- function(pattern = 'file', tmpdir = tempdir(), ...) {
+  dir.create(tmpdir, showWarnings = FALSE, recursive = TRUE)
   base::tempfile(pattern = pattern, tmpdir = tmpdir, ...)
 }
 

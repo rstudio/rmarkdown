@@ -5,7 +5,7 @@ rmarkdown 2.1
 
 - No longer center the `#header` element in the `html_vignette()` output (thanks, @EmilHvitfeldt, #1742).
 
-- Ensure the `tempdir()` exists (via `tempdir(TRUE)`) when writing HTML dependencies to a temporary file, because this directory might be erased by accident (thanks, Kurt Hornik).
+- Ensure the `tempdir()` exists (via `tempdir(TRUE)`) when writing HTML dependencies to a temporary file, because this directory might be erased by accident (thanks, Kurt Hornik, and also @karawoo #1743).
 
 
 rmarkdown 2.0
