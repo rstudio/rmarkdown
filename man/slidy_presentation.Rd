@@ -6,6 +6,7 @@
 \usage{
 slidy_presentation(
   incremental = FALSE,
+  slide_level = NULL,
   duration = NULL,
   footer = NULL,
   font_adjustment = 0,
@@ -35,6 +36,12 @@ slidy_presentation(
 that if you want to reverse the default incremental behavior for an
 individual bullet you can precede it with \code{>}. For example:
 \emph{\code{> - Bullet Text}}}
+
+\item{slide_level}{The heading level which defines individual slides. By
+default this is the highest header level in the hierarchy that is followed
+immediately by content, and not another header, somewhere in the document.
+This default can be overridden by specifying an explicit
+\code{slide_level}.}
 
 \item{duration}{Duration (in minutes) of the slide deck. This value is used
 to add a countdown timer to the slide footer.}

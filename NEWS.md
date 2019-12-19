@@ -7,6 +7,8 @@ rmarkdown 2.1
 
 - Ensure the `tempdir()` exists (via `tempdir(TRUE)`) when writing HTML dependencies to a temporary file, because this directory might be erased by accident (thanks, Kurt Hornik, and also @karawoo #1743).
 
+- Added the `slide_level` argument to `slidy_presentation()` (https://stackoverflow.com/q/59157211/559676).
+
 
 rmarkdown 2.0
 ================================================================================
