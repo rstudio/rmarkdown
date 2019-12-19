@@ -178,12 +178,8 @@ html_document_base <- function(smart = TRUE,
   # Inform the world that a bootswatch theme is being used so that
   # widgets like DT can take advantage of that information
   # (https://github.com/rstudio/DT/pull/740)
-  opts <- options(bootswatch.theme = bootstraplib::bootswatch_detect(theme))
-  exit_actions <- list(function() { options(opts) })
-  on_exit <- function() {
-    for (action in exit_actions)
-      try(action())
-  }
+  bootstraplib::bs_theme_set(theme)
+  on_exit <- function() { bootstraplib::bs_theme_clear() }
 
   output_format(
     knitr = NULL,
