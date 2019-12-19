@@ -19,8 +19,8 @@ html_dependency_jquery <- function()  {
 
   htmlDependency(
     name = "jquery",
-    version = "3.4.1",
-    src = pkg_file(file = "rmd/h/jquery"),
+    version = "1.11.3",
+    src = pkg_file("rmd/h/jquery"),
     script = "jquery.min.js")
 }
 
