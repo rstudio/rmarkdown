@@ -83,7 +83,7 @@ html_document_base <- function(smart = TRUE,
     # resolve and inject extras, including dependencies specified by the format
     # and dependencies specified by the user (via extra_dependencies)
     format_deps <- list()
-    format_deps <- append(format_deps, html_dependency_elevate_section_attrs())
+    format_deps <- append(format_deps, html_dependency_header_attrs())
     if (!is.null(theme)) {
       format_deps <- append(format_deps, list(html_dependency_jquery(),
                                               html_dependency_bootstrap(theme)))

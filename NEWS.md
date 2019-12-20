@@ -9,6 +9,8 @@ rmarkdown 2.1
 
 - Added the `slide_level` argument to `slidy_presentation()` (https://stackoverflow.com/q/59157211/559676).
 
+- Removed the jQuery dependency in `html_document_base()` (#1723). To avoid bugs like #1723, Pandoc 2.8 users have to upgrade to Pandoc 2.9+.
+
 
 rmarkdown 2.0
 ================================================================================
