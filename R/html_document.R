@@ -235,7 +235,9 @@ html_document <- function(toc = FALSE,
   md_extensions <- smart_extension(smart, md_extensions)
 
   bootstrap_version <- bootstrap_version_normalize(bootstrap_version)
-  theme <- theme_normalize(theme, bootstrap_version)
+  theme <- as_bs_theme(theme, bootstrap_version)
+  # A version specified through bs_theme() overwrites bootstrap_version
+  if ("version" %in% names(theme)) bootstrap_version <- theme$version
 
   # toc_float
   if (toc && !identical(toc_float, FALSE)) {
@@ -384,7 +386,7 @@ html_document <- function(toc = FALSE,
         if (bootstrap_version %in% "3") {
           # TODO: remove this approach when we drop BS3 support
           # and use the SASS based approach instead
-          args <- c(args, pandoc_body_padding_variable_args(theme))
+          args <- c(args, pandoc_body_padding_variable_args(theme$bootswatch))
         } else {
           # The $navbar-height SASS var is set by theme_layer_bootswatch()
           padding <- sass::sass_file(pkg_file("rmd/h/scss/navbar-padding.scss"))
@@ -510,42 +512,18 @@ knitr_options_html <- function(fig_width,
   knitr_options(opts_chunk = opts_chunk)
 }
 
-theme_normalize <- function(theme, version) {
-  # If theme is explicitly NULL, that means no bootstrap
+as_bs_theme <- function(theme, version) {
   if (is.null(theme)) return(NULL)
-  # If BS3, we always deal with a Bootswatch theme as a string
-  if (version %in% "3") {
-    # bootstrap or default means vanilla Bootstrap
-    if (theme %in% c("bootstrap", "default")) {
-      return("bootstrap")
-    }
-    return(match.arg(theme, bootswatch_themes(version)))
+  if (is.character(theme) && length(theme) == 1 && !grepl("[0-9]", theme)) {
+    theme <- paste0(theme, "@", version)
   }
-  if (!version %in% c("4", "4-3")) {
-    stop("Don't recognize Bootstrap version: ", version, call. = FALSE)
-  }
-  # In BS4+, things get a bit more complicated...
-  # If theme is a string, then it should be a Bootswatch theme name
-  # However, we want to also accept arbitrary sass input.
-  # Unfortunately, this means users can't pass arbitrary SASS as a string,
-  # but they could use a list instead
-  if (is.character(theme) && length(theme) == 1) {
-    # Vanilla Bootstrap
-    if (theme %in% c("bootstrap", "default", "")) return("")
-    theme <- tryCatch(
-      # Note that this includes a navbar-height SASS variable
-      bootstraplib::theme_layer_bootswatch(theme, version),
-      error = function(e) {
-        stop(
-          "Didn't recognize the theme name: '", theme, "'. ",
-          "If you're trying to provide SASS code, wrap it in a list() ",
-          "or bootstraplib::theme_layer().",
-          call. = FALSE
-        )
-      }
+  theme <- getFromNamespace("as_bs_theme", "bootstraplib")(theme)
+  if (!identical(theme$version, version)) {
+    warning(
+      "Version mismatch between theme and bootstrap_version.",
+      "Using the version from theme", call. = FALSE
     )
   }
-
   theme
 }
 
@@ -756,9 +734,14 @@ navbar_link_text <- function(x, ...) {
 }
 
 # allows users to pass in integers for the version as well
-bootstrap_version_normalize <- function(version = c("3", "4", "4-3")) {
+bootstrap_version_normalize <- function(version) {
   version <- as.character(version)
-  match.arg(version)
+  version <- match.arg(version, c("3", "4", "4-3"))
+  if (identical(version, "3")) return("3")
+  if (system.file(package = "bootstraplib") == "") {
+    stop("The bootstraplib package must be installed to use Bootstrap 4.", call. = FALSE)
+  }
+  version
 }
 
 is_bs3_compatible <- function(version) {

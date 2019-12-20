@@ -44,7 +44,7 @@ html_dependency_jqueryui <- function() {
 html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
 
   version <- bootstrap_version_normalize(version)
-  theme <- theme_normalize(theme, version)
+  theme <- as_bs_theme(theme, version)
 
   if (version %in% "3") {
     return(
@@ -65,11 +65,12 @@ html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
   if (version %in% c("4", "4-3")) {
     # Override Bootstrap 4's `$font-size-base: 1rem` (which increased the
     # based font size from 14px to 16px), but allow themes to override that default
-    font_size_14px <- bootstraplib::theme_layer(
-      pre = "$font-size-base: 0.875rem !default;",
-      post = "h1.title { @include font-size(1.15 * $h1-font-size) }"
+    font_size_14px <- bootstraplib::bs_theme(
+      before = "$font-size-base: 0.875rem !default;",
+      after = "h1.title { @include font-size(1.15 * $h1-font-size) }"
     )
-    return(bootstraplib::bs_sass(theme, font_size_14px, version = version))
+    theme <- bootstraplib::bs_theme_merge(font_size_14px, theme)
+    return(bootstraplib::bs_sass(theme))
   }
 
   stop("Unknown Bootstrap version:", version, call. = FALSE)

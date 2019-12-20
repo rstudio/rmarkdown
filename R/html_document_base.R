@@ -33,6 +33,9 @@ html_document_base <- function(smart = TRUE,
     dependency_resolver <- html_dependency_resolver
 
   bootstrap_version <- bootstrap_version_normalize(bootstrap_version)
+  theme <- as_bs_theme(theme, bootstrap_version)
+  # A version specified through bs_theme() overwrites bootstrap_version
+  if ("version" %in% names(theme)) bootstrap_version <- theme$version
 
   args <- c()
 
@@ -76,10 +79,8 @@ html_document_base <- function(smart = TRUE,
     output_dir <<- output_dir
 
     if (!is.null(theme)) {
-      theme_var <- if (!is.character(theme) || identical(theme, "")) "bootstrap" else theme
-      args <- c(args, "--variable", paste0("theme:", theme_var))
+      args <- c(args, "--variable", paste0("theme:", theme$bootswatch))
     }
-
 
     # resolve and inject extras, including dependencies specified by the format
     # and dependencies specified by the user (via extra_dependencies)
@@ -178,8 +179,13 @@ html_document_base <- function(smart = TRUE,
   # Inform the world that a bootswatch theme is being used so that
   # widgets like DT can take advantage of that information
   # (https://github.com/rstudio/DT/pull/740)
-  bootstraplib::bs_theme_set(theme)
-  on_exit <- function() { bootstraplib::bs_theme_clear() }
+  if (!is.null(theme)) {
+    bootstraplib::bs_theme_set(theme)
+    on_exit <- function() { bootstraplib::bs_theme_clear() }
+  } else {
+    on_exit <- function() { }
+  }
+
 
   output_format(
     knitr = NULL,
