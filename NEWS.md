@@ -11,6 +11,7 @@ rmarkdown 2.1
 
 - Removed the jQuery dependency in `html_document_base()` (#1723). To avoid bugs like #1723, Pandoc 2.8 users have to upgrade to Pandoc 2.9+.
 
+- Enable `render()` to use `knit` field in the YAML front matter (thanks, @atusy, #1711).
 
 rmarkdown 2.0
 ================================================================================
