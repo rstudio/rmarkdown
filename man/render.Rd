@@ -20,7 +20,8 @@ render(
   envir = parent.frame(),
   run_pandoc = TRUE,
   quiet = FALSE,
-  encoding = "UTF-8"
+  encoding = "UTF-8",
+  customize = interactive()
 )
 }
 \arguments{
@@ -101,6 +102,9 @@ output.}
 \item{quiet}{An option to suppress printing of the pandoc command line.}
 
 \item{encoding}{Ignored. The encoding is always assumed to be UTF-8.}
+
+\item{customize}{Render input by a function defined by the \code{knit}
+field at the top level of the YAML front matter of the input.}
 }
 \value{
 When \code{run_pandoc = TRUE}, the compiled document is written into
