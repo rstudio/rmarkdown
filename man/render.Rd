@@ -21,7 +21,7 @@ render(
   run_pandoc = TRUE,
   quiet = FALSE,
   encoding = "UTF-8",
-  customize = interactive()
+  customize = FALSE
 )
 }
 \arguments{
@@ -104,7 +104,8 @@ output.}
 \item{encoding}{Ignored. The encoding is always assumed to be UTF-8.}
 
 \item{customize}{Render input by a function defined by the \code{knit}
-field at the top level of the YAML front matter of the input.}
+field at the top level of the YAML front matter of the input. Default to
+\code{FALSE}.}
 }
 \value{
 When \code{run_pandoc = TRUE}, the compiled document is written into

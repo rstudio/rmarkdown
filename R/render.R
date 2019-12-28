@@ -211,7 +211,8 @@ NULL
 #' @param quiet An option to suppress printing of the pandoc command line.
 #' @param encoding Ignored. The encoding is always assumed to be UTF-8.
 #' @param customize Render input by a function defined by the \code{knit}
-#' field at the top level of the YAML front matter of the input.
+#' field at the top level of the YAML front matter of the input. Default to
+#' \code{FALSE}.
 #' @return
 #'   When \code{run_pandoc = TRUE}, the compiled document is written into
 #'   the output file, and the path of the output file is returned. When
@@ -252,7 +253,7 @@ render <- function(input,
                    run_pandoc = TRUE,
                    quiet = FALSE,
                    encoding = "UTF-8",
-                   customize = interactive()) {
+                   customize = FALSE) {
 
   yaml_knit <- yaml_front_matter(input)[["knit"]]
   if (!is.null(yaml_knit)) {
