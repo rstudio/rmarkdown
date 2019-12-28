@@ -11,6 +11,8 @@ rmarkdown 2.1
 
 - Removed the jQuery dependency in `html_document_base()` (#1723). To avoid bugs like #1723, Pandoc 2.8 users have to upgrade to Pandoc 2.9+.
 
+- Fixed data frames not being printend when `render()` is called interactively (thanks, @atusy, #1750)
+
 
 rmarkdown 2.0
 ================================================================================
