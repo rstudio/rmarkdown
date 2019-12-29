@@ -105,7 +105,8 @@ output.}
 
 \item{customize}{Render input by a function defined by the \code{knit}
 field at the top level of the YAML front matter of the input. Default to
-\code{FALSE}.}
+\code{FALSE}. If \code{TRUE}, then only the \code{input} argument is passed
+to the rendering function, and the others are ignored.}
 }
 \value{
 When \code{run_pandoc = TRUE}, the compiled document is written into

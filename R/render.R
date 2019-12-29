@@ -212,7 +212,8 @@ NULL
 #' @param encoding Ignored. The encoding is always assumed to be UTF-8.
 #' @param customize Render input by a function defined by the \code{knit}
 #' field at the top level of the YAML front matter of the input. Default to
-#' \code{FALSE}.
+#' \code{FALSE}. If \code{TRUE}, then only the \code{input} argument is passed
+#' to the rendering function, and the others are ignored.
 #' @return
 #'   When \code{run_pandoc = TRUE}, the compiled document is written into
 #'   the output file, and the path of the output file is returned. When
@@ -257,16 +258,7 @@ render <- function(input,
 
   if (customize) {
     yaml_knit <- yaml_front_matter(input)[["knit"]]
-    if (!is.null(yaml_knit)) {
-      return(eval(parse(text = yaml_knit))(
-        input = input, output_file = output_file, output_dir = output_dir,
-        output_options = output_options, output_yaml = output_yaml,
-        intermediates_dir = intermediates_dir, knit_root_dir = knit_root_dir,
-        runtime = runtime, clean = clean, knit_meta = knit_meta, envir = envir,
-        run_pandoc = run_pandoc, quiet = quiet, encoding = encoding,
-        customize = FALSE
-      ))
-    }
+    if (!is.null(yaml_knit)) return(eval(parse(text = yaml_knit))(input))
   }
 
   perf_timer_start("render")
