@@ -255,16 +255,18 @@ render <- function(input,
                    encoding = "UTF-8",
                    customize = FALSE) {
 
-  yaml_knit <- yaml_front_matter(input)[["knit"]]
-  if (!is.null(yaml_knit)) {
-    return(eval(parse(text = yaml_knit))(
-      input = input, output_file = output_file, output_dir = output_dir,
-      output_options = output_options, output_yaml = output_yaml,
-      intermediates_dir = intermediates_dir, knit_root_dir = knit_root_dir,
-      runtime = runtime, clean = clean, knit_meta = knit_meta, envir = envir,
-      run_pandoc = run_pandoc, quiet = quiet, encoding = encoding,
-      customize = FALSE
-    ))
+  if (customize) {
+    yaml_knit <- yaml_front_matter(input)[["knit"]]
+    if (!is.null(yaml_knit)) {
+      return(eval(parse(text = yaml_knit))(
+        input = input, output_file = output_file, output_dir = output_dir,
+        output_options = output_options, output_yaml = output_yaml,
+        intermediates_dir = intermediates_dir, knit_root_dir = knit_root_dir,
+        runtime = runtime, clean = clean, knit_meta = knit_meta, envir = envir,
+        run_pandoc = run_pandoc, quiet = quiet, encoding = encoding,
+        customize = FALSE
+      ))
+    }
   }
 
   perf_timer_start("render")
