@@ -25,9 +25,8 @@ html_fragment(
 \arguments{
 \item{number_sections}{\code{TRUE} to number section headings}
 
-\item{section_divs}{Wrap sections in <div> tags (or <section> tags in HTML5),
-and attach identifiers to the enclosing <div> (or <section>) rather than the
-header itself.}
+\item{section_divs}{Wrap sections in <div> tags, and attach identifiers to the
+enclosing <div> rather than the header itself.}
 
 \item{fig_width}{Default width (in inches) for figures}
 
