@@ -48,19 +48,27 @@ local function pagebreaks_from_config (meta)
 end
 
 --- Return a block element causing a page break in the given format.
-local function newpage(format)
+local function newpage(format, type)
+  -- type define if we add block or inline
+  type = type or 'block'
+  if type:match 'block' then
+    add_raw = pandoc.RawBlock
+  elseif type:match 'inline' then
+    add_raw = pandoc.RawInline
+  end
+  -- the format define the string to add
   if format == 'docx' then
-    return pandoc.RawBlock('openxml', pagebreak.ooxml)
+    return add_raw('openxml', pagebreak.ooxml)
   elseif format:match 'latex' then
-    return pandoc.RawBlock('tex', pagebreak.latex)
+    return add_raw('tex', pagebreak.latex)
   elseif format:match 'odt' then
-    return pandoc.RawBlock('opendocument', pagebreak.odt)
+    return add_raw('opendocument', pagebreak.odt)
   elseif format:match 'html.*' then
-    return pandoc.RawBlock('html', pagebreak.html)
+    return add_raw('html', pagebreak.html)
   elseif format:match 'epub' then
-    return pandoc.RawBlock('html', pagebreak.epub)
+    return add_raw('html', pagebreak.epub)
   elseif format:match 'context' then
-    return pandoc.RawBlock('context', pagebreak.context)
+    return add_raw('context', pagebreak.context)
   else
     -- fall back to insert a form feed character
     return pandoc.Para{pandoc.Str '\f'}
@@ -89,11 +97,24 @@ function RawBlock (el)
   return nil
 end
 
--- Turning paragraphs which contain nothing but a form feed
--- characters into line breaks.
+-- Filter function called on each RawBlock element.
 function Para (el)
+  -- Turning paragraphs which contains nothing but a form feed
+  -- characters into line breaks.
   if #el.content == 1 and el.content[1].text == '\f' then
     return newpage(FORMAT)
+  end
+  -- Turning newpage command inside a paragraphs into inline raw
+  -- working only for docx for now
+  if FORMAT:match 'docx' then
+    return pandoc.walk_block(el, {
+      RawInline = function(el)
+        -- check that the inline raw is TeX or LaTeX and matches
+        -- \newpage or \pagebreak.
+        if el.format:match 'tex' and is_newpage_command(el.text) then
+          return newpage(FORMAT, "inline")
+        end
+      end })
   end
 end
 
