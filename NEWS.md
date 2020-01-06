@@ -1,6 +1,8 @@
 rmarkdown 2.1
 ================================================================================
 
+- Support for Bootstrap 4 has been added to `html_document` and `html_document_base` via a new argument (`bootstrap_version`). For this release, these formats default to Bootstrap 3, but a future release will change the default to 4 (opt-in now via `bootstrap_version = 4`). In addition to this "strict" Bootstrap 4 mode, there is "compatible" Bootstrap 4 mode (i.e., `bootstrap_version = "4-3"`), which allows you to use BS3 style nav/navbars. Only use this compatible mode if you have existing `html_document`/`html_document_base` output formats that rely on BS3 markup (but is no longer supported in BS4). Thanks, @cpsievert and @jcheng5, #1260.
+
 - `ioslides_presentation` template no longer generates an empty `<h2>` tag when `subtitle` is not specified in YAML (thanks, @jooyoungseo #1735, @cgrudz #1663).
 
 - Ensure the `tempdir()` exists (via `tempdir(TRUE)`) when writing HTML dependencies to a temporary file, because this directory might be erased by accident (thanks, Kurt Hornik).
@@ -36,8 +38,6 @@ rmarkdown 2.0
 
 rmarkdown 1.18
 ================================================================================
-
-- Support for Bootstrap 4 has been added to `html_document` and `html_document_base` via a new argument (`bootstrap_version`). For this release, these formats default to Bootstrap 3, but a future release will change the default to 4 (opt-in now via `bootstrap_version = 4`). In addition to this "strict" Bootstrap 4 mode, there is "compatible" Bootstrap 4 mode (i.e., `bootstrap_version = "4-3"`), which allows you to use BS3 style nav/navbars. Only use this compatible mode if you have existing `html_document`/`html_document_base` output formats that rely on BS3 markup (but is no longer supported in BS4). Thanks, @cpsievert and @jcheng5, #1260.
 
 - For `pdf_document()`, now we patch Pandoc's built-in LaTeX template to include the document subtitle (unnecessary with pandoc 2.6 onwards) and reduce the vertical spacing before title using `--include-in-header` rather than overwriting the built-in template, avoiding compability problems with newer versions of Pandoc (thanks, @adunning, #1563).
 

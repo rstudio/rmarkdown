@@ -38,7 +38,6 @@ html_dependency_jqueryui <- function() {
 
 # Create an HTML dependency for Bootstrap
 #' @rdname html-dependencies
-#' @inheritParams html_document
 #' @export
 html_dependency_bootstrap <- function(theme) {
 

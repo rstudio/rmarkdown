@@ -25,17 +25,17 @@ html_document_base(
 quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
 \code{...} to ellipses.}
 
-\item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
-"darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
-"sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-case you can use the \code{css} parameter to add your own styles).
-If Bootstrap 4 is used (see \code{bootstrap_version} argument),
-a handful of other themes are available ("cyborg", "lux", "minty", "pulse",
-"sketchy", "slate", "solar", and "superhero"). Moreover, with Bootstrap 4,
-if `theme` is something other than a bootswatch theme, then it's
-considered arbitrary sass passed to \code{bootstraplib::bs_sass()}
-(it should also be noted than theming can also be controlled via
-\code{bootstraplib::theme_variables()}).}
+\item{theme}{Visual theme ("default", "cerulean", "cosmo", "cyborg", "darkly",
+"flatly", "journal", "lumen", "readable", "sandstone", "simplex", "slate",
+"spacelab", "superhero", "united", or "yeti"). Pass \code{NULL} for no
+theme (in this case you can use the \code{css} parameter to add your own styles).
+If Bootstrap 4+ is used (see \code{bootstrap_version} argument),
+a handful of other themes are available ("lux", "minty", "pulse",
+"sketchy", and "solar"). Moreover, with Bootstrap 4+, custom
+\href{https://getbootstrap.com/docs/4.0/getting-started/theming/}{Bootstrap
+themes} are supported via the \code{bs_theme_add_variables()} and
+\code{bs_theme_add()} functions from the bootstraplib package
+(use these functions from within the document).}
 
 \item{self_contained}{Produce a standalone HTML file with no external
 dependencies, using data: URIs to incorporate the contents of linked
