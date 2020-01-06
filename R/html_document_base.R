@@ -32,10 +32,13 @@ html_document_base <- function(smart = TRUE,
   if (is.null(dependency_resolver))
     dependency_resolver <- html_dependency_resolver
 
-  bootstrap_version <- bootstrap_version_normalize(bootstrap_version)
-  theme <- as_bs_theme(theme, bootstrap_version)
-  # A version specified through bs_theme() overwrites bootstrap_version
-  if ("version" %in% names(theme)) bootstrap_version <- theme$version
+  bootstrap_version <- bs_version_match(bootstrap_version)
+  theme <- bs_theme_match(theme, bootstrap_version)
+
+  # Set a new global bootstraplib theme for the Rmd runtime
+  # And restore the old one, if any, on exit
+  theme_old <- bs_theme_new(version = bootstrap_version, bootswatch = theme)
+  on_exit <- function() { bs_theme_set(theme_old) }
 
   args <- c()
 
@@ -79,7 +82,7 @@ html_document_base <- function(smart = TRUE,
     output_dir <<- output_dir
 
     if (!is.null(theme)) {
-      args <- c(args, "--variable", paste0("theme:", theme$bootswatch))
+      args <- c(args, "--variable", paste0("theme:", theme))
     }
 
     # resolve and inject extras, including dependencies specified by the format
@@ -87,12 +90,17 @@ html_document_base <- function(smart = TRUE,
     format_deps <- list()
     format_deps <- append(format_deps, html_dependency_elevate_section_attrs())
     if (!is.null(theme)) {
-      format_deps <- append(format_deps, list(html_dependency_jquery()))
-      format_deps <- append(format_deps, html_dependency_bootstrap_list(theme, bootstrap_version))
+      format_deps <- append(format_deps, list(html_dependency_jquery(), html_dependency_bootstrap(theme)))
+      if (!bootstrap_version %in% "3") {
+        # bootstraplib::bootstrap() picks up the version/theme via
+        # bs_theme_new() + any user calls to bs_theme_add*()
+        format_deps <- append(format_deps, bootstraplib::bootstrap())
+      }
     }
     else if (isTRUE(bootstrap_compatible) && is_shiny(runtime)) {
       # If we can add bootstrap for Shiny, do it
-      format_deps <- append(format_deps, html_dependency_bootstrap_list("bootstrap", bootstrap_version))
+      format_deps <- append(format_deps,
+                            list(html_dependency_bootstrap("bootstrap")))
     }
     format_deps <- append(format_deps, extra_dependencies)
 
@@ -176,25 +184,14 @@ html_document_base <- function(smart = TRUE,
     args <- c(args, pandoc_variable_arg("bs3", TRUE))
   }
 
-  # Inform the world that a bootswatch theme is being used so that
-  # widgets like DT can take advantage of that information
-  # (https://github.com/rstudio/DT/pull/740)
-  if (!is.null(theme)) {
-    bootstraplib::bs_theme_set(theme)
-    on_exit <- function() { bootstraplib::bs_theme_clear() }
-  } else {
-    on_exit <- function() { }
-  }
-
-
   output_format(
     knitr = NULL,
     pandoc = pandoc_options(to = "html", from = NULL, args = args),
     keep_md = FALSE,
     clean_supporting = FALSE,
+    on_exit = on_exit,
     pre_knit = pre_knit,
     post_knit = post_knit,
-    on_exit = on_exit,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor
@@ -208,3 +205,15 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
   preserve$chunks
 }
 
+
+bs_theme_new <- function(version, bootswatch) {
+  if (system.file(package = "bootstraplib") != "") {
+    bootstraplib::bs_theme_new(version = version, bootswatch = bootswatch)
+  }
+}
+
+bs_theme_set <- function(theme) {
+  if (system.file(package = "bootstraplib") != "") {
+    bootstraplib::bs_theme_set(theme)
+  }
+}

@@ -234,10 +234,8 @@ html_document <- function(toc = FALSE,
 
   md_extensions <- smart_extension(smart, md_extensions)
 
-  bootstrap_version <- bootstrap_version_normalize(bootstrap_version)
-  theme <- as_bs_theme(theme, bootstrap_version)
-  # A version specified through bs_theme() overwrites bootstrap_version
-  if ("version" %in% names(theme)) bootstrap_version <- theme$version
+  bootstrap_version <- bs_version_match(bootstrap_version)
+  theme <- bs_theme_match(theme, bootstrap_version)
 
   # toc_float
   if (toc && !identical(toc_float, FALSE)) {
@@ -386,11 +384,13 @@ html_document <- function(toc = FALSE,
         if (bootstrap_version %in% "3") {
           # TODO: remove this approach when we drop BS3 support
           # and use the SASS based approach instead
-          args <- c(args, pandoc_body_padding_variable_args(theme$bootswatch))
+          args <- c(args, pandoc_body_padding_variable_args(theme))
         } else {
-          # The $navbar-height SASS var is set by theme_layer_bootswatch()
+          # The $navbar-height SASS var is set by the bootstraplib theme
           padding <- sass::sass_file(pkg_file("rmd/h/scss/navbar-padding.scss"))
-          padding_css <- bootstraplib::bs_sass_partial(padding, theme)
+          padding_css <- bootstraplib::bootstrap_sass(
+            padding, theme = paste0(theme, "@", bootstrap_version)
+          )
           css_file <- tempfile(fileext = ".css")
           write_utf8(padding_css, css_file)
           args <- c(args, "--css", pandoc_path_arg(css_file))
@@ -512,30 +512,25 @@ knitr_options_html <- function(fig_width,
   knitr_options(opts_chunk = opts_chunk)
 }
 
-as_bs_theme <- function(theme, version) {
+bs_theme_match <- function(theme, version) {
+  # Explicit NULL has special meaning (no bootstrap)
   if (is.null(theme)) return(NULL)
-  if (is.character(theme) && length(theme) == 1 && !grepl("[0-9]", theme)) {
-    theme <- paste0(theme, "@", version)
-  }
-  theme <- getFromNamespace("as_bs_theme", "bootstraplib")(theme)
-  if (!identical(theme$version, version)) {
-    warning(
-      "Version mismatch between theme and bootstrap_version.",
-      "Using the version from theme", call. = FALSE
-    )
-  }
-  theme
-}
 
-# This function isn't really needed but is here to avoid
-# a bootstraplib dependency for BS3
-bootswatch_themes <- function(version) {
-  if (version %in% "3") {
-    c("cerulean", "cosmo", "cyborg", "darkly", "flatly", "journal", "lumen", "paper",
-      "readable", "sandstone", "simplex", "slate", "spacelab", "superhero", "united", "yeti")
-  } else {
-    bootstraplib::bootswatch_themes(version)
+  if (isTRUE(theme %in% c("default", "bootstrap"))) {
+    return("bootstrap")
   }
+
+  # Resolve Bootstrap 3 case without a bootstraplib dependency
+  if (version %in% "3") {
+    themes <- c("cerulean", "cosmo", "cyborg", "darkly", "flatly", "journal", "lumen", "paper",
+                "readable", "sandstone", "simplex", "slate", "spacelab", "superhero", "united", "yeti")
+    return(match.arg(theme, themes))
+  }
+
+  # Bootswatch 4 renamed some themes
+  theme <- switch(theme, paper = "materia", readable = "litera", theme)
+
+  match.arg(theme, bootstraplib::bootswatch_themes(version))
 }
 
 html_highlighters <- function() {
@@ -601,7 +596,7 @@ navbar_html_from_yaml <- function(navbar_yaml, version = 3) {
 #' @export
 navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4-3")) {
 
-  bootstrap_version <- bootstrap_version_normalize(bootstrap_version)
+  bootstrap_version <- bs_version_match(bootstrap_version)
 
   # title and type
   if (is.null(navbar$title)) navbar$title <- ""
@@ -642,7 +637,7 @@ navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4-3")) {
 #' @name navbar_html
 #' @export
 navbar_links_html <- function(links, bootstrap_version = c("3", "4", "4-3")) {
-  bootstrap_version <- bootstrap_version_normalize(bootstrap_version)
+  bootstrap_version <- bs_version_match(bootstrap_version)
   as.character(navbar_links_tags(links, version = bootstrap_version))
 }
 
@@ -734,7 +729,7 @@ navbar_link_text <- function(x, ...) {
 }
 
 # allows users to pass in integers for the version as well
-bootstrap_version_normalize <- function(version) {
+bs_version_match <- function(version) {
   version <- as.character(version)
   version <- match.arg(version, c("3", "4", "4-3"))
   if (identical(version, "3")) return("3")

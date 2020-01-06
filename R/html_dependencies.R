@@ -39,48 +39,24 @@ html_dependency_jqueryui <- function() {
 # Create an HTML dependency for Bootstrap
 #' @rdname html-dependencies
 #' @inheritParams html_document
-#' @param version Bootstrap version. See `bootstrap_version` in [html_document]
 #' @export
-html_dependency_bootstrap <- function(theme, version = c("3", "4", "4-3")) {
+html_dependency_bootstrap <- function(theme) {
 
-  version <- bootstrap_version_normalize(version)
-  theme <- as_bs_theme(theme, version)
-
-  if (version %in% "3") {
-    return(
-      htmlDependency(
-        name = "bootstrap",
-        version = "3.3.5",
-        src = pkg_file("rmd/h/bootstrap"),
-        meta = list(viewport = "width=device-width, initial-scale=1"),
-        script = c(
-          "js/bootstrap.min.js",
-          # These shims are necessary for IE 8 compatibility
-          "shim/html5shiv.min.js",
-          "shim/respond.min.js"),
-        stylesheet = paste0("css/", theme, ".min.css"))
-    )
+  if (identical(theme, "default")) {
+    theme <- "bootstrap"
   }
 
-  if (version %in% c("4", "4-3")) {
-    # Override Bootstrap 4's `$font-size-base: 1rem` (which increased the
-    # based font size from 14px to 16px), but allow themes to override that default
-    font_size_14px <- bootstraplib::bs_theme(
-      before = "$font-size-base: 0.875rem !default;",
-      after = "h1.title { @include font-size(1.15 * $h1-font-size) }"
-    )
-    theme <- bootstraplib::bs_theme_merge(font_size_14px, theme)
-    return(bootstraplib::bs_sass(theme))
-  }
-
-  stop("Unknown Bootstrap version:", version, call. = FALSE)
-}
-
-# an internal version html_dependency_bootstrap() that always returns
-# a list of html dependencies
-html_dependency_bootstrap_list <- function(theme, version) {
-  dep <- html_dependency_bootstrap(theme, version)
-  if (inherits(dep, "html_dependency")) list(dep) else dep
+  htmlDependency(
+    name = "bootstrap",
+    version = "3.3.5",
+    src = pkg_file("rmd/h/bootstrap"),
+    meta = list(viewport = "width=device-width, initial-scale=1"),
+    script = c(
+      "js/bootstrap.min.js",
+      # These shims are necessary for IE 8 compatibility
+      "shim/html5shiv.min.js",
+      "shim/respond.min.js"),
+    stylesheet = paste0("css/", theme, ".min.css"))
 }
 
 # Create an HTML dependency for tocify
