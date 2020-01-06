@@ -37,8 +37,8 @@ html_document_base <- function(smart = TRUE,
 
   # Set a new global bootstraplib theme for the Rmd runtime
   # And restore the old one, if any, on exit
-  theme_old <- bs_theme_new(version = bootstrap_version, bootswatch = theme)
-  on_exit <- function() { bs_theme_set(theme_old) }
+  theme_old <- bs_theme_new_maybe(version = bootstrap_version, bootswatch = theme)
+  on_exit <- function() { bs_theme_set_maybe(theme_old) }
 
   args <- c()
 
@@ -206,14 +206,15 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
 }
 
 
-bs_theme_new <- function(version, bootswatch) {
-  if (system.file(package = "bootstraplib") != "") {
-    bootstraplib::bs_theme_new(version = version, bootswatch = bootswatch)
-  }
+bs_theme_new_maybe <- function(version, bootswatch) {
+  if (system.file(package = "bootstraplib") == "") return(invisible())
+  if (is.null(bootswatch)) return(bootstraplib::bs_theme_get())
+
+  bootstraplib::bs_theme_new(version = version, bootswatch = bootswatch)
 }
 
-bs_theme_set <- function(theme) {
-  if (system.file(package = "bootstraplib") != "") {
-    bootstraplib::bs_theme_set(theme)
-  }
+bs_theme_set_maybe <- function(theme) {
+  if (system.file(package = "bootstraplib") == "") return(invisible())
+
+  bootstraplib::bs_theme_set(theme)
 }
