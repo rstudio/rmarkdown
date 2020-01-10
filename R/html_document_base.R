@@ -208,7 +208,10 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
 
 bs_theme_new_maybe <- function(version, bootswatch) {
   if (system.file(package = "bootstraplib") == "") return(invisible())
-  if (is.null(bootswatch)) return(bootstraplib::bs_theme_get())
+  # Bootstraplib theming is only available for Bootstrap 4
+  if (version %in% "3" || is.null(bootswatch)) {
+    return(bootstraplib::bs_theme_get())
+  }
 
   bootstraplib::bs_theme_new(version = version, bootswatch = bootswatch)
 }
