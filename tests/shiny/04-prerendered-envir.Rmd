@@ -1,0 +1,14 @@
+---
+title: "Untitled"
+output: html_document
+runtime: shiny_prerendered
+---
+
+`args` should return `base::args` instead of `list(input, envir, ...)`; and `output_file` should not exist.
+
+```{r error=TRUE}
+args
+output_file
+```
+
+Originally reported at https://github.com/rstudio/rmarkdown/issues/1124.

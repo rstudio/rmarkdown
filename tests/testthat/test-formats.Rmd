@@ -1,0 +1,33 @@
+---
+title: "Untitled"
+author: "John Doe"
+output: 
+  html_document:
+    md_extensions: -autolink_bare_uris
+---
+
+## Section One
+
+```{r}
+summary(cars)
+```
+
+## Section Two
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Section Three
+
+You can also print data frames
+
+```{r}
+mtcars
+```
+
+

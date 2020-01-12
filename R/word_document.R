@@ -2,31 +2,26 @@
 #'
 #' Format for converting from R Markdown to an MS Word document.
 #'
-#' @inheritParams pdf_document
-#' @inheritParams html_document
-#'
-#' @param reference_docx Use the specified file as a style reference in
-#'   producing a docx file. For best results, the reference docx should be a
-#'   modified version of a docx file produced using pandoc. Pass "default"
-#'   to use the rmarkdown default styles.
-#'
-#' @return R Markdown output format to pass to \code{\link{render}}
-#'
-#' @details
+#' See the \href{https://rmarkdown.rstudio.com/word_document_format.html}{online
+#' documentation} for additional details on using the \code{word_document} format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
 #' document header that includes the title, author, and date. For more details
 #' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 #'
 #' R Markdown documents also support citations. You can find more information on
-#' the markdown syntax for citations within the pandoc documentation on
-#' \href{http://johnmacfarlane.net/pandoc/demo/example19/Citations.html}{citations}
-#' and
-#' \href{http://johnmacfarlane.net/pandoc/demo/example19/Footnotes.html}{footnotes}.
-#'
+#' the markdown syntax for citations in the
+#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' and Citations} article in the online documentation.
+#' @inheritParams pdf_document
+#' @inheritParams html_document
+#' @param reference_docx Use the specified file as a style reference in
+#'   producing a docx file. For best results, the reference docx should be a
+#'   modified version of a docx file produced using pandoc. Pass "default"
+#'   to use the rmarkdown default styles.
+#' @return R Markdown output format to pass to \code{\link{render}}
 #' @examples
 #' \dontrun{
-#'
 #' library(rmarkdown)
 #'
 #' # simple invocation
@@ -35,13 +30,18 @@
 #' # specify an option for syntax highlighting
 #' render("input.Rmd", word_document(highlight = "zenburn"))
 #' }
-#'
 #' @export
-word_document <- function(fig_width = 5,
+word_document <- function(toc = FALSE,
+                          toc_depth = 3,
+                          fig_width = 5,
                           fig_height = 4,
-                          fig_caption = FALSE,
+                          fig_caption = TRUE,
+                          df_print = "default",
+                          smart = TRUE,
                           highlight = "default",
                           reference_docx = "default",
+                          keep_md = FALSE,
+                          md_extensions = NULL,
                           pandoc_args = NULL) {
 
   # knitr options and hooks
@@ -55,27 +55,60 @@ word_document <- function(fig_width = 5,
   # base pandoc options for all docx output
   args <- c()
 
+  # smart quotes, etc.
+  if (smart && !pandoc2.0()) {
+    args <- c(args, "--smart")
+  } else {
+    md_extensions <- smart_extension(smart, md_extensions)
+  }
+
+  # table of contents
+  if (pandoc_available("1.14"))
+    args <- c(args, pandoc_toc_args(toc, toc_depth))
+  else
+    warning("table of contents for word_document requires pandoc >= 1.14")
+
   # highlighting
   if (!is.null(highlight))
     highlight <- match.arg(highlight, highlighters())
   args <- c(args, pandoc_highlight_args(highlight))
 
   # reference docx
-  if (!is.null(reference_docx) && !identical(reference_docx, "default")) {
-    args <- c(args, "--reference-docx", pandoc_path_arg(reference_docx))
-  }
+  args <- c(args, reference_doc_args("docx", reference_docx))
+
+  # lua filters (added if pandoc > 2)
+  args <- c(args, pandoc_lua_filters("pagebreak.lua"))
 
   # pandoc args
   args <- c(args, pandoc_args)
+
+  saved_files_dir <- NULL
+  pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir, output_dir) {
+    saved_files_dir <<- files_dir
+    NULL
+  }
+
+  intermediates_generator <- function(...) {
+    reference_intermediates_generator(saved_files_dir, ..., reference_docx)
+  }
 
   # return output format
   output_format(
     knitr = knitr,
     pandoc = pandoc_options(to = "docx",
-                            from = from_rmarkdown(fig_caption),
-                            args = args)
+                            from = from_rmarkdown(fig_caption, md_extensions),
+                            args = args),
+    keep_md = keep_md,
+    df_print = df_print,
+    pre_processor = pre_processor,
+    intermediates_generator = intermediates_generator
   )
 }
 
-
+reference_doc_args <- function(type, doc) {
+  if (is.null(doc) || identical(doc, "default")) return()
+  c(paste0("--reference-", if (pandoc2.0()) "doc" else {
+    match.arg(type, c("docx", "odt", "doc"))
+  }), pandoc_path_arg(doc))
+}
 

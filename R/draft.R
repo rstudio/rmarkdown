@@ -1,26 +1,22 @@
-
 #' Create a new document based on a template
 #'
 #' Create (and optionally edit) a draft of an R Markdown document based on a
 #' template.
 #'
+#' The \code{draft} function creates new R Markdown documents based on
+#' templates that are either located on the filesystem or within an R package.
+#' The template and its supporting files will be copied to the location
+#' specified by \code{file}.
 #' @param file File name for the draft
 #' @param template Template to use as the basis for the draft. This is either
 #'   the full path to a template directory or the name of a template directory
 #'   within the \code{rmarkdown/templates} directory of a package.
 #' @param package (Optional) Name of package where the template is located.
 #' @param create_dir \code{TRUE} to create a new directory for the document
-#'   (the "default" setting leaves this beahvior up to the creator of the
+#'   (the "default" setting leaves this behavior up to the creator of the
 #'   template).
 #' @param edit \code{TRUE} to edit the template immediately
-#'
-#' @return The file name of the new document (invisibly)
-#'
-#' @details The \code{draft} function creates new R Markdown documents based on
-#'   templates that are either located on the filesystem or within an R package.
-#'   The template and it's supporting files will be copied to the location
-#'   specified by \code{file}.
-#'
+#' @return The file name of the new document (invisibly).
 #' @note An R Markdown template consists of a directory that contains a
 #'   description of the template, a skeleton Rmd file used as the basis for new
 #'   documents, and optionally additional supporting files that are provided
@@ -50,11 +46,8 @@
 #'
 #'   These files will automatically be copied to the directory containing the
 #'   new R Markdown draft.
-#'
-#'
 #' @examples
 #' \dontrun{
-#'
 #' rmarkdown::draft("Q4Report.Rmd",
 #'                  template="/opt/rmd/templates/quarterly_report")
 #'
@@ -85,7 +78,8 @@ draft <- function(file,
   if (!file.exists(template_yaml)) {
     stop("No template.yaml file found for template '", template, "'")
   }
-  template_meta <- yaml::yaml.load_file(template_yaml)
+
+  template_meta <- yaml_load_file(template_yaml)
   if (is.null(template_meta$name) || is.null(template_meta$description)) {
     stop("template.yaml must contain name and description fields")
   }
@@ -101,7 +95,7 @@ draft <- function(file,
     file <- tools::file_path_sans_ext(file)
 
     # create dir (new dir only)
-    if (file.exists(file))
+    if (dir_exists(file))
       stop("The directory '", file, "' already exists.")
     dir.create(file)
 
@@ -132,7 +126,7 @@ draft <- function(file,
 
   # invoke the editor if requested
   if (edit)
-    file.edit(normalizePath(file))
+    utils::file.edit(normalizePath(file))
 
   # return the name of the file created
   invisible(file)
@@ -142,17 +136,17 @@ draft <- function(file,
 list_template_dirs <- function() {
 
   # check each installed package for templates
-  packages <- row.names(installed.packages())
+  packages <- row.names(utils::installed.packages())
   for (pkg in packages) {
 
     # check to see if the package includes a template folder
     template_folder <- system.file("rmarkdown", "templates", package = pkg)
-    if (file.exists(template_folder)) {
+    if (dir_exists(template_folder)) {
 
       # it does; list each template directory within the template folder
       template_dirs <- list.dirs(path = template_folder, recursive = FALSE)
       for (dir in template_dirs) {
-        cat(pkg, "|", dir, "\n", sep="")
+        cat(pkg, "|", dir, "\n", sep = "")
       }
     }
   }

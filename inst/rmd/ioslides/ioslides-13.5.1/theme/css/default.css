@@ -239,7 +239,6 @@ body {
 
 /* line 62, ../scss/default.scss */
 slides > slide {
-  display: none;
   font-family: 'Open Sans', Arial, sans-serif;
   font-size: 26px;
   color: #797979;
@@ -260,17 +259,19 @@ slides > slide {
 }
 /* line 83, ../scss/default.scss */
 slides > slide.far-past {
-  display: none;
 }
 /* line 90, ../scss/default.scss */
 slides > slide.past {
-  display: block;
   opacity: 0;
 }
 /* line 97, ../scss/default.scss */
 slides > slide.current {
   display: block;
   opacity: 1;
+  z-index: 1;
+}
+slides > slide:not(.current) {
+  z-index: 0;
 }
 /* line 103, ../scss/default.scss */
 slides > slide.current .auto-fadein {
@@ -285,13 +286,11 @@ slides > slide.current .gdbar {
 }
 /* line 112, ../scss/default.scss */
 slides > slide.next {
-  display: block;
   opacity: 0;
   pointer-events: none;
 }
 /* line 120, ../scss/default.scss */
 slides > slide.far-next {
-  display: none;
 }
 /* line 127, ../scss/default.scss */
 slides > slide.dark {
@@ -366,8 +365,6 @@ slides.layout-faux-widescreen > slide {
 /* line 217, ../scss/default.scss */
 slides.layout-widescreen > slide.far-past,
 slides.layout-faux-widescreen > slide.far-past {
-  display: block;
-  display: none;
   -webkit-transform: translate(-2260px);
   -moz-transform: translate(-2260px);
   -ms-transform: translate(-2260px);
@@ -401,8 +398,6 @@ slides.layout-faux-widescreen > slide.next {
 /* line 246, ../scss/default.scss */
 slides.layout-widescreen > slide.far-next,
 slides.layout-faux-widescreen > slide.far-next {
-  display: block;
-  display: none;
   -webkit-transform: translate(2260px);
   -moz-transform: translate(2260px);
   -ms-transform: translate(2260px);
@@ -723,6 +718,11 @@ button:not(:disabled):active {
   -ms-column-count: 2;
   -o-column-count: 2;
   column-count: 2;
+}
+
+/* workaround for Safari 8 render bug with lists in columns */
+.columns-2 ul, .columns-2 ol {
+  -webkit-transform: translate3d(0, 0, 0);
 }
 
 /* line 472, ../scss/default.scss */
@@ -1405,7 +1405,21 @@ aside.gdbar img {
   display: none;
 }
 
+slides > slide {
+  background: linear-gradient(#ffffff, #ffffff 85%, #e6e6e6);
+  background-color: white;
+}
+slides > slide {
+  opacity: 0;
+}
+
 @media print {
+  /* Additions for printing with Headless Chrome using pagedown::chrome_print() */
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+
   /* line 978, ../scss/default.scss */
   slides slide {
     display: block !important;
@@ -1500,3 +1514,10 @@ input {
 .jslider {
   margin-top: 8px;
 }
+
+/* Additions for DT package */
+
+.dataTables_info, .dataTables_paginate {
+  font-size: 14px;
+}
+

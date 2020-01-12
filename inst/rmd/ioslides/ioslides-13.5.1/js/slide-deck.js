@@ -128,11 +128,11 @@ SlideDeck.prototype.addEventListeners_ = function() {
   //   'msTransition': 'MSTransitionEnd',
   //   'transition': 'transitionend'
   // };
-  // 
+  //
   // // Find the correct transitionEnd vendor prefix.
   // window.transEndEventName = transEndEventNames[
   //     Modernizr.prefixed('transition')];
-  // 
+  //
   // // When slides are done transitioning, kickoff loading iframes.
   // // Note: we're only looking at a single transition (on the slide). This
   // // doesn't include autobuilds the slides may have. Also, if the slide
@@ -582,7 +582,7 @@ SlideDeck.prototype.updateSlides_ = function(opt_dontPush) {
   this.triggerSlideEvent('slideenter', curSlide);
 
 // window.setTimeout(this.disableSlideFrames_.bind(this, curSlide - 2), 301);
-// 
+//
 // this.enableSlideFrames_(curSlide - 1); // Previous slide.
 // this.enableSlideFrames_(curSlide + 1); // Current slide.
 // this.enableSlideFrames_(curSlide + 2); // Next slide.
@@ -716,15 +716,17 @@ SlideDeck.prototype.updateHash_ = function(dontPush) {
     // Add everything except the hash.
     var loc = location.protocol+'//'+location.host+location.pathname+(location.search?location.search:"");
     var hash = '#' + slideNo;
-    if (window.history.pushState) {
+    if (window.history.pushState && (location.protocol !== "file:")) {
       window.history.pushState(this.curSlide_, 'Slide ' + slideNo, loc + hash);
     } else {
       window.location.replace(loc + hash);
     }
 
     // Record GA hit on this slide.
-    window['_gaq'] && window['_gaq'].push(['_trackPageview',
-                                          document.location.href]);
+    if(typeof window.ga === 'function') {
+      ga('set', 'page', hash)
+      ga('send', 'pageview');
+    }
   }
 };
 
@@ -770,27 +772,38 @@ SlideDeck.prototype.loadTheme_ = function(theme) {
  * @private
  */
 SlideDeck.prototype.loadAnalytics_ = function() {
-  var _gaq = window['_gaq'] || [];
-  _gaq.push(['_setAccount', this.config_.settings.analytics]);
-  _gaq.push(['_trackPageview']);
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+  ga('create', this.config_.settings.analytics, 'auto');
+  ga('send', 'pageview');
 };
 
 
-// Polyfill missing APIs (if we need to), then create the slide deck.
-// iOS < 5 needs classList, dataset, and window.matchMedia. Modernizr contains
-// the last one.
-(function() {
+var loadDeck = function(event) {
+  // Polyfill missing APIs (if we need to), then create the slide deck.
+  // iOS < 5 needs classList, dataset, and window.matchMedia. Modernizr contains
+  // the last one.
   Modernizr.load({
-    test: !!document.body.classList && !!document.body.dataset,
-    nope: ['js/polyfills/classList.min.js', 'js/polyfills/dataset.min.js'],
     complete: function() {
       window.slidedeck = new SlideDeck();
     }
   });
-})();
+};
+
+if (document.readyState !== "loading" &&
+    document.querySelector('slides') === null) { 
+  // if the document is done loading but our element hasn't yet appeared, defer
+  // loading of the deck
+  window.setTimeout(function() {
+    loadDeck(null);
+  }, 0);
+} else {
+  // still loading the DOM, so wait until it's finished
+  document.addEventListener("DOMContentLoaded", loadDeck);
+}
+
+
+

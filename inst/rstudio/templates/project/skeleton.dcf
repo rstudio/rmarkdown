@@ -1,0 +1,5 @@
+Title: Simple R Markdown Website
+Binding: site_skeleton
+Subtitle: Create a simple R Markdown website
+Caption: Create a simple R Markdown website
+OpenFiles: _site.yml, *.Rmd

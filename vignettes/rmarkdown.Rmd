@@ -1,0 +1,98 @@
+---
+title: "Learn R Markdown"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Learn R Markdown}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+
+# Overview
+
+<a href="https://r4ds.had.co.nz/"><img data-uri="https://r4ds.had.co.nz/cover.png" alt="R for Data Science" width="250" style="padding: 0 15px; float: right;"/></a>
+
+If you are new to using R Markdown, we encourage you to start with a systematic overview, rather than diving right in to reading documentation pages. The best place to start is the ["Communication" section](https://r4ds.had.co.nz/communicate-intro.html) in the book "R for Data Science" (R4DS for short), an O’Reilly book written by Hadley Wickham and Garrett Grolemund.
+
+Here are the chapters that cover R Markdown, as summarized by Hadley and Garrett:
+
+* In [R Markdown](https://r4ds.had.co.nz/r-markdown.html), you will learn about R Markdown, a tool for integrating
+  prose, code, and results. You can use R Markdown in notebook mode for 
+  analyst-to-analyst communication, and in report mode for 
+  analyst-to-decision-maker communication. Thanks to the power of R Markdown
+  formats, you can even use the same document for both purposes.
+  
+* In [R Markdown formats](https://r4ds.had.co.nz/r-markdown-formats.html), you'll learn a little about the many other varieties
+  of outputs you can produce using R Markdown, including dashboards, websites,
+  and books.
+  
+* We'll finish up with [R Markdown workflow](https://r4ds.had.co.nz/r-markdown-workflow.html), where you'll learn about the
+  "analysis notebook" and how to systematically record your successes and failures so that you can learn from them.
+  
+<br>
+<br>
+
+<a href="https://rmarkdown.rstudio.com/lesson-1.html"><img data-uri="https://rmarkdown.rstudio.com/lesson-images/params-1-hawaii.png" alt="R Markdown tutorials" width="450" style="padding: 0 15px; float: right;"/></a>
+
+# Tutorials
+
+The [R Markdown website](https://rmarkdown.rstudio.com/lesson-1.html) offers a series of tutorials you can follow to see what is possible with R Markdown. 
+
+These tutorials offer accompanying [RStudio Cloud](https://rstudio.cloud/) lessons you can use right away in your browser.
+
+You can also access links to all these tutorials in the **"Get Started"** section from the top of this page.
+
+<br>
+<br>
+
+# User Guide
+
+Written by the authors of the **rmarkdown** package, [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) provides a comprehensive user guide to the complete R Markdown ecosystem for authoring documents. The book is published by Chapman & Hall/CRC, and you can read it online for free.
+
+<a href="https://bookdown.org/yihui/rmarkdown/"><img data-uri="https://bookdown.org/yihui/rmarkdown/images/cover.png" alt="R Markdown: The Definitive Guide" width="250" style="padding: 0 15px; float: right;"/></a>
+
+The book is structured into four parts:
+
+* [Part I](https://bookdown.org/yihui/rmarkdown/installation.html) introduces how to install the relevant packages, and provides an overview of R Markdown, including the possible output formats, the Markdown syntax, the R code chunk syntax, and how to use other languages in R Markdown.
+
+* [Part II](https://bookdown.org/yihui/rmarkdown/documents.html) is the detailed documentation of built-in output formats in the rmarkdown package, including document formats and presentation formats. These output formats are "built-in" because you do not need any other R packages other than rmarkdown to use them.
+
+* [Part III](https://bookdown.org/yihui/rmarkdown/dashboards.html) documents several R Markdown extension packages that enable you to build different applications or generate output documents with different styles. These output formats are "extensions" because you will need to install R packages, in addition to rmarkdown, to use them.
+
+* [Part IV](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html) covers advanced topics about R Markdown.
+
+<br>
+<br>
+
+# Cheatsheets
+
+<a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf"><img data-uri="https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0.png" alt="R Markdown cheatsheet" width="450" style="padding: 0 15px; float: right;"/></a>
+
+The [R Markdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf) is a one page (two-sided) reference guide you can download as a quick reference while you work.
+
+The [R Markdown Reference](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) is a five page guide that lists each of the options from markdown, knitr, and pandoc that you can use to customize your R Markdown documents. 
+
+You can access both files from within the RStudio IDE:
+
++ R Markdown Cheat Sheet: *Help > Cheatsheets > R Markdown Cheat Sheet*,
+
++ R Markdown Reference Guide: *Help > Cheatsheets > R Markdown Reference Guide*.
+
+```{js, echo=FALSE}
+(function() {
+  var img, imgs = document.querySelectorAll('img');
+  for (var i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    if (!img.src && img.dataset['uri']) img.src = img.dataset['uri'];
+  }
+})();
+```
+

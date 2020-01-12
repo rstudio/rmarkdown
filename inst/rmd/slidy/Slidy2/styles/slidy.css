@@ -414,6 +414,11 @@ table.dataTable, .shiny-datatable-output div {
    font-size: 14pt;
 }
 
+/* adjust footer element size for DT package */
+.dataTables_info, .dataTables_paginate {
+  font-size: 19px;
+}
+
 /* allow R chunks to render in a large font */
 pre.sourceCode, code.sourceCode {
    font-size: 80%;

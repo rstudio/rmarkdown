@@ -1,0 +1,30 @@
+---
+output: html_document
+runtime: shiny
+---
+
+```{r}
+library(data.table)
+mydata <- data.table(A=c("a", "a", "b", "c", "c"), val=c(1:5))
+
+renderPlot({
+  # Works - see console for output
+  print(eval(quote( mydata[A %in% c("a", "c")] )))
+
+  # Error - see console for message
+  print(evalq( mydata[A %in% c("a", "c")] ))
+
+  # Error - see console for message
+  print( mydata[A %in% c("a", "c")] )
+
+  plot(1:3, 1:3) # Just an arbitrary plot
+})
+
+
+# All forms work fine in renderPrint
+renderPrint({
+  print(eval(quote( mydata[A %in% c("a", "c")] ))) # Works
+  print(evalq( mydata[A %in% c("a", "c")] ))       # Works
+  print( mydata[A %in% c("a", "c")] )              # Works
+})
+```

@@ -4,7 +4,6 @@
   <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
 
   <meta charset="utf-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="generator" content="pandoc" />
 
@@ -14,13 +13,8 @@ $if(date-meta)$
   <meta name="date" content="$date-meta$" />
 $endif$
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
-
-  <link rel="stylesheet" media="all" href="$ioslides-url$/fonts/fonts.css">
-
-  <link rel="stylesheet" media="all" href="$ioslides-url$/theme/css/default.css">
-  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="$ioslides-url$/theme/css/phone.css">
 
   <base target="_blank">
 
@@ -38,6 +32,9 @@ $endif$
         usePrettify: true,
         enableSlideAreas: true,
         enableTouch: true,
+        $if(analytics)$
+        analytics: '$analytics$',
+        $endif$
         $if(logo)$
         favIcon: '$logo$',
         $endif$
@@ -47,12 +44,21 @@ $endif$
       presenters: [
       $for(author)$
       {
-        name: '$author$'
+        name: $if(author.name)$ '$author.name$' $else$ '$author$' $endif$,
+        company: '$author.company$',
+        gplus: '$author.gplus$',
+        twitter: '$author.twitter$',
+        www: '$author.www$',
+        github: '$author.github$'
       },
       $endfor$
       ]
     };
   </script>
+
+$for(header-includes)$
+  $header-includes$
+$endfor$
 
   <style type="text/css">
 
@@ -62,6 +68,10 @@ $endif$
 
     em {
       font-style: italic;
+    }
+
+    summary {
+      display: list-item;
     }
 
     slides > slide {
@@ -79,6 +89,10 @@ $endif$
       transition: opacity 0.6s ease-in $transition$s;
       opacity: 0;
     }
+/* https://github.com/ropensci/plotly/pull/524#issuecomment-468142578 */
+slide:not(.current) .plotly.html-widget{
+  display: block;
+}
 
 $if(logo)$
     slides > slide:not(.nobackground):before {
@@ -103,10 +117,6 @@ $for(css)$
   <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
 
-$for(header-includes)$
-  $header-includes$
-$endfor$
-
 </head>
 
 <body style="opacity: 0">
@@ -129,7 +139,7 @@ $else$
     <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
     <hgroup class="auto-fadein">
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
-      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      $if(subtitle)$<h2 data-config-subtitle><!-- populated from slide_config.json --></h2>$endif$
       <p data-config-presenter><!-- populated from slide_config.json --></p>
       $if(date)$
       <p style="margin-top: 6px; margin-left: -2px;">$date$</p>
@@ -147,14 +157,6 @@ $endfor$
   <slide class="backdrop"></slide>
 
 </slides>
-
-<script src="$ioslides-url$/js/modernizr.custom.45394.js"></script>
-<script src="$ioslides-url$/js/prettify/prettify.js"></script>
-<script src="$ioslides-url$/js/prettify/lang-r.js"></script>
-<script src="$ioslides-url$/js/prettify/lang-yaml.js"></script>
-<script src="$ioslides-url$/js/hammer.js"></script>
-<script src="$ioslides-url$/js/slide-controller.js"></script>
-<script src="$ioslides-url$/js/slide-deck.js"></script>
 
 $if(mathjax-url)$
 <!-- dynamically load mathjax for compatibility with self-contained -->

@@ -41,6 +41,39 @@ local function attributes(attr)
   return table.concat(attr_table)
 end
 
+-- Helper function to split a string on spaces
+-- returns a table
+local function split(str)
+  local words = {}
+  for word in str:gmatch("%S+") do table.insert(words, word) end
+  return words
+end
+
+-- Helper function to remove duplicates
+-- returns a table http://stackoverflow.com/a/20067270
+local function uniq(t)
+  local seen = {}
+  local res = {}
+  for _,v in ipairs(t) do
+    if (not seen[v]) then
+      res[#res+1] = v
+      seen[v] = true
+    end
+  end
+  return res
+end
+
+-- Helper function to filter a list
+-- returns a table
+local function grep(f, l)
+  local res = {}
+  for _,v in ipairs(l) do
+    if (f(v)) then
+      res[#res+1] = v
+    end
+  end
+  return res
+end
 
 -- Blocksep is used to separate block elements.
 function Blocksep()
@@ -91,6 +124,10 @@ function LineBreak()
   return "<br/>"
 end
 
+function SoftBreak()
+  return " "
+end
+
 function Emph(s)
   return "<em>" .. s .. "</em>"
 end
@@ -136,17 +173,17 @@ function Link(s, src, tit)
          escape(tit,true) .. "'>" .. s .. "</a>"
 end
 
-function Image(s, src, tit)
-  return "<img src='" .. escape(src,true) .. "' title='" ..
+function Image(s, src, tit, attr)
+  return "<img" .. attributes(attr) .. " src='" .. escape(src,true) .. "' title='" ..
          escape(tit,true) .. "'/>"
 end
 
-function CaptionedImage(src, tit, s)
+function CaptionedImage(src, tit, s, attr)
   local caption = ""
   if fig_caption and (string.len(s) > 0) then
     caption = "<p class='caption'>" .. s .. "</p>"
   end
-  return Image(s, src, tit) .. caption
+  return Image(s, src, tit, attr) .. caption
 end
 
 function Code(s, attr)
@@ -205,10 +242,44 @@ function Header(lev, s, attr)
   -- detect level 1 header and convert it to a segue slide
   local slide_class = ""
   local hgroup_class = ""
-  if lev == 1 then
-    slide_class = "segue dark nobackground"
+  local slide_style = ""
+
+  -- make all headers < slide_level as segue slides
+  if lev < slide_level then
+  	-- create a segue slide but add lev class for possible customization
+    slide_class = "segue dark nobackground" .. " level" .. lev
     hgroup_class = " class = 'auto-fadein'"
     lev = 2
+  end
+
+  -- support for slide specific image backgrounds
+  -- alternative is this css
+  -- slide > slide [data-slide-num="7"] {
+  --   background-image: url("figures/xx.jpg");
+  -- }
+  if attr["data-background"] then
+    -- dark is incompatible with fill and let us uniquify nobackground
+    local slide = split(slide_class .. " fill nobackground")
+    slide = grep(function (v)
+      if v:match("^dark$") then return false else return true end
+    end, slide)
+    slide_class = table.concat(uniq(slide), " ")
+    if attr["data-background"]:match("^#") then
+      slide_style = 'background: ' .. attr["data-background"] .. ';'
+    else
+      -- assume url
+      slide_style = 'background-image: url(' .. attr["data-background"] .. ');'
+      local bg_size = attr["data-background-size"]
+      if not bg_size then bg_size = "contain" end
+      slide_style = slide_style .. ' background-size: ' .. bg_size .. ';'
+      local bg_position = attr["data-background-position"]
+      if not bg_position then bg_position = "center" end
+      slide_style = slide_style .. ' background-position: ' .. bg_position .. ';'
+    end
+    -- remove noise attributes for article
+    attr["data-background"] = nil
+    attr["data-background-size"] = nil
+    attr["data-background-position"] = nil
   end
 
   -- extract optional subtitle
@@ -219,6 +290,12 @@ function Header(lev, s, attr)
       subtitle = string.sub(s, i+1, string.len(s))
       s = string.sub(s, 1, i-1)
     end
+  end
+
+  -- trick: as lev value 2 is used in code below to start a new slide
+  -- we force all lev <= slide_level as new slides
+  if lev > 2 and lev <= slide_level then
+  	lev = 2
   end
 
   -- build slide header (including optional subtitle)
@@ -245,11 +322,19 @@ function Header(lev, s, attr)
 
     -- add 'smaller' class if it was globally specified
     if smaller then
-      attr["class"] = "smaller " .. attr["class"]
+      if (attr["class"]) then
+        attr["class"] = "smaller " .. attr["class"]
+      else
+        attr["class"] = "smaller"
+      end
+    end
+
+    if string.len(slide_style) > 0 then
+      slide_style = ' style="' .. slide_style .. '"'
     end
 
     -- return the beginning of the slide
-    return preface .. "<slide class='" .. slide_class .. "'>" ..
+    return preface .. "<slide class=\"" .. slide_class .. "\"" .. slide_style .. ">" ..
            "<hgroup" .. hgroup_class .. ">" .. header ..  "</hgroup>" ..
            "<article " .. attributes(attr) .. ">"
   else
@@ -293,6 +378,7 @@ function CodeBlock(s, attr)
   local code = escape(s)
   code_sub = code:gsub("[ \t]*[#/]+[ \t]*&lt;b&gt;[ \t]*\n", "<b>")
   code = code_sub:gsub("[ \t]*[#/]+[ \t]*&lt;/b&gt;[ \t]*\n", "</b>")
+  code = code:gsub("[ \t]*[#/]+[ \t]*&lt;/b&gt;[ \t]*$", "</b>")
 
   return "<pre " .. class_attrib .. ">" .. code .. "</pre>"
 end
@@ -361,7 +447,7 @@ function Table(caption, aligns, widths, headers, rows)
   end
   if widths and widths[1] ~= 0 then
     for _, w in pairs(widths) do
-      add('<col width="' .. string.format("%d%%", w * 100) .. '" />')
+      add('<col width="' .. string.format("%f%%", w * 100) .. '" />')
     end
   end
   local header_row = {}
@@ -432,4 +518,3 @@ meta.__index =
     return function() return "" end
   end
 setmetatable(_G, meta)
-

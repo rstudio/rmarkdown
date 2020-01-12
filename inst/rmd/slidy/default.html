@@ -13,10 +13,10 @@ $if(date-meta)$
   <meta name="date" content="$date-meta$" />
 $endif$
 $if(footer)$
-  <meta name="copyright" content="$footer$"/> 
+  <meta name="copyright" content="$footer$"/>
 $endif$
 $if(font-size-adjustment)$
-  <meta name="font-size-adjustment" content="$font-size-adjustment$"/> 
+  <meta name="font-size-adjustment" content="$font-size-adjustment$"/>
 $endif$
   <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
   <style type="text/css">code{white-space: pre;}</style>
@@ -25,17 +25,13 @@ $if(highlighting-css)$
 $highlighting-css$
   </style>
 $endif$
-  <link rel="stylesheet" type="text/css" media="screen, projection, print"
-    href="$slidy-url$/styles/slidy.css" />
+$for(header-includes)$
+  $header-includes$
+$endfor$
 $for(css)$
   <link rel="stylesheet" type="text/css" media="screen, projection, print"
    href="$css$" />
 $endfor$
-$for(header-includes)$
-  $header-includes$
-$endfor$
-  <script src="$slidy-url$/scripts/slidy.js"
-    charset="utf-8" type="text/javascript"></script>
 $if(duration)$
   <meta name="duration" content="$duration$" />
 $endif$

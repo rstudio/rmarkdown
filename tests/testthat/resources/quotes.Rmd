@@ -1,0 +1,14 @@
+
+Here is a filename outside an .R chunk: "empty.bib". It shouldn't be discovered.
+
+```{r}
+# this R code has a lot of strings that aren't filenames
+paste("Covariances should be a ", n, " by ", n, " matrix")
+syms <- paste("x", 1:n, sep = "")
+as.numeric(attr(eval(deriv(form, syms), envir = envir), "gradient"))
+
+# this R code has strings that are filenames
+read.csv("./empty.csv")
+read.csv('./empty.tsv')
+```
+

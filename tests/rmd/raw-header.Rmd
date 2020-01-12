@@ -1,0 +1,12 @@
+---
+output: pdf_document
+header-includes:
+- |
+  ```{=latex}
+  \newcommand{\foobar}[1]{Foo#1Bar}
+  ```    
+---
+
+```{=latex}
+\foobar{Baz}
+```

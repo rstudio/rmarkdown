@@ -1,150 +1,65 @@
 ### Overview
 
-The **rmarkdown** package is a next generation implementation of R Markdown based on [pandoc](http://johnmacfarlane.net/pandoc/). This implementation brings many enhancements to R Markdown, including:
+[![Build Status](https://travis-ci.org/rstudio/rmarkdown.svg?branch=master)](https://travis-ci.org/rstudio/rmarkdown)
+[![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/rmarkdown)](https://cran.r-project.org/package=rmarkdown)
 
-* Create HTML, PDF, and MS Word documents as well as [Beamer](https://bitbucket.org/rivanvx/beamer/wiki/Home), [ioslides](https://code.google.com/p/io-2012-slides/), and [reveal.js](http://lab.hakim.se/reveal-js/#/) presentations.
-* New markdown syntax including expanded support for tables, definition lists, and bibliographies.
-* Hooks for customizing HTML and PDF output (include CSS, headers, and footers).
-* Include raw LaTeX within markdown for advanced customization of PDF output.
-* Compile HTML, PDF, or MS Word notebooks from R scripts.
-* Extensibility: easily define new formats for custom publishing requirements.
-* Create interactive R Markdown documents using Shiny.
+The **rmarkdown** package helps you create dynamic analysis documents that combine code, rendered output (such as figures), and prose. You bring your data, code, and ideas, and R Markdown renders your content into a polished document that can be used to:
 
-Note that PDF output (including Beamer slides) requires an installation of TeX. On Windows, the [MiKTeX](http://miktex.org/) distribution should be used rather than TeX Live.
+<img src="https://bookdown.org/yihui/rmarkdown/images/hex-rmarkdown.png" alt="The rmarkddown hex sticker" width="200" style="padding: 0 15px; float: right;"/>
 
-See the [R Markdown documentation](http://rmarkdown.rstudio.com/) for full details.
+- Do data science interactively within the RStudio IDE,
+
+- Reproduce your analyses,
+
+- Collaborate and share code with others, and
+
+- Communicate your results with others.
+
+R Markdown documents can be rendered to many output formats including HTML documents, PDFs, Word files, slideshows, and more, allowing you to focus on the content while R Markdown takes care of your presentation. 
+
 
 ### Installation
 
-If you are working within RStudio then you can simply install the [current release](http://www.rstudio.com/ide/download/preview) of RStudio (both the rmarkdown package and pandoc are included).
+The easiest way to install the **rmarkdown** package is from within the [RStudio IDE](http://www.rstudio.com/ide/download/preview), but you don't need to explicitly install it or load it, as RStudio automatically does both when needed. A recent version of Pandoc (>= 1.12.3) is also required; RStudio also automatically includes this too so you do not need to download Pandoc if you plan to use rmarkdown from the RStudio IDE.
 
-If you want to use the rmarkdown package outside of RStudio then you can install the package as follows:
+If you want to use the rmarkdown package outside of RStudio, you can install the package from CRAN as follows:
 
-```S
-devtools::install_github("rstudio/rmarkdown")
+```r
+install.packages("rmarkdown")
 ```
 
-A recent version of pandoc (>= 1.12.3) is also required. See the [pandoc installation instructions](PANDOC.md) for details on installing pandoc for your platform.
+If you want to use the development version of the rmarkdown package (either with or without RStudio), you can install the package from GitHub via the [**remotes** package](https://remotes.r-lib.org):
+
+```r
+remotes::install_github('rstudio/rmarkdown')
+```
+
+If not using the RStudio IDE, you'll need to install a recent version of Pandoc (>= 1.12.3); see the [Pandoc installation instructions](https://rmarkdown.rstudio.com/docs/articles/pandoc.html) for help.
 
 ### Usage
 
-The `render` function is used to convert R Markdown (Rmd) files into various output formats (the default is HTML). Calling `render` will knit the specified input document and then produce the final output document using pandoc:
+The easiest way to make a new R Markdown document is from within RStudio. Go to _File > New File > R Markdown_. From the new file wizard, you may:
 
-```S
-render("input.Rmd")
-```
++ Provide a document title (_optional but recommended_),
++ Provide an author name (_optional but recommended_),
++ Select a default output format- HTML is the recommended format for authoring, and you can switch the output format anytime (_required_), 
++ Click **OK** (_required_).
 
-You can also specify a plain markdown file in which case knitting will be bypassed:
+Once inside your new `.Rmd` file, you should see some boilerplate text that includes code chunks. Use the "Knit" button in the RStudio IDE to render the file and preview the output with a single click or use the keyboard shortcut Cmd/Ctrl + Shift + K. 
 
-```S
-render("input.md")
-```
+You can also delete all the text below the YAML frontmatter and fill in your own `.Rmd` by:
 
-#### Output Formats
++ Adding code chunks (keyboard shortcut: `Ctrl + Alt + I`; OS X: `Cmd + Option + I`),
++ Writing prose with [Markdown formatting](https://www.markdowntutorial.com/), and
++ Running each code chunk interactively by clicking the ![The run button](https://rmarkdown.rstudio.com/images/notebook-run-chunk.png) icon within RStudio. 
 
-R Markdown documents can contain a metadata section that includes both title, author, and date information as well as options for customizing output. For example, this metadata included at the top of an Rmd file adds a table of contents and chooses a different HTML theme:
+You can also click "Knit to HTML" again to render the full document with all code chunks. For more help getting started in R Markdown, please see the [R Markdown website](https://rmarkdown.rstudio.com/lesson-1.html) or use the **"Get Started"** links at the top of this page.
 
-```yaml
----
-title: "Sample Document"
-output:
-  html_document:
-    toc: true
-    theme: united
----
-```
+### Getting help
 
-R Markdown has built in support for several output formats (HTML, PDF, and MS Word documents as well as Beamer presentations). These formats can also be specified in metadata, for example:
+There are two main places to get help:
 
-```yaml
----
-title: "Sample Document"
-output:
-  pdf_document:
-    toc: true
-    highlight: zenburn
----
-```
+1. The [RStudio community](https://community.rstudio.com/c/R-Markdown) is a friendly place to ask any questions about rmarkdown and the R Markdown family of packages.
 
-If you aren't specifying format options you can also just use a simple format name:
-
-```yaml
----
-title: "Sample Document"
-output: pdf_document
----
-```
-
-Multiple formats can be specified in metadata:
-
-```yaml
----
-title: "Sample Document"
-output:
-  html_document:
-    toc: true
-    theme: united
-  pdf_document:
-    toc: true
-    highlight: zenburn
----
-```
-
-To select from the various formats defined you can pass a format name to `render`. For example:
-
-```S
-render("input.Rmd", "pdf_document")
-```
-
-If no explicit format name is passed to `render` then the first one defined will be used. You can also render all formats defined in the file with:
-
-```S
-render("input.Rmd", "all")
-```
-
-#### Shared Output Formats
-
-You can also define output formats externally in a file named `_output.yaml` located in the same directory as the R Markdown source file. For example:
-
-```
-html_document:
-  toc: true
-  theme: united
-pdf_document:
-  toc: true
-  highlight: zenburn
-```
-
-Using an `_output.yaml` file is a good way to share output settings across multiple R Markdown files in the same directory.
-
-#### Output Format Functions
-
-Output formats need not be specified in metadata. In fact, metadata is just a convenient way to invoke functions that implement output formats. There are five built-in output formats each exported as a function from the package:
-
-- `html_document`
-- `pdf_document`
-- `word_document`
-- `md_document`
-- `beamer_presentation`
-- `ioslides_presentation`
-- `revealjs_presentation`
-
-As you'd expect, these functions can also be invoked as part of the call to `render`, for example:
-
-```
-render("input.Rmd", html_document(toc = TRUE))
-render("input.Rmd", pdf_document(latex_engine = "lualatex"))
-render("input.Rmd", beamer_presentation(incremental = TRUE))
-```
-
-For more details on the options available for each format see their respective help topics.
-
-### License
-
-The **rmarkdown** package is licensed under the GPLv3 (http://www.gnu.org/licenses/gpl.html).
-
-
-
-
-
+1. [Stack Overflow](https://stackoverflow.com/questions/tagged/r-markdown) is a great source of answers to common rmarkdown questions. It is also a great place to get help, once you have created a reproducible example that illustrates your problem.
 

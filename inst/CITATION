@@ -1,0 +1,35 @@
+citHeader("To cite the 'rmarkdown' package in publications, please use:")
+
+year = sub('.*(2[[:digit:]]{3})-.*', '\\1', meta$Date, perl = TRUE)
+if (length(year) == 0) year = format(Sys.Date(), '%Y')
+vers = paste('R package version', meta$Version)
+auth = format(Filter(function(p) 'aut' %in% p$role, as.person(meta$Author)), c('given', 'family'))
+
+citEntry(
+  entry = 'manual',
+  title = paste('rmarkdown:', meta$Title),
+  author = auth,
+  year = year,
+  note = vers,
+  url = meta$URL,
+  textVersion = paste0(
+    paste(auth, collapse = ' and '), ' (', year, '). rmarkdown: ', meta$Title, '. ', vers, '.',
+    ' URL https://rmarkdown.rstudio.com.'
+  )
+)
+
+citEntry(
+  entry = 'book',
+  title = 'R Markdown: The Definitive Guide',
+  author = c('Yihui Xie', 'J.J. Allaire', 'Garrett Grolemund'),
+  publisher = 'Chapman and Hall/CRC',
+  address = 'Boca Raton, Florida',
+  year = '2018',
+  note = 'ISBN 9781138359338',
+  url = 'https://bookdown.org/yihui/rmarkdown',
+  textVersion = paste(
+    'Yihui Xie and J.J. Allaire and Garrett Grolemund (2018).',
+    'R Markdown: The Definitive Guide.', 'Chapman and Hall/CRC. ISBN 9781138359338.',
+    'URL https://bookdown.org/yihui/rmarkdown.'
+  )
+)

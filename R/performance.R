@@ -15,7 +15,11 @@ elapsed_ms <- function() {
 
 # clears all perf timer state
 perf_timer_reset_all <- function() {
-  .perf_timers <- new.env(parent = emptyenv())
+  env <- environment(perf_timer_reset_all)
+  do.call("unlockBinding", list(".perf_timers", env))
+  env$.perf_timers <- new.env(parent = emptyenv())
+  lockBinding(".perf_timers", env)
+  invisible(.perf_timers)
 }
 
 # record a start time for a perf timer
@@ -51,7 +55,7 @@ perf_timers_as_json <- function() {
                                 " elapsed: ", as.integer(summary[t,]), " }",
                                sep = "")
                          }),
-                collapse=", ")
+                collapse = ", ")
   json <- paste("[", json, "]")
   json
 }
@@ -60,13 +64,12 @@ perf_timers_as_json <- function() {
 # supporting files to files_dir and return an HTML dependency object suitable
 # for inclusion in the document for which the timings were collected
 create_performance_dependency <- function(files_dir) {
-  performance_js <- rmarkdown_system_file("rmd/h/rmarkdown/rmd_perf.js")
-  js_lines <- readLines(performance_js, warn = FALSE, encoding = "UTF-8")
+  performance_js <- pkg_file("rmd/h/rmarkdown/rmd_perf.js")
   js_lines <- gsub("RMARKDOWN_PERFORMANCE_TIMINGS", perf_timers_as_json(),
-                   js_lines, fixed = TRUE)
+                   read_utf8(performance_js), fixed = TRUE)
   perf_js_file <- file.path(files_dir, "rmd_perf.js")
-  writeLines(js_lines, perf_js_file)
-  file.copy(rmarkdown_system_file("rmd/h/rmarkdown/rmd_perf.css"),
+  write_utf8(js_lines, perf_js_file)
+  file.copy(pkg_file("rmd/h/rmarkdown/rmd_perf.css"),
             file.path(files_dir, "rmd_perf.css"))
   htmlDependency(
     name = "rmarkdown-performance",

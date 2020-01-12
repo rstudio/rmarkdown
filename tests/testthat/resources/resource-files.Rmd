@@ -1,0 +1,12 @@
+---
+title: "Untitled"
+author: "RStudio"
+output: html_document
+resource_files:
+- nonempty/*.csv
+- csvs
+- empty.bib
+---
+
+# Hello, world.
+

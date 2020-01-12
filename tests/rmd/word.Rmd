@@ -1,0 +1,8 @@
+---
+title: "Word Document with a Template"
+output:
+  word_document:
+    reference_docx: template.docx
+---
+
+Foo bar.

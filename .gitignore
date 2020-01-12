@@ -2,7 +2,6 @@
 .Rhistory
 .RData
 .DS_Store
-README.html
-CONTRIBUTING.html
-PANDOC.html
-
+inst/doc
+doc
+Meta

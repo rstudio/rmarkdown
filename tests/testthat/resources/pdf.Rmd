@@ -1,0 +1,8 @@
+---
+output: pdf_document
+bibliography: empty.bib
+csl: empty.csl
+---
+
+![empty](empty.png)
+
