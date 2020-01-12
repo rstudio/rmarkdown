@@ -708,7 +708,7 @@ partition_yaml_front_matter <- function(input_lines) {
       } else {
         all(vapply(input_lines[1:delimiters[1] - 1],
                    function(x) is_blank(x) || is_rnb_comment(x),
-                   TRUE, USE.NAMES = FALSE
+                   logical(1), USE.NAMES = FALSE
         ))
       }
     } else {
