@@ -1,6 +1,8 @@
 rmarkdown 2.1
 ================================================================================
 
+- YAML header is now correctly parsed in `html_notebook`'s intermediate `.knit.md` file so that features like adding bibliography works again (thanks, @everdark, @cderv, #1747).
+
 - `ioslides_presentation` template no longer generates an empty `<h2>` tag when `subtitle` is not specified in YAML (thanks, @jooyoungseo #1735, @cgrudz #1663).
 
 - No longer center the `#header` element in the `html_vignette()` output (thanks, @EmilHvitfeldt, #1742).
