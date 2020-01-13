@@ -705,12 +705,10 @@ partition_yaml_front_matter <- function(input_lines) {
       # in html notebook intermediary .knit.md
       if (delimiters[1] == 1) {
         TRUE
-      } else {
-        all(vapply(input_lines[1:delimiters[1] - 1],
-                   function(x) is_blank(x) || is_rnb_comment(x),
-                   logical(1), USE.NAMES = FALSE
-        ))
-      }
+      } else all(grepl(
+        "^\\s*(<!-- rnb-\\w*-(begin|end) -->)?\\s*$",
+        input_lines[1:delimiters[1] - 1]
+      ))
     } else {
       FALSE
     }
