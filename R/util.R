@@ -218,12 +218,6 @@ is_blank <- function(x) {
   else TRUE
 }
 
-is_rnb_comment <- function(x) {
-  if (length(x))
-    all(grepl("<!-- rnb-\\w*-(begin|end) -->", x))
-  else FALSE
-}
-
 trim_trailing_ws <- function(x) {
   sub("\\s+$", "", x)
 }
