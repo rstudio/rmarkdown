@@ -701,8 +701,8 @@ partition_yaml_front_matter <- function(input_lines) {
         (delimiters[2] - delimiters[1] > 1) &&
         grepl("^---\\s*$", input_lines[delimiters[1]])) {
       # verify that it's truly front matter, not preceded by
-      # other content except blank lines or special comment
-      # in html notebook intermediary .knit.md
+      # other content except blank lines or special comments
+      # in html_notebook's intermediate .knit.md
       if (delimiters[1] == 1) {
         TRUE
       } else all(grepl(
