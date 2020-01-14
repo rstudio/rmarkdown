@@ -1,7 +1,7 @@
 rmarkdown 2.1
 ================================================================================
 
-- Added the returned output from `shiny::runApp()` within `rmarkdown::run()` (#1760)
+- Added the returned output from `shiny::runApp()` within `rmarkdown::run()` (thanks, @schloerke, #1760).
 
 - YAML header is now correctly parsed in `html_notebook`'s intermediate `.knit.md` file so that features like adding bibliography works again (thanks, @everdark, @cderv, #1747).
 
