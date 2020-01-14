@@ -105,8 +105,8 @@ function Para (el)
     return newpage(FORMAT)
   end
   -- Turning newpage command inside a paragraphs into inline raw
-  -- working only for docx for now
-  if FORMAT:match 'docx' then
+  -- working only for docx or odt for now
+  if FORMAT:match 'docx' or FORMAT:match 'odt' then
     return pandoc.walk_block(el, {
       RawInline = function(el)
         -- check that the inline raw is TeX or LaTeX and matches
