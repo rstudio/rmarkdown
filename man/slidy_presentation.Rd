@@ -6,6 +6,7 @@
 \usage{
 slidy_presentation(
   incremental = FALSE,
+  slide_level = NULL,
   duration = NULL,
   footer = NULL,
   font_adjustment = 0,
@@ -36,6 +37,12 @@ that if you want to reverse the default incremental behavior for an
 individual bullet you can precede it with \code{>}. For example:
 \emph{\code{> - Bullet Text}}}
 
+\item{slide_level}{The heading level which defines individual slides. By
+default this is the highest header level in the hierarchy that is followed
+immediately by content, and not another header, somewhere in the document.
+This default can be overridden by specifying an explicit
+\code{slide_level}.}
+
 \item{duration}{Duration (in minutes) of the slide deck. This value is used
 to add a countdown timer to the slide footer.}
 
@@ -61,7 +68,8 @@ outputting HTML directly into the markdown document).}
 
 \item{df_print}{Method to be used for printing data frames. Valid values
 include "default", "kable", "tibble", and "paged". The "default" method
-uses \code{print.data.frame}. The "kable" method uses the
+uses a corresponding S3 method of \code{print}, typically
+\code{print.data.frame}. The "kable" method uses the
 \code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
 the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid

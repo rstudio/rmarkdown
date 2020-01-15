@@ -91,7 +91,9 @@ file_name_without_shell_chars <- function(file) {
     name
 }
 
-tempfile <- function(pattern = 'file', tmpdir = tempdir(TRUE), ...) {
+# make sure the tempdir exists
+tempfile <- function(pattern = 'file', tmpdir = tempdir(), ...) {
+  dir.create(tmpdir, showWarnings = FALSE, recursive = TRUE)
   base::tempfile(pattern = pattern, tmpdir = tmpdir, ...)
 }
 
@@ -192,28 +194,6 @@ merge_lists <- function(base_list, overlay_list, recursive = TRUE) {
     }
     merged_list
   }
-}
-
-strip_white <- function(x) {
-  if (!length(x))
-    return(x)
-  while (is_blank(x[1])) {
-    x = x[-1]
-    if (!length(x))
-      return(x)
-  }
-  while (is_blank(x[(n <- length(x))])) {
-    x = x[-n]
-    if (n < 2)
-      return(x)
-  }
-  x
-}
-
-is_blank <- function(x) {
-  if (length(x))
-    all(grepl("^\\s*$", x))
-  else TRUE
 }
 
 trim_trailing_ws <- function(x) {

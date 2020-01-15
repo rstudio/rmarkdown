@@ -32,6 +32,7 @@
 #' }
 #' @export
 slidy_presentation <- function(incremental = FALSE,
+                               slide_level = NULL,
                                duration = NULL,
                                footer = NULL,
                                font_adjustment = 0,
@@ -73,6 +74,10 @@ slidy_presentation <- function(incremental = FALSE,
   # incremental
   if (incremental)
     args <- c(args, "--incremental")
+
+  # slide level
+  if (!is.null(slide_level))
+    args <- c(args, "--slide-level", slide_level)
 
   # duration
   if (!is.null(duration))

@@ -172,8 +172,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
   shiny_args <- merge_lists(list(appDir = app, launch.browser = launch_browser),
                             shiny_args)
-  do.call(shiny::runApp, shiny_args)
-  invisible(NULL)
+  ret <- do.call(shiny::runApp, shiny_args)
+  invisible(ret)
 }
 
 # create the Shiny server function

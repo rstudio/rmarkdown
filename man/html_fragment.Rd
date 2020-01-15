@@ -25,9 +25,8 @@ html_fragment(
 \arguments{
 \item{number_sections}{\code{TRUE} to number section headings}
 
-\item{section_divs}{Wrap sections in <div> tags (or <section> tags in HTML5),
-and attach identifiers to the enclosing <div> (or <section>) rather than the
-header itself.}
+\item{section_divs}{Wrap sections in <div> tags, and attach identifiers to the
+enclosing <div> rather than the header itself.}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -45,7 +44,8 @@ outputting HTML directly into the markdown document).}
 
 \item{df_print}{Method to be used for printing data frames. Valid values
 include "default", "kable", "tibble", and "paged". The "default" method
-uses \code{print.data.frame}. The "kable" method uses the
+uses a corresponding S3 method of \code{print}, typically
+\code{print.data.frame}. The "kable" method uses the
 \code{\link[knitr:kable]{knitr::kable}} function. The "tibble" method uses
 the \pkg{tibble} package to print a summary of the data frame. The "paged"
 method creates a paginated HTML table (note that this method is only valid

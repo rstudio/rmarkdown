@@ -3,9 +3,19 @@ rmarkdown 2.1
 
 - Support for Bootstrap 4 has been added to `html_document` and `html_document_base` via a new argument (`bootstrap_version`). For this release, these formats default to Bootstrap 3, but a future release will change the default to 4 (opt-in now via `bootstrap_version = 4`). In addition to this "strict" Bootstrap 4 mode, there is "compatible" Bootstrap 4 mode (i.e., `bootstrap_version = "4-3"`), which allows you to use BS3 style nav/navbars. Only use this compatible mode if you have existing `html_document`/`html_document_base` output formats that rely on BS3 markup (but is no longer supported in BS4). Thanks, @cpsievert and @jcheng5, #1260.
 
+- Added the returned output from `shiny::runApp()` within `rmarkdown::run()` (thanks, @schloerke, #1760).
+
+- YAML header is now correctly parsed in `html_notebook`'s intermediate `.knit.md` file so that features like adding bibliography works again (thanks, @everdark, @cderv, #1747).
+
 - `ioslides_presentation` template no longer generates an empty `<h2>` tag when `subtitle` is not specified in YAML (thanks, @jooyoungseo #1735, @cgrudz #1663).
 
-- Ensure the `tempdir()` exists (via `tempdir(TRUE)`) when writing HTML dependencies to a temporary file, because this directory might be erased by accident (thanks, Kurt Hornik).
+- No longer center the `#header` element in the `html_vignette()` output (thanks, @EmilHvitfeldt, #1742).
+
+- Ensure the `tempdir()` exists (via `tempdir(TRUE)`) when writing HTML dependencies to a temporary file, because this directory might be erased by accident (thanks, Kurt Hornik, and also @karawoo #1743).
+
+- Added the `slide_level` argument to `slidy_presentation()` (https://stackoverflow.com/q/59157211/559676).
+
+- Removed the jQuery dependency in `html_document_base()` (#1723). To avoid bugs like #1723, Pandoc 2.8 users have to upgrade to Pandoc 2.9+.
 
 
 rmarkdown 2.0
