@@ -700,11 +700,15 @@ partition_yaml_front_matter <- function(input_lines) {
     if (length(delimiters) >= 2 &&
         (delimiters[2] - delimiters[1] > 1) &&
         grepl("^---\\s*$", input_lines[delimiters[1]])) {
-      # verify that it's truly front matter (not preceded by other content)
-      if (delimiters[1] == 1)
+      # verify that it's truly front matter, not preceded by
+      # other content except blank lines or special comments
+      # in html_notebook's intermediate .knit.md
+      if (delimiters[1] == 1) {
         TRUE
-      else
-        is_blank(input_lines[1:delimiters[1] - 1])
+      } else all(grepl(
+        "^\\s*(<!-- rnb-\\w*-(begin|end) -->)?\\s*$",
+        input_lines[1:delimiters[1] - 1]
+      ))
     } else {
       FALSE
     }
