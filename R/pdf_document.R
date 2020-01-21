@@ -244,6 +244,17 @@ patch_tex_output <- function(file) {
   write_utf8(x, file)
 }
 
+# patch output from Pandoc < 2.8: https://github.com/jgm/pandoc/issues/5801
+fix_horiz_rule <- function(file) {
+  if (pandoc_available('2.8')) return()
+  x <- read_utf8(file)
+  i <- x == '\\begin{center}\\rule{0.5\\linewidth}{\\linethickness}\\end{center}'
+  if (any(i)) {
+    x[i] <- '\\begin{center}\\rule{0.5\\linewidth}{0.5pt}\\end{center}'
+    write_utf8(x, file)
+  }
+}
+
 process_header_includes <- function(x) {
   x <- unlist(x[["header-includes"]])
   gsub('(^|\n)\\s*```\\{=latex\\}\n(.+?\n)```\\s*(\n|$)', '\\1\\2\\3', x)
