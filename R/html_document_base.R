@@ -91,9 +91,9 @@ html_document_base <- function(smart = TRUE,
     format_deps <- append(format_deps, html_dependency_header_attrs())
     if (!is.null(theme)) {
       format_deps <- append(format_deps, list(html_dependency_jquery(), html_dependency_bootstrap(theme)))
-      if (!bootstrap_version %in% "3") {
-        # bootstraplib::bootstrap() picks up the version/theme via
-        # bs_theme_new() + any user calls to bs_theme_add*()
+      # Use bootstraplib to compile Bootstrap Sass if user has added added
+      # to the theme we've set
+      if (has_theme_additions(theme_old)) {
         format_deps <- append(format_deps, bootstraplib::bootstrap())
       }
     }
@@ -207,17 +207,18 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
 
 
 bs_theme_new_maybe <- function(version, bootswatch) {
-  if (system.file(package = "bootstraplib") == "") return(invisible())
-  # Bootstraplib theming is only available for Bootstrap 4
-  if (version %in% "3" || is.null(bootswatch)) {
-    return(bootstraplib::bs_theme_get())
+  if (system.file(package = "bootstraplib") != "") {
+    bootstraplib::bs_theme_new(version, bootswatch)
   }
-
-  bootstraplib::bs_theme_new(version = version, bootswatch = bootswatch)
 }
 
 bs_theme_set_maybe <- function(theme) {
-  if (system.file(package = "bootstraplib") == "") return(invisible())
+  if (system.file(package = "bootstraplib") != "") {
+    bootstraplib::bs_theme_set(theme)
+  }
+}
 
-  bootstraplib::bs_theme_set(theme)
+has_theme_additions <- function(theme_old) {
+  if (system.file(package = "bootstraplib") == "") return(FALSE)
+  !identical(theme_old, bootstraplib::bs_theme_get())
 }
