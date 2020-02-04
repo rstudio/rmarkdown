@@ -13,6 +13,7 @@
 
 <title>R Notebook HTML Format</title>
 
+<script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -297,70 +298,70 @@ cat(contents, sep = &quot;\n&quot;)</code></pre>
 <pre class="r"><code>parsed &lt;- rmarkdown::parse_html_notebook(output_file)
 str(parsed)</code></pre>
 <pre><code>## List of 4
-##  $ source     : chr [1:1832] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html&gt;&quot; &quot;&quot; ...
+##  $ source     : chr [1:1845] &quot;&lt;!DOCTYPE html&gt;&quot; &quot;&quot; &quot;&lt;html&gt;&quot; &quot;&quot; ...
 ##  $ rmd        : chr [1:8] &quot;---&quot; &quot;title: \&quot;R Notebook Stub\&quot;&quot; &quot;output: html_notebook&quot; &quot;---&quot; ...
-##  $ header     : chr [1:1718] &quot;&lt;head&gt;&quot; &quot;&quot; &quot;&lt;meta charset=\&quot;utf-8\&quot; /&gt;&quot; &quot;&lt;meta name=\&quot;generator\&quot; content=\&quot;pandoc\&quot; /&gt;&quot; ...
+##  $ header     : chr [1:1731] &quot;&lt;head&gt;&quot; &quot;&quot; &quot;&lt;meta charset=\&quot;utf-8\&quot; /&gt;&quot; &quot;&lt;meta name=\&quot;generator\&quot; content=\&quot;pandoc\&quot; /&gt;&quot; ...
 ##  $ annotations:List of 12
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1751
+##   .. ..$ row  : int 1764
 ##   .. ..$ label: chr &quot;text&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1752
+##   .. ..$ row  : int 1765
 ##   .. ..$ label: chr &quot;text&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1753
+##   .. ..$ row  : int 1766
 ##   .. ..$ label: chr &quot;chunk&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1754
+##   .. ..$ row  : int 1767
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;```r\n# R Code\n```&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1756
+##   .. ..$ row  : int 1769
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1757
+##   .. ..$ row  : int 1770
 ##   .. ..$ label: chr &quot;output&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;Custom output for chunk: 1\n&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1759
+##   .. ..$ row  : int 1772
 ##   .. ..$ label: chr &quot;output&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1760
+##   .. ..$ row  : int 1773
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta :List of 1
 ##   .. .. ..$ data: chr &quot;```r\n# R Logo\n```&quot;
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1762
+##   .. ..$ row  : int 1775
 ##   .. ..$ label: chr &quot;source&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1763
+##   .. ..$ row  : int 1776
 ##   .. ..$ label: chr &quot;plot&quot;
 ##   .. ..$ state: chr &quot;begin&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1765
+##   .. ..$ row  : int 1778
 ##   .. ..$ label: chr &quot;plot&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL
 ##   ..$ :List of 4
-##   .. ..$ row  : int 1766
+##   .. ..$ row  : int 1779
 ##   .. ..$ label: chr &quot;chunk&quot;
 ##   .. ..$ state: chr &quot;end&quot;
 ##   .. ..$ meta : NULL</code></pre>
@@ -372,12 +373,12 @@ str(parsed)</code></pre>
 
 <div id="rStudioFooter" class="band full">
 <div class="bandContent">
-  <div id="copyright">© Copyright 2016 - 2018 RStudio Inc.</div>
+  <div id="copyright">© Copyright 2016 - 2020 RStudio, PBC</div>
   <div id="logos">
     <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
     <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
-    <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
-    <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
+    <a href="https://www.linkedin.com/company/rstudio-pbc" class="footerLogo linkedIn"></a>
+    <a href="https://www.facebook.com/rstudioinc/" class="footerLogo facebook"></a>
   </div>
 </div>
 </div>

@@ -13,6 +13,7 @@
 
 <title>R Markdown Websites</title>
 
+<script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -608,7 +609,7 @@ sessionInfo()
 </ul>
 <p>When referring to an icon you should use it’s full name including the icon set prefix (e.g. “fa-github”, “ion-social-twitter”, “glyphicon-time”, etc.).</p></li>
 </ol>
-<div id="html-navigation-bar" class="section level3">
+<div id="html-navigation-bar" class="section level3 toc-ignore">
 <h3 class="toc-ignore">HTML Navigation Bar</h3>
 <p>If you want to have even more control over the appearance and behavior of the navigation bar you can define it in HTML rather than YAML. If you include a file named <strong>_navbar.html</strong> in your website directory it will be used as the navigation bar. Here’s an example of navigation bar defined in HTML: <a href="https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html" class="uri">https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html</a>.</p>
 <p>Full documentation on syntax of Bootstrap navigation bars can be found here: <a href="http://getbootstrap.com/components/#navbar" class="uri">http://getbootstrap.com/components/#navbar</a>.</p>
@@ -623,7 +624,7 @@ sessionInfo()
 <li><p>A large number of available <a href="http://www.htmlwidgets.org">HTML widgets</a> that provide rich JavaScript data visualizations.</p></li>
 </ul>
 <p>As a result, for many R Markdown websites you won’t need to worry about generating HTML output at all (since it’s created automatically).</p>
-<div id="htmltools-package" class="section level3">
+<div id="htmltools-package" class="section level3 toc-ignore">
 <h3 class="toc-ignore">htmltools Package</h3>
 <p>If the facilities described above don’t meet your requirements, you can also generate custom HTML from your R code using the <strong>htmltools</strong> package. The <strong>htmltools</strong> package enables you to write HTML using a convenient R based syntax (this is the same core HTML generation facility used by the <a href="http://shiny.rstudio.com">shiny</a> package).</p>
 <p>Here’s an example of an R function that creates a <a href="https://getbootstrap.com">Bootstrap</a> thumbnail div:</p>
@@ -656,7 +657,7 @@ thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
 <span id="cb12-4"><a href="#cb12-4"></a><span class="fu">exclude</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;docs.txt&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;*.csv&quot;</span><span class="kw">]</span></span></code></pre></div>
 <p>The <code>name</code> field provides a suggested URL path for your website when it is published (by default this is just the name of the directory containing the site).</p>
 <p>The <code>output_dir</code> field indicates which directory to copy site content into ("_site" is the default if none is specified). Note that this can be “.” to keep all content within the root website directory alongside the source code.</p>
-<div id="included-files" class="section level3">
+<div id="included-files" class="section level3 toc-ignore">
 <h3 class="toc-ignore">Included Files</h3>
 <p>The <code>include</code> and <code>exclude</code> fields enable you to override the default behavior visa-vi what files are copied into the output directory. By default, all files within the website directory are copied into the output directory (e.g. "_site") save for the following:</p>
 <ol style="list-style-type: decimal">
@@ -672,7 +673,7 @@ thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
 <h2>Publishing Websites</h2>
 <p>R Markdown websites are static HTML sites that can be deployed to any standard web server. All site content (generated documents and supporting files) are copied into the <code>_site</code> directory so deployment is simply a matter of moving that directory to the appropriate directory of a web server.</p>
 <p>This section provides additional documentation on publishing websites to several popular hosting services.</p>
-<div id="github-pages" class="section level3">
+<div id="github-pages" class="section level3 toc-ignore">
 <h3 class="toc-ignore">GitHub Pages</h3>
 <p>R Markdown websites are can be hosted using <a href="https://pages.github.com/">GitHub Pages</a> with two additions to the standard site configuration:</p>
 <ol style="list-style-type: decimal">
@@ -687,12 +688,12 @@ thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
   </code></pre>
 <p>You can find an example of a minimal R Markdown website configured for publishing to GitHub Pages here: <a href="https://github.com/rstudio/rmarkdown-website-examples/tree/master/gh-pages" class="uri">https://github.com/rstudio/rmarkdown-website-examples/tree/master/gh-pages</a>.</p>
 </div>
-<div id="amazon-s3" class="section level3">
+<div id="amazon-s3" class="section level3 toc-ignore">
 <h3 class="toc-ignore">Amazon S3</h3>
 <p>If you have an <a href="http://aws.amazon.com/">Amazon Web Services</a> account, you can deploy your R Markdown website directly to the S3 storage service. S3-based websites have global replication, support custom domains, and can be accelerated via the use of the Amazon CloudFront CDN.</p>
 <p>For additional information on deploying websites to S3 see: <a href="http://docs.aws.amazon.com/gettingstarted/latest/swh/website-hosting-intro.html" class="uri">http://docs.aws.amazon.com/gettingstarted/latest/swh/website-hosting-intro.html</a>.</p>
 </div>
-<div id="other-web-hosts" class="section level3">
+<div id="other-web-hosts" class="section level3 toc-ignore">
 <h3 class="toc-ignore">Other Web Hosts</h3>
 <p>There are a wide variety of options for static web hosting, all of which are compatible with R Markdown websites. This guide includes an overview of several of the more popular services: <a href="http://alignedleft.com/resources/cheap-web-hosting" class="uri">http://alignedleft.com/resources/cheap-web-hosting</a>.</p>
 </div>
@@ -738,12 +739,12 @@ thumbnail("Peach", "images/peach.png", "https://en.wikipedia.org/wiki/Peach")
 
 <div id="rStudioFooter" class="band full">
 <div class="bandContent">
-  <div id="copyright">© Copyright 2016 - 2018 RStudio Inc.</div>
+  <div id="copyright">© Copyright 2016 - 2020 RStudio, PBC</div>
   <div id="logos">
     <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
     <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
-    <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
-    <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
+    <a href="https://www.linkedin.com/company/rstudio-pbc" class="footerLogo linkedIn"></a>
+    <a href="https://www.facebook.com/rstudioinc/" class="footerLogo facebook"></a>
   </div>
 </div>
 </div>
