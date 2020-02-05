@@ -25,7 +25,7 @@ html_document_base <- function(smart = TRUE,
                                copy_resources = FALSE,
                                extra_dependencies = NULL,
                                bootstrap_compatible = FALSE,
-                               bootstrap_version = c("3", "4", "4-3"),
+                               bootstrap_version = c("3", "4", "4+3"),
                                ...) {
 
   # default for dependency_resovler

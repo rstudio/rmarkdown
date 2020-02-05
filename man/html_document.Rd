@@ -31,7 +31,7 @@ html_document(
   lib_dir = NULL,
   md_extensions = NULL,
   pandoc_args = NULL,
-  bootstrap_version = c("3", "4", "4-3"),
+  bootstrap_version = c("3", "4", "4+3"),
   ...
 )
 }
@@ -148,7 +148,7 @@ additional details.}
 is not \code{NULL}). Currently three options are supported: Bootstrap version
 3.x (\code{3}), Bootstrap version 4.x (\code{4}), and Bootstrap version 4.x
 with additional JS/CSS to support BS3 style nav, navbar, and other component
-styling (\code{"4-3"}). Use this version if you want to upgrade to Bootstrap 4
+styling (\code{"4+3"}). Use this version if you want to upgrade to Bootstrap 4
 while maintaining the functionality of a document already written with
 Bootstrap 3 in mind.}
 }

@@ -90,7 +90,7 @@
 #'  is not \code{NULL}). Currently three options are supported: Bootstrap version
 #'  3.x (\code{3}), Bootstrap version 4.x (\code{4}), and Bootstrap version 4.x
 #'  with additional JS/CSS to support BS3 style nav, navbar, and other component
-#'  styling (\code{"4-3"}). Use this version if you want to upgrade to Bootstrap 4
+#'  styling (\code{"4+3"}). Use this version if you want to upgrade to Bootstrap 4
 #'  while maintaining the functionality of a document already written with
 #'  Bootstrap 3 in mind.
 #'@return R Markdown output format to pass to \code{\link{render}}
@@ -218,7 +218,7 @@ html_document <- function(toc = FALSE,
                           lib_dir = NULL,
                           md_extensions = NULL,
                           pandoc_args = NULL,
-                          bootstrap_version = c("3", "4", "4-3"),
+                          bootstrap_version = c("3", "4", "4+3"),
                           ...) {
 
   # build pandoc args
@@ -593,7 +593,7 @@ navbar_html_from_yaml <- function(navbar_yaml, version = 3) {
 #' @return Path to temporary file with navbar definition
 #' @keywords internal
 #' @export
-navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4-3")) {
+navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4+3")) {
 
   bootstrap_version <- bs_version_match(bootstrap_version)
 
@@ -635,7 +635,7 @@ navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4-3")) {
 #' @keywords internal
 #' @name navbar_html
 #' @export
-navbar_links_html <- function(links, bootstrap_version = c("3", "4", "4-3")) {
+navbar_links_html <- function(links, bootstrap_version = c("3", "4", "4+3")) {
   bootstrap_version <- bs_version_match(bootstrap_version)
   as.character(navbar_links_tags(links, version = bootstrap_version))
 }
@@ -730,7 +730,7 @@ navbar_link_text <- function(x, ...) {
 # allows users to pass in integers for the version as well
 bs_version_match <- function(version) {
   version <- as.character(version)
-  version <- match.arg(version, c("3", "4", "4-3"))
+  version <- match.arg(version, c("3", "4", "4+3"))
   if (identical(version, "3")) return("3")
   if (system.file(package = "bootstraplib") == "") {
     stop("The bootstraplib package must be installed to use Bootstrap 4.", call. = FALSE)
@@ -739,5 +739,5 @@ bs_version_match <- function(version) {
 }
 
 is_bs3_compatible <- function(version) {
-  version %in% c("3", "4-3")
+  version %in% c("3", "4+3")
 }

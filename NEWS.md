@@ -6,7 +6,7 @@ rmarkdown 2.2
 rmarkdown 2.1
 ================================================================================
 
-- Support for Bootstrap 4 has been added to `html_document` and `html_document_base` via a new argument (`bootstrap_version`). For this release, these formats default to Bootstrap 3, but a future release will change the default to 4 (opt-in now via `bootstrap_version = 4`). In addition to this "strict" Bootstrap 4 mode, there is "compatible" Bootstrap 4 mode (i.e., `bootstrap_version = "4-3"`), which allows you to use BS3 style nav/navbars. Only use this compatible mode if you have existing `html_document`/`html_document_base` output formats that rely on BS3 markup (but is no longer supported in BS4). Thanks, @cpsievert and @jcheng5, #1260.
+- Support for Bootstrap 4 has been added to `html_document` and `html_document_base` via a new argument (`bootstrap_version`). For this release, these formats default to Bootstrap 3, but a future release will change the default to 4 (opt-in now via `bootstrap_version = 4`). In addition to this "strict" Bootstrap 4 mode, there is "compatible" Bootstrap 4 mode (i.e., `bootstrap_version = "4+3"`), which allows you to use BS3 style nav/navbars. Only use this compatible mode if you have existing `html_document`/`html_document_base` output formats that rely on BS3 markup (but is no longer supported in BS4). Thanks, @cpsievert and @jcheng5, #1260.
 
 - Added the returned output from `shiny::runApp()` within `rmarkdown::run()` (thanks, @schloerke, #1760).
 
