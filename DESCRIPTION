@@ -30,7 +30,7 @@ Authors@R: c(
   person("Sergio", "Oller", role = "ctb"),
   #
   # Copyright holders
-  person(family = "RStudio, Inc.", role = "cph"),
+  person(family = "RStudio, PBC", role = "cph"),
   person(family = "jQuery Foundation", role = "cph",
          comment = "jQuery library"),
   person(family = "jQuery contributors", role = c("ctb", "cph"),
