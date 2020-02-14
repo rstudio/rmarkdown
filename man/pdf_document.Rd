@@ -100,7 +100,7 @@ output format, e.g., \code{"-smart"} means the output format will be
 \item{extra_dependencies}{A LaTeX dependency \code{latex_dependency()}, a
 list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
 \code{c("framed", "hyperref")}), or a named list of LaTeX package options
-with the names being package names (e.g. \code{list(hypreref =
+with the names being package names (e.g. \code{list(hyperef =
 c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
 add custom LaTeX packages to the .tex header.}
 
