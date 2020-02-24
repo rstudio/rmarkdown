@@ -154,7 +154,11 @@ At the bottom of the document:
 
 ```markdown
 [id]: http://example.com/ "Title"
-Images
+```
+
+#### Images
+
+```markdown
 ![alt text][id]
 ```
 
@@ -169,7 +173,7 @@ At the bottom of the document:
 End a line with two or more spaces:
 
 ```markdown
-Roses are red,
+Roses are red,  
 Violets are blue.
 ```
 
