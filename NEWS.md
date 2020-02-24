@@ -1,7 +1,7 @@
 rmarkdown 2.2
 ================================================================================
 
-- TOC title can now be specified for `html_document` via `toc-title` top-level YAML frontmatter (thanks, @atusy, #1771).
+- TOC title can now be specified for `html_document` via the top-level option `toc-title` in the YAML frontmatter (thanks, @atusy, #1771).
 
 
 rmarkdown 2.1
