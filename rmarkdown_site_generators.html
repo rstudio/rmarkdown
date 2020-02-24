@@ -310,11 +310,11 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <h2>Site Generator Function</h2>
 <p>A site generator is an R function that is bound to by including it in the “site:” field of the “index.Rmd” or “index.md” file. For example:</p>
 <p><strong>index.Rmd</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a>---</span>
-<span id="cb1-2"><a href="#cb1-2"></a>title: &quot;My Book&quot;</span>
-<span id="cb1-3"><a href="#cb1-3"></a>output: bookdown::gitbook</span>
-<span id="cb1-4"><a href="#cb1-4"></a>site: bookdown::bookdown_site</span>
-<span id="cb1-5"><a href="#cb1-5"></a>---</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="an">title:</span><span class="co"> &quot;My Book&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="an">output:</span><span class="co"> bookdown::gitbook</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="an">site:</span><span class="co"> bookdown::bookdown_site</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">---</span></span></code></pre></div>
 <p>A site generation function should return a list with the following elements:</p>
 <dl>
 <dt>name</dt>
