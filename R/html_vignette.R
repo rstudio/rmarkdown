@@ -61,8 +61,9 @@ html_vignette <- function(fig_width = 3,
       pandoc_args <- c('--metadata',
                        paste0("title=",trimws(title))
                        )
+      return(invisible(pandoc_args))
     }
-    invisible(pandoc_args)
+    invisible(NULL)
   }
 
   output_format(
