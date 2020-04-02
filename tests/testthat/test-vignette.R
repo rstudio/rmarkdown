@@ -21,3 +21,28 @@ test_that("If a title, the title is used", {
   unlink(c(res, tmp_rmd))
 })
 
+test_that("works if no index entry and a title", {
+  rmd <- xfun::read_utf8('resources/vignette-no-title.Rmd')
+  tmp_rmd <- tempfile("test-vignette-", fileext = ".Rmd")
+  xfun::write_utf8(c(rmd[1],
+                     "title: rmd title",
+                     rmd[c(-1, -4)]),
+                   tmp_rmd)
+  res <- rmarkdown::render(tmp_rmd)
+  html <- xfun::read_utf8(res)
+  expect_true(any(grepl("<title>rmd title</title>", html)))
+  expect_true(any(grepl("<h1[^>]*>rmd title</h1>", html)))
+  unlink(c(res, tmp_rmd))
+})
+
+test_that("works if no index entry and no title", {
+  rmd <- xfun::read_utf8('resources/vignette-no-title.Rmd')
+  tmp_rmd <- tempfile("test-vignette-", fileext = ".Rmd")
+  xfun::write_utf8(rmd[-4], tmp_rmd)
+  res <- rmarkdown::render(tmp_rmd)
+  html <- xfun::read_utf8(res)
+  expect_true(any(grepl("<title>.*</title>", html)))
+  expect_false(any(grepl("<h1[^>]*>.*</h1>", html)))
+  unlink(c(res, tmp_rmd))
+})
+
