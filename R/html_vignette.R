@@ -53,18 +53,16 @@ html_vignette <- function(fig_width = 3,
 
   pre_processor <- function(metadata, input_file, runtime, knit_meta,
                             files_dir, output_dir) {
-    if (is.null(metadata[["title"]]) &&
-        !is.null(metadata[["vignette"]])) {
-      title <- gsub(
-        "%\\\\VignetteIndexEntry\\{([^}]*)\\}.*",
-        "\\1", metadata[["vignette"]])
-      pandoc_args <- c('--metadata',
-                       paste0("title=",trimws(title))
-                       )
-      return(invisible(pandoc_args))
+    if (is.null(metadata[["title"]])) {
+      title <- tools::vignetteInfo(input_file)[["title"]]
+      if (nzchar(title)) {
+        pandoc_args <- c('--metadata', paste0("title=", title))
+        return(invisible(pandoc_args))
+      }
     }
     invisible(NULL)
   }
+
 
   output_format(
     knitr = NULL,
