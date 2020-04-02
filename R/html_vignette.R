@@ -55,14 +55,13 @@ html_vignette <- function(fig_width = 3,
                             files_dir, output_dir) {
     if (is.null(metadata[["title"]])) {
       title <- tools::vignetteInfo(input_file)[["title"]]
-      if (nzchar(title)) {
+      if (isTRUE(nzchar(title))) {
         pandoc_args <- c('--metadata', paste0("title=", title))
         return(invisible(pandoc_args))
       }
     }
     invisible(NULL)
   }
-
 
   output_format(
     knitr = NULL,
