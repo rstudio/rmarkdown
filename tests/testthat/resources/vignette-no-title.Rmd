@@ -1,0 +1,11 @@
+---
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This document should render successfully with the VignetteIndexEntry
+as title of the vignette.
+See https://github.com/rstudio/rmarkdown/issues/1765
