@@ -80,8 +80,8 @@ vignette_pre_processor <- function(metadata, input_file) {
   if (is.null(metadata[["title"]])) {
     vignette_index <- tools::vignetteInfo(input_file)[["title"]]
     if (isTRUE(nzchar(vignette_index))) {
-      pandoc_args <- c('--metadata', paste0("title=", vignette_index))
-      return(invisible(pandoc_args))
+      pandoc_arg <- pandoc_metadata_arg("title", vignette_index)
+      return(invisible(pandoc_arg))
     }
   }
   invisible(NULL)
