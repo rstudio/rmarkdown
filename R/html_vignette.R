@@ -53,14 +53,7 @@ html_vignette <- function(fig_width = 3,
 
   pre_processor <- function(metadata, input_file, runtime, knit_meta,
                             files_dir, output_dir) {
-    if (is.null(metadata[["title"]])) {
-      title <- tools::vignetteInfo(input_file)[["title"]]
-      if (isTRUE(nzchar(title))) {
-        pandoc_args <- c('--metadata', paste0("title=", title))
-        return(invisible(pandoc_args))
-      }
-    }
-    invisible(NULL)
+    vignette_pre_processor(metadata, input_file)
   }
 
   output_format(
@@ -81,4 +74,15 @@ html_vignette <- function(fig_width = 3,
                                 self_contained = self_contained,
                                 ...)
   )
+}
+
+vignette_pre_processor <- function(metadata, input_file) {
+  if (is.null(metadata[["title"]])) {
+    vignette_index <- tools::vignetteInfo(input_file)[["title"]]
+    if (isTRUE(nzchar(vignette_index))) {
+      pandoc_args <- c('--metadata', paste0("title=", vignette_index))
+      return(invisible(pandoc_args))
+    }
+  }
+  invisible(NULL)
 }
