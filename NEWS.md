@@ -1,6 +1,10 @@
 rmarkdown 2.2
 ================================================================================
 
+- For `html_vignette`, if no title is provided in the YAML frontmatter, the name in `%\VignetteIndexEntry{name}` will be used as vignette title (#1789)
+
+- `pandoc_metadata_arg` is a new pandoc helper to generate `--metadata` argument for pandoc command line (#1789) 
+
 - TOC title can now be specified for `html_document` via the top-level option `toc-title` in the YAML frontmatter (thanks, @atusy, #1771).
 
 - Floating TOC can now distinguish upper/lower-cases (thanks, @atusy, #1783).
