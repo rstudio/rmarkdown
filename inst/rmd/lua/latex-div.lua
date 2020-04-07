@@ -1,9 +1,8 @@
 --[[
      A Pandoc 2 lua filter converting Pandoc native divs to LaTeX environments
-     Author: Romain Lesur and Yihui Xie
+     Author: Romain Lesur, Christophe Dervieux, and Yihui Xie
      License: Public domain
 --]]
-local pandocList = require 'pandoc.List'
 
 Div = function (div)
   local options = div.attributes['data-latex']
