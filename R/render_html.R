@@ -9,7 +9,7 @@ notebook_render_html_widget <- function(output) {
   pasted <- paste(before, unpreserved$value, after, sep = "\n")
 
   annotated <- htmltools::restorePreserveChunks(pasted,
-                                                unpreserved$chunk)
+                                                unpreserved$chunks)
   attributes(annotated) <- attributes(output)
 
   return(annotated)
