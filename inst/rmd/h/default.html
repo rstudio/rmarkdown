@@ -521,6 +521,9 @@ $if(bs3)$
 $else$
 <div class="col-sm-12 col-md-4 col-lg-3">
 $endif$
+$if(toc-title)$
+<h2 id="$idprefix$toc-title">$toc-title$</h2>
+$endif$
 <div id="$idprefix$TOC" class="tocify">
 </div>
 </div>
@@ -601,6 +604,9 @@ $if(toc_float)$
 $else$
 $if(toc)$
 <div id="$idprefix$TOC">
+$if(toc-title)$
+<h2 id="$idprefix$toc-title">$toc-title$</h2>
+$endif$
 $toc$
 </div>
 $endif$
@@ -693,7 +699,7 @@ $$(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
