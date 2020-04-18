@@ -111,6 +111,7 @@ test_that("a custom output_source can be used on render", {
 })
 
 test_that("UFT8 character in html widget does not break notebook annotation", {
+  # from issue in https://github.com/rstudio/rmarkdown/issues/1762
   skip_on_cran()
   # simulate html widget code
   html_dependency_dummy <- function()  {
