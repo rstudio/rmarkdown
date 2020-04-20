@@ -5,7 +5,7 @@ rmarkdown 2.2
 
 - Floating TOC can now distinguish upper/lower-cases (thanks, @atusy, #1783).
 
-- When `code_folding='show'`, code blocks can be individually hidden for the first time by specifying `class.source='fold-hide'` to the chunk option (thanks, @atusy, #1798).
+- When `code_folding='show'` for the output format `html_document`, code blocks can be individually hidden initially by specifying the chunk option `class.source='fold-hide'` (thanks, @atusy, #1798).
 
 
 rmarkdown 2.1
