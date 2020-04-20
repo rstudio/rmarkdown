@@ -1,6 +1,8 @@
 rmarkdown 2.2
 ================================================================================
 
+- Fixed a bug with encoding when rendering `html_notebook` containing HTML widgets (thanks, @cderv, #1799).
+
 - TOC title can now be specified for `html_document` via the top-level option `toc-title` in the YAML frontmatter (thanks, @atusy, #1771).
 
 - Floating TOC can now distinguish upper/lower-cases (thanks, @atusy, #1783).
