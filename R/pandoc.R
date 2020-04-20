@@ -249,6 +249,14 @@ pandoc_variable_arg <- function(name,
   c("--variable", if (missing(value)) name else paste(name, "=", value, sep = ""))
 }
 
+#' @rdname pandoc_args
+#' @export
+pandoc_metadata_arg <- function(name,
+                                value) {
+
+  c("--metadata", if (missing(value)) name else paste(name, "=", value, sep = ""))
+}
+
 
 #' @rdname pandoc_args
 #' @export
