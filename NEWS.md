@@ -1,13 +1,17 @@
 rmarkdown 2.2
 ================================================================================
 
-- For `html_vignette`, if no title is provided in the YAML frontmatter, the name in `%\VignetteIndexEntry{name}` will be used as vignette title (#1789)
+- For `html_vignette`, if no title is provided in the YAML frontmatter, the name in `%\VignetteIndexEntry{name}` will be used as vignette title (thanks, @cderv, #1789).
 
-- `pandoc_metadata_arg` is a new pandoc helper to generate `--metadata` argument for pandoc command line (#1789) 
+- `pandoc_metadata_arg` is a new pandoc helper to generate `--metadata` argument for pandoc command line (thanks, @cderv, #1789).
+
+- Fixed a bug with encoding when rendering `html_notebook` containing HTML widgets (thanks, @cderv, #1799).
 
 - TOC title can now be specified for `html_document` via the top-level option `toc-title` in the YAML frontmatter (thanks, @atusy, #1771).
 
 - Floating TOC can now distinguish upper/lower-cases (thanks, @atusy, #1783).
+
+- When `code_folding='show'` for the output format `html_document`, code blocks can be individually hidden initially by specifying the chunk option `class.source='fold-hide'` (thanks, @atusy, #1798).
 
 
 rmarkdown 2.1
