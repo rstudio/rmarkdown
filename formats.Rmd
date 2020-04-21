@@ -186,6 +186,10 @@ output:
     <div class="formatSection">
       <div class="formatSectionTitle">Documents</div>
       <div class="formatTable">
+        <a href="https://github.com/bblodfon/rtemps" class="formatTableRow">
+          <div class="formatName">rtemps</div>
+          <div class="formatDescription">Reproducible data analysis templates</div>
+        </a>
         <a href="https://github.com/ropenscilabs/vitae" class="formatTableRow">
           <div class="formatName">vitae</div>
           <div class="formatDescription">Résumé and CV templates</div>
