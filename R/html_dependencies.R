@@ -298,16 +298,26 @@ html_reference_path <- function(path, lib_dir, output_dir) {
 # return the html dependencies as an HTML string suitable for inclusion
 # in the head of a document
 html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
+  # Only copy deps with path
+  dependencies_href <- filter_dependencies(dependencies, "href")
+  dependencies <- filter_dependencies(dependencies, "file")
 
   if (!is.null(lib_dir)) {
     dependencies <- lapply(dependencies, copyDependencyToDir, lib_dir)
     dependencies <- lapply(dependencies, makeDependencyRelative, output_dir)
   }
-  return(renderDependencies(dependencies, "file", encodeFunc = identity,
+  #return(
+  tags <- renderDependencies(dependencies, "file", encodeFunc = identity,
                             hrefFilter = function(path) {
                               html_reference_path(path, lib_dir, output_dir)
                             })
-  )
+  #)
+  HTML(paste0(c(tags, renderDependencies(dependencies_href, "href")), collapse = "\n"))
+}
+
+filter_dependencies <- function(dependencies, src_type = "file") {
+  deps <- lapply(dependencies, function(dep) if(!is.null(dep$src[[src_type]])) return(dep))
+  deps[!sapply(deps, is.null)]
 }
 
 # check class of passed list for 'html_dependency'
@@ -327,15 +337,20 @@ validate_html_dependency <- function(list) {
     stop("name for html_dependency not provided", call. = FALSE)
   if (is.null(list$version))
     stop("version for html_dependency not provided", call. = FALSE)
-  list <- fix_html_dependency(list)
-  if (is.null(list$src$file))
-    stop("path for html_dependency not provided", call. = FALSE)
-  file <- list$src$file
-  if (!is.null(list$package))
-    file <- system.file(file, package = list$package)
-  if (!file.exists(file)) {
-    utils::str(list)
-    stop("path for html_dependency not found: ", file, call. = FALSE)
+  list <- fix_html_dependency(list) 
+
+  # check src path or href are given
+  if (is.null(list$src)) {
+    stop("neither path nor href are provided for html_dependency", call. = FALSE)
+  }
+  if (!is.null(list$src$file)) {
+    file <- list$src$file
+    if (!is.null(list$package))
+      file <- system.file(file, package = list$package)
+    if (!file.exists(file)) {
+      utils::str(list)
+      stop("path for html_dependency not found: ", file, call. = FALSE)
+    }
   }
 
   list
