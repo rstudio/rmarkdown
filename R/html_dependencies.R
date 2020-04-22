@@ -249,11 +249,16 @@ validate_html_dependency <- function(list) {
     }
   }
 
-  if (!is.null(list$src$href)) validate_dependency_url(list$src$href)
+  if (!is.null(list$src$href)) {
+    href <- list$src$href
+    if (!RCurl::url.exists(href))
+      stop("href for html_dependency not found: ", href, call. = FALSE)
+  }
 
   list
 }
 
+# If we do not want to use RCurl dep
 validate_dependency_url <- function(src) {
   error <- suppressWarnings(try({download.file(src, tempfile())}, silent = TRUE))
   error == 0

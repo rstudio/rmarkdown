@@ -91,7 +91,8 @@ Imports:
     tinytex (>= 0.11),
     xfun,
     methods,
-    stringr (>= 1.2.0)
+    stringr (>= 1.2.0),
+    RCurl
 Suggests:
     shiny (>= 0.11),
     tufte,
