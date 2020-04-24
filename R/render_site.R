@@ -595,7 +595,10 @@ site_resources <- function(site_dir, include = NULL, exclude = NULL, recursive =
 
 
 # utility function to list the files that should be copied
-copyable_site_resources <- function(input, config = site_config(input)) {
+#
+# NOTE: '...' is kept for backwards compatibility with older versions of
+# RStudio which called 'copyable_site_resources(encoding = "UTF-8")'
+copyable_site_resources <- function(input, config = site_config(input), ...) {
 
   include <- config$include
 
