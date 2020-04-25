@@ -345,7 +345,7 @@ discover_rmd_resources <- function(rmd_file, discover_single_resource) {
   )
 
   # clean up output file and its supporting files directory
-  temp_files <- c(temp_files, html_file, knitr_files_dir(md_file))
+  temp_files <- c(temp_files, html_file, knitr_files_dir(md_file), knitr_files_dir(html_file))
 
   # run the HTML resource discovery mechanism on the rendered output
   discover_html_resources(html_file, discover_single_resource)
