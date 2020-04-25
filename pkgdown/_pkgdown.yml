@@ -152,6 +152,7 @@ reference:
   desc: ~
   contents:
   - starts_with("pandoc_")
+  - ends_with("_pandoc")
 
 - title: Customizing & extending output formats
   desc: ~
