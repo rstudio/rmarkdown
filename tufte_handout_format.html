@@ -13,7 +13,7 @@
 
 <title>Tufte Handouts</title>
 
-<script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.1.2/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -348,7 +348,7 @@ draft(&quot;my_handout.Rmd&quot;, template = &quot;tufte_html&quot;, package = &
 title: &quot;Tufte Handout&quot;
 subtitle: &quot;An implementation in R Markdown&quot;
 author: &quot;JJ Allaire and Yihui Xie&quot;
-date: &quot;2020-02-24&quot;
+date: &quot;2020-05-09&quot;
 output:
   tufte::tufte_html: default
   tufte::tufte_handout:
@@ -511,7 +511,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
