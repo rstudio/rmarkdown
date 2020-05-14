@@ -11,7 +11,7 @@ tufte_handout(
   dev = "pdf",
   highlight = "default",
   keep_tex = FALSE,
-  citation_package = c("none", "natbib", "biblatex"),
+  citation_package = c("default", "natbib", "biblatex"),
   includes = NULL,
   md_extensions = NULL,
   pandoc_args = NULL
@@ -34,7 +34,9 @@ tufte_handout(
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
 
 \item{citation_package}{The LaTeX package to process citations, \code{natbib}
-or \code{biblatex}. Use \code{none} if neither package is to be used.}
+or \code{biblatex}. Use \code{default} if neither package is to be used,
+which means citations will be processed via the command
+\command{pandoc-citeproc}.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
