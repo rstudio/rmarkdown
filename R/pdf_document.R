@@ -263,6 +263,7 @@ process_header_includes <- function(x) {
 }
 
 citation_package_arg <- function(value) {
+  value <- value[1]
   if (value == "none") {
     warning("citation_package = 'none' was deprecated; please use 'default' instead.")
     value <- "default"
