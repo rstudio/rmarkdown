@@ -66,7 +66,7 @@ beamer_presentation <- function(toc = FALSE,
                                 keep_tex = FALSE,
                                 keep_md = FALSE,
                                 latex_engine = "pdflatex",
-                                citation_package = c("none", "natbib", "biblatex"),
+                                citation_package = c("default", "natbib", "biblatex"),
                                 self_contained = TRUE,
                                 includes = NULL,
                                 md_extensions = NULL,
@@ -115,8 +115,7 @@ beamer_presentation <- function(toc = FALSE,
   args <- c(args, pandoc_latex_engine_args(latex_engine))
 
   # citation package
-  citation_package <- match.arg(citation_package)
-  if (citation_package != "none") args <- c(args, paste0("--", citation_package))
+  args <- c(args, citation_package_arg(citation_package))
 
   # generate a self-contained LaTeX document (including preamble)
   if (self_contained) args <- c(args, "--self-contained")

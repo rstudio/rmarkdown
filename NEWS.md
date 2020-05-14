@@ -15,6 +15,8 @@ rmarkdown 2.2
 
 - When `code_folding='show'` for the output format `html_document`, code blocks can be individually hidden initially by specifying the chunk option `class.source='fold-hide'` (thanks, @atusy, #1798).
 
+- For LaTeX/PDF output formats `pdf_document`, `beamer_presentation`, and `context_document`, the argument `citation_package = 'none'` was deprecated, and `citation_package = 'default'` should be used instead if citations are to be processed by `pandoc-citeproc` (thanks, @njbart, rstudio/bookdown#754).
+
 
 rmarkdown 2.1
 ================================================================================
