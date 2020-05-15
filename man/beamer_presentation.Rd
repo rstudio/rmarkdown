@@ -23,7 +23,7 @@ beamer_presentation(
   keep_tex = FALSE,
   keep_md = FALSE,
   latex_engine = "pdflatex",
-  citation_package = c("none", "natbib", "biblatex"),
+  citation_package = c("default", "natbib", "biblatex"),
   self_contained = TRUE,
   includes = NULL,
   md_extensions = NULL,
@@ -84,8 +84,8 @@ can disable the \code{df_print} behavior entirely by setting the option
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
 built-in template; pass a path to use a custom template that you've
 created.  See the documentation on
-\href{http://pandoc.org/README.html}{pandoc online documentation}
-for details on creating custom templates.}
+\href{http://pandoc.org/README.html}{pandoc online documentation} for
+details on creating custom templates.}
 
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
 
@@ -95,7 +95,9 @@ for details on creating custom templates.}
 "pdflatex", "lualatex", and "xelatex".}
 
 \item{citation_package}{The LaTeX package to process citations, \code{natbib}
-or \code{biblatex}. Use \code{none} if neither package is to be used.}
+or \code{biblatex}. Use \code{default} if neither package is to be used,
+which means citations will be processed via the command
+\command{pandoc-citeproc}.}
 
 \item{self_contained}{Whether to generate a full LaTeX document (\code{TRUE})
 or just the body of a LaTeX document (\code{FALSE}). Note the LaTeX

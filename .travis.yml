@@ -15,7 +15,6 @@ env:
 before_install:
   - "[[ ${PANDOC_VERSION} = latest ]] && ./tools/install-pandoc.sh || true"
   - pandoc --version
-  - tlmgr install units
 
 after_success:
   - "[[ ${TRAVIS_BRANCH}  = master  ]] || exit 0"

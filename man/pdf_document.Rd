@@ -21,7 +21,7 @@ pdf_document(
   keep_tex = FALSE,
   keep_md = FALSE,
   latex_engine = "pdflatex",
-  citation_package = c("none", "natbib", "biblatex"),
+  citation_package = c("default", "natbib", "biblatex"),
   includes = NULL,
   md_extensions = NULL,
   output_extensions = NULL,
@@ -71,8 +71,8 @@ can disable the \code{df_print} behavior entirely by setting the option
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
 built-in template; pass a path to use a custom template that you've
 created.  See the documentation on
-\href{http://pandoc.org/README.html}{pandoc online documentation}
-for details on creating custom templates.}
+\href{http://pandoc.org/README.html}{pandoc online documentation} for
+details on creating custom templates.}
 
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
 
@@ -82,7 +82,9 @@ for details on creating custom templates.}
 "pdflatex", "lualatex", and "xelatex".}
 
 \item{citation_package}{The LaTeX package to process citations, \code{natbib}
-or \code{biblatex}. Use \code{none} if neither package is to be used.}
+or \code{biblatex}. Use \code{default} if neither package is to be used,
+which means citations will be processed via the command
+\command{pandoc-citeproc}.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
@@ -114,7 +116,8 @@ Formats for converting from R Markdown to a PDF or LaTeX document.
 }
 \details{
 See the \href{https://rmarkdown.rstudio.com/pdf_document_format.html}{online
-documentation} for additional details on using the \code{pdf_document} format.
+documentation} for additional details on using the \code{pdf_document}
+format.
 
 Creating PDF output from R Markdown requires that LaTeX be installed.
 
