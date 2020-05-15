@@ -15,6 +15,7 @@ rmarkdown 2.2
 
 - When `code_folding='show'` for the output format `html_document`, code blocks can be individually hidden initially by specifying the chunk option `class.source='fold-hide'` (thanks, @atusy, #1798).
 
+- `output_format` can now inherit `keep_md` and `clean_supporting` from `base_format` when `NULL` is given to these arguments of `output_format` (thanks, @atusy, #1823)
 
 rmarkdown 2.1
 ================================================================================
