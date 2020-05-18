@@ -205,7 +205,25 @@ paged_table_html <- function(x, options = NULL) {
 #' Create a table in HTML with support for paging rows and columns
 #'
 #' @param x a data frame to be rendered as a paged table.
-#' @param options options for printing the paged table
+#' @param options options for printing the paged table. See details for specifics.
+#'
+#' @details
+#' Below are the recognized table pagination options.
+#'
+#' \tabular{rll}{
+#' Option \tab Description \tab Default \cr
+#' \code{max.print} \tab The number of rows to print. \tab 1000 \cr
+#' \code{sql.max.print} \tab The number of rows to print from a SQL data table. \tab 1000 \cr
+#' \code{rows.print} \tab The number of rows to display. \tab 10 \cr
+#' \code{cols.print} \tab The number of columns to display. \tab 10 \cr
+#' \code{cols.min.print} \tab The minimum number of columns to display. \tab - \cr
+#' \code{pages.print} \tab The number of pages to display under page navigation. \tab - \cr
+#' \code{paged.print} \tab When set to FALSE turns off paged tables. \tab TRUE \cr
+#' \code{rownames.print} \tab When set to FALSE turns off row names. \tab TRUE
+#' }
+#'
+#' \bold{Note:} There is a hard cap of 10,000 rows to ensure that pandoc will not
+#' fail when rendering the document.
 #'
 #' @export
 paged_table <- function(x, options = NULL) {
