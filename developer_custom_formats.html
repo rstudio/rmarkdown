@@ -233,7 +233,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>R Markdown includes several built-in document and presentation formats however you aren’t by any means limited to those. An R Markdown format is at it’s core just an R function. When you include an output format in the YAML front-matter of a document you are really just specifying the format function to call and the parameters to pass to it. For example, consider the following:</p>
+<p>R Markdown includes several built-in document and presentation formats however you aren’t by any means limited to those. An R Markdown format is, at its core, just an R function. When you include an output format in the YAML front-matter of a document you are really just specifying the format function to call and the parameters to pass to it. For example, consider the following:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 output:
@@ -275,7 +275,7 @@ output:
 </div>
 <div id="fully-custom-formats" class="section level2">
 <h2>Fully Custom Formats</h2>
-<p>At it’s core an R Markdown format consists of:</p>
+<p>At its core, an R Markdown format consists of:</p>
 <ol style="list-style-type: decimal">
 <li><p>A set of knitr options that govern how Rmd is converted to markdown.</p></li>
 <li><p>A set of pandoc options that govern how markdown is converted to the final output format (e.g. HTML).</p></li>
@@ -288,9 +288,9 @@ output:
                            clean_supporting = FALSE)
 }</code></pre>
 <p>Of course, knitr and pandoc options can get considerabiy more complicated (see the <code>knitr_options</code> and <code>pandoc_options</code> functions for details). The <code>clean_supporting</code> option indicates that you aren’t creating self contained output (like a PDF or HTML document with base64 encoded resources) and therefore want to preserve supporting files like plot images generated during knitting.</p>
-<p>You can also pass a <code>base_format</code> to the <code>output_format</code> function if you want to inherit all of the behavior of an existing format but tweak a subset of it’s options.</p>
+<p>You can also pass a <code>base_format</code> to the <code>output_format</code> function if you want to inherit all of the behavior of an existing format but tweak a subset of its options.</p>
 <p>If there are supporting files required for your format (e.g. HTML/CSS/JS) then you’ll also need to use the other arguments to <code>output_format</code> to ensure they are handled correctly (e.g. copying them into place alongside the generated document).</p>
-<p>The best way to learn about creating fully custom formats is to study the <a href="https://github.com/rstudio/rmarkdown/tree/master/R">source code</a> of the existing built-in formats (e.g. <code>html_document</code> and <code>pdf_document</code>). In some cases a custom format will define it’s own <a href="http://pandoc.org/README.html#templates">pandoc template</a>. You can see the default pandoc templates used by the rmarkdown package by looking in the <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmd"><code>inst/rmd</code></a> directory of the package.</p>
+<p>The best way to learn about creating fully custom formats is to study the <a href="https://github.com/rstudio/rmarkdown/tree/master/R">source code</a> of the existing built-in formats (e.g. <code>html_document</code> and <code>pdf_document</code>). In some cases a custom format will define its own <a href="http://pandoc.org/README.html#templates">pandoc template</a>. You can see the default pandoc templates used by the rmarkdown package by looking in the <a href="https://github.com/rstudio/rmarkdown/tree/master/inst/rmd"><code>inst/rmd</code></a> directory of the package.</p>
 </div>
 
   </div> <!-- articleBandContent -->

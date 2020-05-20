@@ -128,7 +128,7 @@ header:
 
     ## Next Steps {#nextsteps .emphasized}
 
-Would enable you to apply CSS to all of it's content using either of the following CSS selectors:
+Would enable you to apply CSS to all of its content using either of the following CSS selectors:
 
     #nextsteps {
        color: blue;
@@ -264,7 +264,7 @@ By default R Markdown produces standalone HTML files with no external dependenci
         self_contained: false
     ---
 
-Note that even for self contained documents MathJax is still loaded externally (this is necessary because of it's size). If you want to serve MathJax locally then you should specify `mathjax: local` and `self_contained: false`.
+Note that even for self contained documents MathJax is still loaded externally (this is necessary because of its size). If you want to serve MathJax locally then you should specify `mathjax: local` and `self_contained: false`.
 
 One common reason keep dependencies external is for serving R Markdown documents from a website (external dependencies can be cached separately by browsers leading to faster page load times). In the case of serving multiple R Markdown documents you may also want to consolidate dependent library files (e.g. Bootstrap, MathJax, etc.) into a single directory shared by multiple documents. You can use the `lib_dir` option to do this, for example:
 
@@ -367,7 +367,7 @@ slidy_presentation:
   highlight: pygments
 ```
 
-All documents located in the same directory as `_output.yaml` will inherit it's options. Options defined explicitly within documents will override those specified in the shared options file.
+All documents located in the same directory as `_output.yaml` will inherit its options. Options defined explicitly within documents will override those specified in the shared options file.
 
 
 

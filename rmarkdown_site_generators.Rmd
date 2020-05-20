@@ -59,6 +59,6 @@ Emitting this line enables front-ends like RStudio to determine which file they 
 
 See the source code of the [`rmarkdown::default_site`](https://github.com/rstudio/rmarkdown/blob/master/R/render_site.R#L157) function for an example of a site generation function.
 
-The **bookdown** package also implements a custom site generator via it's [`bookdown::bookdown_site`](https://github.com/rstudio/bookdown/blob/master/R/site.R) function.
+The **bookdown** package also implements a custom site generator via its [`bookdown::bookdown_site`](https://github.com/rstudio/bookdown/blob/master/R/site.R) function.
 
 

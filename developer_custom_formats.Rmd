@@ -9,7 +9,7 @@ output:
 
 ## Overview
 
-R Markdown includes several built-in document and presentation formats however you aren't by any means limited to those. An R Markdown format is at it's core just an R function. When you include an output format in the YAML front-matter of a document you are really just specifying the format function to call and the parameters to pass to it. For example, consider the following:
+R Markdown includes several built-in document and presentation formats however you aren't by any means limited to those. An R Markdown format is, at its core, just an R function. When you include an output format in the YAML front-matter of a document you are really just specifying the format function to call and the parameters to pass to it. For example, consider the following:
 
     ---
     title: "Habits"
@@ -61,7 +61,7 @@ The [Package Vignette](https://bookdown.org/yihui/rmarkdown/r-package-vignette.h
 
 ## Fully Custom Formats
 
-At it's core an R Markdown format consists of:
+At its core, an R Markdown format consists of:
 
 1. A set of knitr options that govern how Rmd is converted to markdown.
 
@@ -81,11 +81,11 @@ simple_html_format <- function() {
 
 Of course, knitr and pandoc options can get considerabiy more complicated (see the `knitr_options` and `pandoc_options` functions for details). The `clean_supporting` option indicates that you aren't creating self contained output (like a PDF or HTML document with base64 encoded resources) and therefore want to preserve supporting files like plot images generated during knitting.
 
-You can also pass a `base_format` to the `output_format` function if you want to inherit all of the behavior of an existing format but tweak a subset of it's options.
+You can also pass a `base_format` to the `output_format` function if you want to inherit all of the behavior of an existing format but tweak a subset of its options.
 
 If there are supporting files required for your format (e.g. HTML/CSS/JS) then you'll also need to use the other arguments to `output_format` to ensure they are handled correctly (e.g. copying them into place alongside the generated document).
 
-The best way to learn about creating fully custom formats is to study the [source code](https://github.com/rstudio/rmarkdown/tree/master/R) of the existing built-in formats (e.g. `html_document` and `pdf_document`). In some cases a custom format will define it's own [pandoc template](http://pandoc.org/README.html#templates). You can see the default pandoc templates used by the rmarkdown package by looking in the [`inst/rmd`](https://github.com/rstudio/rmarkdown/tree/master/inst/rmd) directory of the package.
+The best way to learn about creating fully custom formats is to study the [source code](https://github.com/rstudio/rmarkdown/tree/master/R) of the existing built-in formats (e.g. `html_document` and `pdf_document`). In some cases a custom format will define its own [pandoc template](http://pandoc.org/README.html#templates). You can see the default pandoc templates used by the rmarkdown package by looking in the [`inst/rmd`](https://github.com/rstudio/rmarkdown/tree/master/inst/rmd) directory of the package.
 
 
 

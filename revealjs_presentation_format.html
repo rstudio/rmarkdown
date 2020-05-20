@@ -452,7 +452,7 @@ output:
 <h3>Slide IDs and Classes</h3>
 <p>You can also target specific slides or classes of slice with custom CSS by adding ids or classes to the slides headers within your document. For example the following slide header:</p>
 <pre><code>## Next Steps {#nextsteps .emphasized}</code></pre>
-<p>Would enable you to apply CSS to all of it’s content using either of the following CSS selectors:</p>
+<p>Would enable you to apply CSS to all of its content using either of the following CSS selectors:</p>
 <pre><code>#nextsteps {
    color: blue;
 }
@@ -469,7 +469,7 @@ output:
 </div>
 <div id="reveal.js-options" class="section level2">
 <h2>Reveal.js Options</h2>
-<p>Reveal.js has many additional options to conigure it’s behavior. You can specify any of these options using <code>reveal_options</code>, for example:</p>
+<p>Reveal.js has many additional options to configure its behavior. You can specify any of these options using <code>reveal_options</code>, for example:</p>
 <pre><code>---
 title: &quot;Habits&quot;
 output:
@@ -540,7 +540,7 @@ output:
   revealjs::revealjs_presentation:
     self_contained: false
 ---</code></pre>
-<p>Note that even for self contained documents MathJax is still loaded externally (this is necessary because of it’s size). If you want to serve MathJax locally then you should specify <code>mathjax: local</code> and <code>self_contained: false</code>.</p>
+<p>Note that even for self contained documents MathJax is still loaded externally (this is necessary because of its size). If you want to serve MathJax locally then you should specify <code>mathjax: local</code> and <code>self_contained: false</code>.</p>
 <p>One common reason keep dependencies external is for serving R Markdown documents from a website (external dependencies can be cached separately by browsers leading to faster page load times). In the case of serving multiple R Markdown documents you may also want to consolidate dependent library files (e.g. Bootstrap, MathJax, etc.) into a single directory shared by multiple documents. You can use the <code>lib_dir</code> option to do this, for example:</p>
 <pre><code>---
 title: &quot;Habits&quot;
@@ -642,7 +642,7 @@ output:
   theme: sky
   transition: fade
   highlight: pygments</code></pre>
-<p>All documents located in the same directory as <code>_output.yaml</code> will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.</p>
+<p>All documents located in the same directory as <code>_output.yaml</code> will inherit its options. Options defined explicitly within documents will override those specified in the shared options file.</p>
 </div>
 
   </div> <!-- articleBandContent -->

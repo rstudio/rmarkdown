@@ -152,7 +152,7 @@ knitr::opts_chunk$set(cache=TRUE)
 &#96;&#96;&#96;
 </code></pre>
 
-Note that when knitr caching is enabled for an Rmd it's `_files` directory will be copied rather than moved to the `_site` directory (since the cache requires references to generated figures in the `_files` directory).
+Note that when knitr caching is enabled for an Rmd, its `_files` directory will be copied rather than moved to the `_site` directory (since the cache requires references to generated figures in the `_files` directory).
 
 ## Common Elements
 
@@ -300,7 +300,7 @@ This example demonstrates a number of capabilities of navigation bars:
     - [Bootstrap Glyphicons](https://getbootstrap.com/components/#glyphicons)
 
 
-    When referring to an icon you should use it's full name including the icon set prefix (e.g. "fa-github", "ion-social-twitter", "glyphicon-time", etc.). 
+    When referring to an icon you should use its full name including the icon set prefix (e.g. "fa-github", "ion-social-twitter", "glyphicon-time", etc.). 
 
 ### HTML Navigation Bar {.toc-ignore}
 

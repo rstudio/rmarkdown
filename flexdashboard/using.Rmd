@@ -165,7 +165,7 @@ Available htmlwidgets include:
 
 2. [dygraphs](http://rstudio.github.io/dygraphs), which provides rich facilities for charting time-series data and includes support for many interactive features including series/point highlighting, zooming, and panning.
 
-3. [Plotly](https://plot.ly/r/), which via it's ggplotly interface allows you to easily translate your ggplot2 graphics to an interactive web-based version.
+3. [Plotly](https://plot.ly/r/), which via its ggplotly interface allows you to easily translate your ggplot2 graphics to an interactive web-based version.
 
 4. [rbokeh](http://hafen.github.io/rbokeh), an interface to Bokeh, a powerful declarative Bokeh framework for creating web-based plots.
 
@@ -294,7 +294,7 @@ You can specify icons from three different icon sets:
 
 3. [Bootstrap Glyphicons](https://getbootstrap.com/components/#glyphicons)
 
-When referring to an icon you should use it's full name including the icon set prefix (e.g. "fa-github", "ion-social-twitter", "glyphicon-time", etc.). 
+When referring to an icon you should use its full name including the icon set prefix (e.g. "fa-github", "ion-social-twitter", "glyphicon-time", etc.). 
 
 #### Shiny
 
@@ -320,7 +320,7 @@ There are a few things to note about this example:
 
 2. You can specify an optional `symbol` to be displayed alongside the value (in the example "%" is used to denote a percentage).
 
-3. You can specify a set of custom color `sectors` using the `gaugeSectors` function. By default the current theme's "success" color (typically green) is used for the gauge color. The `sectors` option enables you to specify a set of three value ranges ("success", "warning", and "danger") which cause the gauge's color to change based on it's value. 
+3. You can specify a set of custom color `sectors` using the `gaugeSectors` function. By default the current theme's "success" color (typically green) is used for the gauge color. The `sectors` option enables you to specify a set of three value ranges ("success", "warning", and "danger") which cause the gauge's color to change based on its value. 
 
 #### Linking
 
@@ -413,7 +413,7 @@ The height of charts is determined in one of two ways depending on whether your 
 
 ### Size Attributes
 
-The nature of the charts within your dashboard (desired emphasis, visualization types, etc.) will often dictate that you'll want to change the default sizing behavior. If no size attributes are specified then the relative size of each chart will be determined by it's knitr figure size (this is 6 x 4.8 inches or 576 x 460 pixels by default).
+The nature of the charts within your dashboard (desired emphasis, visualization types, etc.) will often dictate that you'll want to change the default sizing behavior. If no size attributes are specified then the relative size of each chart will be determined by its knitr figure size (this is 6 x 4.8 inches or 576 x 460 pixels by default).
 
 You can modify the default sizing behavior by applying the `data-width` and `data-height` attributes to rows, columns, or even individual charts. These attributes establish the relative size between charts laid out in the same dimension (horizontal or vertical).
 
@@ -494,7 +494,7 @@ Note that in this example both pages use the default "columns" orientation. It i
 
 ### Page Navigation 
 
-By default each page you define is given it's own top level tab on the navigation bar. However, if you have a large number of pages (more than 5) you might want to organize your pages into menus on the navigation bar. 
+By default each page you define is given its own top level tab on the navigation bar. However, if you have a large number of pages (more than 5) you might want to organize your pages into menus on the navigation bar. 
 
 To specify that a page should be accessed via a navigation bar menu you use the `data-navmenu` attribute. For example, the following dashboard has 4 pages, 2 of which are located on "Menu A" and two of which are located on "Menu B":
 
@@ -531,7 +531,7 @@ You can specify icons for navigation bar items from three different icon sets:
 
 3. [Bootstrap Glyphicons](https://getbootstrap.com/components/#glyphicons)
 
-When referring to an icon you should use it's full name including the icon set prefix (e.g. "fa-github", "ion-social-twitter", "glyphicon-time", etc.).
+When referring to an icon you should use its full name including the icon set prefix (e.g. "fa-github", "ion-social-twitter", "glyphicon-time", etc.).
 
 ## Storyboards
 
@@ -545,7 +545,7 @@ To create a storyboard layout you do the following:
 
 1. Add the `storyboard: true` option to the dashboard.
 
-2. Include a set of level 3 (`###`) dashboard components. Each component will be allocated it's own frame in the storyboard, with the section title used as the navigation caption.
+2. Include a set of level 3 (`###`) dashboard components. Each component will be allocated its own frame in the storyboard, with the section title used as the navigation caption.
 
 The basics of creating storyboards are explained below. For a more complete example, see the [HTML Widgets Showcase](https://beta.rstudioconnect.com/jjallaire/htmlwidgets-showcase-storyboard/) storyboard.
 
@@ -600,7 +600,7 @@ In addition, some flexdashboard components have special behavior to adapt themse
 
 ### Mobile CSS
 
-If certain components of your dashboard don't work well on smaller mobile devices you can exclude them by applying the `{.no-mobile}` class attribute to a dashboard section. For example, this dashboard hides it's second component on mobile devices:
+If certain components of your dashboard don't work well on smaller mobile devices you can exclude them by applying the `{.no-mobile}` class attribute to a dashboard section. For example, this dashboard hides its second component on mobile devices:
 
 <div id="nomobile"></div>
 <script type="text/javascript">loadSnippet('nomobile')</script>

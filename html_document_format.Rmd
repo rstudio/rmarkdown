@@ -54,7 +54,7 @@ You can specify the `toc_float` option to float the table of contents to the lef
         toc_float: true
     ---
 
-You may optionally specify a list of options for the `toc_float` parameter which control it's behavior. Options include:
+You may optionally specify a list of options for the `toc_float` parameter which control its behavior. Options include:
 
 * `collapsed` (defaults to `TRUE`) controls whether the table of contents appers with only the top-level (e.g. H2) headers. When collapsed the table of contents is automatically expanded inline when necessary.
 
@@ -329,7 +329,7 @@ By default R Markdown produces standalone HTML files with no external dependenci
         self_contained: false
     ---
 
-Note that even for self contained documents MathJax is still loaded externally (this is necessary because of it's size). If you want to serve MathJax locally then you should specify `mathjax: local` and `self_contained: false`.
+Note that even for self contained documents MathJax is still loaded externally (this is necessary because of its size). If you want to serve MathJax locally then you should specify `mathjax: local` and `self_contained: false`.
 
 One common reason keep dependencies external is for serving R Markdown documents from a website (external dependencies can be cached separately by browsers leading to faster page load times). In the case of serving multiple R Markdown documents you may also want to consolidate dependent library files (e.g. Bootstrap, MathJax, etc.) into a single directory shared by multiple documents. You can use the `lib_dir` option to do this, for example:
 
@@ -433,7 +433,7 @@ html_document:
   highlight: textmate
 ```
 
-All documents located in the same directory as `_output.yaml` will inherit it's options. Options defined explicitly within documents will override those specified in the shared options file.
+All documents located in the same directory as `_output.yaml` will inherit its options. Options defined explicitly within documents will override those specified in the shared options file.
 
 ## HTML Fragments
 

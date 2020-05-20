@@ -40,7 +40,7 @@ Here's a simple example of a flexdashboard that uses Shiny:
 
 The first column includes the `{.sidebar}` attribute and two Shiny input controls; the second column includes the Shiny code required to render the chart based on the inputs.
 
-One important thing to note about this example is the chunk labeled `global` at the top of the document. The `global` chunk has special behavior within flexdashboard: it is executed only once within the global environment so that it's results (e.g. data frames read from disk) can be accessed by all users of a multi-user flexdashboard. Loading your data within a `global` chunk will result in substantially better startup performance for your users so is highly recommended.
+One important thing to note about this example is the chunk labeled `global` at the top of the document. The `global` chunk has special behavior within flexdashboard: it is executed only once within the global environment so that its results (e.g. data frames read from disk) can be accessed by all users of a multi-user flexdashboard. Loading your data within a `global` chunk will result in substantially better startup performance for your users so is highly recommended.
 
 ## Using Shiny
 
@@ -160,7 +160,7 @@ For those familiar with Shiny here are further details on how this example works
 
 1. The container is laid out using the `fillCol` function, which establishes a single column layout with flexible row heights.
 
-3. Flexible height behavior is defined via `flex = c(NA, 1)`. The `NA` applies to the first component (the input panel) and says to not give it flexible height (i.e. allow it to occupy it's natural height). The `1` applies to the second component (the plot) and says that it should have flexible height (i.e. occupy all remaining height in the container).
+3. Flexible height behavior is defined via `flex = c(NA, 1)`. The `NA` applies to the first component (the input panel) and says to not give it flexible height (i.e. allow it to occupy its natural height). The `1` applies to the second component (the plot) and says that it should have flexible height (i.e. occupy all remaining height in the container).
 
 3. The call to `plotOutput` includes `height = "100%"` to ensure that the plot takes advantage of the height allocated to it by the `fillCol` flexible layout.
 
@@ -216,7 +216,7 @@ It's also possible to include a Shiny application defined in an external directo
 <div id="shinyembeddedexternal"></div>
 <script type="text/javascript">loadSnippet('shinyembeddedexternal', 'r')</script>
 
-Note that in this example we override the default height of 500 pixels via `options = list(height=850)`. This is because this application uses a sidebar which on mobile layouts will appear on top of the plot output rather than to the left, which necessitates that more height be available for it's display.
+Note that in this example we override the default height of 500 pixels via `options = list(height=850)`. This is because this application uses a sidebar which on mobile layouts will appear on top of the plot output rather than to the left, which necessitates that more height be available for its display.
 
 Including an external Shiny application is a good way to re-use an existing application within a flexdashboard. If however your main goal is to keep the source code for a set of Shiny components separate from the main flexdashboard Rmd then [Shiny Modules] are a preferable way to achieve this, as they include their UI inline within the page rather than within an `<iframe>`.
 

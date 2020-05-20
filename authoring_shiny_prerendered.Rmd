@@ -94,7 +94,7 @@ Conventional Shiny applications can include a `global.R` file to define code whi
 
 The loading and manipulation of data often dominates the startup time of Shiny applications. Since `runtime: shiny_prerendered` documents are executed in two phases (the initial render and then the serving of the document to users) we can perform the expensive data manipulations during rendering and then simply load the data when starting up the application. This extends the concept of "prerendering" from document content and user-interface elements to data.
 
-You can define prerendered data by adding the `context="data"` attribute to an R code chunk. The chunk will be executed during render and any R objects it creates will be saved to an .RData file, which will then be loaded during Shiny server startup. For example, we could take the the setup chunk illustrated above and factor out the data loading into it's own chunk:
+You can define prerendered data by adding the `context="data"` attribute to an R code chunk. The chunk will be executed during render and any R objects it creates will be saved to an .RData file, which will then be loaded during Shiny server startup. For example, we could take the the setup chunk illustrated above and factor out the data loading into its own chunk:
 
 <div id="shiny_prerendered_data_context"></div>
 <script type="text/javascript">loadSnippet('shiny_prerendered_data_context', 'r')</script>
@@ -194,7 +194,7 @@ If you're not using RStudio, or want to run the document in-process for troubles
 
 You can deploy `runtime: shiny_prerendered` documents using version 1.2 or later of [Shiny Server](http://www.rstudio.com/products/shiny/shiny-server/). 
 
-Shiny documents are deployed the same way that Shiny applications are, except rather than deploying ui.R and server.R files, you deploy an Rmd file along with it's required dependencies and pre-rendered HTML. 
+Shiny documents are deployed the same way that Shiny applications are, except rather than deploying ui.R and server.R files, you deploy an Rmd file along with its required dependencies and pre-rendered HTML. 
 
 See the Shiny Server [documentation](http://docs.rstudio.com/shiny-server/#r-markdown) for more details on deploying `runtime: shiny_prerendered` documents.
 

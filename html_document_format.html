@@ -346,7 +346,7 @@ output:
     toc: true
     toc_float: true
 ---</code></pre>
-<p>You may optionally specify a list of options for the <code>toc_float</code> parameter which control it’s behavior. Options include:</p>
+<p>You may optionally specify a list of options for the <code>toc_float</code> parameter which control its behavior. Options include:</p>
 <ul>
 <li><p><code>collapsed</code> (defaults to <code>TRUE</code>) controls whether the table of contents appers with only the top-level (e.g. H2) headers. When collapsed the table of contents is automatically expanded inline when necessary.</p></li>
 <li><p><code>smooth_scroll</code> (defaults to <code>TRUE</code>) controls whether page scrolls are animated when table of contents items are navigated to via mouse clicks.</p></li>
@@ -625,7 +625,7 @@ output:
   html_document:
     self_contained: false
 ---</code></pre>
-<p>Note that even for self contained documents MathJax is still loaded externally (this is necessary because of it’s size). If you want to serve MathJax locally then you should specify <code>mathjax: local</code> and <code>self_contained: false</code>.</p>
+<p>Note that even for self contained documents MathJax is still loaded externally (this is necessary because of its size). If you want to serve MathJax locally then you should specify <code>mathjax: local</code> and <code>self_contained: false</code>.</p>
 <p>One common reason keep dependencies external is for serving R Markdown documents from a website (external dependencies can be cached separately by browsers leading to faster page load times). In the case of serving multiple R Markdown documents you may also want to consolidate dependent library files (e.g. Bootstrap, MathJax, etc.) into a single directory shared by multiple documents. You can use the <code>lib_dir</code> option to do this, for example:</p>
 <pre><code>---
 title: &quot;Habits&quot;
@@ -710,7 +710,7 @@ output:
   self_contained: false
   theme: united
   highlight: textmate</code></pre>
-<p>All documents located in the same directory as <code>_output.yaml</code> will inherit it’s options. Options defined explicitly within documents will override those specified in the shared options file.</p>
+<p>All documents located in the same directory as <code>_output.yaml</code> will inherit its options. Options defined explicitly within documents will override those specified in the shared options file.</p>
 </div>
 <div id="html-fragments" class="section level2">
 <h2>HTML Fragments</h2>
