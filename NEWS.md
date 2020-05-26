@@ -3,9 +3,9 @@ rmarkdown 2.2
 
 - Exported the internal function `find_pandoc()`, and also added two arguments, `dir` and `version`, so that users can provide a custom directory under which this function may find Pandoc, as well as an expected version of Pandoc to be found (thanks, @connorp, #1785).
 
-- For `html_vignette`, if no title is provided in the YAML frontmatter, the name in `%\VignetteIndexEntry{name}` will be used as vignette title (thanks, @cderv, #1789).
+- `pandoc_metadata_arg()` is a new Pandoc helper function to generate `--metadata` argument for Pandoc command line (thanks, @cderv, #1789).
 
-- `pandoc_metadata_arg` is a new pandoc helper to generate `--metadata` argument for pandoc command line (thanks, @cderv, #1789).
+- The output format `html_vignette()` now warns against differences in the vignette title specified in the `title` field in the YAML metadata and the one specified inside `\VignetteIndexEntry{}`. Normally they are expected to be identical (#1789).
 
 - Fixed a bug with encoding when rendering `html_notebook` containing HTML widgets (thanks, @cderv, #1799).
 
