@@ -39,9 +39,6 @@
 #'  chunks by default.
 #'@param code_download Embed the Rmd source code within the document and provide
 #'  a link that can be used by readers to download the code.
-#'@param smart Produce typographically correct output, converting straight
-#'  quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
-#'  \code{...} to ellipses.
 #'@param self_contained Produce a standalone HTML file with no external
 #'  dependencies, using data: URIs to incorporate the contents of linked
 #'  scripts, stylesheets, images, and videos. Note that even for self contained
@@ -191,7 +188,6 @@ html_document <- function(toc = FALSE,
                           df_print = "default",
                           code_folding = c("none", "show", "hide"),
                           code_download = FALSE,
-                          smart = TRUE,
                           self_contained = TRUE,
                           theme = "default",
                           highlight = "default",
@@ -215,8 +211,6 @@ html_document <- function(toc = FALSE,
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
-
-  md_extensions <- smart_extension(smart, md_extensions)
 
   # toc_float
   if (toc && !identical(toc_float, FALSE)) {
@@ -439,7 +433,7 @@ html_document <- function(toc = FALSE,
     post_knit = post_knit,
     pre_processor = pre_processor,
     on_exit = on_exit,
-    base_format = html_document_base(smart = smart, theme = theme,
+    base_format = html_document_base(theme = theme,
                                      self_contained = self_contained,
                                      lib_dir = lib_dir, mathjax = mathjax,
                                      template = template,

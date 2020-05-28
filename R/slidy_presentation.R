@@ -42,7 +42,6 @@ slidy_presentation <- function(incremental = FALSE,
                                fig_caption = TRUE,
                                dev = 'png',
                                df_print = "default",
-                               smart = TRUE,
                                self_contained = TRUE,
                                highlight = "default",
                                mathjax = "default",
@@ -92,8 +91,6 @@ slidy_presentation <- function(incremental = FALSE,
     args <- c(args, pandoc_variable_arg("font-size-adjustment",
                                         font_adjustment))
 
-  md_extensions <- smart_extension(smart, md_extensions)
-
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
 
@@ -136,7 +133,7 @@ slidy_presentation <- function(incremental = FALSE,
     clean_supporting = self_contained,
     df_print = df_print,
     pre_processor = pre_processor,
-    base_format = html_document_base(smart = smart, lib_dir = lib_dir,
+    base_format = html_document_base(lib_dir = lib_dir,
                                      self_contained = self_contained,
                                      mathjax = mathjax,
                                      bootstrap_compatible = TRUE,

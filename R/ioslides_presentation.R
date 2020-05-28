@@ -19,6 +19,9 @@
 #' @param transition Speed of slide transitions. This can be "default",
 #'   "slower", "faster", or a numeric value with a number of seconds (e.g. 0.5).
 #' @param analytics A Google analytics property ID.
+#'@param smart Produce typographically correct output, converting straight
+#'  quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
+#'  \code{...} to ellipses.
 #' @return R Markdown output format to pass to \code{\link{render}}.
 #' @details
 #'   See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
@@ -440,7 +443,7 @@ ioslides_presentation <- function(logo = NULL,
     df_print = df_print,
     pre_processor = pre_processor,
     post_processor = post_processor,
-    base_format = html_document_base(smart = smart, lib_dir = lib_dir,
+    base_format = html_document_base(lib_dir = lib_dir,
                                      self_contained = self_contained,
                                      mathjax = mathjax,
                                      pandoc_args = pandoc_args,
