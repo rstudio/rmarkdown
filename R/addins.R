@@ -39,89 +39,109 @@ grab_clipboard <- function(filepath) {
     }
   }
 
-  # in window, no image be create
-  if (!file.exists(filepath) || file.size(filepath) == 0) {
+  if (!file.exists(filepath)) {
     stop("Clipboard data is not an image.", call. = FALSE)
   }
 }
 
-guess_is_blogdown_post <- function() {
-  # guess current rmd is a blogdown post?
-  # Criteria:
-  # - is a project and .Rproj have something like BuildType: Website
-  # - filepath like content/**/**
+is_blogdown_post <- function() {
+  # is current rmd a blogdown post?
+  # criteria:
+  # - options(rmarkdown.is_blogdown_post = TRUE)
+  # - is a project and .Rproj have attr like BuildType: Website
+  # - filepath like content/**/your_post_name.rmd
 
+  if (getOption("rmarkdown.is_blogdown_post", FALSE)) {
+    return(TRUE)
+  }
   proj_root <- rstudioapi::getActiveProject()
   if (is.null(proj_root)) {
     return(FALSE)
   }
-
   proj_settings <- list.files(proj_root, pattern = ".Rproj", full.names = TRUE)
   currpath <- rstudioapi::getSourceEditorContext()$path
   if (any(grep("BuildType: Website", readLines(proj_settings)) > 0) &&
     basename(dirname(dirname(currpath))) == "content") {
     return(TRUE)
   }
-
   FALSE
-
 }
 
-generate_filepath <- function() {
-  # return filepath and filepath_insert
-  #   filepath: absolute path, to save image in clipboard
-  #   filepath_insert: path in rmd code, ![](filepath_insert)
-  #
-  # for a blogdown post, filepath_insert is different from filepath
-  # https://lcolladotor.github.io/2018/03/07/blogdown-insert-image-addin/#.XrZ9dxMzbjA
-  #
-  # for a generic rmd, filepath_insert is same with filepath,
-  # while filepath_insert is relative path
+generate_default_filepath <- function() {
+  # return default filepath (absolute):
+  # - rmd: .assets/rmd-img-paste-%Y%m%d%H%M%s.png
+  # - post: static/../your_post_name_files/rmd-img-paste-%Y%m%d%H%M%s.png
 
-  filename <- format(Sys.time(), "rmd-img-paste-%Y%m%d%H%M%s.png")
-  currpath <- rstudioapi::getSourceEditorContext()$path
-  if (!nchar(currpath)) {
+  currpath <- xfun::normalize_path(rstudioapi::getSourceEditorContext()$path)
+  if (currpath == "") {
     stop("Please save the file before pasting an image.", call. = FALSE)
   }
 
-  is_post <- getOption("rmarkdown.is_blogdown_post", guess_is_blogdown_post())
-  if (is_post) {
+  filename <- format(Sys.time(), "rmd-img-paste-%Y%m%d%H%M%s.png")
+  dir <- file.path(
+    dirname(currpath),
+    getOption("rmarkdown.paste_image_dir", ".assets")
+  )
+
+  if (is_blogdown_post()) {
     proj_root <- rstudioapi::getActiveProject()
     post_files <- file.path(
-      dirname(gsub(".*content/", "", currpath)),
+      gsub(".*content/", "", dirname(currpath)),
       paste0(tools::file_path_sans_ext(basename(currpath)), "_files")
     )
     dir <- file.path(proj_root, "static", post_files)
-    baseurl <- getOption("rmarkdown.blogdown_baseurl", "")
-    dir_insert <- file.path(baseurl, post_files)
-  } else {
-    dir_insert <- getOption("rmarkdown.paste_image_dir", ".assets")
-    dir <- file.path(dirname(currpath), dir_insert)
   }
 
-  if (!file.exists(dir)) dir.create(dir, recursive = TRUE)
-  list(
-    filepath = file.path(dir, filename),
-    filepath_insert = file.path(dir_insert, filename)
+  # by default, this will create a subfolder if not exist
+  # override by options(rmarkdown.create_sub_dir = FALSE)
+  if (!file.exists(dir) && getOption("rmarkdown.create_sub_dir", TRUE)) {
+    file.create(dir, recursive = TRUE)
+  }
+  file.path(dir, filename)
+}
+
+dialog_set_filename <- function(default_filepath) {
+  filepath <- rstudioapi::selectFile(
+    caption = "Save File",
+    label = "Save",
+    path = default_filepath,
+    existing = FALSE
   )
+  filepath <- xfun::normalize_path(filepath)
+  proj_root <- rstudioapi::getActiveProject()
+  if (is_blogdown_post() &&
+    (!startsWith(filepath, file.path(proj_root, "static")))) {
+    stop("for blogdown post, image should in static/", call. = FALSE)
+  }
+  filepath
 }
 
 insert_image_from_clipboard_addin <- function() {
-
   if (!requireNamespace("rstudioapi", quietly = TRUE)) {
     stop("rstudioapi needed for paste image into rmd. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
-
   doc_id <- rstudioapi::getSourceEditorContext()$id
   if (doc_id %in% c("#console", "#terminal")) {
     stop("You can`t insert an image in the console nor in the terminal.
          Please select a line in the source editor.", call. = FALSE)
   }
-  res <- generate_filepath()
-  grab_clipboard(res$filepath)
 
+  filepath <- generate_default_filepath()
+  if (getOption("rmarkdown.show_dialog", TRUE)) {
+    filepath <- try(dialog_set_filename(filepath), silent = TRUE)
+    if ('try-error' %in% class(filepath)) {
+      message('cancel insert image')
+      return()
+    }
+  }
+  grab_clipboard(filepath)
   position <- rstudioapi::getSourceEditorContext()$selection[[1]]$range$start
   func <- function(filepath) paste0("![](", filepath, ")")
-  rstudioapi::insertText(position, func(res$filepath_insert), id = doc_id)
+  if (is_blogdown_post()) {
+    baseurl <- getOption("rmarkdown.blogdown_baseurl", "")
+    filepath <- file.path(baseurl, gsub(".*static/", "", filepath))
+  }
+  rstudioapi::insertText(position, func(filepath), id = doc_id)
 }
