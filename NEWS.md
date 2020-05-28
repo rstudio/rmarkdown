@@ -19,6 +19,9 @@ rmarkdown 2.2
 
 - `output_format()` can now inherit `keep_md` and `clean_supporting` from `base_format` when `NULL` is passed to these arguments. Previously, you must explicitly specify `keep_md` and/or `clean_supporting` as `TRUE` or `FALSE` in `output_format()` since they could not inherit the corresponding options of `base_format`. This behavior was not consisent with other arguments of `output_format()` (thanks, @atusy, #1823).
 
+- The `smart` argument of most output formats has been removed, because Pandoc's `smart` extension is enabled by default, and setting `smart: false` for an output format did not really have any effect (which could be considered a bug, but we want to get rid of this option since it existed only for a historical reason for Pandoc 1.x, and Pandoc 2.x has been released for more than two years). If you want to disable the `smart` extension, you can use the option `md_extensions: -smart` of the output format (thanks, @atusy, #1774).
+
+
 rmarkdown 2.1
 ================================================================================
 

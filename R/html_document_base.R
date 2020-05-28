@@ -16,8 +16,7 @@
 #' @return HTML base output format.
 #'
 #' @export
-html_document_base <- function(smart = TRUE,
-                               theme = NULL,
+html_document_base <- function(theme = NULL,
                                self_contained = TRUE,
                                lib_dir = NULL,
                                mathjax = "default",
@@ -34,10 +33,6 @@ html_document_base <- function(smart = TRUE,
     dependency_resolver <- html_dependency_resolver
 
   args <- c()
-
-  # smart quotes, etc.
-  if (smart && !pandoc2.0())
-    args <- c(args, "--smart")
 
   # no email obfuscation
   args <- c(args, "--email-obfuscation", "none")
