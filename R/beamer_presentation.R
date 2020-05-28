@@ -126,6 +126,8 @@ beamer_presentation <- function(toc = FALSE,
   # make sure the graphics package is always loaded
   if (identical(template, "default")) args <- c(args, "--variable", "graphics=yes")
 
+  args <- c(args, pandoc_lua_filters(c("pagebreak.lua", "latex-div.lua")))
+
   # custom args
   args <- c(args, pandoc_args)
 
