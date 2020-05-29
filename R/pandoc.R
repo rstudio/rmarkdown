@@ -28,13 +28,13 @@
 #'
 #' # convert markdown to various formats
 #' pandoc_convert("input.md", to = "html")
-#' pandoc_convert("input.md", to = "pdf")
+#' pandoc_convert("input.md", to = "latex")
 #'
 #' # process citations
 #' pandoc_convert("input.md", to = "html", citeproc = TRUE)
 #'
 #' # add some pandoc options
-#' pandoc_convert("input.md", to="pdf", options = c("--listings"))
+#' pandoc_convert("input.md", to = "latex", options = c("--listings"))
 #' }
 #' @export
 pandoc_convert <- function(input,
@@ -61,6 +61,7 @@ pandoc_convert <- function(input,
   args <- c(input)
   if (!is.null(to)) {
     if (to == 'html') to <- 'html4'
+    if (to == 'pdf') to <- 'latex'
     args <- c(args, "--to", to)
   }
   if (!is.null(from))

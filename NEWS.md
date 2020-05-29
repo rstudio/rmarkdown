@@ -25,6 +25,8 @@ rmarkdown 2.2
 
 - `render()` now respects the YAML metadata in the R script when rendering the script with Pandoc 2.8 or later (thanks, @nsoranzo #1740, @cderv #1741).
 
+- For `pandoc_convert()`, when the argument `to = 'pdf'`, it will be changed to `'latex'` internally (thanks, @JohannesFriedrich, #1802).
+
 
 rmarkdown 2.1
 ================================================================================
