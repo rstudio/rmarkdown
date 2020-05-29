@@ -163,7 +163,7 @@ pdf_document <- function(toc = FALSE,
     # use a geometry filter when we are using the "default" template
     if (identical(template, "default")) {
       # set the margin to 1 inch if no geometry options or document class specified
-      if (!any(c("geometry", "documentclass") %in% names(metadata)))
+      if (default_geometry(names(metadata), pandoc_args))
         args <- c(args, "--variable", "geometry:margin=1in")
       # support subtitle for Pandoc < 2.6
       if (("subtitle" %in% names(metadata)) && !pandoc_available("2.6")) args <- c(
@@ -270,6 +270,11 @@ citation_package_arg <- function(value) {
   }
   value <- match.arg(value, c("default", "natbib", "biblatex"))
   if (value != "default") paste0("--", value)
+}
+
+default_geometry <- function(meta_names, pandoc_args = NULL) {
+  !any(c('geometry', 'documentclass') %in% meta_names) &&
+    length(grep('^(--(variable|metadata)=)?documentclass:', pandoc_args)) == 0
 }
 
 #' @param ... Arguments passed to \code{pdf_document()}.
