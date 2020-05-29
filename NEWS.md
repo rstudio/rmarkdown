@@ -27,6 +27,8 @@ rmarkdown 2.2
 
 - For `pandoc_convert()`, when the argument `to = 'pdf'`, it will be changed to `'latex'` internally (thanks, @JohannesFriedrich, #1802).
 
+- `render(run_pandoc = FALSE)` no longer cleans up the Markdown file (typically knitted from Rmd) (thanks, @BrianDiggs, #1812).
+
 
 rmarkdown 2.1
 ================================================================================
