@@ -398,17 +398,17 @@ render <- function(input,
                             format = "Rmd")
     intermediates <- c(intermediates, spin_rmd)
     knit_input <- spin_rmd
-    # append default metadata (this will be ignored if there is user
-    # metadata elsewhere in the file)
-    metadata <- paste('\n',
-      '---\n',
-      'title: "', input, '"\n',
-      'author: "', Sys.info()[["user"]], '"\n',
-      'date: "', Sys.Date(), '"\n',
-      '---\n'
-    , sep = "")
-    input_lines <- read_utf8(knit_input)
-    write_utf8(c(input_lines, metadata), knit_input)
+    # append default metadata unless the field exists in YAML
+    meta1 <- yaml_front_matter(knit_input)
+    meta2 <- list(
+      title = input, author = Sys.info()[["user"]],
+      date = as.character(Sys.Date())
+    )
+    for (i in names(meta2)) if (!is.null(meta1[[i]])) meta2[[i]] <- NULL
+    if (length(meta2)) {
+      input_lines <- read_utf8(knit_input)
+      write_utf8(c(input_lines, '\n\n---', yaml::as.yaml(meta2), '---'), knit_input)
+    }
   }
 
   # read the input file
