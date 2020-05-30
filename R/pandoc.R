@@ -710,17 +710,8 @@ pandoc_citeproc <- function() {
 }
 
 pandoc_lua_filters <- function(...) {
-  args <- c()
   # lua filters was introduced in pandoc 2.0
-  if (pandoc2.0()) {
-    args <- c(
-      rbind(
-        "--lua-filter",
-        pkg_file("rmd", "lua", ...)
-      )
-    )
-  }
-  args
+  if (pandoc2.0()) c(rbind("--lua-filter", pkg_file("rmd", "lua", ...)))
 }
 
 
