@@ -21,6 +21,8 @@ context("html_vignette format")
 
 # https://github.com/rstudio/rmarkdown/pull/1789#issuecomment-616908700
 test_that("vignette_pre_processor warns against differences in vignette index entry and title", {
+  opts <- options(rmarkdown.html_vignette.check_title = TRUE)
+  on.exit(options(opts), add = TRUE)
   input_file <- .generate_temp_vignette('document title', 'vignette title')
   expect_warning(vignette_pre_processor(input_file), 'rmarkdown.html_vignette.check_title')
   unlink(input_file)
