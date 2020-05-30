@@ -77,7 +77,8 @@ html_vignette <- function(fig_width = 3,
 }
 
 vignette_pre_processor <- function(input_file, metadata = yaml_front_matter(input_file)) {
-  if (!getOption(o <- 'rmarkdown.html_vignette.check_title', TRUE)) return()
+  if (!getOption(o <- 'rmarkdown.html_vignette.check_title', !knitr:::is_R_CMD_check()))
+    return()
   title1 <- metadata[['title']]
   title2 <- tools::vignetteInfo(input_file)[['title']]
   if (!identical(title1, title2)) warning(
