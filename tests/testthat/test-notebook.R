@@ -9,8 +9,6 @@ expect_default_evaluate_hook <- function() {
 }
 
 test_that("an example R Notebook document can be rendered and parsed", {
-  skip_on_cran()
-
   # check initial status of hook
   expect_default_evaluate_hook()
 
@@ -35,8 +33,6 @@ test_that("an example R Notebook document can be rendered and parsed", {
 })
 
 test_that("a custom output_source can be used on render", {
-  skip_on_cran()
-
   # set up output_source hook
   png_path <- normalizePath(testthat::test_path("resources/tinyplot.png"), winslash = "/")
   output_options <- list(output_source = function(code, context, ...) {
@@ -112,7 +108,6 @@ test_that("a custom output_source can be used on render", {
 
 test_that("UFT8 character in html widget does not break notebook annotation", {
   # from issue in https://github.com/rstudio/rmarkdown/issues/1762
-  skip_on_cran()
   # simulate html widget code
   html_dependency_dummy <- function()  {
     htmltools::htmlDependency(

@@ -2,8 +2,6 @@ context("params")
 
 test_that("setting of params works", {
 
-  skip_on_cran()
-
   params_sample <- '---\ntitle: "test"\noutput: html_document\nparams:\n  field1:\n    value: "defaulthere"\n  field2: null\n  field3: \n  field4: NULL\n---'
 
   # No overrides
@@ -30,8 +28,6 @@ test_that("setting of params works", {
 })
 
 test_that("params render their UI", {
-
-  skip_on_cran()
 
   # file input is always NULL
   ui <- params_value_to_ui(shiny::fileInput, "anything", TRUE)
@@ -111,8 +107,6 @@ test_that("parameters are configurable", {
 
 test_that("params hidden w/o show_default", {
 
-  skip_on_cran()
-
   # file input is always NULL
   ui <- params_value_to_ui(shiny::fileInput, "anything", FALSE)
   expect_null(ui)
@@ -141,8 +135,6 @@ test_that("params hidden w/o show_default", {
 })
 
 test_that("ui value conversion", {
-  skip_on_cran()
-
   emptydt <- Sys.time()[-1]
 
   # Sys.time() -> as.character loses sub-second precision
