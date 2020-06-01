@@ -77,6 +77,8 @@ html_vignette <- function(fig_width = 3,
 }
 
 vignette_pre_processor <- function(input_file, metadata = yaml_front_matter(input_file)) {
+  if (getRversion() < 3.6)
+    return()
   if (!getOption(o <- 'rmarkdown.html_vignette.check_title', !knitr:::is_R_CMD_check()))
     return()
   title1 <- metadata[['title']]
