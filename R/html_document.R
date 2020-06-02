@@ -234,13 +234,7 @@ html_document <- function(toc = FALSE,
     extra_dependencies <- append(extra_dependencies,
                                  list(html_dependency_jquery(),
                                       html_dependency_jqueryui(),
-                                      html_dependency_tocify(),
-                                      # The following code is needed for screen-reader accessibility improvement for highlighted codeblock:
-                                      if (pandoc_version() <= '2.9.2.1') {
-                                        html_dependency_pandocCodeBlockAccessibility()
-                                      }
-                                 )
-    )
+                                      html_dependency_tocify()))
 
     # flag for template
     args <- c(args, pandoc_variable_arg("toc_float", "1"))
@@ -287,7 +281,13 @@ html_document <- function(toc = FALSE,
   # add highlight.js html_dependency if required
   if (identical(template, "default") && is_highlightjs(highlight)) {
     extra_dependencies <- append(extra_dependencies, list(html_dependency_highlightjs(highlight)))
+  } else if (!is.null(highlight) && pandoc_version() <= '2.9.2.1') {
+    extra_dependencies <- append(extra_dependencies,
+                                 # For screen-reader accessibility improvement
+                                 list(html_dependency_pandocCodeBlockAccessibility()))
   }
+
+
 
   # numbered sections
   if (number_sections)
