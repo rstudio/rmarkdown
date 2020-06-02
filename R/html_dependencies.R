@@ -71,6 +71,19 @@ html_dependency_tocify <- function() {
     stylesheet = "jquery.tocify.css")
 }
 
+# Create an HTML dependency for pandoc_codeblock_accessibility
+#' @rdname html-dependencies
+#' @export
+html_dependency_pandocCodeBlockAccessibility <- function() {
+
+  htmlDependency(
+    name = "pandocCodeBlockAccessibility",
+    version = "0.0.1",
+    src = pkg_file("rmd/h/accessibility"),
+    script = "pandocCodeBlockAccessibility.js"
+)
+}
+
 # Create an HTML dependency for FontAwesome
 #' @rdname html-dependencies
 #' @export
