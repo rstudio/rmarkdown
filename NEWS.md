@@ -1,7 +1,7 @@
 rmarkdown 2.3
 ================================================================================
 
-
+- `html_document()` can apply `code_folding` on any chunk engines. Note that turning `code_folding` on (`"show"` or `"hide"`) and off (`"none"`) invalidates chunk caches (thanks, @atusy, #1835).
 
 rmarkdown 2.2
 ================================================================================
