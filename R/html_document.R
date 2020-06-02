@@ -473,9 +473,9 @@ knitr_options_html <- function(fig_width,
 
   opts_hooks <- if (code_folding != "none") {
     list(
-      engine = function(options) {
+      engine = function(option) {
         options$class.source = c(options$class.source, "foldable")
-        return(options)
+        return(option)
       }
     )
   }
