@@ -284,7 +284,7 @@ html_document <- function(toc = FALSE,
   } else if (!is.null(highlight) && pandoc_version() >= '2.7.3' && pandoc_version() <= '2.9.2.1') {
     extra_dependencies <- append(extra_dependencies,
                                  # For screen-reader accessibility improvement
-                                 list(html_dependency_pandocCodeBlockAccessibility()))
+                                 list(html_dependency_accessibleCodeBlock()))
   }
 
 

@@ -74,13 +74,13 @@ html_dependency_tocify <- function() {
 # Create an HTML dependency for pandoc_codeblock_accessibility
 #' @rdname html-dependencies
 #' @export
-html_dependency_pandocCodeBlockAccessibility <- function() {
+html_dependency_accessibleCodeBlock <- function() {
 
   htmlDependency(
-    name = "pandocCodeBlockAccessibility",
+    name = "accessibleCodeBlock",
     version = "0.0.1",
-    src = pkg_file("rmd/h/accessibility"),
-    script = "pandocCodeBlockAccessibility.js"
+    src = pkg_file("rmd/h/pandoc"),
+    script = "accessibleCodeBlock.js"
 )
 }
 
