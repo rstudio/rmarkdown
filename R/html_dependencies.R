@@ -79,7 +79,7 @@ html_dependency_accessibleCodeBlock <- function() {
   htmlDependency(
     name = "accessibleCodeBlock",
     version = "0.0.1",
-    src = pkg_file("rmd/h/pandoc"),
+    src = pkg_file("rmd/h/accessibility"),
     script = "accessibleCodeBlock.js"
 )
 }
