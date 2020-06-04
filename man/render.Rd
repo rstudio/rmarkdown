@@ -13,7 +13,7 @@ render(
   output_yaml = NULL,
   intermediates_dir = NULL,
   knit_root_dir = NULL,
-  md_file_splitter = NULL,
+  file_scope = NULL,
   runtime = c("auto", "static", "shiny", "shiny_prerendered"),
   clean = TRUE,
   params = NULL,
@@ -75,7 +75,7 @@ uses knitr's \code{root.dir} knit option. If \code{NULL} then the behavior
 will follow the knitr default, which is to use the parent directory of the
 document.}
 
-\item{md_file_splitter}{An optional function that will split markdown
+\item{file_scope}{An optional function that will split markdown
 inputs to pandoc into multiple files. This is for the purpose of invoking
 pandoc with the \code{--file-scope} option, which allows footnotes in
 different files with the same identifiers to work as expected. This is
