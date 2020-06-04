@@ -1,7 +1,7 @@
 rmarkdown 2.3
 ================================================================================
 
-
+- Added `md_file_splitter` option to `render()`, used to split markdown inputs to pandoc into multiple files. This is for the purpose of invoking pandoc with the `--file-scope` option, which in turn enables graceful handling of duplicate footnote numbers across chapters.
 
 rmarkdown 2.2
 ================================================================================
