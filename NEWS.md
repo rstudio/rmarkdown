@@ -1,6 +1,7 @@
 rmarkdown 2.3
 ================================================================================
 
+- Added the customizable `lang` atrribute to `ioslides_presentation` output (thanks, @jooyoungseo, #1841).
 
 
 rmarkdown 2.2
