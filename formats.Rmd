@@ -84,7 +84,7 @@ output:
     <div class="formatSection">
       <div class="formatSectionTitle">Journals</div>
       <div class="formatTable">
-         <a href="https://rstudio.github.io/distill/" class="formatTableRow">
+        <a href="https://rstudio.github.io/distill/" class="formatTableRow">
           <div class="formatName">distill</div>
           <div class="formatDescription">Scientific and technical writing for the web</div>
         </a>
