@@ -1,7 +1,10 @@
 rmarkdown 2.3
 ================================================================================
 
-- Added `file_scope` option to `render()`, a function used to split markdown inputs to pandoc into multiple files. This is for the purpose of invoking pandoc with the `--file-scope` option, which in turn enables graceful handling of duplicate footnote numbers across chapters.
+- Added `file_scope` option to `render()`, a function used to split markdown inputs to pandoc into multiple files. This is for the purpose of invoking pandoc with the `--file-scope` option, which in turn enables graceful handling of duplicate footnote numbers across chapters (#1837).
+
+- Added the customizable `lang` atrribute to `ioslides_presentation` output (thanks, @jooyoungseo, #1841).
+
 
 rmarkdown 2.2
 ================================================================================
