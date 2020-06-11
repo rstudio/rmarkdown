@@ -5,6 +5,7 @@ rmarkdown 2.3
 
 - Added the customizable `lang` atrribute to `ioslides_presentation` output (thanks, @jooyoungseo, #1841).
 
+- Added `publish_site()` function for "one-button" publishing of R Markdown websites.
 
 rmarkdown 2.2
 ================================================================================
