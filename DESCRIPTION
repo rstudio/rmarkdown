@@ -103,7 +103,7 @@ Suggests:
     pkgdown,
     rsconnect
 SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
-URL: https://github.com/rstudio/rmarkdown
+URL: https://rmarkdown.rstudio.com/docs/, https://github.com/rstudio/rmarkdown
 BugReports: https://github.com/rstudio/rmarkdown/issues
 License: GPL-3
 RoxygenNote: 7.1.0
