@@ -7,6 +7,8 @@ rmarkdown 2.3
 
 - Added `publish_site()` function for "one-button" publishing of R Markdown websites.
 
+- When the `df_print` option is `kable` and the output format is not HTML, `<div class="kable-table">` is no longer added to the `kable()` output, because recent versions of Pandoc will convert the `div` to a LaTeX environment when the output format is LaTeX (thanks, Laurens, https://stackoverflow.com/q/62340425/559676).
+
 rmarkdown 2.2
 ================================================================================
 
