@@ -190,7 +190,7 @@ NULL
 #' uses knitr's \code{root.dir} knit option. If \code{NULL} then the behavior
 #' will follow the knitr default, which is to use the parent directory of the
 #' document.
-#' @param file_scope An optional function that will split markdown
+#' @param references_scope An optional function that will split markdown
 #' inputs to pandoc into multiple files. This is for the purpose of invoking
 #' pandoc with the \code{--file-scope} option, which allows footnotes in
 #' different files with the same identifiers to work as expected. This is
@@ -250,7 +250,7 @@ render <- function(input,
                    output_yaml = NULL,
                    intermediates_dir = NULL,
                    knit_root_dir = NULL,
-                   file_scope = NULL,
+                   references_scope = NULL,
                    runtime =  c("auto", "static", "shiny", "shiny_prerendered"),
                    clean = TRUE,
                    params = NULL,
@@ -295,7 +295,7 @@ render <- function(input,
                        output_options = output_options,
                        intermediates_dir = intermediates_dir,
                        knit_root_dir = knit_root_dir,
-                       file_scope = file_scope,
+                       references_scope = references_scope,
                        runtime = runtime,
                        clean = clean,
                        params = params,
@@ -857,17 +857,17 @@ render <- function(input,
       utf8_input <- path.expand(utf8_input)
       output     <- path.expand(output)
 
-      # determine args and input files (if we have an file_scope then we
+      # determine args and input files (if we have a references_scope then we
       # we need to split the files use it here)
       pandoc_args <- output_format$pandoc$args
       input_files <- utf8_input
-      if (!is.null(file_scope)) {
+      if (!is.null(references_scope)) {
 
         # add the --file-scope option
         pandoc_args <- c(pandoc_args, "--file-scope")
 
         # determine new input files
-        inputs <- file_scope(utf8_input)
+        inputs <- references_scope(utf8_input)
         input_files <- unlist(lapply(inputs, function(input) {
           file <- file_with_meta_ext(input$name, "split", "md")
           file <- file.path(dirname(utf8_input), file)
