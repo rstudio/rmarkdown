@@ -1,6 +1,14 @@
 rmarkdown 2.3
 ================================================================================
 
+- Added `references_scope` argument to `render()`, a function used to split markdown inputs to pandoc into multiple files. This is for the purpose of invoking pandoc with the `--file-scope` option, which in turn enables graceful handling of duplicate footnote numbers across chapters (#1837).
+
+- Added the customizable `lang` atrribute to `ioslides_presentation` output (thanks, @jooyoungseo, #1841).
+
+- Added `publish_site()` function for "one-button" publishing of R Markdown websites.
+
+- When the `df_print` option is `kable` and the output format is not HTML, `<div class="kable-table">` is no longer added to the `kable()` output, because recent versions of Pandoc will convert the `div` to a LaTeX environment when the output format is LaTeX (thanks, Laurens, https://stackoverflow.com/q/62340425/559676).
+
 - `html_document()` can apply `code_folding` on any chunk engines. Note that turning `code_folding` on (`"show"` or `"hide"`) and off (`"none"`) invalidates chunk caches (thanks, @atusy, #1835).
 
 rmarkdown 2.2
