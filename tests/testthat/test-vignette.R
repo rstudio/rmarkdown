@@ -24,6 +24,11 @@ test_that("vignette_pre_processor warns against differences in vignette index en
   opts <- options(rmarkdown.html_vignette.check_title = TRUE)
   on.exit(options(opts), add = TRUE)
   input_file <- .generate_temp_vignette('document title', 'vignette title')
-  expect_warning(vignette_pre_processor(input_file), 'rmarkdown.html_vignette.check_title')
+  # only warns for R 3.6 and later
+  if (getRversion() >= 3.6) {
+    expect_warning(vignette_pre_processor(input_file), 'rmarkdown.html_vignette.check_title')
+  } else {
+    expect_null(vignette_pre_processor(input_file))
+  }
   unlink(input_file)
 })
