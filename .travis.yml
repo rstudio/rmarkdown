@@ -6,7 +6,8 @@ pandoc_version: 2.3.1
 cran: https://cran.rstudio.com
 
 env:
-  - _R_CHECK_TESTS_NLINES_=0
+  global:
+    - _R_CHECK_TESTS_NLINES_=0
 
 before_install:
   - pandoc --version
