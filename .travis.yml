@@ -2,24 +2,46 @@ dist: bionic
 language: r
 cache:
   packages: yes
+  directories:
+  - "$PANDOC"
 pandoc_version: 2.3.1
 cran: https://cran.rstudio.com
 
 env:
   global:
     - _R_CHECK_TESTS_NLINES_=0
-  matrix:
-    - PANDOC_VERSION=default NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
-    - PANDOC_VERSION=latest PATH=$HOME/bin:$PATH
+    - PANDOC="$HOME/.pandoc"
+    - PANDOC_DEB="https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb"
 
 before_install:
-  - "[[ ${PANDOC_VERSION} = latest ]] && ./tools/install-pandoc.sh || true"
   - pandoc --version
 
-after_success:
-  - "[[ ${TRAVIS_BRANCH}  = master  ]] || exit 0"
-  - "[[ ${PANDOC_VERSION} = default ]] || exit 0"
-  - "[[ -z ${NETLIFY_AUTH_TOKEN} ]] && exit 0"
-  - nvm install stable
-  - npm install netlify-cli -g
-  - Rscript -e 'pkgdown::build_site(".", document = FALSE, preview = FALSE)' && netlify deploy --prod --dir docs
+jobs:
+  include:
+    - r: 3.3
+    - r: 3.4
+    - r: 3.5
+    - r: 3.6
+    - r: release
+      name: last R and Pandoc versions
+      env: PATH=$HOME/bin:$PATH
+      before_install:
+        - ./tools/install-pandoc.sh || true
+        - pandoc --version
+    - r: release
+      name: last R and Pandoc 2.7.3
+      env: PATH=$PANDOC/usr/bin:$PATH
+      before_install:
+        - if [[ ! -f "$PANDOC/pandoc.deb" ]]; then curl -L "$PANDOC_DEB" -o "$PANDOC/pandoc.deb" && dpkg -x "$PANDOC/pandoc.deb" "$PANDOC"; fi
+        - pandoc --version
+    - r: release
+      name: last R and Pandoc 2.3.1 versions
+      env: NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
+      after_success:
+        - "[[ ${TRAVIS_BRANCH}  = master  ]] || exit 0"
+        - "[[ -z ${NETLIFY_AUTH_TOKEN} ]] && exit 0"
+        - nvm install stable
+        - npm install netlify-cli -g
+        - Rscript -e 'pkgdown::build_site(".", document = FALSE, preview = FALSE)' && netlify deploy --prod --dir docs
+    - r: devel
+
