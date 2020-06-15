@@ -72,8 +72,7 @@ pandoc_convert <- function(input,
     args <- c(args, "--output", output)
 
   # set pandoc stack size
-  stack_size <- getOption("pandoc.stack.size", default = "512m")
-  args <- c(c("+RTS", paste0("-K", stack_size), "-RTS"), args)
+  args <- prepend_pandoc_stack_size(args)
 
   # additional command line options
   args <- c(args, options)
@@ -631,6 +630,12 @@ set_pandoc_info <- function(dir, version = if (!is.null(dir)) get_pandoc_version
   .pandoc$version <- version
 }
 
+# prepend pandoc stack size arguments
+prepend_pandoc_stack_size <- function(args) {
+  stack_size <- getOption("pandoc.stack.size", default = "512m")
+  c(c("+RTS", paste0("-K", stack_size), "-RTS"), args)
+}
+
 # wrap a system call to pandoc so that LC_ALL is not set
 # see: https://github.com/rstudio/rmarkdown/issues/31
 # see: https://ghc.haskell.org/trac/ghc/ticket/7344
@@ -669,6 +674,23 @@ with_pandoc_safe_environment <- function(code) {
   }
 
   force(code)
+}
+
+has_duplicate_footnotes <- function(input) {
+
+  # ensure we've scanned for pandoc
+  find_pandoc()
+
+  # create args
+  args <- prepend_pandoc_stack_size(c(input, "--to", "json"))
+
+  # run the conversion to json, capturing output
+  with_pandoc_safe_environment({
+    result <- system2(pandoc(), args, stdout = TRUE, stderr = TRUE)
+  })
+
+  # check for the duplicate note warning in stderr
+  any(grepl("[WARNING] Duplicate note", result, fixed = TRUE))
 }
 
 # if there is no LANG environment variable set pandoc is going to hang so

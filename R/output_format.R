@@ -22,6 +22,9 @@
 #'   also pass an arbitrary function to be used for printing data frames. You
 #'   can disable the \code{df_print} behavior entirely by setting the option
 #'   \code{rmarkdown.df_print} to \code{FALSE}.
+#' @param renumber_footnotes Whether to automatically renumber duplicate
+#'   numeric footnote identifiers vis the pandoc `--file-scope` option. You
+#'   must provide a \code{file_scope} handler whenever enabling this option.
 #' @param pre_knit An optional function that runs before knitting which receives
 #'   the \code{input} (input filename passed to \code{render}) and \code{...}
 #'   (for future expansion) arguments.
@@ -47,6 +50,12 @@
 #'   \code{output_file}.
 #' @param on_exit A function to call when \code{rmarkdown::render()} finishes
 #'   execution (as registered with a \code{\link{on.exit}} handler).
+#' @param file_scope A function that will split markdown input to pandoc into
+#'   multiple named files. This is useful when the caller has concatenated a
+#'   set of Rmd files together (as \pkg{bookdown} does), and those files may
+#'   need to processed by pandoc using the `--file-scope` option. The function
+#'   should return a named list of files w/ \code{name} and \code{content}
+#'   for each file.
 #' @param base_format An optional format to extend.
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
@@ -62,12 +71,14 @@ output_format <- function(knitr,
                           keep_md = FALSE,
                           clean_supporting = TRUE,
                           df_print = NULL,
+                          renumber_footnotes = NULL,
                           pre_knit = NULL,
                           post_knit = NULL,
                           pre_processor = NULL,
                           intermediates_generator = NULL,
                           post_processor = NULL,
                           on_exit = NULL,
+                          file_scope = NULL,
                           base_format = NULL) {
 
   format <- list(
@@ -76,11 +87,13 @@ output_format <- function(knitr,
     keep_md = keep_md,
     clean_supporting = if (isTRUE(keep_md)) FALSE else clean_supporting,
     df_print = df_print,
+    renumber_footnotes = renumber_footnotes,
     pre_knit = pre_knit,
     post_knit = post_knit,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor,
+    file_scope = file_scope,
     on_exit = on_exit
   )
 

@@ -10,12 +10,14 @@ output_format(
   keep_md = FALSE,
   clean_supporting = TRUE,
   df_print = NULL,
+  renumber_footnotes = NULL,
   pre_knit = NULL,
   post_knit = NULL,
   pre_processor = NULL,
   intermediates_generator = NULL,
   post_processor = NULL,
   on_exit = NULL,
+  file_scope = NULL,
   base_format = NULL
 )
 }
@@ -44,6 +46,10 @@ for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
 \code{rmarkdown.df_print} to \code{FALSE}.}
+
+\item{renumber_footnotes}{Whether to automatically renumber duplicate
+numeric footnote identifiers vis the pandoc `--file-scope` option. You
+must provide a \code{file_scope} handler whenever enabling this option.}
 
 \item{pre_knit}{An optional function that runs before knitting which receives
 the \code{input} (input filename passed to \code{render}) and \code{...}
@@ -75,6 +81,13 @@ render the \code{input_file}.}
 
 \item{on_exit}{A function to call when \code{rmarkdown::render()} finishes
 execution (as registered with a \code{\link{on.exit}} handler).}
+
+\item{file_scope}{A function that will split markdown input to pandoc into
+multiple named files. This is useful when the caller has concatenated a
+set of Rmd files together (as \pkg{bookdown} does), and those files may
+need to processed by pandoc using the `--file-scope` option. The function
+should return a named list of files w/ \code{name} and \code{content}
+for each file.}
 
 \item{base_format}{An optional format to extend.}
 }
