@@ -4,14 +4,12 @@ cache:
   packages: yes
   directories:
   - "$PANDOC"
-pandoc_version: 2.3.1
+pandoc_version: 2.7.3
 cran: https://cran.rstudio.com
 
 env:
   global:
     - _R_CHECK_TESTS_NLINES_=0
-    - PANDOC="$HOME/.pandoc"
-    - PANDOC_DEB="https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb"
 
 before_install:
   - pandoc --version
@@ -23,19 +21,13 @@ jobs:
     - r: 3.5
     - r: 3.6
     - r: release
-      name: last R and Pandoc versions
+      name: R release / Pandoc devel
       env: PATH=$HOME/bin:$PATH
       before_install:
         - ./tools/install-pandoc.sh || true
         - pandoc --version
     - r: release
-      name: last R and Pandoc 2.7.3
-      env: PATH=$PANDOC/usr/bin:$PATH
-      before_install:
-        - if [[ ! -f "$PANDOC/pandoc.deb" ]]; then curl -L "$PANDOC_DEB" -o "$PANDOC/pandoc.deb" && dpkg -x "$PANDOC/pandoc.deb" "$PANDOC"; fi
-        - pandoc --version
-    - r: release
-      name: last R and Pandoc 2.3.1 versions
+      name: R release / RStudio Pandoc
       env: NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
       after_success:
         - "[[ ${TRAVIS_BRANCH}  = master  ]] || exit 0"
