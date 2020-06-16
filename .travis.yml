@@ -21,13 +21,13 @@ jobs:
     - r: 3.5
     - r: 3.6
     - r: release
-      name: R release / last Pandoc
+      name: R release / Pandoc devel
       env: PATH=$HOME/bin:$PATH
       before_install:
         - ./tools/install-pandoc.sh || true
         - pandoc --version
     - r: release
-      name: R release / default Pandoc
+      name: R release / RStudio Pandoc
       env: NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
       after_success:
         - "[[ ${TRAVIS_BRANCH}  = master  ]] || exit 0"
