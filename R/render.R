@@ -847,18 +847,17 @@ render <- function(input,
       utf8_input <- path.expand(utf8_input)
       output     <- path.expand(output)
 
-      # determine args and input files (if we are renumbering footnotes and
-      # we have duplicates then we need to split the input file into multiple
-      # scopes here)
+      # in case the output format turns on the --file-scope flag, run its
+      # file_scope function to split the input into multiple files
       pandoc_args <- output_format$pandoc$args
       input_files <- utf8_input
-      if (!is.null(output_format$file_scope)) {
+      if (!is.null(output_format$file_scope) &&
+          length(inputs <- output_format$file_scope(utf8_input)) > 1) {
 
         # add the --file-scope option
         pandoc_args <- c(pandoc_args, "--file-scope")
 
         # determine new input files
-        inputs <- output_format$file_scope(utf8_input)
         input_files <- unlist(lapply(inputs, function(input) {
           file <- file_with_meta_ext(input$name, "split", "md")
           file <- file.path(dirname(utf8_input), file)
