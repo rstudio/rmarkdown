@@ -852,7 +852,7 @@ render <- function(input,
       # scopes here)
       pandoc_args <- output_format$pandoc$args
       input_files <- utf8_input
-      if (isTRUE(output_format$renumber_footnotes) && has_duplicate_footnotes(utf8_input)) {
+      if (!is.null(output_format$file_scope)) {
 
         # add the --file-scope option
         pandoc_args <- c(pandoc_args, "--file-scope")

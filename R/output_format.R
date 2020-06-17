@@ -22,9 +22,6 @@
 #'   also pass an arbitrary function to be used for printing data frames. You
 #'   can disable the \code{df_print} behavior entirely by setting the option
 #'   \code{rmarkdown.df_print} to \code{FALSE}.
-#' @param renumber_footnotes Whether to automatically renumber duplicate
-#'   numeric footnote identifiers vis the pandoc `--file-scope` option. You
-#'   must provide a \code{file_scope} handler whenever enabling this option.
 #' @param pre_knit An optional function that runs before knitting which receives
 #'   the \code{input} (input filename passed to \code{render}) and \code{...}
 #'   (for future expansion) arguments.
@@ -71,7 +68,6 @@ output_format <- function(knitr,
                           keep_md = FALSE,
                           clean_supporting = TRUE,
                           df_print = NULL,
-                          renumber_footnotes = NULL,
                           pre_knit = NULL,
                           post_knit = NULL,
                           pre_processor = NULL,
@@ -87,7 +83,6 @@ output_format <- function(knitr,
     keep_md = keep_md,
     clean_supporting = if (isTRUE(keep_md)) FALSE else clean_supporting,
     df_print = df_print,
-    renumber_footnotes = renumber_footnotes,
     pre_knit = pre_knit,
     post_knit = post_knit,
     pre_processor = pre_processor,

@@ -676,23 +676,6 @@ with_pandoc_safe_environment <- function(code) {
   force(code)
 }
 
-has_duplicate_footnotes <- function(input) {
-
-  # ensure we've scanned for pandoc
-  find_pandoc()
-
-  # create args
-  args <- prepend_pandoc_stack_size(c(input, "--to", "json"))
-
-  # run the conversion to json, capturing output
-  with_pandoc_safe_environment({
-    result <- system2(pandoc(), args, stdout = TRUE, stderr = TRUE)
-  })
-
-  # check for the duplicate note warning in stderr
-  any(grepl("[WARNING] Duplicate note", result, fixed = TRUE))
-}
-
 # if there is no LANG environment variable set pandoc is going to hang so
 # we need to specify a "generic" lang setting. With glibc >= 2.13 you can
 # specify C.UTF-8 so we prefer that. If we can't find that then we fall back

@@ -10,7 +10,6 @@ output_format(
   keep_md = FALSE,
   clean_supporting = TRUE,
   df_print = NULL,
-  renumber_footnotes = NULL,
   pre_knit = NULL,
   post_knit = NULL,
   pre_processor = NULL,
@@ -46,10 +45,6 @@ for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
 \code{rmarkdown.df_print} to \code{FALSE}.}
-
-\item{renumber_footnotes}{Whether to automatically renumber duplicate
-numeric footnote identifiers vis the pandoc `--file-scope` option. You
-must provide a \code{file_scope} handler whenever enabling this option.}
 
 \item{pre_knit}{An optional function that runs before knitting which receives
 the \code{input} (input filename passed to \code{render}) and \code{...}
