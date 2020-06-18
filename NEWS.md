@@ -13,7 +13,8 @@ rmarkdown 2.3
 
 - `html_vignette()` only warns against differences in the vignette title and the vignette index entry for R >= 3.6.0 (thanks, @krlmlr, #1832).
 
-- `html_document()` can apply `code_folding` on any chunk engines by adding the `foldable` class to source codes via the chunk options (`class.source` or `attr.source`). You may apply this feature to all the source codes for example by runnning `opts_chunk$set(class.source="foldable")` at the beggining of your document (thanks, @atusy, #1835).
+- `html_document()` can apply `code_folding` on any chunk engines if the `foldable` class is added to a source code block via the chunk options (`class.source` or `attr.source`). You may apply this feature to all the source code blocks, for example, by setting `knitr::opts_chunk$set(class.source = "foldable")` at the beggining of your document (thanks, @atusy, #1835).
+
 
 rmarkdown 2.2
 ================================================================================
