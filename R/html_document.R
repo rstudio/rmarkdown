@@ -428,7 +428,7 @@ html_document <- function(toc = FALSE,
 
   # return format
   output_format(
-    knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev, code_folding),
+    knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
     pandoc = pandoc_options(to = "html",
                             from = from_rmarkdown(fig_caption, md_extensions),
                             args = args),
@@ -464,9 +464,7 @@ knitr_options_html <- function(fig_width,
                                fig_height,
                                fig_retina,
                                keep_md,
-                               dev = 'png',
-                               code_folding = c("none", "show", "hide")) {
-  code_folding = match.arg(code_folding)
+                               dev = 'png') {
 
   opts_chunk <- list(dev = dev,
                      dpi = 96,
@@ -477,16 +475,7 @@ knitr_options_html <- function(fig_width,
   if (keep_md)
     opts_chunk$fig.retina <- NULL
 
-  opts_hooks <- if (code_folding != "none") {
-    list(
-      engine = function(options) {
-        options$class.source = c(options$class.source, "foldable")
-        return(options)
-      }
-    )
-  }
-
-  knitr_options(opts_chunk = opts_chunk, opts_hooks = opts_hooks)
+  knitr_options(opts_chunk = opts_chunk)
 }
 
 themes <- function() {
