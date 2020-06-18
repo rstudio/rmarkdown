@@ -72,8 +72,6 @@ html_dependency_tocify <- function() {
 }
 
 # Create an HTML dependency for Pandoc code block accessibility
-#' @rdname html-dependencies
-#' @export
 html_dependency_accessible_code_block <- function() {
   ver <- pandoc_version()
   if (ver < '2.7.3' || ver > '2.9.2.1') return()
