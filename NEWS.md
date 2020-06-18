@@ -9,6 +9,9 @@ rmarkdown 2.3
 
 - When the `df_print` option is `kable` and the output format is not HTML, `<div class="kable-table">` is no longer added to the `kable()` output, because recent versions of Pandoc will convert the `div` to a LaTeX environment when the output format is LaTeX (thanks, Laurens, https://stackoverflow.com/q/62340425/559676).
 
+- `html_vignette()` only warns against differences in the vignette title and the vignette index entry for R >= 3.6.0 (thanks, @krlmlr, #1832).
+
+
 rmarkdown 2.2
 ================================================================================
 
