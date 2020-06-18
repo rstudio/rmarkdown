@@ -1,3 +1,7 @@
+rmarkdown 2.4
+================================================================================
+
+
 rmarkdown 2.3
 ================================================================================
 
@@ -5,7 +9,7 @@ rmarkdown 2.3
 
 - Added `file_scope` option to output format definition. This enables handling of duplicate numeric footnote identifiers (e.g. across bookdown chapters) via the pandoc `--file-scope` option (#1837).
 
-- Added the customizable `lang` atrribute to `ioslides_presentation` output (thanks, @jooyoungseo, #1841).
+- Added the customizable `lang` attribute to `ioslides_presentation` output (thanks, @jooyoungseo, #1841).
 
 - Added `publish_site()` function for "one-button" publishing of R Markdown websites.
 
