@@ -2,24 +2,38 @@ dist: bionic
 language: r
 cache:
   packages: yes
-pandoc_version: 2.3.1
+  directories:
+  - "$PANDOC"
+pandoc_version: 2.7.3
 cran: https://cran.rstudio.com
 
 env:
   global:
     - _R_CHECK_TESTS_NLINES_=0
-  matrix:
-    - PANDOC_VERSION=default NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
-    - PANDOC_VERSION=latest PATH=$HOME/bin:$PATH
 
 before_install:
-  - "[[ ${PANDOC_VERSION} = latest ]] && ./tools/install-pandoc.sh || true"
   - pandoc --version
 
-after_success:
-  - "[[ ${TRAVIS_BRANCH}  = master  ]] || exit 0"
-  - "[[ ${PANDOC_VERSION} = default ]] || exit 0"
-  - "[[ -z ${NETLIFY_AUTH_TOKEN} ]] && exit 0"
-  - nvm install stable
-  - npm install netlify-cli -g
-  - Rscript -e 'pkgdown::build_site(".", document = FALSE, preview = FALSE)' && netlify deploy --prod --dir docs
+jobs:
+  include:
+    - r: 3.3
+    - r: 3.4
+    - r: 3.5
+    - r: 3.6
+    - r: release
+      name: R release / Pandoc devel
+      env: PATH=$HOME/bin:$PATH
+      before_install:
+        - ./tools/install-pandoc.sh || true
+        - pandoc --version
+    - r: release
+      name: R release / RStudio Pandoc
+      env: NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
+      after_success:
+        - "[[ ${TRAVIS_BRANCH}  = master  ]] || exit 0"
+        - "[[ -z ${NETLIFY_AUTH_TOKEN} ]] && exit 0"
+        - nvm install stable
+        - npm install netlify-cli -g
+        - Rscript -e 'pkgdown::build_site(".", document = FALSE, preview = FALSE)' && netlify deploy --prod --dir docs
+    - r: devel
+

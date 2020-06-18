@@ -13,7 +13,6 @@ render(
   output_yaml = NULL,
   intermediates_dir = NULL,
   knit_root_dir = NULL,
-  references_scope = NULL,
   runtime = c("auto", "static", "shiny", "shiny_prerendered"),
   clean = TRUE,
   params = NULL,
@@ -74,15 +73,6 @@ intermediate files are written to the same directory as the input file.}
 uses knitr's \code{root.dir} knit option. If \code{NULL} then the behavior
 will follow the knitr default, which is to use the parent directory of the
 document.}
-
-\item{references_scope}{An optional function that will split markdown
-inputs to pandoc into multiple files. This is for the purpose of invoking
-pandoc with the \code{--file-scope} option, which allows footnotes in
-different files with the same identifiers to work as expected. This is
-useful when the caller has concatenated a set of Rmd files together (as
-\pkg{bookdown} does), and those files may have conflicting footnote numbers.
-The function should return a named list of files w/ \code{name} and
-\code{content} for each file.}
 
 \item{runtime}{The runtime target for rendering. The \code{static} option
 produces output intended for static files; \code{shiny} produces output

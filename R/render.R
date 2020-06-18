@@ -190,14 +190,6 @@ NULL
 #' uses knitr's \code{root.dir} knit option. If \code{NULL} then the behavior
 #' will follow the knitr default, which is to use the parent directory of the
 #' document.
-#' @param references_scope An optional function that will split markdown
-#' inputs to pandoc into multiple files. This is for the purpose of invoking
-#' pandoc with the \code{--file-scope} option, which allows footnotes in
-#' different files with the same identifiers to work as expected. This is
-#' useful when the caller has concatenated a set of Rmd files together (as
-#' \pkg{bookdown} does), and those files may have conflicting footnote numbers.
-#' The function should return a named list of files w/ \code{name} and
-#' \code{content} for each file.
 #' @param runtime The runtime target for rendering. The \code{static} option
 #' produces output intended for static files; \code{shiny} produces output
 #' suitable for use in a Shiny document (see \code{\link{run}}). The default,
@@ -250,7 +242,6 @@ render <- function(input,
                    output_yaml = NULL,
                    intermediates_dir = NULL,
                    knit_root_dir = NULL,
-                   references_scope = NULL,
                    runtime =  c("auto", "static", "shiny", "shiny_prerendered"),
                    clean = TRUE,
                    params = NULL,
@@ -295,7 +286,6 @@ render <- function(input,
                        output_options = output_options,
                        intermediates_dir = intermediates_dir,
                        knit_root_dir = knit_root_dir,
-                       references_scope = references_scope,
                        runtime = runtime,
                        clean = clean,
                        params = params,
@@ -857,17 +847,17 @@ render <- function(input,
       utf8_input <- path.expand(utf8_input)
       output     <- path.expand(output)
 
-      # determine args and input files (if we have a references_scope then we
-      # we need to split the files use it here)
+      # in case the output format turns on the --file-scope flag, run its
+      # file_scope function to split the input into multiple files
       pandoc_args <- output_format$pandoc$args
       input_files <- utf8_input
-      if (!is.null(references_scope)) {
+      if (!is.null(output_format$file_scope) &&
+          length(inputs <- output_format$file_scope(utf8_input)) > 1) {
 
         # add the --file-scope option
         pandoc_args <- c(pandoc_args, "--file-scope")
 
-        # determine new input files
-        inputs <- references_scope(utf8_input)
+        # write the split content into *.split.md files
         input_files <- unlist(lapply(inputs, function(input) {
           file <- file_with_meta_ext(input$name, "split", "md")
           file <- file.path(dirname(utf8_input), file)

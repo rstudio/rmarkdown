@@ -47,6 +47,12 @@
 #'   \code{output_file}.
 #' @param on_exit A function to call when \code{rmarkdown::render()} finishes
 #'   execution (as registered with a \code{\link{on.exit}} handler).
+#' @param file_scope A function that will split markdown input to pandoc into
+#'   multiple named files. This is useful when the caller has concatenated a set
+#'   of Rmd files together (as \pkg{bookdown} does), and those files may need to
+#'   processed by pandoc using the \code{--file-scope} option. The function
+#'   should return a named list of files w/ \code{name} and \code{content} for
+#'   each file.
 #' @param base_format An optional format to extend.
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
@@ -68,6 +74,7 @@ output_format <- function(knitr,
                           intermediates_generator = NULL,
                           post_processor = NULL,
                           on_exit = NULL,
+                          file_scope = NULL,
                           base_format = NULL) {
 
   format <- list(
@@ -81,6 +88,7 @@ output_format <- function(knitr,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor,
+    file_scope = file_scope,
     on_exit = on_exit
   )
 

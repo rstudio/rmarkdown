@@ -58,12 +58,12 @@ publish_site <- function(site_dir = ".", site_name = NULL,
     # handle server
     if (!is.null(server) && is.null(account)) {
 
-      # get a version of the server with the protocol
+      # get a version of the server with the protocol (strip trailing slash)
       if (!grepl("^https?://", server))
         server_with_protocol <- paste0("https://", server)
       else
         server_with_protocol <- server
-      server_with_protocol <- strip_trailing_slash(server_with_protocol)
+      server_with_protocol <- sub("/+$", "", server_with_protocol)
 
       # now strip the protocol if it's there
       server <- sub("^https?://", "", server_with_protocol)

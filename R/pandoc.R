@@ -72,8 +72,7 @@ pandoc_convert <- function(input,
     args <- c(args, "--output", output)
 
   # set pandoc stack size
-  stack_size <- getOption("pandoc.stack.size", default = "512m")
-  args <- c(c("+RTS", paste0("-K", stack_size), "-RTS"), args)
+  args <- prepend_pandoc_stack_size(args)
 
   # additional command line options
   args <- c(args, options)
@@ -629,6 +628,12 @@ get_pandoc_version <- function(pandoc_dir) {
 set_pandoc_info <- function(dir, version = if (!is.null(dir)) get_pandoc_version(dir)) {
   .pandoc$dir <- dir
   .pandoc$version <- version
+}
+
+# prepend pandoc stack size arguments
+prepend_pandoc_stack_size <- function(args) {
+  stack_size <- getOption("pandoc.stack.size", default = "512m")
+  c(c("+RTS", paste0("-K", stack_size), "-RTS"), args)
 }
 
 # wrap a system call to pandoc so that LC_ALL is not set
