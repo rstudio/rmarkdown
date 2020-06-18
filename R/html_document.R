@@ -279,15 +279,15 @@ html_document <- function(toc = FALSE,
   args <- c(args, pandoc_html_highlight_args(template, highlight))
 
   # add highlight.js html_dependency if required
-  if (identical(template, "default") && is_highlightjs(highlight)) {
-    extra_dependencies <- append(extra_dependencies, list(html_dependency_highlightjs(highlight)))
-  } else if (!is.null(highlight) && pandoc_version() >= '2.7.3' && pandoc_version() <= '2.9.2.1') {
-    extra_dependencies <- append(extra_dependencies,
-                                 # For screen-reader accessibility improvement
-                                 list(html_dependency_accessibleCodeBlock()))
-  }
-
-
+  extra_dependencies <- append(
+    extra_dependencies,
+    if (identical(template, "default") && is_highlightjs(highlight)) {
+      list(html_dependency_highlightjs(highlight))
+    } else if (!is.null(highlight)) {
+      # for screen-reader accessibility improvement
+      list(html_dependency_accessible_code_block())
+    }
+  )
 
   # numbered sections
   if (number_sections)

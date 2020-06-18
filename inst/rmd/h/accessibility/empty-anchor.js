@@ -4,11 +4,10 @@
 
 document.addEventListener('DOMContentLoaded', function() {
   const codeList = document.getElementsByClassName("sourceCode");
-
-  for(var i in codeList) {
+  for (var i = 0; i < codeList.length; i++) {
     var linkList = codeList[i].getElementsByTagName('a');
-    for(var j in linkList) {
-      if(linkList[j].innerHTML === "") {
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
         linkList[j].setAttribute('aria-hidden', 'true');
       }
     }

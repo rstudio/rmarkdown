@@ -1,6 +1,8 @@
 rmarkdown 2.3
 ================================================================================
 
+- Addressed an accessibility issue in highlighted code blocks of HTML output for screen reader users: screen readers no longer read out an unnecessary code line id values (thanks, @jooyoungseo and @atusy, #1833).
+
 - Added `file_scope` option to output format definition. This enables handling of duplicate numeric footnote identifiers (e.g. across bookdown chapters) via the pandoc `--file-scope` option (#1837).
 
 - Added the customizable `lang` atrribute to `ioslides_presentation` output (thanks, @jooyoungseo, #1841).
