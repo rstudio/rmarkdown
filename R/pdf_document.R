@@ -3,7 +3,8 @@
 #' Formats for converting from R Markdown to a PDF or LaTeX document.
 #'
 #' See the \href{https://rmarkdown.rstudio.com/pdf_document_format.html}{online
-#' documentation} for additional details on using the \code{pdf_document} format.
+#' documentation} for additional details on using the \code{pdf_document}
+#' format.
 #'
 #' Creating PDF output from R Markdown requires that LaTeX be installed.
 #'
@@ -50,13 +51,15 @@
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", and "xelatex".
 #' @param citation_package The LaTeX package to process citations, \code{natbib}
-#'   or \code{biblatex}. Use \code{none} if neither package is to be used.
+#'   or \code{biblatex}. Use \code{default} if neither package is to be used,
+#'   which means citations will be processed via the command
+#'   \command{pandoc-citeproc}.
 #' @param template Pandoc template to use for rendering. Pass "default" to use
 #'   the rmarkdown package default template; pass \code{NULL} to use pandoc's
 #'   built-in template; pass a path to use a custom template that you've
 #'   created.  See the documentation on
-#'   \href{http://pandoc.org/README.html}{pandoc online documentation}
-#'   for details on creating custom templates.
+#'   \href{http://pandoc.org/README.html}{pandoc online documentation} for
+#'   details on creating custom templates.
 #' @param output_extensions Pandoc extensions to be added or removed from the
 #'   output format, e.g., \code{"-smart"} means the output format will be
 #'   \code{latex-smart}.
@@ -95,7 +98,7 @@ pdf_document <- function(toc = FALSE,
                          keep_tex = FALSE,
                          keep_md = FALSE,
                          latex_engine = "pdflatex",
-                         citation_package = c("none", "natbib", "biblatex"),
+                         citation_package = c("default", "natbib", "biblatex"),
                          includes = NULL,
                          md_extensions = NULL,
                          output_extensions = NULL,
@@ -131,8 +134,7 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_latex_engine_args(latex_engine))
 
   # citation package
-  citation_package <- match.arg(citation_package)
-  if (citation_package != "none") args <- c(args, paste0("--", citation_package))
+  args <- c(args, citation_package_arg(citation_package))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
@@ -161,7 +163,7 @@ pdf_document <- function(toc = FALSE,
     # use a geometry filter when we are using the "default" template
     if (identical(template, "default")) {
       # set the margin to 1 inch if no geometry options or document class specified
-      if (!any(c("geometry", "documentclass") %in% names(metadata)))
+      if (default_geometry(names(metadata), pandoc_args))
         args <- c(args, "--variable", "geometry:margin=1in")
       # support subtitle for Pandoc < 2.6
       if (("subtitle" %in% names(metadata)) && !pandoc_available("2.6")) args <- c(
@@ -258,6 +260,21 @@ fix_horiz_rule <- function(file) {
 process_header_includes <- function(x) {
   x <- unlist(x[["header-includes"]])
   gsub('(^|\n)\\s*```\\{=latex\\}\n(.+?\n)```\\s*(\n|$)', '\\1\\2\\3', x)
+}
+
+citation_package_arg <- function(value) {
+  value <- value[1]
+  if (value == "none") {
+    warning("citation_package = 'none' was deprecated; please use 'default' instead.")
+    value <- "default"
+  }
+  value <- match.arg(value, c("default", "natbib", "biblatex"))
+  if (value != "default") paste0("--", value)
+}
+
+default_geometry <- function(meta_names, pandoc_args = NULL) {
+  !any(c('geometry', 'documentclass') %in% meta_names) &&
+    length(grep('^(--(variable|metadata)=)?documentclass:', pandoc_args)) == 0
 }
 
 #' @param ... Arguments passed to \code{pdf_document()}.

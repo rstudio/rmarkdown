@@ -9,8 +9,6 @@ expect_default_evaluate_hook <- function() {
 }
 
 test_that("an example R Notebook document can be rendered and parsed", {
-  skip_on_cran()
-
   # check initial status of hook
   expect_default_evaluate_hook()
 
@@ -35,8 +33,6 @@ test_that("an example R Notebook document can be rendered and parsed", {
 })
 
 test_that("a custom output_source can be used on render", {
-  skip_on_cran()
-
   # set up output_source hook
   png_path <- normalizePath(testthat::test_path("resources/tinyplot.png"), winslash = "/")
   output_options <- list(output_source = function(code, context, ...) {
@@ -108,4 +104,26 @@ test_that("a custom output_source can be used on render", {
   # parse notebook
   parsed <- parse_html_notebook(output_file)
 
+})
+
+test_that("UFT8 character in html widget does not break notebook annotation", {
+  # from issue in https://github.com/rstudio/rmarkdown/issues/1762
+  # simulate html widget code
+  html_dependency_dummy <- function()  {
+    htmltools::htmlDependency(
+      name = "dummy",
+      version = "0.0.0",
+      src = "dummy_file",
+      script = "dummy.js")
+  }
+  utf8_strings <- enc2utf8("éà")
+  output <- htmltools::htmlPreserve(utf8_strings)
+  output <- knitr::asis_output(output, meta = html_dependency_dummy())
+  reg_res <- paste0(
+    "<!-- rnb-htmlwidget-begin .*-->\n",
+    utf8_strings,"\n",
+    "<!-- rnb-htmlwidget-end -->\n"
+  )
+  expect_match(notebook_render_html_widget(output),
+               reg_res)
 })

@@ -47,6 +47,12 @@
 #'   \code{output_file}.
 #' @param on_exit A function to call when \code{rmarkdown::render()} finishes
 #'   execution (as registered with a \code{\link{on.exit}} handler).
+#' @param file_scope A function that will split markdown input to pandoc into
+#'   multiple named files. This is useful when the caller has concatenated a set
+#'   of Rmd files together (as \pkg{bookdown} does), and those files may need to
+#'   processed by pandoc using the \code{--file-scope} option. The function
+#'   should return a named list of files w/ \code{name} and \code{content} for
+#'   each file.
 #' @param base_format An optional format to extend.
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
@@ -68,19 +74,21 @@ output_format <- function(knitr,
                           intermediates_generator = NULL,
                           post_processor = NULL,
                           on_exit = NULL,
+                          file_scope = NULL,
                           base_format = NULL) {
 
   format <- list(
     knitr = knitr,
     pandoc = pandoc,
     keep_md = keep_md,
-    clean_supporting = clean_supporting && !keep_md,
+    clean_supporting = if (isTRUE(keep_md)) FALSE else clean_supporting,
     df_print = df_print,
     pre_knit = pre_knit,
     post_knit = post_knit,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor,
+    file_scope = file_scope,
     on_exit = on_exit
   )
 
@@ -343,11 +351,6 @@ rmarkdown_format <- function(extensions = NULL) {
   format <- c(format, extensions, recursive = TRUE)
 
   paste(format, collapse = "")
-}
-
-# Add the +smart extension for Pandoc >= 2.0
-smart_extension <- function(smart, extension) {
-  c(extension, if (smart && pandoc2.0()) "+smart")
 }
 
 #' Determine the default output format for an R Markdown document

@@ -16,7 +16,6 @@ slidy_presentation(
   fig_caption = TRUE,
   dev = "png",
   df_print = "default",
-  smart = TRUE,
   self_contained = TRUE,
   highlight = "default",
   mathjax = "default",
@@ -78,10 +77,6 @@ also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
 \code{rmarkdown.df_print} to \code{FALSE}.}
 
-\item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
-\code{...} to ellipses.}
-
 \item{self_contained}{Produce a standalone HTML file with no external
 dependencies, using data: URIs to incorporate the contents of linked
 scripts, stylesheets, images, and videos. Note that even for self contained
@@ -101,8 +96,8 @@ copied into the output directory). You can pass an alternate URL or pass
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
 built-in template; pass a path to use a custom template that you've
 created.  See the documentation on
-\href{http://pandoc.org/README.html}{pandoc online documentation}
-for details on creating custom templates.}
+\href{http://pandoc.org/README.html}{pandoc online documentation} for
+details on creating custom templates.}
 
 \item{css}{One or more css files to include}
 
@@ -124,7 +119,7 @@ additional details.}
 \item{extra_dependencies}{A LaTeX dependency \code{latex_dependency()}, a
 list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
 \code{c("framed", "hyperref")}), or a named list of LaTeX package options
-with the names being package names (e.g. \code{list(hypreref =
+with the names being package names (e.g. \code{list(hyperef =
 c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
 add custom LaTeX packages to the .tex header.}
 

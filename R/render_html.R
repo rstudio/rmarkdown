@@ -1,19 +1,15 @@
 notebook_render_html_widget <- function(output) {
 
-  # TODO: add htmlUnpreserve function to htmlwidgets?
-  unpreserved <- substring(
-    output,
-    n_bytes("<!--html_preserve-->") + 1,
-    n_bytes(output) - n_bytes("<!--/html_preserve-->")
-  )
+  unpreserved <- htmltools::extractPreserveChunks(output)
 
   meta <- base64_encode_object(attr(output, "knit_meta"))
 
   before <- sprintf("\n<!-- rnb-htmlwidget-begin %s-->", meta)
   after  <- "<!-- rnb-htmlwidget-end -->\n"
-  pasted <- paste(before, unpreserved, after, sep = "\n")
+  pasted <- paste(before, unpreserved$value, after, sep = "\n")
 
-  annotated <- htmltools::htmlPreserve(pasted)
+  annotated <- htmltools::restorePreserveChunks(pasted,
+                                                unpreserved$chunks)
   attributes(annotated) <- attributes(output)
 
   return(annotated)

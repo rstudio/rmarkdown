@@ -17,11 +17,11 @@ window.initializeCodeFolding = function(show) {
   var currentIndex = 1;
 
   // select all R code blocks
-  var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan, pre.julia');
+  var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan, pre.julia, pre.foldable');
   rCodeBlocks.each(function() {
 
     // Respect the knitr chunk option `class.source="fold-show"`
-    var showThisChunk = show || $(this)[0].classList.contains('fold-show');
+    var showThisChunk = (show || $(this).hasClass('fold-show')) && !$(this).hasClass('fold-hide');
 
     // create a collapsable div to wrap the code in
     var div = $('<div class="collapse r-code-collapse"></div>');

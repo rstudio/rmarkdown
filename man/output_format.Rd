@@ -16,6 +16,7 @@ output_format(
   intermediates_generator = NULL,
   post_processor = NULL,
   on_exit = NULL,
+  file_scope = NULL,
   base_format = NULL
 )
 }
@@ -75,6 +76,13 @@ render the \code{input_file}.}
 
 \item{on_exit}{A function to call when \code{rmarkdown::render()} finishes
 execution (as registered with a \code{\link{on.exit}} handler).}
+
+\item{file_scope}{A function that will split markdown input to pandoc into
+multiple named files. This is useful when the caller has concatenated a set
+of Rmd files together (as \pkg{bookdown} does), and those files may need to
+processed by pandoc using the \code{--file-scope} option. The function
+should return a named list of files w/ \code{name} and \code{content} for
+each file.}
 
 \item{base_format}{An optional format to extend.}
 }

@@ -13,7 +13,6 @@ html_fragment(
   fig_caption = TRUE,
   dev = "png",
   df_print = "default",
-  smart = TRUE,
   mathjax = TRUE,
   includes = NULL,
   keep_md = FALSE,
@@ -53,10 +52,6 @@ for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
 \code{rmarkdown.df_print} to \code{FALSE}.}
-
-\item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
-\code{...} to ellipses.}
 
 \item{mathjax}{\code{TRUE} to convert $ and $$ math blocks into MathJax
 compatible output. Note that you'll still need to ensure that the page

@@ -496,13 +496,9 @@ default_site_generator <- default_site <- function(input, ...) {
 render_current_session <- function(...) suppressMessages(rmarkdown::render(...))
 
 render_new_session <- function(...) {
-  if (!requireNamespace("callr", quietly = TRUE)) {
-    stop("The callr package must be installed when `new_session: true`.")
-  }
-  callr::r(
+  xfun::Rscript_call(
     function(...) { suppressMessages(rmarkdown::render(...)) },
-    args = list(...),
-    block_callback = function(x) cat(x)
+    args = list(...)
   )
 }
 
@@ -595,7 +591,10 @@ site_resources <- function(site_dir, include = NULL, exclude = NULL, recursive =
 
 
 # utility function to list the files that should be copied
-copyable_site_resources <- function(input, config = site_config(input)) {
+#
+# NOTE: '...' is kept for backwards compatibility with older versions of
+# RStudio which called 'copyable_site_resources(encoding = "UTF-8")'
+copyable_site_resources <- function(input, config = site_config(input), ...) {
 
   include <- config$include
 

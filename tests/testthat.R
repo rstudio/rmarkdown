@@ -1,3 +1,2 @@
 library(testthat)
-test_check("rmarkdown")
-
+if (identical(Sys.getenv("NOT_CRAN"), "true")) test_check("rmarkdown")
