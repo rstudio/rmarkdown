@@ -6,13 +6,11 @@
 
 Div = function (div)
   local options = div.attributes['data-latex']
+  if options == nil then return nil end
 
-  -- if the output format is not latex, the object is left unchanged
+  -- if the output format is not latex, remove the data-latex attr and return
   if FORMAT ~= 'latex' and FORMAT ~= 'beamer' then
-    -- if options has been set for latex, unset for other output
-    if options then
-      div.attributes['data-latex'] = nil
-    end
+    div.attributes['data-latex'] = nil
     return div
   end
 
@@ -23,7 +21,7 @@ Div = function (div)
   -- insert raw latex before content
   table.insert(
     div.content, 1,
-    pandoc.RawBlock('tex', '\\begin' .. '{' .. env .. '}' .. (options or ""))
+    pandoc.RawBlock('tex', '\\begin' .. '{' .. env .. '}' .. options)
   )
   -- insert raw latex after content
   table.insert(
