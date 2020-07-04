@@ -8,5 +8,5 @@ test_that("Metadata is available before pre_knit", {
   }
   input_file = tempfile(fileext = '.md')
   writeLines('---\nfoo: bar\n---', input_file)
-  testthat::expect_message(render(input_file, fmt), message_pre_knit)
+  expect_message(render(input_file, fmt), message_pre_knit)
 })
