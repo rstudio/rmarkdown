@@ -517,6 +517,20 @@ render <- function(input,
   context <- render_context()
   context$df_print <- resolve_df_print(output_format$df_print)
 
+  # make the front_matter available as 'metadata' within the knit environment
+  # (unless it is already defined there, in which case we emit a warning)
+  env <- environment(render)
+  metadata_this <- env$metadata
+  do.call("unlockBinding", list("metadata", env))
+  on.exit({
+    if (bindingIsLocked("metadata", env)) {
+      do.call("unlockBinding", list("metadata", env))
+    }
+    env$metadata <- metadata_this
+    lockBinding("metadata", env)
+  }, add = TRUE)
+  env$metadata <- front_matter
+
   # call any pre_knit handler
   if (!is.null(output_format$pre_knit)) {
     output_format$pre_knit(input = original_input)
@@ -698,20 +712,6 @@ render <- function(input,
         }
       }, add = TRUE)
     }
-
-    # make the front_matter available as 'metadata' within the knit environment
-    # (unless it is already defined there, in which case we emit a warning)
-    env <- environment(render)
-    metadata_this <- env$metadata
-    do.call("unlockBinding", list("metadata", env))
-    on.exit({
-      if (bindingIsLocked("metadata", env)) {
-        do.call("unlockBinding", list("metadata", env))
-      }
-      env$metadata <- metadata_this
-      lockBinding("metadata", env)
-    }, add = TRUE)
-    env$metadata <- front_matter
 
     # call onKnit hooks (normalize to list)
     sapply(as.list(getHook("rmarkdown.onKnit")), function(hook) {
