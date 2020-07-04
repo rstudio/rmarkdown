@@ -6,7 +6,6 @@ test_that("Metadata is available before pre_knit", {
     if (identical(rmarkdown::metadata, list(foo = 'bar'))) {
       message(message_pre_knit)
     }
-    options
   }
   input_file = tempfile(fileext = '.md')
   writeLines('---\nfoo: bar\n---', input_file)
