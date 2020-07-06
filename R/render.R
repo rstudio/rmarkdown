@@ -190,6 +190,12 @@ NULL
 #' uses knitr's \code{root.dir} knit option. If \code{NULL} then the behavior
 #' will follow the knitr default, which is to use the parent directory of the
 #' document.
+#' @param file_scope A function that will split markdown input to pandoc into
+#' multiple named files. This is useful when the caller has concatenated a set
+#' of Rmd files together (as \pkg{bookdown} does), and those files may need to
+#' processed by pandoc using the \code{--file-scope} option. The function
+#' should return a named list of files w/ \code{name} and \code{content} for
+#' each file.
 #' @param runtime The runtime target for rendering. The \code{static} option
 #' produces output intended for static files; \code{shiny} produces output
 #' suitable for use in a Shiny document (see \code{\link{run}}). The default,
@@ -242,6 +248,7 @@ render <- function(input,
                    output_yaml = NULL,
                    intermediates_dir = NULL,
                    knit_root_dir = NULL,
+                   file_scope = NULL,
                    runtime =  c("auto", "static", "shiny", "shiny_prerendered"),
                    clean = TRUE,
                    params = NULL,
@@ -286,6 +293,7 @@ render <- function(input,
                        output_options = output_options,
                        intermediates_dir = intermediates_dir,
                        knit_root_dir = knit_root_dir,
+                       file_scope = file_scope,
                        runtime = runtime,
                        clean = clean,
                        params = params,
@@ -851,8 +859,8 @@ render <- function(input,
       # file_scope function to split the input into multiple files
       pandoc_args <- output_format$pandoc$args
       input_files <- utf8_input
-      if (!is.null(output_format$file_scope) &&
-          length(inputs <- output_format$file_scope(utf8_input)) > 1) {
+      if (!is.null(file_scope) &&
+          length(inputs <- file_scope(utf8_input)) > 1) {
 
         # add the --file-scope option
         pandoc_args <- c(pandoc_args, "--file-scope")

@@ -440,6 +440,30 @@ pandoc_self_contained_html <- function(input, output) {
   invisible(output)
 }
 
+#' Run pandoc using the specified arguments.
+#'
+#' Low-level function to run pandoc using `system2()`.
+#'
+#' @param args Command line arguments.
+#' @param ... Additional arguments to pass on to `system2()`
+#' @return Value from call to `system2()`
+#' @export
+pandoc_run <- function(args, ...) {
+  # ensure we've scanned for pandoc
+  find_pandoc()
+
+  # create args
+  args <- prepend_pandoc_stack_size(args)
+
+  # run pandoc
+  with_pandoc_safe_environment({
+    result <- system2(pandoc(), args, ...)
+  })
+
+  # return result
+  result
+}
+
 
 validate_self_contained <- function(mathjax) {
 

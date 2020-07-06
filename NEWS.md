@@ -7,6 +7,11 @@ rmarkdown 2.4
 
 - When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
 
+- New `pandoc_run()` function for running pandoc using `system2()` arguments and return value (a separate function is required for this so that various standard command line arguments and environment variables can be provided).
+
+- Made `file_scope` a parameter to `render()` rather than an option for output format definitions. This was done to enable callers to have dynamic behavior around `file_scope` (e.g. based on whether duplicate footnotes exist).
+
+
 rmarkdown 2.3
 ================================================================================
 
