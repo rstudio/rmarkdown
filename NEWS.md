@@ -1,5 +1,68 @@
+rmarkdown 2.4
+================================================================================
+
+- Since **rmarkdown** 1.16, Pandoc's fenced `Div`'s are converted to LaTeX environments when the output format is LaTeX, e.g., `::: {.center data-latex=""}` is converted to `\begin{center}`. The attribute `data-latex` of the `Div` was mandatory, even if it is empty. In **rmarkdown** 2.2, we silently drop this requirement, which means `::: {.center}` is converted to `\begin{center}`. This turns out to be a bad idea, because users have no control over which Div's to be converted to LaTeX environments. Previously, they could opt-in by the `data-latex` attribute, but with **rmarkdown** 2.3, all Div's are converted to LaTeX environments unconditionally. What's more, this change led to bugs like https://stackoverflow.com/q/62340425/559676 and https://github.com/rstudio/bookdown/issues/883. Therefore the `data-latex` attribute became mandatory again in this version. If the LaTeX environment does not need arguments, you may use `data-latex=""`.
+
+- The two Lua fitlers `pagebreak.lua` and `latex-div.lua` (introduced in **rmarkdown** 1.16) are also applied to the output format `beamer_presentation` now (thanks, @XiangyunHuang, #1815).
+
+- When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
+
+rmarkdown 2.3
+================================================================================
+
+- Addressed an accessibility issue in highlighted code blocks of HTML output for screen reader users: screen readers no longer read out an unnecessary code line id values (thanks, @jooyoungseo and @atusy, #1833).
+
+- Added `file_scope` option to output format definition. This enables handling of duplicate numeric footnote identifiers (e.g. across bookdown chapters) via the pandoc `--file-scope` option (#1837).
+
+- Added the customizable `lang` attribute to `ioslides_presentation` output (thanks, @jooyoungseo, #1841).
+
+- Added `publish_site()` function for "one-button" publishing of R Markdown websites.
+
+- When the `df_print` option is `kable` and the output format is not HTML, `<div class="kable-table">` is no longer added to the `kable()` output, because recent versions of Pandoc will convert the `div` to a LaTeX environment when the output format is LaTeX (thanks, Laurens, https://stackoverflow.com/q/62340425/559676).
+
+- `html_vignette()` only warns against differences in the vignette title and the vignette index entry for R >= 3.6.0 (thanks, @krlmlr, #1832).
+
+- `html_document()` can apply `code_folding` on any chunk engines if the `foldable` class is added to a source code block via the chunk options (`class.source` or `attr.source`). You may apply this feature to all the source code blocks, for example, by setting `knitr::opts_chunk$set(class.source = "foldable")` at the beginning of your document (thanks, @atusy, #1835).
+
+
+rmarkdown 2.2
+================================================================================
+
+- Exported the internal function `find_pandoc()`, and also added two arguments, `dir` and `version`, so that users can provide a custom directory under which this function may find Pandoc, as well as an expected version of Pandoc to be found (thanks, @connorp, #1785).
+
+- `pandoc_metadata_arg()` is a new Pandoc helper function to generate `--metadata` argument for Pandoc command line (thanks, @cderv, #1789).
+
+- The output format `html_vignette()` now warns against differences in the vignette title specified in the `title` field in the YAML metadata and the one specified inside `\VignetteIndexEntry{}`. Normally they are expected to be identical (#1789).
+
+- Fixed a bug with encoding when rendering `html_notebook` containing HTML widgets (thanks, @cderv, #1799).
+
+- TOC title can now be specified for `html_document` via the top-level option `toc-title` in the YAML frontmatter (thanks, @atusy, #1771).
+
+- Floating TOC can now distinguish upper/lower-cases (thanks, @atusy, #1783).
+
+- When `code_folding='show'` for the output format `html_document`, code blocks can be individually hidden initially by specifying the chunk option `class.source='fold-hide'` (thanks, @atusy, #1798).
+
+- For LaTeX/PDF output formats `pdf_document`, `beamer_presentation`, and `context_document`, the argument `citation_package = 'none'` was deprecated, and `citation_package = 'default'` should be used instead if citations are to be processed by `pandoc-citeproc` (thanks, @njbart, rstudio/bookdown#754).
+
+- `output_format()` can now inherit `keep_md` and `clean_supporting` from `base_format` when `NULL` is passed to these arguments. Previously, you must explicitly specify `keep_md` and/or `clean_supporting` as `TRUE` or `FALSE` in `output_format()` since they could not inherit the corresponding options of `base_format`. This behavior was not consisent with other arguments of `output_format()` (thanks, @atusy, #1823).
+
+- The `smart` argument of most output formats has been removed, because Pandoc's `smart` extension is enabled by default, and setting `smart: false` for an output format did not really have any effect (which could be considered a bug, but we want to get rid of this option since it existed only for a historical reason for Pandoc 1.x, and Pandoc 2.x has been released for more than two years). If you want to disable the `smart` extension, you can use the option `md_extensions: -smart` of the output format (thanks, @atusy, #1774).
+
+- `pdf_document()` should not specify the `geometry` variable when the `documentclass` variable is passed to Pandoc (thanks, @jpcirrus, #1782).
+
+- `render()` now respects the YAML metadata in the R script when rendering the script with Pandoc 2.8 or later (thanks, @nsoranzo #1740, @cderv #1741).
+
+- For `pandoc_convert()`, when the argument `to = 'pdf'`, it will be changed to `'latex'` internally (thanks, @JohannesFriedrich, #1802).
+
+- `render(run_pandoc = FALSE)` no longer cleans up the Markdown file (typically knitted from Rmd) (thanks, @BrianDiggs, #1812).
+
+
 rmarkdown 2.1
 ================================================================================
+
+- Added the returned output from `shiny::runApp()` within `rmarkdown::run()` (thanks, @schloerke, #1760).
+
+- YAML header is now correctly parsed in `html_notebook`'s intermediate `.knit.md` file so that features like adding bibliography works again (thanks, @everdark, @cderv, #1747).
 
 - `ioslides_presentation` template no longer generates an empty `<h2>` tag when `subtitle` is not specified in YAML (thanks, @jooyoungseo #1735, @cgrudz #1663).
 
@@ -10,6 +73,8 @@ rmarkdown 2.1
 - Added the `slide_level` argument to `slidy_presentation()` (https://stackoverflow.com/q/59157211/559676).
 
 - Removed the jQuery dependency in `html_document_base()` (#1723). To avoid bugs like #1723, Pandoc 2.8 users have to upgrade to Pandoc 2.9+.
+
+- For `pdf_document`, horizontal rules generated by Pandoc (before v2.8) stopped working in recent versions of TeX Live, and the same fix as the one to https://github.com/jgm/pandoc/issues/5801 (i.e., hard-code `\linethickness` to `0.5pt`) was applied in **rmarkdown** (thanks, @cderv, https://stackoverflow.com/a/58646915/559676).
 
 
 rmarkdown 2.0

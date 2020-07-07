@@ -2,8 +2,6 @@ context("formats")
 
 test_that("formats successfully produce a document", {
 
-  skip_on_cran()
-
   testFormat <- function(output_format, df_print = NULL) {
     output_file <- I(tempfile())
     render("test-formats.Rmd",
@@ -33,8 +31,6 @@ test_that("formats successfully produce a document", {
 
 test_that("documents with spaces in names can be rendered", {
 
-  skip_on_cran()
-
   # get path to notebook
   rmd_path <- "resources/empty.Rmd"
 
@@ -60,8 +56,6 @@ test_that("documents with spaces in names can be rendered", {
 test_that(
   "setting theme, highlight or fig_retina yields an error on html_vignette",
   {
-
-  skip_on_cran()
 
   testFormat <- function(output_format) {
     output_file <- tempfile()

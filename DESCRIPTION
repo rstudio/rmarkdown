@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 2.0.5
+Version: 2.3.2
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -30,7 +30,7 @@ Authors@R: c(
   person("Sergio", "Oller", role = "ctb"),
   #
   # Copyright holders
-  person(family = "RStudio, Inc.", role = "cph"),
+  person(family = "RStudio, PBC", role = "cph"),
   person(family = "jQuery Foundation", role = "cph",
          comment = "jQuery library"),
   person(family = "jQuery contributors", role = c("ctb", "cph"),
@@ -101,11 +101,11 @@ Suggests:
     tibble,
     fs,
     pkgdown,
-    callr (>= 2.0.0)
+    rsconnect
 SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
 URL: https://github.com/rstudio/rmarkdown
 BugReports: https://github.com/rstudio/rmarkdown/issues
 License: GPL-3
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Encoding: UTF-8
 VignetteBuilder: knitr

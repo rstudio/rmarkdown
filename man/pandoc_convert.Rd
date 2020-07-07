@@ -55,12 +55,12 @@ library(rmarkdown)
 
 # convert markdown to various formats
 pandoc_convert("input.md", to = "html")
-pandoc_convert("input.md", to = "pdf")
+pandoc_convert("input.md", to = "latex")
 
 # process citations
 pandoc_convert("input.md", to = "html", citeproc = TRUE)
 
 # add some pandoc options
-pandoc_convert("input.md", to="pdf", options = c("--listings"))
+pandoc_convert("input.md", to = "latex", options = c("--listings"))
 }
 }

@@ -14,7 +14,6 @@ html_notebook(
   fig_retina = 2,
   fig_caption = TRUE,
   code_folding = "show",
-  smart = TRUE,
   theme = "default",
   highlight = "textmate",
   mathjax = "default",
@@ -58,10 +57,6 @@ they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
 code chunks by default (users can show hidden code chunks either
 individually or document-wide). Specify \code{"show"} to show all R code
 chunks by default.}
-
-\item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
-\code{...} to ellipses.}
 
 \item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
 "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",

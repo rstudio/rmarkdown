@@ -37,7 +37,6 @@ word_document <- function(toc = FALSE,
                           fig_height = 4,
                           fig_caption = TRUE,
                           df_print = "default",
-                          smart = TRUE,
                           highlight = "default",
                           reference_docx = "default",
                           keep_md = FALSE,
@@ -54,13 +53,6 @@ word_document <- function(toc = FALSE,
 
   # base pandoc options for all docx output
   args <- c()
-
-  # smart quotes, etc.
-  if (smart && !pandoc2.0()) {
-    args <- c(args, "--smart")
-  } else {
-    md_extensions <- smart_extension(smart, md_extensions)
-  }
 
   # table of contents
   if (pandoc_available("1.14"))

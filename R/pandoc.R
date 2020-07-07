@@ -28,13 +28,13 @@
 #'
 #' # convert markdown to various formats
 #' pandoc_convert("input.md", to = "html")
-#' pandoc_convert("input.md", to = "pdf")
+#' pandoc_convert("input.md", to = "latex")
 #'
 #' # process citations
 #' pandoc_convert("input.md", to = "html", citeproc = TRUE)
 #'
 #' # add some pandoc options
-#' pandoc_convert("input.md", to="pdf", options = c("--listings"))
+#' pandoc_convert("input.md", to = "latex", options = c("--listings"))
 #' }
 #' @export
 pandoc_convert <- function(input,
@@ -61,6 +61,7 @@ pandoc_convert <- function(input,
   args <- c(input)
   if (!is.null(to)) {
     if (to == 'html') to <- 'html4'
+    if (to == 'pdf') to <- 'latex'
     args <- c(args, "--to", to)
   }
   if (!is.null(from))
@@ -71,8 +72,7 @@ pandoc_convert <- function(input,
     args <- c(args, "--output", output)
 
   # set pandoc stack size
-  stack_size <- getOption("pandoc.stack.size", default = "512m")
-  args <- c(c("+RTS", paste0("-K", stack_size), "-RTS"), args)
+  args <- prepend_pandoc_stack_size(args)
 
   # additional command line options
   args <- c(args, options)
@@ -247,6 +247,14 @@ pandoc_variable_arg <- function(name,
                                 value) {
 
   c("--variable", if (missing(value)) name else paste(name, "=", value, sep = ""))
+}
+
+#' @rdname pandoc_args
+#' @export
+pandoc_metadata_arg <- function(name,
+                                value) {
+
+  c("--metadata", if (missing(value)) name else paste(name, "=", value, sep = ""))
 }
 
 
@@ -544,15 +552,45 @@ is_highlightjs <- function(highlight) {
   !is.null(highlight) && (highlight %in% c("default", "textmate"))
 }
 
-# Scan for a copy of pandoc and set the internal cache if it's found.
-find_pandoc <- function(cache = TRUE) {
+#' Find the \command{pandoc} executable
+#'
+#' Searches for the \command{pandoc} executable in a few places and use the
+#' highest version found, unless a specific version is requested.
+#' @param cache Whether to search for \command{pandoc} again if a Pandoc
+#'   directory containing the \command{pandoc} executable of the expected
+#'   version (if provided) has been found previously. Search again if
+#'   \code{cache = FALSE}.
+#' @param dir A character vector of potential directory paths under which
+#'   \command{pandoc} may be found. If not provided, this function searches for
+#'   \command{pandoc} from the environment variable \var{RSTUDIO_PANDOC} (the
+#'   RStudio IDE will set this variable to the directory of Pandoc bundled with
+#'   the IDE), the environment variable \var{PATH}, and the directory
+#'   \file{~/opt/pandoc/}.
+#' @param version The version of Pandoc to look for (e.g., \code{"2.9.2.1"}). If
+#'   not provided, this function searches for the highest version under the
+#'   potential directories.
+#' @note Usually you do not need to install Pandoc if you use the RStudio IDE,
+#'   because the IDE has bundled a version of Pandoc. If you have installed a
+#'   version of Pandoc by yourself and want to use this version instead, you may
+#'   use the \code{dir} argument of this function.
+#' @return A list containing the directory and version of Pandoc (if found).
+#' @export
+#' @examples rmarkdown::find_pandoc()
+#' rmarkdown::find_pandoc(dir = '~/Downloads/Pandoc')
+#' rmarkdown::find_pandoc(version = '2.7.3')
+find_pandoc <- function(cache = TRUE, dir = NULL, version = NULL) {
 
-  if (!is.null(.pandoc$dir) && cache) return(invisible(as.list(.pandoc)))
+  if (!cache) set_pandoc_info(NULL)  # clear previously found pandoc path
+  if (!is.null(.pandoc$dir) && (is.null(version) || version == .pandoc$version))
+    return(as.list(.pandoc))
 
-  # define potential sources
-  sys_pandoc <- find_program("pandoc")
-  sources <- c(Sys.getenv("RSTUDIO_PANDOC"), if (nzchar(sys_pandoc)) dirname(sys_pandoc))
-  if (!is_windows()) sources <- c(sources, path.expand("~/opt/pandoc"))
+  # look up pandoc in potential sources unless user has supplied `dir`
+  sources <- if (length(dir) == 0) c(
+    Sys.getenv("RSTUDIO_PANDOC"),
+    dirname(find_program("pandoc")),
+    "~/opt/pandoc"
+  ) else dir
+  sources <- path.expand(sources)
 
   # determine the versions of the sources
   versions <- lapply(sources, function(src) {
@@ -564,19 +602,14 @@ find_pandoc <- function(cache = TRUE) {
   found_ver <- numeric_version("0")
   for (i in seq_along(sources)) {
     ver <- versions[[i]]
-    if (ver > found_ver) {
+    if ((!is.null(version) && ver == version) || (is.null(version) && ver > found_ver)) {
       found_ver <- ver
       found_src <- sources[[i]]
     }
   }
 
-  # did we find a version?
-  if (!is.null(found_src)) {
-    .pandoc$dir <- found_src
-    .pandoc$version <- found_ver
-  }
-
-  invisible(as.list(.pandoc))
+  set_pandoc_info(found_src, found_ver)
+  as.list(.pandoc)
 }
 
 # Get an S3 numeric_version for the pandoc utility at the specified path
@@ -590,6 +623,17 @@ get_pandoc_version <- function(pandoc_dir) {
   version <- strsplit(info, "\n")[[1]][1]
   version <- strsplit(version, " ")[[1]][2]
   numeric_version(version)
+}
+
+set_pandoc_info <- function(dir, version = if (!is.null(dir)) get_pandoc_version(dir)) {
+  .pandoc$dir <- dir
+  .pandoc$version <- version
+}
+
+# prepend pandoc stack size arguments
+prepend_pandoc_stack_size <- function(args) {
+  stack_size <- getOption("pandoc.stack.size", default = "512m")
+  c(c("+RTS", paste0("-K", stack_size), "-RTS"), args)
 }
 
 # wrap a system call to pandoc so that LC_ALL is not set
@@ -671,17 +715,8 @@ pandoc_citeproc <- function() {
 }
 
 pandoc_lua_filters <- function(...) {
-  args <- c()
   # lua filters was introduced in pandoc 2.0
-  if (pandoc2.0()) {
-    args <- c(
-      rbind(
-        "--lua-filter",
-        pkg_file("rmd", "lua", ...)
-      )
-    )
-  }
-  args
+  if (pandoc2.0()) c(rbind("--lua-filter", pkg_file("rmd", "lua", ...)))
 }
 
 

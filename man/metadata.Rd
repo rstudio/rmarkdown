@@ -4,7 +4,9 @@
 \name{metadata}
 \alias{metadata}
 \title{The YAML metadata of the current R Markdown document}
-\format{An object of class \code{list} of length 0.}
+\format{
+An object of class \code{list} of length 0.
+}
 \description{
 The object \code{metadata} stores the YAML metadata of the current R Markdown
 document as a list, which you may use in the R code chunks, e.g.

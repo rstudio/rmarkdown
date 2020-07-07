@@ -10,7 +10,7 @@
 #' @return R Markdown output format to pass to \code{\link{render}}
 powerpoint_presentation <- function(
   toc = FALSE, toc_depth = 2, fig_width = 5, fig_height = 4, fig_caption = TRUE,
-  df_print = 'default', smart = TRUE, keep_md = FALSE, md_extensions = NULL,
+  df_print = 'default', keep_md = FALSE, md_extensions = NULL,
   slide_level = NULL, reference_doc = 'default', pandoc_args = NULL
 ) {
 
@@ -24,9 +24,6 @@ powerpoint_presentation <- function(
 
   # base pandoc options for all pptx output
   args <- c()
-
-  # smart quotes, etc.
-  if (smart) md_extensions <- c(md_extensions, '+smart')
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))

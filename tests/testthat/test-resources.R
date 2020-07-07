@@ -2,8 +2,6 @@ context("resource discovery")
 
 test_that("R Markdown resource discovery finds expected resources", {
 
-  skip_on_cran()
-
   resources <- find_external_resources("resources/rmarkdown.Rmd")
   expected <- data.frame(
     path = c("empty.md", "empty.png", "empty.tsv", "empty.Rmd", "empty.css",
@@ -23,8 +21,6 @@ test_that("R Markdown resource discovery finds expected resources", {
 
 test_that("HTML resource discovery finds expected resources", {
 
-  skip_on_cran()
-
   resources <- find_external_resources("resources/html.html")
   expected <- data.frame(
     path = c("empty.js", "empty.css", "empty.png"),
@@ -38,8 +34,6 @@ test_that("HTML resource discovery finds expected resources", {
 })
 
 test_that("Vanilla Markdown resource discovery finds expected resources", {
-
-  skip_on_cran()
 
   resources <- find_external_resources("resources/markdown.md")
   expected <- data.frame(
@@ -56,8 +50,6 @@ test_that("Vanilla Markdown resource discovery finds expected resources", {
 
 test_that("PDF-specific resources are discovered", {
 
-  skip_on_cran()
-
   resources <- find_external_resources("resources/pdf.Rmd")
   expected <- data.frame(
     path = c("empty.bib", "empty.csl", "empty.png"),
@@ -72,16 +64,12 @@ test_that("PDF-specific resources are discovered", {
 
 
 test_that("bare relative directory references are ignored", {
-  skip_on_cran()
-
   resources <- find_external_resources("resources/period.Rmd")
   expect_equal(nrow(resources), 0)
 })
 
 
 test_that("dependencies in .R files are recursively discovered", {
-  skip_on_cran()
-
   resources <- find_external_resources("resources/readcsv.Rmd")
   expected <- data.frame(
     path = c("empty.csv", "readcsv.R", "readcsv-source.R"),
@@ -95,8 +83,6 @@ test_that("dependencies in .R files are recursively discovered", {
 })
 
 test_that("implicitly discovered directories are ignored", {
-  skip_on_cran()
-
   resources <- find_external_resources("resources/directory-refs.Rmd")
   expected <- data.frame(
     path = c("nonempty/empty.csv", "nonempty/empty.jpg"),
@@ -110,8 +96,6 @@ test_that("implicitly discovered directories are ignored", {
 })
 
 test_that("resource_files use cases all work", {
-  skip_on_cran()
-
   resources <- find_external_resources("resources/resource-files.Rmd")
   expected <- data.frame(
     path = c("nonempty/empty.csv", "csvs/csv1.csv", "csvs/csv2.csv", "csvs/other/csv3.csv", "empty.bib"),
@@ -125,8 +109,6 @@ test_that("resource_files use cases all work", {
 })
 
 test_that("dependencies can be discovered on .R files directly", {
-  skip_on_cran()
-
   resources <- find_external_resources("resources/readcsv-source.R")
   expected <- data.frame(
     path = c("empty.csv", "readcsv.R"),
@@ -140,8 +122,6 @@ test_that("dependencies can be discovered on .R files directly", {
 })
 
 test_that("filenames with shell characters can use relative resource paths", {
-  skip_on_cran()
-
   # save current working directory
   oldwd <- getwd()
   on.exit(setwd(oldwd), add = TRUE)
@@ -156,8 +136,6 @@ test_that("filenames with shell characters can use relative resource paths", {
 })
 
 test_that("resources not deleted when filenames contain shell characters", {
-  skip_on_cran()
-
   # save current working directory
   oldwd <- setwd("resources")
   on.exit(setwd(oldwd), add = TRUE)
@@ -169,8 +147,6 @@ test_that("resources not deleted when filenames contain shell characters", {
 })
 
 test_that("empty quoted strings don't confuse resource discovery", {
-  skip_on_cran()
-
   resources <- find_external_resources("resources/quotes.Rmd")
   expected <- data.frame(
     path = c("empty.csv", "empty.tsv"),
@@ -184,8 +160,6 @@ test_that("empty quoted strings don't confuse resource discovery", {
 })
 
 test_that("resources are discovered in CSS files", {
-  skip_on_cran()
-
   resources <- find_external_resources("resources/has-css.Rmd")
   expected <- data.frame(
     path = c("empty.png", "has-image.css"),
@@ -199,8 +173,6 @@ test_that("resources are discovered in CSS files", {
 })
 
 test_that("resources are discovered in notebook files", {
-  skip_on_cran()
-
   resources <- find_external_resources("resources/r-notebook.Rmd")
   expected <- data.frame(
     path = c("tinyplot.png"),
@@ -214,8 +186,6 @@ test_that("resources are discovered in notebook files", {
 })
 
 test_that("multiple resources in the includes option can be discovered", {
-  skip_on_cran()
-
   resources <- find_external_resources("resources/multi-includes.Rmd")
   expected <- data.frame(
     path = c("dep1.html", "dep2.html"),

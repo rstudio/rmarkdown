@@ -453,6 +453,9 @@ $if(toc_float)$
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
 <div class="col-xs-12 col-sm-4 col-md-3">
+$if(toc-title)$
+<h2 id="$idprefix$toc-title">$toc-title$</h2>
+$endif$
 <div id="$idprefix$TOC" class="tocify">
 </div>
 </div>
@@ -529,6 +532,9 @@ $if(toc_float)$
 $else$
 $if(toc)$
 <div id="$idprefix$TOC">
+$if(toc-title)$
+<h2 id="$idprefix$toc-title">$toc-title$</h2>
+$endif$
 $toc$
 </div>
 $endif$
@@ -619,7 +625,7 @@ $$(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0

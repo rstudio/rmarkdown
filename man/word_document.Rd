@@ -11,7 +11,6 @@ word_document(
   fig_height = 4,
   fig_caption = TRUE,
   df_print = "default",
-  smart = TRUE,
   highlight = "default",
   reference_docx = "default",
   keep_md = FALSE,
@@ -41,10 +40,6 @@ for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
 \code{rmarkdown.df_print} to \code{FALSE}.}
-
-\item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
-\code{...} to ellipses.}
 
 \item{highlight}{Syntax highlighting style. Supported styles include
 "default", "tango", "pygments", "kate", "monochrome", "espresso",

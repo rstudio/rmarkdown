@@ -51,6 +51,11 @@ html_vignette <- function(fig_width = 3,
     }
   }
 
+  pre_processor <- function(metadata, input_file, runtime, knit_meta,
+                            files_dir, output_dir) {
+    vignette_pre_processor(input_file, metadata)
+  }
+
   output_format(
     knitr = NULL,
     pandoc = NULL,
@@ -58,6 +63,7 @@ html_vignette <- function(fig_width = 3,
     pre_knit = pre_knit,
     keep_md = keep_md,
     clean_supporting = self_contained,
+    pre_processor = pre_processor,
     base_format = html_document(fig_width = fig_width,
                                 fig_height = fig_height,
                                 dev = dev,
@@ -68,4 +74,20 @@ html_vignette <- function(fig_width = 3,
                                 self_contained = self_contained,
                                 ...)
   )
+}
+
+vignette_pre_processor <- function(input_file, metadata = yaml_front_matter(input_file)) {
+  if (getRversion() < 3.6)
+    return()
+  if (!getOption(o <- 'rmarkdown.html_vignette.check_title', !knitr:::is_R_CMD_check()))
+    return()
+  title1 <- metadata[['title']]
+  title2 <- tools::vignetteInfo(input_file)[['title']]
+  if (!identical(title1, title2)) warning(
+    'The vignette title specified in \\VignetteIndexEntry{} is different from ',
+    'the title in the YAML metadata. The former is "', title2, '", and the ',
+    'latter is "', title1, '". If that is intentional, you may set options(', o,
+    ' = FALSE) to suppress this check.', call. = FALSE
+  )
+  NULL
 }

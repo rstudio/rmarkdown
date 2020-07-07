@@ -85,8 +85,7 @@ context_document <- function(toc = FALSE,
     args <- c(args, "--template", pandoc_path_arg(template))
 
   # citation package
-  citation_package <- match.arg(citation_package)
-  if (citation_package != "none") args <- c(args, paste0("--", citation_package))
+  args <- c(args, citation_package_arg(citation_package))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))

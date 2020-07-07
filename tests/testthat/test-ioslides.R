@@ -53,8 +53,6 @@ mock_markdown <- function(mdtext = NULL,  outputdir = NULL, ... ) {
 
 test_ioslides_presentation <- function() {
 
-  skip_on_cran()
-
   outputdir <- tempfile()
   dir.create(outputdir)
   on.exit(unlink(outputdir), add = TRUE)
@@ -128,8 +126,6 @@ test_ioslides_presentation <- function() {
 test_that("test_ioslides_presentation", test_ioslides_presentation())
 
 test_ioslides_presentation_css <- function() {
-
-  skip_on_cran()
 
   outputdir <- tempfile()
   dir.create(outputdir)

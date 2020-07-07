@@ -18,7 +18,6 @@ html_document(
   df_print = "default",
   code_folding = c("none", "show", "hide"),
   code_download = FALSE,
-  smart = TRUE,
   self_contained = TRUE,
   theme = "default",
   highlight = "default",
@@ -84,10 +83,6 @@ chunks by default.}
 
 \item{code_download}{Embed the Rmd source code within the document and provide
 a link that can be used by readers to download the code.}
-
-\item{smart}{Produce typographically correct output, converting straight
-quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
-\code{...} to ellipses.}
 
 \item{self_contained}{Produce a standalone HTML file with no external
 dependencies, using data: URIs to incorporate the contents of linked
