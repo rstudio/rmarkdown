@@ -203,13 +203,114 @@ html_reference_path <- function(path, lib_dir, output_dir) {
     relative_to(output_dir, path)
 }
 
+copy_if_changed <- function(from, to, recursive = FALSE,
+                            overwrite = FALSE, copy.mode = FALSE) {
+  isdir = dir.exists(from)
+  if (isdir) {
+    if (! dir.exists(to)) {
+      dir.create(to, recursive = TRUE)
+    }
+    if (recursive) {
+      from2 = list.files(from, recursive = FALSE, include.dirs = TRUE,
+                        all.files = TRUE, no.. = TRUE)
+      mapply(copy_if_changed, from = file.path(from, from2),
+             to = file.path(to, from2),
+             moreargs = list(recursive = recursive, overwrite = overwrite,
+                             copy.mode = copy.mode))
+    }
+  } else {
+    digests <- tools::md5sum(c(from, to))
+    if (!isTRUE(digests[1] == digests[2])) {
+      file.copy(from, to, overwrite = TRUE, copy.mode = FALSE)
+    }
+  }
+}
+
+copy_html_dependency <- function(dependency, outputDir, mustWork = TRUE) {
+  dir <- dependency$src$file
+  if (is.null(dir)) {
+    if (mustWork) {
+      stop("Dependency ", dependency$name, " ",
+           dependency$version, " is not disk-based")
+    }
+    else {
+      return(dependency)
+    }
+  }
+  if (!is.null(dependency$package))
+    dir <- system.file(dir, package = dependency$package)
+  if (length(outputDir) != 1 || outputDir %in% c("",
+                                                 "/"))
+    stop("outputDir must be of length 1 and cannot be \"\" or \"/\"")
+  if (!dir_exists(outputDir))
+    dir.create(outputDir)
+  target_dir <- if (getOption("htmltools.dir.version",
+                              TRUE)) {
+    paste(dependency$name, dependency$version, sep = "-")
+  }
+  else dependency$name
+  target_dir <- file.path(outputDir, target_dir)
+  if (! dir_exists(target_dir)) dir.create(target_dir)
+  files <- if (dependency$all_files)
+    list.files(dir)
+  else {
+    unlist(dependency[c("script", "stylesheet",
+                        "attachment")])
+  }
+  srcfiles <- file.path(dir, files)
+  if (any(!file.exists(srcfiles))) {
+    stop(sprintf("Can't copy dependency files that don't exist: '%s'",
+                 paste(srcfiles, collapse = "', '")))
+  }
+  destfiles <- file.path(target_dir, files)
+  isdir <- file.info(srcfiles)$isdir
+  destfiles <- ifelse(isdir, dirname(destfiles), destfiles)
+  mapply(copy_if_changed, from = srcfiles, to = destfiles,
+         recursive = isdir,
+         MoreArgs = list(overwrite = TRUE, copy.mode = FALSE))
+  dependency$src$file <- normalizePath(target_dir, "/", TRUE)
+  dependency
+}
+
 # return the html dependencies as an HTML string suitable for inclusion
 # in the head of a document
 html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
 
+  message("--- html_dependencies_as_string:\nlib_dir = ", lib_dir,
+          ",\noutput_dir = ", output_dir)
   if (!is.null(lib_dir)) {
-    dependencies <- lapply(dependencies, copyDependencyToDir, lib_dir)
-    dependencies <- lapply(dependencies, makeDependencyRelative, output_dir)
+    if (grepl("..", lib_dir, fixed = TRUE)) {
+      # number of ".." in the path to lib_dir.
+      n_steps <- length(gregexpr("..", lib_dir, fixed = TRUE)[[1]])
+      m = regexpr("^(\\.\\.[/\\\\])*\\.\\.[/\\\\]?", lib_dir)
+      i_split <-  attr(m, "match.length")
+      root_rel <- sub("/+$", "", substr(lib_dir, 1, i_split))
+      abs_lib_dir <- normalizePath(lib_dir, winslash = "/")
+      message("------\n  ", n_steps, " back-steps,\n",
+              "  root_rel = ", root_rel, ",\n",
+              "  abs_lib_dir = ", abs_lib_dir, ",\n\n")
+      message("--- copying dependencies to ", abs_lib_dir)
+      dependencies <- lapply(dependencies, copy_html_dependency, abs_lib_dir)
+      message("--- making dependencies relative:\n",
+              "  source = [",
+              paste(lapply(dependencies, function(x) x$src$file),
+                    collapse = ", "), "]\n",
+              "  base = ", output_dir)
+      message("--- done copying")
+      dependencies <- lapply(dependencies, makeDependencyRelative, abs_lib_dir)
+      message("--- done making relative")
+      rendered_deps <- renderDependencies(dependencies, "file", encodeFunc = identity,
+                                hrefFilter = function(path) {
+                                  file.path(lib_dir, path)
+                                })
+      message("--- rendered dependencies: ",
+              str_c(rendered_deps, collapse = "\n"),
+              "---\n", sep = "\n")
+      return(rendered_deps)
+    } else {
+      dependencies <- lapply(dependencies, copyDependencyToDir, lib_dir)
+      dependencies <- lapply(dependencies, makeDependencyRelative, output_dir)
+    }
   }
   return(renderDependencies(dependencies, "file", encodeFunc = identity,
                             hrefFilter = function(path) {

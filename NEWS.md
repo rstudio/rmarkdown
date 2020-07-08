@@ -1,3 +1,4 @@
+
 rmarkdown 2.4
 ================================================================================
 
@@ -6,6 +7,8 @@ rmarkdown 2.4
 - The two Lua fitlers `pagebreak.lua` and `latex-div.lua` (introduced in **rmarkdown** 1.16) are also applied to the output format `beamer_presentation` now (thanks, @XiangyunHuang, #1815).
 
 - When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
+
+- Enable rendering HTML output with a directory structure where there is a shared master library with css, javascript, etc. and separate child directories with RMarkdown files. #146
 
 rmarkdown 2.3
 ================================================================================
