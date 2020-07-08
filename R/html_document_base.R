@@ -90,6 +90,13 @@ html_document_base <- function(theme = NULL,
       format_deps <- append(format_deps,
                             list(html_dependency_bootstrap("bootstrap")))
     }
+
+    if (length(format_deps) > 0  && length(extra_dependencies) > 0) {
+      names(format_deps) <- lapply(format_deps, function(x) x$name)
+      names(extra_dependencies) <- lapply(extra_dependencies, function(x) x$name)
+      format_deps <- format_deps[setdiff(names(format_deps),
+                                         names(extra_dependencies))]
+    }
     format_deps <- append(format_deps, extra_dependencies)
 
     extras <- html_extras_for_document(knit_meta, runtime, dependency_resolver,

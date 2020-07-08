@@ -251,14 +251,16 @@ copy_html_dependency <- function(dependency, outputDir, mustWork = TRUE) {
   if (length(outputDir) != 1 || outputDir %in% c("",
                                                  "/"))
     stop("outputDir must be of length 1 and cannot be \"\" or \"/\"")
-  if (!dir_exists(outputDir))
-    dir.create(outputDir)
   target_dir <- if (getOption("htmltools.dir.version",
                               TRUE)) {
     paste(dependency$name, dependency$version, sep = "-")
   }
   else dependency$name
   target_dir <- file.path(outputDir, target_dir)
+  if (same_path(dir, target_dir))
+    return(dependency)
+  if (!dir_exists(outputDir))
+    dir.create(outputDir)
 
   # Unlike htmltools::copyDependencyToDir(),
   # we do not delete the target directory,  but we
