@@ -91,6 +91,8 @@ html_document_base <- function(theme = NULL,
                             list(html_dependency_bootstrap("bootstrap")))
     }
 
+    # Allow the user to override default dependencies by injecting alternate
+    # dependencies with the same name into extra_dependencies.
     if (length(format_deps) > 0  && length(extra_dependencies) > 0) {
       names(format_deps) <- lapply(format_deps, function(x) x$name)
       names(extra_dependencies) <- lapply(extra_dependencies, function(x) x$name)
