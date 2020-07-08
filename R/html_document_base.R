@@ -92,21 +92,17 @@ html_document_base <- function(theme = NULL,
     }
     format_deps <- append(format_deps, extra_dependencies)
 
-    message("Setting extras in pre-processor")
     extras <- html_extras_for_document(knit_meta, runtime, dependency_resolver,
                                        format_deps)
-    message("Setting html extras in pre-processor")
-    extra_args <- pandoc_html_extras_args(extras, self_contained, lib_dir,
-                                            output_dir)
-    message("extra_args = [", paste(extra_args, collapse = ", "), "]")
-    message("Setting mathjax in pre-processor")
+    args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir,
+                                            output_dir))
+
     # mathjax
-    mjax_args <- pandoc_mathjax_args(mathjax,
+    args <- c(args, pandoc_mathjax_args(mathjax,
                                         template,
                                         self_contained,
                                         lib_dir,
-                                        output_dir)
-    args <- c(args, extra_args, mjax_args)
+                                        output_dir))
 
     preserved_chunks <<- extract_preserve_chunks(input_file)
 

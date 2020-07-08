@@ -203,12 +203,6 @@ html_reference_path <- function(path, lib_dir, output_dir) {
     relative_to(output_dir, path)
 }
 
-# Sometimes, a process (e.g., web server) will be accessing an HTML dependency
-# file when RMarkdown tries to overwrite it, and R throws an error reporting
-# insufficient privilege to delete or overwrite the file.
-#
-# This function reduces that by only copying if the file has changed.
-#
 copy_if_changed <- function(from, to, recursive = FALSE,
                             overwrite = FALSE, copy.mode = FALSE) {
   isdir = dir.exists(from)
@@ -232,18 +226,14 @@ copy_if_changed <- function(from, to, recursive = FALSE,
   }
 }
 
-# This function is mostly a copy of htmltools::copyDependencyToDir(), but it
-# checks for and handles a special case where the lib_dir is not a descendent
-# of the output_dir. The use case is if multiple Rmd files in child directories
-# share a master library that's a child of a parent directory (e.g., the
-# project root):
+# This is an almost exact copy of htmltools::copyDependencyToDir, except that
+# it only copies files if necessary.
 #
-# - proj_root_dir
-#   - master-library
-#   - content
-#     - content-01
-#     - content-02
-#     - content-03
+# Sometimes, a process (e.g., web server) will be accessing an HTML dependency
+# file when RMarkdown tries to overwrite it, and R throws an error reporting
+# insufficient privilege to delete or overwrite the file or directory.
+#
+# This function reduces that by only copying if the file has changed.
 #
 copy_html_dependency <- function(dependency, outputDir, mustWork = TRUE) {
   dir <- dependency$src$file
@@ -269,6 +259,10 @@ copy_html_dependency <- function(dependency, outputDir, mustWork = TRUE) {
   }
   else dependency$name
   target_dir <- file.path(outputDir, target_dir)
+
+  # Unlike htmltools::copyDependencyToDir(),
+  # we do not delete the target directory,  but we
+  # do create it if necessary.
   if (! dir_exists(target_dir)) dir.create(target_dir)
   files <- if (dependency$all_files)
     list.files(dir)
