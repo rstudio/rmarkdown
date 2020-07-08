@@ -203,6 +203,12 @@ html_reference_path <- function(path, lib_dir, output_dir) {
     relative_to(output_dir, path)
 }
 
+# Sometimes, a process (e.g., web server) will be accessing an HTML dependency
+# file when RMarkdown tries to overwrite it, and R throws an error reporting
+# insufficient privilege to delete or overwrite the file.
+#
+# This function reduces that by only copying if the file has changed.
+#
 copy_if_changed <- function(from, to, recursive = FALSE,
                             overwrite = FALSE, copy.mode = FALSE) {
   isdir = dir.exists(from)
@@ -226,6 +232,19 @@ copy_if_changed <- function(from, to, recursive = FALSE,
   }
 }
 
+# This function is mostly a copy of htmltools::copyDependencyToDir(), but it
+# checks for and handles a special case where the lib_dir is not a descendent
+# of the output_dir. The use case is if multiple Rmd files in child directories
+# share a master library that's a child of a parent directory (e.g., the
+# project root):
+#
+# - proj_root_dir
+#   - master-library
+#   - content
+#     - content-01
+#     - content-02
+#     - content-03
+#
 copy_html_dependency <- function(dependency, outputDir, mustWork = TRUE) {
   dir <- dependency$src$file
   if (is.null(dir)) {
@@ -276,37 +295,15 @@ copy_html_dependency <- function(dependency, outputDir, mustWork = TRUE) {
 # in the head of a document
 html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
 
-  message("--- html_dependencies_as_string:\nlib_dir = ", lib_dir,
-          ",\noutput_dir = ", output_dir)
   if (!is.null(lib_dir)) {
-    if (grepl("..", lib_dir, fixed = TRUE)) {
-      # number of ".." in the path to lib_dir.
-      n_steps <- length(gregexpr("..", lib_dir, fixed = TRUE)[[1]])
-      m = regexpr("^(\\.\\.[/\\\\])*\\.\\.[/\\\\]?", lib_dir)
-      i_split <-  attr(m, "match.length")
-      root_rel <- sub("/+$", "", substr(lib_dir, 1, i_split))
+    if (grepl("^\\.\\.", lib_dir)) {
       abs_lib_dir <- normalizePath(lib_dir, winslash = "/")
-      message("------\n  ", n_steps, " back-steps,\n",
-              "  root_rel = ", root_rel, ",\n",
-              "  abs_lib_dir = ", abs_lib_dir, ",\n\n")
-      message("--- copying dependencies to ", abs_lib_dir)
       dependencies <- lapply(dependencies, copy_html_dependency, abs_lib_dir)
-      message("--- making dependencies relative:\n",
-              "  source = [",
-              paste(lapply(dependencies, function(x) x$src$file),
-                    collapse = ", "), "]\n",
-              "  base = ", output_dir)
-      message("--- done copying")
       dependencies <- lapply(dependencies, makeDependencyRelative, abs_lib_dir)
-      message("--- done making relative")
-      rendered_deps <- renderDependencies(dependencies, "file", encodeFunc = identity,
+      return(renderDependencies(dependencies, "file", encodeFunc = identity,
                                 hrefFilter = function(path) {
                                   file.path(lib_dir, path)
-                                })
-      message("--- rendered dependencies: ",
-              str_c(rendered_deps, collapse = "\n"),
-              "---\n", sep = "\n")
-      return(rendered_deps)
+                                }))
     } else {
       dependencies <- lapply(dependencies, copyDependencyToDir, lib_dir)
       dependencies <- lapply(dependencies, makeDependencyRelative, output_dir)
