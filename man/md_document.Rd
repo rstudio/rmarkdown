@@ -23,7 +23,9 @@ md_document(
 \arguments{
 \item{variant}{Markdown variant to produce (defaults to "markdown_strict").
 Other valid values are "commonmark", "markdown_github", "markdown_mmd",
-markdown_phpextra", or even "markdown" (which produces pandoc markdown).
+markdown_phpextra", "markdown" (which produces pandoc markdown), or "knitr"
+(which produces \code{\link{knitr::knit)}}ed markdown). Note that "knitr"
+ignores the parameters, `toc`, `toc_depth`, `md_extensions`, and `pandoc_args`.
 You can also compose custom markdown variants, see the
 \href{http://pandoc.org/README.html}{pandoc online documentation}
 for details.}
