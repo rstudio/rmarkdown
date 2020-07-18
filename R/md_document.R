@@ -12,7 +12,9 @@
 #' @inheritParams html_document
 #' @param variant Markdown variant to produce (defaults to "markdown_strict").
 #'   Other valid values are "commonmark", "markdown_github", "markdown_mmd",
-#'   markdown_phpextra", or even "markdown" (which produces pandoc markdown).
+#'   markdown_phpextra", "markdown" (which produces pandoc markdown), or "knitr"
+#'   (which produces \code{\link{knitr::knit)}}ed markdown). Note that "knitr"
+#'   ignores the parameters, `toc`, `toc_depth`, `md_extensions`, and `pandoc_args`.
 #'   You can also compose custom markdown variants, see the
 #'   \href{http://pandoc.org/README.html}{pandoc online documentation}
 #'   for details.
@@ -60,7 +62,7 @@ md_document <- function(variant = "markdown_strict",
   args <- c(args, pandoc_args)
 
   # add post_processor for yaml preservation
-  post_processor <- if (preserve_yaml && variant != 'markdown') {
+  post_processor <- if (preserve_yaml && !variant %in% c('markdown', 'knitr')) {
     function(metadata, input_file, output_file, clean, verbose) {
       input_lines <- read_utf8(input_file)
       partitioned <- partition_yaml_front_matter(input_lines)
@@ -70,12 +72,21 @@ md_document <- function(variant = "markdown_strict",
       }
       output_file
     }
+  } else if (variant == 'knitr') {
+    function(metadata, input_file, output_file, clean, verbose) {
+      if (preserve_yaml) {
+        file.copy(input_file, output_file, overwrite = TRUE)
+      } else {
+        write_utf8(partition_yaml_front_matter(read_utf8(input_file))$body, output_file)
+      }
+      output_file
+    }
   }
 
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, FALSE, dev),
-    pandoc = pandoc_options(to = variant,
+    pandoc = pandoc_options(to = if (variant == "knitr") "markdown" else variant,
                             from = from_rmarkdown(extensions = md_extensions),
                             args = args,
                             ext = ext),
