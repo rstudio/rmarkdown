@@ -7,6 +7,8 @@ rmarkdown 2.4
 
 - When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
 
+- `md_document` gains "knitr" as a markdown variant so to create `knitr::knit`ted markdown instead of `pandoc`ed markdown (thanks, @atusy, #1863).
+
 rmarkdown 2.3
 ================================================================================
 
