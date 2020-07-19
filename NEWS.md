@@ -7,6 +7,8 @@ rmarkdown 2.4
 
 - When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
 
+- Custom `template` now works when `runtime: shiny` is set in YAML front matter or when `intermediates_dir` argument is set in `render()` (thanks, @atusy, #1865).
+
 rmarkdown 2.3
 ================================================================================
 
