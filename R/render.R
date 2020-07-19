@@ -463,6 +463,11 @@ render <- function(input,
                                           output_format$options)
   }
   pandoc_to <- output_format$pandoc$to
+  template_pos <- which(output_format$pandoc$args == '--template')[1L] + 1L
+  if (!is.na(template_pos)) {
+    output_format$pandoc$args[template_pos] <- normalize_path(
+      output_format$pandoc$args[template_pos], mustWork = TRUE)
+  }
 
   # generate outpout file based on input filename
   output_auto <- pandoc_output_file(input, output_format$pandoc)
