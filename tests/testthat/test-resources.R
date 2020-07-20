@@ -7,7 +7,7 @@ test_that("R Markdown resource discovery finds expected resources", {
     path = c("empty.md", "empty.png", "empty.tsv", "empty.Rmd", "empty.css",
              "empty.jpg", "empty.html", "empty2.html", "empty.csv"),
     explicit = c(FALSE, FALSE, TRUE,  FALSE, FALSE, FALSE, FALSE, FALSE, FALSE),
-    web      = c(FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE,  TRUE,  TRUE,  FALSE),
+    web      = c(FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE,  TRUE,  FALSE,  FALSE),
     stringsAsFactors = FALSE)
 
   # sort by filename to avoid errors arising from file ordering -- we don't
