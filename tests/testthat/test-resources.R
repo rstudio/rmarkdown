@@ -14,8 +14,6 @@ test_that("R Markdown resource discovery finds expected resources", {
   # really care what order these come back in
   resources <- as.data.frame(resources[order(resources[[1]]), , drop = FALSE])
   expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
-  print(resources)
-  print(expected)
 
   expect_equal(resources, expected)
 })
