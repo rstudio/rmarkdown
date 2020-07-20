@@ -3,7 +3,7 @@ title: "Untitled"
 author: "RStudio"
 output: 
   html_document:
-    template: "empty2.html"
+    template: "template.html"
     css: empty.css
     includes:
       before_body: empty.md
