@@ -312,7 +312,7 @@ html_document <- function(toc = FALSE,
       source_file <<- basename(input)
       source_code <<- paste0(
         '<div id="rmd-source-code">',
-        base64enc::base64encode(input),
+        xfun::base64_encode(input),
         '</div>')
     }
   }

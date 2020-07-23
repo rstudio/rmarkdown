@@ -85,11 +85,10 @@ Imports:
     yaml (>= 2.1.19),
     htmltools (>= 0.3.5),
     evaluate (>= 0.13),
-    base64enc,
     jsonlite,
     mime,
     tinytex (>= 0.11),
-    xfun,
+    xfun (>= 0.15.1),
     methods,
     stringr (>= 1.2.0)
 Suggests:
@@ -109,3 +108,4 @@ License: GPL-3
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
+Remotes: yihui/xfun

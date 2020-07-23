@@ -297,11 +297,11 @@ ends_with_bytes <- function(string, bytes) {
 base64_encode_object <- function(object) {
   object <- rapply(object, unclass, how = "list")
   json <- charToRaw(jsonlite::toJSON(object, auto_unbox = TRUE))
-  base64enc::base64encode(json)
+  xfun::base64_encode(json)
 }
 
 base64_decode_object <- function(encoded) {
-  json <- rawToChar(base64enc::base64decode(encoded))
+  json <- rawToChar(xfun::base64_decode(encoded))
   jsonlite::fromJSON(json)
 }
 
