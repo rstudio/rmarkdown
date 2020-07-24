@@ -62,11 +62,13 @@ word_document <- function(toc = FALSE,
     warning("table of contents for word_document requires pandoc >= 1.14")
 
   # numbered sections
-  if (number_sections)
-    if (pandoc_available("2.10.1"))
+  if (number_sections) {
+    if (pandoc_available("2.10.1")) {
       args <- c(args, "--number-sections")
-    else
-      warning("number_sections for word_document requires pandoc >= 2.10.1")
+    } else {
+      warning("number_sections for word_document requires Pandoc >= 2.10.1")
+    }
+  }
 
   # highlighting
   if (!is.null(highlight))
