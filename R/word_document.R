@@ -33,6 +33,7 @@
 #' @export
 word_document <- function(toc = FALSE,
                           toc_depth = 3,
+                          number_sections = FALSE,
                           fig_width = 5,
                           fig_height = 4,
                           fig_caption = TRUE,
@@ -59,6 +60,13 @@ word_document <- function(toc = FALSE,
     args <- c(args, pandoc_toc_args(toc, toc_depth))
   else
     warning("table of contents for word_document requires pandoc >= 1.14")
+
+  # numbered sections
+  if (number_sections)
+    if (pandoc_available("2.10.1"))
+      args <- c(args, "--number-sections")
+    else
+      warning("number_sections for word_document requires pandoc >= 2.10.1")
 
   # highlighting
   if (!is.null(highlight))
