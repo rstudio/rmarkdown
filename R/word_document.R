@@ -56,10 +56,7 @@ word_document <- function(toc = FALSE,
   args <- c()
 
   # table of contents
-  if (pandoc_available("1.14"))
-    args <- c(args, pandoc_toc_args(toc, toc_depth))
-  else
-    warning("table of contents for word_document requires pandoc >= 1.14")
+  args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # numbered sections
   if (number_sections) {

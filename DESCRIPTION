@@ -101,7 +101,7 @@ Suggests:
     fs,
     pkgdown,
     rsconnect
-SystemRequirements: pandoc (>= 1.12.3) - http://pandoc.org
+SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
 URL: https://github.com/rstudio/rmarkdown
 BugReports: https://github.com/rstudio/rmarkdown/issues
 License: GPL-3
