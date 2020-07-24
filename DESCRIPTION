@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 2.3.2
+Version: 2.3.3
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -88,7 +88,7 @@ Imports:
     jsonlite,
     mime,
     tinytex (>= 0.11),
-    xfun (>= 0.15.1),
+    xfun,
     methods,
     stringr (>= 1.2.0)
 Suggests:
@@ -108,4 +108,3 @@ License: GPL-3
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
-Remotes: yihui/xfun
