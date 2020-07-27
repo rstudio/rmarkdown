@@ -2,9 +2,24 @@
 % Please edit documentation in R/powerpoint_presentation.R
 \name{powerpoint_presentation}
 \alias{powerpoint_presentation}
+\alias{pptx_document}
 \title{Convert to a PowerPoint presentation}
 \usage{
 powerpoint_presentation(
+  toc = FALSE,
+  toc_depth = 2,
+  fig_width = 5,
+  fig_height = 4,
+  fig_caption = TRUE,
+  df_print = "default",
+  keep_md = FALSE,
+  md_extensions = NULL,
+  slide_level = NULL,
+  reference_doc = "default",
+  pandoc_args = NULL
+)
+
+pptx_document(
   toc = FALSE,
   toc_depth = 2,
   fig_width = 5,
@@ -63,4 +78,5 @@ R Markdown output format to pass to \code{\link{render}}
 \description{
 Format for converting from R Markdown to a PowerPoint presentation. Pandoc
 v2.0.5 or above is required.
+\code{pptx_document()} is an alias of \code{powerpoint_presentation()}.
 }

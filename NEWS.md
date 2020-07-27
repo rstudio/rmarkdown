@@ -9,6 +9,8 @@ rmarkdown 2.4
 
 - Added the `number_sections` argument to the `word_document()` output format. This requires Pandoc >= v2.10.1, and is set to `FALSE` by default (thanks, @jooyoungseo, #1869).
 
+- Added alias `pptx_document()` for `powerpoint_presentation()` and `docx_document()` for `word_document()`.
+
 
 rmarkdown 2.3
 ================================================================================

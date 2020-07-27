@@ -2,9 +2,25 @@
 % Please edit documentation in R/word_document.R
 \name{word_document}
 \alias{word_document}
+\alias{docx_document}
 \title{Convert to an MS Word document}
 \usage{
 word_document(
+  toc = FALSE,
+  toc_depth = 3,
+  number_sections = FALSE,
+  fig_width = 5,
+  fig_height = 4,
+  fig_caption = TRUE,
+  df_print = "default",
+  highlight = "default",
+  reference_docx = "default",
+  keep_md = FALSE,
+  md_extensions = NULL,
+  pandoc_args = NULL
+)
+
+docx_document(
   toc = FALSE,
   toc_depth = 3,
   number_sections = FALSE,
@@ -66,6 +82,7 @@ R Markdown output format to pass to \code{\link{render}}
 }
 \description{
 Format for converting from R Markdown to an MS Word document.
+\code{docx_document()} is an alias of \code{word_document()}.
 }
 \details{
 See the \href{https://rmarkdown.rstudio.com/word_document_format.html}{online

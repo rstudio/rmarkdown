@@ -1,6 +1,7 @@
 #' Convert to an MS Word document
 #'
 #' Format for converting from R Markdown to an MS Word document.
+#' \code{docx_document()} is an alias of \code{word_document()}.
 #'
 #' See the \href{https://rmarkdown.rstudio.com/word_document_format.html}{online
 #' documentation} for additional details on using the \code{word_document} format.
@@ -31,6 +32,7 @@
 #' render("input.Rmd", word_document(highlight = "zenburn"))
 #' }
 #' @export
+#' @rdname docx_document
 word_document <- function(toc = FALSE,
                           toc_depth = 3,
                           number_sections = FALSE,
@@ -103,6 +105,10 @@ word_document <- function(toc = FALSE,
     intermediates_generator = intermediates_generator
   )
 }
+
+#' @export
+#' @rdname docx_document
+docx_document = word_document
 
 reference_doc_args <- function(type, doc) {
   if (is.null(doc) || identical(doc, "default")) return()

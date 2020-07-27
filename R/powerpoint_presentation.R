@@ -2,11 +2,13 @@
 #'
 #' Format for converting from R Markdown to a PowerPoint presentation. Pandoc
 #' v2.0.5 or above is required.
+#' \code{pptx_document()} is an alias of \code{powerpoint_presentation()}.
 #' @inheritParams pdf_document
 #' @inheritParams html_document
 #' @inheritParams beamer_presentation
 #' @param reference_doc Path to a PowerPoint template.
 #' @export
+#' @rdname pptx_document
 #' @return R Markdown output format to pass to \code{\link{render}}
 powerpoint_presentation <- function(
   toc = FALSE, toc_depth = 2, fig_width = 5, fig_height = 4, fig_caption = TRUE,
@@ -65,6 +67,10 @@ powerpoint_presentation <- function(
     intermediates_generator = intermediates_generator
   )
 }
+
+#' @export
+#' @rdname pptx_document
+pptx_document = powerpoint_presentation
 
 # copy the reference doc to the intermediate dir when the dir is specified
 reference_intermediates_generator <- function(
