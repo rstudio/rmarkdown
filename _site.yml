@@ -8,7 +8,7 @@ output:
     toc_float:
       collapsed: false
     includes:
-      in_header: include_head.html
+      in_header: [include_head.html, google_analytics.html]
       before_body: include_header.html
       after_body: include_footer.html
     css: css/rmarkdown.css
