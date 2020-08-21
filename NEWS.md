@@ -7,6 +7,9 @@ rmarkdown 2.4
 
 - When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
 
+- Added the `number_sections` argument to the `word_document()` output format. This requires Pandoc >= v2.10.1, and is set to `FALSE` by default (thanks, @jooyoungseo, #1869).
+
+
 rmarkdown 2.3
 ================================================================================
 
