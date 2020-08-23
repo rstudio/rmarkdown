@@ -412,7 +412,7 @@ ioslides_presentation <- function(logo = NULL,
 
     # base64 encode if needed
     if (self_contained) {
-      slides_lines <- base64_image_encode(slides_lines)
+      slides_lines <- base64_encode_images(slides_lines)
     }
 
     # read the output file

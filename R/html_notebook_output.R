@@ -39,7 +39,7 @@ html_notebook_render_base64_data <- function(path = NULL,
   # read (if necessary) and encode data
   if (is.null(bytes))
     bytes <- read_file(path, binary = TRUE)
-  encoded <- base64enc::base64encode(bytes)
+  encoded <- xfun::base64_encode(bytes)
 
   # generate html attributes
   sprintf(format, to_html_attributes(attributes), encoded)
