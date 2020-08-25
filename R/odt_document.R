@@ -31,7 +31,8 @@
 #' render("input.Rmd", odt_document(highlight = "zenburn"))
 #' }
 #' @export
-odt_document <- function(fig_width = 5,
+odt_document <- function(number_sections = FALSE,
+                         fig_width = 5,
                          fig_height = 4,
                          fig_caption = TRUE,
                          template = "default",
@@ -67,6 +68,9 @@ odt_document <- function(fig_width = 5,
 
   # pandoc args
   args <- c(args, pandoc_args)
+
+  # number sections with lua filter
+  if (number_sections) args <- c(args, pandoc_lua_filters("number-sections.lua"))
 
   saved_files_dir <- NULL
   pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir, output_dir) {

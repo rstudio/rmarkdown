@@ -62,8 +62,10 @@ word_document <- function(toc = FALSE,
   if (number_sections) {
     if (pandoc_available("2.10.1")) {
       args <- c(args, "--number-sections")
+    } else if (pandoc2.0()) {
+      args <- c(args, pandoc_lua_filters("number-sections.lua"))
     } else {
-      warning("number_sections for word_document requires Pandoc >= 2.10.1")
+      warning("number_sections for word_document requires Pandoc >= 2.0")
     }
   }
 

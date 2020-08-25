@@ -37,6 +37,7 @@ md_document <- function(variant = "markdown_strict",
                         preserve_yaml = FALSE,
                         toc = FALSE,
                         toc_depth = 3,
+                        number_sections = FALSE,
                         fig_width = 7,
                         fig_height = 5,
                         fig_retina = NULL,
@@ -58,6 +59,9 @@ md_document <- function(variant = "markdown_strict",
 
   # pandoc args
   args <- c(args, pandoc_args)
+
+  # number sections with lua filter
+  if (number_sections) args <- c(args, pandoc_lua_filters("number-sections.lua"))
 
   # add post_processor for yaml preservation
   post_processor <- if (preserve_yaml && variant != 'markdown') {
