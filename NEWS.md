@@ -14,6 +14,8 @@ rmarkdown 2.4
 
 - Added the `number_sections` argument to the `word_document()` output format. This requires Pandoc >= v2.10.1, and is set to `FALSE` by default (thanks, @jooyoungseo, #1869).
 
+- Updated documentation for `render` to make it clearer how options are set for the `output_format` parameter (See <https://github.com/rstudio/bookdown/issues/930>) (thanks, @jonathan-g, #xxx)
+
 
 rmarkdown 2.3
 ================================================================================
