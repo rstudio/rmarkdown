@@ -5,6 +5,7 @@
 \title{Convert to an OpenDocument Text (ODT) document}
 \usage{
 odt_document(
+  number_sections = FALSE,
   fig_width = 5,
   fig_height = 4,
   fig_caption = TRUE,
@@ -17,6 +18,8 @@ odt_document(
 )
 }
 \arguments{
+\item{number_sections}{\code{TRUE} to number section headings}
+
 \item{fig_width}{Default width (in inches) for figures}
 
 \item{fig_height}{Default height (in inches) for figures}
