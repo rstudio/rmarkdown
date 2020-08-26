@@ -31,6 +31,7 @@
 #' @export
 rtf_document <- function(toc = FALSE,
                          toc_depth = 3,
+                         number_sections = FALSE,
                          fig_width = 5,
                          fig_height = 4,
                          keep_md = FALSE,
@@ -53,6 +54,9 @@ rtf_document <- function(toc = FALSE,
 
   # pandoc args
   args <- c(args, pandoc_args)
+
+  # number sections
+  if (number_sections) args <- c(args, pandoc_lua_filters("number-sections.lua"))
 
   preserved_chunks <- character()
 

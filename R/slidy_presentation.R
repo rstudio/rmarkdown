@@ -31,7 +31,8 @@
 #' render("pres.Rmd", slidy_presentation(incremental = TRUE))
 #' }
 #' @export
-slidy_presentation <- function(incremental = FALSE,
+slidy_presentation <- function(number_sections = FALSE,
+                               incremental = FALSE,
                                slide_level = NULL,
                                duration = NULL,
                                footer = NULL,
@@ -69,6 +70,9 @@ slidy_presentation <- function(incremental = FALSE,
     extra_dependencies,
     list(html_dependency_slidy(),
          html_dependency_slidy_shiny()))
+
+  # number sections
+  if (number_sections) args <- c(args, pandoc_lua_filters("number-sections.lua"))
 
   # incremental
   if (incremental)
