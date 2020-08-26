@@ -7,7 +7,8 @@ rmarkdown 2.4
 
 - When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
 
-- Added the `number_sections` argument to the `word_document()` output format. This requires Pandoc >= v2.10.1, and is set to `FALSE` by default (thanks, @jooyoungseo, #1869).
+- Added the `number_sections` argument to following formats: `github_document`, `ioslides_presentation`, `md_document`, `odt_document`, `powerpoint_presentation`, `rtf_document`, `slidy_presentation`, `word_document` (thanks @atusy 1893). These are powered by a lua filter and requires Pandoc > 2.0. Pandoc > 2.10.1 adds `--number-sections` for docx format, and thus `word_document` prefers the native feature to the lua filter (thanks, @jooyoungseo, #1869).
+
 
 
 rmarkdown 2.3
