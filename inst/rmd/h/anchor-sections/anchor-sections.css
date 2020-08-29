@@ -1,0 +1,21 @@
+@media (max-width: 1000px) {
+  .hasAnchor:hover a.anchor {
+    visibility: hidden;
+  }
+}
+@media (min-width: 1000px) {
+  .hasAnchor:hover a.anchor {
+      visibility: visible;
+  }
+}
+a.anchor {
+    margin-left: -30px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    visibility: hidden;
+    background-image: url(./link.svg);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: center center;
+}
