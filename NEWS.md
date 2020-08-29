@@ -9,7 +9,7 @@ rmarkdown 2.4
 
 - Added the `number_sections` argument to the `word_document()` output format. This requires Pandoc >= v2.10.1, and is set to `FALSE` by default (thanks, @jooyoungseo, #1869).
 
-- `html_document` gains the `anchor_sections` argument so that readers can get links to headings easily.
+- `html_document` gains the `anchor_sections` argument so that readers can get links to headings easily (thanks, @atusy, #1884).
 
 rmarkdown 2.3
 ================================================================================
