@@ -17,6 +17,5 @@ function Header(el)
     content[i+1] = c
   end
   el.content = content
-  el.classes[#el.classes+1] = 'hasAnchor'
   return(el)
 end
