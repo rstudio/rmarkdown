@@ -1,16 +1,11 @@
-@media (max-width: 1000px) {
-  .hasAnchor:hover a.anchor {
-    visibility: hidden;
-  }
-}
 @media (min-width: 1000px) {
   .hasAnchor:hover>a.anchor,
-  .hasAnchor>h1:hover a.anchor,
-  .hasAnchor>h2:hover a.anchor,
-  .hasAnchor>h3:hover a.anchor,
-  .hasAnchor>h4:hover a.anchor,
-  .hasAnchor>h5:hover a.anchor,
-  .hasAnchor>h6:hover a.anchor {
+  h1:hover a.anchor,
+  h2:hover a.anchor,
+  h3:hover a.anchor,
+  h4:hover a.anchor,
+  h5:hover a.anchor,
+  h6:hover a.anchor {
     visibility: visible;
   }
 }
