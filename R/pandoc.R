@@ -49,6 +49,10 @@ pandoc_convert <- function(input,
   # ensure we've scanned for pandoc
   find_pandoc()
 
+  # evaluate path arguments before changing working directory
+  force(from)
+  force(to)
+
   # execute in specified working directory
   if (is.null(wd)) {
     wd <- base_dir(input)
