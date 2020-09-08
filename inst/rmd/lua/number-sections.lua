@@ -1,9 +1,6 @@
 --[[
 number-sections - Number sections like the --number-sections option
 
-If the "data-number" attribute is not required, opt it out by specifying `false`
-to the `number_sections_with_attributes` metadata.
-
 # MIT License
 
 Copyright (c) 2020 Atsushi Yasumoto
@@ -16,18 +13,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 https://github.com/atusy/lua-filters/blob/master/lua/number-sections.lua
 ]]
-local attributes_free_formats = {
-  -- Improve readability of markdown formats by let them be attributes free
-  -- https://pandoc.org/MANUAL.html#general-options
-  commonmark=1,
-  commonmark_x=1,
-  gfm=1, markdown_github=1,
-  markdown=1,
-  markdown_mmd=1,
-  markdown_phpextra=1,
-  markdown_strict=1
-}
-local full_attributes = attributes_free_formats[FORMAT] == nil
 local section_number_table = {0, 0, 0, 0, 0, 0, 0, 0, 0}
 local n_section_number_table = #section_number_table
 local previous_header_level = 0
@@ -36,18 +21,9 @@ if FORMAT == "docx" then -- to be consistent with Pandoc >= 2.10.1
   separator = pandoc.Str("\t")
 end
 
-local function Meta(meta)
-  if meta.number_sections_with_attributes then
-    full_attributes = meta.number_sections_with_attributes
-  end
-end
-
-local function Header(elem)
+function Header(elem)
   -- If unnumbered
   if (elem.classes:find("unnumbered")) then
-    if full_attributes then
-      elem.attributes["data-number"] = ""
-    end
     return elem
   end
 
@@ -71,17 +47,7 @@ local function Header(elem)
 
   --- Update Header element
   table.insert(elem.content, 1, separator)
-  if full_attributes then
-    table.insert(elem.content, 1, pandoc.Span(section_number_string))
-    elem.content[1].classes = {"header-section-number"}
-    elem.attributes["data-number"] = section_number_string
-  else
-    table.insert(elem.content, 1, pandoc.Str(section_number_string))
-  end
+  table.insert(elem.content, 1, pandoc.Str(section_number_string))
+
   return elem
 end
-
-return {
-  {Meta = Meta},
-  {Header = Header}
-}
