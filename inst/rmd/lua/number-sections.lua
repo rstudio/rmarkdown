@@ -81,9 +81,7 @@ local function Header(elem)
   return elem
 end
 
-local number_sections = {
+return {
   {Meta = Meta},
   {Header = Header}
 }
-
-return number_sections
