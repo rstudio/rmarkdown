@@ -16,7 +16,9 @@ Authors@R: c(
   #
   # Contributors, ordered alphabetically by first name
   person("Andrew", "Dunning", role = "ctb", comment = c(ORCID = "0000-0003-0464-5036")),
-  person("Atsushi", "Yasumoto", role = "ctb", comment = c(ORCID = "0000-0002-8335-495X")),
+  person("Atsushi", "Yasumoto", role = c("ctb", "cph"),
+         comment = c(ORCID = "0000-0002-8335-495X",
+                     cph = "Number sections lua filter")),
   person("Barret", "Schloerke", role = "ctb"),
   person("Christophe", "Dervieux", role = "ctb"),
   person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
