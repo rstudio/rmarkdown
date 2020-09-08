@@ -30,12 +30,7 @@ test_that("number_sections lua filter works", {
   numbers <- c("1", "1.1", "2", "2.1")
   headers <- c("#", "##", "#", "##")
   rmd <- paste0(headers, " ", numbers, "\n\n")
-  result <- paste(
-    .generate_md_and_convert(
-      rmd, md_document(number_sections = TRUE, variant = "gfm")
-    ),
-    collapse="\n"
-  )
-  expected <- paste(paste(headers, numbers, numbers), collapse = "\n\n")
-  expect_identical(result, expected)
+  result <- .generate_md_and_convert(rmd, md_document(number_sections = TRUE))
+  expected <- paste(numbers, numbers)
+  expect_identical(result[result %in% expected], expected)
 })
