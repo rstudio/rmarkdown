@@ -141,6 +141,34 @@ output:
 # First Header
 ````
 
+## Number sections
+
+Numbering sections are supported by Pandoc for limited formats (e.g., html and pdf).
+The rmarkdown package adds `number_sections.lua` to support this feature in other formats (e.g., docx, odt, and so on).
+Users do not have to know which formats use the Pandoc's feature or the Lua filter.
+
+```md
+---
+title: My main title
+output: 
+  md_document:
+    number_sections: true # implemented by Lua filter
+  html_document
+    number_sections: true # implemented by Pandoc
+---
+
+# First Header
+
+## A Header Belonging the First Header
+
+# Second Header
+```
+
+In general, numbers and titles of sections are separated by a space.
+An exception is the `word_document` function, which separates them by a tab in order to be consistent with Pandoc's number sections for docx format in Pandoc >= 2.10.1.
+If one wants to have fine controls on the format of section numbers, prepare customized docx file and specify it to the `reference_docx` argument of the `word_document` function.
+
+
 
 ## About lua filters {#lua-filter}
 
