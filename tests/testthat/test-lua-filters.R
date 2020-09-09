@@ -25,3 +25,12 @@ test_that("pagebreak lua filters works", {
   expect_match(res[grep("HEADER 1", res)+2], "\\newpage", fixed = TRUE)
   expect_match(res[grep("HEADER 2", res)+2], "\\pagebreak", fixed = TRUE)
 })
+
+test_that("number_sections lua filter works", {
+  numbers <- c("1", "1.1", "2", "2.1")
+  headers <- c("#", "##", "#", "##")
+  rmd <- paste0(headers, " ", numbers, "\n\n")
+  result <- .generate_md_and_convert(rmd, md_document(number_sections = TRUE))
+  expected <- paste(numbers, numbers)
+  expect_identical(result[result %in% expected], expected)
+})

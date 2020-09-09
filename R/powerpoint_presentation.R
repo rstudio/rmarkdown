@@ -9,7 +9,8 @@
 #' @export
 #' @return R Markdown output format to pass to \code{\link{render}}
 powerpoint_presentation <- function(
-  toc = FALSE, toc_depth = 2, fig_width = 5, fig_height = 4, fig_caption = TRUE,
+  toc = FALSE, toc_depth = 2, number_sections = FALSE,
+  fig_width = 5, fig_height = 4, fig_caption = TRUE,
   df_print = 'default', keep_md = FALSE, md_extensions = NULL,
   slide_level = NULL, reference_doc = 'default', pandoc_args = NULL
 ) {
@@ -34,6 +35,9 @@ powerpoint_presentation <- function(
   # slide level
   if (!is.null(slide_level))
     args <- c(args, '--slide-level', as.character(slide_level))
+
+  # number sections
+  if (number_sections) args <- c(args, pandoc_lua_filters("number-sections.lua"))
 
   # TODO: syntax highlighting
 
