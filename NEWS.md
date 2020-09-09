@@ -10,6 +10,8 @@ rmarkdown 2.4
 - Added the `number_sections` argument to following formats: `github_document`, `ioslides_presentation`, `md_document`, `odt_document`, `powerpoint_presentation`, `rtf_document`, `slidy_presentation`, `word_document`. These are powered by a lua filter and requires Pandoc > 2.0. It will silently have no effect has before with previous pandoc version (thanks @atusy 1893).  Pandoc >= 2.10.1 adds `--number-sections` for docx format, and thus `word_document` prefers the native feature to the lua filter (thanks, @jooyoungseo, #1869).
 
 
+- For the output format `pdf_document`, the option `fig_crop` will not be enabled unless both the programs `pdfcrop` and `ghostscript` are found (thanks, @dalupus, yihui/knitr#954).
+
 
 rmarkdown 2.3
 ================================================================================
