@@ -9,6 +9,8 @@ rmarkdown 2.4
 
 - Added the `number_sections` argument to the `word_document()` output format. This requires Pandoc >= v2.10.1, and is set to `FALSE` by default (thanks, @jooyoungseo, #1869).
 
+- For the output format `pdf_document`, the option `fig_crop` will not be enabled unless both the programs `pdfcrop` and `ghostscript` are found (thanks, @dalupus, yihui/knitr#954).
+
 
 rmarkdown 2.3
 ================================================================================
