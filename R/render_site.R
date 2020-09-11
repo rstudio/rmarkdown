@@ -240,10 +240,26 @@ site_generator <- function(input = ".", output_format = NULL) {
   # normalize input
   input <- input_as_dir(input)
 
+  # default to the file NOT being in a subdir
+  in_subdir <- FALSE
+
   # if we have an index.Rmd (or .md) then check it's yaml for "site:"
   index <- file.path(input, "index.Rmd")
   if (!file.exists(index))
     index <- file.path(input, "index.md")
+
+  if (!file.exists(index)) {
+    # look in directories above (for site generators that support nested Rmds)
+    root <- tryCatch(rprojroot::find_root(rprojroot::has_file_pattern("^index.R?md$")),
+                     error = function(e) NULL)
+    if (!is.null(root)) {
+      in_subdir <- TRUE
+      index < file.path(root, "index.Rmd")
+      if (!file.exists(index))
+        index <- file.path(root, "index.md")
+    }
+  }
+
   if (file.exists(index)) {
 
     # read index.Rmd and extract the front matter
@@ -253,7 +269,18 @@ site_generator <- function(input = ".", output_format = NULL) {
     if (!is.null(front_matter$site)) {
 
       create_site_generator <- eval(parse(text = front_matter$site))
-      create_site_generator(input)
+      generator <- create_site_generator(input)
+
+      # if it's in a subdir check to see if the generator supports nested files
+      if (in_subdir) {
+        if (isTRUE(generator$subdirs)) {
+          generator
+        } else {
+          NULL
+        }
+      } else {
+        generator
+      }
 
     # is there a "_site.yml"?
     } else if (file.exists(site_config_file(input))) {
