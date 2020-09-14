@@ -346,7 +346,7 @@ ioslides_presentation <- function(number_sections = FALSE,
 
     # number sections
     if (number_sections) {
-      args <- c(args, pandoc_lua_filters_args(pkg_file_lua("number-sections.lua")))
+      args <- c(args, pandoc_lua_filter_args(pkg_file_lua("number-sections.lua")))
     }
 
     lua_writer <- file.path(dirname(input_file), "ioslides_presentation.lua")

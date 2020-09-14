@@ -717,9 +717,13 @@ pandoc_citeproc <- function() {
   if (file.exists(p)) p else bin
 }
 
-pandoc_lua_filters_args <- function(...) {
+#' @rdname pandoc_args
+#' @param lua_files Character vector of file paths to lua filter files. Paths
+#'   will be transformed by \code{\link{pandoc_path_arg}}.
+#' @export
+pandoc_lua_filter_args <- function(lua_files) {
   # lua filters was introduced in pandoc 2.0
-  if (pandoc2.0()) c(rbind("--lua-filter", pandoc_path_arg(...)))
+  if (pandoc2.0()) c(rbind("--lua-filter", pandoc_path_arg(lua_files)))
 }
 
 
