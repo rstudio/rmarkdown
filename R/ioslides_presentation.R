@@ -344,6 +344,11 @@ ioslides_presentation <- function(number_sections = FALSE,
     # add any custom pandoc args
     args <- c(args, pandoc_args)
 
+    # number sections
+    if (number_sections) {
+      args <- c(args, pandoc_lua_filters_args(pkg_file_lua("number-sections.lua")))
+    }
+
     lua_writer <- file.path(dirname(input_file), "ioslides_presentation.lua")
     # The input directory may not be writable (on e.g. Shiny Server), so write
     # to the output directory in this case. We don't always do this since
@@ -436,11 +441,9 @@ ioslides_presentation <- function(number_sections = FALSE,
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
-    pandoc = pandoc_options(
-      to = "html",
-      from = from_rmarkdown(fig_caption, md_extensions),
-      args = args,
-      lua_filters = pkg_file_lua("number-sections.lua")),
+    pandoc = pandoc_options(to = "html",
+                            from = from_rmarkdown(fig_caption, md_extensions),
+                            args = args),
     keep_md = keep_md,
     clean_supporting = self_contained,
     df_print = df_print,
