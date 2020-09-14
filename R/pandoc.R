@@ -717,9 +717,9 @@ pandoc_citeproc <- function() {
   if (file.exists(p)) p else bin
 }
 
-pandoc_lua_filters <- function(...) {
+pandoc_lua_filters_args <- function(...) {
   # lua filters was introduced in pandoc 2.0
-  if (pandoc2.0()) c(rbind("--lua-filter", pkg_file("rmd", "lua", ...)))
+  if (pandoc2.0()) c(rbind("--lua-filter", pandoc_path_arg(...)))
 }
 
 
