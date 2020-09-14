@@ -101,7 +101,6 @@ Suggests:
     dygraphs,
     tibble,
     fs,
-    pkgdown,
     rsconnect
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
 URL: https://github.com/rstudio/rmarkdown
