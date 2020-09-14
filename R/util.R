@@ -41,6 +41,10 @@ pkg_file_arg <- function(...) {
   pandoc_path_arg(pkg_file(...))
 }
 
+pkg_file_lua <- function(...) {
+  pkg_file("rmd", "lua", ...)
+}
+
 #' @rdname rmarkdown_format
 #' @export
 from_rmarkdown <- function(implicit_figures = TRUE, extensions = NULL) {
