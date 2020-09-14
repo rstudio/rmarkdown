@@ -853,7 +853,7 @@ render <- function(input,
       if (!is.null(lua_filters <- output_format$pandoc$lua_filters)) {
         lua_filters <- pandoc_lua_filter_args(lua_filters)
       }
-      pandoc_args <- c(pandoc_args, lua_filters)
+      pandoc_args <- c(lua_filters, pandoc_args)
 
       # in case the output format turns on the --file-scope flag, run its
       # file_scope function to split the input into multiple files
