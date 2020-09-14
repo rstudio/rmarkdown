@@ -126,8 +126,6 @@ beamer_presentation <- function(toc = FALSE,
   # make sure the graphics package is always loaded
   if (identical(template, "default")) args <- c(args, "--variable", "graphics=yes")
 
-  args <- c(args, pandoc_lua_filters(c("pagebreak.lua", "latex-div.lua")))
-
   # custom args
   args <- c(args, pandoc_args)
 
@@ -151,11 +149,14 @@ beamer_presentation <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
-    pandoc = pandoc_options(to = "beamer",
-                            from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args,
-                            latex_engine = latex_engine,
-                            keep_tex = keep_tex),
+    pandoc = pandoc_options(
+      to = "beamer",
+      from = from_rmarkdown(fig_caption, md_extensions),
+      args = args,
+      latex_engine = latex_engine,
+      keep_tex = keep_tex,
+      lua_filters = pkg_file_lua(c("pagebreak.lua", "latex-div.lua"))
+    ),
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     clean_supporting = !keep_tex,
