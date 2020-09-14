@@ -71,9 +71,6 @@ slidy_presentation <- function(number_sections = FALSE,
     list(html_dependency_slidy(),
          html_dependency_slidy_shiny()))
 
-  # number sections
-  if (number_sections) args <- c(args, pandoc_lua_filters("number-sections.lua"))
-
   # incremental
   if (incremental)
     args <- c(args, "--incremental")
@@ -130,9 +127,12 @@ slidy_presentation <- function(number_sections = FALSE,
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
-    pandoc = pandoc_options(to = "slidy",
-                            from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args),
+    pandoc = pandoc_options(
+      to = "slidy",
+      from = from_rmarkdown(fig_caption, md_extensions),
+      args = args,
+      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
+    ),
     keep_md = keep_md,
     clean_supporting = self_contained,
     df_print = df_print,

@@ -55,9 +55,6 @@ rtf_document <- function(toc = FALSE,
   # pandoc args
   args <- c(args, pandoc_args)
 
-  # number sections
-  if (number_sections) args <- c(args, pandoc_lua_filters("number-sections.lua"))
-
   preserved_chunks <- character()
 
   pre_processor <- function(metadata, input_file, runtime, knit_meta,
@@ -76,9 +73,11 @@ rtf_document <- function(toc = FALSE,
   # return output format
   output_format(
     knitr = knitr,
-    pandoc = pandoc_options(to = "rtf",
-                            from = from_rmarkdown(extensions = md_extensions),
-                            args = args),
+    pandoc = pandoc_options(
+      to = "rtf",
+      from = from_rmarkdown(extensions = md_extensions),
+      args = args,
+      lua_filters = if (number_sections) pkg_file("number-sections.lua")),
     keep_md = keep_md,
     pre_processor = pre_processor,
     post_processor = post_processor
