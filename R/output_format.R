@@ -198,6 +198,7 @@ merge_pandoc_options <- function(base,
 
   res <- merge_lists(base, overlay, recursive = FALSE)
   res$args <- c(base$args, overlay$args)
+  res$lua_filters <- c(base$lua_filters, overlay$lua_filters)
   res
 }
 
