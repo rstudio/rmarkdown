@@ -214,10 +214,10 @@ Or by creating a new format :
 
 ```{r creating-format}
 custom_format <- function(toc = TRUE, ...) {
-  output_format(
+  rmarkdown::output_format(
     knitr = knitr_options(),
     # a new filter will be appended to base_format ones
-    pandoc = pandoc_options(to = "html", lua_filters = "new.lua"),
+    pandoc = rmarkdown::pandoc_options(to = "html", lua_filters = "new.lua"),
     base_format = rmarkdown::html_document(toc = toc, ...)
   )
 }
