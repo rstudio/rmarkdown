@@ -7,12 +7,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
+
+This vignettes gives some detailled information regarding the lua filter including in the **rmarkdown** package. To know more about lua filter, you can jump directly to [last section](#lua-filter)
 
 ## Pagebreaks
 
@@ -141,6 +143,8 @@ output:
 # First Header
 ````
 
+
+
 ## Number sections
 
 Numbering sections are supported by Pandoc for limited formats (e.g., html and pdf).
@@ -182,6 +186,43 @@ output:
 ---
 ```
 
+You can also use a special helper using a `!expr` syntax for yaml in your header
+
 The package [rmdfiltr](https://github.com/crsh/rmdfiltr) provides a collection of lua filters and helpers functions to use them.
 
 Before pandoc 2.0, [using filter](https://pandoc.org/filters.html) with pandoc was already available through programs that modifies the AST. `pandoc-citeproc` is an example used to deal with citations. The package [pandocfilter](https://cran.r-project.org/package=pandocfilters) is useful to create filters using R.
+
+### Using filters with output format
+
+If you want to create a format that uses a special filter, you can add it as a pandoc option if the output format.
+
+Either by modifying an existing format: 
+
+```{r modifying-format}
+custom_format <- function(...) {
+  base_format <- rmarkdown::html_document(...)
+  # prepending a new lua filter to html_document() ones
+  base_format$pandoc$lua_filters <- c(
+    pandoc_path_arg("new.lua"), 
+    base_format$pandoc$lua_filters)
+  base_format
+}
+
+basename(custom_format()$pandoc$lua_filters)
+```
+Or by creating a new format :
+
+```{r creating-format}
+custom_format <- function(toc = TRUE, ...) {
+  output_format(
+    knitr = knitr_options(),
+    # a new filter will be appended to base_format ones
+    pandoc = pandoc_options(to = "html", lua_filters = "new.lua"),
+    base_format = rmarkdown::html_document(toc = toc, ...)
+  )
+}
+
+basename(custom_format()$pandoc$lua_filters)
+```
+
+As this is an advanced feature, if you want to go further, we encourage you to look at the examples of formats in packages such as **rmarkdown**, **bookdown** or **pagedown**. 
