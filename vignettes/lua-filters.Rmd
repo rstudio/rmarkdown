@@ -203,7 +203,7 @@ custom_format <- function(...) {
   base_format <- rmarkdown::html_document(...)
   # prepending a new lua filter to html_document() ones
   base_format$pandoc$lua_filters <- c(
-    pandoc_path_arg("new.lua"), 
+    rmarkdown::pandoc_path_arg("new.lua"), 
     base_format$pandoc$lua_filters)
   base_format
 }
