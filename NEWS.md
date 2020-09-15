@@ -1,6 +1,11 @@
 rmarkdown 2.4
 ================================================================================
 
+- Lua filters handling has been improved internally with some user facing changes: 
+    - New exported function `pandoc_lua_filter_args()` to build pandoc command line argument to add a lua filter.
+    - New argument `lua_filters` in `pandoc_options()` to pass the lua filter paths to use with a format. This allow to add filters for custom format using `pandoc` argument in `output_format()` and to get filters from a format using `fmt$pandoc$lua_filters`.
+    - lua filter argument is now passed to pandoc in `render()` and by default the argument are passed first before any other format-defined or user-defined argument. As pandoc's lua filter are apply in the appearing order, this insures that filters for a format are run first. To change the default, you need to deal with it in a custom format. 
+
 - Since **rmarkdown** 1.16, Pandoc's fenced `Div`'s are converted to LaTeX environments when the output format is LaTeX, e.g., `::: {.center data-latex=""}` is converted to `\begin{center}`. The attribute `data-latex` of the `Div` was mandatory, even if it is empty. In **rmarkdown** 2.2, we silently drop this requirement, which means `::: {.center}` is converted to `\begin{center}`. This turns out to be a bad idea, because users have no control over which Div's to be converted to LaTeX environments. Previously, they could opt-in by the `data-latex` attribute, but with **rmarkdown** 2.3, all Div's are converted to LaTeX environments unconditionally. What's more, this change led to bugs like https://stackoverflow.com/q/62340425/559676 and https://github.com/rstudio/bookdown/issues/883. Therefore the `data-latex` attribute became mandatory again in this version. If the LaTeX environment does not need arguments, you may use `data-latex=""`.
 
 - The two Lua fitlers `pagebreak.lua` and `latex-div.lua` (introduced in **rmarkdown** 1.16) are also applied to the output format `beamer_presentation` now (thanks, @XiangyunHuang, #1815).
