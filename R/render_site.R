@@ -250,7 +250,10 @@ site_generator <- function(input = ".", output_format = NULL) {
 
   if (!file.exists(index)) {
     # look in directories above (for site generators that support nested Rmds)
-    root <- tryCatch(rprojroot::find_root(rprojroot::has_file_pattern("^index.R?md$")),
+    root <- tryCatch(rprojroot::find_root(rprojroot::has_file_pattern(
+                                            "^index.R?md$",
+                                            "^\\s*site:.*::.*$"
+                                          )),
                      error = function(e) NULL)
     if (!is.null(root)) {
       in_subdir <- TRUE
