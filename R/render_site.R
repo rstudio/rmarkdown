@@ -233,6 +233,7 @@ clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
   }
 }
 
+#' @import rprojroot
 #' @rdname render_site
 #' @export
 site_generator <- function(input = ".", output_format = NULL) {
