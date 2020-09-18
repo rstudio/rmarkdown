@@ -463,10 +463,10 @@ xfun_session_info <- function() {
   paste('Pandoc version:', pandoc_version())
 }
 
-# given a path of a file in a potential project (e.g., an R package), figure out
-# the project root
+# given a path of a file (or dir) in a potential project (e.g., an R package),
+# figure out the project root
 proj_root <- function(path, file = '^DESCRIPTION$', pattern = '^Package: ') {
-  dir <- dirname(path)
+  dir <- if (dir_exists(path)) path else dirname(path)
   if (same_path(dir, file.path(dir, '..'))) return()
   for (f in list.files(dir, file, full.names = TRUE)) {
     if (length(grep(pattern, read_utf8(f)))) return(dir)
