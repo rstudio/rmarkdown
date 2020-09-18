@@ -1,11 +1,9 @@
-### Overview
+# rmarkdown <img src='man/figures/logo.png' align="right" height="138.5" />
 
 [![Build Status](https://travis-ci.org/rstudio/rmarkdown.svg?branch=master)](https://travis-ci.org/rstudio/rmarkdown)
 [![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/rmarkdown)](https://cran.r-project.org/package=rmarkdown)
 
 The **rmarkdown** package helps you create dynamic analysis documents that combine code, rendered output (such as figures), and prose. You bring your data, code, and ideas, and R Markdown renders your content into a polished document that can be used to:
-
-<img src="https://bookdown.org/yihui/rmarkdown/images/hex-rmarkdown.png" alt="The rmarkddown hex sticker" align="right" width="200" style="padding: 0 15px; float: right;"/>
 
 - Do data science interactively within the RStudio IDE,
 
