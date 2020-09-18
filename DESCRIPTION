@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 2.3.5
+Version: 2.3.6
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -92,8 +92,7 @@ Imports:
     tinytex (>= 0.11),
     xfun,
     methods,
-    stringr (>= 1.2.0),
-    rprojroot
+    stringr (>= 1.2.0)
 Suggests:
     shiny (>= 0.11),
     tufte,

@@ -233,22 +233,18 @@ clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
   }
 }
 
-#' @importFrom rprojroot find_root has_file_pattern
 #' @rdname render_site
 #' @export
 site_generator <- function(input = ".", output_format = NULL) {
 
-  # normalize input
-  input <- input_as_dir(input)
-
   # look for the closest index file with 'site' metadata
   root <- tryCatch(
-    find_root(
-      has_file_pattern(pattern = "^index.R?md$",contents = "^\\s*site:.*::.*$"),
-      path = input
-    ),
+    proj_root(input, "^index.R?md$", "^\\s*site:.*::.*$"),
     error = function(e) NULL
   )
+
+  # normalize input
+  input <- input_as_dir(input)
 
   # if none found then look for a _site.yml file
   if (is.null(root)) {
