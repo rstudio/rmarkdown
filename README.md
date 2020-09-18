@@ -16,7 +16,7 @@ The **rmarkdown** package helps you create dynamic analysis documents that combi
 R Markdown documents can be rendered to many output formats including HTML documents, PDFs, Word files, slideshows, and more, allowing you to focus on the content while R Markdown takes care of your presentation. 
 
 
-### Installation
+## Installation
 
 The easiest way to install the **rmarkdown** package is from within the [RStudio IDE](http://www.rstudio.com/ide/download/preview), but you don't need to explicitly install it or load it, as RStudio automatically does both when needed. A recent version of Pandoc (>= 1.12.3) is also required; RStudio also automatically includes this too so you do not need to download Pandoc if you plan to use rmarkdown from the RStudio IDE.
 
@@ -34,7 +34,7 @@ remotes::install_github('rstudio/rmarkdown')
 
 If not using the RStudio IDE, you'll need to install a recent version of Pandoc (>= 1.12.3); see the [Pandoc installation instructions](https://rmarkdown.rstudio.com/docs/articles/pandoc.html) for help.
 
-### Usage
+## Usage
 
 The easiest way to make a new R Markdown document is from within RStudio. Go to _File > New File > R Markdown_. From the new file wizard, you may:
 
@@ -53,7 +53,7 @@ You can also delete all the text below the YAML frontmatter and fill in your own
 
 You can also click "Knit to HTML" again to render the full document with all code chunks. For more help getting started in R Markdown, please see the [R Markdown website](https://rmarkdown.rstudio.com/lesson-1.html) or use the **"Get Started"** links at the top of this page.
 
-### Getting help
+## Getting help
 
 There are two main places to get help:
 
