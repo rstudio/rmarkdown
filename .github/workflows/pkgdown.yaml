@@ -41,7 +41,7 @@ jobs:
       - name: Install package
         run: R CMD INSTALL .
 
-      - name: Deploy package
+      - name: Build pkgdown site
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
