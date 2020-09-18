@@ -465,13 +465,13 @@ xfun_session_info <- function() {
 
 # given a path of a file in a potential project (e.g., an R package), figure out
 # the project root
-package_root <- function(path, file = '^DESCRIPTION$', pattern = '^Package: ') {
+proj_root <- function(path, file = '^DESCRIPTION$', pattern = '^Package: ') {
   dir <- dirname(path)
   if (same_path(dir, file.path(dir, '..'))) return()
   for (f in list.files(dir, file)) {
     if (length(grep(pattern, read_utf8(f)))) return(dir)
   }
-  package_root(dir)
+  proj_root(dir)
 }
 
 
