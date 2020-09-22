@@ -12,7 +12,7 @@ rmarkdown 2.4
 
 - When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
 
-- Added the `number_sections` argument to following formats: `github_document`, `ioslides_presentation`, `md_document`, `odt_document`, `powerpoint_presentation`, `rtf_document`, `slidy_presentation`, `word_document`. These are powered by a lua filter and requires Pandoc > 2.0. It will silently have no effect has before with previous pandoc version (thanks @atusy 1893).  Pandoc >= 2.10.1 adds `--number-sections` for docx format, and thus `word_document` prefers the native feature to the lua filter (thanks, @jooyoungseo, #1869).
+- Added the `number_sections` argument to following formats: `github_document`, `ioslides_presentation`, `md_document`, `odt_document`, `powerpoint_presentation`, `rtf_document`, `slidy_presentation`, `word_document`. These are powered by a Lua filter and requires Pandoc > 2.0. It will silently have no effect has before with previous pandoc version (thanks @atusy 1893).  Pandoc >= 2.10.1 adds `--number-sections` for docx format, and thus `word_document` prefers the native feature to the Lua filter (thanks, @jooyoungseo, #1869).
 
 - For the output format `pdf_document`, the option `fig_crop` will not be enabled unless both the programs `pdfcrop` and `ghostscript` are found (thanks, @dalupus, yihui/knitr#954).
 
@@ -154,13 +154,13 @@ rmarkdown 1.16
 
 - Added `self_contained` argument to `html_vignette` to keep intermediate directory if `self_contained = FALSE` (thanks, @cderv, #1641).
 
-- It is now possible to add pagebreak in HTML, Word, LaTeX, and ODT documents using the `\newpage` or `\pagebreak` command in an Rmd file. This is possible thanks to the [Pandoc's pagebreak lua filter](https://github.com/pandoc/lua-filters/tree/master/pagebreak). See `vignette("lua-filters", package = "rmarkdown")` (thanks, @cderv, #1626).
+- It is now possible to add pagebreak in HTML, Word, LaTeX, and ODT documents using the `\newpage` or `\pagebreak` command in an Rmd file. This is possible thanks to the [Pandoc's pagebreak Lua filter](https://github.com/pandoc/lua-filters/tree/master/pagebreak). See `vignette("lua-filters", package = "rmarkdown")` (thanks, @cderv, #1626).
 
 - The Pandoc extension `ascii_identifiers` is no longer enabled by default. If you still need it, you may use the argument `md_extensions = "+ascii_identifiers"` in the output format function. However, please note that this will trigger an error in a future version of Pandoc.
 
 - Output formats can be configured by arbitrary YAML files, which used to be restricted to `_output.yml` or `_output.yaml`. They can be specified via the `output_yaml` argument of `render()` or the `output_yaml` top-level parameter of YAML front matter, and the first existing one will be used. If `output_yaml` is specified both for `render()` and YAML front matter, then `render()` has the priority. If none are found, then `_output.yml` or `_output.yaml` will be used if they exist (thanks, @atusy, #1634).
 
-- Added a Pandoc lua filter to convert fenced Divs to LaTeX environments when the output format is `latex` or `beamer`. Basically a fenced Div `::: {.NAME data-latex="[OPTIONS]"}` is converted to `\begin{NAME}[OPTIONS] \end{NAME}` in LaTeX. The attribute `data-latex` must be provided, even if it is an empty string (meaning that the LaTeX environment does not have any optional arguments). For example, `::: {.verbatim data-latex=""}` generates a `verbatim` environment, and `::: {.minipage data-latex="{.5\textwidth}"}` generates `\begin{minipage}{.5\textwidth}`. This lua filter was originally written by @RLesur at https://github.com/yihui/bookdown-crc/issues/1. It will allow users to create custom blocks that work for both HTML and LaTeX output (e.g., info boxes or warning boxes).
+- Added a Pandoc Lua filter to convert fenced Divs to LaTeX environments when the output format is `latex` or `beamer`. Basically a fenced Div `::: {.NAME data-latex="[OPTIONS]"}` is converted to `\begin{NAME}[OPTIONS] \end{NAME}` in LaTeX. The attribute `data-latex` must be provided, even if it is an empty string (meaning that the LaTeX environment does not have any optional arguments). For example, `::: {.verbatim data-latex=""}` generates a `verbatim` environment, and `::: {.minipage data-latex="{.5\textwidth}"}` generates `\begin{minipage}{.5\textwidth}`. This Lua filter was originally written by @RLesur at https://github.com/yihui/bookdown-crc/issues/1. It will allow users to create custom blocks that work for both HTML and LaTeX output (e.g., info boxes or warning boxes).
 
 - Added `keep_html` argument to `github_document` so to save a preview HTML file in a working directory (thanks, @atusy, #1650).
 

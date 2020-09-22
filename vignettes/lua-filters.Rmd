@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignettes gives some detailled information regarding the lua filter including in the **rmarkdown** package. To know more about lua filter, you can jump directly to [last section](#lua-filter)
+This vignettes gives some detailled information regarding the Lua filter including in the **rmarkdown** package. To know more about Lua filter, you can jump directly to [last section](#lua-filter)
 
 ## Pagebreaks
 
@@ -39,7 +39,7 @@ Some other text
 
 ```
 
-rmarkdown will convert those commands in the correct output format syntax using a [lua filter](#lua-filter) during pandoc conversion. 
+rmarkdown will convert those commands in the correct output format syntax using a [Lua filter](#lua-filter) during pandoc conversion. 
 
 ### Using with PDF/ latex documents {#pdf}
 
@@ -174,9 +174,9 @@ If one wants to have fine controls on the format of section numbers, prepare cus
 
 
 
-## About lua filters {#lua-filter}
+## About Lua filters {#lua-filter}
 
-Since pandoc 2.0, it is possible to use lua filters to add some extra functionality to pandoc document conversion. Adding a pagebreak command in markdown to be compatible with several output documents is one of them. You can find some more informations about lua filters in [pandoc's documentation](https://pandoc.org/lua-filters.html) and also some examples in [a collection of lua filters for pandoc](https://github.com/pandoc/lua-filters). These examples, and any other lua filters, can be use in your Rmarkdown document directly by adding [a pandoc argument](https://bookdown.org/yihui/rmarkdown/html-document.html#pandoc-arguments) in yaml header
+Since pandoc 2.0, it is possible to use Lua filters to add some extra functionality to pandoc document conversion. Adding a pagebreak command in markdown to be compatible with several output documents is one of them. You can find some more informations about Lua filters in [pandoc's documentation](https://pandoc.org/lua-filters.html) and also some examples in [a collection of Lua filters for pandoc](https://github.com/pandoc/lua-filters). These examples, and any other Lua filters, can be use in your Rmarkdown document directly by adding [a pandoc argument](https://bookdown.org/yihui/rmarkdown/html-document.html#pandoc-arguments) in yaml header
 
 ```html
 ---
@@ -188,7 +188,7 @@ output:
 
 You can also use a special helper using a `!expr` syntax for yaml in your header
 
-The package [rmdfiltr](https://github.com/crsh/rmdfiltr) provides a collection of lua filters and helpers functions to use them.
+The package [rmdfiltr](https://github.com/crsh/rmdfiltr) provides a collection of Lua filters and helpers functions to use them.
 
 Before pandoc 2.0, [using filter](https://pandoc.org/filters.html) with pandoc was already available through programs that modifies the AST. `pandoc-citeproc` is an example used to deal with citations. The package [pandocfilter](https://cran.r-project.org/package=pandocfilters) is useful to create filters using R.
 
@@ -201,7 +201,7 @@ Either by modifying an existing format:
 ```{r modifying-format}
 custom_format <- function(...) {
   base_format <- rmarkdown::html_document(...)
-  # prepending a new lua filter to html_document() ones
+  # prepending a new Lua filter to html_document() ones
   base_format$pandoc$lua_filters <- c(
     rmarkdown::pandoc_path_arg("new.lua"), 
     base_format$pandoc$lua_filters)

@@ -291,10 +291,10 @@ knitr_options_pdf <- function(fig_width,
 #'   chooses default based on \code{to}). This is typically used to force
 #'   the final output of a latex or beamer conversion to be \code{.tex}
 #'   rather than \code{.pdf}.
-#' @param lua_filters  Character vector of file paths to lua filters to use with
+#' @param lua_filters  Character vector of file paths to Lua filters to use with
 #'   this format. They will be added to pandoc command line call using
 #'   \code{--lua-filter} argument. See \code{vignette("lua-filters", package =
-#'   "rmarkdown")} to know more about lua filters.
+#'   "rmarkdown")} to know more about Lua filters.
 #' @return An list that can be passed as the \code{pandoc} argument of the
 #'   \code{\link{output_format}} function.
 #' @seealso \link{output_format}, \link{rmarkdown_format}

@@ -39,7 +39,7 @@ test_that("clean_supporting is coerced to FALSE only if keep_md is TRUE", {
   expect_identical(results, expected)
 })
 
-test_that("Keep only args and lua filter while merging pandoc options", {
+test_that("Keep only args and Lua filter while merging pandoc options", {
   # non default opt
   foo_opt <- pandoc_options(
     to = "foo", from = "init",  args = "--foo",

@@ -51,7 +51,7 @@ is specified.}
 
 \item{toc_depth}{Depth of headers to include in table of contents.}
 
-\item{lua_files}{Character vector of file paths to lua filter files. Paths
+\item{lua_files}{Character vector of file paths to Lua filter files. Paths
 will be transformed by \code{\link{pandoc_path_arg}}.}
 }
 \value{

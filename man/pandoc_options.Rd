@@ -32,10 +32,10 @@ chooses default based on \code{to}). This is typically used to force
 the final output of a latex or beamer conversion to be \code{.tex}
 rather than \code{.pdf}.}
 
-\item{lua_filters}{Character vector of file paths to lua filters to use with
+\item{lua_filters}{Character vector of file paths to Lua filters to use with
 this format. They will be added to pandoc command line call using
 \code{--lua-filter} argument. See \code{vignette("lua-filters", package =
-"rmarkdown")} to know more about lua filters.}
+"rmarkdown")} to know more about Lua filters.}
 }
 \value{
 An list that can be passed as the \code{pandoc} argument of the

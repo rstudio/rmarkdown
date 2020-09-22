@@ -849,7 +849,7 @@ render <- function(input,
 
       pandoc_args <- output_format$pandoc$args
 
-      # if lua filters are provided, add the command line switch
+      # if Lua filters are provided, add the command line switch
       if (!is.null(lua_filters <- output_format$pandoc$lua_filters)) {
         lua_filters <- pandoc_lua_filter_args(lua_filters)
       }

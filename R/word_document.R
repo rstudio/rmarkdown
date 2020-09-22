@@ -58,7 +58,7 @@ word_document <- function(toc = FALSE,
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
-  # lua filters (added if pandoc > 2)
+  # Lua filters (added if pandoc > 2)
   lua_filters <- pkg_file_lua("pagebreak.lua")
 
   # numbered sections
