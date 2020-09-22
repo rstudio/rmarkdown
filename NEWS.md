@@ -1,10 +1,10 @@
 rmarkdown 2.4
 ================================================================================
 
-- Lua filters handling has been improved internally with some user facing changes: 
-    - New exported function `pandoc_lua_filter_args()` to build pandoc command line argument to add a lua filter.
-    - New argument `lua_filters` in `pandoc_options()` to pass the lua filter paths to use with a format. This allow to add filters for custom format using `pandoc` argument in `output_format()` and to get filters from a format using `fmt$pandoc$lua_filters`.
-    - lua filter argument is now passed to pandoc in `render()` and by default the argument are passed first before any other format-defined or user-defined argument. As pandoc's lua filter are apply in the appearing order, this insures that filters for a format are run first. To change the default, you need to deal with it in a custom format. 
+- Lua filters handling has been improved internally with some user-facing changes (#1899):
+    - New exported function `pandoc_lua_filter_args()` to return the Pandoc command-line argument to add a Lua filter.
+    - New argument `lua_filters` in `pandoc_options()` to pass the Lua filter paths to use with a format. This allow output format authors to add filters for a custom format using the `pandoc` argument of `output_format()` and to get filters from a format using `fmt$pandoc$lua_filters`.
+    - The Lua filters of an output format are now passed to Pandoc in `render()`. By default, they are passed to Pandoc before any other format-defined or user-defined Pandoc arguments (usually via the `pandoc_args` option of an output format). This ensures that filters of an output format are executed first. To change the default, you need to deal with it in a custom format (i.e., modify the elements in `fmt$pandoc$lua_filters`, such as reordering them).
 
 - Since **rmarkdown** 1.16, Pandoc's fenced `Div`'s are converted to LaTeX environments when the output format is LaTeX, e.g., `::: {.center data-latex=""}` is converted to `\begin{center}`. The attribute `data-latex` of the `Div` was mandatory, even if it is empty. In **rmarkdown** 2.2, we silently drop this requirement, which means `::: {.center}` is converted to `\begin{center}`. This turns out to be a bad idea, because users have no control over which Div's to be converted to LaTeX environments. Previously, they could opt-in by the `data-latex` attribute, but with **rmarkdown** 2.3, all Div's are converted to LaTeX environments unconditionally. What's more, this change led to bugs like https://stackoverflow.com/q/62340425/559676 and https://github.com/rstudio/bookdown/issues/883. Therefore the `data-latex` attribute became mandatory again in this version. If the LaTeX environment does not need arguments, you may use `data-latex=""`.
 
@@ -13,7 +13,6 @@ rmarkdown 2.4
 - When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
 
 - Added the `number_sections` argument to following formats: `github_document`, `ioslides_presentation`, `md_document`, `odt_document`, `powerpoint_presentation`, `rtf_document`, `slidy_presentation`, `word_document`. These are powered by a lua filter and requires Pandoc > 2.0. It will silently have no effect has before with previous pandoc version (thanks @atusy 1893).  Pandoc >= 2.10.1 adds `--number-sections` for docx format, and thus `word_document` prefers the native feature to the lua filter (thanks, @jooyoungseo, #1869).
-
 
 - For the output format `pdf_document`, the option `fig_crop` will not be enabled unless both the programs `pdfcrop` and `ghostscript` are found (thanks, @dalupus, yihui/knitr#954).
 
