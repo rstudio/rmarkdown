@@ -60,9 +60,6 @@ md_document <- function(variant = "markdown_strict",
   # pandoc args
   args <- c(args, pandoc_args)
 
-  # number sections with lua filter
-  if (number_sections) args <- c(args, pandoc_lua_filters("number-sections.lua"))
-
   # add post_processor for yaml preservation
   post_processor <- if (preserve_yaml && variant != 'markdown') {
     function(metadata, input_file, output_file, clean, verbose) {
@@ -79,10 +76,12 @@ md_document <- function(variant = "markdown_strict",
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, FALSE, dev),
-    pandoc = pandoc_options(to = variant,
-                            from = from_rmarkdown(extensions = md_extensions),
-                            args = args,
-                            ext = ext),
+    pandoc = pandoc_options(
+      to = variant,
+      from = from_rmarkdown(extensions = md_extensions),
+      args = args,
+      ext = ext,
+      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")),
     clean_supporting = FALSE,
     df_print = df_print,
     post_processor = post_processor

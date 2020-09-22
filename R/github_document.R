@@ -33,9 +33,8 @@ github_document <- function(toc = FALSE,
   # add special markdown rendering template to ensure we include the title fields
   # and add an optional feature to number sections
   pandoc_args <- c(
-    pandoc_args, "--template", pkg_file_arg(
-      "rmarkdown/templates/github_document/resources/default.md"),
-    if (number_sections) pandoc_lua_filters("number-sections.lua")
+    pandoc_args, "--template",
+    pkg_file_arg("rmarkdown/templates/github_document/resources/default.md")
   )
 
 
@@ -46,8 +45,9 @@ github_document <- function(toc = FALSE,
 
   format <- md_document(
     variant = variant, toc = toc, toc_depth = toc_depth,
-    fig_width = fig_width, fig_height = fig_height, dev = dev,
-    df_print = df_print, includes = includes, md_extensions = md_extensions,
+    number_sections = number_sections, fig_width = fig_width,
+    fig_height = fig_height, dev = dev, df_print = df_print,
+    includes = includes, md_extensions = md_extensions,
     pandoc_args = pandoc_args
   )
 
