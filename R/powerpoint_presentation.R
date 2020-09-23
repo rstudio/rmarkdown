@@ -59,7 +59,8 @@ powerpoint_presentation <- function(
       to = 'pptx',
       from = from_rmarkdown(fig_caption, md_extensions),
       args = args,
-      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
+      lua_filters = if (number_sections)
+        pkg_file_lua("number-sections.lua", package = "rmarkdown")
     ),
     keep_md = keep_md,
     df_print = df_print,

@@ -59,14 +59,15 @@ word_document <- function(toc = FALSE,
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
   # Lua filters (added if pandoc > 2)
-  lua_filters <- pkg_file_lua("pagebreak.lua")
+  lua_filters <- pkg_file_lua("pagebreak.lua", package = "rmarkdown")
 
   # numbered sections
   if (number_sections) {
     if (pandoc_available("2.10.1")) {
       args <- c(args, "--number-sections")
     } else {
-      lua_filters <- c(lua_filters, pkg_file_lua("number-sections.lua"))
+      lua_filters <- c(
+        lua_filters, pkg_file_lua("number-sections.lua", package = "rmarkdown"))
     }
   }
 
