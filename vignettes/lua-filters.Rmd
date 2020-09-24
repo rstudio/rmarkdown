@@ -122,6 +122,21 @@ output: word_document
 # First Header
 ````
 
+It is also possible to add the pagebreak command at the very end of a paragraph. This can be useful to avoid a blank page with only the pagebreak paragraph.
+
+````md
+---
+title: My main title
+output: word_document
+---
+
+# First Header
+
+Some text\newpage
+
+This text will be on a new page.
+````
+
 ### Using with ODT documents {#odt}
 
 To use the pagebreak feature with `odt_document()`, you need to provide a reference document that includes a paragraph style with, by default, the name _Pagebreak_. This named paragraph style should have no extra space before or after and have a pagebreak after it. (see [libre office documentation](https://help.libreoffice.org/Writer/Text_Flow) on how to create a style). 
@@ -143,6 +158,22 @@ output:
 # First Header
 ````
 
+Also like with Word output, it is also possible to add the pagebreak command at the very end of a paragraph in ODT document too. 
+
+````md
+---
+title: My main title
+output: 
+  odt_document:
+    reference_odt: reference.odt
+---
+
+# First Header
+
+Some text\newpage
+
+This text will be on a new page.
+````
 
 
 ## Number sections
