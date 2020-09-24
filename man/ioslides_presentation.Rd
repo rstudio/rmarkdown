@@ -5,6 +5,7 @@
 \title{Convert to an ioslides Presentation}
 \usage{
 ioslides_presentation(
+  number_sections = FALSE,
   logo = NULL,
   slide_level = 2,
   incremental = FALSE,
@@ -33,6 +34,8 @@ ioslides_presentation(
 )
 }
 \arguments{
+\item{number_sections}{\code{TRUE} to number section headings}
+
 \item{logo}{Path to file that includes a logo for use in the presentation
 (should be square and at least 128x128).}
 

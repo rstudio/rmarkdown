@@ -861,9 +861,16 @@ render <- function(input,
       utf8_input <- path.expand(utf8_input)
       output     <- path.expand(output)
 
+      pandoc_args <- output_format$pandoc$args
+
+      # if Lua filters are provided, add the command line switch
+      if (!is.null(lua_filters <- output_format$pandoc$lua_filters)) {
+        lua_filters <- pandoc_lua_filter_args(lua_filters)
+      }
+      pandoc_args <- c(lua_filters, pandoc_args)
+
       # in case the output format turns on the --file-scope flag, run its
       # file_scope function to split the input into multiple files
-      pandoc_args <- output_format$pandoc$args
       input_files <- utf8_input
       if (!is.null(output_format$file_scope) &&
           length(inputs <- output_format$file_scope(utf8_input)) > 1) {

@@ -49,6 +49,9 @@ pandoc_convert <- function(input,
   # ensure we've scanned for pandoc
   find_pandoc()
 
+  # evaluate path arguments before changing working directory
+  force(output)
+
   # execute in specified working directory
   if (is.null(wd)) {
     wd <- base_dir(input)
@@ -714,9 +717,13 @@ pandoc_citeproc <- function() {
   if (file.exists(p)) p else bin
 }
 
-pandoc_lua_filters <- function(...) {
-  # lua filters was introduced in pandoc 2.0
-  if (pandoc2.0()) c(rbind("--lua-filter", pkg_file("rmd", "lua", ...)))
+#' @rdname pandoc_args
+#' @param lua_files Character vector of file paths to Lua filter files. Paths
+#'   will be transformed by \code{\link{pandoc_path_arg}}.
+#' @export
+pandoc_lua_filter_args <- function(lua_files) {
+  # Lua filters was introduced in pandoc 2.0
+  if (pandoc2.0()) c(rbind("--lua-filter", pandoc_path_arg(lua_files)))
 }
 
 
