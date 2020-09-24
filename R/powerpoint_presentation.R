@@ -9,7 +9,8 @@
 #' @export
 #' @return R Markdown output format to pass to \code{\link{render}}
 powerpoint_presentation <- function(
-  toc = FALSE, toc_depth = 2, fig_width = 5, fig_height = 4, fig_caption = TRUE,
+  toc = FALSE, toc_depth = 2, number_sections = FALSE,
+  fig_width = 5, fig_height = 4, fig_caption = TRUE,
   df_print = 'default', keep_md = FALSE, md_extensions = NULL,
   slide_level = NULL, reference_doc = 'default', pandoc_args = NULL
 ) {
@@ -57,7 +58,8 @@ powerpoint_presentation <- function(
     pandoc = pandoc_options(
       to = 'pptx',
       from = from_rmarkdown(fig_caption, md_extensions),
-      args = args
+      args = args,
+      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
     ),
     keep_md = keep_md,
     df_print = df_print,

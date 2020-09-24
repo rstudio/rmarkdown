@@ -41,6 +41,10 @@ pkg_file_arg <- function(...) {
   pandoc_path_arg(pkg_file(...))
 }
 
+pkg_file_lua <- function(...) {
+  pkg_file("rmd", "lua", ...)
+}
+
 #' @rdname rmarkdown_format
 #' @export
 from_rmarkdown <- function(implicit_figures = TRUE, extensions = NULL) {
@@ -297,11 +301,11 @@ ends_with_bytes <- function(string, bytes) {
 base64_encode_object <- function(object) {
   object <- rapply(object, unclass, how = "list")
   json <- charToRaw(jsonlite::toJSON(object, auto_unbox = TRUE))
-  base64enc::base64encode(json)
+  xfun::base64_encode(json)
 }
 
 base64_decode_object <- function(encoded) {
-  json <- rawToChar(base64enc::base64decode(encoded))
+  json <- rawToChar(xfun::base64_decode(encoded))
   jsonlite::fromJSON(json)
 }
 
@@ -463,13 +467,15 @@ xfun_session_info <- function() {
   paste('Pandoc version:', pandoc_version())
 }
 
-# given a path of a file in a potential R package, figure out the package root
-package_root <- function(path) {
-  dir <- dirname(path)
+# given a path of a file (or dir) in a potential project (e.g., an R package),
+# figure out the project root
+proj_root <- function(path, file = '^DESCRIPTION$', pattern = '^Package: ') {
+  dir <- if (dir_exists(path)) path else dirname(path)
   if (same_path(dir, file.path(dir, '..'))) return()
-  if (!file.exists(desc <- file.path(dir, 'DESCRIPTION')) ||
-      length(grep('^Package: ', read_utf8(desc))) == 0) return(package_root(dir))
-  dir
+  for (f in list.files(dir, file, full.names = TRUE)) {
+    if (length(grep(pattern, read_utf8(f)))) return(dir)
+  }
+  proj_root(dirname(dir), file, pattern)
 }
 
 
