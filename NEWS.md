@@ -16,6 +16,7 @@ rmarkdown 2.4
 
 - For the output format `pdf_document`, the option `fig_crop` will not be enabled unless both the programs `pdfcrop` and `ghostscript` are found (thanks, @dalupus, yihui/knitr#954).
 
+- Fix a bug that a chunk with `fold-hide` class hides rest of the chunks despite of `html_document(code_folding = "show")` (thanks, @atusy, #1906)
 
 rmarkdown 2.3
 ================================================================================
