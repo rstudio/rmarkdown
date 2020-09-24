@@ -18,7 +18,7 @@ rmarkdown 2.4
 
 - Fixed a bug that a chunk with a class `fold-hide` hides the rest of the chunks even the output format setting `html_document(code_folding = "show")` (thanks, @atusy, #1906).
 
-- Updated documentation for `render` to make it clearer how options are set for the `output_format` parameter (See <https://github.com/rstudio/bookdown/issues/930>) (thanks, @jonathan-g, #1880)
+- Updated documentation for `render` to make it clearer how options are set for the `output_format` parameter (See <https://github.com/rstudio/bookdown/issues/930>) (thanks, @jonathan-g, #1907)
 
 
 rmarkdown 2.3
