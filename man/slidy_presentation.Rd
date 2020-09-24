@@ -5,6 +5,7 @@
 \title{Convert to a slidy presentation}
 \usage{
 slidy_presentation(
+  number_sections = FALSE,
   incremental = FALSE,
   slide_level = NULL,
   duration = NULL,
@@ -31,6 +32,8 @@ slidy_presentation(
 )
 }
 \arguments{
+\item{number_sections}{\code{TRUE} to number section headings}
+
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note
 that if you want to reverse the default incremental behavior for an
 individual bullet you can precede it with \code{>}. For example:
