@@ -68,7 +68,7 @@ pkg_file_lua <- function(filters = NULL, package = NULL) {
   if (is.null(package) || length(package) > 1)
     stop("One package name in which to look for Lua filters must be provided.", call. = FALSE)
   lua_folder <- pkg_file("rmarkdown", "lua", package = package)
-  if (is.null(filters)) filters <- list.files(lua_folder, pattern = "*\\.lua$")
+  if (is.null(filters)) filters <- list.files(lua_folder, "\\.lua$")
   filters <- xfun::with_ext(filters, "lua")
   pandoc_path_arg(file.path(lua_folder, filters))
 }
