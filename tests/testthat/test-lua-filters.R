@@ -35,6 +35,12 @@ test_that("number_sections Lua filter works", {
   expect_identical(result[result %in% expected], expected)
 })
 
+test_that("anchor_sections Lua filter works", {
+  result <- .generate_md_and_convert("# foo", html_document(anchor_sections = TRUE))
+  testthat::expect_true(any(
+    result == '<h1>foo<a href="#foo" class="anchor"></a></h1>'))
+})
+
 test_that("formats have the expected Lua filter", {
   expect_filters <- function(format_fun, expected_filters) {
     filters <- basename(format_fun$pandoc$lua_filters)
