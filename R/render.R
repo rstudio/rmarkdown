@@ -151,7 +151,7 @@ NULL
 #' \code{\link{rmarkdown_format}} for details.
 #' @seealso
 #' \link[knitr:knit]{knit}, \link{output_format},
-#' \href{http://johnmacfarlane.net/pandoc}{pandoc}
+#' \url{https://pandoc.org}
 #' @inheritParams default_output_format
 #' @param input The input file to be rendered. This can be an R script (.R),
 #' an R Markdown document (.Rmd), or a plain markdown document.

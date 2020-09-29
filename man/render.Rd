@@ -199,5 +199,5 @@ render("input.Rmd", c("html_document", "pdf_document"))
 }
 \seealso{
 \link[knitr:knit]{knit}, \link{output_format},
-\href{http://johnmacfarlane.net/pandoc}{pandoc}
+\url{https://pandoc.org}
 }
