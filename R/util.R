@@ -33,16 +33,46 @@ pandoc_output_ext <- function(ext, to, input) {
   paste0(".", to)
 }
 
-pkg_file <- function(...) {
-  system.file(..., package = "rmarkdown")
+pkg_file <- function(..., package = "rmarkdown") {
+  system.file(..., package = package)
 }
 
-pkg_file_arg <- function(...) {
-  pandoc_path_arg(pkg_file(...))
+pkg_file_arg <- function(..., package = "rmarkdown") {
+  pandoc_path_arg(pkg_file(..., package = package))
 }
 
-pkg_file_lua <- function(...) {
-  pkg_file("rmd", "lua", ...)
+#' Get Lua filters full paths in a package
+#'
+#' Lua filters stored in a source package in \code{inst/rmarkdown/lua} will installed in
+#' \code{rmarkdown/lua} in the package path. This function finds the full path of the
+#' Lua filters on the system for installed packages.
+#'
+#'
+#' @param filters Character vector of filename for the Lua filter to retrieve in
+#'   \code{rmarkdown/lua} folder of the package. By default, if none is
+#'   provided, it returns the folder path.
+#' @param package Package name in which to look for the filters. It is set to
+#'   \code{rmarkdown} by default
+#' @return Character vector of absolute file paths for the Lua filter from the
+#'   package. If a filter is not found, it does not error. The returned path
+#'   will already be escaped correctly using \code{\link{pandoc_path_arg}} to be
+#'   used by Pandoc.
+#' @export
+#' @examples
+#' # List all Lua filters stored in the rmarkdown package
+#' pkg_file_lua()
+#' # or in a specific package
+#' pkg_file_lua(package = "bookdown")
+#' # get a specific filter
+#' pkg_file_lua(c("pagebreak.lua", "latex_div.lua"), package = "rmarkdown")
+#' # do not error if not found but return an empty path
+#' pkg_file_lua("donotexist.lua", package = "rmarkdown")
+pkg_file_lua <- function(filters = NULL, package = "rmarkdown") {
+  if (is.null(package) || length(package) > 1)
+    stop("One package name in which to look for Lua filters must be provided.", call. = FALSE)
+  lua_folder <- pkg_file("rmarkdown", "lua", package = package)
+  if (is.null(filters)) filters <- list.files(lua_folder, "[.]lua$")
+  pandoc_path_arg(file.path(lua_folder, filters))
 }
 
 #' @rdname rmarkdown_format

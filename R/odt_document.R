@@ -83,8 +83,9 @@ odt_document <- function(number_sections = FALSE,
       to = "odt",
       from = from_rmarkdown(fig_caption, md_extensions),
       args = args,
-      lua_filters = pkg_file_lua(c(
-        "pagebreak.lua", if (number_sections) "number-sections.lua"))),
+      lua_filters = pkg_file_lua(
+        c("pagebreak.lua", if (number_sections) "number-sections.lua"))
+    ),
     keep_md = keep_md,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator

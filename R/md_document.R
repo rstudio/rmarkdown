@@ -81,7 +81,8 @@ md_document <- function(variant = "markdown_strict",
       from = from_rmarkdown(extensions = md_extensions),
       args = args,
       ext = ext,
-      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")),
+      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
+    ),
     clean_supporting = FALSE,
     df_print = df_print,
     post_processor = post_processor
