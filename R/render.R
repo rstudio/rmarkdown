@@ -163,13 +163,11 @@ NULL
 #' format object (e.g. \code{html_document()}). If using \code{NULL} then the
 #' output format is the first one defined in the YAML frontmatter in the input
 #' file (this defaults to HTML if no format is specified there).
-#'
 #' If you pass an output format object to \code{output_format}, the options
 #' specified in the YAML header or \code{_output.yml} will be ignored and you
 #' must explicitly set all the options you want when you construct the object.
 #' If you pass a string, the output format will use the output parameters in
 #' the YAML header or \code{_output.yml}.
-
 #' @param output_file The name of the output file. If using \code{NULL} then the
 #' output filename will be based on filename for the input file. If a filename
 #' is provided, a path to the output file can also be provided. Note that the
