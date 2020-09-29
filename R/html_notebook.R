@@ -257,7 +257,7 @@ parse_html_notebook <- function(path) {
     if (!identical(c(matches), -1L)) {
       start <- c(attr(matches, "capture.start"))
       end   <- start + c(attr(matches, "capture.length")) - 1
-      decoded <- rawToChar(base64enc::base64decode(substring(line, start, end)))
+      decoded <- rawToChar(xfun::base64_decode(substring(line, start, end)))
       rmd_contents <- strsplit(decoded, "\\r?\\n", perl = TRUE)[[1]]
       next
     }

@@ -38,3 +38,23 @@ test_that("clean_supporting is coerced to FALSE only if keep_md is TRUE", {
 
   expect_identical(results, expected)
 })
+
+test_that("Keep only args and Lua filter while merging pandoc options", {
+  # non default opt
+  foo_opt <- pandoc_options(
+    to = "foo", from = "init",  args = "--foo",
+    ext = "foo", keep_tex = TRUE, latex_engine = "xelatex",
+    lua_filters = "foo.lua")
+  bar_opt <- pandoc_options(to = "bar")
+  res_opt <- merge_pandoc_options(foo_opt, bar_opt)
+  # all options are merged except these
+  kept <- c("args", "lua_filters")
+  expect_equal(res_opt[!names(res_opt) %in% kept],
+               bar_opt[!names(bar_opt) %in% kept])
+  expect_equal(res_opt[kept], foo_opt[kept])
+  # Instead they are appended
+  bar_opt$args <- "--another"
+  bar_opt$lua_filters <- "bar.lua"
+  res_opt <- merge_pandoc_options(foo_opt, bar_opt)
+  lapply(kept, function(x) expect_equal(res_opt[[x]], c(foo_opt[[x]], bar_opt[[x]])))
+})

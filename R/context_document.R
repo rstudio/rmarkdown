@@ -90,9 +90,6 @@ context_document <- function(toc = FALSE,
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
 
-  # lua filters (added if pandoc > 2)
-  args <- c(args, pandoc_lua_filters("pagebreak.lua"))
-
   # args args
   args <- c(args, pandoc_args)
 
@@ -129,11 +126,14 @@ context_document <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
-    pandoc = pandoc_options(to = paste(c("context", output_extensions), collapse = ""),
-                            from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args,
-                            keep_tex = FALSE,
-                            ext = ext),
+    pandoc = pandoc_options(
+      to = paste(c("context", output_extensions), collapse = ""),
+      from = from_rmarkdown(fig_caption, md_extensions),
+      args = args,
+      keep_tex = FALSE,
+      ext = ext,
+      lua_filters = pkg_file_lua("pagebreak.lua")
+    ),
     clean_supporting = !isTRUE(keep_tex),
     keep_md = keep_md,
     df_print = df_print,

@@ -223,7 +223,8 @@
 #'   To create a PDF version of a presentation you can use Print to PDF
 #'   from Google Chrome.
 #' @export
-ioslides_presentation <- function(logo = NULL,
+ioslides_presentation <- function(number_sections = FALSE,
+                                  logo = NULL,
                                   slide_level = 2,
                                   incremental = FALSE,
                                   fig_width = 7.5,
@@ -278,7 +279,7 @@ ioslides_presentation <- function(logo = NULL,
 
   # additional css
   for (css_file in css)
-    args <- c(args, "--css", pandoc_path_arg(css_file))
+    args <- c(args, "--css", pandoc_path_arg(css_file, backslash = FALSE))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
@@ -342,6 +343,10 @@ ioslides_presentation <- function(logo = NULL,
 
     # add any custom pandoc args
     args <- c(args, pandoc_args)
+
+    # number sections
+    if (number_sections)
+      args <- c(args, pandoc_lua_filter_args(pkg_file_lua("number-sections.lua")))
 
     lua_writer <- file.path(dirname(input_file), "ioslides_presentation.lua")
     # The input directory may not be writable (on e.g. Shiny Server), so write
@@ -412,7 +417,7 @@ ioslides_presentation <- function(logo = NULL,
 
     # base64 encode if needed
     if (self_contained) {
-      slides_lines <- base64_image_encode(slides_lines)
+      slides_lines <- base64_encode_images(slides_lines)
     }
 
     # read the output file
@@ -472,4 +477,3 @@ html_dependency_ioslides <- function() {
       "theme/css/phone.css")
     )
 }
-

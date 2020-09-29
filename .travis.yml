@@ -29,6 +29,8 @@ jobs:
     - r: release
       name: R release / RStudio Pandoc
       env: NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
+      before_cache:
+        - Rscript -e 'xfun::pkg_load2("pkgdown")'
       after_success:
         - "[[ ${TRAVIS_BRANCH}  = master  ]] || exit 0"
         - "[[ -z ${NETLIFY_AUTH_TOKEN} ]] && exit 0"

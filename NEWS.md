@@ -1,13 +1,32 @@
 rmarkdown 2.4
 ================================================================================
 
+- Lua filters handling has been improved internally with some user-facing changes (#1899):
+    - New exported function `pandoc_lua_filter_args()` to return the Pandoc command-line argument to add a Lua filter.
+    - New argument `lua_filters` in `pandoc_options()` to pass the Lua filter paths to use with a format. This allow output format authors to add filters for a custom format using the `pandoc` argument of `output_format()` and to get filters from a format using `fmt$pandoc$lua_filters`.
+    - The Lua filters of an output format are now passed to Pandoc in `render()`. By default, they are passed to Pandoc before any other format-defined or user-defined Pandoc arguments (usually via the `pandoc_args` option of an output format). This ensures that filters of an output format are executed first. To change the default, you need to deal with it in a custom format (i.e., modify the elements in `fmt$pandoc$lua_filters`, such as reordering them).
+    - New exported function `pkg_file_lua()` to get the full system path of a
+    Lua filter included in a package source within `inst/rmarkdown/lua` folder.
+    (thanks, @atusy, #1903)
+
+- Fixed the path separators for the `css` parameter in YAML frontmatter for HTML output files under Windows. Previously, forward slashes in `css` paths were converted to backslashes (thanks, @jonathan-g, #1862).
+
 - Since **rmarkdown** 1.16, Pandoc's fenced `Div`'s are converted to LaTeX environments when the output format is LaTeX, e.g., `::: {.center data-latex=""}` is converted to `\begin{center}`. The attribute `data-latex` of the `Div` was mandatory, even if it is empty. In **rmarkdown** 2.2, we silently drop this requirement, which means `::: {.center}` is converted to `\begin{center}`. This turns out to be a bad idea, because users have no control over which Div's to be converted to LaTeX environments. Previously, they could opt-in by the `data-latex` attribute, but with **rmarkdown** 2.3, all Div's are converted to LaTeX environments unconditionally. What's more, this change led to bugs like https://stackoverflow.com/q/62340425/559676 and https://github.com/rstudio/bookdown/issues/883. Therefore the `data-latex` attribute became mandatory again in this version. If the LaTeX environment does not need arguments, you may use `data-latex=""`.
 
 - The two Lua fitlers `pagebreak.lua` and `latex-div.lua` (introduced in **rmarkdown** 1.16) are also applied to the output format `beamer_presentation` now (thanks, @XiangyunHuang, #1815).
 
 - When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
 
-- `rmarkdown::find_external_resources()` now discovers external template file. This in turn fixes the rendering issue of `html_document` with shiny runtime and `intermediate_dir` set (thanks, @atusy, @cderv, #1865).
+- `rmarkdown::find_external_resources()` now discovers external template files. This in turn fixes the rendering issue of `html_document` with the `shiny` runtime and `intermediate_dir` set (thanks, @atusy, @cderv, #1865).
+
+- Added the `number_sections` argument to following formats: `github_document`, `ioslides_presentation`, `md_document`, `odt_document`, `powerpoint_presentation`, `rtf_document`, `slidy_presentation`, `word_document`. These are powered by a Lua filter and requires Pandoc > 2.0. It will silently have no effect has before with previous pandoc version (thanks @atusy 1893).  Pandoc >= 2.10.1 adds `--number-sections` for docx format, and thus `word_document` prefers the native feature to the Lua filter (thanks, @jooyoungseo, #1869).
+
+- For the output format `pdf_document`, the option `fig_crop` will not be enabled unless both the programs `pdfcrop` and `ghostscript` are found (thanks, @dalupus, yihui/knitr#954).
+
+- Fixed a bug that a chunk with a class `fold-hide` hides the rest of the chunks even the output format setting `html_document(code_folding = "show")` (thanks, @atusy, #1906).
+
+- Ported some CSS styles (e.g., underlines, small caps, and multi-column layouts) from the latest Pandoc's HTML template into **rmarkdown**s HTML templates (thanks, @atusy, #1878, #1908).
+
 
 rmarkdown 2.3
 ================================================================================
@@ -146,13 +165,13 @@ rmarkdown 1.16
 
 - Added `self_contained` argument to `html_vignette` to keep intermediate directory if `self_contained = FALSE` (thanks, @cderv, #1641).
 
-- It is now possible to add pagebreak in HTML, Word, LaTeX, and ODT documents using the `\newpage` or `\pagebreak` command in an Rmd file. This is possible thanks to the [Pandoc's pagebreak lua filter](https://github.com/pandoc/lua-filters/tree/master/pagebreak). See `vignette("lua-filters", package = "rmarkdown")` (thanks, @cderv, #1626).
+- It is now possible to add pagebreak in HTML, Word, LaTeX, and ODT documents using the `\newpage` or `\pagebreak` command in an Rmd file. This is possible thanks to the [Pandoc's pagebreak Lua filter](https://github.com/pandoc/lua-filters/tree/master/pagebreak). See `vignette("lua-filters", package = "rmarkdown")` (thanks, @cderv, #1626).
 
 - The Pandoc extension `ascii_identifiers` is no longer enabled by default. If you still need it, you may use the argument `md_extensions = "+ascii_identifiers"` in the output format function. However, please note that this will trigger an error in a future version of Pandoc.
 
 - Output formats can be configured by arbitrary YAML files, which used to be restricted to `_output.yml` or `_output.yaml`. They can be specified via the `output_yaml` argument of `render()` or the `output_yaml` top-level parameter of YAML front matter, and the first existing one will be used. If `output_yaml` is specified both for `render()` and YAML front matter, then `render()` has the priority. If none are found, then `_output.yml` or `_output.yaml` will be used if they exist (thanks, @atusy, #1634).
 
-- Added a Pandoc lua filter to convert fenced Divs to LaTeX environments when the output format is `latex` or `beamer`. Basically a fenced Div `::: {.NAME data-latex="[OPTIONS]"}` is converted to `\begin{NAME}[OPTIONS] \end{NAME}` in LaTeX. The attribute `data-latex` must be provided, even if it is an empty string (meaning that the LaTeX environment does not have any optional arguments). For example, `::: {.verbatim data-latex=""}` generates a `verbatim` environment, and `::: {.minipage data-latex="{.5\textwidth}"}` generates `\begin{minipage}{.5\textwidth}`. This lua filter was originally written by @RLesur at https://github.com/yihui/bookdown-crc/issues/1. It will allow users to create custom blocks that work for both HTML and LaTeX output (e.g., info boxes or warning boxes).
+- Added a Pandoc Lua filter to convert fenced Divs to LaTeX environments when the output format is `latex` or `beamer`. Basically a fenced Div `::: {.NAME data-latex="[OPTIONS]"}` is converted to `\begin{NAME}[OPTIONS] \end{NAME}` in LaTeX. The attribute `data-latex` must be provided, even if it is an empty string (meaning that the LaTeX environment does not have any optional arguments). For example, `::: {.verbatim data-latex=""}` generates a `verbatim` environment, and `::: {.minipage data-latex="{.5\textwidth}"}` generates `\begin{minipage}{.5\textwidth}`. This Lua filter was originally written by @RLesur at https://github.com/yihui/bookdown-crc/issues/1. It will allow users to create custom blocks that work for both HTML and LaTeX output (e.g., info boxes or warning boxes).
 
 - Added `keep_html` argument to `github_document` so to save a preview HTML file in a working directory (thanks, @atusy, #1650).
 
