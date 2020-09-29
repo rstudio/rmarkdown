@@ -155,8 +155,7 @@ beamer_presentation <- function(toc = FALSE,
       args = args,
       latex_engine = latex_engine,
       keep_tex = keep_tex,
-      lua_filters = pkg_file_lua(
-        c("pagebreak.lua", "latex-div.lua"), package = "rmarkdown")
+      lua_filters = pkg_file_lua(c("pagebreak.lua", "latex-div.lua"))
     ),
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,

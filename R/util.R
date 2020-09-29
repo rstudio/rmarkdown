@@ -51,20 +51,23 @@ pkg_file_arg <- function(..., package = "rmarkdown") {
 #' @param filters Character vector of filename for the Lua filter to retrieve in
 #'   \code{rmarkdown/lua} folder of the package. By default, if none is
 #'   provided, it returns the folder path.
-#' @param package Package name in which to look for the filters.
+#' @param package Package name in which to look for the filters. It is set to
+#'   \code{rmarkdown} by default
 #' @return Character vector of absolute file paths for the Lua filter from the
-#'   package. If a filter is not found, it does not error. The path will already
-#'   be escaped correctly using \code{\link{pandoc_path_arg}} to be used by
-#'   Pandoc.
+#'   package. If a filter is not found, it does not error. The returned path
+#'   will already be escaped correctly using \code{\link{pandoc_path_arg}} to be
+#'   used by Pandoc.
 #' @export
 #' @examples
-#' # get the path where Lua filters are stored
+#' # get the path where Lua filters are stored in the rmarkdown package
 #' pkg_file_lua(package = "rmarkdown")
+#' # Note that this is the default
+#' pkg_file_lua()
 #' # get a specific filter
 #' pkg_file_lua(c("pagebreak.lua", "latex_div.lua"), package = "rmarkdown")
 #' # do not error if not found but return an empty path
 #' pkg_file_lua("donotexist.lua", package = "rmarkdown")
-pkg_file_lua <- function(filters = "", package = NULL) {
+pkg_file_lua <- function(filters = "", package = "rmarkdown") {
   if (is.null(package) || length(package) > 1)
     stop("One package name in which to look for Lua filters must be provided.", call. = FALSE)
   pkg_file_arg("rmarkdown", "lua", filters, package = package)

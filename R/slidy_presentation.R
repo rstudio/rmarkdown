@@ -131,8 +131,7 @@ slidy_presentation <- function(number_sections = FALSE,
       to = "slidy",
       from = from_rmarkdown(fig_caption, md_extensions),
       args = args,
-      lua_filters = if (number_sections)
-        pkg_file_lua("number-sections.lua", package = "rmarkdown")
+      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
     ),
     keep_md = keep_md,
     clean_supporting = self_contained,

@@ -345,14 +345,8 @@ ioslides_presentation <- function(number_sections = FALSE,
     args <- c(args, pandoc_args)
 
     # number sections
-    if (number_sections) {
-      args <- c(
-        args,
-        pandoc_lua_filter_args(
-          pkg_file_lua("number-sections.lua", package = "rmarkdown")
-        )
-      )
-    }
+    if (number_sections)
+      args <- c(args, pandoc_lua_filter_args(pkg_file_lua("number-sections.lua")))
 
     lua_writer <- file.path(dirname(input_file), "ioslides_presentation.lua")
     # The input directory may not be writable (on e.g. Shiny Server), so write

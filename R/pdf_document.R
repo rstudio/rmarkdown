@@ -199,9 +199,7 @@ pdf_document <- function(toc = FALSE,
       args = args,
       latex_engine = latex_engine,
       keep_tex = keep_tex,
-      lua_filters = pkg_file_lua(
-        c("pagebreak.lua", "latex-div.lua"),
-        package = "rmarkdown")
+      lua_filters = pkg_file_lua(c("pagebreak.lua", "latex-div.lua"))
     ),
     clean_supporting = !keep_tex,
     keep_md = keep_md,

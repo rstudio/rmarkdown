@@ -77,8 +77,8 @@ rtf_document <- function(toc = FALSE,
       to = "rtf",
       from = from_rmarkdown(extensions = md_extensions),
       args = args,
-      lua_filters = if (number_sections)
-        pkg_file_lua("number-sections.lua", package = "rmarkdown")),
+      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
+    ),
     keep_md = keep_md,
     pre_processor = pre_processor,
     post_processor = post_processor

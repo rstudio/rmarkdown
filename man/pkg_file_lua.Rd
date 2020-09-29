@@ -4,20 +4,21 @@
 \alias{pkg_file_lua}
 \title{Get Lua filters full paths in a package}
 \usage{
-pkg_file_lua(filters = "", package = NULL)
+pkg_file_lua(filters = "", package = "rmarkdown")
 }
 \arguments{
 \item{filters}{Character vector of filename for the Lua filter to retrieve in
 \code{rmarkdown/lua} folder of the package. By default, if none is
 provided, it returns the folder path.}
 
-\item{package}{Package name in which to look for the filters.}
+\item{package}{Package name in which to look for the filters. It is set to
+\code{rmarkdown} by default}
 }
 \value{
 Character vector of absolute file paths for the Lua filter from the
-  package. If a filter is not found, it does not error. The path will already
-  be escaped correctly using \code{\link{pandoc_path_arg}} to be used by
-  Pandoc.
+  package. If a filter is not found, it does not error. The returned path
+  will already be escaped correctly using \code{\link{pandoc_path_arg}} to be
+  used by Pandoc.
 }
 \description{
 Lua filters stored in a source package in \code{inst/rmarkdown/lua} will installed in
@@ -25,8 +26,10 @@ Lua filters stored in a source package in \code{inst/rmarkdown/lua} will install
 Lua filters on the system for installed packages.
 }
 \examples{
-# get the path where Lua filters are stored
+# get the path where Lua filters are stored in the rmarkdown package
 pkg_file_lua(package = "rmarkdown")
+# Note that this is the default
+pkg_file_lua()
 # get a specific filter
 pkg_file_lua(c("pagebreak.lua", "latex_div.lua"), package = "rmarkdown")
 # do not error if not found but return an empty path
