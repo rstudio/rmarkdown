@@ -11,7 +11,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ]]
 
 function Header(el)
-  table.insert(el.content, pandoc.RawInline('html',
-    '<a href="#'..el.identifier..'" class="anchor"></a>'))
+  if el.identifier ~= "" then
+    table.insert(el.content, pandoc.RawInline('html',
+      '<a href="#'..el.identifier..'" class="anchor"></a>'))
+  end
   return(el)
 end
