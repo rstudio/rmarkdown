@@ -295,7 +295,7 @@ html_document <- function(toc = FALSE,
 
   # additional css
   for (css_file in css)
-    args <- c(args, "--css", pandoc_path_arg(css_file))
+    args <- c(args, "--css", pandoc_path_arg(css_file, backslash = FALSE))
 
   # manage list of exit_actions (backing out changes to knitr options)
   exit_actions <- list()
@@ -643,6 +643,5 @@ navbar_link_text <- function(x, ...) {
   else
     tagList(x$text, ...)
 }
-
 
 

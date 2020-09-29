@@ -103,7 +103,7 @@ slidy_presentation <- function(number_sections = FALSE,
 
   # additional css
   for (css_file in css)
-    args <- c(args, "--css", pandoc_path_arg(css_file))
+    args <- c(args, "--css", pandoc_path_arg(css_file, backslash = FALSE))
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
