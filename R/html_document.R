@@ -330,7 +330,7 @@ html_document <- function(toc = FALSE,
   if (anchor_sections) {
     extra_dependencies <- append(extra_dependencies,
                                  list(html_dependency_anchor_sections()))
-    lua_filters <- pkg_file_lua("anchor-sections.lua")
+    lua_filters <- c(lua_filters, "anchor-sections.lua")
   }
 
   # pre-processor for arguments that may depend on the name of the
@@ -442,7 +442,7 @@ html_document <- function(toc = FALSE,
     pandoc = pandoc_options(to = "html",
                             from = from_rmarkdown(fig_caption, md_extensions),
                             args = args,
-                            lua_filters = lua_filters),
+                            lua_filters = pkg_file_lua(lua_filters)),
     keep_md = keep_md,
     clean_supporting = self_contained,
     df_print = df_print,
