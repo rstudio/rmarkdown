@@ -1,21 +1,16 @@
 @media (min-width: 1000px) {
-  h1:hover a.anchor,
-  h2:hover a.anchor,
-  h3:hover a.anchor,
-  h4:hover a.anchor,
-  h5:hover a.anchor,
-  h6:hover a.anchor {
+  h1:hover a.anchor::before,
+  h2:hover a.anchor::before,
+  h3:hover a.anchor::before,
+  h4:hover a.anchor::before,
+  h5:hover a.anchor::before,
+  h6:hover a.anchor::before {
     visibility: visible;
   }
 }
-a.anchor {
-  margin-left: -30px;
+a.anchor::before {
+  margin-left: 10px;
   display: inline-block;
-  width: 30px;
-  height: 30px;
   visibility: hidden;
-  background-image: url(./link.svg);
-  background-repeat: no-repeat;
-  background-size: 20px 20px;
-  background-position: center center;
+  content: "#";
 }
