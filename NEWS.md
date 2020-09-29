@@ -17,6 +17,8 @@ rmarkdown 2.4
 
 - When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
 
+- `rmarkdown::find_external_resources()` now discovers external template files. This in turn fixes the rendering issue of `html_document` with the `shiny` runtime and `intermediate_dir` set (thanks, @atusy, @cderv, #1865).
+
 - Added the `number_sections` argument to following formats: `github_document`, `ioslides_presentation`, `md_document`, `odt_document`, `powerpoint_presentation`, `rtf_document`, `slidy_presentation`, `word_document`. These are powered by a Lua filter and requires Pandoc > 2.0. It will silently have no effect has before with previous pandoc version (thanks @atusy 1893).  Pandoc >= 2.10.1 adds `--number-sections` for docx format, and thus `word_document` prefers the native feature to the Lua filter (thanks, @jooyoungseo, #1869).
 
 - For the output format `pdf_document`, the option `fig_crop` will not be enabled unless both the programs `pdfcrop` and `ghostscript` are found (thanks, @dalupus, yihui/knitr#954).

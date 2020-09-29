@@ -214,7 +214,7 @@ discover_rmd_resources <- function(rmd_file, discover_single_resource) {
     for (output_format in output_formats) {
       if (is.list(output_format)) {
         output_render_files <- unlist(output_format[c(
-          'includes', 'pandoc_args', 'logo', 'reference_doc', 'reference_docx'
+          'includes', 'pandoc_args', 'logo', 'reference_doc', 'reference_docx', 'template'
         )])
         lapply(output_render_files, discover_render_resource)
       }
