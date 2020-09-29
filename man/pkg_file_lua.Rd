@@ -4,7 +4,7 @@
 \alias{pkg_file_lua}
 \title{Get Lua filters full paths in a package}
 \usage{
-pkg_file_lua(filters = "", package = "rmarkdown")
+pkg_file_lua(filters = NULL, package = "rmarkdown")
 }
 \arguments{
 \item{filters}{Character vector of filename for the Lua filter to retrieve in
@@ -26,10 +26,10 @@ Lua filters stored in a source package in \code{inst/rmarkdown/lua} will install
 Lua filters on the system for installed packages.
 }
 \examples{
-# get the path where Lua filters are stored in the rmarkdown package
-pkg_file_lua(package = "rmarkdown")
-# Note that this is the default
+# List all Lua filters stored in the rmarkdown package
 pkg_file_lua()
+# or in a specific package
+pkg_file_lua(package = "bookdown")
 # get a specific filter
 pkg_file_lua(c("pagebreak.lua", "latex_div.lua"), package = "rmarkdown")
 # do not error if not found but return an empty path

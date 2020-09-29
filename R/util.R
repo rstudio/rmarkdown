@@ -59,18 +59,20 @@ pkg_file_arg <- function(..., package = "rmarkdown") {
 #'   used by Pandoc.
 #' @export
 #' @examples
-#' # get the path where Lua filters are stored in the rmarkdown package
-#' pkg_file_lua(package = "rmarkdown")
-#' # Note that this is the default
+#' # List all Lua filters stored in the rmarkdown package
 #' pkg_file_lua()
+#' # or in a specific package
+#' pkg_file_lua(package = "bookdown")
 #' # get a specific filter
 #' pkg_file_lua(c("pagebreak.lua", "latex_div.lua"), package = "rmarkdown")
 #' # do not error if not found but return an empty path
 #' pkg_file_lua("donotexist.lua", package = "rmarkdown")
-pkg_file_lua <- function(filters = "", package = "rmarkdown") {
+pkg_file_lua <- function(filters = NULL, package = "rmarkdown") {
   if (is.null(package) || length(package) > 1)
     stop("One package name in which to look for Lua filters must be provided.", call. = FALSE)
-  pkg_file_arg("rmarkdown", "lua", filters, package = package)
+  lua_folder <- pkg_file("rmarkdown", "lua", package = package)
+  if (is.null(filters)) filters <- list.files(lua_folder, "[.]lua$")
+  pandoc_path_arg(file.path(lua_folder, filters))
 }
 
 #' @rdname rmarkdown_format
