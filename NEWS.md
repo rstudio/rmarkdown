@@ -5,6 +5,9 @@ rmarkdown 2.4
     - New exported function `pandoc_lua_filter_args()` to return the Pandoc command-line argument to add a Lua filter.
     - New argument `lua_filters` in `pandoc_options()` to pass the Lua filter paths to use with a format. This allow output format authors to add filters for a custom format using the `pandoc` argument of `output_format()` and to get filters from a format using `fmt$pandoc$lua_filters`.
     - The Lua filters of an output format are now passed to Pandoc in `render()`. By default, they are passed to Pandoc before any other format-defined or user-defined Pandoc arguments (usually via the `pandoc_args` option of an output format). This ensures that filters of an output format are executed first. To change the default, you need to deal with it in a custom format (i.e., modify the elements in `fmt$pandoc$lua_filters`, such as reordering them).
+    - New exported function `pkg_file_lua()` to get the full system path of a
+    Lua filter included in a package source within `inst/rmarkdown/lua` folder.
+    (thanks, @atusy, #1903)
 
 - Fixed the path separators for the `css` parameter in YAML frontmatter for HTML output files under Windows. Previously, forward slashes in `css` paths were converted to backslashes (thanks, @jonathan-g, #1862).
 
