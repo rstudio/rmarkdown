@@ -142,9 +142,6 @@ pdf_document <- function(toc = FALSE,
   # make sure the graphics package is always loaded
   if (identical(template, "default")) args <- c(args, "--variable", "graphics")
 
-  # lua filters (added if pandoc > 2)
-  args <- c(args, pandoc_lua_filters(c("pagebreak.lua", "latex-div.lua")))
-
   # args args
   args <- c(args, pandoc_args)
 
@@ -196,11 +193,13 @@ pdf_document <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
-    pandoc = pandoc_options(to = paste(c("latex", output_extensions), collapse = ""),
-                            from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args,
-                            latex_engine = latex_engine,
-                            keep_tex = keep_tex),
+    pandoc = pandoc_options(
+      to = paste(c("latex", output_extensions), collapse = ""),
+      from = from_rmarkdown(fig_caption, md_extensions),
+      args = args,
+      latex_engine = latex_engine,
+      keep_tex = keep_tex,
+      lua_filters = pkg_file_lua(c("pagebreak.lua", "latex-div.lua"))),
     clean_supporting = !keep_tex,
     keep_md = keep_md,
     df_print = df_print,

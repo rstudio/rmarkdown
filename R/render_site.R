@@ -237,37 +237,48 @@ clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
 #' @export
 site_generator <- function(input = ".", output_format = NULL) {
 
+  # look for the closest index file with 'site' metadata
+  root <- tryCatch(
+    proj_root(input, "^index.R?md$", "^\\s*site:.*::.*$"),
+    error = function(e) NULL
+  )
+
   # normalize input
   input <- input_as_dir(input)
 
-  # if we have an index.Rmd (or .md) then check it's yaml for "site:"
-  index <- file.path(input, "index.Rmd")
+  # if none found then look for a _site.yml file
+  if (is.null(root)) {
+    if (file.exists(site_config_file(input))) {
+      return (default_site(input))
+    } else {
+      return(NULL)
+    }
+  }
+
+  # determine the index file (will be index.Rmd or index.md)
+  index <- file.path(root, "index.Rmd")
   if (!file.exists(index))
-    index <- file.path(input, "index.md")
-  if (file.exists(index)) {
+    index <- file.path(root, "index.md")
 
-    # read index.Rmd and extract the front matter
-    front_matter <- yaml_front_matter(index)
+  # is this in a subdir of the site root? (only some generators support this)
+  in_subdir <- !same_path(input, root)
 
-    # is there a custom site generator function?
-    if (!is.null(front_matter$site)) {
+  # read index.Rmd and extract the front matter
+  front_matter <- yaml_front_matter(index)
 
-      create_site_generator <- eval(parse(text = front_matter$site))
-      create_site_generator(input)
+  # create the site generator (passing the root dir)
+  create_site_generator <- eval(parse(text = front_matter$site))
+  generator <- create_site_generator(root)
 
-    # is there a "_site.yml"?
-    } else if (file.exists(site_config_file(input))) {
-
-      default_site(input)
-
-    # no custom site generator or "_site.yml"
+  # if it's in a subdir check to see if the generator supports nested files
+  if (in_subdir) {
+    if (isTRUE(generator$subdirs)) {
+      generator
     } else {
       NULL
     }
-
-  # no index.Rmd or index.md
   } else {
-    NULL
+    generator
   }
 }
 

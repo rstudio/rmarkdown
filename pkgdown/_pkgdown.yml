@@ -36,6 +36,8 @@ navbar:
           href: articles/rmarkdown.html
         - text: "Install Pandoc"
           href: articles/pandoc.html
+        - text: "About Lua filters"
+          href: articles/lua-filters.html
     news:
       text: Changelog
       href: news/index.html

@@ -33,3 +33,19 @@ citEntry(
     'URL https://bookdown.org/yihui/rmarkdown.'
   )
 )
+
+citEntry(
+  entry = 'book',
+  title = 'R Markdown Cookbook',
+  author = c('Yihui Xie', 'Christophe Dervieux', 'Emily Riederer'),
+  publisher = 'Chapman and Hall/CRC',
+  address = 'Boca Raton, Florida',
+  year = '2020',
+  note = 'ISBN 9780367563837',
+  url = 'https://bookdown.org/yihui/rmarkdown-cookbook',
+  textVersion = paste(
+    'Yihui Xie and Christophe Dervieux and Emily Riederer (2020).',
+    'R Markdown Cookbook.', 'Chapman and Hall/CRC. ISBN 9780367563837.',
+    'URL https://bookdown.org/yihui/rmarkdown-cookbook.'
+  )
+)

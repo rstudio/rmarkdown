@@ -262,7 +262,7 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
     if (is.null(dependency$package) && is.character(dependency$src$file)) {
 
       # check for a package directory parent
-      package_dir <- package_root(dependency$src$file)
+      package_dir <- proj_root(dependency$src$file)
       # if we have one then populate the package field and make the
       # src$file relative to the package
       if (!is.null(package_dir)) {
