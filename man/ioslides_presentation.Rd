@@ -137,7 +137,7 @@ Format for converting from R Markdown to an
 \href{https://code.google.com/archive/p/io-2012-slides/}{ioslides} presentation.
 }
 \details{
-See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
+See the \href{https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html}{
   online documentation} for additional details on using the
   \code{ioslides_presentation} format.
 

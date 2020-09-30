@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to a Beamer presentation.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/beamer_presentation_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/beamer-presentation.html}{online
 #' documentation} for additional details on using the \code{beamer_presentation}
 #' format.
 #'

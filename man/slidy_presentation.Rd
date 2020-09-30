@@ -136,7 +136,7 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to a slidy presentation.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
+See the \href{https://bookdown.org/yihui/rmarkdown/slidy-presentation.html}{online
 documentation} for additional details on using the \code{slidy_presentation}
 format.
 

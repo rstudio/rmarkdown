@@ -24,7 +24,7 @@
 #'  \code{...} to ellipses.
 #' @return R Markdown output format to pass to \code{\link{render}}.
 #' @details
-#'   See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
+#'   See the \href{https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html}{
 #'   online documentation} for additional details on using the
 #'   \code{ioslides_presentation} format.
 #'

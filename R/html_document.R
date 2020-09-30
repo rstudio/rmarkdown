@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to an HTML document.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/html-document.html}{online
 #' documentation} for additional details on using the \code{html_document}
 #' format.
 #'
