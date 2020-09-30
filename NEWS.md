@@ -1,6 +1,7 @@
 rmarkdown 2.5
 ================================================================================
 
+- Headerless pandoc's [simple table](https://pandoc.org/MANUAL.html#extension-simple_tables) are now formatted correctly when using `html_document()` format (thanks, @fkohrt, #1893)
 
 rmarkdown 2.4
 ================================================================================
