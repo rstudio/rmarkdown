@@ -38,4 +38,5 @@ jobs:
         - npm install netlify-cli -g
         - Rscript -e 'pkgdown::build_site(".", document = FALSE, preview = FALSE)' && netlify deploy --prod --dir docs
     - r: devel
+      env: _R_CHECK_CRAN_INCOMING_=true
 
