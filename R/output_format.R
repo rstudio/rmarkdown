@@ -330,7 +330,7 @@ pandoc_options <- function(to,
 #' }
 #'
 #' For more on pandoc markdown see the
-#' \href{http://pandoc.org/README.html}{pandoc online documentation}.
+#' \href{https://pandoc.org/MANUAL.html}{pandoc online documentation}.
 #' @param implicit_figures Automatically make figures from images (defaults to \code{TRUE}).
 #' @param extensions Markdown extensions to be added or removed from the
 #' default definition of R Markdown.

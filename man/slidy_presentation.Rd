@@ -99,7 +99,7 @@ copied into the output directory). You can pass an alternate URL or pass
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
 built-in template; pass a path to use a custom template that you've
 created.  See the documentation on
-\href{http://pandoc.org/README.html}{pandoc online documentation} for
+\href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
 details on creating custom templates.}
 
 \item{css}{One or more css files to include}
