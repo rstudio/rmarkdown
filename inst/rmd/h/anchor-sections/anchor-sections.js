@@ -1,12 +1,13 @@
+// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
 document.addEventListener('DOMContentLoaded', function() {
   const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
 
-  /* Do nothing if sections are already anchored */
+  // Do nothing if sections are already anchored
   if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
     return null;
   }
 
-  /* Use parent id when pandoc runs with --section-divs  */
+  // Use parent id when pandoc runs with --section-divs
   const parent_id = function(x) {
     const parent = x.parentElement;
     return (
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     );
   };
 
-  /* Add anchors */
+  // Add anchors
   h.forEach(function(x) {
     const id = x.id || parent_id(x);
     if (id === "") {
@@ -29,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     x.appendChild(anchor);
   });
 
-  /* Apply CSS */
+  // Apply CSS
   let style = document.createElement('style');
   style.type = 'text/css';
   style.innerText = '.hasAnchor:hover a.anchor-section {visibility: visible;}' +
