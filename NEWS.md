@@ -3,6 +3,7 @@ rmarkdown 2.5
 
 - Tables without header rows (wich can be possible in Pandoc's [simple table](https://pandoc.org/MANUAL.html#extension-simple_tables)) are now formatted correctly when using `html_document()` format (thanks, @fkohrt, #1893).
 
+- `html_document` gains the `anchor_sections` argument, which is by default `TRUE`, so that readers can get links to headings easily (thanks, @atusy, #1884).
 
 rmarkdown 2.4
 ================================================================================
@@ -32,8 +33,6 @@ rmarkdown 2.4
 - Updated documentation for `render()` to make it clearer how options are set for the `output_format` parameter (thanks, @jonathan-g, #1907 and rstudio/bookdown#930).
 
 - Ported some CSS styles (e.g., underlines, small caps, and multi-column layouts) from the latest Pandoc's HTML template into **rmarkdown**s HTML templates (thanks, @atusy, #1878, #1908).
-
-- `html_document` gains the `anchor_sections` argument so that readers can get links to headings easily (thanks, @atusy, #1884).
 
 rmarkdown 2.3
 ================================================================================
