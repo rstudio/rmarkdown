@@ -3,7 +3,8 @@ rmarkdown 2.5
 
 - Tables without header rows (wich can be possible in Pandoc's [simple table](https://pandoc.org/MANUAL.html#extension-simple_tables)) are now formatted correctly when using `html_document()` format (thanks, @fkohrt, #1893).
 
-- `html_document` gains the `anchor_sections` argument, which is by default `TRUE`, so that readers can get links to headings easily (thanks, @atusy, #1884).
+- `html_document` gains the `anchor_sections` argument, which is `TRUE` by default, so that readers can get links to section headers easily---when you mouse over  a section hader, you will see a hash symbol `#` at the end of the header, which contains the anchor link to this header. You can click on this link and get the URL in the addres bar of your web browser, or right-click on it and copy the URL from the context menu. The hash symbol is defined by the CSS rule `a.anchor-section::before {content: '#';}`. You can customize it by overriding this rule (e.g., via the `css` argument of `html_document`) and use any other symbols or icons, e.g., `content: "\02AD8;"` (thanks, @atusy, #1884).
+
 
 rmarkdown 2.4
 ================================================================================
