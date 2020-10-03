@@ -34,6 +34,7 @@ rmarkdown 2.4
 
 - Ported some CSS styles (e.g., underlines, small caps, and multi-column layouts) from the latest Pandoc's HTML template into **rmarkdown**s HTML templates (thanks, @atusy, #1878, #1908).
 
+
 rmarkdown 2.3
 ================================================================================
 
