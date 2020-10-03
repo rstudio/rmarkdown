@@ -72,6 +72,6 @@ Compared to \code{html_document}, it:
   \item uses a custom highlight scheme
  }
 
-See the \href{https://rmarkdown.rstudio.com/package_vignette_format.html}{online
+See the \href{https://bookdown.org/yihui/rmarkdown/r-package-vignette.html}{online
 documentation} for additional details on using the \code{html_vignette} format.
 }

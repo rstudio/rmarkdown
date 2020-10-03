@@ -26,7 +26,7 @@ md_document(
 Other valid values are "commonmark", "markdown_github", "markdown_mmd",
 markdown_phpextra", or even "markdown" (which produces pandoc markdown).
 You can also compose custom markdown variants, see the
-\href{http://pandoc.org/README.html}{pandoc online documentation}
+\href{https://pandoc.org/MANUAL.html}{pandoc online documentation}
 for details.}
 
 \item{preserve_yaml}{Preserve YAML front matter in final document.}
@@ -80,7 +80,7 @@ Format for converting from R Markdown to another variant of markdown (e.g.
 strict markdown or github flavored markdown)
 }
 \details{
-See the \href{http://rmarkdown.rstudio.com/markdown_document_format.html}{online
+See the \href{https://bookdown.org/yihui/rmarkdown/markdown-document.html}{online
 documentation} for additional details on using the \code{md_document} format.
 
 R Markdown documents can have optional metadata that is used to generate a

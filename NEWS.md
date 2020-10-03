@@ -1,3 +1,9 @@
+rmarkdown 2.5
+================================================================================
+
+- Tables without header rows (wich can be possible in Pandoc's [simple table](https://pandoc.org/MANUAL.html#extension-simple_tables)) are now formatted correctly when using `html_document()` format (thanks, @fkohrt, #1893).
+
+
 rmarkdown 2.4
 ================================================================================
 
@@ -5,9 +11,7 @@ rmarkdown 2.4
     - New exported function `pandoc_lua_filter_args()` to return the Pandoc command-line argument to add a Lua filter.
     - New argument `lua_filters` in `pandoc_options()` to pass the Lua filter paths to use with a format. This allow output format authors to add filters for a custom format using the `pandoc` argument of `output_format()` and to get filters from a format using `fmt$pandoc$lua_filters`.
     - The Lua filters of an output format are now passed to Pandoc in `render()`. By default, they are passed to Pandoc before any other format-defined or user-defined Pandoc arguments (usually via the `pandoc_args` option of an output format). This ensures that filters of an output format are executed first. To change the default, you need to deal with it in a custom format (i.e., modify the elements in `fmt$pandoc$lua_filters`, such as reordering them).
-    - New exported function `pkg_file_lua()` to get the full system path of a
-    Lua filter included in a package source within `inst/rmarkdown/lua` folder.
-    (thanks, @atusy, #1903)
+    - New exported function `pkg_file_lua()` to get the full system path of a Lua filter included in a package source within the `inst/rmarkdown/lua` folder (thanks, @atusy, #1903).
 
 - Fixed the path separators for the `css` parameter in YAML frontmatter for HTML output files under Windows. Previously, forward slashes in `css` paths were converted to backslashes (thanks, @jonathan-g, #1862).
 
@@ -17,11 +21,15 @@ rmarkdown 2.4
 
 - When customizing formats with the `output_format` function, `pre_knit`, `opts_hooks`, and `knit_hooks` can now refer to `rmarkdown::metadata`. Previously, `rmarkdown::metadata` returned `list()` in these functions (thanks, @atusy, #1855).
 
+- `rmarkdown::find_external_resources()` now discovers external template files. This in turn fixes the rendering issue of `html_document` with the `shiny` runtime and `intermediate_dir` set (thanks, @atusy, @cderv, #1865).
+
 - Added the `number_sections` argument to following formats: `github_document`, `ioslides_presentation`, `md_document`, `odt_document`, `powerpoint_presentation`, `rtf_document`, `slidy_presentation`, `word_document`. These are powered by a Lua filter and requires Pandoc > 2.0. It will silently have no effect has before with previous pandoc version (thanks @atusy 1893).  Pandoc >= 2.10.1 adds `--number-sections` for docx format, and thus `word_document` prefers the native feature to the Lua filter (thanks, @jooyoungseo, #1869).
 
 - For the output format `pdf_document`, the option `fig_crop` will not be enabled unless both the programs `pdfcrop` and `ghostscript` are found (thanks, @dalupus, yihui/knitr#954).
 
 - Fixed a bug that a chunk with a class `fold-hide` hides the rest of the chunks even the output format setting `html_document(code_folding = "show")` (thanks, @atusy, #1906).
+
+- Updated documentation for `render()` to make it clearer how options are set for the `output_format` parameter (thanks, @jonathan-g, #1907 and rstudio/bookdown#930).
 
 - Ported some CSS styles (e.g., underlines, small caps, and multi-column layouts) from the latest Pandoc's HTML template into **rmarkdown**s HTML templates (thanks, @atusy, #1878, #1908).
 

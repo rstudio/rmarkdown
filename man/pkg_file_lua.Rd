@@ -2,36 +2,33 @@
 % Please edit documentation in R/util.R
 \name{pkg_file_lua}
 \alias{pkg_file_lua}
-\title{Get Lua filters full paths in a package}
+\title{Get the full paths of Lua filters in an R package}
 \usage{
 pkg_file_lua(filters = NULL, package = "rmarkdown")
 }
 \arguments{
-\item{filters}{Character vector of filename for the Lua filter to retrieve in
-\code{rmarkdown/lua} folder of the package. By default, if none is
-provided, it returns the folder path.}
+\item{filters}{A character vector of filenames for Lua filters to be
+retrieved in \file{rmarkdown/lua} folder of the package. By default
+(\code{NULL}), if none is provided, it returns all filters in that folder.}
 
-\item{package}{Package name in which to look for the filters. It is set to
-\code{rmarkdown} by default}
+\item{package}{The name of the package in which to look for the filters.}
 }
 \value{
-Character vector of absolute file paths for the Lua filter from the
-  package. If a filter is not found, it does not error. The returned path
-  will already be escaped correctly using \code{\link{pandoc_path_arg}} to be
-  used by Pandoc.
+A character vector of absolute file paths for the Lua filter from the
+  package. The returned paths have been processed by
+  \code{\link{pandoc_path_arg}()}, so they are ready to be used by Pandoc.
 }
 \description{
-Lua filters stored in a source package in \code{inst/rmarkdown/lua} will installed in
-\code{rmarkdown/lua} in the package path. This function finds the full path of the
-Lua filters on the system for installed packages.
+Lua filters stored in a source package in the \file{inst/rmarkdown/lua}
+directory will be installed to the \file{rmarkdown/lua} directory in the
+package path. This function finds the full paths of the Lua filters in the
+installed packages.
 }
 \examples{
 # List all Lua filters stored in the rmarkdown package
 pkg_file_lua()
 # or in a specific package
-pkg_file_lua(package = "bookdown")
+if (xfun::loadable("bookdown")) pkg_file_lua(package = "bookdown")
 # get a specific filter
-pkg_file_lua(c("pagebreak.lua", "latex_div.lua"), package = "rmarkdown")
-# do not error if not found but return an empty path
-pkg_file_lua("donotexist.lua", package = "rmarkdown")
+pkg_file_lua(c("pagebreak.lua", "latex_div.lua"))
 }

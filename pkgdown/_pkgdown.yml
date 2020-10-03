@@ -34,8 +34,6 @@ navbar:
       menu:
         - text: "Learn R Markdown"
           href: articles/rmarkdown.html
-        - text: "Install Pandoc"
-          href: articles/pandoc.html
         - text: "About Lua filters"
           href: articles/lua-filters.html
     news:
@@ -46,7 +44,7 @@ navbar:
       href: https://github.com/rstudio/rmarkdown
     community:
       icon: fab fa-discourse fa-lg
-      href: https://community.rstudio.com/c/R-Markdown
+      href: https://community.rstudio.com/c/R-Markdown/10
     home:
       icon: fas fa-home fa-lg
       href: index.html

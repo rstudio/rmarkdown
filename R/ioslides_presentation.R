@@ -1,7 +1,7 @@
 #' Convert to an ioslides Presentation
 #'
 #' Format for converting from R Markdown to an
-#' \href{https://code.google.com/p/io-2012-slides/}{ioslides} presentation.
+#' \href{https://code.google.com/archive/p/io-2012-slides/}{ioslides} presentation.
 #'
 #' @inheritParams html_document
 #' @param logo Path to file that includes a logo for use in the presentation
@@ -24,7 +24,7 @@
 #'  \code{...} to ellipses.
 #' @return R Markdown output format to pass to \code{\link{render}}.
 #' @details
-#'   See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
+#'   See the \href{https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html}{
 #'   online documentation} for additional details on using the
 #'   \code{ioslides_presentation} format.
 #'
@@ -156,7 +156,7 @@
 #'   shouldn't hesitate to add tables for presenting more complex sets of
 #'   information. Pandoc markdown supports several syntaxes for defining
 #'   tables which are described in the
-#'   \href{http://pandoc.org/README.html}{pandoc online documentation}.
+#'   \href{https://pandoc.org/MANUAL.html}{pandoc online documentation}.
 #' @section Advanced Layout:
 #'   You can center content on a slide by adding the \code{.flexbox}
 #'   and \code{.vcenter} attributes to the slide title. For example:

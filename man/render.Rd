@@ -34,7 +34,12 @@ the document to that single format. One can also use a vector of format
 names to render to multiple formats. Alternatively, you can pass an output
 format object (e.g. \code{html_document()}). If using \code{NULL} then the
 output format is the first one defined in the YAML frontmatter in the input
-file (this defaults to HTML if no format is specified there).}
+file (this defaults to HTML if no format is specified there).
+If you pass an output format object to \code{output_format}, the options
+specified in the YAML header or \code{_output.yml} will be ignored and you
+must explicitly set all the options you want when you construct the object.
+If you pass a string, the output format will use the output parameters in
+the YAML header or \code{_output.yml}.}
 
 \item{output_file}{The name of the output file. If using \code{NULL} then the
 output filename will be based on filename for the input file. If a filename
@@ -178,8 +183,15 @@ render("input.Rmd")
 # Render all formats defined in the file
 render("input.Rmd", "all")
 
-# Render a single format
+# Render a single format, using parameters for \code{html_document} from
+# the YAML header parameters.
 render("input.Rmd", "html_document")
+
+# Render a single format, ignoring parameters for \code{html_document} in
+# the YAML header. Any parameters not passed as arguments to
+# \code{html_document()} will be assigned to their default values, regardless
+# of anything in the YAML header
+render("input.Rmd", html_document(toc = TRUE, toc_depth = 2))
 
 # Render multiple formats
 render("input.Rmd", c("html_document", "pdf_document"))
@@ -187,5 +199,5 @@ render("input.Rmd", c("html_document", "pdf_document"))
 }
 \seealso{
 \link[knitr:knit]{knit}, \link{output_format},
-\href{http://johnmacfarlane.net/pandoc}{pandoc}
+\url{https://pandoc.org}
 }

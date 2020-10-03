@@ -1,7 +1,7 @@
 #' Convert to a ConTeXt document
 #'
 #' Format for converting from R Markdown to PDF using
-#' \href{https://wiki.contextgarden.net/}{ConTeXt}.
+#' \href{https://wiki.contextgarden.net/Main_Page}{ConTeXt}.
 #'
 #' ConTeXt needs to be installed. To install the most recent version, see
 #' \url{https://wiki.contextgarden.net/Installation}. A less recent version is

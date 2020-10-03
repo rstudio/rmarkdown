@@ -90,7 +90,7 @@ metadata <- list()
 #'
 #'   For more details on \code{knitr::spin} see the following documentation:
 #'
-#'   \url{http://yihui.org/knitr/demo/stitch/}
+#'   \url{https://yihui.org/knitr/demo/stitch/}
 #' @name compile_notebook
 NULL
 
@@ -151,7 +151,7 @@ NULL
 #' \code{\link{rmarkdown_format}} for details.
 #' @seealso
 #' \link[knitr:knit]{knit}, \link{output_format},
-#' \href{http://johnmacfarlane.net/pandoc}{pandoc}
+#' \url{https://pandoc.org}
 #' @inheritParams default_output_format
 #' @param input The input file to be rendered. This can be an R script (.R),
 #' an R Markdown document (.Rmd), or a plain markdown document.
@@ -163,6 +163,11 @@ NULL
 #' format object (e.g. \code{html_document()}). If using \code{NULL} then the
 #' output format is the first one defined in the YAML frontmatter in the input
 #' file (this defaults to HTML if no format is specified there).
+#' If you pass an output format object to \code{output_format}, the options
+#' specified in the YAML header or \code{_output.yml} will be ignored and you
+#' must explicitly set all the options you want when you construct the object.
+#' If you pass a string, the output format will use the output parameters in
+#' the YAML header or \code{_output.yml}.
 #' @param output_file The name of the output file. If using \code{NULL} then the
 #' output filename will be based on filename for the input file. If a filename
 #' is provided, a path to the output file can also be provided. Note that the
@@ -227,8 +232,15 @@ NULL
 #' # Render all formats defined in the file
 #' render("input.Rmd", "all")
 #'
-#' # Render a single format
+#' # Render a single format, using parameters for \code{html_document} from
+#' # the YAML header parameters.
 #' render("input.Rmd", "html_document")
+#'
+#' # Render a single format, ignoring parameters for \code{html_document} in
+#' # the YAML header. Any parameters not passed as arguments to
+#' # \code{html_document()} will be assigned to their default values, regardless
+#' # of anything in the YAML header
+#' render("input.Rmd", html_document(toc = TRUE, toc_depth = 2))
 #'
 #' # Render multiple formats
 #' render("input.Rmd", c("html_document", "pdf_document"))

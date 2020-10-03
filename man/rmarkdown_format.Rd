@@ -33,7 +33,7 @@ the following tweaks for backward compatibility with the markdown package
 }
 
 For more on pandoc markdown see the
-\href{http://pandoc.org/README.html}{pandoc online documentation}.
+\href{https://pandoc.org/MANUAL.html}{pandoc online documentation}.
 }
 \examples{
 \dontrun{
