@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return null;
     }
     let anchor = document.createElement('a');
-    anchor.href = '#' + x.parentElement.id;
+    anchor.href = '#' + id;
     anchor.classList = ['anchor-section'];
     anchor.textContent ='#';
     x.classList.add('hasAnchor');
