@@ -8,17 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Use parent id when pandoc runs with --section-divs
-  const parent_id = function(x) {
-    const parent = x.parentElement;
-    return (
-      (parent.classList.contains('section') || (parent.tagName === 'SECTION'))
-      ? parent.id : ''
-    );
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
   };
 
   // Add anchors
   h.forEach(function(x) {
-    const id = x.id || parent_id(x);
+    const id = x.id || section_id(x.parentElement);
     if (id === "") {
       return null;
     }
