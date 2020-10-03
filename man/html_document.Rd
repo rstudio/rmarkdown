@@ -9,6 +9,7 @@ html_document(
   toc_depth = 3,
   toc_float = FALSE,
   number_sections = FALSE,
+  anchor_sections = FALSE,
   section_divs = TRUE,
   fig_width = 7,
   fig_height = 5,
@@ -44,6 +45,8 @@ options that control the behavior of the floating table of contents. See the
 \emph{Floating Table of Contents} section below for details.}
 
 \item{number_sections}{\code{TRUE} to number section headings}
+
+\item{anchor_sections}{\code{TRUE} to show section anchors when mouse hovers}
 
 \item{section_divs}{Wrap sections in <div> tags, and attach identifiers to the
 enclosing <div> rather than the header itself.}

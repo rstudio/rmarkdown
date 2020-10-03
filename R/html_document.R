@@ -22,6 +22,7 @@
 #'  options that control the behavior of the floating table of contents. See the
 #'  \emph{Floating Table of Contents} section below for details.
 #'@param number_sections \code{TRUE} to number section headings
+#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers
 #'@param fig_width Default width (in inches) for figures
 #'@param fig_height Default height (in inches) for figures
 #'@param fig_retina Scaling to perform for retina displays (defaults to 2, which
@@ -179,6 +180,7 @@ html_document <- function(toc = FALSE,
                           toc_depth = 3,
                           toc_float = FALSE,
                           number_sections = FALSE,
+                          anchor_sections = TRUE,
                           section_divs = TRUE,
                           fig_width = 7,
                           fig_height = 5,
@@ -321,6 +323,12 @@ html_document <- function(toc = FALSE,
   if (identical(df_print, "paged")) {
     extra_dependencies <- append(extra_dependencies,
                                  list(html_dependency_pagedtable()))
+  }
+
+  # anchor-sections
+  if (anchor_sections) {
+    extra_dependencies <- append(extra_dependencies,
+                                 list(html_dependency_anchor_sections()))
   }
 
   # pre-processor for arguments that may depend on the name of the
