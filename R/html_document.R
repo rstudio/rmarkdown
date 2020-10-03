@@ -180,7 +180,7 @@ html_document <- function(toc = FALSE,
                           toc_depth = 3,
                           toc_float = FALSE,
                           number_sections = FALSE,
-                          anchor_sections = FALSE,
+                          anchor_sections = TRUE,
                           section_divs = TRUE,
                           fig_width = 7,
                           fig_height = 5,
@@ -206,7 +206,6 @@ html_document <- function(toc = FALSE,
 
   # build pandoc args
   args <- c("--standalone")
-  lua_filters <- character(0L)
 
   # use section divs
   if (section_divs)
@@ -330,7 +329,6 @@ html_document <- function(toc = FALSE,
   if (anchor_sections) {
     extra_dependencies <- append(extra_dependencies,
                                  list(html_dependency_anchor_sections()))
-    lua_filters <- c(lua_filters, "anchor-sections.lua")
   }
 
   # pre-processor for arguments that may depend on the name of the
@@ -441,8 +439,7 @@ html_document <- function(toc = FALSE,
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
     pandoc = pandoc_options(to = "html",
                             from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args,
-                            lua_filters = pkg_file_lua(lua_filters)),
+                            args = args),
     keep_md = keep_md,
     clean_supporting = self_contained,
     df_print = df_print,

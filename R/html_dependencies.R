@@ -130,7 +130,7 @@ html_dependency_anchor_sections <- function() {
   htmlDependency(name = "anchor-sections",
                  version = "1.0",
                  src = pkg_file("rmd/h/anchor-sections"),
-                 stylesheet = "anchor-sections.css")
+                 script = "anchor-sections.js")
 }
 
 # analyze navbar html source for icon dependencies
