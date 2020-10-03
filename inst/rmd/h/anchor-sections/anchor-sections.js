@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return null;
   }
 
-  // Use parent id when pandoc runs with --section-divs
+  // Use section id when pandoc runs with --section-divs
   const section_id = function(x) {
     return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
             ? x.id : '');
@@ -26,11 +26,4 @@ document.addEventListener('DOMContentLoaded', function() {
     x.classList.add('hasAnchor');
     x.appendChild(anchor);
   });
-
-  // Apply CSS
-  let style = document.createElement('style');
-  style.type = 'text/css';
-  style.innerText = '.hasAnchor:hover a.anchor-section {visibility: visible;}' +
-    'a.anchor-section {margin-left: 10px; visibility: hidden;}';
-  document.head.appendChild(style);
 });
