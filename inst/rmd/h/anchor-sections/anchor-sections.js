@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let anchor = document.createElement('a');
     anchor.href = '#' + id;
     anchor.classList = ['anchor-section'];
-    anchor.textContent = '#';
     x.classList.add('hasAnchor');
     x.appendChild(anchor);
   });
