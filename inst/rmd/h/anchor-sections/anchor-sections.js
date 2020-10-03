@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     let anchor = document.createElement('a');
     anchor.href = '#' + x.parentElement.id;
-    anchor.classList = ['anchor'];
+    anchor.classList = ['anchor-section'];
     anchor.textContent ='#';
     x.classList.add('hasAnchor');
     x.appendChild(anchor);
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
   /* Apply CSS */
   let style = document.createElement('style');
   style.type = 'text/css';
-  style.innerText = '.hasAnchor:hover a.anchor {visibility: visible;}' +
-    'a.anchor {margin-left: 10px; visibility: hidden;}';
+  style.innerText = '.hasAnchor:hover a.anchor-section {visibility: visible;}' +
+    'a.anchor-section {margin-left: 10px; visibility: hidden;}';
   document.head.appendChild(style);
 });
