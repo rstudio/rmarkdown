@@ -1,5 +1,7 @@
 destination: docs
 
+url: https://cranky-neumann-932307.netlify.app/rmarkdown/
+
 template:
   package: quillt
 
