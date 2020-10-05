@@ -112,6 +112,11 @@ reference:
   - '`rmd_metadata`'
   - '`rmarkdown_format`'
 
+- title: The rmarkdown package
+  desc: ~
+  contents:
+  - '`rmarkdown-package`'
+
 authors:
   "Yihui Xie":
     href: https://yihui.org
