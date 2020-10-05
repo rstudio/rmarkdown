@@ -34,8 +34,8 @@ jobs:
         run: |
           install.packages("remotes")
           remotes::install_deps(dependencies = TRUE)
-          remotes::install_github("apreshill/pkgdown@add-slash")
-          remotes::install_github("apreshill/quillt")
+          remotes::install_github("r-lib/pkgdown")
+          remotes::install_github("apreshill/quillt@js-debug")
         shell: Rscript {0}
 
       - name: Install package
