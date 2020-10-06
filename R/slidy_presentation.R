@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to a slidy presentation.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/slidy-presentation.html}{online
 #' documentation} for additional details on using the \code{slidy_presentation}
 #' format.
 #'
@@ -31,7 +31,8 @@
 #' render("pres.Rmd", slidy_presentation(incremental = TRUE))
 #' }
 #' @export
-slidy_presentation <- function(incremental = FALSE,
+slidy_presentation <- function(number_sections = FALSE,
+                               incremental = FALSE,
                                slide_level = NULL,
                                duration = NULL,
                                footer = NULL,
@@ -102,7 +103,7 @@ slidy_presentation <- function(incremental = FALSE,
 
   # additional css
   for (css_file in css)
-    args <- c(args, "--css", pandoc_path_arg(css_file))
+    args <- c(args, "--css", pandoc_path_arg(css_file, backslash = FALSE))
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
@@ -126,9 +127,12 @@ slidy_presentation <- function(incremental = FALSE,
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
-    pandoc = pandoc_options(to = "slidy",
-                            from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args),
+    pandoc = pandoc_options(
+      to = "slidy",
+      from = from_rmarkdown(fig_caption, md_extensions),
+      args = args,
+      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
+    ),
     keep_md = keep_md,
     clean_supporting = self_contained,
     df_print = df_print,

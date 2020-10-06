@@ -3,7 +3,7 @@
 #' Convert documents to and from various formats using the pandoc utility.
 #'
 #' Supported input and output formats are described in the
-#' \href{http://johnmacfarlane.net/pandoc/README.html}{pandoc user guide}.
+#' \href{https://pandoc.org/MANUAL.html}{pandoc user guide}.
 #'
 #' The system path as well as the version of pandoc shipped with RStudio (if
 #' running under RStudio) are scanned for pandoc and the highest version
@@ -48,6 +48,9 @@ pandoc_convert <- function(input,
 
   # ensure we've scanned for pandoc
   find_pandoc()
+
+  # evaluate path arguments before changing working directory
+  force(output)
 
   # execute in specified working directory
   if (is.null(wd)) {
@@ -714,9 +717,13 @@ pandoc_citeproc <- function() {
   if (file.exists(p)) p else bin
 }
 
-pandoc_lua_filters <- function(...) {
-  # lua filters was introduced in pandoc 2.0
-  if (pandoc2.0()) c(rbind("--lua-filter", pkg_file("rmd", "lua", ...)))
+#' @rdname pandoc_args
+#' @param lua_files Character vector of file paths to Lua filter files. Paths
+#'   will be transformed by \code{\link{pandoc_path_arg}}.
+#' @export
+pandoc_lua_filter_args <- function(lua_files) {
+  # Lua filters was introduced in pandoc 2.0
+  if (pandoc2.0()) c(rbind("--lua-filter", pandoc_path_arg(lua_files)))
 }
 
 
@@ -762,7 +769,7 @@ pandoc2.0 <- function() {
 #' either the system path or shipped with RStudio.
 #'
 #' See the
-#' \href{http://pandoc.org/MANUAL.html}{pandoc manual}
+#' \href{https://pandoc.org/MANUAL.html}{pandoc manual}
 #' for pandoc commands.
 #'
 #' @export

@@ -7,6 +7,7 @@
 word_document(
   toc = FALSE,
   toc_depth = 3,
+  number_sections = FALSE,
   fig_width = 5,
   fig_height = 4,
   fig_caption = TRUE,
@@ -22,6 +23,8 @@ word_document(
 \item{toc}{\code{TRUE} to include a table of contents in the output}
 
 \item{toc_depth}{Depth of headers to include in table of contents}
+
+\item{number_sections}{\code{TRUE} to number section headings}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -65,7 +68,7 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to an MS Word document.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/word_document_format.html}{online
+See the \href{https://bookdown.org/yihui/rmarkdown/word-document.html}{online
 documentation} for additional details on using the \code{word_document} format.
 
 R Markdown documents can have optional metadata that is used to generate a

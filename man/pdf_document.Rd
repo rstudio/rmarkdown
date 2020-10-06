@@ -71,7 +71,7 @@ can disable the \code{df_print} behavior entirely by setting the option
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
 built-in template; pass a path to use a custom template that you've
 created.  See the documentation on
-\href{http://pandoc.org/README.html}{pandoc online documentation} for
+\href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
 details on creating custom templates.}
 
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
@@ -115,7 +115,7 @@ R Markdown output format to pass to \code{\link{render}}
 Formats for converting from R Markdown to a PDF or LaTeX document.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/pdf_document_format.html}{online
+See the \href{https://bookdown.org/yihui/rmarkdown/pdf-document.html}{online
 documentation} for additional details on using the \code{pdf_document}
 format.
 

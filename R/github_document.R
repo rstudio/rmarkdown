@@ -18,6 +18,7 @@
 #' @export
 github_document <- function(toc = FALSE,
                             toc_depth = 3,
+                            number_sections = FALSE,
                             fig_width = 7,
                             fig_height = 5,
                             dev = 'png',
@@ -30,10 +31,12 @@ github_document <- function(toc = FALSE,
                             keep_html = FALSE) {
 
   # add special markdown rendering template to ensure we include the title fields
+  # and add an optional feature to number sections
   pandoc_args <- c(
-    pandoc_args, "--template", pkg_file_arg(
-      "rmarkdown/templates/github_document/resources/default.md")
+    pandoc_args, "--template",
+    pkg_file_arg("rmarkdown/templates/github_document/resources/default.md")
   )
+
 
   pandoc2 <- pandoc2.0()
   # use md_document as base
@@ -42,8 +45,9 @@ github_document <- function(toc = FALSE,
 
   format <- md_document(
     variant = variant, toc = toc, toc_depth = toc_depth,
-    fig_width = fig_width, fig_height = fig_height, dev = dev,
-    df_print = df_print, includes = includes, md_extensions = md_extensions,
+    number_sections = number_sections, fig_width = fig_width,
+    fig_height = fig_height, dev = dev, df_print = df_print,
+    includes = includes, md_extensions = md_extensions,
     pandoc_args = pandoc_args
   )
 

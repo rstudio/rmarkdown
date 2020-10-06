@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to a Beamer presentation.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/beamer_presentation_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/beamer-presentation.html}{online
 #' documentation} for additional details on using the \code{beamer_presentation}
 #' format.
 #'
@@ -149,11 +149,14 @@ beamer_presentation <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
-    pandoc = pandoc_options(to = "beamer",
-                            from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args,
-                            latex_engine = latex_engine,
-                            keep_tex = keep_tex),
+    pandoc = pandoc_options(
+      to = "beamer",
+      from = from_rmarkdown(fig_caption, md_extensions),
+      args = args,
+      latex_engine = latex_engine,
+      keep_tex = keep_tex,
+      lua_filters = pkg_file_lua(c("pagebreak.lua", "latex-div.lua"))
+    ),
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     clean_supporting = !keep_tex,

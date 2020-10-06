@@ -1,7 +1,7 @@
 #' Convert to an ioslides Presentation
 #'
 #' Format for converting from R Markdown to an
-#' \href{https://code.google.com/p/io-2012-slides/}{ioslides} presentation.
+#' \href{https://code.google.com/archive/p/io-2012-slides/}{ioslides} presentation.
 #'
 #' @inheritParams html_document
 #' @param logo Path to file that includes a logo for use in the presentation
@@ -24,7 +24,7 @@
 #'  \code{...} to ellipses.
 #' @return R Markdown output format to pass to \code{\link{render}}.
 #' @details
-#'   See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
+#'   See the \href{https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html}{
 #'   online documentation} for additional details on using the
 #'   \code{ioslides_presentation} format.
 #'
@@ -156,7 +156,7 @@
 #'   shouldn't hesitate to add tables for presenting more complex sets of
 #'   information. Pandoc markdown supports several syntaxes for defining
 #'   tables which are described in the
-#'   \href{http://pandoc.org/README.html}{pandoc online documentation}.
+#'   \href{https://pandoc.org/MANUAL.html}{pandoc online documentation}.
 #' @section Advanced Layout:
 #'   You can center content on a slide by adding the \code{.flexbox}
 #'   and \code{.vcenter} attributes to the slide title. For example:
@@ -223,7 +223,8 @@
 #'   To create a PDF version of a presentation you can use Print to PDF
 #'   from Google Chrome.
 #' @export
-ioslides_presentation <- function(logo = NULL,
+ioslides_presentation <- function(number_sections = FALSE,
+                                  logo = NULL,
                                   slide_level = 2,
                                   incremental = FALSE,
                                   fig_width = 7.5,
@@ -278,7 +279,7 @@ ioslides_presentation <- function(logo = NULL,
 
   # additional css
   for (css_file in css)
-    args <- c(args, "--css", pandoc_path_arg(css_file))
+    args <- c(args, "--css", pandoc_path_arg(css_file, backslash = FALSE))
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
@@ -342,6 +343,10 @@ ioslides_presentation <- function(logo = NULL,
 
     # add any custom pandoc args
     args <- c(args, pandoc_args)
+
+    # number sections
+    if (number_sections)
+      args <- c(args, pandoc_lua_filter_args(pkg_file_lua("number-sections.lua")))
 
     lua_writer <- file.path(dirname(input_file), "ioslides_presentation.lua")
     # The input directory may not be writable (on e.g. Shiny Server), so write
@@ -412,7 +417,7 @@ ioslides_presentation <- function(logo = NULL,
 
     # base64 encode if needed
     if (self_contained) {
-      slides_lines <- base64_image_encode(slides_lines)
+      slides_lines <- base64_encode_images(slides_lines)
     }
 
     # read the output file
@@ -472,4 +477,3 @@ html_dependency_ioslides <- function() {
       "theme/css/phone.css")
     )
 }
-

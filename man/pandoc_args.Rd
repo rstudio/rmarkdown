@@ -8,6 +8,7 @@
 \alias{pandoc_highlight_args}
 \alias{pandoc_latex_engine_args}
 \alias{pandoc_toc_args}
+\alias{pandoc_lua_filter_args}
 \title{Functions for generating pandoc command line arguments}
 \usage{
 pandoc_variable_arg(name, value)
@@ -21,6 +22,8 @@ pandoc_highlight_args(highlight, default = "tango")
 pandoc_latex_engine_args(latex_engine)
 
 pandoc_toc_args(toc, toc_depth = 3)
+
+pandoc_lua_filter_args(lua_files)
 }
 \arguments{
 \item{name}{Name of template variable to set.}
@@ -47,6 +50,9 @@ is specified.}
 \item{toc}{\code{TRUE} to include a table of contents in the output.}
 
 \item{toc_depth}{Depth of headers to include in table of contents.}
+
+\item{lua_files}{Character vector of file paths to Lua filter files. Paths
+will be transformed by \code{\link{pandoc_path_arg}}.}
 }
 \value{
 A character vector with pandoc command line arguments.

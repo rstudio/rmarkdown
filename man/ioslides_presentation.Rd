@@ -5,6 +5,7 @@
 \title{Convert to an ioslides Presentation}
 \usage{
 ioslides_presentation(
+  number_sections = FALSE,
   logo = NULL,
   slide_level = 2,
   incremental = FALSE,
@@ -33,6 +34,8 @@ ioslides_presentation(
 )
 }
 \arguments{
+\item{number_sections}{\code{TRUE} to number section headings}
+
 \item{logo}{Path to file that includes a logo for use in the presentation
 (should be square and at least 128x128).}
 
@@ -131,10 +134,10 @@ R Markdown output format to pass to \code{\link{render}}.
 }
 \description{
 Format for converting from R Markdown to an
-\href{https://code.google.com/p/io-2012-slides/}{ioslides} presentation.
+\href{https://code.google.com/archive/p/io-2012-slides/}{ioslides} presentation.
 }
 \details{
-See the \href{http://rmarkdown.rstudio.com/ioslides_presentation_format.html}{
+See the \href{https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html}{
   online documentation} for additional details on using the
   \code{ioslides_presentation} format.
 
@@ -288,7 +291,7 @@ y <- x * 2
   shouldn't hesitate to add tables for presenting more complex sets of
   information. Pandoc markdown supports several syntaxes for defining
   tables which are described in the
-  \href{http://pandoc.org/README.html}{pandoc online documentation}.
+  \href{https://pandoc.org/MANUAL.html}{pandoc online documentation}.
 }
 
 \section{Advanced Layout}{

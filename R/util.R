@@ -33,12 +33,39 @@ pandoc_output_ext <- function(ext, to, input) {
   paste0(".", to)
 }
 
-pkg_file <- function(...) {
-  system.file(..., package = "rmarkdown")
+pkg_file <- function(..., package = "rmarkdown") {
+  system.file(..., package = package)
 }
 
-pkg_file_arg <- function(...) {
-  pandoc_path_arg(pkg_file(...))
+pkg_file_arg <- function(..., package = "rmarkdown") {
+  pandoc_path_arg(pkg_file(..., package = package))
+}
+
+#' Get the full paths of Lua filters in an R package
+#'
+#' Lua filters stored in a source package in the \file{inst/rmarkdown/lua}
+#' directory will be installed to the \file{rmarkdown/lua} directory in the
+#' package path. This function finds the full paths of the Lua filters in the
+#' installed packages.
+#' @param filters A character vector of filenames for Lua filters to be
+#'   retrieved in \file{rmarkdown/lua} folder of the package. By default
+#'   (\code{NULL}), if none is provided, it returns all filters in that folder.
+#' @param package The name of the package in which to look for the filters.
+#' @return A character vector of absolute file paths for the Lua filter from the
+#'   package. The returned paths have been processed by
+#'   \code{\link{pandoc_path_arg}()}, so they are ready to be used by Pandoc.
+#' @export
+#' @examples
+#' # List all Lua filters stored in the rmarkdown package
+#' pkg_file_lua()
+#' # or in a specific package
+#' if (xfun::loadable("bookdown")) pkg_file_lua(package = "bookdown")
+#' # get a specific filter
+#' pkg_file_lua(c("pagebreak.lua", "latex_div.lua"))
+pkg_file_lua <- function(filters = NULL, package = "rmarkdown") {
+  lua_folder <- pkg_file("rmarkdown", "lua", package = package, mustWork = TRUE)
+  if (is.null(filters)) filters <- list.files(lua_folder, "[.]lua$")
+  pandoc_path_arg(file.path(lua_folder, filters))
 }
 
 #' @rdname rmarkdown_format
@@ -297,11 +324,11 @@ ends_with_bytes <- function(string, bytes) {
 base64_encode_object <- function(object) {
   object <- rapply(object, unclass, how = "list")
   json <- charToRaw(jsonlite::toJSON(object, auto_unbox = TRUE))
-  base64enc::base64encode(json)
+  xfun::base64_encode(json)
 }
 
 base64_decode_object <- function(encoded) {
-  json <- rawToChar(base64enc::base64decode(encoded))
+  json <- rawToChar(xfun::base64_decode(encoded))
   jsonlite::fromJSON(json)
 }
 
@@ -463,13 +490,15 @@ xfun_session_info <- function() {
   paste('Pandoc version:', pandoc_version())
 }
 
-# given a path of a file in a potential R package, figure out the package root
-package_root <- function(path) {
-  dir <- dirname(path)
+# given a path of a file (or dir) in a potential project (e.g., an R package),
+# figure out the project root
+proj_root <- function(path, file = '^DESCRIPTION$', pattern = '^Package: ') {
+  dir <- if (dir_exists(path)) path else dirname(path)
   if (same_path(dir, file.path(dir, '..'))) return()
-  if (!file.exists(desc <- file.path(dir, 'DESCRIPTION')) ||
-      length(grep('^Package: ', read_utf8(desc))) == 0) return(package_root(dir))
-  dir
+  for (f in list.files(dir, file, full.names = TRUE)) {
+    if (length(grep(pattern, read_utf8(f)))) return(dir)
+  }
+  proj_root(dirname(dir), file, pattern)
 }
 
 

@@ -9,6 +9,7 @@ html_document(
   toc_depth = 3,
   toc_float = FALSE,
   number_sections = FALSE,
+  anchor_sections = FALSE,
   section_divs = TRUE,
   fig_width = 7,
   fig_height = 5,
@@ -45,6 +46,8 @@ options that control the behavior of the floating table of contents. See the
 \emph{Floating Table of Contents} section below for details.}
 
 \item{number_sections}{\code{TRUE} to number section headings}
+
+\item{anchor_sections}{\code{TRUE} to show section anchors when mouse hovers}
 
 \item{section_divs}{Wrap sections in <div> tags, and attach identifiers to the
 enclosing <div> rather than the header itself.}
@@ -154,7 +157,7 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to an HTML document.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
+See the \href{https://bookdown.org/yihui/rmarkdown/html-document.html}{online
 documentation} for additional details on using the \code{html_document}
 format.
 
@@ -196,7 +199,7 @@ right:
  of a bootstrap navigation bar. For a simple example of including a navigation bar see
  \url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
   For additional documentation on creating Bootstrap navigation bars see
- \url{http://getbootstrap.com/components/#navbar}.
+ \url{https://getbootstrap.com/docs/4.5/components/navbar/}.
 }
 
 \section{Floating Table of Contents}{
@@ -242,7 +245,7 @@ right:
 
  You can provide a custom HTML template to be used for rendering. The syntax
  for templates is described in the
- \href{http://pandoc.org/README.html}{pandoc documentation}. You can also use
+ \href{https://pandoc.org/MANUAL.html}{pandoc documentation}. You can also use
  the basic pandoc template by passing \code{template = NULL}.
 
  Note however that if you choose not to use the "default" HTML template then
