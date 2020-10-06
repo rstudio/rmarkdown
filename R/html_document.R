@@ -285,6 +285,7 @@ html_document <- function(toc = FALSE,
               "downlit highlighting won't be apply",
               "and no linking will be done.", call. = FALSE)
       highlight_downlit <- FALSE
+    }
   }
   args <- c(args,
             pandoc_html_highlight_args(template, highlight, highlight_downlit)
