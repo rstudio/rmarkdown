@@ -444,6 +444,17 @@ html_document <- function(toc = FALSE,
     args
   }
 
+  # post-processor that use the output file from pandoc
+  post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+
+    # add a post processor for syntax highlighting with downlit if requested
+    if (highlight_downlit) {
+        output_file <- downlit::downlit_html_path(output_file, output_file)
+    }
+
+    output_file
+  }
+
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
@@ -456,6 +467,7 @@ html_document <- function(toc = FALSE,
     pre_knit = pre_knit,
     post_knit = post_knit,
     pre_processor = pre_processor,
+    post_processor = post_processor,
     on_exit = on_exit,
     base_format = html_document_base(theme = theme,
                                      self_contained = self_contained,
