@@ -193,6 +193,7 @@ html_document <- function(toc = FALSE,
                           self_contained = TRUE,
                           theme = "default",
                           highlight = "default",
+                          highlight_downlit = FALSE,
                           mathjax = "default",
                           template = "default",
                           extra_dependencies = NULL,
@@ -278,7 +279,13 @@ html_document <- function(toc = FALSE,
   }
 
   # highlight
-  args <- c(args, pandoc_html_highlight_args(template, highlight))
+  if (highlight_downlit) {
+    if (!requireNamespace("downlit", quietly = TRUE)) {
+      warning("highlight_downlit=TRUE requires the downlit package",
+              "downlit highlighting won't be apply",
+              "and no linking will be done.", call. = FALSE)
+      highlight_downlit <- FALSE
+  }
 
   # add highlight.js html_dependency if required
   extra_dependencies <- append(
