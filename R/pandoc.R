@@ -551,14 +551,14 @@ unix_mathjax_path <- function() {
 
 
 pandoc_html_highlight_args <- function(template,
-                                       highlight) {
+                                       highlight, highlight_downlit = FALSE) {
 
   args <- c()
 
   if (is.null(highlight)) {
     args <- c(args, "--no-highlight")
   }
-  else if (!identical(template, "default")) {
+  else if (highlight_downlit || !identical(template, "default")) {
     if (identical(highlight, "default"))
       highlight <- "pygments"
     args <- c(args, "--highlight-style", highlight)
