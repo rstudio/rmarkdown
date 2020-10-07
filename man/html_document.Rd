@@ -9,7 +9,7 @@ html_document(
   toc_depth = 3,
   toc_float = FALSE,
   number_sections = FALSE,
-  anchor_sections = FALSE,
+  anchor_sections = TRUE,
   section_divs = TRUE,
   fig_width = 7,
   fig_height = 5,
