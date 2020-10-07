@@ -52,9 +52,11 @@ html_document_base <- function(theme = NULL,
 
   output_dir <- ""
 
-  # If theme represents a bs_theme() object, then we coerce it into one and set
-  # it as the global theme pre-knit (so users can modify)
-  old_theme <- NA
+  # At the moment, theme may be either NULL (no Bootstrap), a string (Bootswatch 3 name),
+  # or a list of arguments to bootstraplib::bs_theme(). In the last case, we set the
+  # theme globally so that knitting code may alter it before we ultimately compile it
+  # into an HTML dependency.
+  old_theme <- NULL
   pre_knit <- function(input, ...) {
     if (is.list(theme)) {
       old_theme <<- bootstraplib::bs_global_set(
@@ -63,6 +65,10 @@ html_document_base <- function(theme = NULL,
     }
   }
   post_knit <- function(metadata, input_file, runtime, ...) {}
+  on_exit <- function() {
+    # If theme is a list, we know we've altered global state, so restore the old theme
+    if (is.list(theme)) bootstraplib::bs_global_set(old_theme)
+  }
 
   # pre_processor
   pre_processor <- function(metadata, input_file, runtime, knit_meta,
@@ -86,14 +92,14 @@ html_document_base <- function(theme = NULL,
     format_deps <- list()
     format_deps <- append(format_deps, html_dependency_header_attrs())
     if (!is.null(theme)) {
-      format_deps <- append(format_deps, list(html_dependency_jquery()))
-      # In this case, a bs_theme() was set globally pre-knit, so we get that
-      # global theme (and restore the old state)
-      if (is.list(theme)) {
-        theme <- bootstraplib::bs_global_get()
-        bootstraplib::bs_global_set(old_theme)
-      }
-      format_deps <- append(format_deps, bootstrap_dependencies(theme))
+      format_deps <- append(
+        format_deps,
+        list(html_dependency_jquery()),
+        # When theme is a list, it has been set globally (so users may modify)
+        bootstrap_dependencies(
+          if (is.list(theme)) bootstraplib::bs_global_get() else theme
+        )
+      )
     }
     else if (isTRUE(bootstrap_compatible) && is_shiny(runtime)) {
       # If we can add bootstrap for Shiny, do it
@@ -189,6 +195,7 @@ html_document_base <- function(theme = NULL,
     clean_supporting = FALSE,
     pre_knit = pre_knit,
     post_knit = post_knit,
+    on_exit = on_exit,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor
