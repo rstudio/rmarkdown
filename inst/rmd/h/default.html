@@ -47,23 +47,6 @@ $endfor$
 
 $if(highlightjs)$
 <style type="text/css">code{white-space: pre;}</style>
-$if(theme)$
-<style type="text/css">
- // TODO: move this to a bs_add_rules() call?!?
-  pre {
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: .5rem;
-  }
-  pre:not([class]) {
-    background-color: white;
-  }
-  pre code {
-    background-color: transparent;
-  }
-</style>
-$endif$
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -113,6 +96,13 @@ $endif$
   }
 })();
 </script>
+$if(theme)$
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+$endif$
 $endif$
 
 $if(abstract)$

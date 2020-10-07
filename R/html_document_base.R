@@ -52,6 +52,11 @@ html_document_base <- function(theme = NULL,
 
   output_dir <- ""
 
+  # Bootswatch 3 name (backwards-compatibility)
+  if (is.character(theme)) {
+    theme <- match.arg(theme, themes())
+  }
+
   # At the moment, theme may be either NULL (no Bootstrap), a string (Bootswatch 3 name),
   # or a list of arguments to bootstraplib::bs_theme(). In the last case, we set the
   # theme globally so that knitting code may alter it before we ultimately compile it
@@ -84,7 +89,8 @@ html_document_base <- function(theme = NULL,
     output_dir <<- output_dir
 
     if (!is.null(theme)) {
-      args <- c(args, "--variable", paste0("theme:", theme_bootswatch(theme)))
+      theme_arg <- if (is.list(theme)) "bootstrap" else theme
+      args <- c(args, pandoc_variable_arg("theme", theme_arg))
     }
 
     # resolve and inject extras, including dependencies specified by the format

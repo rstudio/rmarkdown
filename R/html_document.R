@@ -489,6 +489,23 @@ knitr_options_html <- function(fig_width,
   knitr_options(opts_chunk = opts_chunk)
 }
 
+themes <- function() {
+  c("default",
+    "cerulean",
+    "journal",
+    "flatly",
+    "darkly",
+    "readable",
+    "spacelab",
+    "united",
+    "cosmo",
+    "lumen",
+    "paper",
+    "sandstone",
+    "simplex",
+    "yeti")
+}
+
 html_highlighters <- function() {
   c(highlighters(), "textmate")
 }

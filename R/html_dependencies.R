@@ -40,9 +40,6 @@ html_dependency_jqueryui <- function() {
 #' @rdname html-dependencies
 #' @export
 html_dependency_bootstrap <- function(theme) {
-  if (!length(theme)) {
-    return(NULL)
-  }
   if (is_bs_theme(theme)) {
     return(bootstraplib::bs_dependencies(theme))
   }
@@ -74,18 +71,9 @@ is_bs_theme <- function(theme) {
 
 theme_version <- function(theme) {
   if (is.list(theme)) {
-    # TODO: why is this getting passed R.version?
     theme$version %||% bootstraplib::version_default()
   } else {
     substr(html_dependency_bootstrap("default")$version, 1, 1)
-  }
-}
-
-theme_bootswatch <- function(theme) {
-  if (is.list(theme)) {
-    theme$bootswatch %||% "default"
-  } else {
-    theme
   }
 }
 
@@ -94,6 +82,7 @@ is_bs3_compatible <- function(theme) {
   version <- theme_version(theme)
   identical(version, "3") || grepl("\\+3$", version)
 }
+
 
 # Create an HTML dependency for tocify
 #' @rdname html-dependencies
