@@ -98,14 +98,11 @@ html_document_base <- function(theme = NULL,
     format_deps <- list()
     format_deps <- append(format_deps, html_dependency_header_attrs())
     if (!is.null(theme)) {
-      format_deps <- append(
-        format_deps,
-        list(html_dependency_jquery()),
-        # When theme is a list, it has been set globally (so users may modify)
-        bootstrap_dependencies(
-          if (is.list(theme)) bootstraplib::bs_global_get() else theme
-        )
-      )
+      format_deps <- append(format_deps, list(html_dependency_jquery()))
+      # When theme is a list, it has been set globally (so users may modify)
+      format_deps <- append(format_deps, bootstrap_dependencies(
+        if (is.list(theme)) bootstraplib::bs_global_get() else theme
+      ))
     }
     else if (isTRUE(bootstrap_compatible) && is_shiny(runtime)) {
       # If we can add bootstrap for Shiny, do it
