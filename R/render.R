@@ -1011,7 +1011,10 @@ render <- function(input,
     intermediates <- setdiff(intermediates, c(input, intermediates_fig))
     # did not run pandoc; returns the markdown output with attributes of the
     # knitr meta data and intermediate files
-    structure(input, knit_meta = knit_meta, intermediates = intermediates)
+    structure(input,
+              knit_meta = knit_meta,
+              files_dir = files_dir,
+              intermediates = intermediates)
   }
 }
 
