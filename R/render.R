@@ -284,6 +284,8 @@ render <- function(input,
       output_format <- "html_document"
   }
 
+  # TODO: make yaml_front_matter$theme available to the output format?!?
+
   # check for a list of output formats -- if there is more than one
   # then recursively call this function with each format by name
   if (is.character(output_format) && length(output_format) > 1) {

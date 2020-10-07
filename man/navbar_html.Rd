@@ -5,15 +5,14 @@
 \alias{navbar_links_html}
 \title{Create a navbar HTML file from a navbar definition}
 \usage{
-navbar_html(navbar, bootstrap_version = c("3", "4", "4+3"))
+navbar_html(navbar, theme = "default")
 
-navbar_links_html(links, bootstrap_version = c("3", "4", "4+3"))
+navbar_links_html(links, theme = "default")
 }
 \arguments{
 \item{navbar}{Navbar definition}
 
-\item{bootstrap_version}{major version of Bootstrap.
-See \code{bootstrap_version} argument on [html_document].}
+\item{theme}{The navbar's Bootstrap theme.}
 
 \item{links}{List of navbar links}
 }

@@ -26,20 +26,11 @@ html_document_base <- function(theme = NULL,
                                copy_resources = FALSE,
                                extra_dependencies = NULL,
                                bootstrap_compatible = FALSE,
-                               bootstrap_version = c("3", "4", "4+3"),
                                ...) {
 
   # default for dependency_resovler
   if (is.null(dependency_resolver))
     dependency_resolver <- html_dependency_resolver
-
-  bootstrap_version <- bs_version_match(bootstrap_version)
-  theme <- bs_theme_match(theme, bootstrap_version)
-
-  # Set a new global bootstraplib theme for the Rmd runtime
-  # And restore the old one, if any, on exit
-  theme_old <- bs_theme_new_maybe(version = bootstrap_version, bootswatch = theme)
-  on_exit <- function() { bs_theme_set_maybe(theme_old) }
 
   args <- c()
 
@@ -61,8 +52,16 @@ html_document_base <- function(theme = NULL,
 
   output_dir <- ""
 
-  # dummy pre_knit and post_knit functions so that merging of outputs works
-  pre_knit <- function(input, ...) {}
+  # If theme represents a bs_theme() object, then we coerce it into one and set
+  # it as the global theme pre-knit (so users can modify)
+  old_theme <- NA
+  pre_knit <- function(input, ...) {
+    if (is.list(theme)) {
+      old_theme <<- bootstraplib::bs_global_set(
+        do.call(bootstraplib::bs_theme, theme)
+      )
+    }
+  }
   post_knit <- function(metadata, input_file, runtime, ...) {}
 
   # pre_processor
@@ -79,7 +78,7 @@ html_document_base <- function(theme = NULL,
     output_dir <<- output_dir
 
     if (!is.null(theme)) {
-      args <- c(args, "--variable", paste0("theme:", theme))
+      args <- c(args, "--variable", paste0("theme:", theme_bootswatch(theme)))
     }
 
     # resolve and inject extras, including dependencies specified by the format
@@ -87,17 +86,18 @@ html_document_base <- function(theme = NULL,
     format_deps <- list()
     format_deps <- append(format_deps, html_dependency_header_attrs())
     if (!is.null(theme)) {
-      format_deps <- append(format_deps, list(html_dependency_jquery(), html_dependency_bootstrap(theme)))
-      # Use bootstraplib to compile Bootstrap Sass if user has added added
-      # to the theme we've set
-      if (has_theme_additions(theme_old)) {
-        format_deps <- append(format_deps, bootstraplib::bootstrap())
+      format_deps <- append(format_deps, list(html_dependency_jquery()))
+      # In this case, a bs_theme() was set globally pre-knit, so we get that
+      # global theme (and restore the old state)
+      if (is.list(theme)) {
+        theme <- bootstraplib::bs_global_get()
+        bootstraplib::bs_global_set(old_theme)
       }
+      format_deps <- append(format_deps, bootstrap_dependencies(theme))
     }
     else if (isTRUE(bootstrap_compatible) && is_shiny(runtime)) {
       # If we can add bootstrap for Shiny, do it
-      format_deps <- append(format_deps,
-                            list(html_dependency_bootstrap("bootstrap")))
+      format_deps <- append(format_deps, bootstrap_dependencies("bootstrap"))
     }
     format_deps <- append(format_deps, extra_dependencies)
 
@@ -174,8 +174,9 @@ html_document_base <- function(theme = NULL,
     output_file
   }
 
-  if (!is.null(theme) && bootstrap_version %in% "3") {
-    args <- c(args, pandoc_variable_arg("bs3", TRUE))
+  if (!is.null(theme)) {
+    bs3 <- identical("3", theme_version(theme))
+    args <- c(args, pandoc_variable_arg("bs3", bs3))
   }
 
   output_format(
@@ -186,7 +187,6 @@ html_document_base <- function(theme = NULL,
     ),
     keep_md = FALSE,
     clean_supporting = FALSE,
-    on_exit = on_exit,
     pre_knit = pre_knit,
     post_knit = post_knit,
     pre_processor = pre_processor,
@@ -200,22 +200,4 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
   preserve <- extract(input_str)
   if (!identical(preserve$value, input_str)) write_utf8(preserve$value, input_file)
   preserve$chunks
-}
-
-
-bs_theme_new_maybe <- function(version, bootswatch) {
-  if (system.file(package = "bootstraplib") != "") {
-    bootstraplib::bs_theme_new(version, bootswatch)
-  }
-}
-
-bs_theme_set_maybe <- function(theme) {
-  if (system.file(package = "bootstraplib") != "") {
-    bootstraplib::bs_theme_set(theme)
-  }
-}
-
-has_theme_additions <- function(theme_old) {
-  if (system.file(package = "bootstraplib") == "") return(FALSE)
-  !identical(theme_old, bootstraplib::bs_theme_get())
 }

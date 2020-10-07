@@ -49,6 +49,7 @@ $if(highlightjs)$
 <style type="text/css">code{white-space: pre;}</style>
 $if(theme)$
 <style type="text/css">
+ // TODO: move this to a bs_add_rules() call?!?
   pre {
     background-color: #f5f5f5;
     border: 1px solid #ccc;
@@ -158,17 +159,6 @@ https://github.com/twbs/bootstrap/blob/f17f882d/dist/css/bootstrap.css#L1219-L12
 https://github.com/twbs/bootstrap/blob/4de4874e/scss/_reboot.scss#L82-L89 */
 h1, h2, h3 { margin-top: 20px; }
 h4, h5, h6 { margin-top: 10px; }
-
-/* Pandoc uses align attribute to align content but BS4 squashes that */
-.table th[align=left] {
-  text-align: left;
-}
-.table th[align=right] {
-  text-align: right;
-}
-.table th[align=center] {
-  text-align: center;
-}
 $endif$
 
 .table th:not([align]) {
@@ -245,40 +235,6 @@ $endif$
 
 $if(navbar)$
 <style type="text/css">
-$if(bs3)$
-/* TODO: remove this padding CSS when we drop BS3 */
-/* padding for bootstrap navbar */
-body {
-  padding-top: $body_padding$px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
-.section h2 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
-.section h3 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
-.section h4 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
-.section h5 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
-.section h6 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
-$endif$
-
 .dropdown-submenu {
   position: relative;
 }
@@ -318,7 +274,7 @@ $endif$
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $$(document).ready(function () {
   // active menu anchor
@@ -333,6 +289,20 @@ $$(document).ready(function () {
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  // TODO: verify this extra arbitrary padding is sensible
+  var navHeight = $$(".navbar").first().height() + 25;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 $endif$

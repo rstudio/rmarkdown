@@ -14,6 +14,7 @@
 #' the markdown syntax for citations in the
 #' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
+#'@md
 #'@inheritParams output_format
 #'@param toc \code{TRUE} to include a table of contents in the output
 #'@param toc_depth Depth of headers to include in table of contents
@@ -45,17 +46,14 @@
 #'  scripts, stylesheets, images, and videos. Note that even for self contained
 #'  documents MathJax is still loaded externally (this is necessary because of
 #'  its size).
-#'@param theme Visual theme ("default", "cerulean", "cosmo", "cyborg", "darkly",
-#'  "flatly", "journal", "lumen", "readable", "sandstone", "simplex", "slate",
-#'  "spacelab", "superhero", "united", or "yeti"). Pass \code{NULL} for no
-#'  theme (in this case you can use the \code{css} parameter to add your own styles).
-#'  If Bootstrap 4+ is used (see \code{bootstrap_version} argument),
-#'  a handful of other themes are available ("lux", "minty", "pulse",
-#'  "sketchy", and "solar"). Moreover, with Bootstrap 4+, custom
-#'  \href{https://getbootstrap.com/docs/4.0/getting-started/theming/}{Bootstrap
-#'  themes} are supported via the \code{bs_theme_add_variables()} and
-#'  \code{bs_theme_add()} functions from the bootstraplib package
-#'  (use these functions from within the document).
+#'@param theme One of the following:
+#'  * A list of parameters to supply to [bootstraplib::bs_theme()]
+#'    * Use this option for custom themes using Bootstrap 4 or 3.
+#'    * During knit, modifications to the theme may be made via
+#'      [bootstraplib::bs_global_theme_update()].
+#'  * `NULL` for no theme (i.e., no [html_dependency_bootstrap()]).
+#'  * A character string specifying a [Bootswatch 3](https://bootswatch.com/3/)
+#'    theme name (for backwards-compatibility).
 #'@param highlight Syntax highlighting style. Supported styles include
 #'  "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'  "haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.
@@ -84,13 +82,6 @@
 #'@param pandoc_args Additional command line options to pass to pandoc
 #'@param extra_dependencies,... Additional function arguments to pass to the
 #'  base R Markdown HTML output formatter \code{\link{html_document_base}}
-#'@param bootstrap_version version of Bootstrap to use (relevant if \code{theme}
-#'  is not \code{NULL}). Currently three options are supported: Bootstrap version
-#'  3.x (\code{3}), Bootstrap version 4.x (\code{4}), and Bootstrap version 4.x
-#'  with additional JS/CSS to support BS3 style nav, navbar, and other component
-#'  styling (\code{"4+3"}). Use this version if you want to upgrade to Bootstrap 4
-#'  while maintaining the functionality of a document already written with
-#'  Bootstrap 3 in mind.
 #'@return R Markdown output format to pass to \code{\link{render}}
 #'@section Navigation Bars:
 #'
@@ -216,7 +207,6 @@ html_document <- function(toc = FALSE,
                           lib_dir = NULL,
                           md_extensions = NULL,
                           pandoc_args = NULL,
-                          bootstrap_version = c("3", "4", "4+3"),
                           ...) {
 
   # build pandoc args
@@ -228,9 +218,6 @@ html_document <- function(toc = FALSE,
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
-
-  bootstrap_version <- bs_version_match(bootstrap_version)
-  theme <- bs_theme_match(theme, bootstrap_version)
 
   # toc_float
   if (toc && !identical(toc_float, FALSE)) {
@@ -367,11 +354,11 @@ html_document <- function(toc = FALSE,
       if (!file.exists(navbar)) {
         navbar_yaml <- file.path(dirname(navbar), "_navbar.yml")
         if (file.exists(navbar_yaml))
-          navbar <- navbar_html_from_yaml(navbar_yaml, bootstrap_version)
+          navbar <- navbar_html_from_yaml(navbar_yaml, theme)
         # if there is no _navbar.yml then look in site config (if we have it)
         config <- site_config(input_file)
         if (!is.null(config) && !is.null(config$navbar))
-          navbar <- navbar_html(config$navbar, bootstrap_version)
+          navbar <- navbar_html(config$navbar, theme)
       }
 
       if (file.exists(navbar)) {
@@ -386,22 +373,6 @@ html_document <- function(toc = FALSE,
 
         # flag indicating we need extra navbar css and js
         args <- c(args, pandoc_variable_arg("navbar", "1"))
-
-        # navbar padding
-        if (bootstrap_version %in% "3") {
-          # TODO: remove this approach when we drop BS3 support
-          # and use the SASS based approach instead
-          args <- c(args, pandoc_body_padding_variable_args(theme))
-        } else {
-          # The $navbar-height SASS var is set by the bootstraplib theme
-          padding <- sass::sass_file(pkg_file("rmd/h/scss/navbar-padding.scss"))
-          padding_css <- bootstraplib::bootstrap_sass(
-            padding, theme = paste0(theme, "@", bootstrap_version)
-          )
-          css_file <- tempfile(fileext = ".css")
-          write_utf8(padding_css, css_file)
-          args <- c(args, "--css", pandoc_path_arg(css_file))
-        }
 
         # navbar icon dependencies
         iconDeps <- navbar_icon_dependencies(navbar)
@@ -485,7 +456,6 @@ html_document <- function(toc = FALSE,
                                      template = template,
                                      pandoc_args = pandoc_args,
                                      extra_dependencies = extra_dependencies,
-                                     bootstrap_version = bootstrap_version,
                                      ...)
   )
 }
@@ -519,27 +489,6 @@ knitr_options_html <- function(fig_width,
   knitr_options(opts_chunk = opts_chunk)
 }
 
-bs_theme_match <- function(theme, version) {
-  # Explicit NULL has special meaning (no bootstrap)
-  if (is.null(theme)) return(NULL)
-
-  if (isTRUE(theme %in% c("default", "bootstrap"))) {
-    return("bootstrap")
-  }
-
-  # Resolve Bootstrap 3 case without a bootstraplib dependency
-  if (version %in% "3") {
-    themes <- c("cerulean", "cosmo", "cyborg", "darkly", "flatly", "journal", "lumen", "paper",
-                "readable", "sandstone", "simplex", "slate", "spacelab", "superhero", "united", "yeti")
-    return(match.arg(theme, themes))
-  }
-
-  # Bootswatch 4 renamed some themes
-  theme <- switch(theme, paper = "materia", readable = "litera", theme)
-
-  match.arg(theme, bootstraplib::bootswatch_themes(version))
-}
-
 html_highlighters <- function() {
   c(highlighters(), "textmate")
 }
@@ -552,69 +501,36 @@ mathjax_config <- function() {
   "MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 }
 
-# variable which controls body offset (depends on height of navbar in theme)
-# TODO: remove me when if and when we drop BS3 support
-pandoc_body_padding_variable_args <- function(theme) {
-
-  # Height of the navbar in each theme
-  bodyPadding <- switch(
-    theme,
-    journal = 61,
-    flatly = 60,
-    darkly = 60,
-    readable = 66,
-    spacelab = 52,
-    united = 51,
-    cosmo = 51,
-    lumen = 54,
-    paper = 64,
-    sandstone = 61,
-    simplex = 41,
-    yeti = 45,
-    51
-  )
-
-  # header padding is bodyPadding + 5
-  headerPadding <- bodyPadding + 5
-
-  # return variables
-  c(pandoc_variable_arg("body_padding", bodyPadding),
-    pandoc_variable_arg("header_padding", headerPadding))
-}
-
-navbar_html_from_yaml <- function(navbar_yaml, version = 3) {
+navbar_html_from_yaml <- function(navbar_yaml, theme) {
 
   # parse the yaml
   navbar <- yaml_load_file(navbar_yaml)
 
   # generate the html
-  navbar_html(navbar, version)
+  navbar_html(navbar, theme)
 }
 
 
 #' Create a navbar HTML file from a navbar definition
 #'
 #' @param navbar Navbar definition
-#' @param bootstrap_version major version of Bootstrap.
-#' See \code{bootstrap_version} argument on [html_document].
+#' @param theme The navbar's Bootstrap theme.
 #' @param links List of navbar links
 #' @return Path to temporary file with navbar definition
 #' @keywords internal
 #' @export
-navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4+3")) {
-
-  bootstrap_version <- bs_version_match(bootstrap_version)
+navbar_html <- function(navbar, theme = "default") {
 
   # title and type
   if (is.null(navbar$title)) navbar$title <- ""
   if (is.null(navbar$type)) navbar$type <- "default"
 
   # menu entries
-  left <- navbar_links_html(navbar$left, bootstrap_version)
-  right <- navbar_links_html(navbar$right, bootstrap_version)
+  left <- navbar_links_html(navbar$left, theme)
+  right <- navbar_links_html(navbar$right, theme)
 
   # build the navigation HTML
-  navbar_html <- if (is_bs3_compatible(bootstrap_version)) {
+  navbar_html <- if (is_bs3_compatible(theme)) {
     # BS4 -> BS3
     navbar$type[1] <- switch(
       navbar$type[1],
@@ -643,14 +559,13 @@ navbar_html <- function(navbar, bootstrap_version = c("3", "4", "4+3")) {
 #' @keywords internal
 #' @name navbar_html
 #' @export
-navbar_links_html <- function(links, bootstrap_version = c("3", "4", "4+3")) {
-  bootstrap_version <- bs_version_match(bootstrap_version)
-  as.character(navbar_links_tags(links, version = bootstrap_version))
+navbar_links_html <- function(links, theme = "default") {
+  as.character(navbar_links_tags(links, theme = theme))
 }
 
-navbar_links_tags <- function(links, depth = 0L, version) {
+navbar_links_tags <- function(links, depth = 0L, theme) {
 
-  bs3_nav <- is_bs3_compatible(version)
+  bs3_nav <- is_bs3_compatible(theme)
 
   nav_link_class <- function(bs3_nav, depth) {
     if (bs3_nav) return(NULL)
@@ -733,19 +648,4 @@ navbar_link_text <- function(x, ...) {
   }
   else
     tagList(x$text, ...)
-}
-
-# allows users to pass in integers for the version as well
-bs_version_match <- function(version) {
-  version <- as.character(version)
-  version <- match.arg(version, c("3", "4", "4+3"))
-  if (identical(version, "3")) return("3")
-  if (system.file(package = "bootstraplib") == "") {
-    stop("The bootstraplib package must be installed to use Bootstrap 4.", call. = FALSE)
-  }
-  version
-}
-
-is_bs3_compatible <- function(version) {
-  version %in% c("3", "4+3")
 }

@@ -40,11 +40,15 @@ html_dependency_jqueryui <- function() {
 #' @rdname html-dependencies
 #' @export
 html_dependency_bootstrap <- function(theme) {
-
+  if (!length(theme)) {
+    return(NULL)
+  }
+  if (is_bs_theme(theme)) {
+    return(bootstraplib::bs_dependencies(theme))
+  }
   if (identical(theme, "default")) {
     theme <- "bootstrap"
   }
-
   htmlDependency(
     name = "bootstrap",
     version = "3.3.5",
@@ -56,6 +60,39 @@ html_dependency_bootstrap <- function(theme) {
       "shim/html5shiv.min.js",
       "shim/respond.min.js"),
     stylesheet = paste0("css/", theme, ".min.css"))
+}
+
+bootstrap_dependencies <- function(theme) {
+  deps <- html_dependency_bootstrap(theme)
+  if (inherits(deps, "html_dependency")) list(deps) else deps
+}
+
+is_bs_theme <- function(theme) {
+  is_available("bootstraplib") &&
+    bootstraplib::is_bs_theme(theme)
+}
+
+theme_version <- function(theme) {
+  if (is.list(theme)) {
+    # TODO: why is this getting passed R.version?
+    theme$version %||% bootstraplib::version_default()
+  } else {
+    substr(html_dependency_bootstrap("default")$version, 1, 1)
+  }
+}
+
+theme_bootswatch <- function(theme) {
+  if (is.list(theme)) {
+    theme$bootswatch %||% "default"
+  } else {
+    theme
+  }
+}
+
+# TODO: maybe this should be a bootstraplib function?
+is_bs3_compatible <- function(theme) {
+  version <- theme_version(theme)
+  identical(version, "3") || grepl("\\+3$", version)
 }
 
 # Create an HTML dependency for tocify

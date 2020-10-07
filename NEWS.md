@@ -1,6 +1,8 @@
 rmarkdown 2.5
 ================================================================================
 
+- `html_document` (and `html_document_base`)'s `theme` arguments gains the ability to accept a list of values, which are passed along to `bootstraplib::bs_theme()`, making it much easier create custom themes with Bootstrap 4 or 3. To learn more, see <https://rstudio.github.io/bootstraplib> (thanks, @cpsievert, #1260).
+
 - Tables without header rows (wich can be possible in Pandoc's [simple table](https://pandoc.org/MANUAL.html#extension-simple_tables)) are now formatted correctly when using `html_document()` format (thanks, @fkohrt, #1893).
 
 - `html_document` gains the `anchor_sections` argument, which is `TRUE` by default, so that readers can get links to section headers easily---when you mouse over  a section hader, you will see a hash symbol `#` at the end of the header, which contains the anchor link to this header. You can click on this link and get the URL in the addres bar of your web browser, or right-click on it and copy the URL from the context menu. The hash symbol is defined by the CSS rule `a.anchor-section::before {content: '#';}`. You can customize it by overriding this rule (e.g., via the `css` argument of `html_document`) and use any other symbols or icons, e.g., `content: "\02AD8;"` (thanks, @atusy, #1884).
@@ -88,8 +90,6 @@ rmarkdown 2.2
 
 rmarkdown 2.1
 ================================================================================
-
-- Support for Bootstrap 4 has been added to `html_document` and `html_document_base` via a new argument (`bootstrap_version`). For this release, these formats default to Bootstrap 3, but a future release will change the default to 4 (opt-in now via `bootstrap_version = 4`). In addition to this "strict" Bootstrap 4 mode, there is "compatible" Bootstrap 4 mode (i.e., `bootstrap_version = "4+3"`), which allows you to use BS3 style nav/navbars. Only use this compatible mode if you have existing `html_document`/`html_document_base` output formats that rely on BS3 markup (but is no longer supported in BS4). Thanks, @cpsievert and @jcheng5, #1260.
 
 - Added the returned output from `shiny::runApp()` within `rmarkdown::run()` (thanks, @schloerke, #1760).
 

@@ -29,17 +29,18 @@ html_dependency_pagedtable()
 html_dependency_highlightjs(highlight)
 }
 \arguments{
-\item{theme}{Visual theme ("default", "cerulean", "cosmo", "cyborg", "darkly",
-"flatly", "journal", "lumen", "readable", "sandstone", "simplex", "slate",
-"spacelab", "superhero", "united", or "yeti"). Pass \code{NULL} for no
-theme (in this case you can use the \code{css} parameter to add your own styles).
-If Bootstrap 4+ is used (see \code{bootstrap_version} argument),
-a handful of other themes are available ("lux", "minty", "pulse",
-"sketchy", and "solar"). Moreover, with Bootstrap 4+, custom
-\href{https://getbootstrap.com/docs/4.0/getting-started/theming/}{Bootstrap
-themes} are supported via the \code{bs_theme_add_variables()} and
-\code{bs_theme_add()} functions from the bootstraplib package
-(use these functions from within the document).}
+\item{theme}{One of the following:
+\itemize{
+\item A list of parameters to supply to \code{\link[bootstraplib:bs_theme]{bootstraplib::bs_theme()}}
+\itemize{
+\item Use this option for custom themes using Bootstrap 4 or 3.
+\item During knit, modifications to the theme may be made via
+\code{\link[bootstraplib:bs_global_theme]{bootstraplib::bs_global_theme_update()}}.
+}
+\item \code{NULL} for no theme (i.e., no \code{\link[=html_dependency_bootstrap]{html_dependency_bootstrap()}}).
+\item A character string specifying a \href{https://bootswatch.com/3/}{Bootswatch 3}
+theme name (for backwards-compatibility).
+}}
 
 \item{highlight}{Highlighter to use}
 }
