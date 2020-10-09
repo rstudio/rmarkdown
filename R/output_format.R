@@ -612,7 +612,7 @@ enumerate_output_formats <- function(input, envir, encoding, output_yaml = NULL)
   input_lines <- read_utf8(input)
 
   # if this is an R file then spin it
-  if (identical(tolower(tools::file_ext(input)), "r"))
+  if (identical(tolower(xfun::file_ext(input)), "r"))
     input_lines <- knitr::spin(text = input_lines, knit = FALSE)
 
   # parse _site.yml output format if we have it
