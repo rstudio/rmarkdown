@@ -900,15 +900,12 @@ render <- function(input,
       # render to temporary file (preserve extension)
       # this also ensures we don't pass a file path with invalid
       # characters to our pandoc invocation
-      file_ext <- xfun::file_ext(output)
-      ext <- if (nzchar(file_ext))
-        paste(".", file_ext, sep = "")
-      else
-        ""
+      ext <- xfun::file_ext(output)
+      if (ext != '') ext <- paste0('.', ext)
 
       # render to a path in the current working directory
       # (avoid passing invalid characters to shell)
-      pandoc_output_tmp <- basename(tempfile("pandoc", tmpdir = getwd(), fileext = ext))
+      pandoc_output_tmp <- basename(tempfile("pandoc", getwd(), ext))
 
       # clean up temporary file on exit
       on.exit(unlink(pandoc_output_tmp), add = TRUE)
