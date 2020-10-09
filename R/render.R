@@ -342,7 +342,7 @@ render <- function(input,
   }
 
   # check whether this document requires a knit
-  requires_knit <- tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")
+  requires_knit <- tolower(xfun::file_ext(input)) %in% c("r", "rmd", "rmarkdown")
 
   # remember the name of the original input document (we overwrite 'input' once
   # we've knitted)
@@ -395,10 +395,10 @@ render <- function(input,
   intermediates <- c(intermediates, utf8_input)
 
   # track whether this was straight markdown input (to prevent keep_md later)
-  md_input <- identical(tolower(tools::file_ext(input)), "md")
+  md_input <- identical(tolower(xfun::file_ext(input)), "md")
 
   # if this is an R script then spin it first
-  if (identical(tolower(tools::file_ext(input)), "r")) {
+  if (identical(tolower(xfun::file_ext(input)), "r")) {
     # make a copy of the file to spin
     spin_input <- intermediates_loc(file_with_meta_ext(input, "spin", "R"))
     file.copy(input, spin_input, overwrite = TRUE)
@@ -768,7 +768,7 @@ render <- function(input,
 
   # if this isn't html and there are html dependencies then flag an error
   if (!(is_pandoc_to_html(output_format$pandoc) ||
-        identical(tolower(tools::file_ext(output_file)), "html")))  {
+        identical(tolower(xfun::file_ext(output_file)), "html")))  {
     if (has_html_dependencies(knit_meta)) {
       if (!isTRUE(front_matter$always_allow_html)) {
         stop("Functions that produce HTML output found in document targeting ",
@@ -900,7 +900,7 @@ render <- function(input,
       # render to temporary file (preserve extension)
       # this also ensures we don't pass a file path with invalid
       # characters to our pandoc invocation
-      file_ext <- tools::file_ext(output)
+      file_ext <- xfun::file_ext(output)
       ext <- if (nzchar(file_ext))
         paste(".", file_ext, sep = "")
       else

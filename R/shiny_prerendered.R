@@ -612,7 +612,7 @@ shiny_prerendered_append_context <- function(con, name, code) {
 
 # Prerendred data_dir for a given Rmd input file
 shiny_prerendered_data_dir <- function(input, create = FALSE) {
-  data_dir <- paste0(tools::file_path_sans_ext(input), "_data")
+  data_dir <- paste0(xfun::sans_ext(input), "_data")
   if (create && !dir_exists(data_dir))
     dir.create(data_dir)
   data_dir
