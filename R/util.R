@@ -20,7 +20,7 @@ is_osx <- function() {
 pandoc_output_file <- function(input, pandoc_options) {
   to <- strsplit(pandoc_options$to, "[+-]")[[1]][[1]]
   ext <- pandoc_output_ext(pandoc_options$ext, to, input)
-  output <- paste0(tools::file_path_sans_ext(input), ext)
+  output <- paste0(xfun::sans_ext(input), ext)
   basename(output)
 }
 
@@ -29,7 +29,7 @@ pandoc_output_ext <- function(ext, to, input) {
   if (to %in% c("latex", "beamer")) return(".pdf")
   if (to %in% c("html", "html4", "html5", "s5", "slidy", "slideous", "dzslides", "revealjs"))
     return(".html")
-  if (to == "markdown" && tolower(tools::file_ext(input)) != "md") return(".md")
+  if (to == "markdown" && tolower(xfun::file_ext(input)) != "md") return(".md")
   paste0(".", to)
 }
 
@@ -63,9 +63,14 @@ pkg_file_arg <- function(..., package = "rmarkdown") {
 #' # get a specific filter
 #' pkg_file_lua(c("pagebreak.lua", "latex_div.lua"))
 pkg_file_lua <- function(filters = NULL, package = "rmarkdown") {
-  lua_folder <- pkg_file("rmarkdown", "lua", package = package, mustWork = TRUE)
-  if (is.null(filters)) filters <- list.files(lua_folder, "[.]lua$")
-  pandoc_path_arg(file.path(lua_folder, filters))
+  files <- pkg_file(
+    "rmarkdown", "lua", if (is.null(filters)) '.' else filters,
+    package = package, mustWork = TRUE
+  )
+  if (is.null(filters)) {
+    files <- list.files(dirname(files), "[.]lua$", full.names = TRUE)
+  }
+  pandoc_path_arg(files)
 }
 
 #' @rdname rmarkdown_format
@@ -148,25 +153,25 @@ dir_exists <- function(x) {
 }
 
 file_with_ext <- function(file, ext) {
-  paste(tools::file_path_sans_ext(file), ".", ext, sep = "")
+  paste(xfun::sans_ext(file), ".", ext, sep = "")
 }
 
 
-file_with_meta_ext <- function(file, meta_ext, ext = tools::file_ext(file)) {
-  paste(tools::file_path_sans_ext(file),
+file_with_meta_ext <- function(file, meta_ext, ext = xfun::file_ext(file)) {
+  paste(xfun::sans_ext(file),
         ".", meta_ext, ".", ext, sep = "")
 }
 
 knitr_files_dir <- function(file) {
-  paste(tools::file_path_sans_ext(file), "_files", sep = "")
+  paste(xfun::sans_ext(file), "_files", sep = "")
 }
 
 knitr_root_cache_dir <- function(file) {
-  paste(tools::file_path_sans_ext(file), "_cache", sep = "")
+  paste(xfun::sans_ext(file), "_cache", sep = "")
 }
 
 knitr_cache_dir <- function(file, pandoc_to) {
-  paste(tools::file_path_sans_ext(file), "_cache/", pandoc_to, "/", sep = "")
+  paste(xfun::sans_ext(file), "_cache/", pandoc_to, "/", sep = "")
 }
 
 get_knitr_hook_list <- function(hook_names = NULL) {

@@ -318,7 +318,7 @@ ioslides_presentation <- function(number_sections = FALSE,
       logo_path <- logo
       if (!self_contained) {
         # use same extension as specified logo (default is png if unspecified)
-        logo_ext <- tools::file_ext(logo)
+        logo_ext <- xfun::file_ext(logo)
         if (nchar(logo_ext) < 1)
           logo_ext <- "png"
         logo_path <- file.path(files_dir, paste("logo", logo_ext, sep = "."))
