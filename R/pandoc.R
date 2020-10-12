@@ -126,9 +126,7 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
   # resolve type
   type <- match.arg(type)
 
-  pandoc2.11 <- pandoc_available("2.11")
-
-  if (pandoc2.11) {
+  if (pandoc_available("2.11")) {
     bin <- pandoc()
     to <- switch(type,
                  list = "csljson",
