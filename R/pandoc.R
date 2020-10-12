@@ -82,7 +82,11 @@ pandoc_convert <- function(input,
 
   # citeproc filter if requested
   if (citeproc) {
-    args <- c(args, "--filter", pandoc_citeproc())
+    citeproc_args <- if (pandoc_available("2.11"))
+      "--citeproc"
+    else
+      c("--filter", pandoc_citeproc())
+    args <- c(args, citeproc_args)
     # --natbib/--biblatex conflicts with '--filter pandoc-citeproc'
     i <- stats::na.omit(match(c("--natbib", "--biblatex"), options))
     if (length(i)) options <- options[-i]
