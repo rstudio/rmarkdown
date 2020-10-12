@@ -126,14 +126,30 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
   # resolve type
   type <- match.arg(type)
 
+  pandoc2.11 <- pandoc_available("2.11")
+
+  if (pandoc2.11) {
+    bin <- pandoc()
+    to <- switch(type,
+                 list = "csljson",
+                 json = "csljson",
+                 yaml = "markdown"
+    )
+    args <- c(file, "-s", "-t", to)
+  } else {
+    bin <- pandoc_citeproc()
+    conversion <- switch(type,
+                         list = "--bib2json",
+                         json = "--bib2json",
+                         yaml = "--bib2yaml"
+    )
+    args <- c(conversion, file)
+  }
+
   # build the conversion command
-  conversion <- switch(type,
-    list = "--bib2json",
-    json = "--bib2json",
-    yaml = "--bib2yaml"
-  )
-  args <- c(conversion, file)
-  command <- paste(quoted(pandoc_citeproc()), paste(quoted(args), collapse = " "))
+
+
+  command <- paste(quoted(bin), paste(quoted(args), collapse = " "))
 
   # run the conversion
   with_pandoc_safe_environment({
@@ -143,6 +159,11 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
   if (!is.null(status)) {
     cat(result, sep = "\n")
     stop("Error ", status, " occurred building shared library.")
+  }
+
+  # new --citeproc adds an extra nocite has first field in the yaml
+  if (pandoc2.11 && type == "yaml" && grepl("^nocite:", result[2])) {
+    result <- result[-2]
   }
 
   # convert the output if requested
