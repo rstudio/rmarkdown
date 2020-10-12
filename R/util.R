@@ -63,9 +63,14 @@ pkg_file_arg <- function(..., package = "rmarkdown") {
 #' # get a specific filter
 #' pkg_file_lua(c("pagebreak.lua", "latex_div.lua"))
 pkg_file_lua <- function(filters = NULL, package = "rmarkdown") {
-  lua_folder <- pkg_file("rmarkdown", "lua", package = package, mustWork = TRUE)
-  if (is.null(filters)) filters <- list.files(lua_folder, "[.]lua$")
-  pandoc_path_arg(file.path(lua_folder, filters))
+  files <- pkg_file(
+    "rmarkdown", "lua", if (is.null(filters)) '.' else filters,
+    package = package, mustWork = TRUE
+  )
+  if (is.null(filters)) {
+    files <- list.files(dirname(files), "[.]lua$", full.names = TRUE)
+  }
+  pandoc_path_arg(files)
 }
 
 #' @rdname rmarkdown_format
