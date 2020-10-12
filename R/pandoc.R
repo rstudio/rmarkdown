@@ -82,7 +82,7 @@ pandoc_convert <- function(input,
 
   # citeproc filter if requested
   if (citeproc) {
-    args <- c(args, "--filter", pandoc_citeproc())
+    args <- c(args, pandoc_citeproc_args())
     # --natbib/--biblatex conflicts with '--filter pandoc-citeproc'
     i <- stats::na.omit(match(c("--natbib", "--biblatex"), options))
     if (length(i)) options <- options[-i]
@@ -126,14 +126,26 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
   # resolve type
   type <- match.arg(type)
 
+  if (pandoc_available("2.11")) {
+    bin <- pandoc()
+    to <- switch(type,
+                 list = "csljson",
+                 json = "csljson",
+                 yaml = "markdown"
+    )
+    args <- c(file, "-s", "-t", to)
+  } else {
+    bin <- pandoc_citeproc()
+    conversion <- switch(type,
+                         list = "--bib2json",
+                         json = "--bib2json",
+                         yaml = "--bib2yaml"
+    )
+    args <- c(conversion, file)
+  }
+
   # build the conversion command
-  conversion <- switch(type,
-    list = "--bib2json",
-    json = "--bib2json",
-    yaml = "--bib2yaml"
-  )
-  args <- c(conversion, file)
-  command <- paste(quoted(pandoc_citeproc()), paste(quoted(args), collapse = " "))
+  command <- paste(quoted(bin), paste(quoted(args), collapse = " "))
 
   # run the conversion
   with_pandoc_safe_environment({
@@ -332,6 +344,20 @@ pandoc_toc_args <- function(toc,
   }
 
   args
+}
+
+#' @section About Pandoc citeproc:
+#' For Pandoc version before 2.11, a pandoc filter \samp{pandoc-citeproc} is
+#' used. Since Pandoc 2.11, the feature is built-in and activated using
+#' \samp{--citeproc} flag. \samp{pandoc_citeproc_arg} will return the correct
+#' switches depending on the Pandoc version in use.
+#' @rdname pandoc_args
+#' @export
+pandoc_citeproc_args <- function() {
+  if (pandoc_available("2.11"))
+    "--citeproc"
+  else
+    c("--filter", pandoc_citeproc())
 }
 
 
