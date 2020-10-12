@@ -312,7 +312,7 @@ rmarkdown_shiny_ui <- function(dir, file) {
     }
 
     # request must be for an R Markdown or HTML document
-    ext <- tolower(xfun::file_ext(req_path))
+    ext <- tolower(tools::file_ext(req_path))
     if (!(ext %in% c("rmd", "htm", "html"))) return(NULL)
 
     # document must exist
@@ -378,7 +378,7 @@ rmd_cached_output <- function(input) {
   resource_folder <- ""
 
   # if the file is raw HTML, return it directly
-  if (tolower(xfun::file_ext(input)) %in% c("htm", "html")) {
+  if (tolower(tools::file_ext(input)) %in% c("htm", "html")) {
     return(list(
       cacheable = TRUE,
       cached = TRUE,
