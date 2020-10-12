@@ -154,8 +154,8 @@ navbar_icon_dependencies <- function(navbar) {
   html_dependencies_fonts("fa fa" %in% libs, "ion ion" %in% libs)
 }
 
-# utilty function to return a list of font dependencies based
-# whether we are including font_awesome and/or iconicons
+# utility function to return a list of font dependencies based
+# whether we are including font_awesome and/or ionicons
 html_dependencies_fonts <- function(font_awesome, ionicons) {
   deps <- list()
   if (font_awesome)
