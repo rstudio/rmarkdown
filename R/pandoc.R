@@ -145,8 +145,6 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
   }
 
   # build the conversion command
-
-
   command <- paste(quoted(bin), paste(quoted(args), collapse = " "))
 
   # run the conversion
