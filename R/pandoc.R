@@ -161,11 +161,6 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
     stop("Error ", status, " occurred building shared library.")
   }
 
-  # new --citeproc adds an extra nocite has first field in the yaml
-  if (pandoc2.11 && type == "yaml" && grepl("^nocite:", result[2])) {
-    result <- result[-2]
-  }
-
   # convert the output if requested
   if (type == "list") {
     jsonlite::fromJSON(result, simplifyVector = FALSE)
