@@ -72,9 +72,9 @@ parameters are resolved relative to the directory of the input document.
 }
 \section{About Pandoc citeproc}{
 
-For Pandoc version before 2.11, a pandoc filter \code{pandoc-citeproc} is
+For Pandoc version before 2.11, a pandoc filter \samp{pandoc-citeproc} is
 used. Since Pandoc 2.11, the feature is built-in and activated using
-\code{--citeproc} flag. \code{pandoc_citeproc_arg} will return the correct
+\samp{--citeproc} flag. \samp{pandoc_citeproc_arg} will return the correct
 switches depending on the Pandoc version in use.
 }
 
