@@ -41,7 +41,7 @@ html_dependency_jqueryui <- function() {
 #' @export
 html_dependency_bootstrap <- function(theme) {
   if (is_bs_theme(theme)) {
-    return(bootstraplib::bs_dependencies(theme))
+    return(bootstraplib::bs_theme_dependencies(theme))
   }
   if (identical(theme, "default")) {
     theme <- "bootstrap"
