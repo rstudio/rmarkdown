@@ -24,8 +24,7 @@ jobs:
       name: R release / Pandoc devel
       env: PATH=$HOME/bin:$PATH
       before_install:
-        - ./tools/install-pandoc.sh || true
-        - pandoc --version
+        - ./tools/install-pandoc.sh
     - r: release
       name: R release / RStudio Pandoc
       env: NETLIFY_SITE_ID=5d77c13c-e2ee-4a31-87ca-2fe657196160
