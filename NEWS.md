@@ -13,7 +13,6 @@ rmarkdown 2.5
 
 - Fixed the code highlighting when code block is hidden. Previous version introduced a regression where non default code highlighting was still shown when `code_folding` is activated and code block is hidden. (thanks, @matthewcarlucci, #1921)
 
-
 rmarkdown 2.4
 ================================================================================
 
