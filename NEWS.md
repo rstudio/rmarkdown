@@ -13,6 +13,9 @@ rmarkdown 2.5
 
 - Fixed the code highlighting when code block is hidden. Previous version introduced a regression where non default code highlighting was still shown when `code_folding` is activated and code block is hidden. (thanks, @matthewcarlucci, #1921)
 
+- The minimal required version for the **xfun** package (v0.15) has been specified for R Markdown Notebooks to work properly (thanks, @jmcphers, #1923).
+
+
 rmarkdown 2.4
 ================================================================================
 
