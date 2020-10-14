@@ -37,14 +37,9 @@ github_document <- function(toc = FALSE,
     pkg_file_arg("rmarkdown/templates/github_document/resources/default.md")
   )
 
-
-  filters <- c()
   pandoc2 <- pandoc2.0()
   # use md_document as base
-  if (pandoc_available("2.11")) {
-    variant <- "gfm"
-    filters <- c("--lua-filter", pkg_file_lua("github-link.lua"))
-  } else if (pandoc2) {
+  if (pandoc2) {
     variant <-  "gfm"
   } else {
     variant <- "markdown_github"
@@ -56,7 +51,7 @@ github_document <- function(toc = FALSE,
     number_sections = number_sections, fig_width = fig_width,
     fig_height = fig_height, dev = dev, df_print = df_print,
     includes = includes, md_extensions = md_extensions,
-    pandoc_args = c("--atx-headers", filters, pandoc_args)
+    pandoc_args = c("--atx-headers", pandoc_args)
   )
 
   # add a post processor for generating a preview if requested
