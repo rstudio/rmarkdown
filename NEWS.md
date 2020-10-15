@@ -15,6 +15,8 @@ rmarkdown 2.5
 
 - The minimal required version for the **xfun** package (v0.15) has been specified for R Markdown Notebooks to work properly (thanks, @jmcphers, #1923).
 
+- Fixed a bug in `convert_ipynb()` when the language is not specified in the `.ipynb` file (thanks, @acca3003, #1925).
+
 
 rmarkdown 2.4
 ================================================================================
