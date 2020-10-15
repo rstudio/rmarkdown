@@ -439,12 +439,6 @@ render <- function(input,
   shiny_prerendered_dependencies <- list()
   if (requires_knit && is_shiny_prerendered(front_matter$runtime)) {
 
-    # first validate that the user hasn't passed an already created output_format
-    if (is_output_format(output_format)) {
-      stop("You cannot pass a fully constructed output_format to render when ",
-           "using runtime: shiny_prerendered")
-    }
-
     # require shiny for the knit
     if (requireNamespace("shiny")) {
       if (!"package:shiny" %in% search())
