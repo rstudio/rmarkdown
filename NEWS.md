@@ -17,6 +17,8 @@ rmarkdown 2.5
 
 - Fixed a bug in `convert_ipynb()` when the language is not specified in the `.ipynb` file (thanks, @acca3003, #1925).
 
+- Introduce `runtime: shinyrmd` as a more user friendly alias for `runtime: shiny_prerendered`.
+
 
 rmarkdown 2.4
 ================================================================================

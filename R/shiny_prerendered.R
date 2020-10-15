@@ -354,9 +354,9 @@ shiny_prerendered_clean <- function(input) {
 shiny_prerendered_chunk <- function(context, code, singleton = FALSE) {
 
   # verify we are in runtime: shiny_prerendered
-  if (!identical(knitr::opts_knit$get("rmarkdown.runtime"),"shiny_prerendered"))
+  if (!is_shiny_prerendered(knitr::opts_knit$get("rmarkdown.runtime")))
       stop("The shiny_prerendered_chunk function can only be called from ",
-           "within runtime: shiny_prerendered",
+           "within runtime: shinyrmd",
            call. = FALSE)
 
   # add the prerendered chunk to knit_meta
@@ -565,7 +565,7 @@ shiny_prerendered_append_contexts <- function(runtime, file) {
 
     # validate we are in runtime: shiny_prerendered
     if (!is_shiny_prerendered(runtime)) {
-      stop("The code within this document requires runtime: shiny_prerendered",
+      stop("The code within this document requires runtime: shinyrmd",
            call. = FALSE)
     }
 

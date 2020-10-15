@@ -254,7 +254,7 @@ render <- function(input,
                    output_yaml = NULL,
                    intermediates_dir = NULL,
                    knit_root_dir = NULL,
-                   runtime =  c("auto", "static", "shiny", "shiny_prerendered"),
+                   runtime =  c("auto", "static", "shiny", "shinyrmd", "shiny_prerendered"),
                    clean = TRUE,
                    params = NULL,
                    knit_meta = NULL,
@@ -445,7 +445,7 @@ render <- function(input,
         attachNamespace("shiny")
     }
     else
-      stop("The shiny package is required for 'shiny_prerendered' documents")
+      stop("The shiny package is required for shinyrmd documents")
 
     # force various output options
     output_options$self_contained <- FALSE

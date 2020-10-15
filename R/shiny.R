@@ -541,7 +541,7 @@ is_shiny_classic <- function(runtime) {
 }
 
 is_shiny_prerendered <- function(runtime) {
-  identical(runtime, "shiny_prerendered")
+  identical(runtime, "shinyrmd") || identical(runtime, "shiny_prerendered")
 }
 
 write_shiny_deps <- function(files_dir,
