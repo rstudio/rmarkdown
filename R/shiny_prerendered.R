@@ -55,7 +55,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
   # check for a server.R
   else if (file.exists(file.path(dirname(input_rmd), "server.R"))) {
     server_src <- file.path(dirname(input_rmd), "server.R")
-    server <- source(server_src)$value
+    server <- source(server_src, local = FALSE)$value
   } else {
     stop("No server contexts or server.R available for ", input_rmd)
   }
