@@ -54,8 +54,16 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
   # if there were not server contexts then this may be a ui-only rmd,
   # check for a server.R
   else if (file.exists(file.path(dirname(input_rmd), "server.R"))) {
-    server_src <- file.path(dirname(input_rmd), "server.R")
-    server <- source(server_src, local = FALSE)$value
+    # source global.R onStart
+    onStart <- function() {
+      global_r <- file.path.ci(dirname(input_rmd), "global.R")
+      if (file.exists(global_r)) {
+        source(global_r, local = FALSE)
+      }
+    }
+    # server function from server.R
+    server_r <- file.path(dirname(input_rmd), "server.R")
+    server <- source(server_r, local = FALSE)$value
   } else {
     stop("No server contexts or server.R available for ", input_rmd)
   }
