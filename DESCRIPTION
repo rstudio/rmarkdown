@@ -91,14 +91,14 @@ Imports:
     tinytex (>= 0.11),
     xfun (>= 0.15),
     methods,
-    stringr (>= 1.2.0),
-    vctrs (>= 0.3.2)
+    stringr (>= 1.2.0)
 Suggests:
     shiny (>= 0.11),
     tufte,
     testthat,
     digest,
     dygraphs,
+    vctrs,
     tibble,
     fs,
     rsconnect
