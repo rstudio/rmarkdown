@@ -63,7 +63,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
     }
     # server function from server.R
     server_r <- file.path(dirname(input_rmd), "server.R")
-    server <- source(server_r, local = FALSE)$value
+    server <- source(server_r, local = new.env(parent = globalenv()))$value
   } else {
     stop("No server contexts or server.R available for ", input_rmd)
   }
