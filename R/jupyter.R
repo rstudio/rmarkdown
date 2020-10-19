@@ -41,7 +41,7 @@
 convert_ipynb <- function(input, output = xfun::with_ext(input, 'Rmd')) {
   json <- jsonlite::fromJSON(input, simplifyDataFrame = FALSE)
   lang <- json$metadata$kernelspec$language  # global language
-  if (is.null(lang)) lang = 'python'
+  if (is.null(lang)) lang <- 'python'
   res <- character()
   for (cell in json$cells) {
     if (length(src <- unlist(cell$source)) == 0) next  # empty cell
