@@ -74,15 +74,14 @@ outputting HTML directly into the markdown document).}
   method creates a paginated HTML table (note that this method is only valid
   for formats that produce HTML).
 
-  In addition to the named methods you can
-  also pass an arbitrary function to be used for printing data frames. If
-  specifying this within a YAML header, arbitrary functions must be prefaced
-  by \samp{!expr}, i.e \samp{df_print: !expr knitr::kable} is equivalent to
-  the method "kable". See \code{\link[yaml::yaml.load]{yaml::yaml.load}} for
-  details.
+  In addition to the named methods you can also pass an arbitrary function to
+  be used for printing data frames. If specifying this within a YAML header,
+  arbitrary functions must be prefaced by \samp{!expr}, i.e \samp{df_print:
+  !expr knitr::kable} is equivalent to the method "kable". See
+  \code{\link[yaml::yaml.load]{yaml::yaml.load}} for details.
 
-  You can disable the \code{df_print} behavior entirely by setting
-  the option \code{rmarkdown.df_print} to \code{FALSE}.}
+  You can disable the \code{df_print} behavior entirely by setting the option
+  \code{rmarkdown.df_print} to \code{FALSE}.}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
 chunks. Specify \code{"none"} to display all code chunks (assuming
