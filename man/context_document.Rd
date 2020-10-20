@@ -58,7 +58,7 @@ context_document(
   be used for printing data frames. If specifying this within a YAML header,
   arbitrary functions must be prefaced by \samp{!expr}, i.e \samp{df_print:
   !expr knitr::kable} is equivalent to the method "kable". See
-  \code{\link[yaml::yaml.load]{yaml::yaml.load}} for details.
+  \code{\link[yaml:yaml.load]{yaml::yaml.load}} for details.
 
   You can disable the \code{df_print} behavior entirely by setting the option
   \code{rmarkdown.df_print} to \code{FALSE}.}
