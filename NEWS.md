@@ -7,7 +7,7 @@ rmarkdown 2.5
 
 - `pkg_file_lua()` should have thrown an error if the expected Lua file does not exist.
 
-- Provide `files_dir` as attribute on return from `render()` when `run_pandoc = FALSE`.
+- Provide `files_dir` and `intermediates_dir` as attributes on return from `render()` when `run_pandoc = FALSE`.
 
 - Supports new Pandoc 2.11 `--citeproc` flags usage instead of `pandoc-citeproc` external filter. `pandoc_convert()` and `pandoc_citeproc_convert()` will now use the correct flags according to the Pandoc version used. The logic is exported in `pandoc_citeproc_args()`. See [Pandoc release note](https://github.com/jgm/pandoc/releases/tag/2.11) for more information about the new `citeproc` processing (#1916).
 
