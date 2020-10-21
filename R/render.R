@@ -447,6 +447,12 @@ render <- function(input,
     else
       stop("The shiny package is required for shinyrmd documents")
 
+    # source global.R if it exists
+    global_r <- file.path.ci(".", "global.R")
+    if (file.exists(global_r)) {
+      source(global_r, local = envir)
+    }
+
     # force various output options
     output_options$self_contained <- FALSE
     output_options$dependency_resolver <- function(deps) {

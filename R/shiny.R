@@ -66,6 +66,15 @@
 run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
                 auto_reload = TRUE, shiny_args = NULL, render_args = NULL) {
 
+  # if the file argument is missing then substitute ui.Rmd if it exists
+  # (and index.Rmd does not exist)
+  if (missing(file) && missing(default_file)) {
+    if (!file.exists(file.path(dir, "index.Rmd")) &&
+        file.exists(file.path(dir, "ui.Rmd"))) {
+      file <- file.path(dir, "ui.Rmd")
+    }
+  }
+
   # select the document to serve at the root URL if not user-specified. We exclude
   # documents which start with a leading underscore (same pattern is used to
   # designate "sub-documents" in R Markdown websites and bookdown)
@@ -75,8 +84,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       # just one R Markdown document
       default_file <- allRmds
     } else {
-      # more than one: look for an index
-      index <- which(tolower(allRmds) == "index.rmd")
+      # more than one: look for an index or ui
+      index <- which(tolower(allRmds) %in% c("index.rmd", "ui.rmd"))
       if (length(index) > 0) {
         default_file <- allRmds[index[1]]
       } else {
@@ -94,7 +103,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
   if (is.null(default_file)) {
     # no R Markdown default found; how about an HTML?
-    indexHtml <- list.files(dir, "index.html?", ignore.case = TRUE)
+    indexHtml <- list.files(dir, "(index|ui).html?", ignore.case = TRUE)
     if (length(indexHtml) > 0) default_file <- indexHtml[1]
   }
 
