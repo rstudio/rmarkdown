@@ -1011,6 +1011,7 @@ render <- function(input,
     structure(input,
               knit_meta = knit_meta,
               files_dir = files_dir,
+              intermediates_dir = intermediates_fig,
               intermediates = intermediates)
   }
 }
