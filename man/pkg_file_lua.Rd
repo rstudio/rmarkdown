@@ -25,10 +25,8 @@ package path. This function finds the full paths of the Lua filters in the
 installed packages.
 }
 \examples{
-# List all Lua filters stored in the rmarkdown package
+# list all Lua filters stored in the rmarkdown package
 pkg_file_lua()
-# or in a specific package
-if (xfun::loadable("bookdown")) pkg_file_lua(package = "bookdown")
 # get a specific filter
 pkg_file_lua(c("pagebreak.lua", "latex_div.lua"))
 }

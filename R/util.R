@@ -56,10 +56,8 @@ pkg_file_arg <- function(..., package = "rmarkdown") {
 #'   \code{\link{pandoc_path_arg}()}, so they are ready to be used by Pandoc.
 #' @export
 #' @examples
-#' # List all Lua filters stored in the rmarkdown package
+#' # list all Lua filters stored in the rmarkdown package
 #' pkg_file_lua()
-#' # or in a specific package
-#' if (xfun::loadable("bookdown")) pkg_file_lua(package = "bookdown")
 #' # get a specific filter
 #' pkg_file_lua(c("pagebreak.lua", "latex_div.lua"))
 pkg_file_lua <- function(filters = NULL, package = "rmarkdown") {
