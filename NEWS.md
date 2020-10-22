@@ -3,6 +3,8 @@ rmarkdown 2.6
 
 - Enable use of `server.R` and `global.R` alongside `runtime: shinyrmd` documents.
 
+- `pkg_file_lua()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
+
 rmarkdown 2.5
 ================================================================================
 
