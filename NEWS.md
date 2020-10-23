@@ -5,6 +5,8 @@ rmarkdown 2.6
 
 - `pkg_file_lua()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
 
+- Fix `pandoc_convert(citeproc = TRUE)` not supressing the `--natbib` or `--biblatex` options (thanks, @atusy, #1932).
+
 rmarkdown 2.5
 ================================================================================
 
