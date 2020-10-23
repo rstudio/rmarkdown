@@ -82,8 +82,9 @@ pandoc_convert <- function(input,
 
   # citeproc filter if requested
   if (citeproc) {
-    # --natbib/--biblatex conflicts with '--filter pandoc-citeproc'
-    args <- c(setdiff(args, c("--natbib", "--biblatex")),
+    # --natbib/--biblatex conflicts with pandoc own citation processing,
+    # '--filter pandoc-citeproc' or '--citeproc'
+    args <- c(args[!args %in% c("--natbib", "--biblatex")],
               pandoc_citeproc_args())
   }
 
