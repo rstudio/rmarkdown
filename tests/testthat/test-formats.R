@@ -4,7 +4,7 @@ test_that("formats successfully produce a document", {
 
   testFormat <- function(output_format, df_print = NULL) {
     output_file <- I(tempfile())
-    render("test-formats.Rmd",
+    render(test_path("test-formats.Rmd"),
            output_format = output_format,
            output_file = output_file,
           # output_options = ifelse(is.null(df_print), NULL, list(df_print = df_print)),
@@ -32,15 +32,15 @@ test_that("formats successfully produce a document", {
 test_that("documents with spaces in names can be rendered", {
 
   # get path to notebook
-  rmd_path <- "resources/empty.Rmd"
+  rmd_path <- test_path("resources/empty.Rmd")
 
   # attempt to write to directory with spaces
-  output_file <- "directory with spaces/r output.nb.html"
+  output_file <- test_path("directory with spaces/r output.nb.html")
   dir.create(dirname(output_file))
-  on.exit(unlink("directory with spaces", recursive = TRUE), add = TRUE)
+  on.exit(unlink(test_path("directory with spaces"), recursive = TRUE), add = TRUE)
 
   # generate copy with space in name
-  with_spaces <- "directory with spaces/no content.Rmd"
+  with_spaces <- test_path("directory with spaces/no content.Rmd")
   file.copy(rmd_path, with_spaces)
 
   output <- rmarkdown::render(with_spaces,
@@ -60,7 +60,7 @@ test_that(
   testFormat <- function(output_format) {
     output_file <- tempfile()
     expect_error(
-      render("test-formats.Rmd",
+      render(test_path("test-formats.Rmd"),
            output_format = output_format,
            output_file = output_file,
            quiet = TRUE)
