@@ -1,6 +1,8 @@
 rmarkdown 2.6
 ================================================================================
 
+- Intermediary `.tex` file is now correctly deleted is `keep_tex = FALSE` and R Markdown document is not rendered from the working directory.(thanks, @vqv, #1308).
+
 - Enable use of `server.R` and `global.R` alongside `runtime: shinyrmd` documents.
 
 - `pkg_file_lua()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
