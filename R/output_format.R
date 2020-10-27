@@ -778,6 +778,9 @@ citeproc_required <- function(yaml_front_matter,
   ) && (
     !is.null(yaml_front_matter$bibliography) ||
       !is.null(yaml_front_matter$references) ||
-      length(grep("^references\\:\\s*$", input_lines)) > 0
+      # detect references: and bibliography: outside of yaml header
+      # as Pandoc is supporting
+      length(grep("^references\\:\\s*$", input_lines)) > 0 ||
+      length(grep("^bibliography\\:\\s*$", input_lines)) > 0
   )
 }
