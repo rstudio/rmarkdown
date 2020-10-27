@@ -7,7 +7,11 @@ rmarkdown 2.6
 
 - Fix `pandoc_convert(citeproc = TRUE)` not supressing the `--natbib` or `--biblatex` options (thanks, @atusy, #1932).
 
-- Pandoc citeproc is now activated if a `bibliography:` field is defined in another yaml block than the yaml front matter (thanks, @bwiernik, #1364).
+- Pandoc citeproc is now activated if a `bibliography:` field is defined in another yaml block than the yaml front matter (thanks, @bwiernik, #1364). Supported block of the form: 
+```yaml
+bibliography:
+    - references.bib
+```
 
 rmarkdown 2.5
 ================================================================================
