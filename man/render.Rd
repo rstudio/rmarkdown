@@ -13,7 +13,7 @@ render(
   output_yaml = NULL,
   intermediates_dir = NULL,
   knit_root_dir = NULL,
-  runtime = c("auto", "static", "shiny", "shiny_prerendered"),
+  runtime = c("auto", "static", "shiny", "shinyrmd", "shiny_prerendered"),
   clean = TRUE,
   params = NULL,
   knit_meta = NULL,

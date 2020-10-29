@@ -170,10 +170,10 @@ html_dependency_navigation <- function(code_menu, source_embed) {
 html_dependency_anchor_sections <- function() {
 
   htmlDependency(name = "anchor-sections",
-                 version = "1.0",
+                 version = "1.0.1",
                  src = pkg_file("rmd/h/anchor-sections"),
                  script = "anchor-sections.js",
-                 style = "anchor-sections.css")
+                 stylesheet = "anchor-sections.css")
 }
 
 # analyze navbar html source for icon dependencies
@@ -196,8 +196,8 @@ navbar_icon_dependencies <- function(navbar) {
   html_dependencies_fonts("fa fa" %in% libs, "ion ion" %in% libs)
 }
 
-# utilty function to return a list of font dependencies based
-# whether we are including font_awesome and/or iconicons
+# utility function to return a list of font dependencies based
+# whether we are including font_awesome and/or ionicons
 html_dependencies_fonts <- function(font_awesome, ionicons) {
   deps <- list()
   if (font_awesome)

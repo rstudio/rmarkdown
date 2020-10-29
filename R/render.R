@@ -254,7 +254,7 @@ render <- function(input,
                    output_yaml = NULL,
                    intermediates_dir = NULL,
                    knit_root_dir = NULL,
-                   runtime =  c("auto", "static", "shiny", "shiny_prerendered"),
+                   runtime =  c("auto", "static", "shiny", "shinyrmd", "shiny_prerendered"),
                    clean = TRUE,
                    params = NULL,
                    knit_meta = NULL,
@@ -342,7 +342,7 @@ render <- function(input,
   }
 
   # check whether this document requires a knit
-  requires_knit <- tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")
+  requires_knit <- tolower(xfun::file_ext(input)) %in% c("r", "rmd", "rmarkdown")
 
   # remember the name of the original input document (we overwrite 'input' once
   # we've knitted)
@@ -395,10 +395,10 @@ render <- function(input,
   intermediates <- c(intermediates, utf8_input)
 
   # track whether this was straight markdown input (to prevent keep_md later)
-  md_input <- identical(tolower(tools::file_ext(input)), "md")
+  md_input <- identical(tolower(xfun::file_ext(input)), "md")
 
   # if this is an R script then spin it first
-  if (identical(tolower(tools::file_ext(input)), "r")) {
+  if (identical(tolower(xfun::file_ext(input)), "r")) {
     # make a copy of the file to spin
     spin_input <- intermediates_loc(file_with_meta_ext(input, "spin", "R"))
     file.copy(input, spin_input, overwrite = TRUE)
@@ -439,19 +439,19 @@ render <- function(input,
   shiny_prerendered_dependencies <- list()
   if (requires_knit && is_shiny_prerendered(front_matter$runtime)) {
 
-    # first validate that the user hasn't passed an already created output_format
-    if (is_output_format(output_format)) {
-      stop("You cannot pass a fully constructed output_format to render when ",
-           "using runtime: shiny_prerendered")
-    }
-
     # require shiny for the knit
     if (requireNamespace("shiny")) {
       if (!"package:shiny" %in% search())
         attachNamespace("shiny")
     }
     else
-      stop("The shiny package is required for 'shiny_prerendered' documents")
+      stop("The shiny package is required for shinyrmd documents")
+
+    # source global.R if it exists
+    global_r <- file.path.ci(".", "global.R")
+    if (file.exists(global_r)) {
+      source(global_r, local = envir)
+    }
 
     # force various output options
     output_options$self_contained <- FALSE
@@ -768,7 +768,7 @@ render <- function(input,
 
   # if this isn't html and there are html dependencies then flag an error
   if (!(is_pandoc_to_html(output_format$pandoc) ||
-        identical(tolower(tools::file_ext(output_file)), "html")))  {
+        identical(tolower(xfun::file_ext(output_file)), "html")))  {
     if (has_html_dependencies(knit_meta)) {
       if (!isTRUE(front_matter$always_allow_html)) {
         stop("Functions that produce HTML output found in document targeting ",
@@ -900,15 +900,12 @@ render <- function(input,
       # render to temporary file (preserve extension)
       # this also ensures we don't pass a file path with invalid
       # characters to our pandoc invocation
-      file_ext <- tools::file_ext(output)
-      ext <- if (nzchar(file_ext))
-        paste(".", file_ext, sep = "")
-      else
-        ""
+      ext <- xfun::file_ext(output)
+      if (ext != '') ext <- paste0('.', ext)
 
       # render to a path in the current working directory
       # (avoid passing invalid characters to shell)
-      pandoc_output_tmp <- basename(tempfile("pandoc", tmpdir = getwd(), fileext = ext))
+      pandoc_output_tmp <- basename(tempfile("pandoc", getwd(), ext))
 
       # clean up temporary file on exit
       on.exit(unlink(pandoc_output_tmp), add = TRUE)
@@ -1014,6 +1011,7 @@ render <- function(input,
     structure(input,
               knit_meta = knit_meta,
               files_dir = files_dir,
+              intermediates_dir = intermediates_fig,
               intermediates = intermediates)
   }
 }

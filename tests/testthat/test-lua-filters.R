@@ -67,3 +67,8 @@ test_that("formats have the expected Lua filter", {
     word_document(number_sections = TRUE),
     c("pagebreak", if (!pandoc_available("2.10.1")) "number-sections"))
 })
+
+test_that("lua file are correctly found", {
+  expect_match(basename(pkg_file_lua()),  ".*[.]lua$")
+  expect_match(basename(pkg_file_lua("number-sections.lua")),  "^number-sections.lua$")
+})

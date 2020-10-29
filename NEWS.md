@@ -1,3 +1,14 @@
+rmarkdown 2.6
+================================================================================
+
+- Fix issues with `anchor_sections = TRUE` and **learnr** (thanks, @gadenbuie, #1938)
+
+- Enable use of `server.R` and `global.R` alongside `runtime: shinyrmd` documents.
+
+- `pkg_file_lua()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
+
+- Fix `pandoc_convert(citeproc = TRUE)` not supressing the `--natbib` or `--biblatex` options (thanks, @atusy, #1932).
+
 rmarkdown 2.5
 ================================================================================
 
@@ -5,7 +16,21 @@ rmarkdown 2.5
 
 - Tables without header rows (wich can be possible in Pandoc's [simple table](https://pandoc.org/MANUAL.html#extension-simple_tables)) are now formatted correctly when using `html_document()` format (thanks, @fkohrt, #1893).
 
-- `html_document` gains the `anchor_sections` argument, which is `TRUE` by default, so that readers can get links to section headers easily---when you mouse over  a section hader, you will see a hash symbol `#` at the end of the header, which contains the anchor link to this header. You can click on this link and get the URL in the addres bar of your web browser, or right-click on it and copy the URL from the context menu. The hash symbol is defined by the CSS rule `a.anchor-section::before {content: '#';}`. You can customize it by overriding this rule (e.g., via the `css` argument of `html_document`) and use any other symbols or icons, e.g., `content: "\02AD8;"` (thanks, @atusy, #1884).
+- `html_document` gains the `anchor_sections` argument, which is `TRUE` by default, so that readers can get links to section headers easily---when you mouse over a section header, you will see a hash symbol `#` at the end of the header, which contains the anchor link to this header. You can click on this link and get the URL in the addres bar of your web browser, or right-click on it and copy the URL from the context menu. The hash symbol is defined by the CSS rule `a.anchor-section::before {content: '#';}`. You can customize it by overriding this rule (e.g., via the `css` argument of `html_document`) and use any other symbols or icons, e.g., `content: "\02AD8;"` (thanks, @atusy, #1884).
+
+- `pkg_file_lua()` should have thrown an error if the expected Lua file does not exist.
+
+- Provide `files_dir` and `intermediates_dir` as attributes on return from `render()` when `run_pandoc = FALSE`.
+
+- Supports new Pandoc 2.11 `--citeproc` flags usage instead of `pandoc-citeproc` external filter. `pandoc_convert()` and `pandoc_citeproc_convert()` will now use the correct flags according to the Pandoc version used. The logic is exported in `pandoc_citeproc_args()`. See [Pandoc release note](https://github.com/jgm/pandoc/releases/tag/2.11) for more information about the new `citeproc` processing (#1916).
+
+- Fixed the code highlighting when code block is hidden. Previous version introduced a regression where non default code highlighting was still shown when `code_folding` is activated and code block is hidden (thanks, @matthewcarlucci, #1921).
+
+- The minimal required version for the **xfun** package (v0.15) has been specified for R Markdown Notebooks to work properly (thanks, @jmcphers, #1923).
+
+- Fixed a bug in `convert_ipynb()` when the language is not specified in the `.ipynb` file (thanks, @acca3003, #1925).
+
+- Introduce `runtime: shinyrmd` as a more user friendly alias for `runtime: shiny_prerendered`.
 
 - Provide `files_dir` as attribute on return from `render()` when `run_pandoc = FALSE`.
 

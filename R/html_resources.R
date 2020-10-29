@@ -53,7 +53,7 @@
 find_external_resources <- function(input_file, encoding = 'UTF-8') {
 
   # ensure we're working with valid input
-  ext <- tolower(tools::file_ext(input_file))
+  ext <- tolower(xfun::file_ext(input_file))
   if (!(ext %in% c("md", "rmd", "html", "htm", "r", "css"))) {
     stop("Resource discovery is only supported for R Markdown files or HTML files.")
   }
@@ -78,7 +78,7 @@ find_external_resources <- function(input_file, encoding = 'UTF-8') {
           file.exists(file.path(input_dir, path))))
       return(FALSE)
 
-    ext <- tolower(tools::file_ext(file.path(input_dir, path)))
+    ext <- tolower(xfun::file_ext(file.path(input_dir, path)))
 
     if (identical(ext, "r")) {
       # if this is a .R script, look for resources it contains, too
@@ -299,7 +299,7 @@ discover_rmd_resources <- function(rmd_file, discover_single_resource) {
   }
 
   # check for knitr child documents in R Markdown documents
-  if (tolower(tools::file_ext(rmd_file)) == "rmd") {
+  if (tolower(xfun::file_ext(rmd_file)) == "rmd") {
     chunk_lines <- gregexpr(knitr::all_patterns$md$chunk.begin, rmd_content, perl = TRUE)
     for (idx in seq_along(chunk_lines)) {
       chunk_line <- chunk_lines[idx][[1]]
@@ -351,7 +351,7 @@ discover_rmd_resources <- function(rmd_file, discover_single_resource) {
   discover_html_resources(html_file, discover_single_resource)
 
   # if this is an R Markdown file, purl the file to extract just the R code
-  if (tolower(tools::file_ext(rmd_file)) == "rmd") {
+  if (tolower(xfun::file_ext(rmd_file)) == "rmd") {
     r_file <- tempfile(fileext = ".R")
     # suppress possible try() errors https://github.com/rstudio/rmarkdown/issues/1247
     try_file <- tempfile()
@@ -443,7 +443,7 @@ discover_css_resources <- function(css_file, discover_single_resource) {
 
 # given a filename, return true if the file appears to be a web file
 is_web_file <- function(filename) {
-  tolower(tools::file_ext(filename)) %in% c(
+  tolower(xfun::file_ext(filename)) %in% c(
     "css", "gif", "htm", "html", "jpeg", "jpg", "js", "mp3", "mp4", "png", "wav"
   )
 }
