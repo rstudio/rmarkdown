@@ -1,6 +1,8 @@
 rmarkdown 2.6
 ================================================================================
 
+- `html_document` (and `html_document_base`)'s `theme` arguments gains the ability to accept a list of values, which are passed along to `bootstraplib::bs_theme()`, making it much easier create custom themes with Bootstrap 4 or 3. To learn more, see <https://rstudio.github.io/bootstraplib> (thanks, @cpsievert, #1260).
+
 - Fix issues with `anchor_sections = TRUE` and **learnr** (thanks, @gadenbuie, #1938)
 
 - Enable use of `server.R` and `global.R` alongside `runtime: shinyrmd` documents.
@@ -11,8 +13,6 @@ rmarkdown 2.6
 
 rmarkdown 2.5
 ================================================================================
-
-- `html_document` (and `html_document_base`)'s `theme` arguments gains the ability to accept a list of values, which are passed along to `bootstraplib::bs_theme()`, making it much easier create custom themes with Bootstrap 4 or 3. To learn more, see <https://rstudio.github.io/bootstraplib> (thanks, @cpsievert, #1260).
 
 - Tables without header rows (wich can be possible in Pandoc's [simple table](https://pandoc.org/MANUAL.html#extension-simple_tables)) are now formatted correctly when using `html_document()` format (thanks, @fkohrt, #1893).
 
