@@ -282,8 +282,8 @@ html_document <- function(toc = FALSE,
   if (highlight_downlit) {
     if (!requireNamespace("downlit", quietly = TRUE)) {
       warning("highlight_downlit=TRUE requires the downlit package",
-              "downlit highlighting won't be apply",
-              "and no linking will be done.", call. = FALSE)
+              "downlit highlighting won't be applied",
+              "and no function linking will be done.", call. = FALSE)
       highlight_downlit <- FALSE
     }
   }
