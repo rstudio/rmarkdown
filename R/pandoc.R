@@ -470,10 +470,14 @@ pandoc_self_contained_html <- function(input, output) {
 }
 
 
-validate_self_contained <- function(mathjax) {
+validate_self_contained <- function(mathjax, math = NULL) {
 
   if (identical(mathjax, "local"))
     stop("Local MathJax isn't compatible with self_contained\n",
+         "(you should set self_contained to FALSE)", call. = FALSE)
+
+  if (!is.null(math))
+    stop("The `math` argument isn't compatible with self_contained\n",
          "(you should set self_contained to FALSE)", call. = FALSE)
 }
 

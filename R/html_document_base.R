@@ -19,6 +19,7 @@
 html_document_base <- function(theme = NULL,
                                self_contained = TRUE,
                                lib_dir = NULL,
+                               math = "default",
                                mathjax = "default",
                                pandoc_args = NULL,
                                template = "default",
@@ -37,11 +38,23 @@ html_document_base <- function(theme = NULL,
   # no email obfuscation
   args <- c(args, "--email-obfuscation", "none")
 
+  if (!identical(math, "default")) {
+    mathjax <- NULL
+    args <- c(args,
+              if (is.null(math)) {
+                NULL
+              } else if (is.list(math)) {
+                paste0("--", names(math), "=", math[[1L]])
+              } else {
+                paste0("--", math)
+              })
+  }
+
   # self contained document
   if (self_contained) {
     if (copy_resources)
       stop("Local resource copying is incompatible with self-contained documents.")
-    validate_self_contained(mathjax)
+    validate_self_contained(mathjax, math)
     args <- c(args, "--self-contained")
   }
 
