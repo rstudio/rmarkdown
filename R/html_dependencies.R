@@ -64,6 +64,22 @@ bootstrap_dependencies <- function(theme) {
   if (inherits(deps, "html_dependency")) list(deps) else deps
 }
 
+# At the moment, theme may be either NULL (no Bootstrap), a string (Bootswatch
+# 3 name), a bootstraplib::bs_theme(), or a list of arguments to bs_theme().
+as_bs_theme <- function(theme) {
+  if (is_bs_theme(theme)) {
+    return(theme)
+  }
+  if (is.list(theme)) {
+    return(do.call(bootstraplib::bs_theme, theme))
+  }
+  NULL
+}
+
+is_bs_themeish <- function(theme) {
+  is_bs_theme(theme) || is.list(theme)
+}
+
 is_bs_theme <- function(theme) {
   is_available("bootstraplib") &&
     bootstraplib::is_bs_theme(theme)
