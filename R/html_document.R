@@ -56,6 +56,14 @@
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
 #'  copied into the output directory). You can pass an alternate URL or pass
 #'  \code{NULL} to exclude MathJax entirely.
+#'@param math Math rendering engine. The "default" option inherits the `mathjax`
+#'  argument. Available options are "mathjax", "mathml", "webtex", "katex", and
+#'  "gladtex". All of them can be specified as a non-named string. For
+#'  "mathjax", "webtex", and "katex", they can be specified as a named string,
+#'  whose name corresponds to engine and the value corresponds to URL. See
+#'  \url{https://pandoc.org/MANUAL.html#math-rendering-in-html} for the details.
+#'  Note that `c(mathjax = "local")` is equivalent to specifying "local" to
+#'  `mathjax`.
 #'@param section_divs Wrap sections in <div> tags, and attach identifiers to the
 #'  enclosing <div> rather than the header itself.
 #'@param template Pandoc template to use for rendering. Pass "default" to use
