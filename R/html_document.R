@@ -517,6 +517,10 @@ mathjax_config <- function() {
   "MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 }
 
+default_katex <- function() {
+  "https://cdn.jsdelivr.net/npm/katex@0.12.0/dist"
+}
+
 # variable which controls body offset (depends on height of navbar in theme)
 pandoc_body_padding_variable_args <- function(theme) {
 

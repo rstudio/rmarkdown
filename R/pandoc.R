@@ -469,55 +469,49 @@ pandoc_self_contained_html <- function(input, output) {
   invisible(output)
 }
 
-
-validate_self_contained <- function(mathjax, math = NULL) {
-
-  if (identical(mathjax, "local"))
-    stop("Local MathJax isn't compatible with self_contained\n",
-         "(you should set self_contained to FALSE)", call. = FALSE)
-
-  if (!is.null(math))
-    stop("The `math` argument isn't compatible with self_contained\n",
-         "(you should set self_contained to FALSE)", call. = FALSE)
-}
-
-pandoc_mathjax_args <- function(mathjax,
-                                template,
-                                self_contained,
-                                files_dir,
-                                output_dir) {
-  args <- c()
-
-  if (!is.null(mathjax)) {
-
-    if (identical(mathjax, "default")) {
-      if (identical(template, "default"))
-        mathjax <- default_mathjax()
-      else
-        mathjax <- NULL
-    }
-    else if (identical(mathjax, "local")) {
-      mathjax_path <- pandoc_mathjax_local_path()
-      mathjax_path <- render_supporting_files(mathjax_path,
-                                              files_dir,
-                                              "mathjax-local")
-      mathjax <- paste(normalized_relative_to(output_dir, mathjax_path), "/",
-                       mathjax_config(), sep = "")
-    }
-
-    if (identical(template, "default")) {
-      args <- c(args, "--mathjax")
-      args <- c(args, "--variable", paste0("mathjax-url:", mathjax))
-    } else if (!self_contained) {
-      args <- c(args, paste(c("--mathjax", mathjax), collapse = "="))
-    } else {
-      warning("MathJax doesn't work with self_contained when not ",
-              "using the rmarkdown \"default\" template.", call. = FALSE)
-    }
-
+pandoc_math_args <- function(math,
+                             files_dir,
+                             output_dir) {
+  if (is.null(math)) {
+    return(NULL)
   }
 
-  args
+  if (math %in% c("mathml", "webtex", "gladtex")) {
+    return(paste0("--", math))
+  }
+
+  nm <- names(math)
+
+  if (identical(nm, "webtex")) {
+    return(paste0("--webtex=", math[[1L]]))
+  }
+
+  if (math == "mathjax") {
+    return(includes_mathjax(default_mathjax()))
+  }
+
+  if (identical(math["mathjax"], "local")) {
+    return(includes_mathjax(paste(normalized_relative_to(
+      output_dir,
+      render_supporting_files(pandoc_mathjax_local_path(),
+                              files_dir,
+                              "mathjax-local")
+    ), "/", mathjax_config(), sep = "")))
+  }
+
+  if (identical(nm, "mathjax")) {
+    return(includes_mathjax(math[[1L]]))
+  }
+
+  if (math == "katex") {
+    return(includes_katex(default_katex()))
+  }
+
+  if (identical(nm, "katex")) {
+    return(includes_katex(math[[1L]]))
+  }
+
+  stop("Invalid math specification.")
 }
 
 

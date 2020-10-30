@@ -50,3 +50,24 @@ includes_to_pandoc_args <- function(includes,
 normalize_path <- function(path, winslash = "/", mustWork = NA) {
   if (!is.null(path)) normalizePath(path, winslash = winslash, mustWork = mustWork)
 }
+
+includes_math <- function(engine, url) {
+  temp_file <- tempfile(pattern = paste0(engine, "-"), fileext = ".html")
+  xfun::write_utf8(
+    gsub("{{math}}",
+         url,
+         xfun::read_utf8(pkg_file("rmd/h/math/", paste0(engine, ".html"))),
+         fixed = TRUE),
+    temp_file
+  )
+  pandoc_include_args(in_header = temp_file)
+}
+
+includes_mathjax <- function(url) {
+  c("--mathjax", includes_math("mathjax", url))
+}
+
+includes_katex <- function(url) {
+  # To prevent
+  c("--katex", includes_math("katex", url))
+}

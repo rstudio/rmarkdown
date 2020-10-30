@@ -661,22 +661,5 @@ $endif$
 });
 </script>
 $endif$
-
-$if(mathjax-url)$
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "$mathjax-url$";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-$endif$
-
-$if(math)$
-  $math$
-$endif$
-
 </body>
 </html>
