@@ -9,6 +9,8 @@ rmarkdown 2.6
 
 - Fix `pandoc_convert(citeproc = TRUE)` not supressing the `--natbib` or `--biblatex` options (thanks, @atusy, #1932).
 
+- `html_document` and `html_document_base` gains the `math` argument, and support a variety of math rendering engines: "mathjax", "katex", "mathml", "webtex", and "gladtex". The default value is "default", which inherits the `mathjax` option. See `?rmarkdown::html_document` for details (thanks, @atusy, #1940).
+
 rmarkdown 2.5
 ================================================================================
 
