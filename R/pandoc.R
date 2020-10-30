@@ -490,13 +490,14 @@ pandoc_math_args <- function(math,
     return(includes_mathjax(default_mathjax()))
   }
 
-  if (identical(math["mathjax"], "local")) {
-    return(includes_mathjax(paste(normalized_relative_to(
-      output_dir,
-      render_supporting_files(pandoc_mathjax_local_path(),
-                              files_dir,
-                              "mathjax-local")
-    ), "/", mathjax_config(), sep = "")))
+  if (identical(math[["mathjax"]], "local")) {
+    mathjax_path <- pandoc_mathjax_local_path()
+    mathjax_path <- render_supporting_files(mathjax_path,
+                                            files_dir,
+                                            "mathjax-local")
+    mathjax <- paste(normalized_relative_to(output_dir, mathjax_path), "/",
+                     mathjax_config(), sep = "")
+    return(includes_mathjax(mathjax))
   }
 
   if (identical(nm, "mathjax")) {
