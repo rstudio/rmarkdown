@@ -538,7 +538,7 @@ pandoc_math_args <- function(math,
       args <- c(args, paste0("--", engine))
       args <- c(args, "--variable", paste0(engine, "-url:", url))
     } else if (!self_contained) {
-      args <- c(args, paste0("--", engine, "=", url))
+      args <- c(args, paste(c(paste0("--", engine), url), collapse = "="))
     } else {
       warning("MathJax and KaTeX do not work with self_contained when not ",
               "using the rmarkdown \"default\" template.", call. = FALSE)
