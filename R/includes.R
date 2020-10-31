@@ -68,6 +68,5 @@ includes_mathjax <- function(url) {
 }
 
 includes_katex <- function(url) {
-  # To prevent
   c("--katex", includes_math("katex", url))
 }
