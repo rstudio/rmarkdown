@@ -481,6 +481,21 @@ $endif$
 
 $endif$
 
+$if(mathjax-url)$
+<script src="$mathjax-url$" type="text/javascript" data-external="1"></script>
+$endif$
+
+$if(katex-url)$
+<link rel="stylesheet" href="$katex-url$/katex.min.css" data-external="1">
+<script defer src="$katex-url$/katex.min.js" data-external="1"></script>
+<script>document.addEventListener("DOMContentLoaded", function () {
+  var mathElements = document.getElementsByClassName("math");
+  for (var i = 0; i < mathElements.length; i++) {
+    var texText = mathElements[i].firstChild;
+    if (mathElements[i].tagName == "SPAN") { katex.render(texText.data, mathElements[i], { displayMode: mathElements[i].classList.contains("display"), throwOnError: false } );
+  }}});</script>
+$endif$
+
 $for(include-before)$
 $include-before$
 $endfor$
