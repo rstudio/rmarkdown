@@ -1,6 +1,6 @@
 ### Overview
 
-[![Build Status](https://travis-ci.org/rstudio/rmarkdown.svg?branch=master)](https://travis-ci.org/rstudio/rmarkdown)
+[![Build Status](https://travis-ci.com/rstudio/rmarkdown.svg?branch=master)](https://travis-ci.com/rstudio/rmarkdown)
 [![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/rmarkdown)](https://cran.r-project.org/package=rmarkdown)
 
 The **rmarkdown** package helps you create dynamic analysis documents that combine code, rendered output (such as figures), and prose. You bring your data, code, and ideas, and R Markdown renders your content into a polished document that can be used to:
