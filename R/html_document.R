@@ -56,6 +56,14 @@
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
 #'  copied into the output directory). You can pass an alternate URL or pass
 #'  \code{NULL} to exclude MathJax entirely.
+#'@param math Math rendering engine. The "default" option inherits the `mathjax`
+#'  argument. Available options are "mathjax", "mathml", "webtex", "katex", and
+#'  "gladtex". All of them can be specified as a non-named string. For
+#'  "mathjax", "webtex", and "katex", they can be specified as a named string,
+#'  whose name corresponds to engine and the value corresponds to URL. See
+#'  \url{https://pandoc.org/MANUAL.html#math-rendering-in-html} for the details.
+#'  Note that `c(mathjax = "local")` is equivalent to specifying "local" to
+#'  `mathjax`.
 #'@param section_divs Wrap sections in <div> tags, and attach identifiers to the
 #'  enclosing <div> rather than the header itself.
 #'@param template Pandoc template to use for rendering. Pass "default" to use
@@ -194,6 +202,7 @@ html_document <- function(toc = FALSE,
                           theme = "default",
                           highlight = "default",
                           mathjax = "default",
+                          math = "default",
                           template = "default",
                           extra_dependencies = NULL,
                           css = NULL,
@@ -449,7 +458,8 @@ html_document <- function(toc = FALSE,
     on_exit = on_exit,
     base_format = html_document_base(theme = theme,
                                      self_contained = self_contained,
-                                     lib_dir = lib_dir, mathjax = mathjax,
+                                     lib_dir = lib_dir,
+                                     mathjax = mathjax, math = math,
                                      template = template,
                                      pandoc_args = pandoc_args,
                                      extra_dependencies = extra_dependencies,
@@ -507,8 +517,13 @@ html_highlighters <- function() {
   c(highlighters(), "textmate")
 }
 
-default_mathjax <- function() {
-  paste0("https://mathjax.rstudio.com/latest/", mathjax_config())
+default_math <- function(engine = c("mathjax", "katex")) {
+  engine <- match.arg(engine)
+  if (engine == "mathjax") {
+    paste0("https://mathjax.rstudio.com/latest/", mathjax_config())
+  } else {
+    "https://cdn.jsdelivr.net/npm/katex@0.12.0/dist"
+  }
 }
 
 mathjax_config <- function() {

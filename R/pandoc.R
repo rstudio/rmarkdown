@@ -470,44 +470,77 @@ pandoc_self_contained_html <- function(input, output) {
 }
 
 
-validate_self_contained <- function(mathjax) {
+validate_self_contained <- function(math) {
 
-  if (identical(mathjax, "local"))
+  if (identical(c(names(math), math[[1L]]), c("mathjax", "local")))
     stop("Local MathJax isn't compatible with self_contained\n",
          "(you should set self_contained to FALSE)", call. = FALSE)
 }
 
-pandoc_mathjax_args <- function(mathjax,
-                                template,
-                                self_contained,
-                                files_dir,
-                                output_dir) {
+pandoc_math_args <- function(math,
+                             template,
+                             self_contained,
+                             files_dir,
+                             output_dir) {
+  url <- math[[1L]]
+
+  if (is.null(url)) {
+    return(NULL)
+  }
+
+  engine <- names(math)
+
+  if (is.null(engine)) {
+    if (url %in% c("mathml", "webtex", "gladtex")) {
+      return(paste0("--", math[[1L]]))
+    }
+
+    if (identical(url, "mathjax")) {
+      url <- "default"
+      engine <- "mathjax"
+    } else if (identical(url, "katex")) {
+      url <- "default"
+      engine <- "katex"
+    }
+  }
+
+  if (identical(engine, "webtex")) {
+    return(if (identical(url, "default")) {
+      "--webtex"
+    } else {
+      paste0("--webtex=", url)
+    })
+  }
+
+
   args <- c()
 
-  if (!is.null(mathjax)) {
+  is_mathjax <- identical(engine, "mathjax")
+  is_katex <- identical(engine, "katex")
 
-    if (identical(mathjax, "default")) {
+  if (is_mathjax || is_katex) {
+
+    if (identical(url, "default")) {
       if (identical(template, "default"))
-        mathjax <- default_mathjax()
+        url <- default_math(engine)
       else
-        mathjax <- NULL
-    }
-    else if (identical(mathjax, "local")) {
+        url <- NULL
+    } else if (is_mathjax && identical(url, "local")) {
       mathjax_path <- pandoc_mathjax_local_path()
       mathjax_path <- render_supporting_files(mathjax_path,
                                               files_dir,
                                               "mathjax-local")
-      mathjax <- paste(normalized_relative_to(output_dir, mathjax_path), "/",
+      url <- paste(normalized_relative_to(output_dir, mathjax_path), "/",
                        mathjax_config(), sep = "")
     }
 
     if (identical(template, "default")) {
-      args <- c(args, "--mathjax")
-      args <- c(args, "--variable", paste0("mathjax-url:", mathjax))
+      args <- c(args, paste0("--", engine))
+      args <- c(args, "--variable", paste0(engine, "-url:", url))
     } else if (!self_contained) {
-      args <- c(args, paste(c("--mathjax", mathjax), collapse = "="))
+      args <- c(args, paste(c(paste0("--", engine), url), collapse = "="))
     } else {
-      warning("MathJax doesn't work with self_contained when not ",
+      warning("MathJax and KaTeX do not work with self_contained when not ",
               "using the rmarkdown \"default\" template.", call. = FALSE)
     }
 

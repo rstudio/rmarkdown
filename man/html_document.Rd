@@ -23,6 +23,7 @@ html_document(
   theme = "default",
   highlight = "default",
   mathjax = "default",
+  math = "default",
   template = "default",
   extra_dependencies = NULL,
   css = NULL,
@@ -106,6 +107,15 @@ case you can use the \code{css} parameter to add your own styles).}
 MathJax CDN. The "local" option uses a local version of MathJax (which is
 copied into the output directory). You can pass an alternate URL or pass
 \code{NULL} to exclude MathJax entirely.}
+
+\item{math}{Math rendering engine. The "default" option inherits the `mathjax`
+argument. Available options are "mathjax", "mathml", "webtex", "katex", and
+"gladtex". All of them can be specified as a non-named string. For
+"mathjax", "webtex", and "katex", they can be specified as a named string,
+whose name corresponds to engine and the value corresponds to URL. See
+\url{https://pandoc.org/MANUAL.html#math-rendering-in-html} for the details.
+Note that `c(mathjax = "local")` is equivalent to specifying "local" to
+`mathjax`.}
 
 \item{template}{Pandoc template to use for rendering. Pass "default" to use
 the rmarkdown package default template; pass \code{NULL} to use pandoc's

@@ -19,6 +19,7 @@
 html_document_base <- function(theme = NULL,
                                self_contained = TRUE,
                                lib_dir = NULL,
+                               math = "default",
                                mathjax = "default",
                                pandoc_args = NULL,
                                template = "default",
@@ -38,10 +39,13 @@ html_document_base <- function(theme = NULL,
   args <- c(args, "--email-obfuscation", "none")
 
   # self contained document
+  if (identical(math, "default")) {
+    math <- c(mathjax = mathjax)
+  }
   if (self_contained) {
     if (copy_resources)
       stop("Local resource copying is incompatible with self-contained documents.")
-    validate_self_contained(mathjax)
+    validate_self_contained(math)
     args <- c(args, "--self-contained")
   }
 
@@ -97,12 +101,12 @@ html_document_base <- function(theme = NULL,
     args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir,
                                             output_dir))
 
-    # mathjax
-    args <- c(args, pandoc_mathjax_args(mathjax,
-                                        template,
-                                        self_contained,
-                                        lib_dir,
-                                        output_dir))
+    # math
+    args <- c(args, pandoc_math_args(math,
+                                     template,
+                                     self_contained,
+                                     lib_dir,
+                                     output_dir))
 
     preserved_chunks <<- extract_preserve_chunks(input_file)
 

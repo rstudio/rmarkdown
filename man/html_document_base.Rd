@@ -8,6 +8,7 @@ html_document_base(
   theme = NULL,
   self_contained = TRUE,
   lib_dir = NULL,
+  math = "default",
   mathjax = "default",
   pandoc_args = NULL,
   template = "default",
@@ -33,6 +34,15 @@ its size).}
 \item{lib_dir}{Directory to copy dependent HTML libraries (e.g. jquery,
 bootstrap, etc.) into. By default this will be the name of the document with
 \code{_files} appended to it.}
+
+\item{math}{Math rendering engine. The "default" option inherits the `mathjax`
+argument. Available options are "mathjax", "mathml", "webtex", "katex", and
+"gladtex". All of them can be specified as a non-named string. For
+"mathjax", "webtex", and "katex", they can be specified as a named string,
+whose name corresponds to engine and the value corresponds to URL. See
+\url{https://pandoc.org/MANUAL.html#math-rendering-in-html} for the details.
+Note that `c(mathjax = "local")` is equivalent to specifying "local" to
+`mathjax`.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is
