@@ -551,25 +551,26 @@ unix_mathjax_path <- function() {
 
 
 pandoc_html_highlight_args <- function(template,
-                                       highlight, highlight_downlit = FALSE) {
-
+                                       highlight,
+                                       highlight_downlit = FALSE) {
   args <- c()
-
   if (is.null(highlight)) {
+    # deactivate all highlighting if requesting
     args <- c(args, "--no-highlight")
-  }
-  else if (highlight_downlit || !identical(template, "default")) {
-    if (identical(highlight, "default"))
-      highlight <- "pygments"
+  } else if (highlight_downlit || !identical(template, "default")) {
+    # Use requested pandoc highlighting for non default pandoc template or if
+    # downlit is requested
+    if (identical(highlight, "default")) highlight <- "pygments"
     args <- c(args, "--highlight-style", highlight)
-  }
-  else {
+  } else {
+    # for default template only - Pandoc .theme file not supported
     highlight <- match.arg(highlight, html_highlighters())
     if (is_highlightjs(highlight)) {
+      # use highlightjs by default and not pandoc highlighting
       args <- c(args, "--no-highlight")
       args <- c(args, "--variable", "highlightjs=1")
-    }
-    else {
+    } else {
+      # or specified highlight style
       args <- c(args, "--highlight-style", highlight)
     }
   }
