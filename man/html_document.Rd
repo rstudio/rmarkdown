@@ -22,6 +22,7 @@ html_document(
   self_contained = TRUE,
   theme = "default",
   highlight = "default",
+  highlight_downlit = FALSE,
   mathjax = "default",
   template = "default",
   extra_dependencies = NULL,
