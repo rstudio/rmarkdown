@@ -1,7 +1,7 @@
 rmarkdown 2.6
 ================================================================================
 
-- `html_document` (and `html_document_base`)'s `theme` arguments gains the ability to accept a list of values, which are passed along to `bootstraplib::bs_theme()`, making it much easier create custom themes with Bootstrap 4 or 3. To learn more, see <https://rstudio.github.io/bootstraplib> (thanks, @cpsievert, #1260).
+- `html_document` (and `html_document_base`)'s `theme` arguments gains the ability to accept a list of values, which are passed along to `bslib::bs_theme()`, making it much easier create custom themes with Bootstrap 4 or 3. To learn more, see <https://rstudio.github.io/bslib> (thanks, @cpsievert, #1260).
 
 - Fix issues with `anchor_sections = TRUE` and **learnr** (thanks, @gadenbuie, #1938)
 

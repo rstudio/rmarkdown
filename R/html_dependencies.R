@@ -41,7 +41,7 @@ html_dependency_jqueryui <- function() {
 #' @export
 html_dependency_bootstrap <- function(theme) {
   if (is_bs_theme(theme)) {
-    return(bootstraplib::bs_theme_dependencies(theme))
+    return(bslib::bs_theme_dependencies(theme))
   }
   if (identical(theme, "default")) {
     theme <- "bootstrap"
@@ -65,13 +65,13 @@ bootstrap_dependencies <- function(theme) {
 }
 
 # At the moment, theme may be either NULL (no Bootstrap), a string (Bootswatch
-# 3 name), a bootstraplib::bs_theme(), or a list of arguments to bs_theme().
+# 3 name), a bslib::bs_theme(), or a list of arguments to bs_theme().
 as_bs_theme <- function(theme) {
   if (is_bs_theme(theme)) {
     return(theme)
   }
   if (is.list(theme)) {
-    return(do.call(bootstraplib::bs_theme, theme))
+    return(do.call(bslib::bs_theme, theme))
   }
   NULL
 }
@@ -81,19 +81,19 @@ is_bs_themeish <- function(theme) {
 }
 
 is_bs_theme <- function(theme) {
-  is_available("bootstraplib") &&
-    bootstraplib::is_bs_theme(theme)
+  is_available("bslib") &&
+    bslib::is_bs_theme(theme)
 }
 
 theme_version <- function(theme) {
   if (is.list(theme)) {
-    theme$version %||% bootstraplib::version_default()
+    theme$version %||% bslib::version_default()
   } else {
     substr(html_dependency_bootstrap("default")$version, 1, 1)
   }
 }
 
-# TODO: maybe this should be a bootstraplib function?
+# TODO: maybe this should be a bslib function?
 is_bs3_compatible <- function(theme) {
   version <- theme_version(theme)
   identical(version, "3") || grepl("\\+3$", version)

@@ -47,10 +47,10 @@
 #'  documents MathJax is still loaded externally (this is necessary because of
 #'  its size).
 #'@param theme One of the following:
-#'  * A list of parameters to supply to [bootstraplib::bs_theme()]
+#'  * A [bslib::bs_theme()] object (or a list of [bslib::bs_theme()] argument values)
 #'    * Use this option for custom themes using Bootstrap 4 or 3.
 #'    * During knit, modifications to the theme may be made via
-#'      [bootstraplib::bs_global_theme_update()].
+#'      [bslib::bs_global_theme_update()].
 #'  * `NULL` for no theme (i.e., no [html_dependency_bootstrap()]).
 #'  * A character string specifying a [Bootswatch 3](https://bootswatch.com/3/)
 #'    theme name (for backwards-compatibility).

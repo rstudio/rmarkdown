@@ -95,11 +95,11 @@ its size).}
 
 \item{theme}{One of the following:
 \itemize{
-\item A list of parameters to supply to \code{\link[bootstraplib:bs_theme]{bootstraplib::bs_theme()}}
+\item A \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object (or a list of \code{\link[bslib:bs_theme]{bslib::bs_theme()}} argument values)
 \itemize{
 \item Use this option for custom themes using Bootstrap 4 or 3.
 \item During knit, modifications to the theme may be made via
-\code{\link[bootstraplib:bs_global_theme]{bootstraplib::bs_global_theme_update()}}.
+\code{\link[bslib:bs_global_theme_update]{bslib::bs_global_theme_update()}}.
 }
 \item \code{NULL} for no theme (i.e., no \code{\link[=html_dependency_bootstrap]{html_dependency_bootstrap()}}).
 \item A character string specifying a \href{https://bootswatch.com/3/}{Bootswatch 3}
