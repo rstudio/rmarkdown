@@ -559,7 +559,7 @@ pandoc_html_highlight_args <- function(template,
     args <- c(args, "--no-highlight")
   } else if (highlight_downlit) {
     # use pandoc highlight and add custom css
-    if (identical(highlight, "default")) highlight <- "pygments"
+    if (is_highlightjs(highlight)) highlight <- "pygments"
     args <- c(args, "--highlight-style", highlight)
     args <- c(args, "--variable", "highlight-downlit=1")
   } else if (!identical(template, "default")) {

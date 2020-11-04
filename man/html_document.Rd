@@ -103,6 +103,11 @@ case you can use the \code{css} parameter to add your own styles).}
 "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
 "haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.}
 
+\item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package to
+highlight R code (including providing hyperlinks to function documentation).
+Only pandoc highlighting is supported, so with \code{highlight} parameter to
+"default" or "textmate", "pygments" will be used.}
+
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is
 copied into the output directory). You can pass an alternate URL or pass

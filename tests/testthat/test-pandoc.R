@@ -25,6 +25,9 @@ test_that("Correct syntax highlighting argument as requested", {
   expect_equal(pandoc_html_highlight_args("dummy.html", "default",
                                           highlight_downlit = TRUE),
                c(highlight_style("pygments"), downlit))
+  expect_equal(pandoc_html_highlight_args("dummy.html", "textmate",
+                                          highlight_downlit = TRUE),
+               c(highlight_style("pygments"), downlit))
   expect_equal(pandoc_html_highlight_args("default", "tango",
                                           highlight_downlit = TRUE),
                c(highlight_style("tango"),downlit))
