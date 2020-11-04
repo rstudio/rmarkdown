@@ -280,7 +280,7 @@ html_document <- function(toc = FALSE,
 
   # highlight
   if (highlight_downlit) {
-    if (!requireNamespace("downlit", quietly = TRUE)) {
+    if (!xfun::loadable("downlit")) {
       warning("highlight_downlit=TRUE requires the downlit package",
               "downlit highlighting won't be applied",
               "and no function linking will be done.", call. = FALSE)
