@@ -557,9 +557,13 @@ pandoc_html_highlight_args <- function(template,
   if (is.null(highlight)) {
     # deactivate all highlighting if requesting
     args <- c(args, "--no-highlight")
-  } else if (highlight_downlit || !identical(template, "default")) {
-    # Use requested pandoc highlighting for non default pandoc template or if
-    # downlit is requested
+  } else if (highlight_downlit) {
+    # use pandoc highlight and add custom css
+    if (identical(highlight, "default")) highlight <- "pygments"
+    args <- c(args, "--highlight-style", highlight)
+    args <- c(args, "--variable", "highlight-downlit=1")
+  } else if (!identical(template, "default")) {
+    # Use requested pandoc highlighting for non default pandoc template
     if (identical(highlight, "default")) highlight <- "pygments"
     args <- c(args, "--highlight-style", highlight)
   } else {

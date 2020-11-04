@@ -62,6 +62,17 @@ if (window.hljs) {
 </script>
 $endif$
 
+$if(highlight-downlit)$
+<style type="text/css">
+  /* from bookdown::bs4_book() css */
+  code a:any-link {
+    color: inherit; /* use colour from syntax highlighting */
+    text-decoration: underline;
+    text-decoration-color: #ccc;
+  }
+</style>
+$endif$
+
 $if(highlighting-css)$
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
