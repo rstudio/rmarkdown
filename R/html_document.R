@@ -450,7 +450,8 @@ html_document <- function(toc = FALSE,
 
     # add a post processor for syntax highlighting with downlit if requested
     if (highlight_downlit) {
-        output_file <- downlit::downlit_html_path(output_file, output_file)
+        output_file <- downlit::downlit_html_path(output_file, output_file,
+                                                  classes = downlit::classes_pandoc())
     }
 
     output_file
