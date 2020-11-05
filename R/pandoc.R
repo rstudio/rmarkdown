@@ -553,41 +553,44 @@ unix_mathjax_path <- function() {
 pandoc_html_highlight_args <- function(template,
                                        highlight,
                                        highlight_downlit = FALSE) {
+
   args <- c()
-  if (is.null(highlight)) {
-    # deactivate all highlighting if requesting
-    args <- c(args, "--no-highlight")
-  } else if (highlight_downlit) {
-    # use pandoc highlight and add custom css
+
+  # no highlighting engine
+  if (is.null(highlight)) return(pandoc_highlight_args(NULL))
+
+  # downlit engine
+  if (highlight_downlit) {
     if (is_highlightjs(highlight)) {
-      # default to accessible theme a11y - copied from distill
-      # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/a11y.theme
-      highlight <- pkg_file_highlight("a11y.theme")
+      stop(
+        sprintf(
+          "%s theme is for highlightjs highlighting engine",
+          "and can't be used with downlit.",  highlight
+        ),
+        call. = FALSE
+      )
     }
-    args <- c(args, "--highlight-style", highlight)
-    args <- c(args, "--variable", "highlight-downlit=1")
-  } else if (!identical(template, "default")) {
-    # Use requested pandoc highlighting for non default pandoc template
-    if (identical(highlight, "default")) highlight <- "pygments"
-    args <- c(args, "--highlight-style", highlight)
+    # default to accessible theme a11y - copied from distill
+    # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/a11y.theme
+    args <- c(
+      pandoc_highlight_args(highlight, default = pkg_file_highlight("a11y.theme")),
+      pandoc_variable_arg("highlight-downlit")
+    )
+  } else if (is_highlightjs(highlight) ||
+             (highlight == "default" && template == "default")) {
+    # highlightjs engine
+    args <- c(pandoc_highlight_args(NULL),
+              pandoc_variable_arg("highlightjs", "1"))
   } else {
-    # for default template only - Pandoc .theme file not supported
-    highlight <- match.arg(highlight, html_highlighters())
-    if (is_highlightjs(highlight)) {
-      # use highlightjs by default and not pandoc highlighting
-      args <- c(args, "--no-highlight")
-      args <- c(args, "--variable", "highlightjs=1")
-    } else {
-      # or specified highlight style
-      args <- c(args, "--highlight-style", highlight)
-    }
+    # Pandoc engine
+    args <- pandoc_highlight_args(highlight, default = "pygments")
   }
 
   args
 }
 
 is_highlightjs <- function(highlight) {
-  !is.null(highlight) && (highlight %in% c("default", "textmate"))
+  !is.null(highlight) && (highlight %in% c("textmate"))
 }
 
 #' Find the \command{pandoc} executable
