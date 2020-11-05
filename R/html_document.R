@@ -283,13 +283,9 @@ html_document <- function(toc = FALSE,
   }
 
   # highlighting ---------
-  if (highlight_downlit) {
-    if (!xfun::loadable("downlit")) {
-      warning("highlight_downlit=TRUE requires the downlit package",
-              "downlit highlighting won't be applied",
-              "and no function linking will be done.", call. = FALSE)
-      highlight_downlit <- FALSE
-    }
+  if (highlight_downlit && !xfun::loadable("downlit")) {
+    stop("highlight_downlit=TRUE requires the downlit package to be installed.",
+         call. = FALSE)
   }
   args <- c(args,
             pandoc_html_highlight_args(template, highlight, highlight_downlit)
