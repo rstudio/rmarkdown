@@ -18,17 +18,24 @@ test_that("Correct HTML highlighting argument as requested", {
   highlightjs <- pandoc_variable_arg("highlightjs", "1")
   a11y_theme <- hl_style(pkg_file_highlight("a11y.theme"))
   # check logic
+  # no engine
   expect_equal(hl_args(NULL, "default"), hl_style(NULL))
   expect_equal(hl_args(NULL, "dummy.html"), hl_style(NULL))
+  # pandoc
   expect_equal(hl_args("default", "dummy.html"), hl_style("pygments"))
   expect_equal(hl_args("zenburn", "dummy.html"), hl_style("zenburn"))
   expect_equal(hl_args("breezedark", "default"), hl_style("breezedark"))
+  # highlight
   expect_equal(hl_args("default", "default"), c(hl_style(NULL), highlightjs))
+  expect_equal(hl_args("textmate", "default"), c(hl_style(NULL), highlightjs))
+  # downlit
   expect_equal(hl_args("default", "default", TRUE), c(a11y_theme, downlit))
   expect_equal(hl_args("default", "dummy.html", TRUE), c(a11y_theme, downlit))
   expect_equal(hl_args("tango", "default", TRUE), c(hl_style("tango"), downlit))
-
   expect_error(hl_args("textmate", "dummy.html", TRUE))
+  # custom theme
+  expect_equal(hl_args("a11y", "default", FALSE), c(a11y_theme))
+  expect_equal(hl_args("a11y", "default", TRUE), c(a11y_theme, downlit))
 })
 
 test_that("detect highlightjs theme", {

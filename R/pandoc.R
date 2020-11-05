@@ -559,6 +559,15 @@ pandoc_html_highlight_args <- function(template,
   # no highlighting engine
   if (is.null(highlight)) return(pandoc_highlight_args(NULL))
 
+  # TODO: move out so that it works also for other formats
+  resolve_highlight <- function(highlight) {
+    custom <- list(
+      a11y = pkg_file_highlight("a11y.theme")
+    )
+    custom[[highlight]] %||% highlight
+  }
+  highlight <- resolve_highlight(highlight)
+
   # downlit engine
   if (highlight_downlit) {
     if (is_highlightjs(highlight)) {
@@ -573,7 +582,7 @@ pandoc_html_highlight_args <- function(template,
     # default to accessible theme a11y - copied from distill
     # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/a11y.theme
     args <- c(
-      pandoc_highlight_args(highlight, default = pkg_file_highlight("a11y.theme")),
+      pandoc_highlight_args(highlight, default = resolve_highlight("a11y")),
       pandoc_variable_arg("highlight-downlit")
     )
   } else if (is_highlightjs(highlight) ||
