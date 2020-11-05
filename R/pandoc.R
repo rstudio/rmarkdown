@@ -559,7 +559,11 @@ pandoc_html_highlight_args <- function(template,
     args <- c(args, "--no-highlight")
   } else if (highlight_downlit) {
     # use pandoc highlight and add custom css
-    if (is_highlightjs(highlight)) highlight <- "pygments"
+    if (is_highlightjs(highlight)) {
+      # default to accessible theme a11y - copied from distill
+      # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/a11y.theme
+      highlight <- pkg_file_highlight("a11y.theme")
+    }
     args <- c(args, "--highlight-style", highlight)
     args <- c(args, "--variable", "highlight-downlit=1")
   } else if (!identical(template, "default")) {
