@@ -103,10 +103,13 @@ case you can use the \code{css} parameter to add your own styles).}
 "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
 "haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.}
 
-\item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package to
-highlight R code (including providing hyperlinks to function documentation).
-Only pandoc highlighting is supported, so with \code{highlight} parameter to
-"default" or "textmate", "pygments" will be used.}
+\item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package as
+syntax highlighting engine to highlight inline code and R code chunks
+(including providing hyperlinks to function documentation). Only Pandoc
+color schemes are supported with this engine. With \code{highlight}
+"default", it will use the accessible theme called "a11y". To know more
+about \pkg{downlit} highlighting engine, see
+\url{https://downlit.r-lib.org/}.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is
