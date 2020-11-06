@@ -69,11 +69,12 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
   }
 
   # attach dependencies to final html
-  html <- htmltools::attachDependencies(html, deps)
+  html_doc <- htmltools::htmlTemplate(text_ = html, document_ = TRUE)
+  html_doc <- htmltools::attachDependencies(html_doc, deps)
 
   # create shiny app
   shiny::shinyApp(
-    ui = function(req) html,
+    ui = function(req) html_doc,
     server = server,
     onStart = onStart,
     uiPattern = "^/$|^(/.*\\.[Rr][Mm][Dd])$"
@@ -159,7 +160,14 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
     dependencies <- append(dependencies, list(html_dependency_rsiframe()))
 
   # return html w/ dependencies
-  shinyHTML_with_deps(rendered_html, dependencies)
+  html_with_deps <- shinyHTML_with_deps(rendered_html, dependencies)
+
+  # add placeholder for additional dependencies at the end of the <head> element
+  sub('</head>',
+      '\n<!-- HEAD_CONTENT -->\n</head>',
+      html_with_deps,
+      fixed = TRUE,
+      useBytes = TRUE)
 }
 
 shiny_prerendered_prerender <- function(
