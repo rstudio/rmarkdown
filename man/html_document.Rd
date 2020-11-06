@@ -99,12 +99,18 @@ its size).}
 "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
 case you can use the \code{css} parameter to add your own styles).}
 
-\item{highlight}{Syntax highlighting style. Supported styles include
-"default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
-"haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.}
+\item{highlight}{Syntax highlight engine and style. "default" (and "textmate")
+will select highlightjs as syntax highlight engine instead of Pandoc.\cr Any
+other value will be passed as
+\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlight style to
+Pandoc}. Pandoc's supported styles include "tango", "pygments", "kate",
+"monochrome", "espresso", "zenburn", "haddock" and "breezedark". Two custom
+themes are also included, "a11y", for accessible color scheme and "rstudio",
+to replicate RStudio editor theme.\crPass \code{NULL} to prevent syntax
+highlighting.}
 
 \item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package as
-syntax highlighting engine to highlight inline code and R code chunks
+syntax highlight engine to highlight inline code and R code chunks
 (including providing hyperlinks to function documentation). Only Pandoc
 color schemes are supported with this engine. With \code{highlight}
 "default", it will use the accessible theme called "a11y". To know more
