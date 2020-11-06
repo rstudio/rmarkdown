@@ -586,12 +586,15 @@ pandoc_html_highlight_args <- function(template,
     }
     args <- c(
       pandoc_highlight_args(highlight, default = resolve_highlight("a11y")),
+      # variable used to insert some css in a Pandoc template
       pandoc_variable_arg("highlight-downlit")
     )
   } else if (is_highlightjs(highlight) ||
              (highlight == "default" && template == "default")) {
     # highlightjs engine
     args <- c(pandoc_highlight_args(NULL),
+              # variable used to insert some css and js
+              # in the Pandoc default template
               pandoc_variable_arg("highlightjs", "1"))
   } else {
     # Pandoc engine

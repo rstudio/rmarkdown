@@ -99,8 +99,11 @@ its size).}
 "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
 case you can use the \code{css} parameter to add your own styles).}
 
-\item{highlight}{Syntax highlight engine and style. "default" (and "textmate")
- will use highlightjs as syntax highlighting engine instead of Pandoc.
+\item{highlight}{Syntax highlight engine and style. See the
+ \emph{Highlighting} section below for details.
+
+ "default" (and "textmate") will use highlightjs as syntax highlighting
+ engine instead of Pandoc.
 
 Any other value will be passed to Pandoc's
 \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
@@ -109,7 +112,8 @@ style}. Pandoc's built-in styles include "tango", "pygments", "kate",
 themes are also included, "a11y", for accessible color scheme and "rstudio",
 to replicate RStudio editor theme.
 
- Pass \code{NULL} to prevent syntax highlighting.}
+ Pass \code{NULL} to prevent syntax highlighting. Pass a path to a
+ \samp{.theme} file to use a custom highlighting style for Pandoc.}
 
 \item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package as
 syntax highlight engine to highlight inline code and R code chunks
@@ -171,6 +175,53 @@ the markdown syntax for citations in the
 \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 and Citations} article in the online documentation.
 }
+\section{Highlighting}{
+
+
+ Different highlighting engines can be used with a R Markdown HTML documents:
+ highlightjs and Pandoc for all languages they support, \pkg{downlit} only
+ for R code.
+
+ highlightjs engine can only be used with the default template (i.e
+ \code{template = "default"}) and it has a unique style ("textmate"). When
+ activated, a JS script and a CSS file are inserted into the output HTML to
+ make it works. For now, \code{highlight = "default"} will use this engine. In
+ next versions, highghlightjs engine could be removed.
+
+ Pandoc built-in highlighting engine works with any template, default or
+ custom, and style can be chosen among the built-in ones ("tango", "pygments", "kate",
+"monochrome", "espresso", "zenburn", "haddock" and "breezedark") or among some custom
+ theme passed as ".theme" files (see Details in the
+ \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{Pandoc Manual}).
+ \pkg{rmarkdown} includes two custom theme to select with \code{highlight} parameter:
+ \itemize{
+ \item{"a11y", an accessible color theme derived from \url{https://github.com/ericwbailey/a11y-syntax-highlighting}}
+ \item{"rstudio", a color scheme close to RStudio's default highlighting and
+ highglightjs's textmate.}
+ }
+
+ \href{https://downlit.r-lib.org/}{\pkg{downlit}} is an R package that provides a syntax highlighting engine in
+ R. It will also do automatic linking of R code (requires internet
+ connectivity). It is activated only if  \code{highlight_downlit} is
+ \code{TRUE} and will pass after Pandoc engine to replace only R code syntax
+ highlighting and will use any selected Pandoc's style. Default color scheme
+ is the accessible theme "a11y". If default template is used, some CSS is
+ added to get the link introduced by autolinking to use the color scheme
+ chosen. If you want to use with a custom template, add this to your
+ template:
+
+ \preformatted{
+$if(highlight-downlit)$
+<style type="text/css">
+  code a:any-link {
+   color: inherit; /* use colour from syntax highlighting */
+   text-decoration: underline;
+   text-decoration-color: #ccc;
+  }
+ </style>
+ $endif$}
+}
+
 \section{Navigation Bars}{
 
 
@@ -252,16 +303,19 @@ right:
  Note however that if you choose not to use the "default" HTML template then
  several aspects of HTML document rendering will behave differently:
 
- \itemize{ \item{The \code{theme} parameter does not work (you can still
- provide styles using the \code{css} parameter). } \item{For the
- \code{highlight} parameter, the default highlighting style will resolve to
- "pygments" and the "textmate" highlighting style is not available }
- \item{The \code{toc_float} parameter will not work. } \item{The
- \code{code_folding} parameter will not work. } \item{Tabbed sections (as
- described above) will not work.} \item{Navigation bars (as described above)
- will not work. }\item{MathJax will not work if \code{self_contained} is
- \code{TRUE} (these two options can't be used together in normal pandoc
- templates). } }
+ \itemize{
+ \item{The \code{theme} parameter does not work (you can still provide styles
+ using the \code{css} parameter). }
+ \item{For the \code{highlight} parameter, the default highlighting engine
+ will resolve to Pandoc instead of highlightjs and highlighting style will default to
+ "pygments". "textmate" style is not available as related to highlightjs}
+ \item{The \code{toc_float} parameter will not work. }
+ \item{The \code{code_folding} parameter will not work. }
+ \item{Tabbed sections (as described above) will not work.}
+ \item{Navigation bars (as described above) will not work. }
+ \item{MathJax will not work if \code{self_contained} is \code{TRUE} (these
+ two options can't be used together in normal pandoc templates). }
+ }
 
  Due to the above restrictions, you might consider using the \code{includes}
  parameter as an alternative to providing a fully custom template.

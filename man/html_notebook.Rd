@@ -63,8 +63,11 @@ chunks by default.}
 "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
 case you can use the \code{css} parameter to add your own styles).}
 
-\item{highlight}{Syntax highlight engine and style. "default" (and "textmate")
- will use highlightjs as syntax highlighting engine instead of Pandoc.
+\item{highlight}{Syntax highlight engine and style. See the
+ \emph{Highlighting} section below for details.
+
+ "default" (and "textmate") will use highlightjs as syntax highlighting
+ engine instead of Pandoc.
 
 Any other value will be passed to Pandoc's
 \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
@@ -73,7 +76,8 @@ style}. Pandoc's built-in styles include "tango", "pygments", "kate",
 themes are also included, "a11y", for accessible color scheme and "rstudio",
 to replicate RStudio editor theme.
 
- Pass \code{NULL} to prevent syntax highlighting.}
+ Pass \code{NULL} to prevent syntax highlighting. Pass a path to a
+ \samp{.theme} file to use a custom highlighting style for Pandoc.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is
