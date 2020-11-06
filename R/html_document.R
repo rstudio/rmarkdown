@@ -52,11 +52,11 @@
 #'@param highlight Syntax highlight engine and style. "default" (and "textmate")
 #'  will use highlightjs as syntax highlighting engine instead of Pandoc.\cr Any
 #'  other value will be passed to Pandoc's
-#'  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting style}. 
+#'  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting style}.
 #' Pandoc's built-in styles include "tango", "pygments", "kate",
 #'  "monochrome", "espresso", "zenburn", "haddock" and "breezedark". Two custom
 #'  themes are also included, "a11y", for accessible color scheme and "rstudio",
-#'  to replicate RStudio editor theme.\crPass \code{NULL} to prevent syntax
+#'  to replicate RStudio editor theme.\cr Pass \code{NULL} to prevent syntax
 #'  highlighting.
 #'@param highlight_downlit \code{TRUE} to use the \pkg{downlit} package as
 #'  syntax highlight engine to highlight inline code and R code chunks

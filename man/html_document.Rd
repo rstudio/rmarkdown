@@ -100,20 +100,20 @@ its size).}
 case you can use the \code{css} parameter to add your own styles).}
 
 \item{highlight}{Syntax highlight engine and style. "default" (and "textmate")
-will select highlightjs as syntax highlight engine instead of Pandoc.\cr Any
-other value will be passed as
-\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlight style to
-Pandoc}. Pandoc's supported styles include "tango", "pygments", "kate",
-"monochrome", "espresso", "zenburn", "haddock" and "breezedark". Two custom
-themes are also included, "a11y", for accessible color scheme and "rstudio",
-to replicate RStudio editor theme.\crPass \code{NULL} to prevent syntax
-highlighting.}
+ will use highlightjs as syntax highlighting engine instead of Pandoc.\cr Any
+ other value will be passed to Pandoc's
+ \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting style}.
+Pandoc's built-in styles include "tango", "pygments", "kate",
+ "monochrome", "espresso", "zenburn", "haddock" and "breezedark". Two custom
+ themes are also included, "a11y", for accessible color scheme and "rstudio",
+ to replicate RStudio editor theme.\cr Pass \code{NULL} to prevent syntax
+ highlighting.}
 
 \item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package as
 syntax highlight engine to highlight inline code and R code chunks
 (including providing hyperlinks to function documentation). Only Pandoc
 color schemes are supported with this engine. With \code{highlight}
-"default", it will use the accessible theme called "a11y". To know more
+"default", it will use the accessible theme called "a11y". To learn more
 about \pkg{downlit} highlighting engine, see
 \url{https://downlit.r-lib.org/}.}
 
