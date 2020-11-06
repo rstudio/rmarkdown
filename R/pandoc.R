@@ -578,7 +578,7 @@ pandoc_html_highlight_args <- function(template,
     if (is_highlightjs(highlight)) {
       stop(
         sprintf(
-          "%s theme is for highlightjs highlighting engine",
+          "'%s' theme is for highlightjs highlighting engine",
           "and can't be used with downlit.",  highlight
         ),
         call. = FALSE
