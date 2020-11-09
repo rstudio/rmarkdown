@@ -30,13 +30,15 @@ test_that("Correct HTML highlighting argument as requested", {
   expect_equal(hl_args("default", "default"), c(hl_style(NULL), highlightjs))
   expect_equal(hl_args("textmate", "default"), c(hl_style(NULL), highlightjs))
   # downlit
-  expect_equal(hl_args("default", "default", TRUE), c(a11y_theme, downlit))
-  expect_equal(hl_args("default", "dummy.html", TRUE), c(a11y_theme, downlit))
   expect_equal(hl_args("tango", "default", TRUE), c(hl_style("tango"), downlit))
   expect_error(hl_args("textmate", "dummy.html", TRUE))
   # custom theme
+  skip_if_not(pandoc2.0())
+  expect_equal(hl_args("default", "default", TRUE), c(a11y_theme, downlit))
+  expect_equal(hl_args("default", "dummy.html", TRUE), c(a11y_theme, downlit))
   expect_equal(hl_args("a11y", "default", FALSE), c(a11y_theme))
   expect_equal(hl_args("rstudio", "default", TRUE), c(rstudio_theme, downlit))
+  expect_equal(hl_args("path/to.theme", "default"), c(hl_style("path/to.theme")))
 })
 
 test_that("detect highlightjs theme", {

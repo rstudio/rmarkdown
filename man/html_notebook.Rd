@@ -69,15 +69,16 @@ case you can use the \code{css} parameter to add your own styles).}
  "default" (and "textmate") will use highlightjs as syntax highlighting
  engine instead of Pandoc.
 
-Any other value will be passed to Pandoc's
-\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
-style}. Pandoc's built-in styles include "tango", "pygments", "kate",
-"monochrome", "espresso", "zenburn", "haddock" and "breezedark". Two custom
-themes are also included, "a11y", for accessible color scheme and "rstudio",
-to replicate RStudio editor theme.
+ Any other value will be passed to Pandoc's
+ \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
+ style}. Pandoc's built-in styles include "tango", "pygments", "kate",
+ "monochrome", "espresso", "zenburn", "haddock" and "breezedark". Two custom
+  are also included, "a11y", for accessible color scheme and "rstudio",
+ to replicate RStudio editor theme. A path to a \samp{.theme} file can also be
+ passed to be used as a custom highlighting style for Pandoc. Note that custom
+ style are available for Pandoc 2.0+.
 
- Pass \code{NULL} to prevent syntax highlighting. Pass a path to a
- \samp{.theme} file to use a custom highlighting style for Pandoc.}
+ Pass \code{NULL} to prevent syntax highlighting.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is

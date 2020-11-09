@@ -55,15 +55,16 @@
 #'  "default" (and "textmate") will use highlightjs as syntax highlighting
 #'  engine instead of Pandoc.
 #'
-#' Any other value will be passed to Pandoc's
-#' \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
-#' style}. Pandoc's built-in styles include "tango", "pygments", "kate",
-#' "monochrome", "espresso", "zenburn", "haddock" and "breezedark". Two custom
-#' themes are also included, "a11y", for accessible color scheme and "rstudio",
-#' to replicate RStudio editor theme.
+#'  Any other value will be passed to Pandoc's
+#'  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
+#'  style}. Pandoc's built-in styles include "tango", "pygments", "kate",
+#'  "monochrome", "espresso", "zenburn", "haddock" and "breezedark". Two custom
+#'   are also included, "a11y", for accessible color scheme and "rstudio",
+#'  to replicate RStudio editor theme. A path to a \samp{.theme} file can also be
+#'  passed to be used as a custom highlighting style for Pandoc. Note that custom
+#'  style are available for Pandoc 2.0+.
 #'
-#'  Pass \code{NULL} to prevent syntax highlighting. Pass a path to a
-#'  \samp{.theme} file to use a custom highlighting style for Pandoc.
+#'  Pass \code{NULL} to prevent syntax highlighting.
 #'
 #'@param highlight_downlit \code{TRUE} to use the \pkg{downlit} package as
 #'  syntax highlight engine to highlight inline code and R code chunks
@@ -115,12 +116,13 @@
 #' "monochrome", "espresso", "zenburn", "haddock" and "breezedark") or among some custom
 #'  theme passed as ".theme" files (see Details in the
 #'  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{Pandoc Manual}).
-#'  \pkg{rmarkdown} includes two custom theme to select with \code{highlight} parameter:
+#'  \pkg{rmarkdown} includes two custom themes to select with \code{highlight} parameter:
 #'  \itemize{
 #'  \item{"a11y", an accessible color theme derived from \url{https://github.com/ericwbailey/a11y-syntax-highlighting}}
 #'  \item{"rstudio", a color scheme close to RStudio's default highlighting and
 #'  highglightjs's textmate.}
 #'  }
+#'  Custom theme are only available for Pandoc 2.0 and above.
 #'
 #'  \href{https://downlit.r-lib.org/}{\pkg{downlit}} is an R package that provides a syntax highlighting engine in
 #'  R. It will also do automatic linking of R code (requires internet

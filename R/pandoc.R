@@ -561,6 +561,12 @@ pandoc_html_highlight_args <- function(template,
 
   # TODO: move out so that it works also for other formats
   resolve_highlight <- function(highlight) {
+    # if Pandoc built-in highlighter, do no nothing
+    if (highlight %in% highlighters()) return(highlight)
+    if (!pandoc2.0()) {
+      stop("Using a custom highlighting style requires Pandoc 2.0 and above",
+           call. = FALSE)
+    }
     custom <- list(
       # from distill
       # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/a11y.theme
@@ -569,6 +575,7 @@ pandoc_html_highlight_args <- function(template,
       # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/rstudio.theme
       rstudio = pkg_file_highlight("rstudio.theme")
     )
+    # if not an alias use the provided custom path
     custom[[highlight]] %||% highlight
   }
   highlight <- resolve_highlight(highlight)
@@ -584,8 +591,9 @@ pandoc_html_highlight_args <- function(template,
         call. = FALSE
       )
     }
+    default <- if (pandoc2.0()) resolve_highlight("a11y") else "pygments"
     args <- c(
-      pandoc_highlight_args(highlight, default = resolve_highlight("a11y")),
+      pandoc_highlight_args(highlight, default = default),
       # variable used to insert some css in a Pandoc template
       pandoc_variable_arg("highlight-downlit")
     )
