@@ -133,7 +133,11 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   target_file <- file %||% file.path(dir, default_file)
   yaml_front <- if (length(target_file)) yaml_front_matter(target_file)
   runtime <- yaml_front$runtime
-  theme <- render_args$output_options$theme %||% yaml_front$output$html_document$theme
+  theme <- render_args$output_options$theme
+  if (length(target_file)) {
+    format <- output_format_from_yaml_front_matter(readLines(target_file))
+    theme <- format$options$theme
+  }
 
   # run using the requested mode
   if (is_shiny_prerendered(runtime)) {
