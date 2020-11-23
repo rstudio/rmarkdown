@@ -101,24 +101,12 @@ jobs:
           tinytex::tl_pkgs()
         shell: Rscript {0}
 
-      - name: Build
-        run: R CMD build .
-        shell: bash
-
-      - name: Package tarball
-        run: |
-          dsc <- read.dcf("DESCRIPTION")
-          cat("PKG_TARBALL=", sprintf("%s_%s.tar.gz\n", dsc[,"Package"], dsc[,"Version"]), sep= "", file = Sys.getenv("GITHUB_ENV"), append = TRUE)
-        shell: Rscript {0}
-        
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_: false
           _R_CHECK_TESTS_NLINES_: 0
-        run: |
-          mkdir check
-          R CMD check --no-manual --as-cran -o check $PKG_TARBALL
-        shell: bash
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
 
       - name: Show testthat output
         if: always()
