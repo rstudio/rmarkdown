@@ -55,6 +55,10 @@ jobs:
           # install full prebuilt version
           TINYTEX_INSTALLER: TinyTeX
 
+      - name: Add some R options for later steps
+        run: cat("\noptions(tinytex.verbose = TRUE)\n", file = "~/.Rprofile", append = TRUE)
+        shell: Rscript {0}
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
@@ -96,6 +100,7 @@ jobs:
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_: false
+          _R_CHECK_TESTS_NLINES_: 0
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
