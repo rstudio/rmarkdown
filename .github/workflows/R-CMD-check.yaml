@@ -104,7 +104,7 @@ jobs:
       - name: Build
         run: R CMD build .
 
-      - name: Package tarbal
+      - name: Package tarball
         run: |
           dsc <- read.dcf("DESCRIPTION")
           cat("PKG_TARBALL=", sprintf("%s_%s.tar.gz\n", dsc[,"Package"], dsc[,"Version"]), sep= "", file = Sys.getenv("GITHUB_ENV"), append = TRUE)
@@ -117,6 +117,7 @@ jobs:
         run: |
           mkdir check
           R CMD check --no-manual --as-cran -o check $PKG_TARBALL
+        shell: bash
 
       - name: Show testthat output
         if: always()
