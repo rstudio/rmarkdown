@@ -97,6 +97,10 @@ jobs:
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
           rmarkdown::find_pandoc()
+          tinytex::tinytex_root()
+          tinytex::tlmgr("--version")
+          tinytex::tl_pkgs()
+
         shell: Rscript {0}
 
       - name: Check
