@@ -103,6 +103,7 @@ jobs:
 
       - name: Build
         run: R CMD build .
+        shell: bash
 
       - name: Package tarball
         run: |
