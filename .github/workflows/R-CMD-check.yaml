@@ -106,7 +106,9 @@ jobs:
         env:
           _R_CHECK_CRAN_INCOMING_: false
           _R_CHECK_TESTS_NLINES_: 0
-        run: R CMD check --no-manual --as-cran -o check .
+        run: |
+          mkdir check
+          R CMD check --no-manual --as-cran -o check .
 
       - name: Show testthat output
         if: always()
