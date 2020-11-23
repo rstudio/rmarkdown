@@ -99,7 +99,6 @@ jobs:
           rmarkdown::find_pandoc()
           tinytex::tlmgr("--version")
           tinytex::tl_pkgs()
-
         shell: Rscript {0}
 
       - name: Build
@@ -109,6 +108,8 @@ jobs:
         run: |
           dsc <- read.dcf("DESCRIPTION")
           cat("PKG_TARBALL=", sprintf("%s_%s.tar.gz\n", dsc[,"Package"], dsc[,"Version"]), sep= "", file = Sys.getenv("GITHUB_ENV"), append = TRUE)
+        shell: Rscript {0}
+        
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_: false
