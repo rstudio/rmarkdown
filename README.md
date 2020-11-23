@@ -3,6 +3,7 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/rstudio/rmarkdown/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/rmarkdown/actions)
 [![Downloads from the RStudio CRAN mirror](https://cranlogs.r-pkg.org/badges/rmarkdown)](https://cran.r-project.org/package=rmarkdown)
+[![Codecov test coverage](https://codecov.io/gh/rstudio/rmarkdown/branch/master/graph/badge.svg)](https://codecov.io/gh/rstudio/rmarkdown?branch=master)
 <!-- badges: end -->
 
 
