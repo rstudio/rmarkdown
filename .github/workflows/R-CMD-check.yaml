@@ -108,8 +108,7 @@ jobs:
       - name: Package tarbal
         run: |
           dsc <- read.dcf("DESCRIPTION")
-          cat("PKG_TARBALL=", sprintf("%s_%s.tar.gz\n", dsc[,"Package"], dsc[,"Version"]),
-          sep= "", file = Sys.getenv("GITHUB_ENV"), append = TRUE)
+          cat("PKG_TARBALL=", sprintf("%s_%s.tar.gz\n", dsc[,"Package"], dsc[,"Version"]), sep= "", file = Sys.getenv("GITHUB_ENV"), append = TRUE)
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_: false
