@@ -56,7 +56,9 @@ jobs:
           TINYTEX_INSTALLER: TinyTeX
 
       - name: Add some R options for later steps
-        run: cat("\noptions(tinytex.verbose = TRUE)\n", file = "~/.Rprofile", append = TRUE)
+        run: |
+          cat("\noptions(tinytex.verbose = TRUE)\n", file = "~/.Rprofile", append = TRUE)
+          cat(readLines("~/.Rprofile"), sep = "\n")
         shell: Rscript {0}
 
       - name: Query dependencies
