@@ -22,6 +22,12 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v1
 
+      # TODO: Use next tag once this commit is in a release
+      - uses: r-lib/actions/setup-tinytex@5f1c134
+        env:
+          # install full prebuilt version
+          TINYTEX_INSTALLER: TinyTeX
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
