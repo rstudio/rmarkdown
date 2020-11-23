@@ -6,6 +6,10 @@ output:
     md_extensions: -autolink_bare_uris
 ---
 
+```{r setup}
+knitr::opts_chunk$set(tidy = FALSE)
+```
+
 ## Section One
 
 ```{r}
