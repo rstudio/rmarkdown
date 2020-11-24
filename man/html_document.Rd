@@ -109,7 +109,7 @@ case you can use the \code{css} parameter to add your own styles).}
  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
  style}. Pandoc's built-in styles include "tango", "pygments", "kate",
  "monochrome", "espresso", "zenburn", "haddock" and "breezedark". Two custom
-  are also included, "a11y", for accessible color scheme and "rstudio",
+  are also included, "arrow", for accessible color scheme and "rstudio",
  to replicate RStudio editor theme. A path to a \samp{.theme} file can also be
  passed to be used as a custom highlighting style for Pandoc. Note that custom
  style are available for Pandoc 2.0+.
@@ -120,7 +120,7 @@ case you can use the \code{css} parameter to add your own styles).}
 syntax highlight engine to highlight inline code and R code chunks
 (including providing hyperlinks to function documentation). Only Pandoc
 color schemes are supported with this engine. With \code{highlight}
-"default", it will use the accessible theme called "a11y". To learn more
+"default", it will use the accessible theme called "arrow". To learn more
 about \pkg{downlit} highlighting engine, see
 \url{https://downlit.r-lib.org/}.}
 
@@ -186,31 +186,33 @@ and Citations} article in the online documentation.
  highlightjs engine can only be used with the default template (i.e
  \code{template = "default"}) and it has a unique style ("textmate"). When
  activated, a JS script and a CSS file are inserted into the output HTML to
- make it works. For now, \code{highlight = "default"} will use this engine. In
- next versions, highghlightjs engine could be removed.
+ make it works. For now, \code{highlight = "default"} will use this engine.
+ In next versions, highghlightjs engine could be removed.
 
  Pandoc built-in highlighting engine works with any template, default or
- custom, and style can be chosen among the built-in ones ("tango", "pygments", "kate",
-"monochrome", "espresso", "zenburn", "haddock" and "breezedark") or among some custom
- theme passed as ".theme" files (see Details in the
+ custom, and style can be chosen among the built-in ones ("tango", "pygments",
+ "kate", "monochrome", "espresso", "zenburn", "haddock" and "breezedark") or
+ among some custom theme passed as ".theme" files (see Details in the
  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{Pandoc Manual}).
- \pkg{rmarkdown} includes two custom themes to select with \code{highlight} parameter:
+ \pkg{rmarkdown} includes two custom themes to select with \code{highlight}
+ parameter:
  \itemize{
- \item{"a11y", an accessible color theme derived from \url{https://github.com/ericwbailey/a11y-syntax-highlighting}}
+ \item{"arrow", an accessible color theme derived from \href{optimized for
+ accessibility and color contrast}{https://www.a11yproject.com/}}
  \item{"rstudio", a color scheme close to RStudio's default highlighting and
  highglightjs's textmate.}
  }
  Custom theme are only available for Pandoc 2.0 and above.
 
- \href{https://downlit.r-lib.org/}{\pkg{downlit}} is an R package that provides a syntax highlighting engine in
- R. It will also do automatic linking of R code (requires internet
- connectivity). It is activated only if  \code{highlight_downlit} is
- \code{TRUE} and will pass after Pandoc engine to replace only R code syntax
- highlighting and will use any selected Pandoc's style. Default color scheme
- is the accessible theme "a11y". If default template is used, some CSS is
- added to get the link introduced by autolinking to use the color scheme
- chosen. If you want to use with a custom template, add this to your
- template:
+ \href{https://downlit.r-lib.org/}{\pkg{downlit}} is an R package that
+ provides a syntax highlighting engine in R. It will also do automatic
+ linking of R code (requires internet connectivity). It is activated only if
+ \code{highlight_downlit} is \code{TRUE} and will pass after Pandoc engine to
+ replace only R code syntax highlighting and will use any selected Pandoc's
+ style. Default color scheme is the accessible theme "arrow". If default
+ template is used, some CSS is added to get the link introduced by
+ autolinking to use the color scheme chosen. If you want to use with a custom
+ template, add this to your template:
 
  \preformatted{
 $if(highlight-downlit)$

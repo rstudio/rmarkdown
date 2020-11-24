@@ -16,7 +16,7 @@ test_that("Correct HTML highlighting argument as requested", {
   hl_style <- pandoc_highlight_args
   downlit  <- pandoc_variable_arg("highlight-downlit")
   highlightjs <- pandoc_variable_arg("highlightjs", "1")
-  a11y_theme <- hl_style(pkg_file_highlight("a11y.theme"))
+  arrow_theme <- hl_style(pkg_file_highlight("arrow.theme"))
   rstudio_theme <- hl_style(pkg_file_highlight("rstudio.theme"))
   # check logic
   # no engine
@@ -34,9 +34,9 @@ test_that("Correct HTML highlighting argument as requested", {
   expect_error(hl_args("textmate", "dummy.html", TRUE))
   # custom theme
   skip_if_not(pandoc2.0())
-  expect_equal(hl_args("default", "default", TRUE), c(a11y_theme, downlit))
-  expect_equal(hl_args("default", "dummy.html", TRUE), c(a11y_theme, downlit))
-  expect_equal(hl_args("a11y", "default", FALSE), c(a11y_theme))
+  expect_equal(hl_args("default", "default", TRUE), c(arrow_theme, downlit))
+  expect_equal(hl_args("default", "dummy.html", TRUE), c(arrow_theme, downlit))
+  expect_equal(hl_args("arrow", "default", FALSE), c(arrow_theme))
   expect_equal(hl_args("rstudio", "default", TRUE), c(rstudio_theme, downlit))
   expect_equal(hl_args("path/to.theme", "default"), c(hl_style("path/to.theme")))
 })

@@ -569,8 +569,8 @@ pandoc_html_highlight_args <- function(template,
     }
     custom <- list(
       # from distill
-      # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/a11y.theme
-      a11y = pkg_file_highlight("a11y.theme"),
+      # https://raw.githubusercontent.com/apreshill/distill/arrow/inst/rmarkdown/templates/distill_article/resources/arrow.theme
+      arrow = pkg_file_highlight("arrow.theme"),
       # from distill
       # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/rstudio.theme
       rstudio = pkg_file_highlight("rstudio.theme")
@@ -591,7 +591,7 @@ pandoc_html_highlight_args <- function(template,
         call. = FALSE
       )
     }
-    default <- if (pandoc2.0()) resolve_highlight("a11y") else "pygments"
+    default <- if (pandoc2.0()) resolve_highlight("arrow") else "pygments"
     args <- c(
       pandoc_highlight_args(highlight, default = default),
       # variable used to insert some css in a Pandoc template
