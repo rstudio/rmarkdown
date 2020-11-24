@@ -1,4 +1,4 @@
-rmarkdown::render('testthat/test-formats.Rmd', 'pdf_document')
+rmarkdown::render('testthat/test-formats.Rmd', rmarkdown::pdf_document(), I(tempfile()))
 
 # only run this test on CI platforms
 if (.Platform$OS.type == 'unix' && !is.na(Sys.getenv('CI', NA))) {
