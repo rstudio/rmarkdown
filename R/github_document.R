@@ -46,12 +46,18 @@ github_document <- function(toc = FALSE,
   }
   if (!hard_line_breaks) variant <- paste0(variant, "-hard_line_breaks")
 
+  # atx headers are the default in pandoc 2.11.2 and the flag has been deprecated
+  # to be replace by `--markdown-headings=atx|setx`
+  if (!pandoc_available("2.11.2")) pandoc_args <- c(
+    "--atx-headers", pandoc_args
+  )
+
   format <- md_document(
     variant = variant, toc = toc, toc_depth = toc_depth,
     number_sections = number_sections, fig_width = fig_width,
     fig_height = fig_height, dev = dev, df_print = df_print,
     includes = includes, md_extensions = md_extensions,
-    pandoc_args = c("--atx-headers", pandoc_args)
+    pandoc_args = pandoc_args
   )
 
   # add a post processor for generating a preview if requested
