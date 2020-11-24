@@ -8,7 +8,7 @@ test_that("formats successfully produce a document", {
            output_format = output_format,
            output_file = output_file,
           # output_options = ifelse(is.null(df_print), NULL, list(df_print = df_print)),
-           quiet = TRUE, clean = FALSE)
+           quiet = TRUE)
     expect_true(file.exists(output_file))
     file.remove(output_file)
   }

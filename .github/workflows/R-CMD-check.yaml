@@ -57,7 +57,7 @@ jobs:
 
       - name: Add some R options for later steps
         run: |
-          cat("\noptions(tinytex.verbose = TRUE, tinytex.clean = FALSE)\n", file = "~/.Rprofile", append = TRUE)
+          cat("\noptions(tinytex.verbose = TRUE)\n", file = "~/.Rprofile", append = TRUE)
           cat(readLines("~/.Rprofile"), sep = "\n")
         shell: Rscript {0}
 
