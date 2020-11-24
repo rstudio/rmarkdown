@@ -197,8 +197,8 @@ and Citations} article in the online documentation.
  \pkg{rmarkdown} includes two custom themes to select with \code{highlight}
  parameter:
  \itemize{
- \item{"arrow", an accessible color theme derived from \href{optimized for
- accessibility and color contrast}{https://www.a11yproject.com/}}
+ \item{"arrow", an accessible color theme derived from \href{https://www.a11yproject.com/}{optimized for
+ accessibility and color contrast}}
  \item{"rstudio", a color scheme close to RStudio's default highlighting and
  highglightjs's textmate.}
  }
