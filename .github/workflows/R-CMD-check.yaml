@@ -54,7 +54,6 @@ jobs:
         env:
           # install full prebuilt version
           TINYTEX_INSTALLER: TinyTeX
-          TINYTEX_VERSION: '2020.11'
 
       - name: Add some R options for later steps
         run: |
