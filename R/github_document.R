@@ -48,9 +48,8 @@ github_document <- function(toc = FALSE,
 
   # atx headers are the default in pandoc 2.11.2 and the flag has been deprecated
   # to be replace by `--markdown-headings=atx|setx`
-  pandoc_args <- c(
-    if (!pandoc_available("2.11.2")) "--atx-headers",
-        pandoc_args
+  if (!pandoc_available("2.11.2")) pandoc_args <- c(
+    "--atx-headers", pandoc_args
   )
 
   format <- md_document(
