@@ -3,13 +3,16 @@ rmarkdown 2.6
 
 - `html_document` (and `html_document_base`)'s `theme` arguments gains the ability to accept a list of values, which are passed along to `bslib::bs_theme()`, making it much easier create custom themes with Bootstrap 4 or 3. To learn more, see <https://rstudio.github.io/bslib> (thanks, @cpsievert, #1260).
 
-- Fix issues with `anchor_sections = TRUE` and **learnr** (thanks, @gadenbuie, #1938)
+- Fix a bug causing certain resources files to be deleted as intermediate files when `intermediates_dir` is the same as the input (thanks, @bellma-lilly, #1248). 
+
+- Fix issues with `anchor_sections = TRUE` and **learnr** (thanks, @gadenbuie, #1938).
 
 - Enable use of `server.R` and `global.R` alongside `runtime: shinyrmd` documents.
 
 - `pkg_file_lua()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
 
 - Fix `pandoc_convert(citeproc = TRUE)` not supressing the `--natbib` or `--biblatex` options (thanks, @atusy, #1932).
+
 
 rmarkdown 2.5
 ================================================================================

@@ -139,12 +139,20 @@ test_that("filenames with shell characters can use relative resource paths", {
 
 test_that("resources not deleted when filenames contain shell characters", {
   # save current working directory
-  oldwd <- setwd("resources")
+  oldwd <- setwd(test_path("resources"))
   on.exit(setwd(oldwd), add = TRUE)
 
   file.rename("file-exists.Rmd", "file exists.Rmd")
   capture.output(unlink(render("file exists.Rmd")))
   file.rename("file exists.Rmd", "file-exists.Rmd")
+  expect_true(file.exists("empty.csv"))
+})
+
+test_that("resources not deleted when intermediates_dir is same as input", {
+  # save current working directory
+  oldwd <- setwd(test_path("resources"))
+  on.exit(setwd(oldwd), add = TRUE)
+  capture.output(unlink(render("file-exists.Rmd", intermediates_dir = ".")))
   expect_true(file.exists("empty.csv"))
 })
 

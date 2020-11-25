@@ -4,7 +4,12 @@ author: "John Doe"
 output: 
   html_document:
     md_extensions: -autolink_bare_uris
+bibliography: packages.bib
 ---
+
+```{r setup}
+knitr::opts_chunk$set(tidy = FALSE)
+```
 
 ## Section One
 
@@ -30,4 +35,7 @@ You can also print data frames
 mtcars
 ```
 
+```{r, include = FALSE}
+knitr::write_bib("knitr", "packages.bib")
+```
 

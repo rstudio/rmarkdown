@@ -17,7 +17,7 @@ context_document(
   template = NULL,
   keep_tex = FALSE,
   keep_md = FALSE,
-  citation_package = c("none", "natbib", "biblatex"),
+  citation_package = c("default", "natbib", "biblatex"),
   includes = NULL,
   md_extensions = NULL,
   output_extensions = NULL,
