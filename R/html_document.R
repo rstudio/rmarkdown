@@ -86,11 +86,23 @@
 #'  document. For example, to add a \href{https://codepoints.net/U+1F517}{link
 #'  symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}} instead:
 #'  \preformatted{
-#'    a.anchor-section::before {
-#'      content: '\\01F517\\00FE0E';
+#'  a.anchor-section::before {
+#'    content: '\\01F517\\00FE0E';
 #'  }}
 #'  You can remove \samp{\\00FE0E} to get a more complex link pictogram
 #'  \if{html}{\out{(&#x1F517;)}}.
+#'
+#'  If you prefer an svg icon, you can also use one using for example a direct link or downloading it from
+#'  \url{https://material.io/resources/icons/}.
+#'  \preformatted{
+#'  /* From https://material.io/resources/icons/
+#'     Licence: https://www.apache.org/licenses/LICENSE-2.0.html */
+#'  a.anchor-section::before {
+#'    content: url(https://fonts.gstatic.com/s/i/materialicons/link/v7/24px.svg);
+#'  }}
+#'
+#'  About how to apply custom CSS, see
+#'  \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
 #'
 #'@section Navigation Bars:
 #'
