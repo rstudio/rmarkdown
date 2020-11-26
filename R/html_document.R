@@ -352,11 +352,10 @@ html_document <- function(toc = FALSE,
   }
 
   # anchor-sections
-  if (anchor_sections) {
+  if (!xfun::isFALSE(anchor_sections)) {
     extra_dependencies <- append(extra_dependencies,
-                                 list(html_dependency_anchor_sections()))
+                                 list(html_dependency_anchor_sections(anchor_sections)))
   }
-
   # pre-processor for arguments that may depend on the name of the
   # the input file AND which need to inject html dependencies
   # (otherwise we could just call the pre_processor)

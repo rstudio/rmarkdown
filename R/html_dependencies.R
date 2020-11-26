@@ -125,13 +125,28 @@ html_dependency_navigation <- function(code_menu, source_embed) {
                  script = script)
 }
 
-html_dependency_anchor_sections <- function() {
-
+html_dependency_anchor_sections <- function(anchor_sections) {
+  style <- if (isTRUE(anchor_sections)) {
+    "hash"
+  } else if (is.list(anchor_sections)) {
+    anchor_sections[["style"]]
+  }
+  if (is.null(style) || length(style) != 1) {
+    stop("`anchor_sections` can be a list containing only a `style` element.",
+         call. = FALSE)
+  }
+  style_opts <- c("hash", "symbol", "icon")
+  if (!style %in% style_opts) {
+    stop("For anchor_sections, style can be only one of [", paste(style_opts, collapse = ", "), "]",
+         call. = FALSE)
+  }
+  content_style <- function(style) sprintf("anchor-sections-%s.css", style)
   htmlDependency(name = "anchor-sections",
                  version = "1.0.1",
                  src = pkg_file("rmd/h/anchor-sections"),
                  script = "anchor-sections.js",
-                 stylesheet = "anchor-sections.css")
+                 stylesheet = c("anchor-sections.css", content_style(style))
+  )
 }
 
 # analyze navbar html source for icon dependencies
