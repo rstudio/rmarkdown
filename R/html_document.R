@@ -22,7 +22,8 @@
 #'  options that control the behavior of the floating table of contents. See the
 #'  \emph{Floating Table of Contents} section below for details.
 #'@param number_sections \code{TRUE} to number section headings
-#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers
+#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers.
+#'  See \link[rmarkdown:html_document]{Anchor Sections Customization section}.
 #'@param fig_width Default width (in inches) for figures
 #'@param fig_height Default height (in inches) for figures
 #'@param fig_retina Scaling to perform for retina displays (defaults to 2, which
@@ -78,6 +79,19 @@
 #'@param extra_dependencies,... Additional function arguments to pass to the
 #'  base R Markdown HTML output formatter \code{\link{html_document_base}}
 #'@return R Markdown output format to pass to \code{\link{render}}
+#'
+#'@section Anchor Sections Customization:
+#'  By default, a \samp{#} is used as a minimalist choice, referring to the id selector
+#'  in HTML and CSS. You can easily change that using a css rule in your
+#'  document. For example, to add a \href{https://codepoints.net/U+1F517}{link
+#'  symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}} instead:
+#'  \preformatted{
+#'    a.anchor-section::before {
+#'      content: '\\01F517\\00FE0E';
+#'  }}
+#'  You can remove \samp{\\00FE0E} to get a more complex link pictogram
+#'  \if{html}{\out{(&#x1F517;)}}.
+#'
 #'@section Navigation Bars:
 #'
 #'  If you have a set of html documents which you'd like to provide a common
@@ -180,7 +194,7 @@ html_document <- function(toc = FALSE,
                           toc_depth = 3,
                           toc_float = FALSE,
                           number_sections = FALSE,
-                          anchor_sections = TRUE,
+                          anchor_sections = FALSE,
                           section_divs = TRUE,
                           fig_width = 7,
                           fig_height = 5,
