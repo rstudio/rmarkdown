@@ -126,6 +126,9 @@ html_dependency_navigation <- function(code_menu, source_embed) {
 }
 
 html_dependency_anchor_sections <- function(anchor_sections) {
+  if (xfun::isFALSE(anchor_sections)) {
+    stop("anchor_sections can't be FALSE in this function")
+  }
   style <- if (isTRUE(anchor_sections)) {
     "hash"
   } else if (is.list(anchor_sections)) {
