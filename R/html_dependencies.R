@@ -132,10 +132,10 @@ html_dependency_anchor_sections <- function(anchor_sections) {
   style <- if (isTRUE(anchor_sections)) {
     "hash"
   } else if (is.list(anchor_sections)) {
-    anchor_sections[["style"]]
+    anchor_sections[["style"]] %||% "hash"
   }
-  if (is.null(style) || length(style) != 1) {
-    stop("`anchor_sections` can be a list containing only a `style` element.",
+  if (length(style) != 1) {
+    stop("`anchor_sections` can be a list containing only a single `style` element.",
          call. = FALSE)
   }
   style_opts <- c("hash", "symbol", "icon")
@@ -147,7 +147,6 @@ html_dependency_anchor_sections <- function(anchor_sections) {
   htmlDependency(name = "anchor-sections",
                  version = "1.0.1",
                  src = pkg_file("rmd/h/anchor-sections"),
-                 script = "anchor-sections.js",
                  stylesheet = c("anchor-sections.css", content_style(style))
   )
 }

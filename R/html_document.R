@@ -233,6 +233,9 @@ html_document <- function(toc = FALSE,
   # build pandoc args
   args <- c("--standalone")
 
+  # to add lua_filters
+  lua_filters <- c()
+
   # use section divs
   if (section_divs)
     args <- c(args, "--section-divs")
@@ -353,6 +356,13 @@ html_document <- function(toc = FALSE,
 
   # anchor-sections
   if (!xfun::isFALSE(anchor_sections)) {
+    if (is.list(anchor_sections) && "maxlevel" %in% names(anchor_sections)) {
+      args <- c(args,
+                pandoc_metadata_arg(
+                  "rmd_anchor_maxlevel", anchor_sections[["maxlevel"]]
+                ))
+    }
+    lua_filters <- c(lua_filters, pkg_file_lua("anchor-sections.lua"))
     extra_dependencies <- append(extra_dependencies,
                                  list(html_dependency_anchor_sections(anchor_sections)))
   }
@@ -464,7 +474,8 @@ html_document <- function(toc = FALSE,
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
     pandoc = pandoc_options(to = "html",
                             from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args),
+                            args = args,
+                            lua_filters = lua_filters),
     keep_md = keep_md,
     clean_supporting = self_contained,
     df_print = df_print,
