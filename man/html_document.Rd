@@ -184,10 +184,10 @@ and Citations} article in the online documentation.
  for R code.
 
  highlightjs engine can only be used with the default template (i.e
- \code{template = "default"}) and it has a unique style ("textmate"). When
- activated, a JS script and a CSS file are inserted into the output HTML to
- make it works. For now, \code{highlight = "default"} will use this engine.
- In next versions, highghlightjs engine could be removed.
+ \code{template = "default"}) and it has two styles ("default" and
+ "textmate"). When activated, a JS script and a CSS file are inserted into
+ the output HTML to make it works. For now, this is the default engine for
+ the default template - this could change in the future.
 
  Pandoc built-in highlighting engine works with any template, default or
  custom, and style can be chosen among the built-in ones ("tango", "pygments",
