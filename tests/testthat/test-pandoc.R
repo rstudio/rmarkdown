@@ -28,6 +28,7 @@ test_that("Correct HTML highlighting argument as requested", {
   expect_equal(hl_args("breezedark", "default"), hl_style("breezedark"))
   # highlight
   expect_equal(hl_args("default", "default"), c(hl_style(NULL), highlightjs))
+  expect_equal(hl_args("textmate", "dummy.html"), c(hl_style(NULL), highlightjs))
   expect_equal(hl_args("textmate", "default"), c(hl_style(NULL), highlightjs))
   # downlit
   expect_equal(hl_args("tango", "default", TRUE), c(hl_style("tango"), downlit))
