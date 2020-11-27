@@ -29,13 +29,12 @@ test_that("Correct HTML highlighting argument as requested", {
   # highlight
   expect_equal(hl_args("default", "default"), c(hl_style(NULL), highlightjs))
   expect_equal(hl_args("textmate", "default"), c(hl_style(NULL), highlightjs))
-  ##-- will error in pandoc but currently unhandled
-  expect_equal(hl_args("textmate", "dummy.html"), c(hl_style("textmate")))
+  expect_error(hl_args("textmate", "dummy.html"), "Pandoc engine")
   # downlit
   expect_equal(hl_args("tango", "default", TRUE), c(hl_style("tango"), downlit))
   expect_equal(hl_args("tango", "dummy.html", TRUE), c(hl_style("tango"), downlit))
-  expect_error(hl_args("textmate", "dummy.html", TRUE))
-  expect_error(hl_args("textmate", "default", TRUE))
+  expect_error(hl_args("textmate", "dummy.html", TRUE), "downlit engine")
+  expect_error(hl_args("textmate", "default", TRUE), "downlit engine")
   # custom theme
   skip_if_not(pandoc2.0())
   expect_equal(hl_args("default", "default", TRUE), c(arrow_theme, downlit))

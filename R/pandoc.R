@@ -580,16 +580,20 @@ pandoc_html_highlight_args <- function(template,
   }
   highlight <- resolve_highlight(highlight)
 
-  # downlit engine
-  if (highlight_downlit) {
+  check_highlightjs <- function(highlight, engine) {
     if (highlight != "default" && is_highlightjs(highlight)) {
       stop(
-        sprintf(
-          "'%s' theme is for highlightjs highlighting engine",
-          "and can't be used with downlit.", highlight
-        ), call. = FALSE
+        sprintf(c(
+          "'%s' theme is for highlightjs highlighting engine ",
+          "and can't be used with %s engine."), c(highlight, engine)),
+        call. = FALSE
       )
     }
+  }
+
+  # downlit engine
+  if (highlight_downlit) {
+    check_highlightjs(highlight, "downlit")
     default <- if (pandoc2.0()) resolve_highlight("arrow") else "pygments"
     args <- c(
       pandoc_highlight_args(highlight, default = default),
@@ -604,6 +608,7 @@ pandoc_html_highlight_args <- function(template,
               pandoc_variable_arg("highlightjs", "1"))
   } else {
     # Pandoc engine
+    check_highlightjs(highlight, "Pandoc")
     args <- pandoc_highlight_args(highlight, default = "pygments")
   }
 
