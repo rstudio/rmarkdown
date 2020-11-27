@@ -121,7 +121,7 @@ jobs:
           path: check
 
       - name: Test coverage
-        if: success() && runner.os == 'Linux' && matrix.config.r == 'release'
+        if: success() && runner.os == 'Linux' && matrix.config.r == 'release' && matrix.config.pandoc == '2.7.3'
         run: |
           remotes::install_cran("covr")
           covr::codecov()
