@@ -28,25 +28,31 @@ test_that("Correct HTML highlighting argument as requested", {
   expect_equal(hl_args("breezedark", "default"), hl_style("breezedark"))
   # highlight
   expect_equal(hl_args("default", "default"), c(hl_style(NULL), highlightjs))
-  expect_equal(hl_args("textmate", "dummy.html"), c(hl_style(NULL), highlightjs))
   expect_equal(hl_args("textmate", "default"), c(hl_style(NULL), highlightjs))
+  ##-- will error in pandoc but currently unhandled
+  expect_equal(hl_args("textmate", "dummy.html"), c(hl_style("textmate")))
   # downlit
   expect_equal(hl_args("tango", "default", TRUE), c(hl_style("tango"), downlit))
+  expect_equal(hl_args("tango", "dummy.html", TRUE), c(hl_style("tango"), downlit))
   expect_error(hl_args("textmate", "dummy.html", TRUE))
+  expect_error(hl_args("textmate", "default", TRUE))
   # custom theme
   skip_if_not(pandoc2.0())
   expect_equal(hl_args("default", "default", TRUE), c(arrow_theme, downlit))
   expect_equal(hl_args("default", "dummy.html", TRUE), c(arrow_theme, downlit))
   expect_equal(hl_args("arrow", "default", FALSE), c(arrow_theme))
+  expect_equal(hl_args("arrow", "dummy.html", FALSE), c(arrow_theme))
   expect_equal(hl_args("rstudio", "default", TRUE), c(rstudio_theme, downlit))
+  expect_equal(hl_args("rstudio", "dummy.html", TRUE), c(rstudio_theme, downlit))
   expect_equal(hl_args("path/to.theme", "default"), c(hl_style("path/to.theme")))
+  expect_equal(hl_args("path/to.theme", "dummy.html"), c(hl_style("path/to.theme")))
 })
 
 test_that("detect highlightjs theme", {
   expect_false(is_highlightjs(NULL))
   expect_false(is_highlightjs("zenburn"))
-  expect_false(is_highlightjs("default"))
   expect_false(is_highlightjs("path/to/hl.theme"))
 
+  expect_true(is_highlightjs("default"))
   expect_true(is_highlightjs("textmate"))
 })

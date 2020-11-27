@@ -582,13 +582,12 @@ pandoc_html_highlight_args <- function(template,
 
   # downlit engine
   if (highlight_downlit) {
-    if (is_highlightjs(highlight)) {
+    if (highlight != "default" && is_highlightjs(highlight)) {
       stop(
         sprintf(
           "'%s' theme is for highlightjs highlighting engine",
-          "and can't be used with downlit.",  highlight
-        ),
-        call. = FALSE
+          "and can't be used with downlit.", highlight
+        ), call. = FALSE
       )
     }
     default <- if (pandoc2.0()) resolve_highlight("arrow") else "pygments"
@@ -597,9 +596,8 @@ pandoc_html_highlight_args <- function(template,
       # variable used to insert some css in a Pandoc template
       pandoc_variable_arg("highlight-downlit")
     )
-  } else if (is_highlightjs(highlight) ||
-             (highlight == "default" && template == "default")) {
-    # highlightjs engine
+  } else if (template == "default" && is_highlightjs(highlight)) {
+    # highlightjs engine for default template only
     args <- c(pandoc_highlight_args(NULL),
               # variable used to insert some css and js
               # in the Pandoc default template
@@ -613,7 +611,7 @@ pandoc_html_highlight_args <- function(template,
 }
 
 is_highlightjs <- function(highlight) {
-  !is.null(highlight) && (highlight %in% c("textmate"))
+  !is.null(highlight) && (highlight %in% c("default", "textmate"))
 }
 
 #' Find the \command{pandoc} executable
