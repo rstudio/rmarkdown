@@ -107,14 +107,14 @@
 #'
 #'  highlightjs engine can only be used with the default template (i.e
 #'  \code{template = "default"}) and it has two styles ("default" and
-#'  "textmate"). When activated, a JS script and a CSS file are inserted into
-#'  the output HTML to make it works. For now, this is the default engine for
+#'  "textmate"). When activated, it adds two additional dependencies to the
+#'  output file: a JS script and a CSS file. For now, this is the default engine for
 #'  the default template - this could change in the future.
 #'
 #'  Pandoc built-in highlighting engine works with any template, default or
 #'  custom, and style can be chosen among the built-in ones ("tango", "pygments",
 #'  "kate", "monochrome", "espresso", "zenburn", "haddock" and "breezedark") or
-#'  among some custom theme passed as ".theme" files (see Details in the
+#'  a path to a custom theme ".theme" file (see Details in the
 #'  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{Pandoc Manual}).
 #'  \pkg{rmarkdown} includes two custom themes to select with \code{highlight}
 #'  parameter:
@@ -124,17 +124,18 @@
 #'  \item{"rstudio", a color scheme close to RStudio's default highlighting and
 #'  highglightjs's textmate.}
 #'  }
-#'  Custom theme are only available for Pandoc 2.0 and above.
+#'  Custom themes are only available for Pandoc 2.0 and above.
 #'
 #'  \href{https://downlit.r-lib.org/}{\pkg{downlit}} is an R package that
 #'  provides a syntax highlighting engine in R. It will also do automatic
 #'  linking of R code (requires internet connectivity). It is activated only if
-#'  \code{highlight_downlit} is \code{TRUE} and will pass after Pandoc engine to
-#'  replace only R code syntax highlighting and will use any selected Pandoc's
-#'  style. Default color scheme is the accessible theme "arrow". If default
-#'  template is used, some CSS is added to get the link introduced by
-#'  autolinking to use the color scheme chosen. If you want to use with a custom
-#'  template, add this to your template:
+#'  \code{highlight_downlit} is \code{TRUE}. It only affects R code, leaving
+#'  highlighting for other languages unchanged. The default color scheme is 
+#'  the accessible theme "arrow". 
+#'
+#'  It requires some CSS in the template to correctly style links. This is included
+#'  in the default template, but if you want to use with a custom template, you will
+#'  need to add this to your template:
 #'
 #'  \preformatted{
 #' $if(highlight-downlit)$
@@ -745,4 +746,3 @@ navbar_link_text <- function(x, ...) {
   else
     tagList(x$text, ...)
 }
-
