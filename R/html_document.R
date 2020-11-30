@@ -646,7 +646,18 @@ navbar_link_text <- function(x, ...) {
       iconset <- split[[1]][[1]]
     else
       iconset <- ""
-    tagList(tags$span(class = paste(iconset, x$icon)), " ", x$text, ...)
+    # check if a full class is passed for fontawesome
+    # use default 'fas' otherwise
+    # https://github.com/rstudio/rmarkdown/issues/1554
+    class = if (grepl("^fa\\w fa", iconset)) {
+      x$icon
+    } else if (iconset == "fa") {
+      paste("fas", x$icon)
+    } else {
+      # should be other than FontAwesome
+      paste(iconset, x$icon)
+    }
+    tagList(tags$span(class = class), " ", x$text, ...)
   }
   else
     tagList(x$text, ...)
