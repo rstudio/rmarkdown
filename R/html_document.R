@@ -58,20 +58,23 @@
 #'  Any other value will be passed to Pandoc's
 #'  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
 #'  style}. Pandoc's built-in styles include "tango", "pygments", "kate",
-#'  "monochrome", "espresso", "zenburn", "haddock" and "breezedark". Two custom
-#'   are also included, "arrow", for accessible color scheme and "rstudio",
-#'  to replicate RStudio editor theme. A path to a \samp{.theme} file can also be
-#'  passed to be used as a custom highlighting style for Pandoc. Note that custom
-#'  style are available for Pandoc 2.0+.
+#'  "monochrome", "espresso", "zenburn", "haddock" and "breezedark".
+#'
+#'  Two custom styles are also included, "arrow", an accessible color scheme,
+#'  and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+#'  path to a \samp{.theme} to use a custom Pandoc style. Note that custom (This
+#'  requires Pandoc 2.0+)
 #'
 #'  Pass \code{NULL} to prevent syntax highlighting.
 #'
 #'@param highlight_downlit \code{TRUE} to use the \pkg{downlit} package as
 #'  syntax highlight engine to highlight inline code and R code chunks
-#'  (including providing hyperlinks to function documentation). Only Pandoc
-#'  color schemes are supported with this engine. With \code{highlight}
-#'  "default", it will use the accessible theme called "arrow". To learn more
-#'  about \pkg{downlit} highlighting engine, see
+#'  (including providing hyperlinks to function documentation). The package
+#'  needs to be installed to use this feature.
+#'
+#'  Only Pandoc color schemes are supported with this engine. With
+#'  \code{highlight = "default"}, it will use the accessible theme called
+#'  "arrow". To learn more about \pkg{downlit} highlighting engine, see
 #'  \url{https://downlit.r-lib.org/}.
 #'@param mathjax Include mathjax. The "default" option uses an https URL from a
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
@@ -101,37 +104,37 @@
 #'@return R Markdown output format to pass to \code{\link{render}}
 #'@section Highlighting:
 #'
-#'  Different highlighting engines can be used with a R Markdown HTML documents:
-#'  highlightjs and Pandoc for all languages they support, \pkg{downlit} only
-#'  for R code.
+#'  There are three highlighting engines available to HTML documents:
 #'
-#'  highlightjs engine can only be used with the default template (i.e
-#'  \code{template = "default"}) and it has two styles ("default" and
-#'  "textmate"). When activated, it adds two additional dependencies to the
-#'  output file: a JS script and a CSS file. For now, this is the default engine for
-#'  the default template - this could change in the future.
+#'  \describe{
+#'  \item{highlightjs}{It does highlighting in the browser, using javascript It
+#'  can only be used with the default template (i.e \code{template = "default"})
+#'  and it has two styles ("default" and "textmate"). When activated, it adds
+#'  two additional dependencies to the output file: a JS script and a CSS file.
+#'  For now, this is the default engine for the default template - this could
+#'  change in the future.}
 #'
-#'  Pandoc built-in highlighting engine works with any template, default or
-#'  custom, and style can be chosen among the built-in ones ("tango", "pygments",
-#'  "kate", "monochrome", "espresso", "zenburn", "haddock" and "breezedark") or
-#'  a path to a custom theme ".theme" file (see Details in the
+#'  \item{Pandoc}{Pandoc's built-in highlighting.engine works with any template,
+#'  default or custom, and style can be chosen among the built-in ones ("tango",
+#'  "pygments", "kate", "monochrome", "espresso", "zenburn", "haddock" and
+#'  "breezedark") or a path to a custom theme ".theme" file (see Details in the
 #'  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{Pandoc Manual}).
 #'  \pkg{rmarkdown} includes two custom themes to select with \code{highlight}
 #'  parameter:
 #'  \itemize{
-#'  \item{"arrow", an accessible color theme derived from \href{https://www.a11yproject.com/}{optimized for
+#'  \item{"arrow", an accessible style using colors \href{https://www.a11yproject.com/}{optimized for
 #'  accessibility and color contrast}}
 #'  \item{"rstudio", a color scheme close to RStudio's default highlighting and
 #'  highglightjs's textmate.}
 #'  }
-#'  Custom themes are only available for Pandoc 2.0 and above.
+#'  Custom themes are only available for Pandoc 2.0 and above.}
 #'
-#'  \href{https://downlit.r-lib.org/}{\pkg{downlit}} is an R package that
+#'  \item{downlit}{\href{https://downlit.r-lib.org/}{\pkg{downlit}} is an R package that
 #'  provides a syntax highlighting engine in R. It will also do automatic
 #'  linking of R code (requires internet connectivity). It is activated only if
-#'  \code{highlight_downlit} is \code{TRUE}. It only affects R code, leaving
-#'  highlighting for other languages unchanged. The default color scheme is 
-#'  the accessible theme "arrow". 
+#'  \code{highlight_downlit = TRUE} and only affects R code, leaving
+#'  highlighting for other languages unchanged. The default color scheme is
+#'  the accessible theme "arrow".
 #'
 #'  It requires some CSS in the template to correctly style links. This is included
 #'  in the default template, but if you want to use with a custom template, you will
@@ -147,6 +150,7 @@
 #'   }
 #'  </style>
 #'  $endif$}
+#'  }}
 #'
 #'@section Navigation Bars:
 #'

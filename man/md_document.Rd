@@ -70,7 +70,7 @@ additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
-\item{ext}{Extension of the output document (defaults to ".md").}
+\item{ext}{Extension of the output file (defaults to ".md").}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}

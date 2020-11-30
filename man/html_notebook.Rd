@@ -72,11 +72,12 @@ case you can use the \code{css} parameter to add your own styles).}
  Any other value will be passed to Pandoc's
  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
  style}. Pandoc's built-in styles include "tango", "pygments", "kate",
- "monochrome", "espresso", "zenburn", "haddock" and "breezedark". Two custom
-  are also included, "arrow", for accessible color scheme and "rstudio",
- to replicate RStudio editor theme. A path to a \samp{.theme} file can also be
- passed to be used as a custom highlighting style for Pandoc. Note that custom
- style are available for Pandoc 2.0+.
+ "monochrome", "espresso", "zenburn", "haddock" and "breezedark".
+
+ Two custom styles are also included, "arrow", an accessible color scheme,
+ and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+ path to a \samp{.theme} to use a custom Pandoc style. Note that custom (This
+ requires Pandoc 2.0+)
 
  Pass \code{NULL} to prevent syntax highlighting.}
 
