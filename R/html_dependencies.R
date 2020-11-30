@@ -128,7 +128,7 @@ html_dependency_navigation <- function(code_menu, source_embed) {
 html_dependency_anchor_sections <- function() {
 
   htmlDependency(name = "anchor-sections",
-                 version = "1.0",
+                 version = "1.0.1",
                  src = pkg_file("rmd/h/anchor-sections"),
                  script = "anchor-sections.js",
                  stylesheet = "anchor-sections.css")
