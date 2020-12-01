@@ -1,6 +1,7 @@
 /* Styles for section anchors content */
 /* From https://material.io/resources/icons/
    Licence: https://www.apache.org/licenses/LICENSE-2.0.html */
-a.anchor-section::before {
-  content: url('https://fonts.gstatic.com/s/i/materialicons/link/v7/24px.svg');
+
+a.anchor-section:before {
+  content: url(./link-black-24dp.svg);
 }
