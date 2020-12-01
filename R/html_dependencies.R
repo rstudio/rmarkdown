@@ -145,7 +145,7 @@ html_dependency_anchor_sections <- function(anchor_sections) {
   }
   content_style <- function(style) sprintf("anchor-sections-%s.css", style)
   htmlDependency(name = "anchor-sections",
-                 version = "1.0.1",
+                 version = "1.1.0",
                  src = pkg_file("rmd/h/anchor-sections"),
                  stylesheet = c("anchor-sections.css", content_style(style))
   )
