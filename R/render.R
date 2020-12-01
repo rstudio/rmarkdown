@@ -589,7 +589,7 @@ render <- function(input,
     # attribute (e.g. ```{=html}) rather than preservation tokens when
     # pandoc >= v2.0. Note that this option will have the intended effect
     # only for versions of htmltools >= 0.5.0.9003.
-    if (pandoc2.0()) {
+    if (pandoc2.0() && packageVersion("htmltools") >= "0.5.0.9003") {
       prev <- getOption("htmltools.preserve.raw", default = NA)
       options(htmltools.preserve.raw = TRUE)
       if (!is.na(prev)) {
