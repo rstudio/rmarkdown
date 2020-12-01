@@ -22,8 +22,10 @@
 #'  options that control the behavior of the floating table of contents. See the
 #'  \emph{Floating Table of Contents} section below for details.
 #'@param number_sections \code{TRUE} to number section headings
-#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers.
-#'  See \link[rmarkdown:html_document]{Anchor Sections Customization section}.
+#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers
+#'  for all headers. A list can also be passed with \code{style} and/or
+#'  \code{depth} to customize the behavior. See
+#'  \link[rmarkdown:html_document]{Anchor Sections Customization section}.
 #'@param fig_width Default width (in inches) for figures
 #'@param fig_height Default height (in inches) for figures
 #'@param fig_retina Scaling to perform for retina displays (defaults to 2, which
@@ -81,28 +83,48 @@
 #'@return R Markdown output format to pass to \code{\link{render}}
 #'
 #'@section Anchor Sections Customization:
-#'  By default, a \samp{#} is used as a minimalist choice, referring to the id selector
-#'  in HTML and CSS. You can easily change that using a css rule in your
-#'  document. For example, to add a \href{https://codepoints.net/U+1F517}{link
-#'  symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}} instead:
+#'  This will be the default to activate anchor sections link on header
+#'  \preformatted{
+#'  output:
+#'    html_document:
+#'      anchor_sections: TRUE
+#'  }
+#'  There is currently two options to modify the default behavior
+#'
+#'  \describe{
+#'  \item{\code{style}}{It allows to select a predefined style:
+#'  \itemize{
+#'  \item{\code{style = "dash"}, the default, is using a \samp{#}, a minimalist choice referring to the id selector in HTML and CSS.}
+#'  \item{\code{style = "symbol"} will use a \href{https://codepoints.net/U+1F517}{link
+#'  symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}}
+#'  \item{\code{style = "icon"} will use an svg icon from \url{https://material.io/resources/icons/}
+#'  \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}}
+#'  }
+#'  You can also easily change to any of your choosing using a css rule in your
+#'  document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:
 #'  \preformatted{
 #'  a.anchor-section::before {
-#'    content: '\\01F517\\00FE0E';
+#'    content: '\\01F517';
 #'  }}
-#'  You can remove \samp{\\00FE0E} to get a more complex link pictogram
-#'  \if{html}{\out{(&#x1F517;)}}.
-#'
-#'  If you prefer an svg icon, you can also use one using for example a direct link or downloading it from
-#'  \url{https://material.io/resources/icons/}.
-#'  \preformatted{
-#'  /* From https://material.io/resources/icons/
-#'     Licence: https://www.apache.org/licenses/LICENSE-2.0.html */
-#'  a.anchor-section::before {
-#'    content: url(https://fonts.gstatic.com/s/i/materialicons/link/v7/24px.svg);
-#'  }}
-#'
-#'  About how to apply custom CSS, see
+#'  About how to apply custom CSS in R Markdown document, see
 #'  \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
+#'  }
+#'  \item{\code{depth}}{It allows to select the minimum header level to apply
+#'  the anchor link on. For example, this will apply the symbol style
+#'  on level 1 and 2 only:
+#'  \preformatted{
+#'  output:
+#'    html_document:
+#'      anchor_sections:
+#'        style: icon
+#'        depth: 2
+#'  }
+#'  By default, it will be applied on all headers (equivalent of \code{depth=6}).
+#'  }}
+#'
+#'  Using anchor sections will add some CSS to your document output for the
+#'  styling. The anchor link itself is added using a Lua filter. It requires
+#'  Pandoc 2.0+
 #'
 #'@section Navigation Bars:
 #'
