@@ -356,10 +356,10 @@ html_document <- function(toc = FALSE,
 
   # anchor-sections
   if (!xfun::isFALSE(anchor_sections)) {
-    if (is.list(anchor_sections) && "maxlevel" %in% names(anchor_sections)) {
+    if (is.list(anchor_sections) && "depth" %in% names(anchor_sections)) {
       args <- c(args,
                 pandoc_metadata_arg(
-                  "rmd_anchor_maxlevel", anchor_sections[["maxlevel"]]
+                  "rmd_anchor_depth", anchor_sections[["depth"]]
                 ))
     }
     lua_filters <- c(lua_filters, pkg_file_lua("anchor-sections.lua"))

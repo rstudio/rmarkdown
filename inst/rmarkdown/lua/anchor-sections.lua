@@ -1,4 +1,3 @@
-local anchor_maxlevel
 --[[
 anchor-sections - add anchor sections link to headers
 
@@ -26,17 +25,19 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ]]
 
+local anchor_depth
+
 -- retrieve metadata
-function get_metadata(el)
-  anchor_maxlevel = tonumber(el.rmd_anchor_maxlevel)
-  if not anchor_maxlevel then
-    anchor_maxlevel = 6
+function get_anchor_depth(el)
+  anchor_depth = tonumber(el.rmd_anchor_depth)
+  if not anchor_depth then
+    anchor_depth = 6
   end
 end
 
 -- insert anchor link
 function insert_anchor(el)
-  if el.identifier ~= "" and el.level <= anchor_maxlevel then
+  if el.identifier ~= "" and el.level <= anchor_depth then
     el.classes:insert("hasAnchor")
     table.insert(el.content,
       pandoc.Link("", "#"..el.identifier, "", {class = "anchor-section"})
@@ -47,6 +48,6 @@ end
 
 
 return {
-  { Meta = get_metadata },
-  { Header =  insert_anchor}
+  { Meta = get_anchor_depth },
+  { Header =  insert_anchor }
 }
