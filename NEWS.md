@@ -11,8 +11,11 @@ rmarkdown 2.6
 
 - Fix `pandoc_convert(citeproc = TRUE)` not supressing the `--natbib` or `--biblatex` options (thanks, @atusy, #1932).
 
-- `anchor_sections` in `html_documents()` now default to `FALSE`. It was introduced in previous version with a default to `TRUE` but it is reverted now after hearing feedbacks from the community. (Thank you!). The `#` is still used as the character for the anchor but you can easily change that using css rule. Examples have been added in `?html_document`. 
+- Specify that `htmltools::htmlPreserve()` should use the pandoc raw attribute 
+  rather than preservation tokens when pandoc >= v2.0. Note that this option will
+  have the intended effect only for versions of htmltools >= 0.5.0.9003.
 
+- `anchor_sections` in `html_documents()` now default to `FALSE`. It was introduced in previous version with a default to `TRUE` but it is reverted now after hearing feedbacks from the community. (Thank you!). The `#` is still used as the character for the anchor but you can easily change that using css rule. Examples have been added in `?html_document`. 
 
 rmarkdown 2.5
 ================================================================================
