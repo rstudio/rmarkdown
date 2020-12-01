@@ -11,6 +11,10 @@ rmarkdown 2.6
 
 - Fix `pandoc_convert(citeproc = TRUE)` not supressing the `--natbib` or `--biblatex` options (thanks, @atusy, #1932).
 
+- Specify that `htmltools::htmlPreserve()` should use the pandoc raw attribute 
+  rather than preservation tokens when pandoc >= v2.0. Note that this option will
+  have the intended effect only for versions of htmltools >= 0.5.0.9003.
+
 
 rmarkdown 2.5
 ================================================================================
