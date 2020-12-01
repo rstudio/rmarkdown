@@ -75,10 +75,3 @@ test_that("lua file are correctly found", {
   expect_match(basename(pkg_file_lua()),  ".*[.]lua$")
   expect_match(basename(pkg_file_lua("number-sections.lua")),  "^number-sections.lua$")
 })
-
-test_that("anchor_sections with depth requires a variable", {
-  args <- function(acs) html_document(anchor_sections = acs)$pandoc$args
-  expect_false(any(grepl("rmd_anchor_depth", args(TRUE))))
-  expect_false(any(grepl("rmd_anchor_depth", args(list(style = "symbol")))))
-  expect_true("rmd_anchor_depth=3" %in% args(list(depth = 3)))
-})
