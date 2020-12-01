@@ -1,14 +1,13 @@
 test_that("Correct anchor_sections style is used", {
   deps <- html_dependency_anchor_sections
-  expect_error(deps(FALSE))
-  expect_s3_class(deps(TRUE), "html_dependency")
-  css <- function(anchor_sections, id = 2)
-    deps(anchor_sections)$stylesheet[[id]]
-  expect_equal(css(TRUE, 1), "anchor-sections.css")
-  expect_equal(css(list(style = "icon"),1), "anchor-sections.css")
-  expect_match(css(TRUE), "hash")
-  expect_match(css(list(style = "icon")), "icon")
-  expect_match(css(list(style = "symbol")), "symbol")
-  expect_error(css(list(notexisting = "dummy")))
-  expect_error(css("icon"))
+  expect_s3_class(deps(), "html_dependency")
+  expect_error(deps("dummy"))
+  expect_match(deps()$stylesheet[[2]], "hash")
+  css <- function(style, id = 2) {
+    deps(style)$stylesheet[[id]]
+  }
+  expect_equal(css("hash", 1), "anchor-sections.css")
+  expect_equal(css("icon",1), "anchor-sections.css")
+  expect_match(css("icon"), "icon")
+  expect_match(css("symbol"), "symbol")
 })

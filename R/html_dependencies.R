@@ -125,24 +125,9 @@ html_dependency_navigation <- function(code_menu, source_embed) {
                  script = script)
 }
 
-html_dependency_anchor_sections <- function(anchor_sections) {
-  if (xfun::isFALSE(anchor_sections)) {
-    stop("anchor_sections can't be FALSE in this function")
-  }
-  style <- if (isTRUE(anchor_sections)) {
-    "hash"
-  } else if (is.list(anchor_sections)) {
-    anchor_sections[["style"]] %||% "hash"
-  }
-  if (length(style) != 1) {
-    stop("`anchor_sections` can be a list containing only a single `style` element.",
-         call. = FALSE)
-  }
-  style_opts <- c("hash", "symbol", "icon")
-  if (!style %in% style_opts) {
-    stop("For anchor_sections, style can be only one of [", paste(style_opts, collapse = ", "), "]",
-         call. = FALSE)
-  }
+html_dependency_anchor_sections <- function(style = c("hash", "symbol", "icon")) {
+  style <- match.arg(style)
+  # dynamically build css list
   content_style <- function(style) sprintf("anchor-sections-%s.css", style)
   htmlDependency(name = "anchor-sections",
                  version = "1.1.0",
