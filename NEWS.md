@@ -1,6 +1,8 @@
 rmarkdown 2.6
 ================================================================================
 
+- The intermediate `.tex` file is now correctly deleted if `keep_tex = FALSE` when the R Markdown document is not rendered from the working directory (thanks, @vqv, #1308).
+
 - Fix a bug causing certain resources files to be deleted as intermediate files when `intermediates_dir` is the same as the input (thanks, @bellma-lilly, #1248). 
 
 - Fix issues with `anchor_sections = TRUE` and **learnr** (thanks, @gadenbuie, #1938).
