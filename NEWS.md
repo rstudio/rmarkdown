@@ -15,7 +15,7 @@ rmarkdown 2.6
   rather than preservation tokens when pandoc >= v2.0. Note that this option will
   have the intended effect only for versions of htmltools >= 0.5.0.9003.
 
-- `anchor_sections` in `html_documents()` now default to `FALSE`. It was introduced in previous version with a default to `TRUE` but it is reverted now after hearing feedbacks from the community. (Thank you!). The `#` is still used as the character for the anchor but you can easily change that using css rule. Examples have been added in `?html_document`. 
+- `anchor_sections` in `html_documents()` now defaults to `FALSE`. It was introduced in previous version with a default to `TRUE`, but it is reverted now after hearing feedbacks from the community (thank you!). The `#` is still used as the character for the anchor but you can easily change that using CSS rules. Examples have been added to the help page `?html_document`.
 
 rmarkdown 2.5
 ================================================================================
