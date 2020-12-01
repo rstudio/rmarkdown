@@ -378,15 +378,21 @@ html_document <- function(toc = FALSE,
 
   # anchor-sections
   if (!xfun::isFALSE(anchor_sections)) {
+    if (!pandoc2.0()) {
+      stop("Using anchor_sections requires Pandoc 2.0+", call. = FALSE)
+    }
     if (is.list(anchor_sections) && "depth" %in% names(anchor_sections)) {
       args <- c(args,
                 pandoc_metadata_arg(
                   "rmd_anchor_depth", anchor_sections[["depth"]]
-                ))
+                )
+      )
     }
     lua_filters <- c(lua_filters, pkg_file_lua("anchor-sections.lua"))
-    extra_dependencies <- append(extra_dependencies,
-                                 list(html_dependency_anchor_sections(anchor_sections)))
+    extra_dependencies <- append(
+      extra_dependencies,
+      list(html_dependency_anchor_sections(anchor_sections))
+    )
   }
   # pre-processor for arguments that may depend on the name of the
   # the input file AND which need to inject html dependencies
