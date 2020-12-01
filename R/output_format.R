@@ -782,7 +782,7 @@ citeproc_required <- function(yaml_front_matter,
       # as Pandoc is supporting
       # TODO: remove when supporting multiple yaml block
       # https://github.com/rstudio/rmarkdown/issues/1891
-      length(grep("^references\\:\\s*$", input_lines)) > 0 ||
-      length(grep("^bibliography\\:\\s*$", input_lines)) > 0
+      length(grep("^references:\\s*$", input_lines)) > 0 ||
+      length(grep("^bibliography:\\s*$", input_lines)) > 0
   )
 }
