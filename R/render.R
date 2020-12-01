@@ -585,6 +585,18 @@ render <- function(input,
     templates <- knitr::opts_template$get()
     on.exit(knitr::opts_template$restore(templates), add = TRUE)
 
+    # specify that htmltools::htmlPreserve should use the pandoc raw
+    # attribute (e.g. ```{=html}) rather than preservation tokens when
+    # pandoc >= v2.0. Note that this option will have the intended effect
+    # only for versions of htmltools >= 0.5.0.9003.
+    if (pandoc2.0() && packageVersion("htmltools") >= "0.5.0.9003") {
+      prev <- getOption("htmltools.preserve.raw", default = NA)
+      options(htmltools.preserve.raw = TRUE)
+      if (!is.na(prev)) {
+        on.exit(options(htmltools.preserve.raw = prev), add = TRUE)
+      }
+    }
+
     # run render on_exit (run after the knit hooks are saved so that
     # any hook restoration can take precedence)
     if (is.function(output_format$on_exit))
@@ -956,7 +968,10 @@ render <- function(input,
         latexmk(texfile, output_format$pandoc$latex_engine, '--biblatex' %in% output_format$pandoc$args)
         file.rename(file_with_ext(texfile, "pdf"), output_file)
         # clean up the tex file if necessary
-        if (!output_format$pandoc$keep_tex) on.exit(unlink(texfile), add = TRUE)
+        if (!output_format$pandoc$keep_tex) {
+          texfile <- normalize_path(texfile)
+          on.exit(unlink(texfile), add = TRUE)
+        }
       }
     } else {
       convert(output_file, run_citeproc)
