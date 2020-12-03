@@ -21,6 +21,15 @@ rmarkdown 2.6
 
 - `anchor_sections` in `html_documents()` now defaults to `FALSE`. It was introduced in previous version with a default to `TRUE`, but it is reverted now after hearing feedbacks from the community (thank you!). The `#` is still used as the character for the anchor but you can easily change that using CSS rules. Examples have been added to the help page `?html_document`.
 
+- Using Pandoc's default for `--email-obfuscation` now. Previously, it was set to `none` explicitly, which is the default for Pandoc 1.17.2+ anyway. Only users with a Pandoc version before 1.17.2 may see a change in the content of the html source file produced if the document contains email addresses. This change allows to pass the Pandoc's command line flag if you want to set it to another value  (thanks,@seankross, #1969). 
+
+  ````yaml
+  output:
+    html_document: 
+      pandoc_args: ["--email-obfuscation", "javascript"]
+  ````
+
+  See [Pandoc's manual](https://pandoc.org/MANUAL.html#option--email-obfuscation) for the meaning of this option. 
 
 rmarkdown 2.5
 ================================================================================
