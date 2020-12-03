@@ -191,7 +191,6 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   invisible(ret)
 }
 
-
 # create the Shiny server function
 rmarkdown_shiny_server <- function(dir, file, auto_reload, render_args) {
   function(input, output, session) {

@@ -41,6 +41,10 @@ html_dependency_jqueryui <- function() {
 #' @export
 html_dependency_bootstrap <- function(theme) {
   if (is_bs_theme(theme)) {
+    h1_size <- if ("3" %in% theme_version(theme)) "font-size-h1" else "h1-font-size"
+    theme <- bslib::bs_add_rules(
+      theme, paste0("h1.title {margin-top: 1.25rem; font-size: 1.15 * $", h1_size, "}")
+    )
     return(bslib::bs_theme_dependencies(theme))
   }
   if (identical(theme, "default")) {
@@ -56,7 +60,17 @@ html_dependency_bootstrap <- function(theme) {
       # These shims are necessary for IE 8 compatibility
       "shim/html5shiv.min.js",
       "shim/respond.min.js"),
-    stylesheet = paste0("css/", theme, ".min.css"))
+    stylesheet = paste0("css/", theme, ".min.css"),
+    head = format(tags$style(HTML(
+      "h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}"
+    )))
+  )
 }
 
 bootstrap_dependencies <- function(theme) {
@@ -93,7 +107,6 @@ theme_version <- function(theme) {
   }
 }
 
-# TODO: maybe this should be a bslib function?
 is_bs3_compatible <- function(theme) {
   version <- theme_version(theme)
   identical(version, "3") || grepl("\\+3$", version)

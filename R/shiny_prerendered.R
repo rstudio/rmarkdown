@@ -691,7 +691,7 @@ shiny_prerendered_data_file_name <- function(label, cache) {
 # Use me instead of html_dependency_bootstrap() in a shiny runtime to get
 # dynamic theming (i.e., have it work with session$setCurrentTheme())
 shiny_bootstrap_lib <- function(theme) {
-  theme <- as_bs_theme(theme)
-  if (!length(theme)) return(NULL)
-  shiny::bootstrapLib(theme)
+  if (is_bs_themeish(theme)) {
+    shiny::bootstrapLib(as_bs_theme(theme))
+  }
 }

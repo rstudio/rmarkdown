@@ -115,47 +115,11 @@ $if(abstract)$
 </style>
 $endif$
 
-$if(theme)$
-<style type="text/css">
-$if(bs3)$
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-$else$
-/*
-BS3 -> BS4 saw a removal of margin-top which is a pretty jarring change for Rmd
-https://github.com/twbs/bootstrap/blob/f17f882d/dist/css/bootstrap.css#L1219-L1250
-https://github.com/twbs/bootstrap/blob/4de4874e/scss/_reboot.scss#L82-L89 */
-h1, h2, h3 { margin-top: 20px; }
-h4, h5, h6 { margin-top: 10px; }
-$endif$
-
-.table th:not([align]) {
-  text-align: left;
-}
 $if(source_embed)$
+<style type="text/css">
 #rmd-source-code {
   display: none;
 }
-$endif$
 </style>
 $endif$
 
@@ -190,8 +154,6 @@ $endif$
 $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
-
-
 
 $if(theme)$
 <style type = "text/css">
