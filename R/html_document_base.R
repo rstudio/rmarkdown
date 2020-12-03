@@ -34,8 +34,10 @@ html_document_base <- function(theme = NULL,
 
   args <- c()
 
-  # no email obfuscation
-  args <- c(args, "--email-obfuscation", "none")
+  # no email obfuscation - the default for Pandoc 1.17.2+
+  if (!pandoc_available("1.17.2")) {
+    args <- c(args, "--email-obfuscation", "none")
+  }
 
   # self contained document
   if (self_contained) {
