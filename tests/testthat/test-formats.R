@@ -75,16 +75,6 @@ test_that(
 
 test_that("pdf_document can correctly keep tex file if required", {
   rmd_file <- "test-formats.Rmd"
-  # Input in current dir
-  output_file <- tempfile()
-  texfile <- xfun::with_ext(basename(output_file), "tex")
-  render(test_path(rmd_file), pdf_document(keep_tex = FALSE),
-         output_file = output_file, quiet = TRUE)
-  expect_false(file.exists(file.path(dirname(output_file), texfile)))
-  render(test_path(rmd_file), pdf_document(keep_tex = TRUE),
-         output_file = output_file, quiet = TRUE)
-  expect_true(file.exists(file.path(dirname(output_file), texfile)))
-  unlink(c(texfile, output_file))
   # input in another dir
   dir.create(tmpdir <- tempfile())
   file.copy(test_path(rmd_file), tmpdir)
