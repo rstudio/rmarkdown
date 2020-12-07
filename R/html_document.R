@@ -723,7 +723,7 @@ add_anchor_sections <- function(anchor_sections) {
   allowed_args <- c("style", "depth")
   if (is.list(anchor_sections)) {
     # check list elements
-    all_allowed <- all(isTRUE(names(anchor_sections) %in% allowed_args))
+    all_allowed <- all(names(anchor_sections) %in% allowed_args)
     if (xfun::isFALSE(all_allowed)) {
       stop("`anchor_sections` should be TRUE or one of [",
            paste(allowed_args, collapse = ", "), "]",

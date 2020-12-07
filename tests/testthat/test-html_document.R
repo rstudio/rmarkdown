@@ -3,7 +3,6 @@ test_that("anchor_sections adds correct component", {
   expect_equivalent(add_anchor_sections(FALSE), list(NULL, NULL, NULL))
   expect_error(add_anchor_sections(list(dummy = "smg")), "one of")
   expect_error(add_anchor_sections("dummy"), "one of")
-  expect_error(add_anchor_sections(list("smg")), "one of")
   components <- add_anchor_sections(TRUE)
   expect_match(components$lua_filters, "anchor-sections.lua$")
   expect_s3_class(components$extra_dependencies[[1]], "html_dependency")
