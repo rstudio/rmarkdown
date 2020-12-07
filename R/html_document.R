@@ -119,12 +119,14 @@
 #'        style: icon
 #'        depth: 2
 #'  }
-#'  By default, it will be applied on all headers (equivalent of \code{depth=6}).
+#'  By default, it will be applied on all headers (equivalent of
+#'  \code{depth=6}). You can also set anchors manually using \samp{# my header
+#'  {.hasAnchor}} with \code{depth = 0}.
 #'  }}
 #'
 #'  Using anchor sections will add some CSS to your document output for the
-#'  styling. The anchor link itself is added using a Lua filter. It requires
-#'  Pandoc 2.0+
+#'  styling, and JS script if \code{section_divs = TRUE}. The anchor link itself
+#'  is added using a Lua filter - it requires Pandoc 2.0+
 #'
 #'@section Navigation Bars:
 #'
