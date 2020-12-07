@@ -41,7 +41,6 @@ function insert_anchor(el)
   if #el.content == 0 then return(nil) end
 
   if el.identifier ~= "" and el.level <= anchor_depth then
-    el.classes:insert("hasAnchor")
     table.insert(el.content,
       pandoc.Link("", "#"..el.identifier, "", {class = "anchor-section"})
     )

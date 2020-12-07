@@ -132,6 +132,7 @@ html_dependency_anchor_sections <- function(style = c("hash", "symbol", "icon"))
   htmlDependency(name = "anchor-sections",
                  version = "1.1.0",
                  src = pkg_file("rmd/h/anchor-sections"),
+                 script = "anchor-sections.js",
                  stylesheet = c("anchor-sections.css", content_style(style))
   )
 }
