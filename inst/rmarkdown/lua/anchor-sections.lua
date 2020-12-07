@@ -40,12 +40,20 @@ function insert_anchor(el)
   -- do not add anchor on empty headings
   if #el.content == 0 then return(nil) end
 
-  if el.identifier ~= "" and el.level <= anchor_depth then
-    table.insert(el.content,
-      pandoc.Link("", "#"..el.identifier, "", {class = "anchor-section"})
-    )
+  if el.identifier ~= "" then
+    if el.level <= anchor_depth then
+      --[[
+      with --section-divs this will be added on the section div not the Header.
+      The class will be moved to the header node by anchor-sections.js
+      ]]
       el.classes:insert("hasAnchor")
-    el.classes:insert("hasAnchor")
+    end
+    -- .hasAnchor could be added by the piece above or manually by the user
+    if el.classes:find("hasAnchor") then
+      table.insert(el.content,
+        pandoc.Link("", "#"..el.identifier, "", {class = "anchor-section"})
+      )
+    end
   end
   return(el)
 end
