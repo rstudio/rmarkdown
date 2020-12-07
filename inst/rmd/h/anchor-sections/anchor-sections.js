@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Select anchor section links add by Lua filter
-  const anchors = document.querySelectorAll('a.anchor-section')
+  // If section divs is used, we need to put the anchor is the child header
+  const headers = document.querySelectorAll("div.hasAnchor.section[class*='level'] > :first-child")
 
-  // Add the .hasAnchor class to parent header
-  anchors.forEach(function (x) {
-    const parentHeader = x.parentElement
-    if (!parentHeader.classList.contains('hasAnchor')) {
-      parentHeader.classList.add('hasAnchor')
-    }
+  headers.forEach(function (x) {
+    // Add to the header node
+    if (!x.classList.contains('hasAnchor')) x.classList.add('hasAnchor')
+    // Remove from the section or div created by Pandoc
+    x.parentElement.classList.remove('hasAnchor')
   })
 })

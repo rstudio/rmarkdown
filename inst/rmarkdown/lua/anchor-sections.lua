@@ -44,6 +44,8 @@ function insert_anchor(el)
     table.insert(el.content,
       pandoc.Link("", "#"..el.identifier, "", {class = "anchor-section"})
     )
+      el.classes:insert("hasAnchor")
+    el.classes:insert("hasAnchor")
   end
   return(el)
 end

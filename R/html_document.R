@@ -378,7 +378,7 @@ html_document <- function(toc = FALSE,
 
   # anchor-sections
   if (!xfun::isFALSE(anchor_sections)) {
-    components <- add_anchor_sections(anchor_sections)
+    components <- add_anchor_sections(anchor_sections, section_divs)
     args <- c(args, components$args)
     lua_filters <- c(lua_filters, components$lua_filters)
     extra_dependencies <- append(extra_dependencies, components$extra_dependencies)
@@ -706,7 +706,7 @@ navbar_link_text <- function(x, ...) {
     tagList(x$text, ...)
 }
 
-add_anchor_sections <- function(anchor_sections) {
+add_anchor_sections <- function(anchor_sections, section_divs = FALSE) {
 
   res <- list(args = NULL, lua_filters = NULL, extra_dependencies = NULL)
 
@@ -748,7 +748,7 @@ add_anchor_sections <- function(anchor_sections) {
   }
 
   res$lua_filters <- pkg_file_lua("anchor-sections.lua")
-  res$extra_dependencies <- list(html_dependency_anchor_sections(style))
+  res$extra_dependencies <- list(html_dependency_anchor_sections(style, section_divs))
 
   res
 }
