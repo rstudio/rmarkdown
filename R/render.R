@@ -968,7 +968,10 @@ render <- function(input,
         latexmk(texfile, output_format$pandoc$latex_engine, '--biblatex' %in% output_format$pandoc$args)
         file.rename(file_with_ext(texfile, "pdf"), output_file)
         # clean up the tex file if necessary
-        if (!output_format$pandoc$keep_tex) on.exit(unlink(texfile), add = TRUE)
+        if (!output_format$pandoc$keep_tex) {
+          texfile <- normalize_path(texfile)
+          on.exit(unlink(texfile), add = TRUE)
+        }
       }
     } else {
       convert(output_file, run_citeproc)
