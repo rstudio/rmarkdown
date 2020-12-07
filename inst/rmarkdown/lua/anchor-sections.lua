@@ -37,6 +37,9 @@ end
 
 -- insert anchor link
 function insert_anchor(el)
+  -- do not add anchor on empty headings
+  if #el.content == 0 then return(nil) end
+
   if el.identifier ~= "" and el.level <= anchor_depth then
     el.classes:insert("hasAnchor")
     table.insert(el.content,
