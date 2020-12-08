@@ -204,9 +204,9 @@ render_site <- function(input = ".",
 
 #' @rdname render_site
 #' @param preview Whether to list the files to be removed rather than actually
-#'   removing them.
+#'   removing them. Defaulting to TRUE to prevent removing without notice.
 #' @export
-clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
+clean_site <- function(input = ".", preview = TRUE, quiet = FALSE,
                        encoding = "UTF-8") {
 
   # normalize to a directory
@@ -220,17 +220,34 @@ clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
   # get the files to be cleaned
   files <- generator$clean()
 
+
+  if (length(files) == 0) {
+    if (preview || !quiet) cat("Nothing to removed. All clean !\n")
+    return(invisible(NULL))
+  }
+
   # if it's just a preview then return the files, otherwise
   # actually remove the files
-  if (preview)
-    files
-  else {
+  if (preview) {
+    cat("These files and folders can probably be removed:\n",
+        paste0("* ", mark_dirs(files)),
+        "\nUse rmarkdown::clean_site(preview = FALSE) to remove them.",
+        sep = "\n")
+  } else {
     if (!quiet) {
-      cat("Removing files: \n")
-      cat(paste0(" ", files), sep = "\n")
+      cat("Removing files: \n",
+          paste0("* ", mark_dirs(files)),
+          sep = "\n")
     }
     unlink(file.path(input, files), recursive = TRUE)
   }
+}
+
+# TODO: Move to xfun - bookdown use it too.
+mark_dirs <- function(files) {
+  i <- file_test("-d", files) & !grepl("/$", files)
+  files[i] <- paste0(files[i], "/")
+  files
 }
 
 #' @rdname render_site
