@@ -220,7 +220,6 @@ clean_site <- function(input = ".", preview = TRUE, quiet = FALSE,
   # get the files to be cleaned
   files <- generator$clean()
 
-  length(files) == 0
 
   if (length(files) == 0) {
     if (preview || !quiet) cat("Nothing to removed. All clean !\n")
