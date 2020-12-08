@@ -101,7 +101,8 @@ Suggests:
     vctrs,
     tibble,
     fs,
-    rsconnect
+    rsconnect,
+    withr (>= 2.3.0)
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
 URL: https://github.com/rstudio/rmarkdown
 BugReports: https://github.com/rstudio/rmarkdown/issues
