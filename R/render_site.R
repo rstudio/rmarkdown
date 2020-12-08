@@ -222,15 +222,33 @@ clean_site <- function(input = ".", preview = TRUE, quiet = FALSE,
 
   # if it's just a preview then return the files, otherwise
   # actually remove the files
-  if (preview)
-    files
-  else {
+  if (preview) {
+    if (length(files) == 0) {
+      cat("Nothing to removed. All clean !\n")
+    } else {
+      cat("These files and folders can probably be removed:\n",
+          paste0("* ", mark_dirs(files, input)),
+          "\nUse `rmarkdown::clean_site(preview = FALSE)` to remove them.",
+          sep = "\n")
+    }
+  } else {
     if (!quiet) {
-      cat("Removing files: \n")
-      cat(paste0(" ", files), sep = "\n")
+      cat("Removing files: \n",
+          paste0("* ", mark_dirs(files, input)),
+          sep = "\n")
     }
     unlink(file.path(input, files), recursive = TRUE)
   }
+}
+
+# TODO: Move to xfun - bookdown use it too.
+mark_dirs <- function(files, dir) {
+  if (!missing(dir)) {
+    owd = setwd(dir); on.exit(setwd(owd))
+  }
+  i = file_test("-d", files) & !grepl("/$", files)
+  files[i] = paste0(files[i], "/")
+  files
 }
 
 #' @rdname render_site
