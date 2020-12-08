@@ -77,4 +77,5 @@ test_that("clean_site gives notices before removing", {
   expect_output(clean_site(), "removed.*_site")
   expect_true(dir.exists("_site"))
   expect_silent(clean_site(preview = FALSE, quiet = TRUE))
+  expect_output(clean_site(preview = FALSE, quiet = FALSE), "Nothing")
 })

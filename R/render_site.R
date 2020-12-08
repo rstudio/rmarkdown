@@ -220,17 +220,20 @@ clean_site <- function(input = ".", preview = TRUE, quiet = FALSE,
   # get the files to be cleaned
   files <- generator$clean()
 
+  length(files) == 0
+
+  if (length(files) == 0) {
+    if (preview || !quiet) cat("Nothing to removed. All clean !\n")
+    return(invisible(NULL))
+  }
+
   # if it's just a preview then return the files, otherwise
   # actually remove the files
   if (preview) {
-    if (length(files) == 0) {
-      cat("Nothing to removed. All clean !\n")
-    } else {
-      cat("These files and folders can probably be removed:\n",
-          paste0("* ", mark_dirs(files, input)),
-          "\nUse `rmarkdown::clean_site(preview = FALSE)` to remove them.",
-          sep = "\n")
-    }
+    cat("These files and folders can probably be removed:\n",
+        paste0("* ", mark_dirs(files, input)),
+        "\nUse `rmarkdown::clean_site(preview = FALSE)` to remove them.",
+        sep = "\n")
   } else {
     if (!quiet) {
       cat("Removing files: \n",
