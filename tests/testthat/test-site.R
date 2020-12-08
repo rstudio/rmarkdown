@@ -69,3 +69,12 @@ test_that("render_site respects 'new_session' in the config", {
   expect_match(a, "library(stringr)", fixed = TRUE, all = FALSE)
   expect_false(any(grepl("stringr", b, fixed = TRUE)))
 })
+
+test_that("clean_site gives notices before removing", {
+  site_dir <- local_create_site()
+  render_site(site_dir, quiet = TRUE)
+  withr::local_dir(site_dir)
+  expect_output(clean_site(), "removed.*_site")
+  expect_true(dir.exists("_site"))
+  expect_silent(clean_site(preview = FALSE, quiet = TRUE))
+})
