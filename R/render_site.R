@@ -245,8 +245,8 @@ clean_site <- function(input = ".", preview = TRUE, quiet = FALSE,
 
 # TODO: Move to xfun - bookdown use it too.
 mark_dirs <- function(files) {
-  i = file_test("-d", files) & !grepl("/$", files)
-  files[i] = paste0(files[i], "/")
+  i <- file_test("-d", files) & !grepl("/$", files)
+  files[i] <- paste0(files[i], "/")
   files
 }
 
