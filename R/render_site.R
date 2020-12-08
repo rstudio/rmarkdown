@@ -204,9 +204,9 @@ render_site <- function(input = ".",
 
 #' @rdname render_site
 #' @param preview Whether to list the files to be removed rather than actually
-#'   removing them.
+#'   removing them. Defaulting to TRUE to prevent removing without notice.
 #' @export
-clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
+clean_site <- function(input = ".", preview = TRUE, quiet = FALSE,
                        encoding = "UTF-8") {
 
   # normalize to a directory
