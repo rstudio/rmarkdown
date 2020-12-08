@@ -231,7 +231,7 @@ clean_site <- function(input = ".", preview = TRUE, quiet = FALSE,
   if (preview) {
     cat("These files and folders can probably be removed:\n",
         paste0("* ", mark_dirs(files)),
-        "\nUse `rmarkdown::clean_site(preview = FALSE)` to remove them.",
+        "\nUse rmarkdown::clean_site(preview = FALSE) to remove them.",
         sep = "\n")
   } else {
     if (!quiet) {
