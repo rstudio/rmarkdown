@@ -554,6 +554,9 @@ pandoc_html_highlight_args <- function(template,
                                        highlight,
                                        highlight_downlit = FALSE) {
 
+  # Reminder: we do not use pandoc_path_arg() for argument to --highlight-style
+  # https://github.com/rstudio/rmarkdown/issues/1976
+
   args <- c()
 
   # no highlighting engine
