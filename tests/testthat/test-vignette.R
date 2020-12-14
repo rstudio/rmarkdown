@@ -33,6 +33,7 @@ test_that("vignette_pre_processor warns against differences in vignette index en
   }
 })
 
+# https://github.com/rstudio/rmarkdown/issues/1978
 test_that("vignette_pre_processor correctly handles encoding", {
   withr::local_options(list(rmarkdown.html_vignette.check_title = TRUE))
   input_file <- .generate_temp_vignette('Données', 'Données')
