@@ -84,6 +84,10 @@ vignette_pre_processor <- function(input_file, metadata = yaml_front_matter(inpu
     return()
   title1 <- metadata[['title']]
   title2 <- tools::vignetteInfo(input_file)[['title']]
+  # rmarkdown assumes UTF-8 only - tools::vignetteInfo uses readLines with
+  # default OS encoding so issue on Windows for example
+  # https://github.com/rstudio/rmarkdown/issues/1978
+  Encoding(title2) <- "UTF-8"
   if (!identical(title1, title2)) warning(
     'The vignette title specified in \\VignetteIndexEntry{} is different from ',
     'the title in the YAML metadata. The former is "', title2, '", and the ',
