@@ -774,6 +774,8 @@ is_pandoc_to_html <- function(options) {
 
 citeproc_required <- function(yaml_front_matter,
                               input_lines = NULL) {
+  # TODO: remove the hack below after BETS is updated on CRAN https://github.com/nmecsys/BETS/pull/18
+  if (tryCatch(xfun::check_old_package('BETS', '0.4.9'), error = function(e) FALSE)) return(FALSE)
   (
     is.null(yaml_front_matter$citeproc) ||
       yaml_front_matter$citeproc
