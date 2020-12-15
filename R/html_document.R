@@ -22,7 +22,8 @@
 #'  options that control the behavior of the floating table of contents. See the
 #'  \emph{Floating Table of Contents} section below for details.
 #'@param number_sections \code{TRUE} to number section headings
-#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers
+#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers.
+#'  See \link[rmarkdown:html_document]{Anchor Sections Customization section}.
 #'@param fig_width Default width (in inches) for figures
 #'@param fig_height Default height (in inches) for figures
 #'@param fig_retina Scaling to perform for retina displays (defaults to 2, which
@@ -102,6 +103,7 @@
 #'@param extra_dependencies,... Additional function arguments to pass to the
 #'  base R Markdown HTML output formatter \code{\link{html_document_base}}
 #'@return R Markdown output format to pass to \code{\link{render}}
+#'
 #'@section Highlighting:
 #'
 #'  There are three highlighting engines available to HTML documents:
@@ -151,6 +153,30 @@
 #'  </style>
 #'  $endif$}
 #'  }}
+#'
+#'@section Anchor Sections Customization:
+#'  By default, a \samp{#} is used as a minimalist choice, referring to the id selector
+#'  in HTML and CSS. You can easily change that using a css rule in your
+#'  document. For example, to add a \href{https://codepoints.net/U+1F517}{link
+#'  symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}} instead:
+#'  \preformatted{
+#'  a.anchor-section::before {
+#'    content: '\\01F517\\00FE0E';
+#'  }}
+#'  You can remove \samp{\\00FE0E} to get a more complex link pictogram
+#'  \if{html}{\out{(&#x1F517;)}}.
+#'
+#'  If you prefer an svg icon, you can also use one using for example a direct link or downloading it from
+#'  \url{https://material.io/resources/icons/}.
+#'  \preformatted{
+#'  /* From https://material.io/resources/icons/
+#'     Licence: https://www.apache.org/licenses/LICENSE-2.0.html */
+#'  a.anchor-section::before {
+#'    content: url(https://fonts.gstatic.com/s/i/materialicons/link/v7/24px.svg);
+#'  }}
+#'
+#'  About how to apply custom CSS, see
+#'  \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
 #'
 #'@section Navigation Bars:
 #'
@@ -257,7 +283,7 @@ html_document <- function(toc = FALSE,
                           toc_depth = 3,
                           toc_float = FALSE,
                           number_sections = FALSE,
-                          anchor_sections = TRUE,
+                          anchor_sections = FALSE,
                           section_divs = TRUE,
                           fig_width = 7,
                           fig_height = 5,
@@ -745,7 +771,18 @@ navbar_link_text <- function(x, ...) {
       iconset <- split[[1]][[1]]
     else
       iconset <- ""
-    tagList(tags$span(class = paste(iconset, x$icon)), " ", x$text, ...)
+    # check if a full class is passed for fontawesome
+    # use default 'fas' otherwise
+    # https://github.com/rstudio/rmarkdown/issues/1554
+    class = if (grepl("^fa\\w fa", iconset)) {
+      x$icon
+    } else if (iconset == "fa") {
+      paste("fas", x$icon)
+    } else {
+      # should be other than FontAwesome
+      paste(iconset, x$icon)
+    }
+    tagList(tags$span(class = class), " ", x$text, ...)
   }
   else
     tagList(x$text, ...)

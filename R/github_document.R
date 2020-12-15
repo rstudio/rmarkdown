@@ -72,7 +72,6 @@ github_document <- function(toc = FALSE,
         "--template", pkg_file_arg(
           "rmarkdown/templates/github_document/resources/preview.html"),
         "--variable", paste0("github-markdown-css:", css),
-        "--email-obfuscation", "none", # no email obfuscation
         if (pandoc2) c("--metadata", "pagetitle=PREVIEW")  # HTML5 requirement
       )
 
