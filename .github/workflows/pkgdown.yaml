@@ -46,8 +46,8 @@ jobs:
         shell: Rscript {0}
 
       - name: Publish
-        uses: netlify/actions/cli@master
-        with:
-          args: deploy --prod --dir=docs
+        run: |
+          npm install netlify-cli -g
+          netlify deploy --prod --dir docs
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
