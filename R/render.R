@@ -325,6 +325,8 @@ render <- function(input,
     if (!dir_exists(intermediates_dir))
       dir.create(intermediates_dir, recursive = TRUE)
     intermediates_dir <- normalize_path(intermediates_dir)
+  } else {
+    intermediates_dir <- normalize_path(dirname(input))
   }
   intermediates_loc <- function(file) {
     if (is.null(intermediates_dir))
@@ -364,12 +366,6 @@ render <- function(input,
     file.copy(input, input_no_shell_chars, overwrite = TRUE)
     intermediates <- c(intermediates, input_no_shell_chars)
     input <- input_no_shell_chars
-
-    # if an intermediates directory wasn't explicit before, make it explicit now
-    if (is.null(intermediates_dir)) {
-      intermediates_dir <-
-        dirname(normalize_path(input_no_shell_chars))
-    }
   }
 
   # never use the original input directory as the intermediate directory,
