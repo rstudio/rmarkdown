@@ -16,7 +16,7 @@ render_site(
   encoding = "UTF-8"
 )
 
-clean_site(input = ".", preview = FALSE, quiet = FALSE, encoding = "UTF-8")
+clean_site(input = ".", preview = TRUE, quiet = FALSE, encoding = "UTF-8")
 
 site_generator(input = ".", output_format = NULL)
 
@@ -38,7 +38,7 @@ environment).}
 \item{encoding}{Ignored. The encoding is always assumed to be UTF-8.}
 
 \item{preview}{Whether to list the files to be removed rather than actually
-removing them.}
+removing them. Defaulting to TRUE to prevent removing without notice.}
 
 \item{...}{Currently unused.}
 }

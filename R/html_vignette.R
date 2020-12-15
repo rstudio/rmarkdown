@@ -79,10 +79,15 @@ html_vignette <- function(fig_width = 3,
 vignette_pre_processor <- function(input_file, metadata = yaml_front_matter(input_file)) {
   if (getRversion() < 3.6)
     return()
-  if (!getOption(o <- 'rmarkdown.html_vignette.check_title', !knitr:::is_R_CMD_check()))
+  # TODO: use xfun::is_R_CMD_check() in the future (don't bump xfun >= 0.19 yet)
+  if (!getOption(o <- 'rmarkdown.html_vignette.check_title', is.na(Sys.getenv('_R_CHECK_PACKAGE_NAME_', NA))))
     return()
   title1 <- metadata[['title']]
   title2 <- tools::vignetteInfo(input_file)[['title']]
+  # rmarkdown assumes UTF-8 only - tools::vignetteInfo uses readLines with
+  # default OS encoding so issue on Windows for example
+  # https://github.com/rstudio/rmarkdown/issues/1978
+  Encoding(title2) <- "UTF-8"
   if (!identical(title1, title2)) warning(
     'The vignette title specified in \\VignetteIndexEntry{} is different from ',
     'the title in the YAML metadata. The former is "', title2, '", and the ',
