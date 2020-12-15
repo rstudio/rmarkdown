@@ -1,6 +1,7 @@
 rmarkdown 2.7
 ================================================================================
 
+- Fix intermediate files being created at the current directory instead of the input directory when the input file name contains shell characters and `render(intermediates_dir = NULL)` (thanks, @atusy, #1982).
 
 rmarkdown 2.6
 ================================================================================
