@@ -335,12 +335,15 @@ render <- function(input,
       file.path(intermediates_dir, file)
   }
 
-  # resolve output directory before we change the working directory in
+  # resolve output directory and file before we change the working directory in
   # preparation for rendering the document
   if (!is.null(output_dir)) {
     if (!dir_exists(output_dir))
       dir.create(output_dir, recursive = TRUE)
     output_dir <- normalize_path(output_dir)
+  } else if (!is.null(output_file)) {
+    # if output_dir is not null, output file becomes relative to output_dir later
+    output_file <- file.path(getwd(), output_file)
   }
 
   # check whether this document requires a knit
@@ -474,7 +477,7 @@ render <- function(input,
   }
   pandoc_to <- output_format$pandoc$to
 
-  # generate outpout file based on input filename
+  # generate output file based on input filename
   output_auto <- pandoc_output_file(input, output_format$pandoc)
   if (is.null(output_file) || is.na(output_file)) output_file <- output_auto else {
     if (!inherits(output_file, "AsIs") && xfun::file_ext(output_file) == "")
