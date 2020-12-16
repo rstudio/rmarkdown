@@ -343,8 +343,9 @@ render <- function(input,
     output_dir <- normalize_path(output_dir)
   } else if (!is.null(output_file)) {
     # if output_dir is not null, output file becomes relative to output_dir later
-    output_file <- file.path(normalize_path(dirname(output_file)),
-                             basename(output_file))
+    output_file <- structure(file.path(normalize_path(dirname(output_file)),
+                                       basename(output_file)),
+                             class = class(output_file))
   }
 
   # check whether this document requires a knit
