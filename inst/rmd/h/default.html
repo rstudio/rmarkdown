@@ -63,7 +63,14 @@ if (window.hljs) {
 $endif$
 
 $if(highlighting-css)$
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 $highlighting-css$
 
