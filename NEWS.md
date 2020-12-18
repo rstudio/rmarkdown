@@ -10,6 +10,8 @@ rmarkdown 2.7
         depth: 2 # max depth to apply anchor on (default to max which is 6)
   ```
   Customizing using a css rule is still possible. Detailed explanation and examples have been added in `?html_document`.
+  
+- Fix an issue with line numbering in code chunks when `.numberlines` with Pandoc's highlighting (thanks, @aosavi, #1876)
 
 rmarkdown 2.6
 ================================================================================
