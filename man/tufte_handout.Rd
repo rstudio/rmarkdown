@@ -52,7 +52,7 @@ Template for creating a handout according to the style of
 Edward R. Tufte and Richard Feynman.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/tufte_handout_format.html}{online
+See the \href{https://bookdown.org/yihui/rmarkdown/tufte-handouts.html}{online
 documentation} for additional details.
 
 Creating Tufte handout output from R Markdown requires that LaTeX be installed.

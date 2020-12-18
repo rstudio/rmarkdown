@@ -34,9 +34,6 @@ html_document_base <- function(theme = NULL,
 
   args <- c()
 
-  # no email obfuscation
-  args <- c(args, "--email-obfuscation", "none")
-
   # self contained document
   if (self_contained) {
     if (copy_resources)
@@ -106,9 +103,6 @@ html_document_base <- function(theme = NULL,
 
     preserved_chunks <<- extract_preserve_chunks(input_file)
 
-    # a lua filters added if pandoc2.0
-    args <- c(args, pandoc_lua_filters(c("pagebreak.lua", "latex-div.lua")))
-
     args
   }
 
@@ -170,7 +164,10 @@ html_document_base <- function(theme = NULL,
 
   output_format(
     knitr = NULL,
-    pandoc = pandoc_options(to = "html", from = NULL, args = args),
+    pandoc = pandoc_options(
+      to = "html", from = NULL, args = args,
+      lua_filters = pkg_file_lua(c("pagebreak.lua", "latex-div.lua"))
+    ),
     keep_md = FALSE,
     clean_supporting = FALSE,
     pre_knit = pre_knit,

@@ -3,7 +3,7 @@
 #' Convert documents to and from various formats using the pandoc utility.
 #'
 #' Supported input and output formats are described in the
-#' \href{http://johnmacfarlane.net/pandoc/README.html}{pandoc user guide}.
+#' \href{https://pandoc.org/MANUAL.html}{pandoc user guide}.
 #'
 #' The system path as well as the version of pandoc shipped with RStudio (if
 #' running under RStudio) are scanned for pandoc and the highest version
@@ -82,10 +82,10 @@ pandoc_convert <- function(input,
 
   # citeproc filter if requested
   if (citeproc) {
-    args <- c(args, "--filter", pandoc_citeproc())
-    # --natbib/--biblatex conflicts with '--filter pandoc-citeproc'
-    i <- stats::na.omit(match(c("--natbib", "--biblatex"), options))
-    if (length(i)) options <- options[-i]
+    # --natbib/--biblatex conflicts with pandoc own citation processing,
+    # '--filter pandoc-citeproc' or '--citeproc'
+    args <- c(args[!args %in% c("--natbib", "--biblatex")],
+              pandoc_citeproc_args())
   }
 
   # build the conversion command
@@ -126,14 +126,26 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
   # resolve type
   type <- match.arg(type)
 
+  if (pandoc_available("2.11")) {
+    bin <- pandoc()
+    to <- switch(type,
+                 list = "csljson",
+                 json = "csljson",
+                 yaml = "markdown"
+    )
+    args <- c(file, "-s", "-t", to)
+  } else {
+    bin <- pandoc_citeproc()
+    conversion <- switch(type,
+                         list = "--bib2json",
+                         json = "--bib2json",
+                         yaml = "--bib2yaml"
+    )
+    args <- c(conversion, file)
+  }
+
   # build the conversion command
-  conversion <- switch(type,
-    list = "--bib2json",
-    json = "--bib2json",
-    yaml = "--bib2yaml"
-  )
-  args <- c(conversion, file)
-  command <- paste(quoted(pandoc_citeproc()), paste(quoted(args), collapse = " "))
+  command <- paste(quoted(bin), paste(quoted(args), collapse = " "))
 
   # run the conversion
   with_pandoc_safe_environment({
@@ -332,6 +344,20 @@ pandoc_toc_args <- function(toc,
   }
 
   args
+}
+
+#' @section About Pandoc citeproc:
+#' For Pandoc version before 2.11, a pandoc filter \samp{pandoc-citeproc} is
+#' used. Since Pandoc 2.11, the feature is built-in and activated using
+#' \samp{--citeproc} flag. \samp{pandoc_citeproc_arg} will return the correct
+#' switches depending on the Pandoc version in use.
+#' @rdname pandoc_args
+#' @export
+pandoc_citeproc_args <- function() {
+  if (pandoc_available("2.11"))
+    "--citeproc"
+  else
+    c("--filter", pandoc_citeproc())
 }
 
 
@@ -717,9 +743,13 @@ pandoc_citeproc <- function() {
   if (file.exists(p)) p else bin
 }
 
-pandoc_lua_filters <- function(...) {
-  # lua filters was introduced in pandoc 2.0
-  if (pandoc2.0()) c(rbind("--lua-filter", pkg_file("rmd", "lua", ...)))
+#' @rdname pandoc_args
+#' @param lua_files Character vector of file paths to Lua filter files. Paths
+#'   will be transformed by \code{\link{pandoc_path_arg}}.
+#' @export
+pandoc_lua_filter_args <- function(lua_files) {
+  # Lua filters was introduced in pandoc 2.0
+  if (pandoc2.0()) c(rbind("--lua-filter", pandoc_path_arg(lua_files)))
 }
 
 
@@ -765,7 +795,7 @@ pandoc2.0 <- function() {
 #' either the system path or shipped with RStudio.
 #'
 #' See the
-#' \href{http://pandoc.org/MANUAL.html}{pandoc manual}
+#' \href{https://pandoc.org/MANUAL.html}{pandoc manual}
 #' for pandoc commands.
 #'
 #' @export

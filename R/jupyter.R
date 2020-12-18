@@ -40,7 +40,10 @@
 #' xfun::file_string(nb_rmd)
 convert_ipynb <- function(input, output = xfun::with_ext(input, 'Rmd')) {
   json <- jsonlite::fromJSON(input, simplifyDataFrame = FALSE)
-  lang <- json$metadata$kernelspec$language  # global language
+  spec <- json$metadata$kernelspec
+  lang <- spec$language  # global language
+  if (is.null(lang) && identical(tolower(spec$name), 'ir')) lang <- 'r'
+  if (is.null(lang)) lang <- 'python'  # fall back to python
   res <- character()
   for (cell in json$cells) {
     if (length(src <- unlist(cell$source)) == 0) next  # empty cell

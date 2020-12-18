@@ -125,6 +125,15 @@ html_dependency_navigation <- function(code_menu, source_embed) {
                  script = script)
 }
 
+html_dependency_anchor_sections <- function() {
+
+  htmlDependency(name = "anchor-sections",
+                 version = "1.0.1",
+                 src = pkg_file("rmd/h/anchor-sections"),
+                 script = "anchor-sections.js",
+                 stylesheet = "anchor-sections.css")
+}
+
 # analyze navbar html source for icon dependencies
 navbar_icon_dependencies <- function(navbar) {
 
@@ -132,7 +141,7 @@ navbar_icon_dependencies <- function(navbar) {
   source <- read_utf8(navbar)
 
   # find icon references
-  res <- regexec('<(span|i) +class *= *("|\') *(fa fa|ion ion)-', source)
+  res <- regexec('<(span|i) +class *= *("|\') *(fa\\w fa|ion ion)-', source)
   matches <- regmatches(source, res)
   libs <- c()
   for (match in matches) {
@@ -142,11 +151,13 @@ navbar_icon_dependencies <- function(navbar) {
   libs <- unique(libs)
 
   # return their dependencies
-  html_dependencies_fonts("fa fa" %in% libs, "ion ion" %in% libs)
+  any_fa <- any(grepl("fa\\w fa", libs))
+  any_ion <- any(grepl("ion ion", libs))
+  html_dependencies_fonts(any_fa, any_ion)
 }
 
-# utilty function to return a list of font dependencies based
-# whether we are including font_awesome and/or iconicons
+# utility function to return a list of font dependencies based
+# whether we are including font_awesome and/or ionicons
 html_dependencies_fonts <- function(font_awesome, ionicons) {
   deps <- list()
   if (font_awesome)

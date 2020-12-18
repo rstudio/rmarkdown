@@ -8,6 +8,8 @@
 \alias{pandoc_highlight_args}
 \alias{pandoc_latex_engine_args}
 \alias{pandoc_toc_args}
+\alias{pandoc_citeproc_args}
+\alias{pandoc_lua_filter_args}
 \title{Functions for generating pandoc command line arguments}
 \usage{
 pandoc_variable_arg(name, value)
@@ -21,6 +23,10 @@ pandoc_highlight_args(highlight, default = "tango")
 pandoc_latex_engine_args(latex_engine)
 
 pandoc_toc_args(toc, toc_depth = 3)
+
+pandoc_citeproc_args()
+
+pandoc_lua_filter_args(lua_files)
 }
 \arguments{
 \item{name}{Name of template variable to set.}
@@ -47,6 +53,9 @@ is specified.}
 \item{toc}{\code{TRUE} to include a table of contents in the output.}
 
 \item{toc_depth}{Depth of headers to include in table of contents.}
+
+\item{lua_files}{Character vector of file paths to Lua filter files. Paths
+will be transformed by \code{\link{pandoc_path_arg}}.}
 }
 \value{
 A character vector with pandoc command line arguments.
@@ -61,6 +70,14 @@ Non-absolute paths for resources referenced from the
 \code{in_header}, \code{before_body}, and \code{after_body}
 parameters are resolved relative to the directory of the input document.
 }
+\section{About Pandoc citeproc}{
+
+For Pandoc version before 2.11, a pandoc filter \samp{pandoc-citeproc} is
+used. Since Pandoc 2.11, the feature is built-in and activated using
+\samp{--citeproc} flag. \samp{pandoc_citeproc_arg} will return the correct
+switches depending on the Pandoc version in use.
+}
+
 \examples{
 \dontrun{
 library(rmarkdown)
