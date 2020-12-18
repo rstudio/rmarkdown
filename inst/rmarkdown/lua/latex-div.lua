@@ -4,6 +4,8 @@
      License: Public domain
 --]]
 
+text = require 'text'
+
 Div = function (div)
   -- look for 'latex' or 'data-latex' and at least 1 class
   local options = div.attributes['latex']
@@ -22,7 +24,7 @@ Div = function (div)
   end
 
   -- if it's "1" or "true" then just set it to empty string
-  if options == "1" or options == "true" then
+  if options == "1" or text.lower(options) == "true" then
     options = ""
   end
 
