@@ -3,6 +3,8 @@ rmarkdown 2.7
 
 - Fix an issue with line numbering in code chunks when `.numberlines` with Pandoc's highlighting (thanks, @aosavi, #1876)
 
+- Accept `latex="{options}"`, `latex=1`, or `latex=true` for Latex Divs.
+
 rmarkdown 2.6
 ================================================================================
 
