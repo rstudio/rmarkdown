@@ -337,9 +337,12 @@ site_config <- function(input = ".", encoding = "UTF-8") {
 # default site implementation (can be overridden by custom site generators)
 
 #' @rdname render_site
+#' @param output_format_filter An optional function which is passed the
+#'  input file and the output format, and which returns a (potentially
+#'  modified) output format.
 #' @param ... Currently unused.
 #' @export
-default_site_generator <- default_site <- function(input, ...) {
+default_site_generator <- default_site <- function(input, output_format_filter = NULL, ...) {
 
   # get the site config
   config <- site_config(input)
@@ -395,8 +398,14 @@ default_site_generator <- default_site <- function(input, ...) {
       # log the file being rendered
       if (!quiet) message("\nRendering: ", x)
 
+      # optionally customize the output format via filter
+      file_output_format <- output_format
+      if (!is.null(output_format_filter)) {
+        file_output_format <- output_format_filter(x, output_format)
+      }
+
       output <- render_one(input = x,
-                           output_format = output_format,
+                           output_format = file_output_format,
                            output_options = list(lib_dir = "site_libs",
                                                  self_contained = FALSE),
                            envir = envir,

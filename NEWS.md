@@ -5,6 +5,9 @@ rmarkdown 2.7
 
 - Accept `latex="{options}"`, `latex=1`, or `latex=true` for Latex Divs.
 
+- Add `output_format_filter` function to `default_site_generator()`. Enables custom site generators to customize or even entirely replace the output format right before rendering of each page.
+
+
 rmarkdown 2.6
 ================================================================================
 
