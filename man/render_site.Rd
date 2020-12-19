@@ -22,7 +22,7 @@ site_generator(input = ".", output_format = NULL)
 
 site_config(input = ".", encoding = "UTF-8")
 
-default_site_generator(input, ...)
+default_site_generator(input, output_format_filter = NULL, ...)
 }
 \arguments{
 \item{input}{Website directory (or the name of a file within the directory).}
@@ -39,6 +39,10 @@ environment).}
 
 \item{preview}{Whether to list the files to be removed rather than actually
 removing them. Defaulting to TRUE to prevent removing without notice.}
+
+\item{output_format_filter}{An optional function which is passed the
+input file and the output format, and which returns a (potentially
+modified) output format.}
 
 \item{...}{Currently unused.}
 }
