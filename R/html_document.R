@@ -97,7 +97,7 @@
 #'  \item{\code{style = "dash"}, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.}
 #'  \item{\code{style = "symbol"} will use a \href{https://codepoints.net/U+1F517}{link
 #'  symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}}
-#'  \item{\code{style = "icon"} will use an svg icon from \url{https://material.io/resources/icons/}
+#'  \item{\code{style = "icon"} will use an svg icon.
 #'  \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}}
 #'  }
 #'  You can also customise using a css rule in your
@@ -109,7 +109,7 @@
 #'  About how to apply custom CSS in R Markdown document, see
 #'  \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
 #'  }
-#'  \item{\code{depth}}{Select the maximum header level to add the 
+#'  \item{\code{depth}}{Select the maximum header level to add the
 #'  anchor link to. For example, this yaml will use the symbol style and
 #'  only with level 1 and 2 headings:
 #'  \preformatted{
