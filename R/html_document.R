@@ -379,12 +379,10 @@ html_document <- function(toc = FALSE,
   }
 
   # anchor-sections
-  if (!xfun::isFALSE(anchor_sections)) {
-    components <- add_anchor_sections(anchor_sections, section_divs)
-    args <- c(args, components$args)
-    lua_filters <- c(lua_filters, components$lua_filters)
-    extra_dependencies <- append(extra_dependencies, components$extra_dependencies)
-  }
+  components <- add_anchor_sections(anchor_sections, section_divs)
+  args <- c(args, components$args)
+  lua_filters <- c(lua_filters, components$lua_filters)
+  extra_dependencies <- append(extra_dependencies, components$extra_dependencies)
 
   # pre-processor for arguments that may depend on the name of the
   # the input file AND which need to inject html dependencies
@@ -721,45 +719,38 @@ navbar_link_text <- function(x, ...) {
 
 add_anchor_sections <- function(anchor_sections, section_divs = FALSE) {
 
+  # expected output object
   res <- list(args = NULL, lua_filters = NULL, extra_dependencies = NULL)
-
+  # Do nothing
   if (xfun::isFALSE(anchor_sections)) return(res)
-
+  # Requires Pandoc 2.0 because using a Lua filter
   if (!pandoc2.0()) {
     stop("Using anchor_sections requires Pandoc 2.0+", call. = FALSE)
   }
 
-  # default style used
-  style <- "hash"
-
-    # allowed customization
   allowed_args <- c("style", "depth")
-  if (is.list(anchor_sections)) {
+  default_style  <- "hash"
+
+  if (isTRUE(anchor_sections)) {
+    style <- default_style
+    depth <- NULL
+  } else if (is.list(anchor_sections)) {
     # check list elements
     all_allowed <- all(names(anchor_sections) %in% allowed_args)
     if (xfun::isFALSE(all_allowed)) {
-      stop("`anchor_sections` should be TRUE or one of [",
+      stop("`anchor_sections` could be a list with only names in [",
            paste(allowed_args, collapse = ", "), "]",
            call. = FALSE)
     }
-    if ("depth" %in% names(anchor_sections)) {
-      # Add metadata only if required
-      res$args <- pandoc_metadata_arg(
-        "rmd_anchor_depth", anchor_sections[["depth"]]
-      )
-    }
-    # change style if required
-    style <- anchor_sections[["style"]] %||% style
-    if (length(style) != 1) {
-      stop("`anchor_sections` can be a list containing only a single `style` element.",
-           call. = FALSE)
-    }
-  } else if (!isTRUE(anchor_sections)) {
-    stop("`anchor_sections` should be TRUE or one of [",
+    style <- anchor_sections[["style"]] %||% default_style
+    depth <- anchor_sections[["depth"]]
+  } else {
+    stop("`anchor_sections` should be FALSE, TRUE or a list with names [",
          paste(allowed_args, collapse = ", "), "]",
          call. = FALSE)
   }
 
+  res$args <- if (!is.null(depth)) pandoc_metadata_arg("rmd_anchor_depth", depth)
   res$lua_filters <- pkg_file_lua("anchor-sections.lua")
   res$extra_dependencies <- list(html_dependency_anchor_sections(style, section_divs))
 
