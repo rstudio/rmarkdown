@@ -51,7 +51,11 @@ function insert_anchor(el)
     -- .hasAnchor could be added by the piece above or manually by the user
     if el.classes:find("hasAnchor") then
       table.insert(el.content,
-        pandoc.Link("", "#"..el.identifier, "", {class = "anchor-section"})
+        pandoc.Link("", "#"..el.identifier, "",
+          pandoc.Attr(
+            nil, {"anchor-section"}, {["aria-label"]="Anchor link to header"}
+          )
+        )
       )
     end
   end
