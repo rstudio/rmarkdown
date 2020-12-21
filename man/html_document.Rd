@@ -178,7 +178,7 @@ and Citations} article in the online documentation.
  \item{\code{style = "icon"} will use an svg icon.
  \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}}
  }
- You can also customise using a css rule in your
+ You can also customize using a css rule in your
  document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:
  \preformatted{
  a.anchor-section::before {
