@@ -9,7 +9,6 @@ on:
     branches:
       - main
       - master
-      - gha
 
 name: R-CMD-check
 
@@ -23,12 +22,12 @@ jobs:
       matrix:
         config:
           - {os: windows-latest, pandoc: '2.7.3',   r: 'release'}
-          # - {os: macOS-latest,   pandoc: '2.7.3',   r: 'release'}
-          # - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
-          # - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'devel',   rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
-          # - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
-          # - {os: ubuntu-18.04,   pandoc: '2.11.2',  r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
-          # - {os: ubuntu-18.04,   pandoc: 'devel',   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
+          - {os: macOS-latest,   pandoc: '2.7.3',   r: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
+          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'devel',   rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
+          - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
+          - {os: ubuntu-18.04,   pandoc: '2.11.3.1',  r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
+          - {os: ubuntu-18.04,   pandoc: 'devel',   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
