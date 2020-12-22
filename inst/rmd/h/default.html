@@ -677,7 +677,7 @@ $$(document).ready(function ()  {
       hashGenerator: function (text) {
         return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
-      ignoreSelector: ".toc-ignore, .unlisted.unnumbered, .unlisted.unnumbered *",
+      ignoreSelector: ".toc-ignore, .unlisted.unnumbered",
       scrollTo: 0
     };
 $if(toc_collapsed)$
