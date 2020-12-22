@@ -591,7 +591,7 @@ site_resources <- function(site_dir, include = NULL, exclude = NULL, recursive =
                   "Rproj", "rproj",
                   "RData", "rdata", "rds")
   extensions_regex <- utils::glob2rx(paste0("*.", extensions))
-  excludes <- c("^rsconnect$", "^packrat$", "^\\..*$", "^_.*$", "^.*_cache$",
+  excludes <- c("^rsconnect$", "^packrat$", "^renv$", "^\\..*$", "^_.*$", "^.*_cache$",
                 extensions_regex,
                 utils::glob2rx(exclude))
   files <- all_files
