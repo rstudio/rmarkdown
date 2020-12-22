@@ -664,8 +664,8 @@ $if(toc_float)$
 <script>
 $$(document).ready(function ()  {
 
-    // move toc-ignore selectors from section div to header
-    $$('div.section.toc-ignore')
+    // move toc-ignore selectors from section div to header or add it to header
+    $$('div.section.toc-ignore, div.unlisted.unnumbered')
         .removeClass('toc-ignore')
         .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
 
