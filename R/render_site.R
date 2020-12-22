@@ -30,7 +30,7 @@
 #'       \item{Files beginning with "_"}
 #'       \item{Files known to contain R source code (e.g. ".R", ".s", ".Rmd"), R
 #'       data (e.g. ".RData", ".rds"), or configuration data (e.g. ".Rproj",
-#'       "rsconnect")).}
+#'       "rsconnect", "renv")).}
 #'     }
 #'     Note that you can override which files are included or excluded via
 #'     settings in "_site.yml" (described below).}
@@ -584,7 +584,7 @@ site_resources <- function(site_dir, include = NULL, exclude = NULL, recursive =
   # excludes:
   #   - known source/data extensions
   #   - anything that starts w/ '.' or '_'
-  #   - rsconnect and packrat directories
+  #   - rsconnect, renv and packrat directories
   #   - user excludes
   extensions <- c("R", "r", "S", "s",
                   "Rmd", "rmd", "md", "Rmarkdown", "rmarkdown",
