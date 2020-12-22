@@ -7,7 +7,7 @@ rmarkdown 2.7
 
 - Add `output_format_filter` function to `default_site_generator()`. Enables custom site generators to customize or even entirely replace the output format right before rendering of each page.
 
-- Fix floating ToC so that it will avoid headings with unnumbered and unlisted classes (thanks, @atusy, #1933).
+- Floating ToC in `html_document` can now hide headings with unnumbered and unlisted classes (thanks, @atusy, #1933).
 
 rmarkdown 2.6
 ================================================================================
