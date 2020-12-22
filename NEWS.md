@@ -7,6 +7,7 @@ rmarkdown 2.7
 
 - Add `output_format_filter` function to `default_site_generator()`. Enables custom site generators to customize or even entirely replace the output format right before rendering of each page.
 
+- Automatically exclude renv directory for `render_site()` (thanks, @jmbuhr, #1996)
 
 rmarkdown 2.6
 ================================================================================
