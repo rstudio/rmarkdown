@@ -29,8 +29,9 @@
 #'       \item{Files beginning with "." (hidden files).}
 #'       \item{Files beginning with "_"}
 #'       \item{Files known to contain R source code (e.g. ".R", ".s", ".Rmd"), R
-#'       data (e.g. ".RData", ".rds"), or configuration data (e.g. ".Rproj",
-#'       "rsconnect")).}
+#'       data (e.g. ".RData", ".rds"), configuration data (e.g. ".Rproj",
+#'       "rsconnect") or package project management data (e.g.
+#'       "packrat", "renv").}
 #'     }
 #'     Note that you can override which files are included or excluded via
 #'     settings in "_site.yml" (described below).}
@@ -584,14 +585,14 @@ site_resources <- function(site_dir, include = NULL, exclude = NULL, recursive =
   # excludes:
   #   - known source/data extensions
   #   - anything that starts w/ '.' or '_'
-  #   - rsconnect and packrat directories
+  #   - rsconnect, renv and packrat directories
   #   - user excludes
   extensions <- c("R", "r", "S", "s",
                   "Rmd", "rmd", "md", "Rmarkdown", "rmarkdown",
                   "Rproj", "rproj",
                   "RData", "rdata", "rds")
   extensions_regex <- utils::glob2rx(paste0("*.", extensions))
-  excludes <- c("^rsconnect$", "^packrat$", "^\\..*$", "^_.*$", "^.*_cache$",
+  excludes <- c("^rsconnect$", "^packrat$", "^renv$", "^\\..*$", "^_.*$", "^.*_cache$",
                 extensions_regex,
                 utils::glob2rx(exclude))
   files <- all_files
