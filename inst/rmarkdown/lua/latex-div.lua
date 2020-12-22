@@ -13,7 +13,7 @@ Div = function (div)
     options = div.attributes['data-latex']
   end
   if not options or #div.attr.classes == 0 then
-    return div
+    return nil
   end
 
   -- if the output format is not latex, remove the attr and return
