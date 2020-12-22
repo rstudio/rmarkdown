@@ -84,8 +84,9 @@ rendered in the following fashion:
       \item{Files beginning with "." (hidden files).}
       \item{Files beginning with "_"}
       \item{Files known to contain R source code (e.g. ".R", ".s", ".Rmd"), R
-      data (e.g. ".RData", ".rds"), or configuration data (e.g. ".Rproj",
-      "rsconnect", "renv")).}
+      data (e.g. ".RData", ".rds"), configuration data (e.g. ".Rproj",
+      "rsconnect") or package project management data (e.g.
+      "packrat", "renv").}
     }
     Note that you can override which files are included or excluded via
     settings in "_site.yml" (described below).}
