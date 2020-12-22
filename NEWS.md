@@ -44,6 +44,8 @@ rmarkdown 2.6
   ````
 
   See [Pandoc's manual](https://pandoc.org/MANUAL.html#option--email-obfuscation) for the meaning of this option. 
+  
+- Fix Fontawesome 5 icons in navbar by correctly handling new prefix as `fa` has been deprecated in favor of `fas` or `fab` (#1967)
 
 rmarkdown 2.5
 ================================================================================
