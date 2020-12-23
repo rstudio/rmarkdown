@@ -53,7 +53,7 @@ jobs:
       - uses: r-lib/actions/setup-tinytex@5f1c134
         env:
           # install full prebuilt version
-          TINYTEX_INSTALLER: TinyTeX
+          TINYTEX_INSTALLER: TinyTeX-1
 
       - name: Add some R options for later steps
         run: |
