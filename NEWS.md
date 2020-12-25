@@ -9,7 +9,7 @@ rmarkdown 2.7
 
 - Automatically exclude renv directory for `render_site()` (thanks, @jmbuhr, #1996)
 
-- Support `number_offset` feature to formats that supports the `number_sections` feature with a Lua filter. Note that `number_offset` needs be specified as a top-level option of the YAML front matter (thanks, @atusy, #1999).
+- Number offset for section headers can be set via the `number_offset` top-level option of the YAML front matter. This feature supports variety of formats including those without native `--number-sections` option (e.g.,  `md_document`) (thanks, @atusy, #1999).
 
 rmarkdown 2.6
 ================================================================================
