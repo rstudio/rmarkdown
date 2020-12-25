@@ -26,7 +26,7 @@ function Meta(meta)
   if offset then
     section_number_table[1] = tonumber(
         (type(offset) == "table") and (pandoc.utils.stringify(offset)) or offset
-      ) - 1
+      )
   end
 end
 

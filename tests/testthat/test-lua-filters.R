@@ -27,9 +27,9 @@ test_that("pagebreak Lua filters works", {
 })
 
 test_that("number_sections Lua filter works", {
-  test_number_sections <- function(number_offset = 1L) {
+  test_number_sections <- function(number_offset = 0L) {
       numbers <- paste0(
-        c(0L, 0L, 1L, 1L) + number_offset,
+        c(1L, 1L, 2L, 2L) + number_offset,
         c("", ".1", "", ".1")
       )
       headers <- c("#", "##", "#", "##")
@@ -37,7 +37,7 @@ test_that("number_sections Lua filter works", {
         paste0(headers, " ", numbers, "\n\n"),
         md_document(
           number_sections = TRUE,
-          pandoc_args = if (number_offset > 1) {
+          pandoc_args = if (number_offset > 0) {
             sprintf("--metadata=number_offset:%s", number_offset)
           }
         )
