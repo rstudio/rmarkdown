@@ -24,9 +24,12 @@ end
 function Meta(meta)
   local offset = meta.number_offset
   if offset then
-    section_number_table[1] = tonumber(
-        (type(offset) == "table") and (pandoc.utils.stringify(offset)) or offset
-      )
+    offset = (type(offset) == "table") and (pandoc.utils.stringify(offset)) or offset
+    local i = 0
+    for int in string.gmatch(offset, "[0-9]+") do
+      i = i + 1
+      section_number_table[i] = tonumber(int)
+    end
   end
 end
 
