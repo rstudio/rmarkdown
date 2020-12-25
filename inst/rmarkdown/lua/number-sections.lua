@@ -21,6 +21,13 @@ if FORMAT == "docx" then -- to be consistent with Pandoc >= 2.10.1
   separator = pandoc.Str("\t")
 end
 
+function Meta(meta)
+  if meta.number_offset then
+      section_number_table[1] = tonumber(
+        pandoc.utils.stringify(meta.number_offset)) - 1
+  end
+end
+
 function Header(elem)
   -- If unnumbered
   if (elem.classes:find("unnumbered")) then
