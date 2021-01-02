@@ -4,13 +4,13 @@ test_that("formats successfully produce a document", {
 
   testFormat <- function(output_format, df_print = NULL) {
     output_file <- I(tempfile())
+    on.exit(unlink(output_file), add = TRUE)
     render(test_path("test-formats.Rmd"),
            output_format = output_format,
            output_file = output_file,
           # output_options = ifelse(is.null(df_print), NULL, list(df_print = df_print)),
            quiet = TRUE)
     expect_true(file.exists(output_file))
-    file.remove(output_file)
   }
 
   testFormat(html_document(), df_print = "kable")
