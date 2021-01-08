@@ -691,7 +691,14 @@ shiny_prerendered_data_file_name <- function(label, cache) {
 # Use me instead of html_dependency_bootstrap() in a shiny runtime to get
 # dynamic theming (i.e., have it work with session$setCurrentTheme())
 shiny_bootstrap_lib <- function(theme) {
-  if (is_bs_themeish(theme)) {
-    shiny::bootstrapLib(as_bs_theme(theme))
+  if (!is_bs_themeish(theme)) {
+    return(NULL)
   }
+  if (!is_available("shiny", "1.5.0.9007")) {
+    stop(
+      "Using a {bslib} theme with `runtime: shiny` requires shiny v1.6 or higher.",
+      "Please try updating with `install.packages('shiny')`"
+    )
+  }
+  shiny::bootstrapLib(as_bs_theme(theme))
 }
