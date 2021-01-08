@@ -164,6 +164,7 @@ clean_tmpfiles <- function() {
   ))
 }
 
+# test if all paths in x are directories
 dir_exists <- function(x) {
   length(x) > 0 && utils::file_test('-d', x)
 }

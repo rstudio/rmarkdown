@@ -1,17 +1,13 @@
 on:
-  push:
-    branches:
-      - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
+  workflow_run:
+    workflows: ["R-CMD-check"]
+    branches: [main,master]
+    types: completed
 
-name: test-coverage
+name: pkgdown
 
 jobs:
-  test-coverage:
+  pkgdown:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -21,12 +17,6 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
 
       - uses: r-lib/actions/setup-pandoc@v1
-
-      # TODO: Use next tag once this commit is in a release
-      - uses: r-lib/actions/setup-tinytex@5f1c134
-        env:
-          # install full prebuilt version
-          TINYTEX_INSTALLER: TinyTeX
 
       - name: Query dependencies
         run: |
@@ -43,12 +33,22 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
       - name: Install dependencies
-        run: |
-          install.packages(c("remotes"))
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("covr")
+        run: remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
-      - name: Test coverage
-        run: covr::codecov()
+      - name: Install package
+        run: R CMD INSTALL .
+
+      - name: Build pkgdown site
+        run: |
+          install.packages("pkgdown", type = "binary")
+          pkgdown::build_site(new_process = FALSE)
         shell: Rscript {0}
+
+      - name: Publish
+        run: |
+          npm install netlify-cli -g
+          netlify deploy --prod --dir docs
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

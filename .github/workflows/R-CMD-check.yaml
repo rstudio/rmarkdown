@@ -26,7 +26,7 @@ jobs:
           - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'oldrel',  rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
           - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'devel',   rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
           - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
-          - {os: ubuntu-18.04,   pandoc: '2.11.2',  r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
+          - {os: ubuntu-18.04,   pandoc: '2.11.3.1',  r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
           - {os: ubuntu-18.04,   pandoc: 'devel',   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/bionic/latest"}
 
     env:
@@ -53,7 +53,7 @@ jobs:
       - uses: r-lib/actions/setup-tinytex@5f1c134
         env:
           # install full prebuilt version
-          TINYTEX_INSTALLER: TinyTeX
+          TINYTEX_INSTALLER: TinyTeX-1
 
       - name: Add some R options for later steps
         run: |
@@ -69,7 +69,6 @@ jobs:
         shell: Rscript {0}
 
       - name: Cache R packages
-        if: runner.os != 'Windows'
         uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
@@ -105,6 +104,7 @@ jobs:
         env:
           _R_CHECK_CRAN_INCOMING_: false
           _R_CHECK_TESTS_NLINES_: 0
+          TMPDIR: ${{ runner.temp }}
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
@@ -119,3 +119,10 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+
+      - name: Test coverage
+        if: success() && runner.os == 'Linux' && matrix.config.r == 'release' && matrix.config.pandoc == '2.7.3'
+        run: |
+          remotes::install_cran("covr")
+          covr::codecov()
+        shell: Rscript {0}

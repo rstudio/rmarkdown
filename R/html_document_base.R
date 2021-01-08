@@ -34,9 +34,6 @@ html_document_base <- function(theme = NULL,
 
   args <- c()
 
-  # no email obfuscation
-  args <- c(args, "--email-obfuscation", "none")
-
   # self contained document
   if (self_contained) {
     if (copy_resources)
