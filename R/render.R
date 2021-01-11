@@ -469,6 +469,8 @@ render <- function(input,
   # if we haven't been passed a fully formed output format then
   # resolve it by looking at the yaml
   if (!is_output_format(output_format)) {
+    # determine a default format from output extension if possible
+    output_format <- output_format_string_from_ext(output_format, output_file)
     output_format <- output_format_from_yaml_front_matter(input_lines,
                                                           output_options,
                                                           output_format,

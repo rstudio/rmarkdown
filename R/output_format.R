@@ -466,7 +466,6 @@ all_output_formats <- function(input, output_yaml = NULL) {
   enumerate_output_formats(input, output_yaml = output_yaml)
 }
 
-
 # Synthesize the output format for a document from it's YAML. If we can't
 # find an output format then we just return html_document
 output_format_from_yaml_front_matter <- function(input_lines,
@@ -595,6 +594,15 @@ create_output_format <- function(name,
 
   # return the format
   output_format
+}
+
+output_format_string_from_ext <- function(output_format, output_file) {
+  if (!is.null(output_format) || is.null(output_file)) return(output_format)
+  switch(xfun::file_ext(output_file),
+    html = "html_document",
+    pdf = "pdf_document",
+    docx = "word_document"
+  )
 }
 
 create_output_format_function <- function(name) {
