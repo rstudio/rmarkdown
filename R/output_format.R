@@ -601,8 +601,8 @@ create_output_format <- function(name,
   output_format
 }
 
-output_format_string_from_ext <- function(output_format, output_file) {
-  if (!is.null(output_format) || is.null(output_file)) return(output_format)
+output_format_string_from_ext <- function(format_name, output_file) {
+  if (!is.null(format_name) || is.null(output_file)) return(format_name)
   switch(xfun::file_ext(output_file),
     html = "html_document",
     pdf = "pdf_document",
