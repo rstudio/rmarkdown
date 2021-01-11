@@ -602,7 +602,8 @@ create_output_format <- function(name,
 }
 
 output_format_string_from_ext <- function(format_name, output_file) {
-  if (!is.null(format_name) || is.null(output_file)) return(format_name)
+  default_format <- "html_document"
+  if (!is.null(format_name) || is.null(output_file)) return(default_format)
   switch(xfun::file_ext(output_file),
     html = "html_document",
     pdf = "pdf_document",
