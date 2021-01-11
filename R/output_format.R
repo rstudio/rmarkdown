@@ -552,7 +552,7 @@ output_format_from_yaml_front_matter <- function(input_lines,
 
   # no output formats defined in the file, just take the passed format by name,
   # or default to a format based on the output_file extension if any,
-  # or html_document)
+  # or html_document
   } else {
     if (is.null(format_name)) {
       format_name <- output_format_string_from_ext(format_name, output_file)
