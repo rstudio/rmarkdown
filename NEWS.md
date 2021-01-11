@@ -9,6 +9,8 @@ rmarkdown 2.7
 
 - Automatically exclude renv directory for `render_site()` (thanks, @jmbuhr, #1996)
 
+- When no `output_format` is provided in any way but an `output_file` is provided in `render()`, the default format will be determined based on the extension: `"pdf_document"` for `.pdf`, or `"word_document"` for `.docx`. Otherwise, it will be `"html_document"` as previous version. (thanks, @pearsonca, #1569)  
+
 rmarkdown 2.6
 ================================================================================
 
