@@ -85,7 +85,7 @@ test_that("default output_format is guessed from output file extenstion", {
   expect_equal(output_format_string_from_ext(NULL, "test.pdf"), "pdf_document")
   expect_equal(output_format_string_from_ext(NULL, "test.html"), "html_document")
   expect_equal(output_format_string_from_ext(NULL, "test.docx"), "word_document")
-  expect_null(output_format_string_from_ext(NULL, "test.html5"))
+  expect_equal(output_format_string_from_ext(NULL, "test.any"), "html_document")
   expect_equal(output_format_string_from_ext("custom_document", NULL), "custom_document")
   expect_equal(output_format_string_from_ext("custom_document", "test.pdf"), "custom_document")
 })
