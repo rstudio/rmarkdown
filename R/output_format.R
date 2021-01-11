@@ -555,7 +555,7 @@ output_format_from_yaml_front_matter <- function(input_lines,
   # or html_document
   } else {
     if (is.null(format_name)) {
-      format_name <- output_format_string_from_ext(format_name, output_file)
+      format_name <- output_format_string_from_ext(output_file)
     }
   }
 
@@ -601,9 +601,9 @@ create_output_format <- function(name,
   output_format
 }
 
-output_format_string_from_ext <- function(format_name, output_file) {
+output_format_string_from_ext <- function(output_file) {
   default_format <- "html_document"
-  if (!is.null(format_name) || is.null(output_file)) return(default_format)
+  if (is.null(output_file)) return(default_format)
   switch(xfun::file_ext(output_file),
     html = "html_document",
     pdf = "pdf_document",
