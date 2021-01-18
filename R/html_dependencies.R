@@ -41,9 +41,14 @@ html_dependency_jqueryui <- function() {
 #' @export
 html_dependency_bootstrap <- function(theme) {
   if (is_bs_theme(theme)) {
+    # TODO: would it make sense for these additional rules to come as a part of
+    # bslib::bs_theme_dependencies() (for consistency sake)?
     h1_size <- if ("3" %in% theme_version(theme)) "font-size-h1" else "h1-font-size"
     theme <- bslib::bs_add_rules(
-      theme, paste0("h1.title {margin-top: 1.25rem; font-size: 1.15 * $", h1_size, "}")
+      theme, c(
+        paste0("h1.title {margin-top: 1.25rem; font-size: 1.15 * $", h1_size, "}"),
+        "pre:not([class]) { background-color: $body-bg }"
+      )
     )
     return(bslib::bs_theme_dependencies(theme))
   }
@@ -61,6 +66,8 @@ html_dependency_bootstrap <- function(theme) {
       "shim/html5shiv.min.js",
       "shim/respond.min.js"),
     stylesheet = paste0("css/", theme, ".min.css"),
+    # CSS rules yanked from inst/rmd/h/default.html that should remain for historical
+    # reasons, but shouldn't be included if bslib is relevant
     head = format(tags$style(HTML(
       "h1 {font-size: 34px;}
        h1.title {font-size: 38px;}
@@ -68,7 +75,9 @@ html_dependency_bootstrap <- function(theme) {
        h3 {font-size: 24px;}
        h4 {font-size: 18px;}
        h5 {font-size: 16px;}
-       h6 {font-size: 12px;}"
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }"
     )))
   )
 }
