@@ -107,11 +107,6 @@ theme_version <- function(theme) {
   }
 }
 
-is_bs3_compatible <- function(theme) {
-  version <- theme_version(theme)
-  identical(version, "3") || grepl("\\+3$", version)
-}
-
 
 # Create an HTML dependency for tocify
 #' @rdname html-dependencies

@@ -380,11 +380,11 @@ html_document <- function(toc = FALSE,
       if (!file.exists(navbar)) {
         navbar_yaml <- file.path(dirname(navbar), "_navbar.yml")
         if (file.exists(navbar_yaml))
-          navbar <- navbar_html_from_yaml(navbar_yaml, theme)
+          navbar <- navbar_html_from_yaml(navbar_yaml)
         # if there is no _navbar.yml then look in site config (if we have it)
         config <- site_config(input_file)
         if (!is.null(config) && !is.null(config$navbar))
-          navbar <- navbar_html(config$navbar, theme)
+          navbar <- navbar_html(config$navbar)
       }
 
       if (file.exists(navbar)) {
@@ -544,76 +544,48 @@ mathjax_config <- function() {
   "MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 }
 
-navbar_html_from_yaml <- function(navbar_yaml, theme) {
+
+navbar_html_from_yaml <- function(navbar_yaml) {
 
   # parse the yaml
   navbar <- yaml_load_file(navbar_yaml)
 
   # generate the html
-  navbar_html(navbar, theme)
+  navbar_html(navbar)
 }
 
 
 #' Create a navbar HTML file from a navbar definition
 #'
 #' @param navbar Navbar definition
-#' @param theme The navbar's Bootstrap theme.
 #' @param links List of navbar links
 #' @return Path to temporary file with navbar definition
 #' @keywords internal
 #' @export
-navbar_html <- function(navbar, theme = "default") {
+navbar_html <- function(navbar) {
 
   # title and type
   if (is.null(navbar$title)) navbar$title <- ""
   if (is.null(navbar$type)) navbar$type <- "default"
 
   # menu entries
-  left <- navbar_links_html(navbar$left, theme)
-  right <- navbar_links_html(navbar$right, theme)
+  left <- navbar_links_html(navbar$left)
+  right <- navbar_links_html(navbar$right)
 
-  # build the navigation HTML
-  navbar_html <- if (is_bs3_compatible(theme)) {
-    # BS4 -> BS3
-    navbar$type[1] <- switch(
-      navbar$type[1],
-      light = "default",
-      dark = "inverse",
-      navbar$type[1]
-    )
-    template <- file_string(pkg_file("rmd/h/_navbar3.html"))
-    sprintf(template, navbar$type[1], navbar$title, left, right)
-  } else {
-    # BS3 -> BS4
-    navbar$type[1] <- switch(
-      navbar$type[1],
-      default = "light",
-      inverse = "dark",
-      navbar$type[1]
-    )
-    navbar$type <- rep(navbar$type, length.out = 2)
-    template <- file_string(pkg_file("rmd/h/_navbar.html"))
-    sprintf(template, navbar$expand %||% "lg", navbar$type[1], navbar$type[2], navbar$title, left, right)
-  }
-
+  # build the navigation bar and return it as a temp file
+  template <- file_string(pkg_file("rmd/h/_navbar.html"))
+  navbar_html <- sprintf(template, navbar$type, navbar$title, left, right)
   as_tmpfile(navbar_html)
 }
 
 #' @keywords internal
 #' @name navbar_html
 #' @export
-navbar_links_html <- function(links, theme = "default") {
-  as.character(navbar_links_tags(links, theme = theme))
+navbar_links_html <- function(links) {
+  as.character(navbar_links_tags(links))
 }
 
-navbar_links_tags <- function(links, depth = 0L, theme) {
-
-  bs3_nav <- is_bs3_compatible(theme)
-
-  nav_link_class <- function(bs3_nav, depth) {
-    if (bs3_nav) return(NULL)
-    if (depth > 0) "dropdown-item" else "nav-link"
-  }
+navbar_links_tags <- function(links, depth = 0L) {
 
   if (!is.null(links)) {
 
@@ -632,25 +604,20 @@ navbar_links_tags <- function(links, depth = 0L, theme) {
           link_text <- navbar_link_text(x, " ", tags$span(class = "caret"))
         }
 
-        submenuLinks <- navbar_links_tags(x$menu, depth = depth + 1L, version)
+        submenuLinks <- navbar_links_tags(x$menu, depth = depth + 1L)
 
-        tags$li(
-          class = menu_class,
-          tags$a(
-            href = "#",
-            class = "dropdown-toggle",
-            class = nav_link_class(bs3_nav, depth),
-            `data-toggle` = "dropdown",
-            role = "button",
-            `aria-expanded` = "false",
-            link_text
-          ),
-          tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
+        tags$li(class = menu_class,
+                tags$a(
+                  href = "#", class = "dropdown-toggle",
+                  `data-toggle` = "dropdown", role = "button",
+                  `aria-expanded` = "false", link_text),
+                tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
         )
 
       } else if (!is.null(x$text) && grepl("^\\s*-{3,}\\s*$", x$text)) {
 
-        tags$li(class = if (bs3_nav) "divider" else "dropdown-divider")
+        # divider
+        tags$li(class = "divider")
 
       } else if (!is.null(x$text) && is.null(x$href)) {
 
@@ -661,15 +628,7 @@ navbar_links_tags <- function(links, depth = 0L, theme) {
 
         # standard menu item
         textTags <- navbar_link_text(x)
-        tags$li(
-          # https://getbootstrap.com/docs/4.4/components/navs/#tabs-with-dropdowns
-          class = if (!bs3_nav && depth == 0) "nav-item",
-          tags$a(
-            class = nav_link_class(bs3_nav, depth),
-            href = x$href,
-            textTags
-          )
-        )
+        tags$li(tags$a(href = x$href, textTags))
       }
     })
     tagList(tags)
@@ -703,3 +662,5 @@ navbar_link_text <- function(x, ...) {
   else
     tagList(x$text, ...)
 }
+
+
