@@ -109,7 +109,9 @@ is_bs_theme <- function(theme) {
 }
 
 theme_version <- function(theme) {
-  if (is.list(theme)) {
+  if (is_bs_theme(theme)) {
+    bslib::theme_version(theme)
+  } else if (is.list(theme)) {
     theme$version %||% bslib::version_default()
   } else {
     substr(html_dependency_bootstrap("default")$version, 1, 1)
