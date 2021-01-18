@@ -155,6 +155,8 @@ $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
 
+
+
 $if(theme)$
 <style type = "text/css">
 .main-container {
@@ -269,8 +271,7 @@ $$(document).ready(function () {
   menuAnchor.closest('li.dropdown').addClass('active');
 
   // Navbar adjustments
-  // TODO: verify this extra arbitrary padding is sensible
-  var navHeight = $$(".navbar").first().height() + 25;
+  var navHeight = $$(".navbar").first().height() + 15;
   var style = document.createElement('style');
   var pt = "padding-top: " + navHeight + "px; ";
   var mt = "margin-top: -" + navHeight + "px; ";
