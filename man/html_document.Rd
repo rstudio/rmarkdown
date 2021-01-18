@@ -102,7 +102,7 @@ its size).}
 \itemize{
 \item Use this option for custom themes using Bootstrap 4 or 3.
 \item During knit, modifications to the theme may be made via
-\code{\link[bslib:bs_global_theme_update]{bslib::bs_global_theme_update()}}.
+\code{\link[bslib:bs_global_theme]{bslib::bs_global_theme_update()}}.
 }
 \item \code{NULL} for no theme (i.e., no \code{\link[=html_dependency_bootstrap]{html_dependency_bootstrap()}}).
 \item A character string specifying a \href{https://bootswatch.com/3/}{Bootswatch 3}
@@ -167,28 +167,28 @@ and Citations} article in the online documentation.
 }
 \section{Anchor Sections Customization}{
 
- By default, a \samp{#} is used as a minimalist choice, referring to the id selector
- in HTML and CSS. You can easily change that using a css rule in your
- document. For example, to add a \href{https://codepoints.net/U+1F517}{link
- symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}} instead:
- \preformatted{
+By default, a \samp{#} is used as a minimalist choice, referring to the id selector
+in HTML and CSS. You can easily change that using a css rule in your
+document. For example, to add a \href{https://codepoints.net/U+1F517}{link
+symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}} instead:
+\preformatted{
  a.anchor-section::before {
    content: '\\01F517\\00FE0E';
  }}
- You can remove \samp{\\00FE0E} to get a more complex link pictogram
- \if{html}{\out{(&#x1F517;)}}.
+You can remove \samp{\\00FE0E} to get a more complex link pictogram
+\if{html}{\out{(&#x1F517;)}}.
 
- If you prefer an svg icon, you can also use one using for example a direct link or downloading it from
- \url{https://material.io/resources/icons/}.
- \preformatted{
+If you prefer an svg icon, you can also use one using for example a direct link or downloading it from
+\url{https://material.io/resources/icons/}.
+\preformatted{
  /* From https://material.io/resources/icons/
     Licence: https://www.apache.org/licenses/LICENSE-2.0.html */
  a.anchor-section::before {
    content: url(https://fonts.gstatic.com/s/i/materialicons/link/v7/24px.svg);
  }}
 
- About how to apply custom CSS, see
- \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
+About how to apply custom CSS, see
+\url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
 }
 
 \section{Navigation Bars}{
