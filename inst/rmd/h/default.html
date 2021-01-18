@@ -100,13 +100,6 @@ $endif$
   }
 })();
 </script>
-$if(theme)$
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
-$endif$
 $endif$
 
 $if(abstract)$
@@ -169,6 +162,7 @@ $if(theme)$
   margin-left: auto;
   margin-right: auto;
 }
+// TODO: what to do about this background color?
 code {
   color: inherit;
   background-color: rgba(0, 0, 0, 0.04);
@@ -291,11 +285,8 @@ $$(document).ready(function () {
 </script>
 $endif$
 
-<!--
-  Note that .tabset-dropdown was initially implemented using Glyphicons, which were dropped
-  in BS4. The idea behind the "equivalent" BS4 CSS derives from how carets are implemented
-  https://github.com/twbs/bootstrap/blob/099860/scss/mixins/_caret.scss#L1
--->
+<!-- tabsets -->
+
 <style type="text/css">
 .tabset-dropdown > .nav-tabs {
   display: inline-table;
@@ -306,8 +297,7 @@ $endif$
   border-radius: 4px;
 }
 
-$if(bs3)$
-.tabset-dropdown > .nav-tabs > li.active-dropdown-tab:before {
+.tabset-dropdown > .nav-tabs > li.active:before {
   content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
@@ -315,7 +305,7 @@ $if(bs3)$
   border-right: 1px solid #ddd;
 }
 
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active-dropdown-tab:before {
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
   content: "&#xe258;";
   border: none;
 }
@@ -327,42 +317,8 @@ $if(bs3)$
   padding: 10px;
   border-right: 1px solid #ddd;
 }
-$else$
-.tabset-dropdown > .nav-tabs > li.active-dropdown-tab:before {
-  display: inline-block;
-  margin-left: 0.255em;
-  vertical-align: 0.255em;
-  content: "";
-  border-top: 0.3em solid;
-  border-right: 0.3em solid transparent;
-  border-bottom: 0;
-  border-left: 0.3em solid transparent;
-}
 
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active-dropdown-tab:before {
-  display: inline-block;
-  margin-left: 0.255em;
-  vertical-align: 0.255em;
-  content: "";
-  border-top: 0.3em solid transparent;
-  border-right: 0;
-  border-bottom: 0.3em solid transparent;
-  border-left: 0.3em solid;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  display: inline-block;
-  margin-left: 0.255em;
-  vertical-align: 0.255em;
-  content: "";
-  border-top: 0.3em solid;
-  border-right: 0.3em solid transparent;
-  border-bottom: 0;
-  border-left: 0.3em solid transparent;
-}
-$endif$
-
-.tabset-dropdown > .nav-tabs > li.active-dropdown-tab {
+.tabset-dropdown > .nav-tabs > li.active {
   display: block;
 }
 
@@ -635,8 +591,6 @@ $$(document).ready(function () {
 $$(document).ready(function () {
   $$('.tabset-dropdown > .nav-tabs > li').click(function () {
     $$(this).parent().toggleClass('nav-tabs-open');
-    $$(this).siblings().removeClass("active-dropdown-tab");
-    $$(this).addClass("active-dropdown-tab");
   });
 });
 </script>
