@@ -71,8 +71,6 @@ rmarkdown 2.5
 
 - Introduce `runtime: shinyrmd` as a more user friendly alias for `runtime: shiny_prerendered`.
 
-- Provide `files_dir` as attribute on return from `render()` when `run_pandoc = FALSE`.
-
 
 rmarkdown 2.4
 ================================================================================
