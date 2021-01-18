@@ -1,7 +1,9 @@
 rmarkdown 2.7
 ================================================================================
 
-- `html_document` (and `html_document_base`)'s `theme` arguments gains the ability to accept a list of values, which are passed along to `bslib::bs_theme()`, making it much easier create custom themes with Bootstrap 4 or 3. To learn more, see <https://rstudio.github.io/bslib> (thanks, @cpsievert, #1260).
+- `html_document` (and `html_document_base`)'s `theme` parameter now understand `bslib::bs_theme()` objects/arguments, meaning that one may opt-into Bootstrap 4 and more easily create custom themes. For examples, see <https://github.com/rstudio/rmarkdown/pull/1706>, and for context, see <https://rstudio.github.io/bslib> (thanks, @cpsievert, #1706)
+
+- Files with `.scss`/`.sass` extension (i.e., Sass files) provided to `html_document`'s `css` parameter are now compiled to CSS using the `{sass}` package. Also, if `theme` is a `{bslib}` object, these Sass files may utilize Sass code inside the `theme` (thanks, @cpsievert, #1706)
 
 - Fix an issue with line numbering in code chunks when `.numberlines` with Pandoc's highlighting (thanks, @aosavi, #1876)
 

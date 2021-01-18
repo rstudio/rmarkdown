@@ -326,9 +326,23 @@ html_document <- function(toc = FALSE,
   if (number_sections)
     args <- c(args, "--number-sections")
 
-  # additional css
-  for (css_file in css)
-    args <- c(args, "--css", pandoc_path_arg(css_file, backslash = FALSE))
+  # additional sass/css
+  for (f in css) {
+    if (is_bs_themeish(theme)) {
+      theme <- bslib::bs_add_rules(as_bs_theme(theme), sass::sass_file(f))
+      next
+    }
+    is_sass <- grepl("\\.s[a,c]ss$", f)
+    if (is_sass) {
+      f <- sass::sass(
+        sass::sass_file(f),
+        output = sub("\\.s[a,c]ss$", ".css", f),
+        options = sass::sass_options(output_style = "compressed")
+      )
+    }
+    args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
+  }
+
 
   # manage list of exit_actions (backing out changes to knitr options)
   exit_actions <- list()
