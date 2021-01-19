@@ -50,8 +50,9 @@
 #'@param theme One of the following:
 #'  * A [bslib::bs_theme()] object (or a list of [bslib::bs_theme()] argument values)
 #'    * Use this option for custom themes using Bootstrap 4 or 3.
-#'    * During knit, modifications to the theme may be made via
-#'      [bslib::bs_global_theme_update()].
+#'    * In this case, any `.scss`/`.sass` files provided to the `css`
+#'      parameter may utilize the `theme`'s underlying Sass utilities
+#'      (e.g., variables, mixins, etc).
 #'  * `NULL` for no theme (i.e., no [html_dependency_bootstrap()]).
 #'  * A character string specifying a [Bootswatch 3](https://bootswatch.com/3/)
 #'    theme name (for backwards-compatibility).
@@ -245,6 +246,9 @@ html_document <- function(toc = FALSE,
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
+  # makes downstream logic easier to reason about
+  theme <- resolve_theme(theme)
+
   # toc_float
   if (toc && !identical(toc_float, FALSE)) {
 
@@ -328,8 +332,8 @@ html_document <- function(toc = FALSE,
 
   # additional sass/css
   for (f in css) {
-    if (is_bs_themeish(theme)) {
-      theme <- bslib::bs_add_rules(as_bs_theme(theme), sass::sass_file(f))
+    if (is_bs_theme(theme)) {
+      theme <- bslib::bs_add_rules(theme, sass::sass_file(f))
       next
     }
     is_sass <- grepl("\\.s[ac]ss$", f)

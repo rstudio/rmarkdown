@@ -40,8 +40,8 @@ html_dependency_jqueryui <- function() {
 #' @rdname html-dependencies
 #' @export
 html_dependency_bootstrap <- function(theme) {
-  if (is_bs_themeish(theme)) {
-      theme <- as_bs_theme(theme)
+  theme <- resolve_theme(theme)
+  if (is_bs_theme(theme)) {
     # TODO: would it make sense for these additional rules to come as a part of
     # bslib::bs_theme_dependencies() (for consistency sake)?
     h1_size <- if ("3" %in% theme_version(theme)) "font-size-h1" else "h1-font-size"
@@ -52,9 +52,6 @@ html_dependency_bootstrap <- function(theme) {
       )
     )
     return(bslib::bs_theme_dependencies(theme))
-  }
-  if (identical(theme, "default")) {
-    theme <- "bootstrap"
   }
   htmlDependency(
     name = "bootstrap",
@@ -88,6 +85,34 @@ bootstrap_dependencies <- function(theme) {
   if (inherits(deps, "html_dependency")) list(deps) else deps
 }
 
+resolve_theme <- function(theme) {
+  # theme = NULL means no Bootstrap
+  if (is.null(theme)) return(theme)
+  # Bootstrap/Bootswatch 3 names (backwards-compatibility)
+  if (is.character(theme)) {
+    if (length(theme) != 1) {
+      stop("`theme` must be character vector of length 1.")
+    }
+    if (theme %in% c("bootstrap", "default")) {
+      return("bootstrap")
+    }
+    return(match.arg(theme, themes()))
+  }
+  if (is.list(theme)) {
+    if (!is_available("bslib")) {
+      stop("Providing a list to `theme` requires the bslib package.")
+    }
+    return(as_bs_theme(theme))
+  }
+  stop(
+    "`theme` expects any one of the following values: ",
+    "(1) NULL (no Bootstrap), ",
+    "(2) a character string referencing a Bootswatch 3 theme name, ",
+    "(3) a list of arguments to bslib::bs_theme(), ",
+    "(4) a bslib::bs_theme() object."
+  )
+}
+
 # At the moment, theme may be either NULL (no Bootstrap), a string (Bootswatch
 # 3 name), a bslib::bs_theme(), or a list of arguments to bs_theme().
 as_bs_theme <- function(theme) {
@@ -100,10 +125,6 @@ as_bs_theme <- function(theme) {
   NULL
 }
 
-is_bs_themeish <- function(theme) {
-  is_bs_theme(theme) || is.list(theme)
-}
-
 is_bs_theme <- function(theme) {
   is_available("bslib") &&
     bslib::is_bs_theme(theme)
@@ -112,8 +133,6 @@ is_bs_theme <- function(theme) {
 theme_version <- function(theme) {
   if (is_bs_theme(theme)) {
     bslib::theme_version(theme)
-  } else if (is.list(theme)) {
-    theme$version %||% bslib::version_default()
   } else {
     substr(html_dependency_bootstrap("default")$version, 1, 1)
   }

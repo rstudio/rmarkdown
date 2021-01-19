@@ -49,23 +49,20 @@ html_document_base <- function(theme = NULL,
 
   output_dir <- ""
 
-  # Bootswatch 3 name (backwards-compatibility)
-  if (is.character(theme)) {
-    theme <- match.arg(theme, themes())
-  }
+  theme <- resolve_theme(theme)
 
   # In the bs_theme() case, we set the theme globally so that knitting code may
   # alter it before we ultimately compile it into an HTML dependency.
   old_theme <- NULL
   pre_knit <- function(input, ...) {
-    if (is_bs_themeish(theme)) {
-      old_theme <<- bslib::bs_global_set(as_bs_theme(theme))
+    if (is_bs_theme(theme)) {
+      old_theme <<- bslib::bs_global_set(theme)
     }
   }
   post_knit <- function(metadata, input_file, runtime, ...) {}
   on_exit <- function() {
     # In this case, we know we've altered global state, so restore the old theme
-    if (is_bs_themeish(theme)) bslib::bs_global_set(old_theme)
+    if (is_bs_theme(theme)) bslib::bs_global_set(old_theme)
   }
 
   # pre_processor
@@ -94,7 +91,7 @@ html_document_base <- function(theme = NULL,
       format_deps <- append(format_deps, list(html_dependency_jquery()))
       format_deps <- append(format_deps, bootstrap_dependencies(
         # If TRUE, a as_bs_theme(theme) has been set globally (so users may customize it)
-        if (is_bs_themeish(theme)) bslib::bs_global_get() else theme
+        if (is_bs_theme(theme)) bslib::bs_global_get() else theme
       ))
     }
     else if (isTRUE(bootstrap_compatible) && is_shiny(runtime)) {
