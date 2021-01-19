@@ -90,7 +90,7 @@ html_document_base <- function(theme = NULL,
     if (!is.null(theme)) {
       format_deps <- append(format_deps, list(html_dependency_jquery()))
       format_deps <- append(format_deps, bootstrap_dependencies(
-        # If TRUE, a as_bs_theme(theme) has been set globally (so users may customize it)
+        # If TRUE, an as_bs_theme(theme) has been set globally (so users may customize it)
         if (is_bs_theme(theme)) bslib::bs_global_get() else theme
       ))
     }
