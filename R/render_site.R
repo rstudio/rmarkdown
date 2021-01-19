@@ -257,7 +257,7 @@ site_generator <- function(input = ".", output_format = NULL) {
 
   # look for the closest index file with 'site' metadata
   root <- tryCatch(
-    proj_root(input, "^index.R?md$", "^\\s*site:.*::.*$"),
+    proj_root(input, "^index.[Rr]?md$", "^\\s*site:.*::.*$"),
     error = function(e) NULL
   )
 
