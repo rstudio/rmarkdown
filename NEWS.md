@@ -13,6 +13,9 @@ rmarkdown 2.7
 
 - Automatically exclude renv directory for `render_site()` (thanks, @jmbuhr, #1996)
 
+- Do not force `options(htmltools.preserve.raw = TRUE)` when this option has been set, otherwise it is impossible for other packages to turn this option off, e.g., yihui/xaringan#293.
+
+
 rmarkdown 2.6
 ================================================================================
 
@@ -51,6 +54,7 @@ rmarkdown 2.6
   See [Pandoc's manual](https://pandoc.org/MANUAL.html#option--email-obfuscation) for the meaning of this option. 
   
 - Fix Fontawesome 5 icons in navbar by correctly handling new prefix as `fa` has been deprecated in favor of `fas` or `fab` (#1967)
+
 
 rmarkdown 2.5
 ================================================================================
