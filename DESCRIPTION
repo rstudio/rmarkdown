@@ -104,7 +104,8 @@ Suggests:
     fs,
     rsconnect,
     withr (>= 2.3.0),
-    bslib
+    bslib,
+    sass
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
 URL: https://github.com/rstudio/rmarkdown
 BugReports: https://github.com/rstudio/rmarkdown/issues
