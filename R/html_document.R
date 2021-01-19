@@ -332,11 +332,11 @@ html_document <- function(toc = FALSE,
       theme <- bslib::bs_add_rules(as_bs_theme(theme), sass::sass_file(f))
       next
     }
-    is_sass <- grepl("\\.s[a,c]ss$", f)
+    is_sass <- grepl("\\.s[ac]ss$", f)
     if (is_sass) {
       f <- sass::sass(
         sass::sass_file(f),
-        output = sub("\\.s[a,c]ss$", ".css", f),
+        output = sub("\\.s[ac]ss$", ".css", f),
         options = sass::sass_options(output_style = "compressed")
       )
     }
@@ -676,5 +676,4 @@ navbar_link_text <- function(x, ...) {
   else
     tagList(x$text, ...)
 }
-
 

@@ -40,7 +40,8 @@ html_dependency_jqueryui <- function() {
 #' @rdname html-dependencies
 #' @export
 html_dependency_bootstrap <- function(theme) {
-  if (is_bs_theme(theme)) {
+  if (is_bs_themeish(theme)) {
+      theme <- as_bs_theme(theme)
     # TODO: would it make sense for these additional rules to come as a part of
     # bslib::bs_theme_dependencies() (for consistency sake)?
     h1_size <- if ("3" %in% theme_version(theme)) "font-size-h1" else "h1-font-size"

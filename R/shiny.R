@@ -135,7 +135,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   runtime <- yaml_front$runtime
   theme <- render_args$output_options$theme
   if (length(target_file)) {
-    format <- output_format_from_yaml_front_matter(readLines(target_file))
+    format <- output_format_from_yaml_front_matter(read_utf8(target_file))
     theme <- format$options$theme
   }
 
