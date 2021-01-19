@@ -24,8 +24,9 @@ html_document_base(
 \item A \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object (or a list of \code{\link[bslib:bs_theme]{bslib::bs_theme()}} argument values)
 \itemize{
 \item Use this option for custom themes using Bootstrap 4 or 3.
-\item During knit, modifications to the theme may be made via
-\code{\link[bslib:bs_global_theme]{bslib::bs_global_theme_update()}}.
+\item In this case, any \code{.scss}/\code{.sass} files provided to the \code{css}
+parameter may utilize the \code{theme}'s underlying Sass utilities
+(e.g., variables, mixins, etc).
 }
 \item \code{NULL} for no theme (i.e., no \code{\link[=html_dependency_bootstrap]{html_dependency_bootstrap()}}).
 \item A character string specifying a \href{https://bootswatch.com/3/}{Bootswatch 3}
