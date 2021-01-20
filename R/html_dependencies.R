@@ -91,7 +91,7 @@ resolve_theme <- function(theme) {
   # Bootstrap/Bootswatch 3 names (backwards-compatibility)
   if (is.character(theme)) {
     if (length(theme) != 1) {
-      stop("`theme` must be character vector of length 1.")
+      stop("`theme` must be character vector of length 1.", call. = FALSE)
     }
     if (theme %in% c("bootstrap", "default")) {
       return("bootstrap")
@@ -100,17 +100,17 @@ resolve_theme <- function(theme) {
   }
   if (is.list(theme)) {
     if (!is_available("bslib")) {
-      stop("Providing a list to `theme` requires the bslib package.")
+      stop("Providing a list to `theme` requires the bslib package.", call. = FALSE)
     }
     return(as_bs_theme(theme))
   }
   stop(
-    "`theme` expects any one of the following values: ",
-    "(1) NULL (no Bootstrap), ",
-    "(2) a character string referencing a Bootswatch 3 theme name, ",
-    "(3) a list of arguments to bslib::bs_theme(), ",
-    "(4) a bslib::bs_theme() object."
-  )
+    "`theme` expects any one of the following values: \n",
+    "    (1) NULL (no Bootstrap), \n",
+    "    (2) a character string referencing a Bootswatch 3 theme name, \n",
+    "    (3) a list of arguments to bslib::bs_theme(), \n",
+    "    (4) a bslib::bs_theme() object."
+  , call. = FALSE)
 }
 
 # At the moment, theme may be either NULL (no Bootstrap), a string (Bootswatch
