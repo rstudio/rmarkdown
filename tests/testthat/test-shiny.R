@@ -11,7 +11,8 @@ test_that("file.path.ci returns correctly no matter the case", {
   }
   expect_equal_file("global.R", tmp_dir)
   # on windows case in filename does not matter
-  if (!xfun::is_windows()) expect_equal_file("global.r", tmp_dir)
+  # & MacOs in GHA is case insensitive
+  if (xfun::is_linux()) expect_equal_file("global.r", tmp_dir)
   expect_equal_file("global.R", "donotexist")
   expect_equal_file("global.Rmd", tmp_dir, "global.R")
 })
