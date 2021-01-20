@@ -485,8 +485,10 @@ file.path.ci <- function(dir, name) {
 
   matches <- list.files(dir, name, ignore.case = TRUE, full.names = TRUE,
                         include.dirs = TRUE)
-  if (length(matches) == 0)
-    return(default)
+  # name is used as a pattern above and can match other files
+  # so we need to filter as if it was literal string
+  matches <- matches[tolower(name) == tolower(basename(matches))]
+  if (length(matches) == 0) return(default)
   return(matches[[1]])
 }
 
