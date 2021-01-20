@@ -697,8 +697,7 @@ shiny_bootstrap_lib <- function(theme) {
   }
   if (!is_available("shiny", "1.5.0.9007")) {
     stop(
-      "Using a {bslib} theme with `runtime: shiny` requires shiny v1.6 or higher.",
-      "Please try updating with `install.packages('shiny')`"
+      "Using a {bslib} theme with `runtime: shiny` requires shiny 1.5.0.9007 or higher."
     )
   }
   shiny::bootstrapLib(theme)
