@@ -7,6 +7,8 @@ rmarkdown 2.7
 
 - Fix an issue with line numbering in code chunks when `.numberlines` with Pandoc's highlighting (thanks, @aosavi, #1876)
 
+- Fix an issue with shiny runtime and `global.R` (thanks, @liaojiahui-r, rstudio/flexdashboard#298)
+
 - Accept `latex="{options}"`, `latex=1`, or `latex=true` for Latex Divs.
 
 - Add `output_format_filter` function to `default_site_generator()`. Enables custom site generators to customize or even entirely replace the output format right before rendering of each page.
