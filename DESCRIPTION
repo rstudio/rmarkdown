@@ -113,4 +113,6 @@ License: GPL-3
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
-Remotes: rstudio/bslib
+Remotes: 
+  rstudio/bslib,
+  rstudio/shiny
