@@ -25,6 +25,8 @@ $success: #0da861 !default;
 $success1: lighten($success, 5%) !default;
 $success2: darken($success, 5%)  !default;
 
+$font-family-monospace: 'Source Code Pro', 'Courier New', monospace !default;
+
 
 /* line 17, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
@@ -579,7 +581,7 @@ pre[data-lang="go"] {
 /* line 368, ../scss/default.scss */
 code {
   font-size: 95%;
-  font-family: 'Source Code Pro', 'Courier New', monospace;
+  font-family: $font-family-monospace;
   color: $black;
 }
 
@@ -1517,7 +1519,7 @@ slides > slide {
 
   /* line 1044, ../scss/default.scss */
   pre, code {
-    font-family: monospace !important;
+    font-family: $font-family-monospace !important;
   }
 }
 
