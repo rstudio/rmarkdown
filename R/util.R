@@ -16,6 +16,15 @@ is_osx <- function() {
   if (is.null(x)) y else x
 }
 
+# a la shiny:::is_available
+is_available <- function(package, version = NULL) {
+  installed <- nzchar(system.file(package = package))
+  if (is.null(version)) {
+    return(installed)
+  }
+  installed && isTRUE(utils::packageVersion(package) >= version)
+}
+
 # determine the output file for a pandoc conversion
 pandoc_output_file <- function(input, pandoc_options) {
   to <- strsplit(pandoc_options$to, "[+-]")[[1]][[1]]
