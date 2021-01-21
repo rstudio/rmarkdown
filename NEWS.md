@@ -15,6 +15,7 @@ rmarkdown 2.7
 
 - Do not force `options(htmltools.preserve.raw = TRUE)` when this option has been set, otherwise it is impossible for other packages to turn this option off, e.g., yihui/xaringan#293.
 
+- `knitr_options_pdf()` will now throw a warning when `fig_crop = TRUE` but is disabled because required tools _pdfcrop_ and/or _ghostscript_ are missing. (thanks, @netique, #2016)
 
 rmarkdown 2.6
 ================================================================================
