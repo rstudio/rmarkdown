@@ -321,9 +321,9 @@ has_crop_tools <- function() {
   if (length(missing) > 0) {
     x <- paste0(names(missing), collapse = ", ")
     warning(
-      c(sprintf("Tool(s) not installed or not in PATH: %s", x),
-        "\n -> As a result, cropping will be disabled."
-        ))
+      sprintf("\nTool(s) not installed or not in PATH: %s", x),
+      "\n-> As a result, cropping will be disabled."
+    )
     return(FALSE)
   }
   TRUE
