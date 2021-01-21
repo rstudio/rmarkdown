@@ -312,6 +312,23 @@ find_program <- function(program) {
   }
 }
 
+has_crop_tools <- function() {
+  tools <- list(
+    pdfcrop = find_program("pdfcrop"),
+    ghostcript = tools::find_gs_cmd()
+  )
+  missing <- tools[tools == ""]
+  if (length(missing) > 0) {
+    x <- paste0(names(missing), collapse = ", ")
+    warning(
+      c(sprintf("Tool(s) not installed or not in PATH: %s", x),
+        "\n -> As a result, cropping will be disabled."
+        ))
+    return(FALSE)
+  }
+  TRUE
+}
+
 # given a string, escape the regex metacharacters it contains:
 # regex metas are these,
 #   . \ | ( ) [ { ^ $ * + ?
