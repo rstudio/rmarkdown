@@ -13,6 +13,6 @@ either the system path or shipped with RStudio.
 }
 \details{
 See the
-\href{http://pandoc.org/MANUAL.html}{pandoc manual}
+\href{https://pandoc.org/MANUAL.html}{pandoc manual}
 for pandoc commands.
 }

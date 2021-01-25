@@ -90,7 +90,7 @@ metadata <- list()
 #'
 #'   For more details on \code{knitr::spin} see the following documentation:
 #'
-#'   \url{http://yihui.org/knitr/demo/stitch/}
+#'   \url{https://yihui.org/knitr/demo/stitch/}
 #' @name compile_notebook
 NULL
 
@@ -151,7 +151,7 @@ NULL
 #' \code{\link{rmarkdown_format}} for details.
 #' @seealso
 #' \link[knitr:knit]{knit}, \link{output_format},
-#' \href{http://johnmacfarlane.net/pandoc}{pandoc}
+#' \url{https://pandoc.org}
 #' @inheritParams default_output_format
 #' @param input The input file to be rendered. This can be an R script (.R),
 #' an R Markdown document (.Rmd), or a plain markdown document.
@@ -163,13 +163,11 @@ NULL
 #' format object (e.g. \code{html_document()}). If using \code{NULL} then the
 #' output format is the first one defined in the YAML frontmatter in the input
 #' file (this defaults to HTML if no format is specified there).
-#'
 #' If you pass an output format object to \code{output_format}, the options
 #' specified in the YAML header or \code{_output.yml} will be ignored and you
 #' must explicitly set all the options you want when you construct the object.
 #' If you pass a string, the output format will use the output parameters in
 #' the YAML header or \code{_output.yml}.
-
 #' @param output_file The name of the output file. If using \code{NULL} then the
 #' output filename will be based on filename for the input file. If a filename
 #' is provided, a path to the output file can also be provided. Note that the
@@ -256,7 +254,7 @@ render <- function(input,
                    output_yaml = NULL,
                    intermediates_dir = NULL,
                    knit_root_dir = NULL,
-                   runtime =  c("auto", "static", "shiny", "shiny_prerendered"),
+                   runtime =  c("auto", "static", "shiny", "shinyrmd", "shiny_prerendered"),
                    clean = TRUE,
                    params = NULL,
                    knit_meta = NULL,
@@ -344,7 +342,7 @@ render <- function(input,
   }
 
   # check whether this document requires a knit
-  requires_knit <- tolower(tools::file_ext(input)) %in% c("r", "rmd", "rmarkdown")
+  requires_knit <- tolower(xfun::file_ext(input)) %in% c("r", "rmd", "rmarkdown")
 
   # remember the name of the original input document (we overwrite 'input' once
   # we've knitted)
@@ -371,13 +369,15 @@ render <- function(input,
     if (is.null(intermediates_dir)) {
       intermediates_dir <-
         dirname(normalize_path(input_no_shell_chars))
+    }
+  }
+
       # never use the original input directory as the intermediate directory,
       # otherwise external resources discovered will be deleted as intermediate
       # files later (because they are copied to the "intermediate" dir)
-      if (same_path(intermediates_dir, dirname(original_input)))
+  if (!is.null(intermediates_dir) &&
+      same_path(intermediates_dir, dirname(original_input)))
         intermediates_dir <- NULL
-    }
-  }
 
   # force evaluation of knitr root dir before we change directory context
   force(knit_root_dir)
@@ -397,10 +397,10 @@ render <- function(input,
   intermediates <- c(intermediates, utf8_input)
 
   # track whether this was straight markdown input (to prevent keep_md later)
-  md_input <- identical(tolower(tools::file_ext(input)), "md")
+  md_input <- identical(tolower(xfun::file_ext(input)), "md")
 
   # if this is an R script then spin it first
-  if (identical(tolower(tools::file_ext(input)), "r")) {
+  if (identical(tolower(xfun::file_ext(input)), "r")) {
     # make a copy of the file to spin
     spin_input <- intermediates_loc(file_with_meta_ext(input, "spin", "R"))
     file.copy(input, spin_input, overwrite = TRUE)
@@ -441,19 +441,19 @@ render <- function(input,
   shiny_prerendered_dependencies <- list()
   if (requires_knit && is_shiny_prerendered(front_matter$runtime)) {
 
-    # first validate that the user hasn't passed an already created output_format
-    if (is_output_format(output_format)) {
-      stop("You cannot pass a fully constructed output_format to render when ",
-           "using runtime: shiny_prerendered")
-    }
-
     # require shiny for the knit
     if (requireNamespace("shiny")) {
       if (!"package:shiny" %in% search())
         attachNamespace("shiny")
     }
     else
-      stop("The shiny package is required for 'shiny_prerendered' documents")
+      stop("The shiny package is required for shinyrmd documents")
+
+    # source global.R if it exists
+    global_r <- file.path.ci(".", "global.R")
+    if (file.exists(global_r)) {
+      source(global_r, local = envir)
+    }
 
     # force various output options
     output_options$self_contained <- FALSE
@@ -584,6 +584,17 @@ render <- function(input,
     on.exit(knitr::opts_hooks$restore(ohooks), add = TRUE)
     templates <- knitr::opts_template$get()
     on.exit(knitr::opts_template$restore(templates), add = TRUE)
+
+    # specify that htmltools::htmlPreserve() should use the Pandoc raw attribute
+    # by default (e.g. ```{=html}) rather than preservation tokens when pandoc
+    # >= v2.0. Note that this option will have the intended effect only for
+    # versions of htmltools >= 0.5.1.
+    if (pandoc2.0() && packageVersion("htmltools") >= "0.5.1") {
+      if (is.null(prev <- getOption("htmltools.preserve.raw"))) {
+        options(htmltools.preserve.raw = TRUE)
+        on.exit(options(htmltools.preserve.raw = prev), add = TRUE)
+      }
+    }
 
     # run render on_exit (run after the knit hooks are saved so that
     # any hook restoration can take precedence)
@@ -770,7 +781,7 @@ render <- function(input,
 
   # if this isn't html and there are html dependencies then flag an error
   if (!(is_pandoc_to_html(output_format$pandoc) ||
-        identical(tolower(tools::file_ext(output_file)), "html")))  {
+        identical(tolower(xfun::file_ext(output_file)), "html")))  {
     if (has_html_dependencies(knit_meta)) {
       if (!isTRUE(front_matter$always_allow_html)) {
         stop("Functions that produce HTML output found in document targeting ",
@@ -902,15 +913,12 @@ render <- function(input,
       # render to temporary file (preserve extension)
       # this also ensures we don't pass a file path with invalid
       # characters to our pandoc invocation
-      file_ext <- tools::file_ext(output)
-      ext <- if (nzchar(file_ext))
-        paste(".", file_ext, sep = "")
-      else
-        ""
+      ext <- xfun::file_ext(output)
+      if (ext != '') ext <- paste0('.', ext)
 
       # render to a path in the current working directory
       # (avoid passing invalid characters to shell)
-      pandoc_output_tmp <- basename(tempfile("pandoc", tmpdir = getwd(), fileext = ext))
+      pandoc_output_tmp <- basename(tempfile("pandoc", getwd(), ext))
 
       # clean up temporary file on exit
       on.exit(unlink(pandoc_output_tmp), add = TRUE)
@@ -959,7 +967,10 @@ render <- function(input,
         latexmk(texfile, output_format$pandoc$latex_engine, '--biblatex' %in% output_format$pandoc$args)
         file.rename(file_with_ext(texfile, "pdf"), output_file)
         # clean up the tex file if necessary
-        if (!output_format$pandoc$keep_tex) on.exit(unlink(texfile), add = TRUE)
+        if (!output_format$pandoc$keep_tex) {
+          texfile <- normalize_path(texfile)
+          on.exit(unlink(texfile), add = TRUE)
+        }
       }
     } else {
       convert(output_file, run_citeproc)
@@ -1013,7 +1024,11 @@ render <- function(input,
     intermediates <- setdiff(intermediates, c(input, intermediates_fig))
     # did not run pandoc; returns the markdown output with attributes of the
     # knitr meta data and intermediate files
-    structure(input, knit_meta = knit_meta, intermediates = intermediates)
+    structure(input,
+              knit_meta = knit_meta,
+              files_dir = files_dir,
+              intermediates_dir = intermediates_fig,
+              intermediates = intermediates)
   }
 }
 

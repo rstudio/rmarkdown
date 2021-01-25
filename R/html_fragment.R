@@ -5,7 +5,7 @@
 #' assumes you will include the output into an existing document (e.g. a blog
 #' post).
 #'
-#' See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/html-document.html}{online
 #' documentation} for additional details on using the \code{html_fragment}
 #' format.
 #' @param mathjax \code{TRUE} to convert $ and $$ math blocks into MathJax

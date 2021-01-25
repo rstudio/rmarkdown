@@ -43,7 +43,7 @@ Convert documents to and from various formats using the pandoc utility.
 }
 \details{
 Supported input and output formats are described in the
-\href{http://johnmacfarlane.net/pandoc/README.html}{pandoc user guide}.
+\href{https://pandoc.org/MANUAL.html}{pandoc user guide}.
 
 The system path as well as the version of pandoc shipped with RStudio (if
 running under RStudio) are scanned for pandoc and the highest version

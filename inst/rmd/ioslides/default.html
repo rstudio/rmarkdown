@@ -94,6 +94,22 @@ slide:not(.current) .plotly.html-widget{
   display: block;
 }
 
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    $if(quotes)$
+    q { quotes: "“" "”" "‘" "’"; }
+    $endif$
+    $if(highlighting-css)$
+    $highlighting-css$
+    $endif$
+    $if(displaymath-css)$
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    $endif$
+
 $if(logo)$
     slides > slide:not(.nobackground):before {
       font-size: 12pt;

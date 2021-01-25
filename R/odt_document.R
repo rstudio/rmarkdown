@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to an ODT document.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/odt_document_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/opendocument-text-document.html}{online
 #' documentation} for additional details on using the \code{odt_document} format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
@@ -83,8 +83,9 @@ odt_document <- function(number_sections = FALSE,
       to = "odt",
       from = from_rmarkdown(fig_caption, md_extensions),
       args = args,
-      lua_filters = pkg_file_lua(c(
-        "pagebreak.lua", if (number_sections) "number-sections.lua"))),
+      lua_filters = pkg_file_lua(
+        c("pagebreak.lua", if (number_sections) "number-sections.lua"))
+    ),
     keep_md = keep_md,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator

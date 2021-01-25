@@ -1,19 +1,21 @@
 context("resource discovery")
 
 test_that("R Markdown resource discovery finds expected resources", {
-
+  # Test with the current version of the template
+  file.copy(pkg_file("rmd/h/default.html"), 'resources/template.html')
   resources <- find_external_resources("resources/rmarkdown.Rmd")
   expected <- data.frame(
     path = c("empty.md", "empty.png", "empty.tsv", "empty.Rmd", "empty.css",
-             "empty.jpg", "empty.html", "empty.csv"),
-    explicit = c(FALSE, FALSE, TRUE,  FALSE, FALSE, FALSE, FALSE, FALSE),
-    web      = c(FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE,  TRUE,  FALSE),
+             "empty.jpg", "empty.html", "template.html", "empty.csv"),
+    explicit = c(FALSE, FALSE, TRUE,  FALSE, FALSE, FALSE, FALSE, FALSE, FALSE),
+    web      = c(FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE,  TRUE,  FALSE,  FALSE),
     stringsAsFactors = FALSE)
 
-  # sort by filename to avoid errors arising from file ordering -- we don't
-  # really care what order these come back in
+  # sort by filename and remove rownames to avoid errors arising from file ordering
+  # -- we don't really care what order these come back in
   resources <- as.data.frame(resources[order(resources[[1]]), , drop = FALSE])
   expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
+  rownames(resources) <- rownames(expected) <- NULL
 
   expect_equal(resources, expected)
 })
@@ -137,12 +139,20 @@ test_that("filenames with shell characters can use relative resource paths", {
 
 test_that("resources not deleted when filenames contain shell characters", {
   # save current working directory
-  oldwd <- setwd("resources")
+  oldwd <- setwd(test_path("resources"))
   on.exit(setwd(oldwd), add = TRUE)
 
   file.rename("file-exists.Rmd", "file exists.Rmd")
   capture.output(unlink(render("file exists.Rmd")))
   file.rename("file exists.Rmd", "file-exists.Rmd")
+  expect_true(file.exists("empty.csv"))
+})
+
+test_that("resources not deleted when intermediates_dir is same as input", {
+  # save current working directory
+  oldwd <- setwd(test_path("resources"))
+  on.exit(setwd(oldwd), add = TRUE)
+  capture.output(unlink(render("file-exists.Rmd", intermediates_dir = ".")))
   expect_true(file.exists("empty.csv"))
 })
 
