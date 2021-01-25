@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to an MS Word document.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/word_document_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/word-document.html}{online
 #' documentation} for additional details on using the \code{word_document} format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a

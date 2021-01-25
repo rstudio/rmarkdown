@@ -19,7 +19,23 @@ $if(font-size-adjustment)$
   <meta name="font-size-adjustment" content="$font-size-adjustment$"/>
 $endif$
   <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    $if(quotes)$
+    q { quotes: "“" "”" "‘" "’"; }
+    $endif$
+    $if(highlighting-css)$
+    $highlighting-css$
+    $endif$
+    $if(displaymath-css)$
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    $endif$
+  </style>
 $if(highlighting-css)$
   <style type="text/css">
 $highlighting-css$

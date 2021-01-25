@@ -1,7 +1,7 @@
 #' Convert to a ConTeXt document
 #'
 #' Format for converting from R Markdown to PDF using
-#' \href{https://wiki.contextgarden.net/}{ConTeXt}.
+#' \href{https://wiki.contextgarden.net/Main_Page}{ConTeXt}.
 #'
 #' ConTeXt needs to be installed. To install the most recent version, see
 #' \url{https://wiki.contextgarden.net/Installation}. A less recent version is
@@ -42,7 +42,7 @@ context_document <- function(toc = FALSE,
                              template = NULL,
                              keep_tex = FALSE,
                              keep_md = FALSE,
-                             citation_package = c("none", "natbib", "biblatex"),
+                             citation_package = c("default", "natbib", "biblatex"),
                              includes = NULL,
                              md_extensions = NULL,
                              output_extensions = NULL,
@@ -132,7 +132,8 @@ context_document <- function(toc = FALSE,
       args = args,
       keep_tex = FALSE,
       ext = ext,
-      lua_filters = pkg_file_lua("pagebreak.lua")),
+      lua_filters = pkg_file_lua("pagebreak.lua")
+    ),
     clean_supporting = !isTRUE(keep_tex),
     keep_md = keep_md,
     df_print = df_print,

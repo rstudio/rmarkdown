@@ -30,7 +30,7 @@ odt_document(
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
 built-in template; pass a path to use a custom template that you've
 created.  See the documentation on
-\href{http://pandoc.org/README.html}{pandoc online documentation} for
+\href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
 details on creating custom templates.}
 
 \item{reference_odt}{Use the specified file as a style reference in
@@ -56,7 +56,7 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to an ODT document.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/odt_document_format.html}{online
+See the \href{https://bookdown.org/yihui/rmarkdown/opendocument-text-document.html}{online
 documentation} for additional details on using the \code{odt_document} format.
 
 R Markdown documents can have optional metadata that is used to generate a

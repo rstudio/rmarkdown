@@ -17,7 +17,7 @@ context_document(
   template = NULL,
   keep_tex = FALSE,
   keep_md = FALSE,
-  citation_package = c("none", "natbib", "biblatex"),
+  citation_package = c("default", "natbib", "biblatex"),
   includes = NULL,
   md_extensions = NULL,
   output_extensions = NULL,
@@ -55,13 +55,15 @@ method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
-\code{rmarkdown.df_print} to \code{FALSE}.}
+\code{rmarkdown.df_print} to \code{FALSE}. See
+\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+frame printing section} in bookdown book for examples.}
 
 \item{template}{Pandoc template to use for rendering. Pass "default" to use
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
 built-in template; pass a path to use a custom template that you've
 created.  See the documentation on
-\href{http://pandoc.org/README.html}{pandoc online documentation} for
+\href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
 details on creating custom templates.}
 
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
@@ -98,7 +100,7 @@ R Markdown output format to pass to \code{\link{render}}.
 }
 \description{
 Format for converting from R Markdown to PDF using
-\href{https://wiki.contextgarden.net/}{ConTeXt}.
+\href{https://wiki.contextgarden.net/Main_Page}{ConTeXt}.
 }
 \details{
 ConTeXt needs to be installed. To install the most recent version, see

@@ -66,6 +66,15 @@
 run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
                 auto_reload = TRUE, shiny_args = NULL, render_args = NULL) {
 
+  # if the file argument is missing then substitute ui.Rmd if it exists
+  # (and index.Rmd does not exist)
+  if (missing(file) && missing(default_file)) {
+    if (!file.exists(file.path(dir, "index.Rmd")) &&
+        file.exists(file.path(dir, "ui.Rmd"))) {
+      file <- file.path(dir, "ui.Rmd")
+    }
+  }
+
   # select the document to serve at the root URL if not user-specified. We exclude
   # documents which start with a leading underscore (same pattern is used to
   # designate "sub-documents" in R Markdown websites and bookdown)
@@ -75,8 +84,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       # just one R Markdown document
       default_file <- allRmds
     } else {
-      # more than one: look for an index
-      index <- which(tolower(allRmds) == "index.rmd")
+      # more than one: look for an index or ui
+      index <- which(tolower(allRmds) %in% c("index.rmd", "ui.rmd"))
       if (length(index) > 0) {
         default_file <- allRmds[index[1]]
       } else {
@@ -94,7 +103,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
   if (is.null(default_file)) {
     # no R Markdown default found; how about an HTML?
-    indexHtml <- list.files(dir, "index.html?", ignore.case = TRUE)
+    indexHtml <- list.files(dir, "(index|ui).html?", ignore.case = TRUE)
     if (length(indexHtml) > 0) default_file <- indexHtml[1]
   }
 
@@ -122,13 +131,19 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
   # determine the runtime of the target file
   target_file <- file %||% file.path(dir, default_file)
-  runtime <- if (length(target_file)) yaml_front_matter(target_file)$runtime
+  yaml_front <- if (length(target_file)) yaml_front_matter(target_file)
+  runtime <- yaml_front$runtime
+  theme <- render_args$output_options$theme
+  if (length(target_file)) {
+    format <- output_format_from_yaml_front_matter(read_utf8(target_file))
+    theme <- format$options$theme
+  }
 
   # run using the requested mode
   if (is_shiny_prerendered(runtime)) {
 
     # get the pre-rendered shiny app
-    app <- shiny_prerendered_app(target_file, render_args = render_args)
+    app <- shiny_prerendered_app(target_file, render_args = render_args, theme = theme)
   } else {
 
     # add rmd_resources handler on start
@@ -143,7 +158,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     # combine the user-supplied list of Shiny arguments with our own and start
     # the Shiny server; handle requests for the root (/) and any R markdown files
     # within
-    app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir, default_file),
+    app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir, default_file, theme),
                            uiPattern = "^/$|^/index\\.html?$|^(/.*\\.[Rr][Mm][Dd])$",
                            onStart = onStart,
                            server = rmarkdown_shiny_server(
@@ -302,7 +317,7 @@ rmarkdown_shiny_server <- function(dir, file, auto_reload, render_args) {
 }
 
 # create the Shiny UI function
-rmarkdown_shiny_ui <- function(dir, file) {
+rmarkdown_shiny_ui <- function(dir, file, theme) {
   function(req) {
     # map requests to / to requests for the default--index.Rmd, or another if
     # specified
@@ -312,7 +327,7 @@ rmarkdown_shiny_ui <- function(dir, file) {
     }
 
     # request must be for an R Markdown or HTML document
-    ext <- tolower(tools::file_ext(req_path))
+    ext <- tolower(xfun::file_ext(req_path))
     if (!(ext %in% c("rmd", "htm", "html"))) return(NULL)
 
     # document must exist
@@ -324,7 +339,8 @@ rmarkdown_shiny_ui <- function(dir, file) {
     tags$div(
       tags$head(
         tags$script(src = "rmd_resources/rmd_loader.js"),
-        tags$link(href = "rmd_resources/rmd_loader.css", rel = "stylesheet")
+        tags$link(href = "rmd_resources/rmd_loader.css", rel = "stylesheet"),
+        shiny_bootstrap_lib(theme)
       ),
 
       # Shiny shows the outer conditionalPanel as long as the document hasn't
@@ -378,7 +394,7 @@ rmd_cached_output <- function(input) {
   resource_folder <- ""
 
   # if the file is raw HTML, return it directly
-  if (tolower(tools::file_ext(input)) %in% c("htm", "html")) {
+  if (tolower(xfun::file_ext(input)) %in% c("htm", "html")) {
     return(list(
       cacheable = TRUE,
       cached = TRUE,
@@ -469,8 +485,10 @@ file.path.ci <- function(dir, name) {
 
   matches <- list.files(dir, name, ignore.case = TRUE, full.names = TRUE,
                         include.dirs = TRUE)
-  if (length(matches) == 0)
-    return(default)
+  # name is used as a pattern above and can match other files
+  # so we need to filter as if it was literal string
+  matches <- matches[tolower(name) == tolower(basename(matches))]
+  if (length(matches) == 0) return(default)
   return(matches[[1]])
 }
 
@@ -541,7 +559,7 @@ is_shiny_classic <- function(runtime) {
 }
 
 is_shiny_prerendered <- function(runtime) {
-  identical(runtime, "shiny_prerendered")
+  identical(runtime, "shinyrmd") || identical(runtime, "shiny_prerendered")
 }
 
 write_shiny_deps <- function(files_dir,

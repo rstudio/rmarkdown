@@ -13,7 +13,7 @@ copy_html_resources <- function(html_str, lib_dir, output_dir) {
       # if the resource is a CSS file, perform a similar rewriting of its
       # content in the library directory
       res_path <- file.path(output_dir, res_src)
-      if (identical(tolower(tools::file_ext(res_path)), "css") &&
+      if (identical(tolower(xfun::file_ext(res_path)), "css") &&
           file.exists(res_path)) {
         css_content <- copy_resources(
           file_string(res_path), lib_dir, lib_dir, call_css_resource_attrs

@@ -92,7 +92,7 @@ draft <- function(file,
   if (create_dir) {
 
     # remove .Rmd extension if necessary
-    file <- tools::file_path_sans_ext(file)
+    file <- xfun::sans_ext(file)
 
     # create dir (new dir only)
     if (dir_exists(file))
@@ -104,7 +104,7 @@ draft <- function(file,
   }
 
   # Ensure we have an Rmd extension
-  if (!identical(tolower(tools::file_ext(file)), "rmd"))
+  if (!identical(tolower(xfun::file_ext(file)), "rmd"))
     file <- paste(file, ".Rmd", sep = "")
 
   # Ensure the file doesn't already exist

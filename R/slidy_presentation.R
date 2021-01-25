@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to a slidy presentation.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/slidy-presentation.html}{online
 #' documentation} for additional details on using the \code{slidy_presentation}
 #' format.
 #'
@@ -103,7 +103,7 @@ slidy_presentation <- function(number_sections = FALSE,
 
   # additional css
   for (css_file in css)
-    args <- c(args, "--css", pandoc_path_arg(css_file, backslash=FALSE))
+    args <- c(args, "--css", pandoc_path_arg(css_file, backslash = FALSE))
 
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
