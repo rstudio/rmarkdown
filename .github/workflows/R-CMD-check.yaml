@@ -80,6 +80,8 @@ jobs:
         run: Rscript -e 'pak::local_system_requirements(execute = TRUE)'
 
       - name: Install dependencies
+        env:
+          TMPDIR: ${{ runner.temp }}
         run: |
           pak::local_install_dev_deps(upgrade = TRUE)
           pak::pkg_install("rcmdcheck")
