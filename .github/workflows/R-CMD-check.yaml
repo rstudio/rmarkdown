@@ -43,6 +43,11 @@ jobs:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
 
+      - name: change temp dir
+        if: runner.os == 'Windows'
+        run: echo "TMPDIR=${{ runner.temp }}" >> $GITHUB_ENV
+        shell: bash
+
       - uses: r-lib/actions/setup-pandoc@v1
         if: matrix.config.pandoc != 'devel'
         with:
@@ -80,8 +85,6 @@ jobs:
         run: Rscript -e 'pak::local_system_requirements(execute = TRUE)'
 
       - name: Install dependencies
-        env:
-          TMPDIR: ${{ runner.temp }}
         run: |
           pak::local_install_dev_deps(upgrade = TRUE)
           pak::pkg_install("rcmdcheck")
@@ -101,7 +104,6 @@ jobs:
         env:
           _R_CHECK_CRAN_INCOMING_: false
           _R_CHECK_TESTS_NLINES_: 0
-          TMPDIR: ${{ runner.temp }}
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
