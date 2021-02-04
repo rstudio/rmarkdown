@@ -479,7 +479,8 @@ html_dependency_ioslides <- function(theme) {
     )
   )
 
-  if (is.null(theme)) {
+  theme <- resolve_theme(theme)
+  if (!is_bs_theme(theme)) {
     css <- htmlDependency(
       name = paste0(name, "-css"),
       version = version,
@@ -493,10 +494,6 @@ html_dependency_ioslides <- function(theme) {
     return(list(js, css))
   }
 
-  theme <- as_bs_theme(theme)
-  if (!is_bs_theme(theme)) {
-    stop("`theme` must be a `bslib::bs_theme()` object or a list of arguments to it")
-  }
   if ("3" %in% theme_version(theme)) {
     stop("`ioslides_presentation()` is not compatible with Bootstrap 3 (use version = 4 or higher)")
   }
