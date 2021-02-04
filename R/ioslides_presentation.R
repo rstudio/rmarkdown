@@ -293,9 +293,17 @@ ioslides_presentation <- function(number_sections = FALSE,
     template <- pkg_file("rmd/ioslides/default.html")
   args <- c(args, "--template", pandoc_path_arg(template))
 
-  # html dependency for ioslides
-  extra_dependencies <- append(extra_dependencies,
-                               html_dependency_ioslides(theme))
+  # Add ioslides HTML dependencies
+  # If bslib is relevant, we want to register a _deferred_ version of the CSS dependency so
+  # it can update in response to Shiny's session$setCurrentTheme() (e.g., bslib::bs_themer())
+  # https://rstudio.github.io/bslib/articles/theming.html#dynamic-theming-in-shiny
+  theme <- resolve_theme(theme)
+  if (is_bs_theme(theme)) {
+    dynamic_ioslides <- bslib::bs_dependency_defer(html_dependency_ioslides)
+    theme <- bslib::bs_bundle(theme, sass::sass_layer(html_deps = dynamic_ioslides))
+  } else {
+    extra_dependencies <- append(extra_dependencies, html_dependency_ioslides(theme))
+  }
 
   # analytics
   if (!is.null(analytics))
@@ -461,7 +469,7 @@ ioslides_presentation <- function(number_sections = FALSE,
 }
 
 
-html_dependency_ioslides <- function(theme) {
+html_dependency_ioslides <- function(theme = NULL) {
   name <- "ioslides"
   version <- "13.5.1"
   js <- htmlDependency(

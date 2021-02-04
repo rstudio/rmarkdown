@@ -6,8 +6,8 @@
 
 $body-bg:       #fff !default;
 $body-color:    #000 !default;
-$gray-100: mix($body-bg, $body-color, 90%);
-$gray-800: mix($body-bg, $body-color, 20%);
+$body-100: mix($body-bg, $body-color, 90%) !default;
+$body-800: mix($body-bg, $body-color, 20%) !default;
 
 $primary: #4387fd !default;
 $primary1: lighten($primary, 5%) !default;
@@ -345,11 +345,11 @@ slides > slide.title-slide:after {
 slides > slide.backdrop {
   z-index: -10;
   display: block !important;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $body-bg), color-stop(85%, $body-bg), color-stop(100%, $gray-100));
-  background: -webkit-linear-gradient($body-bg, $body-bg 85%, $gray-100);
-  background: -moz-linear-gradient($body-bg, $body-bg 85%, $gray-100);
-  background: -o-linear-gradient($body-bg, $body-bg 85%, $gray-100);
-  background: linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $body-bg), color-stop(85%, $body-bg), color-stop(100%, $body-100));
+  background: -webkit-linear-gradient($body-bg, $body-bg 85%, $body-100);
+  background: -moz-linear-gradient($body-bg, $body-bg 85%, $body-100);
+  background: -o-linear-gradient($body-bg, $body-bg 85%, $body-100);
+  background: linear-gradient($body-bg, $body-bg 85%, $body-100);
   background-color: $body-bg;
 }
 /* line 175, ../scss/default.scss */
@@ -558,7 +558,7 @@ pre {
 }
 
 .prettyprint {
-  background-color: $gray-100;
+  background-color: $body-100;
 }
 
 /* line 351, ../scss/default.scss */
@@ -576,7 +576,7 @@ pre[data-lang]:after {
 
 /* line 364, ../scss/default.scss */
 pre[data-lang="go"] {
-  color: $gray-800;
+  color: $body-800;
 }
 
 /* line 368, ../scss/default.scss */
@@ -591,7 +591,7 @@ iframe {
   width: 100%;
   height: 510px;
   background: $body-bg;
-  border: 1px solid $gray-100;
+  border: 1px solid $body-100;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -708,7 +708,7 @@ button:not(:disabled):active {
 
 /* line 448, ../scss/default.scss */
 .gray {
-  color: $gray-100;
+  color: $body-100;
 }
 
 /* line 451, ../scss/default.scss */
@@ -765,7 +765,7 @@ table.rmdtable tr > td:first-child, table th {
 }
 /* line 484, ../scss/default.scss */
 table.rmdtable tr:nth-child(odd) {
-  background-color: $gray-100;
+  background-color: $body-100;
 }
 /* line 488, ../scss/default.scss */
 table.rmdtable th {
@@ -1067,7 +1067,7 @@ article.smaller q:before, article.smaller q:after {
 .with-notes.popup .note {
   width: 109%;
   height: 260px;
-  background: $gray-100;
+  background: $body-100;
   padding: 0;
   -webkit-box-shadow: 0 0 10px mix($body-bg, $body-color, 47.5%);
   -moz-box-shadow: 0 0 10px mix($body-bg, $body-color, 47.5%);
@@ -1246,12 +1246,12 @@ article.smaller q:before, article.smaller q:after {
 }
 /* line 812, ../scss/default.scss */
 .segue h2 {
-  color: $gray-100;
+  color: $body-100;
   font-size: 60px;
 }
 /* line 816, ../scss/default.scss */
 .segue h3 {
-  color: $gray-100;
+  color: $body-100;
   line-height: 2.8;
 }
 /* line 820, ../scss/default.scss */
@@ -1295,11 +1295,11 @@ aside.gdbar {
   -ms-border-radius: 0 10px 10px 0;
   -o-border-radius: 0 10px 10px 0;
   border-radius: 0 10px 10px 0;
-  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, $gray-100), color-stop(100%, $gray-100)) no-repeat;
-  background: -webkit-linear-gradient(left, $gray-100, $gray-100) no-repeat;
-  background: -moz-linear-gradient(left, $gray-100, $gray-100) no-repeat;
-  background: -o-linear-gradient(left, $gray-100, $gray-100) no-repeat;
-  background: linear-gradient(left, $gray-100, $gray-100) no-repeat;
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, $body-100), color-stop(100%, $body-100)) no-repeat;
+  background: -webkit-linear-gradient(left, $body-100, $body-100) no-repeat;
+  background: -moz-linear-gradient(left, $body-100, $body-100) no-repeat;
+  background: -o-linear-gradient(left, $body-100, $body-100) no-repeat;
+  background: linear-gradient(left, $body-100, $body-100) no-repeat;
   -webkit-background-size: 0% 100%;
   -moz-background-size: 0% 100%;
   -o-background-size: 0% 100%;
@@ -1374,7 +1374,7 @@ aside.gdbar img {
 
 /* line 913, ../scss/default.scss */
 .quote {
-  color: $gray-100;
+  color: $body-100;
 }
 /* line 916, ../scss/default.scss */
 .quote .author {
@@ -1405,11 +1405,11 @@ aside.gdbar img {
   cursor: pointer;
   opacity: 0.5;
   pointer-events: auto !important;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $body-bg), color-stop(85%, $body-bg), color-stop(100%, $gray-100));
-  background: -webkit-linear-gradient($body-bg, $body-bg 85%, $gray-100);
-  background: -moz-linear-gradient($body-bg, $body-bg 85%, $gray-100);
-  background: -o-linear-gradient($body-bg, $body-bg 85%, $gray-100);
-  background: linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $body-bg), color-stop(85%, $body-bg), color-stop(100%, $body-100));
+  background: -webkit-linear-gradient($body-bg, $body-bg 85%, $body-100);
+  background: -moz-linear-gradient($body-bg, $body-bg 85%, $body-100);
+  background: -o-linear-gradient($body-bg, $body-bg 85%, $body-100);
+  background: linear-gradient($body-bg, $body-bg 85%, $body-100);
   background-color: $body-bg;
 }
 /* line 945, ../scss/default.scss */
@@ -1431,7 +1431,7 @@ aside.gdbar img {
 }
 
 slides > slide {
-  background: linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background: linear-gradient($body-bg, $body-bg 85%, $body-100);
   background-color: $body-bg;
 }
 slides > slide {
@@ -1449,11 +1449,11 @@ slides > slide {
   slides slide {
     display: block !important;
     position: relative;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $body-bg), color-stop(85%, $body-bg), color-stop(100%, $gray-100));
-    background: -webkit-linear-gradient($body-bg, $body-bg 85%, $gray-100);
-    background: -moz-linear-gradient($body-bg, $body-bg 85%, $gray-100);
-    background: -o-linear-gradient($body-bg, $body-bg 85%, $gray-100);
-    background: linear-gradient($body-bg, $body-bg 85%, $gray-100);
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $body-bg), color-stop(85%, $body-bg), color-stop(100%, $body-100));
+    background: -webkit-linear-gradient($body-bg, $body-bg 85%, $body-100);
+    background: -moz-linear-gradient($body-bg, $body-bg 85%, $body-100);
+    background: -o-linear-gradient($body-bg, $body-bg 85%, $body-100);
+    background: linear-gradient($body-bg, $body-bg 85%, $body-100);
     background-color: $body-bg;
     -webkit-transform: none !important;
     -moz-transform: none !important;
@@ -1531,7 +1531,7 @@ label {
 }
 label, input {
   font-size: 16px;
-  color: $gray-800;
+  color: $body-800;
 }
 input {
   width: 220px;
