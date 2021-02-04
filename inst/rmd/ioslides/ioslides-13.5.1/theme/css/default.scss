@@ -4,10 +4,10 @@
 // a theme and have it "just work".
 // TODO: right now font-size is hard coded, but should probably respect Bootstrap vars
 
-$white:    #fff !default;
-$black:    #000 !default;
-$gray-100: mix($white, $black, 90%) !default;
-$gray-800: mix($white, $black, 20%) !default;
+$body-bg:       #fff !default;
+$body-color:    #000 !default;
+$gray-100: mix($body-bg, $body-color, 90%);
+$gray-800: mix($body-bg, $body-color, 20%);
 
 $primary: #4387fd !default;
 $primary1: lighten($primary, 5%) !default;
@@ -26,7 +26,7 @@ $success1: lighten($success, 5%) !default;
 $success2: darken($success, 5%)  !default;
 
 $font-family-monospace: 'Source Code Pro', 'Courier New', monospace !default;
-$code-color: $black !default;
+$code-color: $body-color !default;
 
 
 /* line 17, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
@@ -109,7 +109,7 @@ body {
   min-height: 740px;
   width: 100%;
   overflow: hidden;
-  color: $white;
+  color: $body-bg;
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
   -ms-font-smoothing: antialiased;
@@ -212,7 +212,7 @@ slide.fill img {
  */
 /* line 22, ../scss/default.scss */
 ::selection {
-  color: $white;
+  color: $body-bg;
   background-color: $warning;
   text-shadow: none;
 }
@@ -226,20 +226,20 @@ slide.fill img {
 
 /* line 33, ../scss/default.scss */
 ::-webkit-scrollbar-thumb {
-  background-color: rgba($black, 0.1);
+  background-color: rgba($body-color, 0.1);
   background-clip: padding-box;
   border: solid transparent;
   min-height: 28px;
   padding: 100px 0 0;
-  -webkit-box-shadow: inset 1px 1px 0 rgba($black, 0.1), inset 0 -1px 0 rgba($black, 0.07);
-  -moz-box-shadow: inset 1px 1px 0 rgba($black, 0.1), inset 0 -1px 0 rgba($black, 0.07);
-  box-shadow: inset 1px 1px 0 rgba($black, 0.1), inset 0 -1px 0 rgba($black, 0.07);
+  -webkit-box-shadow: inset 1px 1px 0 rgba($body-color, 0.1), inset 0 -1px 0 rgba($body-color, 0.07);
+  -moz-box-shadow: inset 1px 1px 0 rgba($body-color, 0.1), inset 0 -1px 0 rgba($body-color, 0.07);
+  box-shadow: inset 1px 1px 0 rgba($body-color, 0.1), inset 0 -1px 0 rgba($body-color, 0.07);
   border-width: 1px 1px 1px 6px;
 }
 
 /* line 42, ../scss/default.scss */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba($black, 0.5);
+  background-color: rgba($body-color, 0.5);
 }
 
 /* line 45, ../scss/default.scss */
@@ -262,12 +262,12 @@ slide.fill img {
 
 /* line 58, ../scss/default.scss */
 body {
-  background: $black;
+  background: $body-color;
 }
 
 /* line 62, ../scss/default.scss */
 slides > slide {
-  color: mix($white, $black, 47.5%);
+  color: mix($body-bg, $body-color, 47.5%);
   width: 900px;
   height: 700px;
   margin-left: -450px;
@@ -320,7 +320,7 @@ slides > slide.far-next {
 }
 /* line 127, ../scss/default.scss */
 slides > slide.dark {
-  background: mix($white, $black, 32%) !important;
+  background: mix($body-bg, $body-color, 32%) !important;
 }
 
 /* line 147, ../scss/default.scss */
@@ -345,12 +345,12 @@ slides > slide.title-slide:after {
 slides > slide.backdrop {
   z-index: -10;
   display: block !important;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $white), color-stop(85%, $white), color-stop(100%, $gray-100));
-  background: -webkit-linear-gradient($white, $white 85%, $gray-100);
-  background: -moz-linear-gradient($white, $white 85%, $gray-100);
-  background: -o-linear-gradient($white, $white 85%, $gray-100);
-  background: linear-gradient($white, $white 85%, $gray-100);
-  background-color: $white;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $body-bg), color-stop(85%, $body-bg), color-stop(100%, $gray-100));
+  background: -webkit-linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background: -moz-linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background: -o-linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background: linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background-color: $body-bg;
 }
 /* line 175, ../scss/default.scss */
 slides > slide.backdrop:after, slides > slide.backdrop:before {
@@ -459,7 +459,7 @@ a {
 }
 /* line 271, ../scss/default.scss */
 a:hover {
-  color: $black !important;
+  color: $body-color !important;
 }
 
 /* line 276, ../scss/default.scss */
@@ -472,7 +472,7 @@ h2 {
   font-size: 45px;
   line-height: 65px;
   letter-spacing: -2px;
-  color: mix($white, $black, 32%);
+  color: mix($body-bg, $body-color, 32%);
 }
 
 /* line 287, ../scss/default.scss */
@@ -481,7 +481,7 @@ h3 {
   letter-spacing: -1px;
   line-height: 2;
   font-weight: inherit;
-  color: mix($white, $black, 47.5%);
+  color: mix($body-bg, $body-color, 47.5%);
 }
 
 /* line 295, ../scss/default.scss */
@@ -564,12 +564,12 @@ pre {
 /* line 351, ../scss/default.scss */
 pre[data-lang]:after {
   content: attr(data-lang);
-  background-color: mix($white, $black, 66.7%);
+  background-color: mix($body-bg, $body-color, 66.7%);
   right: 0;
   top: 0;
   position: absolute;
   font-size: 16pt;
-  color: $white;
+  color: $body-bg;
   padding: 2px 25px;
   text-transform: uppercase;
 }
@@ -590,7 +590,7 @@ code {
 iframe {
   width: 100%;
   height: 510px;
-  background: $white;
+  background: $body-bg;
   border: 1px solid $gray-100;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -605,12 +605,12 @@ dt {
 /* line 386, ../scss/default.scss */
 button {
   display: inline-block;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(40%, mix($white, $black, 97.5%)), color-stop(70%, mix($white, $black, 89%)));
-  background: -webkit-linear-gradient(mix($white, $black, 97.5%) 40%, mix($white, $black, 89%) 70%);
-  background: -moz-linear-gradient(mix($white, $black, 97.5%) 40%, mix($white, $black, 89%) 70%);
-  background: -o-linear-gradient(mix($white, $black, 97.5%) 40%, mix($white, $black, 89%) 70%);
-  background: linear-gradient(mix($white, $black, 97.5%) 40%, mix($white, $black, 89%) 70%);
-  border: 1px solid mix($white, $black, 66%);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(40%, mix($body-bg, $body-color, 97.5%)), color-stop(70%, mix($body-bg, $body-color, 89%)));
+  background: -webkit-linear-gradient(mix($body-bg, $body-color, 97.5%) 40%, mix($body-bg, $body-color, 89%) 70%);
+  background: -moz-linear-gradient(mix($body-bg, $body-color, 97.5%) 40%, mix($body-bg, $body-color, 89%) 70%);
+  background: -o-linear-gradient(mix($body-bg, $body-color, 97.5%) 40%, mix($body-bg, $body-color, 89%) 70%);
+  background: linear-gradient(mix($body-bg, $body-color, 97.5%) 40%, mix($body-bg, $body-color, 89%) 70%);
+  border: 1px solid mix($body-bg, $body-color, 66%);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
@@ -623,27 +623,27 @@ button {
   -moz-user-select: none;
   user-select: none;
   cursor: pointer;
-  text-shadow: 1px 1px $white;
+  text-shadow: 1px 1px $body-bg;
   font-size: 10pt;
 }
 
 /* line 400, ../scss/default.scss */
 button:not(:disabled):hover {
-  border-color: mix($white, $black, 32%);
+  border-color: mix($body-bg, $body-color, 32%);
 }
 
 /* line 404, ../scss/default.scss */
 button:not(:disabled):active {
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(40%, mix($white, $black, 89%)), color-stop(70%, mix($white, $black, 97.5%)));
-  background: -webkit-linear-gradient(mix($white, $black, 89%) 40%, mix($white, $black, 97.5%) 70%);
-  background: -moz-linear-gradient(mix($white, $black, 89%) 40%, mix($white, $black, 97.5%) 70%);
-  background: -o-linear-gradient(mix($white, $black, 89%) 40%, mix($white, $black, 97.5%) 70%);
-  background: linear-gradient(mix($white, $black, 89%) 40%, mix($white, $black, 97.5%) 70%);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(40%, mix($body-bg, $body-color, 89%)), color-stop(70%, mix($body-bg, $body-color, 97.5%)));
+  background: -webkit-linear-gradient(mix($body-bg, $body-color, 89%) 40%, mix($body-bg, $body-color, 97.5%) 70%);
+  background: -moz-linear-gradient(mix($body-bg, $body-color, 89%) 40%, mix($body-bg, $body-color, 97.5%) 70%);
+  background: -o-linear-gradient(mix($body-bg, $body-color, 89%) 40%, mix($body-bg, $body-color, 97.5%) 70%);
+  background: linear-gradient(mix($body-bg, $body-color, 89%) 40%, mix($body-bg, $body-color, 97.5%) 70%);
 }
 
 /* line 408, ../scss/default.scss */
 :disabled {
-  color: mix($white, $black, 66%);
+  color: mix($body-bg, $body-color, 66%);
 }
 
 /* line 412, ../scss/default.scss */
@@ -713,27 +713,27 @@ button:not(:disabled):active {
 
 /* line 451, ../scss/default.scss */
 .gray2 {
-  color: mix($white, $black, 66%);
+  color: mix($body-bg, $body-color, 66%);
 }
 
 /* line 454, ../scss/default.scss */
 .gray3 {
-  color: mix($white, $black, 47.5%);
+  color: mix($body-bg, $body-color, 47.5%);
 }
 
 /* line 457, ../scss/default.scss */
 .gray4 {
-  color: mix($white, $black, 32%);
+  color: mix($body-bg, $body-color, 32%);
 }
 
 /* line 461, ../scss/default.scss */
 .white {
-  color: $white !important;
+  color: $body-bg !important;
 }
 
 /* line 464, ../scss/default.scss */
 .black {
-  color: $black !important;
+  color: $body-color !important;
 }
 
 /* line 468, ../scss/default.scss */
@@ -756,12 +756,12 @@ table.rmdtable {
   border-collapse: -moz-initial;
   border-collapse: initial;
   border-spacing: 2px;
-  border-bottom: 1px solid mix($white, $black, 47.5%);
+  border-bottom: 1px solid mix($body-bg, $body-color, 47.5%);
 }
 /* line 479, ../scss/default.scss */
 table.rmdtable tr > td:first-child, table th {
   font-weight: 600;
-  color: mix($white, $black, 32%);
+  color: mix($body-bg, $body-color, 32%);
 }
 /* line 484, ../scss/default.scss */
 table.rmdtable tr:nth-child(odd) {
@@ -769,7 +769,7 @@ table.rmdtable tr:nth-child(odd) {
 }
 /* line 488, ../scss/default.scss */
 table.rmdtable th {
-  color: $white;
+  color: $body-bg;
   font-size: 18px;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(40%, $primary), color-stop(80%, $primary2)) no-repeat;
   background: -webkit-linear-gradient(top, $primary 40%, $primary2 80%) no-repeat;
@@ -784,7 +784,7 @@ table.rmdtable td, table th {
 }
 /* line 499, ../scss/default.scss */
 table.rmdtable td.highlight {
-  color: mix($white, $black, 32%);
+  color: mix($body-bg, $body-color, 32%);
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(40%, $warning), color-stop(80%, $warning2)) no-repeat;
   background: -webkit-linear-gradient(top, $warning 40%, $warning2 80%) no-repeat;
   background: -moz-linear-gradient(top, $warning 40%, $warning2 80%) no-repeat;
@@ -794,7 +794,7 @@ table.rmdtable td.highlight {
 /* line 504, ../scss/default.scss */
 table.rmdtable.rows {
   border-bottom: none;
-  border-right: 1px solid mix($white, $black, 47.5%);
+  border-right: 1px solid mix($body-bg, $body-color, 47.5%);
 }
 
 /* line 510, ../scss/default.scss */
@@ -905,7 +905,7 @@ article.smaller q:before, article.smaller q:after {
 /* line 600, ../scss/default.scss */
 .prettyprint .com {
   /* a comment */
-  color: mix($white, $black, 47.5%);
+  color: mix($body-bg, $body-color, 47.5%);
   font-style: italic;
 }
 
@@ -919,7 +919,7 @@ article.smaller q:before, article.smaller q:after {
 .prettyprint .pun,
 .prettyprint .opn,
 .prettyprint .clo {
-  color: mix($white, $black, 32%);
+  color: mix($body-bg, $body-color, 32%);
 }
 
 /* line 615, ../scss/default.scss */
@@ -933,7 +933,7 @@ article.smaller q:before, article.smaller q:after {
 
 /* line 618, ../scss/default.scss */
 .prettyprint .pln {
-  color: mix($white, $black, 32%);
+  color: mix($body-bg, $body-color, 32%);
 }
 
 /* line 622, ../scss/default.scss */
@@ -945,7 +945,7 @@ article.smaller q:before, article.smaller q:after {
   top: 0;
   left: 0;
   padding: 1em;
-  background: rgba($black, 0.3);
+  background: rgba($body-color, 0.3);
   opacity: 0;
   pointer-events: none;
   display: -webkit-box !important;
@@ -985,15 +985,15 @@ article.smaller q:before, article.smaller q:after {
 }
 /* line 640, ../scss/default.scss */
 .note > section {
-  background: $white;
+  background: $body-bg;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
-  -webkit-box-shadow: 0 0 10px mix($white, $black, 47.5%);
-  -moz-box-shadow: 0 0 10px mix($white, $black, 47.5%);
-  box-shadow: 0 0 10px mix($white, $black, 47.5%);
+  -webkit-box-shadow: 0 0 10px mix($body-bg, $body-color, 47.5%);
+  -moz-box-shadow: 0 0 10px mix($body-bg, $body-color, 47.5%);
+  box-shadow: 0 0 10px mix($body-bg, $body-color, 47.5%);
   width: 60%;
   padding: 2em;
 }
@@ -1019,7 +1019,7 @@ article.smaller q:before, article.smaller q:after {
 /* line 666, ../scss/default.scss */
 .with-notes.popup slide {
   overflow: visible;
-  background: $white;
+  background: $body-bg;
   -webkit-transition: none;
   -moz-transition: none;
   -o-transition: none;
@@ -1038,9 +1038,9 @@ article.smaller q:before, article.smaller q:after {
   -ms-transform: scale(0.6) translate3d(0.5em, 0.5em, 0);
   -o-transform: scale(0.6) translate3d(0.5em, 0.5em, 0);
   transform: scale(0.6) translate3d(0.5em, 0.5em, 0);
-  -webkit-box-shadow: 0 0 10px mix($white, $black, 47.5%);
-  -moz-box-shadow: 0 0 10px mix($white, $black, 47.5%);
-  box-shadow: 0 0 10px mix($white, $black, 47.5%);
+  -webkit-box-shadow: 0 0 10px mix($body-bg, $body-color, 47.5%);
+  -moz-box-shadow: 0 0 10px mix($body-bg, $body-color, 47.5%);
+  box-shadow: 0 0 10px mix($body-bg, $body-color, 47.5%);
 }
 /* line 678, ../scss/default.scss */
 .with-notes.popup slide.backdrop {
@@ -1069,9 +1069,9 @@ article.smaller q:before, article.smaller q:after {
   height: 260px;
   background: $gray-100;
   padding: 0;
-  -webkit-box-shadow: 0 0 10px mix($white, $black, 47.5%);
-  -moz-box-shadow: 0 0 10px mix($white, $black, 47.5%);
-  box-shadow: 0 0 10px mix($white, $black, 47.5%);
+  -webkit-box-shadow: 0 0 10px mix($body-bg, $body-color, 47.5%);
+  -moz-box-shadow: 0 0 10px mix($body-bg, $body-color, 47.5%);
+  box-shadow: 0 0 10px mix($body-bg, $body-color, 47.5%);
   -webkit-transform: translate3d(250px, 800px, 0) scale(1.5);
   -moz-transform: translate3d(250px, 800px, 0) scale(1.5);
   -ms-transform: translate3d(250px, 800px, 0) scale(1.5);
@@ -1084,7 +1084,7 @@ article.smaller q:before, article.smaller q:after {
 }
 /* line 705, ../scss/default.scss */
 .with-notes.popup .note > section {
-  background: $white;
+  background: $body-bg;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -1115,7 +1115,7 @@ article.smaller q:before, article.smaller q:after {
 /* line 725, ../scss/default.scss */
 .source {
   font-size: 14px;
-  color: mix($white, $black, 66%);
+  color: mix($body-bg, $body-color, 66%);
   position: absolute;
   bottom: 70px;
   left: 60px;
@@ -1128,11 +1128,11 @@ article.smaller q:before, article.smaller q:after {
 
 /* line 737, ../scss/default.scss */
 .reflect {
-  -webkit-box-reflect: below 3px -webkit-linear-gradient(rgba($white, 0) 85%, $white 150%);
-  -moz-box-reflect: below 3px -moz-linear-gradient(rgba($white, 0) 85%, $white 150%);
-  -o-box-reflect: below 3px -o-linear-gradient(rgba($white, 0) 85%, $white 150%);
-  -ms-box-reflect: below 3px -ms-linear-gradient(rgba($white, 0) 85%, $white 150%);
-  box-reflect: below 3px linear-gradient(rgba($white, 0) 85%, $white 150%);
+  -webkit-box-reflect: below 3px -webkit-linear-gradient(rgba($body-bg, 0) 85%, $body-bg 150%);
+  -moz-box-reflect: below 3px -moz-linear-gradient(rgba($body-bg, 0) 85%, $body-bg 150%);
+  -o-box-reflect: below 3px -o-linear-gradient(rgba($body-bg, 0) 85%, $body-bg 150%);
+  -ms-box-reflect: below 3px -ms-linear-gradient(rgba($body-bg, 0) 85%, $body-bg 150%);
+  box-reflect: below 3px linear-gradient(rgba($body-bg, 0) 85%, $body-bg 150%);
 }
 
 /* line 745, ../scss/default.scss */
@@ -1263,7 +1263,7 @@ article.smaller q:before, article.smaller q:after {
 /* line 826, ../scss/default.scss */
 .thank-you-slide {
   background: $primary !important;
-  color: $white;
+  color: $body-bg;
 }
 /* line 830, ../scss/default.scss */
 .thank-you-slide h2 {
@@ -1356,18 +1356,18 @@ aside.gdbar img {
   font-size: 65px;
   line-height: 1.4;
   letter-spacing: -3px;
-  color: mix($white, $black, 32%);
+  color: mix($body-bg, $body-color, 32%);
 }
 /* line 898, ../scss/default.scss */
 .title-slide hgroup h2 {
   font-size: 34px;
-  color: mix($white, $black, 66%);
+  color: mix($body-bg, $body-color, 66%);
   font-weight: inherit;
 }
 /* line 904, ../scss/default.scss */
 .title-slide hgroup p {
   font-size: 20px;
-  color: mix($white, $black, 47.5%);
+  color: mix($body-bg, $body-color, 47.5%);
   line-height: 1.3;
   margin-top: 2em;
 }
@@ -1386,7 +1386,7 @@ aside.gdbar img {
 
 /* line 925, ../scss/default.scss */
 [data-config-contact] a {
-  color: $white;
+  color: $body-bg;
   border-bottom: none;
 }
 /* line 929, ../scss/default.scss */
@@ -1405,12 +1405,12 @@ aside.gdbar img {
   cursor: pointer;
   opacity: 0.5;
   pointer-events: auto !important;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $white), color-stop(85%, $white), color-stop(100%, $gray-100));
-  background: -webkit-linear-gradient($white, $white 85%, $gray-100);
-  background: -moz-linear-gradient($white, $white 85%, $gray-100);
-  background: -o-linear-gradient($white, $white 85%, $gray-100);
-  background: linear-gradient($white, $white 85%, $gray-100);
-  background-color: $white;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $body-bg), color-stop(85%, $body-bg), color-stop(100%, $gray-100));
+  background: -webkit-linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background: -moz-linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background: -o-linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background: linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background-color: $body-bg;
 }
 /* line 945, ../scss/default.scss */
 .overview slides slide.backdrop {
@@ -1431,8 +1431,8 @@ aside.gdbar img {
 }
 
 slides > slide {
-  background: linear-gradient($white, $white 85%, $gray-100);
-  background-color: $white;
+  background: linear-gradient($body-bg, $body-bg 85%, $gray-100);
+  background-color: $body-bg;
 }
 slides > slide {
   opacity: 0;
@@ -1449,12 +1449,12 @@ slides > slide {
   slides slide {
     display: block !important;
     position: relative;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $white), color-stop(85%, $white), color-stop(100%, $gray-100));
-    background: -webkit-linear-gradient($white, $white 85%, $gray-100);
-    background: -moz-linear-gradient($white, $white 85%, $gray-100);
-    background: -o-linear-gradient($white, $white 85%, $gray-100);
-    background: linear-gradient($white, $white 85%, $gray-100);
-    background-color: $white;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $body-bg), color-stop(85%, $body-bg), color-stop(100%, $gray-100));
+    background: -webkit-linear-gradient($body-bg, $body-bg 85%, $gray-100);
+    background: -moz-linear-gradient($body-bg, $body-bg 85%, $gray-100);
+    background: -o-linear-gradient($body-bg, $body-bg 85%, $gray-100);
+    background: linear-gradient($body-bg, $body-bg 85%, $gray-100);
+    background-color: $body-bg;
     -webkit-transform: none !important;
     -moz-transform: none !important;
     -ms-transform: none !important;
@@ -1468,7 +1468,7 @@ slides > slide {
     margin-top: 0 !important;
     margin-left: 0 !important;
     opacity: 1 !important;
-    color: mix($white, $black, 33.3%);
+    color: mix($body-bg, $body-color, 33.3%);
   }
   /* line 998, ../scss/default.scss */
   slides slide.far-past, slides slide.past, slides slide.next, slides slide.far-next, slides slide.far-past, slides slide.current {
