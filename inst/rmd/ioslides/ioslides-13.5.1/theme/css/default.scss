@@ -26,6 +26,7 @@ $success1: lighten($success, 5%) !default;
 $success2: darken($success, 5%)  !default;
 
 $font-family-monospace: 'Source Code Pro', 'Courier New', monospace !default;
+$code-color: $black !default;
 
 
 /* line 17, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
@@ -582,7 +583,7 @@ pre[data-lang="go"] {
 code {
   font-size: 95%;
   font-family: $font-family-monospace;
-  color: $black;
+  color: $code-color;
 }
 
 /* line 374, ../scss/default.scss */
