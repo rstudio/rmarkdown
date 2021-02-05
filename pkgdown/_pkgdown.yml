@@ -62,10 +62,10 @@ reference:
   contents:
   - ends_with("_presentation")
   - ends_with("_document")
-  - '`html_vignette`'
-  - '`tufte_handout`'
-  - '`html_notebook`'
-  - '`html_fragment`'
+  - html_vignette
+  - tufte_handout
+  - html_notebook
+  - html_fragment
 
 - title: Rendering documents
   desc: These functions can be used to render or "compile" an R Markdown document.
@@ -76,12 +76,12 @@ reference:
 - title: Helper functions
   desc: These functions are useful when working with R Markdown documents.
   contents:
-  - '`draft`'
-  - '`find_external_resources`'
-  - '`includes`'
-  - '`metadata`'
-  - '`paged_table`'
-  - '`relative_to`'
+  - draft
+  - find_external_resources
+  - includes
+  - metadata
+  - paged_table
+  - relative_to
   - contains("params")
 
 - title: HTML notebooks
@@ -91,7 +91,7 @@ reference:
   contents:
   - starts_with("html_notebook_")
   - ends_with("_html_notebook")
-  - '`convert_ipynb`'
+  - convert_ipynb
 
 - title: R Markdown websites
   desc: >
@@ -109,7 +109,7 @@ reference:
     to R Markdown documents by adding reactive components made with [Shiny](http://shiny.rstudio.com/).
   contents:
   - contains("shiny")
-  - '`run`'
+  - run
 
 - title: Pandoc
   desc: ~
@@ -120,21 +120,22 @@ reference:
 - title: Customizing & extending output formats
   desc: ~
   contents:
-  - '`all_output_formats`'
-  - '`default_output_format`'
+  - all_output_formats
+  - default_output_format
   - contains("dependen")
-  - '`html_document_base`'
+  - html_document_base
   - starts_with("knitr_")
-  - '`output_format`'
-  - '`output_metadata`'
-  - '`resolve_output_format`'
-  - '`rmd_metadata`'
-  - '`rmarkdown_format`'
+  - output_format
+  - output_metadata
+  - resolve_output_format
+  - rmd_metadata
+  - rmarkdown_format
+  - pkg_file_lua
 
 - title: The rmarkdown package
   desc: ~
   contents:
-  - '`rmarkdown-package`'
+  - rmarkdown-package
 
 authors:
   "Yihui Xie":
