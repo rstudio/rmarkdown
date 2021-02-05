@@ -76,7 +76,7 @@ The book is structured into four parts:
 
 <a href="https://bookdown.org/yihui/rmarkdown-cookbook/"><img data-uri="https://bookdown.org/yihui/rmarkdown-cookbook/images/cover.png" alt="R Markdown Cookbook" width="250" style="padding: 0 15px; float: right;"/></a>
 
-[R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) provide a range of examples on how to extend the functionality of your R Markdown documents. As a cookbook, this guide is recommended to new and intermediate R Markdown users who desire to enhance the efficiency of using R Markdown and also explore the power of R Markdown. The book is published by Chapman & Hall/CRC, and you can read it online for free.
+[R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) provides a range of examples on how to extend the functionality of your R Markdown documents. As a cookbook, this guide is recommended to new and intermediate R Markdown users who desire to enhance the efficiency of using R Markdown and also explore the power of R Markdown. The book is published by Chapman & Hall/CRC, and you can read it online for free.
 
 This cookbook is not a full technical reference for R Markdown but aims to supplement, instead of replace, the existing literature. The book is thus organized by topics with example as self-contained as possible so that readers can read this book with specific tasks in mind to do with R Markdown. 
 
