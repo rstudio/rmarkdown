@@ -26,20 +26,28 @@ home:
 navbar:
   title: ~
   type: default
-  left:
-  - text: Reference
-    href: reference/index.html
-  - text: Articles
-    menu:
-      - text: "Install Pandoc"
-        href: articles/pandoc.html
-      - text: "About Lua filters"
-        href: articles/lua-filters.html
-  right:
-  - text: News
-    href: news/index.html
-  - icon: fab fa-github fa-lg
-    href: https://github.com/rstudio/rmarkdown
+  structure:
+    left:  [intro, reference, articles]
+    right: [news, github, community]
+  components:
+    home: ~
+    reference:
+      text: Reference
+      href: reference/index.html
+    articles:
+      text: Articles
+      menu:
+        - text: "About Lua filters"
+          href: articles/lua-filters.html
+    news:
+      text: News
+      href: news/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/rstudio/rmarkdown
+    community:
+      icon: fab fa-discourse fa-lg
+      href: https://community.rstudio.com/c/R-Markdown/10
 
 reference:
 - title: Output formats
