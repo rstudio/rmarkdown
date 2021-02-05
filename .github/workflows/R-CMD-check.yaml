@@ -5,10 +5,16 @@ on:
     branches:
       - main
       - master
+    paths-ignore:
+      - 'pkgdown/**'
+      - '.github/workflows/pkgdown.yml'
   pull_request:
     branches:
       - main
       - master
+    paths-ignore:
+      - 'pkgdown/**'
+      - '.github/workflows/pkgdown.yml'
 
 name: R-CMD-check
 
