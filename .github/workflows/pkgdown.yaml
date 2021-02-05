@@ -47,7 +47,8 @@ jobs:
         shell: Rscript {0}
 
       - name: Deploy to Netlify
-        if: false
+        # only deploy on the fork for now
+        if: github.repository_owner == 'apreshill'
         # NETLIFY_AUTH_TOKEN added in the repo's secrets
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
