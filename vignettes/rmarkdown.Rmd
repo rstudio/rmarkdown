@@ -78,7 +78,7 @@ The book is structured into four parts:
 
 The [R Markdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf) is a one page (two-sided) reference guide you can download as a quick reference while you work.
 
-The [R Markdown Reference](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) is a five page guide that lists each of the options from markdown, knitr, and pandoc that you can use to customize your R Markdown documents. 
+The [R Markdown Reference](https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) is a five page guide that lists each of the options from markdown, knitr, and pandoc that you can use to customize your R Markdown documents. 
 
 You can access both files from within the RStudio IDE:
 

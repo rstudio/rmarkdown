@@ -1,6 +1,8 @@
 # paged_table_type_sum and paged_table_obj_sum should be replaced
 # by tibble::type_sum once tibble supports R 3.0.0.
 paged_table_type_sum <- function(x) {
+  #  support vctrs-type vectors if the package is installed
+  if (xfun::loadable("vctrs") && vctrs::vec_is(x)) return(vctrs::vec_ptype_abbr(x))
   type_sum <- function(x)
   {
     format_sum <- switch(

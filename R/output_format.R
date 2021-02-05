@@ -21,7 +21,9 @@
 #'   for formats that produce HTML). In addition to the named methods you can
 #'   also pass an arbitrary function to be used for printing data frames. You
 #'   can disable the \code{df_print} behavior entirely by setting the option
-#'   \code{rmarkdown.df_print} to \code{FALSE}.
+#'   \code{rmarkdown.df_print} to \code{FALSE}. See
+#'   \href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+#'   frame printing section} in bookdown book for examples.
 #' @param pre_knit An optional function that runs before knitting which receives
 #'   the \code{input} (input filename passed to \code{render}) and \code{...}
 #'   (for future expansion) arguments.
@@ -198,6 +200,7 @@ merge_pandoc_options <- function(base,
 
   res <- merge_lists(base, overlay, recursive = FALSE)
   res$args <- c(base$args, overlay$args)
+  res$lua_filters <- c(base$lua_filters, overlay$lua_filters)
   res
 }
 
@@ -259,7 +262,7 @@ knitr_options_pdf <- function(fig_width,
   knit_hooks <- NULL
 
   # apply cropping if requested and we have pdfcrop and ghostscript
-  crop <- fig_crop && find_program("pdfcrop") != '' && tools::find_gs_cmd() != ''
+  crop <- fig_crop && has_crop_tools()
   if (crop) {
     knit_hooks = list(crop = knitr::hook_pdfcrop)
     opts_chunk$crop = TRUE
@@ -290,6 +293,10 @@ knitr_options_pdf <- function(fig_width,
 #'   chooses default based on \code{to}). This is typically used to force
 #'   the final output of a latex or beamer conversion to be \code{.tex}
 #'   rather than \code{.pdf}.
+#' @param lua_filters  Character vector of file paths to Lua filters to use with
+#'   this format. They will be added to pandoc command line call using
+#'   \code{--lua-filter} argument. See \code{vignette("lua-filters", package =
+#'   "rmarkdown")} to know more about Lua filters.
 #' @return An list that can be passed as the \code{pandoc} argument of the
 #'   \code{\link{output_format}} function.
 #' @seealso \link{output_format}, \link{rmarkdown_format}
@@ -299,13 +306,15 @@ pandoc_options <- function(to,
                            args = NULL,
                            keep_tex = FALSE,
                            latex_engine = c("pdflatex", "lualatex", "xelatex"),
-                           ext = NULL) {
+                           ext = NULL,
+                           lua_filters = NULL) {
   list(to = to,
        from = from,
        args = args,
        keep_tex = keep_tex,
        latex_engine = match.arg(latex_engine),
-       ext = ext)
+       ext = ext,
+       lua_filters = lua_filters)
 }
 
 #' R Markdown input format definition
@@ -323,7 +332,7 @@ pandoc_options <- function(to,
 #' }
 #'
 #' For more on pandoc markdown see the
-#' \href{http://pandoc.org/README.html}{pandoc online documentation}.
+#' \href{https://pandoc.org/MANUAL.html}{pandoc online documentation}.
 #' @param implicit_figures Automatically make figures from images (defaults to \code{TRUE}).
 #' @param extensions Markdown extensions to be added or removed from the
 #' default definition of R Markdown.
@@ -605,7 +614,7 @@ enumerate_output_formats <- function(input, envir, encoding, output_yaml = NULL)
   input_lines <- read_utf8(input)
 
   # if this is an R file then spin it
-  if (identical(tolower(tools::file_ext(input)), "r"))
+  if (identical(tolower(xfun::file_ext(input)), "r"))
     input_lines <- knitr::spin(text = input_lines, knit = FALSE)
 
   # parse _site.yml output format if we have it
@@ -765,12 +774,19 @@ is_pandoc_to_html <- function(options) {
 
 citeproc_required <- function(yaml_front_matter,
                               input_lines = NULL) {
+  # TODO: remove the hack below after BETS is updated on CRAN https://github.com/nmecsys/BETS/pull/18
+  if (tryCatch(xfun::check_old_package('BETS', '0.4.9'), error = function(e) FALSE)) return(FALSE)
   (
     is.null(yaml_front_matter$citeproc) ||
       yaml_front_matter$citeproc
   ) && (
     !is.null(yaml_front_matter$bibliography) ||
       !is.null(yaml_front_matter$references) ||
-      length(grep("^references\\:\\s*$", input_lines)) > 0
+      # detect references: and bibliography: outside of yaml header
+      # as Pandoc is supporting
+      # TODO: remove when supporting multiple yaml block
+      # https://github.com/rstudio/rmarkdown/issues/1891
+      length(grep("^references:\\s*$", input_lines)) > 0 ||
+      length(grep("^bibliography:\\s*$", input_lines)) > 0
   )
 }

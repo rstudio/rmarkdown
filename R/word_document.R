@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to an MS Word document.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/word_document_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/word-document.html}{online
 #' documentation} for additional details on using the \code{word_document} format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
@@ -58,12 +58,15 @@ word_document <- function(toc = FALSE,
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
+  # Lua filters (added if pandoc > 2)
+  lua_filters <- pkg_file_lua("pagebreak.lua")
+
   # numbered sections
   if (number_sections) {
     if (pandoc_available("2.10.1")) {
       args <- c(args, "--number-sections")
     } else {
-      args <- c(args, pandoc_lua_filters("number-sections.lua"))
+      lua_filters <- c(lua_filters, pkg_file_lua("number-sections.lua"))
     }
   }
 
@@ -74,9 +77,6 @@ word_document <- function(toc = FALSE,
 
   # reference docx
   args <- c(args, reference_doc_args("docx", reference_docx))
-
-  # lua filters (added if pandoc > 2)
-  args <- c(args, pandoc_lua_filters("pagebreak.lua"))
 
   # pandoc args
   args <- c(args, pandoc_args)
@@ -96,7 +96,8 @@ word_document <- function(toc = FALSE,
     knitr = knitr,
     pandoc = pandoc_options(to = "docx",
                             from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args),
+                            args = args,
+                            lua_filters = lua_filters),
     keep_md = keep_md,
     df_print = df_print,
     pre_processor = pre_processor,

@@ -33,21 +33,30 @@ github_document <- function(toc = FALSE,
   # add special markdown rendering template to ensure we include the title fields
   # and add an optional feature to number sections
   pandoc_args <- c(
-    pandoc_args, "--template", pkg_file_arg(
-      "rmarkdown/templates/github_document/resources/default.md"),
-    if (number_sections) pandoc_lua_filters("number-sections.lua")
+    pandoc_args, "--template",
+    pkg_file_arg("rmarkdown/templates/github_document/resources/default.md")
   )
-
 
   pandoc2 <- pandoc2.0()
   # use md_document as base
-  variant <- if (pandoc2) "gfm" else "markdown_github"
+  if (pandoc2) {
+    variant <-  "gfm"
+  } else {
+    variant <- "markdown_github"
+  }
   if (!hard_line_breaks) variant <- paste0(variant, "-hard_line_breaks")
+
+  # atx headers are the default in pandoc 2.11.2 and the flag has been deprecated
+  # to be replace by `--markdown-headings=atx|setx`
+  if (!pandoc_available("2.11.2")) pandoc_args <- c(
+    "--atx-headers", pandoc_args
+  )
 
   format <- md_document(
     variant = variant, toc = toc, toc_depth = toc_depth,
-    fig_width = fig_width, fig_height = fig_height, dev = dev,
-    df_print = df_print, includes = includes, md_extensions = md_extensions,
+    number_sections = number_sections, fig_width = fig_width,
+    fig_height = fig_height, dev = dev, df_print = df_print,
+    includes = includes, md_extensions = md_extensions,
     pandoc_args = pandoc_args
   )
 
@@ -63,7 +72,6 @@ github_document <- function(toc = FALSE,
         "--template", pkg_file_arg(
           "rmarkdown/templates/github_document/resources/preview.html"),
         "--variable", paste0("github-markdown-css:", css),
-        "--email-obfuscation", "none", # no email obfuscation
         if (pandoc2) c("--metadata", "pagetitle=PREVIEW")  # HTML5 requirement
       )
 
@@ -92,4 +100,29 @@ github_document <- function(toc = FALSE,
   }
 
   format  # return format
+}
+
+# explicit definition of gfm_format -- not currently used b/c it didn't
+# yield different about that 'gfm' w/ pandoc 2.11. keeping in the source
+# code for now in case we need to use it for another workaround.
+gfm_format <- function() {
+  paste0("markdown_strict",
+   # commonmark
+   "+raw_html",
+   "+all_symbols_escapable",
+   "+backtick_code_blocks",
+   "+fenced_code_blocks",
+   "+space_in_atx_header",
+   "+intraword_underscores",
+   "+lists_without_preceding_blankline",
+   "+shortcut_reference_links",
+   # gfm extensions
+   "+auto_identifiers",
+   "+autolink_bare_uris",
+   "+emoji",
+   "+gfm_auto_identifiers",
+   "+pipe_tables",
+   "+strikeout",
+   "+task_lists"
+  )
 }

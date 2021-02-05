@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 2.3.5
+Version: 2.6.6
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -18,8 +18,9 @@ Authors@R: c(
   person("Andrew", "Dunning", role = "ctb", comment = c(ORCID = "0000-0003-0464-5036")),
   person("Atsushi", "Yasumoto", role = c("ctb", "cph"),
          comment = c(ORCID = "0000-0002-8335-495X",
-                     cph = "Number sections lua filter")),
+                     cph = "Number sections Lua filter")),
   person("Barret", "Schloerke", role = "ctb"),
+  person("Carson", "Sievert", role = "ctb", comment = c(ORCID = "0000-0002-4958-2844")),
   person("Christophe", "Dervieux", role = "ctb"),
   person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
   person("Jeff", "Allen", role = "ctb", email = "jeff@rstudio.com"),
@@ -72,9 +73,9 @@ Authors@R: c(
   person("Aidan", "Lister", role = c("ctb", "cph"), 
          comment = "jQuery StickyTabs"),
   person("Benct Philip", "Jonsson", role = c("ctb", "cph"), 
-         comment = "pagebreak lua filter"),
+         comment = "pagebreak Lua filter"),
   person("Albert", "Krewinkel", role = c("ctb", "cph"), 
-         comment = "pagebreak lua filter")
+         comment = "pagebreak Lua filter")
   )
 Maintainer: Yihui Xie <xie@yihui.name>
 Description: Convert R Markdown documents into a variety of formats.
@@ -88,20 +89,23 @@ Imports:
     htmltools (>= 0.3.5),
     evaluate (>= 0.13),
     jsonlite,
-    mime,
     tinytex (>= 0.11),
-    xfun,
+    xfun (>= 0.15),
     methods,
     stringr (>= 1.2.0)
 Suggests:
     shiny (>= 0.11),
     tufte,
-    testthat,
+    testthat (>= 3.0.0),
     digest,
     dygraphs,
+    vctrs,
     tibble,
     fs,
-    rsconnect
+    rsconnect,
+    withr (>= 2.3.0),
+    bslib,
+    sass
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
 URL: https://github.com/rstudio/rmarkdown
 BugReports: https://github.com/rstudio/rmarkdown/issues
@@ -109,3 +113,6 @@ License: GPL-3
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
+Remotes: 
+  rstudio/bslib,
+  rstudio/shiny

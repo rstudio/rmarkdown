@@ -36,9 +36,6 @@ powerpoint_presentation <- function(
   if (!is.null(slide_level))
     args <- c(args, '--slide-level', as.character(slide_level))
 
-  # number sections
-  if (number_sections) args <- c(args, pandoc_lua_filters("number-sections.lua"))
-
   # TODO: syntax highlighting
 
   # pandoc args
@@ -61,7 +58,8 @@ powerpoint_presentation <- function(
     pandoc = pandoc_options(
       to = 'pptx',
       from = from_rmarkdown(fig_caption, md_extensions),
-      args = args
+      args = args,
+      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
     ),
     keep_md = keep_md,
     df_print = df_print,

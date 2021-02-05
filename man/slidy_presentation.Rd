@@ -78,7 +78,9 @@ method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
-\code{rmarkdown.df_print} to \code{FALSE}.}
+\code{rmarkdown.df_print} to \code{FALSE}. See
+\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+frame printing section} in bookdown book for examples.}
 
 \item{self_contained}{Produce a standalone HTML file with no external
 dependencies, using data: URIs to incorporate the contents of linked
@@ -99,7 +101,7 @@ copied into the output directory). You can pass an alternate URL or pass
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
 built-in template; pass a path to use a custom template that you've
 created.  See the documentation on
-\href{http://pandoc.org/README.html}{pandoc online documentation} for
+\href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
 details on creating custom templates.}
 
 \item{css}{One or more css files to include}
@@ -136,7 +138,7 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to a slidy presentation.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/slidy_presentation_format.html}{online
+See the \href{https://bookdown.org/yihui/rmarkdown/slidy-presentation.html}{online
 documentation} for additional details on using the \code{slidy_presentation}
 format.
 

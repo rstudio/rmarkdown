@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to an ODT document.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/odt_document_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/opendocument-text-document.html}{online
 #' documentation} for additional details on using the \code{odt_document} format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
@@ -63,14 +63,8 @@ odt_document <- function(number_sections = FALSE,
   # reference odt
   args <- c(args, reference_doc_args("odt", reference_odt))
 
-  # lua filters (added if pandoc > 2)
-  args <- c(args, pandoc_lua_filters("pagebreak.lua"))
-
   # pandoc args
   args <- c(args, pandoc_args)
-
-  # number sections with lua filter
-  if (number_sections) args <- c(args, pandoc_lua_filters("number-sections.lua"))
 
   saved_files_dir <- NULL
   pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir, output_dir) {
@@ -85,9 +79,13 @@ odt_document <- function(number_sections = FALSE,
   # return output format
   output_format(
     knitr = knitr,
-    pandoc = pandoc_options(to = "odt",
-                            from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args),
+    pandoc = pandoc_options(
+      to = "odt",
+      from = from_rmarkdown(fig_caption, md_extensions),
+      args = args,
+      lua_filters = pkg_file_lua(
+        c("pagebreak.lua", if (number_sections) "number-sections.lua"))
+    ),
     keep_md = keep_md,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator

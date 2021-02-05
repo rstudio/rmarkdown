@@ -51,7 +51,9 @@ method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
-\code{rmarkdown.df_print} to \code{FALSE}.}
+\code{rmarkdown.df_print} to \code{FALSE}. See
+\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+frame printing section} in bookdown book for examples.}
 
 \item{mathjax}{\code{TRUE} to convert $ and $$ math blocks into MathJax
 compatible output. Note that you'll still need to ensure that the page
@@ -80,7 +82,7 @@ assumes you will include the output into an existing document (e.g. a blog
 post).
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
+See the \href{https://bookdown.org/yihui/rmarkdown/html-document.html}{online
 documentation} for additional details on using the \code{html_fragment}
 format.
 }
