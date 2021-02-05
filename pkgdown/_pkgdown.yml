@@ -39,15 +39,17 @@ navbar:
       menu:
         - text: "About Lua filters"
           href: articles/lua-filters.html
-    news:
-      text: News
-      href: news/index.html
     github:
       icon: fab fa-github fa-lg
       href: https://github.com/rstudio/rmarkdown
     community:
       icon: fab fa-discourse fa-lg
       href: https://community.rstudio.com/c/R-Markdown/10
+
+news:
+   releases:
+    - text: "R Markdown family news Dec. 2020"
+      href: https://blog.rstudio.com/2020/12/21/rmd-news
 
 reference:
 - title: Output formats
