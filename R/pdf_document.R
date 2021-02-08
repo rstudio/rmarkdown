@@ -2,7 +2,7 @@
 #'
 #' Formats for converting from R Markdown to a PDF or LaTeX document.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/pdf_document_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/pdf-document.html}{online
 #' documentation} for additional details on using the \code{pdf_document}
 #' format.
 #'
@@ -58,7 +58,7 @@
 #'   the rmarkdown package default template; pass \code{NULL} to use pandoc's
 #'   built-in template; pass a path to use a custom template that you've
 #'   created.  See the documentation on
-#'   \href{http://pandoc.org/README.html}{pandoc online documentation} for
+#'   \href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
 #'   details on creating custom templates.
 #' @param output_extensions Pandoc extensions to be added or removed from the
 #'   output format, e.g., \code{"-smart"} means the output format will be
@@ -142,9 +142,6 @@ pdf_document <- function(toc = FALSE,
   # make sure the graphics package is always loaded
   if (identical(template, "default")) args <- c(args, "--variable", "graphics")
 
-  # lua filters (added if pandoc > 2)
-  args <- c(args, pandoc_lua_filters(c("pagebreak.lua", "latex-div.lua")))
-
   # args args
   args <- c(args, pandoc_args)
 
@@ -196,11 +193,14 @@ pdf_document <- function(toc = FALSE,
   # return format
   output_format(
     knitr = knitr_options_pdf(fig_width, fig_height, fig_crop, dev),
-    pandoc = pandoc_options(to = paste(c("latex", output_extensions), collapse = ""),
-                            from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args,
-                            latex_engine = latex_engine,
-                            keep_tex = keep_tex),
+    pandoc = pandoc_options(
+      to = paste(c("latex", output_extensions), collapse = ""),
+      from = from_rmarkdown(fig_caption, md_extensions),
+      args = args,
+      latex_engine = latex_engine,
+      keep_tex = keep_tex,
+      lua_filters = pkg_file_lua(c("pagebreak.lua", "latex-div.lua"))
+    ),
     clean_supporting = !keep_tex,
     keep_md = keep_md,
     df_print = df_print,

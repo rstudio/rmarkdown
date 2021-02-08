@@ -29,8 +29,9 @@
 #'       \item{Files beginning with "." (hidden files).}
 #'       \item{Files beginning with "_"}
 #'       \item{Files known to contain R source code (e.g. ".R", ".s", ".Rmd"), R
-#'       data (e.g. ".RData", ".rds"), or configuration data (e.g. ".Rproj",
-#'       "rsconnect")).}
+#'       data (e.g. ".RData", ".rds"), configuration data (e.g. ".Rproj",
+#'       "rsconnect") or package project management data (e.g.
+#'       "packrat", "renv").}
 #'     }
 #'     Note that you can override which files are included or excluded via
 #'     settings in "_site.yml" (described below).}
@@ -204,9 +205,9 @@ render_site <- function(input = ".",
 
 #' @rdname render_site
 #' @param preview Whether to list the files to be removed rather than actually
-#'   removing them.
+#'   removing them. Defaulting to TRUE to prevent removing without notice.
 #' @export
-clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
+clean_site <- function(input = ".", preview = TRUE, quiet = FALSE,
                        encoding = "UTF-8") {
 
   # normalize to a directory
@@ -220,54 +221,82 @@ clean_site <- function(input = ".", preview = FALSE, quiet = FALSE,
   # get the files to be cleaned
   files <- generator$clean()
 
+
+  if (length(files) == 0) {
+    if (preview || !quiet) cat("Nothing to removed. All clean !\n")
+    return(invisible(NULL))
+  }
+
   # if it's just a preview then return the files, otherwise
   # actually remove the files
-  if (preview)
-    files
-  else {
+  if (preview) {
+    cat("These files and folders can probably be removed:\n",
+        paste0("* ", mark_dirs(files)),
+        "\nUse rmarkdown::clean_site(preview = FALSE) to remove them.",
+        sep = "\n")
+  } else {
     if (!quiet) {
-      cat("Removing files: \n")
-      cat(paste0(" ", files), sep = "\n")
+      cat("Removing files: \n",
+          paste0("* ", mark_dirs(files)),
+          sep = "\n")
     }
     unlink(file.path(input, files), recursive = TRUE)
   }
+}
+
+# TODO: Move to xfun - bookdown use it too.
+mark_dirs <- function(files) {
+  i <- file_test("-d", files) & !grepl("/$", files)
+  files[i] <- paste0(files[i], "/")
+  files
 }
 
 #' @rdname render_site
 #' @export
 site_generator <- function(input = ".", output_format = NULL) {
 
+  # look for the closest index file with 'site' metadata
+  root <- tryCatch(
+    proj_root(input, "^index.R?md$", "^\\s*site:.*::.*$"),
+    error = function(e) NULL
+  )
+
   # normalize input
   input <- input_as_dir(input)
 
-  # if we have an index.Rmd (or .md) then check it's yaml for "site:"
-  index <- file.path(input, "index.Rmd")
+  # if none found then look for a _site.yml file
+  if (is.null(root)) {
+    if (file.exists(site_config_file(input))) {
+      return (default_site(input))
+    } else {
+      return(NULL)
+    }
+  }
+
+  # determine the index file (will be index.Rmd or index.md)
+  index <- file.path(root, "index.Rmd")
   if (!file.exists(index))
-    index <- file.path(input, "index.md")
-  if (file.exists(index)) {
+    index <- file.path(root, "index.md")
 
-    # read index.Rmd and extract the front matter
-    front_matter <- yaml_front_matter(index)
+  # is this in a subdir of the site root? (only some generators support this)
+  in_subdir <- !same_path(input, root)
 
-    # is there a custom site generator function?
-    if (!is.null(front_matter$site)) {
+  # read index.Rmd and extract the front matter
+  front_matter <- yaml_front_matter(index)
 
-      create_site_generator <- eval(parse(text = front_matter$site))
-      create_site_generator(input)
+  # create the site generator (passing the root dir)
+  create_site_generator <- eval(parse(text = front_matter$site))
+  generator <- create_site_generator(root)
 
-    # is there a "_site.yml"?
-    } else if (file.exists(site_config_file(input))) {
-
-      default_site(input)
-
-    # no custom site generator or "_site.yml"
+  # if it's in a subdir check to see if the generator supports nested files
+  if (in_subdir) {
+    if (isTRUE(generator$subdirs)) {
+      generator
     } else {
       NULL
     }
-
-  # no index.Rmd or index.md
   } else {
-    NULL
+    generator
   }
 }
 
@@ -309,9 +338,12 @@ site_config <- function(input = ".", encoding = "UTF-8") {
 # default site implementation (can be overridden by custom site generators)
 
 #' @rdname render_site
+#' @param output_format_filter An optional function which is passed the
+#'  input file and the output format, and which returns a (potentially
+#'  modified) output format.
 #' @param ... Currently unused.
 #' @export
-default_site_generator <- default_site <- function(input, ...) {
+default_site_generator <- default_site <- function(input, output_format_filter = NULL, ...) {
 
   # get the site config
   config <- site_config(input)
@@ -367,8 +399,14 @@ default_site_generator <- default_site <- function(input, ...) {
       # log the file being rendered
       if (!quiet) message("\nRendering: ", x)
 
+      # optionally customize the output format via filter
+      file_output_format <- output_format
+      if (!is.null(output_format_filter)) {
+        file_output_format <- output_format_filter(x, output_format)
+      }
+
       output <- render_one(input = x,
-                           output_format = output_format,
+                           output_format = file_output_format,
                            output_options = list(lib_dir = "site_libs",
                                                  self_contained = FALSE),
                            envir = envir,
@@ -547,14 +585,14 @@ site_resources <- function(site_dir, include = NULL, exclude = NULL, recursive =
   # excludes:
   #   - known source/data extensions
   #   - anything that starts w/ '.' or '_'
-  #   - rsconnect and packrat directories
+  #   - rsconnect, renv and packrat directories
   #   - user excludes
   extensions <- c("R", "r", "S", "s",
                   "Rmd", "rmd", "md", "Rmarkdown", "rmarkdown",
                   "Rproj", "rproj",
                   "RData", "rdata", "rds")
   extensions_regex <- utils::glob2rx(paste0("*.", extensions))
-  excludes <- c("^rsconnect$", "^packrat$", "^\\..*$", "^_.*$", "^.*_cache$",
+  excludes <- c("^rsconnect$", "^packrat$", "^renv$", "^\\..*$", "^_.*$", "^.*_cache$",
                 extensions_regex,
                 utils::glob2rx(exclude))
   files <- all_files
@@ -614,8 +652,10 @@ input_as_dir <- function(input) {
 
   # ensure the input dir exists
   if (!file.exists(input)) {
-    stop("The specified directory '", normalize_path(input, mustWork = FALSE),
-         "' does not exist.", call. = FALSE)
+    input <- normalize_path(input, mustWork = FALSE)
+    if (!file.exists(input)) stop(
+      "The specified directory '", input, "' does not exist.", call. = FALSE
+    )
   }
 
   # convert from file to directory if necessary

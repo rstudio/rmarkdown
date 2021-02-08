@@ -132,6 +132,10 @@ function Emph(s)
   return "<em>" .. s .. "</em>"
 end
 
+function Underline(s)
+  return "<u>" .. s .. "</u>"
+end
+
 function Strong(s)
   return "<strong>" .. s .. "</strong>"
 end

@@ -1,0 +1,53 @@
+on:
+  workflow_run:
+    workflows: ["R-CMD-check"]
+    branches: [main,master]
+    types: completed
+
+name: pkgdown
+
+jobs:
+  pkgdown:
+    runs-on: macOS-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@v1
+        id: install-r
+
+      - uses: r-lib/actions/setup-pandoc@v1
+
+      - name: Install pak and query dependencies
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          saveRDS(pak::pkg_deps_tree(c("local::.", "pkgdown"), dependencies = TRUE), ".github/r-depends.rds")
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-${{ hashFiles('.github/r-depends.rds') }}
+          restore-keys: ${{ runner.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-
+
+      - name: Install package and dependencies
+        run: |
+          pak::local_install(upgrade = TRUE)
+          pak::local_install_dev_deps()
+        shell: Rscript {0}
+
+      - name: Build pkgdown site
+        run: |
+          pak::pkg_install("pkgdown")
+          pkgdown::build_site(new_process = FALSE)
+        shell: Rscript {0}
+
+      - name: Publish
+        run: |
+          npm install netlify-cli -g
+          netlify deploy --prod --dir docs
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

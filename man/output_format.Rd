@@ -16,6 +16,7 @@ output_format(
   intermediates_generator = NULL,
   post_processor = NULL,
   on_exit = NULL,
+  file_scope = NULL,
   base_format = NULL
 )
 }
@@ -43,7 +44,9 @@ method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
-\code{rmarkdown.df_print} to \code{FALSE}.}
+\code{rmarkdown.df_print} to \code{FALSE}. See
+\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+frame printing section} in bookdown book for examples.}
 
 \item{pre_knit}{An optional function that runs before knitting which receives
 the \code{input} (input filename passed to \code{render}) and \code{...}
@@ -75,6 +78,13 @@ render the \code{input_file}.}
 
 \item{on_exit}{A function to call when \code{rmarkdown::render()} finishes
 execution (as registered with a \code{\link{on.exit}} handler).}
+
+\item{file_scope}{A function that will split markdown input to pandoc into
+multiple named files. This is useful when the caller has concatenated a set
+of Rmd files together (as \pkg{bookdown} does), and those files may need to
+processed by pandoc using the \code{--file-scope} option. The function
+should return a named list of files w/ \code{name} and \code{content} for
+each file.}
 
 \item{base_format}{An optional format to extend.}
 }

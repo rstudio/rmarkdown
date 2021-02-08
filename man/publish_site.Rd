@@ -45,6 +45,4 @@ library(rmarkdown)
 publish_site()
 }
 
-
-
 }

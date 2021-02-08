@@ -9,6 +9,7 @@ md_document(
   preserve_yaml = FALSE,
   toc = FALSE,
   toc_depth = 3,
+  number_sections = FALSE,
   fig_width = 7,
   fig_height = 5,
   fig_retina = NULL,
@@ -25,7 +26,7 @@ md_document(
 Other valid values are "commonmark", "markdown_github", "markdown_mmd",
 markdown_phpextra", or even "markdown" (which produces pandoc markdown).
 You can also compose custom markdown variants, see the
-\href{http://pandoc.org/README.html}{pandoc online documentation}
+\href{https://pandoc.org/MANUAL.html}{pandoc online documentation}
 for details.}
 
 \item{preserve_yaml}{Preserve YAML front matter in final document.}
@@ -33,6 +34,8 @@ for details.}
 \item{toc}{\code{TRUE} to include a table of contents in the output}
 
 \item{toc_depth}{Depth of headers to include in table of contents}
+
+\item{number_sections}{\code{TRUE} to number section headings}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -56,7 +59,9 @@ method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
-\code{rmarkdown.df_print} to \code{FALSE}.}
+\code{rmarkdown.df_print} to \code{FALSE}. See
+\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+frame printing section} in bookdown book for examples.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
@@ -77,7 +82,7 @@ Format for converting from R Markdown to another variant of markdown (e.g.
 strict markdown or github flavored markdown)
 }
 \details{
-See the \href{http://rmarkdown.rstudio.com/markdown_document_format.html}{online
+See the \href{https://bookdown.org/yihui/rmarkdown/markdown-document.html}{online
 documentation} for additional details on using the \code{md_document} format.
 
 R Markdown documents can have optional metadata that is used to generate a

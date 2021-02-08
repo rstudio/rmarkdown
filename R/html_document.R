@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to an HTML document.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/html_document_format.html}{online
+#' See the \href{https://bookdown.org/yihui/rmarkdown/html-document.html}{online
 #' documentation} for additional details on using the \code{html_document}
 #' format.
 #'
@@ -14,6 +14,7 @@
 #' the markdown syntax for citations in the
 #' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
+#'@md
 #'@inheritParams output_format
 #'@param toc \code{TRUE} to include a table of contents in the output
 #'@param toc_depth Depth of headers to include in table of contents
@@ -22,6 +23,8 @@
 #'  options that control the behavior of the floating table of contents. See the
 #'  \emph{Floating Table of Contents} section below for details.
 #'@param number_sections \code{TRUE} to number section headings
+#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers.
+#'  See \link[rmarkdown:html_document]{Anchor Sections Customization section}.
 #'@param fig_width Default width (in inches) for figures
 #'@param fig_height Default height (in inches) for figures
 #'@param fig_retina Scaling to perform for retina displays (defaults to 2, which
@@ -44,10 +47,15 @@
 #'  scripts, stylesheets, images, and videos. Note that even for self contained
 #'  documents MathJax is still loaded externally (this is necessary because of
 #'  its size).
-#'@param theme Visual theme ("default", "cerulean", "journal", "flatly",
-#'  "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
-#'  "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-#'  case you can use the \code{css} parameter to add your own styles).
+#'@param theme One of the following:
+#'  * A [bslib::bs_theme()] object (or a list of [bslib::bs_theme()] argument values)
+#'    * Use this option for custom themes using Bootstrap 4 or 3.
+#'    * In this case, any `.scss`/`.sass` files provided to the `css`
+#'      parameter may utilize the `theme`'s underlying Sass utilities
+#'      (e.g., variables, mixins, etc).
+#'  * `NULL` for no theme (i.e., no [html_dependency_bootstrap()]).
+#'  * A character string specifying a [Bootswatch 3](https://bootswatch.com/3/)
+#'    theme name (for backwards-compatibility).
 #'@param highlight Syntax highlighting style. Supported styles include
 #'  "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
 #'  "haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.
@@ -77,6 +85,31 @@
 #'@param extra_dependencies,... Additional function arguments to pass to the
 #'  base R Markdown HTML output formatter \code{\link{html_document_base}}
 #'@return R Markdown output format to pass to \code{\link{render}}
+#'
+#'@section Anchor Sections Customization:
+#'  By default, a \samp{#} is used as a minimalist choice, referring to the id selector
+#'  in HTML and CSS. You can easily change that using a css rule in your
+#'  document. For example, to add a \href{https://codepoints.net/U+1F517}{link
+#'  symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}} instead:
+#'  \preformatted{
+#'  a.anchor-section::before {
+#'    content: '\\01F517\\00FE0E';
+#'  }}
+#'  You can remove \samp{\\00FE0E} to get a more complex link pictogram
+#'  \if{html}{\out{(&#x1F517;)}}.
+#'
+#'  If you prefer an svg icon, you can also use one using for example a direct link or downloading it from
+#'  \url{https://material.io/resources/icons/}.
+#'  \preformatted{
+#'  /* From https://material.io/resources/icons/
+#'     Licence: https://www.apache.org/licenses/LICENSE-2.0.html */
+#'  a.anchor-section::before {
+#'    content: url(https://fonts.gstatic.com/s/i/materialicons/link/v7/24px.svg);
+#'  }}
+#'
+#'  About how to apply custom CSS, see
+#'  \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
+#'
 #'@section Navigation Bars:
 #'
 #'  If you have a set of html documents which you'd like to provide a common
@@ -105,7 +138,7 @@
 #'  of a bootstrap navigation bar. For a simple example of including a navigation bar see
 #'  \url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
 #'   For additional documentation on creating Bootstrap navigation bars see
-#'  \url{http://getbootstrap.com/components/#navbar}.
+#'  \url{https://getbootstrap.com/docs/4.5/components/navbar/}.
 #'
 #'
 #'@section Floating Table of Contents:
@@ -146,7 +179,7 @@
 #'
 #'  You can provide a custom HTML template to be used for rendering. The syntax
 #'  for templates is described in the
-#'  \href{http://pandoc.org/README.html}{pandoc documentation}. You can also use
+#'  \href{https://pandoc.org/MANUAL.html}{pandoc documentation}. You can also use
 #'  the basic pandoc template by passing \code{template = NULL}.
 #'
 #'  Note however that if you choose not to use the "default" HTML template then
@@ -179,6 +212,7 @@ html_document <- function(toc = FALSE,
                           toc_depth = 3,
                           toc_float = FALSE,
                           number_sections = FALSE,
+                          anchor_sections = FALSE,
                           section_divs = TRUE,
                           fig_width = 7,
                           fig_height = 5,
@@ -211,6 +245,9 @@ html_document <- function(toc = FALSE,
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
+
+  # makes downstream logic easier to reason about
+  theme <- resolve_theme(theme)
 
   # toc_float
   if (toc && !identical(toc_float, FALSE)) {
@@ -279,17 +316,37 @@ html_document <- function(toc = FALSE,
   args <- c(args, pandoc_html_highlight_args(template, highlight))
 
   # add highlight.js html_dependency if required
-  if (identical(template, "default") && is_highlightjs(highlight)) {
-    extra_dependencies <- append(extra_dependencies, list(html_dependency_highlightjs(highlight)))
-  }
+  extra_dependencies <- append(
+    extra_dependencies,
+    if (identical(template, "default") && is_highlightjs(highlight)) {
+      list(html_dependency_highlightjs(highlight))
+    } else if (!is.null(highlight)) {
+      # for screen-reader accessibility improvement
+      list(html_dependency_accessible_code_block())
+    }
+  )
 
   # numbered sections
   if (number_sections)
     args <- c(args, "--number-sections")
 
-  # additional css
-  for (css_file in css)
-    args <- c(args, "--css", pandoc_path_arg(css_file))
+  # additional sass/css
+  for (f in css) {
+    if (is_bs_theme(theme)) {
+      theme <- bslib::bs_add_rules(theme, sass::sass_file(f))
+      next
+    }
+    is_sass <- grepl("\\.s[ac]ss$", f)
+    if (is_sass) {
+      f <- sass::sass(
+        sass::sass_file(f),
+        output = sub("\\.s[ac]ss$", ".css", f),
+        options = sass::sass_options(output_style = "compressed")
+      )
+    }
+    args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
+  }
+
 
   # manage list of exit_actions (backing out changes to knitr options)
   exit_actions <- list()
@@ -306,7 +363,7 @@ html_document <- function(toc = FALSE,
       source_file <<- basename(input)
       source_code <<- paste0(
         '<div id="rmd-source-code">',
-        base64enc::base64encode(input),
+        xfun::base64_encode(input),
         '</div>')
     }
   }
@@ -315,6 +372,12 @@ html_document <- function(toc = FALSE,
   if (identical(df_print, "paged")) {
     extra_dependencies <- append(extra_dependencies,
                                  list(html_dependency_pagedtable()))
+  }
+
+  # anchor-sections
+  if (anchor_sections) {
+    extra_dependencies <- append(extra_dependencies,
+                                 list(html_dependency_anchor_sections()))
   }
 
   # pre-processor for arguments that may depend on the name of the
@@ -354,8 +417,6 @@ html_document <- function(toc = FALSE,
 
         # flag indicating we need extra navbar css and js
         args <- c(args, pandoc_variable_arg("navbar", "1"))
-        # variables controlling padding from navbar
-        args <- c(args, pandoc_body_padding_variable_args(theme))
 
         # navbar icon dependencies
         iconDeps <- navbar_icon_dependencies(navbar)
@@ -501,35 +562,6 @@ mathjax_config <- function() {
   "MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 }
 
-# variable which controls body offset (depends on height of navbar in theme)
-pandoc_body_padding_variable_args <- function(theme) {
-
-  # height of navbar in bootstrap 3.3.5
-  navbarHeights <- c("default" = 51,
-                     "cerulean" = 51,
-                     "journal" = 61 ,
-                     "flatly" = 60,
-                     "darkly" = 60,
-                     "readable" = 66,
-                     "spacelab" = 52,
-                     "united" = 51,
-                     "cosmo" = 51,
-                     "lumen" = 54,
-                     "paper" = 64,
-                     "sandstone" = 61,
-                     "simplex" = 41,
-                     "yeti" = 45)
-
-  # body padding is navbar height
-  bodyPadding <- navbarHeights[[theme]]
-
-  # header padding is bodyPadding + 5
-  headerPadding <- bodyPadding + 5
-
-  # return variables
-  c(pandoc_variable_arg("body_padding", bodyPadding),
-    pandoc_variable_arg("header_padding", headerPadding))
-}
 
 navbar_html_from_yaml <- function(navbar_yaml) {
 
@@ -632,11 +664,20 @@ navbar_link_text <- function(x, ...) {
       iconset <- split[[1]][[1]]
     else
       iconset <- ""
-    tagList(tags$span(class = paste(iconset, x$icon)), " ", x$text, ...)
+    # check if a full class is passed for fontawesome
+    # use default 'fas' otherwise
+    # https://github.com/rstudio/rmarkdown/issues/1554
+    class = if (grepl("^fa\\w fa", iconset)) {
+      x$icon
+    } else if (iconset == "fa") {
+      paste("fas", x$icon)
+    } else {
+      # should be other than FontAwesome
+      paste(iconset, x$icon)
+    }
+    tagList(tags$span(class = class), " ", x$text, ...)
   }
   else
     tagList(x$text, ...)
 }
-
-
 

@@ -16,11 +16,20 @@ is_osx <- function() {
   if (is.null(x)) y else x
 }
 
+# a la shiny:::is_available
+is_available <- function(package, version = NULL) {
+  installed <- nzchar(system.file(package = package))
+  if (is.null(version)) {
+    return(installed)
+  }
+  installed && isTRUE(utils::packageVersion(package) >= version)
+}
+
 # determine the output file for a pandoc conversion
 pandoc_output_file <- function(input, pandoc_options) {
   to <- strsplit(pandoc_options$to, "[+-]")[[1]][[1]]
   ext <- pandoc_output_ext(pandoc_options$ext, to, input)
-  output <- paste0(tools::file_path_sans_ext(input), ext)
+  output <- paste0(xfun::sans_ext(input), ext)
   basename(output)
 }
 
@@ -29,16 +38,55 @@ pandoc_output_ext <- function(ext, to, input) {
   if (to %in% c("latex", "beamer")) return(".pdf")
   if (to %in% c("html", "html4", "html5", "s5", "slidy", "slideous", "dzslides", "revealjs"))
     return(".html")
-  if (to == "markdown" && tolower(tools::file_ext(input)) != "md") return(".md")
+  if (to == "markdown" && tolower(xfun::file_ext(input)) != "md") return(".md")
   paste0(".", to)
 }
 
-pkg_file <- function(...) {
-  system.file(..., package = "rmarkdown")
+# needs to handle the case when this function is used in a package loaded with
+# devtools or pkgload load_all(). Required for testing with testthat also.
+# From pkgdown:
+# https://github.com/r-lib/pkgdown/blob/04d3a76892320ac4bd918b39604c157e9f83507a/R/utils-fs.R#L85
+pkg_file <- function(..., package = "rmarkdown", mustWork = FALSE) {
+  if (is.null(devtools_meta(package))) {
+    system.file(..., package = package, mustWork = mustWork)
+  } else {
+    # used only if package has been loaded with devtools or pkgload
+    file.path(getNamespaceInfo(package, "path"), "inst", ...)
+  }
 }
 
-pkg_file_arg <- function(...) {
-  pandoc_path_arg(pkg_file(...))
+pkg_file_arg <- function(..., package = "rmarkdown") {
+  pandoc_path_arg(pkg_file(..., package = package))
+}
+
+#' Get the full paths of Lua filters in an R package
+#'
+#' Lua filters stored in a source package in the \file{inst/rmarkdown/lua}
+#' directory will be installed to the \file{rmarkdown/lua} directory in the
+#' package path. This function finds the full paths of the Lua filters in the
+#' installed packages.
+#' @param filters A character vector of filenames for Lua filters to be
+#'   retrieved in \file{rmarkdown/lua} folder of the package. By default
+#'   (\code{NULL}), if none is provided, it returns all filters in that folder.
+#' @param package The name of the package in which to look for the filters.
+#' @return A character vector of absolute file paths for the Lua filter from the
+#'   package. The returned paths have been processed by
+#'   \code{\link{pandoc_path_arg}()}, so they are ready to be used by Pandoc.
+#' @export
+#' @examples
+#' # list all Lua filters stored in the rmarkdown package
+#' pkg_file_lua()
+#' # get a specific filter
+#' pkg_file_lua(c("pagebreak.lua", "latex_div.lua"))
+pkg_file_lua <- function(filters = NULL, package = "rmarkdown") {
+  files <- pkg_file(
+    "rmarkdown", "lua", if (is.null(filters)) '.' else filters,
+    package = package, mustWork = TRUE
+  )
+  if (is.null(filters)) {
+    files <- list.files(dirname(files), "[.]lua$", full.names = TRUE)
+  }
+  pandoc_path_arg(files)
 }
 
 #' @rdname rmarkdown_format
@@ -116,30 +164,31 @@ clean_tmpfiles <- function() {
   ))
 }
 
+# test if all paths in x are directories
 dir_exists <- function(x) {
   length(x) > 0 && utils::file_test('-d', x)
 }
 
 file_with_ext <- function(file, ext) {
-  paste(tools::file_path_sans_ext(file), ".", ext, sep = "")
+  paste(xfun::sans_ext(file), ".", ext, sep = "")
 }
 
 
-file_with_meta_ext <- function(file, meta_ext, ext = tools::file_ext(file)) {
-  paste(tools::file_path_sans_ext(file),
+file_with_meta_ext <- function(file, meta_ext, ext = xfun::file_ext(file)) {
+  paste(xfun::sans_ext(file),
         ".", meta_ext, ".", ext, sep = "")
 }
 
 knitr_files_dir <- function(file) {
-  paste(tools::file_path_sans_ext(file), "_files", sep = "")
+  paste(xfun::sans_ext(file), "_files", sep = "")
 }
 
 knitr_root_cache_dir <- function(file) {
-  paste(tools::file_path_sans_ext(file), "_cache", sep = "")
+  paste(xfun::sans_ext(file), "_cache", sep = "")
 }
 
 knitr_cache_dir <- function(file, pandoc_to) {
-  paste(tools::file_path_sans_ext(file), "_cache/", pandoc_to, "/", sep = "")
+  paste(xfun::sans_ext(file), "_cache/", pandoc_to, "/", sep = "")
 }
 
 get_knitr_hook_list <- function(hook_names = NULL) {
@@ -263,6 +312,21 @@ find_program <- function(program) {
   }
 }
 
+has_crop_tools <- function() {
+  tools <- c(
+    pdfcrop = unname(find_program("pdfcrop")),
+    ghostcript = unname(tools::find_gs_cmd())
+  )
+  missing <- tools[tools == ""]
+  if (length(missing) == 0) return(TRUE)
+  x <- paste0(names(missing), collapse = ", ")
+  warning(
+    sprintf("\nTool(s) not installed or not in PATH: %s", x),
+    "\n-> As a result, figure cropping will be disabled."
+  )
+  FALSE
+}
+
 # given a string, escape the regex metacharacters it contains:
 # regex metas are these,
 #   . \ | ( ) [ { ^ $ * + ?
@@ -297,11 +361,11 @@ ends_with_bytes <- function(string, bytes) {
 base64_encode_object <- function(object) {
   object <- rapply(object, unclass, how = "list")
   json <- charToRaw(jsonlite::toJSON(object, auto_unbox = TRUE))
-  base64enc::base64encode(json)
+  xfun::base64_encode(json)
 }
 
 base64_decode_object <- function(encoded) {
-  json <- rawToChar(base64enc::base64decode(encoded))
+  json <- rawToChar(xfun::base64_decode(encoded))
   jsonlite::fromJSON(json)
 }
 
@@ -463,13 +527,15 @@ xfun_session_info <- function() {
   paste('Pandoc version:', pandoc_version())
 }
 
-# given a path of a file in a potential R package, figure out the package root
-package_root <- function(path) {
-  dir <- dirname(path)
+# given a path of a file (or dir) in a potential project (e.g., an R package),
+# figure out the project root
+proj_root <- function(path, file = '^DESCRIPTION$', pattern = '^Package: ') {
+  dir <- if (dir_exists(path)) path else dirname(path)
   if (same_path(dir, file.path(dir, '..'))) return()
-  if (!file.exists(desc <- file.path(dir, 'DESCRIPTION')) ||
-      length(grep('^Package: ', read_utf8(desc))) == 0) return(package_root(dir))
-  dir
+  for (f in list.files(dir, file, full.names = TRUE)) {
+    if (length(grep(pattern, read_utf8(f)))) return(dir)
+  }
+  proj_root(dirname(dir), file, pattern)
 }
 
 
@@ -494,4 +560,14 @@ get_loaded_packages <- function() {
     version = version,
     row.names = NULL, stringsAsFactors = FALSE
   )
+}
+
+# devtools metadata -------------------------------------------------------
+
+# from pkgdown
+# https://github.com/r-lib/pkgdown/blob/77f909b0138a1d7191ad9bb3cf95e78d8e8d93b9/R/utils.r#L52
+
+devtools_meta <- function(package) {
+  ns <- .getNamespace(package)
+  ns[[".__DEVTOOLS__"]]
 }

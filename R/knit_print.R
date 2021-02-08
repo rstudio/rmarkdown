@@ -19,8 +19,10 @@ knit_print.data.frame <- function(x, ...) {
 
   if (!is.null(context$df_print)) {
     if (identical(context$df_print, knitr::kable)) {
-      res <- one_string(c('<div class="kable-table">', '', knitr::kable(x), '', '</div>'))
-      knitr::asis_output(res)
+      res <- c('', knitr::kable(x), '')
+      if (knitr::is_html_output())
+        res <- c('<div class="kable-table">', res, '</div>')
+      knitr::asis_output(one_string(res))
     } else {
       context$df_print(x)
     }
