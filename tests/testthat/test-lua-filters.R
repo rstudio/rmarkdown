@@ -6,7 +6,7 @@
 }
 
 # Lua filters exists only since pandoc 2.0
-skip_if_not(rmarkdown::pandoc_available("2.0"))
+skip_if_not_pandoc("2.0")
 
 test_that("pagebreak Lua filters works", {
   rmd <- "# HEADER 1\n\\newpage\n# HEADER 2\n\\pagebreak\n# HEADER 3"

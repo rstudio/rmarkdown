@@ -2,7 +2,7 @@
 test_that("toc has correct identifier", {
   local_edition(3)
   skip_on_cran() # avoid pandoc issue on CRAN
-  skip_if_not(pandoc_available("2.10.1"))
+  skip_if_not_pandoc("2.10.1") # changes in gfm writer break this test for earlier versions
   tmp_file <- local_rmd_file(
     c("# 10 Section","","Sentence.","", "# Header","","Sentence ")
   )
