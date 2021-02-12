@@ -22,6 +22,8 @@ home:
     href: https://rmarkdown.rstudio.com/
   - text: Read the book
     href: https://bookdown.org/yihui/rmarkdown/
+  - text: Get some help
+    href: https://community.rstudio.com/c/R-Markdown/10
 
 navbar:
   title: ~
@@ -42,9 +44,6 @@ navbar:
     github:
       icon: fab fa-github fa-lg
       href: https://github.com/rstudio/rmarkdown
-    community:
-      icon: fab fa-discourse fa-lg
-      href: https://community.rstudio.com/c/R-Markdown/10
 
 news:
    releases:
