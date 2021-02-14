@@ -160,7 +160,10 @@ html_dependency_accessible_code_block <- function() {
     name = "accessible-code-block",
     version = "0.0.1",
     src = pkg_file("rmd/h/accessibility"),
-    script = "empty-anchor.js"
+    script = list(
+      src = "empty-anchor.js",
+      defer = NA
+    )
   )
 }
 
@@ -207,11 +210,13 @@ html_dependency_navigation <- function(code_menu, source_embed) {
 }
 
 html_dependency_anchor_sections <- function() {
-
   htmlDependency(name = "anchor-sections",
                  version = "1.0.1",
                  src = pkg_file("rmd/h/anchor-sections"),
-                 script = "anchor-sections.js",
+                 script = list(
+                   src = "anchor-sections.js",
+                   defer = NA
+                 ),
                  stylesheet = "anchor-sections.css")
 }
 
@@ -426,7 +431,10 @@ html_dependency_header_attrs <- function() {
       "header-attrs",
       version = packageVersion("rmarkdown"),
       src = pkg_file("rmd/h/pandoc"),
-      script = "header-attrs.js"
+      script = list(
+        src = "header-attrs.js",
+        defer = NA
+      )
     )
   )
 }

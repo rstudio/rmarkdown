@@ -1,5 +1,5 @@
 // Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
-document.addEventListener('DOMContentLoaded', function() {
+(function() {
   // Do nothing if AnchorJS is used
   if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
     return;
@@ -30,4 +30,4 @@ document.addEventListener('DOMContentLoaded', function() {
     x.classList.add('hasAnchor');
     x.appendChild(anchor);
   });
-});
+})();

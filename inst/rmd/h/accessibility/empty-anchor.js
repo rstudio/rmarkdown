@@ -2,7 +2,7 @@
 // v0.0.1
 // Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
 
-document.addEventListener('DOMContentLoaded', function() {
+(function() {
   const codeList = document.getElementsByClassName("sourceCode");
   for (var i = 0; i < codeList.length; i++) {
     var linkList = codeList[i].getElementsByTagName('a');
@@ -12,4 +12,4 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   }
-});
+})();
