@@ -108,8 +108,8 @@ test_that("a custom output_source can be used on render", {
 
 test_that("UFT8 character in html widget does not break notebook annotation", {
 
-  # as of htmltools v0.5.0.9003 we no longer use token based htmlPreserve
-  skip_if(packageVersion("htmltools") >= "0.5.0.9003")
+  # as of htmltools v0.5.1 we no longer use token based htmlPreserve
+  skip_if(packageVersion("htmltools") >= "0.5.1")
 
   # from issue in https://github.com/rstudio/rmarkdown/issues/1762
   # simulate html widget code
