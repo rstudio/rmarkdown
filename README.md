@@ -21,6 +21,10 @@ R Markdown documents can be rendered to many output formats including HTML docum
 
 ## Book
 
+
+<a href="https://bookdown.org/yihui/rmarkdown/"><img src="https://bookdown.org/yihui/rmarkdown/images/cover.png" height="400"></a>
+<a href="https://bookdown.org/yihui/rmarkdown-cookbook/"><img src="https://bookdown.org/yihui/rmarkdown-cookbook/images/cover.png" height="400"></a>
+
 ## Installation
 
 The easiest way to install the **rmarkdown** package is from within the [RStudio IDE](https://rstudio.com/products/rstudio/download/preview/), but you don't need to explicitly install it or load it, as RStudio automatically does both when needed. A recent version of Pandoc (>= 1.12.3) is also required; RStudio also automatically includes this too so you do not need to download Pandoc if you plan to use rmarkdown from the RStudio IDE.
