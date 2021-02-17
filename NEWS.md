@@ -21,6 +21,8 @@ rmarkdown 2.7
 
 - Eliminated the unnecessary padding in code blocks in the `html_document` output with Bootstrap 4 themes (thanks, @atusy, #2019).
 
+- `github_document()` will produce a working TOC even if some headers start with number (#2039)
+
 rmarkdown 2.6
 ================================================================================
 
