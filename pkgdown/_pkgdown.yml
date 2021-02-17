@@ -31,7 +31,7 @@ navbar:
     home: ~
     examples:
       text: Examples
-      href: articles/examples.html
+      href: articles/articles/examples.html
     articles:
       text: Articles
       menu:
