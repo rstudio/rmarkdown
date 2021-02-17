@@ -38,7 +38,7 @@ jobs:
         run: |
           pak::local_install(upgrade = TRUE)
           pak::local_install_dev_deps()
-          pak::pkg_install("r-lib/pkgdown@fix-oversight")
+          pak::pkg_install("r-lib/pkgdown")
           pak::pkg_install("apreshill/quillt")
         shell: Rscript {0}
 
