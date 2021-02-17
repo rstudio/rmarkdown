@@ -1,6 +1,6 @@
 destination: docs
 
-url: https://brave-wilson-36f8ca.netlify.app/
+url: https://pkgs.rstudio.com/rmarkdown/
 
 template:
   package: quillt
@@ -20,10 +20,6 @@ home:
   links:
   - text: Learn more
     href: https://rmarkdown.rstudio.com/
-  - text: Read the book
-    href: https://bookdown.org/yihui/rmarkdown/
-  - text: Get some help
-    href: https://community.rstudio.com/c/R-Markdown/10
 
 navbar:
   title: ~
@@ -47,11 +43,16 @@ navbar:
     github:
       icon: fab fa-github fa-lg
       href: https://github.com/rstudio/rmarkdown
+    news:
+      text: News
+      menu:
+        - text: "Changelog"
+          href: news/index.html
+        - text: "------------------"
+        - text: "Blog posts"
+        - text: "Version 2.6"
+          href: https://blog.rstudio.com/2020/12/21/rmd-news
 
-news:
-   releases:
-    - text: "R Markdown family news Dec. 2020"
-      href: https://blog.rstudio.com/2020/12/21/rmd-news
 
 reference:
 - title: Output formats
