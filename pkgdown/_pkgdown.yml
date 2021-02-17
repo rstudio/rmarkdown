@@ -29,18 +29,21 @@ navbar:
   title: ~
   type: default
   structure:
-    left:  [intro, reference, articles]
-    right: [news, github, community]
+    left:  [intro, examples, articles]
+    right: [reference, news, github]
   components:
     home: ~
-    reference:
-      text: Reference
-      href: reference/index.html
+    examples:
+      text: Examples
+      href: articles/examples.html
     articles:
       text: Articles
       menu:
         - text: "About Lua filters"
           href: articles/lua-filters.html
+    reference:
+      text: Reference
+      href: reference/index.html
     github:
       icon: fab fa-github fa-lg
       href: https://github.com/rstudio/rmarkdown
@@ -54,10 +57,8 @@ reference:
 - title: Output formats
   desc: >
     These output formats can be specified in your document's YAML frontmatter.
-    Each output format has different arguments available which you can see in
-    their respective docs; to view the available arguments in your R console,
-    for `html_document` for example, you may use
-    `str(rmarkdown::html_document())`.
+    Each output format has different arguments available which you can see on
+    their respective help pages.
   contents:
   - ends_with("_presentation")
   - ends_with("_document")
