@@ -13,7 +13,7 @@ template:
       card: summary
 
 development:
-  mode: auto
+  version_tooltip: "Development version"
 
 home:
   strip_header: false
