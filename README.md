@@ -19,11 +19,13 @@ The **rmarkdown** package helps you create dynamic analysis documents that combi
 
 R Markdown documents can be rendered to many output formats including HTML documents, PDFs, Word files, slideshows, and more, allowing you to focus on the content while R Markdown takes care of your presentation. 
 
-## Book
+## Books
 
 
 <a href="https://bookdown.org/yihui/rmarkdown/"><img src="https://bookdown.org/yihui/rmarkdown/images/cover.png" height="400"></a>
 <a href="https://bookdown.org/yihui/rmarkdown-cookbook/"><img src="https://bookdown.org/yihui/rmarkdown-cookbook/images/cover.png" height="400"></a>
+
+See more about them in [Get Started](https://pkgs.rstudio.com/rmarkdown/articles/rmarkdown.html).
 
 ## Installation
 
