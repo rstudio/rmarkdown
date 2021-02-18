@@ -19,9 +19,12 @@
 #' @param transition Speed of slide transitions. This can be "default",
 #'   "slower", "faster", or a numeric value with a number of seconds (e.g. 0.5).
 #' @param analytics A Google analytics property ID.
-#'@param smart Produce typographically correct output, converting straight
-#'  quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
-#'  \code{...} to ellipses.
+#' @param smart Produce typographically correct output, converting straight
+#'   quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
+#'   \code{...} to ellipses.
+#' @param theme a list of theming arguments (currently `bg`, `fg`, `primary`,
+#'   `success`, `warning`, `danger`, `base_font`, and `code_font` are supported,
+#'   see [bslib::bs_theme()] for more about these options)
 #' @return R Markdown output format to pass to \code{\link{render}}.
 #' @details
 #'   See the \href{https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html}{
@@ -248,6 +251,7 @@ ioslides_presentation <- function(number_sections = FALSE,
                                   md_extensions = NULL,
                                   pandoc_args = NULL,
                                   extra_dependencies = NULL,
+                                  theme = NULL,
                                   ...) {
 
   # base pandoc options for all output
@@ -289,9 +293,17 @@ ioslides_presentation <- function(number_sections = FALSE,
     template <- pkg_file("rmd/ioslides/default.html")
   args <- c(args, "--template", pandoc_path_arg(template))
 
-  # html dependency for ioslides
-  extra_dependencies <- append(extra_dependencies,
-                               list(html_dependency_ioslides()))
+  # Add ioslides HTML dependencies
+  # If bslib is relevant, we want to register a _deferred_ version of the CSS dependency so
+  # it can update in response to Shiny's session$setCurrentTheme() (e.g., bslib::bs_themer())
+  # https://rstudio.github.io/bslib/articles/theming.html#dynamic-theming-in-shiny
+  theme <- resolve_theme(theme)
+  if (is_bs_theme(theme)) {
+    dynamic_ioslides <- bslib::bs_dependency_defer(html_dependency_ioslides)
+    theme <- bslib::bs_bundle(theme, sass::sass_layer(html_deps = dynamic_ioslides))
+  } else {
+    extra_dependencies <- append(extra_dependencies, html_dependency_ioslides(theme))
+  }
 
   # analytics
   if (!is.null(analytics))
@@ -453,14 +465,16 @@ ioslides_presentation <- function(number_sections = FALSE,
                                      mathjax = mathjax,
                                      pandoc_args = pandoc_args,
                                      extra_dependencies = extra_dependencies,
-                                     bootstrap_compatible = TRUE, ...))
+                                     bootstrap_compatible = TRUE, theme = theme, ...))
 }
 
 
-html_dependency_ioslides <- function() {
-  htmlDependency(
-    name = "ioslides",
-    version = "13.5.1",
+html_dependency_ioslides <- function(theme = NULL) {
+  name <- "ioslides"
+  version <- "13.5.1"
+  js <- htmlDependency(
+    name = paste0(name, "-js"),
+    version = version,
     src = pkg_file("rmd/ioslides/ioslides-13.5.1"),
     script = c(
       "js/modernizr.custom.45394.js",
@@ -470,10 +484,43 @@ html_dependency_ioslides <- function() {
       "js/hammer.js",
       "js/slide-controller.js",
       "js/slide-deck.js"
-    ),
-    stylesheet = c(
-      "fonts/fonts.css",
-      "theme/css/default.css",
-      "theme/css/phone.css")
     )
+  )
+
+  theme <- resolve_theme(theme)
+  if (!is_bs_theme(theme)) {
+    css <- htmlDependency(
+      name = paste0(name, "-css"),
+      version = version,
+      src = pkg_file("rmd/ioslides/ioslides-13.5.1"),
+      stylesheet = c(
+        "fonts/fonts.css",
+        "theme/css/default.css",
+        "theme/css/phone.css"
+      )
+    )
+    return(list(js, css))
+  }
+
+  if ("3" %in% theme_version(theme)) {
+    stop("`ioslides_presentation()` is not compatible with Bootstrap 3 (use version = 4 or higher)")
+  }
+  io_file <- function(...) {
+    sass::sass_file(pkg_file("rmd/ioslides/ioslides-13.5.1", ...))
+  }
+  css <- bslib::bs_dependency(
+    input = sass::sass_layer(
+      rules = list(
+        io_file("fonts/fonts.css"),
+        io_file("theme/css/default.scss"),
+        io_file("theme/css/phone.css")
+      ),
+      file_attachments = c(fonts = pkg_file("rmd/ioslides/ioslides-13.5.1/fonts"))
+    ),
+    theme = theme,
+    name = paste0(name, "-css"),
+    version = version,
+    cache_key_extra = packageVersion("rmarkdown")
+  )
+  list(js, css)
 }

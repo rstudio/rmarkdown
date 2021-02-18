@@ -30,6 +30,7 @@ ioslides_presentation(
   md_extensions = NULL,
   pandoc_args = NULL,
   extra_dependencies = NULL,
+  theme = NULL,
   ...
 )
 }
@@ -127,6 +128,10 @@ additional details.}
 
 \item{extra_dependencies}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
+
+\item{theme}{a list of theming arguments (currently `bg`, `fg`, `primary`,
+`success`, `warning`, `danger`, `base_font`, and `code_font` are supported,
+see [bslib::bs_theme()] for more about these options)}
 
 \item{...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
