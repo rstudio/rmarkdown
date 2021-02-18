@@ -89,10 +89,17 @@ html_document_base <- function(theme = NULL,
     format_deps <- append(format_deps, html_dependency_header_attrs())
     if (!is.null(theme)) {
       format_deps <- append(format_deps, list(html_dependency_jquery()))
-      format_deps <- append(format_deps, bootstrap_dependencies(
-        # If TRUE, an as_bs_theme(theme) has been set globally (so users may customize it)
-        if (is_bs_theme(theme)) bslib::bs_global_get() else theme
-      ))
+      # theme was set globally pre-knit, and it may be modified during knit
+      if (is_bs_theme(theme)) {
+        theme <- bslib::bs_global_get()
+      }
+      bootstrap_deps <- if (is_bs_theme(theme) && is_shiny(runtime)) {
+        if (!is_available("shiny", "1.6.0")) stop("Using a {bslib} theme with `runtime: shiny` requires shiny 1.6.0 or higher.")
+        list(shiny::bootstrapLib(theme))
+      } else {
+        bootstrap_dependencies(theme)
+      }
+      format_deps <- append(format_deps, htmltools::resolveDependencies(bootstrap_deps))
     }
     else if (isTRUE(bootstrap_compatible) && is_shiny(runtime)) {
       # If we can add bootstrap for Shiny, do it

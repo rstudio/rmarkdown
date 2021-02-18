@@ -131,19 +131,13 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
   # determine the runtime of the target file
   target_file <- file %||% file.path(dir, default_file)
-  yaml_front <- if (length(target_file)) yaml_front_matter(target_file)
-  runtime <- yaml_front$runtime
-  theme <- render_args$output_options$theme
-  if (length(target_file)) {
-    format <- output_format_from_yaml_front_matter(read_utf8(target_file))
-    theme <- format$options$theme
-  }
+  runtime <- if (length(target_file)) yaml_front_matter(target_file)
 
   # run using the requested mode
   if (is_shiny_prerendered(runtime)) {
 
     # get the pre-rendered shiny app
-    app <- shiny_prerendered_app(target_file, render_args = render_args, theme = theme)
+    app <- shiny_prerendered_app(target_file, render_args = render_args)
   } else {
 
     # add rmd_resources handler on start
@@ -158,7 +152,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     # combine the user-supplied list of Shiny arguments with our own and start
     # the Shiny server; handle requests for the root (/) and any R markdown files
     # within
-    app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir, default_file, theme),
+    app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir, default_file),
                            uiPattern = "^/$|^/index\\.html?$|^(/.*\\.[Rr][Mm][Dd])$",
                            onStart = onStart,
                            server = rmarkdown_shiny_server(
@@ -317,7 +311,7 @@ rmarkdown_shiny_server <- function(dir, file, auto_reload, render_args) {
 }
 
 # create the Shiny UI function
-rmarkdown_shiny_ui <- function(dir, file, theme) {
+rmarkdown_shiny_ui <- function(dir, file) {
   function(req) {
     # map requests to / to requests for the default--index.Rmd, or another if
     # specified
@@ -339,8 +333,7 @@ rmarkdown_shiny_ui <- function(dir, file, theme) {
     tags$div(
       tags$head(
         tags$script(src = "rmd_resources/rmd_loader.js"),
-        tags$link(href = "rmd_resources/rmd_loader.css", rel = "stylesheet"),
-        shiny_bootstrap_lib(theme)
+        tags$link(href = "rmd_resources/rmd_loader.css", rel = "stylesheet")
       ),
 
       # Shiny shows the outer conditionalPanel as long as the document hasn't
