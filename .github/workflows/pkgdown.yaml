@@ -65,4 +65,4 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         uses: netlify/actions/cli@master
         with:
-        args: deploy --prod --dir docs
+          args: deploy --prod --dir docs
