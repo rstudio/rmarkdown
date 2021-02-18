@@ -23,6 +23,8 @@ rmarkdown 2.7
 
 - `github_document()` will produce a working TOC even if some headers start with number (#2039)
 
+- Fix and issue with `knit_print.data.frame`. The `...` are no more passed to `print()` to avoid passing `knit_print()` arguments `options` and `encoding` to custom `print()` methods. (#2047) 
+
 rmarkdown 2.6
 ================================================================================
 
