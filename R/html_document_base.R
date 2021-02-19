@@ -94,8 +94,7 @@ html_document_base <- function(theme = NULL,
         theme <- bslib::bs_global_get()
       }
       bootstrap_deps <- if (is_bs_theme(theme) && is_shiny(runtime)) {
-        if (!is_available("shiny", "1.6.0")) stop("Using a {bslib} theme with `runtime: shiny` requires shiny 1.6.0 or higher.")
-        list(shiny::bootstrapLib(theme))
+        list(shiny_bootstrap_lib(theme))
       } else {
         bootstrap_dependencies(theme)
       }

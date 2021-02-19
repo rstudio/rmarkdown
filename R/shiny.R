@@ -131,7 +131,18 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
   # determine the runtime of the target file
   target_file <- file %||% file.path(dir, default_file)
-  runtime <- if (length(target_file)) yaml_front_matter(target_file)$runtime
+  yaml_front <- if (length(target_file)) yaml_front_matter(target_file)
+  runtime <- yaml_front$runtime
+  theme <- render_args$output_options$theme
+  # Let shiny::getCurrentTheme() know about the yaml's theme, so
+  # things like `bslib::bs_themer()` can work with prerendered documents.
+  # Also note that we add the actual shiny::bootstrapLib() dependency
+  # inside the document's pre-processing hook so the 'last' version of
+  # the theme wins out
+  if (length(target_file)) {
+    format <- output_format_from_yaml_front_matter(read_utf8(target_file))
+    set_current_theme(resolve_theme(format$options$theme))
+  }
 
   # run using the requested mode
   if (is_shiny_prerendered(runtime)) {
@@ -578,4 +589,11 @@ read_shiny_deps <- function(files_dir) {
   } else {
     list()
   }
+}
+
+
+# shiny:::setCurrentTheme() was added in 1.6 (we may export in next version)
+set_current_theme <- function(theme) {
+  set_theme <- asNamespace("shiny")$setCurrentTheme
+  if (is.function(set_theme)) set_theme(theme)
 }
