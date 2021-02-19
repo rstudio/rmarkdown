@@ -131,7 +131,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
   # determine the runtime of the target file
   target_file <- file %||% file.path(dir, default_file)
-  runtime <- if (length(target_file)) yaml_front_matter(target_file)
+  runtime <- if (length(target_file)) yaml_front_matter(target_file)$runtime
 
   # run using the requested mode
   if (is_shiny_prerendered(runtime)) {
