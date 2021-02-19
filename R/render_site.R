@@ -401,7 +401,7 @@ default_site_generator <- default_site <- function(input, output_format_filter =
 
       # optionally customize the output format via filter
       file_output_format <- output_format
-      if (!is.null(output_format_filter)) {
+      if (is.function(output_format_filter)) {
         file_output_format <- output_format_filter(x, output_format)
       }
 

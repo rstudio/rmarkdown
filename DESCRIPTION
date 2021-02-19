@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 2.6.6
+Version: 2.7.1
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -94,7 +94,7 @@ Imports:
     methods,
     stringr (>= 1.2.0)
 Suggests:
-    shiny (>= 0.11),
+    shiny (>= 1.6.0),
     tufte,
     testthat (>= 3.0.0),
     digest,
@@ -104,15 +104,12 @@ Suggests:
     fs,
     rsconnect,
     withr (>= 2.3.0),
-    bslib,
+    bslib (>= 0.2.4),
     sass
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
-URL: https://rmarkdown.rstudio.com/docs/, https://github.com/rstudio/rmarkdown
+URL: https://github.com/rstudio/rmarkdown, https://rmarkdown.rstudio.com/docs/
 BugReports: https://github.com/rstudio/rmarkdown/issues
 License: GPL-3
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
-Remotes: 
-  rstudio/bslib,
-  rstudio/shiny
