@@ -16,3 +16,13 @@ test_that("file.path.ci returns correctly no matter the case", {
   expect_equal_file("global.R", "donotexist")
   expect_equal_file("global.Rmd", tmp_dir, "global.R")
 })
+
+
+test_that("set_current_theme() informs shiny::getCurrentTheme()", {
+  expect_null(shiny::getCurrentTheme())
+  theme <- bslib::bs_theme()
+  set_current_theme(theme)
+  expect_equal(theme, shiny::getCurrentTheme())
+  set_current_theme(NULL)
+  expect_null(shiny::getCurrentTheme())
+})
