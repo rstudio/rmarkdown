@@ -1,13 +1,10 @@
 
 # Create a shiny app object from an Rmd w/ runtime: shiny_prerendered
-shiny_prerendered_app <- function(input_rmd, render_args, theme) {
+shiny_prerendered_app <- function(input_rmd, render_args) {
 
   # get rendered html and capture dependencies
   html <- shiny_prerendered_html(input_rmd, render_args)
-  deps <- c(
-    htmltools::htmlDependencies(html),
-    shiny_bootstrap_lib(theme)
-  )
+  deps <- htmltools::htmlDependencies(html)
 
   # create the server environment
   server_envir = new.env(parent = globalenv())
@@ -695,9 +692,9 @@ shiny_bootstrap_lib <- function(theme) {
   if (!is_bs_theme(theme)) {
     return(NULL)
   }
-  if (!is_available("shiny", "1.5.0.9007")) {
+  if (!is_available("shiny", "1.6.0")) {
     stop(
-      "Using a {bslib} theme with `runtime: shiny` requires shiny 1.5.0.9007 or higher."
+      "Using a {bslib} theme with `runtime: shiny` requires shiny 1.6.0 or higher."
     )
   }
   shiny::bootstrapLib(theme)

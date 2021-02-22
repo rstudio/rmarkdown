@@ -1,6 +1,7 @@
 rmarkdown 2.8
 ================================================================================
 
+- Provided a `runtime: shiny` fix for output formats that pass a modified `bslib::bs_theme()` object to `html_document_base()`'s `theme` (thanks, @cpsievert, #2049).
 
 rmarkdown 2.7
 ================================================================================
