@@ -4,7 +4,7 @@ http://rmarkdown.netlify.com/*   https://rmarkdown.rstudio.com/:splat  301!
 /flexdashboard    /flexdashboard/   301!
 
 /docs/articles/pandoc.html  https://pandoc.org/installing.html  301!
-/docs/*  https://rmarkdown-docs.netlify.com/:splat   200
+/docs/*  https://rmarkdown-pkg.netlify.app/:splat   200
 
 /r_notebooks*  https://bookdown.org/yihui/rmarkdown/notebook.html  301
 /html_document_format* https://bookdown.org/yihui/rmarkdown/html-document.html  301
