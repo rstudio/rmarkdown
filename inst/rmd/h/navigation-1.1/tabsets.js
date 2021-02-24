@@ -104,9 +104,6 @@ window.buildTabsets = function(tocID) {
       // default
       if (tab.hasClass('active')) {
         activeTabIndex = i;
-        li.addClass('active');
-        tab.addClass('active');
-        tab.addClass('in');
       }
 
       // check if this is a dropdown tab and process it accordingly
@@ -169,10 +166,6 @@ window.buildTabsets = function(tocID) {
           if (dropdownTab.hasClass('active')) {
             activeTabIndex = i;
             activeDropdownTabIndex = j;
-            li.addClass('active');
-            dropdownLi.addClass('active');
-            dropdownTab.addClass('active');
-            dropdownTab.addClass('in');
           }
 
           // build and append the dropdown tab link
