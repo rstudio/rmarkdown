@@ -1,5 +1,7 @@
 destination: docs
 
+url: https://rmarkdown.rstudio.com/docs/
+
 template:
   params:
     bootswatch: simplex

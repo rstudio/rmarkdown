@@ -34,9 +34,6 @@ html_document_base <- function(theme = NULL,
 
   args <- c()
 
-  # no email obfuscation
-  args <- c(args, "--email-obfuscation", "none")
-
   # self contained document
   if (self_contained) {
     if (copy_resources)
@@ -52,9 +49,21 @@ html_document_base <- function(theme = NULL,
 
   output_dir <- ""
 
-  # dummy pre_knit and post_knit functions so that merging of outputs works
-  pre_knit <- function(input, ...) {}
+  theme <- resolve_theme(theme)
+
+  # In the bs_theme() case, we set the theme globally so that knitting code may
+  # alter it before we ultimately compile it into an HTML dependency.
+  old_theme <- NULL
+  pre_knit <- function(input, ...) {
+    if (is_bs_theme(theme)) {
+      old_theme <<- bslib::bs_global_set(theme)
+    }
+  }
   post_knit <- function(metadata, input_file, runtime, ...) {}
+  on_exit <- function() {
+    # In this case, we know we've altered global state, so restore the old theme
+    if (is_bs_theme(theme)) bslib::bs_global_set(old_theme)
+  }
 
   # pre_processor
   pre_processor <- function(metadata, input_file, runtime, knit_meta,
@@ -69,12 +78,9 @@ html_document_base <- function(theme = NULL,
     # copy supplied output_dir (for use in post-processor)
     output_dir <<- output_dir
 
-    # handle theme
     if (!is.null(theme)) {
-      theme <- match.arg(theme, themes())
-      if (identical(theme, "default"))
-        theme <- "bootstrap"
-      args <- c(args, "--variable", paste0("theme:", theme))
+      theme_arg <- if (is.list(theme)) "bootstrap" else theme
+      args <- c(args, pandoc_variable_arg("theme", theme_arg))
     }
 
     # resolve and inject extras, including dependencies specified by the format
@@ -82,13 +88,21 @@ html_document_base <- function(theme = NULL,
     format_deps <- list()
     format_deps <- append(format_deps, html_dependency_header_attrs())
     if (!is.null(theme)) {
-      format_deps <- append(format_deps, list(html_dependency_jquery(),
-                                              html_dependency_bootstrap(theme)))
+      format_deps <- append(format_deps, list(html_dependency_jquery()))
+      # theme was set globally pre-knit, and it may be modified during knit
+      if (is_bs_theme(theme)) {
+        theme <- bslib::bs_global_get()
+      }
+      bootstrap_deps <- if (is_bs_theme(theme) && is_shiny(runtime)) {
+        list(shiny_bootstrap_lib(theme))
+      } else {
+        bootstrap_dependencies(theme)
+      }
+      format_deps <- append(format_deps, htmltools::resolveDependencies(bootstrap_deps))
     }
     else if (isTRUE(bootstrap_compatible) && is_shiny(runtime)) {
       # If we can add bootstrap for Shiny, do it
-      format_deps <- append(format_deps,
-                            list(html_dependency_bootstrap("bootstrap")))
+      format_deps <- append(format_deps, bootstrap_dependencies("bootstrap"))
     }
     format_deps <- append(format_deps, extra_dependencies)
 
@@ -165,6 +179,11 @@ html_document_base <- function(theme = NULL,
     output_file
   }
 
+  if (!is.null(theme)) {
+    bs3 <- identical("3", theme_version(theme))
+    args <- c(args, pandoc_variable_arg("bs3", bs3))
+  }
+
   output_format(
     knitr = NULL,
     pandoc = pandoc_options(
@@ -175,6 +194,7 @@ html_document_base <- function(theme = NULL,
     clean_supporting = FALSE,
     pre_knit = pre_knit,
     post_knit = post_knit,
+    on_exit = on_exit,
     pre_processor = pre_processor,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor
@@ -187,4 +207,3 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
   if (!identical(preserve$value, input_str)) write_utf8(preserve$value, input_file)
   preserve$chunks
 }
-

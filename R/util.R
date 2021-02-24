@@ -16,6 +16,15 @@ is_osx <- function() {
   if (is.null(x)) y else x
 }
 
+# a la shiny:::is_available
+is_available <- function(package, version = NULL) {
+  installed <- nzchar(system.file(package = package))
+  if (is.null(version)) {
+    return(installed)
+  }
+  installed && isTRUE(utils::packageVersion(package) >= version)
+}
+
 # determine the output file for a pandoc conversion
 pandoc_output_file <- function(input, pandoc_options) {
   to <- strsplit(pandoc_options$to, "[+-]")[[1]][[1]]
@@ -155,6 +164,7 @@ clean_tmpfiles <- function() {
   ))
 }
 
+# test if all paths in x are directories
 dir_exists <- function(x) {
   length(x) > 0 && utils::file_test('-d', x)
 }
@@ -300,6 +310,21 @@ find_program <- function(program) {
   } else {
     Sys.which(program)
   }
+}
+
+has_crop_tools <- function() {
+  tools <- c(
+    pdfcrop = unname(find_program("pdfcrop")),
+    ghostcript = unname(tools::find_gs_cmd())
+  )
+  missing <- tools[tools == ""]
+  if (length(missing) == 0) return(TRUE)
+  x <- paste0(names(missing), collapse = ", ")
+  warning(
+    sprintf("\nTool(s) not installed or not in PATH: %s", x),
+    "\n-> As a result, figure cropping will be disabled."
+  )
+  FALSE
 }
 
 # given a string, escape the regex metacharacters it contains:

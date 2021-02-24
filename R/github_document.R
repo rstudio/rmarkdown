@@ -46,12 +46,22 @@ github_document <- function(toc = FALSE,
   }
   if (!hard_line_breaks) variant <- paste0(variant, "-hard_line_breaks")
 
+  # atx headers are the default in pandoc 2.11.2 and the flag has been deprecated
+  # to be replace by `--markdown-headings=atx|setx`
+  if (!pandoc_available("2.11.2")) pandoc_args <- c(
+    "--atx-headers", pandoc_args
+  )
+
+  if (toc && !isTRUE(grepl("gfm_auto_identifiers", md_extensions))) {
+    md_extensions <- c(md_extensions, "+gfm_auto_identifiers")
+  }
+
   format <- md_document(
     variant = variant, toc = toc, toc_depth = toc_depth,
     number_sections = number_sections, fig_width = fig_width,
     fig_height = fig_height, dev = dev, df_print = df_print,
     includes = includes, md_extensions = md_extensions,
-    pandoc_args = c("--atx-headers", pandoc_args)
+    pandoc_args = pandoc_args
   )
 
   # add a post processor for generating a preview if requested
@@ -66,7 +76,6 @@ github_document <- function(toc = FALSE,
         "--template", pkg_file_arg(
           "rmarkdown/templates/github_document/resources/preview.html"),
         "--variable", paste0("github-markdown-css:", css),
-        "--email-obfuscation", "none", # no email obfuscation
         if (pandoc2) c("--metadata", "pagetitle=PREVIEW")  # HTML5 requirement
       )
 

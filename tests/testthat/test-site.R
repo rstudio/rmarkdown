@@ -1,14 +1,22 @@
 context("site")
 
+# copy part of our demo site to a tempdir
+local_create_site <- function(files, env = parent.frame()) {
+  site_dir <- tempfile()
+  dir.create(site_dir, recursive = TRUE)
+  withr::defer(unlink(site_dir, recursive = TRUE), envir = env)
+  # by default copy all files
+  if (missing(files)) files <- c("_site.yml", "index.Rmd", "PageA.Rmd",
+                        "PageB.rmd", "PageC.md", "PageD.R", "styles.css",
+                        "script.R", "docs.txt")
+  file.copy(test_path("site", files), site_dir, recursive = TRUE)
+  site_dir
+}
+
 test_that("render_site", {
 
   # copy our demo site to a tempdir
-  site_dir <- tempfile()
-  dir.create(site_dir)
-  files <- c("_site.yml", "index.Rmd", "PageA.Rmd",
-             "PageB.rmd", "PageC.md", "PageD.R", "styles.css",
-             "script.R", "docs.txt")
-  file.copy(file.path("site", files), site_dir, recursive = TRUE)
+  site_dir <- local_create_site()
 
   # render it
   capture.output(render_site(site_dir))
@@ -38,10 +46,8 @@ test_that("render_site respects 'new_session' in the config", {
   skip_if_not_installed("xfun", "0.13")
 
   # copy parts of our demo site to a tempdir
-  site_dir <- tempfile()
-  dir.create(site_dir)
   files <- c("_site.yml", "index.Rmd", "PageA.Rmd", "PageB.rmd", "PageD.R")
-  file.copy(file.path("site", files), site_dir, recursive = TRUE)
+  site_dir <- local_create_site(files)
 
   # default behaviour --> new_session: false
   render_site(site_dir, quiet = TRUE)
@@ -62,4 +68,14 @@ test_that("render_site respects 'new_session' in the config", {
   # pkg loaded in PageA (stringr) should NOT show up in search path of PageB
   expect_match(a, "library(stringr)", fixed = TRUE, all = FALSE)
   expect_false(any(grepl("stringr", b, fixed = TRUE)))
+})
+
+test_that("clean_site gives notices before removing", {
+  site_dir <- local_create_site()
+  render_site(site_dir, quiet = TRUE)
+  withr::local_dir(site_dir)
+  expect_output(clean_site(), "removed.*_site")
+  expect_true(dir.exists("_site"))
+  expect_silent(clean_site(preview = FALSE, quiet = TRUE))
+  expect_output(clean_site(preview = FALSE, quiet = FALSE), "Nothing")
 })

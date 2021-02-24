@@ -58,3 +58,25 @@ test_that("Keep only args and Lua filter while merging pandoc options", {
   res_opt <- merge_pandoc_options(foo_opt, bar_opt)
   lapply(kept, function(x) expect_equal(res_opt[[x]], c(foo_opt[[x]], bar_opt[[x]])))
 })
+
+test_that("citeproc is enable/disable correctly", {
+  test_citeproc_not_required <- function(yml, lines = NULL) {
+    expect_false(citeproc_required(!!yml, !!lines))
+  }
+  test_citeproc_required <- function(yml, lines = NULL) {
+    expect_true(citeproc_required(!!yml, !!lines))
+  }
+  test_citeproc_not_required(list(title = "dummy"))
+  test_citeproc_not_required(list(title = "dummy", citeproc = TRUE))
+  test_citeproc_required(list(bibliography = "a.bib"))
+  test_citeproc_not_required(list(bibliography = "a.bib", citeproc = FALSE))
+  test_citeproc_required(list(references = "a.bib"))
+  test_citeproc_not_required(list(references = "a.bib", citeproc = FALSE))
+  test_citeproc_required(list(references = list(type = "book")))
+  test_citeproc_not_required(list(references = list(type = "book"), citeproc = FALSE))
+  test_citeproc_required(list(), c("references:", "  - type: book"))
+  test_citeproc_not_required(list(citeproc = FALSE), c("references:", "  - type: book"))
+  test_citeproc_required(list(), c("bibliography:", "  - a.bib"))
+  test_citeproc_not_required(list(citeproc = FALSE), c("bibliography:", "  - a.bib"))
+  test_citeproc_not_required(list(title = "dummy"), c("bibliography: a.bib"))
+})

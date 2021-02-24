@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 2.5.3
+Version: 2.7.1
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -20,6 +20,7 @@ Authors@R: c(
          comment = c(ORCID = "0000-0002-8335-495X",
                      cph = "Number sections Lua filter")),
   person("Barret", "Schloerke", role = "ctb"),
+  person("Carson", "Sievert", role = "ctb", comment = c(ORCID = "0000-0002-4958-2844")),
   person("Christophe", "Dervieux", role = "ctb"),
   person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
   person("Jeff", "Allen", role = "ctb", email = "jeff@rstudio.com"),
@@ -93,17 +94,20 @@ Imports:
     methods,
     stringr (>= 1.2.0)
 Suggests:
-    shiny (>= 0.11),
+    shiny (>= 1.6.0),
     tufte,
-    testthat (>= 2.0.0),
+    testthat (>= 3.0.0),
     digest,
     dygraphs,
     vctrs,
     tibble,
     fs,
-    rsconnect
+    rsconnect,
+    withr (>= 2.3.0),
+    bslib (>= 0.2.4),
+    sass
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
-URL: https://github.com/rstudio/rmarkdown
+URL: https://github.com/rstudio/rmarkdown, https://rmarkdown.rstudio.com/docs/
 BugReports: https://github.com/rstudio/rmarkdown/issues
 License: GPL-3
 RoxygenNote: 7.1.1
