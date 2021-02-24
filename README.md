@@ -72,3 +72,6 @@ There are two main places to get help:
 
 1. [Stack Overflow](https://stackoverflow.com/questions/tagged/r-markdown) is a great source of answers to common rmarkdown questions. It is also a great place to get help, once you have created a reproducible example that illustrates your problem.
 
+## Code of Conduct
+
+Please note that the **rmarkdown** project is released with a [Contributor Code of Conduct](https://pkgs.rstudio.com/rmarkdown/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
