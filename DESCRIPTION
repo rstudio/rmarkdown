@@ -107,7 +107,7 @@ Suggests:
     bslib (>= 0.2.4),
     sass
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
-URL: https://github.com/rstudio/rmarkdown, https://rmarkdown.rstudio.com/docs/
+URL: https://github.com/rstudio/rmarkdown, https://pkgs.rstudio.com/rmarkdown/
 BugReports: https://github.com/rstudio/rmarkdown/issues
 License: GPL-3
 RoxygenNote: 7.1.1
