@@ -63,7 +63,7 @@ jobs:
         id: netlify-deploy
         uses: nwtgck/actions-netlify@v1.1
         with:
-          publish-dir: 'docs'
+          publish-dir: 'reference'
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message:
