@@ -3,9 +3,6 @@ on:
     branches:
      - main
      - master
-  pull_request:
-    branches:
-      - 'pkgdown[-/]**'
 
 name: pkgdown
 
@@ -65,7 +62,7 @@ jobs:
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message:
-            'Deploy from GHA: ${{ github.event.pull_request.title || github.event.head_commit.message }} (${{ github.sha }})'
+            'Deploy from GHA: ${{ github.event.head_commit.message }} (${{ github.sha }})'
           enable-pull-request-comment: false
           enable-commit-comment: false
           enable-commit-status: true
