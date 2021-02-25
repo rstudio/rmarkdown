@@ -3,6 +3,8 @@ rmarkdown 2.8
 
 - Provided a `runtime: shiny` fix for output formats that pass a modified `bslib::bs_theme()` object to `html_document_base()`'s `theme` (thanks, @cpsievert, #2049).
 
+- Rendering using `runtime: shiny_prerendered` will now produce valid HTML by not inserting anymore the full document as body in the resulting shiny apps. (thanks, @dakep, #1942).
+
 rmarkdown 2.7
 ================================================================================
 
