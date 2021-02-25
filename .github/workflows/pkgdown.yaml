@@ -3,11 +3,16 @@ on:
     branches:
      - main
      - master
+  pull_request:
+    branches:
+     - main
+     - master
 
 name: pkgdown
 
 jobs:
   pkgdown:
+    if: ${{ github.event_name == 'push' || startsWith(github.head_ref, 'pkgdown/') }}
     runs-on: ubuntu-18.04
     env:
       RSPM: https://packagemanager.rstudio.com/cran/__linux__/bionic/latest
@@ -58,7 +63,7 @@ jobs:
         id: netlify-deploy
         uses: nwtgck/actions-netlify@v1.1
         with:
-          publish-dir: 'docs'
+          publish-dir: 'reference'
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message:
@@ -66,6 +71,7 @@ jobs:
           enable-pull-request-comment: false
           enable-commit-comment: false
           enable-commit-status: true
+          alias: deploy-preview-${{ github.event.number }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
