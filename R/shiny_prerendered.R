@@ -68,8 +68,12 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
     stop("No server contexts or server.R available for ", input_rmd)
   }
 
+  # This is a full document than should not be expended in shiny::renderPage()
+  # make shiny aware of that with the attributes 'html_document' to mimic the result of
+  # htmltools::htmlTemplate(document_ = TRUE)
+  html_doc <- htmltools::tagList(html)
+  class(html_doc) <- c("html_document", class(html_doc))
   # attach dependencies to final html
-  html_doc <- htmltools::htmlTemplate(text_ = html, document_ = TRUE)
   html_doc <- htmltools::attachDependencies(html_doc, deps)
 
   # create shiny app
@@ -163,8 +167,9 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
   html_with_deps <- shinyHTML_with_deps(rendered_html, dependencies)
 
   # add placeholder for additional dependencies at the end of the <head> element
+  # using a template expansion expected by shiny (usually done in shiny:::renderPage)
   sub('</head>',
-      '\n<!-- HEAD_CONTENT -->\n</head>',
+      paste0('\n', htmltools::htmlTemplate(text_ = "{{ headContent() }}"), '\n</head>'),
       html_with_deps,
       fixed = TRUE,
       useBytes = TRUE)
