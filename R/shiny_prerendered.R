@@ -68,17 +68,11 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
     stop("No server contexts or server.R available for ", input_rmd)
   }
 
-  # This is a full document than should not be expended in shiny::renderPage()
-  # make shiny aware of that with the attributes 'html_document' to mimic the result of
-  # htmltools::htmlTemplate(document_ = TRUE)
-  html_doc <- htmltools::tagList(html)
-  class(html_doc) <- c("html_document", class(html_doc))
-  # attach dependencies to final html
-  html_doc <- htmltools::attachDependencies(html_doc, deps)
+  html_ui <- shiny_prerendered_ui(html, deps)
 
   # create shiny app
   shiny::shinyApp(
-    ui = function(req) html_doc,
+    ui = function(req) html_ui,
     server = server,
     onStart = onStart,
     uiPattern = "^/$|^(/.*\\.[Rr][Mm][Dd])$"
@@ -173,6 +167,17 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
       html_with_deps,
       fixed = TRUE,
       useBytes = TRUE)
+}
+
+shiny_prerendered_ui <- function(html, deps) {
+  # prerendered html is a full document that should not be expanded in shiny::renderPage()
+  # so make shiny aware of that with the attributes 'html_document' to mimic the result of
+  # htmltools::htmlTemplate(document_ = TRUE).
+  # https://github.com/rstudio/rmarkdown/issues/1912
+  html_doc <- htmltools::tagList(html)
+  class(html_doc) <- c("html_document", class(html_doc))
+  # attach dependencies to final html
+  htmltools::attachDependencies(html_doc, deps)
 }
 
 shiny_prerendered_prerender <- function(
