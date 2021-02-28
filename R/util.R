@@ -315,7 +315,7 @@ find_program <- function(program) {
 has_crop_tools <- function() {
   tools <- c(
     pdfcrop = unname(find_program("pdfcrop")),
-    ghostcript = unname(tools::find_gs_cmd())
+    ghostscript = unname(tools::find_gs_cmd())
   )
   missing <- tools[tools == ""]
   if (length(missing) == 0) return(TRUE)
