@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 # Overview
 
-<a href="https://r4ds.had.co.nz/"><img data-uri="https://r4ds.had.co.nz/cover.png" alt="R for Data Science" width="250" style="padding: 0 15px; float: right;"/></a>
+<a href="https://r4ds.had.co.nz/"><img src="https://r4ds.had.co.nz/cover.png" alt="R for Data Science" data-external=1 width="250" style="padding: 0 15px; float: right;"/></a>
 
 If you are new to using R Markdown, we encourage you to start with a systematic overview, rather than diving right in to reading documentation pages. The best place to start is the ["Communication" section](https://r4ds.had.co.nz/communicate-intro.html) in the book "R for Data Science" (R4DS for short), an O’Reilly book written by Hadley Wickham and Garrett Grolemund.
 
@@ -40,7 +40,7 @@ Here are the chapters that cover R Markdown, as summarized by Hadley and Garrett
 <br>
 <br>
 
-<a href="https://rmarkdown.rstudio.com/lesson-1.html"><img data-uri="https://rmarkdown.rstudio.com/lesson-images/params-1-hawaii.png" alt="R Markdown tutorials" width="450" style="padding: 0 15px; float: right;"/></a>
+<a href="https://rmarkdown.rstudio.com/lesson-1.html"><img src="https://rmarkdown.rstudio.com/lesson-images/params-1-hawaii.png" alt="R Markdown tutorials" data-external=1 width="450" style="padding: 0 15px; float: right;"/></a>
 
 # Tutorials
 
@@ -57,7 +57,7 @@ You can also access links to all these tutorials in the **"Get Started"** sectio
 
 Written by the authors of the **rmarkdown** package, [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) provides a comprehensive user guide to the complete R Markdown ecosystem for authoring documents. The book is published by Chapman & Hall/CRC, and you can read it online for free.
 
-<a href="https://bookdown.org/yihui/rmarkdown/"><img data-uri="https://bookdown.org/yihui/rmarkdown/images/cover.png" alt="R Markdown: The Definitive Guide" width="250" style="padding: 0 15px; float: right;"/></a>
+<a href="https://bookdown.org/yihui/rmarkdown/"><img src="https://bookdown.org/yihui/rmarkdown/images/cover.png" alt="R Markdown: The Definitive Guide" data-external=1 width="250" style="padding: 0 15px; float: right;"/></a>
 
 The book is structured into four parts:
 
@@ -74,7 +74,7 @@ The book is structured into four parts:
 
 # Going further wih examples
 
-<a href="https://bookdown.org/yihui/rmarkdown-cookbook/"><img data-uri="https://bookdown.org/yihui/rmarkdown-cookbook/images/cover.png" alt="R Markdown Cookbook" width="250" style="padding: 0 15px; float: right;"/></a>
+<a href="https://bookdown.org/yihui/rmarkdown-cookbook/"><img src="https://bookdown.org/yihui/rmarkdown-cookbook/images/cover.png" alt="R Markdown Cookbook" data-external=1 width="250" style="padding: 0 15px; float: right;"/></a>
 
 [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) provides a range of examples on how to extend the functionality of your R Markdown documents. As a cookbook, this guide is recommended to new and intermediate R Markdown users who desire to enhance the efficiency of using R Markdown and also explore the power of R Markdown. The book is published by Chapman & Hall/CRC, and you can read it online for free.
 
@@ -119,7 +119,7 @@ cat(formatted, sep = "\n")
 
 # Cheatsheets
 
-<a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf"><img data-uri="https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0.png" alt="R Markdown cheatsheet" width="450" style="padding: 0 15px; float: right;"/></a>
+<a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf"><img src="https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0.png" alt="R Markdown cheatsheet" data-external=1 width="450" style="padding: 0 15px; float: right;"/></a>
 
 The [R Markdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf) is a one page (two-sided) reference guide you can download as a quick reference while you work.
 
@@ -130,14 +130,3 @@ You can access both files from within the RStudio IDE:
 + R Markdown Cheat Sheet: *Help > Cheatsheets > R Markdown Cheat Sheet*,
 
 + R Markdown Reference Guide: *Help > Cheatsheets > R Markdown Reference Guide*.
-
-```{js, echo=FALSE}
-(function() {
-  var img, imgs = document.querySelectorAll('img');
-  for (var i = 0; i < imgs.length; i++) {
-    img = imgs[i];
-    if (!img.src && img.dataset['uri']) img.src = img.dataset['uri'];
-  }
-})();
-```
-
