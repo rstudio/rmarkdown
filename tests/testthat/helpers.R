@@ -4,6 +4,13 @@ local_rmd_file <- function(..., .env = parent.frame()) {
   path
 }
 
+.render_and_read <- function(input, ...) {
+  skip_if_not_pandoc()
+  output_file <- withr::local_tempfile()
+  res <- rmarkdown::render(input, output_file = output_file, quiet = TRUE, ...)
+  xfun::read_utf8(res)
+}
+
 # Use to test pandoc availability or version lower than
 skip_if_not_pandoc <- function(ver = NULL) {
   if (!pandoc_available(ver)) {
