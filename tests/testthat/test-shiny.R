@@ -16,3 +16,27 @@ test_that("file.path.ci returns correctly no matter the case", {
   expect_equal_file("global.R", "donotexist")
   expect_equal_file("global.Rmd", tmp_dir, "global.R")
 })
+
+
+test_that("set_current_theme() informs shiny::getCurrentTheme()", {
+  expect_null(shiny::getCurrentTheme())
+  theme <- bslib::bs_theme()
+  set_current_theme(theme)
+  expect_equal(theme, shiny::getCurrentTheme())
+  set_current_theme(NULL)
+  expect_null(shiny::getCurrentTheme())
+})
+
+test_that("html_prerendered is a full document template to use as UI for shiny", {
+  tmp_rmd <- local_rmd_file(c("---", "title: shiny", "runtime: shiny_prerendered", "---", "", "```{r}", "1+1", "```"))
+  html <- shiny_prerendered_html(tmp_rmd, list(quiet = TRUE))
+  expect_match(html, "<!-- HEAD_CONTENT -->")
+})
+
+test_that("html can be annotated as being a full document with deps attached", {
+  html <- HTML("dummy")
+  deps <- list(htmltools::htmlDependency("a", "1.1", c(href = "/")))
+  ui <- shiny_prerendered_ui(html, deps)
+  expect_s3_class(ui, "html_document")
+  expect_equal(htmltools::htmlDependencies(ui), deps)
+})

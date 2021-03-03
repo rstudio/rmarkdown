@@ -179,6 +179,9 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 $if(kable-scroll)$
@@ -441,9 +444,9 @@ $if(toc_float)$
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
 $if(bs3)$
-<div class="col-xs-12 col-sm-4 col-md-3">
-$else$
 <div class="col-sm-12 col-md-4 col-lg-3">
+$else$
+<div class="col-xs-12 col-sm-4 col-md-3">
 $endif$
 $if(toc-title)$
 <h2 id="$idprefix$toc-title">$toc-title$</h2>
@@ -472,7 +475,7 @@ $if(theme)$
 $if(code_menu)$
 <div class="btn-group pull-right float-right">
 <button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 $if(code_folding)$
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>

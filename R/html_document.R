@@ -63,8 +63,8 @@
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
 #'  copied into the output directory). You can pass an alternate URL or pass
 #'  \code{NULL} to exclude MathJax entirely.
-#'@param section_divs Wrap sections in <div> tags, and attach identifiers to the
-#'  enclosing <div> rather than the header itself.
+#'@param section_divs Wrap sections in \code{<div>} tags, and attach identifiers to the
+#'  enclosing \code{<div>} rather than the header itself.
 #'@param template Pandoc template to use for rendering. Pass "default" to use
 #'  the rmarkdown package default template; pass \code{NULL} to use pandoc's
 #'  built-in template; pass a path to use a custom template that you've created.
