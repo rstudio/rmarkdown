@@ -1,6 +1,7 @@
+# TODO: added for new tests - to remove when switching the package to edition 3
+local_edition(3)
+
 test_that("file.path.ci returns correctly no matter the case", {
-  # TODO: added for new tests - to remove when switching the package to edition 3
-  local_edition(3)
   tmp_dir <- withr::local_tempdir()
   expect_equal(file.path.ci(tmp_dir, "global.R"), file.path(tmp_dir, "global.R"))
 
@@ -27,7 +28,29 @@ test_that("set_current_theme() informs shiny::getCurrentTheme()", {
   expect_null(shiny::getCurrentTheme())
 })
 
+test_that("html template contains special comment when in shiny prerendered", {
+  skip_if_not_pandoc()
+  special_comment <- "<!-- HEAD_CONTENT -->"
+  content <- c("---", "title: shiny", "runtime: shiny_prerendered", "---", "", "```{r}", "1+1", "```")
+  tmp_rmd <- local_rmd_file(content)
+  html <- .render_and_read(tmp_rmd, output_format = "html_document")
+  expect_match(one_string(html), special_comment, fixed = TRUE,
+               label = "hmlt_document template")
+  html <- .render_and_read(tmp_rmd, output_format = "ioslides_presentation")
+  expect_match(one_string(html), special_comment, fixed = TRUE,
+               label = "ioslides_presentation template")
+  html <- .render_and_read(tmp_rmd, output_format = "slidy_presentation")
+  expect_match(one_string(html), special_comment, fixed = TRUE,
+               label = "slidy_presentation template")
+  # no runtime shiny prerendered
+  content <- content[-which(grepl("^runtime", content))]
+  tmp_rmd <- local_rmd_file(content)
+  html <- .render_and_read(tmp_rmd, output_format = "html_document")
+  expect_false(any(grepl(special_comment, html)))
+})
+
 test_that("html_prerendered is a full document template to use as UI for shiny", {
+  skip_if_not_pandoc()
   tmp_rmd <- local_rmd_file(c("---", "title: shiny", "runtime: shiny_prerendered", "---", "", "```{r}", "1+1", "```"))
   html <- shiny_prerendered_html(tmp_rmd, list(quiet = TRUE))
   expect_match(html, "<!-- HEAD_CONTENT -->")
