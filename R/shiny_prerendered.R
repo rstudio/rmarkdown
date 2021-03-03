@@ -162,8 +162,9 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
 
   # The html template used to render the UI should contain the placeholder
   # expected by shiny in `shiny:::renderPage()` which uses
-  # `htmltools::renderDocument` If it is not present in the template, we add
-  # this placeholder at the end of the <head> element
+  # `htmltools::renderDocument`.
+  # If it is not present in the template, we add this placeholder at the end of
+  # the <head> element
   if (!any(grepl(headContent <- "<!-- HEAD_CONTENT -->", html_with_deps, fixed = TRUE))) {
     html_with_deps <- sub(
       '</head>',
