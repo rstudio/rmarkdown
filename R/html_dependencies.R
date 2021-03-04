@@ -126,8 +126,7 @@ as_bs_theme <- function(theme) {
 }
 
 is_bs_theme <- function(theme) {
-  is_available("bslib") &&
-    bslib::is_bs_theme(theme)
+  is_available("bslib") && bslib::is_bs_theme(theme)
 }
 
 theme_version <- function(theme) {

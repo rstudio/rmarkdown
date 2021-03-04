@@ -18,13 +18,26 @@ test_that("file.path.ci returns correctly no matter the case", {
 })
 
 
-test_that("set_current_theme() informs shiny::getCurrentTheme()", {
-  expect_null(shiny::getCurrentTheme())
-  theme <- bslib::bs_theme()
-  set_current_theme(theme)
-  expect_equal(theme, shiny::getCurrentTheme())
-  set_current_theme(NULL)
-  expect_null(shiny::getCurrentTheme())
+test_that("set_current_theme() informs shiny::getCurrentTheme() only with bslib theme", {
+  skip_if_not(packageVersion("shiny") >= 1.6)
+  with_clean_shinyTheme <- function(expr) {
+    shiny:::setCurrentTheme(NULL)
+    force(expr)
+    shiny:::setCurrentTheme(NULL)
+  }
+  with_clean_shinyTheme({
+    theme <- bslib::bs_theme()
+    set_current_theme(theme)
+    expect_equal(theme, shiny::getCurrentTheme())
+  })
+  with_clean_shinyTheme({
+    set_current_theme(NULL)
+    expect_null(shiny::getCurrentTheme())
+  })
+  with_clean_shinyTheme({
+    set_current_theme("cerulean")
+    expect_null(shiny::getCurrentTheme())
+  })
 })
 
 test_that("html_prerendered is a full document template to use as UI for shiny", {
