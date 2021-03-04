@@ -160,13 +160,20 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
   # return html w/ dependencies
   html_with_deps <- shinyHTML_with_deps(rendered_html, dependencies)
 
-  # add placeholder for additional dependencies at the end of the <head> element
-  # using a template expansion expected by shiny (usually done in shiny:::renderPage)
-  sub('</head>',
-      paste0('\n', htmltools::htmlTemplate(text_ = "{{ headContent() }}"), '\n</head>'),
+  # The html template used to render the UI should contain the placeholder
+  # expected by shiny in `shiny:::renderPage()` which uses
+  # `htmltools::renderDocument`.
+  # If it is not present in the template, we add this placeholder at the end of
+  # the <head> element
+  if (!any(grepl(headContent <- "<!-- HEAD_CONTENT -->", html_with_deps, fixed = TRUE))) {
+    html_with_deps <- sub(
+      '</head>',
+      paste0('\n', headContent, '\n</head>'),
       html_with_deps,
       fixed = TRUE,
       useBytes = TRUE)
+  }
+  html_with_deps
 }
 
 shiny_prerendered_ui <- function(html, deps) {

@@ -1,8 +1,6 @@
 .generate_md_and_convert <- function(content, output_format) {
   input_file <- local_rmd_file(c("---\ntitle: Test\n---\n", content))
-  output_file <- withr::local_tempfile()
-  res <- rmarkdown::render(input_file, output_format = output_format, output_file = output_file, quiet = TRUE)
-  xfun::read_utf8(res)
+  .render_and_read(input_file, output_format = output_format)
 }
 
 # Lua filters exists only since pandoc 2.0

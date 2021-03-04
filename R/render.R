@@ -844,6 +844,10 @@ render <- function(input,
                                             shiny_prerendered_dependencies,
                                             files_dir,
                                             output_dir)
+      # indicate to Pandoc we are in a shiny prerendered document to activate
+      # specific parts in the template.
+      output_format$pandoc$args <- c(output_format$pandoc$args,
+                                     pandoc_variable_arg("shiny-prerendered"))
     }
 
     perf_timer_stop("pre-processor")
