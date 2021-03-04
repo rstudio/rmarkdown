@@ -597,5 +597,5 @@ read_shiny_deps <- function(files_dir) {
 # shiny:::setCurrentTheme() was added in 1.6 (we may export in next version)
 set_current_theme <- function(theme) {
   set_theme <- asNamespace("shiny")$setCurrentTheme
-  if (is.function(set_theme) && is_bs_theme(theme)) set_theme(theme)
+  if (is.function(set_theme)) set_theme(theme)
 }
