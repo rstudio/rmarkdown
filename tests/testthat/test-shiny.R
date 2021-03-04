@@ -28,7 +28,7 @@ test_that("set_current_theme() informs shiny::getCurrentTheme()", {
   expect_null(shiny::getCurrentTheme())
 })
 
-test_that("html template contains special comment when in shiny prerendered", {
+test_that("HTML template contains special comment when in shiny prerendered", {
   skip_if_not_pandoc()
   special_comment <- "<!-- HEAD_CONTENT -->"
   content <- c("---", "title: shiny", "runtime: shiny_prerendered", "---", "", "```{r}", "1+1", "```")
@@ -49,19 +49,16 @@ test_that("html template contains special comment when in shiny prerendered", {
   expect_false(any(grepl(special_comment, html)))
 })
 
-# As we don't use directly `{{ headContent() }}`, this test should help detect
-# if htmltools has change this special token in the future. In our CI tests, but also
-# in reverse dependency test
-test_that("htmtools still use the special token rmarkdown uses in its template", {
-  htmltools_headcontent <- as.character(htmltools::htmlTemplate(text_ = "{{ headContent() }}"))
-  expect_match(htmltools_headcontent, "<!-- HEAD_CONTENT -->", fixed = TRUE)
-})
-
-test_that("html_prerendered is a full document template to use as UI for shiny", {
+test_that("Special HEAD comment is added if none in rendered HTML when in shiny prerendered", {
   skip_if_not_pandoc()
+  special_comment <- "<!-- HEAD_CONTENT -->"
   tmp_rmd <- local_rmd_file(c("---", "title: shiny", "runtime: shiny_prerendered", "---", "", "```{r}", "1+1", "```"))
   html <- shiny_prerendered_html(tmp_rmd, list(quiet = TRUE))
-  expect_match(html, "<!-- HEAD_CONTENT -->")
+  expect_length(which(special_comment == xfun::split_lines(html)), 1L)
+  tmp_rmd <- local_rmd_file(c("---", "title: shiny", "runtime: shiny_prerendered", "---", "", "```{r}", "1+1", "```"))
+  opts <- list(template = NULL, mathjax = NULL)
+  html <- shiny_prerendered_html(tmp_rmd, list(output_options = opts, quiet = TRUE))
+  expect_length(which(special_comment == xfun::split_lines(html)), 1L)
 })
 
 test_that("html can be annotated as being a full document with deps attached", {
@@ -70,4 +67,12 @@ test_that("html can be annotated as being a full document with deps attached", {
   ui <- shiny_prerendered_ui(html, deps)
   expect_s3_class(ui, "html_document")
   expect_equal(htmltools::htmlDependencies(ui), deps)
+})
+
+# As we don't use directly `{{ headContent() }}`, this test should help detect
+# if htmltools has change this special token in the future. In our CI tests, but also
+# in reverse dependency test
+test_that("htmtools still use the special token rmarkdown uses in its template", {
+  htmltools_headcontent <- as.character(htmltools::htmlTemplate(text_ = "{{ headContent() }}"))
+  expect_match(htmltools_headcontent, "<!-- HEAD_CONTENT -->", fixed = TRUE)
 })
