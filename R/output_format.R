@@ -305,7 +305,7 @@ pandoc_options <- function(to,
                            from = rmarkdown_format(),
                            args = NULL,
                            keep_tex = FALSE,
-                           latex_engine = c("pdflatex", "lualatex", "xelatex"),
+                           latex_engine = c("pdflatex", "lualatex", "xelatex", "tectonic"),
                            ext = NULL,
                            lua_filters = NULL) {
   list(to = to,
