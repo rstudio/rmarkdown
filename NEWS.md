@@ -7,6 +7,8 @@ rmarkdown 2.8
 
 - Rendering using `runtime: shiny_prerendered` or `runtime: shinyrmd` will now produce valid HTML by not inserting anymore the full document as body in the resulting shiny apps (thanks, @dakep, #1912). Header content usually containing html dependencies will be inserted in the HTML document at the end of the head before `</head>`, unless the rendered HTML contains `<!-- HEAD_CONTENT -->` special comment (see `htmltools::renderDocument()`). A new Pandoc variable is set in for shiny prerendered document to allow conditional insertion of such content in the the HTML template using `$if(shiny-prerendered)$`. This has been done in all HTML template in this package. Users of custom template should make this change to provide support for this runtime. See **rmarkdown** default template (`default.html`) for an example (#2064).
 
+- Added tectonic as a supported LaTeX engine for generating PDF output (#2078). You can specify to use this by adding `engine: "tectonic"` to your **rmarkdown** header.
+
 rmarkdown 2.7
 ================================================================================
 
