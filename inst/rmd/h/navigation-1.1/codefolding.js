@@ -49,13 +49,22 @@ window.initializeCodeFolding = function(show) {
     // show the div if necessary
     if (showThis) div.collapse('show');
 
-    // update state of button on show/hide
-    div.on('hidden.bs.collapse', function () {
+    // update state of button on show/hide and for intermediate states
+    div.on('hide.bs.collapse', function () {
       showCodeText.text('Code');
+      showCodeButton.addClass('code-collapsing');
+    });
+    div.on('hidden.bs.collapse', function () {
+      showCodeButton.removeClass('code-collapsing');
     });
     div.on('show.bs.collapse', function () {
       showCodeText.text('Hide');
+      showCodeButton.addClass('code-expanding');
     });
+    div.on('shown.bs.collapse', function () {
+      showCodeButton.removeClass('code-expanding');
+    });
+
   });
 
 }
