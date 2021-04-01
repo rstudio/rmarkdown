@@ -9,6 +9,8 @@ rmarkdown 2.8
 
 - Added `tectonic` as a supported LaTeX engine for generating PDF output (thanks, @dpryan79, #2078). You can specify to use this by adding `engine: "tectonic"` to your output format in YAML, such as `pdf_document`.
 
+- When no `output_format` is provided in any way but an `output_file` is provided in `render()`, the default format will be determined based on the extension: `"pdf_document"` for `.pdf`, or `"word_document"` for `.docx`. Otherwise, it will be `"html_document"` as previous version. (thanks, @pearsonca, #1569)  
+
 rmarkdown 2.7
 ================================================================================
 
@@ -35,9 +37,6 @@ rmarkdown 2.7
 - `github_document()` will produce a working TOC even if some headers start with number (#2039).
 
 - Fix an issue with `knit_print.data.frame`. The `...` arguments are no more passed to `print()` to avoid passing `knit_print()` arguments `options` and `encoding` to custom `print()` methods (#2047).
-
-
-- When no `output_format` is provided in any way but an `output_file` is provided in `render()`, the default format will be determined based on the extension: `"pdf_document"` for `.pdf`, or `"word_document"` for `.docx`. Otherwise, it will be `"html_document"` as previous version. (thanks, @pearsonca, #1569)  
 
 rmarkdown 2.6
 ================================================================================
