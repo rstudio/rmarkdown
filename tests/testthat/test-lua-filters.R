@@ -4,22 +4,11 @@
 }
 
 # Lua filters exists only since pandoc 2.0
-skip_if_not_pandoc("2.0")
+skip_if_not_pandoc("2.0.0")
 
-test_that("pagebreak Lua filters works", {
-  rmd <- "# HEADER 1\n\\newpage\n# HEADER 2\n\\pagebreak\n# HEADER 3"
-  res <- .generate_md_and_convert(rmd, "html_document")
-  expect_match(res[grep("HEADER 1", res)+1], "<div style=\"page-break-after: always;\"></div>")
-  expect_match(res[grep("HEADER 2", res)+1], "<div style=\"page-break-after: always;\"></div>")
-  # add a class instead of inline style
-  rmd2 <- paste0("---\nnewpage_html_class: page-break\n---\n", rmd)
-  res <- .generate_md_and_convert(rmd2, "html_document")
-  expect_match(res[grep("HEADER 1", res)+1], "<div class=\"page-break\"></div>")
-  expect_match(res[grep("HEADER 2", res)+1], "<div class=\"page-break\"></div>")
-  # For tex document this is unchanged
-  res <- .generate_md_and_convert(rmd, "latex_document")
-  expect_match(res[grep("HEADER 1", res)+2], "\\newpage", fixed = TRUE)
-  expect_match(res[grep("HEADER 2", res)+2], "\\pagebreak", fixed = TRUE)
+test_that("lua file are correctly found", {
+  expect_match(basename(pkg_file_lua()),  ".*[.]lua$")
+  expect_match(basename(pkg_file_lua("number-sections.lua")),  "^number-sections.lua$")
 })
 
 test_that("number_sections Lua filter works", {
@@ -66,7 +55,21 @@ test_that("formats have the expected Lua filter", {
     c("pagebreak", if (!pandoc_available("2.10.1")) "number-sections"))
 })
 
-test_that("lua file are correctly found", {
-  expect_match(basename(pkg_file_lua()),  ".*[.]lua$")
-  expect_match(basename(pkg_file_lua("number-sections.lua")),  "^number-sections.lua$")
+# pagebreak requires pandoc.utils which is added by pandoc 2.0.6
+skip_if_not_pandoc("2.0.6")
+
+test_that("pagebreak Lua filters works", {
+  rmd <- "# HEADER 1\n\\newpage\n# HEADER 2\n\\pagebreak\n# HEADER 3"
+  res <- .generate_md_and_convert(rmd, "html_document")
+  expect_match(res[grep("HEADER 1", res)+1], "<div style=\"page-break-after: always;\"></div>")
+  expect_match(res[grep("HEADER 2", res)+1], "<div style=\"page-break-after: always;\"></div>")
+  # add a class instead of inline style
+  rmd2 <- paste0("---\nnewpage_html_class: page-break\n---\n", rmd)
+  res <- .generate_md_and_convert(rmd2, "html_document")
+  expect_match(res[grep("HEADER 1", res)+1], "<div class=\"page-break\"></div>")
+  expect_match(res[grep("HEADER 2", res)+1], "<div class=\"page-break\"></div>")
+  # For tex document this is unchanged
+  res <- .generate_md_and_convert(rmd, "latex_document")
+  expect_match(res[grep("HEADER 1", res)+2], "\\newpage", fixed = TRUE)
+  expect_match(res[grep("HEADER 2", res)+2], "\\pagebreak", fixed = TRUE)
 })
