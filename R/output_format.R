@@ -466,13 +466,14 @@ all_output_formats <- function(input, output_yaml = NULL) {
   enumerate_output_formats(input, output_yaml = output_yaml)
 }
 
-
 # Synthesize the output format for a document from it's YAML. If we can't
-# find an output format then we just return html_document
+# find an output format then we use a default one based on the output_file extension
+# or just return html_document
 output_format_from_yaml_front_matter <- function(input_lines,
                                                  output_options = NULL,
                                                  output_format_name = NULL,
-                                                 output_yaml = NULL) {
+                                                 output_yaml = NULL,
+                                                 output_file = NULL) {
 
   format_name <- output_format_name
 
@@ -549,10 +550,13 @@ output_format_from_yaml_front_matter <- function(input_lines,
       }
     }
 
-  # no output formats defined in the file, just take the passed format
-  # by name (or default to html_document if no named format was specified)
+  # no output formats defined in the file, just take the passed format by name,
+  # or default to a format based on the output_file extension if any,
+  # or html_document
   } else {
-    if (is.null(format_name)) format_name <- "html_document"
+    if (is.null(format_name)) {
+      format_name <- output_format_string_from_ext(output_file)
+    }
   }
 
   # merge any output_options passed in the call to render
@@ -595,6 +599,17 @@ create_output_format <- function(name,
 
   # return the format
   output_format
+}
+
+output_format_string_from_ext <- function(output_file) {
+  default_format <- "html_document"
+  if (is.null(output_file)) return(default_format)
+  switch(xfun::file_ext(output_file),
+    html = "html_document",
+    pdf = "pdf_document",
+    docx = "word_document",
+    default_format  # always been the default format in R Markdown
+  )
 }
 
 create_output_format_function <- function(name) {
