@@ -5,7 +5,7 @@
      Depends: Pandoc > 2.0.0
 --]]
 
-text = require 'text'
+tolower = text.lower or string.lower
 
 Div = function (div)
   -- look for 'latex' or 'data-latex' and at least 1 class
@@ -25,7 +25,7 @@ Div = function (div)
   end
 
   -- if it's "1" or "true" then just set it to empty string
-  if options == "1" or text.lower(options) == "true" then
+  if options == "1" or tolower(options) == "true" then
     options = ""
   end
 
