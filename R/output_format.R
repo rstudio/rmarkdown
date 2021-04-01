@@ -608,7 +608,7 @@ output_format_string_from_ext <- function(output_file) {
     html = "html_document",
     pdf = "pdf_document",
     docx = "word_document",
-    "html_document" # always been the default format in R Markdown
+    default_format  # always been the default format in R Markdown
   )
 }
 
