@@ -9,7 +9,7 @@ rmarkdown 2.8
 
 - Added `tectonic` as a supported LaTeX engine for generating PDF output (thanks, @dpryan79, #2078). You can specify to use this by adding `engine: "tectonic"` to your output format in YAML, such as `pdf_document`.
 
-- Skip the `pagebreak.lua` lua filter when pandoc is older than 2.0.6 (thanks, @atusy, #2088)
+- Lua filters checks `PANDOC_VERSION` and skip if the requirement is unmet. Minimal version is 2.1 because `PANDOC_VERSION` is available from that version (thanks, @atusy, #2088).
 
 rmarkdown 2.7
 ================================================================================

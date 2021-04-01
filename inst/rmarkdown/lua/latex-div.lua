@@ -2,10 +2,14 @@
      A Pandoc 2 Lua filter converting Pandoc native divs to LaTeX environments
      Author: Romain Lesur, Christophe Dervieux, and Yihui Xie
      License: Public domain
-     Depends: Pandoc > 2.0.0
 --]]
 
-tolower = text.lower or string.lower
+if (not PANDOC_VERSION) or (PANDOC_VERSION < "2.1") then
+    print("latex-div.lua requires Pandoc > 2.1")
+    return {}
+end
+
+text = require 'text'
 
 Div = function (div)
   -- look for 'latex' or 'data-latex' and at least 1 class
@@ -25,7 +29,7 @@ Div = function (div)
   end
 
   -- if it's "1" or "true" then just set it to empty string
-  if options == "1" or tolower(options) == "true" then
+  if options == "1" or text.lower(options) == "true" then
     options = ""
   end
 

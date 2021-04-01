@@ -1,8 +1,6 @@
 --[[
 number-sections - Number sections like the --number-sections option
 
-depends on pandoc >= 2.0.6
-
 # MIT License
 
 Copyright (c) 2020 Atsushi Yasumoto
@@ -15,6 +13,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 https://github.com/atusy/lua-filters/blob/master/lua/number-sections.lua
 ]]
+
+if (not PANDOC_VERSION) or (PANDOC_VERSION < "2.1") then
+  print("number-sections.lua requires Pandoc > 2.1")
+  return {}
+end
+
 local section_number_table = {0, 0, 0, 0, 0, 0, 0, 0, 0}
 local n_section_number_table = #section_number_table
 local previous_header_level = 0
