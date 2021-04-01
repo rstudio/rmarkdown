@@ -472,7 +472,8 @@ render <- function(input,
     output_format <- output_format_from_yaml_front_matter(input_lines,
                                                           output_options,
                                                           output_format,
-                                                          output_yaml)
+                                                          output_yaml,
+                                                          output_file)
     output_format <- create_output_format(output_format$name,
                                           output_format$options)
   }
