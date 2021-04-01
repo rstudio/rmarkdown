@@ -48,7 +48,7 @@ document body.}
 is specified.}
 
 \item{latex_engine}{LaTeX engine for producing PDF output. Options are
-"pdflatex", "lualatex", and "xelatex".}
+"pdflatex", "lualatex", "xelatex", and "tectonic".}
 
 \item{toc}{\code{TRUE} to include a table of contents in the output.}
 

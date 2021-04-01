@@ -11,7 +11,7 @@ citEntry(
   author = auth,
   year = year,
   note = vers,
-  url = meta$URL,
+  url = strsplit(meta$URL, ',')[[1]][1],
   textVersion = paste0(
     paste(auth, collapse = ' and '), ' (', year, '). rmarkdown: ', meta$Title, '. ', vers, '.',
     ' URL https://rmarkdown.rstudio.com.'

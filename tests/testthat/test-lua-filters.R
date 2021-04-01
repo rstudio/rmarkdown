@@ -1,14 +1,10 @@
 .generate_md_and_convert <- function(content, output_format) {
-  input_file <- tempfile(fileext = ".Rmd")
-  output_file <- tempfile()
-  on.exit(unlink(c(input_file, output_file)), add = TRUE)
-  xfun::write_utf8(c("---\ntitle: Test\n---\n", content), input_file)
-  res <- rmarkdown::render(input_file, output_format = output_format, output_file = output_file, quiet = TRUE)
-  xfun::read_utf8(res)
+  input_file <- local_rmd_file(c("---\ntitle: Test\n---\n", content))
+  .render_and_read(input_file, output_format = output_format)
 }
 
 # Lua filters exists only since pandoc 2.0
-skip_if_not(rmarkdown::pandoc_available("2.0"))
+skip_if_not_pandoc("2.0")
 
 test_that("pagebreak Lua filters works", {
   rmd <- "# HEADER 1\n\\newpage\n# HEADER 2\n\\pagebreak\n# HEADER 3"

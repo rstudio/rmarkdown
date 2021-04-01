@@ -262,7 +262,7 @@ knitr_options_pdf <- function(fig_width,
   knit_hooks <- NULL
 
   # apply cropping if requested and we have pdfcrop and ghostscript
-  crop <- fig_crop && find_program("pdfcrop") != '' && tools::find_gs_cmd() != ''
+  crop <- fig_crop && has_crop_tools()
   if (crop) {
     knit_hooks = list(crop = knitr::hook_pdfcrop)
     opts_chunk$crop = TRUE
@@ -305,7 +305,7 @@ pandoc_options <- function(to,
                            from = rmarkdown_format(),
                            args = NULL,
                            keep_tex = FALSE,
-                           latex_engine = c("pdflatex", "lualatex", "xelatex"),
+                           latex_engine = c("pdflatex", "lualatex", "xelatex", "tectonic"),
                            ext = NULL,
                            lua_filters = NULL) {
   list(to = to,

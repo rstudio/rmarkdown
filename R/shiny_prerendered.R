@@ -4,7 +4,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
 
   # get rendered html and capture dependencies
   html <- shiny_prerendered_html(input_rmd, render_args)
-  deps <- attr(html, "html_dependencies")
+  deps <- htmltools::htmlDependencies(html)
 
   # create the server environment
   server_envir = new.env(parent = globalenv())
@@ -68,12 +68,11 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
     stop("No server contexts or server.R available for ", input_rmd)
   }
 
-  # attach dependencies to final html
-  html <- htmltools::attachDependencies(html, deps)
+  html_ui <- shiny_prerendered_ui(html, deps)
 
   # create shiny app
   shiny::shinyApp(
-    ui = function(req) html,
+    ui = function(req) html_ui,
     server = server,
     onStart = onStart,
     uiPattern = "^/$|^(/.*\\.[Rr][Mm][Dd])$"
@@ -159,7 +158,33 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
     dependencies <- append(dependencies, list(html_dependency_rsiframe()))
 
   # return html w/ dependencies
-  shinyHTML_with_deps(rendered_html, dependencies)
+  html_with_deps <- shinyHTML_with_deps(rendered_html, dependencies)
+
+  # The html template used to render the UI should contain the placeholder
+  # expected by shiny in `shiny:::renderPage()` which uses
+  # `htmltools::renderDocument`.
+  # If it is not present in the template, we add this placeholder at the end of
+  # the <head> element
+  if (!any(grepl(headContent <- "<!-- HEAD_CONTENT -->", html_with_deps, fixed = TRUE))) {
+    html_with_deps <- sub(
+      '</head>',
+      paste0('\n', headContent, '\n</head>'),
+      html_with_deps,
+      fixed = TRUE,
+      useBytes = TRUE)
+  }
+  html_with_deps
+}
+
+shiny_prerendered_ui <- function(html, deps) {
+  # prerendered html is a full document that should not be expanded in shiny::renderPage()
+  # so make shiny aware of that with the attributes 'html_document' to mimic the result of
+  # htmltools::htmlTemplate(document_ = TRUE).
+  # https://github.com/rstudio/rmarkdown/issues/1912
+  html_doc <- htmltools::tagList(html)
+  class(html_doc) <- c("html_document", class(html_doc))
+  # attach dependencies to final html
+  htmltools::attachDependencies(html_doc, deps)
 }
 
 shiny_prerendered_prerender <- function(
@@ -683,4 +708,19 @@ shiny_prerendered_data_chunks_index <- function(data_dir) {
 shiny_prerendered_data_file_name <- function(label, cache) {
   type <- ifelse(cache, ".cached", "")
   sprintf("%s%s.RData", label, type)
+}
+
+# Use me instead of html_dependency_bootstrap() in a shiny runtime to get
+# dynamic theming (i.e., have it work with session$setCurrentTheme())
+shiny_bootstrap_lib <- function(theme) {
+  theme <- resolve_theme(theme)
+  if (!is_bs_theme(theme)) {
+    return(NULL)
+  }
+  if (!is_available("shiny", "1.6.0")) {
+    stop(
+      "Using a {bslib} theme with `runtime: shiny` requires shiny 1.6.0 or higher."
+    )
+  }
+  shiny::bootstrapLib(theme)
 }
