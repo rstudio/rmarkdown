@@ -1,6 +1,8 @@
 --[[
 number-sections - Number sections like the --number-sections option
 
+depends on pandoc >= 2.0.6
+
 # MIT License
 
 Copyright (c) 2020 Atsushi Yasumoto

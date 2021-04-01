@@ -1,6 +1,8 @@
 --[[
 pagebreak – convert raw LaTeX page breaks to other formats
 
+depends on pandoc >= 2.0.6
+
 Copyright © 2017-2019 Benct Philip Jonsson, Albert Krewinkel
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -15,6 +17,11 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ]]
+if not pandoc.utils then
+  print('pagebreak.lua requires pandoc >= 2.0.6')
+  return {}
+end
+
 local stringify_orig = (require 'pandoc.utils').stringify
 
 local function stringify(x)
