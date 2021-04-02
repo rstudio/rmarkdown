@@ -11,7 +11,7 @@ rmarkdown 2.8
 
 - When no `output_format` is provided in any way but an `output_file` is provided in `render()`, the default format will be determined based on the extension: `"pdf_document"` for `.pdf`, or `"word_document"` for `.docx`. Otherwise, it will be `"html_document"` as previous version. (thanks, @pearsonca, #1569) 
 
-- Added a new global option `rmarkdown.rstudio.preview`. When set `FALSE`, `render()` will not output the message starting by `Output created: ` allowing RStudio IDE to open a preview of the document. This is useful for package developers that would need to emit there own output message for there custom format. See `?render_site` for more info on this special message.
+- Added a new global option `rmarkdown.render.message`. When set `FALSE`, `render()` will not output the message starting by `Output created: ` allowing RStudio IDE to open a preview of the document. This is useful for package developers that would need to emit there own output message for there custom format. See `?render_site` for more info on this special message.
 
 rmarkdown 2.7
 ================================================================================

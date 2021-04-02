@@ -215,7 +215,7 @@ NULL
 #' output.
 #' @param quiet An option to suppress printing during rendering from knitr,
 #'   pandoc command line and others. To only suppress printing of the last
-#'   "Output created: " message, you can set \code{rmarkdown.rstudio.preview} to
+#'   "Output created: " message, you can set \code{rmarkdown.render.message} to
 #'   \code{FALSE}
 #' @param encoding Ignored. The encoding is always assumed to be UTF-8.
 #' @return
@@ -1005,7 +1005,7 @@ render <- function(input,
                                                   clean,
                                                   !quiet)
 
-    if (!quiet && getOption('rmarkdown.rstudio.preview', TRUE)) {
+    if (!quiet && getOption('rmarkdown.render.message', TRUE)) {
       message("\nOutput created: ", relative_to(oldwd, output_file))
     }
 
