@@ -14,6 +14,7 @@
 #'   locally previewing what the document will look like on GitHub.
 #' @param keep_html \code{TRUE} to keep the preview HTML file in the working
 #'   directory. Default is \code{FALSE}.
+#' @param gfm By default, \code{gfm = TRUE}, creates a GitHub Flavored Markdown file. If \code{gfm = TRUE}, a Markdown file will be created.
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @export
 github_document <- function(toc = FALSE,
@@ -28,7 +29,8 @@ github_document <- function(toc = FALSE,
                             hard_line_breaks = TRUE,
                             pandoc_args = NULL,
                             html_preview = TRUE,
-                            keep_html = FALSE) {
+                            keep_html = FALSE,
+                            gfm = TRUE) {
 
   # add special markdown rendering template to ensure we include the title fields
   # and add an optional feature to number sections
@@ -61,7 +63,8 @@ github_document <- function(toc = FALSE,
     number_sections = number_sections, fig_width = fig_width,
     fig_height = fig_height, dev = dev, df_print = df_print,
     includes = includes, md_extensions = md_extensions,
-    pandoc_args = pandoc_args
+    pandoc_args = pandoc_args,
+    ext = ifelse(gfm, ".gfm", ".md")
   )
 
   # add a post processor for generating a preview if requested
@@ -111,22 +114,22 @@ github_document <- function(toc = FALSE,
 # code for now in case we need to use it for another workaround.
 gfm_format <- function() {
   paste0("markdown_strict",
-   # commonmark
-   "+raw_html",
-   "+all_symbols_escapable",
-   "+backtick_code_blocks",
-   "+fenced_code_blocks",
-   "+space_in_atx_header",
-   "+intraword_underscores",
-   "+lists_without_preceding_blankline",
-   "+shortcut_reference_links",
-   # gfm extensions
-   "+auto_identifiers",
-   "+autolink_bare_uris",
-   "+emoji",
-   "+gfm_auto_identifiers",
-   "+pipe_tables",
-   "+strikeout",
-   "+task_lists"
+         # commonmark
+         "+raw_html",
+         "+all_symbols_escapable",
+         "+backtick_code_blocks",
+         "+fenced_code_blocks",
+         "+space_in_atx_header",
+         "+intraword_underscores",
+         "+lists_without_preceding_blankline",
+         "+shortcut_reference_links",
+         # gfm extensions
+         "+auto_identifiers",
+         "+autolink_bare_uris",
+         "+emoji",
+         "+gfm_auto_identifiers",
+         "+pipe_tables",
+         "+strikeout",
+         "+task_lists"
   )
 }

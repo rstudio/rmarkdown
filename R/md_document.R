@@ -74,17 +74,45 @@ md_document <- function(variant = "markdown_strict",
   }
 
   # return format
-  output_format(
-    knitr = knitr_options_html(fig_width, fig_height, fig_retina, FALSE, dev),
-    pandoc = pandoc_options(
-      to = variant,
-      from = from_rmarkdown(extensions = md_extensions),
-      args = args,
-      ext = ext,
-      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
-    ),
-    clean_supporting = FALSE,
-    df_print = df_print,
-    post_processor = post_processor
-  )
+  if(ext == ".gfm") {
+    output_format(
+      knitr = knitr_options_html(fig_width, fig_height, fig_retina, FALSE, dev),
+      pandoc = pandoc_options(
+        to = variant,
+        from = from_rmarkdown(extensions = md_extensions),
+        args = args
+      ),
+      clean_supporting = FALSE,
+      df_print = df_print,
+      pre_processor = if (number_sections) {
+        function(metadata, input_file, ...) {
+          pandoc_convert(
+            input_file,
+            to = "markdown",
+            output = input_file,
+            options = c(
+              "--standalone",
+              "--lua-filter",
+              pkg_file_lua("number-sections.lua")
+            )
+          )
+          return(character(0L))
+        }},
+      post_processor =  post_processor
+    )
+  } else {
+    output_format(
+      knitr = knitr_options_html(fig_width, fig_height, fig_retina, FALSE, dev),
+      pandoc = pandoc_options(
+        to = variant,
+        from = from_rmarkdown(extensions = md_extensions),
+        args = args,
+        ext = ext,
+        lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
+      ),
+      clean_supporting = FALSE,
+      df_print = df_print,
+      post_processor = post_processor
+    )
+  }
 }

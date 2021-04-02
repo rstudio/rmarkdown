@@ -17,7 +17,8 @@ github_document(
   hard_line_breaks = TRUE,
   pandoc_args = NULL,
   html_preview = TRUE,
-  keep_html = FALSE
+  keep_html = FALSE,
+  gfm = TRUE
 )
 }
 \arguments{
@@ -64,6 +65,8 @@ locally previewing what the document will look like on GitHub.}
 
 \item{keep_html}{\code{TRUE} to keep the preview HTML file in the working
 directory. Default is \code{FALSE}.}
+
+\item{gfm}{By default, \code{gfm = TRUE}, creates a GitHub Flavored Markdown file. If \code{gfm = TRUE}, a Markdown file will be created.}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}
