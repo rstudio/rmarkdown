@@ -80,11 +80,20 @@ md_document <- function(variant = "markdown_strict",
       to = variant,
       from = from_rmarkdown(extensions = md_extensions),
       args = args,
-      ext = ext,
-      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
+      ext = ext
     ),
     clean_supporting = FALSE,
     df_print = df_print,
+    pre_processor = if (number_sections) {function(metadata, input_file, ...) {
+      pandoc_convert(
+        input_file, to = "markdown", output = input_file,
+        options = c(
+          "--standalone",
+          "--lua-filter", pkg_file_lua("number-sections.lua")
+        )
+      )
+      return(character(0L))
+    }},
     post_processor = post_processor
   )
 }
