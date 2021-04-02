@@ -213,7 +213,10 @@ NULL
 #' environment).
 #' @param run_pandoc An option for whether to run pandoc to convert Markdown
 #' output.
-#' @param quiet An option to suppress printing of the pandoc command line.
+#' @param quiet An option to suppress printing during rendering from knitr,
+#'   pandoc command line and others. To only suppress printing of the last
+#'   "Output created: " message, you can set \code{rmarkdown.render.message} to
+#'   \code{FALSE}
 #' @param encoding Ignored. The encoding is always assumed to be UTF-8.
 #' @return
 #'   When \code{run_pandoc = TRUE}, the compiled document is written into
@@ -1002,7 +1005,7 @@ render <- function(input,
                                                   clean,
                                                   !quiet)
 
-    if (!quiet) {
+    if (!quiet && getOption('rmarkdown.render.message', TRUE)) {
       message("\nOutput created: ", relative_to(oldwd, output_file))
     }
 
