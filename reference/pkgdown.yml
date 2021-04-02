@@ -1,0 +1,12 @@
+pandoc: 2.11.4
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  articles/examples: examples.html
+  lua-filters: lua-filters.html
+  rmarkdown: rmarkdown.html
+last_built: 2021-04-02T21:40Z
+urls:
+  reference: https://pkgs.rstudio.com/rmarkdown//reference
+  article: https://pkgs.rstudio.com/rmarkdown//articles
+
