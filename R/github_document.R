@@ -15,7 +15,7 @@
 #' @param keep_html \code{TRUE} to keep the preview HTML file in the working
 #'   directory. Default is \code{FALSE}.
 #' @param ext Extention of the output document (defaults to ".md")
-#' @return R Markdown output format to pass to \code{\link{render}}
+#' @inheritParams md_document
 #' @export
 github_document <- function(toc = FALSE,
                             toc_depth = 3,
