@@ -14,7 +14,7 @@
 #'   locally previewing what the document will look like on GitHub.
 #' @param keep_html \code{TRUE} to keep the preview HTML file in the working
 #'   directory. Default is \code{FALSE}.
-#' @param gfm By default, \code{gfm = TRUE}, creates a GitHub Flavored Markdown file. If \code{gfm = TRUE}, a Markdown file will be created.
+#' @param ext Extention of the output document (defaults to ".md")
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @export
 github_document <- function(toc = FALSE,
@@ -30,7 +30,7 @@ github_document <- function(toc = FALSE,
                             pandoc_args = NULL,
                             html_preview = TRUE,
                             keep_html = FALSE,
-                            gfm = TRUE) {
+                            ext = ".md") {
 
   # add special markdown rendering template to ensure we include the title fields
   # and add an optional feature to number sections
@@ -64,7 +64,7 @@ github_document <- function(toc = FALSE,
     fig_height = fig_height, dev = dev, df_print = df_print,
     includes = includes, md_extensions = md_extensions,
     pandoc_args = pandoc_args,
-    ext = ifelse(gfm, ".gfm", ".md")
+    ext = ext
   )
 
   # add a post processor for generating a preview if requested
