@@ -80,6 +80,7 @@ md_document <- function(variant = "markdown_strict",
       to = variant,
       from = from_rmarkdown(extensions = md_extensions),
       args = args,
+      lua_filters = if (number_sections) pkg_file_lua("fix-link-after-number-sections.lua"),
       ext = ext
     ),
     clean_supporting = FALSE,
@@ -89,6 +90,7 @@ md_document <- function(variant = "markdown_strict",
         input_file, to = "markdown", output = input_file,
         options = c(
           "--standalone",
+          "--lua-filter", pkg_file_lua("record-header-id.lua"),
           "--lua-filter", pkg_file_lua("number-sections.lua")
         )
       )
