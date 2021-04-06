@@ -74,6 +74,9 @@ html_document_base <- function(theme = NULL,
     }
     is_sass <- grepl("\\.s[ac]ss$", f)
     if (is_sass) {
+      if (!xfun::loadable("sass")) {
+        stop("Using `.sass` or `.scss` file in `css` argument requires the sass package.", call. = FALSE)
+      }
       f <- sass::sass(
         sass::sass_file(f),
         output = sub("\\.s[ac]ss$", ".css", f),
