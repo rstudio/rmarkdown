@@ -22,6 +22,7 @@
 #'@param smart Produce typographically correct output, converting straight
 #'  quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
 #'  \code{...} to ellipses.
+#' @param css One or more css files to include.
 #' @return R Markdown output format to pass to \code{\link{render}}.
 #' @details
 #'   See the \href{https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html}{
