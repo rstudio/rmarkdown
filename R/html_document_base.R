@@ -79,7 +79,7 @@ html_document_base <- function(theme = NULL,
       }
       f <- sass::sass(
         sass::sass_file(f),
-        output = sub("\\.s[ac]ss$", ".css", f),
+        output = sass::output_template(basename = "rmarkdown"),
         options = sass::sass_options(output_style = "compressed")
       )
     }
