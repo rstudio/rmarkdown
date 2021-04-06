@@ -13,6 +13,8 @@ rmarkdown 2.8
 
 - Added a new global option `rmarkdown.render.message`. When set `FALSE`, `render()` will not output the message starting by `Output created: ` allowing RStudio IDE to open a preview of the document. This is useful for package developers that would need to emit there own output message for there custom format. See `?render_site` for more info on this special message (#2092).
 
+- `html_document_base` gains a `css` argument (which does the same thing as `html_document`'s `css` argument) (thanks, @cpsievert, #2095).
+
 rmarkdown 2.7
 ================================================================================
 
