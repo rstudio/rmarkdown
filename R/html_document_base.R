@@ -69,7 +69,7 @@ html_document_base <- function(theme = NULL,
   # additional sass/css
   for (f in css) {
     if (is_bs_theme(theme)) {
-      theme <- bslib::bs_add_rules(theme, sass::sass_file(f))
+      theme <- bslib::bs_add_rules(theme, xfun::read_utf8(f))
       next
     }
     is_sass <- grepl("\\.s[ac]ss$", f)
