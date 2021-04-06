@@ -108,7 +108,10 @@ Note that if you don't use the "default" template then some features of
 \code{html_document} won't be available (see the Templates section below for
 more details).}
 
-\item{css}{One or more css files to include}
+\item{css}{CSS and/or Sass files to include. Files with an extension of .sass
+or .scss are compiled to CSS via \code{\link[sass:sass]{sass::sass()}}/\code{\link[=sass_file]{sass_file()}}. Also, if
+\code{theme} is a \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object, Sass code may use Bootstrap Sass
+variables, functions, mixins, etc.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}

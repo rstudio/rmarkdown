@@ -25,6 +25,7 @@ html_document_base <- function(theme = NULL,
                                dependency_resolver = NULL,
                                copy_resources = FALSE,
                                extra_dependencies = NULL,
+                               css = NULL,
                                bootstrap_compatible = FALSE,
                                ...) {
 
@@ -63,6 +64,23 @@ html_document_base <- function(theme = NULL,
   on_exit <- function() {
     # In this case, we know we've altered global state, so restore the old theme
     if (is_bs_theme(theme)) bslib::bs_global_set(old_theme)
+  }
+
+  # additional sass/css
+  for (f in css) {
+    if (is_bs_theme(theme)) {
+      theme <- bslib::bs_add_rules(theme, sass::sass_file(f))
+      next
+    }
+    is_sass <- grepl("\\.s[ac]ss$", f)
+    if (is_sass) {
+      f <- sass::sass(
+        sass::sass_file(f),
+        output = sub("\\.s[ac]ss$", ".css", f),
+        options = sass::sass_options(output_style = "compressed")
+      )
+    }
+    args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
   }
 
   # pre_processor
