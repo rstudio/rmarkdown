@@ -1,3 +1,15 @@
+--[[
+     Fix broken links to headers due by `number-sections.lua`.
+     `record-header-id.lua` prior to `number-sections.lua`.
+
+     Author: Atsushi Yasumoto
+     License: Public domain
+]]
+if (not PANDOC_VERSION) or (PANDOC_VERSION < "2.1") then
+  io.stderr:write("[WARNING] (pagebreak.lua) requires at least Pandoc 2.1. Lua filter skipped.")
+  return {}
+end
+
 identifiers = {}
 
 function Div(div)
