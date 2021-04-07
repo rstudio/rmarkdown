@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ]]
 
 if (not PANDOC_VERSION) or (PANDOC_VERSION < "2.1") then
-  print("pagebreak.lua requires Pandoc > 2.1")
+  io.stderr:write("[WARNING] (pagebreak.lua) requires at least Pandoc 2.1")
   return {}
 end
 
