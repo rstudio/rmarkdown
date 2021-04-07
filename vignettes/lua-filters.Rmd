@@ -14,13 +14,17 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignettes gives some detailled information regarding the Lua filter including in the **rmarkdown** package. To know more about Lua filter, you can jump directly to [last section](#lua-filter)
+This vignettes gives some detailed information regarding the Lua filters including in the **rmarkdown** package. You don't have to do anything to use them usually as they just works usaully. This document presents the features they power.
+
+To know more about Lua filters in general, you can jump directly to [last section](#lua-filter)
 
 ## Pagebreaks
 
+This filter is available since **rmarkdown** 1.15 and works with Pandoc 2.1+ (shipped in RStudio >= 1.2).
+
 Adding a pagebreak in document was always possible using custom output specific syntax in a rmarkdown file but one drawback was the compatibility with several output format.
 
-Since rmarkdown >= 1.15 and with RStudio >= 1.2 (or with pandoc >= 2.0), it is possible to add a `\newpage` or `\pagebreak` command in a new line to include a pagebreak in any of these formats: `pdf_document()`, `html_document()`, `word_document()` and `odt_document()`. 
+With this Lua filter, it is possible to add a `\newpage` or `\pagebreak` command in a new line to include a pagebreak in any of these formats: `pdf_document()`, `html_document()`, `word_document()` and `odt_document()`. 
 
 ```md
 # Header 1
@@ -147,6 +151,8 @@ output:
 
 ## Number sections
 
+This filter is available since **rmarkdown** 2.4 and works with Pandoc 2.1+ (shipped in RStudio >= 1.2).
+
 Numbering sections are supported by Pandoc for limited formats (e.g., html and pdf).
 The rmarkdown package adds `number_sections.lua` to support this feature in other formats (e.g., docx, odt, and so on).
 Users do not have to know which formats use the Pandoc's feature or the Lua filter.
@@ -172,7 +178,37 @@ In general, numbers and titles of sections are separated by a space.
 An exception is the `word_document` function, which separates them by a tab in order to be consistent with Pandoc's number sections for docx format in Pandoc >= 2.10.1.
 If one wants to have fine controls on the format of section numbers, prepare customized docx file and specify it to the `reference_docx` argument of the `word_document` function.
 
+## Custom environment for LaTeX 
 
+This filter is available since **rmarkdown** 1.15 and works with Pandoc 2.1+ (shipped in RStudio >= 1.2).
+
+Pandoc supports a syntax called [Fenced Divs](https://pandoc.org/MANUAL.html#divs-and-spans) that allows to create `<div>` in HTML. For example, the syntax is 
+
+```markdown
+::: {#special .sidebar}
+Here is a paragraph.
+
+And another.
+:::
+```
+By default, this special syntax will be ignored in LaTeX conversion for PDF output and the content of the block will be used as-is. However, this syntax could be used to create LaTeX environment. 
+
+That is why **rmarkdown** uses a custom Lua filter to allow any Fenced Divs to be converted as a LaTeX environment (`\begin{env}` ... `\end{env}`) when desired by adding a special attribute.
+
+```markdown
+::: {.verbatim data-latex=""}
+We show some _verbatim_ text here.
+:::
+```
+Its LaTeX output will be:
+
+```latex
+\begin{verbatim}
+We show some \emph{verbatim} text here.
+\end{verbatim}
+```
+
+This feature we call _Custom blocks_ is documented in details in the [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html)
 
 ## About Lua filters {#lua-filter}
 

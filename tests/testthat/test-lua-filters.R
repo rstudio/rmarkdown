@@ -3,8 +3,8 @@
   .render_and_read(input_file, output_format = output_format)
 }
 
-# Lua filters exists only since pandoc 2.0
-skip_if_not_pandoc("2.0")
+# rmarkdown requires pandoc >= 2.1 to support Lua filters
+skip_if_not_pandoc("2.1")
 
 test_that("pagebreak Lua filters works", {
   rmd <- "# HEADER 1\n\\newpage\n# HEADER 2\n\\pagebreak\n# HEADER 3"
