@@ -15,7 +15,7 @@ https://github.com/atusy/lua-filters/blob/master/lua/number-sections.lua
 ]]
 
 if (not PANDOC_VERSION) or (PANDOC_VERSION < "2.1") then
-  io.stderr:write("[WARNING] (number-sections.lua) requires at least Pandoc 2.1")
+  io.stderr:write("[WARNING] (number-sections.lua) requires at least Pandoc 2.1. Lua Filter skipped")
   return {}
 end
 
