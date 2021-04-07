@@ -13,7 +13,7 @@ rmarkdown 2.8
 
 - Added a new global option `rmarkdown.render.message`. When set `FALSE`, `render()` will not output the message starting by `Output created: ` allowing RStudio IDE to open a preview of the document. This is useful for package developers that would need to emit there own output message for there custom format. See `?render_site` for more info on this special message (#2092).
 
-- Lua filters check the global variable, `PANDOC_VERSION`, and skip if the requirement is unmet. Minimal version is 2.1 because `PANDOC_VERSION` is available from that version (thanks, @atusy, #2088).
+- Lua filters have now an explicit Pandoc version minimal requirement. A filter will be skipped with a warning printed by the Lua filter if this requirement is not met. For now, all filters work for Pandoc 2.1 and above (thanks, @atusy, #2088).
 
 rmarkdown 2.7
 ================================================================================
