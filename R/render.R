@@ -989,7 +989,7 @@ render <- function(input,
     if (!is.null(intermediates_dir)) {
       intermediate_output <- file.path(intermediates_dir, basename(output_file))
       if (file.exists(intermediate_output)) {
-        file.rename(intermediate_output, output_file)
+        file.copy(intermediate_output, output_file) && unlink(intermediate_output)
       }
     }
 
