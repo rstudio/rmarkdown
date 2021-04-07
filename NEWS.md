@@ -1,7 +1,7 @@
 rmarkdown 2.8
 ================================================================================
 
-- Fix an `Invalid cross-device link` error when `tempdir()` is used for `intermediates_dir` in `render()` (thanks, @gorgitko, PR #2096).
+- Fix an `Invalid cross-device link` error when `tempdir()` is used for `intermediates_dir` in `render()` (thanks, @gorgitko, #2096).
 
 - Fix a regression in HTML default template with floating toc incorrectly placed on small size window (thanks, @grimbough, #2071)
 
