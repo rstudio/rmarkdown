@@ -16,6 +16,11 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ]]
 
+--[[
+  About the requirement:
+  * PANDOC_VERSION -> 2.1
+  * pandoc.utils -> 2.1
+]]
 if (not PANDOC_VERSION) or (PANDOC_VERSION < "2.1") then
   io.stderr:write("[WARNING] (pagebreak.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
   return {}

@@ -14,6 +14,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 https://github.com/atusy/lua-filters/blob/master/lua/number-sections.lua
 ]]
 
+--[[
+  About the requirement:
+  * PANDOC_VERSION -> 2.1
+]]
 if (not PANDOC_VERSION) or (PANDOC_VERSION < "2.1") then
   io.stderr:write("[WARNING] (number-sections.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
   return {}
