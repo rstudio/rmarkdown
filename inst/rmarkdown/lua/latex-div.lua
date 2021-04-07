@@ -1,6 +1,6 @@
 --[[
      A Pandoc 2 Lua filter converting Pandoc native divs to LaTeX environments
-     Author: Romain Lesur, Christophe Dervieux, and Yihui Xie
+     Author: Romain Lesur, Christophe Dervieux, Atsushi Yasumoto and Yihui Xie
      License: Public domain
 --]]
 
