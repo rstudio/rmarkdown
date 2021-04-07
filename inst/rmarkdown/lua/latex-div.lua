@@ -5,7 +5,7 @@
 --]]
 
 if (not PANDOC_VERSION) or (PANDOC_VERSION < "2.1") then
-    print("latex-div.lua requires Pandoc > 2.1")
+    io.stderr:write("[WARNING] (latex-div.lua) requires at least Pandoc 2.1")
     return {}
 end
 
