@@ -4,8 +4,12 @@
      License: Public domain
 --]]
 
+--[[
+  About the requirement:
+  * PANDOC_VERSION -> 2.1
+]]
 if (not PANDOC_VERSION) or (PANDOC_VERSION < "2.1") then
-    io.stderr:write("[WARNING] (latex-div.lua) requires at least Pandoc 2.1. Lua Filter skipped")
+    io.stderr:write("[WARNING] (latex-div.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
     return {}
 end
 
