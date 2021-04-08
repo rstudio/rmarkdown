@@ -144,7 +144,7 @@ html_document_base <- function(theme = NULL,
     preserved_chunks <<- extract_preserve_chunks(input_file)
 
     # At this point lib_dir should exist
-    # (fs will error it copying fails)
+    # (fs will error if copying fails)
     if (!self_contained) {
       fs::file_copy(names(css_map), file.path(lib_dir, css_map))
       names(css_map) <- file.path(lib_dir, css_map)
