@@ -389,15 +389,15 @@ render <- function(input,
   oldwd <- setwd(dirname(abs_path(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
-  # reset the name of the input file to be relative and calculate variations
-  # on the filename for our various intermediate targets
+  # reset the name of the input file to be relative and generete the name of
+  # the intermediate knitted file. The extension can be set as an option mainly for blogdown
+  # as `.md~` will be ignored.
   input <- basename(input)
   knit_input <- input
-  knit_output <- intermediates_loc(file_with_meta_ext(input, "knit", "md"))
-
+  knit_output <- intermediates_loc(
+    file_with_meta_ext(input, "knit", getOption("rmarkdown.knit.ext", "md"))
+  )
   intermediates <- c(intermediates, knit_output)
-  utf8_input <- intermediates_loc(file_with_meta_ext(input, "utf8", "md"))
-  intermediates <- c(intermediates, utf8_input)
 
   # track whether this was straight markdown input (to prevent keep_md later)
   md_input <- identical(tolower(xfun::file_ext(input)), "md")
@@ -825,8 +825,6 @@ render <- function(input,
   }
   intermediates <- c(intermediates, intermediates_fig)
 
-  file.copy(input, utf8_input, overwrite = TRUE)
-
   if (run_pandoc) {
 
     perf_timer_start("pre-processor")
@@ -834,7 +832,7 @@ render <- function(input,
     # call any pre_processor
     if (!is.null(output_format$pre_processor)) {
       extra_args <- output_format$pre_processor(front_matter,
-                                                utf8_input,
+                                                input,
                                                 runtime,
                                                 knit_meta,
                                                 files_dir,
@@ -844,7 +842,7 @@ render <- function(input,
 
     # write shiny_prerendered_dependencies if we have them
     if (is_shiny_prerendered(runtime)) {
-      shiny_prerendered_append_dependencies(utf8_input,
+      shiny_prerendered_append_dependencies(input,
                                             shiny_prerendered_dependencies,
                                             files_dir,
                                             output_dir)
@@ -877,8 +875,8 @@ render <- function(input,
 
       # ensure we expand paths (for Windows where leading `~/` does
       # not get expanded by pandoc)
-      utf8_input <- path.expand(utf8_input)
-      output     <- path.expand(output)
+      input  <- path.expand(input)
+      output <- path.expand(output)
 
       pandoc_args <- output_format$pandoc$args
 
@@ -890,9 +888,9 @@ render <- function(input,
 
       # in case the output format turns on the --file-scope flag, run its
       # file_scope function to split the input into multiple files
-      input_files <- utf8_input
+      input_files <- input
       if (!is.null(output_format$file_scope) &&
-          length(inputs <- output_format$file_scope(utf8_input)) > 1) {
+          length(inputs <- output_format$file_scope(input)) > 1) {
 
         # add the --file-scope option
         pandoc_args <- c(pandoc_args, "--file-scope")
@@ -900,7 +898,7 @@ render <- function(input,
         # write the split content into *.split.md files
         input_files <- unlist(lapply(inputs, function(input) {
           file <- file_with_meta_ext(input$name, "split", "md")
-          file <- file.path(dirname(utf8_input), file)
+          file <- file.path(dirname(input), file)
           write_utf8(input$content, file)
           file
         }))
@@ -911,7 +909,7 @@ render <- function(input,
 
       # if we don't detect any invalid shell characters in the
       # target path, then just call pandoc directly
-      if (!grepl(.shell_chars_regex, output) && !grepl(.shell_chars_regex, utf8_input)) {
+      if (!grepl(.shell_chars_regex, output) && !grepl(.shell_chars_regex, input)) {
         return(pandoc_convert(
           input_files, pandoc_to, output_format$pandoc$from, output,
           citeproc, pandoc_args, !quiet
@@ -939,7 +937,7 @@ render <- function(input,
 
       # construct output path (when passed only a file name to '--output',
       # pandoc seems to render in the same directory as the input file)
-      pandoc_output_tmp_path <- file.path(dirname(utf8_input), pandoc_output_tmp)
+      pandoc_output_tmp_path <- file.path(dirname(input), pandoc_output_tmp)
 
       # rename output file to desired location
       renamed <- suppressWarnings(file.rename(pandoc_output_tmp_path, output))
@@ -1000,7 +998,7 @@ render <- function(input,
     # if there is a post-processor then call it
     if (!is.null(output_format$post_processor))
       output_file <- output_format$post_processor(front_matter,
-                                                  utf8_input,
+                                                  input,
                                                   output_file,
                                                   clean,
                                                   !quiet)
