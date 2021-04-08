@@ -390,10 +390,13 @@ render <- function(input,
   on.exit(setwd(oldwd), add = TRUE)
 
   # reset the name of the input file to be relative and generete the name of
-  # the intermediate knitted file
+  # the intermediate knitted file. The extension can be set as an option mainly for blogdown
+  # as `.md~` will be ignored.
   input <- basename(input)
   knit_input <- input
-  knit_output <- intermediates_loc(file_with_meta_ext(input, "knit", "md"))
+  knit_output <- intermediates_loc(
+    file_with_meta_ext(input, "knit", getOption("rmarkdown.knit.ext", "md"))
+  )
   intermediates <- c(intermediates, knit_output)
 
   # track whether this was straight markdown input (to prevent keep_md later)
