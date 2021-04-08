@@ -1,6 +1,12 @@
 rmarkdown 2.8
 ================================================================================
 
+- A new internal option `rmarkdown.knit.ext` has been added to control the extension of the intermediary knit output during a rendering. It defaults to `md` to produce `*.knit.md`. Only useful for very advanced usage (#2098).
+
+- `render')` won't produce any `*.utf8.md` intermediary file anymore. This was a leftover from previous versions of **rmarkdown**. Since **knitr** 1.24 and **rmarkdown** 2.0, only UTF-8 input files are allowed. (#2098).
+
+- Fix an `Invalid cross-device link` error when `tempdir()` is used for `intermediates_dir` in `render()` (thanks, @gorgitko, #2096).
+
 - Fix a regression in HTML default template with floating toc incorrectly placed on small size window (thanks, @grimbough, #2071)
 
 - Provided a `runtime: shiny` fix for output formats that pass a modified `bslib::bs_theme()` object to `html_document_base()`'s `theme` (thanks, @cpsievert, #2049).
@@ -12,6 +18,8 @@ rmarkdown 2.8
 - When no `output_format` is provided in any way but an `output_file` is provided in `render()`, the default format will be determined based on the extension: `"pdf_document"` for `.pdf`, or `"word_document"` for `.docx`. Otherwise, it will be `"html_document"` as previous version (thanks, @pearsonca, #1569).
 
 - Added a new global option `rmarkdown.render.message`. When set `FALSE`, `render()` will not output the message starting by `Output created: ` allowing RStudio IDE to open a preview of the document. This is useful for package developers that would need to emit there own output message for there custom format. See `?render_site` for more info on this special message (#2092).
+
+- Lua filters have now an explicit Pandoc version minimal requirement. A filter will be skipped with a warning printed by the Lua filter if this requirement is not met. For now, all filters work for Pandoc 2.1 and above (thanks, @atusy, #2088).
 
 - `html_document_base` gains a `css` argument (which does the same thing as `html_document`'s `css` argument) (thanks, @cpsievert, #2095).
 
