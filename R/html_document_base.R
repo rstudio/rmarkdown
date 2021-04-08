@@ -66,8 +66,10 @@ html_document_base <- function(theme = NULL,
     if (is_bs_theme(theme)) bslib::bs_global_set(old_theme)
   }
 
-  # additional sass/css
-  for (f in css) {
+  # map relative & absolute file paths for later copying to lib_dir (if relevant)
+  css_map <- if (length(css)) setNames(css, normalizePath(css, mustWork = TRUE))
+  for (i in seq_along(css)) {
+    f <- css[[i]]
     if (is_bs_theme(theme)) {
       theme <- bslib::bs_add_rules(theme, xfun::read_utf8(f))
       next
@@ -77,13 +79,13 @@ html_document_base <- function(theme = NULL,
       if (!xfun::loadable("sass")) {
         stop("Using `.sass` or `.scss` file in `css` argument requires the sass package.", call. = FALSE)
       }
-      f <- sass::sass(
+      names(css_map)[[i]] <- sass::sass(
         sass::sass_file(f),
         output = sass::output_template(basename = "rmarkdown"),
         options = sass::sass_options(output_style = "compressed")
       )
+      css_map[[i]] <- sub("\\.s[ac]ss$", ".min.css", css_map[[i]])
     }
-    args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
   }
 
   # pre_processor
@@ -140,6 +142,16 @@ html_document_base <- function(theme = NULL,
                                         output_dir))
 
     preserved_chunks <<- extract_preserve_chunks(input_file)
+
+    # At this point lib_dir should exist
+    # (fs will error it copying fails)
+    if (!self_contained) {
+      fs::file_copy(names(css_map), file.path(lib_dir, css_map))
+      names(css_map) <- file.path(lib_dir, css_map)
+    }
+    for (f in names(css_map)) {
+      args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
+    }
 
     args
   }

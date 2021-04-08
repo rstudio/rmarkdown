@@ -15,6 +15,8 @@ rmarkdown 2.8
 
 - `html_document_base` gains a `css` argument (which does the same thing as `html_document`'s `css` argument) (thanks, @cpsievert, #2095).
 
+- Fixed `html_document`'s `css` argument not working correctly with `self_contained = FALSE` (thanks, @cpsievert, #2095).
+
 rmarkdown 2.7
 ================================================================================
 
