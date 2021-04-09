@@ -3,7 +3,7 @@ rmarkdown 2.8
 
 - A new internal option `rmarkdown.knit.ext` has been added to control the extension of the intermediary knit output during a rendering. It defaults to `md` to produce `*.knit.md`. Only useful for very advanced usage (#2098).
 
-- `render')` won't produce any `*.utf8.md` intermediary file anymore. This was a leftover from previous versions of **rmarkdown**. Since **knitr** 1.24 and **rmarkdown** 2.0, only UTF-8 input files are allowed. (#2098).
+- `render()` won't produce any `*.utf8.md` intermediary file anymore. This was a leftover from previous versions of **rmarkdown**. Since **knitr** 1.24 and **rmarkdown** 2.0, only UTF-8 input files are allowed. (#2098).
 
 - Fix an `Invalid cross-device link` error when `tempdir()` is used for `intermediates_dir` in `render()` (thanks, @gorgitko, #2096).
 
