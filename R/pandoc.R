@@ -750,7 +750,7 @@ pandoc_citeproc <- function() {
 pandoc_lua_filter_args <- function(lua_files) {
   # Lua filters was introduced in pandoc 2.0
   if (pandoc2.0()) {
-    if (!nzchar(Sys.getenv("RMARKDOWN_LUA_SHARED"))) {
+    if (is.na(Sys.getenv("RMARKDOWN_LUA_SHARED", NA))) {
       Sys.setenv(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua"))
     }
     c(rbind("--lua-filter", pandoc_path_arg(lua_files)))
