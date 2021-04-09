@@ -26,7 +26,7 @@ if (not pandocAvailable {2,1}) then
   return {}
 end
 
--- START OF THE FILTER'S FUNCTIONS
+-- START OF THE FILTER'S FUNCTIONS --
 
 local section_number_table = {0, 0, 0, 0, 0, 0, 0, 0, 0}
 local n_section_number_table = #section_number_table

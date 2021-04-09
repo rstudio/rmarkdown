@@ -30,7 +30,7 @@ if (not pandocAvailable {2,1}) then
   return {}
 end
 
--- START OF THE FILTER'S FUNCTIONS
+-- START OF THE FILTER'S FUNCTIONS --
 
 local stringify_orig = (require 'pandoc.utils').stringify
 
