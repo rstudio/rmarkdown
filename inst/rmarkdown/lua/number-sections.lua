@@ -25,17 +25,13 @@ local function pandocAvailable(target)
   -- this function only work for Pandoc 2.1 and above. It returns false is not
   if not PANDOC_VERSION then return false end
   if not target then error("No target version specified in pandocAvailable.") end
-  -- checking major version
-  if target[1] and (not PANDOC_VERSION[1] or PANDOC_VERSION[1] < target[1]) then
-    return false
-  end
-  -- checking minor version
-  if target[2] and (not PANDOC_VERSION[2] or PANDOC_VERSION[2] < target[2]) then
-    return false
-  end
-  -- checking patch version
-  if target[3] and (not PANDOC_VERSION[3] or PANDOC_VERSION[3] < target[3]) then
-    return false
+  -- checking each version number
+  for i = 1,3 do
+    -- some versions do not have 3 numbers
+    if not PANDOC_VERSION[i] then break end
+    if target[i] and PANDOC_VERSION[i] < target[i] then
+      return false
+    end
   end
   return true
 end
