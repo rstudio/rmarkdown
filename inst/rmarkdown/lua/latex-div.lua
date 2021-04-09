@@ -19,10 +19,9 @@ local function pandocAvailable(target)
   -- EPOCH.MAJOR.MINOR.PATCH (https://pvp.haskell.org)
   for i = 1,4 do
     -- some versions do not have all numbers
-    if not PANDOC_VERSION[i] then break end
-    if target[i] and PANDOC_VERSION[i] < target[i] then
-      return false
-    end
+    if not PANDOC_VERSION[i] or not target[i] then break end
+    if PANDOC_VERSION[i] < target[i] then return false end
+    if PANDOC_VERSION[i] > target[i] then return true end
   end
   return true
 end
@@ -31,7 +30,7 @@ end
   About the requirement:
   * PANDOC_VERSION -> 2.1
 ]]
-if (not pandocAvailable {2,1}) then
+if (not pandocAvailable {2,7,3}) then
     io.stderr:write("[WARNING] (latex-div.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
     return {}
 end
