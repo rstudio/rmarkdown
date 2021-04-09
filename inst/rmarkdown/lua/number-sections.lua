@@ -14,14 +14,38 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 https://github.com/atusy/lua-filters/blob/master/lua/number-sections.lua
 ]]
 
+-- COMMON PART ACROSS LUA FILTERS
+
+--[[
+  This function tests the pandoc version againt a target version
+  For Pandoc 2.7.3, PANDOC_VERSION >= "2.8" would be enough but before 2.7.3
+  it is a table object
+]]
+local function pandocAvailable(target)
+  -- this function only work for Pandoc 2.1 and above. It returns false is not
+  if not PANDOC_VERSION then return false end
+  if not target then error("No target version specified in pandocAvailable.") end
+  -- checking each version number
+  for i = 1,3 do
+    -- some versions do not have 3 numbers
+    if not PANDOC_VERSION[i] then break end
+    if target[i] and PANDOC_VERSION[i] < target[i] then
+      return false
+    end
+  end
+  return true
+end
+
 --[[
   About the requirement:
   * PANDOC_VERSION -> 2.1
 ]]
-if (not PANDOC_VERSION) or (PANDOC_VERSION < "2.1") then
+if (not pandocAvailable {2,1}) then
   io.stderr:write("[WARNING] (number-sections.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
   return {}
 end
+
+-- START OF THE FILTER'S FUNCTIONS
 
 local section_number_table = {0, 0, 0, 0, 0, 0, 0, 0, 0}
 local n_section_number_table = #section_number_table
