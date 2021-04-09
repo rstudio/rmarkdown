@@ -30,7 +30,7 @@ end
   About the requirement:
   * PANDOC_VERSION -> 2.1
 ]]
-if (not pandocAvailable {2,7,3}) then
+if (not pandocAvailable {2,1}) then
     io.stderr:write("[WARNING] (latex-div.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
     return {}
 end
