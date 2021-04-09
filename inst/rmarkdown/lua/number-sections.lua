@@ -24,10 +24,11 @@ https://github.com/atusy/lua-filters/blob/master/lua/number-sections.lua
 local function pandocAvailable(target)
   -- this function only work for Pandoc 2.1 and above. It returns false is not
   if not PANDOC_VERSION then return false end
-  if not target then error("No target version specified in pandocAvailable.") end
+  assert(target, "No target version specified in pandocAvailable.")
   -- checking each version number
-  for i = 1,3 do
-    -- some versions do not have 3 numbers
+  -- EPOCH.MAJOR.MINOR.PATCH (https://pvp.haskell.org)
+  for i = 1,4 do
+    -- some versions do not have all numbers
     if not PANDOC_VERSION[i] then break end
     if target[i] and PANDOC_VERSION[i] < target[i] then
       return false
