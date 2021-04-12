@@ -101,7 +101,7 @@ html_document_base <- function(theme = NULL,
           sass::sass_file(f),
           # write output file to `lib_dir/sass-{sass:::sass_hash()}{[basename(f)}`
           output = sass_output_template(
-            basename = tools::file_path_sans_ext(basename(f)),
+            basename = xfun::sans_ext(basename(f)),
             tmpdir = lib_dir
           ),
           options = sass::sass_options(output_style = "compressed")
