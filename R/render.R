@@ -882,10 +882,8 @@ render <- function(input,
 
       # if Lua filters are provided, add the command line switch
       if (!is.null(lua_filters <- output_format$pandoc$lua_filters)) {
-        if (is.na(Sys.getenv("RMARKDOWN_LUA_SHARED", unset = NA))) {
-          lua_env_vars <- xfun::set_envvar(c(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua")))
-          on.exit(xfun::set_envvar(lua_env_vars), add = TRUE)
-        }
+        lua_env_vars <- xfun::set_envvar(c(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua")))
+        on.exit(xfun::set_envvar(lua_env_vars), add = TRUE)
         lua_filters <- pandoc_lua_filter_args(lua_filters)
       }
       pandoc_args <- c(lua_filters, pandoc_args)
