@@ -99,8 +99,11 @@ html_document_base <- function(theme = NULL,
         }
         f <- sass::sass(
           sass::sass_file(f),
-          # we use a custom fonction to write temp file in lib_dir
-          output = sass_output_template(tmpdir = lib_dir),
+          # write output file to `lib_dir/sass-{sass:::sass_hash()}{[basename(f)}`
+          output = sass_output_template(
+            basename = tools::file_path_sans_ext(basename(f)),
+            tmpdir = lib_dir
+          ),
           options = sass::sass_options(output_style = "compressed")
         )
       }
