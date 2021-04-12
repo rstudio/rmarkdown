@@ -14,7 +14,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 https://github.com/atusy/lua-filters/blob/master/lua/number-sections.lua
 ]]
 
---  Load shared lua filter
+-- REQUIREMENTS: Load shared lua filter - see `shared.lua` for more details.
 dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
 
 --[[

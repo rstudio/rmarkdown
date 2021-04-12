@@ -4,7 +4,7 @@
      License: Public domain
 --]]
 
---  Load shared lua filter
+-- REQUIREMENTS: Load shared lua filter - see `shared.lua` for more details.
 dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
 
 --[[

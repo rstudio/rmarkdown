@@ -17,7 +17,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ]]
 
---  Load shared lua filter
+-- REQUIREMENTS: Load shared lua filter - see `shared.lua` for more details.
 dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
 
 --[[

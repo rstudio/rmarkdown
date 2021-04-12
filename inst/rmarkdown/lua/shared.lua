@@ -4,9 +4,23 @@
 
   USAGE
     This script is loaded in other script by an RMARKDOW_LUA_SHARED environment variable
-    set inside rmarkdown R package.
+    set inside rmarkdown R package by `render()`.
+
     Use this line in other script to use this function
       dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
+
+    To use this script directly, use `dofile(<path-to-script>)`
+
+  NOTE
+    USAGE could change if Pandoc 2.1.2+ is supported only as PANDOC_SCRIPT_FILE is
+    available from other Lua Filters. In this case, path to `shared.lua` could be
+    determined from other filters relatively and loaded with `dofile()`
+
+    See https://gist.github.com/cderv/ca24d2681b0a1c4b6f91e0b49d725f36 for an example
+    of `import("shared.lua")`
+
+  LICENSE
+    MIT License
 ]]
 
 
