@@ -57,6 +57,12 @@ html_document_base <- function(theme = NULL,
   old_theme <- NULL
   pre_knit <- function(input, ...) {
     if (is_bs_theme(theme)) {
+      # merge css file with bslib mechanism...
+      for (f in css) theme <<- bslib::bs_add_rules(theme, xfun::read_utf8(f))
+      # ...and don't process CSS files further
+      css <<- NULL
+
+      # save old theme
       old_theme <<- bslib::bs_global_set(theme)
     }
   }
@@ -64,26 +70,6 @@ html_document_base <- function(theme = NULL,
   on_exit <- function() {
     # In this case, we know we've altered global state, so restore the old theme
     if (is_bs_theme(theme)) bslib::bs_global_set(old_theme)
-  }
-
-  # additional sass/css
-  for (f in css) {
-    if (is_bs_theme(theme)) {
-      theme <- bslib::bs_add_rules(theme, xfun::read_utf8(f))
-      next
-    }
-    is_sass <- grepl("\\.s[ac]ss$", f)
-    if (is_sass) {
-      if (!xfun::loadable("sass")) {
-        stop("Using `.sass` or `.scss` file in `css` argument requires the sass package.", call. = FALSE)
-      }
-      f <- sass::sass(
-        sass::sass_file(f),
-        output = sass::output_template(basename = "rmarkdown"),
-        options = sass::sass_options(output_style = "compressed")
-      )
-    }
-    args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
   }
 
   # pre_processor
@@ -102,6 +88,24 @@ html_document_base <- function(theme = NULL,
     if (!is.null(theme)) {
       theme_arg <- if (is.list(theme)) "bootstrap" else theme
       args <- c(args, pandoc_variable_arg("theme", theme_arg))
+    }
+
+    # Process css files as Pandoc argument
+    for (f in css) {
+      is_sass <- grepl("\\.s[ac]ss$", f)
+      if (is_sass) {
+        if (!xfun::loadable("sass")) {
+          stop("Using `.sass` or `.scss` file in `css` argument requires the sass package.", call. = FALSE)
+        }
+        f <- sass::sass(
+          sass::sass_file(f),
+          # we use a custom fonction to write temp file in lib_dir
+          output = sass_output_template(tmpdir = lib_dir),
+          options = sass::sass_options(output_style = "compressed")
+        )
+      }
+      f <- normalized_relative_to(output_dir, f)
+      args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
     }
 
     # resolve and inject extras, including dependencies specified by the format
@@ -227,4 +231,27 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
   preserve <- extract(input_str)
   if (!identical(preserve$value, input_str)) write_utf8(preserve$value, input_file)
   preserve$chunks
+}
+
+
+# inspired by sass::output_template but writes to a custom temp dir instead of only tempdir()
+# TODO: use the one from sass package when it supports it
+sass_output_template <- function(basename = "rmarkdown", dirname = "sass", fileext = NULL, tmpdir = tempdir())
+{
+  function(options = list(), suffix = NULL) {
+    fileext <- fileext %||% if (isTRUE(options$output_style %in%
+                                       c(2, 3)))
+      ".min.css"
+    else ".css"
+    out_dir <- if (is.null(suffix)) {
+      tempfile(tmpdir = tmpdir, pattern = dirname)
+    }
+    else {
+      file.path(tmpdir, paste0(dirname, suffix))
+    }
+    if (!dir.exists(out_dir)) {
+      dir.create(out_dir, recursive = TRUE)
+    }
+    file.path(out_dir, paste0(basename, fileext))
+  }
 }
