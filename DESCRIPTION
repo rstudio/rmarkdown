@@ -91,7 +91,7 @@ Imports:
     evaluate (>= 0.13),
     jsonlite,
     tinytex (>= 0.11),
-    xfun (>= 0.15),
+    xfun (>= 0.21),
     methods,
     stringr (>= 1.2.0)
 Suggests:
