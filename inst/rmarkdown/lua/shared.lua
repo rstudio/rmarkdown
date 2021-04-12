@@ -25,9 +25,13 @@
 
 
 --[[
-  This function tests the pandoc version againt a target version
-  For Pandoc 2.7.3, PANDOC_VERSION >= "2.8" would be enough but before 2.7.3
-  it is a table object
+  This function tests the pandoc version againt a target version.
+
+  USAGE
+    pandocAvailable {2,1}
+  NOTE
+    For Pandoc 2.7.3, PANDOC_VERSION >= "2.8" would be enough but before 2.7.3
+    it is a table object
 ]]
 function pandocAvailable(target)
   -- this function only work for Pandoc 2.1 and above. It returns false is not
