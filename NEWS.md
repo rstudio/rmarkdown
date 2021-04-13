@@ -21,7 +21,7 @@ rmarkdown 2.8
 
 - Lua filters have now an explicit Pandoc version minimal requirement. A filter will be skipped with a warning printed by the Lua filter if this requirement is not met. For now, all filters work for Pandoc 2.1 and above (thanks, @atusy, #2088).
 
-- `html_document_base` gains a `css` argument (which does the same thing as `html_document`'s `css` argument) (thanks, @cpsievert, #2095).
+- `html_document_base` gains a `css` argument (which does the same thing as `html_document`'s `css` argument) (thanks, @cpsievert, #2095). This also fix an issue when `.sass` or `.scss` files are used with this `css` argument when `self_contained: FALSE`. Moreover, **sass** caching mechanism can now be used when passing `.sass` or `.scss` files to the `css` argument.
 
 rmarkdown 2.7
 ================================================================================
