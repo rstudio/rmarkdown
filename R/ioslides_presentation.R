@@ -19,7 +19,7 @@
 #' @param transition Speed of slide transitions. This can be "default",
 #'   "slower", "faster", or a numeric value with a number of seconds (e.g. 0.5).
 #' @param analytics A Google analytics property ID.
-#'@param smart Produce typographically correct output, converting straight
+#' @param smart Produce typographically correct output, converting straight
 #'  quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
 #'  \code{...} to ellipses.
 #' @param css One or more css files to include.
