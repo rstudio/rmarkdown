@@ -59,7 +59,7 @@ html_document_base <- function(theme = NULL,
     if (is_bs_theme(theme)) {
       # merge css file with bslib mechanism...
       for (f in css) theme <<- bslib::bs_add_rules(theme, xfun::read_utf8(f))
-      # ...and don't process CSS files further
+      # ...and don't process CSS files further in Pandoc
       css <<- NULL
 
       # save old theme
@@ -90,7 +90,7 @@ html_document_base <- function(theme = NULL,
       args <- c(args, pandoc_variable_arg("theme", theme_arg))
     }
 
-    # Process css files as Pandoc argument
+    # Process css files as Pandoc argument if not already been processed by bslib
     for (f in css) {
       is_sass <- grepl("\\.s[ac]ss$", f)
       if (is_sass) {
