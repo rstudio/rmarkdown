@@ -20,6 +20,7 @@
 #' @param ... Additional arguments passed to \code{\link{html_document}}. Please
 #'   note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
 #'   coded. Setting any of those will yield an error.
+#' @param css One or more css files to include.
 #' @param readme Use this vignette as the package README.md file (i.e. render
 #'   it as README.md to the package root). Note that if there are image files
 #'   within your vignette you should be sure to add README_files to .Rbuildignore

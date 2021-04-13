@@ -21,6 +21,8 @@ rmarkdown 2.8
 
 - Internal changes regarding Lua filters. They have now an explicit Pandoc version minimal requirement: A filter will be skipped with a warning printed by the Lua filter if this requirement is not met. For now, all filters work for Pandoc 2.1 and above (thanks, @atusy, #2088). There is also now a new mechanism to have a share Lua filter script loadable by other Lua files: `render()` will set the `RMARKDOWN_LUA_SHARED` env var to the path of Lua filter `shared.lua` so that other filters can access functions defined in it using `dofile(os.getenv 'RMARKDOWN_LUA_SHARED')`. This is for internal usage only to avoid duplication (thanks, @tarleb, #2103).
 
+- `html_document_base` gains a `css` argument, to which `html_document`'s `css` argument is now passed. This also fix an issue when `.sass` or `.scss` files are used with this `css` argument when `self_contained: FALSE`. Moreover, **sass** caching mechanism can now be used when passing `.sass` or `.scss` files to the `css` argument (thanks, @cpsievert, #2095).
+
 rmarkdown 2.7
 ================================================================================
 
