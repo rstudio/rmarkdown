@@ -4,14 +4,19 @@
      License: Public domain
 --]]
 
+-- REQUIREMENTS: Load shared lua filter - see `shared.lua` for more details.
+dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
+
 --[[
   About the requirement:
   * PANDOC_VERSION -> 2.1
 ]]
-if (not PANDOC_VERSION) or (PANDOC_VERSION < "2.1") then
+if (not pandocAvailable {2,1}) then
     io.stderr:write("[WARNING] (latex-div.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
     return {}
 end
+
+-- START OF THE FILTER'S FUNCTIONS --
 
 text = require 'text'
 
