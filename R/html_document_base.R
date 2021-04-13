@@ -92,8 +92,7 @@ html_document_base <- function(theme = NULL,
 
     # Process css files as Pandoc argument if not already been processed by bslib
     for (f in css) {
-      is_sass <- grepl("\\.s[ac]ss$", f)
-      if (is_sass) {
+      if (grepl("\\.s[ac]ss$", f)) {
         if (!xfun::loadable("sass")) {
           stop("Using `.sass` or `.scss` file in `css` argument requires the sass package.", call. = FALSE)
         }
@@ -239,8 +238,8 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
 
 # inspired by sass::output_template but writes to a custom temp dir instead of only tempdir()
 # TODO: use the one from sass package when it supports it
-sass_output_template <- function(basename = "rmarkdown", dirname = "sass", fileext = NULL, tmpdir = tempdir())
-{
+sass_output_template <- function(basename = "rmarkdown", dirname = "sass",
+                                 fileext = NULL, tmpdir = tempdir()) {
   function(options = list(), suffix = NULL) {
     fileext <- fileext %||% if (isTRUE(options$output_style %in%
                                        c(2, 3)))
