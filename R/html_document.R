@@ -14,7 +14,7 @@
 #' the markdown syntax for citations in the
 #' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
 #' and Citations} article in the online documentation.
-#'@md
+#'
 #'@inheritParams output_format
 #'@param toc \code{TRUE} to include a table of contents in the output
 #'@param toc_depth Depth of headers to include in table of contents
@@ -210,6 +210,7 @@
 #'
 #' render("input.Rmd", html_document(toc = TRUE))
 #' }
+#' @md
 #' @export
 html_document <- function(toc = FALSE,
                           toc_depth = 3,
