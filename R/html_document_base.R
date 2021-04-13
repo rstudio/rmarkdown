@@ -237,7 +237,7 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
 
 
 # inspired by sass::output_template but writes to a custom temp dir instead of only tempdir()
-# TODO: use the one from sass package when it supports it
+# TODO: use the one from sass package when sass 0.3.2 in on CRAN (rstudio/sass#77)
 sass_output_template <- function(basename = "rmarkdown", dirname = "sass",
                                  fileext = NULL, tmpdir = tempdir()) {
   function(options = list(), suffix = NULL) {
