@@ -114,4 +114,5 @@ License: GPL-3
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
+Config/Needs/website: rstudio/quillt,r-lib/pkgdown,ggplot2,palmerpenguins
 Remotes: yihui/tinytex
