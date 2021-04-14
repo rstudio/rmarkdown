@@ -17,37 +17,74 @@ local section_number_table = {0, 0, 0, 0, 0, 0, 0, 0, 0}
 local n_section_number_table = #section_number_table
 local previous_header_level = 0
 local separator = pandoc.Space()
+local identifiers = {}
+local needs_number_sections = true
 if FORMAT == "docx" then -- to be consistent with Pandoc >= 2.10.1
   separator = pandoc.Str("\t")
 end
 
-function Header(elem)
+
+function is_preprocess(meta)
+  preprocess = meta['preprocess_number_sections']
+end
+
+
+function fix_link_id(div)
+  local old_id = div.attributes['data-rmarkdown-temporarily-recorded-id']
+
+  if old_id and #div.content and (div.content[1].t == 'Header') then
+    needs_number_sections = false
+    identifiers['#' .. old_id] = '#' .. div.content[1].identifier
+    return div.content
+  end
+end
+
+
+function number_sections(header)
+  if not needs_number_sections then
+    return nil
+  end
+
   -- If unnumbered
-  if (elem.classes:find("unnumbered")) then
-    return elem
+  if (header.classes:find("unnumbered")) then
+    return header
   end
 
   -- Else
   --- Reset and update section_number_table
-  if (elem.level < previous_header_level) then
-    for i=elem.level+1,n_section_number_table do
+  if (header.level < previous_header_level) then
+    for i=header.level+1,n_section_number_table do
       section_number_table[i] = 0
     end
   end
-  previous_header_level = elem.level
-  section_number_table[elem.level] = section_number_table[elem.level] + 1
+  previous_header_level = header.level
+  section_number_table[header.level] = section_number_table[header.level] + 1
 
   --- Define section number as string
-  local section_number_string = tostring(section_number_table[elem.level])
-  if elem.level > 1 then
-    for i = elem.level-1,1,-1 do
+  local section_number_string = tostring(section_number_table[header.level])
+  if header.level > 1 then
+    for i = header.level-1,1,-1 do
       section_number_string = section_number_table[i] .. "." .. section_number_string
     end
   end
 
   --- Update Header element
-  table.insert(elem.content, 1, separator)
-  table.insert(elem.content, 1, pandoc.Str(section_number_string))
+  table.insert(header.content, 1, separator)
+  table.insert(header.content, 1, pandoc.Str(section_number_string))
 
-  return elem
+  --- Return Div wrapping Header and recording Header's current ID
+  if preprocess then
+    div = pandoc.Div({header})
+    div.attributes['data-rmarkdown-temporarily-recorded-id'] = header.identifier
+    return div
+  end
+
+  return header
 end
+
+
+return {
+  {Meta = is_preprocess},
+  {Div = fix_link_id},
+  {Header = number_sections}
+}
