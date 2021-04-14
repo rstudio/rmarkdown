@@ -52,6 +52,7 @@ jobs:
           pak::pkg_install("rstudio/quillt")
           # use in articles's example
           pak::pkg_install("palmerpenguins")
+          pak::pkg_install("ggplot2")
         shell: Rscript {0}
 
       - name: Install package
