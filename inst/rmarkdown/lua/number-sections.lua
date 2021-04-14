@@ -3,7 +3,7 @@ number-sections - Number sections like the --number-sections option
 
 # MIT License
 
-Copyright (c) 2020 Atsushi Yasumoto
+Copyright (c) 2020 Atsushi Yasumoto, Christophe Dervieux
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -13,6 +13,21 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 https://github.com/atusy/lua-filters/blob/master/lua/number-sections.lua
 ]]
+
+-- REQUIREMENTS: Load shared lua filter - see `shared.lua` for more details.
+dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
+
+--[[
+  About the requirement:
+  * PANDOC_VERSION -> 2.1
+]]
+if (not pandocAvailable {2,1}) then
+  io.stderr:write("[WARNING] (number-sections.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
+  return {}
+end
+
+-- START OF THE FILTER'S FUNCTIONS --
+
 local section_number_table = {0, 0, 0, 0, 0, 0, 0, 0, 0}
 local n_section_number_table = #section_number_table
 local previous_header_level = 0
