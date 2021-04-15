@@ -1,0 +1,134 @@
+---
+title: "About accessibility for HTML document"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+When producing any content for the Web, it is really important to consider **Accessibility.** W3C, the [World Wide Web Consortium](https://en.wikipedia.org/wiki/World_Wide_Web_Consortium "Wikipedia W3C page"), has some standard for Web Design and Application regarding Accessibility
+
+> The power of the Web is in its universality.\
+> Access by everyone regardless of disability is an essential aspect.\
+> --- Tim Berners-Lee, W3C Director and inventor of the World Wide Web
+
+**rmarkdown** has to make things easier to produce such content and this document aims to present the existing features.
+
+## Adding alternative text for figures
+
+Until **knitr** 1.31, [alternate text](https://www.w3schools.com/tags/att_img_alt.asp) was added to figures created in chunks by using the `fig.cap` chunk options. There was no way for knitr users to create alt text and figure captions separately. This missing [feature](https://github.com/rstudio/rmarkdown/issues/1867) was originally requested by [Dr. Mine Dogucu](https://mdogucu.ics.uci.edu/).
+
+Why is a different alt text than caption text important ? As [JooYoung Seo pointed out](https://github.com/rstudio/rmarkdown/issues/1867#issuecomment-716200288), figure captions are used for relatively concise figure titles, whereas image alt text is intended to deliver more descriptive text-based information for assistive technologies like screen readers.
+
+What is alt text?
+
+As defined from [Webaim](https://webaim.org/techniques/alttext/):
+
+> It is read by screen readers in place of images allowing the content and function of the image to be accessible to those with visual or certain cognitive disabilities.
+>
+> It is displayed in place of the image in browsers if the image file is not loaded or when the user has chosen not to view images.
+>
+> It provides a semantic meaning and description to images which can be read by search engines or be used to later determine the content of the image from page context alone.
+
+### Setting alt text with **knitr**
+
+You can set the alt text using the new **knitr** code chunk option `fig.alt`. We'll use data from the [palmerpenguins package](https://github.com/allisonhorst/palmerpenguins) to illustrate usage with a [ggplot2](https://ggplot2.tidyverse.org/) plot.
+
+```{r}
+# install packages to run locally
+# install.packages("palmerpenguins")
+# install.packages("ggplot2")
+
+library(palmerpenguins)
+library(ggplot2)
+```
+
+Here is a scatterplot to start:
+
+    ```{r, fig.alt = "Scatterplot of flipper length by bill length of 3 penguin species, where we show penguins with bigger flippers have bigger bills."}`r ''`
+    ggplot(data = penguins, aes(x = flipper_length_mm,
+                                y = bill_length_mm,
+                                color = species)) +
+      geom_point(aes(shape = species), alpha = 0.8) +
+      theme_minimal() +
+      scale_color_manual(values = c("darkorange","purple","cyan4")) 
+    ```
+
+```{r, echo=FALSE, fig.alt = "Scatterplot of flipper length by bill length of 3 penguin species, where we show penguins with bigger flippers have bigger bills.", warning=FALSE}
+ggplot(data = penguins, aes(x = flipper_length_mm,
+                            y = bill_length_mm,
+                            color = species)) +
+  geom_point(aes(shape = species), alpha = 0.8) +
+  theme_minimal() +
+  scale_color_manual(values = c("darkorange","purple","cyan4")) 
+```
+
+You can check this page using your browser inspector to see that alt text is set properly. Browsers also have specific Accessibility inspectors :
+
+-   Firefox: [Accessibility Inspector](https://developer.mozilla.org/en-US/docs/Tools/Accessibility_inspector "Firefox's Accessibility Inspector website")
+
+-   Chrome: [Accessibility features reference](https://developer.chrome.com/docs/devtools/accessibility/reference/ "Chrome's Accessibility features reference")
+
+As any other `fig.*` options, `fig.alt` can take a vector as input as well, if a code chunk produces more than one plot. For example:
+
+    ```{r, fig.alt = c("Informative alt text for plot 1", "Informative alt text for plot 2")}`r ''`
+    plot1
+    plot2
+    ```
+
+### Combining figure captions and alt text
+
+By default, if you do not provide the `fig.alt` chunk option, the text in the figure caption provided by the `fig.cap` chunk option will be used as the alt text. You do not *have* to use `fig.cap` to use `fig.alt`- you may use each chunk option in isolation, but they will also work together.
+
+    ```{r, fig.cap="Bigger flippers, bigger bills", fig.alt = "Scatterplot of flipper length by bill length of 3 penguin species, where we show penguins with bigger flippers have bigger bills."}`r ''`
+    ggplot(data = penguins, aes(x = flipper_length_mm,
+                                y = bill_length_mm,
+                                color = species)) +
+      geom_point(aes(shape = species), alpha = 0.8) +
+      theme_minimal() +
+      scale_color_manual(values = c("darkorange","purple","cyan4")) 
+    ```
+
+```{r, echo=FALSE, fig.cap="Bigger flippers, bigger bills", fig.alt = "Scatterplot of flipper length by bill length of 3 penguin species, where we show penguins with bigger flippers have bigger bills."}
+ggplot(data = penguins, aes(x = flipper_length_mm,
+                            y = bill_length_mm,
+                            color = species)) +
+  geom_point(aes(shape = species), alpha = 0.8) +
+  theme_minimal() +
+  scale_color_manual(values = c("darkorange","purple","cyan4")) 
+```
+
+### Alt text for static images
+
+For static images, you could always include alt text using Markdown syntax:
+
+``` {.markdown}
+![alt text goes here](img.png)
+```
+
+By default, [implicit_figures](https://pandoc.org/MANUAL.html#images) extension from Pandoc is activated for some format like `html_document` and this will lead to same caption and alt text. Setting `fig_caption = FALSE` in `html_document` would prevent the caption. Unfortunately, Pandoc does not offer yet to differentiate alt text and caption.
+
+To work around this limitation, the knitr code chunk option can be used with `knitr::include_graphics`:
+
+    ```{r, fig.alt = "rmarkdown package logo", out.width="25%"}`r ''`
+    knitr::include_graphics("https://pkgs.rstudio.com/rmarkdown/reference/figures/logo.png")
+    ```
+
+```{r, fig.alt = "rmarkdown hex logo", out.width="25%", echo=FALSE, fig.cap = "New color for rmarkdown logo !"}
+knitr::include_graphics("https://pkgs.rstudio.com/rmarkdown/reference/figures/logo.png")
+```
+
+### Alt text resources
+
+You may learn more about how to write more informative alt text for data visualization in this [Nightingale article](https://medium.com/nightingale/writing-alt-text-for-data-visualization-2a218ef43f81) and use it properly in this [a11yproject post](https://www.a11yproject.com/posts/2013-01-14-alt-text/ "Using alt text properly - a11yproject").
+
+Some additional resources:
+
+-   [WGBH Guide Guidelines for describing STEM images](https://www.wgbh.org/foundation/ncam/guidelines/guidelines-for-describing-stem-images)
+-   [Diagram Center Accessible Images](http://diagramcenter.org/making-images-accessible.html)
+-   [Diagram Center Accessible Math Tricks and Tips](http://diagramcenter.org/accessible-math-tools-tips-and-training.html)
+
+Sincere thanks to [Liz Hare](http://www.doggenetics.com/) for recommending [these and other resources on Twitter](https://twitter.com/DogGeneticsLLC/status/1375267373586976769?s=20), and to [Silvia Canelón](https://silvia.rbind.io/) for sharing them with us.
