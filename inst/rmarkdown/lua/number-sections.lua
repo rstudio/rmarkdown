@@ -47,15 +47,16 @@ end
 function pairwise_link_id(div)
   local old_id = div.attributes['data-rmarkdown-temporarily-recorded-id']
 
-  if old_id and #div.content and (div.content[1].t == 'Header') then
+  if not preprocess and old_id and #div.content and (div.content[1].t == 'Header') then
     needs_number_sections = false
     identifiers['#' .. old_id] = '#' .. div.content[1].identifier
     return div.content
   end
 end
 
+
 function fix_link_id(link)
-  if identifiers[link.target] then
+  if not preprocess and identifiers[link.target] then
     link.target = identifiers[link.target]
     return link
   end
@@ -63,13 +64,9 @@ end
 
 
 function number_sections(header)
-  if not needs_number_sections then
+  -- Unnumbered
+  if not needs_number_sections or header.classes:find("unnumbered") then
     return nil
-  end
-
-  -- If unnumbered
-  if (header.classes:find("unnumbered")) then
-    return header
   end
 
   -- Else
