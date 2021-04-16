@@ -67,10 +67,6 @@ md_document <- function(variant = "markdown_strict",
     && any(grepl("+gfm_auto_identifiers", md_extensions, fixed = TRUE))
   ) {
     function(metadata, input_file, ...) {
-      lua_env_vars <- xfun::set_envvar(
-        c(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua"))
-      )
-      on.exit(xfun::set_envvar(lua_env_vars), add = TRUE)
       input_lines <- read_utf8(input_file)
       pandoc_convert(
         input_file, to = "markdown", output = input_file,
