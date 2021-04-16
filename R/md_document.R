@@ -60,6 +60,19 @@ md_document <- function(variant = "markdown_strict",
   # pandoc args
   args <- c(args, pandoc_args)
 
+  # add pre_processor to fix link IDs when using numbering sections
+  pre_processor <- if (number_sections) {function(metadata, input_file, ...) {
+    markdown_format <- md_document(
+      variant = "markdown",
+      preserve_yaml = TRUE,
+      pandoc_args = c("--metadata", "preprocess_number_sections=true")
+    )
+    markdown_format$pandoc$lua_filters <- pkg_file_lua("number-sections.lua")
+    render(input_file, markdown_format, quiet = TRUE)
+    warning(paste(xfun::read_utf8(input_file), collapse="\n"))
+    return(character(0L))
+  }}
+
   # add post_processor for yaml preservation
   post_processor <- if (preserve_yaml && variant != 'markdown') {
     function(metadata, input_file, output_file, clean, verbose) {
@@ -85,17 +98,7 @@ md_document <- function(variant = "markdown_strict",
     ),
     clean_supporting = FALSE,
     df_print = df_print,
-    pre_processor = if (number_sections) {function(metadata, input_file, ...) {
-      pandoc_convert(
-        input_file, to = "markdown", output = input_file,
-        options = c(
-          "--standalone",
-          "--lua-filter", pkg_file_lua("number-sections.lua"),
-          "--metadata", "preprocess_number_sections=true"
-        )
-      )
-      return(character(0L))
-    }},
+    pre_processor = pre_processor,
     post_processor = post_processor
   )
 }
