@@ -71,14 +71,15 @@ md_document <- function(variant = "markdown_strict",
         c(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua"))
       )
       on.exit(xfun::set_envvar(lua_env_vars), add = TRUE)
+      input_lines <- read_utf8(input_file)
       pandoc_convert(
         input_file, to = "markdown", output = input_file,
         options = c(
-          "--standalone",
           "--lua-filter", pkg_file_lua("number-sections.lua"),
           "--metadata", "preprocess_number_sections=true"
         )
       )
+      write_utf8(.preserve_yaml(input_lines, read_utf8(input_file)), input_file)
       return(character(0L))
     }
   }
@@ -86,13 +87,10 @@ md_document <- function(variant = "markdown_strict",
   # add post_processor for yaml preservation
   post_processor <- if (preserve_yaml && variant != 'markdown') {
     function(metadata, input_file, output_file, clean, verbose) {
-      input_lines <- read_utf8(input_file)
-      partitioned <- partition_yaml_front_matter(input_lines)
-      if (!is.null(partitioned$front_matter)) {
-        output_lines <- c(partitioned$front_matter, "", read_utf8(output_file))
-        write_utf8(output_lines, output_file)
-      }
-      output_file
+      write_utf8(
+        .preserve_yaml(read_utf8(input_file), read_utf8(output_file)),
+        output_file
+      )
     }
   }
 
@@ -111,4 +109,12 @@ md_document <- function(variant = "markdown_strict",
     pre_processor = pre_processor,
     post_processor = post_processor
   )
+}
+
+.preserve_yaml <- function(input_lines, output_lines) {
+  partitioned <- partition_yaml_front_matter(input_lines)
+  if (!is.null(partitioned$front_matter)) {
+    output_lines <- c(partitioned$front_matter, "", output_lines)
+  }
+  output_lines
 }
