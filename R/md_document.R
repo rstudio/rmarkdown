@@ -60,6 +60,29 @@ md_document <- function(variant = "markdown_strict",
   # pandoc args
   args <- c(args, pandoc_args)
 
+  # Preprocess number_sections if variant is a markdown flavor +gfm_auto_identifers
+  pre_processor <- if (
+    number_sections
+    && grepl("^(commonmark|gfm|markdown)", variant)
+    && grepl("+gfm_auto_identifiers", md_extensions, fixed = TRUE)
+  ) {
+    function(metadata, input_file, ...) {
+      lua_env_vars <- xfun::set_envvar(
+        c(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua"))
+      )
+      on.exit(xfun::set_envvar(lua_env_vars), add = TRUE)
+      pandoc_convert(
+        input_file, to = "markdown", output = input_file,
+        options = c(
+          "--standalone",
+          "--lua-filter", pkg_file_lua("number-sections.lua"),
+          "--metadata", "preprocess_number_sections=true"
+        )
+      )
+      return(character(0L))
+    }
+  }
+
   # add post_processor for yaml preservation
   post_processor <- if (preserve_yaml && variant != 'markdown') {
     function(metadata, input_file, output_file, clean, verbose) {
@@ -85,19 +108,7 @@ md_document <- function(variant = "markdown_strict",
     ),
     clean_supporting = FALSE,
     df_print = df_print,
-    pre_processor = if (number_sections) {function(metadata, input_file, ...) {
-      lua_env_vars <- xfun::set_envvar(c(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua")))
-      on.exit(xfun::set_envvar(lua_env_vars), add = TRUE)
-      pandoc_convert(
-        input_file, to = "markdown", output = input_file,
-        options = c(
-          "--standalone",
-          "--lua-filter", pkg_file_lua("number-sections.lua"),
-          "--metadata", "preprocess_number_sections=true"
-        )
-      )
-      return(character(0L))
-    }},
+    pre_processor = pre_processor,
     post_processor = post_processor
   )
 }
