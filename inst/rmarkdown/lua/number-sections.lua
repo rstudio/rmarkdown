@@ -44,13 +44,20 @@ function is_preprocess(meta)
 end
 
 
-function fix_link_id(div)
+function pairwise_link_id(div)
   local old_id = div.attributes['data-rmarkdown-temporarily-recorded-id']
 
   if old_id and #div.content and (div.content[1].t == 'Header') then
     needs_number_sections = false
     identifiers['#' .. old_id] = '#' .. div.content[1].identifier
     return div.content
+  end
+end
+
+function fix_link_id(link)
+  if identifiers[link.target] then
+    link.target = identifiers[link.target]
+    return link
   end
 end
 
@@ -100,6 +107,7 @@ end
 
 return {
   {Meta = is_preprocess},
-  {Div = fix_link_id},
+  {Div = pairwise_link_id},
+  {Link = fix_link_id},
   {Header = number_sections}
 }
