@@ -64,7 +64,7 @@ md_document <- function(variant = "markdown_strict",
   pre_processor <- if (
     number_sections
     && grepl("^(commonmark|gfm|markdown)", variant)
-    && grepl("+gfm_auto_identifiers", md_extensions, fixed = TRUE)
+    && any(grepl("+gfm_auto_identifiers", md_extensions, fixed = TRUE))
   ) {
     function(metadata, input_file, ...) {
       lua_env_vars <- xfun::set_envvar(
