@@ -86,6 +86,8 @@ md_document <- function(variant = "markdown_strict",
     clean_supporting = FALSE,
     df_print = df_print,
     pre_processor = if (number_sections) {function(metadata, input_file, ...) {
+      lua_env_vars <- xfun::set_envvar(c(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua")))
+      on.exit(xfun::set_envvar(lua_env_vars), add = TRUE)
       pandoc_convert(
         input_file, to = "markdown", output = input_file,
         options = c(
