@@ -1,6 +1,10 @@
 --[[
 number-sections - Number sections like the --number-sections option
 
+When output is a markdown flavor +gfm_auto_identifiers, pandoc must run twice
+with this filter to keep alive links to numbered headers. In the first time,
+add a following argument: `--metadata preprocess_number_sections=true`.
+
 # MIT License
 
 Copyright (c) 2020 Atsushi Yasumoto, Christophe Dervieux
