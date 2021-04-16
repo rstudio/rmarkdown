@@ -25,12 +25,23 @@ test_that("pagebreak Lua filters works", {
 test_that("number_sections Lua filter works", {
   numbers <- c("1", "1.1", "2", "2.1")
   headers <- c("#", "##", "#", "##")
-  rmd <- paste0(headers, " ", numbers, "\n\n")
-  result <- .generate_md_and_convert(rmd, md_document(number_sections = TRUE))
+  rmd <- c(paste0(headers, " ", numbers, "\n\n"), "[1]")
   expected <- paste(numbers, numbers)
   # pandoc 2.11.2 default to atx headers
   if (pandoc_available("2.11.2")) expected <- paste(headers, expected)
+
+  # -gfm_auto_identifiers
+  result <- .generate_md_and_convert(rmd, md_document(number_sections = TRUE))
   expect_identical(result[result %in% expected], expected)
+  expect_false(identical(result[length(result)], "[1](#1-1)"))
+
+  # +gfm_auto_identifiers
+  result <- .generate_md_and_convert(
+    rmd,
+    md_document(number_sections = TRUE, md_extensions = "+gfm_auto_identifiers")
+  )
+  expect_identical(result[result %in% expected], expected)
+  expect_identical(result[length(result)], "[1](#1-1)")
 })
 
 test_that("formats have the expected Lua filter", {
