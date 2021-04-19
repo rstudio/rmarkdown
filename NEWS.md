@@ -1,6 +1,8 @@
 rmarkdown 2.8
 ================================================================================
 
+- Fix an issue with `citation_package` having no effect when using `.md` file as input to `render()` with latex and PDF output formats (thanks, @andrewheiss, #2113).
+
 - A new internal option `rmarkdown.knit.ext` has been added to control the extension of the intermediary knit output during a rendering. It defaults to `md` to produce `*.knit.md`. Only useful for very advanced usage (#2098).
 
 - `render()` won't produce any `*.utf8.md` intermediary file anymore. This was a leftover from previous versions of **rmarkdown**. Since **knitr** 1.24 and **rmarkdown** 2.0, only UTF-8 input files are allowed. (#2098).
