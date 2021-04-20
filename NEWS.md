@@ -1,6 +1,8 @@
 rmarkdown 2.8
 ================================================================================
 
+- Fix an issue with styling and code folding button behavior when default is `code-folding: show`. The Button can now be correctly style according to state as `aria-expanded` attributes is correctly updated. Also, new classes has been added on the button to allow styling during transition: `btn-collapsing` and `btn-expanding` are respectively applied during transition Show to Hide and Hide to Show. (This follow [Bootstrap behavior for the collapsible block](https://getbootstrap.com/docs/3.4/javascript/#collapse)) (thanks, @steveharoz, #2085).
+
 - Fix an issue with `citation_package` having no effect when using `.md` file as input to `render()` with latex and PDF output formats (thanks, @andrewheiss, #2113).
 
 - A new internal option `rmarkdown.knit.ext` has been added to control the extension of the intermediary knit output during a rendering. It defaults to `md` to produce `*.knit.md`. Only useful for very advanced usage (#2098).
