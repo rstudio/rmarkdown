@@ -52,7 +52,7 @@ github_document <- function(toc = FALSE,
     "--atx-headers", pandoc_args
   )
 
-  if (toc && !isTRUE(grepl("gfm_auto_identifiers", md_extensions))) {
+  if ((toc || number_sections) && !isTRUE(grepl("gfm_auto_identifiers", md_extensions))) {
     md_extensions <- c(md_extensions, "+gfm_auto_identifiers")
   }
 
