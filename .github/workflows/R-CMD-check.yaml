@@ -89,7 +89,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ${{ env.R_LIBS_USER }}
+            ${{ env.R_LIBS_USER }}/*
             !${{ env.R_LIBS_USER }}/pak
           key: ${{ matrix.config.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-${{ hashFiles('.github/r-depends.rds') }}
           restore-keys: ${{ matrix.config.os }}-${{ steps.install-r.outputs.installed-r-version }}-1-
