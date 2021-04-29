@@ -48,8 +48,9 @@ md_document <- function(variant = "markdown_strict",
                         pandoc_args = NULL,
                         ext = ".md") {
 
+
   # base pandoc options for all markdown output
-  args <- c(if (variant != "markdown" || preserve_yaml) "--standalone")
+  args <- c("--standalone")
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
@@ -60,8 +61,11 @@ md_document <- function(variant = "markdown_strict",
   # pandoc args
   args <- c(args, pandoc_args)
 
-  # add post_processor for yaml preservation
-  post_processor <- if (preserve_yaml && variant != 'markdown') {
+  # variants
+  variant <- adapt_md_variant(variant, preserve_yaml)
+
+  # add post_processor for yaml preservation if not supported by pandoc
+  post_processor <- if (preserve_yaml && grepl('yaml_metadata_block', variant, fixed = TRUE)) {
     function(metadata, input_file, output_file, clean, verbose) {
       input_lines <- read_utf8(input_file)
       partitioned <- partition_yaml_front_matter(input_lines)
@@ -87,4 +91,31 @@ md_document <- function(variant = "markdown_strict",
     df_print = df_print,
     post_processor = post_processor
   )
+}
+
+adapt_md_variant <- function(variant, preserve_yaml) {
+  variant_base <- gsub("^([^+-]*).*", "\\1", variant)
+  variant_extensions <- gsub(sprintf("^%s", variant_base), "", variant)
+
+  set_extension <- function(format, ext, add = TRUE) {
+    ext <- paste0(ifelse(add, "+", "-"), ext)
+    if (grepl(ext, format, fixed = TRUE)) return(format)
+    paste0(format, ext, collapse = "")
+  }
+
+  # yaml_metadata_block extension
+  variant_extensions <- switch(
+    variant_base,
+    gfm=,
+    commonmark=,
+    commonmark_x= if (pandoc_available(2.13)) set_extension(variant_extensions, "yaml_metadata_block", preserve_yaml),
+    markdown =,
+    markdown_phpextra=,
+    markdown_github=,
+    markdown_mmd=,
+    markdown_strict= set_extension(variant_extensions, "yaml_metadata_block", preserve_yaml),
+    variant_extensions
+  )
+
+  paste0(variant_base, variant_extensions, collapse = "")
 }
