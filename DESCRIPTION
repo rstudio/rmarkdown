@@ -104,7 +104,7 @@ Suggests:
     tibble,
     fs,
     rsconnect,
-    withr (>= 2.3.0),
+    withr (>= 2.4.2),
     bslib (>= 0.2.4),
     sass (>= 0.3.1)
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
