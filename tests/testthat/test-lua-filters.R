@@ -40,6 +40,12 @@ test_that("latex-divs.lua works", {
   rmd <- "::: {.custom #id}\ncontent\n:::\n\n some other content"
   res <- .generate_md_and_convert(rmd, "html_document")
   expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom"')
+  rmd <- "::: {.custom #id data-latex=''}\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "html_document")
+  expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom"')
+  rmd <- "::: {.custom #id latex=true}\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "html_document")
+  expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom"')
 })
 
 test_that("formats have the expected Lua filter", {
