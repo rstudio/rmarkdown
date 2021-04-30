@@ -106,7 +106,7 @@ Suggests:
     rsconnect,
     withr (>= 2.3.0),
     bslib (>= 0.2.4),
-    sass (>= 0.3.0)
+    sass (>= 0.3.1)
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
 URL: https://github.com/rstudio/rmarkdown, https://pkgs.rstudio.com/rmarkdown/
 BugReports: https://github.com/rstudio/rmarkdown/issues
@@ -114,4 +114,4 @@ License: GPL-3
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
-Remotes: yihui/tinytex
+Remotes: yihui/tinytex, rstudio/sass
