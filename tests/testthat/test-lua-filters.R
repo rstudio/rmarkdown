@@ -33,6 +33,15 @@ test_that("number_sections Lua filter works", {
   expect_identical(result[result %in% expected], expected)
 })
 
+test_that("latex-divs.lua works", {
+  rmd <- "::: custom\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "html_document")
+  expect_match(grep('custom', res, value = TRUE), '<div class="custom"')
+  rmd <- "::: {.custom #id}\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "html_document")
+  expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom"')
+})
+
 test_that("formats have the expected Lua filter", {
   expect_filters <- function(format_fun, expected_filters) {
     filters <- basename(format_fun$pandoc$lua_filters)
