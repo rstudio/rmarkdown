@@ -90,7 +90,7 @@ Imports:
     htmltools (>= 0.3.5),
     evaluate (>= 0.13),
     jsonlite,
-    tinytex (>= 0.11),
+    tinytex (>= 0.31),
     xfun (>= 0.21),
     methods,
     stringr (>= 1.2.0)
@@ -114,4 +114,4 @@ License: GPL-3
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
-Remotes: yihui/tinytex, rstudio/sass, rstudio/bslib
+Remotes: rstudio/sass, rstudio/bslib
