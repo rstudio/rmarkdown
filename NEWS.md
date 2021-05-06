@@ -29,6 +29,8 @@ rmarkdown 2.8
 
 - `html_document_base` gains a `css` argument, to which `html_document`'s `css` argument is now passed. This also fix an issue when `.sass` or `.scss` files are used with this `css` argument when `self_contained: FALSE`. Moreover, **sass** caching mechanism can now be used when passing `.sass` or `.scss` files to the `css` argument (thanks, @cpsievert, #2095).
 
+- The `fig_crop` option of PDF document formats (such as `pdf_document` and `beamer_presentation`) supports the value `"auto"` now, which means `fig_crop = TRUE` when figure cropping tools `pdfcrop` and `ghostscript` are available.
+
 - `rmarkdown::tufte_handout` has been deprecated and will be removed in the future from this package. It has been moved to the **tufte** package since **rmarkdown** 0.9.5 (released on 2016-02-22). Please use `tufte::tufte_handout` instead.
 
 

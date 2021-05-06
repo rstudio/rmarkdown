@@ -262,10 +262,12 @@ knitr_options_pdf <- function(fig_width,
   knit_hooks <- NULL
 
   # apply cropping if requested and we have pdfcrop and ghostscript
-  crop <- fig_crop && has_crop_tools()
-  if (crop) {
-    knit_hooks = list(crop = knitr::hook_pdfcrop)
-    opts_chunk$crop = TRUE
+  if (identical(fig_crop, 'auto')) fig_crop <- has_crop_tools(FALSE) else {
+    if (fig_crop && !has_crop_tools()) fig_crop <- FALSE
+  }
+  if (fig_crop) {
+    knit_hooks <- list(crop = knitr::hook_pdfcrop)
+    opts_chunk$crop <- TRUE
   }
 
   # return options
