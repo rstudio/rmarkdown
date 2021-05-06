@@ -31,6 +31,8 @@ rmarkdown 2.8
 
 - The `fig_crop` option of PDF document formats (such as `pdf_document` and `beamer_presentation`) supports the value `"auto"` now, which means `fig_crop = TRUE` when figure cropping tools `pdfcrop` and `ghostscript` are available.
 
+- The default value of the `fig_crop` option of PDF output formats has been changed from `TRUE` to `"auto"` (#2077).
+
 - `rmarkdown::tufte_handout` has been deprecated and will be removed in the future from this package. It has been moved to the **tufte** package since **rmarkdown** 0.9.5 (released on 2016-02-22). Please use `tufte::tufte_handout` instead.
 
 

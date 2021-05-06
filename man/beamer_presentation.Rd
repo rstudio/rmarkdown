@@ -11,7 +11,7 @@ beamer_presentation(
   incremental = FALSE,
   fig_width = 10,
   fig_height = 7,
-  fig_crop = TRUE,
+  fig_crop = "auto",
   fig_caption = TRUE,
   dev = "pdf",
   df_print = "default",
