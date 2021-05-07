@@ -1,7 +1,7 @@
 http://rmarkdown.rstudio.com/*   https://rmarkdown.rstudio.com/:splat  301!
 https://rmarkdown.netlify.com/*  https://rmarkdown.rstudio.com/:splat  301!
 http://rmarkdown.netlify.com/*   https://rmarkdown.rstudio.com/:splat  301!
-/flexdashboard    /flexdashboard/   301!
+/flexdashboard/*     https://pkgs.rstudio.com/flexdashboard/:splat   301!
 
 /r_notebooks.html  https://bookdown.org/yihui/rmarkdown/notebook.html  301!
 /html_document_format.html https://bookdown.org/yihui/rmarkdown/html-document.html  301!
