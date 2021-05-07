@@ -102,9 +102,9 @@
 #'  \if{html}{\out{(&#x1F517;)}}.
 #'
 #'  If you prefer an svg icon, you can also use one using for example a direct link or downloading it from
-#'  \url{https://material.io/resources/icons/}.
+#'  \url{https://fonts.google.com/icons}.
 #'  \preformatted{
-#'  /* From https://material.io/resources/icons/
+#'  /* From https://fonts.google.com/icons
 #'     Licence: https://www.apache.org/licenses/LICENSE-2.0.html */
 #'  a.anchor-section::before {
 #'    content: url(https://fonts.gstatic.com/s/i/materialicons/link/v7/24px.svg);
