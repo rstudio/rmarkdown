@@ -22,19 +22,19 @@ output:
         <div class="galleryItemDescription">HTML documents for web publishing.</div>
       </div>
       <div class="galleryItem">
-        <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/svm-rmarkdown-article-example.pdf"><img class="galleryItemImage" src="galleryImages/pdf.png"/></a>
-        <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/svm-rmarkdown-article-example.pdf" class="galleryItemLabel">PDF</a>
-        <div class="galleryItemDescription">PDF documents for printing. <a href="https://raw.githubusercontent.com/svmiller/svm-r-markdown-templates/master/svm-rmarkdown-article-example.Rmd">Example Code</a></div>
+        <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/article-example/svm-rmarkdown-article-example.pdf"><img class="galleryItemImage" src="galleryImages/pdf.png"/></a>
+        <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/article-example/svm-rmarkdown-article-example.pdf" class="galleryItemLabel">PDF</a>
+        <div class="galleryItemDescription">PDF documents for printing. <a href="https://github.com/svmiller/svm-r-markdown-templates/blob/master/article-example/svm-rmarkdown-article-example.Rmd">Example Code</a></div>
       </div>
       <div class="galleryItem">
         <img class="galleryItemImage" src="galleryImages/word.png"/>
-        <a class="galleryItemLabel">Microsoft Word</a>
+        <a href="https://github.com/svmiller/svm-r-markdown-templates/tree/master/word-example" class="galleryItemLabel">Microsoft Word</a>
         <div class="galleryItemDescription">Microsoft Word documents for Office workflows.</div>
       </div>
       <div class="galleryItem">
         <a href="https://rstudio.github.io/tufte/"><img class="galleryItemImage" src="galleryImages/tufte.png"/></a>
         <a href="https://rstudio.github.io/tufte/" class="galleryItemLabel">Handouts</a>
-        <div class="galleryItemDescription">Tufte styled documents for handouts. <a href="https://raw.githubusercontent.com/rstudio/tufte/master/inst/rmarkdown/templates/tufte_html/skeleton/skeleton.Rmd">Example Code</a></div>
+        <div class="galleryItemDescription">Tufte styled documents for handouts. <a href="https://github.com/rstudio/tufte/tree/master/inst/rmarkdown/templates/tufte_html/skeleton/skeleton.Rmd">Example Code</a></div>
       </div>
     </div>
   </div>
@@ -52,11 +52,6 @@ output:
         <a href="https://gallery.shinyapps.io/UNCCC2/"><img class="galleryItemImage" src="galleryImages/widgets2.png"/></a>
         <a href="https://gallery.shinyapps.io/UNCCC2/" class="galleryItemLabel">HTML Widgets</a>
         <div class="galleryItemDescription">Embed htmlwidgets such as dygraphs and datatables directly into your reports.</div>
-      </div>
-      <div class="galleryItem">
-        <a href="https://uasnap.shinyapps.io/ex_leaflet/"><img class="galleryItemImage" src="galleryImages/shiny1.png"/></a>
-        <a href="https://uasnap.shinyapps.io/ex_leaflet/" class="galleryItemLabel">Shiny</a>
-        <div class="galleryItemDescription">Add interactive analysis with shiny, which lets your user rerun the actual analysis within your report.</div>
       </div>
       <div class="galleryItem">
         <a href="https://bookdown.org/csgillespie/shiny_components/"><img class="galleryItemImage" src="galleryImages/shiny2.png"/></a>
@@ -79,11 +74,6 @@ output:
         <a href="https://beta.rstudioconnect.com/jjallaire/htmlwidgets-highcharter/"><img class="galleryItemImage" src="galleryImages/dashboard2.png"/></a>
         <a href="https://beta.rstudioconnect.com/jjallaire/htmlwidgets-highcharter/" class="galleryItemLabel">Dashboard with htmlwidgets</a>
         <div class="galleryItemDescription">Add interactive graphics to a dashboard with htmlwidgets.</div>
-      </div>
-      <div class="galleryItem">
-        <a href="https://walkerke.shinyapps.io/neighborhood_diversity/"><img class="galleryItemImage" src="galleryImages/dashboard3.png"/></a>
-        <a href="https://walkerke.shinyapps.io/neighborhood_diversity/" class="galleryItemLabel">Dashboard with Shiny</a>
-        <div class="galleryItemDescription">Add interactive analysis to a dashboard with Shiny.</div>
       </div>
       <div class="galleryItem">
         <a href="https://beta.rstudioconnect.com/jjallaire/htmlwidgets-showcase-storyboard/"><img class="galleryItemImage" src="galleryImages/dashboard4.png"/></a>

@@ -61,7 +61,7 @@ knitr::knit_hooks$set(source = function(x, options){
 
 Let us now test how this hook performs.
 
-```{r qplot, fig.width = 5, fig.height = 5, fig.align = "center", verbatim = TRUE}
+```{r qplot, fig.width = 5, fig.height = 5, fig.align = "center", verbatim = TRUE, message=FALSE}
 library(ggplot2)
 qplot(wt, am, color = vs, data = mtcars)
 ```

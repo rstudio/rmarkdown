@@ -1,0 +1,150 @@
+---
+title: "Word Documents"
+output:
+  html_document:
+    toc: true
+---
+
+## Overview
+
+To create a Word document from R Markdown you specify the `word_document` output format in the front-matter of your document:
+
+    ---
+    title: "Habits"
+    author: John Doe
+    date: March 22, 2005
+    output: word_document
+    ---
+
+## Figure Options
+
+There are a number of options that affect the output of figures within Word documents:
+
+* `fig_width` and  `fig_height` can be used to control the default figure width and height (5x4 is used if not values are specified)
+
+* `fig_caption` controls whether figures are rendered with captions
+
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      word_document:
+        fig_width: 5
+        fig_height: 5
+        fig_caption: true
+    ---
+
+## Data Frame Printing
+
+You can enhance the default display of data frames via the `df_print` option. Valid values include:
+
+| Option  | Description  |
+|------------|-------------------------------------------|
+| default  | Call the [`print.data.frame`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/print.dataframe.html) generic method   |
+| kable  | Use the [`knitr::kable`](https://www.rdocumentation.org/packages/knitr/versions/1.12.3/topics/kable) function. |
+| tibble  | Use the [`tibble::print.tbl_df`](https://www.rdocumentation.org/packages/tibble/versions/1.2/topics/print.tbl_df) function.  |
+
+For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        df_print: kable
+    ---
+
+## Syntax Highlighting
+
+You can use the `highlight` option to control the syntax highlighting theme. For example:
+
+    ---
+    title: "Habits"
+    output:
+      word_document:
+        highlight: "tango"
+    ---
+
+Supported styles include "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn", and "haddock". Pass `null` to prevent syntax highlighting.
+
+
+## Style Reference
+
+You can also specify a document to be used as as a style reference in producing a docx file. This will allow you to customize things such as margins and other formatting characteristics. For best results, the reference docx should be a modified version of a docx file produced using rmarkdown. Pass "default" to use the default styles. You can do this with the `reference_docx` option:
+
+    ---
+    title: "Habits"
+    output:
+      word_document:
+        reference_docx: mystyles.docx
+    ---
+    
+For more on this, see the article [here](/articles_docx.html).
+
+## Keeping Markdown
+
+When knitr processes an R Markdown input file it creates a markdown (md) file which is subsequently tranformed into a Word document by pandoc. If you want to keep a copy of the markdown file after rendering you can do so using the `keep_md` option:
+
+    ---
+    title: "Habits"
+    output:
+      word_document:
+        keep_md: true
+    ---
+
+## Markdown Extensions
+
+By default R Markdown is defined as all pandoc markdown extensions with the following tweaks for backward compatibility with the markdown package:
+
+```
++autolink_bare_uris
++ascii_identifier
++tex_math_single_backslash
+```
+
+You can enable or disable markdown extensions using the `md_extensions` option (you preface an option with `-` to disable and `+` to enable it). For example:
+
+    ---
+    title: "Habits"
+    output:
+      html_document:
+        md_extensions: -autolink_bare_uris+hard_line_breaks
+    ---
+
+The above would disable the `autolink_bare_uris` extension and enable the `hard_line_breaks` extension. 
+
+For more on available markdown extensions see the [pandoc markdown specification](http://pandoc.org/README.html#pandocs-markdown).
+
+
+## Pandoc Arguments
+
+If there are pandoc features you want to use that lack equivilants in the YAML options described above you can still use them by passing custom `pandoc_args`. For example:
+
+    ---
+    title: "Habits"
+    output:
+      word_document:
+        pandoc_args: [
+          "--csl", "/var/csl/acs-nano.csl"
+        ]
+    ---
+
+Documentation on all available pandoc arguments can be found in the [pandoc user guide](http://johnmacfarlane.net/pandoc/README.html#options).
+
+## Shared Options
+
+If you want to specify a set of default options to be shared by multiple documents within a directory you can include a file named `_output.yaml` within the directory. Note that no YAML delimeters or enclosing output object are used in this file. For example:
+
+**\_output.yaml**
+
+```yaml
+word_document:
+  fig_width: 5
+  fig_height: 5
+  fig_caption: true
+```
+
+All documents located in the same directory as `_output.yaml` will inherit its options. Options defined explicitly within documents will override those specified in the shared options file.
+
+
+

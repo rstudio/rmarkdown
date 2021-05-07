@@ -34,7 +34,7 @@ If you are creating an R function that generates HTML there are a number of ways
 2. Generate HTML that does not indent tags at the beginning of lines.
 
 3. A varation of \#2, use the [**htmltools**](http://cran.r-project.org/web/packages/htmltools/index.html) package to generate HTML (which
-will print it's output by default without indentation).
+will print its output by default without indentation).
 
 If you are a user of an R package that is generating HTML that includes indentation you can temporarily workaround the problem by rendering your documnent with rmarkdown v1 (see section below on [Continuing to Use v1]).
 

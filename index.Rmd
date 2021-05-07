@@ -52,6 +52,15 @@ $("#pageContent").removeClass("standardPadding");
       </div>
     </div>
   </div>
+  <div class="band full gray2 fourth leftText">
+    <div class="bandContent vCenter">
+      <div class="blurb">
+        <div>Need R Markdown in production? Learn how to <a href="https://docs.rstudio.com/connect/user/publishing/">publish</a> and <a href="https://docs.rstudio.com/connect/user/scheduling/">schedule</a> reports, <a href="https://docs.rstudio.com/connect/user/param-rmarkdown/">enable self-service customization</a>, and distribute beautiful emails using <a href='https://rstudio.com/products/connect'> RStudio Connect</a>.
+        </div>
+      </div>
+    </div>
+    <img class="imageFour" src="images/band4.png"/>
+  </div>
 </div>
 
 <!--/html_preserve-->

@@ -143,7 +143,7 @@ github_document:
   fig_height: 5
 ```
 
-All documents located in the same directory as `_output.yaml` will inherit it's options. Options defined explicitly within documents will override those specified in the shared options file.
+All documents located in the same directory as `_output.yaml` will inherit its options. Options defined explicitly within documents will override those specified in the shared options file.
 
 
 

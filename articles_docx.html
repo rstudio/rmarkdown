@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Richard Layton" />
@@ -14,6 +14,7 @@
 
 <title>Happy collaboration with Rmd to docx</title>
 
+<script src="site_libs/header-attrs-2.3.7/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -30,7 +31,20 @@
 
 <script type="text/javascript" src="js/redirect.js"></script>
 <script type="text/javascript" src="js/rmarkdown.js"></script>
-<script type="text/javascript" src="js/ga.js"></script>
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-20375833-3', 'auto', {'allowLinker': true});
+ga('require', 'linker');
+ga('linker:autoLink', ['rstudio.com', 'rstudio.github.io', 'rviews.rstudio.com', 'community.rstudio.com', 'rpubs.rstudio.com', 'environments.rstudio.com', 'rstudio.org', 'dailies.rstudio.com', 'pages.rstudio.com', 'db.rstudio.com', 'solutions.rstudio.com', 'docs.rstudio.com', 'spark.rstudio.com', 'shiny.rstudio.com', 'education.rstudio.com', 'rstudio.cloud', 'shinyapps.io', 'team-admin.rstudio.com', 'blog.rstudio.com', 'support.rstudio.com', 'blogs.rstudio.com', 'keras.rstudio.com', 'swag.rstudio.com', 'tensorflow.rstudio.com', 'packagemanager.rstudio.com'] );
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -79,9 +93,7 @@ h6 {
 
 <link rel="stylesheet" href="css/rmarkdown.css" type="text/css" />
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -95,7 +107,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -112,8 +123,6 @@ summary {
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -159,6 +168,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -171,20 +181,17 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -204,6 +211,7 @@ $(document).ready(function () {
         <a class="menuItem" href="formats.html">Formats</a>
         <a class="menuItem" href="articles.html">Articles</a>
         <a class="menuItem" href="https://bookdown.org/yihui/rmarkdown/">Book</a>
+        <a class="menuItem" href="docs/">References</a>
         <a class="menuItem gitHub" href="https://github.com/rstudio/rmarkdown"></a>
         <a class="menuItem gitHubText" href="https://github.com/rstudio/rmarkdown">Source on GitHub</a>
       </div>
@@ -231,8 +239,8 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 
 
 <h1 class="title toc-ignore">Happy collaboration with Rmd to docx</h1>
-<h4 class="author"><em>Richard Layton</em></h4>
-<h4 class="date"><em>July 21st, 2015</em></h4>
+<h4 class="author">Richard Layton</h4>
+<h4 class="date">July 21st, 2015</h4>
 
 </div>
 
@@ -505,24 +513,27 @@ obstacles to effective collaboration.</code></pre>
 </li>
 <li>Word 2013</li>
 </ul>
-<pre><code>## R version 3.5.1 (2018-07-02)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS  10.14.1
+<pre><code>## R version 4.0.2 (2020-06-22)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Catalina 10.15.6
 ## 
 ## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+## BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] knitr_1.20.24
+## [1] ggplot2_3.3.2 knitr_1.29.5 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_3.5.1  magrittr_1.5    tools_3.5.1     htmltools_0.3.6
-##  [5] yaml_2.2.0      Rcpp_1.0.0      stringi_1.2.4   rmarkdown_1.11 
-##  [9] stringr_1.3.1   xfun_0.4.6      digest_0.6.18   evaluate_0.12</code></pre>
+##  [1] magrittr_1.5     tidyselect_1.1.0 munsell_0.5.0    colorspace_1.4-1 R6_2.4.1         rlang_0.4.7     
+##  [7] dplyr_1.0.2      stringr_1.4.0    highr_0.8        tools_4.0.2      grid_4.0.2       gtable_0.3.0    
+## [13] xfun_0.17.4      withr_2.3.0      htmltools_0.5.0  ellipsis_0.3.1   yaml_2.2.1       digest_0.6.25   
+## [19] tibble_3.0.3     lifecycle_0.2.0  crayon_1.3.4     farver_2.0.3     purrr_0.3.4      vctrs_0.3.4     
+## [25] glue_1.4.2       evaluate_0.14    rmarkdown_2.3.7  labeling_0.3     stringi_1.5.3    compiler_4.0.2  
+## [31] pillar_1.4.6     generics_0.0.2   scales_1.1.1     jsonlite_1.7.1   pkgconfig_2.0.3</code></pre>
 <p><br></p>
 </div>
 <div id="image-credits" class="section level3">
@@ -539,12 +550,12 @@ obstacles to effective collaboration.</code></pre>
 
 <div id="rStudioFooter" class="band full">
 <div class="bandContent">
-  <div id="copyright">© Copyright 2016 - 2018 RStudio Inc.</div>
+  <div id="copyright">© Copyright 2016 - 2020 RStudio, PBC</div>
   <div id="logos">
     <a href="https://twitter.com/rstudio" class="footerLogo twitter"></a>
     <a href="https://github.com/rstudio" class="footerLogo gitHub"></a>
-    <a href="https://www.linkedin.com/company/rstudio-inc" class="footerLogo linkedIn"></a>
-    <a href="https://www.facebook.com/pages/RStudio-Inc/267733656584415" Class="footerLogo facebook"></a>
+    <a href="https://www.linkedin.com/company/rstudio-pbc" class="footerLogo linkedIn"></a>
+    <a href="https://www.facebook.com/rstudioinc/" class="footerLogo facebook"></a>
   </div>
 </div>
 </div>
@@ -575,6 +586,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 
 </body>

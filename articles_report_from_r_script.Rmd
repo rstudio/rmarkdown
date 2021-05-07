@@ -43,7 +43,7 @@ You can also specify the output format within the metadata, for example:
 
 ## Markdown Formatting
 
-Note that the R comment used above to add a title, author, and date includes a single-quote as a special prefix character. This is a [roxygen2](https://cran.rstudio.com/web/packages/roxygen2/index.html) style comment, and it's actually possible to include many such comments in an R script, all of which will be converted to markdown content within the compiled report For example:
+Note that the R comment used above to add a title, author, and date includes a single-quote as a special prefix character. This is a [roxygen2](https://cran.rstudio.com/web/packages/roxygen2/index.html) style comment, and it's actually possible to include many such comments in an R script, all of which will be converted to markdown content within the compiled report. For example:
 
 ```{r, eval=FALSE}
 #' A script comment that includes **markdown** formatting.

@@ -16,13 +16,14 @@ using the `bibliography` metadata field in a YAML metadata section. For example:
     ---
     title: "Sample Document"
     output: html_document
-    bibliography: bibliography.bib
+    bibliography: bibliography.json
     ---
 
 The bibliography may have any of these formats:
 
   Format            File extension
   ------------      --------------
+  CSL-JSON          .json
   MODS              .mods
   BibLaTeX          .bib
   BibTeX            .bibtex
@@ -32,7 +33,11 @@ The bibliography may have any of these formats:
   ISI               .wos
   MEDLINE           .medline
   Copac             .copac
-  JSON citeproc     .json
+
+[CSL-JSON](https://citeproc-js.readthedocs.io/en/latest/csl-json/markup.html) 
+is the recommended format. This is the native format for
+Pandoc's citation processor, `pandoc-citeproc`. All other types 
+are internally converted to CSL-JSON. 
 
 Note that `.bib` can generally be used with both BibTeX and BibLaTeX
 files, but you can use `.bibtex` to force BibTeX.
