@@ -18,7 +18,7 @@ tufte_handout <- function(fig_width = 4,
                           pandoc_args = NULL) {
 
   # TODO: remove tufte_handout from rmarkdown
-  if (!xfun::is_R_CMD_check()) warning(
+  warning(
     'The function rmarkdown::tufte_handout() has been deprecated. Please use',
     'tufte::tufte_handout instead.'
   )
