@@ -35,6 +35,8 @@ rmarkdown 2.8
 
 - `rmarkdown::tufte_handout` has been deprecated and will be removed in the future from this package. It has been moved to the **tufte** package since **rmarkdown** 0.9.5 (released on 2016-02-22). Please use `tufte::tufte_handout` instead.
 
+- When rendering a `runtime: shiny` document, an extra temp folder will be used in the output path. With the extra temp random folder in the path, predictable output file names may be used. (#2137)
+
 
 rmarkdown 2.7
 ================================================================================
