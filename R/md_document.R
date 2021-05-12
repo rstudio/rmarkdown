@@ -118,7 +118,7 @@ adapt_md_variant <- function(variant, preserve_yaml) {
       } else {
         variant_extensions
       }
-    }
+    },
     markdown =,
     markdown_phpextra =,
     markdown_github =,
