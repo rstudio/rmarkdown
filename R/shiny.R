@@ -452,7 +452,7 @@ rmd_cached_output <- function(input) {
     # It's not cacheable, and should be rendered to a session-specific temporary
     # directory, but with a predictable file name.
     tmp_dir <- tempfile()
-    output_dest_name <- paste0(xfun::sans_ext(basename(input)), ".html")
+    output_dest_name <- xfun::with_ext(basename(input), ".html")
     output_dest <- file.path(tmp_dir, output_dest_name)
   }
   list(
