@@ -65,7 +65,7 @@ md_document <- function(variant = "markdown_strict",
   variant <- adapt_md_variant(variant, preserve_yaml)
 
   # add post_processor for yaml preservation if not supported by pandoc
-  post_processor <- if (preserve_yaml && grepl('yaml_metadata_block', variant, fixed = TRUE)) {
+  post_processor <- if (preserve_yaml && !grepl('yaml_metadata_block', variant, fixed = TRUE)) {
     function(metadata, input_file, output_file, clean, verbose) {
       input_lines <- read_utf8(input_file)
       partitioned <- partition_yaml_front_matter(input_lines)
@@ -103,17 +103,28 @@ adapt_md_variant <- function(variant, preserve_yaml) {
     paste0(format, ext, collapse = "")
   }
 
+  add_yaml_block_ext <- function(extensions, preserve_yaml) {
+    set_extension(variant_extensions, "yaml_metadata_block", preserve_yaml)
+  }
+
   # yaml_metadata_block extension
   variant_extensions <- switch(
     variant_base,
-    gfm=,
-    commonmark=,
-    commonmark_x= if (pandoc_available(2.13)) set_extension(variant_extensions, "yaml_metadata_block", preserve_yaml),
+    gfm =,
+    commonmark =,
+    commonmark_x = {
+      if (pandoc_available(2.13)) {
+        add_yaml_block_ext(variant_extensions, preserve_yaml)
+      } else {
+        variant_extensions
+      }
+    }
     markdown =,
-    markdown_phpextra=,
-    markdown_github=,
-    markdown_mmd=,
-    markdown_strict= set_extension(variant_extensions, "yaml_metadata_block", preserve_yaml),
+    markdown_phpextra =,
+    markdown_github =,
+    markdown_mmd =,
+    markdown_strict = add_yaml_block_ext(variant_extensions, preserve_yaml),
+    # do not modified for unknown (yet) md variant
     variant_extensions
   )
 
