@@ -11,11 +11,11 @@
 #' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 #' @inheritParams html_document
 #' @param variant Markdown variant to produce (defaults to "markdown_strict").
-#'   Other valid values are "commonmark", "markdown_github", "markdown_mmd",
-#'   markdown_phpextra", or even "markdown" (which produces pandoc markdown).
-#'   You can also compose custom markdown variants, see the
-#'   \href{https://pandoc.org/MANUAL.html}{pandoc online documentation}
-#'   for details.
+#'   Other valid values are "commonmark", "gfm", "commonmark_x", "markdown_mmd",
+#'   markdown_phpextra", "markdown_github", or even "markdown" (which produces
+#'   pandoc markdown). You can also compose custom markdown variants, see the
+#'   \href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
+#'   details.
 #' @param preserve_yaml Preserve YAML front matter in final document.
 #' @param fig_retina Scaling to perform for retina displays. Defaults to
 #'   \code{NULL} which performs no scaling. A setting of 2 will work for all
