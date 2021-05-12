@@ -36,6 +36,22 @@ html_dependency_jqueryui <- function() {
     script = "jquery-ui.min.js")
 }
 
+html_dependencies_rstrap <- function() {
+  list(
+    # TODO: not useful if rmarkdown uses jquerylib
+    jquerylib::jquery_core(3),
+    # custom deps forked from boostrap
+    htmltools::htmlDependency(
+      name = "rstrap",
+      version = "1.1.0",
+      src = pkg_file("rmd/h/rstrap"),
+      stylesheet = "rstrap.css",
+      script = "rstrap.js",
+      all_files = FALSE
+    )
+  )
+}
+
 # Create an HTML dependency for Bootstrap
 #' @rdname html-dependencies
 #' @export
@@ -52,6 +68,9 @@ html_dependency_bootstrap <- function(theme) {
       )
     )
     return(bslib::bs_theme_dependencies(theme))
+  }
+  if (identical(theme, "rstrap")) {
+    return(html_dependencies_rstrap())
   }
   htmlDependency(
     name = "bootstrap",
@@ -88,6 +107,9 @@ bootstrap_dependencies <- function(theme) {
 resolve_theme <- function(theme) {
   # theme = NULL means no Bootstrap
   if (is.null(theme)) return(theme)
+  # special handling for rstrap theme,
+  # triggered when bootstrap folder removed from installation folder
+  if (!dir.exists(pkg_file("rmd/h/bootstrap"))) return("rstrap")
   # Bootstrap/Bootswatch 3 names (backwards-compatibility)
   if (is.character(theme)) {
     if (length(theme) != 1) {
