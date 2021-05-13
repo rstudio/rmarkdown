@@ -109,7 +109,14 @@ resolve_theme <- function(theme) {
   if (is.null(theme)) return(theme)
   # special handling for rstrap theme,
   # triggered when bootstrap folder removed from installation folder
-  if (!dir.exists(pkg_file("rmd/h/bootstrap"))) return("rstrap")
+  if (!dir.exists(pkg_file("rmd/h/bootstrap"))) {
+    # we are in rstrap mode, if theme has been changed it will be overriden and
+    # have no documented effect.
+    if (!identical(theme, "default")) {
+      warning("`theme` is deactivated. Changing `theme` argument will have not effect.", call. = FALSE)
+    }
+    return("rstrap")
+  }
   # Bootstrap/Bootswatch 3 names (backwards-compatibility)
   if (is.character(theme)) {
     if (length(theme) != 1) {
