@@ -4,7 +4,6 @@ withr::local_temp_libpaths(action = "replace")
 .libPaths()
 install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
 pak::local_install_dev_deps(".")
-pak::local_install(".")
 
 # remove boostrap folder
 bs_folder <- system.file("rmd/h/bootstrap", package = "rmarkdown", lib.loc = .libPaths()[1])
