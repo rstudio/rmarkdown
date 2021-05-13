@@ -57,6 +57,8 @@ html_dependencies_rstrap <- function() {
 #' @export
 html_dependency_bootstrap <- function(theme) {
   theme <- resolve_theme(theme)
+
+  # Boostrap with bslib package
   if (is_bs_theme(theme)) {
     # TODO: would it make sense for these additional rules to come as a part of
     # bslib::bs_theme_dependencies() (for consistency sake)?
@@ -69,9 +71,11 @@ html_dependency_bootstrap <- function(theme) {
     )
     return(bslib::bs_theme_dependencies(theme))
   }
-  if (identical(theme, "rstrap")) {
-    return(html_dependencies_rstrap())
-  }
+
+  # Used in rstrap mode only
+  if (identical(theme, "rstrap")) return(html_dependencies_rstrap())
+
+  # Rmarkdown own BS3 dependency
   htmlDependency(
     name = "bootstrap",
     version = "3.3.5",
@@ -160,11 +164,9 @@ is_bs_theme <- function(theme) {
 }
 
 theme_version <- function(theme) {
-  if (is_bs_theme(theme)) {
-    bslib::theme_version(theme)
-  } else {
-    substr(html_dependency_bootstrap("default")$version, 1, 1)
-  }
+  if (is_bs_theme(theme)) return(bslib::theme_version(theme))
+  if (identical(theme, "rstrap")) return(NA_character_)
+  substr(html_dependency_bootstrap("default")$version, 1, 1)
 }
 
 
