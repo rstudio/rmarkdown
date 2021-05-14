@@ -113,7 +113,7 @@ resolve_theme <- function(theme) {
   if (is.null(theme)) return(theme)
   # special handling for rstrap theme,
   # triggered when bootstrap folder removed from installation folder
-  if (!dir.exists(pkg_file("rmd/h/bootstrap")) || getOption("rmarkdown.rstrap_mode", FALSE)) {
+  if (!dir.exists(pkg_file("rmd/h/bootstrap")) || getOption("rmarkdown.rstrap", FALSE)) {
     # we are in rstrap mode, if theme has been changed it will be overridden and
     # have no documented effect.
     if (!identical(theme, "default")) {
