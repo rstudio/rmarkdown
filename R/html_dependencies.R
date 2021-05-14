@@ -117,7 +117,10 @@ resolve_theme <- function(theme) {
     # we are in rstrap mode, if theme has been changed it will be overridden and
     # have no documented effect.
     if (!identical(theme, "default")) {
-      warning("`theme` is deactivated. Changing `theme` argument will have not effect.", call. = FALSE)
+      xfun::do_once(
+        warning("`theme` is deactivated. Changing `theme` argument will have not effect.", call. = FALSE),
+        "rmarkdown.rstrap.theme_warning"
+      )
     }
     return("rstrap")
   }
