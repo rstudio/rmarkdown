@@ -118,7 +118,7 @@ resolve_theme <- function(theme) {
     # have no documented effect.
     if (!identical(theme, "default")) {
       xfun::do_once(
-        warning("`theme` is deactivated. Changing `theme` argument will have not effect.", call. = FALSE),
+        warning("`theme` is deactivated. Changing `theme` argument will have no effect.", call. = FALSE),
         "rmarkdown.rstrap.theme_warning"
       )
     }
