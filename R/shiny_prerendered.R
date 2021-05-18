@@ -28,7 +28,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
     assign(".shiny_prerendered_server_start_code", server_start_code, envir = server_envir)
 
     # execute the startup code (server_start_context + context="data" loading)
-    eval(parse(text = server_start_context), envir = server_envir)
+    eval(xfun::parse_only(server_start_context), envir = server_envir)
     shiny_prerendered_data_load(input_rmd, server_envir)
 
     # lock the environment to prevent inadvertant assignments
@@ -39,7 +39,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
   .server_context <- shiny_prerendered_extract_context(html_lines, "server")
   server_envir$.server_context <- .server_context
   server <- function(input, output, session) {
-    eval(parse(text = .server_context))
+    eval(xfun::parse_only(.server_context))
   }
   environment(server) <- new.env(parent = server_envir)
 
@@ -521,7 +521,7 @@ shiny_prerendered_evaluate_hook <- function(input) {
 
     # otherwise parse so we can throw an error for invalid code
     else {
-      parse(text = code)
+      xfun::parse_only(code)
       list()
     }
   }

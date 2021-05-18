@@ -7,6 +7,8 @@ rmarkdown 2.9
 
 - Fix prefix handling in R Markdown website's navbar for Fontawesome V5 and compatibility with V4. For icon only available in V5, the full prefix + name should be use, especially with new `fab` prefix (e.g. `fab fa-r-project`). If no prefix is used (e.g `fa-home` instead of `fas fa-home`), the `fa` prefix will added for V4 compatibility as it has been deprecated in V5. We advice to use the full prefix + name for icons following Fontawesome documentation. (#1994)
 
+- `rmarkdown::site_generator()` can hang session waiting for input when the `site` field is not found in the YAML frontmatter of `index.Rmd` (thanks, @kevinushey @mirh, #2043).
+
 
 rmarkdown 2.8
 ================================================================================

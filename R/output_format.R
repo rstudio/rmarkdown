@@ -402,7 +402,7 @@ default_output_format <- function(input, output_yaml = NULL) {
 
   # look up the formals of the output function to get the full option list and
   # merge against the explicitly set list
-  format_function <- eval(parse(text = format$name))
+  format_function <- eval(xfun::parse_only(format$name))
   format$options <- merge_lists(as.list(formals(format_function)),
                                 format$options,
                                 recursive = FALSE)
@@ -615,7 +615,7 @@ output_format_string_from_ext <- function(output_file) {
 }
 
 create_output_format_function <- function(name) {
-  output_format_func <- eval(parse(text = name))
+  output_format_func <- eval(xfun::parse_only(name))
   if (!is.function(output_format_func))
     stop("YAML output format must evaluate to a function", call. = FALSE)
   output_format_func

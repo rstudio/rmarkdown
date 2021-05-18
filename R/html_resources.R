@@ -332,7 +332,7 @@ discover_rmd_resources <- function(rmd_file, discover_single_resource) {
   # html_document to pick up dependencies
   output_format <- output_format_from_yaml_front_matter(rmd_content)
 
-  output_format_function <- eval(parse(text = output_format$name))
+  output_format_function <- eval(xfun::parse_only(output_format$name))
 
   override_output_format <- if (!is_pandoc_to_html(output_format_function()$pandoc)) "html_document"
 

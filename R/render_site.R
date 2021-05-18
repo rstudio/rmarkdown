@@ -282,7 +282,11 @@ site_generator <- function(input = ".", output_format = NULL) {
   front_matter <- yaml_front_matter(index)
 
   # create the site generator (passing the root dir)
-  create_site_generator <- eval(parse(text = front_matter$site))
+  create_site_generator <- eval(xfun::parse_only(front_matter$site))
+  if (!is.function(create_site_generator)) stop(
+    "Cannot find the site generator from the 'site' field in YAML frontmatter ",
+    "of '", index, "'."
+  )
   generator <- create_site_generator(root)
 
   # if it's in a subdir check to see if the generator supports nested files
