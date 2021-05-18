@@ -80,3 +80,11 @@ test_that("citeproc is enable/disable correctly", {
   test_citeproc_not_required(list(citeproc = FALSE), c("bibliography:", "  - a.bib"))
   test_citeproc_not_required(list(title = "dummy"), c("bibliography: a.bib"))
 })
+
+test_that("default output_format is guessed from output file extension", {
+  expect_equal(output_format_string_from_ext("test.pdf"), "pdf_document")
+  expect_equal(output_format_string_from_ext("test.html"), "html_document")
+  expect_equal(output_format_string_from_ext("test.docx"), "word_document")
+  expect_equal(output_format_string_from_ext("test.any"), "html_document")
+  expect_equal(output_format_string_from_ext(NULL), "html_document")
+})

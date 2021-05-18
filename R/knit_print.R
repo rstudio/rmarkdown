@@ -27,7 +27,7 @@ knit_print.data.frame <- function(x, ...) {
       context$df_print(x)
     }
   } else {
-    print(x, ...)
+    print(x)
   }
 }
 
