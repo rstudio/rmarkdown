@@ -37,7 +37,7 @@ rmarkdown 2.8
 
 - When rendering a `runtime: shiny` document, an extra temp folder will be used in the output path. With the extra temp random folder in the path, predictable output file names may be used. (#2137)
 
-- Floating ToC in `html_document` can now hide headings with unnumbered and unlisted classes (thanks, @atusy, #1933).
+- Floating ToC in `html_document` can now hide headings with unnumbered and unlisted classes (thanks, @atusy, #1993).
 
 
 rmarkdown 2.7
