@@ -652,15 +652,18 @@ navbar_link_text <- function(x, ...) {
       iconset <- split[[1]][[1]]
     else
       iconset <- ""
-    # check if a full class is passed for fontawesome
-    # use default 'fas' otherwise
+    # check if a full class is passed for fontawesome = V5
+    # Add fa deprecated fa prefix otherwise = V4 compatibility
     # https://github.com/rstudio/rmarkdown/issues/1554
-    class = if (grepl("^fa\\w fa", iconset)) {
+    class = if (grepl("^fa\\w? fa", iconset)) {
+      # Fontawesome 5 - full new prefix + name must be passed
+      # if old fa prefix is passed - keep it for compatibility
       x$icon
     } else if (iconset == "fa") {
-      paste("fas", x$icon)
+      # Fontawesome 4 compatibility - Add deprecated fa prefix
+      paste("fa", x$icon)
     } else {
-      # should be other than FontAwesome
+      # Other Icon sets
       paste(iconset, x$icon)
     }
     tagList(tags$span(class = class), " ", x$text, ...)
