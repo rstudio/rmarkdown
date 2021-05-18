@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // If section divs is used, we need to put the anchor is the child header
+  // If section divs is used, we need to put the anchor in the child header
   const headers = document.querySelectorAll("div.hasAnchor.section[class*='level'] > :first-child")
 
   headers.forEach(function (x) {
