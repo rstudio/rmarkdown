@@ -5,6 +5,8 @@ rmarkdown 2.9
 
 - Floating ToC in `html_document` can now hide headings with unnumbered and unlisted classes (thanks, @atusy, #1993).
 
+- `rmarkdown::site_generator()` can hang session waiting for input when the `site` field is not found in the YAML frontmatter of `index.Rmd` (thanks, @kevinushey @mirh, #2043).
+
 
 rmarkdown 2.8
 ================================================================================
