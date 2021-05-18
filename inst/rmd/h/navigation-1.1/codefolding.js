@@ -23,7 +23,6 @@ window.initializeCodeFolding = function(show) {
     // create a collapsable div to wrap the code in
     var div = $('<div class="collapse r-code-collapse"></div>');
     var showThis = (show || $(this).hasClass('fold-show')) && !$(this).hasClass('fold-hide');
-    if (showThis) div.collapse('show');
     var id = 'rcode-643E0F36' + currentIndex++;
     div.attr('id', id);
     $(this).before(div);
@@ -47,13 +46,27 @@ window.initializeCodeFolding = function(show) {
 
     div.before(buttonRow);
 
+    // show the div if necessary
+    if (showThis) div.collapse('show');
+
     // update state of button on show/hide
-    div.on('hidden.bs.collapse', function () {
+    //   * Change text
+    //   * add a class for intermediate states styling
+    div.on('hide.bs.collapse', function () {
       showCodeText.text('Code');
+      showCodeButton.addClass('btn-collapsing');
+    });
+    div.on('hidden.bs.collapse', function () {
+      showCodeButton.removeClass('btn-collapsing');
     });
     div.on('show.bs.collapse', function () {
       showCodeText.text('Hide');
+      showCodeButton.addClass('btn-expanding');
     });
+    div.on('shown.bs.collapse', function () {
+      showCodeButton.removeClass('btn-expanding');
+    });
+
   });
 
 }

@@ -49,8 +49,8 @@ options that control the behavior of the floating table of contents. See the
 \item{anchor_sections}{\code{TRUE} to show section anchors when mouse hovers.
 See \link[rmarkdown:html_document]{Anchor Sections Customization section}.}
 
-\item{section_divs}{Wrap sections in <div> tags, and attach identifiers to the
-enclosing <div> rather than the header itself.}
+\item{section_divs}{Wrap sections in \code{<div>} tags, and attach identifiers to the
+enclosing \code{<div>} rather than the header itself.}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -129,7 +129,10 @@ more details).}
 \item{extra_dependencies, ...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
 
-\item{css}{One or more css files to include}
+\item{css}{CSS and/or Sass files to include. Files with an extension of .sass
+or .scss are compiled to CSS via \code{sass::sass()}. Also, if \code{theme} is a
+\code{\link[bslib:bs_theme]{bslib::bs_theme()}} object, Sass code may reference the relevant Bootstrap
+Sass variables, functions, mixins, etc.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
@@ -180,9 +183,9 @@ You can remove \samp{\\00FE0E} to get a more complex link pictogram
 \if{html}{\out{(&#x1F517;)}}.
 
 If you prefer an svg icon, you can also use one using for example a direct link or downloading it from
-\url{https://material.io/resources/icons/}.
+\url{https://fonts.google.com/icons}.
 \preformatted{
- /* From https://material.io/resources/icons/
+ /* From https://fonts.google.com/icons
     Licence: https://www.apache.org/licenses/LICENSE-2.0.html */
  a.anchor-section::before {
    content: url(https://fonts.gstatic.com/s/i/materialicons/link/v7/24px.svg);

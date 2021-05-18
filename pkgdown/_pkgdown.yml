@@ -1,108 +1,74 @@
-destination: docs
+destination: reference
+
+url: https://pkgs.rstudio.com/rmarkdown/
 
 template:
-  params:
-    bootswatch: simplex
+  package: quillt
+  opengraph:
+    image:
+      src: man/figures/logo.png
+      alt: "R Markdown package"
+    twitter:
+      creator: "@rstudio"
+      card: summary
+
+development:
+  version_tooltip: "Development version"
 
 home:
-  strip_header: true
+  strip_header: false
   links:
   - text: Learn more
     href: https://rmarkdown.rstudio.com/
-  - text: Read the book
-    href: https://bookdown.org/yihui/rmarkdown/
 
 navbar:
-  title: "R Markdown"
-  type: inverse
+  title: ~
+  type: default
   structure:
-    left:
-    - intro
-    - articles
-    right:
-    - reference
-    - news
-    - github
-    - community
-    - home
+    left:  [intro, examples, articles]
+    right: [reference, news, github]
   components:
-    reference:
-      text: Reference
-      href: reference/index.html
+    home: ~
+    examples:
+      text: Examples
+      href: articles/articles/examples.html
     articles:
       text: Articles
       menu:
-        - text: "Learn R Markdown"
-          href: articles/rmarkdown.html
         - text: "About Lua filters"
           href: articles/lua-filters.html
-    news:
-      text: Changelog
-      href: news/index.html
+    reference:
+      text: Reference
+      href: reference/index.html
     github:
       icon: fab fa-github fa-lg
       href: https://github.com/rstudio/rmarkdown
-    community:
-      icon: fab fa-discourse fa-lg
-      href: https://community.rstudio.com/c/R-Markdown/10
-    home:
-      icon: fas fa-home fa-lg
-      href: index.html
-    intro:
-      text: Get started
+    news:
+      text: News
       menu:
-        - text: Using
-        - text: "Introduction"
-          href: https://rmarkdown.rstudio.com/lesson-1.html
-        - text: "How It Works"
-          href: https://rmarkdown.rstudio.com/lesson-2.html
-        - text: "---"
-        - text: Code
-        - text: "Code Chunks"
-          href: https://rmarkdown.rstudio.com/lesson-3.html
-        - text: "Inline Code"
-          href: https://rmarkdown.rstudio.com/lesson-4.html
-        - text: "Code Languages"
-          href: https://rmarkdown.rstudio.com/lesson-5.html
-        - text: "Parameters"
-          href: https://rmarkdown.rstudio.com/lesson-6.html
-        - text: "---"
-        - text: Basics
-        - text: "Tables"
-          href: https://rmarkdown.rstudio.com/lesson-7.html
-        - text: "Markdown Basics"
-          href: https://rmarkdown.rstudio.com/lesson-8.html
-        - text: "Output Formats"
-          href: https://rmarkdown.rstudio.com/lesson-9.html
-        - text: "---"
-        - text: "Additional Output Formats"
-        - text: "Notebooks"
-          href: https://rmarkdown.rstudio.com/lesson-10.html
-        - text: "Slide Presentations"
-          href: https://rmarkdown.rstudio.com/lesson-11.html
-        - text: "Dashboards"
-          href: https://rmarkdown.rstudio.com/lesson-12.html
-        - text: "Websites"
-          href: https://rmarkdown.rstudio.com/lesson-13.html
-        - text: "Interactive Documents"
-          href: https://rmarkdown.rstudio.com/lesson-14.html
+        - text: "Changelog"
+          href: news/index.html
+        - text: "------------------"
+        - text: "Blog posts"
+        - text: "Version 2.7"
+          href: https://blog.rstudio.com/2021/04/15/2021-spring-rmd-news/
+        - text: "Version 2.6"
+          href: https://blog.rstudio.com/2020/12/21/rmd-news
 
 
 reference:
 - title: Output formats
   desc: >
     These output formats can be specified in your document's YAML frontmatter.
-    Each output format has different arguments available which you can see in
-    their respective docs; to view the available arguments in your R console,
-    for `html_document` for example, you may use
-    `str(rmarkdown::html_document())`.
+    Each output format has different arguments available which you can see on
+    their respective help pages.
   contents:
   - ends_with("_presentation")
   - ends_with("_document")
-  - '`html_vignette`'
-  - '`tufte_handout`'
-  - '`html_notebook`'
-  - '`html_fragment`'
+  - html_vignette
+  - tufte_handout
+  - html_notebook
+  - html_fragment
 
 - title: Rendering documents
   desc: These functions can be used to render or "compile" an R Markdown document.
@@ -113,12 +79,12 @@ reference:
 - title: Helper functions
   desc: These functions are useful when working with R Markdown documents.
   contents:
-  - '`draft`'
-  - '`find_external_resources`'
-  - '`includes`'
-  - '`metadata`'
-  - '`paged_table`'
-  - '`relative_to`'
+  - draft
+  - find_external_resources
+  - includes
+  - metadata
+  - paged_table
+  - relative_to
   - contains("params")
 
 - title: HTML notebooks
@@ -128,7 +94,7 @@ reference:
   contents:
   - starts_with("html_notebook_")
   - ends_with("_html_notebook")
-  - '`convert_ipynb`'
+  - convert_ipynb
 
 - title: R Markdown websites
   desc: >
@@ -146,7 +112,7 @@ reference:
     to R Markdown documents by adding reactive components made with [Shiny](http://shiny.rstudio.com/).
   contents:
   - contains("shiny")
-  - '`run`'
+  - run
 
 - title: Pandoc
   desc: ~
@@ -157,16 +123,22 @@ reference:
 - title: Customizing & extending output formats
   desc: ~
   contents:
-  - '`all_output_formats`'
-  - '`default_output_format`'
+  - all_output_formats
+  - default_output_format
   - contains("dependen")
-  - '`html_document_base`'
+  - html_document_base
   - starts_with("knitr_")
-  - '`output_format`'
-  - '`output_metadata`'
-  - '`resolve_output_format`'
-  - '`rmd_metadata`'
-  - '`rmarkdown_format`'
+  - output_format
+  - output_metadata
+  - resolve_output_format
+  - rmd_metadata
+  - rmarkdown_format
+  - pkg_file_lua
+
+- title: The rmarkdown package
+  desc: ~
+  contents:
+  - rmarkdown-package
 
 authors:
   "Yihui Xie":

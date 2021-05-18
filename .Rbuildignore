@@ -12,3 +12,6 @@
 ^doc$
 ^Meta$
 ^codecov\.yml$
+^docs$
+^reference$
+^vignettes/articles$

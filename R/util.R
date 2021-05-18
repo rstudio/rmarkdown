@@ -312,15 +312,15 @@ find_program <- function(program) {
   }
 }
 
-has_crop_tools <- function() {
+has_crop_tools <- function(warn = TRUE) {
   tools <- c(
     pdfcrop = unname(find_program("pdfcrop")),
-    ghostcript = unname(tools::find_gs_cmd())
+    ghostscript = unname(tools::find_gs_cmd())
   )
   missing <- tools[tools == ""]
   if (length(missing) == 0) return(TRUE)
   x <- paste0(names(missing), collapse = ", ")
-  warning(
+  if (warn) warning(
     sprintf("\nTool(s) not installed or not in PATH: %s", x),
     "\n-> As a result, figure cropping will be disabled."
   )

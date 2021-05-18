@@ -84,7 +84,10 @@ copied into the output directory). You can pass an alternate URL or pass
 \item{extra_dependencies}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
 
-\item{css}{One or more css files to include}
+\item{css}{CSS and/or Sass files to include. Files with an extension of .sass
+or .scss are compiled to CSS via \code{sass::sass()}. Also, if \code{theme} is a
+\code{\link[bslib:bs_theme]{bslib::bs_theme()}} object, Sass code may reference the relevant Bootstrap
+Sass variables, functions, mixins, etc.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}

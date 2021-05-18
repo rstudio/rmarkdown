@@ -104,7 +104,7 @@ created.  See the documentation on
 \href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
 details on creating custom templates.}
 
-\item{css}{One or more css files to include}
+\item{css}{One or more css files to include.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}

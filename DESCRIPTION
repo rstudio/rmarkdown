@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 2.6.6
+Version: 2.8.2
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -22,6 +22,7 @@ Authors@R: c(
   person("Barret", "Schloerke", role = "ctb"),
   person("Carson", "Sievert", role = "ctb", comment = c(ORCID = "0000-0002-4958-2844")),
   person("Christophe", "Dervieux", role = "ctb"),
+  person("Devon", "Ryan", role = "ctb", email = "dpryan79@gmail.com", comment = c(ORCID = "0000-0002-8549-0971")),
   person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
   person("Jeff", "Allen", role = "ctb", email = "jeff@rstudio.com"),
   person("JooYoung", "Seo", role="ctb", comment = c(ORCID = "0000-0002-4064-6012")),
@@ -89,12 +90,12 @@ Imports:
     htmltools (>= 0.3.5),
     evaluate (>= 0.13),
     jsonlite,
-    tinytex (>= 0.11),
-    xfun (>= 0.15),
+    tinytex (>= 0.31),
+    xfun (>= 0.21),
     methods,
     stringr (>= 1.2.0)
 Suggests:
-    shiny (>= 0.11),
+    shiny (>= 1.6.0),
     tufte,
     testthat (>= 3.0.0),
     digest,
@@ -103,16 +104,14 @@ Suggests:
     tibble,
     fs,
     rsconnect,
-    withr (>= 2.3.0),
-    bslib,
-    sass
+    withr (>= 2.4.2),
+    bslib (>= 0.2.4),
+    sass (>= 0.3.1)
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
-URL: https://github.com/rstudio/rmarkdown
+URL: https://github.com/rstudio/rmarkdown, https://pkgs.rstudio.com/rmarkdown/
 BugReports: https://github.com/rstudio/rmarkdown/issues
 License: GPL-3
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
-Remotes: 
-  rstudio/bslib,
-  rstudio/shiny
+Remotes: rstudio/sass, rstudio/bslib

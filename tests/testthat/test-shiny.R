@@ -1,6 +1,7 @@
+# TODO: added for new tests - to remove when switching the package to edition 3
+local_edition(3)
+
 test_that("file.path.ci returns correctly no matter the case", {
-  # TODO: added for new tests - to remove when switching the package to edition 3
-  local_edition(3)
   tmp_dir <- withr::local_tempdir()
   expect_equal(file.path.ci(tmp_dir, "global.R"), file.path(tmp_dir, "global.R"))
 
@@ -15,4 +16,14 @@ test_that("file.path.ci returns correctly no matter the case", {
   if (xfun::is_linux()) expect_equal_file("global.r", tmp_dir)
   expect_equal_file("global.R", "donotexist")
   expect_equal_file("global.Rmd", tmp_dir, "global.R")
+})
+
+
+test_that("set_current_theme() informs shiny::getCurrentTheme()", {
+  expect_null(shiny::getCurrentTheme())
+  theme <- bslib::bs_theme()
+  set_current_theme(theme)
+  expect_equal(theme, shiny::getCurrentTheme())
+  set_current_theme(NULL)
+  expect_null(shiny::getCurrentTheme())
 })

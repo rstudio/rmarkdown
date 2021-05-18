@@ -49,7 +49,7 @@
 #'   "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.
 #' @param keep_tex Keep the intermediate tex file used in the conversion to PDF
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
-#'   "pdflatex", "lualatex", and "xelatex".
+#'   "pdflatex", "lualatex", "xelatex" and "tectonic".
 #' @param citation_package The LaTeX package to process citations, \code{natbib}
 #'   or \code{biblatex}. Use \code{default} if neither package is to be used,
 #'   which means citations will be processed via the command
@@ -89,7 +89,7 @@ pdf_document <- function(toc = FALSE,
                          number_sections = FALSE,
                          fig_width = 6.5,
                          fig_height = 4.5,
-                         fig_crop = TRUE,
+                         fig_crop = 'auto',
                          fig_caption = TRUE,
                          dev = 'pdf',
                          df_print = "default",
@@ -130,7 +130,7 @@ pdf_document <- function(toc = FALSE,
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
-  latex_engine <- match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
+  latex_engine <- match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex", "tectonic"))
   args <- c(args, pandoc_latex_engine_args(latex_engine))
 
   # citation package

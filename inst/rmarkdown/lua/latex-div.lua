@@ -1,8 +1,22 @@
 --[[
      A Pandoc 2 Lua filter converting Pandoc native divs to LaTeX environments
-     Author: Romain Lesur, Christophe Dervieux, and Yihui Xie
+     Author: Romain Lesur, Christophe Dervieux, Atsushi Yasumoto and Yihui Xie
      License: Public domain
 --]]
+
+-- REQUIREMENTS: Load shared lua filter - see `shared.lua` for more details.
+dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
+
+--[[
+  About the requirement:
+  * PANDOC_VERSION -> 2.1
+]]
+if (not pandocAvailable {2,1}) then
+    io.stderr:write("[WARNING] (latex-div.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
+    return {}
+end
+
+-- START OF THE FILTER'S FUNCTIONS --
 
 text = require 'text'
 
@@ -18,8 +32,8 @@ Div = function (div)
 
   -- if the output format is not latex, remove the attr and return
   if FORMAT ~= 'latex' and FORMAT ~= 'beamer' then
-    div.attributes['latex'] = nil
-    div.attributes['data-latex'] = nil
+    if div.attributes['latex'] then div.attributes['latex'] = nil end
+    if div.attributes['data-latex'] then div.attributes['data-latex'] = nil end
     return div
   end
 
