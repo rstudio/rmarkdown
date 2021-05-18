@@ -40,11 +40,19 @@ html_dependency_jqueryui <- function() {
 #' @rdname html-dependencies
 #' @export
 html_dependency_bootstrap <- function(theme) {
-
-  if (identical(theme, "default")) {
-    theme <- "bootstrap"
+  theme <- resolve_theme(theme)
+  if (is_bs_theme(theme)) {
+    # TODO: would it make sense for these additional rules to come as a part of
+    # bslib::bs_theme_dependencies() (for consistency sake)?
+    h1_size <- if ("3" %in% theme_version(theme)) "font-size-h1" else "h1-font-size"
+    theme <- bslib::bs_add_rules(
+      theme, c(
+        paste0("h1.title {margin-top: 1.25rem; font-size: 1.15 * $", h1_size, "}"),
+        "pre:not([class]) { background-color: $body-bg }"
+      )
+    )
+    return(bslib::bs_theme_dependencies(theme))
   }
-
   htmlDependency(
     name = "bootstrap",
     version = "3.3.5",
@@ -55,8 +63,81 @@ html_dependency_bootstrap <- function(theme) {
       # These shims are necessary for IE 8 compatibility
       "shim/html5shiv.min.js",
       "shim/respond.min.js"),
-    stylesheet = paste0("css/", theme, ".min.css"))
+    stylesheet = paste0("css/", theme, ".min.css"),
+    # CSS rules yanked from inst/rmd/h/default.html that should remain for historical
+    # reasons, but shouldn't be included if bslib is relevant
+    head = format(tags$style(HTML(
+      "h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }"
+    )))
+  )
 }
+
+bootstrap_dependencies <- function(theme) {
+  deps <- html_dependency_bootstrap(theme)
+  if (inherits(deps, "html_dependency")) list(deps) else deps
+}
+
+resolve_theme <- function(theme) {
+  # theme = NULL means no Bootstrap
+  if (is.null(theme)) return(theme)
+  # Bootstrap/Bootswatch 3 names (backwards-compatibility)
+  if (is.character(theme)) {
+    if (length(theme) != 1) {
+      stop("`theme` must be character vector of length 1.", call. = FALSE)
+    }
+    if (theme %in% c("bootstrap", "default")) {
+      return("bootstrap")
+    }
+    return(match.arg(theme, themes()))
+  }
+  if (is.list(theme)) {
+    if (!is_available("bslib")) {
+      stop("Providing a list to `theme` requires the bslib package.", call. = FALSE)
+    }
+    return(as_bs_theme(theme))
+  }
+  stop(
+    "`theme` expects any one of the following values: \n",
+    "    (1) NULL (no Bootstrap), \n",
+    "    (2) a character string referencing a Bootswatch 3 theme name, \n",
+    "    (3) a list of arguments to bslib::bs_theme(), \n",
+    "    (4) a bslib::bs_theme() object."
+  , call. = FALSE)
+}
+
+# At the moment, theme may be either NULL (no Bootstrap), a string (Bootswatch
+# 3 name), a bslib::bs_theme(), or a list of arguments to bs_theme().
+as_bs_theme <- function(theme) {
+  if (is_bs_theme(theme)) {
+    return(theme)
+  }
+  if (is.list(theme)) {
+    return(do.call(bslib::bs_theme, theme))
+  }
+  NULL
+}
+
+is_bs_theme <- function(theme) {
+  is_available("bslib") &&
+    bslib::is_bs_theme(theme)
+}
+
+theme_version <- function(theme) {
+  if (is_bs_theme(theme)) {
+    bslib::theme_version(theme)
+  } else {
+    substr(html_dependency_bootstrap("default")$version, 1, 1)
+  }
+}
+
 
 # Create an HTML dependency for tocify
 #' @rdname html-dependencies

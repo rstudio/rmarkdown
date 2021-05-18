@@ -51,8 +51,8 @@ for all headers. A list can also be passed with \code{style} and/or
 \code{depth} to customize the behavior. See
 \link[rmarkdown:html_document]{Anchor Sections Customization section}.}
 
-\item{section_divs}{Wrap sections in <div> tags, and attach identifiers to the
-enclosing <div> rather than the header itself.}
+\item{section_divs}{Wrap sections in \code{<div>} tags, and attach identifiers to the
+enclosing \code{<div>} rather than the header itself.}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -98,10 +98,19 @@ scripts, stylesheets, images, and videos. Note that even for self contained
 documents MathJax is still loaded externally (this is necessary because of
 its size).}
 
-\item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
-"darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
-"sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-case you can use the \code{css} parameter to add your own styles).}
+\item{theme}{One of the following:
+\itemize{
+\item A \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object (or a list of \code{\link[bslib:bs_theme]{bslib::bs_theme()}} argument values)
+\itemize{
+\item Use this option for custom themes using Bootstrap 4 or 3.
+\item In this case, any \code{.scss}/\code{.sass} files provided to the \code{css}
+parameter may utilize the \code{theme}'s underlying Sass utilities
+(e.g., variables, mixins, etc).
+}
+\item \code{NULL} for no theme (i.e., no \code{\link[=html_dependency_bootstrap]{html_dependency_bootstrap()}}).
+\item A character string specifying a \href{https://bootswatch.com/3/}{Bootswatch 3}
+theme name (for backwards-compatibility).
+}}
 
 \item{highlight}{Syntax highlighting style. Supported styles include
 "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
@@ -122,7 +131,10 @@ more details).}
 \item{extra_dependencies, ...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
 
-\item{css}{One or more css files to include}
+\item{css}{CSS and/or Sass files to include. Files with an extension of .sass
+or .scss are compiled to CSS via \code{sass::sass()}. Also, if \code{theme} is a
+\code{\link[bslib:bs_theme]{bslib::bs_theme()}} object, Sass code may reference the relevant Bootstrap
+Sass variables, functions, mixins, etc.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
@@ -161,65 +173,65 @@ and Citations} article in the online documentation.
 }
 \section{Anchor Sections Customization}{
 
- This will be the default to activate anchor sections link on header
- \preformatted{
+This will be the default to activate anchor sections link on header
+\preformatted{
  output:
    html_document:
      anchor_sections: TRUE
  }
- There are currently two options to modify the default behavior
+There are currently two options to modify the default behavior
 
- \describe{
- \item{\code{style}}{Select a predefine visual style:
- \itemize{
- \item{\code{style = "dash"}, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.}
- \item{\code{style = "symbol"} will use a \href{https://codepoints.net/U+1F517}{link
- symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}}
- \item{\code{style = "icon"} will use an svg icon.
- \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}}
- }
- You can also customize using a css rule in your
- document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:
- \preformatted{
+\describe{
+\item{\code{style}}{Select a predefine visual style:
+\itemize{
+\item{\code{style = "dash"}, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.}
+\item{\code{style = "symbol"} will use a \href{https://codepoints.net/U+1F517}{link
+symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}}
+\item{\code{style = "icon"} will use an svg icon.
+\if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}}
+}
+You can also customize using a css rule in your
+document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:
+\preformatted{
  a.anchor-section::before {
    content: '\\01F517';
  }}
- About how to apply custom CSS in R Markdown document, see
- \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
- }
- \item{\code{depth}}{Select the maximum header level to add the
- anchor link to. For example, this yaml will use the symbol style and
- only with level 1 and 2 headings:
- \preformatted{
+About how to apply custom CSS in R Markdown document, see
+\url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
+}
+\item{\code{depth}}{Select the maximum header level to add the
+anchor link to. For example, this yaml will use the symbol style and
+only with level 1 and 2 headings:
+\preformatted{
  output:
    html_document:
      anchor_sections:
        style: icon
        depth: 2
  }
- If omitted, anchor will be added to all headers (equivalent of
- \code{depth=6}). You can also set anchors manually using \samp{# my header
+If omitted, anchor will be added to all headers (equivalent of
+\code{depth=6}). You can also set anchors manually using \samp{# my header
  {.hasAnchor}} with \code{depth = 0}.
- }}
+}}
 
- Using anchor sections will add some CSS to your document output for the
- styling, and a JS script if \code{section_divs = TRUE}. The anchor link itself
- is added using a Lua filter, and hence requires Pandoc 2.0+
+Using anchor sections will add some CSS to your document output for the
+styling, and a JS script if \code{section_divs = TRUE}. The anchor link itself
+is added using a Lua filter, and hence requires Pandoc 2.0+
 }
 
 \section{Navigation Bars}{
 
 
- If you have a set of html documents which you'd like to provide a common
- global navigation bar for, you can include a "_navbar.yml" or "_navbar.html"
- file within the same directory as your html document and it will automatically
- be included at the top of the document.
+If you have a set of html documents which you'd like to provide a common
+global navigation bar for, you can include a "_navbar.yml" or "_navbar.html"
+file within the same directory as your html document and it will automatically
+be included at the top of the document.
 
- The "_navbar.yml" file includes \code{title}, \code{type}, \code{left}, and
- \code{right} fields (to define menu items for the left and right of the navbar
- respectively). Menu items include \code{title} and \code{href} fields. For example:
+The "_navbar.yml" file includes \code{title}, \code{type}, \code{left}, and
+\code{right} fields (to define menu items for the left and right of the navbar
+respectively). Menu items include \code{title} and \code{href} fields. For example:
 
- \preformatted{title: "My Website"
+\preformatted{title: "My Website"
 type: default
 left:
   - text: "Home"
@@ -229,78 +241,78 @@ left:
 right:
   - text: GitHub
     href: https://github.com}
- The \code{type} field is optional and can take the value "default" or "inverse" (which
- provides a different color scheme for the navigation bar).
+The \code{type} field is optional and can take the value "default" or "inverse" (which
+provides a different color scheme for the navigation bar).
 
- Alternatively, you can include a "_navbar.html" file which is a full HTML definition
- of a bootstrap navigation bar. For a simple example of including a navigation bar see
- \url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
-  For additional documentation on creating Bootstrap navigation bars see
- \url{https://getbootstrap.com/docs/4.5/components/navbar/}.
+Alternatively, you can include a "_navbar.html" file which is a full HTML definition
+of a bootstrap navigation bar. For a simple example of including a navigation bar see
+\url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
+For additional documentation on creating Bootstrap navigation bars see
+\url{https://getbootstrap.com/docs/4.5/components/navbar/}.
 }
 
 \section{Floating Table of Contents}{
 
 
- You may specify a list of options for the \code{toc_float} parameter which
- control the behavior of the floating table of contents. Options include:
+You may specify a list of options for the \code{toc_float} parameter which
+control the behavior of the floating table of contents. Options include:
 
- \itemize{ \item{\code{collapsed} (defaults to \code{TRUE}) controls whether
- the table of contents appears with only the top-level (H2) headers. When
- collapsed the table of contents is automatically expanded inline when
- necessary.} \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls
- whether page scrolls are animated when table of contents items are navigated
- to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
- whether the table of contents appears when user prints out the HTML page.}}
+\itemize{ \item{\code{collapsed} (defaults to \code{TRUE}) controls whether
+the table of contents appears with only the top-level (H2) headers. When
+collapsed the table of contents is automatically expanded inline when
+necessary.} \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls
+whether page scrolls are animated when table of contents items are navigated
+to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
+whether the table of contents appears when user prints out the HTML page.}}
 }
 
 \section{Tabbed Sections}{
 
 
- You can organize content using tabs by applying the \code{.tabset} class
- attribute to headers within a document. This will cause all sub-headers of
- the header with the \code{.tabset} attribute to appear within tabs rather
- than as standalone sections. For example:
+You can organize content using tabs by applying the \code{.tabset} class
+attribute to headers within a document. This will cause all sub-headers of
+the header with the \code{.tabset} attribute to appear within tabs rather
+than as standalone sections. For example:
 
- \preformatted{## Quarterly Results {.tabset}
+\preformatted{## Quarterly Results {.tabset}
 
 ### By Product
 
 ### By Region }
 
- You can also specify two additional attributes to control the appearance and
- behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
- fade in and out when switching. The \code{.tabset-pills} attribute causes
- the visual appearance of the tabs to be "pill" rather than traditional tabs.
- For example:
+You can also specify two additional attributes to control the appearance and
+behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
+fade in and out when switching. The \code{.tabset-pills} attribute causes
+the visual appearance of the tabs to be "pill" rather than traditional tabs.
+For example:
 
- \preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
+\preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
 }
 
 \section{Templates}{
 
 
- You can provide a custom HTML template to be used for rendering. The syntax
- for templates is described in the
- \href{https://pandoc.org/MANUAL.html}{pandoc documentation}. You can also use
- the basic pandoc template by passing \code{template = NULL}.
+You can provide a custom HTML template to be used for rendering. The syntax
+for templates is described in the
+\href{https://pandoc.org/MANUAL.html}{pandoc documentation}. You can also use
+the basic pandoc template by passing \code{template = NULL}.
 
- Note however that if you choose not to use the "default" HTML template then
- several aspects of HTML document rendering will behave differently:
+Note however that if you choose not to use the "default" HTML template then
+several aspects of HTML document rendering will behave differently:
 
- \itemize{ \item{The \code{theme} parameter does not work (you can still
- provide styles using the \code{css} parameter). } \item{For the
- \code{highlight} parameter, the default highlighting style will resolve to
- "pygments" and the "textmate" highlighting style is not available }
- \item{The \code{toc_float} parameter will not work. } \item{The
- \code{code_folding} parameter will not work. } \item{Tabbed sections (as
- described above) will not work.} \item{Navigation bars (as described above)
- will not work. }\item{MathJax will not work if \code{self_contained} is
- \code{TRUE} (these two options can't be used together in normal pandoc
- templates). } }
+\itemize{ \item{The \code{theme} parameter does not work (you can still
+provide styles using the \code{css} parameter). } \item{For the
+\code{highlight} parameter, the default highlighting style will resolve to
+"pygments" and the "textmate" highlighting style is not available }
+\item{The \code{toc_float} parameter will not work. } \item{The
+\code{code_folding} parameter will not work. } \item{Tabbed sections (as
+described above) will not work.} \item{Navigation bars (as described above)
+will not work. }\item{MathJax will not work if \code{self_contained} is
+\code{TRUE} (these two options can't be used together in normal pandoc
+templates). } }
 
- Due to the above restrictions, you might consider using the \code{includes}
- parameter as an alternative to providing a fully custom template.
+Due to the above restrictions, you might consider using the \code{includes}
+parameter as an alternative to providing a fully custom template.
 }
 
 \examples{

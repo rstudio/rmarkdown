@@ -10,7 +10,7 @@ context_document(
   number_sections = FALSE,
   fig_width = 6.5,
   fig_height = 4.5,
-  fig_crop = TRUE,
+  fig_crop = "auto",
   fig_caption = TRUE,
   dev = "pdf",
   df_print = "default",

@@ -2,6 +2,7 @@
 pagebreak – convert raw LaTeX page breaks to other formats
 
 Copyright © 2017-2019 Benct Philip Jonsson, Albert Krewinkel
+Copyright © 2019-2021 Christophe Dervieux, Romain Lesur, Atsushi Yasumoto
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -15,6 +16,22 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ]]
+
+-- REQUIREMENTS: Load shared lua filter - see `shared.lua` for more details.
+dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
+
+--[[
+  About the requirement:
+  * PANDOC_VERSION -> 2.1
+  * pandoc.utils -> 2.1
+]]
+if (not pandocAvailable {2,1}) then
+  io.stderr:write("[WARNING] (pagebreak.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
+  return {}
+end
+
+-- START OF THE FILTER'S FUNCTIONS --
+
 local stringify_orig = (require 'pandoc.utils').stringify
 
 local function stringify(x)
