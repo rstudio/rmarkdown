@@ -37,6 +37,8 @@ rmarkdown 2.8
 
 - When rendering a `runtime: shiny` document, an extra temp folder will be used in the output path. With the extra temp random folder in the path, predictable output file names may be used. (#2137)
 
+- Floating ToC in `html_document` can now hide headings with unnumbered and unlisted classes (thanks, @atusy, #1993).
+
 
 rmarkdown 2.7
 ================================================================================
@@ -64,6 +66,7 @@ rmarkdown 2.7
 - `github_document()` will produce a working TOC even if some headers start with number (#2039).
 
 - Fix an issue with `knit_print.data.frame`. The `...` arguments are no more passed to `print()` to avoid passing `knit_print()` arguments `options` and `encoding` to custom `print()` methods (#2047).
+
 
 rmarkdown 2.6
 ================================================================================

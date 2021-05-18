@@ -616,6 +616,9 @@ $if(toc_float)$
 <script>
 $$(document).ready(function ()  {
 
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $$('.unlisted.unnumbered').addClass('toc-ignore')
+
     // move toc-ignore selectors from section div to header
     $$('div.section.toc-ignore')
         .removeClass('toc-ignore')
