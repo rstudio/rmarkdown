@@ -172,6 +172,7 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
       html_with_deps,
       fixed = TRUE,
       useBytes = TRUE)
+    Encoding(html_with_deps) <- "UTF-8"
   }
   html_with_deps
 }
