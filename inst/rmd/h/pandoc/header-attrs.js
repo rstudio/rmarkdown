@@ -1,6 +1,6 @@
 // Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
-(function(e) {
+(function() {
   var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
   var i, h, a, hasAnchor;
   for (i = 0; i < hs.length; i++) {
