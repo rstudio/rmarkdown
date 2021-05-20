@@ -236,7 +236,7 @@ pandoc_version <- function() {
 #' @param toc_depth Depth of headers to include in table of contents.
 #' @param highlight The name of a pandoc syntax highlighting theme.
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
-#'   "pdflatex", "lualatex", and "xelatex".
+#'   "pdflatex", "lualatex", "xelatex", and "tectonic".
 #' @param default The highlighting theme to use if "default"
 #'   is specified.
 #' @return A character vector with pandoc command line arguments.

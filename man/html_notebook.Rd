@@ -58,28 +58,37 @@ code chunks by default (users can show hidden code chunks either
 individually or document-wide). Specify \code{"show"} to show all R code
 chunks by default.}
 
-\item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
-"darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
-"sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-case you can use the \code{css} parameter to add your own styles).}
+\item{theme}{One of the following:
+\itemize{
+\item A \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object (or a list of \code{\link[bslib:bs_theme]{bslib::bs_theme()}} argument values)
+\itemize{
+\item Use this option for custom themes using Bootstrap 4 or 3.
+\item In this case, any \code{.scss}/\code{.sass} files provided to the \code{css}
+parameter may utilize the \code{theme}'s underlying Sass utilities
+(e.g., variables, mixins, etc).
+}
+\item \code{NULL} for no theme (i.e., no \code{\link[=html_dependency_bootstrap]{html_dependency_bootstrap()}}).
+\item A character string specifying a \href{https://bootswatch.com/3/}{Bootswatch 3}
+theme name (for backwards-compatibility).
+}}
 
 \item{highlight}{Syntax highlight engine and style. See the
- \emph{Highlighting} section below for details.
+\emph{Highlighting} section below for details.
 
- "default" (and "textmate") will use highlightjs as syntax highlighting
- engine instead of Pandoc.
+"default" (and "textmate") will use highlightjs as syntax highlighting
+engine instead of Pandoc.
 
- Any other value will be passed to Pandoc's
- \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
- style}. Pandoc's built-in styles include "tango", "pygments", "kate",
- "monochrome", "espresso", "zenburn", "haddock" and "breezedark".
+Any other value will be passed to Pandoc's
+\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
+style}. Pandoc's built-in styles include "tango", "pygments", "kate",
+"monochrome", "espresso", "zenburn", "haddock" and "breezedark".
 
- Two custom styles are also included, "arrow", an accessible color scheme,
- and "rstudio", which mimics the default IDE theme. Alternatively, supply a
- path to a \samp{.theme} to use a custom Pandoc style. Note that custom (This
- requires Pandoc 2.0+)
+Two custom styles are also included, "arrow", an accessible color scheme,
+and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+path to a \samp{.theme} to use a custom Pandoc style. Note that custom (This
+requires Pandoc 2.0+)
 
- Pass \code{NULL} to prevent syntax highlighting.}
+Pass \code{NULL} to prevent syntax highlighting.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is
@@ -89,7 +98,10 @@ copied into the output directory). You can pass an alternate URL or pass
 \item{extra_dependencies}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
 
-\item{css}{One or more css files to include}
+\item{css}{CSS and/or Sass files to include. Files with an extension of .sass
+or .scss are compiled to CSS via \code{sass::sass()}. Also, if \code{theme} is a
+\code{\link[bslib:bs_theme]{bslib::bs_theme()}} object, Sass code may reference the relevant Bootstrap
+Sass variables, functions, mixins, etc.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
