@@ -1,6 +1,16 @@
 rmarkdown 2.9
 ================================================================================
 
+- `anchor_sections` can now be easily customized using `style` or `depth` element for `anchor_sections`. Ex: 
+  ```yaml
+  output:
+    html_document:
+      anchor_sections:
+        style: symbol # use symbol style ("dash", "symbol", "icon")
+        depth: 2 # max depth to apply anchor on (default to max which is 6)
+  ```
+  Customizing using a css rule is still possible. Detailed explanation and examples have been added in `?html_document`.
+
 - When rendering a `runtime: shiny` document, an extra temp folder will be used in the output path. With the extra temp random folder in the path, predictable output file names may be used. (#2137)
 
 - Floating ToC in `html_document` can now hide headings with unnumbered and unlisted classes (thanks, @atusy, #1993).
