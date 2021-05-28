@@ -891,22 +891,15 @@ render <- function(input,
       # in case the output format turns on the --file-scope flag, run its
       # file_scope function to split the input into multiple files
       input_files <- input
-      if (!is.null(output_format$file_scope) &&
-          length(inputs <- output_format$file_scope(input)) > 1) {
-
-        # add the --file-scope option
-        pandoc_args <- c(pandoc_args, "--file-scope")
-
-        # write the split content into *.split.md files
-        input_files <- unlist(lapply(inputs, function(f) {
-          file <- file_with_meta_ext(f$name, "split", "md")
-          file <- file.path(dirname(input), file)
-          write_utf8(f$content, file)
-          file
-        }))
-
-        # cleanup the split files after render
-        on.exit(unlink(input_files), add = TRUE)
+      if (!is.null(output_format$file_scope) && is.function(output_format$file_scope)) {
+        input_files <- file_scope_split(input, output_format$file_scope)
+        # ignore if input_files has not really been splitted
+        if (length(input_files) > 1) {
+          # add the --file-scope option
+          pandoc_args <- c(pandoc_args, "--file-scope")
+          # cleanup the split files after render
+          on.exit(unlink(input_files), add = TRUE)
+        }
       }
 
       # if we don't detect any invalid shell characters in the
@@ -1192,3 +1185,21 @@ resolve_df_print <- function(df_print) {
 #' @keywords NULL
 #' @export
 output_metadata = knitr:::new_defaults()
+
+file_scope_split <- function(input, file_scope_fun) {
+  inputs <- file_scope_fun(input)
+
+  # file_scope_fun should split the input file in several
+  # do nothing if not and return input file unsplited
+  if (length(inputs) <= 1) return(input)
+
+  # write the split content into *.split.md files
+  input_files <- lapply(inputs, function(f) {
+    file <- file_with_meta_ext(f$name, "split", "md")
+    file <- file.path(dirname(input), file)
+    write_utf8(f$content, file)
+    file
+  })
+
+  unlist(input_files)
+}
