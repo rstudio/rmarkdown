@@ -891,7 +891,7 @@ render <- function(input,
       # in case the output format turns on the --file-scope flag, run its
       # file_scope function to split the input into multiple files
       input_files <- input
-      if (!is.null(output_format$file_scope) && is.function(output_format$file_scope)) {
+      if (is.function(output_format$file_scope)) {
         input_files <- file_scope_split(input, output_format$file_scope)
         # ignore if input_files has not really been splitted
         if (length(input_files) > 1) {
@@ -1186,8 +1186,8 @@ resolve_df_print <- function(df_print) {
 #' @export
 output_metadata = knitr:::new_defaults()
 
-file_scope_split <- function(input, file_scope_fun) {
-  inputs <- file_scope_fun(input)
+file_scope_split <- function(input, fun) {
+  inputs <- fun(input)
 
   # file_scope_fun should split the input file in several
   # do nothing if not and return input file unsplited
