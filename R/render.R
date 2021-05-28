@@ -898,10 +898,10 @@ render <- function(input,
         pandoc_args <- c(pandoc_args, "--file-scope")
 
         # write the split content into *.split.md files
-        input_files <- unlist(lapply(inputs, function(input) {
-          file <- file_with_meta_ext(input$name, "split", "md")
+        input_files <- unlist(lapply(inputs, function(f) {
+          file <- file_with_meta_ext(f$name, "split", "md")
           file <- file.path(dirname(input), file)
-          write_utf8(input$content, file)
+          write_utf8(f$content, file)
           file
         }))
 
