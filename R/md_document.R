@@ -22,7 +22,7 @@
 #'   widely used retina displays, but will also result in the output of
 #'   \code{<img>} tags rather than markdown images due to the need to set the
 #'   width of the image explicitly.
-#' @param ext Extention of the output document (defaults to ".md").
+#' @param ext Extension of the output file (defaults to ".md").
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @examples
 #' \dontrun{

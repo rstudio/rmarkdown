@@ -72,9 +72,23 @@ parameter may utilize the \code{theme}'s underlying Sass utilities
 theme name (for backwards-compatibility).
 }}
 
-\item{highlight}{Syntax highlighting style. Supported styles include
-"default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
-"haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.}
+\item{highlight}{Syntax highlight engine and style. See the
+\emph{Highlighting} section below for details.
+
+"default" (and "textmate") will use highlightjs as syntax highlighting
+engine instead of Pandoc.
+
+Any other value will be passed to Pandoc's
+\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
+style}. Pandoc's built-in styles include "tango", "pygments", "kate",
+"monochrome", "espresso", "zenburn", "haddock" and "breezedark".
+
+Two custom styles are also included, "arrow", an accessible color scheme,
+and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+path to a \samp{.theme} to use a custom Pandoc style. Note that custom (This
+requires Pandoc 2.0+)
+
+Pass \code{NULL} to prevent syntax highlighting.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is
