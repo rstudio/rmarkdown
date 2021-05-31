@@ -317,7 +317,7 @@ html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
 
 filter_dependencies <- function(dependencies, src_type = "file") {
   deps <- lapply(dependencies, function(dep) if(!is.null(dep$src[[src_type]])) return(dep))
-  deps[!sapply(deps, is.null)]
+  deps[!vapply(deps, is.null, logical(1))]
 }
 
 # check class of passed list for 'html_dependency'
