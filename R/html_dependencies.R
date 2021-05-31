@@ -298,26 +298,31 @@ html_reference_path <- function(path, lib_dir, output_dir) {
 # return the html dependencies as an HTML string suitable for inclusion
 # in the head of a document
 html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
-  # Only copy deps with path
-  dependencies_href <- filter_dependencies(dependencies, "href")
-  dependencies <- filter_dependencies(dependencies, "file")
-
   if (!is.null(lib_dir)) {
-    dependencies <- lapply(dependencies, copyDependencyToDir, lib_dir)
-    dependencies <- lapply(dependencies, makeDependencyRelative, output_dir)
+    # using mustWork=FALSE insures non-disk based dependencies are
+    # return untouched, keeping the order of all deps.
+    dependencies <- lapply(dependencies, copyDependencyToDir,
+                           output_dir = lib_dir, mustWork = FALSE)
+    dependencies <- lapply(dependencies, makeDependencyRelative,
+                           basepath = output_dir, mustWork = FALSE)
   }
-  #return(
-  tags <- renderDependencies(dependencies, "file", encodeFunc = identity,
-                            hrefFilter = function(path) {
-                              html_reference_path(path, lib_dir, output_dir)
-                            })
-  #)
-  HTML(paste0(c(tags, renderDependencies(dependencies_href, "href")), collapse = "\n"))
-}
 
-filter_dependencies <- function(dependencies, src_type = "file") {
-  deps <- lapply(dependencies, function(dep) if(!is.null(dep$src[[src_type]])) return(dep))
-  deps[!vapply(deps, is.null, logical(1))]
+  # Dependencies are iterated on as file based dependencies needs to be
+  # processed a specific way for Pandoc compatibility.
+  html <- c()
+  for (dep in dependencies) {
+    tags <- if (is.null(dep$src[["file"]])) {
+      renderDependencies(list(dep), "href")
+    } else {
+      renderDependencies(list(dep), "file",
+                         encodeFunc = identity,
+                         hrefFilter = function(path) {
+                           html_reference_path(path, lib_dir, output_dir)
+                         })
+    }
+    html <- c(html, tags)
+  }
+  HTML(paste(html, collapse = "\n"))
 }
 
 # check class of passed list for 'html_dependency'
@@ -337,7 +342,7 @@ validate_html_dependency <- function(list) {
     stop("name for html_dependency not provided", call. = FALSE)
   if (is.null(list$version))
     stop("version for html_dependency not provided", call. = FALSE)
-  list <- fix_html_dependency(list) 
+  list <- fix_html_dependency(list)
 
   # check src path or href are given
   if (is.null(list$src)) {
