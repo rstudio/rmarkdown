@@ -188,3 +188,11 @@ test_that("html_dependencies_as_string tranforms correctly", {
   dir.create(ldir <- file.path(odir, "lib"))
   expect_snapshot(html_dependencies_as_string(deps, ldir, odir))
 })
+
+test_that("html_dependencies_fonts loads the correct fonts dep", {
+  fa <- html_dependency_font_awesome()
+  io <- html_dependency_ionicons()
+  expect_identical(html_dependencies_fonts(TRUE, FALSE), list(fa))
+  expect_identical(html_dependencies_fonts(FALSE, TRUE), list(io))
+  expect_identical(html_dependencies_fonts(TRUE, TRUE), list(fa, io))
+})
