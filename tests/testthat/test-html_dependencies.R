@@ -178,4 +178,13 @@ test_that("Dependencies are correctly validated", {
   expect_error(validate_html_dependency(dep2), "path for html_dependency not found:", fixed = TRUE)
 })
 
-
+test_that("html_dependencies_as_string tranforms correctly", {
+  deps <- list(
+    htmlDependency(name = "bar", version = "1.2.0", src = pkg_file("rmd/h"), script = "foo.js"),
+    htmlDependency(name = "bar", version = "1.2.0", src = c(href = "https://example.org/"), script = "foo.js"),
+    htmlDependency(name = "baz", version = "1.1.0", src = pkg_file("rmd/h"), script = "baz.js")
+  )
+  odir <- withr::local_tempdir()
+  dir.create(ldir <- file.path(odir, "lib"))
+  expect_snapshot(html_dependencies_as_string(deps, ldir, odir))
+})
