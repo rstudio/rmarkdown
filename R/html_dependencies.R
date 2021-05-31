@@ -302,7 +302,7 @@ html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
     # using mustWork=FALSE insures non-disk based dependencies are
     # return untouched, keeping the order of all deps.
     dependencies <- lapply(dependencies, copyDependencyToDir,
-                           output_dir = lib_dir, mustWork = FALSE)
+                           outputDir = lib_dir, mustWork = FALSE)
     dependencies <- lapply(dependencies, makeDependencyRelative,
                            basepath = output_dir, mustWork = FALSE)
   }
