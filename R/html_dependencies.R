@@ -91,7 +91,7 @@ resolve_theme <- function(theme) {
   # Bootstrap/Bootswatch 3 names (backwards-compatibility)
   if (is.character(theme)) {
     if (length(theme) != 1) {
-      stop("`theme` must be character vector of length 1.", call. = FALSE)
+      stop2("`theme` must be character vector of length 1.")
     }
     if (theme %in% c("bootstrap", "default")) {
       return("bootstrap")
@@ -100,17 +100,17 @@ resolve_theme <- function(theme) {
   }
   if (is.list(theme)) {
     if (!is_available("bslib")) {
-      stop("Providing a list to `theme` requires the bslib package.", call. = FALSE)
+      stop2("Providing a list to `theme` requires the bslib package.")
     }
     return(as_bs_theme(theme))
   }
-  stop(
+  stop2(
     "`theme` expects any one of the following values: \n",
     "    (1) NULL (no Bootstrap), \n",
     "    (2) a character string referencing a Bootswatch 3 theme name, \n",
     "    (3) a list of arguments to bslib::bs_theme(), \n",
     "    (4) a bslib::bs_theme() object."
-  , call. = FALSE)
+  )
 }
 
 # At the moment, theme may be either NULL (no Bootstrap), a string (Bootswatch
@@ -335,25 +335,25 @@ validate_html_dependency <- function(list) {
 
   # ensure it's the right class
   if (!is_html_dependency(list))
-    stop("passed object is not of class html_dependency", call. = FALSE)
+    stop2("passed object is not of class html_dependency")
 
   # validate required fields
   if (is.null(list$name))
-    stop("name for html_dependency not provided", call. = FALSE)
+    stop2("name for html_dependency not provided")
   if (is.null(list$version))
-    stop("version for html_dependency not provided", call. = FALSE)
+    stop2("version for html_dependency not provided")
   list <- fix_html_dependency(list)
 
   # check src path or href are given
   if (is.null(list$src)) {
-    stop("src for html_dependency not provided", call. = FALSE)
+    stop2("src for html_dependency not provided")
   }
   if (!is.null(list$src$file)) {
     file <- list$src$file
     if (!is.null(list$package))
       file <- system.file(file, package = list$package)
     if (!file.exists(file)) {
-      stop("path for html_dependency not found: ", file, call. = FALSE)
+      stop2("path for html_dependency not found: ", file)
     }
   }
 

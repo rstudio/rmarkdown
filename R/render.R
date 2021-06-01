@@ -359,10 +359,10 @@ render <- function(input,
         file_name_without_shell_chars(basename(input)))
 
     if (file.exists(input_no_shell_chars)) {
-      stop("The name of the input file cannot contain the special shell ",
+      stop2("The name of the input file cannot contain the special shell ",
            "characters: ", .shell_chars_regex, " (attempted to copy to a ",
            "version without those characters '", input_no_shell_chars, "' ",
-           "however that file already exists)", call. = FALSE)
+           "however that file already exists)")
     }
     file.copy(input, input_no_shell_chars, overwrite = TRUE)
     intermediates <- c(intermediates, input_no_shell_chars)
@@ -497,8 +497,7 @@ render <- function(input,
 
   # Stop the render process early if the output directory does not exist
   if (!dir_exists(output_dir)) {
-    stop("The directory '", output_dir, "' does not not exist.",
-         call. = FALSE)
+    stop2("The directory '", output_dir, "' does not not exist.")
   }
 
   # use output filename based files dir
@@ -723,8 +722,8 @@ render <- function(input,
           inherits(envirParams, "knit_param")
 
         if (!isKnownParamsObject) {
-          stop("params object already exists in knit environment ",
-               "so can't be overwritten by render params", call. = FALSE)
+          stop2("params object already exists in knit environment ",
+               "so can't be overwritten by render params")
         }
       }
 
@@ -788,20 +787,20 @@ render <- function(input,
         identical(tolower(xfun::file_ext(output_file)), "html")))  {
     if (has_html_dependencies(knit_meta)) {
       if (!isTRUE(front_matter$always_allow_html)) {
-        stop("Functions that produce HTML output found in document targeting ",
+        stop2("Functions that produce HTML output found in document targeting ",
              pandoc_to, " output.\nPlease change the output type ",
              "of this document to HTML. Alternatively, you can allow\n",
              "HTML output in non-HTML formats by adding this option to the YAML front",
              "-matter of\nyour rmarkdown file:\n\n",
              "  always_allow_html: true\n\n",
-             "Note however that the HTML output will not be visible in non-HTML formats.\n\n",
-             call. = FALSE)
+             "Note however that the HTML output will not be visible in non-HTML formats.\n\n"
+        )
       }
     }
     if (!identical(runtime, "static")) {
-      stop("Runtime '", runtime, "' is not supported for ",
+      stop2("Runtime '", runtime, "' is not supported for ",
            pandoc_to, " output.\nPlease change the output type ",
-           "of this document to HTML.", call. = FALSE)
+           "of this document to HTML.")
     }
   }
 
@@ -1157,8 +1156,8 @@ resolve_df_print <- function(df_print) {
     else if (df_print == "default")
       df_print <- print
     else
-      stop('Invalid value for df_print (valid values are ',
-           paste(valid_methods, collapse = ", "), call. = FALSE)
+      stop2('Invalid value for df_print (valid values are ',
+           paste(valid_methods, collapse = ", "))
   }
 
   df_print

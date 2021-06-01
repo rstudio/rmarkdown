@@ -654,9 +654,9 @@ input_as_dir <- function(input) {
   # ensure the input dir exists
   if (!file.exists(input)) {
     input <- normalize_path(input, mustWork = FALSE)
-    if (!file.exists(input)) stop(
-      "The specified directory '", input, "' does not exist.", call. = FALSE
-    )
+    if (!file.exists(input)) {
+      stop2("The specified directory '", input, "' does not exist.")
+    }
   }
 
   # convert from file to directory if necessary

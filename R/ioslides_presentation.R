@@ -274,8 +274,8 @@ ioslides_presentation <- function(number_sections = FALSE,
                          "faster" = "0.2",
                          "slower" = "0.6")
   else
-    stop('transition must be "default", "faster", "slower" or a ',
-         'numeric value (representing seconds)', call. = FALSE)
+    stop2('transition must be "default", "faster", "slower" or a ',
+         'numeric value (representing seconds)')
   args <- c(args, pandoc_variable_arg("transition", transition))
 
   # additional css
@@ -432,7 +432,7 @@ ioslides_presentation <- function(number_sections = FALSE,
       output_lines <- c(preface_lines, slides_lines, suffix_lines)
       write_utf8(output_lines, output_file)
     } else {
-      stop("Slides placeholder not found in slides HTML", call. = FALSE)
+      stop2("Slides placeholder not found in slides HTML")
     }
 
     output_file

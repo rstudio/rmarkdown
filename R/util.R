@@ -254,8 +254,7 @@ trim_trailing_ws <- function(x) {
 base_dir <- function(x) {
   base <- unique(dirname(x))
   if (length(base) > 1) {
-    stop("Input files not all in same directory, please supply explicit wd",
-      call. = FALSE)
+    stop2("Input files not all in same directory, please supply explicit wd")
   }
   base
 }
@@ -561,6 +560,9 @@ get_loaded_packages <- function() {
     row.names = NULL, stringsAsFactors = FALSE
   )
 }
+
+warning2 = function(...) warning(..., call. = FALSE)
+stop2 = function(...) stop(..., call. = FALSE)
 
 # devtools metadata -------------------------------------------------------
 

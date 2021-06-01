@@ -94,7 +94,7 @@ html_document_base <- function(theme = NULL,
     for (f in css) {
       if (grepl("\\.s[ac]ss$", f)) {
         if (!xfun::loadable("sass")) {
-          stop("Using `.sass` or `.scss` file in `css` argument requires the sass package.", call. = FALSE)
+          stop2("Using `.sass` or `.scss` file in `css` argument requires the sass package.")
         }
         f <- sass::sass(
           sass::sass_file(f),
