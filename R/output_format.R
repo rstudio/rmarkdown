@@ -481,7 +481,7 @@ output_format_from_yaml_front_matter <- function(input_lines,
 
   # ensure input is the correct data type
   if (!is_null_or_string(format_name)) {
-    stop("Unrecognized output format specified", call. = FALSE)
+    stop2("Unrecognized output format specified")
   }
 
   # parse the yaml
@@ -586,7 +586,7 @@ create_output_format <- function(name,
 
   # validate the name
   if (is.null(name))
-    stop("The output format name must not be NULL", call. = FALSE)
+    stop2("The output format name must not be NULL")
   if (name == "revealjs_presentation")
     stop("reveal.js presentations are now located in a separate package: ",
          "https://github.com/jjallaire/revealjs")
@@ -597,7 +597,7 @@ create_output_format <- function(name,
   # call the function
   output_format <- do.call(output_format_func, options)
   if (!is_output_format(output_format))
-    stop("Format is not of class rmarkdown_output_format", call. = FALSE)
+    stop2("Format is not of class rmarkdown_output_format")
 
   # return the format
   output_format
@@ -617,7 +617,7 @@ output_format_string_from_ext <- function(output_file) {
 create_output_format_function <- function(name) {
   output_format_func <- eval(xfun::parse_only(name))
   if (!is.function(output_format_func))
-    stop("YAML output format must evaluate to a function", call. = FALSE)
+    stop2("YAML output format must evaluate to a function")
   output_format_func
 }
 
@@ -719,7 +719,7 @@ parse_yaml_front_matter <- function(input_lines) {
 validate_front_matter <- function(front_matter) {
   front_matter <- trim_trailing_ws(front_matter)
   if (grepl(":$", front_matter))
-    stop("Invalid YAML front matter (ends with ':')", call. = FALSE)
+    stop2("Invalid YAML front matter (ends with ':')")
 }
 
 

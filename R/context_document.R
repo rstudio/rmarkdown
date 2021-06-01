@@ -56,10 +56,10 @@ context_document <- function(toc = FALSE,
   sys_context <- if (is.null(context_path)) find_program("context") else context_path
   ext <- match.arg(ext)
   if (identical(ext, ".pdf") && !nzchar(sys_context))
-    stop("Cannot find ConTeXt.\n",
+    stop2("Cannot find ConTeXt.\n",
          "Please, check that ConTeXt is installed.\n",
-         "For more information, see the help page '?context_document'.",
-         call. = FALSE)
+         "For more information, see the help page '?context_document'."
+         )
 
   # base pandoc options for all ConTeXt output
   args <- c("--standalone")
