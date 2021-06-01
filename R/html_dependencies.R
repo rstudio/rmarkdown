@@ -346,7 +346,7 @@ validate_html_dependency <- function(list) {
 
   # check src path or href are given
   if (is.null(list$src)) {
-    stop("neither path nor href are provided for html_dependency", call. = FALSE)
+    stop("src for html_dependency not provided", call. = FALSE)
   }
   if (!is.null(list$src$file)) {
     file <- list$src$file
