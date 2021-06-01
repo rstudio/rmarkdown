@@ -173,7 +173,7 @@ test_that("Dependencies are correctly validated", {
   dep2 <- dep; dep2$version <- NULL
   expect_error(validate_html_dependency(dep2), "version .* not provided")
   dep2 <- dep; dep2$src <- NULL
-  expect_error(validate_html_dependency(dep2), "neither path nor href")
+  expect_error(validate_html_dependency(dep2), "src .* not provided")
   dep2 <- dep; dep2$src <- list(file = tempfile("donotexist"))
   expect_error(validate_html_dependency(dep2), "path for html_dependency not found:", fixed = TRUE)
 })
