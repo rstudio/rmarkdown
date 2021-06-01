@@ -1,6 +1,8 @@
 rmarkdown 2.9
 ================================================================================
 
+- All HTML dependencies are now correctly supported, included those with only a `href` url in their `src`. Previously, an unjustified error 'path for html_dependency not provided.' was thrown when rendering documents (thanks, @crazycapivara, @matthewstrasiotto, #1805, #1948, #2151). 
+
 - Fix an error thrown with output format using a `file_scope` function (like in **bookdown**) (thanks, @rfaelens, #2149).
 
 - Fix an issue with `copy_ressource = TRUE` in `html_document_base` where very long HTML documents were truncated during post processing (thanks, @oliviermeslin, #2145).
