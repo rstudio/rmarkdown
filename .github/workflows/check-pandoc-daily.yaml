@@ -10,7 +10,7 @@ name: R-CMD-check-daily-pandoc
 jobs:
   check:
     runs-on: ${{ matrix.config.os }}
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) [Pandoc ${{ matrix.config.pandoc }}]
+    name: ${{ matrix.config.os }} (R release) [Pandoc devel]
 
     strategy:
       fail-fast: false
