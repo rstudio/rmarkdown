@@ -141,6 +141,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   # the theme wins out
   if (length(target_file)) {
     format <- output_format_from_yaml_front_matter(read_utf8(target_file))
+    old_theme <- shiny::getCurrentTheme()
+    on.exit(set_current_theme(old_theme), add = TRUE)
     set_current_theme(resolve_theme(format$options$theme))
   }
 
