@@ -19,11 +19,14 @@ test_that("file.path.ci returns correctly no matter the case", {
 })
 
 
-test_that("set_current_theme() informs shiny::getCurrentTheme()", {
+test_that("set_current_theme() informs shiny::getCurrentTheme() only with bslib theme", {
+  skip_if_not(packageVersion("shiny") >= 1.6)
   expect_null(shiny::getCurrentTheme())
-  theme <- bslib::bs_theme()
-  set_current_theme(theme)
+  set_current_theme(theme <- bslib::bs_theme())
   expect_equal(theme, shiny::getCurrentTheme())
   set_current_theme(NULL)
   expect_null(shiny::getCurrentTheme())
+  set_current_theme(theme <- "cerulean")
+  expect_equal(theme, shiny::getCurrentTheme())
+  set_current_theme(NULL)
 })
