@@ -7,14 +7,15 @@ rmarkdown 2.9
 
 - Fix an issue with `copy_ressource = TRUE` in `html_document_base` where very long HTML documents were truncated during post processing (thanks, @oliviermeslin, #2145).
 
-- When rendering a `runtime: shiny` document, an extra temp folder will be used in the output path. With the extra temp random folder in the path, predictable output file names may be used. (#2137)
+- When `run()`-ing a `runtime: shiny` document, an extra temp folder will be used in the output path. With the extra temp random folder in the path, predictable output file names may be used. (#2137)
+
+- When `run()`-ing a `runtime: shiny` document with a `{bslib}` theme, the global theme value wasn't being restored properly. (#2160)
 
 - Floating ToC in `html_document` can now hide headings with unnumbered and unlisted classes (thanks, @atusy, #1993).
 
 - Fix prefix handling in R Markdown website's navbar for Fontawesome V5 and compatibility with V4. For icon only available in V5, the full prefix + name should be use, especially with new `fab` prefix (e.g. `fab fa-r-project`). If no prefix is used (e.g `fa-home` instead of `fas fa-home`), the `fa` prefix will be added for V4 compatibility as it has been deprecated in V5. We advice to use the full prefix + name for icons following Fontawesome documentation. (#1994)
 
 - `rmarkdown::site_generator()` can hang session waiting for input when the `site` field is not found in the YAML frontmatter of `index.Rmd` (thanks, @kevinushey @mirh, #2043).
-
 
 rmarkdown 2.8
 ================================================================================
