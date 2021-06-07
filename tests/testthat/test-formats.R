@@ -27,7 +27,7 @@ test_that("formats successfully produce a document", {
   suppressWarnings(testFormat(html_vignette()))
 
   if (requireNamespace("tufte", quietly = TRUE))
-    suppressWarnings(testFormat(expect_warning(tufte_handout(), "deprecated")))
+    suppressWarnings(testFormat(tufte_handout()))
 })
 
 test_that("documents with spaces in names can be rendered", {
