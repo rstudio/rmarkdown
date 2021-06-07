@@ -17,17 +17,17 @@ test_that("formats successfully produce a document", {
   testFormat(html_document(), df_print = "kable")
   testFormat(html_notebook())
   testFormat(html_fragment(), df_print = "tibble")
-  testFormat(html_vignette(), df_print = "tibble")
+  expect_warning(testFormat(html_vignette(), df_print = "tibble"))
   testFormat(ioslides_presentation(), df_print = "kable")
   testFormat(slidy_presentation(), df_print = "kable")
   testFormat(md_document(), df_print = "kable")
   testFormat(pdf_document(), df_print = "kable")
   testFormat(beamer_presentation(), df_print = "kable")
   testFormat(word_document(), df_print = "kable")
-  testFormat(html_vignette())
+  expect_warning(testFormat(html_vignette()), "vignette title")
 
   if (requireNamespace("tufte", quietly = TRUE))
-    testFormat(tufte_handout())
+    suppressWarnings(testFormat(expect_warning(tufte_handout(), "deprecated")))
 })
 
 test_that("documents with spaces in names can be rendered", {
