@@ -1,4 +1,5 @@
-context("formats")
+# TODO: to remove when switching the package to edition 3
+local_edition(3)
 
 test_that("formats successfully produce a document", {
 
@@ -87,3 +88,4 @@ test_that("pdf_document can correctly keep tex file if required", {
   expect_true(file.exists(file.path(tmpdir, texfile)))
   unlink(tmpdir, recursive = TRUE)
 })
+
