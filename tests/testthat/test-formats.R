@@ -96,3 +96,10 @@ test_that("url in css arg works HTML based format", {
   expect_error(render(rmd, html_document_base(css = css), quiet = TRUE), NA)
 })
 
+test_that("css arg works HTML based format", {
+  rmd <- local_rmd_file("---", "title: test", "---", "", "# test")
+  css <- withr::local_tempfile(fileext = ".css")
+  xfun::write_utf8("h1{color:red;}", css)
+  expect_error(render(rmd, html_document_base(css = css), quiet = TRUE), NA)
+})
+
