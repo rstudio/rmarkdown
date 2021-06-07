@@ -106,7 +106,8 @@ html_document_base <- function(theme = NULL,
           options = sass::sass_options(output_style = "compressed")
         )
       }
-      f <- normalized_relative_to(output_dir, f)
+      # do not normalize web path
+      if (!xfun::is_web_path(f)) f <- normalized_relative_to(output_dir, f)
       args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
     }
 
