@@ -1,6 +1,8 @@
 rmarkdown 2.9
 ================================================================================
 
+- Fix a regression in version 2.8 when a url is used in `css` argument (thanks, @vnijs, #2163).
+
 - All HTML dependencies are now correctly supported, included those with only an `href` component but not `file` component in their `src` attribute. Previously, **rmarkdown** would throw the error `'path for html_dependency not provided'` when rendering documents containing HTML dependencies with `href` components (thanks, @crazycapivara, @matthewstrasiotto, #1805, #1948, #2151).
 
 - Fix an error thrown with output format using a `file_scope` function (like in **bookdown**) (thanks, @rfaelens, #2149).
