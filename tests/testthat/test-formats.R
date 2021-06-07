@@ -94,6 +94,8 @@ test_that("url in css arg works HTML based format", {
   rmd <- local_rmd_file("---", "title: test", "---", "", "# test")
   css <- "https://raw.githubusercontent.com/rstudio/rmarkdown/master/tests/testthat/ressources/styles.css"
   expect_error(render(rmd, html_document_base(css = css), quiet = TRUE), NA)
+  skip_if_not_installed("bslib")
+  expect_error(render(rmd, html_document_base(css = css, theme = list(version = 4)), quiet = TRUE), NA)
 })
 
 test_that("css arg works HTML based format", {
@@ -101,5 +103,7 @@ test_that("css arg works HTML based format", {
   css <- withr::local_tempfile(fileext = ".css")
   xfun::write_utf8("h1{color:red;}", css)
   expect_error(render(rmd, html_document_base(css = css), quiet = TRUE), NA)
+  skip_if_not_installed("bslib")
+  expect_error(render(rmd, html_document_base(css = css, theme = list(version = 4)), quiet = TRUE), NA)
 })
 
