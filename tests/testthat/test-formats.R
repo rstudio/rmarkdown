@@ -92,7 +92,7 @@ test_that("pdf_document can correctly keep tex file if required", {
 test_that("url in css arg works HTML based format", {
   skip_if_offline()
   rmd <- local_rmd_file("---", "title: test", "---", "", "# test")
-  css <- "https://raw.githubusercontent.com/rstudio/rmarkdown/master/inst/rmd/h/fontawesome/css/all.css"
+  css <- "https://raw.githubusercontent.com/rstudio/rmarkdown/master/tests/testthat/ressources/styles.css"
   expect_error(render(rmd, html_document_base(css = css), quiet = TRUE), NA)
 })
 
