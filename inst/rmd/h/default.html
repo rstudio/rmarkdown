@@ -26,6 +26,9 @@ $endif$
 $for(header-includes)$
 $header-includes$
 $endfor$
+$if(shiny-prerendered)$
+<!-- HEAD_CONTENT -->
+$endif$
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -444,9 +447,9 @@ $if(toc_float)$
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row">
 $if(bs3)$
-<div class="col-sm-12 col-md-4 col-lg-3">
-$else$
 <div class="col-xs-12 col-sm-4 col-md-3">
+$else$
+<div class="col-sm-12 col-md-4 col-lg-3">
 $endif$
 $if(toc-title)$
 <h2 id="$idprefix$toc-title">$toc-title$</h2>
@@ -456,9 +459,9 @@ $endif$
 </div>
 
 $if(bs3)$
-<div class="toc-content col-sm-12 col-md-8 col-lg-9">
-$else$
 <div class="toc-content col-xs-12 col-sm-8 col-md-9">
+$else$
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
 $endif$
 
 $endif$
@@ -612,6 +615,9 @@ $endif$
 $if(toc_float)$
 <script>
 $$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $$('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $$('div.section.toc-ignore')

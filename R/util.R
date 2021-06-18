@@ -254,8 +254,7 @@ trim_trailing_ws <- function(x) {
 base_dir <- function(x) {
   base <- unique(dirname(x))
   if (length(base) > 1) {
-    stop("Input files not all in same directory, please supply explicit wd",
-      call. = FALSE)
+    stop2("Input files not all in same directory, please supply explicit wd")
   }
   base
 }
@@ -312,7 +311,7 @@ find_program <- function(program) {
   }
 }
 
-has_crop_tools <- function() {
+has_crop_tools <- function(warn = TRUE) {
   tools <- c(
     pdfcrop = unname(find_program("pdfcrop")),
     ghostscript = unname(tools::find_gs_cmd())
@@ -320,7 +319,7 @@ has_crop_tools <- function() {
   missing <- tools[tools == ""]
   if (length(missing) == 0) return(TRUE)
   x <- paste0(names(missing), collapse = ", ")
-  warning(
+  if (warn) warning(
     sprintf("\nTool(s) not installed or not in PATH: %s", x),
     "\n-> As a result, figure cropping will be disabled."
   )
@@ -561,6 +560,9 @@ get_loaded_packages <- function() {
     row.names = NULL, stringsAsFactors = FALSE
   )
 }
+
+warning2 = function(...) warning(..., call. = FALSE)
+stop2 = function(...) stop(..., call. = FALSE)
 
 # devtools metadata -------------------------------------------------------
 

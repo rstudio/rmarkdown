@@ -28,7 +28,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
     assign(".shiny_prerendered_server_start_code", server_start_code, envir = server_envir)
 
     # execute the startup code (server_start_context + context="data" loading)
-    eval(parse(text = server_start_context), envir = server_envir)
+    eval(xfun::parse_only(server_start_context), envir = server_envir)
     shiny_prerendered_data_load(input_rmd, server_envir)
 
     # lock the environment to prevent inadvertant assignments
@@ -39,7 +39,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
   .server_context <- shiny_prerendered_extract_context(html_lines, "server")
   server_envir$.server_context <- .server_context
   server <- function(input, output, session) {
-    eval(parse(text = .server_context))
+    eval(xfun::parse_only(.server_context))
   }
   environment(server) <- new.env(parent = server_envir)
 
@@ -160,13 +160,21 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
   # return html w/ dependencies
   html_with_deps <- shinyHTML_with_deps(rendered_html, dependencies)
 
-  # add placeholder for additional dependencies at the end of the <head> element
-  # using a template expansion expected by shiny (usually done in shiny:::renderPage)
-  sub('</head>',
-      paste0('\n', htmltools::htmlTemplate(text_ = "{{ headContent() }}"), '\n</head>'),
+  # The html template used to render the UI should contain the placeholder
+  # expected by shiny in `shiny:::renderPage()` which uses
+  # `htmltools::renderDocument`.
+  # If it is not present in the template, we add this placeholder at the end of
+  # the <head> element
+  if (!any(grepl(headContent <- "<!-- HEAD_CONTENT -->", html_with_deps, fixed = TRUE))) {
+    html_with_deps <- sub(
+      '</head>',
+      paste0('\n', headContent, '\n</head>'),
       html_with_deps,
       fixed = TRUE,
       useBytes = TRUE)
+    Encoding(html_with_deps) <- "UTF-8"
+  }
+  html_with_deps
 }
 
 shiny_prerendered_ui <- function(html, deps) {
@@ -395,9 +403,9 @@ shiny_prerendered_chunk <- function(context, code, singleton = FALSE) {
 
   # verify we are in runtime: shiny_prerendered
   if (!is_shiny_prerendered(knitr::opts_knit$get("rmarkdown.runtime")))
-      stop("The shiny_prerendered_chunk function can only be called from ",
-           "within runtime: shinyrmd",
-           call. = FALSE)
+      stop2("The shiny_prerendered_chunk function can only be called from ",
+           "within runtime: shinyrmd"
+      )
 
   # add the prerendered chunk to knit_meta
   knitr::knit_meta_add(list(
@@ -514,7 +522,7 @@ shiny_prerendered_evaluate_hook <- function(input) {
 
     # otherwise parse so we can throw an error for invalid code
     else {
-      parse(text = code)
+      xfun::parse_only(code)
       list()
     }
   }
@@ -605,8 +613,7 @@ shiny_prerendered_append_contexts <- function(runtime, file) {
 
     # validate we are in runtime: shiny_prerendered
     if (!is_shiny_prerendered(runtime)) {
-      stop("The code within this document requires runtime: shinyrmd",
-           call. = FALSE)
+      stop2("The code within this document requires runtime: shinyrmd")
     }
 
     # open the file

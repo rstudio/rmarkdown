@@ -262,10 +262,12 @@ knitr_options_pdf <- function(fig_width,
   knit_hooks <- NULL
 
   # apply cropping if requested and we have pdfcrop and ghostscript
-  crop <- fig_crop && has_crop_tools()
-  if (crop) {
-    knit_hooks = list(crop = knitr::hook_pdfcrop)
-    opts_chunk$crop = TRUE
+  if (identical(fig_crop, 'auto')) fig_crop <- has_crop_tools(FALSE) else {
+    if (fig_crop && !has_crop_tools()) fig_crop <- FALSE
+  }
+  if (fig_crop) {
+    knit_hooks <- list(crop = knitr::hook_pdfcrop)
+    opts_chunk$crop <- TRUE
   }
 
   # return options
@@ -305,7 +307,7 @@ pandoc_options <- function(to,
                            from = rmarkdown_format(),
                            args = NULL,
                            keep_tex = FALSE,
-                           latex_engine = c("pdflatex", "lualatex", "xelatex"),
+                           latex_engine = c("pdflatex", "lualatex", "xelatex", "tectonic"),
                            ext = NULL,
                            lua_filters = NULL) {
   list(to = to,
@@ -400,7 +402,7 @@ default_output_format <- function(input, output_yaml = NULL) {
 
   # look up the formals of the output function to get the full option list and
   # merge against the explicitly set list
-  format_function <- eval(parse(text = format$name))
+  format_function <- eval(xfun::parse_only(format$name))
   format$options <- merge_lists(as.list(formals(format_function)),
                                 format$options,
                                 recursive = FALSE)
@@ -466,19 +468,20 @@ all_output_formats <- function(input, output_yaml = NULL) {
   enumerate_output_formats(input, output_yaml = output_yaml)
 }
 
-
 # Synthesize the output format for a document from it's YAML. If we can't
-# find an output format then we just return html_document
+# find an output format then we use a default one based on the output_file extension
+# or just return html_document
 output_format_from_yaml_front_matter <- function(input_lines,
                                                  output_options = NULL,
                                                  output_format_name = NULL,
-                                                 output_yaml = NULL) {
+                                                 output_yaml = NULL,
+                                                 output_file = NULL) {
 
   format_name <- output_format_name
 
   # ensure input is the correct data type
   if (!is_null_or_string(format_name)) {
-    stop("Unrecognized output format specified", call. = FALSE)
+    stop2("Unrecognized output format specified")
   }
 
   # parse the yaml
@@ -549,10 +552,13 @@ output_format_from_yaml_front_matter <- function(input_lines,
       }
     }
 
-  # no output formats defined in the file, just take the passed format
-  # by name (or default to html_document if no named format was specified)
+  # no output formats defined in the file, just take the passed format by name,
+  # or default to a format based on the output_file extension if any,
+  # or html_document
   } else {
-    if (is.null(format_name)) format_name <- "html_document"
+    if (is.null(format_name)) {
+      format_name <- output_format_string_from_ext(output_file)
+    }
   }
 
   # merge any output_options passed in the call to render
@@ -580,7 +586,7 @@ create_output_format <- function(name,
 
   # validate the name
   if (is.null(name))
-    stop("The output format name must not be NULL", call. = FALSE)
+    stop2("The output format name must not be NULL")
   if (name == "revealjs_presentation")
     stop("reveal.js presentations are now located in a separate package: ",
          "https://github.com/jjallaire/revealjs")
@@ -591,16 +597,27 @@ create_output_format <- function(name,
   # call the function
   output_format <- do.call(output_format_func, options)
   if (!is_output_format(output_format))
-    stop("Format is not of class rmarkdown_output_format", call. = FALSE)
+    stop2("Format is not of class rmarkdown_output_format")
 
   # return the format
   output_format
 }
 
+output_format_string_from_ext <- function(output_file) {
+  default_format <- "html_document"
+  if (is.null(output_file)) return(default_format)
+  switch(xfun::file_ext(output_file),
+    html = "html_document",
+    pdf = "pdf_document",
+    docx = "word_document",
+    default_format  # always been the default format in R Markdown
+  )
+}
+
 create_output_format_function <- function(name) {
-  output_format_func <- eval(parse(text = name))
+  output_format_func <- eval(xfun::parse_only(name))
   if (!is.function(output_format_func))
-    stop("YAML output format must evaluate to a function", call. = FALSE)
+    stop2("YAML output format must evaluate to a function")
   output_format_func
 }
 
@@ -702,7 +719,7 @@ parse_yaml_front_matter <- function(input_lines) {
 validate_front_matter <- function(front_matter) {
   front_matter <- trim_trailing_ws(front_matter)
   if (grepl(":$", front_matter))
-    stop("Invalid YAML front matter (ends with ':')", call. = FALSE)
+    stop2("Invalid YAML front matter (ends with ':')")
 }
 
 

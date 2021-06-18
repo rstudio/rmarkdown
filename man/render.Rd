@@ -103,7 +103,10 @@ environment).}
 \item{run_pandoc}{An option for whether to run pandoc to convert Markdown
 output.}
 
-\item{quiet}{An option to suppress printing of the pandoc command line.}
+\item{quiet}{An option to suppress printing during rendering from knitr,
+pandoc command line and others. To only suppress printing of the last
+"Output created: " message, you can set \code{rmarkdown.render.message} to
+\code{FALSE}}
 
 \item{encoding}{Ignored. The encoding is always assumed to be UTF-8.}
 }

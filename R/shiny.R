@@ -141,6 +141,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   # the theme wins out
   if (length(target_file)) {
     format <- output_format_from_yaml_front_matter(read_utf8(target_file))
+    old_theme <- shiny::getCurrentTheme()
+    on.exit(set_current_theme(old_theme), add = TRUE)
     set_current_theme(resolve_theme(format$options$theme))
   }
 
@@ -450,8 +452,10 @@ rmd_cached_output <- function(input) {
     }
   } else {
     # It's not cacheable, and should be rendered to a session-specific temporary
-    # file
-    output_dest <- tempfile(fileext = ".html")
+    # directory, but with a predictable file name.
+    tmp_dir <- tempfile()
+    output_dest_name <- xfun::with_ext(basename(input), ".html")
+    output_dest <- file.path(tmp_dir, output_dest_name)
   }
   list(
     cacheable = cacheable,

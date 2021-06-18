@@ -91,7 +91,7 @@ resolve_theme <- function(theme) {
   # Bootstrap/Bootswatch 3 names (backwards-compatibility)
   if (is.character(theme)) {
     if (length(theme) != 1) {
-      stop("`theme` must be character vector of length 1.", call. = FALSE)
+      stop2("`theme` must be character vector of length 1.")
     }
     if (theme %in% c("bootstrap", "default")) {
       return("bootstrap")
@@ -100,17 +100,17 @@ resolve_theme <- function(theme) {
   }
   if (is.list(theme)) {
     if (!is_available("bslib")) {
-      stop("Providing a list to `theme` requires the bslib package.", call. = FALSE)
+      stop2("Providing a list to `theme` requires the bslib package.")
     }
     return(as_bs_theme(theme))
   }
-  stop(
+  stop2(
     "`theme` expects any one of the following values: \n",
     "    (1) NULL (no Bootstrap), \n",
     "    (2) a character string referencing a Bootswatch 3 theme name, \n",
     "    (3) a list of arguments to bslib::bs_theme(), \n",
     "    (4) a bslib::bs_theme() object."
-  , call. = FALSE)
+  )
 }
 
 # At the moment, theme may be either NULL (no Bootstrap), a string (Bootswatch
@@ -222,7 +222,7 @@ navbar_icon_dependencies <- function(navbar) {
   source <- read_utf8(navbar)
 
   # find icon references
-  res <- regexec('<(span|i) +class *= *("|\') *(fa\\w fa|ion ion)-', source)
+  res <- regexec('<(span|i) +class *= *("|\') *(fa\\w? fa|ion ion)-', source)
   matches <- regmatches(source, res)
   libs <- c()
   for (match in matches) {
@@ -232,7 +232,7 @@ navbar_icon_dependencies <- function(navbar) {
   libs <- unique(libs)
 
   # return their dependencies
-  any_fa <- any(grepl("fa\\w fa", libs))
+  any_fa <- any(grepl("fa\\w? fa", libs))
   any_ion <- any(grepl("ion ion", libs))
   html_dependencies_fonts(any_fa, any_ion)
 }
@@ -382,26 +382,45 @@ copy_html_dependency <- function(dependency, outputDir, mustWork = TRUE) {
 # return the html dependencies as an HTML string suitable for inclusion
 # in the head of a document
 html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
-
   if (!is.null(lib_dir)) {
-    if (grepl("^\\.\\.", lib_dir)) {
+    if (getOption("rmarkdown.uptree.dependencies", default=FALSE) &&
+        grepl("^\\.\\.", lib_dir)) {
       abs_lib_dir <- normalizePath(lib_dir, winslash = "/")
-      dependencies <- lapply(dependencies, copy_html_dependency, abs_lib_dir)
-      dependencies <- lapply(dependencies, makeDependencyRelative, abs_lib_dir)
+      dependencies <- lapply(dependencies, copy_html_dependency, abs_lib_dir,
+                             mustWork = FALSE)
+      dependencies <- lapply(dependencies, makeDependencyRelative, abs_lib_dir,
+                             mustWork = FALSE)
       return(renderDependencies(dependencies, "file", encodeFunc = identity,
                                 hrefFilter = function(path) {
                                   file.path(lib_dir, path)
                                 }))
     } else {
-      dependencies <- lapply(dependencies, copyDependencyToDir, lib_dir)
-      dependencies <- lapply(dependencies, makeDependencyRelative, output_dir)
+    # using mustWork=FALSE insures non-disk based dependencies are
+    # return untouched, keeping the order of all deps.
+    dependencies <- lapply(dependencies, copyDependencyToDir,
+                           outputDir = lib_dir, mustWork = FALSE)
+    dependencies <- lapply(dependencies, makeDependencyRelative,
+                           basepath = output_dir, mustWork = FALSE)
     }
+
   }
-  return(renderDependencies(dependencies, "file", encodeFunc = identity,
-                            hrefFilter = function(path) {
-                              html_reference_path(path, lib_dir, output_dir)
-                            })
-  )
+
+  # Dependencies are iterated on as file based dependencies needs to be
+  # processed a specific way for Pandoc compatibility.
+  html <- c()
+  for (dep in dependencies) {
+    tags <- if (is.null(dep$src[["file"]])) {
+      renderDependencies(list(dep), "href")
+    } else {
+      renderDependencies(list(dep), "file",
+                         encodeFunc = identity,
+                         hrefFilter = function(path) {
+                           html_reference_path(path, lib_dir, output_dir)
+                         })
+    }
+    html <- c(html, tags)
+  }
+  HTML(paste(html, collapse = "\n"))
 }
 
 # check class of passed list for 'html_dependency'
@@ -414,22 +433,26 @@ validate_html_dependency <- function(list) {
 
   # ensure it's the right class
   if (!is_html_dependency(list))
-    stop("passed object is not of class html_dependency", call. = FALSE)
+    stop2("passed object is not of class html_dependency")
 
   # validate required fields
   if (is.null(list$name))
-    stop("name for html_dependency not provided", call. = FALSE)
+    stop2("name for html_dependency not provided")
   if (is.null(list$version))
-    stop("version for html_dependency not provided", call. = FALSE)
+    stop2("version for html_dependency not provided")
   list <- fix_html_dependency(list)
-  if (is.null(list$src$file))
-    stop("path for html_dependency not provided", call. = FALSE)
-  file <- list$src$file
-  if (!is.null(list$package))
-    file <- system.file(file, package = list$package)
-  if (!file.exists(file)) {
-    utils::str(list)
-    stop("path for html_dependency not found: ", file, call. = FALSE)
+
+  # check src path or href are given
+  if (is.null(list$src)) {
+    stop2("src for html_dependency not provided")
+  }
+  if (!is.null(list$src$file)) {
+    file <- list$src$file
+    if (!is.null(list$package))
+      file <- system.file(file, package = list$package)
+    if (!file.exists(file)) {
+      stop2("path for html_dependency not found: ", file)
+    }
   }
 
   list

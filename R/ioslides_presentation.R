@@ -19,9 +19,10 @@
 #' @param transition Speed of slide transitions. This can be "default",
 #'   "slower", "faster", or a numeric value with a number of seconds (e.g. 0.5).
 #' @param analytics A Google analytics property ID.
-#'@param smart Produce typographically correct output, converting straight
+#' @param smart Produce typographically correct output, converting straight
 #'  quotes to curly quotes, \code{---} to em-dashes, \code{--} to en-dashes, and
 #'  \code{...} to ellipses.
+#' @param css One or more css files to include.
 #' @return R Markdown output format to pass to \code{\link{render}}.
 #' @details
 #'   See the \href{https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html}{
@@ -273,8 +274,8 @@ ioslides_presentation <- function(number_sections = FALSE,
                          "faster" = "0.2",
                          "slower" = "0.6")
   else
-    stop('transition must be "default", "faster", "slower" or a ',
-         'numeric value (representing seconds)', call. = FALSE)
+    stop2('transition must be "default", "faster", "slower" or a ',
+         'numeric value (representing seconds)')
   args <- c(args, pandoc_variable_arg("transition", transition))
 
   # additional css
@@ -431,7 +432,7 @@ ioslides_presentation <- function(number_sections = FALSE,
       output_lines <- c(preface_lines, slides_lines, suffix_lines)
       write_utf8(output_lines, output_file)
     } else {
-      stop("Slides placeholder not found in slides HTML", call. = FALSE)
+      stop2("Slides placeholder not found in slides HTML")
     }
 
     output_file
