@@ -66,12 +66,17 @@
 run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
                 auto_reload = TRUE, shiny_args = NULL, render_args = NULL) {
 
+  # if file is missing and there is an index.qmd (and no index.Rmd) then use that
+  if (missing(file) && !file.exists("index.Rmd") && file.exists("index.qmd"))
+    file <- "index.qmd"
+
   # if the file argument is missing then substitute ui.Rmd if it exists
   # (and index.Rmd does not exist)
   if (missing(file) && missing(default_file)) {
-    if (!file.exists(file.path(dir, "index.Rmd")) &&
-        file.exists(file.path(dir, "ui.Rmd"))) {
-      file <- file.path(dir, "ui.Rmd")
+    if (!any(file.exists(file.path(dir, paste0("index.", c("qmd", "Rmd"))))) &&
+        any(file.exists(file.path(dir, paste0("ui.", c("qmd", "Rmd")))))) {
+      uiRmd = file.path(dir, "ui.Rmd")
+      file <- ifelse(file.exists(uiRmd), uiRmd, file.path(dir, "ui.qmd"))
     }
   }
 
@@ -79,13 +84,13 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   # documents which start with a leading underscore (same pattern is used to
   # designate "sub-documents" in R Markdown websites and bookdown)
   if (is.null(default_file)) {
-    allRmds <- list.files(path = dir, pattern = "^[^_].*\\.[Rr][Mm][Dd]$")
+    allRmds <- list.files(path = dir, pattern = "^[^_].*\\.[Rrq][Mm][Dd]$")
     if (length(allRmds) == 1) {
       # just one R Markdown document
       default_file <- allRmds
     } else {
       # more than one: look for an index or ui
-      index <- which(tolower(allRmds) %in% c("index.rmd", "ui.rmd"))
+      index <- which(tolower(allRmds) %in% c("index.rmd", "index.qmd", "ui.rmd", "ui.qmd"))
       if (length(index) > 0) {
         default_file <- allRmds[index[1]]
       } else {
@@ -166,7 +171,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     # the Shiny server; handle requests for the root (/) and any R markdown files
     # within
     app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir, default_file),
-                           uiPattern = "^/$|^/index\\.html?$|^(/.*\\.[Rr][Mm][Dd])$",
+                           uiPattern = "^/$|^/index\\.html?$|^(/.*\\.[Rrq][Mm][Dd])$",
                            onStart = onStart,
                            server = rmarkdown_shiny_server(
                              dir, default_file, auto_reload, render_args))
@@ -335,7 +340,7 @@ rmarkdown_shiny_ui <- function(dir, file) {
 
     # request must be for an R Markdown or HTML document
     ext <- tolower(xfun::file_ext(req_path))
-    if (!(ext %in% c("rmd", "htm", "html"))) return(NULL)
+    if (!(ext %in% c("rmd", "qmd", "htm", "html"))) return(NULL)
 
     # document must exist
     target_file <- resolve_relative(dir, req_path)
