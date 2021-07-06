@@ -138,6 +138,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   target_file <- file %||% file.path(dir, default_file)
   yaml_front <- if (length(target_file)) yaml_front_matter(target_file)
   runtime <- yaml_front$runtime
+  server <- yaml_front$server
   theme <- render_args$output_options$theme
   # Let shiny::getCurrentTheme() know about the yaml's theme, so
   # things like `bslib::bs_themer()` can work with prerendered documents.
@@ -152,7 +153,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   }
 
   # run using the requested mode
-  if (is_shiny_prerendered(runtime)) {
+  if (is_shiny_prerendered(runtime, server)) {
 
     # get the pre-rendered shiny app
     app <- shiny_prerendered_app(target_file, render_args = render_args)
@@ -571,8 +572,16 @@ is_shiny_classic <- function(runtime) {
   identical(runtime, "shiny")
 }
 
-is_shiny_prerendered <- function(runtime) {
-  identical(runtime, "shinyrmd") || identical(runtime, "shiny_prerendered")
+is_shiny_prerendered <- function(runtime, server = NULL) {
+  if (identical(runtime, "shinyrmd") || identical(runtime, "shiny_prerendered")) {
+    TRUE
+  } else if (identical(server, "shiny")) {
+    TRUE
+  } else if (is.list(server) && identical(server[["type"]], "shiny")) {
+    TRUE
+  } else {
+    FALSE
+  }
 }
 
 write_shiny_deps <- function(files_dir,

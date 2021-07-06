@@ -442,7 +442,8 @@ render <- function(input,
   # if this is shiny_prerendered then modify the output format to
   # be single-page and to output dependencies to the shiny.dep file
   shiny_prerendered_dependencies <- list()
-  if (requires_knit && is_shiny_prerendered(front_matter$runtime)) {
+  if (requires_knit && is_shiny_prerendered(front_matter$runtime,
+                                            front_matter$server)) {
 
     # require shiny for the knit
     if (requireNamespace("shiny")) {
@@ -450,7 +451,7 @@ render <- function(input,
         attachNamespace("shiny")
     }
     else
-      stop("The shiny package is required for shinyrmd documents")
+      stop("The shiny package is required for shiny documents")
 
     # source global.R if it exists
     global_r <- file.path.ci(".", "global.R")
@@ -528,7 +529,14 @@ render <- function(input,
   # presume that we're rendering as a static document unless specified
   # otherwise in the parameters
   runtime <- match.arg(runtime)
-  if (identical(runtime, "auto")) runtime <- front_matter$runtime %||% "static"
+  if (identical(runtime, "auto")) {
+    if (is_shiny_prerendered(front_matter$runtime, front_matter$server)) {
+      runtime <- "shinyrmd"
+    } else {
+      runtime <- front_matter$runtime %||% "static"
+    }
+  }
+
 
   # set df_print
   context <- render_context()
