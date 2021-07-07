@@ -121,14 +121,14 @@ html_document_base <- function(theme = NULL,
       if (is_bs_theme(theme)) {
         theme <- bslib::bs_global_get()
       }
-      bootstrap_deps <- if (is_bs_theme(theme) && is_shiny(runtime)) {
+      bootstrap_deps <- if (is_bs_theme(theme) && is_shiny(runtime, metadata[["server"]])) {
         list(shiny_bootstrap_lib(theme))
       } else {
         bootstrap_dependencies(theme)
       }
       format_deps <- append(format_deps, htmltools::resolveDependencies(bootstrap_deps))
     }
-    else if (isTRUE(bootstrap_compatible) && is_shiny(runtime)) {
+    else if (isTRUE(bootstrap_compatible) && is_shiny(runtime, metadata[["server"]])) {
       # If we can add bootstrap for Shiny, do it
       format_deps <- append(format_deps, bootstrap_dependencies("bootstrap"))
     }

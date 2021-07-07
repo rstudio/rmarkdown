@@ -576,7 +576,7 @@ render <- function(input,
 
   # determine our id-prefix (add one if necessary for runtime: shiny)
   id_prefix <- id_prefix_from_args(output_format$pandoc$args)
-  if (!nzchar(id_prefix) && is_shiny(runtime)) {
+  if (!nzchar(id_prefix) && is_shiny(runtime, front_matter[["server"]])) {
     id_prefix <- "section-"
     output_format$pandoc$args <- c(output_format$pandoc$args, rbind("--id-prefix", id_prefix))
   }

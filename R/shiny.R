@@ -96,8 +96,8 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
       } else {
         # look for first one that has runtime: shiny
         for (rmd in allRmds) {
-          runtime <- yaml_front_matter(file.path(dir, rmd))$runtime
-          if (is_shiny(runtime)) {
+          yaml <- yaml_front_matter(file.path(dir, rmd))
+          if (is_shiny(yaml$runtime, yaml$server)) {
             default_file <- rmd
             break
           }
@@ -564,8 +564,9 @@ render_delayed <- function(expr) {
   quoted = TRUE)
 }
 
-is_shiny <- function(runtime) {
-  !is.null(runtime) && grepl('^shiny', runtime)
+is_shiny <- function(runtime, server = NULL) {
+  (!is.null(runtime) && grepl('^shiny', runtime)) ||
+  is_shiny_prerendered(runtime, server)
 }
 
 is_shiny_classic <- function(runtime) {
