@@ -36,6 +36,18 @@ if FORMAT == "docx" then -- to be consistent with Pandoc >= 2.10.1
   separator = pandoc.Str("\t")
 end
 
+function Meta(meta)
+  local offset = meta.number_offset
+  if offset then
+    offset = (type(offset) == "table") and (pandoc.utils.stringify(offset)) or offset
+    local i = 0
+    for int in string.gmatch(offset, "[0-9]+") do
+      i = i + 1
+      section_number_table[i] = tonumber(int)
+    end
+  end
+end
+
 function Header(elem)
   -- If unnumbered
   if (elem.classes:find("unnumbered")) then
@@ -66,3 +78,8 @@ function Header(elem)
 
   return elem
 end
+
+return {
+  {Meta = Meta},
+  {Header = Header}
+}
