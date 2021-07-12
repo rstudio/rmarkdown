@@ -531,7 +531,7 @@ render <- function(input,
   runtime <- match.arg(runtime)
   if (identical(runtime, "auto")) {
     if (is_shiny_prerendered(front_matter$runtime, front_matter$server)) {
-      runtime <- "shinyrmd"
+      runtime <- "shiny_prerendered"
     } else {
       runtime <- front_matter$runtime %||% "static"
     }
