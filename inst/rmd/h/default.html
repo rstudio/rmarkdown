@@ -26,6 +26,9 @@ $endif$
 $for(header-includes)$
 $header-includes$
 $endfor$
+$if(shiny-prerendered)$
+<!-- HEAD_CONTENT -->
+$endif$
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -44,13 +47,6 @@ $endfor$
 
 $if(highlightjs)$
 <style type="text/css">code{white-space: pre;}</style>
-$if(theme)$
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
-$endif$
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -63,7 +59,14 @@ if (window.hljs) {
 $endif$
 
 $if(highlighting-css)$
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 $highlighting-css$
 
@@ -100,13 +103,6 @@ $endif$
   }
 })();
 </script>
-$if(theme)$
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
-$endif$
 $endif$
 
 $if(abstract)$
@@ -122,37 +118,11 @@ $if(abstract)$
 </style>
 $endif$
 
-$if(theme)$
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
 $if(source_embed)$
+<style type="text/css">
 #rmd-source-code {
   display: none;
 }
-$endif$
 </style>
 $endif$
 
@@ -197,10 +167,6 @@ $if(theme)$
   margin-left: auto;
   margin-right: auto;
 }
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
 img {
   max-width:100%;
 }
@@ -215,6 +181,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+pre code {
+  padding: 0;
 }
 </style>
 
@@ -247,36 +216,6 @@ $endif$
 
 $if(navbar)$
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: $body_padding$px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
-.section h2 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
-.section h3 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
-.section h4 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
-.section h5 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
-.section h6 {
-  padding-top: $header_padding$px;
-  margin-top: -$header_padding$px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -304,7 +243,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -316,7 +255,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $$(document).ready(function () {
   // active menu anchor
@@ -327,10 +266,23 @@ $$(document).ready(function () {
   var menuAnchor = $$('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $$(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 $endif$
@@ -343,7 +295,6 @@ $endif$
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -494,8 +445,12 @@ $if(theme)$
 $if(toc_float)$
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
+$if(bs3)$
 <div class="col-xs-12 col-sm-4 col-md-3">
+$else$
+<div class="col-sm-12 col-md-4 col-lg-3">
+$endif$
 $if(toc-title)$
 <h2 id="$idprefix$toc-title">$toc-title$</h2>
 $endif$
@@ -503,7 +458,11 @@ $endif$
 </div>
 </div>
 
+$if(bs3)$
 <div class="toc-content col-xs-12 col-sm-8 col-md-9">
+$else$
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+$endif$
 
 $endif$
 
@@ -514,12 +473,12 @@ $include-before$
 $endfor$
 
 $if(theme)$
-<div class="fluid-row" id="$idprefix$header">
+<div id="$idprefix$header">
 
 $if(code_menu)$
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 $if(code_folding)$
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -633,7 +592,7 @@ $$(document).ready(function () {
 
 $$(document).ready(function () {
   $$('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $$(this).parent().toggleClass('nav-tabs-open')
+    $$(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -656,6 +615,9 @@ $endif$
 $if(toc_float)$
 <script>
 $$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $$('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $$('div.section.toc-ignore')

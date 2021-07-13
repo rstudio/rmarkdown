@@ -44,6 +44,9 @@ $endif$
 $for(header-includes)$
   $header-includes$
 $endfor$
+$if(shiny-prerendered)$
+  <!-- HEAD_CONTENT -->
+$endif$
 $for(css)$
   <link rel="stylesheet" type="text/css" media="screen, projection, print"
    href="$css$" />

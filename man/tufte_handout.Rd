@@ -22,8 +22,10 @@ tufte_handout(
 
 \item{fig_height}{Default height (in inches) for figures}
 
-\item{fig_crop}{\code{TRUE} to automatically apply the \code{pdfcrop} utility
-(if available) to pdf figures}
+\item{fig_crop}{Whether to crop PDF figures with the command
+\command{pdfcrop}. This requires the tools \command{pdfcrop} and
+\command{ghostscript} to be installed. By default, \code{fig_crop = TRUE}
+if these two tools are available.}
 
 \item{dev}{Graphics device to use for figure output (defaults to pdf)}
 
@@ -48,21 +50,8 @@ additional details.}
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 }
 \description{
-Template for creating a handout according to the style of
-Edward R. Tufte and Richard Feynman.
-}
-\details{
-See the \href{https://bookdown.org/yihui/rmarkdown/tufte-handouts.html}{online
+This function has been moved to the \pkg{tufte} package. Please use
+\code{tufte::tufte_handout} instead. See the
+\href{https://bookdown.org/yihui/rmarkdown/tufte-handouts.html}{online
 documentation} for additional details.
-
-Creating Tufte handout output from R Markdown requires that LaTeX be installed.
-
-R Markdown documents can have optional metadata that is used to generate a
-document header that includes the title, author, and date. For more details
-see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
-
-R Markdown documents also support citations. You can find more information on
-the markdown syntax for citations in the
-\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
-and Citations} article in the online documentation.
 }

@@ -100,7 +100,7 @@ pandoc_convert <- function(input,
     result <- system(command)
   })
   if (result != 0)
-    stop("pandoc document conversion failed with error ", result, call. = FALSE)
+    stop2("pandoc document conversion failed with error ", result)
 
   invisible(NULL)
 }
@@ -207,7 +207,7 @@ pandoc_available <- function(version = NULL,
     "pandoc", if (!is.null(version)) c("version", version, "or higher"),
     "is required and was not found (see the help page ?rmarkdown::pandoc_available)."
   )
-  if (error && !found) stop(paste(msg, collapse = " "), call. = FALSE)
+  if (error && !found) stop2(paste(msg, collapse = " "))
 
   found
 }
@@ -236,7 +236,7 @@ pandoc_version <- function() {
 #' @param toc_depth Depth of headers to include in table of contents.
 #' @param highlight The name of a pandoc syntax highlighting theme.
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
-#'   "pdflatex", "lualatex", and "xelatex".
+#'   "pdflatex", "lualatex", "xelatex", and "tectonic".
 #' @param default The highlighting theme to use if "default"
 #'   is specified.
 #' @return A character vector with pandoc command line arguments.
@@ -473,8 +473,8 @@ pandoc_self_contained_html <- function(input, output) {
 validate_self_contained <- function(mathjax) {
 
   if (identical(mathjax, "local"))
-    stop("Local MathJax isn't compatible with self_contained\n",
-         "(you should set self_contained to FALSE)", call. = FALSE)
+    stop2("Local MathJax isn't compatible with self_contained\n",
+         "(you should set self_contained to FALSE)")
 }
 
 pandoc_mathjax_args <- function(mathjax,

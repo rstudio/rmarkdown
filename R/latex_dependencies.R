@@ -76,11 +76,11 @@ validate_latex_dependency <- function(list) {
 
   # ensure it's the right class
   if (!is_latex_dependency(list))
-    stop("passed object is not of class latex_dependency", call. = FALSE)
+    stop2("passed object is not of class latex_dependency")
 
   # validate required fields
   if (is.null(list$name))
-    stop("name (package name) for latex_dependency not provided", call. = FALSE)
+    stop2("name (package name) for latex_dependency not provided")
   list
 }
 

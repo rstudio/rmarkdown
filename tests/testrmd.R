@@ -1,5 +1,5 @@
 # only run this test on CI platforms
-if (.Platform$OS.type == 'unix' && !is.na(Sys.getenv('CI', NA))) {
+if (.Platform$OS.type == 'unix' && !is.na(Sys.getenv('CI', NA)) && rmarkdown::pandoc_available()) {
 
   # test if Word documents can be rendered with a specified intermediate dir
   # (https://github.com/rstudio/rmarkdown/issues/1431)

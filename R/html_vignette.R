@@ -20,6 +20,7 @@
 #' @param ... Additional arguments passed to \code{\link{html_document}}. Please
 #'   note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
 #'   coded. Setting any of those will yield an error.
+#' @param css One or more css files to include.
 #' @param readme Use this vignette as the package README.md file (i.e. render
 #'   it as README.md to the package root). Note that if there are image files
 #'   within your vignette you should be sure to add README_files to .Rbuildignore
@@ -79,8 +80,7 @@ html_vignette <- function(fig_width = 3,
 vignette_pre_processor <- function(input_file, metadata = yaml_front_matter(input_file)) {
   if (getRversion() < 3.6)
     return()
-  # TODO: use xfun::is_R_CMD_check() in the future (don't bump xfun >= 0.19 yet)
-  if (!getOption(o <- 'rmarkdown.html_vignette.check_title', is.na(Sys.getenv('_R_CHECK_PACKAGE_NAME_', NA))))
+  if (!getOption(o <- 'rmarkdown.html_vignette.check_title', !xfun::is_R_CMD_check()))
     return()
   title1 <- metadata[['title']]
   title2 <- tools::vignetteInfo(input_file)[['title']]
