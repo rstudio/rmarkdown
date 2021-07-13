@@ -3,6 +3,9 @@ rmarkdown 2.10
 
 - New supported syntax for Shiny prerendered documents: you can now  use `server: shiny` or `server: type: shiny`.
 
+- Fix intermediate files being created at the current directory instead of the input directory when the input file name contains shell characters and `render(intermediates_dir = NULL)` (thanks, @atusy, #1982).
+
+
 rmarkdown 2.9
 ================================================================================
 
