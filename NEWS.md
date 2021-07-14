@@ -3,6 +3,8 @@ rmarkdown 2.10
 
 - New supported syntax for Shiny prerendered documents: you can now  use `server: shiny` or `server: type: shiny`.
 
+- Ability to inject additional functions into Shiny prerendered server scope using the "server-extras" context.
+
 rmarkdown 2.9
 ================================================================================
 
