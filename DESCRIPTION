@@ -106,7 +106,7 @@ Suggests:
     rsconnect,
     withr (>= 2.4.2),
     bslib (>= 0.2.5.1),
-    sass (>= 0.4.0)
+    sass (>= 0.4.0),
     jquerylib
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
 URL: https://github.com/rstudio/rmarkdown, https://pkgs.rstudio.com/rmarkdown/
