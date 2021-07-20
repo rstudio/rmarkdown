@@ -59,7 +59,7 @@ test_that("md_document() can preserve yaml", {
   expect_snapshot_md <- function(variant, preserve_yaml) {
     rmd <- local_rmd_file(c("---", "title: test", "---", "", "content"))
     res <- render(rmd, md_document(variant, preserve_yaml = preserve_yaml), quiet = TRUE)
-    expect_snapshot_file(res, sprintf("yaml-block-%s%s.md", variant, if(preserve_yaml) "-meta" else ""))
+    expect_snapshot_file(res, sprintf("yaml-block-%s%s.md", variant, if (preserve_yaml) "-meta" else ""))
   }
   expect_snapshot_md("markdown", preserve_yaml = FALSE)
   expect_snapshot_md("markdown_phpextra", preserve_yaml = FALSE)
