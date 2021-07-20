@@ -7,8 +7,8 @@ output:
     smart: false
 ---
 
-<script src="flexdashboard/libs/ace-1.2.3/ace.js" type="text/javascript" charset="utf-8"></script>
-<script src="flexdashboard/libs/holder-2.9.0/holder.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="flexdashboard/ace-1.2.3/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="flexdashboard/holder-2.9.0/holder.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="flexdashboard/snippets/snippets.js" type="text/javascript" charset="utf-8"></script>
 
 ## Overview
