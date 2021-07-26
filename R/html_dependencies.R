@@ -91,9 +91,7 @@ bootstrap_dependencies <- function(theme) {
 
 resolve_theme <- function(theme) {
   # theme = NULL means no Bootstrap
-  if (is.null(theme)) {
-    return(theme)
-  }
+  if (is.null(theme)) return(theme)
 
   # Bootstrap/Bootswatch 3 names (backwards-compatibility)
   if (is.character(theme)) {
