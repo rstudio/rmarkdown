@@ -11,6 +11,9 @@ rmarkdown 2.10
 
 - Ability to inject additional functions into Shiny prerendered server scope using the "server-extras" context.
 
+- Fixed the syntax highlighting issue with R's pipe operator `|>` (thanks, @edzer, rstudio/bookdown#1157).
+
+
 rmarkdown 2.9
 ================================================================================
 
