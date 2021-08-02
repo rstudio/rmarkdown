@@ -16,12 +16,7 @@ NULL
 #' @rdname html-dependencies
 #' @export
 html_dependency_jquery <- function()  {
-
-  htmlDependency(
-    name = "jquery",
-    version = "1.11.3",
-    src = pkg_file("rmd/h/jquery"),
-    script = "jquery.min.js")
+  jquerylib::jquery_core()
 }
 
 # Create an HTML dependency for jQuery UI
