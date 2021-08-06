@@ -1,6 +1,7 @@
 test_that("all elements can be NULL", {
   out_fmt <- output_format(
-    knitr = NULL, pandoc = NULL, keep_md = NULL, clean_supporting = NULL
+    knitr = NULL, pandoc = NULL, keep_md = NULL, clean_supporting = NULL,
+    allow_uptree_lib_dir = NULL
   )
   lapply(out_fmt, expect_null)
 })
@@ -9,6 +10,7 @@ test_that("inherits base format", {
   base_fmt <- html_document()
   out_fmt <- output_format(
     knitr = NULL, pandoc = NULL, keep_md = NULL, clean_supporting = NULL,
+    allow_uptree_lib_dir = NULL,
     base_format = base_fmt
   )
   classes <- lapply(base_fmt, class)

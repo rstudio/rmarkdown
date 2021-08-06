@@ -31,6 +31,7 @@ html_document(
   lib_dir = NULL,
   md_extensions = NULL,
   pandoc_args = NULL,
+  allow_uptree_lib_dir = FALSE,
   ...
 )
 }
@@ -126,7 +127,8 @@ Note that if you don't use the "default" template then some features of
 \code{html_document} won't be available (see the Templates section below for
 more details).}
 
-\item{extra_dependencies, ...}{Additional function arguments to pass to the
+\item{extra_dependencies, allow_uptree_lib_dir, ...}{Additional function
+arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
 
 \item{css}{CSS and/or Sass files to include. Files with an extension of .sass
@@ -289,6 +291,50 @@ templates). } }
 
 Due to the above restrictions, you might consider using the \code{includes}
 parameter as an alternative to providing a fully custom template.
+}
+
+\section{Directory structure}{
+
+
+By default \code{html_document} and related HTML document types put dependency
+files into the main output directory or a subdirectory specified by the
+\code{lib_dir} parameter:
+If \code{lib_dir} is not a direct descendant of the
+main output directory, \code{render()} will throw and error with the
+message "The path <lib_dir> does not appear to be a descendant of
+<output_dir>".
+
+Sometimes it is useful to have a directory tree where the different
+HTML documents are in their own subdirectories and the
+dependencies are in a common directory at the root of the site.
+\itemize{
+\item main_dir/
+\itemize{
+\item lib/
+\itemize{
+\item dependencies go here
+}
+\item index.Rmd
+\item node-01/
+\itemize{
+\item index.Rmd
+}
+\item node-02/
+\itemize{
+\item index.Rmd
+}
+}
+}
+
+One way to achieve this is with the \code{render_site} command, but knitting
+individual documents in subdirectories (such as with the RStudio "knit"
+button) will result in errors.
+
+It is possible to achieve this directory structure by setting the
+\code{allow_uptree_lib_dir} parameter to \code{yes} or \code{true} in the
+\code{output/html_document} section of the YAML header
+and set \code{lib_dir} to a relative path, such as \code{../lib} or \code{../site_lib}
+in \code{node-01/index.Rmd} and \code{node-02/index.Rmd} in the example above.
 }
 
 \examples{

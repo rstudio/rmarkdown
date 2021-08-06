@@ -30,6 +30,7 @@ ioslides_presentation(
   md_extensions = NULL,
   pandoc_args = NULL,
   extra_dependencies = NULL,
+  allow_uptree_lib_dir = FALSE,
   ...
 )
 }
@@ -125,10 +126,16 @@ additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
-\item{extra_dependencies}{Additional function arguments to pass to the
+\item{extra_dependencies}{Additional function
+arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
 
-\item{...}{Additional function arguments to pass to the
+\item{allow_uptree_lib_dir}{Additional function
+arguments to pass to the
+base R Markdown HTML output formatter \code{\link{html_document_base}}}
+
+\item{...}{Additional function
+arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
 }
 \value{

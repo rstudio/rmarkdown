@@ -249,6 +249,7 @@ ioslides_presentation <- function(number_sections = FALSE,
                                   md_extensions = NULL,
                                   pandoc_args = NULL,
                                   extra_dependencies = NULL,
+                                  allow_uptree_lib_dir = FALSE,
                                   ...) {
 
   # base pandoc options for all output
@@ -454,7 +455,9 @@ ioslides_presentation <- function(number_sections = FALSE,
                                      mathjax = mathjax,
                                      pandoc_args = pandoc_args,
                                      extra_dependencies = extra_dependencies,
-                                     bootstrap_compatible = TRUE, ...))
+                                     bootstrap_compatible = TRUE,
+                                     allow_uptree_lib_dir = allow_uptree_lib_dir,
+                                     ...))
 }
 
 

@@ -1,7 +1,9 @@
 rmarkdown 2.11
 ================================================================================
 
-
+- `html_document` output allows `lib_dir` to point to a parent of the output 
+  directory. This used to throw an error, "The path <file> does not appear to 
+  be a descendant of <dir>".
 
 rmarkdown 2.10
 ================================================================================

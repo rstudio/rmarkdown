@@ -322,7 +322,7 @@ copy_if_changed <- function(from, to, recursive = FALSE,
                         all.files = TRUE, no.. = TRUE)
       mapply(copy_if_changed, from = file.path(from, from2),
              to = file.path(to, from2),
-             moreargs = list(recursive = recursive, overwrite = overwrite,
+             MoreArgs = list(recursive = recursive, overwrite = overwrite,
                              copy.mode = copy.mode))
     }
   } else {
@@ -396,10 +396,10 @@ copy_html_dependency <- function(dependency, outputDir, mustWork = TRUE) {
 
 # return the html dependencies as an HTML string suitable for inclusion
 # in the head of a document
-html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
+html_dependencies_as_string <- function(dependencies, lib_dir, output_dir,
+                                        allow_uptree_lib_dir = FALSE) {
   if (!is.null(lib_dir)) {
-    if (getOption("rmarkdown.uptree.dependencies", default=FALSE) &&
-        grepl("^\\.\\.", lib_dir)) {
+    if (allow_uptree_lib_dir && grepl("^\\.\\.", lib_dir)) {
       abs_lib_dir <- normalizePath(lib_dir, winslash = "/")
       dependencies <- lapply(dependencies, copy_html_dependency, abs_lib_dir,
                              mustWork = FALSE)
@@ -410,12 +410,12 @@ html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
                                   file.path(lib_dir, path)
                                 }))
     } else {
-    # using mustWork=FALSE insures non-disk based dependencies are
-    # return untouched, keeping the order of all deps.
-    dependencies <- lapply(dependencies, copyDependencyToDir,
-                           outputDir = lib_dir, mustWork = FALSE)
-    dependencies <- lapply(dependencies, makeDependencyRelative,
-                           basepath = output_dir, mustWork = FALSE)
+      # using mustWork=FALSE insures non-disk based dependencies are
+      # return untouched, keeping the order of all deps.
+      dependencies <- lapply(dependencies, copyDependencyToDir,
+                             outputDir = lib_dir, mustWork = FALSE)
+      dependencies <- lapply(dependencies, makeDependencyRelative,
+                             basepath = output_dir, mustWork = FALSE)
     }
 
   }
