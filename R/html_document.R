@@ -521,20 +521,22 @@ knitr_options_html <- function(fig_width,
   knitr_options(opts_chunk = opts_chunk)
 }
 
+# CSS files in inst/rmd/h/bootstrap/css
 themes <- function() {
-  c("default",
+  c("default", # keep for backward compatibility reason, changed to 'bootstrap' internally
+    "bootstrap",
     "cerulean",
-    "journal",
-    "flatly",
-    "darkly",
-    "readable",
-    "spacelab",
-    "united",
     "cosmo",
+    "darkly",
+    "flatly",
+    "journal",
     "lumen",
     "paper",
+    "readable",
     "sandstone",
     "simplex",
+    "spacelab",
+    "united",
     "yeti")
 }
 

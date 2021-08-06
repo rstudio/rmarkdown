@@ -345,7 +345,7 @@ render <- function(input,
   }
 
   # check whether this document requires a knit
-  requires_knit <- tolower(xfun::file_ext(input)) %in% c("r", "rmd", "rmarkdown")
+  requires_knit <- tolower(xfun::file_ext(input)) %in% c("r", "rmd", "rmarkdown", "qmd")
 
   # remember the name of the original input document (we overwrite 'input' once
   # we've knitted)
@@ -442,7 +442,8 @@ render <- function(input,
   # if this is shiny_prerendered then modify the output format to
   # be single-page and to output dependencies to the shiny.dep file
   shiny_prerendered_dependencies <- list()
-  if (requires_knit && is_shiny_prerendered(front_matter$runtime)) {
+  if (requires_knit && is_shiny_prerendered(front_matter$runtime,
+                                            front_matter$server)) {
 
     # require shiny for the knit
     if (requireNamespace("shiny")) {
@@ -450,7 +451,7 @@ render <- function(input,
         attachNamespace("shiny")
     }
     else
-      stop("The shiny package is required for shinyrmd documents")
+      stop("The shiny package is required for shiny documents")
 
     # source global.R if it exists
     global_r <- file.path.ci(".", "global.R")
@@ -528,7 +529,14 @@ render <- function(input,
   # presume that we're rendering as a static document unless specified
   # otherwise in the parameters
   runtime <- match.arg(runtime)
-  if (identical(runtime, "auto")) runtime <- front_matter$runtime %||% "static"
+  if (identical(runtime, "auto")) {
+    if (is_shiny_prerendered(front_matter$runtime, front_matter$server)) {
+      runtime <- "shiny_prerendered"
+    } else {
+      runtime <- front_matter$runtime %||% "static"
+    }
+  }
+
 
   # set df_print
   context <- render_context()
@@ -568,7 +576,7 @@ render <- function(input,
 
   # determine our id-prefix (add one if necessary for runtime: shiny)
   id_prefix <- id_prefix_from_args(output_format$pandoc$args)
-  if (!nzchar(id_prefix) && is_shiny(runtime)) {
+  if (!nzchar(id_prefix) && is_shiny(runtime, front_matter[["server"]])) {
     id_prefix <- "section-"
     output_format$pandoc$args <- c(output_format$pandoc$args, rbind("--id-prefix", id_prefix))
   }

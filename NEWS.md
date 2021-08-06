@@ -1,5 +1,22 @@
+rmarkdown 2.11
+================================================================================
+
+
+
 rmarkdown 2.10
 ================================================================================
+
+- `md_document()` will now handle correctly `preserve_yaml` value for all variants and all pandoc versions (#2190). 
+  * with `preserve_yaml = TRUE`, markdown output will keep the YAML metadata block from the Rmd file.
+  * with `preserve_yaml = FALSE`, markdown output will have no YAML metadata block.
+  
+  This fixes a breaking change in Pandoc 2.13 regarding `gfm`, `commonmark` and `commonmark_x` which now supports `yaml_metadata_block` by default (#2118).  
+
+- New supported syntax for Shiny prerendered documents: you can now  use `server: shiny` or `server: type: shiny`.
+
+- Ability to inject additional functions into Shiny prerendered server scope using the "server-extras" context.
+
+- Fixed the syntax highlighting issue with R's pipe operator `|>` (thanks, @edzer, rstudio/bookdown#1157).
 
 
 rmarkdown 2.9

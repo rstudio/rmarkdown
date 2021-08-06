@@ -9,8 +9,16 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
   # create the server environment
   server_envir = new.env(parent = globalenv())
 
-  # extract the server-start context
+  # read the html
   html_lines <- strsplit(html, "\n", fixed = TRUE)[[1]]
+
+  # read and remove server-extras (used for both embedded and server.R use cases)
+  server_extras <- shiny_prerendered_extract_context(html_lines, "server-extras")
+  if (length(server_extras) > 0) {
+    html_lines <- shiny_prerendered_remove_contexts(html_lines, "server-extras")
+  }
+
+  # extract the server-start context
   server_start_context <- shiny_prerendered_extract_context(html_lines,
                                                             "server-start")
 
@@ -36,7 +44,8 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
   }
 
   # extract the server context
-  .server_context <- shiny_prerendered_extract_context(html_lines, "server")
+  .server_context <- c(server_extras,
+                       shiny_prerendered_extract_context(html_lines, "server"))
   server_envir$.server_context <- .server_context
   server <- function(input, output, session) {
     eval(xfun::parse_only(.server_context))
@@ -63,7 +72,11 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
     }
     # server function from server.R
     server_r <- file.path(dirname(input_rmd), "server.R")
-    server <- source(server_r, local = new.env(parent = globalenv()))$value
+    server_r_env = new.env(parent = globalenv())
+    if (length(server_extras) > 0) {
+      eval(xfun::parse_only(server_extras), envir = server_r_env)
+    }
+    server <- source(server_r, local = server_r_env)$value
   } else {
     stop("No server contexts or server.R available for ", input_rmd)
   }
@@ -75,7 +88,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
     ui = function(req) html_ui,
     server = server,
     onStart = onStart,
-    uiPattern = "^/$|^(/.*\\.[Rr][Mm][Dd])$"
+    uiPattern = "^/$|^(/.*\\.[Rrq][Mm][Dd])$"
   )
 }
 
@@ -404,7 +417,7 @@ shiny_prerendered_chunk <- function(context, code, singleton = FALSE) {
   # verify we are in runtime: shiny_prerendered
   if (!is_shiny_prerendered(knitr::opts_knit$get("rmarkdown.runtime")))
       stop2("The shiny_prerendered_chunk function can only be called from ",
-           "within runtime: shinyrmd"
+           "within a shiny server compatible document"
       )
 
   # add the prerendered chunk to knit_meta
@@ -613,7 +626,7 @@ shiny_prerendered_append_contexts <- function(runtime, file) {
 
     # validate we are in runtime: shiny_prerendered
     if (!is_shiny_prerendered(runtime)) {
-      stop2("The code within this document requires runtime: shinyrmd")
+      stop2("The code within this document requires server: shiny")
     }
 
     # open the file

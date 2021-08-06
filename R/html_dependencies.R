@@ -16,12 +16,7 @@ NULL
 #' @rdname html-dependencies
 #' @export
 html_dependency_jquery <- function()  {
-
-  htmlDependency(
-    name = "jquery",
-    version = "1.11.3",
-    src = pkg_file("rmd/h/jquery"),
-    script = "jquery.min.js")
+  jquerylib::jquery_core()
 }
 
 # Create an HTML dependency for jQuery UI
@@ -41,6 +36,8 @@ html_dependency_jqueryui <- function() {
 #' @export
 html_dependency_bootstrap <- function(theme) {
   theme <- resolve_theme(theme)
+
+  # Bootstrap with bslib package
   if (is_bs_theme(theme)) {
     # TODO: would it make sense for these additional rules to come as a part of
     # bslib::bs_theme_dependencies() (for consistency sake)?
@@ -53,6 +50,8 @@ html_dependency_bootstrap <- function(theme) {
     )
     return(bslib::bs_theme_dependencies(theme))
   }
+
+  # Rmarkdown own BS3 dependency
   htmlDependency(
     name = "bootstrap",
     version = "3.3.5",
@@ -88,16 +87,35 @@ bootstrap_dependencies <- function(theme) {
 resolve_theme <- function(theme) {
   # theme = NULL means no Bootstrap
   if (is.null(theme)) return(theme)
+
   # Bootstrap/Bootswatch 3 names (backwards-compatibility)
   if (is.character(theme)) {
     if (length(theme) != 1) {
       stop2("`theme` must be character vector of length 1.")
     }
-    if (theme %in% c("bootstrap", "default")) {
-      return("bootstrap")
+    if (identical(theme, "default")) {
+      theme <- "bootstrap"
     }
+
+    # special handling triggered when bootstrap folder removed from installation folder
+    # In this case, bslib is used as default.
+    bslib_forced_mode <- getOption("rmarkdown.bslib_forced_mode", FALSE)
+    if (bslib_forced_mode || !dir.exists(pkg_file("rmd/h/bootstrap"))) {
+      # we are in special bslib default mode, theme is tweaked to be a list
+      if (!is_available("bslib")) {
+        stop2(
+          "bslib package is required and must be installed",
+          if (bslib_forced_mode) " when in special bslib forced mode",
+          "."
+        )
+      }
+      return(bslib::bs_theme(version = 3, bootswatch = theme))
+    }
+
     return(match.arg(theme, themes()))
   }
+
+  # Bootstrap theme handled by bslib package
   if (is.list(theme)) {
     if (!is_available("bslib")) {
       stop2("Providing a list to `theme` requires the bslib package.")
@@ -131,11 +149,8 @@ is_bs_theme <- function(theme) {
 }
 
 theme_version <- function(theme) {
-  if (is_bs_theme(theme)) {
-    bslib::theme_version(theme)
-  } else {
-    substr(html_dependency_bootstrap("default")$version, 1, 1)
-  }
+  if (is_bs_theme(theme)) return(bslib::theme_version(theme))
+  substr(html_dependency_bootstrap("default")$version, 1, 1)
 }
 
 

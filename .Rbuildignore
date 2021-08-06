@@ -7,6 +7,7 @@
 ^tests/testthat/site/_site/
 ^tests/testthat/site/lib/
 ^tests/testthat/site/.*_files/
+^tests/manual/
 ^\.github$
 ^pkgdown$
 ^doc$
