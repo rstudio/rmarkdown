@@ -205,25 +205,43 @@
 #'
 #'@section Directory structure:
 #'
-#'  By default `html_document` and related HTML document types put dependency
-#'  files into the main output directory or a subdirectory specified by the
-#'  `lib_dir` parameter:
-#'  If `lib_dir` is not a direct descendant of the
-#'  main output directory, `render()` will throw and error with the
-#'  message "The path <file> does not appear to be a descendant of <dir>".
+#'  By default \code{html_document} and related HTML document types put
+#'  dependency files into the main output directory or a subdirectory specified
+#'  by the \code{lib_dir} parameter:
+#'  If \code{lib_dir} is not a direct descendant of the main output directory,
+#'  \code{render()} will throw and error with the message
+#'  "The path &lt;file&gt; does not appear to be a descendant of &lt;dir&gt;".
 #'
 #'  Sometimes it is useful to have a directory tree where the different
-#'  HTML documents are in their own subdirectories and the
-#'  dependencies are in a common directory at the root of the site.
+#'  HTML documents are in their own subdirectories and the dependencies are in
+#'  a common directory at the root of the site.
 #'
-#'  * main_dir/
-#'    * lib/
-#'      * dependencies go here
-#'    * index.Rmd
-#'    * node-01/
-#'      * index.Rmd
-#'    * node-02/
-#'      * index.Rmd
+#'  \itemize{
+#'  \item{
+#'  \code{main_dir/}
+#'  \itemize{
+#'  \item{
+#'  \code{lib/}
+#'  \itemize{
+#'  \item{dependencies go here}
+#'  }
+#'  }
+#'  }
+#'  \item{\code{index.Rmd}}
+#'  \item{
+#'  \code{node-01/}
+#'  \itemize{
+#'  \item{\code{index.Rmd}}
+#'  }
+#'  }
+#'  \item{
+#'  \code{node-02/}
+#'  \itemize{
+#'  \item{\code{index.Rmd}}
+#'  }
+#'  }
+#'  }
+#'  }
 #'
 #'  One way to achieve this is with the `render_site` command, but knitting
 #'  individual documents in subdirectories (such as with the RStudio "knit"

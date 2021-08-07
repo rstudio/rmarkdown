@@ -5,7 +5,6 @@ output:
     allow_uptree_lib_dir: true
     lib_dir: "../lib"
     css: "../lib/styles.css"
-    mathjax: local
     self_contained: false
 ---
 

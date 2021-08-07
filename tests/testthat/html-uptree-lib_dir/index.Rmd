@@ -4,7 +4,6 @@ output:
   html_document:
     lib_dir: lib
     css: "lib/styles.css"
-    mathjax: local
     self_contained: false
 ---
 

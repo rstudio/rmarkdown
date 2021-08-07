@@ -301,26 +301,32 @@ files into the main output directory or a subdirectory specified by the
 \code{lib_dir} parameter:
 If \code{lib_dir} is not a direct descendant of the
 main output directory, \code{render()} will throw and error with the
-message "The path <file> does not appear to be a descendant of <dir>".
+message "The path <file> does not appear to be a descendant of
+<dir>".
 
 Sometimes it is useful to have a directory tree where the different
 HTML documents are in their own subdirectories and the
 dependencies are in a common directory at the root of the site.
+
 \itemize{
-\item main_dir/
+\item{\code{main_dir}
 \itemize{
-\item lib/
-\itemize{
-\item dependencies go here
+\item{\code{lib/}
+\itemize{\item{dependencies go here}}
 }
-\item index.Rmd
-\item node-01/
-\itemize{
-\item index.Rmd
 }
-\item node-02/
+\item{\code{index.Rmd}}
+\item{
+\code{node-01/}
 \itemize{
-\item index.Rmd
+\item{\code{index.Rmd}}
+}
+}
+\item{
+\code{node-02/}
+\itemize{
+\item{\code{index.Rmd}}
+}
 }
 }
 }
