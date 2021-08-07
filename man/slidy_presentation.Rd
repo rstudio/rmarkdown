@@ -28,7 +28,6 @@ slidy_presentation(
   md_extensions = NULL,
   pandoc_args = NULL,
   extra_dependencies = NULL,
-  allow_uptree_lib_dir = FALSE,
   ...
 )
 }
@@ -128,10 +127,6 @@ list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
 with the names being package names (e.g. \code{list(hyperef =
 c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
 add custom LaTeX packages to the .tex header.}
-
-\item{allow_uptree_lib_dir}{Additional function
-arguments to pass to the
-base R Markdown HTML output formatter \code{\link{html_document_base}}}
 
 \item{...}{Additional function arguments to pass to the base R Markdown HTML
 output formatter \code{\link{html_document_base}}}

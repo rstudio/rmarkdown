@@ -81,8 +81,7 @@ MathJax CDN. The "local" option uses a local version of MathJax (which is
 copied into the output directory). You can pass an alternate URL or pass
 \code{NULL} to exclude MathJax entirely.}
 
-\item{extra_dependencies}{Additional function
-arguments to pass to the
+\item{extra_dependencies}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
 
 \item{css}{CSS and/or Sass files to include. Files with an extension of .sass
@@ -109,8 +108,7 @@ dependencies. Defaults to \code{TRUE}. In notebooks, setting this to
 \code{FALSE} is not recommended, since the setting does not apply to
 embedded notebook output such as plots and HTML widgets.}
 
-\item{...}{Additional function
-arguments to pass to the
+\item{...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
 }
 \description{

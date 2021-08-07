@@ -55,7 +55,6 @@ slidy_presentation <- function(number_sections = FALSE,
                                md_extensions = NULL,
                                pandoc_args = NULL,
                                extra_dependencies = NULL,
-                               allow_uptree_lib_dir = FALSE,
                                ...) {
 
   # base pandoc options for all reveal.js output

@@ -210,8 +210,7 @@
 #'  `lib_dir` parameter:
 #'  If `lib_dir` is not a direct descendant of the
 #'  main output directory, `render()` will throw and error with the
-#'  message "The path <lib_dir> does not appear to be a descendant of
-#'  <output_dir>".
+#'  message "The path <file> does not appear to be a descendant of <dir>".
 #'
 #'  Sometimes it is useful to have a directory tree where the different
 #'  HTML documents are in their own subdirectories and the
