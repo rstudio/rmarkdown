@@ -2,11 +2,6 @@
 // be compatible with the behavior of Pandoc < 2.8).
 document.addEventListener('DOMContentLoaded', function(e) {
   var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
-  // With reveal.js output, div.section does not seem to pick up on the
-  // sections properly.
-  if (hs.length == 0) {
-   hs = document.querySelectorAll("section[class*='level'] > :first-child");
-  }
   var i, h, a;
   for (i = 0; i < hs.length; i++) {
     h = hs[i];
