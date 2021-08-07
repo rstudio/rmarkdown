@@ -380,7 +380,7 @@ render <- function(input,
   # files later (because they are copied to the "intermediate" dir)
   if (!is.null(intermediates_dir) &&
       same_path(intermediates_dir, dirname(original_input)))
-        intermediates_dir <- NULL
+    intermediates_dir <- NULL
 
   # force evaluation of knitr root dir before we change directory context
   force(knit_root_dir)
