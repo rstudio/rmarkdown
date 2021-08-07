@@ -89,7 +89,7 @@ each file.}
 
 \item{base_format}{An optional format to extend.}
 
-\item{allow_uptree_lib_dir}{Allow `lib_dir` output parameter not to
+\item{allow_uptree_lib_dir}{Allow \code{lib_dir} output parameter not to
 be a descendent of the output directory.}
 }
 \value{

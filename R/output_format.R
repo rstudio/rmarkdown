@@ -56,7 +56,7 @@
 #'   should return a named list of files w/ \code{name} and \code{content} for
 #'   each file.
 #' @param base_format An optional format to extend.
-#' @param allow_uptree_lib_dir Allow `lib_dir` output parameter not to
+#' @param allow_uptree_lib_dir Allow \code{lib_dir} output parameter not to
 #'   be a descendent of the output directory.
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
