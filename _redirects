@@ -33,3 +33,4 @@ http://rmarkdown.netlify.com/*   https://rmarkdown.rstudio.com/:splat  301!
 /developer_parameterized_reports*  https://bookdown.org/yihui/rmarkdown/parameterized-reports.html  301
 /developer_document_templates*   https://bookdown.org/yihui/rmarkdown/document-templates.html   301
 /developer_custom_formats*   https://bookdown.org/yihui/rmarkdown/new-formats.html   301
+/authoring_bibliographies_and_citations*  https://pandoc.org/MANUAL.html#citations  301
