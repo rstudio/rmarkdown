@@ -16,7 +16,7 @@ NULL
 #' @rdname html-dependencies
 #' @export
 html_dependency_jquery <- function()  {
-  jquerylib::jquery_core()
+  jquerylib::jquery_core(major_version = getOption('rmarkdown.jquery.version', 3))
 }
 
 # Create an HTML dependency for jQuery UI
