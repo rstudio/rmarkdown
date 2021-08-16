@@ -1,6 +1,7 @@
 rmarkdown 2.11
 ================================================================================
 
+- It is possible to specify the version of jQuery via a global option now, e.g., `options(rmarkdown.jquery.version = 2)` (note that the default major version is `3`). This is mainly for advanced users and developers to test different versions of jQuery.
 
 
 rmarkdown 2.10
