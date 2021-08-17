@@ -25,6 +25,7 @@ Authors@R: c(
   person("Devon", "Ryan", role = "ctb", email = "dpryan79@gmail.com", comment = c(ORCID = "0000-0002-8549-0971")),
   person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
   person("Jeff", "Allen", role = "ctb", email = "jeff@rstudio.com"),
+  person("Jonathan", "Gilligan", role = "ctb", email = "jonathan.gilligan@gmail.com", comment = c(ORCID = "0000-0003-1375-6686")),
   person("JooYoung", "Seo", role="ctb", comment = c(ORCID = "0000-0002-4064-6012")),
   person("Malcolm", "Barrett", role = "ctb"),
   person("Rob", "Hyndman", role = "ctb", email = "Rob.Hyndman@monash.edu"),
