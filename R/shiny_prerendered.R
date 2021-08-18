@@ -120,7 +120,7 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
     args <- merge_lists(list(input = input_rmd), render_args)
     # force prerender to execute in separate environment to ensure that
     # running w/ prerender step is equivalent to running the prerendered app
-    args$envir <- new.env(parent = args$envir)
+    args$envir <- new.env(parent = args$envir %||% globalenv())
 
     # execute the render
     rendered_html <- do.call(render, args)
