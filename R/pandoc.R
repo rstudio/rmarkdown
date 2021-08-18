@@ -157,6 +157,8 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
     stop("Error ", status, " occurred building shared library.")
   }
 
+  Encoding(result) <- "UTF-8"
+
   # convert the output if requested
   if (type == "list") {
     jsonlite::fromJSON(result, simplifyVector = FALSE)
