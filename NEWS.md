@@ -3,6 +3,8 @@ rmarkdown 2.11
 
 - It is possible to specify the version of jQuery via a global option now, e.g., `options(rmarkdown.jquery.version = 2)` (note that the default major version is `3`). This is mainly for advanced users and developers to test different versions of jQuery.
 
+- `pandoc_citeproc_convert()` now handles correctly bib file containing specific UTF-8 characters on non default UTF-8 systems like Windows (thanks, @mitchelloharawild, #2195).
+
 
 rmarkdown 2.10
 ================================================================================
