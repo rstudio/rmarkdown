@@ -34,7 +34,7 @@ The links to the left provide a quick tour of R Markdown. The links at the top p
 
 You may also find the following resources helpful:
 
-* [The R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
+* [The R Markdown Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
 * [The R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
 
 ***

@@ -1,7 +1,7 @@
 http://rmarkdown.rstudio.com/*   https://rmarkdown.rstudio.com/:splat  301!
 https://rmarkdown.netlify.com/*  https://rmarkdown.rstudio.com/:splat  301!
 http://rmarkdown.netlify.com/*   https://rmarkdown.rstudio.com/:splat  301!
-/flexdashboard    /flexdashboard/   301!
+/flexdashboard/*     https://pkgs.rstudio.com/flexdashboard/:splat   301!
 
 /docs/articles/pandoc.html  https://pandoc.org/installing.html  301!
 /docs/*  https://rmarkdown-pkg.netlify.app/:splat   200
@@ -33,3 +33,4 @@ http://rmarkdown.netlify.com/*   https://rmarkdown.rstudio.com/:splat  301!
 /developer_parameterized_reports*  https://bookdown.org/yihui/rmarkdown/parameterized-reports.html  301
 /developer_document_templates*   https://bookdown.org/yihui/rmarkdown/document-templates.html   301
 /developer_custom_formats*   https://bookdown.org/yihui/rmarkdown/new-formats.html   301
+/authoring_bibliographies_and_citations*  https://pandoc.org/MANUAL.html#citations  301
