@@ -14,16 +14,25 @@
 
 <title>Happy collaboration with Rmd to docx</title>
 
-<script src="site_libs/header-attrs-2.3.7/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs/header-attrs.js"></script>
+<script src="site_libs/jquery/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/bootstrap/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation/tabsets.js"></script>
+<link href="site_libs/highlightjs/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs/highlight.js"></script>
 
 <meta name="description" content="Turn your analyses into high quality documents, reports, presentations and dashboards with R Markdown. Use a productive notebook interface to weave together narrative text and code to produce elegantly formatted output. Use multiple languages including R, Python, and SQL. R Markdown supports a reproducible workflow for dozens of static and dynamic output formats including HTML, PDF, MS Word, Beamer, HTML5 slides, Tufte-style handouts, books, dashboards, shiny applications, scientific articles, websites, and more." />
 
@@ -46,12 +55,17 @@ ga('send', 'pageview');
 </script>
 <!-- End Google Analytics -->
 
-<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+
+<style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -64,32 +78,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 <link rel="stylesheet" href="css/rmarkdown.css" type="text/css" />
 
@@ -100,10 +89,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -120,6 +105,9 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
@@ -132,7 +120,6 @@ summary {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -234,7 +221,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 <div id="pageContent" class="standardPadding">
   <div class="articleBandContent">
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -513,27 +500,23 @@ obstacles to effective collaboration.</code></pre>
 </li>
 <li>Word 2013</li>
 </ul>
-<pre><code>## R version 4.0.2 (2020-06-22)
+<pre><code>## R version 4.1.1 (2021-08-10)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.6
+## Running under: macOS Big Sur 11.5.2
 ## 
 ## Matrix products: default
-## BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] ggplot2_3.3.2 knitr_1.29.5 
+## [1] knitr_1.33.7
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] magrittr_1.5     tidyselect_1.1.0 munsell_0.5.0    colorspace_1.4-1 R6_2.4.1         rlang_0.4.7     
-##  [7] dplyr_1.0.2      stringr_1.4.0    highr_0.8        tools_4.0.2      grid_4.0.2       gtable_0.3.0    
-## [13] xfun_0.17.4      withr_2.3.0      htmltools_0.5.0  ellipsis_0.3.1   yaml_2.2.1       digest_0.6.25   
-## [19] tibble_3.0.3     lifecycle_0.2.0  crayon_1.3.4     farver_2.0.3     purrr_0.3.4      vctrs_0.3.4     
-## [25] glue_1.4.2       evaluate_0.14    rmarkdown_2.3.7  labeling_0.3     stringi_1.5.3    compiler_4.0.2  
-## [31] pillar_1.4.6     generics_0.0.2   scales_1.1.1     jsonlite_1.7.1   pkgconfig_2.0.3</code></pre>
+##  [1] digest_0.6.27     R6_2.5.1          jsonlite_1.7.2    magrittr_2.0.1    evaluate_0.14     rlang_0.4.11     
+##  [7] stringi_1.7.3     jquerylib_0.1.4   bslib_0.2.5.1     rmarkdown_2.10    tools_4.1.1       stringr_1.4.0    
+## [13] xfun_0.25         yaml_2.2.1        compiler_4.1.1    htmltools_0.5.1.1 sass_0.4.0</code></pre>
 <p><br></p>
 </div>
 <div id="image-credits" class="section level3">
@@ -578,7 +561,7 @@ obstacles to effective collaboration.</code></pre>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -596,7 +579,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

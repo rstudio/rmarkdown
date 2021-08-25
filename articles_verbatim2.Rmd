@@ -45,7 +45,7 @@ After a lot of experimentation, I ended up with the following hook. Note that my
 knitr::knit_hooks$set(source = function(x, options){
   if (!is.null(options$verbatim) && options$verbatim){
     opts = gsub(",\\s*verbatim\\s*=\\s*TRUE\\s*", "", options$params.src)
-    bef = sprintf('\n\n    ```{r %s}\n', opts, "\n")
+    bef = sprintf('\n\n    ```{r %s}\n', opts)
     stringr::str_c(
       bef, 
       knitr:::indent_block(paste(x, collapse = '\n'), "    "), 
