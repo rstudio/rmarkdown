@@ -9,6 +9,8 @@ rmarkdown 2.11
 
 - Shiny prerendered documents are now pre-rendered in a child environment to avoid allowing the results of static code chunks to exist in the Shiny app environment (@gadenbuie, #2203).
 
+- The previously unexported function `convert_ipynb()` is exported now (thanks, @acircleda).
+
 
 rmarkdown 2.10
 ================================================================================
