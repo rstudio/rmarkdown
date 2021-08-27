@@ -52,4 +52,3 @@ xfun::file_string(nb_file)  # show file content
 nb_rmd = rmarkdown:::convert_ipynb(nb_file)
 xfun::file_string(nb_rmd)
 }
-\keyword{internal}
