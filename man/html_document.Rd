@@ -24,6 +24,7 @@ html_document(
   highlight = "default",
   mathjax = "default",
   template = "default",
+  katex = FALSE,
   extra_dependencies = NULL,
   css = NULL,
   includes = NULL,
@@ -125,6 +126,9 @@ built-in template; pass a path to use a custom template that you've created.
 Note that if you don't use the "default" template then some features of
 \code{html_document} won't be available (see the Templates section below for
 more details).}
+
+\item{katex}{if \code{TRUE} math is rendered server-side using the katex package,
+such that mathjax is not needed in the html. This implies \code{mathjax = FALSE}.}
 
 \item{extra_dependencies, ...}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}

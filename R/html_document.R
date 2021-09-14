@@ -63,6 +63,8 @@
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
 #'  copied into the output directory). You can pass an alternate URL or pass
 #'  \code{NULL} to exclude MathJax entirely.
+#'@param katex if \code{TRUE} math is rendered server-side using the katex package,
+#' such that mathjax is not needed in the html. This implies \code{mathjax = FALSE}.
 #'@param section_divs Wrap sections in \code{<div>} tags, and attach identifiers to the
 #'  enclosing \code{<div>} rather than the header itself.
 #'@param template Pandoc template to use for rendering. Pass "default" to use
@@ -231,6 +233,7 @@ html_document <- function(toc = FALSE,
                           highlight = "default",
                           mathjax = "default",
                           template = "default",
+                          katex = FALSE,
                           extra_dependencies = NULL,
                           css = NULL,
                           includes = NULL,
@@ -468,6 +471,13 @@ html_document <- function(toc = FALSE,
     args
   }
 
+  post_processor <- if(isTRUE(katex)){
+    mathjax <- FALSE
+    function(metadata, input_file, output_file, clean, verbose) {
+      katex::render_math_in_html(output_file, output = output_file)
+    }
+  }
+
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
@@ -480,6 +490,7 @@ html_document <- function(toc = FALSE,
     pre_knit = pre_knit,
     post_knit = post_knit,
     pre_processor = pre_processor,
+    post_processor = post_processor,
     on_exit = on_exit,
     base_format = html_document_base(theme = theme,
                                      self_contained = self_contained,
