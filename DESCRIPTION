@@ -1,7 +1,7 @@
 Package: rmarkdown
 Type: Package
 Title: Dynamic Documents for R
-Version: 2.11
+Version: 2.11.1
 Authors@R: c(
   person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
   person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
@@ -89,6 +89,7 @@ Imports:
     tinytex (>= 0.31),
     xfun (>= 0.21),
     jquerylib,
+    bslib (>= 0.2.5.1),
     methods,
     stringr (>= 1.2.0)
 Suggests:
@@ -102,7 +103,6 @@ Suggests:
     fs,
     rsconnect,
     withr (>= 2.4.2),
-    bslib (>= 0.2.5.1),
     sass (>= 0.4.0)
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
 URL: https://github.com/rstudio/rmarkdown, https://pkgs.rstudio.com/rmarkdown/
