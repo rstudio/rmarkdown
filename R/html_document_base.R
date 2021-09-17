@@ -102,15 +102,15 @@ html_document_base <- function(theme = NULL,
         f <- sass::sass(
           sass::sass_file(f),
           # write output file to `lib_dir/sass-{sass:::sass_hash()}{[basename(f)}`
-          output = sass_output_template(
+          output = sass::output_template(
             basename = xfun::sans_ext(basename(f)),
-            tmpdir = lib_dir
+            dirname = "sass",
+            path = lib_dir
           ),
           options = sass::sass_options(output_style = "compressed")
         )
+        f <- normalized_relative_to(output_dir, f)
       }
-      # do not normalize web path
-      if (!xfun::is_web_path(f)) f <- normalized_relative_to(output_dir, f)
       args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
     }
 
@@ -256,27 +256,4 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
   preserve <- extract(input_str)
   if (!identical(preserve$value, input_str)) write_utf8(preserve$value, input_file)
   preserve$chunks
-}
-
-
-# inspired by sass::output_template but writes to a custom temp dir instead of only tempdir()
-# TODO: use the one from sass package when sass 0.3.2 in on CRAN (rstudio/sass#77)
-sass_output_template <- function(basename = "rmarkdown", dirname = "sass",
-                                 fileext = NULL, tmpdir = tempdir()) {
-  function(options = list(), suffix = NULL) {
-    fileext <- fileext %||% if (isTRUE(options$output_style %in%
-                                       c(2, 3)))
-      ".min.css"
-    else ".css"
-    out_dir <- if (is.null(suffix)) {
-      tempfile(tmpdir = tmpdir, pattern = dirname)
-    }
-    else {
-      file.path(tmpdir, paste0(dirname, suffix))
-    }
-    if (!dir.exists(out_dir)) {
-      dir.create(out_dir, recursive = TRUE)
-    }
-    file.path(out_dir, paste0(basename, fileext))
-  }
 }

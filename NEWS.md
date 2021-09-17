@@ -1,4 +1,4 @@
-rmarkdown 2.11
+rmarkdown 2.12
 ================================================================================
 
 - `html_document` output allows `lib_dir` to point to a parent of the output 
@@ -8,7 +8,18 @@ rmarkdown 2.11
   where there is a shared master library with css, javascript, etc. and separate 
   child directories with RMarkdown files. #146 and #1859.
 
+rmarkdown 2.11
+================================================================================
+
+- Relative paths in parent directories in the `css` argument of `html_document()` were incorrectly normalized to absolute paths by #2095 in v2.8. Now relative paths in parent directories will no longer be converted to absolute paths (thanks, @daijiang, yihui/xaringan#331).
+
 - It is possible to specify the version of jQuery via a global option now, e.g., `options(rmarkdown.jquery.version = 2)` (note that the default major version is `3`). This is mainly for advanced users and developers to test different versions of jQuery.
+
+- `pandoc_citeproc_convert()` now handles correctly bib file containing specific UTF-8 characters on non default UTF-8 systems like Windows (thanks, @mitchelloharawild, #2195).
+
+- Shiny prerendered documents are now pre-rendered in a child environment to avoid allowing the results of static code chunks to exist in the Shiny app environment (@gadenbuie, #2203).
+
+- The previously unexported function `convert_ipynb()` is exported now (thanks, @acircleda).
 
 
 rmarkdown 2.10
