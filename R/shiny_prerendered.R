@@ -347,6 +347,10 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
       dependency$src = list(href = unname(dependency$src))
     }
 
+    if (!is.null(dependency$package)) {
+      dependency$pkgVersion <- get_package_version_string(dependency$package)
+    }
+
     # return dependency
     dependency
   })
