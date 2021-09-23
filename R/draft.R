@@ -63,7 +63,7 @@ draft <- function(file,
 
   # resolve package file
   if (!is.null(package)) {
-    template_path = system.file("rmarkdown", "templates", template,
+    template_path = pkg_file("rmarkdown", "templates", template,
                                 package = package)
     if (!nzchar(template_path)) {
       stop("The template '", template, "' was not found in the ",
