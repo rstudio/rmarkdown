@@ -32,7 +32,7 @@ html_document_base <- function(theme = NULL,
                                allow_uptree_lib_dir = FALSE,
                                ...) {
 
-  # default for dependency_resovler
+  # default for dependency_resolver
   if (is.null(dependency_resolver))
     dependency_resolver <- html_dependency_resolver
 

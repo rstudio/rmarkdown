@@ -7,6 +7,7 @@ rmarkdown 2.12
   <dir>". This makes it possible to have a directory structure for HTML output
   where there is a shared master library with css, javascript, etc. and separate 
   child directories with RMarkdown files. #146 and #1859.
+- `draft()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
 
 rmarkdown 2.11
 ================================================================================
