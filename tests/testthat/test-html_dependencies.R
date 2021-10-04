@@ -196,3 +196,8 @@ test_that("html_dependencies_fonts loads the correct fonts dep", {
   expect_identical(html_dependencies_fonts(FALSE, TRUE), list(io))
   expect_identical(html_dependencies_fonts(TRUE, TRUE), list(fa, io))
 })
+
+test_that("header-attr can be opt-out", {
+  withr::local_options(list(rmarkdown.html_dependency.header_attr = FALSE))
+  expect_null(html_dependency_header_attrs())
+})
