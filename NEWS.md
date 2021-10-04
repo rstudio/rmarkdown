@@ -1,7 +1,7 @@
 rmarkdown 2.12
 ================================================================================
 
-- Added an option `rmarkdown.html_dependency.header_attr`, `TRUE` by default. It can be set to `FALSE` to opt-out using `html_dependency_header_attrs()` HTML dependency in document based on `html_document_base()` which is used by default when Pandoc 2.9 and above is used (thanks, @salim-b, rstudio/bookdown#865, @maelle, r-lib/downlit#1538).
+- Added a global option `rmarkdown.html_dependency.header_attr` (`TRUE` by default). It can be set to `FALSE` to opt-out the HTML dependency `html_dependency_header_attrs()` in documents based on `html_document_base()` (thanks, @salim-b rstudio/bookdown#865, @maelle r-lib/downlit#1538).
 
 - `draft()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
 
