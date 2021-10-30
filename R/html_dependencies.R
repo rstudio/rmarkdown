@@ -553,12 +553,14 @@ html_dependency_rsiframe <- function() {
 # Pandoc 2.9 adds attributes on both headers and their parent divs. We remove
 # the ones on headers since they are unnecessary (#1723).
 html_dependency_header_attrs <- function() {
-  if (pandoc_available('2.9')) list(
-    htmlDependency(
-      "header-attrs",
-      version = packageVersion("rmarkdown"),
-      src = pkg_file("rmd/h/pandoc"),
-      script = "header-attrs.js"
+  if (getOption('rmarkdown.html_dependency.header_attr', TRUE) && pandoc_available('2.9')) {
+    list(
+      htmlDependency(
+        "header-attrs",
+        version = packageVersion("rmarkdown"),
+        src = pkg_file("rmd/h/pandoc"),
+        script = "header-attrs.js"
+      )
     )
-  )
+  }
 }

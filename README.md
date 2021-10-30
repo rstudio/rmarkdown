@@ -21,9 +21,8 @@ R Markdown documents can be rendered to many output formats including HTML docum
 
 ## Books
 
-
-<a href="https://bookdown.org/yihui/rmarkdown/"><img src="https://bookdown.org/yihui/rmarkdown/images/cover.png" alt="R Markdown: The Definitive Guide" height="400"></a>
-<a href="https://bookdown.org/yihui/rmarkdown-cookbook/"><img src="https://bookdown.org/yihui/rmarkdown-cookbook/images/cover.png" alt="R Markdown Cookbook" height="400"></a>
+<a href="https://bookdown.org/yihui/rmarkdown/"><img class="book" src="https://bookdown.org/yihui/rmarkdown/images/cover.png" alt="R Markdown: The Definitive Guide" height="400"></a>
+<a href="https://bookdown.org/yihui/rmarkdown-cookbook/"><img class="book" src="https://bookdown.org/yihui/rmarkdown-cookbook/images/cover.png" alt="R Markdown Cookbook" height="400"></a>
 
 See more about them in [Get Started](https://pkgs.rstudio.com/rmarkdown/articles/rmarkdown.html).
 
