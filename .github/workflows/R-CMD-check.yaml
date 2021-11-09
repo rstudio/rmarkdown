@@ -28,7 +28,6 @@ jobs:
       matrix:
         config:
           # testing R release with last shipped pandoc version in RStudio IDE and new pandoc
-          # TODO: issue on windows with pandoc 2.11.4 - change when fixed
           - {os: windows-latest, pandoc: '2.16.1',  r: 'release'}
           - {os: macOS-latest,   pandoc: '2.16.1',  r: 'release'}
           - {os: ubuntu-18.04,   pandoc: '2.16.1',  r: 'release'}
