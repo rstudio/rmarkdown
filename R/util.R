@@ -47,11 +47,11 @@ pandoc_output_ext <- function(ext, to, input) {
 # From pkgdown:
 # https://github.com/r-lib/pkgdown/blob/04d3a76892320ac4bd918b39604c157e9f83507a/R/utils-fs.R#L85
 pkg_file <- function(..., package = "rmarkdown", mustWork = FALSE) {
-  if (is.null(devtools_meta(package))) {
-    system.file(..., package = package, mustWork = mustWork)
-  } else {
+  if (devtools_loaded(package)) {
     # used only if package has been loaded with devtools or pkgload
-    file.path(getNamespaceInfo(package, "path"), "inst", ...)
+    file.path(find.package(package), "inst", ...)
+  } else {
+    system.file(..., package = package, mustWork = mustWork)
   }
 }
 
@@ -566,10 +566,13 @@ stop2 = function(...) stop(..., call. = FALSE)
 
 # devtools metadata -------------------------------------------------------
 
-# from pkgdown
+# from pkgdown & downlit
 # https://github.com/r-lib/pkgdown/blob/77f909b0138a1d7191ad9bb3cf95e78d8e8d93b9/R/utils.r#L52
 
-devtools_meta <- function(package) {
-  ns <- .getNamespace(package)
-  ns[[".__DEVTOOLS__"]]
+devtools_loaded <- function(x) {
+  if (!x %in% loadedNamespaces()) {
+    return(FALSE)
+  }
+  ns <- .getNamespace(x)
+  !is.null(ns$.__DEVTOOLS__)
 }
