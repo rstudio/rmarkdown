@@ -5,6 +5,8 @@ rmarkdown 2.12
 
 - `draft()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
 
+- Rendering using `runtime: shiny_prerendered` or `runtime: shinyrmd` now natively supports custom templates. Previously, developers had to add special comment conditionally. See NEWS from 2.8 for the previous behavior (thanks, @atusy, #2249).
+
 rmarkdown 2.11
 ================================================================================
 
