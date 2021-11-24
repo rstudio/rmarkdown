@@ -856,7 +856,7 @@ render <- function(input,
       # indicate to Pandoc we are in a shiny prerendered document to activate
       # specific parts in the template.
       output_format$pandoc$args <- c(output_format$pandoc$args,
-                                     pandoc_variable_arg("shiny-prerendered"))
+                                     pandoc_include_args(in_header = pkg_file("rmd/h/shiny-header.html")))
     }
 
     perf_timer_stop("pre-processor")
