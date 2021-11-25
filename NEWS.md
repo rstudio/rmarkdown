@@ -5,7 +5,7 @@ rmarkdown 2.12
 
 - `draft()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
 
-- Rendering using `runtime: shiny_prerendered` or `runtime: shinyrmd` now natively supports custom templates. Previously, developers had to add special comment conditionally. See NEWS from 2.8 for the previous behavior (thanks, @atusy, #2249).
+- Rendering using `runtime: shiny_prerendered` or `runtime: shinyrmd` now natively supports custom templates. Previously, developers had to add special comment, `<!-- HEAD_CONTENT -->`, conditionally. The new behavior inserts `<!-- HEAD_CONTENT -->` as a last element of `$header-includes$`. If templates rely on the old behavior and require some contents between `$header-includes$` and `<!-- HEAD_CONTENT -->`, consider including them with `$header-includes$`. See also NEWS from 2.8 for the previous behavior (thanks, @atusy, #2249).
 
 rmarkdown 2.11
 ================================================================================
