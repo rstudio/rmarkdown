@@ -28,9 +28,9 @@ jobs:
       matrix:
         config:
           # testing R release with last shipped pandoc version in RStudio IDE and new pandoc
-          - {os: windows-latest, pandoc: '2.16.1',  r: 'release'}
-          - {os: macOS-latest,   pandoc: '2.16.1',  r: 'release'}
-          - {os: ubuntu-18.04,   pandoc: '2.16.1',  r: 'release'}
+          - {os: windows-latest, pandoc: '2.16.2',  r: 'release'}
+          - {os: macOS-latest,   pandoc: '2.16.2',  r: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.16.2',  r: 'release'}
           - {os: ubuntu-18.04,   pandoc: 'devel',   r: 'release'}
           # testing older pandoc versions
           - {os: ubuntu-18.04,   pandoc: '2.14.2',  r: 'release'}
@@ -50,7 +50,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
@@ -69,7 +69,7 @@ jobs:
       - uses: cderv/actions/setup-pandoc-nightly@nightly-pandoc
         if: matrix.config.pandoc == 'devel'
 
-      - uses: r-lib/actions/setup-tinytex@v1
+      - uses: r-lib/actions/setup-tinytex@v2
         env:
           # install full prebuilt version
           TINYTEX_INSTALLER: TinyTeX
@@ -80,9 +80,10 @@ jobs:
           cat(readLines("~/.Rprofile"), sep = "\n")
         shell: Rscript {0}
 
-      - uses: r-lib/actions/setup-r-dependencies@v1
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: rcmdcheck
+          extra-packages: any::rcmdcheck
+          needs: check
 
       - name: Pandoc and Tinytex info
         run: |
@@ -91,19 +92,7 @@ jobs:
           tinytex::tl_pkgs()
         shell: Rscript {0}
 
-      - uses: r-lib/actions/check-r-package@v1
-
-      - name: Show testthat output
-        if: always()
-        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
-        shell: bash
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@main
-        with:
-          name: ${{ matrix.config.os }}-r${{ matrix.config.r }}-results
-          path: check
+      - uses: r-lib/actions/check-r-package@v2
 
       - name: Test coverage
         if: success() && runner.os == 'Linux' && matrix.config.r == 'release' && matrix.config.pandoc == '2.7.3'
