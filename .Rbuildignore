@@ -16,3 +16,4 @@
 ^docs$
 ^reference$
 ^vignettes/articles$
+^CITATION\.cff$
