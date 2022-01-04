@@ -53,7 +53,7 @@ function insert_anchor(el)
       table.insert(el.content,
         pandoc.Link("", "#"..el.identifier, "",
           pandoc.Attr(
-            nil, {"anchor-section"}, {["aria-label"]="Anchor link to header"}
+            "", {"anchor-section"}, {["aria-label"]="Anchor link to header"}
           )
         )
       )
