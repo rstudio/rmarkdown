@@ -10,7 +10,7 @@ rmarkdown 2.12
   output:
     html_document:
       anchor_sections:
-        style: symbol # use symbol style ("dash", "symbol", "icon")
+        style: symbol # use symbol style ("hash", "symbol", "icon")
         depth: 2 # max depth to apply anchor on (default to max which is 6)
   ```
   Customizing using a css rule is still possible. Detailed explanation and examples have been added in `?html_document`.
