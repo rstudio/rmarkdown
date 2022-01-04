@@ -173,50 +173,50 @@ and Citations} article in the online documentation.
 }
 \section{Anchor Sections Customization}{
 
-This will be the default to activate anchor sections link on header
-\preformatted{
- output:
-   html_document:
-     anchor_sections: TRUE
- }
+
+This will be the default to activate anchor sections link on header\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    anchor_sections: TRUE
+}\if{html}{\out{</div>}}
+
 There are currently two options to modify the default behavior
 
 \describe{
-\item{\code{style}}{Select a predefine visual style:
+\item{\code{style}}{Select a predefined visual style:
 \itemize{
-\item{\code{style = "dash"}, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.}
-\item{\code{style = "symbol"} will use a \href{https://codepoints.net/U+1F517}{link
-symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}}
-\item{\code{style = "icon"} will use an svg icon.
-\if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}}
+\item \code{style = "dash"}, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.
+\item \code{style = "symbol"} will use a \href{https://codepoints.net/U+1F517}{link symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}
+\item \code{style = "icon"} will use an svg icon. \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}
 }
+
 You can also customize using a css rule in your
-document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:
-\preformatted{
- a.anchor-section::before {
-   content: '\\01F517';
- }}
+document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:\if{html}{\out{<div class="sourceCode css">}}\preformatted{a.anchor-section::before \{
+  content: '\\\\01F517';
+\}
+}\if{html}{\out{</div>}}
+
 About how to apply custom CSS in R Markdown document, see
 \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
 }
 \item{\code{depth}}{Select the maximum header level to add the
 anchor link to. For example, this yaml will use the symbol style and
-only with level 1 and 2 headings:
-\preformatted{
- output:
-   html_document:
-     anchor_sections:
-       style: icon
-       depth: 2
- }
+only with level 1 and 2 headings:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    anchor_sections:
+      style: icon
+      depth: 2
+}\if{html}{\out{</div>}}
+
 If omitted, anchor will be added to all headers (equivalent of
-\code{depth=6}). You can also set anchors manually using \samp{# my header
- {.hasAnchor}} with \code{depth = 0}.
-}}
+\code{depth=6}). You can also set anchors manually with \code{depth = 0} using this syntax\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{# my header \{.hasAnchor\}
+}\if{html}{\out{</div>}}
+
+}
 
 Using anchor sections will add some CSS to your document output for the
 styling, and a JS script if \code{section_divs = TRUE}. The anchor link itself
 is added using a Lua filter, and hence requires Pandoc 2.0+
+}
 }
 
 \section{Navigation Bars}{

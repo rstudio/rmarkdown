@@ -92,50 +92,52 @@
 #'@return R Markdown output format to pass to \code{\link{render}}
 #'
 #'@section Anchor Sections Customization:
+#'
 #'  This will be the default to activate anchor sections link on header
-#'  \preformatted{
+#'  ```yaml
 #'  output:
 #'    html_document:
 #'      anchor_sections: TRUE
-#'  }
+#'  ````
 #'  There are currently two options to modify the default behavior
 #'
 #'  \describe{
-#'  \item{\code{style}}{Select a predefine visual style:
-#'  \itemize{
-#'  \item{\code{style = "dash"}, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.}
-#'  \item{\code{style = "symbol"} will use a \href{https://codepoints.net/U+1F517}{link
-#'  symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}}
-#'  \item{\code{style = "icon"} will use an svg icon.
-#'  \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}}
-#'  }
+#'  \item{`style`}{Select a predefined visual style:
+#'   * `style = "dash"`, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.
+#'   * `style = "symbol"` will use a [link symbol](https://codepoints.net/U+1F517) \if{html}{\out{(&#x1F517;&#xFE0E;)}}
+#'   * `style = "icon"` will use an svg icon. \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}
+#'
 #'  You can also customize using a css rule in your
 #'  document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:
-#'  \preformatted{
+#'  ```css
 #'  a.anchor-section::before {
 #'    content: '\\01F517';
-#'  }}
-#'  About how to apply custom CSS in R Markdown document, see
-#'  \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
 #'  }
-#'  \item{\code{depth}}{Select the maximum header level to add the
+#'  ```
+#'  About how to apply custom CSS in R Markdown document, see
+#'  <https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html>
+#'  }
+#'  \item{`depth`}{Select the maximum header level to add the
 #'  anchor link to. For example, this yaml will use the symbol style and
 #'  only with level 1 and 2 headings:
-#'  \preformatted{
+#'  ```yaml
 #'  output:
 #'    html_document:
 #'      anchor_sections:
 #'        style: icon
 #'        depth: 2
-#'  }
+#'  ```
 #'  If omitted, anchor will be added to all headers (equivalent of
-#'  \code{depth=6}). You can also set anchors manually using \samp{# my header
-#'  {.hasAnchor}} with \code{depth = 0}.
-#'  }}
+#'  `depth=6`). You can also set anchors manually with `depth = 0` using this syntax
+#'  ```markdown
+#'  # my header {.hasAnchor}
+#'  ```
+#'  }
 #'
 #'  Using anchor sections will add some CSS to your document output for the
-#'  styling, and a JS script if \code{section_divs = TRUE}. The anchor link itself
+#'  styling, and a JS script if `section_divs = TRUE`. The anchor link itself
 #'  is added using a Lua filter, and hence requires Pandoc 2.0+
+#'  }
 #'
 #'@section Navigation Bars:
 #'
