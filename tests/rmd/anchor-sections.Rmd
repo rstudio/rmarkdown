@@ -1,0 +1,18 @@
+---
+title: "achor_sections"
+author: "christophe"
+date: "04/01/2022"
+output:
+  html_document:
+    anchor_sections:
+      style: symbol # use symbol style ("dash", "symbol", "icon")
+      depth: 2 # max depth to apply anchor on (default to max which is 6)
+---
+
+# Hello
+
+## Sub 1
+
+### Sub 2
+
+Content
