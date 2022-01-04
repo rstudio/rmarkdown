@@ -5,6 +5,16 @@ rmarkdown 2.12
 
 - `draft()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
 
+- `anchor_sections` can now be easily customized using `style` or `depth` element for `anchor_sections`. Ex: 
+  ```yaml
+  output:
+    html_document:
+      anchor_sections:
+        style: symbol # use symbol style ("hash", "symbol", "icon")
+        depth: 2 # max depth to apply anchor on (default to max which is 6)
+  ```
+  Customizing using a css rule is still possible. Detailed explanation and examples have been added in `?html_document`.
+
 rmarkdown 2.11
 ================================================================================
 

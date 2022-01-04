@@ -23,8 +23,10 @@
 #'  options that control the behavior of the floating table of contents. See the
 #'  \emph{Floating Table of Contents} section below for details.
 #'@param number_sections \code{TRUE} to number section headings
-#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers.
-#'  See \link[rmarkdown:html_document]{Anchor Sections Customization section}.
+#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers
+#'  for all headers. A list can also be passed with \code{style} and/or
+#'  \code{depth} to customize the behavior. See
+#'  \link[rmarkdown:html_document]{Anchor Sections Customization section}.
 #'@param fig_width Default width (in inches) for figures
 #'@param fig_height Default height (in inches) for figures
 #'@param fig_retina Scaling to perform for retina displays (defaults to 2, which
@@ -90,28 +92,52 @@
 #'@return R Markdown output format to pass to \code{\link{render}}
 #'
 #'@section Anchor Sections Customization:
-#'  By default, a \samp{#} is used as a minimalist choice, referring to the id selector
-#'  in HTML and CSS. You can easily change that using a css rule in your
-#'  document. For example, to add a \href{https://codepoints.net/U+1F517}{link
-#'  symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}} instead:
-#'  \preformatted{
-#'  a.anchor-section::before {
-#'    content: '\\01F517\\00FE0E';
-#'  }}
-#'  You can remove \samp{\\00FE0E} to get a more complex link pictogram
-#'  \if{html}{\out{(&#x1F517;)}}.
 #'
-#'  If you prefer an svg icon, you can also use one using for example a direct link or downloading it from
-#'  \url{https://fonts.google.com/icons}.
-#'  \preformatted{
-#'  /* From https://fonts.google.com/icons
-#'     Licence: https://www.apache.org/licenses/LICENSE-2.0.html */
-#'  a.anchor-section::before {
-#'    content: url(https://fonts.gstatic.com/s/i/materialicons/link/v7/24px.svg);
-#'  }}
+#'  This will be the default to activate anchor sections link on header
+#'  ```yaml
+#'  output:
+#'    html_document:
+#'      anchor_sections: TRUE
+#'  ````
+#'  There are currently two options to modify the default behavior
 #'
-#'  About how to apply custom CSS, see
-#'  \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
+#'  \describe{
+#'  \item{`style`}{Select a predefined visual style:
+#'   * `style = "dash"`, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.
+#'   * `style = "symbol"` will use a [link symbol](https://codepoints.net/U+1F517) \if{html}{\out{(&#x1F517;&#xFE0E;)}}
+#'   * `style = "icon"` will use an svg icon. \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}
+#'
+#'  You can also customize using a css rule in your
+#'  document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:
+#'  ```css
+#'  a.anchor-section::before {
+#'    content: '\\01F517';
+#'  }
+#'  ```
+#'  About how to apply custom CSS in R Markdown document, see
+#'  <https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html>
+#'  }
+#'  \item{`depth`}{Select the maximum header level to add the
+#'  anchor link to. For example, this yaml will use the symbol style and
+#'  only with level 1 and 2 headings:
+#'  ```yaml
+#'  output:
+#'    html_document:
+#'      anchor_sections:
+#'        style: icon
+#'        depth: 2
+#'  ```
+#'  If omitted, anchor will be added to all headers (equivalent of
+#'  `depth=6`). You can also set anchors manually with `depth = 0` using this syntax
+#'  ```markdown
+#'  # my header {.hasAnchor}
+#'  ```
+#'  }
+#'
+#'  Using anchor sections will add some CSS to your document output for the
+#'  styling, and a JS script if `section_divs = TRUE`. The anchor link itself
+#'  is added using a Lua filter, and hence requires Pandoc 2.0+
+#'  }
 #'
 #'@section Navigation Bars:
 #'
@@ -243,6 +269,9 @@ html_document <- function(toc = FALSE,
   # build pandoc args
   args <- c("--standalone")
 
+  # to add lua_filters
+  lua_filters <- c()
+
   # use section divs
   if (section_divs)
     args <- c(args, "--section-divs")
@@ -362,10 +391,10 @@ html_document <- function(toc = FALSE,
   }
 
   # anchor-sections
-  if (anchor_sections) {
-    extra_dependencies <- append(extra_dependencies,
-                                 list(html_dependency_anchor_sections()))
-  }
+  components <- add_anchor_sections(anchor_sections, section_divs)
+  args <- c(args, components$args)
+  lua_filters <- c(lua_filters, components$lua_filters)
+  extra_dependencies <- append(extra_dependencies, components$extra_dependencies)
 
   # pre-processor for arguments that may depend on the name of the
   # the input file AND which need to inject html dependencies
@@ -473,7 +502,8 @@ html_document <- function(toc = FALSE,
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
     pandoc = pandoc_options(to = "html",
                             from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args),
+                            args = args,
+                            lua_filters = lua_filters),
     keep_md = keep_md,
     clean_supporting = self_contained,
     df_print = df_print,
@@ -674,3 +704,42 @@ navbar_link_text <- function(x, ...) {
     tagList(x$text, ...)
 }
 
+add_anchor_sections <- function(anchor_sections, section_divs = FALSE) {
+
+  # expected output object
+  res <- list(args = NULL, lua_filters = NULL, extra_dependencies = NULL)
+  # Do nothing
+  if (xfun::isFALSE(anchor_sections)) return(res)
+  # Requires Pandoc 2.0 because using a Lua filter
+  if (!pandoc2.0()) {
+    stop("Using anchor_sections requires Pandoc 2.0+", call. = FALSE)
+  }
+
+  allowed_args <- c("style", "depth")
+  default_style  <- "hash"
+
+  if (isTRUE(anchor_sections)) {
+    style <- default_style
+    depth <- NULL
+  } else if (is.list(anchor_sections)) {
+    # check list elements
+    all_allowed <- all(names(anchor_sections) %in% allowed_args)
+    if (xfun::isFALSE(all_allowed)) {
+      stop("`anchor_sections` could be a list with only names in [",
+           paste(allowed_args, collapse = ", "), "]",
+           call. = FALSE)
+    }
+    style <- anchor_sections[["style"]] %||% default_style
+    depth <- anchor_sections[["depth"]]
+  } else {
+    stop("`anchor_sections` should be FALSE, TRUE or a list with names [",
+         paste(allowed_args, collapse = ", "), "]",
+         call. = FALSE)
+  }
+
+  res$args <- if (!is.null(depth)) pandoc_metadata_arg("rmd_anchor_depth", depth)
+  res$lua_filters <- pkg_file_lua("anchor-sections.lua")
+  res$extra_dependencies <- list(html_dependency_anchor_sections(style, section_divs))
+
+  res
+}

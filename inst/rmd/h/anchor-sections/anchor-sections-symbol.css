@@ -1,0 +1,6 @@
+/* Styles for section anchors content */
+/* Link symbol : https://codepoints.net/U+1F517
+   with variation selector https://graphemica.com/FE0E */
+a.anchor-section::before{content: '\01F517\00FE0E';font-size: 20px;}
+/* deactivate underline for link symbol */
+a.anchor-section:hover {text-decoration: none;}
