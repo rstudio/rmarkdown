@@ -8,7 +8,7 @@ message: 'To cite package "rmarkdown" in publications use:'
 type: software
 license: GPL-3.0-only
 title: 'rmarkdown: Dynamic Documents for R'
-version: 2.11.4
+version: 2.11.5
 abstract: Convert R Markdown documents into a variety of formats.
 authors:
 - family-names: Allaire
@@ -67,7 +67,7 @@ preferred-citation:
     given-names: Winston
   - family-names: Iannone
     given-names: Richard
-  year: '2021'
+  year: '2022'
   url: https://github.com/rstudio/rmarkdown
 repository: https://CRAN.R-project.org/package=rmarkdown
 repository-code: https://github.com/rstudio/rmarkdown
