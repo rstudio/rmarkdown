@@ -8,6 +8,7 @@ on:
   release:
     types: [published]
   push:
+    branches: main
     paths:
       - DESCRIPTION
       - inst/CITATION
