@@ -14,7 +14,7 @@
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' \href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 #' and Citations} article in the online documentation.
 #' @inheritParams pdf_document
 #' @param context_path Path of the ConTeXt executable. If not provided, ConTeXt has
@@ -56,10 +56,10 @@ context_document <- function(toc = FALSE,
   sys_context <- if (is.null(context_path)) find_program("context") else context_path
   ext <- match.arg(ext)
   if (identical(ext, ".pdf") && !nzchar(sys_context))
-    stop("Cannot find ConTeXt.\n",
+    stop2("Cannot find ConTeXt.\n",
          "Please, check that ConTeXt is installed.\n",
-         "For more information, see the help page '?context_document'.",
-         call. = FALSE)
+         "For more information, see the help page '?context_document'."
+         )
 
   # base pandoc options for all ConTeXt output
   args <- c("--standalone")

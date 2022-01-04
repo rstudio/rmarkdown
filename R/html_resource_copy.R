@@ -102,10 +102,11 @@ copy_resources <- function(input_str, lib_dir, output_dir, resource_locator) {
 
       # the text from the current replacement to the end of the output,
       # if applicable
-      after <- if (res_rep == length(res_replacements))
-        substring(input_str, ch_pos)
-      else
+      after <- if (res_rep == length(res_replacements)) {
+        substring(input_str, ch_pos, last = nchar(input_str, type = "bytes"))
+      } else {
         ""
+      }
 
       # compose the next segment of the output from the text between
       # replacements and the current replacement text

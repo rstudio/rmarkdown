@@ -14,7 +14,7 @@
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' \href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 #' and Citations} article in the online documentation.
 #'
 #' Many aspects of the LaTeX template used to create PDF documents can be
@@ -41,8 +41,10 @@
 #'    \item{\code{linestretch}}{Options for line spacing (e.g. 1, 1.5, 3)}
 #' }
 #' @inheritParams html_document
-#' @param fig_crop \code{TRUE} to automatically apply the \code{pdfcrop} utility
-#'   (if available) to pdf figures
+#' @param fig_crop Whether to crop PDF figures with the command
+#'   \command{pdfcrop}. This requires the tools \command{pdfcrop} and
+#'   \command{ghostscript} to be installed. By default, \code{fig_crop = TRUE}
+#'   if these two tools are available.
 #' @param dev Graphics device to use for figure output (defaults to pdf)
 #' @param highlight Syntax highlighting style. Supported styles include
 #'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
@@ -186,6 +188,17 @@ pdf_document <- function(toc = FALSE,
                       output_dir)
   }
 
+  post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+    # TODO: remove this temporary fix after the syntax highlighting problem is
+    # fixed in Pandoc https://github.com/rstudio/bookdown/issues/1157
+    x <- read_utf8(output_file)
+    s <- '\\SpecialCharTok{|}\\ErrorTok{\\textgreater{}}'
+    if (length(grep(s, x, fixed = TRUE)) == 0) return(output_file)
+    x <- gsub(s, '\\SpecialCharTok{|\\textgreater{}}', x, fixed = TRUE)
+    write_utf8(x, output_file)
+    output_file
+  }
+
   intermediates_generator <- function(...) {
     general_intermediates_generator(saved_files_dir, ...)
   }
@@ -205,6 +218,7 @@ pdf_document <- function(toc = FALSE,
     keep_md = keep_md,
     df_print = df_print,
     pre_processor = pre_processor,
+    post_processor = post_processor,
     intermediates_generator = intermediates_generator
   )
 }

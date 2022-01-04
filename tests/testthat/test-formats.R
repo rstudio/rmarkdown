@@ -1,4 +1,5 @@
-context("formats")
+# TODO: to remove when switching the package to edition 3
+local_edition(3)
 
 test_that("formats successfully produce a document", {
 
@@ -16,17 +17,17 @@ test_that("formats successfully produce a document", {
   testFormat(html_document(), df_print = "kable")
   testFormat(html_notebook())
   testFormat(html_fragment(), df_print = "tibble")
-  testFormat(html_vignette(), df_print = "tibble")
+  suppressWarnings(testFormat(html_vignette(), df_print = "tibble"))
   testFormat(ioslides_presentation(), df_print = "kable")
   testFormat(slidy_presentation(), df_print = "kable")
   testFormat(md_document(), df_print = "kable")
   testFormat(pdf_document(), df_print = "kable")
   testFormat(beamer_presentation(), df_print = "kable")
   testFormat(word_document(), df_print = "kable")
-  testFormat(html_vignette())
+  suppressWarnings(testFormat(html_vignette()))
 
   if (requireNamespace("tufte", quietly = TRUE))
-    testFormat(tufte_handout())
+    suppressWarnings(testFormat(tufte_handout()))
 })
 
 test_that("documents with spaces in names can be rendered", {
@@ -87,3 +88,22 @@ test_that("pdf_document can correctly keep tex file if required", {
   expect_true(file.exists(file.path(tmpdir, texfile)))
   unlink(tmpdir, recursive = TRUE)
 })
+
+test_that("url in css arg works HTML based format", {
+  skip_if_offline()
+  rmd <- local_rmd_file("---", "title: test", "---", "", "# test")
+  css <- "https://raw.githubusercontent.com/rstudio/rmarkdown/master/tests/testthat/resources/styles.css"
+  expect_error(render(rmd, html_document_base(css = css), quiet = TRUE), NA)
+  skip_if_not_installed("bslib")
+  expect_error(render(rmd, html_document_base(css = css, theme = list(version = 4)), quiet = TRUE), NA)
+})
+
+test_that("css arg works HTML based format", {
+  rmd <- local_rmd_file("---", "title: test", "---", "", "# test")
+  css <- withr::local_tempfile(fileext = ".css")
+  xfun::write_utf8("h1{color:red;}", css)
+  expect_error(render(rmd, html_document_base(css = css), quiet = TRUE), NA)
+  skip_if_not_installed("bslib")
+  expect_error(render(rmd, html_document_base(css = css, theme = list(version = 4)), quiet = TRUE), NA)
+})
+
