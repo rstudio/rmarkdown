@@ -46,7 +46,7 @@ function insert_anchor(el)
       with --section-divs this will be added on the section div not the Header.
       The class will be moved to the header node by anchor-sections.js
       ]]
-      el.classes:insert("hasAnchor")
+      table.insert(el.classes, "hasAnchor")
     end
     -- .hasAnchor could be added by the piece above or manually by the user
     if el.classes:find("hasAnchor") then
