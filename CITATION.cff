@@ -8,7 +8,7 @@ message: 'To cite package "rmarkdown" in publications use:'
 type: software
 license: GPL-3.0-only
 title: 'rmarkdown: Dynamic Documents for R'
-version: 2.11.5
+version: 2.11.6
 abstract: Convert R Markdown documents into a variety of formats.
 authors:
 - family-names: Allaire
