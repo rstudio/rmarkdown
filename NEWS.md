@@ -14,6 +14,8 @@ rmarkdown 2.12
         depth: 2 # max depth to apply anchor on (default to max which is 6)
   ```
   Customizing using a css rule is still possible. Detailed explanation and examples have been added in `?html_document`.
+  
+- Added support for Pandoc's `dir` variable in HTML templates. This is the second [Language Variables](https://pandoc.org/MANUAL.html#language-variables) after `lang`. 
 
 rmarkdown 2.11
 ================================================================================
