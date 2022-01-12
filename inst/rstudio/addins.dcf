@@ -1,0 +1,4 @@
+Name: Insert Image
+Description: Insert an external image into a R Markdown document.
+Binding: insert_image_addin
+Interactive: true

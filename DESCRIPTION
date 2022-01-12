@@ -81,7 +81,9 @@ Suggests:
     tibble,
     tufte,
     vctrs,
-    withr (>= 2.4.2)
+    withr (>= 2.4.2),
+    rstudioapi,
+    miniUI
 VignetteBuilder: knitr
 Config/Needs/website: rstudio/quillt, pkgdown
 Encoding: UTF-8
