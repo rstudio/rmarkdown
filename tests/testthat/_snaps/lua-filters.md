@@ -1,4 +1,4 @@
-# latex-divs.lua works with PDF/latex
+# latex-divs.lua works with LaTeX (PDF)
 
     \begin{custom} content  \end{custom}
 

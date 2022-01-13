@@ -47,8 +47,10 @@ options that control the behavior of the floating table of contents. See the
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
-\item{anchor_sections}{\code{TRUE} to show section anchors when mouse hovers.
-See \link[rmarkdown:html_document]{Anchor Sections Customization section}.}
+\item{anchor_sections}{\code{TRUE} to show section anchors when mouse hovers
+for all headers. A list can also be passed with \code{style} and/or
+\code{depth} to customize the behavior. See
+\link[rmarkdown:html_document]{Anchor Sections Customization section}.}
 
 \item{section_divs}{Wrap sections in \code{<div>} tags, and attach identifiers to the
 enclosing \code{<div>} rather than the header itself.}
@@ -191,7 +193,7 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+\href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 and Citations} article in the online documentation.
 }
 \section{Highlighting}{
@@ -248,28 +250,50 @@ $if(highlight-downlit)$
 
 \section{Anchor Sections Customization}{
 
-By default, a \samp{#} is used as a minimalist choice, referring to the id selector
-in HTML and CSS. You can easily change that using a css rule in your
-document. For example, to add a \href{https://codepoints.net/U+1F517}{link
-symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}} instead:
-\preformatted{
- a.anchor-section::before {
-   content: '\\01F517\\00FE0E';
- }}
-You can remove \samp{\\00FE0E} to get a more complex link pictogram
-\if{html}{\out{(&#x1F517;)}}.
 
-If you prefer an svg icon, you can also use one using for example a direct link or downloading it from
-\url{https://fonts.google.com/icons}.
-\preformatted{
- /* From https://fonts.google.com/icons
-    Licence: https://www.apache.org/licenses/LICENSE-2.0.html */
- a.anchor-section::before {
-   content: url(https://fonts.gstatic.com/s/i/materialicons/link/v7/24px.svg);
- }}
+This will be the default to activate anchor sections link on header\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    anchor_sections: TRUE
+}\if{html}{\out{</div>}}
 
-About how to apply custom CSS, see
+There are currently two options to modify the default behavior
+
+\describe{
+\item{\code{style}}{Select a predefined visual style:
+\itemize{
+\item \code{style = "dash"}, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.
+\item \code{style = "symbol"} will use a \href{https://codepoints.net/U+1F517}{link symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}
+\item \code{style = "icon"} will use an svg icon. \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}
+}
+
+You can also customize using a css rule in your
+document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:\if{html}{\out{<div class="sourceCode css">}}\preformatted{a.anchor-section::before \{
+  content: '\\\\01F517';
+\}
+}\if{html}{\out{</div>}}
+
+About how to apply custom CSS in R Markdown document, see
 \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
+}
+\item{\code{depth}}{Select the maximum header level to add the
+anchor link to. For example, this yaml will use the symbol style and
+only with level 1 and 2 headings:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    anchor_sections:
+      style: icon
+      depth: 2
+}\if{html}{\out{</div>}}
+
+If omitted, anchor will be added to all headers (equivalent of
+\code{depth=6}). You can also set anchors manually with \code{depth = 0} using this syntax\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{# my header \{.hasAnchor\}
+}\if{html}{\out{</div>}}
+
+}
+
+Using anchor sections will add some CSS to your document output for the
+styling, and a JS script if \code{section_divs = TRUE}. The anchor link itself
+is added using a Lua filter, and hence requires Pandoc 2.0+
+}
 }
 
 \section{Navigation Bars}{

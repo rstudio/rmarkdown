@@ -29,7 +29,7 @@ html_document_base <- function(theme = NULL,
                                bootstrap_compatible = FALSE,
                                ...) {
 
-  # default for dependency_resovler
+  # default for dependency_resolver
   if (is.null(dependency_resolver))
     dependency_resolver <- html_dependency_resolver
 
@@ -94,19 +94,20 @@ html_document_base <- function(theme = NULL,
     for (f in css) {
       if (grepl("\\.s[ac]ss$", f)) {
         if (!xfun::loadable("sass")) {
-          stop("Using `.sass` or `.scss` file in `css` argument requires the sass package.", call. = FALSE)
+          stop2("Using `.sass` or `.scss` file in `css` argument requires the sass package.")
         }
         f <- sass::sass(
           sass::sass_file(f),
           # write output file to `lib_dir/sass-{sass:::sass_hash()}{[basename(f)}`
-          output = sass_output_template(
+          output = sass::output_template(
             basename = xfun::sans_ext(basename(f)),
-            tmpdir = lib_dir
+            dirname = "sass",
+            path = lib_dir
           ),
           options = sass::sass_options(output_style = "compressed")
         )
+        f <- normalized_relative_to(output_dir, f)
       }
-      f <- normalized_relative_to(output_dir, f)
       args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
     }
 
@@ -120,14 +121,14 @@ html_document_base <- function(theme = NULL,
       if (is_bs_theme(theme)) {
         theme <- bslib::bs_global_get()
       }
-      bootstrap_deps <- if (is_bs_theme(theme) && is_shiny(runtime)) {
+      bootstrap_deps <- if (is_bs_theme(theme) && is_shiny(runtime, metadata[["server"]])) {
         list(shiny_bootstrap_lib(theme))
       } else {
         bootstrap_dependencies(theme)
       }
       format_deps <- append(format_deps, htmltools::resolveDependencies(bootstrap_deps))
     }
-    else if (isTRUE(bootstrap_compatible) && is_shiny(runtime)) {
+    else if (isTRUE(bootstrap_compatible) && is_shiny(runtime, metadata[["server"]])) {
       # If we can add bootstrap for Shiny, do it
       format_deps <- append(format_deps, bootstrap_dependencies("bootstrap"))
     }
@@ -157,13 +158,19 @@ html_document_base <- function(theme = NULL,
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
-    # if there are no preserved chunks to restore and no resource to copy then no
-    # post-processing is necessary
-    if (length(preserved_chunks) == 0 && !isTRUE(copy_resources) && self_contained)
-      return(output_file)
-
     # read the output file
     output_str <- read_utf8(output_file)
+
+    # TODO: remove this temporary fix after the syntax highlighting problem is
+    # fixed in Pandoc https://github.com/rstudio/bookdown/issues/1157
+    s1 <- '<span class="sc">|</span><span class="er">&gt;</span>'
+    s2 <- '<span class="ot">=</span><span class="er">&gt;</span>'
+
+    # if there are no preserved chunks to restore and no resource to copy then no
+    # post-processing is necessary
+    if ((length(preserved_chunks) == 0 && !isTRUE(copy_resources) && self_contained) &&
+        !length(c(grep(s1, output_str, fixed = TRUE), grep(s2, output_str, fixed = TRUE))))
+      return(output_file)
 
     # if we preserved chunks, restore them
     if (length(preserved_chunks) > 0) {
@@ -202,6 +209,10 @@ html_document_base <- function(theme = NULL,
       output_str <- process_images(output_str, image_relative)
     }
 
+    # fix the issue mentioned in TODO above
+    output_str <- gsub(s1, '<span class="sc">|&gt;</span>', output_str, fixed = TRUE)
+    output_str <- gsub(s2, '<span class="ot">=&gt;</span>', output_str, fixed = TRUE)
+
     write_utf8(output_str, output_file)
     output_file
   }
@@ -233,27 +244,4 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
   preserve <- extract(input_str)
   if (!identical(preserve$value, input_str)) write_utf8(preserve$value, input_file)
   preserve$chunks
-}
-
-
-# inspired by sass::output_template but writes to a custom temp dir instead of only tempdir()
-# TODO: use the one from sass package when sass 0.3.2 in on CRAN (rstudio/sass#77)
-sass_output_template <- function(basename = "rmarkdown", dirname = "sass",
-                                 fileext = NULL, tmpdir = tempdir()) {
-  function(options = list(), suffix = NULL) {
-    fileext <- fileext %||% if (isTRUE(options$output_style %in%
-                                       c(2, 3)))
-      ".min.css"
-    else ".css"
-    out_dir <- if (is.null(suffix)) {
-      tempfile(tmpdir = tmpdir, pattern = dirname)
-    }
-    else {
-      file.path(tmpdir, paste0(dirname, suffix))
-    }
-    if (!dir.exists(out_dir)) {
-      dir.create(out_dir, recursive = TRUE)
-    }
-    file.path(out_dir, paste0(basename, fileext))
-  }
 }

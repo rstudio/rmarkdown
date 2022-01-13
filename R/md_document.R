@@ -11,11 +11,11 @@
 #' see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 #' @inheritParams html_document
 #' @param variant Markdown variant to produce (defaults to "markdown_strict").
-#'   Other valid values are "commonmark", "markdown_github", "markdown_mmd",
-#'   markdown_phpextra", or even "markdown" (which produces pandoc markdown).
-#'   You can also compose custom markdown variants, see the
-#'   \href{https://pandoc.org/MANUAL.html}{pandoc online documentation}
-#'   for details.
+#'   Other valid values are "commonmark", "gfm", "commonmark_x", "markdown_mmd",
+#'   markdown_phpextra", "markdown_github", or even "markdown" (which produces
+#'   pandoc markdown). You can also compose custom markdown variants, see the
+#'   \href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
+#'   details.
 #' @param preserve_yaml Preserve YAML front matter in final document.
 #' @param fig_retina Scaling to perform for retina displays. Defaults to
 #'   \code{NULL} which performs no scaling. A setting of 2 will work for all
@@ -48,8 +48,9 @@ md_document <- function(variant = "markdown_strict",
                         pandoc_args = NULL,
                         ext = ".md") {
 
+
   # base pandoc options for all markdown output
-  args <- c(if (variant != "markdown" || preserve_yaml) "--standalone")
+  args <- c(if (preserve_yaml) "--standalone")
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
@@ -60,8 +61,11 @@ md_document <- function(variant = "markdown_strict",
   # pandoc args
   args <- c(args, pandoc_args)
 
-  # add post_processor for yaml preservation
-  post_processor <- if (preserve_yaml && variant != 'markdown') {
+  # variants
+  variant <- adapt_md_variant(variant, preserve_yaml)
+
+  # add post_processor for yaml preservation if not supported by pandoc
+  post_processor <- if (preserve_yaml && !grepl('yaml_metadata_block', variant, fixed = TRUE)) {
     function(metadata, input_file, output_file, clean, verbose) {
       input_lines <- read_utf8(input_file)
       partitioned <- partition_yaml_front_matter(input_lines)
@@ -87,4 +91,42 @@ md_document <- function(variant = "markdown_strict",
     df_print = df_print,
     post_processor = post_processor
   )
+}
+
+adapt_md_variant <- function(variant, preserve_yaml) {
+  variant_base <- gsub("^([^+-]*).*", "\\1", variant)
+  variant_extensions <- gsub(sprintf("^%s", variant_base), "", variant)
+
+  set_extension <- function(format, ext, add = TRUE) {
+    ext <- paste0(ifelse(add, "+", "-"), ext)
+    if (grepl(ext, format, fixed = TRUE)) return(format)
+    paste0(format, ext, collapse = "")
+  }
+
+  add_yaml_block_ext <- function(extensions, preserve_yaml) {
+    set_extension(variant_extensions, "yaml_metadata_block", preserve_yaml)
+  }
+
+  # yaml_metadata_block extension
+  variant_extensions <- switch(
+    variant_base,
+    gfm =,
+    commonmark =,
+    commonmark_x = {
+      if (pandoc_available(2.13)) {
+        add_yaml_block_ext(variant_extensions, preserve_yaml)
+      } else {
+        variant_extensions
+      }
+    },
+    markdown =,
+    markdown_phpextra =,
+    markdown_github =,
+    markdown_mmd =,
+    markdown_strict = add_yaml_block_ext(variant_extensions, preserve_yaml),
+    # do not modified for unknown (yet) md variant
+    variant_extensions
+  )
+
+  paste0(variant_base, variant_extensions, collapse = "")
 }

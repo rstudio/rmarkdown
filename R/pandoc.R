@@ -100,7 +100,7 @@ pandoc_convert <- function(input,
     result <- system(command)
   })
   if (result != 0)
-    stop("pandoc document conversion failed with error ", result, call. = FALSE)
+    stop2("pandoc document conversion failed with error ", result)
 
   invisible(NULL)
 }
@@ -157,6 +157,8 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
     stop("Error ", status, " occurred building shared library.")
   }
 
+  Encoding(result) <- "UTF-8"
+
   # convert the output if requested
   if (type == "list") {
     jsonlite::fromJSON(result, simplifyVector = FALSE)
@@ -207,7 +209,7 @@ pandoc_available <- function(version = NULL,
     "pandoc", if (!is.null(version)) c("version", version, "or higher"),
     "is required and was not found (see the help page ?rmarkdown::pandoc_available)."
   )
-  if (error && !found) stop(paste(msg, collapse = " "), call. = FALSE)
+  if (error && !found) stop2(paste(msg, collapse = " "))
 
   found
 }
@@ -473,8 +475,8 @@ pandoc_self_contained_html <- function(input, output) {
 validate_self_contained <- function(mathjax) {
 
   if (identical(mathjax, "local"))
-    stop("Local MathJax isn't compatible with self_contained\n",
-         "(you should set self_contained to FALSE)", call. = FALSE)
+    stop2("Local MathJax isn't compatible with self_contained\n",
+         "(you should set self_contained to FALSE)")
 }
 
 pandoc_mathjax_args <- function(mathjax,
