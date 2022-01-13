@@ -581,7 +581,7 @@ html_document <- function(toc = FALSE,
     args
   }
 
-  # post-processor that use the output file from pandoc
+  # post-processor that uses the output file from pandoc
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
 
     # add a post processor for syntax highlighting with downlit if requested
