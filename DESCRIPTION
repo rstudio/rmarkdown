@@ -75,7 +75,7 @@ Suggests:
     dygraphs,
     fs,
     rsconnect,
-    downlit (>= 0.2.1),
+    downlit (>= 0.4.0),
     sass (>= 0.4.0),
     shiny (>= 1.6.0),
     testthat (>= 3.0.0),
