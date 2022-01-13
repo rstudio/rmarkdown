@@ -605,7 +605,7 @@ pandoc_html_highlight_args <- function(template,
       # variable used to insert some css in a Pandoc template
       pandoc_variable_arg("highlight-downlit")
     )
-  } else if (template == "default" && is_highlightjs(highlight)) {
+  } else if (identical(template, "default") && is_highlightjs(highlight)) {
     # highlightjs engine for default template only
     args <- c(pandoc_highlight_args(NULL),
               # variable used to insert some css and js
