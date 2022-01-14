@@ -564,7 +564,7 @@ pandoc_html_highlight_args <- function(template,
   # no highlighting engine
   if (is.null(highlight)) return(pandoc_highlight_args(NULL))
 
-  highlight <- resolve_highlight(highlight)
+  highlight <- resolve_highlight(highlight, html_highlighters())
 
   check_highlightjs <- function(highlight, engine) {
     if (highlight != "default" && is_highlightjs(highlight)) {
@@ -605,9 +605,16 @@ is_highlightjs <- function(highlight) {
   !is.null(highlight) && (highlight %in% c("default", "textmate"))
 }
 
-resolve_highlight <- function(highlight) {
-  # if Pandoc built-in highlighter, do no nothing
-  if (highlight %in% highlighters()) return(highlight)
+resolve_highlight <- function(highlight, supported = highlighters()) {
+  is_supported <- TRUE
+  # for backward compatibility, partial match still need to work
+  highlight <- tryCatch(
+    error = function(e) { is_supported <<- FALSE; highlight },
+    match.arg(highlight, supported)
+  )
+  if (is_supported) return(highlight)
+
+  # Otherwise it could be a custom (built-in) .theme file
   if (!pandoc2.0()) {
     stop("Using a custom highlighting style requires Pandoc 2.0 and above",
          call. = FALSE)
