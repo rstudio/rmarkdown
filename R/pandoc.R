@@ -564,26 +564,7 @@ pandoc_html_highlight_args <- function(template,
   # no highlighting engine
   if (is.null(highlight)) return(pandoc_highlight_args(NULL))
 
-  # TODO: move out so that it works also for other formats
-  resolve_highlight <- function(highlight) {
-    # if Pandoc built-in highlighter, do no nothing
-    if (highlight %in% highlighters()) return(highlight)
-    if (!pandoc2.0()) {
-      stop("Using a custom highlighting style requires Pandoc 2.0 and above",
-           call. = FALSE)
-    }
-    custom <- list(
-      # from distill
-      # https://raw.githubusercontent.com/apreshill/distill/arrow/inst/rmarkdown/templates/distill_article/resources/arrow.theme
-      arrow = pkg_file_highlight("arrow.theme"),
-      # from distill
-      # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/rstudio.theme
-      rstudio = pkg_file_highlight("rstudio.theme")
-    )
-    # if not an alias use the provided custom path
-    custom[[highlight]] %||% highlight
-  }
-  highlight <- resolve_highlight(highlight)
+  highlight <- resolve_highlight(highlight, html_highlighters())
 
   check_highlightjs <- function(highlight, engine) {
     if (highlight != "default" && is_highlightjs(highlight)) {
@@ -622,6 +603,38 @@ pandoc_html_highlight_args <- function(template,
 
 is_highlightjs <- function(highlight) {
   !is.null(highlight) && (highlight %in% c("default", "textmate"))
+}
+
+resolve_highlight <- function(highlight, supported = highlighters()) {
+  # for backward compatibility, partial match still need to work
+  i <- pmatch(highlight, supported, nomatch = 0L)
+  if (i > 0L) return(supported[i])
+
+  # Otherwise it could be a custom (built-in) .theme file
+  if (!pandoc2.0()) {
+    stop("Using a custom highlighting style requires Pandoc 2.0 and above",
+         call. = FALSE)
+  }
+  custom <- list(
+    # from distill
+    # https://raw.githubusercontent.com/apreshill/distill/arrow/inst/rmarkdown/templates/distill_article/resources/arrow.theme
+    arrow = pkg_file_highlight("arrow.theme"),
+    # from distill
+    # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/rstudio.theme
+    rstudio = pkg_file_highlight("rstudio.theme")
+  )
+  # if not an alias use the provided custom path
+  highlight <- custom[[highlight]] %||% highlight
+  # Check for extension or give informative error otherwise
+  if (!identical(xfun::file_ext(highlight), "theme")) {
+    msg <- c(
+      sprintf("`highlight` argument must be one of %s",
+              knitr::combine_words(c(supported, names(custom)), and = " or ", before = "`")),
+      " or a file with extension `.theme`."
+    )
+    stop(msg, call. = FALSE)
+  }
+  highlight
 }
 
 #' Find the \command{pandoc} executable

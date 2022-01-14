@@ -46,9 +46,18 @@
 #'   \command{ghostscript} to be installed. By default, \code{fig_crop = TRUE}
 #'   if these two tools are available.
 #' @param dev Graphics device to use for figure output (defaults to pdf)
-#' @param highlight Syntax highlighting style. Supported styles include
-#'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
-#'   "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.
+#' @param highlight Syntax highlighting style passed to Pandoc.
+#'
+#'  Supported built-in styles include "default", "tango", "pygments", "kate",
+#'  "monochrome", "espresso", "zenburn", "haddock", and "breezedark".
+#'
+#'   Two custom styles are also included, "arrow", an accessible color scheme,
+#'   and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+#'   path to a \samp{.theme} file to use
+#'   \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{a custom Pandoc
+#'   style}. Note that custom theme requires Pandoc 2.0+.
+#'
+#'   Pass \code{NULL} to prevent syntax highlighting.
 #' @param keep_tex Keep the intermediate tex file used in the conversion to PDF
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", "xelatex" and "tectonic".
@@ -127,8 +136,7 @@ pdf_document <- function(toc = FALSE,
     args <- c(args, "--number-sections")
 
   # highlighting
-  if (!is.null(highlight))
-    highlight <- match.arg(highlight, highlighters())
+  if (!is.null(highlight)) highlight <- resolve_highlight(highlight, highlighters())
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine

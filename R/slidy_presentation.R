@@ -119,6 +119,7 @@ slidy_presentation <- function(number_sections = FALSE,
     args <- c()
 
     # highlight
+    if (!is.null(highlight)) highlight <- resolve_highlight(highlight, highlighters())
     args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))
 
     # return additional args
