@@ -11,6 +11,8 @@ path = xfun::relative_path(path)
 # check blogdown
 blogdown <- try(blogdown:::site_root(),TRUE)
 if(class(blogdown) %in% 'try-error'){
+  imgdir = file.path('images')
+}else{
   imgdir = if (bundle <- blogdown:::bundle_index(path)) {
     file.path(dirname(path), 'images')
   } else {
@@ -19,8 +21,6 @@ if(class(blogdown) %in% 'try-error'){
       paste0(xfun::sans_ext(basename(path)), '_files')
     )
   }
-}else{
-  imgdir = file.path('images')
 }
 
 shiny::runGadget(
@@ -90,7 +90,15 @@ shiny::runGadget(
         })
       }
       image_code = function() {
-        s = target
+        s = if(class(blogdown) %in% 'try-error'){
+          if (bundle) substring(target, nchar(dirname(path)) + 2) else paste0(
+            ifelse(getOption('blogdown.insertimage.usebaseurl', FALSE),
+                   blogdown:::load_config()$baseurl, '/'),
+            gsub('^static/', '', target)
+          )
+        }else{
+          target
+        }
         w = input$w; h = input$h; alt = input$alt
         if (w == '' && h == '') {
           paste0('![', alt, '](', s, ')')
@@ -117,4 +125,3 @@ shiny::runGadget(
   stopOnCancel = FALSE,
   viewer = shiny::dialogViewer('Add external image to a R Markdown document', height = 380)
 )
-
