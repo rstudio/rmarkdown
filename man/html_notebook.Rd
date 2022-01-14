@@ -16,6 +16,7 @@ html_notebook(
   code_folding = "show",
   theme = "default",
   highlight = "textmate",
+  highlight_downlit = FALSE,
   mathjax = "default",
   extra_dependencies = NULL,
   css = NULL,
@@ -72,9 +73,33 @@ parameter may utilize the \code{theme}'s underlying Sass utilities
 theme name (for backwards-compatibility).
 }}
 
-\item{highlight}{Syntax highlighting style. Supported styles include
-"default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
-"haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.}
+\item{highlight}{Syntax highlight engine and style. See the
+\emph{Highlighting} section below for details.
+
+"default" (and "textmate") will use highlightjs as syntax highlighting
+engine instead of Pandoc.
+
+Any other value will be passed to Pandoc's
+\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{highlighting
+style}. Pandoc's built-in styles include "tango", "pygments", "kate",
+"monochrome", "espresso", "zenburn", "haddock" and "breezedark".
+
+Two custom styles are also included, "arrow", an accessible color scheme,
+and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+path to a \samp{.theme} to use a custom Pandoc style. Note that custom theme
+requires Pandoc 2.0+.
+
+Pass \code{NULL} to prevent syntax highlighting.}
+
+\item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package as
+syntax highlight engine to highlight inline code and R code chunks
+(including providing hyperlinks to function documentation). The package
+needs to be installed to use this feature.
+
+Only Pandoc color schemes are supported with this engine. With
+\code{highlight = "default"}, it will use the accessible theme called
+"arrow". To learn more about \pkg{downlit} highlighting engine, see
+\url{https://downlit.r-lib.org/}.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is

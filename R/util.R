@@ -89,6 +89,10 @@ pkg_file_lua <- function(filters = NULL, package = "rmarkdown") {
   pandoc_path_arg(files)
 }
 
+pkg_file_highlight <- function(file) {
+  pkg_file("rmarkdown", "highlight", file, mustWork = TRUE)
+}
+
 #' @rdname rmarkdown_format
 #' @export
 from_rmarkdown <- function(implicit_figures = TRUE, extensions = NULL) {
