@@ -628,7 +628,17 @@ resolve_highlight <- function(highlight, supported = highlighters()) {
     rstudio = pkg_file_highlight("rstudio.theme")
   )
   # if not an alias use the provided custom path
-  custom[[highlight]] %||% highlight
+  highlight <- custom[[highlight]] %||% highlight
+  # Check for extension or give informative error otherwise
+  if (!identical(xfun::file_ext(highlight), "theme")) {
+    msg <- c(
+      sprintf("`highlight` argument must be one of %s",
+              knitr::combine_words(c(supported, names(custom)), and = " or ", before = "`")),
+      " or a file with extension `.theme`."
+    )
+    stop(msg, call. = FALSE)
+  }
+  highlight
 }
 
 #' Find the \command{pandoc} executable
