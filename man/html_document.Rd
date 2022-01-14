@@ -126,8 +126,8 @@ style}. Pandoc's built-in styles include "tango", "pygments", "kate",
 
 Two custom styles are also included, "arrow", an accessible color scheme,
 and "rstudio", which mimics the default IDE theme. Alternatively, supply a
-path to a \samp{.theme} to use a custom Pandoc style. Note that custom (This
-requires Pandoc 2.0+)
+path to a \samp{.theme} to use a custom Pandoc style. Note that custom theme
+requires Pandoc 2.0+.
 
 Pass \code{NULL} to prevent syntax highlighting.}
 
