@@ -12,6 +12,10 @@ test_that("build highlight args for pandoc correctly", {
 test_that("Detect if a theme file is providing in highlight", {
   expect_equal(resolve_highlight("default"), "default")
   expect_equal(resolve_highlight("breezedark"), "breezedark")
+  expect_equal(resolve_highlight("breez"), "breezedark")
+  expect_equal(
+    resolve_highlight("textmate", html_highlighters()), "textmate"
+  )
   if (pandoc_available("2.0")) {
     expect_equal(resolve_highlight("arrow"), pkg_file_highlight("arrow.theme"))
     expect_equal(resolve_highlight("custom.theme"), "custom.theme")
