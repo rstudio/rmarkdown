@@ -8,8 +8,20 @@ ctx_ext = tolower(xfun::file_ext(ctx$path))
 
 path = xfun::normalize_path(ctx$path)
 path = xfun::relative_path(path)
-
-imgdir = file.path('images')
+# check blogdown
+blogdown <- try(blogdown:::site_root(),TRUE)
+if(class(blogdown) %in% 'try-error'){
+  imgdir = if (bundle <- blogdown:::bundle_index(path)) {
+    file.path(dirname(path), 'images')
+  } else {
+    file.path(
+      'static', dirname(gsub('^content/', '', path)),
+      paste0(xfun::sans_ext(basename(path)), '_files')
+    )
+  }
+}else{
+  imgdir = file.path('images')
+}
 
 shiny::runGadget(
   miniUI::miniPage(miniUI::miniContentPanel(
@@ -48,6 +60,15 @@ shiny::runGadget(
     shiny::observeEvent(input$done, {
       if (is.null(input$newimg)) return(warning('You have to choose an image!',call. = FALSE))
       target = input$target
+      if (bundle) {
+        if (!startsWith(target, dirname(path))) return(warning(
+          "The target file path must be under the directory '", dirname(path), "'.", call. = FALSE
+        ))
+      } else {
+        if (!grepl('^static/', target)) return(warning(
+          "The target file path must start with 'static/'.", call. = FALSE
+        ))
+      }
       if (file.exists(target)) {
         if (!as.logical(input$overwrite)) warning(
           'The image already exists and you chose not to overwrite it! ',
