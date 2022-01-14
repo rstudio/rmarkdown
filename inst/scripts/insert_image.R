@@ -60,6 +60,7 @@ shiny::runGadget(
     shiny::observeEvent(input$done, {
       if (is.null(input$newimg)) return(warning('You have to choose an image!',call. = FALSE))
       target = input$target
+      if(!class(blogdown) %in% 'try-error'){
       if (bundle) {
         if (!startsWith(target, dirname(path))) return(warning(
           "The target file path must be under the directory '", dirname(path), "'.", call. = FALSE
@@ -69,6 +70,8 @@ shiny::runGadget(
           "The target file path must start with 'static/'.", call. = FALSE
         ))
       }
+    }
+
       if (file.exists(target)) {
         if (!as.logical(input$overwrite)) warning(
           'The image already exists and you chose not to overwrite it! ',
