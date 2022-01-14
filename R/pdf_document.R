@@ -127,8 +127,7 @@ pdf_document <- function(toc = FALSE,
     args <- c(args, "--number-sections")
 
   # highlighting
-  if (!is.null(highlight))
-    highlight <- match.arg(highlight, highlighters())
+  if (!is.null(highlight)) highlight <- resolve_highlight(highlight)
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
