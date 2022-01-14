@@ -106,8 +106,7 @@ beamer_presentation <- function(toc = FALSE,
     args <- c(args, pandoc_variable_arg("fonttheme", fonttheme))
 
   # highlighting
-  if (!is.null(highlight))
-    highlight <- match.arg(highlight, highlighters())
+  if (!is.null(highlight)) highlight <- resolve_highlight(highlight, highlighters())
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
