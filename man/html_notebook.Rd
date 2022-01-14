@@ -16,6 +16,7 @@ html_notebook(
   code_folding = "show",
   theme = "default",
   highlight = "textmate",
+  highlight_downlit = FALSE,
   mathjax = "default",
   extra_dependencies = NULL,
   css = NULL,
@@ -89,6 +90,16 @@ path to a \samp{.theme} to use a custom Pandoc style. Note that custom theme
 requires Pandoc 2.0+.
 
 Pass \code{NULL} to prevent syntax highlighting.}
+
+\item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package as
+syntax highlight engine to highlight inline code and R code chunks
+(including providing hyperlinks to function documentation). The package
+needs to be installed to use this feature.
+
+Only Pandoc color schemes are supported with this engine. With
+\code{highlight = "default"}, it will use the accessible theme called
+"arrow". To learn more about \pkg{downlit} highlighting engine, see
+\url{https://downlit.r-lib.org/}.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is
