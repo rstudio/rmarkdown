@@ -94,13 +94,13 @@ shiny::runGadget(
       }
       image_code = function() {
         s = if(class(blogdown) %in% 'try-error'){
+          target
+        }else{
           if (bundle) substring(target, nchar(dirname(path)) + 2) else paste0(
             ifelse(getOption('blogdown.insertimage.usebaseurl', FALSE),
                    blogdown:::load_config()$baseurl, '/'),
             gsub('^static/', '', target)
           )
-        }else{
-          target
         }
         w = input$w; h = input$h; alt = input$alt
         if (w == '' && h == '') {
