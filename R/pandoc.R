@@ -606,13 +606,9 @@ is_highlightjs <- function(highlight) {
 }
 
 resolve_highlight <- function(highlight, supported = highlighters()) {
-  is_supported <- TRUE
   # for backward compatibility, partial match still need to work
-  highlight <- tryCatch(
-    error = function(e) { is_supported <<- FALSE; highlight },
-    match.arg(highlight, supported)
-  )
-  if (is_supported) return(highlight)
+  i <- pmatch(highlight, supported, nomatch = 0L)
+  if (i > 0L) return(supported[i])
 
   # Otherwise it could be a custom (built-in) .theme file
   if (!pandoc2.0()) {
