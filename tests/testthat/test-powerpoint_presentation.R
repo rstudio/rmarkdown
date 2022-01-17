@@ -9,3 +9,9 @@ test_that("Incremental feature", {
     expect_false("--incremental" %in% ppt_out$pandoc$args)
   }
 })
+
+test_that("Powerpoint require Pandoc 2.0.5 and above", {
+  skip_if_not_pandoc()
+  skip_if_pandoc("2.0.5")
+  expect_error(powerpoint_presentation(), "is required and was not found")
+})
