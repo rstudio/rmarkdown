@@ -37,7 +37,8 @@ slidy_presentation(
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note
 that if you want to reverse the default incremental behavior for an
 individual bullet you can precede it with \code{>}. For example:
-\emph{\code{> - Bullet Text}}}
+\emph{\verb{> - Bullet Text}}. See more in
+\href{https://pandoc.org/MANUAL.html#incremental-lists}{Pandoc's Manual}}
 
 \item{slide_level}{The heading level which defines individual slides. By
 default this is the highest header level in the hierarchy that is followed
