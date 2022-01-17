@@ -8,12 +8,18 @@
 #' @param reference_doc Path to a PowerPoint template.
 #' @export
 #' @return R Markdown output format to pass to \code{\link{render}}
-powerpoint_presentation <- function(
-  toc = FALSE, toc_depth = 2, number_sections = FALSE,
-  fig_width = 5, fig_height = 4, fig_caption = TRUE,
-  df_print = 'default', keep_md = FALSE, md_extensions = NULL,
-  slide_level = NULL, reference_doc = 'default', pandoc_args = NULL
-) {
+powerpoint_presentation <- function(toc = FALSE,
+                                    toc_depth = 2,
+                                    number_sections = FALSE,
+                                    fig_width = 5,
+                                    fig_height = 4,
+                                    fig_caption = TRUE,
+                                    df_print = "default",
+                                    keep_md = FALSE,
+                                    md_extensions = NULL,
+                                    slide_level = NULL,
+                                    reference_doc = "default",
+                                    pandoc_args = NULL) {
 
   # PowerPoint has been supported since Pandoc 2.0.5
   pandoc_available('2.0.5', error = TRUE)
