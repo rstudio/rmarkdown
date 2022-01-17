@@ -11,6 +11,7 @@
 powerpoint_presentation <- function(toc = FALSE,
                                     toc_depth = 2,
                                     number_sections = FALSE,
+                                    incremental = FALSE,
                                     fig_width = 5,
                                     fig_height = 4,
                                     fig_caption = TRUE,
@@ -37,6 +38,18 @@ powerpoint_presentation <- function(toc = FALSE,
 
   # ppt template
   args <- c(args, reference_doc_args("doc", reference_doc))
+
+  # incremental
+  if (incremental) {
+    if (!pandoc_available('2.15')) {
+      warning(
+        "`incremental = TRUE` for powerpoint presentation is supported since Pandoc 2.15.\n",
+        " It will have no effect with current Pandoc used: ", pandoc_version(), "."
+      )
+    } else {
+      args <- c(args, "--incremental")
+    }
+  }
 
   # slide level
   if (!is.null(slide_level))
