@@ -1,6 +1,8 @@
 rmarkdown 2.12
 ================================================================================
 
+- Added `available_templates()` to list all the templates from a specific package that can be used with `rmarkdown::draft()`.
+
 - Following support in Pandoc 2.15, `powerpoint_presentation()` gains a `incremental` argument as other slide formats. As a reminder, setting `incremental = TRUE` will make lists to display incrementally. See more in [Pandoc's MANUAL](https://pandoc.org/MANUAL.html#incremental-lists).
 
 - Improved the highlighting mechanism in formats that supports `highlight` argument: 
