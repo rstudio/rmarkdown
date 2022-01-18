@@ -149,9 +149,7 @@ draft <- function(file,
 #' available_templates()
 #'
 #' # List rticles templates
-#' \dontrun{
-#'   available_templates("rticles")
-#' }
+#' available_templates("rticles")
 available_templates <- function(package = "rmarkdown", full_path = FALSE) {
   template_folder <- pkg_file("rmarkdown", "templates", package = package)
   if (dir_exists(template_folder)) {
