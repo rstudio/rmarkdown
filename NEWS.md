@@ -1,6 +1,8 @@
 rmarkdown 2.12
 ================================================================================
 
+- Following support in Pandoc 2.15, `powerpoint_presentation()` gains a `incremental` argument as other slide formats. As a reminder, setting `incremental = TRUE` will make lists to display incrementally. See more in [Pandoc's MANUAL](https://pandoc.org/MANUAL.html#incremental-lists).
+
 - Improved the highlighting mechanism in formats that supports `highlight` argument: 
   * It is now possible to pass a custom theme file `.theme` in `highlight` argument for customizing the [syntax highlighting style used by Pandoc](https://pandoc.org/MANUAL.html#syntax-highlighting). 
   * In addition to Pandoc's own supported themes, two more themes are bundled in the package:  `highlight: arrow` a theme [optimized for accessibility and color constrast](https://www.a11yproject.com/) (thanks to @apreshill), and `highlight: rstudio` to mimic the RStudio editor theme.

@@ -45,7 +45,8 @@ This default can be overridden by specifying an explicit
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note
 that if you want to reverse the default incremental behavior for an
 individual bullet you can precede it with \code{>}. For example:
-\emph{\code{> - Bullet Text}}}
+\emph{\verb{> - Bullet Text}}. See more in
+\href{https://pandoc.org/MANUAL.html#incremental-lists}{Pandoc's Manual}}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -126,15 +127,14 @@ additional details.}
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 }
 \value{
-R Markdown output format to pass to \code{\link{render}}
+R Markdown output format to pass to \code{\link[=render]{render()}}
 }
 \description{
 Format for converting from R Markdown to a Beamer presentation.
 }
 \details{
-See the \href{https://bookdown.org/yihui/rmarkdown/beamer-presentation.html}{online
-documentation} for additional details on using the \code{beamer_presentation}
-format.
+See the \href{https://bookdown.org/yihui/rmarkdown/beamer-presentation.html}{online documentation}
+for additional details on using the \code{beamer_presentation} format.
 
 Creating Beamer output from R Markdown requires that LaTeX be installed.
 
@@ -144,8 +144,8 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
-and Citations} article in the online documentation.
+\href{https://pandoc.org/MANUAL.html#citations}{Bibliographies and Citations}
+article in the online documentation.
 }
 \examples{
 \dontrun{
