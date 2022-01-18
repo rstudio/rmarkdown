@@ -1,117 +1,90 @@
-Package: rmarkdown
 Type: Package
+Package: rmarkdown
 Title: Dynamic Documents for R
-Version: 2.7.10
+Version: 2.11.9
 Authors@R: c(
-  person("JJ", "Allaire", role = "aut", email = "jj@rstudio.com"),
-  person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
-  person("Jonathan", "McPherson", role = "aut", email = "jonathan@rstudio.com"),
-  person("Javier", "Luraschi", role = "aut", email = "javier@rstudio.com"),
-  person("Kevin", "Ushey", role = "aut", email = "kevin@rstudio.com"),
-  person("Aron", "Atkins", role = "aut", email = "aron@rstudio.com"),
-  person("Hadley", "Wickham", role = "aut", email = "hadley@rstudio.com"),
-  person("Joe", "Cheng", role = "aut", email = "joe@rstudio.com"),
-  person("Winston", "Chang", role = "aut", email = "winston@rstudio.com"),
-  person("Richard", "Iannone", role = "aut", email = "rich@rstudio.com", comment = c(ORCID = "0000-0003-3925-190X")),
-  #
-  # Contributors, ordered alphabetically by first name
-  person("Andrew", "Dunning", role = "ctb", comment = c(ORCID = "0000-0003-0464-5036")),
-  person("Atsushi", "Yasumoto", role = c("ctb", "cph"),
-         comment = c(ORCID = "0000-0002-8335-495X",
-                     cph = "Number sections Lua filter")),
-  person("Barret", "Schloerke", role = "ctb"),
-  person("Carson", "Sievert", role = "ctb", comment = c(ORCID = "0000-0002-4958-2844")),
-  person("Christophe", "Dervieux", role = "ctb"),
-  person("Devon", "Ryan", role = "ctb", email = "dpryan79@gmail.com", comment = c(ORCID = "0000-0002-8549-0971")),
-  person("Frederik", "Aust", role = "ctb", email = "frederik.aust@uni-koeln.de", comment = c(ORCID = "0000-0003-4900-788X")),
-  person("Jeff", "Allen", role = "ctb", email = "jeff@rstudio.com"),
-  person("JooYoung", "Seo", role="ctb", comment = c(ORCID = "0000-0002-4064-6012")),
-  person("Malcolm", "Barrett", role = "ctb"),
-  person("Rob", "Hyndman", role = "ctb", email = "Rob.Hyndman@monash.edu"),
-  person("Romain", "Lesur", role = "ctb"),
-  person("Roy", "Storey", role = "ctb"),
-  person("Ruben", "Arslan", role = "ctb", email = "ruben.arslan@uni-goettingen.de"),
-  person("Sergio", "Oller", role = "ctb"),
-  #
-  # Copyright holders
-  person(family = "RStudio, PBC", role = "cph"),
-  person(family = "jQuery Foundation", role = "cph",
-         comment = "jQuery library"),
-  person(family = "jQuery contributors", role = c("ctb", "cph"),
-         comment = "jQuery library; authors listed in inst/rmd/h/jquery-AUTHORS.txt"),
-  person(family = "jQuery UI contributors", role = c("ctb", "cph"),
-         comment = "jQuery UI library; authors listed in inst/rmd/h/jqueryui-AUTHORS.txt"),
-  person("Mark", "Otto", role = "ctb",
-         comment = "Bootstrap library"),
-  person("Jacob", "Thornton", role = "ctb",
-         comment = "Bootstrap library"),
-  person(family = "Bootstrap contributors", role = "ctb",
-         comment = "Bootstrap library"),
-  person(family = "Twitter, Inc", role = "cph",
-         comment = "Bootstrap library"),
-  person("Alexander", "Farkas", role = c("ctb", "cph"),
-         comment = "html5shiv library"),
-  person("Scott", "Jehl", role = c("ctb", "cph"),
-         comment = "Respond.js library"),
-  person("Ivan", "Sagalaev", role = c("ctb", "cph"),
-         comment = "highlight.js library"),
-  person("Greg", "Franko", role = c("ctb", "cph"),
-         comment = "tocify library"),
-  person("John", "MacFarlane", role = c("ctb", "cph"),
-         comment = "Pandoc templates"),
-  person(family = "Google, Inc.", role = c("ctb", "cph"),
-         comment = "ioslides library"),
-  person("Dave", "Raggett", role = "ctb",
-         comment = "slidy library"),
-  person(family = "W3C", role = "cph",
-         comment = "slidy library"),
-  person("Dave", "Gandy", role = c("ctb", "cph"),
-         comment = "Font-Awesome"),
-  person("Ben", "Sperry", role = "ctb",
-         comment = "Ionicons"),
-  person(family = "Drifty", role = "cph",
-         comment = "Ionicons"),
-  person("Aidan", "Lister", role = c("ctb", "cph"), 
-         comment = "jQuery StickyTabs"),
-  person("Benct Philip", "Jonsson", role = c("ctb", "cph"), 
-         comment = "pagebreak Lua filter"),
-  person("Albert", "Krewinkel", role = c("ctb", "cph"), 
-         comment = "pagebreak Lua filter")
+    person("JJ", "Allaire", , "jj@rstudio.com", role = "aut"),
+    person("Yihui", "Xie", , "xie@yihui.name", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0645-5666")),
+    person("Jonathan", "McPherson", , "jonathan@rstudio.com", role = "aut"),
+    person("Javier", "Luraschi", , "javier@rstudio.com", role = "aut"),
+    person("Kevin", "Ushey", , "kevin@rstudio.com", role = "aut"),
+    person("Aron", "Atkins", , "aron@rstudio.com", role = "aut"),
+    person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
+    person("Joe", "Cheng", , "joe@rstudio.com", role = "aut"),
+    person("Winston", "Chang", , "winston@rstudio.com", role = "aut"),
+    person("Richard", "Iannone", , "rich@rstudio.com", role = "aut", comment = c(ORCID = "0000-0003-3925-190X")),
+    person("Andrew", "Dunning", role = "ctb", comment = c(ORCID = "0000-0003-0464-5036")),
+    person("Atsushi", "Yasumoto", role = c("ctb", "cph"), comment = c(ORCID = "0000-0002-8335-495X", cph = "Number sections Lua filter")),
+    person("Barret", "Schloerke", role = "ctb"),
+    person("Carson", "Sievert", role = "ctb", comment = c(ORCID = "0000-0002-4958-2844")), 
+    person("Christophe", "Dervieux", role = "ctb"),
+    person("Devon", "Ryan", , "dpryan79@gmail.com", role = "ctb", comment = c(ORCID = "0000-0002-8549-0971")),
+    person("Frederik", "Aust", , "frederik.aust@uni-koeln.de", role = "ctb", comment = c(ORCID = "0000-0003-4900-788X")),
+    person("Jeff", "Allen", , "jeff@rstudio.com", role = "ctb"), 
+    person("JooYoung", "Seo", role = "ctb", comment = c(ORCID = "0000-0002-4064-6012")),
+    person("Malcolm", "Barrett", role = "ctb"),
+    person("Rob", "Hyndman", , "Rob.Hyndman@monash.edu", role = "ctb"),
+    person("Romain", "Lesur", role = "ctb"),
+    person("Roy", "Storey", role = "ctb"),
+    person("Ruben", "Arslan", , "ruben.arslan@uni-goettingen.de", role = "ctb"),
+    person("Sergio", "Oller", role = "ctb"),
+    person(, "RStudio, PBC", role = "cph"),
+    person(, "jQuery UI contributors", role = c("ctb", "cph"), comment = "jQuery UI library; authors listed in inst/rmd/h/jqueryui-AUTHORS.txt"),
+    person("Mark", "Otto", role = "ctb", comment = "Bootstrap library"),
+    person("Jacob", "Thornton", role = "ctb", comment = "Bootstrap library"),
+    person(, "Bootstrap contributors", role = "ctb", comment = "Bootstrap library"),
+    person(, "Twitter, Inc", role = "cph", comment = "Bootstrap library"),
+    person("Alexander", "Farkas", role = c("ctb", "cph"), comment = "html5shiv library"),
+    person("Scott", "Jehl", role = c("ctb", "cph"), comment = "Respond.js library"),
+    person("Ivan", "Sagalaev", role = c("ctb", "cph"), comment = "highlight.js library"),
+    person("Greg", "Franko", role = c("ctb", "cph"), comment = "tocify library"),
+    person("John", "MacFarlane", role = c("ctb", "cph"), comment = "Pandoc templates"),
+    person(, "Google, Inc.", role = c("ctb", "cph"), comment = "ioslides library"),
+    person("Dave", "Raggett", role = "ctb", comment = "slidy library"),
+    person(, "W3C", role = "cph", comment = "slidy library"),
+    person("Dave", "Gandy", role = c("ctb", "cph"), comment = "Font-Awesome"),
+    person("Ben", "Sperry", role = "ctb", comment = "Ionicons"),
+    person(, "Drifty", role = "cph", comment = "Ionicons"),
+    person("Aidan", "Lister", role = c("ctb", "cph"), comment = "jQuery StickyTabs"),
+    person("Benct Philip", "Jonsson", role = c("ctb", "cph"), comment = "pagebreak Lua filter"),
+    person("Albert", "Krewinkel", role = c("ctb", "cph"), comment = "pagebreak Lua filter")
   )
 Maintainer: Yihui Xie <xie@yihui.name>
 Description: Convert R Markdown documents into a variety of formats.
+License: GPL-3
+URL: https://github.com/rstudio/rmarkdown, https://pkgs.rstudio.com/rmarkdown/
+BugReports: https://github.com/rstudio/rmarkdown/issues
 Depends:
     R (>= 3.0)
 Imports:
+    bslib (>= 0.2.5.1),
+    evaluate (>= 0.13),
+    htmltools (>= 0.3.5),
+    jquerylib,
+    jsonlite,
+    knitr (>= 1.22),
+    methods,
+    stringr (>= 1.2.0),
+    tinytex (>= 0.31),
     tools,
     utils,
-    knitr (>= 1.22),
-    yaml (>= 2.1.19),
-    htmltools (>= 0.3.5),
-    evaluate (>= 0.13),
-    jsonlite,
-    tinytex (>= 0.11),
     xfun (>= 0.21),
-    methods,
-    stringr (>= 1.2.0)
+    yaml (>= 2.1.19)
 Suggests:
-    shiny (>= 1.6.0),
-    tufte,
-    testthat (>= 3.0.0),
     digest,
     dygraphs,
-    vctrs,
-    tibble,
     fs,
     rsconnect,
-    withr (>= 2.3.0),
-    bslib (>= 0.2.4),
-    sass (>= 0.3.0)
-SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
-URL: https://github.com/rstudio/rmarkdown, https://pkgs.rstudio.com/rmarkdown/
-BugReports: https://github.com/rstudio/rmarkdown/issues
-License: GPL-3
-RoxygenNote: 7.1.1
-Encoding: UTF-8
+    downlit (>= 0.4.0),
+    sass (>= 0.4.0),
+    shiny (>= 1.6.0),
+    testthat (>= 3.0.0),
+    tibble,
+    tufte,
+    vctrs,
+    withr (>= 2.4.2)
 VignetteBuilder: knitr
-Remotes: yihui/tinytex
+Config/Needs/website: rstudio/quillt, pkgdown
+Encoding: UTF-8
+RoxygenNote: 7.1.2
+SystemRequirements: pandoc (>= 1.14) - http://pandoc.org

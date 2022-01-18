@@ -6,14 +6,22 @@
 #' @inheritParams html_document
 #' @inheritParams beamer_presentation
 #' @param reference_doc Path to a PowerPoint template.
+#' @return R Markdown output format to pass to [render()]
+#' @md
 #' @export
-#' @return R Markdown output format to pass to \code{\link{render}}
-powerpoint_presentation <- function(
-  toc = FALSE, toc_depth = 2, number_sections = FALSE,
-  fig_width = 5, fig_height = 4, fig_caption = TRUE,
-  df_print = 'default', keep_md = FALSE, md_extensions = NULL,
-  slide_level = NULL, reference_doc = 'default', pandoc_args = NULL
-) {
+powerpoint_presentation <- function(toc = FALSE,
+                                    toc_depth = 2,
+                                    number_sections = FALSE,
+                                    incremental = FALSE,
+                                    fig_width = 5,
+                                    fig_height = 4,
+                                    fig_caption = TRUE,
+                                    df_print = "default",
+                                    keep_md = FALSE,
+                                    md_extensions = NULL,
+                                    slide_level = NULL,
+                                    reference_doc = "default",
+                                    pandoc_args = NULL) {
 
   # PowerPoint has been supported since Pandoc 2.0.5
   pandoc_available('2.0.5', error = TRUE)
@@ -31,6 +39,19 @@ powerpoint_presentation <- function(
 
   # ppt template
   args <- c(args, reference_doc_args("doc", reference_doc))
+
+  # incremental
+  if (incremental) {
+    if (!pandoc_available('2.15')) {
+      warning(
+        "`incremental = TRUE` for powerpoint presentation is supported since Pandoc 2.15.\n",
+        " It will have no effect with current Pandoc version used: ", pandoc_version(), ".",
+        call. = FALSE
+      )
+    } else {
+      args <- c(args, "--incremental")
+    }
+  }
 
   # slide level
   if (!is.null(slide_level))

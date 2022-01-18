@@ -235,24 +235,17 @@ clean_site <- function(input = ".", preview = TRUE, quiet = FALSE,
   # actually remove the files
   if (preview) {
     cat("These files and folders can probably be removed:\n",
-        paste0("* ", mark_dirs(files)),
+        paste0("* ", xfun::mark_dirs(files)),
         "\nUse rmarkdown::clean_site(preview = FALSE) to remove them.",
         sep = "\n")
   } else {
     if (!quiet) {
       cat("Removing files: \n",
-          paste0("* ", mark_dirs(files)),
+          paste0("* ", xfun::mark_dirs(files)),
           sep = "\n")
     }
     unlink(file.path(input, files), recursive = TRUE)
   }
-}
-
-# TODO: Move to xfun - bookdown use it too.
-mark_dirs <- function(files) {
-  i <- file_test("-d", files) & !grepl("/$", files)
-  files[i] <- paste0(files[i], "/")
-  files
 }
 
 #' @rdname render_site
@@ -289,7 +282,11 @@ site_generator <- function(input = ".", output_format = NULL) {
   front_matter <- yaml_front_matter(index)
 
   # create the site generator (passing the root dir)
-  create_site_generator <- eval(parse(text = front_matter$site))
+  create_site_generator <- eval(xfun::parse_only(front_matter$site))
+  if (!is.function(create_site_generator)) stop(
+    "Cannot find the site generator from the 'site' field in YAML frontmatter ",
+    "of '", index, "'."
+  )
   generator <- create_site_generator(root)
 
   # if it's in a subdir check to see if the generator supports nested files
@@ -657,9 +654,9 @@ input_as_dir <- function(input) {
   # ensure the input dir exists
   if (!file.exists(input)) {
     input <- normalize_path(input, mustWork = FALSE)
-    if (!file.exists(input)) stop(
-      "The specified directory '", input, "' does not exist.", call. = FALSE
-    )
+    if (!file.exists(input)) {
+      stop2("The specified directory '", input, "' does not exist.")
+    }
   }
 
   # convert from file to directory if necessary

@@ -14,7 +14,7 @@
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' \href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 #' and Citations} article in the online documentation.
 #'
 #' Many aspects of the LaTeX template used to create PDF documents can be
@@ -41,12 +41,23 @@
 #'    \item{\code{linestretch}}{Options for line spacing (e.g. 1, 1.5, 3)}
 #' }
 #' @inheritParams html_document
-#' @param fig_crop \code{TRUE} to automatically apply the \code{pdfcrop} utility
-#'   (if available) to pdf figures
+#' @param fig_crop Whether to crop PDF figures with the command
+#'   \command{pdfcrop}. This requires the tools \command{pdfcrop} and
+#'   \command{ghostscript} to be installed. By default, \code{fig_crop = TRUE}
+#'   if these two tools are available.
 #' @param dev Graphics device to use for figure output (defaults to pdf)
-#' @param highlight Syntax highlighting style. Supported styles include
-#'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
-#'   "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.
+#' @param highlight Syntax highlighting style passed to Pandoc.
+#'
+#'  Supported built-in styles include "default", "tango", "pygments", "kate",
+#'  "monochrome", "espresso", "zenburn", "haddock", and "breezedark".
+#'
+#'   Two custom styles are also included, "arrow", an accessible color scheme,
+#'   and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+#'   path to a \samp{.theme} file to use
+#'   \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{a custom Pandoc
+#'   style}. Note that custom theme requires Pandoc 2.0+.
+#'
+#'   Pass \code{NULL} to prevent syntax highlighting.
 #' @param keep_tex Keep the intermediate tex file used in the conversion to PDF
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
 #'   "pdflatex", "lualatex", "xelatex" and "tectonic".
@@ -89,7 +100,7 @@ pdf_document <- function(toc = FALSE,
                          number_sections = FALSE,
                          fig_width = 6.5,
                          fig_height = 4.5,
-                         fig_crop = TRUE,
+                         fig_crop = 'auto',
                          fig_caption = TRUE,
                          dev = 'pdf',
                          df_print = "default",
@@ -125,8 +136,7 @@ pdf_document <- function(toc = FALSE,
     args <- c(args, "--number-sections")
 
   # highlighting
-  if (!is.null(highlight))
-    highlight <- match.arg(highlight, highlighters())
+  if (!is.null(highlight)) highlight <- resolve_highlight(highlight, highlighters())
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
@@ -186,6 +196,17 @@ pdf_document <- function(toc = FALSE,
                       output_dir)
   }
 
+  post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+    # TODO: remove this temporary fix after the syntax highlighting problem is
+    # fixed in Pandoc https://github.com/rstudio/bookdown/issues/1157
+    x <- read_utf8(output_file)
+    s <- '\\SpecialCharTok{|}\\ErrorTok{\\textgreater{}}'
+    if (length(grep(s, x, fixed = TRUE)) == 0) return(output_file)
+    x <- gsub(s, '\\SpecialCharTok{|\\textgreater{}}', x, fixed = TRUE)
+    write_utf8(x, output_file)
+    output_file
+  }
+
   intermediates_generator <- function(...) {
     general_intermediates_generator(saved_files_dir, ...)
   }
@@ -205,6 +226,7 @@ pdf_document <- function(toc = FALSE,
     keep_md = keep_md,
     df_print = df_print,
     pre_processor = pre_processor,
+    post_processor = post_processor,
     intermediates_generator = intermediates_generator
   )
 }

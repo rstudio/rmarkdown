@@ -32,8 +32,8 @@ Div = function (div)
 
   -- if the output format is not latex, remove the attr and return
   if FORMAT ~= 'latex' and FORMAT ~= 'beamer' then
-    div.attributes['latex'] = nil
-    div.attributes['data-latex'] = nil
+    if div.attributes['latex'] then div.attributes['latex'] = nil end
+    if div.attributes['data-latex'] then div.attributes['data-latex'] = nil end
     return div
   end
 

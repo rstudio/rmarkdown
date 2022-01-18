@@ -37,7 +37,8 @@ slidy_presentation(
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note
 that if you want to reverse the default incremental behavior for an
 individual bullet you can precede it with \code{>}. For example:
-\emph{\code{> - Bullet Text}}}
+\emph{\verb{> - Bullet Text}}. See more in
+\href{https://pandoc.org/MANUAL.html#incremental-lists}{Pandoc's Manual}}
 
 \item{slide_level}{The heading level which defines individual slides. By
 default this is the highest header level in the hierarchy that is followed
@@ -88,9 +89,18 @@ scripts, stylesheets, images, and videos. Note that even for self contained
 documents MathJax is still loaded externally (this is necessary because of
 its size).}
 
-\item{highlight}{Syntax highlighting style. Supported styles include
-"default", "tango", "pygments", "kate", "monochrome", "espresso",
-"zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.}
+\item{highlight}{Syntax highlighting style passed to Pandoc.
+
+ Supported built-in styles include "default", "tango", "pygments", "kate",
+ "monochrome", "espresso", "zenburn", "haddock", and "breezedark".
+
+  Two custom styles are also included, "arrow", an accessible color scheme,
+  and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+  path to a \samp{.theme} file to use
+  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{a custom Pandoc
+  style}. Note that custom theme requires Pandoc 2.0+.
+
+  Pass \code{NULL} to prevent syntax highlighting.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is

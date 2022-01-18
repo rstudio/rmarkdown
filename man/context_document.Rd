@@ -10,7 +10,7 @@ context_document(
   number_sections = FALSE,
   fig_width = 6.5,
   fig_height = 4.5,
-  fig_crop = TRUE,
+  fig_crop = "auto",
   fig_caption = TRUE,
   dev = "pdf",
   df_print = "default",
@@ -38,8 +38,10 @@ context_document(
 
 \item{fig_height}{Default height (in inches) for figures}
 
-\item{fig_crop}{\code{TRUE} to automatically apply the \code{pdfcrop} utility
-(if available) to pdf figures}
+\item{fig_crop}{Whether to crop PDF figures with the command
+\command{pdfcrop}. This requires the tools \command{pdfcrop} and
+\command{ghostscript} to be installed. By default, \code{fig_crop = TRUE}
+if these two tools are available.}
 
 \item{fig_caption}{\code{TRUE} to render figures with captions}
 
@@ -114,7 +116,7 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+\href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 and Citations} article in the online documentation.
 }
 \examples{

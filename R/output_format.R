@@ -262,10 +262,12 @@ knitr_options_pdf <- function(fig_width,
   knit_hooks <- NULL
 
   # apply cropping if requested and we have pdfcrop and ghostscript
-  crop <- fig_crop && has_crop_tools()
-  if (crop) {
-    knit_hooks = list(crop = knitr::hook_pdfcrop)
-    opts_chunk$crop = TRUE
+  if (identical(fig_crop, 'auto')) fig_crop <- has_crop_tools(FALSE) else {
+    if (fig_crop && !has_crop_tools()) fig_crop <- FALSE
+  }
+  if (fig_crop) {
+    knit_hooks <- list(crop = knitr::hook_pdfcrop)
+    opts_chunk$crop <- TRUE
   }
 
   # return options
@@ -400,7 +402,7 @@ default_output_format <- function(input, output_yaml = NULL) {
 
   # look up the formals of the output function to get the full option list and
   # merge against the explicitly set list
-  format_function <- eval(parse(text = format$name))
+  format_function <- eval(xfun::parse_only(format$name))
   format$options <- merge_lists(as.list(formals(format_function)),
                                 format$options,
                                 recursive = FALSE)
@@ -479,7 +481,7 @@ output_format_from_yaml_front_matter <- function(input_lines,
 
   # ensure input is the correct data type
   if (!is_null_or_string(format_name)) {
-    stop("Unrecognized output format specified", call. = FALSE)
+    stop2("Unrecognized output format specified")
   }
 
   # parse the yaml
@@ -584,7 +586,7 @@ create_output_format <- function(name,
 
   # validate the name
   if (is.null(name))
-    stop("The output format name must not be NULL", call. = FALSE)
+    stop2("The output format name must not be NULL")
   if (name == "revealjs_presentation")
     stop("reveal.js presentations are now located in a separate package: ",
          "https://github.com/jjallaire/revealjs")
@@ -595,7 +597,7 @@ create_output_format <- function(name,
   # call the function
   output_format <- do.call(output_format_func, options)
   if (!is_output_format(output_format))
-    stop("Format is not of class rmarkdown_output_format", call. = FALSE)
+    stop2("Format is not of class rmarkdown_output_format")
 
   # return the format
   output_format
@@ -613,9 +615,9 @@ output_format_string_from_ext <- function(output_file) {
 }
 
 create_output_format_function <- function(name) {
-  output_format_func <- eval(parse(text = name))
+  output_format_func <- eval(xfun::parse_only(name))
   if (!is.function(output_format_func))
-    stop("YAML output format must evaluate to a function", call. = FALSE)
+    stop2("YAML output format must evaluate to a function")
   output_format_func
 }
 
@@ -717,7 +719,7 @@ parse_yaml_front_matter <- function(input_lines) {
 validate_front_matter <- function(front_matter) {
   front_matter <- trim_trailing_ws(front_matter)
   if (grepl(":$", front_matter))
-    stop("Invalid YAML front matter (ends with ':')", call. = FALSE)
+    stop2("Invalid YAML front matter (ends with ':')")
 }
 
 

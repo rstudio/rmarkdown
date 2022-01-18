@@ -1,5 +1,91 @@
+rmarkdown 2.12
+================================================================================
+
+- Fixed broken links to section headers when `number_sections = TRUE` is specified in `md_document` and `github_document` (thanks, #2093, @atusy).
+
+- Following support in Pandoc 2.15, `powerpoint_presentation()` gains a `incremental` argument as other slide formats. As a reminder, setting `incremental = TRUE` will make lists to display incrementally. See more in [Pandoc's MANUAL](https://pandoc.org/MANUAL.html#incremental-lists).
+
+- Improved the highlighting mechanism in formats that supports `highlight` argument: 
+  * It is now possible to pass a custom theme file `.theme` in `highlight` argument for customizing the [syntax highlighting style used by Pandoc](https://pandoc.org/MANUAL.html#syntax-highlighting). 
+  * In addition to Pandoc's own supported themes, two more themes are bundled in the package:  `highlight: arrow` a theme [optimized for accessibility and color constrast](https://www.a11yproject.com/) (thanks to @apreshill), and `highlight: rstudio` to mimic the RStudio editor theme.
+  * For HTML output only, added optional [downlit](https://downlit.r-lib.org/) support in `html_document()` for R syntax highlighting and autolinking. Use `highlight_downlit = TRUE` to activate it (same argument as in **distill**). This features require the **downlit** package. 
+
+- Added a global option `rmarkdown.html_dependency.header_attr` (`TRUE` by default). It can be set to `FALSE` to opt-out the HTML dependency `html_dependency_header_attrs()` in documents based on `html_document_base()` (thanks, @salim-b rstudio/bookdown#865, @maelle r-lib/downlit#1538).
+
+- `draft()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
+
+- `anchor_sections` can now be easily customized using `style` or `depth` element for `anchor_sections`. Ex: 
+  ```yaml
+  output:
+    html_document:
+      anchor_sections:
+        style: symbol # use symbol style ("hash", "symbol", "icon")
+        depth: 2 # max depth to apply anchor on (default to max which is 6)
+  ```
+  Customizing using a css rule is still possible. Detailed explanation and examples have been added in `?html_document`.
+  
+- Added support for Pandoc's `dir` variable in HTML templates. This is the second [Language Variables](https://pandoc.org/MANUAL.html#language-variables) after `lang`. 
+
+rmarkdown 2.11
+================================================================================
+
+- Relative paths in parent directories in the `css` argument of `html_document()` were incorrectly normalized to absolute paths by #2095 in v2.8. Now relative paths in parent directories will no longer be converted to absolute paths (thanks, @daijiang, yihui/xaringan#331).
+
+- It is possible to specify the version of jQuery via a global option now, e.g., `options(rmarkdown.jquery.version = 2)` (note that the default major version is `3`). This is mainly for advanced users and developers to test different versions of jQuery.
+
+- `pandoc_citeproc_convert()` now handles correctly bib file containing specific UTF-8 characters on non default UTF-8 systems like Windows (thanks, @mitchelloharawild, #2195).
+
+- Shiny prerendered documents are now pre-rendered in a child environment to avoid allowing the results of static code chunks to exist in the Shiny app environment (@gadenbuie, #2203).
+
+- The previously unexported function `convert_ipynb()` is exported now (thanks, @acircleda).
+
+
+rmarkdown 2.10
+================================================================================
+
+- `md_document()` will now handle correctly `preserve_yaml` value for all variants and all pandoc versions (#2190). 
+  * with `preserve_yaml = TRUE`, markdown output will keep the YAML metadata block from the Rmd file.
+  * with `preserve_yaml = FALSE`, markdown output will have no YAML metadata block.
+  
+  This fixes a breaking change in Pandoc 2.13 regarding `gfm`, `commonmark` and `commonmark_x` which now supports `yaml_metadata_block` by default (#2118).  
+
+- New supported syntax for Shiny prerendered documents: you can now  use `server: shiny` or `server: type: shiny`.
+
+- Ability to inject additional functions into Shiny prerendered server scope using the "server-extras" context.
+
+- Fixed the syntax highlighting issue with R's pipe operator `|>` (thanks, @edzer, rstudio/bookdown#1157).
+
+
+rmarkdown 2.9
+================================================================================
+
+- Fix a regression in version 2.8 when a url is used in `css` argument (thanks, @vnijs, #2163).
+
+- All HTML dependencies are now correctly supported, included those with only an `href` component but not `file` component in their `src` attribute. Previously, **rmarkdown** would throw the error `'path for html_dependency not provided'` when rendering documents containing HTML dependencies with `href` components (thanks, @crazycapivara, @matthewstrasiotto, #1805, #1948, #2151).
+
+- Fix an error thrown with output format using a `file_scope` function (like in **bookdown**) (thanks, @rfaelens, #2149).
+
+- Fix an issue with `copy_ressource = TRUE` in `html_document_base` where very long HTML documents were truncated during post processing (thanks, @oliviermeslin, #2145).
+
+- When `run()`-ing a `runtime: shiny` document, an extra temp folder will be used in the output path. With the extra temp random folder in the path, predictable output file names may be used. (#2137)
+
+- When `run()`-ing a `runtime: shiny` document with a `{bslib}` theme, the global theme value wasn't being restored properly. (#2160)
+
+- Floating ToC in `html_document` can now hide headings with unnumbered and unlisted classes (thanks, @atusy, #1993).
+
+- Fix prefix handling in R Markdown website's navbar for Fontawesome V5 and compatibility with V4. For icon only available in V5, the full prefix + name should be use, especially with new `fab` prefix (e.g. `fab fa-r-project`). If no prefix is used (e.g `fa-home` instead of `fas fa-home`), the `fa` prefix will be added for V4 compatibility as it has been deprecated in V5. We advice to use the full prefix + name for icons following Fontawesome documentation. (#1994)
+
+- `rmarkdown::site_generator()` can hang session waiting for input when the `site` field is not found in the YAML frontmatter of `index.Rmd` (thanks, @kevinushey @mirh, #2043).
+
+
 rmarkdown 2.8
 ================================================================================
+
+- Fix a issue with Pandoc 2.5 and `latex-div.lua` - documents can now be rendered as expected without error (thanks, @davidwales, #2121).
+
+- Fix an issue with styling and code folding button behavior when default is `code-folding: show`. The Button can now be correctly style according to state as `aria-expanded` attributes is correctly updated. Also, new classes has been added on the button to allow styling during transition: `btn-collapsing` and `btn-expanding` are respectively applied during transition Show to Hide and Hide to Show. (This follow [Bootstrap behavior for the collapsible block](https://getbootstrap.com/docs/3.4/javascript/#collapse)) (thanks, @steveharoz, #2085).
+
+- Fix an issue with `citation_package` having no effect when using `.md` file as input to `render()` with latex and PDF output formats (thanks, @andrewheiss, #2113).
 
 - A new internal option `rmarkdown.knit.ext` has been added to control the extension of the intermediary knit output during a rendering. It defaults to `md` to produce `*.knit.md`. Only useful for very advanced usage (#2098).
 
@@ -23,7 +109,12 @@ rmarkdown 2.8
 
 - `html_document_base` gains a `css` argument, to which `html_document`'s `css` argument is now passed. This also fix an issue when `.sass` or `.scss` files are used with this `css` argument when `self_contained: FALSE`. Moreover, **sass** caching mechanism can now be used when passing `.sass` or `.scss` files to the `css` argument (thanks, @cpsievert, #2095).
 
-- Fixed broken links to section headers when `number_sections = TRUE` is specified in `md_document` and `github_document` (thanks, #2093, @atusy).
+- The `fig_crop` option of PDF document formats (such as `pdf_document` and `beamer_presentation`) supports the value `"auto"` now, which means `fig_crop = TRUE` when figure cropping tools `pdfcrop` and `ghostscript` are available.
+
+- The default value of the `fig_crop` option of PDF output formats has been changed from `TRUE` to `"auto"` (#2077).
+
+- `rmarkdown::tufte_handout` has been deprecated and will be removed in the future from this package. It has been moved to the **tufte** package since **rmarkdown** 0.9.5 (released on 2016-02-22). Please use `tufte::tufte_handout` instead.
+
 
 rmarkdown 2.7
 ================================================================================
@@ -51,6 +142,7 @@ rmarkdown 2.7
 - `github_document()` will produce a working TOC even if some headers start with number (#2039).
 
 - Fix an issue with `knit_print.data.frame`. The `...` arguments are no more passed to `print()` to avoid passing `knit_print()` arguments `options` and `encoding` to custom `print()` methods (#2047).
+
 
 rmarkdown 2.6
 ================================================================================

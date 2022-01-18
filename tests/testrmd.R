@@ -1,5 +1,5 @@
 # only run this test on CI platforms
-if (.Platform$OS.type == 'unix' && !is.na(Sys.getenv('CI', NA)) && rmarkdown::pandoc_available()) {
+if (.Platform$OS.type == 'unix' && !isTRUE(as.logical(Sys.getenv("CI"))) && rmarkdown::pandoc_available()) {
 
   # test if Word documents can be rendered with a specified intermediate dir
   # (https://github.com/rstudio/rmarkdown/issues/1431)
@@ -34,4 +34,9 @@ if (.Platform$OS.type == 'unix' && !is.na(Sys.getenv('CI', NA)) && rmarkdown::pa
   # raw blocks in header-includes should work:
   # https://github.com/rstudio/rmarkdown/issues/1729
   rmarkdown::render('rmd/raw-header.Rmd')
+
+  # anchor_sections should work without Lua error
+  # https://github.com/rstudio/rmarkdown/pull/1964
+  rmarkdown::render("rmd/anchor-sections.Rmd")
+
 }
