@@ -149,7 +149,7 @@ draft <- function(file,
 #' available_templates()
 #'
 #' # List rticles templates
-#' if (requireNamespace("rticles", quietly = TRUE)) {
+#' \dontrun{
 #'   available_templates("rticles")
 #' }
 available_templates <- function(package = "rmarkdown", full_path = FALSE) {

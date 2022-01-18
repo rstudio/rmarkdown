@@ -24,7 +24,7 @@ a new document for R Markdown from a package.
 available_templates()
 
 # List rticles templates
-if (requireNamespace("rticles", quietly = TRUE)) {
+\dontrun{
   available_templates("rticles")
 }
 }
