@@ -17,6 +17,7 @@
 #' @param font_adjustment Increase or decrease the default font size (e.g. -1 or
 #'   +1). You can also manually adjust the font size during the presentation
 #'   using the 'S' (smaller) and 'B' (bigger) keys.
+#' @param css One or more css files to include.
 #' @param ... Additional function arguments to pass to the base R Markdown HTML
 #'   output formatter \code{\link{html_document_base}}
 #' @return R Markdown output format to pass to \code{\link{render}}
@@ -118,6 +119,7 @@ slidy_presentation <- function(number_sections = FALSE,
     args <- c()
 
     # highlight
+    if (!is.null(highlight)) highlight <- resolve_highlight(highlight, highlighters())
     args <- c(args, pandoc_highlight_args(highlight, default = "pygments"))
 
     # return additional args

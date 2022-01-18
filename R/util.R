@@ -16,6 +16,15 @@ is_osx <- function() {
   if (is.null(x)) y else x
 }
 
+# a la shiny:::is_available
+is_available <- function(package, version = NULL) {
+  installed <- nzchar(system.file(package = package))
+  if (is.null(version)) {
+    return(installed)
+  }
+  installed && isTRUE(utils::packageVersion(package) >= version)
+}
+
 # determine the output file for a pandoc conversion
 pandoc_output_file <- function(input, pandoc_options) {
   to <- strsplit(pandoc_options$to, "[+-]")[[1]][[1]]
@@ -38,11 +47,11 @@ pandoc_output_ext <- function(ext, to, input) {
 # From pkgdown:
 # https://github.com/r-lib/pkgdown/blob/04d3a76892320ac4bd918b39604c157e9f83507a/R/utils-fs.R#L85
 pkg_file <- function(..., package = "rmarkdown", mustWork = FALSE) {
-  if (is.null(devtools_meta(package))) {
-    system.file(..., package = package, mustWork = mustWork)
-  } else {
+  if (devtools_loaded(package)) {
     # used only if package has been loaded with devtools or pkgload
-    file.path(getNamespaceInfo(package, "path"), "inst", ...)
+    file.path(find.package(package), "inst", ...)
+  } else {
+    system.file(..., package = package, mustWork = mustWork)
   }
 }
 
@@ -78,6 +87,10 @@ pkg_file_lua <- function(filters = NULL, package = "rmarkdown") {
     files <- list.files(dirname(files), "[.]lua$", full.names = TRUE)
   }
   pandoc_path_arg(files)
+}
+
+pkg_file_highlight <- function(file) {
+  pkg_file("rmarkdown", "highlight", file, mustWork = TRUE)
 }
 
 #' @rdname rmarkdown_format
@@ -155,6 +168,7 @@ clean_tmpfiles <- function() {
   ))
 }
 
+# test if all paths in x are directories
 dir_exists <- function(x) {
   length(x) > 0 && utils::file_test('-d', x)
 }
@@ -244,8 +258,7 @@ trim_trailing_ws <- function(x) {
 base_dir <- function(x) {
   base <- unique(dirname(x))
   if (length(base) > 1) {
-    stop("Input files not all in same directory, please supply explicit wd",
-      call. = FALSE)
+    stop2("Input files not all in same directory, please supply explicit wd")
   }
   base
 }
@@ -300,6 +313,21 @@ find_program <- function(program) {
   } else {
     Sys.which(program)
   }
+}
+
+has_crop_tools <- function(warn = TRUE) {
+  tools <- c(
+    pdfcrop = unname(find_program("pdfcrop")),
+    ghostscript = unname(tools::find_gs_cmd())
+  )
+  missing <- tools[tools == ""]
+  if (length(missing) == 0) return(TRUE)
+  x <- paste0(names(missing), collapse = ", ")
+  if (warn) warning(
+    sprintf("\nTool(s) not installed or not in PATH: %s", x),
+    "\n-> As a result, figure cropping will be disabled."
+  )
+  FALSE
 }
 
 # given a string, escape the regex metacharacters it contains:
@@ -537,12 +565,18 @@ get_loaded_packages <- function() {
   )
 }
 
+warning2 = function(...) warning(..., call. = FALSE)
+stop2 = function(...) stop(..., call. = FALSE)
+
 # devtools metadata -------------------------------------------------------
 
-# from pkgdown
+# from pkgdown & downlit
 # https://github.com/r-lib/pkgdown/blob/77f909b0138a1d7191ad9bb3cf95e78d8e8d93b9/R/utils.r#L52
 
-devtools_meta <- function(package) {
-  ns <- .getNamespace(package)
-  ns[[".__DEVTOOLS__"]]
+devtools_loaded <- function(x) {
+  if (!x %in% loadedNamespaces()) {
+    return(FALSE)
+  }
+  ns <- .getNamespace(x)
+  !is.null(ns$.__DEVTOOLS__)
 }

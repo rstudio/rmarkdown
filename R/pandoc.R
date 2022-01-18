@@ -100,7 +100,7 @@ pandoc_convert <- function(input,
     result <- system(command)
   })
   if (result != 0)
-    stop("pandoc document conversion failed with error ", result, call. = FALSE)
+    stop2("pandoc document conversion failed with error ", result)
 
   invisible(NULL)
 }
@@ -157,6 +157,8 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
     stop("Error ", status, " occurred building shared library.")
   }
 
+  Encoding(result) <- "UTF-8"
+
   # convert the output if requested
   if (type == "list") {
     jsonlite::fromJSON(result, simplifyVector = FALSE)
@@ -207,7 +209,7 @@ pandoc_available <- function(version = NULL,
     "pandoc", if (!is.null(version)) c("version", version, "or higher"),
     "is required and was not found (see the help page ?rmarkdown::pandoc_available)."
   )
-  if (error && !found) stop(paste(msg, collapse = " "), call. = FALSE)
+  if (error && !found) stop2(paste(msg, collapse = " "))
 
   found
 }
@@ -236,7 +238,7 @@ pandoc_version <- function() {
 #' @param toc_depth Depth of headers to include in table of contents.
 #' @param highlight The name of a pandoc syntax highlighting theme.
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
-#'   "pdflatex", "lualatex", and "xelatex".
+#'   "pdflatex", "lualatex", "xelatex", and "tectonic".
 #' @param default The highlighting theme to use if "default"
 #'   is specified.
 #' @return A character vector with pandoc command line arguments.
@@ -584,27 +586,49 @@ unix_mathjax_path <- function() {
 
 
 pandoc_html_highlight_args <- function(template,
-                                       highlight) {
+                                       highlight,
+                                       highlight_downlit = FALSE) {
+
+  # Reminder: we do not use pandoc_path_arg() for argument to --highlight-style
+  # https://github.com/rstudio/rmarkdown/issues/1976
 
   args <- c()
 
-  if (is.null(highlight)) {
-    args <- c(args, "--no-highlight")
-  }
-  else if (!identical(template, "default")) {
-    if (identical(highlight, "default"))
-      highlight <- "pygments"
-    args <- c(args, "--highlight-style", highlight)
-  }
-  else {
-    highlight <- match.arg(highlight, html_highlighters())
-    if (is_highlightjs(highlight)) {
-      args <- c(args, "--no-highlight")
-      args <- c(args, "--variable", "highlightjs=1")
+  # no highlighting engine
+  if (is.null(highlight)) return(pandoc_highlight_args(NULL))
+
+  highlight <- resolve_highlight(highlight, html_highlighters())
+
+  check_highlightjs <- function(highlight, engine) {
+    if (highlight != "default" && is_highlightjs(highlight)) {
+      stop(
+        sprintf(c(
+          "'%s' theme is for highlightjs highlighting engine ",
+          "and can't be used with %s engine."), c(highlight, engine)),
+        call. = FALSE
+      )
     }
-    else {
-      args <- c(args, "--highlight-style", highlight)
-    }
+  }
+
+  # downlit engine
+  if (highlight_downlit) {
+    check_highlightjs(highlight, "downlit")
+    default <- if (pandoc2.0()) resolve_highlight("arrow") else "pygments"
+    args <- c(
+      pandoc_highlight_args(highlight, default = default),
+      # variable used to insert some css in a Pandoc template
+      pandoc_variable_arg("highlight-downlit")
+    )
+  } else if (identical(template, "default") && is_highlightjs(highlight)) {
+    # highlightjs engine for default template only
+    args <- c(pandoc_highlight_args(NULL),
+              # variable used to insert some css and js
+              # in the Pandoc default template
+              pandoc_variable_arg("highlightjs", "1"))
+  } else {
+    # Pandoc engine
+    check_highlightjs(highlight, "Pandoc")
+    args <- pandoc_highlight_args(highlight, default = "pygments")
   }
 
   args
@@ -612,6 +636,38 @@ pandoc_html_highlight_args <- function(template,
 
 is_highlightjs <- function(highlight) {
   !is.null(highlight) && (highlight %in% c("default", "textmate"))
+}
+
+resolve_highlight <- function(highlight, supported = highlighters()) {
+  # for backward compatibility, partial match still need to work
+  i <- pmatch(highlight, supported, nomatch = 0L)
+  if (i > 0L) return(supported[i])
+
+  # Otherwise it could be a custom (built-in) .theme file
+  if (!pandoc2.0()) {
+    stop("Using a custom highlighting style requires Pandoc 2.0 and above",
+         call. = FALSE)
+  }
+  custom <- list(
+    # from distill
+    # https://raw.githubusercontent.com/apreshill/distill/arrow/inst/rmarkdown/templates/distill_article/resources/arrow.theme
+    arrow = pkg_file_highlight("arrow.theme"),
+    # from distill
+    # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/rstudio.theme
+    rstudio = pkg_file_highlight("rstudio.theme")
+  )
+  # if not an alias use the provided custom path
+  highlight <- custom[[highlight]] %||% highlight
+  # Check for extension or give informative error otherwise
+  if (!identical(xfun::file_ext(highlight), "theme")) {
+    msg <- c(
+      sprintf("`highlight` argument must be one of %s",
+              knitr::combine_words(c(supported, names(custom)), and = " or ", before = "`")),
+      " or a file with extension `.theme`."
+    )
+    stop(msg, call. = FALSE)
+  }
+  highlight
 }
 
 #' Find the \command{pandoc} executable

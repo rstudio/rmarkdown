@@ -213,7 +213,10 @@ NULL
 #' environment).
 #' @param run_pandoc An option for whether to run pandoc to convert Markdown
 #' output.
-#' @param quiet An option to suppress printing of the pandoc command line.
+#' @param quiet An option to suppress printing during rendering from knitr,
+#'   pandoc command line and others. To only suppress printing of the last
+#'   "Output created: " message, you can set \code{rmarkdown.render.message} to
+#'   \code{FALSE}
 #' @param encoding Ignored. The encoding is always assumed to be UTF-8.
 #' @return
 #'   When \code{run_pandoc = TRUE}, the compiled document is written into
@@ -342,7 +345,7 @@ render <- function(input,
   }
 
   # check whether this document requires a knit
-  requires_knit <- tolower(xfun::file_ext(input)) %in% c("r", "rmd", "rmarkdown")
+  requires_knit <- tolower(xfun::file_ext(input)) %in% c("r", "rmd", "rmarkdown", "qmd")
 
   # remember the name of the original input document (we overwrite 'input' once
   # we've knitted)
@@ -356,10 +359,10 @@ render <- function(input,
         file_name_without_shell_chars(basename(input)))
 
     if (file.exists(input_no_shell_chars)) {
-      stop("The name of the input file cannot contain the special shell ",
+      stop2("The name of the input file cannot contain the special shell ",
            "characters: ", .shell_chars_regex, " (attempted to copy to a ",
            "version without those characters '", input_no_shell_chars, "' ",
-           "however that file already exists)", call. = FALSE)
+           "however that file already exists)")
     }
     file.copy(input, input_no_shell_chars, overwrite = TRUE)
     intermediates <- c(intermediates, input_no_shell_chars)
@@ -369,13 +372,15 @@ render <- function(input,
     if (is.null(intermediates_dir)) {
       intermediates_dir <-
         dirname(normalize_path(input_no_shell_chars))
-      # never use the original input directory as the intermediate directory,
-      # otherwise external resources discovered will be deleted as intermediate
-      # files later (because they are copied to the "intermediate" dir)
-      if (same_path(intermediates_dir, dirname(original_input)))
-        intermediates_dir <- NULL
     }
   }
+
+  # never use the original input directory as the intermediate directory,
+  # otherwise external resources discovered will be deleted as intermediate
+  # files later (because they are copied to the "intermediate" dir)
+  if (!is.null(intermediates_dir) &&
+      same_path(intermediates_dir, dirname(original_input)))
+    intermediates_dir <- NULL
 
   # force evaluation of knitr root dir before we change directory context
   force(knit_root_dir)
@@ -384,15 +389,15 @@ render <- function(input,
   oldwd <- setwd(dirname(abs_path(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
-  # reset the name of the input file to be relative and calculate variations
-  # on the filename for our various intermediate targets
+  # reset the name of the input file to be relative and generete the name of
+  # the intermediate knitted file. The extension can be set as an option mainly for blogdown
+  # as `.md~` will be ignored.
   input <- basename(input)
   knit_input <- input
-  knit_output <- intermediates_loc(file_with_meta_ext(input, "knit", "md"))
-
+  knit_output <- intermediates_loc(
+    file_with_meta_ext(input, "knit", getOption("rmarkdown.knit.ext", "md"))
+  )
   intermediates <- c(intermediates, knit_output)
-  utf8_input <- intermediates_loc(file_with_meta_ext(input, "utf8", "md"))
-  intermediates <- c(intermediates, utf8_input)
 
   # track whether this was straight markdown input (to prevent keep_md later)
   md_input <- identical(tolower(xfun::file_ext(input)), "md")
@@ -437,7 +442,8 @@ render <- function(input,
   # if this is shiny_prerendered then modify the output format to
   # be single-page and to output dependencies to the shiny.dep file
   shiny_prerendered_dependencies <- list()
-  if (requires_knit && is_shiny_prerendered(front_matter$runtime)) {
+  if (requires_knit && is_shiny_prerendered(front_matter$runtime,
+                                            front_matter$server)) {
 
     # require shiny for the knit
     if (requireNamespace("shiny")) {
@@ -445,7 +451,7 @@ render <- function(input,
         attachNamespace("shiny")
     }
     else
-      stop("The shiny package is required for shinyrmd documents")
+      stop("The shiny package is required for shiny documents")
 
     # source global.R if it exists
     global_r <- file.path.ci(".", "global.R")
@@ -470,7 +476,8 @@ render <- function(input,
     output_format <- output_format_from_yaml_front_matter(input_lines,
                                                           output_options,
                                                           output_format,
-                                                          output_yaml)
+                                                          output_yaml,
+                                                          output_file)
     output_format <- create_output_format(output_format$name,
                                           output_format$options)
   }
@@ -491,8 +498,7 @@ render <- function(input,
 
   # Stop the render process early if the output directory does not exist
   if (!dir_exists(output_dir)) {
-    stop("The directory '", output_dir, "' does not not exist.",
-         call. = FALSE)
+    stop2("The directory '", output_dir, "' does not not exist.")
   }
 
   # use output filename based files dir
@@ -523,7 +529,14 @@ render <- function(input,
   # presume that we're rendering as a static document unless specified
   # otherwise in the parameters
   runtime <- match.arg(runtime)
-  if (identical(runtime, "auto")) runtime <- front_matter$runtime %||% "static"
+  if (identical(runtime, "auto")) {
+    if (is_shiny_prerendered(front_matter$runtime, front_matter$server)) {
+      runtime <- "shiny_prerendered"
+    } else {
+      runtime <- front_matter$runtime %||% "static"
+    }
+  }
+
 
   # set df_print
   context <- render_context()
@@ -563,7 +576,7 @@ render <- function(input,
 
   # determine our id-prefix (add one if necessary for runtime: shiny)
   id_prefix <- id_prefix_from_args(output_format$pandoc$args)
-  if (!nzchar(id_prefix) && is_shiny(runtime)) {
+  if (!nzchar(id_prefix) && is_shiny(runtime, front_matter[["server"]])) {
     id_prefix <- "section-"
     output_format$pandoc$args <- c(output_format$pandoc$args, rbind("--id-prefix", id_prefix))
   }
@@ -582,6 +595,17 @@ render <- function(input,
     on.exit(knitr::opts_hooks$restore(ohooks), add = TRUE)
     templates <- knitr::opts_template$get()
     on.exit(knitr::opts_template$restore(templates), add = TRUE)
+
+    # specify that htmltools::htmlPreserve() should use the Pandoc raw attribute
+    # by default (e.g. ```{=html}) rather than preservation tokens when pandoc
+    # >= v2.0. Note that this option will have the intended effect only for
+    # versions of htmltools >= 0.5.1.
+    if (pandoc2.0() && packageVersion("htmltools") >= "0.5.1") {
+      if (is.null(prev <- getOption("htmltools.preserve.raw"))) {
+        options(htmltools.preserve.raw = TRUE)
+        on.exit(options(htmltools.preserve.raw = prev), add = TRUE)
+      }
+    }
 
     # run render on_exit (run after the knit hooks are saved so that
     # any hook restoration can take precedence)
@@ -706,8 +730,8 @@ render <- function(input,
           inherits(envirParams, "knit_param")
 
         if (!isKnownParamsObject) {
-          stop("params object already exists in knit environment ",
-               "so can't be overwritten by render params", call. = FALSE)
+          stop2("params object already exists in knit environment ",
+               "so can't be overwritten by render params")
         }
       }
 
@@ -771,20 +795,20 @@ render <- function(input,
         identical(tolower(xfun::file_ext(output_file)), "html")))  {
     if (has_html_dependencies(knit_meta)) {
       if (!isTRUE(front_matter$always_allow_html)) {
-        stop("Functions that produce HTML output found in document targeting ",
+        stop2("Functions that produce HTML output found in document targeting ",
              pandoc_to, " output.\nPlease change the output type ",
              "of this document to HTML. Alternatively, you can allow\n",
              "HTML output in non-HTML formats by adding this option to the YAML front",
              "-matter of\nyour rmarkdown file:\n\n",
              "  always_allow_html: true\n\n",
-             "Note however that the HTML output will not be visible in non-HTML formats.\n\n",
-             call. = FALSE)
+             "Note however that the HTML output will not be visible in non-HTML formats.\n\n"
+        )
       }
     }
     if (!identical(runtime, "static")) {
-      stop("Runtime '", runtime, "' is not supported for ",
+      stop2("Runtime '", runtime, "' is not supported for ",
            pandoc_to, " output.\nPlease change the output type ",
-           "of this document to HTML.", call. = FALSE)
+           "of this document to HTML.")
     }
   }
 
@@ -808,8 +832,6 @@ render <- function(input,
   }
   intermediates <- c(intermediates, intermediates_fig)
 
-  file.copy(input, utf8_input, overwrite = TRUE)
-
   if (run_pandoc) {
 
     perf_timer_start("pre-processor")
@@ -817,7 +839,7 @@ render <- function(input,
     # call any pre_processor
     if (!is.null(output_format$pre_processor)) {
       extra_args <- output_format$pre_processor(front_matter,
-                                                utf8_input,
+                                                input,
                                                 runtime,
                                                 knit_meta,
                                                 files_dir,
@@ -827,10 +849,14 @@ render <- function(input,
 
     # write shiny_prerendered_dependencies if we have them
     if (is_shiny_prerendered(runtime)) {
-      shiny_prerendered_append_dependencies(utf8_input,
+      shiny_prerendered_append_dependencies(input,
                                             shiny_prerendered_dependencies,
                                             files_dir,
                                             output_dir)
+      # indicate to Pandoc we are in a shiny prerendered document to activate
+      # specific parts in the template.
+      output_format$pandoc$args <- c(output_format$pandoc$args,
+                                     pandoc_variable_arg("shiny-prerendered"))
     }
 
     perf_timer_stop("pre-processor")
@@ -856,41 +882,36 @@ render <- function(input,
 
       # ensure we expand paths (for Windows where leading `~/` does
       # not get expanded by pandoc)
-      utf8_input <- path.expand(utf8_input)
-      output     <- path.expand(output)
+      input  <- path.expand(input)
+      output <- path.expand(output)
 
       pandoc_args <- output_format$pandoc$args
 
       # if Lua filters are provided, add the command line switch
       if (!is.null(lua_filters <- output_format$pandoc$lua_filters)) {
+        lua_env_vars <- xfun::set_envvar(c(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua")))
+        on.exit(xfun::set_envvar(lua_env_vars), add = TRUE)
         lua_filters <- pandoc_lua_filter_args(lua_filters)
       }
       pandoc_args <- c(lua_filters, pandoc_args)
 
       # in case the output format turns on the --file-scope flag, run its
       # file_scope function to split the input into multiple files
-      input_files <- utf8_input
-      if (!is.null(output_format$file_scope) &&
-          length(inputs <- output_format$file_scope(utf8_input)) > 1) {
-
-        # add the --file-scope option
-        pandoc_args <- c(pandoc_args, "--file-scope")
-
-        # write the split content into *.split.md files
-        input_files <- unlist(lapply(inputs, function(input) {
-          file <- file_with_meta_ext(input$name, "split", "md")
-          file <- file.path(dirname(utf8_input), file)
-          write_utf8(input$content, file)
-          file
-        }))
-
-        # cleanup the split files after render
-        on.exit(unlink(input_files), add = TRUE)
+      input_files <- input
+      if (is.function(output_format$file_scope)) {
+        input_files <- file_scope_split(input, output_format$file_scope)
+        # ignore if input_files has not really been splitted
+        if (length(input_files) > 1) {
+          # add the --file-scope option
+          pandoc_args <- c(pandoc_args, "--file-scope")
+          # cleanup the split files after render
+          on.exit(unlink(input_files), add = TRUE)
+        }
       }
 
       # if we don't detect any invalid shell characters in the
       # target path, then just call pandoc directly
-      if (!grepl(.shell_chars_regex, output) && !grepl(.shell_chars_regex, utf8_input)) {
+      if (!grepl(.shell_chars_regex, output) && !grepl(.shell_chars_regex, input)) {
         return(pandoc_convert(
           input_files, pandoc_to, output_format$pandoc$from, output,
           citeproc, pandoc_args, !quiet
@@ -918,7 +939,7 @@ render <- function(input,
 
       # construct output path (when passed only a file name to '--output',
       # pandoc seems to render in the same directory as the input file)
-      pandoc_output_tmp_path <- file.path(dirname(utf8_input), pandoc_output_tmp)
+      pandoc_output_tmp_path <- file.path(dirname(input), pandoc_output_tmp)
 
       # rename output file to desired location
       renamed <- suppressWarnings(file.rename(pandoc_output_tmp_path, output))
@@ -943,7 +964,7 @@ render <- function(input,
     # if the output format is LaTeX, first convert .md to .tex, and then convert
     # .tex to .pdf via latexmk() if PDF output is requested (in rmarkdown <=
     # v1.8, we used to call Pandoc to convert .md to .tex and .pdf separately)
-    if (output_format$pandoc$keep_tex || knitr::is_latex_output()) {
+    if (output_format$pandoc$keep_tex || pandoc_to %in% c("latex", "beamer")) {
       # do not use pandoc-citeproc if needs to build bibliography
       convert(texfile, run_citeproc && !need_bibtex)
       # patch the .tex output generated from the default Pandoc LaTeX template
@@ -954,7 +975,10 @@ render <- function(input,
         latexmk(texfile, output_format$pandoc$latex_engine, '--biblatex' %in% output_format$pandoc$args)
         file.rename(file_with_ext(texfile, "pdf"), output_file)
         # clean up the tex file if necessary
-        if (!output_format$pandoc$keep_tex) on.exit(unlink(texfile), add = TRUE)
+        if (!output_format$pandoc$keep_tex) {
+          texfile <- normalize_path(texfile)
+          on.exit(unlink(texfile), add = TRUE)
+        }
       }
     } else {
       convert(output_file, run_citeproc)
@@ -965,7 +989,7 @@ render <- function(input,
     if (!is.null(intermediates_dir)) {
       intermediate_output <- file.path(intermediates_dir, basename(output_file))
       if (file.exists(intermediate_output)) {
-        file.rename(intermediate_output, output_file)
+        move_dir(intermediate_output, output_file)
       }
     }
 
@@ -976,12 +1000,12 @@ render <- function(input,
     # if there is a post-processor then call it
     if (!is.null(output_format$post_processor))
       output_file <- output_format$post_processor(front_matter,
-                                                  utf8_input,
+                                                  input,
                                                   output_file,
                                                   clean,
                                                   !quiet)
 
-    if (!quiet) {
+    if (!quiet && getOption('rmarkdown.render.message', TRUE)) {
       message("\nOutput created: ", relative_to(oldwd, output_file))
     }
 
@@ -1140,8 +1164,8 @@ resolve_df_print <- function(df_print) {
     else if (df_print == "default")
       df_print <- print
     else
-      stop('Invalid value for df_print (valid values are ',
-           paste(valid_methods, collapse = ", "), call. = FALSE)
+      stop2('Invalid value for df_print (valid values are ',
+           paste(valid_methods, collapse = ", "))
   }
 
   df_print
@@ -1168,3 +1192,21 @@ resolve_df_print <- function(df_print) {
 #' @keywords NULL
 #' @export
 output_metadata = knitr:::new_defaults()
+
+file_scope_split <- function(input, fun) {
+  inputs <- fun(input)
+
+  # file_scope_fun should split the input file in several
+  # do nothing if not and return input file unsplited
+  if (length(inputs) <= 1) return(input)
+
+  # write the split content into *.split.md files
+  input_files <- lapply(inputs, function(f) {
+    file <- file_with_meta_ext(f$name, "split", "md")
+    file <- file.path(dirname(input), file)
+    write_utf8(f$content, file)
+    file
+  })
+
+  unlist(input_files)
+}

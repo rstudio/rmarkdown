@@ -20,6 +20,7 @@
 #' @param ... Additional arguments passed to \code{\link{html_document}}. Please
 #'   note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
 #'   coded. Setting any of those will yield an error.
+#' @param css One or more css files to include.
 #' @param readme Use this vignette as the package README.md file (i.e. render
 #'   it as README.md to the package root). Note that if there are image files
 #'   within your vignette you should be sure to add README_files to .Rbuildignore
@@ -79,10 +80,14 @@ html_vignette <- function(fig_width = 3,
 vignette_pre_processor <- function(input_file, metadata = yaml_front_matter(input_file)) {
   if (getRversion() < 3.6)
     return()
-  if (!getOption(o <- 'rmarkdown.html_vignette.check_title', !knitr:::is_R_CMD_check()))
+  if (!getOption(o <- 'rmarkdown.html_vignette.check_title', !xfun::is_R_CMD_check()))
     return()
   title1 <- metadata[['title']]
   title2 <- tools::vignetteInfo(input_file)[['title']]
+  # rmarkdown assumes UTF-8 only - tools::vignetteInfo uses readLines with
+  # default OS encoding so issue on Windows for example
+  # https://github.com/rstudio/rmarkdown/issues/1978
+  Encoding(title2) <- "UTF-8"
   if (!identical(title1, title2)) warning(
     'The vignette title specified in \\VignetteIndexEntry{} is different from ',
     'the title in the YAML metadata. The former is "', title2, '", and the ',

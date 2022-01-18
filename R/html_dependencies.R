@@ -16,12 +16,7 @@ NULL
 #' @rdname html-dependencies
 #' @export
 html_dependency_jquery <- function()  {
-
-  htmlDependency(
-    name = "jquery",
-    version = "1.11.3",
-    src = pkg_file("rmd/h/jquery"),
-    script = "jquery.min.js")
+  jquerylib::jquery_core(major_version = getOption('rmarkdown.jquery.version', 3))
 }
 
 # Create an HTML dependency for jQuery UI
@@ -40,11 +35,23 @@ html_dependency_jqueryui <- function() {
 #' @rdname html-dependencies
 #' @export
 html_dependency_bootstrap <- function(theme) {
+  theme <- resolve_theme(theme)
 
-  if (identical(theme, "default")) {
-    theme <- "bootstrap"
+  # Bootstrap with bslib package
+  if (is_bs_theme(theme)) {
+    # TODO: would it make sense for these additional rules to come as a part of
+    # bslib::bs_theme_dependencies() (for consistency sake)?
+    h1_size <- if ("3" %in% theme_version(theme)) "font-size-h1" else "h1-font-size"
+    theme <- bslib::bs_add_rules(
+      theme, c(
+        paste0("h1.title {margin-top: 1.25rem; font-size: 1.15 * $", h1_size, "}"),
+        "pre:not([class]) { background-color: $body-bg }"
+      )
+    )
+    return(bslib::bs_theme_dependencies(theme))
   }
 
+  # Rmarkdown own BS3 dependency
   htmlDependency(
     name = "bootstrap",
     version = "3.3.5",
@@ -55,8 +62,97 @@ html_dependency_bootstrap <- function(theme) {
       # These shims are necessary for IE 8 compatibility
       "shim/html5shiv.min.js",
       "shim/respond.min.js"),
-    stylesheet = paste0("css/", theme, ".min.css"))
+    stylesheet = paste0("css/", theme, ".min.css"),
+    # CSS rules yanked from inst/rmd/h/default.html that should remain for historical
+    # reasons, but shouldn't be included if bslib is relevant
+    head = format(tags$style(HTML(
+      "h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }"
+    )))
+  )
 }
+
+bootstrap_dependencies <- function(theme) {
+  deps <- html_dependency_bootstrap(theme)
+  if (inherits(deps, "html_dependency")) list(deps) else deps
+}
+
+resolve_theme <- function(theme) {
+  # theme = NULL means no Bootstrap
+  if (is.null(theme)) return(theme)
+
+  # Bootstrap/Bootswatch 3 names (backwards-compatibility)
+  if (is.character(theme)) {
+    if (length(theme) != 1) {
+      stop2("`theme` must be character vector of length 1.")
+    }
+    if (identical(theme, "default")) {
+      theme <- "bootstrap"
+    }
+
+    # special handling triggered when bootstrap folder removed from installation folder
+    # In this case, bslib is used as default.
+    bslib_forced_mode <- getOption("rmarkdown.bslib_forced_mode", FALSE)
+    if (bslib_forced_mode || !dir.exists(pkg_file("rmd/h/bootstrap"))) {
+      # we are in special bslib default mode, theme is tweaked to be a list
+      if (!is_available("bslib")) {
+        stop2(
+          "bslib package is required and must be installed",
+          if (bslib_forced_mode) " when in special bslib forced mode",
+          "."
+        )
+      }
+      return(bslib::bs_theme(version = 3, bootswatch = theme))
+    }
+
+    return(match.arg(theme, themes()))
+  }
+
+  # Bootstrap theme handled by bslib package
+  if (is.list(theme)) {
+    if (!is_available("bslib")) {
+      stop2("Providing a list to `theme` requires the bslib package.")
+    }
+    return(as_bs_theme(theme))
+  }
+  stop2(
+    "`theme` expects any one of the following values: \n",
+    "    (1) NULL (no Bootstrap), \n",
+    "    (2) a character string referencing a Bootswatch 3 theme name, \n",
+    "    (3) a list of arguments to bslib::bs_theme(), \n",
+    "    (4) a bslib::bs_theme() object."
+  )
+}
+
+# At the moment, theme may be either NULL (no Bootstrap), a string (Bootswatch
+# 3 name), a bslib::bs_theme(), or a list of arguments to bs_theme().
+as_bs_theme <- function(theme) {
+  if (is_bs_theme(theme)) {
+    return(theme)
+  }
+  if (is.list(theme)) {
+    return(do.call(bslib::bs_theme, theme))
+  }
+  NULL
+}
+
+is_bs_theme <- function(theme) {
+  is_available("bslib") &&
+    bslib::is_bs_theme(theme)
+}
+
+theme_version <- function(theme) {
+  if (is_bs_theme(theme)) return(bslib::theme_version(theme))
+  substr(html_dependency_bootstrap("default")$version, 1, 1)
+}
+
 
 # Create an HTML dependency for tocify
 #' @rdname html-dependencies
@@ -125,13 +221,17 @@ html_dependency_navigation <- function(code_menu, source_embed) {
                  script = script)
 }
 
-html_dependency_anchor_sections <- function() {
-
+html_dependency_anchor_sections <- function(style = c("hash", "symbol", "icon"),
+                                            section_divs = FALSE) {
+  style <- match.arg(style)
+  # dynamically build css list
+  content_style <- function(style) sprintf("anchor-sections-%s.css", style)
   htmlDependency(name = "anchor-sections",
-                 version = "1.0.1",
+                 version = "1.1.0",
                  src = pkg_file("rmd/h/anchor-sections"),
-                 script = "anchor-sections.js",
-                 stylesheet = "anchor-sections.css")
+                 script = if (section_divs) "anchor-sections.js",
+                 stylesheet = c("anchor-sections.css", content_style(style))
+  )
 }
 
 # analyze navbar html source for icon dependencies
@@ -141,7 +241,7 @@ navbar_icon_dependencies <- function(navbar) {
   source <- read_utf8(navbar)
 
   # find icon references
-  res <- regexec('<(span|i) +class *= *("|\') *(fa fa|ion ion)-', source)
+  res <- regexec('<(span|i) +class *= *("|\') *(fa\\w? fa|ion ion)-', source)
   matches <- regmatches(source, res)
   libs <- c()
   for (match in matches) {
@@ -151,7 +251,9 @@ navbar_icon_dependencies <- function(navbar) {
   libs <- unique(libs)
 
   # return their dependencies
-  html_dependencies_fonts("fa fa" %in% libs, "ion ion" %in% libs)
+  any_fa <- any(grepl("fa\\w? fa", libs))
+  any_ion <- any(grepl("ion ion", libs))
+  html_dependencies_fonts(any_fa, any_ion)
 }
 
 # utility function to return a list of font dependencies based
@@ -215,16 +317,31 @@ html_reference_path <- function(path, lib_dir, output_dir) {
 # return the html dependencies as an HTML string suitable for inclusion
 # in the head of a document
 html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
-
   if (!is.null(lib_dir)) {
-    dependencies <- lapply(dependencies, copyDependencyToDir, lib_dir)
-    dependencies <- lapply(dependencies, makeDependencyRelative, output_dir)
+    # using mustWork=FALSE insures non-disk based dependencies are
+    # return untouched, keeping the order of all deps.
+    dependencies <- lapply(dependencies, copyDependencyToDir,
+                           outputDir = lib_dir, mustWork = FALSE)
+    dependencies <- lapply(dependencies, makeDependencyRelative,
+                           basepath = output_dir, mustWork = FALSE)
   }
-  return(renderDependencies(dependencies, "file", encodeFunc = identity,
-                            hrefFilter = function(path) {
-                              html_reference_path(path, lib_dir, output_dir)
-                            })
-  )
+
+  # Dependencies are iterated on as file based dependencies needs to be
+  # processed a specific way for Pandoc compatibility.
+  html <- c()
+  for (dep in dependencies) {
+    tags <- if (is.null(dep$src[["file"]])) {
+      renderDependencies(list(dep), "href")
+    } else {
+      renderDependencies(list(dep), "file",
+                         encodeFunc = identity,
+                         hrefFilter = function(path) {
+                           html_reference_path(path, lib_dir, output_dir)
+                         })
+    }
+    html <- c(html, tags)
+  }
+  HTML(paste(html, collapse = "\n"))
 }
 
 # check class of passed list for 'html_dependency'
@@ -237,22 +354,26 @@ validate_html_dependency <- function(list) {
 
   # ensure it's the right class
   if (!is_html_dependency(list))
-    stop("passed object is not of class html_dependency", call. = FALSE)
+    stop2("passed object is not of class html_dependency")
 
   # validate required fields
   if (is.null(list$name))
-    stop("name for html_dependency not provided", call. = FALSE)
+    stop2("name for html_dependency not provided")
   if (is.null(list$version))
-    stop("version for html_dependency not provided", call. = FALSE)
+    stop2("version for html_dependency not provided")
   list <- fix_html_dependency(list)
-  if (is.null(list$src$file))
-    stop("path for html_dependency not provided", call. = FALSE)
-  file <- list$src$file
-  if (!is.null(list$package))
-    file <- system.file(file, package = list$package)
-  if (!file.exists(file)) {
-    utils::str(list)
-    stop("path for html_dependency not found: ", file, call. = FALSE)
+
+  # check src path or href are given
+  if (is.null(list$src)) {
+    stop2("src for html_dependency not provided")
+  }
+  if (!is.null(list$src$file)) {
+    file <- list$src$file
+    if (!is.null(list$package))
+      file <- system.file(file, package = list$package)
+    if (!file.exists(file)) {
+      stop2("path for html_dependency not found: ", file)
+    }
   }
 
   list
@@ -338,12 +459,14 @@ html_dependency_rsiframe <- function() {
 # Pandoc 2.9 adds attributes on both headers and their parent divs. We remove
 # the ones on headers since they are unnecessary (#1723).
 html_dependency_header_attrs <- function() {
-  if (pandoc_available('2.9')) list(
-    htmlDependency(
-      "header-attrs",
-      version = packageVersion("rmarkdown"),
-      src = pkg_file("rmd/h/pandoc"),
-      script = "header-attrs.js"
+  if (getOption('rmarkdown.html_dependency.header_attr', TRUE) && pandoc_available('2.9')) {
+    list(
+      htmlDependency(
+        "header-attrs",
+        version = packageVersion("rmarkdown"),
+        src = pkg_file("rmd/h/pandoc"),
+        script = "header-attrs.js"
+      )
     )
-  )
+  }
 }

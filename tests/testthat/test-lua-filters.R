@@ -1,14 +1,15 @@
+# TODO: to remove when switching the package to edition 3
+local_edition(3)
+
 .generate_md_and_convert <- function(content, output_format) {
-  input_file <- tempfile(fileext = ".Rmd")
-  output_file <- tempfile()
-  on.exit(unlink(c(input_file, output_file)), add = TRUE)
-  xfun::write_utf8(c("---\ntitle: Test\n---\n", content), input_file)
-  res <- rmarkdown::render(input_file, output_format = output_format, output_file = output_file, quiet = TRUE)
-  xfun::read_utf8(res)
+  input_file <- local_rmd_file(c("---\ntitle: Test\n---\n", content))
+  .render_and_read(input_file, output_format = output_format)
 }
 
-# Lua filters exists only since pandoc 2.0
-skip_if_not(rmarkdown::pandoc_available("2.0"))
+# rmarkdown requires pandoc >= 2.1 to support Lua filters
+skip_if_not_pandoc("2.1")
+
+# TODO: At some point, change this file to test only the filter in a simple pandoc conversion without all the rendering ( ~ unit test for Lua filters)
 
 test_that("pagebreak Lua filters works", {
   rmd <- "# HEADER 1\n\\newpage\n# HEADER 2\n\\pagebreak\n# HEADER 3"
@@ -32,7 +33,45 @@ test_that("number_sections Lua filter works", {
   rmd <- paste0(headers, " ", numbers, "\n\n")
   result <- .generate_md_and_convert(rmd, md_document(number_sections = TRUE))
   expected <- paste(numbers, numbers)
+  # pandoc 2.11.2 default to atx headers
+  if (pandoc_available("2.11.2")) expected <- paste(headers, expected)
   expect_identical(result[result %in% expected], expected)
+})
+
+test_that("latex-divs.lua works with HTML doc", {
+  rmd <- "::: custom\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "html_document")
+  expect_match(grep('custom', res, value = TRUE), '<div class="custom"')
+  rmd <- "::: {.custom #id}\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "html_document")
+  expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom">')
+  rmd <- "::: {.custom #id data-latex=''}\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "html_document")
+  expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom">')
+  rmd <- "::: {.custom #id latex=true}\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "html_document")
+  expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom">')
+  rmd <- "::: {.custom #id latex=1}\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "html_document")
+  expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom">')
+})
+
+test_that("latex-divs.lua works with LaTeX (PDF)", {
+  rmd <- "::: {.custom #id}\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "latex_document")
+  expect_false(any(grepl('custom', res)))
+  rmd <- "::: {.custom #id data-latex=''}\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "latex_document")
+  lines <- local({ i <- grep("custom", res); seq.int(i[1], i[2])})
+  expect_snapshot_output(cat(res[lines]))
+  rmd <- "::: {.custom #id latex=true}\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "latex_document")
+  lines <- local({ i <- grep("custom", res); seq.int(i[1], i[2])})
+  expect_snapshot_output(cat(res[lines]))
+  rmd <- "::: {.custom #id latex=1}\ncontent\n:::\n\n some other content"
+  res <- .generate_md_and_convert(rmd, "latex_document")
+  lines <- local({ i <- grep("custom", res); seq.int(i[1], i[2])})
+  expect_snapshot_output(cat(res[lines]))
 })
 
 test_that("formats have the expected Lua filter", {
@@ -45,27 +84,28 @@ test_that("formats have the expected Lua filter", {
       xfun::with_ext(expected_filters, "lua")
     )
   }
-  expect_filters(beamer_presentation(), c("pagebreak", "latex-div"))
+  # different lua filter
+  pgb <- "pagebreak"; lxd <- "latex-div"
+  nbs <- "number-sections"; acs <- "anchor-sections"
+  expect_filters(beamer_presentation(), c(pgb, lxd))
   expect_filters(github_document(number_sections = TRUE),
                  md_document(number_sections = TRUE))
-  expect_filters(html_document(), c("pagebreak", "latex-div"))
-  expect_filters(html_document_base(), c("pagebreak", "latex-div"))
-  expect_filters(latex_document(), c("pagebreak", "latex-div"))
-  expect_filters(context_document(ext = ".tex"), c("pagebreak"))
-  expect_filters(md_document(number_sections = TRUE), "number-sections")
-  expect_filters(pdf_document(), c("pagebreak", "latex-div"))
-  expect_filters(powerpoint_presentation(number_sections = TRUE),
-                 "number-sections")
-  expect_filters(odt_document(number_sections = TRUE),
-                 c("pagebreak", "number-sections"))
-  expect_filters(rtf_document(number_sections = TRUE), c("number-sections"))
-  expect_filters(
-    slidy_presentation(number_sections = TRUE),
-    c("pagebreak", "latex-div", "number-sections")
-  )
+  expect_filters(html_document(), c(pgb, lxd))
+  expect_filters(html_document(anchor_sections = TRUE), c(pgb, lxd, acs))
+  expect_filters(html_document(anchor_sections = list(depth = 3)), c(pgb, lxd, acs))
+  expect_filters(html_document_base(), c(pgb, lxd))
+  expect_filters(latex_document(), c(pgb, lxd))
+  expect_filters(context_document(ext = ".tex"), c(pgb))
+  expect_filters(md_document(number_sections = TRUE), c(nbs))
+  expect_filters(pdf_document(), c(pgb, lxd))
+  expect_filters(powerpoint_presentation(number_sections = TRUE), c(nbs))
+  expect_filters(odt_document(number_sections = TRUE), c(pgb, nbs))
+  expect_filters(rtf_document(number_sections = TRUE), c(nbs))
+  expect_filters(slidy_presentation(number_sections = TRUE), c(pgb, lxd, nbs))
   expect_filters(
     word_document(number_sections = TRUE),
-    c("pagebreak", if (!pandoc_available("2.10.1")) "number-sections"))
+    c(pgb, if (!pandoc_available("2.10.1")) nbs)
+  )
 })
 
 test_that("lua file are correctly found", {
