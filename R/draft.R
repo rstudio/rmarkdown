@@ -132,7 +132,40 @@ draft <- function(file,
   invisible(file)
 }
 
+#' List available R Markdown template in a package
+#'
+#' List the available template by name that can be used with [draft()] to create
+#' a new document for R Markdown from a package.
+#'
+#' @param package Package to list template from. Default to **rmarkdown**
+#' @param full_path Set to `TRUE` to get the full path to the available templates
+#'
+#' @return A character vector of templates name to use within [draft()]. If
+#'   `full_path = TRUE`, it returns the full path to the templates.
+#' @export
+#' @md
+#' @examples
+#' # List rmarkdown templates & create a draft
+#' available_templates()
+#'
+#' # List rticles templates
+#' if (requireNamespace("rticles", quietly = TRUE)) {
+#'   available_templates("rticles")
+#' }
+available_templates <- function(package = "rmarkdown", full_path = FALSE) {
+  template_folder <- pkg_file("rmarkdown", "templates", package = package)
+  if (dir_exists(template_folder)) {
+    templates <- list.files(template_folder, full.names = TRUE)
+    # exclude file in folder if any
+    templates <- templates[utils::file_test('-d', templates)]
+    if (full_path) return(templates)
+    basename(templates)
+  }
+}
+
 # List the template directories that are available for consumption.
+# This function is only used by RStudio IDE in version before 1.1.74
+# https://github.com/rstudio/rstudio/commit/01b26d1afd8e403fe1d026cba9264bf983a86173
 list_template_dirs <- function() {
 
   # check each installed package for templates
