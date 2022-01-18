@@ -887,6 +887,13 @@ render <- function(input,
 
       pandoc_args <- output_format$pandoc$args
 
+      # let number_offset in metadata be an alternative of --number-offset option
+      if (("--number-sections" %in% pandoc_args) && !is.null(env$metadata$number_offset)) {
+          pandoc_args <- c(
+            pandoc_args, paste0("--number-offset=", env$metadata$number_offset)
+          )
+      }
+
       # if Lua filters are provided, add the command line switch
       if (!is.null(lua_filters <- output_format$pandoc$lua_filters)) {
         lua_env_vars <- xfun::set_envvar(c(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua")))

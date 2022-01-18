@@ -28,14 +28,28 @@ test_that("pagebreak Lua filters works", {
 })
 
 test_that("number_sections Lua filter works", {
-  numbers <- c("1", "1.1", "2", "2.1")
-  headers <- c("#", "##", "#", "##")
-  rmd <- paste0(headers, " ", numbers, "\n\n")
-  result <- .generate_md_and_convert(rmd, md_document(number_sections = TRUE))
-  expected <- paste(numbers, numbers)
-  # pandoc 2.11.2 default to atx headers
-  if (pandoc_available("2.11.2")) expected <- paste(headers, expected)
-  expect_identical(result[result %in% expected], expected)
+  test_number_sections <- function(number_offset = 0L) {
+      numbers <- paste0(
+        c(1L, 1L, 2L, 2L) + number_offset,
+        c("", ".1", "", ".1")
+      )
+      headers <- c("#", "##", "#", "##")
+      result <- .generate_md_and_convert(
+        paste0(headers, " ", numbers, "\n\n"),
+        md_document(
+          number_sections = TRUE,
+          pandoc_args = if (number_offset > 0) {
+            sprintf("--metadata=number_offset:%s", number_offset)
+          }
+        )
+      )
+      expected <- paste(numbers, numbers)
+      # pandoc 2.11.2 default to atx headers
+      if (pandoc_available("2.11.2")) expected <- paste(headers, expected)
+      expect_identical(result[result %in% expected], expected)
+  }
+  test_number_sections(1L)
+  test_number_sections(2L)
 })
 
 test_that("latex-divs.lua works with HTML doc", {

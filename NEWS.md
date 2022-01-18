@@ -142,6 +142,8 @@ rmarkdown 2.7
 - Fix an issue with `knit_print.data.frame`. The `...` arguments are no more passed to `print()` to avoid passing `knit_print()` arguments `options` and `encoding` to custom `print()` methods (#2047).
 
 
+- Number offset for section headers can be set via the `number_offset` top-level option of the YAML front matter. This feature supports variety of formats including those without native `--number-sections` option (e.g.,  `md_document`) (thanks, @atusy, #1999).
+
 rmarkdown 2.6
 ================================================================================
 
