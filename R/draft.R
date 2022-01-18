@@ -164,6 +164,7 @@ available_templates <- function(package = "rmarkdown", full_path = FALSE) {
 # List the template directories that are available for consumption.
 # This function is only used by RStudio IDE in version before 1.1.74
 # https://github.com/rstudio/rstudio/commit/01b26d1afd8e403fe1d026cba9264bf983a86173
+# TODO: Remove this function
 list_template_dirs <- function() {
 
   # check each installed package for templates
