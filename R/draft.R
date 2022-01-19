@@ -152,13 +152,12 @@ draft <- function(file,
 #' available_templates("rticles")
 available_templates <- function(package = "rmarkdown", full_path = FALSE) {
   template_folder <- pkg_file("rmarkdown", "templates", package = package)
-  if (dir_exists(template_folder)) {
-    templates <- list.files(template_folder, full.names = TRUE)
-    # exclude file in folder if any
-    templates <- templates[utils::file_test('-d', templates)]
-    if (full_path) return(templates)
-    basename(templates)
-  }
+  if (!dir_exists(template_folder)) return(invisible(character()))
+  templates <- list.files(template_folder, full.names = TRUE)
+  # exclude file in folder if any
+  templates <- templates[utils::file_test('-d', templates)]
+  if (full_path) return(templates)
+  basename(templates)
 }
 
 # List the template directories that are available for consumption.
