@@ -31,3 +31,10 @@ test_that("file_scope split correctly input file", {
   expect_snapshot_file(splitted[1])
   expect_snapshot_file(splitted[2])
 })
+
+test_that("syntax definition file is correctly added", {
+  expect_identical(add_syntax_definition("--no-highlight"), "--no-highlight")
+  dummy_xml <- pandoc_syntax_definition_args("dummy/r.xml")
+  expect_identical(add_syntax_definition(c("arg1", dummy_xml)), c("arg1", dummy_xml))
+  expect_match(add_syntax_definition(c("arg1")), "r.xml", fixed = TRUE, all = FALSE)
+})
