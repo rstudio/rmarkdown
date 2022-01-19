@@ -1,6 +1,6 @@
 <!-- Manually edited:
   From https://invent.kde.org/frameworks/syntax-highlighting/-/blob/master/data/syntax/r.xml
-  with adjustment to support new R 4.0 syntax.
+  with adjustment to support new R 4.0 syntax: |> and =>
 -->
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
@@ -12,7 +12,7 @@
 	R      : http://www.r-project.org/
 	RKWard : http://rkward.kde.org/
 	-->
-<language version="11" kateversion="5.0" name="R Script" section="Scientific" extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPLv2">
+<language version="12" kateversion="5.0" name="R Script" section="Scientific" extensions="*.R;*.r;*.S;*.s;*.q" mimetype="" license="GPLv2">
 <highlighting>
 
 	<list name="controls">
@@ -121,13 +121,17 @@
 			<Detect2Chars attribute="Assign" context="operator_rhs" char="&lt;" char1="-"/>
 			<StringDetect attribute="Assign" context="operator_rhs" String="-&gt;&gt;"/>
 			<Detect2Chars attribute="Assign" context="operator_rhs" char="-" char1="&gt;"/>
-			<RegExpr attribute="Assign" context="operator_rhs" String="=(?!=)"/>
+			<!-- Handle new pipebind operator -->
+			<RegExpr attribute="Assign" context="operator_rhs" String="=(?!(=|&gt;))"/>
 			<Detect2Chars attribute="Operator" context="operator_rhs" char="*" char1="*"/>
 			<Detect2Chars attribute="Operator" context="operator_rhs" char="&lt;" char1="="/>
 			<Detect2Chars attribute="Operator" context="operator_rhs" char="&gt;" char1="="/>
 			<Detect2Chars attribute="Operator" context="operator_rhs" char="=" char1="="/>
 			<Detect2Chars attribute="Operator" context="operator_rhs" char="!" char1="="/>
+			<!-- New pipe operator -->
 			<Detect2Chars attribute="Operator" context="operator_rhs" char="|" char1="&gt;"/>
+			<!-- New pipebind operator -->
+			<Detect2Chars attribute="Operator" context="operator_rhs" char="=" char1="&gt;"/>
 			<Detect2Chars attribute="Operator" context="operator_rhs" char="|" char1="|"/>
 			<Detect2Chars attribute="Operator" context="operator_rhs" char="&amp;" char1="&amp;"/>
 			<StringDetect attribute="Operator" context="operator_rhs" String=":::"/>
