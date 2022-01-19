@@ -48,17 +48,6 @@ function is_preprocess(meta)
 end
 
 
-function pairwise_link_id(div)
-  local old_id = div.attributes['data-rmarkdown-temporarily-recorded-id']
-
-  if not preprocess and old_id and #div.content and (div.content[1].t == 'Header') then
-    needs_number_sections = false
-    identifiers['#' .. old_id] = '#' .. div.content[1].identifier
-    return div.content
-  end
-end
-
-
 function fix_link_id(link)
   if not preprocess and identifiers[link.target] then
     link.target = identifiers[link.target]
@@ -68,6 +57,29 @@ end
 
 
 function number_sections(header)
+
+  -- This will only run on second conversion to help fix the links in the TOC
+  -- by retrieving the recorded attributes
+  if not preprocess and #header.content and (header.content[1].t == 'Span') then
+    needs_number_sections = false
+    -- retrieve the attributes
+    local span_content = header.content[1]
+    local old_id = span_content.attributes['data-rmarkdown-temporarily-recorded-id']
+    if old_id then
+      identifiers['#' .. old_id] = '#' .. header.identifier
+    end
+    -- remove span
+    header.content:remove(1)
+    -- prepend span Inlines content to the header content
+    header.content = span_content.content:__concat(header.content)
+    -- return content without the span
+    return header
+  end
+
+  -- The following part will run during the pre-processing step only to
+  --  * add numbers on header
+  --  * record the old identifier for next processing to fix links
+
   -- Unnumbered
   if not needs_number_sections or header.classes:find("unnumbered") then
     return nil
@@ -97,9 +109,13 @@ function number_sections(header)
 
   --- Return Div wrapping Header and recording Header's current ID
   if preprocess then
-    div = pandoc.Div({header})
-    div.attributes['data-rmarkdown-temporarily-recorded-id'] = header.identifier
-    return div
+    local attr = {}
+    attr['data-rmarkdown-temporarily-recorded-id'] = header.identifier
+    header.content = pandoc.Span(
+      header.content,
+      pandoc.Attr('', '', attr)
+    )
+    return header
   end
 
   return header
@@ -108,7 +124,6 @@ end
 
 return {
   {Meta = is_preprocess},
-  {Div = pairwise_link_id},
+  {Header = number_sections},
   {Link = fix_link_id},
-  {Header = number_sections}
 }
