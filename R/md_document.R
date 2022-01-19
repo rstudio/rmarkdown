@@ -62,6 +62,11 @@ md_document <- function(variant = "markdown_strict",
   args <- c(args, pandoc_args)
 
   # Preprocess number_sections if variant is a markdown flavor +gfm_auto_identifers
+  if (number_sections && !pandoc_available("2.1")) {
+    warning("`number_sections = TRUE` requires at least Pandoc 2.1. The feature will be deactivated",
+            call. = FALSE)
+    number_sections <- FALSE
+  }
   pre_processor <- if (
     number_sections
     && grepl("^(commonmark|gfm|markdown)", variant)
