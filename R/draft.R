@@ -165,7 +165,10 @@ available_templates <- function(package = "rmarkdown", full_path = FALSE) {
 # https://github.com/rstudio/rstudio/commit/01b26d1afd8e403fe1d026cba9264bf983a86173
 # TODO: Remove this function
 list_template_dirs <- function() {
-
+  warning(
+    "`list_template_dirs()` is deprecated and will be defunct in future version",
+    call. = FALSE, immediate. = TRUE
+  )
   # check each installed package for templates
   packages <- row.names(utils::installed.packages())
   for (pkg in packages) {
