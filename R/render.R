@@ -885,6 +885,7 @@ render <- function(input,
       input  <- path.expand(input)
       output <- path.expand(output)
 
+      # Tweak Pandoc argument for all formats
       pandoc_args <- output_format$pandoc$args
 
       # if Lua filters are provided, add the command line switch
@@ -894,6 +895,11 @@ render <- function(input,
         lua_filters <- pandoc_lua_filter_args(lua_filters)
       }
       pandoc_args <- c(lua_filters, pandoc_args)
+
+      # if pandoc highlighting is used, add the syntax definition file
+      # supporting new pipe operator
+      # TODO: remove when updated upstream
+      pandoc_args <- add_syntax_definition(pandoc_args)
 
       # in case the output format turns on the --file-scope flag, run its
       # file_scope function to split the input into multiple files
@@ -1209,4 +1215,16 @@ file_scope_split <- function(input, fun) {
   })
 
   unlist(input_files)
+}
+
+add_syntax_definition <- function(args) {
+  # do not add if not Pandoc highlighting
+  if (detect_pattern("--no-highlight", args)) return(args)
+  # do not add if user provided another r.xml file
+  if (detect_pattern("--syntax-definition", args) &&
+      detect_pattern("r\\.xml", args)) {
+    return(args)
+  }
+  # otherwise add our file
+  c(args, "--syntax-definition", pkg_file_highlight("r.xml"))
 }
