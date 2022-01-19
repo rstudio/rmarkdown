@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE language SYSTEM "language.dtd">
+<!DOCTYPE language>
 <!-- Kate 2.5 (KDE 3.5) highlighting module for R
 	based on an earlier version by E.L. Willighagen. Code folding code by Ben Goodrich
 	version 2.0: (c) 2006 Thomas Friedrichsmeier, Arne Henningsen, and the RKWard Team
