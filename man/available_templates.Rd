@@ -24,7 +24,5 @@ a new document for R Markdown from a package.
 available_templates()
 
 # List rticles templates
-\dontrun{
-  available_templates("rticles")
-}
+available_templates("rticles")
 }
