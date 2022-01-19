@@ -813,7 +813,7 @@ pandoc_lua_filter_args <- function(lua_files) {
 #'   will be transformed by \code{\link{pandoc_path_arg}}.
 #' @export
 pandoc_syntax_definition_args <- function(xml_files) {
-  c(rbind("--syntax-definition", pandoc_path_arg(xml_files)))
+  if (pandoc2.0()) c(rbind("--syntax-definition", pandoc_path_arg(xml_files)))
 }
 
 # quote args if they need it
