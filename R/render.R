@@ -1226,5 +1226,5 @@ add_syntax_definition <- function(args) {
     return(args)
   }
   # otherwise add our file
-  c(args, "--syntax-definition", pkg_file_highlight("r.xml"))
+  c(args, pandoc_syntax_definition_args(pkg_file_highlight("r.xml")))
 }
