@@ -897,7 +897,7 @@ render <- function(input,
       pandoc_args <- c(lua_filters, pandoc_args)
 
       # if pandoc highlighting is used, add the syntax definition file
-      # supporting new pipe operator
+      # supporting new pipe operator. Only done for Pandoc 2.15+
       # TODO: remove when updated upstream
       pandoc_args <- add_syntax_definition(pandoc_args)
 
@@ -1218,11 +1218,14 @@ file_scope_split <- function(input, fun) {
 }
 
 add_syntax_definition <- function(args) {
-  # do not add if not Pandoc highlighting
-  if (detect_pattern("--no-highlight", args)) return(args)
-  # do not add if user provided another r.xml file
-  if (detect_pattern("--syntax-definition", args) &&
-      detect_pattern("r\\.xml", args)) {
+  if (
+    # Only add a syntax file for 2.15+ due to Pandoc's issues.
+    !pandoc_available("2.15") ||
+    # do not add if not Pandoc highlighting
+    detect_pattern("--no-highlight", args) ||
+    # do not add if user provided another r.xml file
+    (detect_pattern("--syntax-definition", args) && detect_pattern("r\\.xml", args))
+  ) {
     return(args)
   }
   # otherwise add our file
