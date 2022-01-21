@@ -78,7 +78,7 @@ function number_sections(header)
       if old_id then
         identifiers['#' .. old_id] = '#' .. header.identifier
         -- remove span
-        header.content:remove(1)
+        table.remove(header.content, 1)
         -- prepend span Inlines content to the header content
         header.content = span_content.content:__concat(header.content)
         -- return content without the span
