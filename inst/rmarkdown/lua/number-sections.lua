@@ -132,7 +132,7 @@ function number_sections(header)
     attr['data-rmarkdown-temporarily-recorded-id'] = header.identifier
     header.content = {pandoc.Span(
       header.content,
-      pandoc.Attr('', '', attr)
+      pandoc.Attr('', {}, attr)
     )}
   end
 
