@@ -60,65 +60,64 @@ function number_sections(header)
 
   -- This will only run on second conversion to help fix the links in the TOC
   -- by retrieving the recorded attributes
-  if not preprocess and #header.content and (header.content[1].t == 'Span') then
-    needs_number_sections = false
-    -- retrieve the attributes
-    local span_content = header.content[1]
-    local old_id = span_content.attributes['data-rmarkdown-temporarily-recorded-id']
-    if old_id then
-      identifiers['#' .. old_id] = '#' .. header.identifier
+  if not preprocess then
+    if #header.content and (header.content[1].t == 'Span') then
+      needs_number_sections = false
+      -- retrieve the attributes
+      local span_content = header.content[1]
+      local old_id = span_content.attributes['data-rmarkdown-temporarily-recorded-id']
+      if old_id then
+        identifiers['#' .. old_id] = '#' .. header.identifier
+      end
+      -- remove span
+      header.content:remove(1)
+      -- prepend span Inlines content to the header content
+      header.content = span_content.content:__concat(header.content)
+      -- return content without the span
+      return header
     end
-    -- remove span
-    header.content:remove(1)
-    -- prepend span Inlines content to the header content
-    header.content = span_content.content:__concat(header.content)
-    -- return content without the span
-    return header
-  end
+  else
 
-  -- The following part will run during the pre-processing step only to
-  --  * add numbers on header
-  --  * record the old identifier for next processing to fix links
+    -- The following part will run during the pre-processing step only to
+    --  * add numbers on header
+    --  * record the old identifier for next processing to fix links
 
-  -- Unnumbered
-  if not needs_number_sections or header.classes:find("unnumbered") then
-    return nil
-  end
-
-  -- Else
-  --- Reset and update section_number_table
-  if (header.level < previous_header_level) then
-    for i=header.level+1,n_section_number_table do
-      section_number_table[i] = 0
+    -- Unnumbered
+    if not needs_number_sections or header.classes:find("unnumbered") then
+      return nil
     end
-  end
-  previous_header_level = header.level
-  section_number_table[header.level] = section_number_table[header.level] + 1
 
-  --- Define section number as string
-  local section_number_string = tostring(section_number_table[header.level])
-  if header.level > 1 then
-    for i = header.level-1,1,-1 do
-      section_number_string = section_number_table[i] .. "." .. section_number_string
+    --- Reset and update section_number_table
+    if (header.level < previous_header_level) then
+      for i=header.level+1,n_section_number_table do
+        section_number_table[i] = 0
+      end
     end
-  end
+    previous_header_level = header.level
+    section_number_table[header.level] = section_number_table[header.level] + 1
 
-  --- Update Header element
-  table.insert(header.content, 1, separator)
-  table.insert(header.content, 1, pandoc.Str(section_number_string))
+    --- Define section number as string
+    local section_number_string = tostring(section_number_table[header.level])
+    if header.level > 1 then
+      for i = header.level-1,1,-1 do
+        section_number_string = section_number_table[i] .. "." .. section_number_string
+      end
+    end
 
-  --- Return Div wrapping Header and recording Header's current ID
-  if preprocess then
+    --- Update Header element
+    table.insert(header.content, 1, separator)
+    table.insert(header.content, 1, pandoc.Str(section_number_string))
+
+    --- Return Header wrapped in Spans with recording Header's current ID as attribute
     local attr = {}
     attr['data-rmarkdown-temporarily-recorded-id'] = header.identifier
-    header.content = pandoc.Span(
+    header.content = {pandoc.Span(
       header.content,
       pandoc.Attr('', '', attr)
-    )
+    )}
+
     return header
   end
-
-  return header
 end
 
 
