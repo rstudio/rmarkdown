@@ -45,6 +45,10 @@ test_that("number_sections Lua filter works", {
     md_document(number_sections = TRUE, md_extensions = "+gfm_auto_identifiers")
   )
   expect_snapshot_output(result, variant = pandoc_2.11.2)
+
+  # Github document
+  result <- .generate_md_and_convert(rmd, github_document(number_sections = TRUE, toc = TRUE))
+  expect_snapshot_output(result, variant = pandoc_2.11.2)
 })
 
 test_that("latex-divs.lua works with HTML doc", {
