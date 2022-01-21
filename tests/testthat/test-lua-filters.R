@@ -47,6 +47,7 @@ test_that("number_sections Lua filter works", {
   expect_snapshot_output(result, variant = pandoc_2.11.2)
 
   # Github document
+  skip_if_not_pandoc("2.10.1") # changes in gfm writer break this test for earlier versions
   result <- .generate_md_and_convert(rmd, github_document(number_sections = TRUE, toc = TRUE))
   expect_snapshot_output(result, variant = pandoc_2.11.2)
 })
