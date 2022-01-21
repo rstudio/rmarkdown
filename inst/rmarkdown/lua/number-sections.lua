@@ -37,7 +37,6 @@ local n_section_number_table = #section_number_table
 local previous_header_level = 0
 local separator = pandoc.Space()
 local identifiers = {}
-local needs_number_sections = true
 if FORMAT == "docx" then -- to be consistent with Pandoc >= 2.10.1
   separator = pandoc.Str("\t")
 end
@@ -62,7 +61,6 @@ function number_sections(header)
   -- by retrieving the recorded attributes
   if not preprocess then
     if #header.content and (header.content[1].t == 'Span') then
-      needs_number_sections = false
       -- retrieve the attributes
       local span_content = header.content[1]
       local old_id = span_content.attributes['data-rmarkdown-temporarily-recorded-id']
@@ -83,7 +81,7 @@ function number_sections(header)
     --  * record the old identifier for next processing to fix links
 
     -- Unnumbered
-    if not needs_number_sections or header.classes:find("unnumbered") then
+    if header.classes:find("unnumbered") then
       return nil
     end
 
