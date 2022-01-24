@@ -48,26 +48,6 @@ function pandocAvailable(target)
   return true
 end
 
-
---- Returns the type of a metadata value.
---  Author: Albert Krewinkel
---  Source: https://github.com/pandoc/lua-filters/commit/3057acc52d1d6cfb7134c934a5039ce170bf78fa
---
---  Backward compatible function as retrieving type on Metadata has changed.
---  `pandoc.utils.type()` not available before Pandoc 2.17
---
--- @param v a metadata value
--- @treturn string one of `Blocks`, `Inlines`, `List`, `Map`, `string`, `boolean`
-function metatype (v)
-  if pandoc.utils.type == nil then
-    local metatag = type(v) == 'table' and v.t and v.t:gsub('^Meta', '')
-    return metatag and metatag ~= 'Map' and metatag or type(v)
-  end
-  return pandoc.utils.type(v)
-end
-
-type = pandoc.utils.type or metatype
-
 -- for debuging purpose
 function print_debug(label,obj,iter)
   local debug_mode = os.getenv("DEBUG_PANDOC_LUA") == "TRUE"
@@ -88,3 +68,24 @@ function print_debug(label,obj,iter)
   end
   return nil
 end
+
+
+--- Returns the type of a metadata value.
+--  Author: Albert Krewinkel
+--  Source: https://github.com/pandoc/lua-filters/commit/3057acc52d1d6cfb7134c934a5039ce170bf78fa
+--
+--  Backward compatible function as retrieving type on Metadata has changed.
+--  `pandoc.utils.type()` not available before Pandoc 2.17
+--
+-- @param v a metadata value
+-- @treturn string one of `Blocks`, `Inlines`, `List`, `Map`, `string`, `boolean`
+local origtype = type -- base Lua function
+function metatype (v)
+  if PANDOC_VERSION <= '2.16.2' then
+    local metatag = origtype(v) == 'table' and v.t and v.t:gsub('^Meta', '')
+    return metatag and metatag ~= 'Map' and metatag or origtype(v)
+  end
+  return pandoc.utils.type(v)
+end
+
+type = pandoc.utils.type or metatype
