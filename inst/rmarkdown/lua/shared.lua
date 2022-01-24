@@ -47,3 +47,43 @@ function pandocAvailable(target)
   end
   return true
 end
+
+-- for debuging purpose
+function print_debug(label,obj,iter)
+  local debug_mode = os.getenv("DEBUG_PANDOC_LUA") == "TRUE"
+  obj = obj or nil
+  iter = iter or pairs
+  label = label or ""
+  label = "DEBUG (from custom-environment.lua): "..label
+  if (debug_mode) then
+      if not obj then
+          print(label.." nil")
+      elseif (type(obj) == "string") then
+          print(label.." "..obj)
+      elseif type(obj) == "table" then
+          for k,v in iter(obj) do
+              print(label.."id:"..k.. " val:"..v)
+          end
+      end
+  end
+  return nil
+end
+
+
+--- Returns the type of a metadata value.
+--  Author: Albert Krewinkel
+--  Source: https://github.com/pandoc/lua-filters/commit/3057acc52d1d6cfb7134c934a5039ce170bf78fa
+--
+--  Backward compatible function as retrieving type on Metadata has changed.
+--  `pandoc.utils.type()` not available before Pandoc 2.17
+--
+-- @param v a metadata value
+-- @treturn string one of `Blocks`, `Inlines`, `List`, `Map`, `string`, `boolean`
+function pandoc_type (v)
+  if pandoc.utils.type == nil then
+    local metatag = type(v) == 'table' and v.t and v.t:gsub('^Meta', '')
+    return metatag and metatag ~= 'Map' and metatag or type(v)
+  end
+  return pandoc.utils.type(v)
+end
+
