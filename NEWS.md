@@ -28,10 +28,6 @@ rmarkdown 2.12
   
 - Added support for Pandoc's `dir` variable in HTML templates. This is the second [Language Variables](https://pandoc.org/MANUAL.html#language-variables) after `lang`. 
 
-- Lua Filters: Added two more functions in `shared.lua` for other package to use: 
-  * Added `type()` function backward compatible following Pandoc 2.17 changes.
-  * Added `print_debug()` for easier logging during debug.
-
 rmarkdown 2.11
 ================================================================================
 
