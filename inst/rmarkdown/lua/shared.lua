@@ -79,13 +79,11 @@ end
 --
 -- @param v a metadata value
 -- @treturn string one of `Blocks`, `Inlines`, `List`, `Map`, `string`, `boolean`
-local origtype = type -- base Lua function
-function metatype (v)
-  if PANDOC_VERSION <= '2.16.2' then
-    local metatag = origtype(v) == 'table' and v.t and v.t:gsub('^Meta', '')
-    return metatag and metatag ~= 'Map' and metatag or origtype(v)
+function pandoc_type (v)
+  if pandoc.utils.type == nil then
+    local metatag = type(v) == 'table' and v.t and v.t:gsub('^Meta', '')
+    return metatag and metatag ~= 'Map' and metatag or type(v)
   end
   return pandoc.utils.type(v)
 end
 
-type = pandoc.utils.type or metatype
