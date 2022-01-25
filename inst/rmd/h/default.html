@@ -479,10 +479,6 @@ $endif$
 
 $endif$
 
-$if(mathjax-url)$
-<script src="$mathjax-url$" type="text/javascript" data-external="1"></script>
-$endif$
-
 $if(katex-url)$
 <link rel="stylesheet" href="$katex-url$/katex.min.css" data-external="1">
 <script defer src="$katex-url$/katex.min.js" data-external="1"></script>
@@ -677,5 +673,18 @@ $endif$
 });
 </script>
 $endif$
+
+$if(mathjax-url)$
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "$mathjax-url$";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+$endif$
+
 </body>
 </html>
