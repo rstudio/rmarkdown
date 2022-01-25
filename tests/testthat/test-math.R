@@ -27,12 +27,4 @@ test_that("add_math_support() builds correct Pandoc arguments", {
     test_add_math_support(list(engine = "katex"), template = "default"),
     c(pandoc_math_args("katex"), pandoc_variable_arg("katex-url", default_math("katex")))
   )
-
-  withr::with_tempdir({
-    dir.create(file_dir <- "files-dir")
-    expect_identical(
-      test_add_math_support(list(engine = "mathjax", url = "local"), files_dir = file_dir, output_dir = "."),
-      c("--mathjax", file.path("files-dir", "mathjax-local", mathjax_config()))
-    )
-  })
 })
