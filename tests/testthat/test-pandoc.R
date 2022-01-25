@@ -84,3 +84,9 @@ test_that("Converting bib file is working", {
   expect_snapshot_output(pandoc_citeproc_convert(bib_file, "json"))
   expect_snapshot_output(pandoc_citeproc_convert(bib_file, "yaml"))
 })
+
+test_that("pandoc_math_args() build correct CLI flag", {
+  expect_identical(pandoc_math_args("katex"), c("--katex"))
+  expect_identical(pandoc_math_args("katex", "CDN"), c("--katex", "CDN"))
+  expect_error(pandoc_math_args("gladtex", "CDN"), "gladtex does not support")
+})

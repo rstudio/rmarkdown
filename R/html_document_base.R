@@ -338,8 +338,11 @@ check_math_argument <- function(math) {
     }
   } else if (is.character(math) && length(math) == 1L) {
     engine <- math
-  } else {
+  }
+  # if no engine, incorrect value provided
+  if (is.null(engine)) {
     stop2("math can be the engine name (a string) or a list with engine and optionnaly the url to use.")
   }
+
   list(engine = engine, url = url)
 }

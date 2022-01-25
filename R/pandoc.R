@@ -490,7 +490,7 @@ pandoc_math_args <- function(engine = pandoc_math_engines(), url = NULL) {
   engine <- match.arg(engine)
 
   if (!is.null(url) && engine %in% c("mathml", "gladtex")) {
-    stop2("mathml and gladtex does not support setting a URL.")
+    stop2(sprintf("%s does not support setting a URL.", engine))
   }
 
   c(paste0("--", engine), if (!is.null(url)) url)
