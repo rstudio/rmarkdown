@@ -85,16 +85,23 @@
 #'  \code{highlight = "default"}, it will use the accessible theme called
 #'  "arrow". To learn more about \pkg{downlit} highlighting engine, see
 #'  \url{https://downlit.r-lib.org/}.
-#'@param mathjax Include mathjax. The "default" option uses an https URL from a
+#'@param mathjax _(deprecated - see `math` argument)_ Include mathjax. The "default" option uses an https URL from a
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
 #'  copied into the output directory). You can pass an alternate URL or pass
 #'  \code{NULL} to exclude MathJax entirely.
-#'@param math Math rendering engine. The "default" option inherits the `mathjax`
-#'  argument. Available options are "mathjax", "mathml", "webtex", "katex", and
-#'  "gladtex". All of them can be specified as a non-named string. For
-#'  "mathjax", "webtex", and "katex", they can be specified as a named string,
-#'  whose name corresponds to engine and the value corresponds to URL. See
-#'  \url{https://pandoc.org/MANUAL.html#math-rendering-in-html} for the details.
+#'@param math Math rendering engine to use. This will define the math method to use with Pandoc.
+#'
+#'  * It can be a string for the engine, one of
+#'  `r knitr::combine_words(pandoc_math_engines(), and = "or ", before = "'")`,
+#'  or `default` for `mathjax`.
+#'  * It can be a list of
+#'    * `engine`:  one of
+#'      `r knitr::combine_words(pandoc_math_engines(), and = "or ", before = "'")`.
+#'    * `url`: A specific url to use with `mathjax`, `katex` or `webtex`.
+#'      Note that for `engine = "mathjax"`, `url = "local"` will use a local version of MathJax (which is
+#'  copied into the output directory).
+#'
+#'  See [Pandoc's Manual about Math in HTML](https://pandoc.org/MANUAL.html#math-rendering-in-html) for the details.
 #'  Note that `c(mathjax = "local")` is equivalent to specifying "local" to
 #'  `mathjax`.
 #'@param section_divs Wrap sections in \code{<div>} tags, and attach identifiers to the
@@ -682,20 +689,6 @@ themes <- function() {
 html_highlighters <- function() {
   c(highlighters(), "textmate")
 }
-
-default_math <- function(engine = c("mathjax", "katex")) {
-  engine <- match.arg(engine)
-  if (engine == "mathjax") {
-    paste0("https://mathjax.rstudio.com/latest/", mathjax_config())
-  } else {
-    "https://cdn.jsdelivr.net/npm/katex@0.12.0/dist"
-  }
-}
-
-mathjax_config <- function() {
-  "MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-}
-
 
 navbar_html_from_yaml <- function(navbar_yaml) {
 
