@@ -85,7 +85,7 @@
 #'  \code{highlight = "default"}, it will use the accessible theme called
 #'  "arrow". To learn more about \pkg{downlit} highlighting engine, see
 #'  \url{https://downlit.r-lib.org/}.
-#'@param mathjax _(deprecated - see `math` argument)_ Include mathjax. The "default" option uses an https URL from a
+#'@param mathjax Include mathjax. The "default" option uses an https URL from a
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
 #'  copied into the output directory). You can pass an alternate URL or pass
 #'  \code{NULL} to exclude MathJax entirely.
@@ -100,6 +100,15 @@
 #'    * `url`: A specific url to use with `mathjax`, `katex` or `webtex`.
 #'      Note that for `engine = "mathjax"`, `url = "local"` will use a local version of MathJax (which is
 #'  copied into the output directory).
+#'
+#'  For example,
+#'  ```yaml
+#'  output:
+#'    html_document:
+#'      math:
+#'        engine: katex
+#'        url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+#'  ```
 #'
 #'  See [Pandoc's Manual about Math in HTML](https://pandoc.org/MANUAL.html#math-rendering-in-html) for the details.
 #'  Note that `c(mathjax = "local")` is equivalent to specifying "local" to

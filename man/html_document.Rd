@@ -147,14 +147,30 @@ MathJax CDN. The "local" option uses a local version of MathJax (which is
 copied into the output directory). You can pass an alternate URL or pass
 \code{NULL} to exclude MathJax entirely.}
 
-\item{math}{Math rendering engine. The "default" option inherits the `mathjax`
-argument. Available options are "mathjax", "mathml", "webtex", "katex", and
-"gladtex". All of them can be specified as a non-named string. For
-"mathjax", "webtex", and "katex", they can be specified as a named string,
-whose name corresponds to engine and the value corresponds to URL. See
-\url{https://pandoc.org/MANUAL.html#math-rendering-in-html} for the details.
-Note that `c(mathjax = "local")` is equivalent to specifying "local" to
-`mathjax`.}
+\item{math}{Math rendering engine to use. This will define the math method to use with Pandoc.
+\itemize{
+\item It can be a string for the engine, one of
+\verb{r 'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'or }default\code{for}mathjax`.
+\item It can be a list of
+\itemize{
+\item \code{engine}:  one of
+'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'.
+\item \code{url}: A specific url to use with \code{mathjax}, \code{katex} or \code{webtex}.
+Note that for \code{engine = "mathjax"}, \code{url = "local"} will use a local version of MathJax (which is
+copied into the output directory).
+}
+}
+
+For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    math:
+      engine: katex
+      url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+}\if{html}{\out{</div>}}
+
+See \href{https://pandoc.org/MANUAL.html#math-rendering-in-html}{Pandoc's Manual about Math in HTML} for the details.
+Note that \code{c(mathjax = "local")} is equivalent to specifying "local" to
+\code{mathjax}.}
 
 \item{template}{Pandoc template to use for rendering. Pass "default" to use
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
