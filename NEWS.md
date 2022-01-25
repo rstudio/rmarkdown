@@ -3,6 +3,8 @@ rmarkdown 2.12
 
 - `html_document` and `html_document_base` gains the `math` argument, and support a variety of math rendering engines: "mathjax", "katex", "mathml", "webtex", and "gladtex". The default value is "default", which inherits the `mathjax` option. See `?rmarkdown::html_document` for details (thanks, @atusy, #1940).
 
+- Fixed broken links to section headers when `number_sections = TRUE` is specified in `md_document` and `github_document` (thanks, #2093, @atusy).
+
 - Added `available_templates()` to list all the templates from a specific package that can be used with `rmarkdown::draft()`.
 
 - Following support in Pandoc 2.15, `powerpoint_presentation()` gains a `incremental` argument as other slide formats. As a reminder, setting `incremental = TRUE` will make lists to display incrementally. See more in [Pandoc's MANUAL](https://pandoc.org/MANUAL.html#incremental-lists).
@@ -27,6 +29,10 @@ rmarkdown 2.12
   Customizing using a css rule is still possible. Detailed explanation and examples have been added in `?html_document`.
   
 - Added support for Pandoc's `dir` variable in HTML templates. This is the second [Language Variables](https://pandoc.org/MANUAL.html#language-variables) after `lang`. 
+
+- Lua Filters: Added two more functions in `shared.lua` for other package to use: 
+  * Added `type()` function backward compatible following Pandoc 2.17 changes.
+  * Added `print_debug()` for easier logging during debug.
 
 rmarkdown 2.11
 ================================================================================

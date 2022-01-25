@@ -8,7 +8,7 @@ message: 'To cite package "rmarkdown" in publications use:'
 type: software
 license: GPL-3.0-only
 title: 'rmarkdown: Dynamic Documents for R'
-version: 2.11.10
+version: 2.11.12
 abstract: Convert R Markdown documents into a variety of formats.
 authors:
 - family-names: Allaire
@@ -80,7 +80,7 @@ preferred-citation:
     email: rich@rstudio.com
     orcid: https://orcid.org/0000-0003-3925-190X
   year: '2022'
-  notes: R package version 2.11.10
+  notes: R package version 2.11.12
   url: https://github.com/rstudio/rmarkdown
 repository: https://CRAN.R-project.org/package=rmarkdown
 repository-code: https://github.com/rstudio/rmarkdown
@@ -523,7 +523,7 @@ references:
     email: hadley@rstudio.com
   year: '2022'
   url: https://CRAN.R-project.org/package=testthat
-  version: '>= 3.0.0'
+  version: '>= 3.0.3'
 - type: software
   title: tibble
   abstract: 'tibble: Simple Data Frames'
