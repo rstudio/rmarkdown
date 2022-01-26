@@ -33,7 +33,7 @@ test_that("add_math_support() builds correct Pandoc arguments", {
     test_add_math_support(list(engine = "default")),
     test_add_math_support(list(engine = "mathjax"))
   )
-  expect_error(test_add_math_support(list(engine = "dummy")), "Engine `math='dummy'`")
+  expect_error(test_add_math_support(list(engine = "dummy")), "`math_method='dummy'`")
 
   expect_identical(
     test_add_math_support(list(engine = "gladtex")),

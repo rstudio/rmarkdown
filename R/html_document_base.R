@@ -19,7 +19,7 @@
 html_document_base <- function(theme = NULL,
                                self_contained = TRUE,
                                lib_dir = NULL,
-                               math = "default",
+                               math_method = "default",
                                mathjax = "default",
                                pandoc_args = NULL,
                                template = "default",
@@ -38,7 +38,7 @@ html_document_base <- function(theme = NULL,
 
   # backward compatibility for math /mathjax argument
   # math is used only when `mathjax = "default"`
-  math <- mathjax_to_math(mathjax, math)
+  math <- mathjax_to_math(mathjax, math_method)
   # any math to list(engine = , url = )
   math <- check_math_argument(math)
 
@@ -279,12 +279,12 @@ add_math_support <- function(math, template, files_dir, output_dir) {
 
   # Check supported
   if (!math$engine %in% c(pandoc_math_engines())) {
-    stop2(sprintf("Engine `math='%s'` is not supported.", math$engine))
+    stop2(sprintf("`math_method='%s'` is not supported.", math$engine))
   }
 
   # support only mathjax for Pandoc before 2.0+
   if (!pandoc2.0() && !identical(math$engine, "mathjax")) {
-    stop2("only `math = 'mathjax'` is supported with earlier version than Pandoc 2.0 ")
+    stop2("only `math_method = 'mathjax'` is supported with earlier version than Pandoc 2.0 ")
   }
 
   # No special handling needed for most engine

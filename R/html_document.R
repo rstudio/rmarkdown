@@ -89,7 +89,7 @@
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
 #'  copied into the output directory). You can pass an alternate URL or pass
 #'  \code{NULL} to exclude MathJax entirely.
-#'@param math Math rendering engine to use. This will define the math method to use with Pandoc.
+#'@param math_method Math rendering engine to use. This will define the math method to use with Pandoc.
 #'
 #'  * It can be a string for the engine, one of
 #'  `r knitr::combine_words(pandoc_math_engines(), and = "or ", before = "'")`,
@@ -105,7 +105,7 @@
 #'  ```yaml
 #'  output:
 #'    html_document:
-#'      math:
+#'      math_method:
 #'        engine: katex
 #'        url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
 #'  ```
@@ -357,7 +357,7 @@ html_document <- function(toc = FALSE,
                           theme = "default",
                           highlight = "default",
                           highlight_downlit = FALSE,
-                          math = "default",
+                          math_method = "default",
                           mathjax = "default",
                           template = "default",
                           extra_dependencies = NULL,
@@ -638,7 +638,7 @@ html_document <- function(toc = FALSE,
     base_format = html_document_base(theme = theme,
                                      self_contained = self_contained,
                                      lib_dir = lib_dir,
-                                     math = math,
+                                     math_method = math_method,
                                      mathjax = mathjax,
                                      template = template,
                                      pandoc_args = pandoc_args,

@@ -2,5 +2,5 @@
 local_edition(3)
 
 test_that("Only mathjax is supported", {
-  expect_error(ioslides_presentation(math = "katex"))
+  expect_error(ioslides_presentation(math_method = "katex"))
 })
