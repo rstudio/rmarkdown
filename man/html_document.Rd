@@ -23,7 +23,7 @@ html_document(
   theme = "default",
   highlight = "default",
   highlight_downlit = FALSE,
-  math = "default",
+  math_method = "default",
   mathjax = "default",
   template = "default",
   extra_dependencies = NULL,
@@ -142,7 +142,7 @@ Only Pandoc color schemes are supported with this engine. With
 "arrow". To learn more about \pkg{downlit} highlighting engine, see
 \url{https://downlit.r-lib.org/}.}
 
-\item{math}{Math rendering engine to use. This will define the math method to use with Pandoc.
+\item{math_method}{Math rendering engine to use. This will define the math method to use with Pandoc.
 \itemize{
 \item It can be a string for the engine, one of
 \verb{r 'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'or }default\code{for}mathjax`.
@@ -158,7 +158,7 @@ copied into the output directory).
 
 For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
   html_document:
-    math:
+    math_method:
       engine: katex
       url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
 }\if{html}{\out{</div>}}

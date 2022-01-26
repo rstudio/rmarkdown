@@ -8,7 +8,7 @@ html_document_base(
   theme = NULL,
   self_contained = TRUE,
   lib_dir = NULL,
-  math = "default",
+  math_method = "default",
   mathjax = "default",
   pandoc_args = NULL,
   template = "default",
@@ -45,7 +45,7 @@ its size).}
 bootstrap, etc.) into. By default this will be the name of the document with
 \code{_files} appended to it.}
 
-\item{math}{Math rendering engine to use. This will define the math method to use with Pandoc.
+\item{math_method}{Math rendering engine to use. This will define the math method to use with Pandoc.
 \itemize{
 \item It can be a string for the engine, one of
 \verb{r 'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'or }default\code{for}mathjax`.
@@ -61,7 +61,7 @@ copied into the output directory).
 
 For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
   html_document:
-    math:
+    math_method:
       engine: katex
       url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
 }\if{html}{\out{</div>}}
