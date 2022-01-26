@@ -50,6 +50,11 @@ html_document_base <- function(theme = NULL,
     args <- c(args, "--self-contained")
   }
 
+  # math support
+  math_support <- add_math_support(math, template, lib_dir, output_dir)
+  args <- c(args, math_support$args)
+  extra_dependencies <- c(extra_dependencies, math_support$extras_dependencies)
+
   # custom args
   args <- c(args, pandoc_args)
 
@@ -145,9 +150,6 @@ html_document_base <- function(theme = NULL,
                                        format_deps)
     args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir,
                                             output_dir))
-
-    # math
-    args <- c(args, add_math_support(math, template, lib_dir, output_dir))
 
     preserved_chunks <<- extract_preserve_chunks(input_file)
 
@@ -252,15 +254,8 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
 
 # Math support ------------------------------------------------------------
 
-default_math <- function(engine = c("mathjax", "katex")) {
-  # we need those url in our codebase as we are providing them to Pandoc's template
-  # instead of Pandoc's internal values.
-  engine <- match.arg(engine)
-  if (identical(engine, "mathjax")) {
-    paste0("https://mathjax.rstudio.com/latest/", mathjax_config())
-  } else {
-    "https://cdn.jsdelivr.net/npm/katex@0.15.1/dist"
-  }
+default_mathjax <- function() {
+  paste0("https://mathjax.rstudio.com/latest/", mathjax_config())
 }
 
 mathjax_config <- function() {
@@ -271,6 +266,8 @@ add_math_support <- function(math, template, files_dir, output_dir) {
 
   # check math argument should be already or NULL
   # (list(engine = "", url = "")
+
+  extras <- NULL
 
   if (is.null(math)) return(NULL)
 
@@ -290,33 +287,41 @@ add_math_support <- function(math, template, files_dir, output_dir) {
     stop2("only `math = 'mathjax'` is supported with earlier version than Pandoc 2.0 ")
   }
 
-  # No special handling needed
+  # No special handling needed for most engine
   if (math$engine %in% setdiff(pandoc_math_engines(), c("mathjax", "katex"))) {
-    return(pandoc_math_args(math$engine, math$url))
+    return(list(args = pandoc_math_args(math$engine, math$url)))
   }
 
   # MATHJAX OR KATEX needs special handling
-  if (is.null(math$url) && identical(template, "default")) {
-    # default url in our template
-    math$url <- default_math(math$engine)
-  } else if (identical(math$url, "local") && identical(math$engine, "mathjax")) {
-    # local supported for mathjax only
-    mathjax_path <- render_supporting_files(
-      pandoc_mathjax_local_path(),
-      files_dir,
-      "mathjax-local")
-    math$url <- paste(normalized_relative_to(output_dir, mathjax_path), "/",
-                 mathjax_config(), sep = "")
+
+  if (identical(math$engine, "katex")) {
+    if (identical(template, "default")) {
+      args <- pandoc_math_args(math$engine)
+      extras <- html_dependency_katex()
+    } else {
+      args <- c(pandoc_math_args(math$engine, math$url))
+    }
+  } else if (identical(math$engine, "mathjax")) {
+    if (identical(math$url, "local")) {
+      # local supported for mathjax only
+      mathjax_path <- render_supporting_files(
+        pandoc_mathjax_local_path(),
+        files_dir,
+        "mathjax-local")
+      math$url <- paste(normalized_relative_to(output_dir, mathjax_path), "/",
+                        mathjax_config(), sep = "")
+    }
+    if (identical(template, "default")) {
+      args <- c(
+        pandoc_math_args(math$engine),
+        pandoc_variable_arg("mathjax-url", math$url %||% default_mathjax())
+      )
+    } else {
+      args <- c(pandoc_math_args(math$engine, math$url))
+    }
   }
 
-  args <- if (identical(template, "default")) {
-    c(pandoc_math_args(math$engine),
-      pandoc_variable_arg(sprintf("%s-url", math$engine), math$url))
-  } else {
-    c(pandoc_math_args(math$engine, math$url))
-  }
-
-  args
+  list(args =  args, extra_dependencies = extras)
 }
 
 check_math_argument <- function(math) {
