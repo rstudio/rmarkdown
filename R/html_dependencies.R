@@ -470,3 +470,34 @@ html_dependency_header_attrs <- function() {
     )
   }
 }
+
+# Store KaTeX as a html dependency to include in our template
+html_dependency_katex <- function() {
+  htmlDependency(
+    name = "katex", version = "0.15.2",
+    src = c(href = "https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/"),
+    script = list(src = "katex.min.js",
+                  integrity = "sha256-bgI9WhLOPSUlPrdgHUg3rPIB2vq+D+mYkUTM3q0U8fw=",
+                  'data-external' = "1",
+                  defer = NA),
+    stylesheet = c("katex.min.css"),
+    # from Pandoc
+    # https://github.com/jgm/pandoc/blob/7ddb609aae48ec10ef9899b25c52a4abecfbc176/src/Text/Pandoc/Writers/HTML.hs#L313
+    head = c(
+      '<script>document.addEventListener("DOMContentLoaded", function () {',
+      '  var mathElements = document.getElementsByClassName("math");',
+      '  var macros = [];',
+      '  for (var i = 0; i < mathElements.length; i++) {',
+      '    var texText = mathElements[i].firstChild;',
+      '    if (mathElements[i].tagName == "SPAN") {',
+      '      katex.render(texText.data, mathElements[i], {',
+      '        displayMode: mathElements[i].classList.contains("display"),',
+      '        throwOnError: false,',
+      '        macros: macros,',
+      '        fleqn: false',
+      '      });',
+      '    }}});',
+      '</script>"'
+    )
+  )
+}
