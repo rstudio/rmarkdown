@@ -53,7 +53,7 @@ html_document_base <- function(theme = NULL,
   # math support
   math_support <- add_math_support(math, template, lib_dir, output_dir)
   args <- c(args, math_support$args)
-  extra_dependencies <- c(extra_dependencies, math_support$extras_dependencies)
+  extra_dependencies <- c(extra_dependencies, math_support$extra_dependencies)
 
   # custom args
   args <- c(args, pandoc_args)
@@ -297,7 +297,7 @@ add_math_support <- function(math, template, files_dir, output_dir) {
   if (identical(math$engine, "katex")) {
     if (identical(template, "default")) {
       args <- pandoc_math_args(math$engine)
-      extras <- html_dependency_katex()
+      extras <- list(html_dependency_katex())
     } else {
       args <- c(pandoc_math_args(math$engine, math$url))
     }
