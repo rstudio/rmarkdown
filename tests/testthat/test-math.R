@@ -35,15 +35,24 @@ test_that("add_math_support() builds correct Pandoc arguments", {
   )
   expect_error(test_add_math_support(list(engine = "dummy")), "Engine `math='dummy'`")
 
-  expect_identical(test_add_math_support(list(engine = "gladtex")), pandoc_math_args("gladtex"))
+  expect_identical(
+    test_add_math_support(list(engine = "gladtex")),
+    list(args = pandoc_math_args("gladtex"))
+  )
 
   expect_identical(
     test_add_math_support(list(engine = "mathjax"), template = "default"),
-    c(pandoc_math_args("mathjax"), pandoc_variable_arg("mathjax-url", default_math("mathjax")))
+    list(
+      args = c(pandoc_math_args("mathjax"), pandoc_variable_arg("mathjax-url", default_mathjax())),
+      extra_dependencies = NULL
+    )
   )
   expect_identical(
     test_add_math_support(list(engine = "katex"), template = "default"),
-    c(pandoc_math_args("katex"), pandoc_variable_arg("katex-url", default_math("katex")))
+    list(
+      args = pandoc_math_args("katex"),
+      extra_dependencies = list(html_dependency_katex())
+    )
   )
 })
 
