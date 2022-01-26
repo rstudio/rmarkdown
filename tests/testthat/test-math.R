@@ -15,6 +15,15 @@ test_that("check_math_argument()", {
   expect_error(check_math_argument(list(engine = FALSE)), "'math' can be the")
 })
 
+test_that("mathjax_to_math() brings backward compatibility", {
+  expect_null(mathjax_to_math(NULL, "default"))
+  expect_null(mathjax_to_math(FALSE, "default"))
+  expect_identical(mathjax_to_math(TRUE, "katex"), "katex")
+  expect_identical(mathjax_to_math("default", "webtex"), "webtex")
+  expect_identical(mathjax_to_math("local", "webtex"), list(engine = "mathjax", url = "local"))
+  expect_identical(mathjax_to_math("CDN", "webtex"), list(engine = "mathjax", url = "CDN"))
+})
+
 test_that("add_math_support() builds correct Pandoc arguments", {
   test_add_math_support <- function(math, template = NULL, files_dir = NULL, output_dir = NULL) {
     add_math_support(math, template, files_dir, output_dir)

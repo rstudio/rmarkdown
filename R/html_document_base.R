@@ -37,19 +37,8 @@ html_document_base <- function(theme = NULL,
   args <- c()
 
   # backward compatibility for math /mathjax argument
-  if (!identical(mathjax, "default")) {
-    # if not default
-    if (is.null(mathjax)){
-      # either it is deactivated
-      math <- NULL
-    } else if (identical(mathjax, "local")) {
-      # either it is local version asked
-      math <- list(engine = "mathjax", url = "local")
-    } else {
-      # or a url to pass to mathjax
-      math <- list(engine = "mathjax", url = mathjax)
-    }
-  }
+  # math is used only when `mathjax = "default"`
+  math <- mathjax_to_math(mathjax, math)
 
   # self contained document
   if (self_contained) {
@@ -350,4 +339,25 @@ check_math_argument <- function(math) {
   }
 
   list(engine = engine, url = url)
+}
+
+mathjax_to_math <- function(mathjax, math) {
+  if (is.null(mathjax)) {
+    # deactivate math
+    return(NULL)
+  } else if (identical(mathjax, "default")) {
+    # default to other argument now
+    return(math)
+  } else if (identical(mathjax, "local")) {
+    # use local mathajx
+    return(list(engine = "mathjax", url = "local"))
+  } else if (is.logical(mathjax)) {
+    # let mathjax = FALSE deactivate
+    return(if(isTRUE(mathjax)) math)
+  } else if (is.character(mathjax)) {
+    # any other string should be a mathjax url
+    return(list(engine = "mathjax", url = mathjax))
+  }
+  # just return math for any other value
+  math
 }
