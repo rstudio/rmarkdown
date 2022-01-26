@@ -2,11 +2,17 @@
 local_edition(3)
 
 test_that("check_math_argument()", {
+  # valid value
   expect_null(check_math_argument(NULL))
   expect_identical(check_math_argument("katex"), list(engine = "katex", url = NULL))
   expect_identical(check_math_argument(list("katex")), list(engine = "katex", url = NULL))
+  expect_identical(check_math_argument(list(engine = "katex")), list(engine = "katex", url = NULL))
   expect_identical(check_math_argument(list(engine = "katex", url = "CDN")), list(engine = "katex", url = "CDN"))
-  expect_error(check_math_argument(list(wrong = "katex")), "math can be the")
+  # invalid value
+  expect_error(check_math_argument(list(wrong = "katex")), "'math' can be the") # wrong name
+  expect_error(check_math_argument(FALSE), "'math' can be the") # logical
+  expect_error(check_math_argument(TRUE), "'math' can be the")
+  expect_error(check_math_argument(list(engine = FALSE)), "'math' can be the")
 })
 
 test_that("add_math_support() builds correct Pandoc arguments", {

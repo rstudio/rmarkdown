@@ -331,20 +331,22 @@ add_math_support <- function(math, template, files_dir, output_dir) {
 
 check_math_argument <- function(math) {
   url <- NULL
+  engine <- NULL
+  # math is deactivated
   if (is.null(math)) return(NULL)
-  if (is.list(math)) {
-    if (!is.null(names(math))) {
-      engine <- math$engine
-      url <- math$url
-    } else if (length(math) == 1L) {
-      engine <- math[[1L]]
-    }
-  } else if (is.character(math) && length(math) == 1L) {
-    engine <- math
+  # otherwise
+  if (is.list(math) && !is.null(names(math))) {
+    # can be a named list
+    engine <- if (is.character(math$engine)) math$engine
+    url <- math$url
+  } else if (length(math) == 1L && is.character(math[[1L]])) {
+    # can be a string
+    engine <- math[[1L]]
   }
-  # if no engine, incorrect value provided
+
+  # if no engine found, incorrect value must have been provided
   if (is.null(engine)) {
-    stop2("math can be the engine name (a string) or a list with engine and optionnaly the url to use.")
+    stop2("'math' can be the engine name (a string) or a list with engine and optionnaly the url to use.")
   }
 
   list(engine = engine, url = url)
