@@ -479,27 +479,6 @@ $endif$
 
 $endif$
 
-$if(katex-url)$
-$-- From Pandoc writer
-$-- https://github.com/jgm/pandoc/blob/7ddb609aae48ec10ef9899b25c52a4abecfbc176/src/Text/Pandoc/Writers/HTML.hs#L313
-<script defer src="$katex-url$/katex.min.js" data-external="1"></script>
-<script>document.addEventListener("DOMContentLoaded", function () {
-  var mathElements = document.getElementsByClassName("math");
-  var macros = [];
-  for (var i = 0; i < mathElements.length; i++) {
-    var texText = mathElements[i].firstChild;
-    if (mathElements[i].tagName == "SPAN") {
-     katex.render(texText.data, mathElements[i], {
-      displayMode: mathElements[i].classList.contains('display'),
-      throwOnError: false,
-      macros: macros,
-      fleqn: false
-     });
-  }}});
-</script>
-<link rel="stylesheet" href="$katex-url$/katex.min.css" data-external="1">
-$endif$
-
 $for(include-before)$
 $include-before$
 $endfor$
