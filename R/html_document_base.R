@@ -39,6 +39,8 @@ html_document_base <- function(theme = NULL,
   # backward compatibility for math /mathjax argument
   # math is used only when `mathjax = "default"`
   math <- mathjax_to_math(mathjax, math)
+  # any math to list(engine = , url = )
+  math <- check_math_argument(math)
 
   # self contained document
   if (self_contained) {
@@ -267,9 +269,8 @@ mathjax_config <- function() {
 
 add_math_support <- function(math, template, files_dir, output_dir) {
 
-  # check math argument
-  # (list(engine = "", url = "") or list("engine") or "engine")
-  math <- check_math_argument(math)
+  # check math argument should be already or NULL
+  # (list(engine = "", url = "")
 
   if (is.null(math)) return(NULL)
 

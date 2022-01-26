@@ -29,7 +29,10 @@ test_that("add_math_support() builds correct Pandoc arguments", {
     add_math_support(math, template, files_dir, output_dir)
   }
   expect_null(test_add_math_support(math = NULL))
-  expect_identical(test_add_math_support("default"), test_add_math_support("mathjax"))
+  expect_identical(
+    test_add_math_support(list(engine = "default")),
+    test_add_math_support(list(engine = "mathjax"))
+  )
   expect_error(test_add_math_support(list(engine = "dummy")), "Engine `math='dummy'`")
 
   expect_identical(test_add_math_support(list(engine = "gladtex")), pandoc_math_args("gladtex"))
@@ -42,4 +45,9 @@ test_that("add_math_support() builds correct Pandoc arguments", {
     test_add_math_support(list(engine = "katex"), template = "default"),
     c(pandoc_math_args("katex"), pandoc_variable_arg("katex-url", default_math("katex")))
   )
+})
+
+test_that("Local mathjax does not work with self_contained", {
+  expect_error(validate_self_contained(list(engine = "mathjax", url = "local")),
+               "isn't compatible")
 })
