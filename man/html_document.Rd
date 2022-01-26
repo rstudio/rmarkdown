@@ -23,8 +23,8 @@ html_document(
   theme = "default",
   highlight = "default",
   highlight_downlit = FALSE,
-  mathjax = "default",
   math = "default",
+  mathjax = "default",
   template = "default",
   extra_dependencies = NULL,
   css = NULL,
@@ -142,11 +142,6 @@ Only Pandoc color schemes are supported with this engine. With
 "arrow". To learn more about \pkg{downlit} highlighting engine, see
 \url{https://downlit.r-lib.org/}.}
 
-\item{mathjax}{Include mathjax. The "default" option uses an https URL from a
-MathJax CDN. The "local" option uses a local version of MathJax (which is
-copied into the output directory). You can pass an alternate URL or pass
-\code{NULL} to exclude MathJax entirely.}
-
 \item{math}{Math rendering engine to use. This will define the math method to use with Pandoc.
 \itemize{
 \item It can be a string for the engine, one of
@@ -171,6 +166,11 @@ For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
 See \href{https://pandoc.org/MANUAL.html#math-rendering-in-html}{Pandoc's Manual about Math in HTML} for the details.
 Note that \code{c(mathjax = "local")} is equivalent to specifying "local" to
 \code{mathjax}.}
+
+\item{mathjax}{Include mathjax. The "default" option uses an https URL from a
+MathJax CDN. The "local" option uses a local version of MathJax (which is
+copied into the output directory). You can pass an alternate URL or pass
+\code{NULL} to exclude MathJax entirely.}
 
 \item{template}{Pandoc template to use for rendering. Pass "default" to use
 the rmarkdown package default template; pass \code{NULL} to use pandoc's

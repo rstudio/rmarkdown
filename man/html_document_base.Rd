@@ -8,8 +8,8 @@ html_document_base(
   theme = NULL,
   self_contained = TRUE,
   lib_dir = NULL,
-  mathjax = "default",
   math = "default",
+  mathjax = "default",
   pandoc_args = NULL,
   template = "default",
   dependency_resolver = NULL,
@@ -45,11 +45,6 @@ its size).}
 bootstrap, etc.) into. By default this will be the name of the document with
 \code{_files} appended to it.}
 
-\item{mathjax}{Include mathjax. The "default" option uses an https URL from a
-MathJax CDN. The "local" option uses a local version of MathJax (which is
-copied into the output directory). You can pass an alternate URL or pass
-\code{NULL} to exclude MathJax entirely.}
-
 \item{math}{Math rendering engine to use. This will define the math method to use with Pandoc.
 \itemize{
 \item It can be a string for the engine, one of
@@ -74,6 +69,11 @@ For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
 See \href{https://pandoc.org/MANUAL.html#math-rendering-in-html}{Pandoc's Manual about Math in HTML} for the details.
 Note that \code{c(mathjax = "local")} is equivalent to specifying "local" to
 \code{mathjax}.}
+
+\item{mathjax}{Include mathjax. The "default" option uses an https URL from a
+MathJax CDN. The "local" option uses a local version of MathJax (which is
+copied into the output directory). You can pass an alternate URL or pass
+\code{NULL} to exclude MathJax entirely.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
