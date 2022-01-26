@@ -39,7 +39,10 @@ html_document_base <- function(theme = NULL,
   # backward compatibility for math /mathjax argument
   if (!identical(mathjax, "default")) {
     # if not default
-    if (identical(mathjax, "local")) {
+    if (is.null(mathjax)){
+      # either it is deactivated
+      math <- NULL
+    } else if (identical(mathjax, "local")) {
       # either it is local version asked
       math <- list(engine = "mathjax", url = "local")
     } else {
