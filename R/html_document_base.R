@@ -297,7 +297,7 @@ add_math_support <- function(math, template, files_dir, output_dir) {
   if (identical(math$engine, "katex")) {
     if (identical(template, "default")) {
       args <- pandoc_math_args(math$engine)
-      extras <- list(html_dependency_katex())
+      extras <- list(html_dependency_katex(math$url))
     } else {
       args <- c(pandoc_math_args(math$engine, math$url))
     }

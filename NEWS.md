@@ -17,6 +17,8 @@ rmarkdown 2.12
         url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js
   ```
   
+  For `math_method = "katex"`, KaTeX CDN will be inserted in version 0.15.2 by default (from jsdelivr). A custom URL toward another CDN can be passed as `url`.
+  
   Most HTML output format using `html_document()` or `html_document_base()` as based format should benefit from this new feature.
   See `?rmarkdown::html_document()` for details (thanks, @atusy, #1940).
   

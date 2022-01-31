@@ -56,6 +56,13 @@ test_that("add_math_support() builds correct Pandoc arguments", {
   )
 })
 
+test_that("html_dependency_katex() supports custom url", {
+  expect_identical(html_dependency_katex("cdn/katex@2.1.2")$version, "2.1.2")
+  expect_identical(html_dependency_katex("cdn/katex@2.1.2")$src$href, "cdn/katex@2.1.2")
+  expect_identical(html_dependency_katex("cdn/katex")$version, "99.99.99")
+  expect_identical(html_dependency_katex("cdn/katex")$src$href, "cdn/katex")
+})
+
 test_that("Local mathjax does not work with self_contained", {
   expect_error(validate_self_contained(list(engine = "mathjax", url = "local")),
                "isn't compatible")
