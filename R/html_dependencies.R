@@ -472,16 +472,36 @@ html_dependency_header_attrs <- function() {
 }
 
 # Store KaTeX as a html dependency to include in our template
-html_dependency_katex <- function() {
-  cdn <- "https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/"
+html_dependency_katex <- function(href = NULL) {
+  # supporting custom url
+  if (is.null(href)) {
+    href <- "https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/"
+    version <- "0.15.2"
+    integrity <- "sha256-bgI9WhLOPSUlPrdgHUg3rPIB2vq+D+mYkUTM3q0U8fw="
+  } else {
+    # if a custom url is passed we can't set value we don't know
+    integrity <- NULL
+    # guessing version from a CDN
+    r <- "^.*katex@([0-9.]+).*"
+    version <- if (grepl(r, href)) {
+      gsub(r, "\\1", href)
+    } else  {
+      "99.99.99"
+    }
+  }
+
   htmlDependency(
-    name = "katex", version = "0.15.2",
-    src = c(href = cdn),
-    script = list(src = "katex.min.js",
-                  integrity = "sha256-bgI9WhLOPSUlPrdgHUg3rPIB2vq+D+mYkUTM3q0U8fw=",
-                  crossorigin = 'anonymous',
-                  'data-external' = "1",
-                  defer = NA),
+    name = "katex",
+    version = version,
+    src = c(href = href),
+    script = c(
+      list(src = "katex.min.js",
+           'data-external' = "1",
+           defer = NA),
+      if (!is.null(integrity)) {
+        list(integrity = integrity, crossorigin = 'anonymous')
+      }
+    ),
     # TODO: reactivate when we can set data-external = 1 in htmltools
     #
     # stylesheet = c("katex.min.css"),
@@ -502,7 +522,7 @@ html_dependency_katex <- function() {
       '      });',
       '    }}});',
       '</script>',
-      sprintf('<link rel="stylesheet" href="%skatex.min.css" data-external="1">', cdn)
+      sprintf('<link rel="stylesheet" href="%skatex.min.css" data-external="1">', href)
     )
   )
 }
