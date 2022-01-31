@@ -1,7 +1,26 @@
 rmarkdown 2.12
 ================================================================================
 
-- Fixed broken links to section headers when `number_sections = TRUE` is specified in `md_document` and `github_document` (thanks, #2093, @atusy).
+- `html_document()` and `html_document_base()` gains the `math_method` argument to support [all the math rendering engines from Pandoc](https://pandoc.org/MANUAL.html#math-rendering-in-html): "mathjax", "katex", "mathml", "webtex", and "gladtex". For backward compatibility, `mathjax` argument is still working when `math_method = "default"` which is the default, and will take precedence is `mathjax` is different that `"default"`.  
+  From now on, use `math_method` to customize the engine
+  ```yaml
+  output:
+    html_document:
+      math_method: katex
+  ```
+  or its url (for `mathjax`, `katex` and `webtex`)
+  ```yaml
+  output:
+    html_document:
+      math_method: 
+        engine: mathjax
+        url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js
+  ```
+  
+  Most HTML output format using `html_document()` or `html_document_base()` as based format should benefit from this new feature.
+  See `?rmarkdown::html_document()` for details (thanks, @atusy, #1940).
+  
+- Fixed broken links to section headers when `number_sections = TRUE` is specified in `md_document` and `github_document` (thanks, @atusy, #2093).
 
 - Added `available_templates()` to list all the templates from a specific package that can be used with `rmarkdown::draft()`.
 

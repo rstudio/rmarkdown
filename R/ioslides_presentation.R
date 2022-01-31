@@ -261,6 +261,7 @@ ioslides_presentation <- function(number_sections = FALSE,
                                   widescreen = FALSE,
                                   smaller = FALSE,
                                   transition = "default",
+                                  math_method = "mathjax",
                                   mathjax = "default",
                                   analytics = NULL,
                                   template = NULL,
@@ -275,6 +276,13 @@ ioslides_presentation <- function(number_sections = FALSE,
 
   # base pandoc options for all output
   args <- c()
+
+  # math
+  math <- mathjax_to_math(mathjax, math_method)
+  math <- check_math_argument(math)
+  if (!identical(math$engine, "mathjax")) {
+    stop2("Only mathjax is supported for `ioslide_presentation()` for 'math'.")
+  }
 
   # widescreen
   if (widescreen)

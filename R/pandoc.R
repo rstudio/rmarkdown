@@ -472,50 +472,25 @@ pandoc_self_contained_html <- function(input, output) {
 }
 
 
-validate_self_contained <- function(mathjax) {
-
-  if (identical(mathjax, "local"))
+validate_self_contained <- function(math) {
+  if (identical(math$engine, "mathjax") && identical(math$url, "local"))
     stop2("Local MathJax isn't compatible with self_contained\n",
          "(you should set self_contained to FALSE)")
 }
 
-pandoc_mathjax_args <- function(mathjax,
-                                template,
-                                self_contained,
-                                files_dir,
-                                output_dir) {
-  args <- c()
+pandoc_math_engines <- function() {
+  c("mathjax", "mathml", "webtex", "katex", "gladtex")
+}
 
-  if (!is.null(mathjax)) {
+pandoc_math_args <- function(engine = pandoc_math_engines(), url = NULL) {
 
-    if (identical(mathjax, "default")) {
-      if (identical(template, "default"))
-        mathjax <- default_mathjax()
-      else
-        mathjax <- NULL
-    }
-    else if (identical(mathjax, "local")) {
-      mathjax_path <- pandoc_mathjax_local_path()
-      mathjax_path <- render_supporting_files(mathjax_path,
-                                              files_dir,
-                                              "mathjax-local")
-      mathjax <- paste(normalized_relative_to(output_dir, mathjax_path), "/",
-                       mathjax_config(), sep = "")
-    }
+  engine <- match.arg(engine)
 
-    if (identical(template, "default")) {
-      args <- c(args, "--mathjax")
-      args <- c(args, "--variable", paste0("mathjax-url:", mathjax))
-    } else if (!self_contained) {
-      args <- c(args, paste(c("--mathjax", mathjax), collapse = "="))
-    } else {
-      warning("MathJax doesn't work with self_contained when not ",
-              "using the rmarkdown \"default\" template.", call. = FALSE)
-    }
-
+  if (!is.null(url) && engine %in% c("mathml", "gladtex")) {
+    stop2(sprintf("%s does not support setting a URL.", engine))
   }
 
-  args
+  c(paste0("--", engine), if (!is.null(url)) url)
 }
 
 
