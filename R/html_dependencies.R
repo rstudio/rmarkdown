@@ -501,7 +501,7 @@ html_dependency_katex <- function() {
       '        fleqn: false',
       '      });',
       '    }}});',
-      '</script>"',
+      '</script>',
       sprintf('<link rel="stylesheet" href="%skatex.min.css" data-external="1">', cdn)
     )
   )
