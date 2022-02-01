@@ -122,10 +122,6 @@ pdf_document <- function(toc = FALSE,
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
 
-  append_in_header <- function(text, file = as_tmpfile(text)) {
-    includes_to_pandoc_args(includes(in_header = file))
-  }
-
   # template path and assets
   if (!is.null(template) && !identical(template, "default")) {
     args <- c(args, "--template", pandoc_path_arg(template))
@@ -231,6 +227,19 @@ pdf_document <- function(toc = FALSE,
   )
 }
 
+#' @param ... Arguments passed to \code{pdf_document()}.
+#' @rdname pdf_document
+#' @export
+latex_document <- function(...) {
+  merge_lists(pdf_document(..., keep_tex = TRUE), list(pandoc = list(ext = ".tex")))
+}
+
+#' @rdname pdf_document
+#' @export
+latex_fragment <- function(...) {
+  latex_document(..., template = pkg_file("rmd/fragment/default.tex"))
+}
+
 general_intermediates_generator <- function(
   saved_files_dir, original_input, intermediates_dir
 ) {
@@ -279,11 +288,6 @@ fix_horiz_rule <- function(file) {
   }
 }
 
-process_header_includes <- function(x) {
-  x <- unlist(x[["header-includes"]])
-  gsub('(^|\n)\\s*```\\{=latex\\}\n(.+?\n)```\\s*(\n|$)', '\\1\\2\\3', x)
-}
-
 citation_package_arg <- function(value) {
   value <- value[1]
   if (value == "none") {
@@ -294,20 +298,18 @@ citation_package_arg <- function(value) {
   if (value != "default") paste0("--", value)
 }
 
+# utils
 default_geometry <- function(meta_names, pandoc_args = NULL) {
   !any(c('geometry', 'documentclass') %in% meta_names) &&
     length(grep('^(--(variable|metadata)=)?documentclass:', pandoc_args)) == 0
 }
 
-#' @param ... Arguments passed to \code{pdf_document()}.
-#' @rdname pdf_document
-#' @export
-latex_document <- function(...) {
-  merge_lists(pdf_document(..., keep_tex = TRUE), list(pandoc = list(ext = ".tex")))
+process_header_includes <- function(x) {
+  x <- unlist(x[["header-includes"]])
+  gsub('(^|\n)\\s*```\\{=latex\\}\n(.+?\n)```\\s*(\n|$)', '\\1\\2\\3', x)
 }
 
-#' @rdname pdf_document
-#' @export
-latex_fragment <- function(...) {
-  latex_document(..., template = pkg_file("rmd/fragment/default.tex"))
+append_in_header <- function(text, file = as_tmpfile(text)) {
+  includes_to_pandoc_args(includes(in_header = file))
 }
+

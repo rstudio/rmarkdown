@@ -137,8 +137,15 @@ beamer_presentation <- function(toc = FALSE,
     # save files dir (for generating intermediates)
     saved_files_dir <<- files_dir
 
+    # make sure --include-in-header from command line will not completely
+    # override header-includes in metadata but give the latter lower precedence:
+    # https://github.com/rstudio/rmarkdown/issues/1359
+    # Same in PDF for beamer
+    # https://github.com/rstudio/rmarkdown/issues/2294
+    args <- append_in_header(process_header_includes(metadata))
+
     # no-op other than caching dir location
-    invisible(NULL)
+    args
   }
 
   # generate intermediates (required to make resources available for publish)
