@@ -7,10 +7,59 @@ rmarkdown 2.12
   <dir>". This makes it possible to have a directory structure for HTML output
   where there is a shared master library with css, javascript, etc. and separate 
   child directories with RMarkdown files. #146 and #1859.
+- Fix an issue in `beamer_presentation()` where `header-includes` would be overwritten by `includes = list(in_header =)` (thanks, @samcarter, #2294). Same fix as for `pdf_document()` (#1359).
+
+- `html_document()` and `html_document_base()` gains the `math_method` argument to support [all the math rendering engines from Pandoc](https://pandoc.org/MANUAL.html#math-rendering-in-html): "mathjax", "katex", "mathml", "webtex", and "gladtex". For backward compatibility, `mathjax` argument is still working when `math_method = "default"` which is the default, and will take precedence is `mathjax` is different that `"default"`.  
+  From now on, use `math_method` to customize the engine
+  ```yaml
+  output:
+    html_document:
+      math_method: katex
+  ```
+  or its url (for `mathjax`, `katex` and `webtex`)
+  ```yaml
+  output:
+    html_document:
+      math_method: 
+        engine: mathjax
+        url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js
+  ```
+  
+  For `math_method = "katex"`, KaTeX CDN will be inserted in version 0.15.2 by default (from jsdelivr). A custom URL toward another CDN can be passed as `url`.
+  
+  Most HTML output format using `html_document()` or `html_document_base()` as based format should benefit from this new feature.
+  See `?rmarkdown::html_document()` for details (thanks, @atusy, #1940).
+  
+- Fixed broken links to section headers when `number_sections = TRUE` is specified in `md_document` and `github_document` (thanks, @atusy, #2093).
+
+- Added `available_templates()` to list all the templates from a specific package that can be used with `rmarkdown::draft()`.
+
+- Following support in Pandoc 2.15, `powerpoint_presentation()` gains a `incremental` argument as other slide formats. As a reminder, setting `incremental = TRUE` will make lists to display incrementally. See more in [Pandoc's MANUAL](https://pandoc.org/MANUAL.html#incremental-lists).
+
+- Improved the highlighting mechanism in formats that supports `highlight` argument: 
+  * It is now possible to pass a custom theme file `.theme` in `highlight` argument for customizing the [syntax highlighting style used by Pandoc](https://pandoc.org/MANUAL.html#syntax-highlighting). 
+  * In addition to Pandoc's own supported themes, two more themes are bundled in the package:  `highlight: arrow` a theme [optimized for accessibility and color constrast](https://www.a11yproject.com/) (thanks to @apreshill), and `highlight: rstudio` to mimic the RStudio editor theme.
+  * For HTML output only, added optional [downlit](https://downlit.r-lib.org/) support in `html_document()` for R syntax highlighting and autolinking. Use `highlight_downlit = TRUE` to activate it (same argument as in **distill**). This features require the **downlit** package. 
 
 - Added a global option `rmarkdown.html_dependency.header_attr` (`TRUE` by default). It can be set to `FALSE` to opt-out the HTML dependency `html_dependency_header_attrs()` in documents based on `html_document_base()` (thanks, @salim-b rstudio/bookdown#865, @maelle r-lib/downlit#1538).
 
 - `draft()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
+
+- `anchor_sections` can now be easily customized using `style` or `depth` element for `anchor_sections`. Ex: 
+  ```yaml
+  output:
+    html_document:
+      anchor_sections:
+        style: symbol # use symbol style ("hash", "symbol", "icon")
+        depth: 2 # max depth to apply anchor on (default to max which is 6)
+  ```
+  Customizing using a css rule is still possible. Detailed explanation and examples have been added in `?html_document`.
+  
+- Added support for Pandoc's `dir` variable in HTML templates. This is the second [Language Variables](https://pandoc.org/MANUAL.html#language-variables) after `lang`. 
+
+- Lua Filters: Added two more functions in `shared.lua` for other package to use: 
+  * Added `type()` function backward compatible following Pandoc 2.17 changes.
+  * Added `print_debug()` for easier logging during debug.
 
 rmarkdown 2.11
 ================================================================================

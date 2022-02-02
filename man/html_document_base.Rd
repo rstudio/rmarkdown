@@ -8,6 +8,7 @@ html_document_base(
   theme = NULL,
   self_contained = TRUE,
   lib_dir = NULL,
+  math_method = "default",
   mathjax = "default",
   pandoc_args = NULL,
   template = "default",
@@ -44,6 +45,31 @@ its size).}
 \item{lib_dir}{Directory to copy dependent HTML libraries (e.g. jquery,
 bootstrap, etc.) into. By default this will be the name of the document with
 \code{_files} appended to it.}
+
+\item{math_method}{Math rendering engine to use. This will define the math method to use with Pandoc.
+\itemize{
+\item It can be a string for the engine, one of
+\verb{r 'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'or }default\code{for}mathjax`.
+\item It can be a list of
+\itemize{
+\item \code{engine}:  one of
+'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'.
+\item \code{url}: A specific url to use with \code{mathjax}, \code{katex} or \code{webtex}.
+Note that for \code{engine = "mathjax"}, \code{url = "local"} will use a local version of MathJax (which is
+copied into the output directory).
+}
+}
+
+For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    math_method:
+      engine: katex
+      url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+}\if{html}{\out{</div>}}
+
+See \href{https://pandoc.org/MANUAL.html#math-rendering-in-html}{Pandoc's Manual about Math in HTML} for the details.
+Note that \code{c(mathjax = "local")} is equivalent to specifying "local" to
+\code{mathjax}.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is

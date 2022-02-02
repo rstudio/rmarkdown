@@ -81,7 +81,7 @@ which means citations will be processed via the command
 document (typically created using the \code{\link{includes}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{output_extensions}{Pandoc extensions to be added or removed from the

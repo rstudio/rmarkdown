@@ -221,13 +221,17 @@ html_dependency_navigation <- function(code_menu, source_embed) {
                  script = script)
 }
 
-html_dependency_anchor_sections <- function() {
-
+html_dependency_anchor_sections <- function(style = c("hash", "symbol", "icon"),
+                                            section_divs = FALSE) {
+  style <- match.arg(style)
+  # dynamically build css list
+  content_style <- function(style) sprintf("anchor-sections-%s.css", style)
   htmlDependency(name = "anchor-sections",
-                 version = "1.0.1",
+                 version = "1.1.0",
                  src = pkg_file("rmd/h/anchor-sections"),
-                 script = "anchor-sections.js",
-                 stylesheet = "anchor-sections.css")
+                 script = if (section_divs) "anchor-sections.js",
+                 stylesheet = c("anchor-sections.css", content_style(style))
+  )
 }
 
 # analyze navbar html source for icon dependencies
@@ -563,4 +567,60 @@ html_dependency_header_attrs <- function() {
       )
     )
   }
+}
+
+# Store KaTeX as a html dependency to include in our template
+html_dependency_katex <- function(href = NULL) {
+  # supporting custom url
+  if (is.null(href)) {
+    href <- "https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/"
+    version <- "0.15.2"
+    integrity <- "sha256-bgI9WhLOPSUlPrdgHUg3rPIB2vq+D+mYkUTM3q0U8fw="
+  } else {
+    # if a custom url is passed we can't set value we don't know
+    integrity <- NULL
+    # guessing version from a CDN
+    r <- "^.*katex@([0-9.]+).*"
+    version <- if (grepl(r, href)) {
+      gsub(r, "\\1", href)
+    } else  {
+      "99.99.99"
+    }
+  }
+
+  htmlDependency(
+    name = "katex",
+    version = version,
+    src = c(href = href),
+    script = c(
+      list(src = "katex.min.js",
+           'data-external' = "1",
+           defer = NA),
+      if (!is.null(integrity)) {
+        list(integrity = integrity, crossorigin = 'anonymous')
+      }
+    ),
+    # TODO: reactivate when we can set data-external = 1 in htmltools
+    #
+    # stylesheet = c("katex.min.css"),
+    # from Pandoc
+    # https://github.com/jgm/pandoc/blob/7ddb609aae48ec10ef9899b25c52a4abecfbc176/src/Text/Pandoc/Writers/HTML.hs#L313
+    head = c(
+      '<script>document.addEventListener("DOMContentLoaded", function () {',
+      '  var mathElements = document.getElementsByClassName("math");',
+      '  var macros = [];',
+      '  for (var i = 0; i < mathElements.length; i++) {',
+      '    var texText = mathElements[i].firstChild;',
+      '    if (mathElements[i].tagName == "SPAN") {',
+      '      katex.render(texText.data, mathElements[i], {',
+      '        displayMode: mathElements[i].classList.contains("display"),',
+      '        throwOnError: false,',
+      '        macros: macros,',
+      '        fleqn: false',
+      '      });',
+      '    }}});',
+      '</script>',
+      sprintf('<link rel="stylesheet" href="%skatex.min.css" data-external="1">', href)
+    )
+  )
 }

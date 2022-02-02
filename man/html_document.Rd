@@ -22,6 +22,8 @@ html_document(
   self_contained = TRUE,
   theme = "default",
   highlight = "default",
+  highlight_downlit = FALSE,
+  math_method = "default",
   mathjax = "default",
   template = "default",
   extra_dependencies = NULL,
@@ -47,8 +49,10 @@ options that control the behavior of the floating table of contents. See the
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
-\item{anchor_sections}{\code{TRUE} to show section anchors when mouse hovers.
-See \link[rmarkdown:html_document]{Anchor Sections Customization section}.}
+\item{anchor_sections}{\code{TRUE} to show section anchors when mouse hovers
+for all headers. A list can also be passed with \code{style} and/or
+\code{depth} to customize the behavior. See
+\link[rmarkdown:html_document]{Anchor Sections Customization section}.}
 
 \item{section_divs}{Wrap sections in \code{<div>} tags, and attach identifiers to the
 enclosing \code{<div>} rather than the header itself.}
@@ -111,9 +115,58 @@ parameter may utilize the \code{theme}'s underlying Sass utilities
 theme name (for backwards-compatibility).
 }}
 
-\item{highlight}{Syntax highlighting style. Supported styles include
-"default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
-"haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.}
+\item{highlight}{Syntax highlight engine and style. See the
+\emph{Highlighting} section below for details.
+
+"default" (and "textmate") will use highlightjs as syntax highlighting
+engine instead of Pandoc.
+
+Any other value will be passed as Pandoc's highlighting style. Pandoc's
+built-in styles include "tango", "pygments", "kate", "monochrome",
+"espresso", "zenburn", "haddock" and "breezedark".
+
+Two custom styles are also included, "arrow", an accessible color scheme,
+and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+path to a \samp{.theme} to use
+\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{a custom Pandoc
+style}. Note that custom theme requires Pandoc 2.0+.
+
+Pass \code{NULL} to prevent syntax highlighting.}
+
+\item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package as
+syntax highlight engine to highlight inline code and R code chunks
+(including providing hyperlinks to function documentation). The package
+needs to be installed to use this feature.
+
+Only Pandoc color schemes are supported with this engine. With
+\code{highlight = "default"}, it will use the accessible theme called
+"arrow". To learn more about \pkg{downlit} highlighting engine, see
+\url{https://downlit.r-lib.org/}.}
+
+\item{math_method}{Math rendering engine to use. This will define the math method to use with Pandoc.
+\itemize{
+\item It can be a string for the engine, one of
+\verb{r 'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'or }default\code{for}mathjax`.
+\item It can be a list of
+\itemize{
+\item \code{engine}:  one of
+'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'.
+\item \code{url}: A specific url to use with \code{mathjax}, \code{katex} or \code{webtex}.
+Note that for \code{engine = "mathjax"}, \code{url = "local"} will use a local version of MathJax (which is
+copied into the output directory).
+}
+}
+
+For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    math_method:
+      engine: katex
+      url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+}\if{html}{\out{</div>}}
+
+See \href{https://pandoc.org/MANUAL.html#math-rendering-in-html}{Pandoc's Manual about Math in HTML} for the details.
+Note that \code{c(mathjax = "local")} is equivalent to specifying "local" to
+\code{mathjax}.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is
@@ -146,7 +199,7 @@ bootstrap, etc.) into. By default this will be the name of the document with
 \code{_files} appended to it.}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
@@ -171,30 +224,104 @@ the markdown syntax for citations in the
 \href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 and Citations} article in the online documentation.
 }
+\section{Highlighting}{
+
+
+There are three highlighting engines available to HTML documents:
+
+\describe{
+\item{highlightjs}{It does highlighting in the browser, using javascript It
+can only be used with the default template (i.e \code{template = "default"})
+and it has two styles ("default" and "textmate"). When activated, it adds
+two additional dependencies to the output file: a JS script and a CSS file.
+For now, this is the default engine for the default template - this could
+change in the future.}
+
+\item{Pandoc}{Pandoc's built-in highlighting.engine works with any template,
+default or custom, and style can be chosen among the built-in ones ("tango",
+"pygments", "kate", "monochrome", "espresso", "zenburn", "haddock" and
+"breezedark") or a path to a custom theme ".theme" file (see Details in the
+\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{Pandoc Manual}).
+\pkg{rmarkdown} includes two custom themes to select with \code{highlight}
+parameter:
+\itemize{
+\item{"arrow", an accessible style using colors \href{https://www.a11yproject.com/}{optimized for
+accessibility and color contrast}}
+\item{"rstudio", a color scheme close to RStudio's default highlighting and
+highglightjs's textmate.}
+}
+Custom themes are only available for Pandoc 2.0 and above.}
+
+\item{downlit}{\href{https://downlit.r-lib.org/}{\pkg{downlit}} is an R package that
+provides a syntax highlighting engine in R. It will also do automatic
+linking of R code (requires internet connectivity). It is activated only if
+\code{highlight_downlit = TRUE} and only affects R code, leaving
+highlighting for other languages unchanged. The default color scheme is
+the accessible theme "arrow".
+
+It requires some CSS in the template to correctly style links. This is included
+in the default template, but if you want to use with a custom template, you will
+need to add this to your template:
+
+\preformatted{
+$if(highlight-downlit)$
+<style type="text/css">
+  code a:any-link {
+   color: inherit; /* use colour from syntax highlighting */
+   text-decoration: underline;
+   text-decoration-color: #ccc;
+  }
+ </style>
+ $endif$}
+}}
+}
+
 \section{Anchor Sections Customization}{
 
-By default, a \samp{#} is used as a minimalist choice, referring to the id selector
-in HTML and CSS. You can easily change that using a css rule in your
-document. For example, to add a \href{https://codepoints.net/U+1F517}{link
-symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}} instead:
-\preformatted{
- a.anchor-section::before {
-   content: '\\01F517\\00FE0E';
- }}
-You can remove \samp{\\00FE0E} to get a more complex link pictogram
-\if{html}{\out{(&#x1F517;)}}.
 
-If you prefer an svg icon, you can also use one using for example a direct link or downloading it from
-\url{https://fonts.google.com/icons}.
-\preformatted{
- /* From https://fonts.google.com/icons
-    Licence: https://www.apache.org/licenses/LICENSE-2.0.html */
- a.anchor-section::before {
-   content: url(https://fonts.gstatic.com/s/i/materialicons/link/v7/24px.svg);
- }}
+This will be the default to activate anchor sections link on header\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    anchor_sections: TRUE
+}\if{html}{\out{</div>}}
 
-About how to apply custom CSS, see
+There are currently two options to modify the default behavior
+
+\describe{
+\item{\code{style}}{Select a predefined visual style:
+\itemize{
+\item \code{style = "dash"}, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.
+\item \code{style = "symbol"} will use a \href{https://codepoints.net/U+1F517}{link symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}
+\item \code{style = "icon"} will use an svg icon. \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}
+}
+
+You can also customize using a css rule in your
+document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:\if{html}{\out{<div class="sourceCode css">}}\preformatted{a.anchor-section::before \{
+  content: '\\\\01F517';
+\}
+}\if{html}{\out{</div>}}
+
+About how to apply custom CSS in R Markdown document, see
 \url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
+}
+\item{\code{depth}}{Select the maximum header level to add the
+anchor link to. For example, this yaml will use the symbol style and
+only with level 1 and 2 headings:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    anchor_sections:
+      style: icon
+      depth: 2
+}\if{html}{\out{</div>}}
+
+If omitted, anchor will be added to all headers (equivalent of
+\code{depth=6}). You can also set anchors manually with \code{depth = 0} using this syntax\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{# my header \{.hasAnchor\}
+}\if{html}{\out{</div>}}
+
+}
+
+Using anchor sections will add some CSS to your document output for the
+styling, and a JS script if \code{section_divs = TRUE}. The anchor link itself
+is added using a Lua filter, and hence requires Pandoc 2.0+
+}
 }
 
 \section{Navigation Bars}{
@@ -278,16 +405,19 @@ the basic pandoc template by passing \code{template = NULL}.
 Note however that if you choose not to use the "default" HTML template then
 several aspects of HTML document rendering will behave differently:
 
-\itemize{ \item{The \code{theme} parameter does not work (you can still
-provide styles using the \code{css} parameter). } \item{For the
-\code{highlight} parameter, the default highlighting style will resolve to
-"pygments" and the "textmate" highlighting style is not available }
-\item{The \code{toc_float} parameter will not work. } \item{The
-\code{code_folding} parameter will not work. } \item{Tabbed sections (as
-described above) will not work.} \item{Navigation bars (as described above)
-will not work. }\item{MathJax will not work if \code{self_contained} is
-\code{TRUE} (these two options can't be used together in normal pandoc
-templates). } }
+\itemize{
+\item{The \code{theme} parameter does not work (you can still provide styles
+using the \code{css} parameter). }
+\item{For the \code{highlight} parameter, the default highlighting engine
+will resolve to Pandoc instead of highlightjs and highlighting style will default to
+"pygments". "textmate" style is not available as related to highlightjs}
+\item{The \code{toc_float} parameter will not work. }
+\item{The \code{code_folding} parameter will not work. }
+\item{Tabbed sections (as described above) will not work.}
+\item{Navigation bars (as described above) will not work. }
+\item{MathJax will not work if \code{self_contained} is \code{TRUE} (these
+two options can't be used together in normal pandoc templates). }
+}
 
 Due to the above restrictions, you might consider using the \code{includes}
 parameter as an alternative to providing a fully custom template.

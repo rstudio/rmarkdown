@@ -21,6 +21,7 @@
 html_document_base <- function(theme = NULL,
                                self_contained = TRUE,
                                lib_dir = NULL,
+                               math_method = "default",
                                mathjax = "default",
                                pandoc_args = NULL,
                                template = "default",
@@ -38,13 +39,24 @@ html_document_base <- function(theme = NULL,
 
   args <- c()
 
+  # backward compatibility for math /mathjax argument
+  # math is used only when `mathjax = "default"`
+  math <- mathjax_to_math(mathjax, math_method)
+  # any math to list(engine = , url = )
+  math <- check_math_argument(math)
+
   # self contained document
   if (self_contained) {
     if (copy_resources)
       stop("Local resource copying is incompatible with self-contained documents.")
-    validate_self_contained(mathjax)
+    validate_self_contained(math)
     args <- c(args, "--self-contained")
   }
+
+  # math support
+  math_support <- add_math_support(math, template, lib_dir, output_dir)
+  args <- c(args, math_support$args)
+  extra_dependencies <- c(extra_dependencies, math_support$extra_dependencies)
 
   # custom args
   args <- c(args, pandoc_args)
@@ -151,13 +163,6 @@ html_document_base <- function(theme = NULL,
     args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir,
                                             output_dir, allow_uptree_lib_dir))
 
-    # mathjax
-    args <- c(args, pandoc_mathjax_args(mathjax,
-                                        template,
-                                        self_contained,
-                                        lib_dir,
-                                        output_dir))
-
     preserved_chunks <<- extract_preserve_chunks(input_file)
 
     args
@@ -256,4 +261,121 @@ extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks)
   preserve <- extract(input_str)
   if (!identical(preserve$value, input_str)) write_utf8(preserve$value, input_file)
   preserve$chunks
+}
+
+
+# Math support ------------------------------------------------------------
+
+default_mathjax <- function() {
+  paste0("https://mathjax.rstudio.com/latest/", mathjax_config())
+}
+
+mathjax_config <- function() {
+  "MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+}
+
+add_math_support <- function(math, template, files_dir, output_dir) {
+
+  # check math argument should be already or NULL
+  # (list(engine = "", url = "")
+
+  extras <- NULL
+
+  if (is.null(math)) return(NULL)
+
+  # handle different engines
+  # TODO: engine to use r-katex package
+
+  # Default
+  if (identical(math$engine, "default")) math$engine <- "mathjax"
+
+  # Check supported
+  if (!math$engine %in% c(pandoc_math_engines())) {
+    stop2(sprintf("`math_method='%s'` is not supported.", math$engine))
+  }
+
+  # support only mathjax for Pandoc before 2.0+
+  if (!pandoc2.0() && !identical(math$engine, "mathjax")) {
+    stop2("only `math_method = 'mathjax'` is supported with earlier version than Pandoc 2.0 ")
+  }
+
+  # No special handling needed for most engine
+  if (math$engine %in% setdiff(pandoc_math_engines(), c("mathjax", "katex"))) {
+    return(list(args = pandoc_math_args(math$engine, math$url)))
+  }
+
+  # MATHJAX OR KATEX needs special handling
+
+  if (identical(math$engine, "katex")) {
+    if (identical(template, "default")) {
+      args <- pandoc_math_args(math$engine)
+      extras <- list(html_dependency_katex(math$url))
+    } else {
+      args <- c(pandoc_math_args(math$engine, math$url))
+    }
+  } else if (identical(math$engine, "mathjax")) {
+    if (identical(math$url, "local")) {
+      # local supported for mathjax only
+      mathjax_path <- render_supporting_files(
+        pandoc_mathjax_local_path(),
+        files_dir,
+        "mathjax-local")
+      math$url <- paste(normalized_relative_to(output_dir, mathjax_path), "/",
+                        mathjax_config(), sep = "")
+    }
+    if (identical(template, "default")) {
+      args <- c(
+        pandoc_math_args(math$engine),
+        pandoc_variable_arg("mathjax-url", math$url %||% default_mathjax())
+      )
+    } else {
+      args <- c(pandoc_math_args(math$engine, math$url))
+    }
+  }
+
+  list(args =  args, extra_dependencies = extras)
+}
+
+check_math_argument <- function(math) {
+  url <- NULL
+  engine <- NULL
+  # math is deactivated
+  if (is.null(math)) return(NULL)
+  # otherwise
+  if (is.list(math) && !is.null(names(math))) {
+    # can be a named list
+    engine <- if (is.character(math$engine)) math$engine
+    url <- math$url
+  } else if (length(math) == 1L && is.character(math[[1L]])) {
+    # can be a string
+    engine <- math[[1L]]
+  }
+
+  # if no engine found, incorrect value must have been provided
+  if (is.null(engine)) {
+    stop2("'math' can be the engine name (a string) or a list with engine and optionnaly the url to use.")
+  }
+
+  list(engine = engine, url = url)
+}
+
+mathjax_to_math <- function(mathjax, math) {
+  if (is.null(mathjax)) {
+    # deactivate math
+    return(NULL)
+  } else if (identical(mathjax, "default")) {
+    # default to other argument now
+    return(math)
+  } else if (identical(mathjax, "local")) {
+    # use local mathajx
+    return(list(engine = "mathjax", url = "local"))
+  } else if (is.logical(mathjax)) {
+    # let mathjax = FALSE deactivate
+    return(if(isTRUE(mathjax)) math)
+  } else if (is.character(mathjax)) {
+    # any other string should be a mathjax url
+    return(list(engine = "mathjax", url = mathjax))
+  }
+  # just return math for any other value
+  math
 }
