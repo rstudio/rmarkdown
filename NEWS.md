@@ -24,6 +24,8 @@ rmarkdown 2.12
   Most HTML output format using `html_document()` or `html_document_base()` as based format should benefit from this new feature.
   See `?rmarkdown::html_document()` for details (thanks, @atusy, #1940).
   
+- `github_document()` also gain the `math_method` argument set  to `"webtex` by default so that equations can be rendered in the Github Markdown document. Previously, equations were not rendered. Set `math_method = NULL` to deactivate.
+  
 - Fixed broken links to section headers when `number_sections = TRUE` is specified in `md_document` and `github_document` (thanks, @atusy, #2093).
 
 - Added `available_templates()` to list all the templates from a specific package that can be used with `rmarkdown::draft()`.
