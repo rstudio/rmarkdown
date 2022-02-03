@@ -490,7 +490,7 @@ pandoc_math_args <- function(engine = pandoc_math_engines(), url = NULL) {
     stop2(sprintf("%s does not support setting a URL.", engine))
   }
 
-  c(paste0("--", engine), if (!is.null(url)) url)
+  paste0(c("--", engine, if (!is.null(url)) c("=", url)), collapse = "")
 }
 
 

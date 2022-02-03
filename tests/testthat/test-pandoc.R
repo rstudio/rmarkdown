@@ -87,6 +87,6 @@ test_that("Converting bib file is working", {
 
 test_that("pandoc_math_args() build correct CLI flag", {
   expect_identical(pandoc_math_args("katex"), c("--katex"))
-  expect_identical(pandoc_math_args("katex", "CDN"), c("--katex", "CDN"))
+  expect_identical(pandoc_math_args("webtex", "url"), c("--webtex=url"))
   expect_error(pandoc_math_args("gladtex", "CDN"), "gladtex does not support")
 })
