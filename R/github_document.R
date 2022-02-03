@@ -96,7 +96,7 @@ github_document <- function(toc = FALSE,
           "rmarkdown/templates/github_document/resources/preview.html"),
         "--variable", paste0("github-markdown-css:", css),
         if (pandoc2) c("--metadata", "pagetitle=PREVIEW"),  # HTML5 requirement
-        if (!is.null(math)) math$args
+        if (!is.null(math_method)) math$args
       )
 
       # run pandoc
