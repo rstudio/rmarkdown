@@ -10,6 +10,7 @@ md_document(
   toc = FALSE,
   toc_depth = 3,
   number_sections = FALSE,
+  math_method = NULL,
   fig_width = 7,
   fig_height = 5,
   fig_retina = NULL,
@@ -36,6 +37,10 @@ details.}
 \item{toc_depth}{Depth of headers to include in table of contents}
 
 \item{number_sections}{\code{TRUE} to number section headings}
+
+\item{math_method}{Use \code{"webtex"} to activate math rendering using the Webtex
+math method. This will insert math an image in the resulting Markdown. See
+\code{\link[=html_document]{html_document()}} for option to change webtex URL.}
 
 \item{fig_width}{Default width (in inches) for figures}
 

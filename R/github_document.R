@@ -19,6 +19,7 @@
 github_document <- function(toc = FALSE,
                             toc_depth = 3,
                             number_sections = FALSE,
+                            math_method = NULL,
                             fig_width = 7,
                             fig_height = 5,
                             dev = 'png',
@@ -58,8 +59,9 @@ github_document <- function(toc = FALSE,
 
   format <- md_document(
     variant = variant, toc = toc, toc_depth = toc_depth,
-    number_sections = number_sections, fig_width = fig_width,
-    fig_height = fig_height, dev = dev, df_print = df_print,
+    number_sections = number_sections, math_method = math_method,
+    fig_width = fig_width, fig_height = fig_height,
+    dev = dev, df_print = df_print,
     includes = includes, md_extensions = md_extensions,
     pandoc_args = pandoc_args
   )
@@ -78,6 +80,13 @@ github_document <- function(toc = FALSE,
         "--variable", paste0("github-markdown-css:", css),
         if (pandoc2) c("--metadata", "pagetitle=PREVIEW")  # HTML5 requirement
       )
+
+      # add math support
+      if (!is.null(math_method)) {
+        math <- check_math_argument(math_method)
+        math <- add_math_support(math, NULL, NULL, NULL)
+        args <- c(args, math$args)
+      }
 
       # run pandoc
       preview_file <- file_with_ext(output_file, "html")

@@ -17,6 +17,9 @@
 #'   \href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
 #'   details.
 #' @param preserve_yaml Preserve YAML front matter in final document.
+#' @param math_method Use `"webtex"` to activate math rendering using the Webtex
+#'   math method. This will insert math an image in the resulting Markdown. See
+#'   [html_document()] for option to change webtex URL.
 #' @param fig_retina Scaling to perform for retina displays. Defaults to
 #'   \code{NULL} which performs no scaling. A setting of 2 will work for all
 #'   widely used retina displays, but will also result in the output of
@@ -33,11 +36,13 @@
 #' render("input.Rmd", md_document(variant = "markdown_github"))
 #' }
 #' @export
+#' @md
 md_document <- function(variant = "markdown_strict",
                         preserve_yaml = FALSE,
                         toc = FALSE,
                         toc_depth = 3,
                         number_sections = FALSE,
+                        math_method = NULL,
                         fig_width = 7,
                         fig_height = 5,
                         fig_retina = NULL,
@@ -57,6 +62,16 @@ md_document <- function(variant = "markdown_strict",
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))
+
+  # math support
+  if (!is.null(math_method)) {
+    math <- check_math_argument(math_method)
+    if (math$engine != "webtex") {
+      stop("Markdown output format only support 'webtex' for math engine")
+    }
+    math <- add_math_support(math, NULL, NULL, NULL)
+    args <- c(args, math$args)
+  }
 
   # pandoc args
   args <- c(args, pandoc_args)
