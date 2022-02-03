@@ -28,30 +28,9 @@ github_document(
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
-\item{math_method}{Math rendering engine to use. This will define the math method to use with Pandoc.
-\itemize{
-\item It can be a string for the engine, one of
-\verb{r 'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'or }default\code{for}mathjax`.
-\item It can be a list of
-\itemize{
-\item \code{engine}:  one of
-'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'.
-\item \code{url}: A specific url to use with \code{mathjax}, \code{katex} or \code{webtex}.
-Note that for \code{engine = "mathjax"}, \code{url = "local"} will use a local version of MathJax (which is
-copied into the output directory).
-}
-}
-
-For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
-  html_document:
-    math_method:
-      engine: katex
-      url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
-}\if{html}{\out{</div>}}
-
-See \href{https://pandoc.org/MANUAL.html#math-rendering-in-html}{Pandoc's Manual about Math in HTML} for the details.
-Note that \code{c(mathjax = "local")} is equivalent to specifying "local" to
-\code{mathjax}.}
+\item{math_method}{Use \code{"webtex"} to activate math rendering using the Webtex
+math method. This will insert math an image in the resulting Markdown. See
+\code{\link[=html_document]{html_document()}} for option to change webtex URL.}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -92,13 +71,12 @@ locally previewing what the document will look like on GitHub.}
 directory. Default is \code{FALSE}.}
 }
 \value{
-R Markdown output format to pass to \code{\link{render}}
+R Markdown output format to pass to \code{\link[=render]{render()}}
 }
 \description{
 Format for converting from R Markdown to GitHub Flavored Markdown.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online
-documentation} for additional details on using the \code{github_document}
+See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online documentation} for additional details on using the \code{github_document()}
 format.
 }
