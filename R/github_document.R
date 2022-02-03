@@ -2,8 +2,8 @@
 #'
 #' Format for converting from R Markdown to GitHub Flavored Markdown.
 #'
-#' See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online
-#' documentation} for additional details on using the \code{github_document}
+#' See the [online
+#' documentation](https://rmarkdown.rstudio.com/github_document_format.html) for additional details on using the `github_document()`
 #' format.
 #' @inheritParams output_format
 #' @inheritParams html_document
@@ -11,14 +11,15 @@
 #' @param math_method Use `"webtex"` to activate math rendering using the Webtex
 #'   math method. This will insert math an image in the resulting Markdown. See
 #'   [html_document()] for option to change webtex URL.
-#' @param hard_line_breaks \code{TRUE} to generate markdown that uses a simple
+#' @param hard_line_breaks `TRUE` to generate markdown that uses a simple
 #'   newline to represent a line break (as opposed to two-spaces and a newline).
-#' @param html_preview \code{TRUE} to also generate an HTML file for the purpose of
+#' @param html_preview `TRUE` to also generate an HTML file for the purpose of
 #'   locally previewing what the document will look like on GitHub.
-#' @param keep_html \code{TRUE} to keep the preview HTML file in the working
-#'   directory. Default is \code{FALSE}.
-#' @return R Markdown output format to pass to \code{\link{render}}
+#' @param keep_html `TRUE` to keep the preview HTML file in the working
+#'   directory. Default is `FALSE`.
+#' @return R Markdown output format to pass to [render()]
 #' @export
+#' @md
 github_document <- function(toc = FALSE,
                             toc_depth = 3,
                             number_sections = FALSE,
