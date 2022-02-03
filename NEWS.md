@@ -21,6 +21,8 @@ rmarkdown 2.12
   
   For `math_method = "katex"`, KaTeX CDN will be inserted in version 0.15.2 by default (from jsdelivr). A custom URL toward another CDN can be passed as `url`.
   
+  For `math_method = "webtex"`, it will default to inset SVG using `https://latex.codecogs.com/svg.image?`. Use `https://latex.codecogs.com/png.image?` for PNG. See https://latex.codecogs.com for supported options (dpi, background, ...).
+  
   Most HTML output format using `html_document()` or `html_document_base()` as based format should benefit from this new feature.
   See `?rmarkdown::html_document()` for details (thanks, @atusy, #1940).
   
