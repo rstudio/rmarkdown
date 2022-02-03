@@ -8,7 +8,7 @@ github_document(
   toc = FALSE,
   toc_depth = 3,
   number_sections = FALSE,
-  math_method = NULL,
+  math_method = "webtex",
   fig_width = 7,
   fig_height = 5,
   dev = "png",
@@ -28,9 +28,9 @@ github_document(
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
-\item{math_method}{Use \code{"webtex"} to activate math rendering using the Webtex
-math method. This will insert math an image in the resulting Markdown. See
-\code{\link[=html_document]{html_document()}} for option to change webtex URL.}
+\item{math_method}{\code{"webtex"} (the default) is used to render equations. This
+will insert math an image in the resulting Markdown. See \code{\link[=html_document]{html_document()}}
+for option to change webtex URL. Set to \code{NULL} to opt-out.}
 
 \item{fig_width}{Default width (in inches) for figures}
 

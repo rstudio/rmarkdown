@@ -8,9 +8,9 @@
 #' @inheritParams output_format
 #' @inheritParams html_document
 #' @inheritParams md_document
-#' @param math_method Use `"webtex"` to activate math rendering using the Webtex
-#'   math method. This will insert math an image in the resulting Markdown. See
-#'   [html_document()] for option to change webtex URL.
+#' @param math_method `"webtex"` (the default) is used to render equations. This
+#'   will insert math an image in the resulting Markdown. See [html_document()]
+#'   for option to change webtex URL. Set to `NULL` to opt-out.
 #' @param hard_line_breaks `TRUE` to generate markdown that uses a simple
 #'   newline to represent a line break (as opposed to two-spaces and a newline).
 #' @param html_preview `TRUE` to also generate an HTML file for the purpose of
@@ -23,7 +23,7 @@
 github_document <- function(toc = FALSE,
                             toc_depth = 3,
                             number_sections = FALSE,
-                            math_method = NULL,
+                            math_method = "webtex",
                             fig_width = 7,
                             fig_height = 5,
                             dev = 'png',
