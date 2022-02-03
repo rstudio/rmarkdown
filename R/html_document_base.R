@@ -50,11 +50,6 @@ html_document_base <- function(theme = NULL,
     args <- c(args, "--self-contained")
   }
 
-  # math support
-  math_support <- add_math_support(math, template, lib_dir, output_dir)
-  args <- c(args, math_support$args)
-  extra_dependencies <- c(extra_dependencies, math_support$extra_dependencies)
-
   # custom args
   args <- c(args, pandoc_args)
 
@@ -122,6 +117,11 @@ html_document_base <- function(theme = NULL,
       }
       args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
     }
+
+    # math support
+    math_support <- add_math_support(math, template, lib_dir, output_dir)
+    args <- c(args, math_support$args)
+    extra_dependencies <- c(extra_dependencies, math_support$extra_dependencies)
 
     # resolve and inject extras, including dependencies specified by the format
     # and dependencies specified by the user (via extra_dependencies)
