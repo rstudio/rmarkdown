@@ -8,6 +8,9 @@
 #' @inheritParams output_format
 #' @inheritParams html_document
 #' @inheritParams md_document
+#' @param math_method Use `"webtex"` to activate math rendering using the Webtex
+#'   math method. This will insert math an image in the resulting Markdown. See
+#'   [html_document()] for option to change webtex URL.
 #' @param hard_line_breaks \code{TRUE} to generate markdown that uses a simple
 #'   newline to represent a line break (as opposed to two-spaces and a newline).
 #' @param html_preview \code{TRUE} to also generate an HTML file for the purpose of
@@ -57,9 +60,23 @@ github_document <- function(toc = FALSE,
     md_extensions <- c(md_extensions, "+gfm_auto_identifiers")
   }
 
+  # math support
+  if (!is.null(math_method)) {
+    math <- check_math_argument(math_method)
+    if (math$engine != "webtex") {
+      stop("Markdown output format only support 'webtex' for math engine")
+    }
+    if (is.null(math$url)) {
+      # default to png and white background
+      math$url <- "https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;"
+    }
+    math <- add_math_support(math, NULL, NULL, NULL)
+    pandoc_args <- c(pandoc_args, math$args)
+  }
+
   format <- md_document(
     variant = variant, toc = toc, toc_depth = toc_depth,
-    number_sections = number_sections, math_method = math_method,
+    number_sections = number_sections,
     fig_width = fig_width, fig_height = fig_height,
     dev = dev, df_print = df_print,
     includes = includes, md_extensions = md_extensions,
@@ -78,15 +95,9 @@ github_document <- function(toc = FALSE,
         "--template", pkg_file_arg(
           "rmarkdown/templates/github_document/resources/preview.html"),
         "--variable", paste0("github-markdown-css:", css),
-        if (pandoc2) c("--metadata", "pagetitle=PREVIEW")  # HTML5 requirement
+        if (pandoc2) c("--metadata", "pagetitle=PREVIEW"),  # HTML5 requirement
+        if (!is.null(math)) math$args
       )
-
-      # add math support
-      if (!is.null(math_method)) {
-        math <- check_math_argument(math_method)
-        math <- add_math_support(math, NULL, NULL, NULL)
-        args <- c(args, math$args)
-      }
 
       # run pandoc
       preview_file <- file_with_ext(output_file, "html")
