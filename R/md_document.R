@@ -87,15 +87,17 @@ md_document <- function(variant = "markdown_strict",
   }
 
   # variants
-  variant <- adapt_md_variant(variant, preserve_yaml)
+  variant <- adapt_md_variant(variant)
 
-  # add post_processor for yaml preservation if not supported by pandoc
-  post_processor <- if (preserve_yaml && !grepl('yaml_metadata_block', variant, fixed = TRUE)) {
+  # add post_processor for yaml preservation as Pandoc +yaml_metadata_block has
+  # undesired sorting (https://github.com/rstudio/rmarkdown/pull/2190/files)
+  post_processor <- if (preserve_yaml) {
     function(metadata, input_file, output_file, clean, verbose) {
       write_utf8(
         .preserve_yaml(read_utf8(input_file), read_utf8(output_file)),
         output_file
       )
+      output_file
     }
   }
 
@@ -124,40 +126,42 @@ md_document <- function(variant = "markdown_strict",
   output_lines
 }
 
-adapt_md_variant <- function(variant, preserve_yaml) {
+adapt_md_variant <- function(variant) {
   variant_base <- gsub("^([^+-]*).*", "\\1", variant)
   variant_extensions <- gsub(sprintf("^%s", variant_base), "", variant)
 
   set_extension <- function(format, ext, add = TRUE) {
     ext <- paste0(ifelse(add, "+", "-"), ext)
-    if (grepl(ext, format, fixed = TRUE)) return(format)
-    paste0(format, ext, collapse = "")
+    for (e in ext) {
+      if (grepl(e, format, fixed = TRUE)) next
+      format <- paste0(format, e, collapse = "")
+    }
+    format
   }
 
-  add_yaml_block_ext <- function(extensions, preserve_yaml) {
-    set_extension(variant_extensions, "yaml_metadata_block", preserve_yaml)
+  # Remove yaml_metadata_block extension unless user asked otherwise in variant
+  if (!grepl("yaml_metadata_block", variant_extensions, fixed = TRUE)) {
+    variant_extensions <- switch(
+      variant_base,
+      gfm = ,
+      commonmark = ,
+      commonmark_x = {
+        if (pandoc_available(2.13)) {
+          set_extension(variant_extensions, "yaml_metadata_block", FALSE)
+        } else {
+          # Unsupported extension before YAML 2.13
+          variant_extensions
+        }
+      },
+      markdown = set_extension(variant_extensions, c("yaml_metadata_block", "pandoc_title_block"), FALSE),
+      markdown_mmd = set_extension(variant_extensions, c("yaml_metadata_block", "mmd_title_block"), FALSE),
+      markdown_github = ,
+      markdown_phpextra = ,
+      markdown_strict = set_extension(variant_extensions, "yaml_metadata_block", FALSE),
+      # do not modified for unknown (yet) md variant
+      variant_extensions
+    )
   }
-
-  # yaml_metadata_block extension
-  variant_extensions <- switch(
-    variant_base,
-    gfm =,
-    commonmark =,
-    commonmark_x = {
-      if (pandoc_available(2.13)) {
-        add_yaml_block_ext(variant_extensions, preserve_yaml)
-      } else {
-        variant_extensions
-      }
-    },
-    markdown =,
-    markdown_phpextra =,
-    markdown_github =,
-    markdown_mmd =,
-    markdown_strict = add_yaml_block_ext(variant_extensions, preserve_yaml),
-    # do not modified for unknown (yet) md variant
-    variant_extensions
-  )
 
   paste0(variant_base, variant_extensions, collapse = "")
 }
