@@ -70,7 +70,7 @@ github_document <- function(toc = FALSE,
 
   format$post_processor <- function(metadata, input_file, output_file, clean, verbose) {
 
-    if (is.function(post)) post(metadata, input_file, output_file, clean, verbose)
+    if (is.function(post)) output_file <- post(metadata, input_file, output_file, clean, verbose)
 
     if (html_preview) {
       css <- pkg_file_arg(
@@ -104,8 +104,9 @@ github_document <- function(toc = FALSE,
 
       if (verbose) message("\nPreview created: ", preview_file)
 
-      output_file
     }
+
+    output_file
   }
 
   format  # return format
