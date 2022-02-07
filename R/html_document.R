@@ -92,7 +92,7 @@
 #'@param math_method Math rendering engine to use. This will define the math method to use with Pandoc.
 #'
 #'  * It can be a string for the engine, one of
-#'  `r knitr::combine_words(pandoc_math_engines(), and = "or ", before = "'")`,
+#'  `r knitr::combine_words(c(pandoc_math_engines(), "r-katex"), and = "or ", before = "'")`,
 #'  or `default` for `mathjax`.
 #'  * It can be a list of
 #'    * `engine`:  one of
@@ -110,9 +110,14 @@
 #'        url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
 #'  ```
 #'
-#'  See [Pandoc's Manual about Math in HTML](https://pandoc.org/MANUAL.html#math-rendering-in-html) for the details.
-#'  Note that `c(mathjax = "local")` is equivalent to specifying "local" to
-#'  `mathjax`.
+#'  See [Pandoc's Manual about Math in
+#'  HTML](https://pandoc.org/MANUAL.html#math-rendering-in-html) for the details
+#'  about Pandoc supported methods.
+#'
+#'  Using `math_method = "r-katex"` will opt-in server side rendering using
+#'  KaTeX thanks to [katex](https://docs.ropensci.org/katex/) R package. This is
+#'  useful compared to `math_method = "katex"` to have no JS dependency, only a
+#'  CSS dependency for styling equation.
 #'@param section_divs Wrap sections in \code{<div>} tags, and attach identifiers to the
 #'  enclosing \code{<div>} rather than the header itself.
 #'@param template Pandoc template to use for rendering. Pass "default" to use
