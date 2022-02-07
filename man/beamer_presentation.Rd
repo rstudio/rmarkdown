@@ -45,7 +45,8 @@ This default can be overridden by specifying an explicit
 \item{incremental}{\code{TRUE} to render slide bullets incrementally. Note
 that if you want to reverse the default incremental behavior for an
 individual bullet you can precede it with \code{>}. For example:
-\emph{\code{> - Bullet Text}}}
+\emph{\verb{> - Bullet Text}}. See more in
+\href{https://pandoc.org/MANUAL.html#incremental-lists}{Pandoc's Manual}}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -80,9 +81,18 @@ frame printing section} in bookdown book for examples.}
 
 \item{fonttheme}{Beamer font theme (e.g. "structurebold").}
 
-\item{highlight}{Syntax highlighting style. Supported styles include
-"default", "tango", "pygments", "kate", "monochrome", "espresso",
-"zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.}
+\item{highlight}{Syntax highlighting style passed to Pandoc.
+
+ Supported built-in styles include "default", "tango", "pygments", "kate",
+ "monochrome", "espresso", "zenburn", "haddock", and "breezedark".
+
+  Two custom styles are also included, "arrow", an accessible color scheme,
+  and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+  path to a \samp{.theme} file to use
+  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{a custom Pandoc
+  style}. Note that custom theme requires Pandoc 2.0+.
+
+  Pass \code{NULL} to prevent syntax highlighting.}
 
 \item{template}{Pandoc template to use for rendering. Pass "default" to use
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
@@ -111,21 +121,20 @@ document is an intermediate file unless \code{keep_tex = TRUE}.}
 document (typically created using the \code{\link{includes}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 }
 \value{
-R Markdown output format to pass to \code{\link{render}}
+R Markdown output format to pass to \code{\link[=render]{render()}}
 }
 \description{
 Format for converting from R Markdown to a Beamer presentation.
 }
 \details{
-See the \href{https://bookdown.org/yihui/rmarkdown/beamer-presentation.html}{online
-documentation} for additional details on using the \code{beamer_presentation}
-format.
+See the \href{https://bookdown.org/yihui/rmarkdown/beamer-presentation.html}{online documentation}
+for additional details on using the \code{beamer_presentation} format.
 
 Creating Beamer output from R Markdown requires that LaTeX be installed.
 
@@ -135,8 +144,8 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
-and Citations} article in the online documentation.
+\href{https://pandoc.org/MANUAL.html#citations}{Bibliographies and Citations}
+article in the online documentation.
 }
 \examples{
 \dontrun{

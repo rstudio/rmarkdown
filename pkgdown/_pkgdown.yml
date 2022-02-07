@@ -80,6 +80,7 @@ reference:
   desc: These functions are useful when working with R Markdown documents.
   contents:
   - draft
+  - available_templates
   - find_external_resources
   - includes
   - metadata

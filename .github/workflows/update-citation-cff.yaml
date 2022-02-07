@@ -1,0 +1,52 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/master/examples
+# The action runs when:
+# - A new release is published
+# - The DESCRIPTION or inst/CITATION are modified
+# - Can be run manually
+# For customizing the triggers, visit https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows
+on:
+  release:
+    types: [published]
+  push:
+    branches: main
+    paths:
+      - DESCRIPTION
+      - inst/CITATION
+  workflow_dispatch:
+
+name: Update CITATION.cff
+
+jobs:
+  update-citation-cff:
+    runs-on: macos-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::cffr, any::V8, local::.
+
+      - name: Update CITATION.cff
+        run: |
+          library(cffr)
+          # Customize with your own code
+          # See https://docs.ropensci.org/cffr/articles/cffr.html
+          # Write your own keys
+          mykeys <- list()
+          # Create your CITATION.cff file
+          cff_write("rmarkdown", keys = mykeys)
+        shell: Rscript {0}
+
+      - name: Commit results
+        run: |
+          git config --local user.name "$GITHUB_ACTOR"
+          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git add CITATION.cff
+          git commit -m 'Update CITATION.cff' || echo "No changes to commit"
+          git push origin || echo "No changes to commit"

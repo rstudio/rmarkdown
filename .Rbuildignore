@@ -16,3 +16,5 @@
 ^docs$
 ^reference$
 ^vignettes/articles$
+^CITATION\.cff$
+^LICENSE\.md$

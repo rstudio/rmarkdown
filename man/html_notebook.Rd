@@ -16,6 +16,8 @@ html_notebook(
   code_folding = "show",
   theme = "default",
   highlight = "textmate",
+  highlight_downlit = FALSE,
+  math_method = "default",
   mathjax = "default",
   extra_dependencies = NULL,
   css = NULL,
@@ -72,9 +74,58 @@ parameter may utilize the \code{theme}'s underlying Sass utilities
 theme name (for backwards-compatibility).
 }}
 
-\item{highlight}{Syntax highlighting style. Supported styles include
-"default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
-"haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.}
+\item{highlight}{Syntax highlight engine and style. See the
+\emph{Highlighting} section below for details.
+
+"default" (and "textmate") will use highlightjs as syntax highlighting
+engine instead of Pandoc.
+
+Any other value will be passed as Pandoc's highlighting style. Pandoc's
+built-in styles include "tango", "pygments", "kate", "monochrome",
+"espresso", "zenburn", "haddock" and "breezedark".
+
+Two custom styles are also included, "arrow", an accessible color scheme,
+and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+path to a \samp{.theme} to use
+\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{a custom Pandoc
+style}. Note that custom theme requires Pandoc 2.0+.
+
+Pass \code{NULL} to prevent syntax highlighting.}
+
+\item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package as
+syntax highlight engine to highlight inline code and R code chunks
+(including providing hyperlinks to function documentation). The package
+needs to be installed to use this feature.
+
+Only Pandoc color schemes are supported with this engine. With
+\code{highlight = "default"}, it will use the accessible theme called
+"arrow". To learn more about \pkg{downlit} highlighting engine, see
+\url{https://downlit.r-lib.org/}.}
+
+\item{math_method}{Math rendering engine to use. This will define the math method to use with Pandoc.
+\itemize{
+\item It can be a string for the engine, one of
+\verb{r 'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'or }default\code{for}mathjax`.
+\item It can be a list of
+\itemize{
+\item \code{engine}:  one of
+'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'.
+\item \code{url}: A specific url to use with \code{mathjax}, \code{katex} or \code{webtex}.
+Note that for \code{engine = "mathjax"}, \code{url = "local"} will use a local version of MathJax (which is
+copied into the output directory).
+}
+}
+
+For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    math_method:
+      engine: katex
+      url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+}\if{html}{\out{</div>}}
+
+See \href{https://pandoc.org/MANUAL.html#math-rendering-in-html}{Pandoc's Manual about Math in HTML} for the details.
+Note that \code{c(mathjax = "local")} is equivalent to specifying "local" to
+\code{mathjax}.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is
@@ -93,7 +144,7 @@ Sass variables, functions, mixins, etc.}
 document (typically created using the \code{\link{includes}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
