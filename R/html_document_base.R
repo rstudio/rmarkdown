@@ -163,6 +163,14 @@ html_document_base <- function(theme = NULL,
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+
+    # Special KaTeX math support
+    if (identical(math_method, "r-katex") && xfun::pkg_available("katex")) {
+      katex::render_math_in_html(output_file, output = output_file)
+    }
+
+    # Other processing ----
+
     # read the output file
     output_str <- read_utf8(output_file)
 
@@ -219,6 +227,7 @@ html_document_base <- function(theme = NULL,
     output_str <- gsub(s2, '<span class="ot">=&gt;</span>', output_str, fixed = TRUE)
 
     write_utf8(output_str, output_file)
+
     output_file
   }
 
@@ -272,7 +281,19 @@ add_math_support <- function(math, template, files_dir, output_dir) {
   if (is.null(math)) return(NULL)
 
   # handle different engines
-  # TODO: engine to use r-katex package
+
+  # Special handling: KaTeX R package
+  if (identical(math$engine, "r-katex")) {
+    if (xfun::pkg_available("katex")) {
+      # katex R package will recognize `$..$` and `\(...\)` (inline)
+      # or '$$...$$' and '\\[...\\]' (display). so it is done by Pandoc with
+      # `--mathjax` and not `--katex`
+      # setting no flag will make Pandoc throw a warning
+      return(list(args = pandoc_math_args("mathjax")))
+    }
+    warning2("katex R package is required for server side rendering. Defaulting to online KaTeX.")
+    math$engine <- "katex"
+  }
 
   # Default
   if (identical(math$engine, "default")) math$engine <- "mathjax"
