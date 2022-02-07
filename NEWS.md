@@ -1,6 +1,8 @@
 rmarkdown 2.12
 ================================================================================
 
+- Fix a regression with rendering `shiny_prerendered` document (thanks, @aronatkins, @gadenbuie, #2218).
+
 - Fix an issue in `beamer_presentation()` where `header-includes` would be overwritten by `includes = list(in_header =)` (thanks, @samcarter, #2294). Same fix as for `pdf_document()` (#1359).
 
 - `html_document()` and `html_document_base()` gains the `math_method` argument to support [all the math rendering engines from Pandoc](https://pandoc.org/MANUAL.html#math-rendering-in-html): "mathjax", "katex", "mathml", "webtex", and "gladtex". For backward compatibility, `mathjax` argument is still working when `math_method = "default"` which is the default, and will take precedence is `mathjax` is different that `"default"`.  
