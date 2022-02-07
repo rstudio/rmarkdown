@@ -38,6 +38,9 @@ details.}
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
+\item{standalone}{Set to `TRUE` to include title, date and other metadata
+field in addition to Rmd content as a body.}
+
 \item{fig_width}{Default width (in inches) for figures}
 
 \item{fig_height}{Default height (in inches) for figures}

@@ -17,6 +17,8 @@
 #'   \href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
 #'   details.
 #' @param preserve_yaml Preserve YAML front matter in final document.
+#' @param standalone Set to `TRUE` to include title, date and other metadata
+#'   field in addition to Rmd content as a body.
 #' @param fig_retina Scaling to perform for retina displays. Defaults to
 #'   \code{NULL} which performs no scaling. A setting of 2 will work for all
 #'   widely used retina displays, but will also result in the output of
