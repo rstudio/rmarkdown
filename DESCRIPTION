@@ -76,6 +76,7 @@ Suggests:
     fs,
     rsconnect,
     downlit (>= 0.4.0),
+    katex (>= 1.3.0),
     sass (>= 0.4.0),
     shiny (>= 1.6.0),
     testthat (>= 3.0.3),
