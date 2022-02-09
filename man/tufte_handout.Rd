@@ -29,9 +29,18 @@ if these two tools are available.}
 
 \item{dev}{Graphics device to use for figure output (defaults to pdf)}
 
-\item{highlight}{Syntax highlighting style. Supported styles include
-"default", "tango", "pygments", "kate", "monochrome", "espresso",
-"zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.}
+\item{highlight}{Syntax highlighting style passed to Pandoc.
+
+ Supported built-in styles include "default", "tango", "pygments", "kate",
+ "monochrome", "espresso", "zenburn", "haddock", and "breezedark".
+
+  Two custom styles are also included, "arrow", an accessible color scheme,
+  and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+  path to a \samp{.theme} file to use
+  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{a custom Pandoc
+  style}. Note that custom theme requires Pandoc 2.0+.
+
+  Pass \code{NULL} to prevent syntax highlighting.}
 
 \item{keep_tex}{Keep the intermediate tex file used in the conversion to PDF}
 
@@ -44,7 +53,7 @@ which means citations will be processed via the command
 document (typically created using the \code{\link{includes}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}

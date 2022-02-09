@@ -71,8 +71,7 @@ word_document <- function(toc = FALSE,
   }
 
   # highlighting
-  if (!is.null(highlight))
-    highlight <- match.arg(highlight, highlighters())
+  if (!is.null(highlight)) highlight <- resolve_highlight(highlight, highlighters())
   args <- c(args, pandoc_highlight_args(highlight))
 
   # reference docx

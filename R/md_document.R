@@ -22,7 +22,7 @@
 #'   widely used retina displays, but will also result in the output of
 #'   \code{<img>} tags rather than markdown images due to the need to set the
 #'   width of the image explicitly.
-#' @param ext Extention of the output document (defaults to ".md").
+#' @param ext Extension of the output file (defaults to ".md").
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @examples
 #' \dontrun{
@@ -61,19 +61,41 @@ md_document <- function(variant = "markdown_strict",
   # pandoc args
   args <- c(args, pandoc_args)
 
+  # Preprocess number_sections if variant is a markdown flavor +gfm_auto_identifers
+  if (number_sections && !pandoc_available("2.1")) {
+    warning("`number_sections = TRUE` requires at least Pandoc 2.1. The feature will be deactivated",
+            call. = FALSE)
+    number_sections <- FALSE
+  }
+  pre_processor <- if (
+    number_sections
+    && grepl("^(commonmark|gfm|markdown)", variant)
+    && any(grepl("+gfm_auto_identifiers", md_extensions, fixed = TRUE))
+  ) {
+    function(metadata, input_file, ...) {
+      input_lines <- read_utf8(input_file)
+      pandoc_convert(
+        input_file, to = "markdown", output = input_file,
+        options = c(
+          "--lua-filter", pkg_file_lua("number-sections.lua"),
+          "--metadata", "preprocess_number_sections=true"
+        )
+      )
+      write_utf8(.preserve_yaml(input_lines, read_utf8(input_file)), input_file)
+      return(character(0L))
+    }
+  }
+
   # variants
   variant <- adapt_md_variant(variant, preserve_yaml)
 
   # add post_processor for yaml preservation if not supported by pandoc
   post_processor <- if (preserve_yaml && !grepl('yaml_metadata_block', variant, fixed = TRUE)) {
     function(metadata, input_file, output_file, clean, verbose) {
-      input_lines <- read_utf8(input_file)
-      partitioned <- partition_yaml_front_matter(input_lines)
-      if (!is.null(partitioned$front_matter)) {
-        output_lines <- c(partitioned$front_matter, "", read_utf8(output_file))
-        write_utf8(output_lines, output_file)
-      }
-      output_file
+      write_utf8(
+        .preserve_yaml(read_utf8(input_file), read_utf8(output_file)),
+        output_file
+      )
     }
   }
 
@@ -84,13 +106,22 @@ md_document <- function(variant = "markdown_strict",
       to = variant,
       from = from_rmarkdown(extensions = md_extensions),
       args = args,
-      ext = ext,
-      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua")
+      lua_filters = if (number_sections) pkg_file_lua("number-sections.lua"),
+      ext = ext
     ),
     clean_supporting = FALSE,
     df_print = df_print,
+    pre_processor = pre_processor,
     post_processor = post_processor
   )
+}
+
+.preserve_yaml <- function(input_lines, output_lines) {
+  partitioned <- partition_yaml_front_matter(input_lines)
+  if (!is.null(partitioned$front_matter)) {
+    output_lines <- c(partitioned$front_matter, "", output_lines)
+  }
+  output_lines
 }
 
 adapt_md_variant <- function(variant, preserve_yaml) {

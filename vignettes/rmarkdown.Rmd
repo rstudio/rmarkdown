@@ -119,14 +119,11 @@ cat(formatted, sep = "\n")
 
 # Cheatsheets
 
-<a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf"><img src="https://www.rstudio.com/wp-content/uploads/2018/08/rmarkdown-2.0.png" alt="R Markdown cheatsheet" data-external=1 width="450" style="padding: 0 15px; float: right;"/></a>
+<a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf"><img src="https://raw.githubusercontent.com/rstudio/cheatsheets/main/pngs/rmarkdown.png" alt="R Markdown cheatsheet" data-external=1 width="400" style="padding: 0 15px; float: right;"/></a>
 
-The [R Markdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf) is a one page (two-sided) reference guide you can download as a quick reference while you work.
+The [R Markdown cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf) is a one page (two-sided) reference guide you can download as a quick reference while you work.
 
-The [R Markdown Reference](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) is a five page guide that lists each of the options from markdown, knitr, and pandoc that you can use to customize your R Markdown documents. 
-
-You can access both files from within the RStudio IDE:
-
-+ R Markdown Cheat Sheet: *Help > Cheatsheets > R Markdown Cheat Sheet*,
-
-+ R Markdown Reference Guide: *Help > Cheatsheets > R Markdown Reference Guide*.
+You can access it from within the RStudio IDE: 
+ 
+- *Help > Cheatsheets >  
+R Markdown Cheat Sheet*
