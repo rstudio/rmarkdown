@@ -291,8 +291,8 @@ add_math_support <- function(math, template, files_dir, output_dir) {
       # TODO: patch template to remove the math variable when needed.
       return(list(args = pandoc_math_args("katex")))
     }
-    warning2("katex R package (>= 1.4.0) is required for server side rendering. Defaulting to online KaTeX.")
-    math$engine <- "katex"
+    stop2("katex R package (>= 1.4.0) is required for server-side rendering.\n",
+          "Install the package or change `math_method`.")
   }
 
   # Default
