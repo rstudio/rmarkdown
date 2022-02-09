@@ -284,14 +284,14 @@ add_math_support <- function(math, template, files_dir, output_dir) {
 
   # Special handling: KaTeX R package
   if (identical(math$engine, "r-katex")) {
-    if (xfun::pkg_available("katex")) {
-      # katex R package will recognize `$..$` and `\(...\)` (inline)
-      # or '$$...$$' and '\\[...\\]' (display). so it is done by Pandoc with
-      # `--mathjax` and not `--katex`
-      # setting no flag will make Pandoc throw a warning
-      return(list(args = pandoc_math_args("mathjax")))
+    if (xfun::pkg_available("katex", "1.4.0")) {
+      # We need to tell pandoc to process the equation,
+      # setting no math argument will make Pandoc throw a warning
+      # If used with a template contained `$math$`, JS and CSS will be inserted
+      # TODO: patch template to remove the math variable when needed.
+      return(list(args = pandoc_math_args("katex")))
     }
-    warning2("katex R package is required for server side rendering. Defaulting to online KaTeX.")
+    warning2("katex R package (>= 1.4.0) is required for server side rendering. Defaulting to online KaTeX.")
     math$engine <- "katex"
   }
 
