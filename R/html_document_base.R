@@ -165,7 +165,7 @@ html_document_base <- function(theme = NULL,
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
 
     # Special KaTeX math support
-    if (identical(math_method, "r-katex") && xfun::pkg_available("katex")) {
+    if (identical(math_method, "r-katex") && xfun::pkg_available("katex", "1.4.0")) {
       katex::render_math_in_html(output_file, output = output_file)
     }
 
