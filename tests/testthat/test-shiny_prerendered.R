@@ -24,7 +24,7 @@ test_that("HTML template contains special comment when in shiny prerendered", {
 
 test_that("Special HEAD comment is added if none in rendered HTML when in shiny prerendered", {
   skip_if_not_pandoc()
-  special_comment <- "\\s*<!-- HEAD_CONTENT -->"
+  special_comment <- "^\\s*<!-- HEAD_CONTENT -->\\s*$"
   tmp_rmd <- local_rmd_file(c("---", "title: shiny", "runtime: shiny_prerendered", "---", "", "```{r}", "1+1", "```"))
   html <- shiny_prerendered_html(tmp_rmd, list(quiet = TRUE))
   expect_length(which(grepl(special_comment, xfun::split_lines(html))), 1L)
