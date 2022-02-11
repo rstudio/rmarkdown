@@ -34,6 +34,15 @@ test_that("Special HEAD comment is added if none in rendered HTML when in shiny 
   opts <- list(template = NULL, mathjax = NULL)
   html <- shiny_prerendered_html(tmp_rmd, list(output_options = opts, quiet = TRUE))
   expect_length(grep(special_comment, xfun::split_lines(html)), 1L)
+  # placed in include headers
+  tmp_rmd <- local_rmd_file(c("---", "title: shiny", "runtime: shiny_prerendered", "---", "", "content"))
+  template <- withr::local_tempfile(fileext = ".html")
+  xfun::write_utf8(c("<head>", "$header-includes$", "<scripts></scripts>", "</head>",
+                     "<body>", "$body$", "</body>"),
+                   template)
+  opts <- list(template = template, mathjax = NULL)
+  html <- shiny_prerendered_html(tmp_rmd, list(output_options = opts, quiet = TRUE))
+  expect_equal(grep(special_comment, xfun::split_lines(html)), 2)
 })
 
 test_that("html can be annotated as being a full document with deps attached", {
