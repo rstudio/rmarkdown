@@ -1,6 +1,8 @@
 rmarkdown 2.12
 ================================================================================
 
+- Rendering using `runtime: shiny_prerendered` or `runtime: shinyrmd` now natively supports custom templates. Previously since 2.8, developers had to add a special comment, `<!-- HEAD_CONTENT -->`, conditionally to `shiny-prerendered` variable. (See also NEWS from 2.8 for the previous behavior). The new behavior inserts required special comment `<!-- HEAD_CONTENT -->` as a last element of `$header-includes$`. If templates rely on the old behavior and require some contents between `$header-includes$` and `<!-- HEAD_CONTENT -->`, consider including them with `$header-includes$` (thanks, @atusy, @gadenbuie #2249).
+
 - Fix a regression with rendering `shiny_prerendered` document (thanks, @aronatkins, @gadenbuie, #2218).
 
 - Fix an issue in `beamer_presentation()` where `header-includes` would be overwritten by `includes = list(in_header =)` (thanks, @samcarter, #2294). Same fix as for `pdf_document()` (#1359).
