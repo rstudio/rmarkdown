@@ -112,6 +112,15 @@ is_null_or_string <- function(text) {
   is.null(text) || (is.character(text) && (length(text) == 1))
 }
 
+# TODO: Export knitr:::is_blank() in xfun, and use here
+is_blank <- function(x) {
+  if (length(x)) {
+    all(grepl("^\\s*$", x))
+  } else {
+    TRUE
+  }
+}
+
 read_utf8 <- function(file) {
   if (inherits(file, 'connection')) con <- file else {
     con <- base::file(file, encoding = 'UTF-8'); on.exit(close(con), add = TRUE)

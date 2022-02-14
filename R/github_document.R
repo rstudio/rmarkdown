@@ -24,6 +24,7 @@ github_document <- function(toc = FALSE,
                             toc_depth = 3,
                             number_sections = FALSE,
                             math_method = "webtex",
+                            preserve_yaml = FALSE,
                             fig_width = 7,
                             fig_height = 5,
                             dev = 'png',
@@ -85,9 +86,13 @@ github_document <- function(toc = FALSE,
   )
 
   # add a post processor for generating a preview if requested
-  if (html_preview) {
-    format$post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+  post <- format$post_processor
 
+  format$post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+
+    if (is.function(post)) output_file <- post(metadata, input_file, output_file, clean, verbose)
+
+    if (html_preview) {
       css <- pkg_file_arg(
         "rmarkdown/templates/github_document/resources/github.css")
       # provide a preview that looks like github
@@ -120,8 +125,9 @@ github_document <- function(toc = FALSE,
 
       if (verbose) message("\nPreview created: ", preview_file)
 
-      output_file
     }
+
+    output_file
   }
 
   format  # return format

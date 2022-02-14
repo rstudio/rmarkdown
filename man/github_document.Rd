@@ -9,6 +9,7 @@ github_document(
   toc_depth = 3,
   number_sections = FALSE,
   math_method = "webtex",
+  preserve_yaml = FALSE,
   fig_width = 7,
   fig_height = 5,
   dev = "png",
@@ -31,6 +32,8 @@ github_document(
 \item{math_method}{\code{"webtex"} (the default) is used to render equations. This
 will insert math an image in the resulting Markdown. See \code{\link[=html_document]{html_document()}}
 for option to change webtex URL. Set to \code{NULL} to opt-out.}
+
+\item{preserve_yaml}{Preserve YAML front matter in final document.}
 
 \item{fig_width}{Default width (in inches) for figures}
 
