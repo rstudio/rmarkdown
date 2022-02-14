@@ -36,6 +36,8 @@ rmarkdown 2.12
   Most HTML output format using `html_document()` or `html_document_base()` as based format should benefit from this new feature.
   See `?rmarkdown::html_document()` for details (thanks, @atusy, #1940).
   
+- `github_document()` also gains the `math_method` argument set to `"webtex"` by default so that LaTeX equations can be rendered in the Github Markdown document as images. Previously, LaTeX equations were not rendered. Set `math_method = NULL` to deactivate.
+
 - Added support for [**katex**](https://docs.ropensci.org/katex/) R package as a math engine with `math_method = "r-katex"` in HTML documents. This method offers server-side rendering of all the equations, which means no JS processing is needed in the browser as with usual KaTeX or MathJaX methods. (thanks, @jeroen, #2304).
   
 - Fixed broken links to section headers when `number_sections = TRUE` is specified in `md_document` and `github_document` (thanks, @atusy, #2093).
