@@ -1,6 +1,8 @@
 rmarkdown 2.12
 ================================================================================
 
+- `md_document()` is gaining a new `standalone` argument, FALSE by default unless `toc = TRUE`. This allows to output authors, date and other metadata per the Pandoc's template. Due to limitation in how Pandoc is handling metadata blocks in its extensions `yaml_metadata_block`, `preserve_yaml = TRUE` now deactivate any extension to let **rmarkdown** directly handle the keeping of YAML block - this means it does not set `standalone = TRUE` by default. `github_document()` is gaining the `preserve_yaml` argument now (thanks, @florisvdh, #2297).
+
 - Rendering using `runtime: shiny_prerendered` or `runtime: shinyrmd` now natively supports custom templates. Previously since 2.8, developers had to add a special comment, `<!-- HEAD_CONTENT -->`, conditionally to `shiny-prerendered` variable. (See also NEWS from 2.8 for the previous behavior). The new behavior inserts required special comment `<!-- HEAD_CONTENT -->` as a last element of `$header-includes$`. If templates rely on the old behavior and require some contents between `$header-includes$` and `<!-- HEAD_CONTENT -->`, consider including them with `$header-includes$` (thanks, @atusy, @gadenbuie #2249).
 
 - Fix a regression with rendering `shiny_prerendered` document (thanks, @aronatkins, @gadenbuie, #2218).
