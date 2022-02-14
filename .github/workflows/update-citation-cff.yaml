@@ -7,11 +7,6 @@
 on:
   release:
     types: [published]
-  push:
-    branches: main
-    paths:
-      - DESCRIPTION
-      - inst/CITATION
   workflow_dispatch:
 
 name: Update CITATION.cff
