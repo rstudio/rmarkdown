@@ -91,12 +91,11 @@
 #'  \code{NULL} to exclude MathJax entirely.
 #'@param math_method Math rendering engine to use. This will define the math method to use with Pandoc.
 #'
-#'  * It can be a string for the engine, one of
-#'  `r knitr::combine_words(c(pandoc_math_engines(), "r-katex"), and = "or ", before = "'")`,
-#'  or `default` for `mathjax`.
+#'  * It can be a string for the engine, one of `r knitr::combine_words(c(pandoc_math_engines(), "r-katex"), and = "or ", before = '"')`
+#'  or "default" for `mathjax`.
 #'  * It can be a list of
 #'    * `engine`:  one of
-#'      `r knitr::combine_words(pandoc_math_engines(), and = "or ", before = "'")`.
+#'      `r knitr::combine_words(pandoc_math_engines(), and = "or ", before = '"')`.
 #'    * `url`: A specific url to use with `mathjax`, `katex` or `webtex`.
 #'      Note that for `engine = "mathjax"`, `url = "local"` will use a local version of MathJax (which is
 #'  copied into the output directory).

@@ -47,12 +47,12 @@ bootstrap, etc.) into. By default this will be the name of the document with
 
 \item{math_method}{Math rendering engine to use. This will define the math method to use with Pandoc.
 \itemize{
-\item It can be a string for the engine, one of
-\verb{r 'mathjax', 'mathml', 'webtex', 'katex', 'gladtex', or 'r-katex'or }default\code{for}mathjax`.
+\item It can be a string for the engine, one of "mathjax", "mathml", "webtex", "katex", "gladtex", or "r-katex"
+or "default" for \code{mathjax}.
 \item It can be a list of
 \itemize{
 \item \code{engine}:  one of
-'mathjax', 'mathml', 'webtex', 'katex', or 'gladtex'.
+"mathjax", "mathml", "webtex", "katex", or "gladtex".
 \item \code{url}: A specific url to use with \code{mathjax}, \code{katex} or \code{webtex}.
 Note that for \code{engine = "mathjax"}, \code{url = "local"} will use a local version of MathJax (which is
 copied into the output directory).
