@@ -78,11 +78,10 @@ github_document <- function(toc = FALSE,
 
   format <- md_document(
     variant = variant, toc = toc, toc_depth = toc_depth,
-    number_sections = number_sections,
+    number_sections = number_sections, preserve_yaml = preserve_yaml,
     fig_width = fig_width, fig_height = fig_height,
-    dev = dev, df_print = df_print,
-    includes = includes, md_extensions = md_extensions,
-    pandoc_args = pandoc_args
+    dev = dev, df_print = df_print, includes = includes,
+    md_extensions = md_extensions, pandoc_args = pandoc_args
   )
 
   # add a post processor for generating a preview if requested
