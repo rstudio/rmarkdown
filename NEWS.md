@@ -1,6 +1,8 @@
 rmarkdown 2.12
 ================================================================================
 
+- A shiny prerendered document with only a empty server context does not error anymore. Document will be rendered with a empty server function and `server.R` file will be ignored. To use `server.R`, no server context should be present in the Rmd document (thanks, @jcheng5, #2305).
+
 - Templates for `html_document()` and `ioslides_presentation()` gain a new CSS rule to display single line `<summary>` content inline (rstudio/rstudio#10589).
 
 - `md_document()` is gaining a new `standalone` argument, FALSE by default unless `toc = TRUE`. This allows to output authors, date and other metadata per the Pandoc's template. Due to limitation in how Pandoc is handling metadata blocks in its extensions `yaml_metadata_block`, `preserve_yaml = TRUE` now deactivate any extension to let **rmarkdown** directly handle the keeping of YAML block - this means it does not set `standalone = TRUE` by default. `github_document()` is gaining the `preserve_yaml` argument now (thanks, @florisvdh, #2297).

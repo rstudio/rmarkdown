@@ -477,6 +477,13 @@ shiny_prerendered_option_hook <- function(input) {
       on.exit(close(conn), add = TRUE)
       write(data_file, file = conn, append = TRUE)
     }
+
+    if (identical(options$context, "server")) {
+      # if empty server context, set a default server function
+      if (is_blank(options$code)) {
+        options$code <- "# empty server context"
+      }
+    }
     options
   }
 }
