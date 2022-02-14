@@ -8,7 +8,7 @@ message: 'To cite package "rmarkdown" in publications use:'
 type: software
 license: GPL-3.0-only
 title: 'rmarkdown: Dynamic Documents for R'
-version: 2.11.15
+version: 2.11.19
 abstract: Convert R Markdown documents into a variety of formats.
 authors:
 - family-names: Allaire
@@ -80,7 +80,7 @@ preferred-citation:
     email: rich@rstudio.com
     orcid: https://orcid.org/0000-0003-3925-190X
   year: '2022'
-  notes: R package version 2.11.15
+  notes: R package version 2.11.19
   url: https://github.com/rstudio/rmarkdown
 repository: https://CRAN.R-project.org/package=rmarkdown
 repository-code: https://github.com/rstudio/rmarkdown
@@ -452,6 +452,18 @@ references:
   year: '2022'
   url: https://CRAN.R-project.org/package=downlit
   version: '>= 0.4.0'
+- type: software
+  title: katex
+  abstract: 'katex: Rendering Math to HTML, ''MathML'', or R-Documentation Format'
+  notes: Suggests
+  authors:
+  - family-names: Ooms
+    given-names: Jeroen
+    email: jeroen@berkeley.edu
+    orcid: https://orcid.org/0000-0002-4035-0289
+  year: '2022'
+  url: https://CRAN.R-project.org/package=katex
+  version: '>= 1.4.0'
 - type: software
   title: sass
   abstract: 'sass: Syntactically Awesome Style Sheets (''Sass'')'

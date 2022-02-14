@@ -1,6 +1,12 @@
 rmarkdown 2.12
 ================================================================================
 
+- Templates for `html_document()` and `ioslides_presentation()` gain a new CSS rule to display single line `<summary>` content inline (rstudio/rstudio#10589).
+
+- `md_document()` is gaining a new `standalone` argument, FALSE by default unless `toc = TRUE`. This allows to output authors, date and other metadata per the Pandoc's template. Due to limitation in how Pandoc is handling metadata blocks in its extensions `yaml_metadata_block`, `preserve_yaml = TRUE` now deactivate any extension to let **rmarkdown** directly handle the keeping of YAML block - this means it does not set `standalone = TRUE` by default. `github_document()` is gaining the `preserve_yaml` argument now (thanks, @florisvdh, #2297).
+
+- Rendering using `runtime: shiny_prerendered` or `runtime: shinyrmd` now natively supports custom templates. Previously since 2.8, developers had to add a special comment, `<!-- HEAD_CONTENT -->`, conditionally to `shiny-prerendered` variable. (See also NEWS from 2.8 for the previous behavior). The new behavior inserts required special comment `<!-- HEAD_CONTENT -->` as a last element of `$header-includes$`. If templates rely on the old behavior and require some contents between `$header-includes$` and `<!-- HEAD_CONTENT -->`, consider including them with `$header-includes$` (thanks, @atusy, @gadenbuie #2249).
+
 - Fix a regression with rendering `shiny_prerendered` document (thanks, @aronatkins, @gadenbuie, #2218).
 
 - Fix an issue in `beamer_presentation()` where `header-includes` would be overwritten by `includes = list(in_header =)` (thanks, @samcarter, #2294). Same fix as for `pdf_document()` (#1359).
@@ -27,6 +33,8 @@ rmarkdown 2.12
   
   Most HTML output format using `html_document()` or `html_document_base()` as based format should benefit from this new feature.
   See `?rmarkdown::html_document()` for details (thanks, @atusy, #1940).
+  
+- Added support for [**katex**](https://docs.ropensci.org/katex/) R package as a math engine with `math_method = "r-katex"` in HTML documents. This method offers server-side rendering of all the equations, which means no JS processing is needed in the browser as with usual KaTeX or MathJaX methods. (thanks, @jeroen, #2304).
   
 - Fixed broken links to section headers when `number_sections = TRUE` is specified in `md_document` and `github_document` (thanks, @atusy, #2093).
 

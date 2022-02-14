@@ -857,10 +857,12 @@ render <- function(input,
                                             shiny_prerendered_dependencies,
                                             files_dir,
                                             output_dir)
-      # indicate to Pandoc we are in a shiny prerendered document to activate
-      # specific parts in the template.
+      # Include special comment in header for correc insertion of HTML dependencies
+      # during shiny_prerendered process (See `shiny_prerendered_html()`).
+      # This should be the last header-includes to be set.
+      # Context in https://github.com/rstudio/rmarkdown/pull/2249
       output_format$pandoc$args <- c(output_format$pandoc$args,
-                                     pandoc_variable_arg("shiny-prerendered"))
+                                     pandoc_include_args(in_header = pkg_file("rmd/h/shiny-header.html")))
     }
 
     perf_timer_stop("pre-processor")
