@@ -24,14 +24,25 @@ test_that("HTML template contains special comment when in shiny prerendered", {
 
 test_that("Special HEAD comment is added if none in rendered HTML when in shiny prerendered", {
   skip_if_not_pandoc()
-  special_comment <- "<!-- HEAD_CONTENT -->"
+  # inserted in default template
+  special_comment <- "^\\s*<!-- HEAD_CONTENT -->\\s*$"
   tmp_rmd <- local_rmd_file(c("---", "title: shiny", "runtime: shiny_prerendered", "---", "", "```{r}", "1+1", "```"))
   html <- shiny_prerendered_html(tmp_rmd, list(quiet = TRUE))
-  expect_length(which(special_comment == xfun::split_lines(html)), 1L)
+  expect_length(grep(special_comment, xfun::split_lines(html)), 1L)
+  # inserted in pandoc  template
   tmp_rmd <- local_rmd_file(c("---", "title: shiny", "runtime: shiny_prerendered", "---", "", "```{r}", "1+1", "```"))
   opts <- list(template = NULL, mathjax = NULL)
   html <- shiny_prerendered_html(tmp_rmd, list(output_options = opts, quiet = TRUE))
-  expect_length(which(special_comment == xfun::split_lines(html)), 1L)
+  expect_length(grep(special_comment, xfun::split_lines(html)), 1L)
+  # placed in include headers
+  tmp_rmd <- local_rmd_file(c("---", "title: shiny", "runtime: shiny_prerendered", "---", "", "content"))
+  template <- withr::local_tempfile(fileext = ".html")
+  xfun::write_utf8(c("<head>", "$header-includes$", "<scripts></scripts>", "</head>",
+                     "<body>", "$body$", "</body>"),
+                   template)
+  opts <- list(template = template, mathjax = NULL)
+  html <- shiny_prerendered_html(tmp_rmd, list(output_options = opts, quiet = TRUE))
+  expect_equal(grep(special_comment, xfun::split_lines(html)), 2)
 })
 
 test_that("html can be annotated as being a full document with deps attached", {
