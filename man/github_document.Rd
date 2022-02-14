@@ -83,3 +83,16 @@ Format for converting from R Markdown to GitHub Flavored Markdown.
 See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online documentation} for additional details on using the \code{github_document()}
 format.
 }
+\section{About Math support}{
+For Github Markdown output, PNG images with a white background are used so
+that it shows correctly on Github on both light and dark theme. You can
+choose to only output SVG for better quality by changing the URL used:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  github_document:
+    math_method:
+      engine: webtex
+      url: https://latex.codecogs.com/svg.image?
+}\if{html}{\out{</div>}}
+
+Background or fonts color cannot be changed for now and your equation may not be visible on dark theme.
+}
+

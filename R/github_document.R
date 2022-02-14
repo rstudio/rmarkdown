@@ -17,6 +17,22 @@
 #'   locally previewing what the document will look like on GitHub.
 #' @param keep_html `TRUE` to keep the preview HTML file in the working
 #'   directory. Default is `FALSE`.
+#'
+#' @details # About Math support
+#'
+#' For Github Markdown output, PNG images with a white background are used so
+#' that it shows correctly on Github on both light and dark theme. You can
+#' choose to only output SVG for better quality by changing the URL used:
+#'
+#' ```yaml
+#' output:
+#'   github_document:
+#'     math_method:
+#'       engine: webtex
+#'       url: https://latex.codecogs.com/svg.image?
+#' ```
+#'
+#' Background or fonts color cannot be changed for now and your equation may not be visible on dark theme.
 #' @return R Markdown output format to pass to [render()]
 #' @export
 #' @md
