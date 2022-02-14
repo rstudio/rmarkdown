@@ -10,6 +10,7 @@ md_document(
   toc = FALSE,
   toc_depth = 3,
   number_sections = FALSE,
+  standalone = FALSE,
   fig_width = 7,
   fig_height = 5,
   fig_retina = NULL,
@@ -36,6 +37,9 @@ details.}
 \item{toc_depth}{Depth of headers to include in table of contents}
 
 \item{number_sections}{\code{TRUE} to number section headings}
+
+\item{standalone}{Set to `TRUE` to include title, date and other metadata
+field in addition to Rmd content as a body.}
 
 \item{fig_width}{Default width (in inches) for figures}
 

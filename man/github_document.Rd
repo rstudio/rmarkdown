@@ -8,6 +8,7 @@ github_document(
   toc = FALSE,
   toc_depth = 3,
   number_sections = FALSE,
+  preserve_yaml = FALSE,
   fig_width = 7,
   fig_height = 5,
   dev = "png",
@@ -26,6 +27,8 @@ github_document(
 \item{toc_depth}{Depth of headers to include in table of contents}
 
 \item{number_sections}{\code{TRUE} to number section headings}
+
+\item{preserve_yaml}{Preserve YAML front matter in final document.}
 
 \item{fig_width}{Default width (in inches) for figures}
 
