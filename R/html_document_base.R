@@ -163,6 +163,14 @@ html_document_base <- function(theme = NULL,
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+
+    # Special KaTeX math support
+    if (identical(math_method, "r-katex") && xfun::pkg_available("katex", "1.4.0")) {
+      katex::render_math_in_html(output_file, output = output_file)
+    }
+
+    # Other processing ----
+
     # read the output file
     output_str <- read_utf8(output_file)
 
@@ -219,6 +227,7 @@ html_document_base <- function(theme = NULL,
     output_str <- gsub(s2, '<span class="ot">=&gt;</span>', output_str, fixed = TRUE)
 
     write_utf8(output_str, output_file)
+
     output_file
   }
 
@@ -272,7 +281,19 @@ add_math_support <- function(math, template, files_dir, output_dir) {
   if (is.null(math)) return(NULL)
 
   # handle different engines
-  # TODO: engine to use r-katex package
+
+  # Special handling: KaTeX R package
+  if (identical(math$engine, "r-katex")) {
+    if (xfun::pkg_available("katex", "1.4.0")) {
+      # We need to tell pandoc to process the equation,
+      # setting no math argument will make Pandoc throw a warning
+      # If used with a template contained `$math$`, JS and CSS will be inserted
+      # TODO: patch template to remove the math variable when needed.
+      return(list(args = pandoc_math_args("katex")))
+    }
+    stop2("katex R package (>= 1.4.0) is required for server-side rendering.\n",
+          "Install the package or change `math_method`.")
+  }
 
   # Default
   if (identical(math$engine, "default")) math$engine <- "mathjax"
