@@ -13,6 +13,8 @@ html_vignette(
   keep_md = FALSE,
   readme = FALSE,
   self_contained = TRUE,
+  tabset = FALSE,
+  extra_dependencies = NULL,
   ...
 )
 }
@@ -51,6 +53,13 @@ scripts, stylesheets, images, and videos. Note that even for self contained
 documents MathJax is still loaded externally (this is necessary because of
 its size).}
 
+\item{tabset}{Opt-in tabbed-sections feature inspired by \code{\link{html_document}}.
+See section "Tabbed Sections" for the detail.
+This feature also allows navigation to the tab from table of contents and URL.}
+
+\item{extra_dependencies}{Additional function arguments to pass to the
+base R Markdown HTML output formatter \code{\link{html_document_base}}}
+
 \item{...}{Additional arguments passed to \code{\link{html_document}}. Please
 note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
 coded. Setting any of those will yield an error.}
@@ -77,3 +86,26 @@ Compared to \code{html_document}, it:
 See the \href{https://bookdown.org/yihui/rmarkdown/r-package-vignette.html}{online
 documentation} for additional details on using the \code{html_vignette} format.
 }
+\section{Tabbed Sections}{
+
+
+You can organize content using tabs by applying the \code{.tabset} class
+attribute to headers within a document. This will cause all sub-headers of
+the header with the \code{.tabset} attribute to appear within tabs rather
+than as standalone sections. For example:
+
+\preformatted{## Quarterly Results {.tabset}
+
+### By Product
+
+### By Region }
+
+You can also specify two additional attributes to control the appearance and
+behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
+fade in and out when switching. The \code{.tabset-pills} attribute causes
+the visual appearance of the tabs to be "pill" rather than traditional tabs.
+For example:
+
+\preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
+}
+

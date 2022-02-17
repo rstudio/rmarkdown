@@ -10,6 +10,7 @@
 \alias{html_dependency_ionicons}
 \alias{html_dependency_pagedtable}
 \alias{html_dependency_highlightjs}
+\alias{html_dependency_tabset}
 \title{Provide common HTML dependencies for R Markdown formats}
 \usage{
 html_dependency_jquery()
@@ -27,6 +28,8 @@ html_dependency_ionicons()
 html_dependency_pagedtable()
 
 html_dependency_highlightjs(highlight)
+
+html_dependency_tabset()
 }
 \arguments{
 \item{theme}{One of the following:
