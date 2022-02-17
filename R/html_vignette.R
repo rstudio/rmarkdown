@@ -24,6 +24,10 @@
 #' @param readme Use this vignette as the package README.md file (i.e. render
 #'   it as README.md to the package root). Note that if there are image files
 #'   within your vignette you should be sure to add README_files to .Rbuildignore
+#' @param tabset Opt-in tabbed-sections feature inspired by \code{\link{html_document}}.
+#'   See section "Tabbed Sections" for the detail.
+#'   This feature also allows navigation to the tab from table of contents and URL.
+#' @inheritSection html_document Tabbed Sections
 #' @return R Markdown output format to pass to \code{\link{render}}
 #' @export
 html_vignette <- function(fig_width = 3,
@@ -34,11 +38,17 @@ html_vignette <- function(fig_width = 3,
                           keep_md = FALSE,
                           readme = FALSE,
                           self_contained = TRUE,
+                          tabset = FALSE,
+                          extra_dependencies = NULL,
                           ...) {
 
   if (is.null(css)) {
     css <- system.file("rmarkdown", "templates", "html_vignette" ,"resources",
       "vignette.css", package = "rmarkdown")
+  }
+
+  if (tabset) {
+    extra_dependencies <- append(extra_dependencies, list(html_dependency_tabset()))
   }
 
   pre_knit <- function(input, ...) {
@@ -73,6 +83,7 @@ html_vignette <- function(fig_width = 3,
                                 theme = NULL,
                                 highlight = "pygments",
                                 self_contained = self_contained,
+                                extra_dependencies = extra_dependencies,
                                 ...)
   )
 }
