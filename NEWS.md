@@ -70,6 +70,9 @@ rmarkdown 2.12
 - Lua Filters: Added two more functions in `shared.lua` for other package to use: 
   * Added `type()` function backward compatible following Pandoc 2.17 changes.
   * Added `print_debug()` for easier logging during debug.
+  
+- Add opt-in `tabset` option to the `html_vignette`. In contrast to the similar feature from `html_document`, this feature supports navigation from ToC and URL. Any custom formats can introduce this feature by using an exported function `html_dependency_tabset()` (thanks, @atusy, #2313).
+
 
 rmarkdown 2.11
 ================================================================================
