@@ -769,6 +769,7 @@ navbar_links_tags <- function(links, depth = 0L) {
                 tags$a(
                   href = "#", class = "dropdown-toggle",
                   `data-toggle` = "dropdown", role = "button",
+                  `data-bs-toggle` = "dropdown", # BS5
                   `aria-expanded` = "false", link_text),
                 tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
         )
