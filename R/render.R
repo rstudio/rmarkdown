@@ -103,7 +103,7 @@ NULL
 #'
 #' Note that the \pkg{knitr} \code{error} option is set to \code{FALSE} during
 #' rendering (which is different from the \pkg{knitr} default value of
-#' \code{TRUE}).
+#' \code{TRUE}). However, this can be changed via the \code{error} option.
 #'
 #' For additional details on rendering R scripts see
 #' \link[=compile_notebook]{Compiling R scripts to a notebook}.
@@ -218,6 +218,8 @@ NULL
 #'   "Output created: " message, you can set \code{rmarkdown.render.message} to
 #'   \code{FALSE}
 #' @param encoding Ignored. The encoding is always assumed to be UTF-8.
+#' @param error Can be set to \code{TRUE} to pass over errors in rendered files.
+#'   This is internally passed to \code{rmarkdown::opts$set()}.
 #' @return
 #'   When \code{run_pandoc = TRUE}, the compiled document is written into
 #'   the output file, and the path of the output file is returned. When
@@ -264,7 +266,8 @@ render <- function(input,
                    envir = parent.frame(),
                    run_pandoc = TRUE,
                    quiet = FALSE,
-                   encoding = "UTF-8") {
+                   encoding = "UTF-8",
+                   error = FALSE) {
 
   perf_timer_start("render")
 
@@ -614,7 +617,7 @@ render <- function(input,
 
     # default rendering and chunk options
     knitr::render_markdown()
-    knitr::opts_chunk$set(tidy = FALSE, error = FALSE)
+    knitr::opts_chunk$set(tidy = FALSE, error = error)
     # the retina option does not make sense to non-HTML output formats
     if (!grepl('[.]html$', output_file)) knitr::opts_chunk$set(fig.retina = NULL)
 
