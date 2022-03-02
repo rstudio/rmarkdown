@@ -480,7 +480,7 @@ shiny_prerendered_option_hook <- function(input) {
 
     if (identical(options$context, "server")) {
       # if empty server context, set a default server function
-      if (is_blank(options$code)) {
+      if (xfun::is_blank(options$code)) {
         options$code <- "# empty server context"
       }
     }
