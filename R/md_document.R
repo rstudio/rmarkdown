@@ -101,8 +101,10 @@ md_document <- function(variant = "markdown_strict",
   # undesired sorting (https://github.com/rstudio/rmarkdown/pull/2190/files)
   post_processor <- if (preserve_yaml) {
     function(metadata, input_file, output_file, clean, verbose) {
+      input_lines <- read_utf8(input_file)
+      output_lines <- read_utf8(output_file)
       write_utf8(
-        .preserve_yaml(read_utf8(input_file), read_utf8(output_file)),
+        .preserve_yaml(input_lines, output_lines),
         output_file
       )
       output_file

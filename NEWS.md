@@ -3,6 +3,8 @@ rmarkdown 2.13
 
 - Fix an issue with older R version and vignette building (#2324).
 
+- Fix an issue with older R version and `preserve_yaml = TRUE` in `md_document()` (#2325).
+
 rmarkdown 2.12
 ================================================================================
 
