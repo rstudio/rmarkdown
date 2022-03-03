@@ -89,7 +89,8 @@ md_document <- function(variant = "markdown_strict",
           "--metadata", "preprocess_number_sections=true"
         )
       )
-      write_utf8(.preserve_yaml(input_lines, read_utf8(input_file)), input_file)
+      input_lines2 <- read_utf8(input_file)
+      write_utf8(.preserve_yaml(input_lines, input_lines2), input_file)
       return(character(0L))
     }
   }
