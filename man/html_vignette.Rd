@@ -100,12 +100,15 @@ than as standalone sections. For example:
 
 ### By Region }
 
-You can also specify two additional attributes to control the appearance and
-behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
-fade in and out when switching. The \code{.tabset-pills} attribute causes
-the visual appearance of the tabs to be "pill" rather than traditional tabs.
-For example:
+With \code{\link[=html_document]{html_document()}}, you can also specify two additional attributes to
+control the appearance and behavior of the tabs. The \code{.tabset-fade}
+attributes causes the tabs to fade in and out when switching. The
+\code{.tabset-pills} attribute causes the visual appearance of the tabs to
+be "pill" rather than traditional tabs. For example:
 
 \preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
+
+If tabbed sections relies on \code{\link[=html_dependency_tabset]{html_dependency_tabset()}}, for example by
+\code{\link[=html_vignette]{html_vignette()}}, these two attributes are not supported.
 }
 
