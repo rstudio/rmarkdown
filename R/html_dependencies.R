@@ -532,7 +532,7 @@ html_dependency_katex <- function(href = NULL) {
 html_dependency_tabset <- function() {
   htmlDependency(
     "tabset",
-    version = packageVersion("rmarkdown"),
+    version = "1.0",
     src = pkg_file("rmd/h/tabset"),
     script = "tabset.js",
     stylesheet = "tabset.css",
