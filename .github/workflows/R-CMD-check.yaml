@@ -64,7 +64,7 @@ jobs:
         run: echo "TMPDIR=${{ runner.temp }}" >> $GITHUB_ENV
         shell: bash
 
-      - uses: r-lib/actions/setup-pandoc@v1
+      - uses: r-lib/actions/setup-pandoc@v2
         if: matrix.config.pandoc != 'devel'
         with:
           pandoc-version: ${{ matrix.config.pandoc }}
