@@ -298,13 +298,16 @@
 #'
 #' ### By Region }
 #'
-#'  You can also specify two additional attributes to control the appearance and
-#'  behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
-#'  fade in and out when switching. The \code{.tabset-pills} attribute causes
-#'  the visual appearance of the tabs to be "pill" rather than traditional tabs.
-#'  For example:
+#'  With [html_document()], you can also specify two additional attributes to
+#'  control the appearance and behavior of the tabs. The \code{.tabset-fade}
+#'  attributes causes the tabs to fade in and out when switching. The
+#'  \code{.tabset-pills} attribute causes the visual appearance of the tabs to
+#'  be "pill" rather than traditional tabs. For example:
 #'
 #'  \preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
+#'
+#'  If tabbed sections relies on [html_dependency_tabset()], for example by
+#'  [html_vignette()], these two attributes are not supported.
 #'
 #'@section Templates:
 #'
