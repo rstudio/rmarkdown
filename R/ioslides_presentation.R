@@ -328,6 +328,10 @@ ioslides_presentation <- function(number_sections = FALSE,
   if (!is.null(analytics))
     args <- c(args, pandoc_variable_arg("analytics", analytics))
 
+  # do not wrap lines: https://github.com/rstudio/rmarkdown/issues/2327
+  if (!length(grep('--wrap', pandoc_args)))
+    pandoc_args <- c('--wrap', 'none', pandoc_args)
+
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
   pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,

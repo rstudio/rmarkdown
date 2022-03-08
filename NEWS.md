@@ -5,6 +5,9 @@ rmarkdown 2.13
 
 - Fix an issue with older R version and `preserve_yaml = TRUE` in `md_document()` (#2325).
 
+- Long title in `ioslides_presentation` failed to work with Pandoc 2.17.x (thanks, @Am386DX-40, #2327).
+
+
 rmarkdown 2.12
 ================================================================================
 
