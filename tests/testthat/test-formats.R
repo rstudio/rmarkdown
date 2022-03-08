@@ -69,7 +69,6 @@ test_that(
   }
 
   testFormat(html_vignette(theme = "z"))
-  testFormat(html_vignette(highlight = "z"))
   testFormat(html_vignette(fig_retina = 2))
 
 })

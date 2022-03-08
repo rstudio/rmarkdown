@@ -772,6 +772,7 @@ navbar_links_tags <- function(links, depth = 0L) {
                 tags$a(
                   href = "#", class = "dropdown-toggle",
                   `data-toggle` = "dropdown", role = "button",
+                  `data-bs-toggle` = "dropdown", # BS5
                   `aria-expanded` = "false", link_text),
                 tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
         )
@@ -834,6 +835,8 @@ add_anchor_sections <- function(anchor_sections, section_divs = FALSE) {
   res <- list(args = NULL, lua_filters = NULL, extra_dependencies = NULL)
   # Do nothing
   if (xfun::isFALSE(anchor_sections)) return(res)
+  # TODO: remove this hack when https://github.com/ThinkR-open/gitdown/issues/17 is resolved
+  if (xfun::check_old_package('gitdown', '0.1.5')) return(res)
   # Requires Pandoc 2.0 because using a Lua filter
   if (!pandoc2.0()) {
     stop("Using anchor_sections requires Pandoc 2.0+", call. = FALSE)

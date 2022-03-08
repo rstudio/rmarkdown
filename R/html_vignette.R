@@ -11,15 +11,14 @@
 #'   \item never uses a theme
 #'   \item has a smaller default figure size
 #'   \item uses a custom css stylesheet
-#'   \item uses a custom highlight scheme
 #'  }
 #'
 #' See the \href{https://bookdown.org/yihui/rmarkdown/r-package-vignette.html}{online
 #' documentation} for additional details on using the \code{html_vignette} format.
 #' @inheritParams html_document
-#' @param ... Additional arguments passed to \code{\link{html_document}}. Please
-#'   note that \code{theme}, \code{fig_retina} and \code{highlight} are hard
-#'   coded. Setting any of those will yield an error.
+#' @param highlight,... Additional arguments passed to
+#'   \code{\link{html_document}}. Please note that \code{theme} and
+#'   \code{fig_retina} are hard-coded. Setting any of those will yield an error.
 #' @param css One or more css files to include.
 #' @param readme Use this vignette as the package README.md file (i.e. render
 #'   it as README.md to the package root). Note that if there are image files
@@ -35,6 +34,7 @@ html_vignette <- function(fig_width = 3,
                           dev = 'png',
                           df_print = "default",
                           css = NULL,
+                          highlight = "pygments",
                           keep_md = FALSE,
                           readme = FALSE,
                           self_contained = TRUE,
@@ -81,7 +81,7 @@ html_vignette <- function(fig_width = 3,
                                 fig_retina = NULL,
                                 css = css,
                                 theme = NULL,
-                                highlight = "pygments",
+                                highlight = highlight,
                                 self_contained = self_contained,
                                 extra_dependencies = extra_dependencies,
                                 ...)
