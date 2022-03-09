@@ -1223,6 +1223,8 @@ file_scope_split <- function(input, fun) {
 
 add_syntax_definition <- function(args) {
   if (
+    # do nothing if opt-out
+    xfun::isFALSE(lang <- getOption("rmarkdown.highlighting.xml.add", TRUE)) ||
     # do not add before Pandoc 2.15 due to issues with xml parsing,
     !pandoc_available("2.15") ||
     # do not add if no Pandoc highlighting,
@@ -1232,10 +1234,19 @@ add_syntax_definition <- function(args) {
   ) {
     return(args)
   }
-  # otherwise add our file
+  ## otherwise add our file
+  # default language to add
+  if (!is.character(lang)) lang <- .syntax_highlight_bundled_language()
+  # is user asking to remove one ?
+  lang <- setdiff(lang, getOption("rmarkdown.highlighting.xml.remove"))
+  # create the CLI flags
   c(args,
     pandoc_syntax_definition_args(
-      pkg_file_highlight(c("r.xml", "markdown.xml"))
+      pkg_file_highlight(xfun::with_ext(lang, "xml"))
     )
   )
+}
+
+.syntax_highlight_bundled_language <- function() {
+  xfun::sans_ext(list.files(pkg_file_highlight("/"), pattern = "[.]xml$"))
 }
