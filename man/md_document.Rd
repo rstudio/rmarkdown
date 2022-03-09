@@ -10,6 +10,7 @@ md_document(
   toc = FALSE,
   toc_depth = 3,
   number_sections = FALSE,
+  standalone = FALSE,
   fig_width = 7,
   fig_height = 5,
   fig_retina = NULL,
@@ -37,6 +38,9 @@ details.}
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
+\item{standalone}{Set to \code{TRUE} to include title, date and other metadata
+field in addition to Rmd content as a body.}
+
 \item{fig_width}{Default width (in inches) for figures}
 
 \item{fig_height}{Default height (in inches) for figures}
@@ -44,7 +48,7 @@ details.}
 \item{fig_retina}{Scaling to perform for retina displays. Defaults to
 \code{NULL} which performs no scaling. A setting of 2 will work for all
 widely used retina displays, but will also result in the output of
-\code{<img>} tags rather than markdown images due to the need to set the
+\verb{<img>} tags rather than markdown images due to the need to set the
 width of the image explicitly.}
 
 \item{dev}{Graphics device to use for figure output (defaults to png)}
@@ -75,15 +79,15 @@ additional details.}
 \item{ext}{Extension of the output file (defaults to ".md").}
 }
 \value{
-R Markdown output format to pass to \code{\link{render}}
+R Markdown output format to pass to \code{\link[=render]{render()}}
 }
 \description{
 Format for converting from R Markdown to another variant of markdown (e.g.
 strict markdown or github flavored markdown)
 }
 \details{
-See the \href{https://bookdown.org/yihui/rmarkdown/markdown-document.html}{online
-documentation} for additional details on using the \code{md_document} format.
+See the \href{https://bookdown.org/yihui/rmarkdown/markdown-document.html}{online documentation}
+for additional details on using the \code{md_document()} format.
 
 R Markdown documents can have optional metadata that is used to generate a
 document header that includes the title, author, and date. For more details

@@ -1,20 +1,49 @@
+rmarkdown 2.13
+================================================================================
+
+- Fix an issue with older R version and vignette building (#2324).
+
+- Fix an issue with older R version and `preserve_yaml = TRUE` in `md_document()` (#2325).
+
+- Long title in `ioslides_presentation` failed to work with Pandoc 2.17.x (thanks, @Am386DX-40, #2327).
+
+
 rmarkdown 2.12
 ================================================================================
 
-- Added `available_templates()` to list all the templates from a specific package that can be used with `rmarkdown::draft()`.
+- `html_document()` and `html_document_base()` gains the `math_method` argument to support [all the math rendering engines from Pandoc](https://pandoc.org/MANUAL.html#math-rendering-in-html): "mathjax", "katex", "mathml", "webtex", and "gladtex". For backward compatibility, the `mathjax` argument still works and will take precedence over `math_method`, but we recommend using the new `math_method` argument instead of the `mathjax` argument, and the latter could be deprecated in the future.
 
-- Following support in Pandoc 2.15, `powerpoint_presentation()` gains a `incremental` argument as other slide formats. As a reminder, setting `incremental = TRUE` will make lists to display incrementally. See more in [Pandoc's MANUAL](https://pandoc.org/MANUAL.html#incremental-lists).
+  You can specify a math engine via `math_method` as an engine name, e.g.,
 
-- Improved the highlighting mechanism in formats that supports `highlight` argument: 
-  * It is now possible to pass a custom theme file `.theme` in `highlight` argument for customizing the [syntax highlighting style used by Pandoc](https://pandoc.org/MANUAL.html#syntax-highlighting). 
-  * In addition to Pandoc's own supported themes, two more themes are bundled in the package:  `highlight: arrow` a theme [optimized for accessibility and color constrast](https://www.a11yproject.com/) (thanks to @apreshill), and `highlight: rstudio` to mimic the RStudio editor theme.
-  * For HTML output only, added optional [downlit](https://downlit.r-lib.org/) support in `html_document()` for R syntax highlighting and autolinking. Use `highlight_downlit = TRUE` to activate it (same argument as in **distill**). This features require the **downlit** package. 
+  ```yaml
+  output:
+    html_document:
+      math_method: katex
+  ```
 
-- Added a global option `rmarkdown.html_dependency.header_attr` (`TRUE` by default). It can be set to `FALSE` to opt-out the HTML dependency `html_dependency_header_attrs()` in documents based on `html_document_base()` (thanks, @salim-b rstudio/bookdown#865, @maelle r-lib/downlit#1538).
+  or provide both a name and a URL (for `mathjax`, `katex` and `webtex`):
 
-- `draft()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
+  ```yaml
+  output:
+    html_document:
+      math_method: 
+        engine: mathjax
+        url: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js
+  ```
 
-- `anchor_sections` can now be easily customized using `style` or `depth` element for `anchor_sections`. Ex: 
+  For `math_method = "katex"`, KaTeX CDN will be inserted in version 0.15.2 by default (from jsdelivr). A custom URL toward another CDN can be passed as `url`.
+
+  For `math_method = "webtex"`, it will default to inset SVG using `https://latex.codecogs.com/svg.image?`. Use `https://latex.codecogs.com/png.image?` for PNG. See https://latex.codecogs.com for supported options (dpi, background, ...).
+
+  Most HTML output format using `html_document()` or `html_document_base()` as based format should benefit from this new feature.
+  See `?rmarkdown::html_document()` for details (thanks, @atusy, #1940).
+
+- `github_document()` also gains the `math_method` argument set to `"webtex"` by default so that LaTeX equations can be rendered in the Github Markdown document as images. Previously, LaTeX equations were not rendered. Set `math_method = NULL` to deactivate.
+
+- Added support for [**katex**](https://docs.ropensci.org/katex/) R package as a math engine with `math_method = "r-katex"` in HTML documents. This method offers server-side rendering of all the equations, which means no JS processing is needed in the browser as with usual KaTeX or MathJaX methods. (thanks, @jeroen, #2304).
+
+- `anchor_sections` can now be easily customized using `style` or `depth` element for `anchor_sections`. For example:
+
   ```yaml
   output:
     html_document:
@@ -22,9 +51,46 @@ rmarkdown 2.12
         style: symbol # use symbol style ("hash", "symbol", "icon")
         depth: 2 # max depth to apply anchor on (default to max which is 6)
   ```
-  Customizing using a css rule is still possible. Detailed explanation and examples have been added in `?html_document`.
-  
+
+  Customizing using a CSS rule is still possible. Detailed explanation and examples have been added to the help page `?html_document`.
+
+- Improved the highlighting mechanism in formats that supports `highlight` argument: 
+
+  * It is now possible to pass a custom theme file `.theme` in `highlight` argument for customizing the [syntax highlighting style used by Pandoc](https://pandoc.org/MANUAL.html#syntax-highlighting). 
+  * In addition to Pandoc's own supported themes, two more themes are bundled in the package:  `highlight: arrow` a theme [optimized for accessibility and color constrast](https://www.a11yproject.com/) (thanks to @apreshill), and `highlight: rstudio` to mimic the RStudio editor theme.
+  * For HTML output only, added optional [downlit](https://downlit.r-lib.org/) support in `html_document()` for R syntax highlighting and autolinking. Use `highlight_downlit = TRUE` to activate it (same argument as in **distill**). This features require the **downlit** package. 
+
+- Templates for `html_document()` and `ioslides_presentation()` gained a new CSS rule to display single line `<summary>` content inline (rstudio/rstudio#10589).
+
+- `md_document()` gained a new `standalone` argument, which is `FALSE` by default unless `toc = TRUE`. This allows to output authors, date and other metadata per the Pandoc's template. Due to limitation in how Pandoc is handling metadata blocks in its extensions `yaml_metadata_block`, `preserve_yaml = TRUE` now deactivate any extension to let **rmarkdown** directly handle the keeping of YAML block - this means it does not set `standalone = TRUE` by default. Meanwhile, `github_document()` gained the `preserve_yaml` argument (thanks, @florisvdh, #2297).
+
+- Added `available_templates()` to list all the templates from a specific package that can be used with `rmarkdown::draft()`.
+
+- Following support in Pandoc 2.15, `powerpoint_presentation()` gained a `incremental` argument as other slide formats. As a reminder, setting `incremental = TRUE` will make lists to display incrementally. See more in [Pandoc's MANUAL](https://pandoc.org/MANUAL.html#incremental-lists).
+
 - Added support for Pandoc's `dir` variable in HTML templates. This is the second [Language Variables](https://pandoc.org/MANUAL.html#language-variables) after `lang`. 
+
+- Added a global option `rmarkdown.html_dependency.header_attr` (`TRUE` by default). It can be set to `FALSE` to opt-out the HTML dependency `html_dependency_header_attrs()` in documents based on `html_document_base()` (thanks, @salim-b rstudio/bookdown#865, @maelle r-lib/downlit#1538).
+
+- Rendering using `runtime: shiny_prerendered` or `runtime: shinyrmd` now natively supports custom templates. Previously since 2.8, developers had to add a special comment, `<!-- HEAD_CONTENT -->`, conditionally to `shiny-prerendered` variable. (See also NEWS from 2.8 for the previous behavior). The new behavior inserts required special comment `<!-- HEAD_CONTENT -->` as a last element of `$header-includes$`. If templates rely on the old behavior and require some contents between `$header-includes$` and `<!-- HEAD_CONTENT -->`, consider including them with `$header-includes$` (thanks, @atusy, @gadenbuie #2249).
+
+- A shiny prerendered document with only a empty server context does not error anymore. Document will be rendered with a empty server function and `server.R` file will be ignored. To use `server.R`, no server context should be present in the Rmd document (thanks, @jcheng5, #2305).
+
+- Fixed a regression with rendering `shiny_prerendered` document (thanks, @aronatkins, @gadenbuie, #2218).
+
+- Fixed an issue in `beamer_presentation()` where `header-includes` would be overwritten by `includes = list(in_header =)` (thanks, @samcarter, #2294). Same fix as for `pdf_document()` (#1359).
+  
+- Fixed broken links to section headers when `number_sections = TRUE` is specified in `md_document` and `github_document` (thanks, @atusy, #2093).
+
+- `draft()` now works with `devtools::load_all()` and **testthat** when used in other packages. 
+
+- Lua Filters: Added two more functions in `shared.lua` for other package to use: 
+
+  * Added `type()` function backward compatible following Pandoc 2.17 changes.
+  * Added `print_debug()` for easier logging during debug.
+  
+- Add opt-in `tabset` option to the `html_vignette`. In contrast to the similar feature from `html_document`, this feature supports navigation from ToC and URL. Any custom formats can introduce this feature by using an exported function `html_dependency_tabset()` (thanks, @atusy, #2313).
+
 
 rmarkdown 2.11
 ================================================================================

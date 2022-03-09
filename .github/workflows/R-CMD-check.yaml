@@ -39,8 +39,11 @@ jobs:
           - {os: ubuntu-18.04,   pandoc: '2.5',     r: 'release'}
           - {os: ubuntu-18.04,   pandoc: '2.0.0.1', r: 'release'}
           # testing other R versions
-          - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'oldrel'}
           - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'oldrel-1'}
+          - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'oldrel-2'}
+          - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'oldrel-3'}
+          - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'oldrel-4'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -61,7 +64,7 @@ jobs:
         run: echo "TMPDIR=${{ runner.temp }}" >> $GITHUB_ENV
         shell: bash
 
-      - uses: r-lib/actions/setup-pandoc@v1
+      - uses: r-lib/actions/setup-pandoc@v2
         if: matrix.config.pandoc != 'devel'
         with:
           pandoc-version: ${{ matrix.config.pandoc }}

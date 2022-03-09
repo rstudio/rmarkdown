@@ -8,6 +8,8 @@ github_document(
   toc = FALSE,
   toc_depth = 3,
   number_sections = FALSE,
+  math_method = "webtex",
+  preserve_yaml = FALSE,
   fig_width = 7,
   fig_height = 5,
   dev = "png",
@@ -26,6 +28,12 @@ github_document(
 \item{toc_depth}{Depth of headers to include in table of contents}
 
 \item{number_sections}{\code{TRUE} to number section headings}
+
+\item{math_method}{\code{"webtex"} (the default) is used to render equations. This
+will insert math an image in the resulting Markdown. See \code{\link[=html_document]{html_document()}}
+for option to change webtex URL. Set to \code{NULL} to opt-out.}
+
+\item{preserve_yaml}{Preserve YAML front matter in final document.}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -66,13 +74,25 @@ locally previewing what the document will look like on GitHub.}
 directory. Default is \code{FALSE}.}
 }
 \value{
-R Markdown output format to pass to \code{\link{render}}
+R Markdown output format to pass to \code{\link[=render]{render()}}
 }
 \description{
 Format for converting from R Markdown to GitHub Flavored Markdown.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online
-documentation} for additional details on using the \code{github_document}
+See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online documentation} for additional details on using the \code{github_document()}
 format.
 }
+\section{About Math support}{
+For Github Markdown output, PNG images with a white background are used so
+that it shows correctly on Github on both light and dark theme. You can
+choose to only output SVG for better quality by changing the URL used:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  github_document:
+    math_method:
+      engine: webtex
+      url: https://latex.codecogs.com/svg.image?
+}\if{html}{\out{</div>}}
+
+Background or fonts color cannot be changed for now and your equation may not be visible on dark theme.
+}
+

@@ -89,6 +89,34 @@
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
 #'  copied into the output directory). You can pass an alternate URL or pass
 #'  \code{NULL} to exclude MathJax entirely.
+#'@param math_method Math rendering engine to use. This will define the math method to use with Pandoc.
+#'
+#'  * It can be a string for the engine, one of `r knitr::combine_words(c(pandoc_math_engines(), "r-katex"), and = "or ", before = '"')`
+#'  or "default" for `mathjax`.
+#'  * It can be a list of
+#'    * `engine`:  one of
+#'      `r knitr::combine_words(pandoc_math_engines(), and = "or ", before = '"')`.
+#'    * `url`: A specific url to use with `mathjax`, `katex` or `webtex`.
+#'      Note that for `engine = "mathjax"`, `url = "local"` will use a local version of MathJax (which is
+#'  copied into the output directory).
+#'
+#'  For example,
+#'  ```yaml
+#'  output:
+#'    html_document:
+#'      math_method:
+#'        engine: katex
+#'        url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+#'  ```
+#'
+#'  See [Pandoc's Manual about Math in
+#'  HTML](https://pandoc.org/MANUAL.html#math-rendering-in-html) for the details
+#'  about Pandoc supported methods.
+#'
+#'  Using `math_method = "r-katex"` will opt-in server side rendering using
+#'  KaTeX thanks to [katex](https://docs.ropensci.org/katex/) R package. This is
+#'  useful compared to `math_method = "katex"` to have no JS dependency, only a
+#'  CSS dependency for styling equation.
 #'@param section_divs Wrap sections in \code{<div>} tags, and attach identifiers to the
 #'  enclosing \code{<div>} rather than the header itself.
 #'@param template Pandoc template to use for rendering. Pass "default" to use
@@ -270,13 +298,16 @@
 #'
 #' ### By Region }
 #'
-#'  You can also specify two additional attributes to control the appearance and
-#'  behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
-#'  fade in and out when switching. The \code{.tabset-pills} attribute causes
-#'  the visual appearance of the tabs to be "pill" rather than traditional tabs.
-#'  For example:
+#'  With [html_document()], you can also specify two additional attributes to
+#'  control the appearance and behavior of the tabs. The \code{.tabset-fade}
+#'  attributes causes the tabs to fade in and out when switching. The
+#'  \code{.tabset-pills} attribute causes the visual appearance of the tabs to
+#'  be "pill" rather than traditional tabs. For example:
 #'
 #'  \preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
+#'
+#'  If tabbed sections relies on [html_dependency_tabset()], for example by
+#'  [html_vignette()], these two attributes are not supported.
 #'
 #'@section Templates:
 #'
@@ -333,6 +364,7 @@ html_document <- function(toc = FALSE,
                           theme = "default",
                           highlight = "default",
                           highlight_downlit = FALSE,
+                          math_method = "default",
                           mathjax = "default",
                           template = "default",
                           extra_dependencies = NULL,
@@ -612,7 +644,9 @@ html_document <- function(toc = FALSE,
     on_exit = on_exit,
     base_format = html_document_base(theme = theme,
                                      self_contained = self_contained,
-                                     lib_dir = lib_dir, mathjax = mathjax,
+                                     lib_dir = lib_dir,
+                                     math_method = math_method,
+                                     mathjax = mathjax,
                                      template = template,
                                      pandoc_args = pandoc_args,
                                      extra_dependencies = extra_dependencies,
@@ -672,15 +706,6 @@ themes <- function() {
 html_highlighters <- function() {
   c(highlighters(), "textmate")
 }
-
-default_mathjax <- function() {
-  paste0("https://mathjax.rstudio.com/latest/", mathjax_config())
-}
-
-mathjax_config <- function() {
-  "MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-}
-
 
 navbar_html_from_yaml <- function(navbar_yaml) {
 
@@ -747,6 +772,7 @@ navbar_links_tags <- function(links, depth = 0L) {
                 tags$a(
                   href = "#", class = "dropdown-toggle",
                   `data-toggle` = "dropdown", role = "button",
+                  `data-bs-toggle` = "dropdown", # BS5
                   `aria-expanded` = "false", link_text),
                 tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
         )
@@ -809,6 +835,8 @@ add_anchor_sections <- function(anchor_sections, section_divs = FALSE) {
   res <- list(args = NULL, lua_filters = NULL, extra_dependencies = NULL)
   # Do nothing
   if (xfun::isFALSE(anchor_sections)) return(res)
+  # TODO: remove this hack when https://github.com/ThinkR-open/gitdown/issues/17 is resolved
+  if (xfun::check_old_package('gitdown', '0.1.5')) return(res)
   # Requires Pandoc 2.0 because using a Lua filter
   if (!pandoc2.0()) {
     stop("Using anchor_sections requires Pandoc 2.0+", call. = FALSE)

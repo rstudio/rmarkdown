@@ -834,6 +834,10 @@ render <- function(input,
 
   if (run_pandoc) {
 
+    # set env vars required during Pandoc processing
+    lua_env_vars <- xfun::set_envvar(c(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua")))
+    on.exit(xfun::set_envvar(lua_env_vars), add = TRUE)
+
     perf_timer_start("pre-processor")
 
     # call any pre_processor
@@ -853,10 +857,12 @@ render <- function(input,
                                             shiny_prerendered_dependencies,
                                             files_dir,
                                             output_dir)
-      # indicate to Pandoc we are in a shiny prerendered document to activate
-      # specific parts in the template.
+      # Include special comment in header for correc insertion of HTML dependencies
+      # during shiny_prerendered process (See `shiny_prerendered_html()`).
+      # This should be the last header-includes to be set.
+      # Context in https://github.com/rstudio/rmarkdown/pull/2249
       output_format$pandoc$args <- c(output_format$pandoc$args,
-                                     pandoc_variable_arg("shiny-prerendered"))
+                                     pandoc_include_args(in_header = pkg_file("rmd/h/shiny-header.html")))
     }
 
     perf_timer_stop("pre-processor")
@@ -890,8 +896,6 @@ render <- function(input,
 
       # if Lua filters are provided, add the command line switch
       if (!is.null(lua_filters <- output_format$pandoc$lua_filters)) {
-        lua_env_vars <- xfun::set_envvar(c(RMARKDOWN_LUA_SHARED = pkg_file_lua("shared.lua")))
-        on.exit(xfun::set_envvar(lua_env_vars), add = TRUE)
         lua_filters <- pandoc_lua_filter_args(lua_filters)
       }
       pandoc_args <- c(lua_filters, pandoc_args)

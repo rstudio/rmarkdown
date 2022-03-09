@@ -1,0 +1,24 @@
+.tabset>.tab {
+  display: none;
+  border: solid 1px black;
+  padding: 5px; }
+.tabset>.tab.active {
+  display: block; }
+.tabset>.tab>:first-child {
+  display: none; }
+
+.tabset>.tabmenu {
+  margin-bottom: 0;
+  padding: 0; }
+.tabset>.tabmenu li {
+  display: inline-block;
+  margin: 0 2px 0 0; }
+.tabset>.tabmenu button {
+  text-decoration: none;
+  font-weight: normal; }
+.tabset>.tabmenu .active button {
+  text-decoration: solid underline;
+  font-weight: bold; }
+.tabset>.tabmenu .active button:before {
+  content: "> "; }
+

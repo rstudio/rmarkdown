@@ -78,8 +78,15 @@ test_that("detect highlightjs theme", {
 test_that("Converting bib file is working", {
   skip_on_cran()
   skip_if_not_pandoc("2.11") # only test with newer Pandoc citeproc
+  skip_on_os("windows") # UTF-8 and windows does not work well for now.
   bib_file <- test_path("resources/UTF8.bib")
   expect_snapshot_value(pandoc_citeproc_convert(bib_file, "list"), style = "deparse")
   expect_snapshot_output(pandoc_citeproc_convert(bib_file, "json"))
   expect_snapshot_output(pandoc_citeproc_convert(bib_file, "yaml"))
+})
+
+test_that("pandoc_math_args() build correct CLI flag", {
+  expect_identical(pandoc_math_args("katex"), c("--katex"))
+  expect_identical(pandoc_math_args("webtex", "url"), c("--webtex=url"))
+  expect_error(pandoc_math_args("gladtex", "CDN"), "gladtex does not support")
 })
