@@ -1223,9 +1223,9 @@ file_scope_split <- function(input, fun) {
 
 add_syntax_definition <- function(args) {
   if (
-    # Only add a syntax file for 2.15+ due to Pandoc's issues.
+    # do not add before Pandoc 2.15 due to issues with xml parsing,
     !pandoc_available("2.15") ||
-    # do not add if not Pandoc highlighting
+    # do not add if no Pandoc highlighting,
     detect_pattern("--no-highlight", args) ||
     # do not add if user provided another r.xml file
     (detect_pattern("--syntax-definition", args) && detect_pattern("r\\.xml", args))
