@@ -47,6 +47,7 @@ test_that("syntax definition file is correctly added", {
   if (!pandoc_available("2.15")) {
     expect_identical(add_syntax_definition("arg1"), "arg1")
   }
+  expect_identical(add_syntax_definition("arg1", "markdown"), "arg1")
 
   # Add custom xml files cases
   skip_if_not_pandoc("2.15")
