@@ -1251,7 +1251,7 @@ add_syntax_definition <- function(args) {
 }
 
 .syntax_highlight_bundled_language <- function() {
-  xfun::sans_ext(list.files(pkg_file_highlight("/"), pattern = "[.]xml$"))
+  xfun::sans_ext(list.files(pkg_file_highlight(""), pattern = "[.]xml$"))
 }
 
 .find_syntax_args <- function(args) {
