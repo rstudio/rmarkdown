@@ -40,17 +40,14 @@ test_that("syntax definition file is correctly added", {
     add_syntax_definition(c("--no-highlight", "--other")),
     c("--no-highlight", "--other")
   )
-  withr::with_options(list(rmarkdown.highlighting.xml.add = FALSE),
+  withr::with_options(
+    list(rmarkdown.highlighting.xml.add = FALSE),
     expect_identical(add_syntax_definition(""), "")
-  )
-  dummy_xml <- pandoc_syntax_definition_args("dummy/r.xml")
-  expect_identical(
-    add_syntax_definition(c("arg1", dummy_xml)),
-    c("arg1", dummy_xml)
   )
   if (!pandoc_available("2.15")) {
     expect_identical(add_syntax_definition("arg1"), "arg1")
   }
+
   # Add custom xml files cases
   skip_if_not_pandoc("2.15")
   args <- add_syntax_definition(NULL)
@@ -61,6 +58,10 @@ test_that("syntax definition file is correctly added", {
   )
   reg <- sprintf("(%s)", paste0(.syntax_highlight_bundled_language(), collapse = "|"))
   expect_match(args1, reg)
+  ## User provided file is kept
+  args <- add_syntax_definition(c("arg1", pandoc_syntax_definition_args("dummy/r.xml")))
+  expect_match(args, "dummy.+r[.]xml$", all = FALSE)
+  expect_length(grep("r[.]xml$", args), 1L)
   ## Opt in specific
   withr::with_options(list(rmarkdown.highlighting.xml.add = "markdown"), {
       args <- add_syntax_definition(c("arg1"))

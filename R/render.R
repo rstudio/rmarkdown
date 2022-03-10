@@ -1228,17 +1228,20 @@ add_syntax_definition <- function(args) {
     # do not add before Pandoc 2.15 due to issues with xml parsing,
     !pandoc_available("2.15") ||
     # do not add if no Pandoc highlighting,
-    detect_pattern("--no-highlight", args) ||
-    # do not add if user provided another r.xml file
-    (detect_pattern("--syntax-definition", args) && detect_pattern("r\\.xml", args))
+    detect_pattern("--no-highlight", args)
   ) {
     return(args)
   }
-  ## otherwise add our file
+
   # default language to add
   if (!is.character(lang)) lang <- .syntax_highlight_bundled_language()
-  # is user asking to remove one ?
-  lang <- setdiff(lang, getOption("rmarkdown.highlighting.xml.remove"))
+  lang <- setdiff(lang, c(
+    # user provided argument
+    .find_syntax_args(args),
+    # is user asking to remove one ?
+    getOption("rmarkdown.highlighting.xml.remove")
+  ))
+
   # create the CLI flags
   c(args,
     pandoc_syntax_definition_args(
@@ -1249,4 +1252,12 @@ add_syntax_definition <- function(args) {
 
 .syntax_highlight_bundled_language <- function() {
   xfun::sans_ext(list.files(pkg_file_highlight("/"), pattern = "[.]xml$"))
+}
+
+.find_syntax_args <- function(args) {
+  if (!detect_pattern("--syntax-definition", args)) return(character(0))
+  default_lang <- .syntax_highlight_bundled_language()
+  xml_pattern <- sprintf("%s[.]xml", default_lang)
+  found <- vapply(xml_pattern, detect_pattern, vec = args, FUN.VALUE = logical(1))
+  default_lang[found]
 }
