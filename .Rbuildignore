@@ -20,3 +20,4 @@
 ^vignettes/articles$
 ^CITATION\.cff$
 ^LICENSE\.md$
+^revdep$

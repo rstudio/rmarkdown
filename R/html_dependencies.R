@@ -624,3 +624,16 @@ html_dependency_katex <- function(href = NULL) {
     )
   )
 }
+
+#' @rdname html-dependencies
+#' @export
+html_dependency_tabset <- function() {
+  htmlDependency(
+    "tabset",
+    version = "1.0",
+    src = pkg_file("rmd/h/tabset"),
+    script = "tabset.js",
+    stylesheet = "tabset.css",
+    all_files = FALSE
+  )
+}

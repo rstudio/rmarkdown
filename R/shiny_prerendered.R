@@ -177,10 +177,11 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
   html_with_deps <- shinyHTML_with_deps(rendered_html, dependencies)
 
   # The html template used to render the UI should contain the placeholder
-  # expected by shiny in `shiny:::renderPage()` which uses
-  # `htmltools::renderDocument`.
-  # If it is not present in the template, we add this placeholder at the end of
-  # the <head> element
+  # expected by shiny in `shiny:::renderPage()` which uses `htmltools::renderDocument`.
+  # This should be included during render() as a header include file. As a safety measure,
+  # if it is not present in the template, we add this placeholder at the end of
+  # the <head> element. This should not happen really.
+  # Context: https://github.com/rstudio/rmarkdown/pull/2249
   if (!any(grepl(headContent <- "<!-- HEAD_CONTENT -->", html_with_deps, fixed = TRUE))) {
     html_with_deps <- sub(
       '</head>',
@@ -347,6 +348,10 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
       dependency$src = list(href = unname(dependency$src))
     }
 
+    if (!is.null(dependency$package)) {
+      dependency$pkgVersion <- get_package_version_string(dependency$package)
+    }
+
     # return dependency
     dependency
   })
@@ -471,6 +476,13 @@ shiny_prerendered_option_hook <- function(input) {
       conn <- file(index_file, open = "ab", encoding = "UTF-8")
       on.exit(close(conn), add = TRUE)
       write(data_file, file = conn, append = TRUE)
+    }
+
+    if (identical(options$context, "server")) {
+      # if empty server context, set a default server function
+      if (xfun::is_blank(options$code)) {
+        options$code <- "# empty server context"
+      }
     }
     options
   }

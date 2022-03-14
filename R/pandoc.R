@@ -482,15 +482,15 @@ pandoc_math_engines <- function() {
   c("mathjax", "mathml", "webtex", "katex", "gladtex")
 }
 
-pandoc_math_args <- function(engine = pandoc_math_engines(), url = NULL) {
+pandoc_math_args <- function(engine, url = NULL) {
 
-  engine <- match.arg(engine)
+  engine <- match.arg(engine, choices = pandoc_math_engines())
 
   if (!is.null(url) && engine %in% c("mathml", "gladtex")) {
     stop2(sprintf("%s does not support setting a URL.", engine))
   }
 
-  c(paste0("--", engine), if (!is.null(url)) url)
+  paste0(c("--", engine, if (!is.null(url)) c("=", url)), collapse = "")
 }
 
 

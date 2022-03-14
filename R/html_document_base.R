@@ -53,11 +53,6 @@ html_document_base <- function(theme = NULL,
     args <- c(args, "--self-contained")
   }
 
-  # math support
-  math_support <- add_math_support(math, template, lib_dir, output_dir)
-  args <- c(args, math_support$args)
-  extra_dependencies <- c(extra_dependencies, math_support$extra_dependencies)
-
   # custom args
   args <- c(args, pandoc_args)
 
@@ -126,6 +121,11 @@ html_document_base <- function(theme = NULL,
       args <- c(args, "--css", pandoc_path_arg(f, backslash = FALSE))
     }
 
+    # math support
+    math_support <- add_math_support(math, template, lib_dir, output_dir)
+    args <- c(args, math_support$args)
+    extra_dependencies <- c(extra_dependencies, math_support$extra_dependencies)
+
     # resolve and inject extras, including dependencies specified by the format
     # and dependencies specified by the user (via extra_dependencies)
     format_deps <- list()
@@ -175,6 +175,14 @@ html_document_base <- function(theme = NULL,
   }
 
   post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+
+    # Special KaTeX math support
+    if (identical(math_method, "r-katex") && xfun::pkg_available("katex", "1.4.0")) {
+      katex::render_math_in_html(output_file, output = output_file)
+    }
+
+    # Other processing ----
+
     # read the output file
     output_str <- read_utf8(output_file)
 
@@ -231,6 +239,7 @@ html_document_base <- function(theme = NULL,
     output_str <- gsub(s2, '<span class="ot">=&gt;</span>', output_str, fixed = TRUE)
 
     write_utf8(output_str, output_file)
+
     output_file
   }
 
@@ -284,7 +293,19 @@ add_math_support <- function(math, template, files_dir, output_dir) {
   if (is.null(math)) return(NULL)
 
   # handle different engines
-  # TODO: engine to use r-katex package
+
+  # Special handling: KaTeX R package
+  if (identical(math$engine, "r-katex")) {
+    if (xfun::pkg_available("katex", "1.4.0")) {
+      # We need to tell pandoc to process the equation,
+      # setting no math argument will make Pandoc throw a warning
+      # If used with a template contained `$math$`, JS and CSS will be inserted
+      # TODO: patch template to remove the math variable when needed.
+      return(list(args = pandoc_math_args("katex")))
+    }
+    stop2("katex R package (>= 1.4.0) is required for server-side rendering.\n",
+          "Install the package or change `math_method`.")
+  }
 
   # Default
   if (identical(math$engine, "default")) math$engine <- "mathjax"
@@ -297,6 +318,12 @@ add_math_support <- function(math, template, files_dir, output_dir) {
   # support only mathjax for Pandoc before 2.0+
   if (!pandoc2.0() && !identical(math$engine, "mathjax")) {
     stop2("only `math_method = 'mathjax'` is supported with earlier version than Pandoc 2.0 ")
+  }
+
+  # change default for url for webtex to use SVG
+  # Pandoc still uses PNG
+  if (identical(math$engine, "webtex")) {
+    math$url <- math$url %||% "https://latex.codecogs.com/svg.image?"
   }
 
   # No special handling needed for most engine

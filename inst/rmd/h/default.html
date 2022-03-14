@@ -26,9 +26,6 @@ $endif$
 $for(header-includes)$
 $header-includes$
 $endfor$
-$if(shiny-prerendered)$
-<!-- HEAD_CONTENT -->
-$endif$
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -192,6 +189,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -488,7 +488,7 @@ $if(theme)$
 
 $if(code_menu)$
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 $if(code_folding)$
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
