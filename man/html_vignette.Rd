@@ -62,7 +62,8 @@ its size).}
 See section "Tabbed Sections" for the detail.
 This feature also allows navigation to the tab from table of contents and URL.}
 
-\item{extra_dependencies}{Additional function arguments to pass to the
+\item{extra_dependencies}{Additional function
+arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
 }
 \value{
