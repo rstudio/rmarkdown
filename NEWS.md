@@ -1,7 +1,7 @@
 rmarkdown 2.14
 ================================================================================
 
-
+- Fix an issue with Shiny prerendered documents and Pandoc not correctly rendering last markdown paragraph in HTML (thanks, @gadenbuie, #2336).
 
 rmarkdown 2.13
 ================================================================================
