@@ -1,0 +1,9 @@
+.chunk-details[open] > .chunk-summary::after {
+  content: "Hide";
+}
+.chunk-summary::after {
+  content: "Code";
+}
+.chunk-summary {
+  text-align: right;
+}
