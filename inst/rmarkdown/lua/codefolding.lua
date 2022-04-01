@@ -25,10 +25,10 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 --]]
 
-local INITIAL_STATE
+local DEFAULT_STATE
 
 function Meta(meta)
-  DETAILS_STATE = meta["rmd_codefolding_lua"] == "show" and " open" or ""
+  DEFAULT_STATE = meta["rmd_codefolding_lua"] == "show" and " open" or ""
 end
 
 function CodeBlock(elem)
@@ -46,11 +46,19 @@ function CodeBlock(elem)
   end
   if not folding then return end
 
+  -- Do nothin if has "fold-none" class
+  if elem.classes:find("fold-none") then return end
+
   -- Do folding
+  local state = 
+    (elem.classes:find("fold-show") and " open") or
+    (elem.classes:find("fold-hide") and "") or
+    DEFAULT_STATE
+
   return {
     pandoc.RawBlock(
       "html",
-      "<details class=chunk-details" .. DETAILS_STATE .. ">"
+      "<details class=chunk-details" .. state .. ">"
       ..
       "<summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>"
     ),
