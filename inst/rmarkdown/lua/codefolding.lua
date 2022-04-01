@@ -52,7 +52,7 @@ function CodeBlock(elem)
       "html",
       "<details class=chunk-details" .. DETAILS_STATE .. ">"
       ..
-      "<summary class=chunk-summary></summary>"
+      "<summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>"
     ),
     elem,
     pandoc.RawBlock("html", "</details>")

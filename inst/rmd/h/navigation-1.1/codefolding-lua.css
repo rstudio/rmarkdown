@@ -1,8 +1,8 @@
 .chunk-details[open] > .chunk-summary::after {
   content: "Hide";
 }
-.chunk-summary::after {
-  content: "Code";
+.chunk-details[open] .chunk-summary-text {
+  display: none;
 }
 .chunk-summary {
   text-align: right;
