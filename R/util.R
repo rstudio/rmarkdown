@@ -538,6 +538,7 @@ proj_root <- function(path, file = '^DESCRIPTION$', pattern = '^Package: ') {
   for (f in list.files(dir, file, full.names = TRUE)) {
     if (length(grep(pattern, read_utf8(f)))) return(dir)
   }
+  dir <- normalize_path(dir)
   proj_root(dirname(dir), file, pattern)
 }
 

@@ -359,9 +359,13 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
   # remove NULLs (excluded dependencies)
   dependencies <- dependencies[!sapply(dependencies, is.null)]
 
-  # append them to the file (guarnateed to be UTF-8)
+  # append them to the file (guaranteed to be UTF-8)
   con <- file(input, open = "at", encoding = "UTF-8")
   on.exit(close(con), add = TRUE)
+
+  # Add newline before adding any raw html dependency script
+  # https://github.com/rstudio/rmarkdown/issues/2336
+  writeLines("", con = con)
 
   # write deps to connection
   dependencies_json <- jsonlite::serializeJSON(dependencies, pretty = FALSE)
