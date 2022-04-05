@@ -34,7 +34,9 @@ test_that("number_sections Lua filter works", {
   headers <- c("# A", "## B", "# C", "## D")
   rmd <- c(paste0(headers, "\n\n"), "See [A]")
   # Variant for snapshot: pandoc 2.11.2 default to atx headers
-  pandoc_versions <- if (pandoc_available("2.11.2")) {
+  pandoc_versions <- if (pandoc_available("2.18")) {
+    "after-pandoc-2.18"
+  } else if (pandoc_available("2.11.2")) {
     "after-pandoc-2.11.2"
   } else {
     "before-pandoc-2.11.2"
@@ -53,13 +55,6 @@ test_that("number_sections Lua filter works", {
 
   # Github document
   skip_if_not_pandoc("2.10.1") # changes in gfm writer break this test for earlier versions
-  pandoc_versions <- if (pandoc_available("2.18")) {
-    "after-pandoc-2.18"
-  } else if (pandoc_available("2.11.2")) {
-    "after-pandoc-2.11.2"
-  } else {
-    "before-pandoc-2.11.2"
-  }
   result <- .generate_md_and_convert(rmd, github_document(number_sections = TRUE, toc = TRUE))
   expect_snapshot_output(result, variant = pandoc_versions)
 })
