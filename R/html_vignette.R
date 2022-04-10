@@ -59,10 +59,9 @@ html_vignette <- function(fig_width = 3,
   if (code_folding != "none") {
     extra_dependencies <- append(extra_dependencies,
                                  list(html_dependency_codefolding_lua()))
-    pandoc_args <- append(pandoc_args,
-                          c("-M",
-                            paste0("rmd_codefolding_lua=", code_folding)))
-    lua_filters <- c(lua_filters, pkg_file_lua("codefolding.lua"))
+    pandoc_args <- c(pandoc_args,
+                     pandoc_metadata_arg("rmd_codefolding_lua", code_folding))
+    lua_filters <- append(lua_filters, pkg_file_lua("codefolding.lua"))
   }
 
   pre_knit <- function(input, ...) {
