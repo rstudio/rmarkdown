@@ -1,9 +1,9 @@
-.chunk-details[open] > .chunk-summary::after {
+detaiks.chunk-details > summary.chunk-summary {
+  text-align: right;
+}
+details.chunk-details[open] > summary.chunk-summary::after {
   content: "Hide";
 }
-.chunk-details[open] .chunk-summary-text {
+details.chunk-details[open] > summary.chunk-summary > span.chunk-summary-text {
   display: none;
-}
-.chunk-summary {
-  text-align: right;
 }
