@@ -91,11 +91,12 @@ html_vignette <- function(fig_width = 3,
                                extra_dependencies = extra_dependencies,
                                pandoc_args = pandoc_args,
                                ...)
-  base_format$pandoc$lua_filters <- append(base_format$pandoc$lua_filters,
-                                           lua_filters)
+  pandoc <- base_format$pandoc
+  pandoc$lua_filters <- c(pandoc$lua_filters, lua_filters)
+
   output_format(
     knitr = NULL,
-    pandoc = NULL,
+    pandoc = pandoc,
     df_print = df_print,
     pre_knit = pre_knit,
     keep_md = keep_md,
