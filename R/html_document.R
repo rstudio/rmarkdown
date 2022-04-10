@@ -37,11 +37,13 @@
 #'@param fig_caption \code{TRUE} to render figures with captions
 #'@param dev Graphics device to use for figure output (defaults to png)
 #'@param code_folding Enable document readers to toggle the display of R code
-#'  chunks. Specify \code{"none"} to display all code chunks (assuming
-#'  they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
-#'  code chunks by default (users can show hidden code chunks either
-#'  individually or document-wide). Specify \code{"show"} to show all R code
-#'  chunks by default.
+#'  chunks. Specify \code{"none"} to display all code chunks. Specify
+#'  \code{"hide"} to hide all R code chunks by default (users can show hidden
+#'  code chunks either individually or document-wide). Specify \code{"show"} to
+#'  show all R code chunks by default. If not \code{"none"}, users can
+#'  individually toggle code chunks be shown or hidden. The document-wide toggle
+#'  button is also available for \code{"html_document"}, but not for
+#'  \code{"html_vignette"}.
 #'@param code_download Embed the Rmd source code within the document and provide
 #'  a link that can be used by readers to download the code.
 #'@param self_contained Produce a standalone HTML file with no external
