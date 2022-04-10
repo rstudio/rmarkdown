@@ -10,10 +10,10 @@ output:
 
 Use the cheatsheets that are built into the RStudio IDE to jog your memory about R Markdown.
 
-[![](lesson-images/cheatsheets-1-cheatsheet.png)](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+[![](lesson-images/cheatsheets-1-cheatsheet.png)](https://github.com/rstudio/cheatsheets/raw/main/rmarkdown-2.0.pdf)
 </br>
 
-Go to *File > Help > Cheatsheets > R Markdown Cheat Sheet* to open the main [R Markdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf), pictured above.
+Go to *File > Help > Cheatsheets > R Markdown Cheat Sheet* to open the main [R Markdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/main/rmarkdown-2.0.pdf), pictured above.
 
 ![](lesson-images/cheatsheets-2-path.png)
 </br>
