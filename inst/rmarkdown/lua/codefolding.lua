@@ -44,10 +44,10 @@ function CodeBlock(elem)
       break
     end
   end
-  if not folding then return end
+  if not folding then return elem end
 
   -- Do nothin if has "fold-none" class
-  if elem.classes:find("fold-none") then return end
+  if elem.classes:find("fold-none") then return elem end
 
   -- Do folding
   local state = 
