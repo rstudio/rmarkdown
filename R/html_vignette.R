@@ -44,7 +44,7 @@ html_vignette <- function(fig_width = 3,
                           pandoc_args = NULL,
                           ...) {
 
-  lua_filters <- character(0L)
+  lua_filters <- c()
 
   if (is.null(css)) {
     css <- system.file("rmarkdown", "templates", "html_vignette" ,"resources",
