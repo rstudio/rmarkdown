@@ -26,6 +26,7 @@
 #'   See section "Tabbed Sections" for the detail.
 #'   This feature also allows navigation to the tab from table of contents and URL.
 #' @inheritSection html_document Tabbed Sections
+#' @inheritSection html_document Code folding
 #' @return R Markdown output format to pass to [render()]
 #' @md
 #' @export
