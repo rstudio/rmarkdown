@@ -284,7 +284,7 @@
 #'  to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
 #'  whether the table of contents appears when user prints out the HTML page.}}
 #'
-#'@section Code folding:
+#' @section Code folding:
 #'
 #'  Code blocks become foldable by specifying "show" or "hide" to the
 #'  \code{code_folding} parameter. The state can be toggled individually on
