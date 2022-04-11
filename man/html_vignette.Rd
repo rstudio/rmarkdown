@@ -15,7 +15,9 @@ html_vignette(
   readme = FALSE,
   self_contained = TRUE,
   tabset = FALSE,
+  code_folding = c("none", "show", "hide"),
   extra_dependencies = NULL,
+  pandoc_args = NULL,
   ...
 )
 }
@@ -62,8 +64,19 @@ its size).}
 See section "Tabbed Sections" for the detail.
 This feature also allows navigation to the tab from table of contents and URL.}
 
+\item{code_folding}{Enable document readers to toggle the display of R code
+chunks. Specify \code{"none"} to display all code chunks. Specify
+\code{"hide"} to hide all R code chunks by default (users can show hidden
+code chunks either individually or document-wide). Specify \code{"show"} to
+show all R code chunks by default. If not \code{"none"}, users can
+individually toggle code chunks be shown or hidden. The document-wide toggle
+button is also available for \code{"html_document"}, but not for
+\code{"html_vignette"}.}
+
 \item{extra_dependencies}{Additional function arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
+
+\item{pandoc_args}{Additional command line options to pass to pandoc}
 }
 \value{
 R Markdown output format to pass to \code{\link[=render]{render()}}

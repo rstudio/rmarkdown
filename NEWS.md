@@ -7,6 +7,8 @@ rmarkdown 2.14
 
 - Fixed a bug that `site_generator()` fails to detect the root dir of the site and causes infinite recursion (thanks, @fisher-j, #2339).
 
+- `html_vignette()` gains `code_folding` argument (thanks, @atusy, #2340).
+
 
 rmarkdown 2.13
 ================================================================================
