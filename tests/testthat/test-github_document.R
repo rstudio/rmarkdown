@@ -7,8 +7,9 @@ test_that("toc has correct identifier", {
   tmp_file <- local_rmd_file(
     c("# 10 Section","","Sentence.","", "# Header","","Sentence ")
   )
+  pandoc_version <- ifelse(pandoc_available("2.18"), "after-pandoc-2.18", "before-pandoc-2.18")
   res <- render(tmp_file, github_document(toc = TRUE, html_preview = FALSE))
-  expect_snapshot_file(res, "github-toc.md", compare = compare_file_text)
+  expect_snapshot_file(res, "github-toc.md", compare = compare_file_text, variant = pandoc_version)
 })
 
 test_that("toc has correct identifier also when sections are numbered ", {
@@ -17,8 +18,9 @@ test_that("toc has correct identifier also when sections are numbered ", {
   tmp_file <- local_rmd_file(
     c("# Section","","Sentence.","", "# Header","","Sentence ")
   )
+  pandoc_version <- ifelse(pandoc_available("2.18"), "after-pandoc-2.18", "before-pandoc-2.18")
   res <- render(tmp_file, github_document(toc = TRUE, number_sections = TRUE, html_preview = FALSE))
-  expect_snapshot_file(res, "github-toc-numbered.md", compare = compare_file_text)
+  expect_snapshot_file(res, "github-toc-numbered.md", compare = compare_file_text, variant = pandoc_version)
 })
 
 

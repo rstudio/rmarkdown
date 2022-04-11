@@ -1,6 +1,8 @@
 rmarkdown 2.14
 ================================================================================
 
+- Fix an issue with `site_generator()` detection of a site project (thanks, @bhattmaulik, #2344).
+
 - Fix an issue with Shiny prerendered documents and Pandoc not correctly rendering last markdown paragraph in HTML (thanks, @gadenbuie, #2336).
 
 - Fixed a bug that `site_generator()` fails to detect the root dir of the site and causes infinite recursion (thanks, @fisher-j, #2339).
