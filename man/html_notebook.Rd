@@ -55,12 +55,9 @@ outputting HTML directly into the markdown document).}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
 chunks. Specify \code{"none"} to display all code chunks. Specify
-\code{"hide"} to hide all R code chunks by default (users can show hidden
-code chunks either individually or document-wide). Specify \code{"show"} to
-show all R code chunks by default. If not \code{"none"}, users can
-individually toggle code chunks be shown or hidden. The document-wide toggle
-button is also available for \code{"html_document"}, but not for
-\code{"html_vignette"}.}
+\code{"hide"} or \code{"show"} to hide or show all R code chunks by
+default, and let readers toggle the states on browsers. See the
+\emph{Code folding}}
 
 \item{theme}{One of the following:
 \itemize{

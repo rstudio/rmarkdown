@@ -9,6 +9,8 @@ rmarkdown 2.14
 
 - `html_vignette()` gains `code_folding` argument (thanks, @atusy, #2340).
 
+- `html_document()` can opt-out `code_folding = "show"` or `"hide"` for individual code blocks by adding the `fold-none` class to the code blocks (thanks, @atusy, #2348).
+
 - When using a development version of Pandoc, a `.9999` suffix is appended to version number so that `pandoc_available()` can correctly compared version with last release.
 
 rmarkdown 2.13
