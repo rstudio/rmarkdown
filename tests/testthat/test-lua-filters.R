@@ -34,8 +34,10 @@ test_that("number_sections Lua filter works", {
   headers <- c("# A", "## B", "# C", "## D")
   rmd <- c(paste0(headers, "\n\n"), "See [A]")
   # Variant for snapshot: pandoc 2.11.2 default to atx headers
-  pandoc_versions <- if (pandoc_available("2.18")) {
+  pandoc_versions <- if (pandoc_available("2.18.0.1")) {
     "after-pandoc-2.18"
+  } else if (pandoc_available("2.18")) {
+    "pandoc-2.18"
   } else if (pandoc_available("2.11.2")) {
     "after-pandoc-2.11.2"
   } else {
