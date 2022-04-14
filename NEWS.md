@@ -1,6 +1,8 @@
 rmarkdown 2.14
 ================================================================================
 
+- Impove highlighting theme `arrow` regarding accessibility.
+
 - Fix an issue with `site_generator()` detection of a site project (thanks, @bhattmaulik, #2344).
 
 - Fix an issue with Shiny prerendered documents and Pandoc not correctly rendering last markdown paragraph in HTML (thanks, @gadenbuie, #2336).
