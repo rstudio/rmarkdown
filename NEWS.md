@@ -1,3 +1,9 @@
+rmarkdown 2.15
+================================================================================
+
+- The `tufte_handout()` function inside **rmarkdown** is defunct now. Its codebase was moved to the **tufte** package in 2016, and this function was marked as deprecated in 2021. Please use `tufte::tufte_handout()` instead of `rmarkdown::tufte_handout()`. The latter will be removed eventually from this package.
+
+
 rmarkdown 2.14
 ================================================================================
 

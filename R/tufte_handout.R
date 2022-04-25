@@ -5,6 +5,7 @@
 #' \href{https://bookdown.org/yihui/rmarkdown/tufte-handouts.html}{online
 #' documentation} for additional details.
 #' @inheritParams pdf_document
+#' @keywords internal
 #' @export
 tufte_handout <- function(fig_width = 4,
                           fig_height = 2.5,
@@ -18,8 +19,8 @@ tufte_handout <- function(fig_width = 4,
                           pandoc_args = NULL) {
 
   # TODO: remove tufte_handout from rmarkdown
-  warning(
-    'The function rmarkdown::tufte_handout() has been deprecated. Please use',
+  stop(
+    'rmarkdown::tufte_handout is defunct. Please use ',
     'tufte::tufte_handout instead.'
   )
 
