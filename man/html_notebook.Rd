@@ -54,11 +54,10 @@ outputting HTML directly into the markdown document).}
 \item{fig_caption}{\code{TRUE} to render figures with captions}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
-chunks. Specify \code{"none"} to display all code chunks (assuming
-they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
-code chunks by default (users can show hidden code chunks either
-individually or document-wide). Specify \code{"show"} to show all R code
-chunks by default.}
+chunks. Specify \code{"none"} to display all code chunks. Specify
+\code{"hide"} or \code{"show"} to hide or show all R code chunks by
+default, and let readers toggle the states on browsers. See the
+\emph{Code folding}}
 
 \item{theme}{One of the following:
 \itemize{

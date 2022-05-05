@@ -28,22 +28,23 @@ jobs:
       matrix:
         config:
           # testing R release with last shipped pandoc version in RStudio IDE and new pandoc
-          - {os: windows-latest, pandoc: '2.16.2',  r: 'release'}
-          - {os: macOS-latest,   pandoc: '2.16.2',  r: 'release'}
-          - {os: ubuntu-18.04,   pandoc: '2.16.2',  r: 'release'}
+          - {os: windows-latest, pandoc: '2.18',  r: 'release'}
+          - {os: macOS-latest,   pandoc: '2.18',  r: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.18',  r: 'release'}
           - {os: ubuntu-18.04,   pandoc: 'devel',   r: 'release'}
           # testing older pandoc versions
+          - {os: ubuntu-18.04,   pandoc: '2.17.1.1',  r: 'release'}
           - {os: ubuntu-18.04,   pandoc: '2.14.2',  r: 'release'}
           - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'release'}
           - {os: ubuntu-18.04,   pandoc: '2.7.3',   r: 'release'}
           - {os: ubuntu-18.04,   pandoc: '2.5',     r: 'release'}
           - {os: ubuntu-18.04,   pandoc: '2.0.0.1', r: 'release'}
           # testing other R versions
-          - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'oldrel-1'}
-          - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'oldrel-2'}
-          - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'oldrel-3'}
-          - {os: ubuntu-18.04,   pandoc: '2.11.4',  r: 'oldrel-4'}
+          - {os: ubuntu-18.04,   pandoc: '2.14.2',  r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-18.04,   pandoc: '2.14.2',  r: 'oldrel-1'}
+          - {os: ubuntu-18.04,   pandoc: '2.14.2',  r: 'oldrel-2'}
+          - {os: ubuntu-18.04,   pandoc: '2.14.2',  r: 'oldrel-3'}
+          - {os: ubuntu-18.04,   pandoc: '2.14.2',  r: 'oldrel-4'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true

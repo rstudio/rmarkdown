@@ -64,3 +64,4 @@ This function has been moved to the \pkg{tufte} package. Please use
 \href{https://bookdown.org/yihui/rmarkdown/tufte-handouts.html}{online
 documentation} for additional details.
 }
+\keyword{internal}

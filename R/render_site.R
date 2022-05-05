@@ -251,10 +251,12 @@ clean_site <- function(input = ".", preview = TRUE, quiet = FALSE,
 #' @rdname render_site
 #' @export
 site_generator <- function(input = ".", output_format = NULL) {
-
+  has_rproj <- function(dir) {
+    length(list.files(dir, "[.]Rproj$")) != 0
+  }
   # look for the closest index file with 'site' metadata
   root <- tryCatch(
-    proj_root(input, "^index.R?md$", "^\\s*site:.*::.*$"),
+    proj_root(input, "^index.R?md$", "^\\s*site:.*::.*$", has_rproj),
     error = function(e) NULL
   )
 

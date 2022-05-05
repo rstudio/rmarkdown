@@ -26,6 +26,7 @@
 #'   See section "Tabbed Sections" for the detail.
 #'   This feature also allows navigation to the tab from table of contents and URL.
 #' @inheritSection html_document Tabbed Sections
+#' @inheritSection html_document Code folding
 #' @return R Markdown output format to pass to [render()]
 #' @md
 #' @export
@@ -39,8 +40,12 @@ html_vignette <- function(fig_width = 3,
                           readme = FALSE,
                           self_contained = TRUE,
                           tabset = FALSE,
+                          code_folding = c("none", "show", "hide"),
                           extra_dependencies = NULL,
+                          pandoc_args = NULL,
                           ...) {
+
+  lua_filters <- c()
 
   if (is.null(css)) {
     css <- system.file("rmarkdown", "templates", "html_vignette" ,"resources",
@@ -49,6 +54,15 @@ html_vignette <- function(fig_width = 3,
 
   if (tabset) {
     extra_dependencies <- append(extra_dependencies, list(html_dependency_tabset()))
+  }
+
+  code_folding <- match.arg(code_folding)
+  if (code_folding != "none") {
+    extra_dependencies <- append(extra_dependencies,
+                                 list(html_dependency_codefolding_lua()))
+    pandoc_args <- c(pandoc_args,
+                     pandoc_metadata_arg("rmd_codefolding_lua", code_folding))
+    lua_filters <- c(lua_filters, pkg_file_lua("codefolding.lua"))
   }
 
   pre_knit <- function(input, ...) {
@@ -67,6 +81,19 @@ html_vignette <- function(fig_width = 3,
     vignette_pre_processor(input_file, metadata)
   }
 
+  base_format <- html_document(fig_width = fig_width,
+                               fig_height = fig_height,
+                               dev = dev,
+                               fig_retina = NULL,
+                               css = css,
+                               theme = NULL,
+                               highlight = highlight,
+                               self_contained = self_contained,
+                               extra_dependencies = extra_dependencies,
+                               pandoc_args = pandoc_args,
+                               ...)
+  base_format$pandoc$lua_filters <- append(base_format$pandoc$lua_filters,
+                                           lua_filters)
   output_format(
     knitr = NULL,
     pandoc = NULL,
@@ -75,16 +102,7 @@ html_vignette <- function(fig_width = 3,
     keep_md = keep_md,
     clean_supporting = self_contained,
     pre_processor = pre_processor,
-    base_format = html_document(fig_width = fig_width,
-                                fig_height = fig_height,
-                                dev = dev,
-                                fig_retina = NULL,
-                                css = css,
-                                theme = NULL,
-                                highlight = highlight,
-                                self_contained = self_contained,
-                                extra_dependencies = extra_dependencies,
-                                ...)
+    base_format = base_format
   )
 }
 

@@ -637,3 +637,15 @@ html_dependency_tabset <- function() {
     all_files = FALSE
   )
 }
+
+#' @rdname html-dependencies
+#' @export
+html_dependency_codefolding_lua <- function() {
+  htmlDependency(
+    "codefolding-lua",
+    version = "1.1",
+    src = pkg_file("rmd/h/navigation-1.1"),
+    stylesheet = "codefolding-lua.css",
+    all_files = FALSE
+  )
+}

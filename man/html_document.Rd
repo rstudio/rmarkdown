@@ -86,11 +86,10 @@ can disable the \code{df_print} behavior entirely by setting the option
 frame printing section} in bookdown book for examples.}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
-chunks. Specify \code{"none"} to display all code chunks (assuming
-they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
-code chunks by default (users can show hidden code chunks either
-individually or document-wide). Specify \code{"show"} to show all R code
-chunks by default.}
+chunks. Specify \code{"none"} to display all code chunks. Specify
+\code{"hide"} or \code{"show"} to hide or show all R code chunks by
+default, and let readers toggle the states on browsers. See the
+\emph{Code folding}}
 
 \item{code_download}{Embed the Rmd source code within the document and provide
 a link that can be used by readers to download the code.}
@@ -373,6 +372,26 @@ necessary.} \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls
 whether page scrolls are animated when table of contents items are navigated
 to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
 whether the table of contents appears when user prints out the HTML page.}}
+}
+
+\section{Code folding}{
+
+
+Code blocks become foldable by specifying "show" or "hide" to the
+\code{code_folding} parameter. The state can be toggled individually on
+browsers. The document-wide toggle button is also provided for
+\code{html_document} and some of its extentions such as
+\code{html_notebook}. Note that this feature applies not only to source
+codes of chunks, but also markdown code blocks.
+
+Supported languages are R, Python, Bash, SQL, C++, Stan, and Julia. To
+support code blocks with other languages, add \code{foldable} class to them
+(i.e., \code{class.source = "foldable"} as a chunk option).
+
+The default initial state of code folding respects the value given to the
+\code{code_folding} parameter. To override the behavior individually, add
+\code{fold-none} to disable, \code{fold-hide} to initially hide,
+\code{fold-show} to initially show.
 }
 
 \section{Tabbed Sections}{

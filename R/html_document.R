@@ -15,41 +15,40 @@
 #' \href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 #' and Citations} article in the online documentation.
 #'
-#'@inheritParams output_format
-#'@param toc \code{TRUE} to include a table of contents in the output
-#'@param toc_depth Depth of headers to include in table of contents
-#'@param toc_float \code{TRUE} to float the table of contents to the left of the
+#' @inheritParams output_format
+#' @param toc \code{TRUE} to include a table of contents in the output
+#' @param toc_depth Depth of headers to include in table of contents
+#' @param toc_float \code{TRUE} to float the table of contents to the left of the
 #'  main document content. Rather than \code{TRUE} you may also pass a list of
 #'  options that control the behavior of the floating table of contents. See the
 #'  \emph{Floating Table of Contents} section below for details.
-#'@param number_sections \code{TRUE} to number section headings
-#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers
+#' @param number_sections \code{TRUE} to number section headings
+#' @param anchor_sections \code{TRUE} to show section anchors when mouse hovers
 #'  for all headers. A list can also be passed with \code{style} and/or
 #'  \code{depth} to customize the behavior. See
 #'  \link[rmarkdown:html_document]{Anchor Sections Customization section}.
-#'@param fig_width Default width (in inches) for figures
-#'@param fig_height Default height (in inches) for figures
-#'@param fig_retina Scaling to perform for retina displays (defaults to 2, which
+#' @param fig_width Default width (in inches) for figures
+#' @param fig_height Default height (in inches) for figures
+#' @param fig_retina Scaling to perform for retina displays (defaults to 2, which
 #'  currently works for all widely used retina displays). Set to \code{NULL} to
 #'  prevent retina scaling. Note that this will always be \code{NULL} when
 #'  \code{keep_md} is specified (this is because \code{fig_retina} relies on
 #'  outputting HTML directly into the markdown document).
-#'@param fig_caption \code{TRUE} to render figures with captions
-#'@param dev Graphics device to use for figure output (defaults to png)
-#'@param code_folding Enable document readers to toggle the display of R code
-#'  chunks. Specify \code{"none"} to display all code chunks (assuming
-#'  they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
-#'  code chunks by default (users can show hidden code chunks either
-#'  individually or document-wide). Specify \code{"show"} to show all R code
-#'  chunks by default.
-#'@param code_download Embed the Rmd source code within the document and provide
+#' @param fig_caption \code{TRUE} to render figures with captions
+#' @param dev Graphics device to use for figure output (defaults to png)
+#' @param code_folding Enable document readers to toggle the display of R code
+#'  chunks. Specify \code{"none"} to display all code chunks. Specify
+#'  \code{"hide"} or \code{"show"} to hide or show all R code chunks by
+#'  default, and let readers toggle the states on browsers. See the
+#'  \emph{Code folding}
+#' @param code_download Embed the Rmd source code within the document and provide
 #'  a link that can be used by readers to download the code.
-#'@param self_contained Produce a standalone HTML file with no external
+#' @param self_contained Produce a standalone HTML file with no external
 #'  dependencies, using data: URIs to incorporate the contents of linked
 #'  scripts, stylesheets, images, and videos. Note that even for self contained
 #'  documents MathJax is still loaded externally (this is necessary because of
 #'  its size).
-#'@param theme One of the following:
+#' @param theme One of the following:
 #'  * A [bslib::bs_theme()] object (or a list of [bslib::bs_theme()] argument values)
 #'    * Use this option for custom themes using Bootstrap 4 or 3.
 #'    * In this case, any `.scss`/`.sass` files provided to the `css`
@@ -58,7 +57,7 @@
 #'  * `NULL` for no theme (i.e., no [html_dependency_bootstrap()]).
 #'  * A character string specifying a [Bootswatch 3](https://bootswatch.com/3/)
 #'    theme name (for backwards-compatibility).
-#'@param highlight Syntax highlight engine and style. See the
+#' @param highlight Syntax highlight engine and style. See the
 #'  \emph{Highlighting} section below for details.
 #'
 #'  "default" (and "textmate") will use highlightjs as syntax highlighting
@@ -76,7 +75,7 @@
 #'
 #'  Pass \code{NULL} to prevent syntax highlighting.
 #'
-#'@param highlight_downlit \code{TRUE} to use the \pkg{downlit} package as
+#' @param highlight_downlit \code{TRUE} to use the \pkg{downlit} package as
 #'  syntax highlight engine to highlight inline code and R code chunks
 #'  (including providing hyperlinks to function documentation). The package
 #'  needs to be installed to use this feature.
@@ -85,11 +84,11 @@
 #'  \code{highlight = "default"}, it will use the accessible theme called
 #'  "arrow". To learn more about \pkg{downlit} highlighting engine, see
 #'  \url{https://downlit.r-lib.org/}.
-#'@param mathjax Include mathjax. The "default" option uses an https URL from a
+#' @param mathjax Include mathjax. The "default" option uses an https URL from a
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
 #'  copied into the output directory). You can pass an alternate URL or pass
 #'  \code{NULL} to exclude MathJax entirely.
-#'@param math_method Math rendering engine to use. This will define the math method to use with Pandoc.
+#' @param math_method Math rendering engine to use. This will define the math method to use with Pandoc.
 #'
 #'  * It can be a string for the engine, one of `r knitr::combine_words(c(pandoc_math_engines(), "r-katex"), and = "or ", before = '"')`
 #'  or "default" for `mathjax`.
@@ -117,34 +116,34 @@
 #'  KaTeX thanks to [katex](https://docs.ropensci.org/katex/) R package. This is
 #'  useful compared to `math_method = "katex"` to have no JS dependency, only a
 #'  CSS dependency for styling equation.
-#'@param section_divs Wrap sections in \code{<div>} tags, and attach identifiers to the
+#' @param section_divs Wrap sections in \code{<div>} tags, and attach identifiers to the
 #'  enclosing \code{<div>} rather than the header itself.
-#'@param template Pandoc template to use for rendering. Pass "default" to use
+#' @param template Pandoc template to use for rendering. Pass "default" to use
 #'  the rmarkdown package default template; pass \code{NULL} to use pandoc's
 #'  built-in template; pass a path to use a custom template that you've created.
 #'  Note that if you don't use the "default" template then some features of
 #'  \code{html_document} won't be available (see the Templates section below for
 #'  more details).
-#'@param css CSS and/or Sass files to include. Files with an extension of .sass
+#' @param css CSS and/or Sass files to include. Files with an extension of .sass
 #'  or .scss are compiled to CSS via `sass::sass()`. Also, if `theme` is a
 #'  [bslib::bs_theme()] object, Sass code may reference the relevant Bootstrap
 #'  Sass variables, functions, mixins, etc.
-#'@param includes Named list of additional content to include within the
+#' @param includes Named list of additional content to include within the
 #'  document (typically created using the \code{\link{includes}} function).
-#'@param keep_md Keep the markdown file generated by knitting.
-#'@param lib_dir Directory to copy dependent HTML libraries (e.g. jquery,
+#' @param keep_md Keep the markdown file generated by knitting.
+#' @param lib_dir Directory to copy dependent HTML libraries (e.g. jquery,
 #'  bootstrap, etc.) into. By default this will be the name of the document with
 #'  \code{_files} appended to it.
-#'@param md_extensions Markdown extensions to be added or removed from the
+#' @param md_extensions Markdown extensions to be added or removed from the
 #'  default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 #'  additional details.
-#'@param pandoc_args Additional command line options to pass to pandoc
-#'@param extra_dependencies,allow_uptree_lib_dir,... Additional function
+#' @param pandoc_args Additional command line options to pass to pandoc
+#' @param extra_dependencies,allow_uptree_lib_dir,... Additional function
 #'  arguments to pass to the
 #'  base R Markdown HTML output formatter \code{\link{html_document_base}}
-#'@return R Markdown output format to pass to \code{\link{render}}
+#' @return R Markdown output format to pass to \code{\link{render}}
 #'
-#'@section Highlighting:
+#' @section Highlighting:
 #'
 #'  There are three highlighting engines available to HTML documents:
 #'
@@ -194,7 +193,7 @@
 #'  $endif$}
 #'  }}
 #'
-#'@section Anchor Sections Customization:
+#' @section Anchor Sections Customization:
 #'
 #'  This will be the default to activate anchor sections link on header
 #'  ```yaml
@@ -242,7 +241,7 @@
 #'  is added using a Lua filter, and hence requires Pandoc 2.0+
 #'  }
 #'
-#'@section Navigation Bars:
+#' @section Navigation Bars:
 #'
 #'  If you have a set of html documents which you'd like to provide a common
 #'  global navigation bar for, you can include a "_navbar.yml" or "_navbar.html"
@@ -273,7 +272,7 @@
 #'  \url{https://getbootstrap.com/docs/4.5/components/navbar/}.
 #'
 #'
-#'@section Floating Table of Contents:
+#' @section Floating Table of Contents:
 #'
 #'  You may specify a list of options for the \code{toc_float} parameter which
 #'  control the behavior of the floating table of contents. Options include:
@@ -286,7 +285,25 @@
 #'  to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
 #'  whether the table of contents appears when user prints out the HTML page.}}
 #'
-#'@section Tabbed Sections:
+#' @section Code folding:
+#'
+#'  Code blocks become foldable by specifying "show" or "hide" to the
+#'  \code{code_folding} parameter. The state can be toggled individually on
+#'  browsers. The document-wide toggle button is also provided for
+#'  \code{html_document} and some of its extentions such as
+#'  \code{html_notebook}. Note that this feature applies not only to source
+#'  codes of chunks, but also markdown code blocks.
+#'
+#'  Supported languages are R, Python, Bash, SQL, C++, Stan, and Julia. To
+#'  support code blocks with other languages, add \code{foldable} class to them
+#'  (i.e., \code{class.source = "foldable"} as a chunk option).
+#'
+#'  The default initial state of code folding respects the value given to the
+#'  \code{code_folding} parameter. To override the behavior individually, add
+#'  \code{fold-none} to disable, \code{fold-hide} to initially hide,
+#'  \code{fold-show} to initially show.
+#'
+#' @section Tabbed Sections:
 #'
 #'  You can organize content using tabs by applying the \code{.tabset} class
 #'  attribute to headers within a document. This will cause all sub-headers of
@@ -310,7 +327,7 @@
 #'  If tabbed sections relies on [html_dependency_tabset()], for example by
 #'  [html_vignette()], these two attributes are not supported.
 #'
-#'@section Templates:
+#' @section Templates:
 #'
 #'  You can provide a custom HTML template to be used for rendering. The syntax
 #'  for templates is described in the

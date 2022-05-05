@@ -15,7 +15,9 @@ html_vignette(
   readme = FALSE,
   self_contained = TRUE,
   tabset = FALSE,
+  code_folding = c("none", "show", "hide"),
   extra_dependencies = NULL,
+  pandoc_args = NULL,
   ...
 )
 }
@@ -62,9 +64,17 @@ its size).}
 See section "Tabbed Sections" for the detail.
 This feature also allows navigation to the tab from table of contents and URL.}
 
+\item{code_folding}{Enable document readers to toggle the display of R code
+chunks. Specify \code{"none"} to display all code chunks. Specify
+\code{"hide"} or \code{"show"} to hide or show all R code chunks by
+default, and let readers toggle the states on browsers. See the
+\emph{Code folding}}
+
 \item{extra_dependencies}{Additional function
 arguments to pass to the
 base R Markdown HTML output formatter \code{\link{html_document_base}}}
+
+\item{pandoc_args}{Additional command line options to pass to pandoc}
 }
 \value{
 R Markdown output format to pass to \code{\link[=render]{render()}}
@@ -110,5 +120,25 @@ be "pill" rather than traditional tabs. For example:
 
 If tabbed sections relies on \code{\link[=html_dependency_tabset]{html_dependency_tabset()}}, for example by
 \code{\link[=html_vignette]{html_vignette()}}, these two attributes are not supported.
+}
+
+\section{Code folding}{
+
+
+Code blocks become foldable by specifying "show" or "hide" to the
+\code{code_folding} parameter. The state can be toggled individually on
+browsers. The document-wide toggle button is also provided for
+\code{html_document} and some of its extentions such as
+\code{html_notebook}. Note that this feature applies not only to source
+codes of chunks, but also markdown code blocks.
+
+Supported languages are R, Python, Bash, SQL, C++, Stan, and Julia. To
+support code blocks with other languages, add \code{foldable} class to them
+(i.e., \code{class.source = "foldable"} as a chunk option).
+
+The default initial state of code folding respects the value given to the
+\code{code_folding} parameter. To override the behavior individually, add
+\code{fold-none} to disable, \code{fold-hide} to initially hide,
+\code{fold-show} to initially show.
 }
 

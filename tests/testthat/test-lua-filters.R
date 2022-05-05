@@ -34,10 +34,18 @@ test_that("number_sections Lua filter works", {
   headers <- c("# A", "## B", "# C", "## D")
   rmd <- c(paste0(headers, "\n\n"), "See [A]")
   # Variant for snapshot: pandoc 2.11.2 default to atx headers
-  pandoc_2.11.2 <- ifelse(pandoc_available("2.11.2"), "pandoc-2.11.2", "pandoc-before-2.11.2")
+  pandoc_versions <- if (pandoc_available("2.18.0.1")) {
+    "after-pandoc-2.18"
+  } else if (pandoc_available("2.18")) {
+    "pandoc-2.18"
+  } else if (pandoc_available("2.11.2")) {
+    "after-pandoc-2.11.2"
+  } else {
+    "before-pandoc-2.11.2"
+  }
   # -gfm_auto_identifiers
   result <- .generate_md_and_convert(rmd, md_document(number_sections = TRUE))
-  expect_snapshot_output(result, variant = pandoc_2.11.2)
+  expect_snapshot_output(result, variant = pandoc_versions)
 
   # +gfm_auto_identifiers
   skip_if_not_pandoc("2.5") # gfm_auto_identifiers is not working the same before
@@ -45,12 +53,12 @@ test_that("number_sections Lua filter works", {
     rmd,
     md_document(number_sections = TRUE, md_extensions = "+gfm_auto_identifiers")
   )
-  expect_snapshot_output(result, variant = pandoc_2.11.2)
+  expect_snapshot_output(result, variant = pandoc_versions)
 
   # Github document
   skip_if_not_pandoc("2.10.1") # changes in gfm writer break this test for earlier versions
   result <- .generate_md_and_convert(rmd, github_document(number_sections = TRUE, toc = TRUE))
-  expect_snapshot_output(result, variant = pandoc_2.11.2)
+  expect_snapshot_output(result, variant = pandoc_versions)
 })
 
 test_that("latex-divs.lua works with HTML doc", {
