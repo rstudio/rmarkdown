@@ -8,9 +8,12 @@
 #' @inheritParams output_format
 #' @inheritParams html_document
 #' @inheritParams md_document
-#' @param math_method `"webtex"` (the default) is used to render equations. This
-#'   will insert math an image in the resulting Markdown. See [html_document()]
-#'   for option to change webtex URL. Set to `NULL` to opt-out.
+#' @param math_method `"default"` means that [native Github
+#'   support](https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/)
+#'    for math notations using Mathjax syntax will be used. Other possible value
+#'   is `"webtex"` where equation will be rendered to an image in the resulting
+#'   Markdown. See [html_document()] for option to change webtex URL. Set `math_method`to
+#'   `NULL` to opt-out any math treatment.
 #' @param hard_line_breaks `TRUE` to generate markdown that uses a simple
 #'   newline to represent a line break (as opposed to two-spaces and a newline).
 #' @param html_preview `TRUE` to also generate an HTML file for the purpose of
@@ -20,7 +23,11 @@
 #'
 #' @details # About Math support
 #'
-#' For Github Markdown output, PNG images with a white background are used so
+#' Default behavior is to keep any inline equation using `$` and any block
+#' equation using `$$` in the resulting markdown as Github will process those
+#' using Mathjax.
+#'
+#' When using `webtex`, PNG images with a white background are used by default so
 #' that it shows correctly on Github on both light and dark theme. You can
 #' choose to only output SVG for better quality by changing the URL used:
 #'
@@ -33,6 +40,7 @@
 #' ```
 #'
 #' Background or fonts color cannot be changed for now and your equation may not be visible on dark theme.
+#'
 #' @return R Markdown output format to pass to [render()]
 #' @export
 #' @md

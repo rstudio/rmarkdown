@@ -29,9 +29,11 @@ github_document(
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
-\item{math_method}{\code{"webtex"} (the default) is used to render equations. This
-will insert math an image in the resulting Markdown. See \code{\link[=html_document]{html_document()}}
-for option to change webtex URL. Set to \code{NULL} to opt-out.}
+\item{math_method}{\code{"default"} means that \href{https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/}{native Github support}
+for math notations using Mathjax syntax will be used. Other possible value
+is \code{"webtex"} where equation will be rendered to an image in the resulting
+Markdown. See \code{\link[=html_document]{html_document()}} for option to change webtex URL. Set \code{math_method}to
+\code{NULL} to opt-out any math treatment.}
 
 \item{preserve_yaml}{Preserve YAML front matter in final document.}
 
@@ -84,7 +86,11 @@ See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online 
 format.
 }
 \section{About Math support}{
-For Github Markdown output, PNG images with a white background are used so
+Default behavior is to keep any inline equation using \code{$} and any block
+equation using \verb{$$} in the resulting markdown as Github will process those
+using Mathjax.
+
+When using \code{webtex}, PNG images with a white background are used by default so
 that it shows correctly on Github on both light and dark theme. You can
 choose to only output SVG for better quality by changing the URL used:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
   github_document:
