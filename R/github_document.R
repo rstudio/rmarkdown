@@ -81,18 +81,29 @@ github_document <- function(toc = FALSE,
   # math support
   if (!is.null(math_method)) {
     math <- check_math_argument(math_method)
+    preview_math <- NULL
     if (!math$engine %in% c("default", "webtex")) {
       stop("Markdown output format only support 'default' for native Github Math support or 'webtex' for using a Webtex online service to render math.")
     }
-    if (math$engine == "webtex" && is.null(math$url)) {
-      # default to png and white background for webtex
-      math$url <- "https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;"
-    } else if (math$engine == "default") {
-      # don't activate math in Pandoc and pass it as is
-      # https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/
-      math <- NULL
-      # TODO: Check for version - should be the default in Pandoc 2.19+
-      variant <- paste0(variant, "+tex_math_dollars")
+    if (math$engine == "default") {
+      if (pandoc_available("2.10.1")) {
+        # don't activate math in Pandoc and pass it as is
+        # https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/
+        math <- NULL
+        # TODO: Check for version - should be the default in Pandoc 2.19+
+        variant <- paste0(variant, "+tex_math_dollars")
+        preview_math <- check_math_argument("mathjax")
+      } else {
+        # fallback to webtex
+        math <- check_math_argument("webtex")
+      }
+    }
+    if (!is.null(math) && math$engine == "webtex") {
+      if (is.null(math$url)) {
+        # default to png and white background for webtex
+        math$url <- "https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;"
+      }
+      preview_math <- check_math_argument("webtex")
     }
     math <- add_math_support(math, NULL, NULL, NULL)
     pandoc_args <- c(pandoc_args, math$args)
@@ -112,11 +123,7 @@ github_document <- function(toc = FALSE,
   format$post_processor <- function(metadata, input_file, output_file, clean, verbose) {
 
     if (is.function(post)) output_file <- post(metadata, input_file, output_file, clean, verbose)
-    # handle specifically math method for preview
-    preview_math_arg <- switch(math_method %||% "",
-                               default = "--mathjax",
-                               webtex  = math$args,
-                               NULL)
+
     if (html_preview) {
       css <- pkg_file_arg(
         "rmarkdown/templates/github_document/resources/github.css")
@@ -127,7 +134,7 @@ github_document <- function(toc = FALSE,
           "rmarkdown/templates/github_document/resources/preview.html"),
         "--variable", paste0("github-markdown-css:", css),
         if (pandoc2) c("--metadata", "pagetitle=PREVIEW"),  # HTML5 requirement
-        preview_math_arg
+        if (!is.null(preview_math)) add_math_support(preview_math)$args
       )
 
       # run pandoc

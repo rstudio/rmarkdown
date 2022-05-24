@@ -44,9 +44,9 @@ test_that("github_document produces atx-header", {
   expect_snapshot_file(res, "github-atx.md", compare = compare_file_text)
 })
 
-test_that("github_document math support with native math", {
+test_that("github_document supports native math", {
   skip_on_cran()
-  skip_if_not_pandoc()
+  skip_if_not_pandoc("2.10.1")
   tmp_file <- local_rmd_file(c(
     "**The Cauchy-Schwarz Inequality**",
     "$$\\sum_{k=1}^n$$",
@@ -58,7 +58,7 @@ test_that("github_document math support with native math", {
   expect_match(res, "$\\sqrt{3x-1}+(1+x)^2$", fixed = TRUE, all = FALSE)
 })
 
-test_that("github_document math support with webtex math math", {
+test_that("github_document supports math with webtex", {
   skip_on_cran()
   skip_if_not_pandoc()
   skip_if_offline("latex.codecogs.com")
@@ -69,5 +69,19 @@ test_that("github_document math support with webtex math math", {
     "This sentence uses `$` delimiters to show math inline:  $\\sqrt{3x-1}+(1+x)^2$"
   ))
   res <- .render_and_read(tmp_file, output_format = github_document(html_preview = FALSE, math_method = "webtex"))
+  expect_match(res, "^!\\[.*][(]https://latex[.]codecogs[.]com", all = FALSE)
+})
+
+test_that("github_document uses webtex as default for pandoc before 2.10.1", {
+  skip_on_cran()
+  skip_if_pandoc("2.10.1")
+  skip_if_offline("latex.codecogs.com")
+  tmp_file <- local_rmd_file(c(
+    "**The Cauchy-Schwarz Inequality**",
+    "$$\\sum_{k=1}^n$$",
+    "",
+    "This sentence uses `$` delimiters to show math inline:  $\\sqrt{3x-1}+(1+x)^2$"
+  ))
+  res <- .render_and_read(tmp_file, output_format = github_document(html_preview = FALSE, math_method = "default"))
   expect_match(res, "^!\\[.*][(]https://latex[.]codecogs[.]com", all = FALSE)
 })
