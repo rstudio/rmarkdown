@@ -106,6 +106,7 @@ github_document <- function(toc = FALSE,
       preview_math <- check_math_argument("webtex")
     }
     math <- add_math_support(math, NULL, NULL, NULL)
+    preview_math <- add_math_support(preview_math, NULL, NULL, NULL)
     pandoc_args <- c(pandoc_args, math$args)
   }
 
@@ -134,7 +135,7 @@ github_document <- function(toc = FALSE,
           "rmarkdown/templates/github_document/resources/preview.html"),
         "--variable", paste0("github-markdown-css:", css),
         if (pandoc2) c("--metadata", "pagetitle=PREVIEW"),  # HTML5 requirement
-        if (!is.null(preview_math)) add_math_support(preview_math)$args
+        if (!is.null(preview_math)) preview_math$args
       )
 
       # run pandoc
