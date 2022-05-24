@@ -60,7 +60,7 @@ test_that("github_document supports native math", {
 
 test_that("github_document supports math with webtex", {
   skip_on_cran()
-  skip_if_not_pandoc()
+  skip_if_not_pandoc("2.0.4")
   skip_if_offline("latex.codecogs.com")
   tmp_file <- local_rmd_file(c(
     "**The Cauchy-Schwarz Inequality**",
@@ -75,6 +75,7 @@ test_that("github_document supports math with webtex", {
 test_that("github_document uses webtex as default for pandoc before 2.10.1", {
   skip_on_cran()
   skip_if_pandoc("2.10.1")
+  skip_if_not_pandoc("2.0.4")
   skip_if_offline("latex.codecogs.com")
   tmp_file <- local_rmd_file(c(
     "**The Cauchy-Schwarz Inequality**",
