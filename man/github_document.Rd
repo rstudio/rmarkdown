@@ -8,7 +8,7 @@ github_document(
   toc = FALSE,
   toc_depth = 3,
   number_sections = FALSE,
-  math_method = "webtex",
+  math_method = "default",
   preserve_yaml = FALSE,
   fig_width = 7,
   fig_height = 5,
