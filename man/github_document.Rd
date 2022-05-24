@@ -90,6 +90,8 @@ Default behavior is to keep any inline equation using \code{$} and any block
 equation using \verb{$$} in the resulting markdown as Github will process those
 using Mathjax.
 
+\strong{This feature is only available with Pandoc 2.10.1 and above}
+
 When using \code{webtex}, PNG images with a white background are used by default so
 that it shows correctly on Github on both light and dark theme. You can
 choose to only output SVG for better quality by changing the URL used:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
@@ -100,5 +102,7 @@ choose to only output SVG for better quality by changing the URL used:\if{html}{
 }\if{html}{\out{</div>}}
 
 Background or fonts color cannot be changed for now and your equation may not be visible on dark theme.
+
+\strong{Using \code{webtex} will be the default with Pandoc 2.0.4 until Pandoc 2.10. Before 2.0.4, Github document output does not support math.}
 }
 
