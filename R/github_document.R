@@ -79,7 +79,7 @@ github_document <- function(toc = FALSE,
   }
 
   # math support
-  if (!is.null(math_method)) {
+  if (!is.null(math_method) && pandoc_available("2.0.4")) {
     math <- check_math_argument(math_method)
     preview_math <- NULL
     if (!math$engine %in% c("default", "webtex")) {
