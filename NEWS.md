@@ -3,6 +3,8 @@ rmarkdown 2.15
 
 - The `tufte_handout()` function inside **rmarkdown** is defunct now. Its codebase was moved to the **tufte** package in 2016, and this function was marked as deprecated in 2021. Please use `tufte::tufte_handout()` instead of `rmarkdown::tufte_handout()`. The latter will be removed eventually from this package.
 
+- `github_document()` gains `math_method = "default"` and defaults to it. No special processing will be done to inline maths in `$` and block maths in `$$` as now [Github supports it](https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/) and will render using Mathjax (thanks, @kylebutts, #2361).
+
 
 rmarkdown 2.14
 ================================================================================
