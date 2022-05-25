@@ -25,11 +25,9 @@
 #'
 #' Default behavior is to keep any inline equation using `$` and any block
 #' equation using `$$` in the resulting markdown as Github will process those
-#' using Mathjax.
+#' using Mathjax. **This feature is only available with Pandoc 2.10.1 and above**
 #'
-#' **This feature is only available with Pandoc 2.10.1 and above**
-#'
-#' When using `webtex`, PNG images with a white background are used by default so
+#' When using `"webtex"`, PNG images with a white background are used by default so
 #' that it shows correctly on Github on both light and dark theme. You can
 #' choose to only output SVG for better quality by changing the URL used:
 #'
@@ -43,7 +41,7 @@
 #'
 #' Background or fonts color cannot be changed for now and your equation may not be visible on dark theme.
 #'
-#' **Using `webtex` will be the default with Pandoc 2.0.4 until Pandoc 2.10. Before 2.0.4, Github document output does not support math.**
+#' Using `"webtex"` will be the default with Pandoc 2.0.4 until Pandoc 2.10. Before 2.0.4, Github document output does not support math.
 #'
 #' @return R Markdown output format to pass to [render()]
 #' @export
