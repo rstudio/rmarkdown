@@ -32,7 +32,7 @@ You can use Pandoc's Markdown to make:
 * Subscripts
 * Strikethrough text
 
-Read more about markdown at [Pandoc's Markdown](authoring_pandoc_markdown.html) or consult the quick reference in the [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf).
+Read more about markdown at [Pandoc's Markdown](authoring_pandoc_markdown.html) or consult the quick reference in the [R Markdown Cheatsheet](https://github.com/rstudio/cheatsheets/raw/main/rmarkdown-2.0.pdf).
 
 ***
 
