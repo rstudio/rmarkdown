@@ -127,7 +127,7 @@ If tabbed sections relies on \code{\link[=html_dependency_tabset]{html_dependenc
 Code blocks become foldable by specifying "show" or "hide" to the
 \code{code_folding} parameter. The state can be toggled individually on
 browsers. The document-wide toggle button is also provided for
-\code{html_document} and some of its extentions such as
+\code{html_document} and some of its extensions such as
 \code{html_notebook}. Note that this feature applies not only to source
 codes of chunks, but also markdown code blocks.
 
