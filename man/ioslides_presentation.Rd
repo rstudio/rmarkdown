@@ -269,7 +269,7 @@ output:
 }\if{html}{\out{</div>}}
 
 You can also enable the \code{smaller} option on a slide-by-slide basis
-by adding the \code{.smaller} attibute to the slide header:\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{## Getting up \{.smaller\}
+by adding the \code{.smaller} attribute to the slide header:\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{## Getting up \{.smaller\}
 }\if{html}{\out{</div>}}
 }
 

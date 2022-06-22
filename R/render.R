@@ -685,7 +685,7 @@ render <- function(input,
         # check for 'global' chunk label
         if (identical(knitr::opts_current$get("label"), "global")) {
 
-          # check list of previously evaludated global chunks
+          # check list of previously evaluated global chunks
           code_string <- one_string(code)
           if (!code_string %in% .globals$evaluated_global_chunks) {
 

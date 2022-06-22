@@ -368,7 +368,7 @@ check_math_argument <- function(math) {
 
   # if no engine found, incorrect value must have been provided
   if (is.null(engine)) {
-    stop2("'math' can be the engine name (a string) or a list with engine and optionnaly the url to use.")
+    stop2("'math' can be the engine name (a string) or a list with engine and optionally the url to use.")
   }
 
   list(engine = engine, url = url)
