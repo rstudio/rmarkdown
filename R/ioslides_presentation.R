@@ -128,7 +128,7 @@
 #'   ---
 #'   ````
 #'   You can also enable the `smaller` option on a slide-by-slide basis
-#'   by adding the `.smaller` attibute to the slide header:
+#'   by adding the `.smaller` attribute to the slide header:
 #'   ```markdown
 #'   ## Getting up {.smaller}
 #'   ```

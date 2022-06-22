@@ -85,7 +85,7 @@ rmarkdown 2.12
 - Improved the highlighting mechanism in formats that supports `highlight` argument: 
 
   * It is now possible to pass a custom theme file `.theme` in `highlight` argument for customizing the [syntax highlighting style used by Pandoc](https://pandoc.org/MANUAL.html#syntax-highlighting). 
-  * In addition to Pandoc's own supported themes, two more themes are bundled in the package:  `highlight: arrow` a theme [optimized for accessibility and color constrast](https://www.a11yproject.com/) (thanks to @apreshill), and `highlight: rstudio` to mimic the RStudio editor theme.
+  * In addition to Pandoc's own supported themes, two more themes are bundled in the package:  `highlight: arrow` a theme [optimized for accessibility and color contrast](https://www.a11yproject.com/) (thanks to @apreshill), and `highlight: rstudio` to mimic the RStudio editor theme.
   * For HTML output only, added optional [downlit](https://downlit.r-lib.org/) support in `html_document()` for R syntax highlighting and autolinking. Use `highlight_downlit = TRUE` to activate it (same argument as in **distill**). This features require the **downlit** package. 
 
 - Templates for `html_document()` and `ioslides_presentation()` gained a new CSS rule to display single line `<summary>` content inline (rstudio/rstudio#10589).
