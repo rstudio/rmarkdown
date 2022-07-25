@@ -389,7 +389,7 @@ render <- function(input,
   oldwd <- setwd(dirname(abs_path(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
-  # reset the name of the input file to be relative and generete the name of
+  # reset the name of the input file to be relative and generate the name of
   # the intermediate knitted file. The extension can be set as an option mainly for blogdown
   # as `.md~` will be ignored.
   input <- basename(input)
