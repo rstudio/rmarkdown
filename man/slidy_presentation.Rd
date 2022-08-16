@@ -117,7 +117,9 @@ copied into the output directory).
 }
 }
 
-For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+For example,
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
   html_document:
     math_method:
       engine: katex

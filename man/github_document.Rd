@@ -92,7 +92,9 @@ using Mathjax. \strong{This feature is only available with Pandoc 2.10.1 and abo
 
 When using \code{"webtex"}, PNG images with a white background are used by default so
 that it shows correctly on Github on both light and dark theme. You can
-choose to only output SVG for better quality by changing the URL used:\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+choose to only output SVG for better quality by changing the URL used:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
   github_document:
     math_method:
       engine: webtex
