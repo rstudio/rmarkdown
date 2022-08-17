@@ -163,7 +163,7 @@ html_dependency_tocify <- function() {
     name = "tocify",
     version = "1.9.1",
     src = pkg_file("rmd/h/tocify"),
-    script = "jquery.tocify.js",
+    script = c("jquery.tocify.js", "tabset.tocify.js"),
     stylesheet = "jquery.tocify.css")
 }
 

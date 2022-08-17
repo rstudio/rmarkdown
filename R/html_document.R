@@ -398,6 +398,7 @@ html_document <- function(toc = FALSE,
 
   # build pandoc args
   args <- c("--standalone")
+  lua_filters <- character(0L)
 
   # to add lua_filters
   lua_filters <- c()
@@ -438,6 +439,9 @@ html_document <- function(toc = FALSE,
 
     # flag for template
     args <- c(args, pandoc_variable_arg("toc_float", "1"))
+
+    # Lua filter
+    lua_filters <- c(lua_filters, pkg_file_lua("tocify-tabset.lua"))
 
     # selectors
     selectors <- paste0("h", seq(1, toc_depth), collapse = ",")
