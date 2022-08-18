@@ -3,6 +3,8 @@ rmarkdown 2.16
 
 - Pandoc 2.19 has deprecated the argument `--self-contained`. If you have installed Pandoc 2.19+,  **rmarkdown** will use `--embed-resources --standalone` as recommended by Pandoc for output formats that use the option `self_contained = TRUE` (#2382).
 
+- `pandoc_version()` returns a version number of the form `X.Y.Z.YYYY.MM.DD` for the nightly build of Pandoc now, where `YYYY.MM.DD` is its build date. Previously it would return `X.Y.Z.9999` to indicate the nightly version.
+
 
 rmarkdown 2.15
 ================================================================================

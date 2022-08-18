@@ -690,9 +690,11 @@ get_pandoc_version <- function(pandoc_dir) {
   version <- components[1]
   # pandoc nightly adds -nightly-YYYY-MM-DD to last release version
   # https://github.com/jgm/pandoc/issues/8016
-  # mark it as devel appending a 9999
-  nightly <- identical(components[2], "nightly")
-  if (nightly) version <- paste(version, "9999", sep = ".")
+  # mark it as devel appending YYYY.MM.DD
+  nightly <- match("nightly", components)
+  if (!is.na(nightly)) version <- paste(c(
+    version, grep("^[0-9]+$", components[-(1:nightly)], value = TRUE)
+  ), collapse = ".")
   numeric_version(version)
 }
 
