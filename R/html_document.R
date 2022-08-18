@@ -396,8 +396,8 @@ html_document <- function(toc = FALSE,
                           pandoc_args = NULL,
                           ...) {
 
-  # build pandoc args
-  args <- c("--standalone")
+  # self_contained = TRUE already uses --standalone
+  args <- if (!self_contained) c("--standalone")
 
   # to add lua_filters
   lua_filters <- c()

@@ -118,7 +118,7 @@ beamer_presentation <- function(toc = FALSE,
   args <- c(args, citation_package_arg(citation_package))
 
   # generate a self-contained LaTeX document (including preamble)
-  if (self_contained) args <- c(args, "--self-contained")
+  if (self_contained) args <- c(args, self_contained_args())
 
   # content includes
   args <- c(args, includes_to_pandoc_args(includes))

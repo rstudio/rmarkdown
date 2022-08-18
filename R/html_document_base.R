@@ -44,7 +44,7 @@ html_document_base <- function(theme = NULL,
     if (copy_resources)
       stop("Local resource copying is incompatible with self-contained documents.")
     validate_self_contained(math)
-    args <- c(args, "--self-contained")
+    args <- c(args, self_contained_args())
   }
 
   # custom args

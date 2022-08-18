@@ -1,6 +1,7 @@
 rmarkdown 2.16
 ================================================================================
 
+- Pandoc 2.19 has deprecated the argument `--self-contained`. If you have installed Pandoc 2.19+,  **rmarkdown** will use `--embed-resources --standalone` as recommended by Pandoc for output formats that use the option `self_contained = TRUE` (#2382).
 
 
 rmarkdown 2.15

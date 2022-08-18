@@ -140,7 +140,7 @@ github_document <- function(toc = FALSE,
         "rmarkdown/templates/github_document/resources/github.css")
       # provide a preview that looks like github
       args <- c(
-        "--standalone", "--self-contained", "--highlight-style", "pygments",
+        self_contained_args(), "--highlight-style", "pygments",
         "--template", pkg_file_arg(
           "rmarkdown/templates/github_document/resources/preview.html"),
         "--variable", paste0("github-markdown-css:", css),
