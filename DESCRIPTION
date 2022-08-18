@@ -59,7 +59,7 @@ Depends:
 Imports:
     bslib (>= 0.2.5.1),
     evaluate (>= 0.13),
-    htmltools (>= 0.3.5),
+    htmltools (>= 0.5.1),
     jquerylib,
     jsonlite,
     knitr (>= 1.22),

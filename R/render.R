@@ -598,13 +598,10 @@ render <- function(input,
 
     # specify that htmltools::htmlPreserve() should use the Pandoc raw attribute
     # by default (e.g. ```{=html}) rather than preservation tokens when pandoc
-    # >= v2.0. Note that this option will have the intended effect only for
-    # versions of htmltools >= 0.5.1.
-    if (pandoc2.0() && packageVersion("htmltools") >= "0.5.1") {
-      if (is.null(prev <- getOption("htmltools.preserve.raw"))) {
-        options(htmltools.preserve.raw = TRUE)
-        on.exit(options(htmltools.preserve.raw = prev), add = TRUE)
-      }
+    # >= v2.0.
+    if (pandoc2.0() && is.null(prev <- getOption("htmltools.preserve.raw"))) {
+      options(htmltools.preserve.raw = TRUE)
+      on.exit(options(htmltools.preserve.raw = prev), add = TRUE)
     }
 
     # run render on_exit (run after the knit hooks are saved so that
