@@ -38,8 +38,9 @@ jobs:
           - {os: ubuntu-latest,  pandoc: '2.14.2',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.11.4',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.7.3',    r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.5',      r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.0.0.1',  r: 'release'}
+          # Does not shipped with pandoc-citeproc so can't test without installing it
+          # - {os: ubuntu-latest,  pandoc: '2.5',      r: 'release'}
+          # - {os: ubuntu-latest,  pandoc: '2.0.0.1',  r: 'release'}
           # testing other R versions
           - {os: ubuntu-latest,  pandoc: '2.14.2',   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.14.2',   r: 'oldrel-1'}
