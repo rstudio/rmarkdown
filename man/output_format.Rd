@@ -17,7 +17,8 @@ output_format(
   post_processor = NULL,
   on_exit = NULL,
   file_scope = NULL,
-  base_format = NULL
+  base_format = NULL,
+  allow_uptree_lib_dir = FALSE
 )
 }
 \arguments{
@@ -87,6 +88,9 @@ should return a named list of files w/ \code{name} and \code{content} for
 each file.}
 
 \item{base_format}{An optional format to extend.}
+
+\item{allow_uptree_lib_dir}{Allow \code{lib_dir} output parameter not to
+be a descendent of the output directory.}
 }
 \value{
 An R Markdown output format definition that can be passed to
