@@ -1,7 +1,5 @@
-rmarkdown 2.15
+rmarkdown 2.17
 ================================================================================
-
-- The `tufte_handout()` function inside **rmarkdown** is defunct now. Its codebase was moved to the **tufte** package in 2016, and this function was marked as deprecated in 2021. Please use `tufte::tufte_handout()` instead of `rmarkdown::tufte_handout()`. The latter will be removed eventually from this package.
 
 - `html_document` output allows `lib_dir` to point to a parent of the output 
   directory if the `allow_uptree_lib_dir` parameter is set to `TRUE`. This used
@@ -9,6 +7,24 @@ rmarkdown 2.15
   <dir>". This makes it possible to have a directory structure for HTML output
   where there is a shared master library with css, javascript, etc. and separate 
   child directories with RMarkdown files. #146 and #1859.
+
+
+rmarkdown 2.16
+================================================================================
+
+- Pandoc 2.19 has deprecated the argument `--self-contained`. If you have installed Pandoc 2.19+,  **rmarkdown** will use `--embed-resources --standalone` as recommended by Pandoc for output formats that use the option `self_contained = TRUE` (#2382).
+
+- `pandoc_version()` returns a version number of the form `X.Y.Z.YYYY.MM.DD` for the nightly build of Pandoc now, where `YYYY.MM.DD` is its build date. Previously it would return `X.Y.Z.9999` to indicate the nightly version.
+
+
+rmarkdown 2.15
+================================================================================
+
+- Fix navbar issue with website when using Boostrap 5 with **bslib** (thanks, @guasi, #2379, @cpsievert, #2384).
+
+- The `tufte_handout()` function inside **rmarkdown** is defunct now. Its codebase was moved to the **tufte** package in 2016, and this function was marked as deprecated in 2021. Please use `tufte::tufte_handout()` instead of `rmarkdown::tufte_handout()`. The latter will be removed eventually from this package.
+
+- `github_document()` gains `math_method = "default"` and defaults to it. No special processing will be done to inline maths in `$` and block maths in `$$` as now [Github supports it](https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/) and will render using Mathjax (thanks, @kylebutts, #2361).
 
 
 rmarkdown 2.14
@@ -88,7 +104,7 @@ rmarkdown 2.12
 - Improved the highlighting mechanism in formats that supports `highlight` argument: 
 
   * It is now possible to pass a custom theme file `.theme` in `highlight` argument for customizing the [syntax highlighting style used by Pandoc](https://pandoc.org/MANUAL.html#syntax-highlighting). 
-  * In addition to Pandoc's own supported themes, two more themes are bundled in the package:  `highlight: arrow` a theme [optimized for accessibility and color constrast](https://www.a11yproject.com/) (thanks to @apreshill), and `highlight: rstudio` to mimic the RStudio editor theme.
+  * In addition to Pandoc's own supported themes, two more themes are bundled in the package:  `highlight: arrow` a theme [optimized for accessibility and color contrast](https://www.a11yproject.com/) (thanks to @apreshill), and `highlight: rstudio` to mimic the RStudio editor theme.
   * For HTML output only, added optional [downlit](https://downlit.r-lib.org/) support in `html_document()` for R syntax highlighting and autolinking. Use `highlight_downlit = TRUE` to activate it (same argument as in **distill**). This features require the **downlit** package. 
 
 - Templates for `html_document()` and `ioslides_presentation()` gained a new CSS rule to display single line `<summary>` content inline (rstudio/rstudio#10589).

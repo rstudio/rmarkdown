@@ -69,7 +69,7 @@ md_document <- function(variant = "markdown_strict",
   # pandoc args
   args <- c(args, pandoc_args)
 
-  # Preprocess number_sections if variant is a markdown flavor +gfm_auto_identifers
+  # Preprocess number_sections if variant is a markdown flavor +gfm_auto_identifiers
   if (number_sections && !pandoc_available("2.1")) {
     warning("`number_sections = TRUE` requires at least Pandoc 2.1. The feature will be deactivated",
             call. = FALSE)

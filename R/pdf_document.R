@@ -117,7 +117,7 @@ pdf_document <- function(toc = FALSE,
                          extra_dependencies = NULL) {
 
   # base pandoc options for all PDF output
-  args <- c("--self-contained")
+  args <- self_contained_args()
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))

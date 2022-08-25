@@ -8,9 +8,12 @@
 #' @inheritParams output_format
 #' @inheritParams html_document
 #' @inheritParams md_document
-#' @param math_method `"webtex"` (the default) is used to render equations. This
-#'   will insert math an image in the resulting Markdown. See [html_document()]
-#'   for option to change webtex URL. Set to `NULL` to opt-out.
+#' @param math_method `"default"` means that [native Github
+#'   support](https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/)
+#'    for math notations using Mathjax syntax will be used. Other possible value
+#'   is `"webtex"` where equation will be rendered to an image in the resulting
+#'   Markdown. See [html_document()] for option to change webtex URL. Set `math_method`to
+#'   `NULL` to opt-out any math treatment.
 #' @param hard_line_breaks `TRUE` to generate markdown that uses a simple
 #'   newline to represent a line break (as opposed to two-spaces and a newline).
 #' @param html_preview `TRUE` to also generate an HTML file for the purpose of
@@ -20,7 +23,11 @@
 #'
 #' @details # About Math support
 #'
-#' For Github Markdown output, PNG images with a white background are used so
+#' Default behavior is to keep any inline equation using `$` and any block
+#' equation using `$$` in the resulting markdown as Github will process those
+#' using Mathjax. **This feature is only available with Pandoc 2.10.1 and above**
+#'
+#' When using `"webtex"`, PNG images with a white background are used by default so
 #' that it shows correctly on Github on both light and dark theme. You can
 #' choose to only output SVG for better quality by changing the URL used:
 #'
@@ -33,13 +40,16 @@
 #' ```
 #'
 #' Background or fonts color cannot be changed for now and your equation may not be visible on dark theme.
+#'
+#' Using `"webtex"` will be the default with Pandoc 2.0.4 until Pandoc 2.10. Before 2.0.4, Github document output does not support math.
+#'
 #' @return R Markdown output format to pass to [render()]
 #' @export
 #' @md
 github_document <- function(toc = FALSE,
                             toc_depth = 3,
                             number_sections = FALSE,
-                            math_method = "webtex",
+                            math_method = "default",
                             preserve_yaml = FALSE,
                             fig_width = 7,
                             fig_height = 5,
@@ -79,16 +89,34 @@ github_document <- function(toc = FALSE,
   }
 
   # math support
-  if (!is.null(math_method)) {
+  if (!is.null(math_method) && pandoc_available("2.0.4")) {
     math <- check_math_argument(math_method)
-    if (math$engine != "webtex") {
-      stop("Markdown output format only support 'webtex' for math engine")
+    preview_math <- NULL
+    if (!math$engine %in% c("default", "webtex")) {
+      stop("Markdown output format only support 'default' for native Github Math support or 'webtex' for using a Webtex online service to render math.")
     }
-    if (is.null(math$url)) {
-      # default to png and white background
-      math$url <- "https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;"
+    if (math$engine == "default") {
+      if (pandoc_available("2.10.1")) {
+        # don't activate math in Pandoc and pass it as is
+        # https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/
+        math <- NULL
+        # TODO: Check for version - should be the default in Pandoc 2.19+
+        variant <- paste0(variant, "+tex_math_dollars")
+        preview_math <- check_math_argument("mathjax")
+      } else {
+        # fallback to webtex
+        math <- check_math_argument("webtex")
+      }
+    }
+    if (!is.null(math) && math$engine == "webtex") {
+      if (is.null(math$url)) {
+        # default to png and white background for webtex
+        math$url <- "https://latex.codecogs.com/png.image?%5Cdpi%7B110%7D&space;%5Cbg_white&space;"
+      }
+      preview_math <- check_math_argument("webtex")
     }
     math <- add_math_support(math, NULL, NULL, NULL)
+    preview_math <- add_math_support(preview_math, NULL, NULL, NULL)
     pandoc_args <- c(pandoc_args, math$args)
   }
 
@@ -112,12 +140,12 @@ github_document <- function(toc = FALSE,
         "rmarkdown/templates/github_document/resources/github.css")
       # provide a preview that looks like github
       args <- c(
-        "--standalone", "--self-contained", "--highlight-style", "pygments",
+        self_contained_args(), "--highlight-style", "pygments",
         "--template", pkg_file_arg(
           "rmarkdown/templates/github_document/resources/preview.html"),
         "--variable", paste0("github-markdown-css:", css),
         if (pandoc2) c("--metadata", "pagetitle=PREVIEW"),  # HTML5 requirement
-        if (!is.null(math_method)) math$args
+        if (!is.null(preview_math)) preview_math$args
       )
 
       # run pandoc

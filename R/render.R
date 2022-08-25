@@ -389,7 +389,7 @@ render <- function(input,
   oldwd <- setwd(dirname(abs_path(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
-  # reset the name of the input file to be relative and generete the name of
+  # reset the name of the input file to be relative and generate the name of
   # the intermediate knitted file. The extension can be set as an option mainly for blogdown
   # as `.md~` will be ignored.
   input <- basename(input)
@@ -598,13 +598,10 @@ render <- function(input,
 
     # specify that htmltools::htmlPreserve() should use the Pandoc raw attribute
     # by default (e.g. ```{=html}) rather than preservation tokens when pandoc
-    # >= v2.0. Note that this option will have the intended effect only for
-    # versions of htmltools >= 0.5.1.
-    if (pandoc2.0() && packageVersion("htmltools") >= "0.5.1") {
-      if (is.null(prev <- getOption("htmltools.preserve.raw"))) {
-        options(htmltools.preserve.raw = TRUE)
-        on.exit(options(htmltools.preserve.raw = prev), add = TRUE)
-      }
+    # >= v2.0.
+    if (pandoc2.0() && is.null(prev <- getOption("htmltools.preserve.raw"))) {
+      options(htmltools.preserve.raw = TRUE)
+      on.exit(options(htmltools.preserve.raw = prev), add = TRUE)
     }
 
     # run render on_exit (run after the knit hooks are saved so that
@@ -685,7 +682,7 @@ render <- function(input,
         # check for 'global' chunk label
         if (identical(knitr::opts_current$get("label"), "global")) {
 
-          # check list of previously evaludated global chunks
+          # check list of previously evaluated global chunks
           code_string <- one_string(code)
           if (!code_string %in% .globals$evaluated_global_chunks) {
 

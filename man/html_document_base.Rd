@@ -17,7 +17,6 @@ html_document_base(
   extra_dependencies = NULL,
   css = NULL,
   bootstrap_compatible = FALSE,
-  allow_uptree_lib_dir = FALSE,
   ...
 )
 }
@@ -60,7 +59,9 @@ copied into the output directory).
 }
 }
 
-For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+For example,
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
   html_document:
     math_method:
       engine: katex
@@ -103,9 +104,6 @@ or .scss are compiled to CSS via \code{sass::sass()}. Also, if \code{theme} is a
 Sass variables, functions, mixins, etc.}
 
 \item{bootstrap_compatible}{Bootstrap compatible}
-
-\item{allow_uptree_lib_dir}{Allow lib_dir not to be a descendent of the
-output directory.}
 
 \item{...}{Ignored}
 }

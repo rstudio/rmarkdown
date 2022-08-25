@@ -88,6 +88,10 @@ pandoc_convert <- function(input,
               pandoc_citeproc_args())
   }
 
+  # change the --self-contained argument for Pandoc 2.19+
+  i <- match('--self-contained', args)
+  if (!is.na(i) && pandoc_available('2.19')) args <- c(args[-i], self_contained_args())
+
   # build the conversion command
   command <- paste(quoted(pandoc()), paste(quoted(args), collapse = " "))
 
@@ -463,7 +467,7 @@ pandoc_self_contained_html <- function(input, output) {
     from = from,
     output = output,
     options = c(
-      "--self-contained",
+      self_contained_args(),
       "--template", template
     )
   )
@@ -686,9 +690,11 @@ get_pandoc_version <- function(pandoc_dir) {
   version <- components[1]
   # pandoc nightly adds -nightly-YYYY-MM-DD to last release version
   # https://github.com/jgm/pandoc/issues/8016
-  # mark it as devel appending a 9999
-  nightly <- identical(components[2], "nightly")
-  if (nightly) version <- paste(version, "9999", sep = ".")
+  # mark it as devel appending YYYY.MM.DD
+  nightly <- match("nightly", components)
+  if (!is.na(nightly)) version <- paste(c(
+    version, grep("^[0-9]+$", components[-(1:nightly)], value = TRUE)
+  ), collapse = ".")
   numeric_version(version)
 }
 
@@ -824,6 +830,11 @@ find_pandoc_theme_variable <- function(args) {
 
 pandoc2.0 <- function() {
   pandoc_available("2.0")
+}
+
+# Pandoc 2.19 deprecated --self-contained
+self_contained_args <- function() {
+  if (pandoc_available('2.19')) c('--embed-resources', '--standalone') else '--self-contained'
 }
 
 #' Get the path of the pandoc executable

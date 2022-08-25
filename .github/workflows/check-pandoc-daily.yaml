@@ -18,7 +18,7 @@ jobs:
         config:
           - {os: windows-latest}
           - {os: macOS-latest}
-          - {os: ubuntu-18.04}
+          - {os: ubuntu-latest}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true

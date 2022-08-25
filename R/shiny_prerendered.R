@@ -24,7 +24,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
 
   # extract the code used for server startup (this encompasses both the
   # context="server-start" code and the context="data" code). This can be
-  # retreived later via the shiny_prerendered_server_start_code function. The
+  # retrieved later via the shiny_prerendered_server_start_code function. The
   # purpose of this is for appliations which want to run user in other
   # processes while still duplicating the setup context (e.g. tutorials).
   server_start_code <- one_string(c(server_start_context,
@@ -39,7 +39,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
     eval(xfun::parse_only(server_start_context), envir = server_envir)
     shiny_prerendered_data_load(input_rmd, server_envir)
 
-    # lock the environment to prevent inadvertant assignments
+    # lock the environment to prevent inadvertent assignments
     lockEnvironment(server_envir)
   }
 
@@ -658,7 +658,7 @@ shiny_prerendered_append_contexts <- function(runtime, file) {
     # append the contexts as script tags
     for (context in shiny_prerendered_contexts) {
 
-      # resovle singletons
+      # resolve singletons
       if (isTRUE(context$singleton)) {
         found_singleton <- FALSE
         for (singleton in singletons) {
@@ -710,7 +710,7 @@ shiny_prerendered_data_dir <- function(input, create = FALSE) {
 #     ensures that we only read .RData for chunks that were
 #     included in the last rendered document.
 #
-# (2) We want to load data into the server environemnt in the
+# (2) We want to load data into the server environment in the
 #     exact same chunk order that it appears in the document.
 #
 shiny_prerendered_data_load <- function(input_rmd, server_envir) {
