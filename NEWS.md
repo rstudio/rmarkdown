@@ -1,7 +1,7 @@
 rmarkdown 2.17
 ================================================================================
 
-
+- `rmarkdown::render_site()` will now also look for `index.rmd` in addition to `index.Rmd` for custom site generator in YAML with `site:` (thanks, @kamalsacranie, #2409).
 
 rmarkdown 2.16
 ================================================================================

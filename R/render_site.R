@@ -256,7 +256,7 @@ site_generator <- function(input = ".", output_format = NULL) {
   }
   # look for the closest index file with 'site' metadata
   root <- tryCatch(
-    proj_root(input, "^index.R?md$", "^\\s*site:.*::.*$", has_rproj),
+    proj_root(input, "^index.[rR]?md$", "^\\s*site:.*::.*$", has_rproj),
     error = function(e) NULL
   )
 
@@ -273,9 +273,11 @@ site_generator <- function(input = ".", output_format = NULL) {
   }
 
   # determine the index file (will be index.Rmd or index.md)
-  index <- file.path(root, "index.Rmd")
-  if (!file.exists(index))
-    index <- file.path(root, "index.md")
+  index <- xfun::existing_files(
+    file.path(root, xfun::with_ext("index", c("Rmd", "rmd"))),
+    first = TRUE, error = FALSE
+  )
+  if (length(index) == 0) index <- file.path(root, "index.md")
 
   # is this in a subdir of the site root? (only some generators support this)
   in_subdir <- !same_path(input, root)
