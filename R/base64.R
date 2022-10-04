@@ -4,7 +4,6 @@ process_html_res <- function(html, reg, processor) {
   html <- one_string(html)
   process_img_src <- function(img_src) {
     src <- sub(reg, '\\1', img_src)
-
     vapply(
       seq_along(img_src),
       function(i) processor(img_src[[i]], src[[i]]),
