@@ -1,9 +1,14 @@
+rmarkdown 2.18
+================================================================================
+
+
 rmarkdown 2.17
 ================================================================================
 
 - `rmarkdown::render_site()` will now also look for `index.rmd` in addition to `index.Rmd` for custom site generator in YAML with `site:` (thanks, @kamalsacranie, #2409).
 
 - Icons in tabset dropdown are now correctly shown, including when `self_contained: false` (thanks, @cpsievert, #1697).
+
 
 rmarkdown 2.16
 ================================================================================
