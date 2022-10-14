@@ -291,6 +291,7 @@ render <- function(input,
   # then recursively call this function with each format by name
   if (is.character(output_format) && length(output_format) > 1) {
     outputs <- character()
+    if (length(output_file) == 1) output_file <- rep(output_file, length(output_format))
     for (i in seq_along(output_format)) {
       # the output_file argument is intentionally ignored (we can't give
       # the same name to each rendered output); copy the rest by name
