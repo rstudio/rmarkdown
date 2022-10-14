@@ -1,6 +1,7 @@
 rmarkdown 2.18
 ================================================================================
 
+- `rmarkdown::render()` argument `output_file` is now used for all output formats, if there is only one name for multiple output formats (thanks, @MaelAstruc, issue #2421).
 
 rmarkdown 2.17
 ================================================================================
