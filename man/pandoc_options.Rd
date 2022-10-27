@@ -28,9 +28,9 @@ pandoc_options(
 'latex' and 'beamer' target formats)}
 
 \item{ext}{File extension (e.g. ".tex") for output file (if \code{NULL}
-chooses default based on \code{to}). This is typically used to force
-the final output of a latex or beamer conversion to be \code{.tex}
-rather than \code{.pdf}.}
+chooses default based on \code{to}). This is typically used to force the
+final output of a latex or beamer conversion to be \code{.tex} rather than
+\code{.pdf}.}
 
 \item{lua_filters}{Character vector of file paths to Lua filters to use with
 this format. They will be added to pandoc command line call using
@@ -45,9 +45,9 @@ An list that can be passed as the \code{pandoc} argument of the
 Define the pandoc options for an R Markdown output format.
 }
 \details{
-The \code{from} argument should be used very cautiously as it's
-important for users to be able to rely on a stable definition of supported
-markdown extensions.
+The \code{from} argument should be used very cautiously as it's important for
+users to be able to rely on a stable definition of supported markdown
+extensions.
 }
 \seealso{
 \link{output_format}, \link{rmarkdown_format}

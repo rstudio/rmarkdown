@@ -281,9 +281,9 @@ knitr_options_pdf <- function(fig_width,
 #'
 #' Define the pandoc options for an R Markdown output format.
 #'
-#' The \code{from} argument should be used very cautiously as it's
-#' important for users to be able to rely on a stable definition of supported
-#' markdown extensions.
+#' The \code{from} argument should be used very cautiously as it's important for
+#' users to be able to rely on a stable definition of supported markdown
+#' extensions.
 #' @param to Pandoc format to convert to
 #' @param from Pandoc format to convert from
 #' @param args Character vector of command line arguments to pass to pandoc
@@ -292,9 +292,9 @@ knitr_options_pdf <- function(fig_width,
 #' @param latex_engine LaTeX engine to producing PDF output (applies only to
 #'   'latex' and 'beamer' target formats)
 #' @param ext File extension (e.g. ".tex") for output file (if \code{NULL}
-#'   chooses default based on \code{to}). This is typically used to force
-#'   the final output of a latex or beamer conversion to be \code{.tex}
-#'   rather than \code{.pdf}.
+#'   chooses default based on \code{to}). This is typically used to force the
+#'   final output of a latex or beamer conversion to be \code{.tex} rather than
+#'   \code{.pdf}.
 #' @param lua_filters  Character vector of file paths to Lua filters to use with
 #'   this format. They will be added to pandoc command line call using
 #'   \code{--lua-filter} argument. See \code{vignette("lua-filters", package =
