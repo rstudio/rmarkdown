@@ -11,7 +11,8 @@ pandoc_options(
   keep_tex = FALSE,
   latex_engine = c("pdflatex", "lualatex", "xelatex", "tectonic"),
   ext = NULL,
-  lua_filters = NULL
+  lua_filters = NULL,
+  convert_fun = NULL
 )
 }
 \arguments{
@@ -36,6 +37,13 @@ final output of a latex or beamer conversion to be \code{.tex} rather than
 this format. They will be added to pandoc command line call using
 \code{--lua-filter} argument. See \code{vignette("lua-filters", package =
 "rmarkdown")} to know more about Lua filters.}
+
+\item{convert_fun}{A function to convert the input file to the desired output
+format in \code{\link{render}()}. If not provided,
+\code{\link{pandoc_convert}()} will be used. If a custom function is
+provided, its arguments and returned value should match the
+\code{pandoc_convert()} function. Note that this function does not have to
+use Pandoc but can also use other tools such as \pkg{commonmark}.}
 }
 \value{
 An list that can be passed as the \code{pandoc} argument of the

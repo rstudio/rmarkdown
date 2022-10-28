@@ -3,6 +3,9 @@ rmarkdown 2.18
 
 - `rmarkdown::render()` argument `output_file` is now used for all output formats, if there is only one name for multiple output formats (thanks, @MaelAstruc, #2421).
 
+- Custom output formats can provide a custom function to convert Markdown input to the desired output format now. To do so, define the output format via `output_format(pandoc = pandoc_options(convert_fun = function(...) {}))`. The default converting function is `pandoc_convert()` in this package. See the help page `?pandoc_option` for more details.
+
+
 rmarkdown 2.17
 ================================================================================
 

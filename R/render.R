@@ -911,10 +911,14 @@ render <- function(input,
         }
       }
 
+      # use the convert function from the output format if provided
+      if (!is.function(convert_fun <- output_format$pandoc$convert_fun))
+        convert_fun <- pandoc_convert
+
       # if we don't detect any invalid shell characters in the
       # target path, then just call pandoc directly
       if (!grepl(.shell_chars_regex, output) && !grepl(.shell_chars_regex, input)) {
-        return(pandoc_convert(
+        return(convert_fun(
           input_files, pandoc_to, output_format$pandoc$from, output,
           citeproc, pandoc_args, !quiet
         ))
@@ -934,7 +938,7 @@ render <- function(input,
       on.exit(unlink(pandoc_output_tmp), add = TRUE)
 
       # call pandoc to render file
-      status <- pandoc_convert(
+      status <- convert_fun(
         input_files, pandoc_to, output_format$pandoc$from, pandoc_output_tmp,
         citeproc, pandoc_args, !quiet
       )

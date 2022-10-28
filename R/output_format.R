@@ -299,6 +299,12 @@ knitr_options_pdf <- function(fig_width,
 #'   this format. They will be added to pandoc command line call using
 #'   \code{--lua-filter} argument. See \code{vignette("lua-filters", package =
 #'   "rmarkdown")} to know more about Lua filters.
+#' @param convert_fun A function to convert the input file to the desired output
+#'   format in \code{\link{render}()}. If not provided,
+#'   \code{\link{pandoc_convert}()} will be used. If a custom function is
+#'   provided, its arguments and returned value should match the
+#'   \code{pandoc_convert()} function. Note that this function does not have to
+#'   use Pandoc but can also use other tools such as \pkg{commonmark}.
 #' @return An list that can be passed as the \code{pandoc} argument of the
 #'   \code{\link{output_format}} function.
 #' @seealso \link{output_format}, \link{rmarkdown_format}
@@ -309,13 +315,15 @@ pandoc_options <- function(to,
                            keep_tex = FALSE,
                            latex_engine = c("pdflatex", "lualatex", "xelatex", "tectonic"),
                            ext = NULL,
-                           lua_filters = NULL) {
+                           lua_filters = NULL,
+                           convert_fun = NULL) {
   list(to = to,
        from = from,
        args = args,
        keep_tex = keep_tex,
        latex_engine = match.arg(latex_engine),
        ext = ext,
+       convert_fun = convert_fun,
        lua_filters = lua_filters)
 }
 
