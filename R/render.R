@@ -291,6 +291,7 @@ render <- function(input,
   # then recursively call this function with each format by name
   if (is.character(output_format) && length(output_format) > 1) {
     outputs <- character()
+    if (length(output_file) == 1) output_file <- rep(output_file, length(output_format))
     for (i in seq_along(output_format)) {
       # the output_file argument is intentionally ignored (we can't give
       # the same name to each rendered output); copy the rest by name
@@ -910,13 +911,18 @@ render <- function(input,
         }
       }
 
+      # use the convert function from the output format if provided
+      if (!is.function(convert_fun <- output_format$pandoc$convert_fun))
+        convert_fun <- pandoc_convert
+      convert_it <- function(output) convert_fun(
+        output = output, input_files, pandoc_to, output_format$pandoc$from,
+        citeproc, pandoc_args, !quiet
+      )
+
       # if we don't detect any invalid shell characters in the
       # target path, then just call pandoc directly
       if (!grepl(.shell_chars_regex, output) && !grepl(.shell_chars_regex, input)) {
-        return(pandoc_convert(
-          input_files, pandoc_to, output_format$pandoc$from, output,
-          citeproc, pandoc_args, !quiet
-        ))
+        return(convert_it(output))
       }
 
       # render to temporary file (preserve extension)
@@ -933,10 +939,7 @@ render <- function(input,
       on.exit(unlink(pandoc_output_tmp), add = TRUE)
 
       # call pandoc to render file
-      status <- pandoc_convert(
-        input_files, pandoc_to, output_format$pandoc$from, pandoc_output_tmp,
-        citeproc, pandoc_args, !quiet
-      )
+      status <- convert_it(pandoc_output_tmp)
 
       # construct output path (when passed only a file name to '--output',
       # pandoc seems to render in the same directory as the input file)

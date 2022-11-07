@@ -1,4 +1,4 @@
-rmarkdown 2.17
+rmarkdown 2.18
 ================================================================================
 
 - `html_document` output allows `lib_dir` to point to a parent of the output 
@@ -7,6 +7,18 @@ rmarkdown 2.17
   <dir>". This makes it possible to have a directory structure for HTML output
   where there is a shared master library with css, javascript, etc. and separate 
   child directories with RMarkdown files. #146 and #1859.
+
+- `rmarkdown::render()` argument `output_file` is now used for all output formats, if there is only one name for multiple output formats (thanks, @MaelAstruc, #2421).
+
+- Custom output formats can provide a custom function to convert Markdown input to the desired output format now. To do so, define the output format via `output_format(pandoc = pandoc_options(convert_fun = function(...) {}))`. The default converting function is `pandoc_convert()` in this package. See the help page `?pandoc_option` for more details.
+
+
+rmarkdown 2.17
+================================================================================
+
+- `rmarkdown::render_site()` will now also look for `index.rmd` in addition to `index.Rmd` for custom site generator in YAML with `site:` (thanks, @kamalsacranie, #2409).
+
+- Icons in tabset dropdown are now correctly shown, including when `self_contained: false` (thanks, @cpsievert, #1697).
 
 
 rmarkdown 2.16
