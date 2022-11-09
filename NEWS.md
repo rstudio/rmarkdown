@@ -1,16 +1,16 @@
 rmarkdown 2.19
 ================================================================================
 
-
-rmarkdown 2.18
-================================================================================
-
 - `html_document` output allows `lib_dir` to point to a parent of the output 
   directory if the `allow_uptree_lib_dir` parameter is set to `TRUE`. This used
   to throw an error, "The path <file> does not appear to be a descendant of 
   <dir>". This makes it possible to have a directory structure for HTML output
   where there is a shared master library with css, javascript, etc. and separate 
   child directories with RMarkdown files. #146 and #1859.
+
+
+rmarkdown 2.18
+================================================================================
 
 - `rmarkdown::render()` argument `output_file` is now used for all output formats, if there is only one name for multiple output formats (thanks, @MaelAstruc, #2421).
 
