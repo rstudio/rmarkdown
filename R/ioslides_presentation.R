@@ -360,7 +360,7 @@ ioslides_presentation <- function(number_sections = FALSE,
         file.copy(from = logo, to = logo_path)
         logo_path <- normalized_relative_to(output_dir, logo_path)
       } else {
-        logo_path <- xfun::base64_uri(logo_path)
+        logo_path <- if (!grepl("^data:", logo_path)) xfun::base64_uri(logo_path) else logo_path
       }
       args <- c(args, "--variable", paste("logo=", logo_path, sep = ""))
     }
