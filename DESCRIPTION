@@ -87,5 +87,5 @@ Suggests:
 VignetteBuilder: knitr
 Config/Needs/website: rstudio/quillt, pkgdown
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
