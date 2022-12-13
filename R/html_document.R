@@ -854,7 +854,7 @@ add_anchor_sections <- function(anchor_sections, section_divs = FALSE) {
   # expected output object
   res <- list(args = NULL, lua_filters = NULL, extra_dependencies = NULL)
   # Do nothing
-  if (xfun::isFALSE(anchor_sections)) return(res)
+  if (identical(anchor_sections, FALSE)) return(res)
   # Requires Pandoc 2.0 because using a Lua filter
   if (!pandoc2.0()) {
     stop("Using anchor_sections requires Pandoc 2.0+", call. = FALSE)
@@ -869,7 +869,7 @@ add_anchor_sections <- function(anchor_sections, section_divs = FALSE) {
   } else if (is.list(anchor_sections)) {
     # check list elements
     all_allowed <- all(names(anchor_sections) %in% allowed_args)
-    if (xfun::isFALSE(all_allowed)) {
+    if (!all_allowed) {
       stop("`anchor_sections` could be a list with only names in [",
            paste(allowed_args, collapse = ", "), "]",
            call. = FALSE)
