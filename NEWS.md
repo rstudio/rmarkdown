@@ -1,3 +1,9 @@
+rmarkdown 2.20
+================================================================================
+
+- The defunct `tufte_handout()` has been removed from **rmarkdown**. Please use `tufte::tufte_handout()` instead.
+
+
 rmarkdown 2.19
 ================================================================================
 
