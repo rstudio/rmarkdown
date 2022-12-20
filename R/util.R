@@ -281,7 +281,7 @@ same_path <- function(path1, path2, ...) {
 # cannot be represented in the current system locale, even if the file exists
 abs_path <- function(x) {
   if (!file.exists(x)) stop("The file '", x, "' does not exist.")
-  res <- normalize_path(x, mustWork = FALSE)
+  res <- normalize_path(x, must_work = FALSE)
   if (file.exists(res)) return(res)
   if (!requireNamespace('fs', quietly = TRUE)) warning(
     'normalizePath() cannot make the path(s) absolute. The fs package is required.'
