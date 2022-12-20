@@ -68,7 +68,7 @@ Imports:
     tinytex (>= 0.31),
     tools,
     utils,
-    xfun (>= 0.30),
+    xfun (>= 0.35.2),
     yaml (>= 2.1.19)
 Suggests:
     digest,
@@ -88,3 +88,4 @@ Config/Needs/website: rstudio/quillt, pkgdown
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
+Remotes: yihui/xfun
