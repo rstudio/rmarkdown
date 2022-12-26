@@ -47,6 +47,6 @@ includes_to_pandoc_args <- function(includes,
 
 # simple wrapper over normalizePath that preserves NULLs and applies pandoc-
 # friendly defaults
-normalize_path <- function(path, winslash = "/", mustWork = NA) {
-  if (!is.null(path)) normalizePath(path, winslash = winslash, mustWork = mustWork)
+normalize_path <- function(path, winslash = "/", must_work = NA) {
+  if (!is.null(path)) normalizePath(path, winslash = winslash, mustWork = must_work)
 }

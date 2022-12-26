@@ -476,8 +476,8 @@ resolve_relative <- function(dir, relpath) {
   abs.path <- file.path(dir, relpath)
   if (!file.exists(abs.path))
     return(NULL)
-  abs.path <- normalize_path(abs.path, mustWork = TRUE)
-  dir <- normalize_path(dir, mustWork = TRUE)
+  abs.path <- normalize_path(abs.path, must_work = TRUE)
+  dir <- normalize_path(dir, must_work = TRUE)
   # trim the possible trailing slash under Windows
   if (.Platform$OS.type == 'windows') dir <- sub('/$', '', dir)
   if (nchar(abs.path) <= nchar(dir) + 1)

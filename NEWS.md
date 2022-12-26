@@ -1,4 +1,4 @@
-rmarkdown 2.19
+rmarkdown 2.20
 ================================================================================
 
 - `html_document` output allows `lib_dir` to point to a parent of the output 
@@ -7,6 +7,14 @@ rmarkdown 2.19
   <dir>". This makes it possible to have a directory structure for HTML output
   where there is a shared master library with css, javascript, etc. and separate 
   child directories with RMarkdown files. #146 and #1859.
+
+- The defunct `tufte_handout()` has been removed from **rmarkdown**. Please use `tufte::tufte_handout()` instead.
+
+
+rmarkdown 2.19
+================================================================================
+
+- No longer use `xfun::isFALSE()` internally.
 
 
 rmarkdown 2.18

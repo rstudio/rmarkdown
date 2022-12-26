@@ -44,7 +44,7 @@ copy_resources <- function(input_str, lib_dir, output_dir, resource_locator) {
 
       # check to see if it's already in the library (by absolute path)
       res_src <- normalized_relative_to(lib_dir, in_file)
-      if (same_path(res_src, in_file, mustWork = FALSE)) {
+      if (same_path(res_src, in_file, must_work = FALSE)) {
         # not inside the library, copy it there
         target_dir <- if (dirname(in_file) == ".")
           lib_dir
