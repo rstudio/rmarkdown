@@ -26,9 +26,11 @@ copy_html_resources <- function(html_str, lib_dir, output_dir) {
 }
 
 make_abs_path_safe <- function(path) {
-  path <- sub("^[/]*", "", path)  # *nix
-  path <- sub("^.:(/|\\\\)*", "", path)  # windows
-  path
+  if (xfun::is_windows()) {
+    sub("^.:(/|\\\\)*", "", path)  # windows
+  } else {
+    sub("^[/]*", "", path)  # *nix
+  }
 }
 
 copy_resources <- function(input_str, lib_dir, output_dir, resource_locator) {
