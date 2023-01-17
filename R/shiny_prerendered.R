@@ -131,7 +131,7 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
   }
 
   # normalize paths
-  rendered_html <- normalize_path(rendered_html, winslash = "/")
+  rendered_html <- normalize_path(rendered_html)
   output_dir <- dirname(rendered_html)
 
   add_resource_path <- function(path, prefix = basename(path), temporary = TRUE) {
