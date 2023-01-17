@@ -5,6 +5,8 @@ rmarkdown 2.20
 
 - If an input path to `rmarkdown::render()` is a symbolic link, it is no longer resolved to its real path (thanks, @SamDM @jmw86069, #1508).
 
+- Make sure to avoid creating invalid paths when copying resources (thanks, @mnazarov, #2429).
+
 
 rmarkdown 2.19
 ================================================================================
