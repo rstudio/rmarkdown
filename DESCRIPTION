@@ -68,7 +68,7 @@ Imports:
     tinytex (>= 0.31),
     tools,
     utils,
-    xfun (>= 0.30),
+    xfun (>= 0.36),
     yaml (>= 2.1.19)
 Suggests:
     digest,
