@@ -27,11 +27,11 @@ relative_to <- function(dir, file) {
 # A variant of relative_to that normalizes its inputs.
 normalized_relative_to <- function(dir, file) {
   relative_to(
-    normalize_path(dir, mustWork = FALSE),
-    normalize_path(file, mustWork = FALSE))
+    normalize_path(dir, must_work = FALSE),
+    normalize_path(file, must_work = FALSE))
 }
 
 # If a path is a relative path, it should be the same as ./path
 is_relative <- function(path) {
-  same_path(path, file.path('.', path), mustWork = FALSE)
+  same_path(path, file.path('.', path), must_work = FALSE)
 }

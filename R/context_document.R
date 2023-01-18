@@ -50,9 +50,7 @@ context_document <- function(toc = FALSE,
                              context_path = NULL,
                              context_args = NULL,
                              ext = c(".pdf", ".tex")) {
-  if (!is.null(context_path)) {
-    context_path <- normalizePath(context_path, mustWork = TRUE)
-  }
+  context_path <- normalize_path(context_path, must_work = TRUE)
   sys_context <- if (is.null(context_path)) find_program("context") else context_path
   ext <- match.arg(ext)
   if (identical(ext, ".pdf") && !nzchar(sys_context))

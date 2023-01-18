@@ -125,8 +125,7 @@ draft <- function(file,
   file.rename(file.path(dirname(file), "skeleton.Rmd"), file)
 
   # invoke the editor if requested
-  if (edit)
-    utils::file.edit(normalizePath(file))
+  if (edit) utils::file.edit(file)
 
   # return the name of the file created
   invisible(file)
