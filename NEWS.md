@@ -7,6 +7,8 @@ rmarkdown 2.20
 
 - Make sure to avoid creating invalid paths when copying resources (thanks, @mnazarov, #2429).
 
+- Make sure `logo` is properly embedded in `ioslides_presentation()` when `self_contained = TRUE` (thanks, @mnazarov, #2428).
+
 
 rmarkdown 2.19
 ================================================================================

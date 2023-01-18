@@ -332,6 +332,8 @@ ioslides_presentation <- function(number_sections = FALSE,
   if (!length(grep('--wrap', pandoc_args)))
     pandoc_args <- c('--wrap', 'none', pandoc_args)
 
+  logo_placeholder <- "data:,LOGO"
+
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
   pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
@@ -361,7 +363,7 @@ ioslides_presentation <- function(number_sections = FALSE,
         logo_path <- normalized_relative_to(output_dir, logo_path)
       } else {
         # placeholder, will be replaced by base64-encoded logo in post_processor
-        logo_path <- "data:,LOGO"  
+        logo_path <- logo_placeholder
       }
       args <- c(args, "--variable", paste("logo=", logo_path, sep = ""))
     }
@@ -458,12 +460,11 @@ ioslides_presentation <- function(number_sections = FALSE,
     if (self_contained) {
       slides_lines <- base64_encode_images(slides_lines)
       if (!is.null(logo)) {
-        logo_placeholder <- "data:,LOGO"
-        logo_base64 <- if (!grepl("^data:", logo)) xfun::base64_uri(logo) else logo
+        logo_base64 <- if (grepl("^data:", logo)) logo else xfun::base64_uri(logo)
         output_lines <- gsub(logo_placeholder, logo_base64, output_lines, fixed = TRUE)
       }
     }
-    
+
     # substitute slides for the sentinel line
     sentinel_line <- grep("^RENDERED_SLIDES$", output_lines)
     if (length(sentinel_line) == 1) {
