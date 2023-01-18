@@ -436,12 +436,12 @@ pandoc_template <- function(metadata, template, output, verbose = FALSE) {
 pandoc_self_contained_html <- function(input, output) {
 
   # make input file path absolute
-  input <- normalizePath(input)
+  input <- normalize_path(input)
 
   # ensure output file exists and make it's path absolute
   if (!file.exists(output))
     file.create(output)
-  output <- normalizePath(output)
+  output <- normalize_path(output)
 
   # create a simple body-only template
   template <- tempfile(fileext = ".html")

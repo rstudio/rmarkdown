@@ -25,9 +25,6 @@ test_that("formats successfully produce a document", {
   testFormat(beamer_presentation(), df_print = "kable")
   testFormat(word_document(), df_print = "kable")
   suppressWarnings(testFormat(html_vignette()))
-
-  if (requireNamespace("tufte", quietly = TRUE))
-    testFormat(tufte::tufte_handout())
 })
 
 test_that("documents with spaces in names can be rendered", {

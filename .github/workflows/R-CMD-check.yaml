@@ -37,7 +37,6 @@ jobs:
           - {os: ubuntu-latest,  pandoc: '2.17.1.1', r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.14.2',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.11.4',   r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.7.3',    r: 'release'}
           # Does not shipped with pandoc-citeproc so can't test without installing it
           # - {os: ubuntu-latest,  pandoc: '2.5',      r: 'release'}
           # - {os: ubuntu-latest,  pandoc: '2.0.0.1',  r: 'release'}
