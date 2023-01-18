@@ -360,7 +360,8 @@ ioslides_presentation <- function(number_sections = FALSE,
         file.copy(from = logo, to = logo_path)
         logo_path <- normalized_relative_to(output_dir, logo_path)
       } else {
-        logo_path <- if (!grepl("^data:", logo_path)) xfun::base64_uri(logo_path) else logo_path
+        # placeholder, will be replaced by base64-encoded logo in post_processor
+        logo_path <- "data:,LOGO"  
       }
       args <- c(args, "--variable", paste("logo=", logo_path, sep = ""))
     }
@@ -450,14 +451,19 @@ ioslides_presentation <- function(number_sections = FALSE,
     # read the slides
     slides_lines <- read_utf8(output_tmpfile)
 
-    # base64 encode if needed
-    if (self_contained) {
-      slides_lines <- base64_encode_images(slides_lines)
-    }
-
     # read the output file
     output_lines <- read_utf8(output_file)
 
+    # base64 encode if needed
+    if (self_contained) {
+      slides_lines <- base64_encode_images(slides_lines)
+      if (!is.null(logo)) {
+        logo_placeholder <- "data:,LOGO"
+        logo_base64 <- if (!grepl("^data:", logo)) xfun::base64_uri(logo) else logo
+        output_lines <- gsub(logo_placeholder, logo_base64, output_lines, fixed = TRUE)
+      }
+    }
+    
     # substitute slides for the sentinel line
     sentinel_line <- grep("^RENDERED_SLIDES$", output_lines)
     if (length(sentinel_line) == 1) {
