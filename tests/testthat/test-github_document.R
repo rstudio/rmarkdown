@@ -7,7 +7,9 @@ test_that("toc has correct identifier", {
   tmp_file <- local_rmd_file(
     c("# 10 Section","","Sentence.","", "# Header","","Sentence ")
   )
-  pandoc_version <- if (pandoc_available("2.18.0.1")) {
+  pandoc_version <- if (pandoc_available("3")) {
+    "pandoc-3"
+  } else if (pandoc_available("2.18.0.1")) {
     "after-pandoc-2.18"
   } else if (pandoc_available("2.18")) {
     "pandoc-2.18"
@@ -24,7 +26,9 @@ test_that("toc has correct identifier also when sections are numbered ", {
   tmp_file <- local_rmd_file(
     c("# Section","","Sentence.","", "# Header","","Sentence ")
   )
-  pandoc_version <- if (pandoc_available("2.18.0.1")) {
+  pandoc_version <- if (pandoc_available("3")) {
+    "pandoc-3"
+  } else if (pandoc_available("2.18.0.1")) {
     "after-pandoc-2.18"
   } else if (pandoc_available("2.18")) {
     "pandoc-2.18"
