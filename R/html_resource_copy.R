@@ -25,6 +25,14 @@ copy_html_resources <- function(html_str, lib_dir, output_dir) {
   copy_resources(html_str, lib_dir, output_dir, resource_locator)
 }
 
+make_abs_path_safe <- function(path) {
+  if (xfun::is_windows()) {
+    sub("^.:(/|\\\\)*", "", path)  # windows
+  } else {
+    sub("^[/]*", "", path)  # *nix
+  }
+}
+
 copy_resources <- function(input_str, lib_dir, output_dir, resource_locator) {
   # ensure the lib directory exists
   dir.create(lib_dir, recursive = TRUE, showWarnings = FALSE)
@@ -49,7 +57,7 @@ copy_resources <- function(input_str, lib_dir, output_dir, resource_locator) {
         target_dir <- if (dirname(in_file) == ".")
           lib_dir
         else
-          file.path(lib_dir, dirname(in_file))
+          file.path(lib_dir, make_abs_path_safe(dirname(in_file)))
         dir.create(target_dir, recursive = TRUE, showWarnings = FALSE)
         target_res_file <- file.path(target_dir, basename(in_file))
 
@@ -61,7 +69,7 @@ copy_resources <- function(input_str, lib_dir, output_dir, resource_locator) {
         if (identical(lib_dir, output_dir))
           res_src <- in_file
         else
-          res_src <- file.path(relative_lib, src)
+          res_src <- file.path(relative_lib, make_abs_path_safe(src))
       } else {
         # inside the library, fix up the URL
         res_src <- file.path(relative_lib, res_src)

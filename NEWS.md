@@ -1,3 +1,7 @@
+rmarkdown 2.21
+================================================================================
+
+
 rmarkdown 2.20
 ================================================================================
 
@@ -9,6 +13,12 @@ rmarkdown 2.20
   child directories with RMarkdown files. #146 and #1859.
 
 - The defunct `tufte_handout()` has been removed from **rmarkdown**. Please use `tufte::tufte_handout()` instead.
+
+- If an input path to `rmarkdown::render()` is a symbolic link, it is no longer resolved to its real path (thanks, @SamDM @jmw86069, #1508).
+
+- Make sure to avoid creating invalid paths when copying resources (thanks, @mnazarov, #2429).
+
+- Make sure `logo` is properly embedded in `ioslides_presentation()` when `self_contained = TRUE` (thanks, @mnazarov, #2428).
 
 
 rmarkdown 2.19

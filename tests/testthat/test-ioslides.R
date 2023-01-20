@@ -179,3 +179,31 @@ test_ioslides_presentation_css <- function() {
 
 
 test_that("ioslides presentation is styled", test_ioslides_presentation_css())
+
+test_ioslides_presentation_logo <- function() {
+  
+  outputdir <- tempfile()
+  dir.create(outputdir)
+  on.exit(unlink(outputdir), add = TRUE)
+  
+  # Generate mock md file with logo
+  void <- file.copy("resources/empty.png", file.path(outputdir, "logo.png"))
+  mdtext <- c("# Slide One\n")
+  mock <- mock_markdown(mdtext = mdtext, outputdir = outputdir, self_contained = TRUE, logo = "logo.png")
+  html <- mock$html_file
+  
+  slide_lines <- c(
+    !any(grepl("logo\\.png", html))
+    , any(grep("favIcon: 'data:image/png;base64,[^']*'", html))
+    , any(grepl("background: url\\(data:image/png;base64,[^\\)]*)", html))
+  )
+  expect_true(all(slide_lines), info = "slide lines - self contained logo")
+  
+  # if logo is passed as base64 string, do not re-encode
+  logobase64 <- xfun::base64_uri("resources/empty.png")
+  mock2 <- mock_markdown(mdtext = mdtext, outputdir = outputdir, self_contained = TRUE, logo = logobase64)
+  html2 <- mock2$html_file
+  expect_equal(html, html2)
+}
+
+test_that("ioslides presentation embeds logo", test_ioslides_presentation_logo())
