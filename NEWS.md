@@ -1,16 +1,16 @@
 rmarkdown 2.21
 ================================================================================
 
-
-rmarkdown 2.20
-================================================================================
-
 - `html_document` output allows `lib_dir` to point to a parent of the output 
   directory if the `allow_uptree_lib_dir` parameter is set to `TRUE`. This used
   to throw an error, "The path <file> does not appear to be a descendant of 
   <dir>". This makes it possible to have a directory structure for HTML output
   where there is a shared master library with css, javascript, etc. and separate 
   child directories with RMarkdown files. #146 and #1859.
+
+
+rmarkdown 2.20
+================================================================================
 
 - The defunct `tufte_handout()` has been removed from **rmarkdown**. Please use `tufte::tufte_handout()` instead.
 
