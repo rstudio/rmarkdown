@@ -259,6 +259,17 @@ rmarkdown_shiny_server <- function(dir, file, auto_reload, render_args) {
         list()
       }
 
+      # The input Rmd may have CSS file paths that are relative to its directory,
+      # so copy them over to the directory that html_document_base() will actually
+      # execute in (since html_document_base() will try to read them before
+      # copy_resources happens)
+      front_matter <- yaml_front_matter(reactive_file())
+      css_files <- unlist(lapply(front_matter$output, `[[`, "css"))
+      file.copy(
+        file.path(dirname(reactive_file()), css_files),
+        dirname(dirname(output_dest))
+      )
+
       # ensure that the document is not rendered to one page
       output_opts <- list(
         self_contained = FALSE,
