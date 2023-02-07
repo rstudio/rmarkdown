@@ -1,6 +1,7 @@
 rmarkdown 2.21
 ================================================================================
 
+- Now uses the Font Awesome HTML dependency from the `fontawesome` package. This package frequently updates Font Awesome icons and it is now imported by `rmarkdown` (thanks, @rich-iannone, #2451).
 
 rmarkdown 2.20
 ================================================================================
