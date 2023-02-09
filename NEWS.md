@@ -1,6 +1,7 @@
 rmarkdown 2.21
 ================================================================================
 
+- Now HTML output formats use the Font Awesome HTML dependency from the **fontawesome** package instead of shipping an outdated version of Font Awesome in **rmarkdown** (thanks, @rich-iannone, #2451).
 
 rmarkdown 2.20
 ================================================================================
