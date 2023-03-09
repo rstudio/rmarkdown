@@ -831,3 +831,39 @@ citeproc_required <- function(yaml_front_matter,
       length(grep("^bibliography:\\s*$", input_lines)) > 0
   )
 }
+
+#' Define an R Markdown's output format dependency
+#'
+#' Define the dependency such as and pre/post-processors dynamically from
+#' within chunks. This function shares some arguments with
+#' \code{\link{output_format}}, but lacks the others because dependency
+#' is resolved after \code{post_knit} and before \code{pre_processor}.
+#'
+#' @param name A dependency name. If some dependencies share the same name,
+#'   then only the first one will be attached.
+#' @inheritParams output_format
+#' @return An list of arguments with the "rmd_dependency" class.
+#' @examples
+#' # Add lua filters from within a chunk
+#' output_format_dependency("lua_filter", pre_processor = function(...) {
+#'   pandoc_lua_filter_args(c("example1.lua", "example2.lua"))
+#' })
+#'
+#' @export
+output_format_dependency <- function(name,
+                                     pre_processor = NULL,
+                                     post_processor = NULL,
+                                     file_scope = NULL,
+                                     on_exit = NULL) {
+  structure(list(name = name,
+                 pre_processor = pre_processor,
+                 post_processor = post_processor,
+                 file_scope = file_scope,
+                 on_exit = on_exit),
+            class = "output_format_dependency")
+}
+
+#' @export
+knit_print.output_format_dependency <- function(x, ...) {
+  knitr::asis_output(list(), meta = list(x))
+}
