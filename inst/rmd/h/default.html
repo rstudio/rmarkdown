@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$>
+<html$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$$if(dir)$ dir="$dir$"$endif$>
 
 <head>
 
@@ -75,8 +75,26 @@ window.setTimeout(function() { hljs.initHighlighting(); }, 0);
 </script>
 $endif$
 
+$if(highlight-downlit)$
+<style type="text/css">
+  /* from bookdown::bs4_book() css */
+  code a:any-link {
+    color: inherit; /* use colour from syntax highlighting */
+    text-decoration: underline;
+    text-decoration-color: #ccc;
+  }
+</style>
+$endif$
+
 $if(highlighting-css)$
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 $highlighting-css$
 
@@ -120,7 +138,6 @@ background-color: white;
 }
 </style>
 $endif$
-$endif$
 
 $if(abstract)$
 <style type="text/css">
@@ -135,7 +152,7 @@ width: 90%;
 </style>
 $endif$
 
-$if(theme)$
+$if(source_embed)$
 <style type="text/css">
 h1 {
 font-size: 34px;
@@ -166,6 +183,7 @@ $if(source_embed)$
 display: none;
 }
 $endif$
+
 </style>
 $endif$
 
@@ -182,10 +200,12 @@ max-width: 940px;
 margin-left: auto;
 margin-right: auto;
 }
+
 code {
 color: inherit;
 background-color: rgba(0, 0, 0, 0.04);
 }
+
 img {
 max-width:100%;
 }
@@ -200,6 +220,12 @@ outline: none;
 }
 summary {
 display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
 }
 </style>
 
@@ -262,6 +288,7 @@ margin-top: -$header_padding$px;
 padding-top: $header_padding$px;
 margin-top: -$header_padding$px;
 }
+
 .dropdown-submenu {
 position: relative;
 }
@@ -301,21 +328,38 @@ border-radius: 6px 0 6px 6px;
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $$(document).ready(function () {
-// active menu anchor
-href = window.location.pathname
-href = href.substr(href.lastIndexOf('/') + 1)
-if (href === "")
-href = "index.html";
-var menuAnchor = $$('a[href="' + href + '"]');
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $$('a[href="' + href + '"]');
 
-// mark it active
-menuAnchor.parent().addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
-// if it's got a parent navbar menu mark it active as well
-menuAnchor.closest('li.dropdown').addClass('active');
+  // Navbar adjustments
+  var navHeight = $$(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 $endif$
@@ -352,6 +396,7 @@ font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
+
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -504,6 +549,7 @@ $if(breadcrumbs)$
   $if(title)$
   <h1 class="h1 text-is-sea-blue">$title$</h1>
   $endif$
+
 </div>
 $else$
 <div class="text-center">
@@ -568,9 +614,11 @@ window.buildTabsets("$idprefix$TOC");
 });
 
 $$(document).ready(function () {
+
 $$('.tabset-dropdown > .nav-tabs > li').click(function () {
 $$(this).parent().toggleClass('nav-tabs-open')
 });
+
 });
 </script>
 $endif$

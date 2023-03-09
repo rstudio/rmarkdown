@@ -19,7 +19,7 @@
 #' @param input Path to the input \file{.ipynb} file.
 #' @param output The output file path.
 #' @return The output file path (invisibly).
-#' @keywords internal
+#' @export
 #' @examples
 #' # this is not a real ipynb file, but illustrates what convert_ipynb() does
 #' nb_data <- list(

@@ -10,14 +10,14 @@ context_document(
   number_sections = FALSE,
   fig_width = 6.5,
   fig_height = 4.5,
-  fig_crop = TRUE,
+  fig_crop = "auto",
   fig_caption = TRUE,
   dev = "pdf",
   df_print = "default",
   template = NULL,
   keep_tex = FALSE,
   keep_md = FALSE,
-  citation_package = c("none", "natbib", "biblatex"),
+  citation_package = c("default", "natbib", "biblatex"),
   includes = NULL,
   md_extensions = NULL,
   output_extensions = NULL,
@@ -38,8 +38,10 @@ context_document(
 
 \item{fig_height}{Default height (in inches) for figures}
 
-\item{fig_crop}{\code{TRUE} to automatically apply the \code{pdfcrop} utility
-(if available) to pdf figures}
+\item{fig_crop}{Whether to crop PDF figures with the command
+\command{pdfcrop}. This requires the tools \command{pdfcrop} and
+\command{ghostscript} to be installed. By default, \code{fig_crop = TRUE}
+if these two tools are available.}
 
 \item{fig_caption}{\code{TRUE} to render figures with captions}
 
@@ -55,7 +57,9 @@ method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
-\code{rmarkdown.df_print} to \code{FALSE}.}
+\code{rmarkdown.df_print} to \code{FALSE}. See
+\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+frame printing section} in bookdown book for examples.}
 
 \item{template}{Pandoc template to use for rendering. Pass "default" to use
 the rmarkdown package default template; pass \code{NULL} to use pandoc's
@@ -77,7 +81,7 @@ which means citations will be processed via the command
 document (typically created using the \code{\link{includes}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{output_extensions}{Pandoc extensions to be added or removed from the
@@ -112,7 +116,7 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+\href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 and Citations} article in the online documentation.
 }
 \examples{

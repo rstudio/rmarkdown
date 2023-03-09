@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$>
+<html$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$$if(dir)$ dir="$dir$"$endif$>
 <head>
   <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
 
@@ -72,6 +72,10 @@ $endfor$
 
     summary {
       display: list-item;
+    }
+
+    details > summary > p:only-child {
+      display: inline;
     }
 
     slides > slide {

@@ -10,6 +10,7 @@ md_document(
   toc = FALSE,
   toc_depth = 3,
   number_sections = FALSE,
+  standalone = FALSE,
   fig_width = 7,
   fig_height = 5,
   fig_retina = NULL,
@@ -23,11 +24,11 @@ md_document(
 }
 \arguments{
 \item{variant}{Markdown variant to produce (defaults to "markdown_strict").
-Other valid values are "commonmark", "markdown_github", "markdown_mmd",
-markdown_phpextra", or even "markdown" (which produces pandoc markdown).
-You can also compose custom markdown variants, see the
-\href{https://pandoc.org/MANUAL.html}{pandoc online documentation}
-for details.}
+Other valid values are "commonmark", "gfm", "commonmark_x", "markdown_mmd",
+markdown_phpextra", "markdown_github", or even "markdown" (which produces
+pandoc markdown). You can also compose custom markdown variants, see the
+\href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
+details.}
 
 \item{preserve_yaml}{Preserve YAML front matter in final document.}
 
@@ -37,6 +38,9 @@ for details.}
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
+\item{standalone}{Set to \code{TRUE} to include title, date and other metadata
+field in addition to Rmd content as a body.}
+
 \item{fig_width}{Default width (in inches) for figures}
 
 \item{fig_height}{Default height (in inches) for figures}
@@ -44,7 +48,7 @@ for details.}
 \item{fig_retina}{Scaling to perform for retina displays. Defaults to
 \code{NULL} which performs no scaling. A setting of 2 will work for all
 widely used retina displays, but will also result in the output of
-\code{<img>} tags rather than markdown images due to the need to set the
+\verb{<img>} tags rather than markdown images due to the need to set the
 width of the image explicitly.}
 
 \item{dev}{Graphics device to use for figure output (defaults to png)}
@@ -59,29 +63,31 @@ method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
-\code{rmarkdown.df_print} to \code{FALSE}.}
+\code{rmarkdown.df_print} to \code{FALSE}. See
+\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+frame printing section} in bookdown book for examples.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
-\item{ext}{Extention of the output document (defaults to ".md").}
+\item{ext}{Extension of the output file (defaults to ".md").}
 }
 \value{
-R Markdown output format to pass to \code{\link{render}}
+R Markdown output format to pass to \code{\link[=render]{render()}}
 }
 \description{
 Format for converting from R Markdown to another variant of markdown (e.g.
 strict markdown or github flavored markdown)
 }
 \details{
-See the \href{https://bookdown.org/yihui/rmarkdown/markdown-document.html}{online
-documentation} for additional details on using the \code{md_document} format.
+See the \href{https://bookdown.org/yihui/rmarkdown/markdown-document.html}{online documentation}
+for additional details on using the \code{md_document()} format.
 
 R Markdown documents can have optional metadata that is used to generate a
 document header that includes the title, author, and date. For more details

@@ -5,3 +5,7 @@
 inst/doc
 doc
 Meta
+docs
+reference
+
+/.luarc.json

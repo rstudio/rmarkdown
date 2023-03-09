@@ -66,12 +66,17 @@
 run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
                 auto_reload = TRUE, shiny_args = NULL, render_args = NULL) {
 
+  # if file is missing and there is an index.qmd (and no index.Rmd) then use that
+  if (missing(file) && !file.exists("index.Rmd") && file.exists("index.qmd"))
+    file <- "index.qmd"
+
   # if the file argument is missing then substitute ui.Rmd if it exists
   # (and index.Rmd does not exist)
   if (missing(file) && missing(default_file)) {
-    if (!file.exists(file.path(dir, "index.Rmd")) &&
-        file.exists(file.path(dir, "ui.Rmd"))) {
-      file <- file.path(dir, "ui.Rmd")
+    if (!any(file.exists(file.path(dir, paste0("index.", c("qmd", "Rmd"))))) &&
+        any(file.exists(file.path(dir, paste0("ui.", c("qmd", "Rmd")))))) {
+      uiRmd = file.path(dir, "ui.Rmd")
+      file <- ifelse(file.exists(uiRmd), uiRmd, file.path(dir, "ui.qmd"))
     }
   }
 
@@ -79,20 +84,20 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
   # documents which start with a leading underscore (same pattern is used to
   # designate "sub-documents" in R Markdown websites and bookdown)
   if (is.null(default_file)) {
-    allRmds <- list.files(path = dir, pattern = "^[^_].*\\.[Rr][Mm][Dd]$")
+    allRmds <- list.files(path = dir, pattern = "^[^_].*\\.[Rrq][Mm][Dd]$")
     if (length(allRmds) == 1) {
       # just one R Markdown document
       default_file <- allRmds
     } else {
       # more than one: look for an index or ui
-      index <- which(tolower(allRmds) %in% c("index.rmd", "ui.rmd"))
+      index <- which(tolower(allRmds) %in% c("index.rmd", "index.qmd", "ui.rmd", "ui.qmd"))
       if (length(index) > 0) {
         default_file <- allRmds[index[1]]
       } else {
         # look for first one that has runtime: shiny
         for (rmd in allRmds) {
-          runtime <- yaml_front_matter(file.path(dir, rmd))$runtime
-          if (is_shiny(runtime)) {
+          yaml <- yaml_front_matter(file.path(dir, rmd))
+          if (is_shiny(yaml$runtime, yaml$server)) {
             default_file <- rmd
             break
           }
@@ -131,10 +136,24 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
 
   # determine the runtime of the target file
   target_file <- file %||% file.path(dir, default_file)
-  runtime <- if (length(target_file)) yaml_front_matter(target_file)$runtime
+  yaml_front <- if (length(target_file)) yaml_front_matter(target_file)
+  runtime <- yaml_front$runtime
+  server <- yaml_front$server
+  theme <- render_args$output_options$theme
+  # Let shiny::getCurrentTheme() know about the yaml's theme, so
+  # things like `bslib::bs_themer()` can work with prerendered documents.
+  # Also note that we add the actual shiny::bootstrapLib() dependency
+  # inside the document's pre-processing hook so the 'last' version of
+  # the theme wins out
+  if (length(target_file)) {
+    format <- output_format_from_yaml_front_matter(read_utf8(target_file))
+    old_theme <- shiny::getCurrentTheme()
+    on.exit(set_current_theme(old_theme), add = TRUE)
+    set_current_theme(resolve_theme(format$options$theme))
+  }
 
   # run using the requested mode
-  if (is_shiny_prerendered(runtime)) {
+  if (is_shiny_prerendered(runtime, server)) {
 
     # get the pre-rendered shiny app
     app <- shiny_prerendered_app(target_file, render_args = render_args)
@@ -153,7 +172,7 @@ run <- function(file = "index.Rmd", dir = dirname(file), default_file = NULL,
     # the Shiny server; handle requests for the root (/) and any R markdown files
     # within
     app <- shiny::shinyApp(ui = rmarkdown_shiny_ui(dir, default_file),
-                           uiPattern = "^/$|^/index\\.html?$|^(/.*\\.[Rr][Mm][Dd])$",
+                           uiPattern = "^/$|^/index\\.html?$|^(/.*\\.[Rrq][Mm][Dd])$",
                            onStart = onStart,
                            server = rmarkdown_shiny_server(
                              dir, default_file, auto_reload, render_args))
@@ -322,7 +341,7 @@ rmarkdown_shiny_ui <- function(dir, file) {
 
     # request must be for an R Markdown or HTML document
     ext <- tolower(xfun::file_ext(req_path))
-    if (!(ext %in% c("rmd", "htm", "html"))) return(NULL)
+    if (!(ext %in% c("rmd", "qmd", "htm", "html"))) return(NULL)
 
     # document must exist
     target_file <- resolve_relative(dir, req_path)
@@ -439,8 +458,10 @@ rmd_cached_output <- function(input) {
     }
   } else {
     # It's not cacheable, and should be rendered to a session-specific temporary
-    # file
-    output_dest <- tempfile(fileext = ".html")
+    # directory, but with a predictable file name.
+    tmp_dir <- tempfile()
+    output_dest_name <- xfun::with_ext(basename(input), ".html")
+    output_dest <- file.path(tmp_dir, output_dest_name)
   }
   list(
     cacheable = cacheable,
@@ -455,8 +476,8 @@ resolve_relative <- function(dir, relpath) {
   abs.path <- file.path(dir, relpath)
   if (!file.exists(abs.path))
     return(NULL)
-  abs.path <- normalize_path(abs.path, mustWork = TRUE)
-  dir <- normalize_path(dir, mustWork = TRUE)
+  abs.path <- normalize_path(abs.path, must_work = TRUE)
+  dir <- normalize_path(dir, must_work = TRUE)
   # trim the possible trailing slash under Windows
   if (.Platform$OS.type == 'windows') dir <- sub('/$', '', dir)
   if (nchar(abs.path) <= nchar(dir) + 1)
@@ -478,8 +499,10 @@ file.path.ci <- function(dir, name) {
 
   matches <- list.files(dir, name, ignore.case = TRUE, full.names = TRUE,
                         include.dirs = TRUE)
-  if (length(matches) == 0)
-    return(default)
+  # name is used as a pattern above and can match other files
+  # so we need to filter as if it was literal string
+  matches <- matches[tolower(name) == tolower(basename(matches))]
+  if (length(matches) == 0) return(default)
   return(matches[[1]])
 }
 
@@ -541,16 +564,25 @@ render_delayed <- function(expr) {
   quoted = TRUE)
 }
 
-is_shiny <- function(runtime) {
-  !is.null(runtime) && grepl('^shiny', runtime)
+is_shiny <- function(runtime, server = NULL) {
+  (!is.null(runtime) && grepl('^shiny', runtime)) ||
+  is_shiny_prerendered(runtime, server)
 }
 
 is_shiny_classic <- function(runtime) {
   identical(runtime, "shiny")
 }
 
-is_shiny_prerendered <- function(runtime) {
-  identical(runtime, "shinyrmd") || identical(runtime, "shiny_prerendered")
+is_shiny_prerendered <- function(runtime, server = NULL) {
+  if (identical(runtime, "shinyrmd") || identical(runtime, "shiny_prerendered")) {
+    TRUE
+  } else if (identical(server, "shiny")) {
+    TRUE
+  } else if (is.list(server) && identical(server[["type"]], "shiny")) {
+    TRUE
+  } else {
+    FALSE
+  }
 }
 
 write_shiny_deps <- function(files_dir,
@@ -576,4 +608,11 @@ read_shiny_deps <- function(files_dir) {
   } else {
     list()
   }
+}
+
+
+# shiny:::setCurrentTheme() was added in 1.6 (we may export in next version)
+set_current_theme <- function(theme) {
+  set_theme <- asNamespace("shiny")$setCurrentTheme
+  if (is.function(set_theme)) set_theme(theme)
 }

@@ -8,6 +8,8 @@ github_document(
   toc = FALSE,
   toc_depth = 3,
   number_sections = FALSE,
+  math_method = "default",
+  preserve_yaml = FALSE,
   fig_width = 7,
   fig_height = 5,
   dev = "png",
@@ -27,6 +29,14 @@ github_document(
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
+\item{math_method}{\code{"default"} means that \href{https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/}{native Github support}
+for math notations using Mathjax syntax will be used. Other possible value
+is \code{"webtex"} where equation will be rendered to an image in the resulting
+Markdown. See \code{\link[=html_document]{html_document()}} for option to change webtex URL. Set \code{math_method}to
+\code{NULL} to opt-out any math treatment.}
+
+\item{preserve_yaml}{Preserve YAML front matter in final document.}
+
 \item{fig_width}{Default width (in inches) for figures}
 
 \item{fig_height}{Default height (in inches) for figures}
@@ -43,13 +53,15 @@ method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
-\code{rmarkdown.df_print} to \code{FALSE}.}
+\code{rmarkdown.df_print} to \code{FALSE}. See
+\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+frame printing section} in bookdown book for examples.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{hard_line_breaks}{\code{TRUE} to generate markdown that uses a simple
@@ -64,13 +76,33 @@ locally previewing what the document will look like on GitHub.}
 directory. Default is \code{FALSE}.}
 }
 \value{
-R Markdown output format to pass to \code{\link{render}}
+R Markdown output format to pass to \code{\link[=render]{render()}}
 }
 \description{
 Format for converting from R Markdown to GitHub Flavored Markdown.
 }
 \details{
-See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online
-documentation} for additional details on using the \code{github_document}
+See the \href{https://rmarkdown.rstudio.com/github_document_format.html}{online documentation} for additional details on using the \code{github_document()}
 format.
 }
+\section{About Math support}{
+Default behavior is to keep any inline equation using \code{$} and any block
+equation using \verb{$$} in the resulting markdown as Github will process those
+using Mathjax. \strong{This feature is only available with Pandoc 2.10.1 and above}
+
+When using \code{"webtex"}, PNG images with a white background are used by default so
+that it shows correctly on Github on both light and dark theme. You can
+choose to only output SVG for better quality by changing the URL used:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  github_document:
+    math_method:
+      engine: webtex
+      url: https://latex.codecogs.com/svg.image?
+}\if{html}{\out{</div>}}
+
+Background or fonts color cannot be changed for now and your equation may not be visible on dark theme.
+
+Using \code{"webtex"} will be the default with Pandoc 2.0.4 until Pandoc 2.10. Before 2.0.4, Github document output does not support math.
+}
+

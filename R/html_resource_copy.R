@@ -25,6 +25,14 @@ copy_html_resources <- function(html_str, lib_dir, output_dir) {
   copy_resources(html_str, lib_dir, output_dir, resource_locator)
 }
 
+make_abs_path_safe <- function(path) {
+  if (xfun::is_windows()) {
+    sub("^.:(/|\\\\)*", "", path)  # windows
+  } else {
+    sub("^[/]*", "", path)  # *nix
+  }
+}
+
 copy_resources <- function(input_str, lib_dir, output_dir, resource_locator) {
   # ensure the lib directory exists
   dir.create(lib_dir, recursive = TRUE, showWarnings = FALSE)
@@ -44,12 +52,12 @@ copy_resources <- function(input_str, lib_dir, output_dir, resource_locator) {
 
       # check to see if it's already in the library (by absolute path)
       res_src <- normalized_relative_to(lib_dir, in_file)
-      if (same_path(res_src, in_file, mustWork = FALSE)) {
+      if (same_path(res_src, in_file, must_work = FALSE)) {
         # not inside the library, copy it there
         target_dir <- if (dirname(in_file) == ".")
           lib_dir
         else
-          file.path(lib_dir, dirname(in_file))
+          file.path(lib_dir, make_abs_path_safe(dirname(in_file)))
         dir.create(target_dir, recursive = TRUE, showWarnings = FALSE)
         target_res_file <- file.path(target_dir, basename(in_file))
 
@@ -61,7 +69,7 @@ copy_resources <- function(input_str, lib_dir, output_dir, resource_locator) {
         if (identical(lib_dir, output_dir))
           res_src <- in_file
         else
-          res_src <- file.path(relative_lib, src)
+          res_src <- file.path(relative_lib, make_abs_path_safe(src))
       } else {
         # inside the library, fix up the URL
         res_src <- file.path(relative_lib, res_src)
@@ -102,10 +110,11 @@ copy_resources <- function(input_str, lib_dir, output_dir, resource_locator) {
 
       # the text from the current replacement to the end of the output,
       # if applicable
-      after <- if (res_rep == length(res_replacements))
-        substring(input_str, ch_pos)
-      else
+      after <- if (res_rep == length(res_replacements)) {
+        substring(input_str, ch_pos, last = nchar(input_str, type = "bytes"))
+      } else {
         ""
+      }
 
       # compose the next segment of the output from the text between
       # replacements and the current replacement text

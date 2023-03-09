@@ -12,73 +12,238 @@
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' \href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 #' and Citations} article in the online documentation.
-#'@inheritParams output_format
-#'@param toc \code{TRUE} to include a table of contents in the output
-#'@param toc_depth Depth of headers to include in table of contents
-#'@param toc_float \code{TRUE} to float the table of contents to the left of the
+#'
+#' @inheritParams output_format
+#' @param toc \code{TRUE} to include a table of contents in the output
+#' @param toc_depth Depth of headers to include in table of contents
+#' @param toc_float \code{TRUE} to float the table of contents to the left of the
 #'  main document content. Rather than \code{TRUE} you may also pass a list of
 #'  options that control the behavior of the floating table of contents. See the
 #'  \emph{Floating Table of Contents} section below for details.
-#'@param number_sections \code{TRUE} to number section headings
-#'@param anchor_sections \code{TRUE} to show section anchors when mouse hovers
-#'@param fig_width Default width (in inches) for figures
-#'@param fig_height Default height (in inches) for figures
-#'@param fig_retina Scaling to perform for retina displays (defaults to 2, which
+#' @param number_sections \code{TRUE} to number section headings
+#' @param anchor_sections \code{TRUE} to show section anchors when mouse hovers
+#'  for all headers. A list can also be passed with \code{style} and/or
+#'  \code{depth} to customize the behavior. See
+#'  \link[rmarkdown:html_document]{Anchor Sections Customization section}.
+#' @param fig_width Default width (in inches) for figures
+#' @param fig_height Default height (in inches) for figures
+#' @param fig_retina Scaling to perform for retina displays (defaults to 2, which
 #'  currently works for all widely used retina displays). Set to \code{NULL} to
 #'  prevent retina scaling. Note that this will always be \code{NULL} when
 #'  \code{keep_md} is specified (this is because \code{fig_retina} relies on
 #'  outputting HTML directly into the markdown document).
-#'@param fig_caption \code{TRUE} to render figures with captions
-#'@param dev Graphics device to use for figure output (defaults to png)
-#'@param code_folding Enable document readers to toggle the display of R code
-#'  chunks. Specify \code{"none"} to display all code chunks (assuming
-#'  they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
-#'  code chunks by default (users can show hidden code chunks either
-#'  individually or document-wide). Specify \code{"show"} to show all R code
-#'  chunks by default.
-#'@param code_download Embed the Rmd source code within the document and provide
+#' @param fig_caption \code{TRUE} to render figures with captions
+#' @param dev Graphics device to use for figure output (defaults to png)
+#' @param code_folding Enable document readers to toggle the display of R code
+#'  chunks. Specify \code{"none"} to display all code chunks. Specify
+#'  \code{"hide"} or \code{"show"} to hide or show all R code chunks by
+#'  default, and let readers toggle the states on browsers. See the
+#'  \emph{Code folding}
+#' @param code_download Embed the Rmd source code within the document and provide
 #'  a link that can be used by readers to download the code.
-#'@param self_contained Produce a standalone HTML file with no external
+#' @param self_contained Produce a standalone HTML file with no external
 #'  dependencies, using data: URIs to incorporate the contents of linked
 #'  scripts, stylesheets, images, and videos. Note that even for self contained
 #'  documents MathJax is still loaded externally (this is necessary because of
 #'  its size).
-#'@param theme Visual theme ("default", "cerulean", "journal", "flatly",
-#'  "darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
-#'  "sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-#'  case you can use the \code{css} parameter to add your own styles).
-#'@param highlight Syntax highlighting style. Supported styles include
-#'  "default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
-#'  "haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.
-#'@param mathjax Include mathjax. The "default" option uses an https URL from a
+#' @param theme One of the following:
+#'  * A [bslib::bs_theme()] object (or a list of [bslib::bs_theme()] argument values)
+#'    * Use this option for custom themes using Bootstrap 4 or 3.
+#'    * In this case, any `.scss`/`.sass` files provided to the `css`
+#'      parameter may utilize the `theme`'s underlying Sass utilities
+#'      (e.g., variables, mixins, etc).
+#'  * `NULL` for no theme (i.e., no [html_dependency_bootstrap()]).
+#'  * A character string specifying a [Bootswatch 3](https://bootswatch.com/3/)
+#'    theme name (for backwards-compatibility).
+#' @param highlight Syntax highlight engine and style. See the
+#'  \emph{Highlighting} section below for details.
+#'
+#'  "default" (and "textmate") will use highlightjs as syntax highlighting
+#'  engine instead of Pandoc.
+#'
+#'  Any other value will be passed as Pandoc's highlighting style. Pandoc's
+#'  built-in styles include "tango", "pygments", "kate", "monochrome",
+#'  "espresso", "zenburn", "haddock" and "breezedark".
+#'
+#'  Two custom styles are also included, "arrow", an accessible color scheme,
+#'  and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+#'  path to a \samp{.theme} to use
+#'  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{a custom Pandoc
+#'  style}. Note that custom theme requires Pandoc 2.0+.
+#'
+#'  Pass \code{NULL} to prevent syntax highlighting.
+#'
+#' @param highlight_downlit \code{TRUE} to use the \pkg{downlit} package as
+#'  syntax highlight engine to highlight inline code and R code chunks
+#'  (including providing hyperlinks to function documentation). The package
+#'  needs to be installed to use this feature.
+#'
+#'  Only Pandoc color schemes are supported with this engine. With
+#'  \code{highlight = "default"}, it will use the accessible theme called
+#'  "arrow". To learn more about \pkg{downlit} highlighting engine, see
+#'  \url{https://downlit.r-lib.org/}.
+#' @param mathjax Include mathjax. The "default" option uses an https URL from a
 #'  MathJax CDN. The "local" option uses a local version of MathJax (which is
 #'  copied into the output directory). You can pass an alternate URL or pass
 #'  \code{NULL} to exclude MathJax entirely.
-#'@param section_divs Wrap sections in <div> tags, and attach identifiers to the
-#'  enclosing <div> rather than the header itself.
-#'@param template Pandoc template to use for rendering. Pass "default" to use
+#' @param math_method Math rendering engine to use. This will define the math method to use with Pandoc.
+#'
+#'  * It can be a string for the engine, one of `r knitr::combine_words(c(pandoc_math_engines(), "r-katex"), and = "or ", before = '"')`
+#'  or "default" for `mathjax`.
+#'  * It can be a list of
+#'    * `engine`:  one of
+#'      `r knitr::combine_words(pandoc_math_engines(), and = "or ", before = '"')`.
+#'    * `url`: A specific url to use with `mathjax`, `katex` or `webtex`.
+#'      Note that for `engine = "mathjax"`, `url = "local"` will use a local version of MathJax (which is
+#'  copied into the output directory).
+#'
+#'  For example,
+#'  ```yaml
+#'  output:
+#'    html_document:
+#'      math_method:
+#'        engine: katex
+#'        url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+#'  ```
+#'
+#'  See [Pandoc's Manual about Math in
+#'  HTML](https://pandoc.org/MANUAL.html#math-rendering-in-html) for the details
+#'  about Pandoc supported methods.
+#'
+#'  Using `math_method = "r-katex"` will opt-in server side rendering using
+#'  KaTeX thanks to [katex](https://docs.ropensci.org/katex/) R package. This is
+#'  useful compared to `math_method = "katex"` to have no JS dependency, only a
+#'  CSS dependency for styling equation.
+#' @param section_divs Wrap sections in \code{<div>} tags, and attach identifiers to the
+#'  enclosing \code{<div>} rather than the header itself.
+#' @param template Pandoc template to use for rendering. Pass "default" to use
 #'  the rmarkdown package default template; pass \code{NULL} to use pandoc's
 #'  built-in template; pass a path to use a custom template that you've created.
 #'  Note that if you don't use the "default" template then some features of
 #'  \code{html_document} won't be available (see the Templates section below for
 #'  more details).
-#'@param css One or more css files to include
-#'@param includes Named list of additional content to include within the
+#' @param extra_dependencies Extra dependencies as a list of the
+#'   \code{html_dependency} class objects typically generated by
+#'   \code{\link[htmltools:htmlDependency]{htmltools:htmlDependency()}}.
+#' @param css CSS and/or Sass files to include. Files with an extension of .sass
+#'  or .scss are compiled to CSS via `sass::sass()`. Also, if `theme` is a
+#'  [bslib::bs_theme()] object, Sass code may reference the relevant Bootstrap
+#'  Sass variables, functions, mixins, etc.
+#' @param includes Named list of additional content to include within the
 #'  document (typically created using the \code{\link{includes}} function).
-#'@param keep_md Keep the markdown file generated by knitting.
-#'@param lib_dir Directory to copy dependent HTML libraries (e.g. jquery,
+#' @param keep_md Keep the markdown file generated by knitting.
+#' @param lib_dir Directory to copy dependent HTML libraries (e.g. jquery,
 #'  bootstrap, etc.) into. By default this will be the name of the document with
 #'  \code{_files} appended to it.
-#'@param md_extensions Markdown extensions to be added or removed from the
-#'  default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+#' @param md_extensions Markdown extensions to be added or removed from the
+#'  default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 #'  additional details.
-#'@param pandoc_args Additional command line options to pass to pandoc
-#'@param extra_dependencies,... Additional function arguments to pass to the
-#'  base R Markdown HTML output formatter \code{\link{html_document_base}}
-#'@return R Markdown output format to pass to \code{\link{render}}
-#'@section Navigation Bars:
+#' @param pandoc_args Additional command line options to pass to pandoc
+#' @param ... Additional function arguments to pass to the base R Markdown HTML
+#'   output formatter \code{\link{html_document_base}}
+#' @return R Markdown output format to pass to \code{\link{render}}
+#'
+#' @section Highlighting:
+#'
+#'  There are three highlighting engines available to HTML documents:
+#'
+#'  \describe{
+#'  \item{highlightjs}{It does highlighting in the browser, using javascript It
+#'  can only be used with the default template (i.e \code{template = "default"})
+#'  and it has two styles ("default" and "textmate"). When activated, it adds
+#'  two additional dependencies to the output file: a JS script and a CSS file.
+#'  For now, this is the default engine for the default template - this could
+#'  change in the future.}
+#'
+#'  \item{Pandoc}{Pandoc's built-in highlighting.engine works with any template,
+#'  default or custom, and style can be chosen among the built-in ones ("tango",
+#'  "pygments", "kate", "monochrome", "espresso", "zenburn", "haddock" and
+#'  "breezedark") or a path to a custom theme ".theme" file (see Details in the
+#'  \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{Pandoc Manual}).
+#'  \pkg{rmarkdown} includes two custom themes to select with \code{highlight}
+#'  parameter:
+#'  \itemize{
+#'  \item{"arrow", an accessible style using colors \href{https://www.a11yproject.com/}{optimized for
+#'  accessibility and color contrast}}
+#'  \item{"rstudio", a color scheme close to RStudio's default highlighting and
+#'  highglightjs's textmate.}
+#'  }
+#'  Custom themes are only available for Pandoc 2.0 and above.}
+#'
+#'  \item{downlit}{\href{https://downlit.r-lib.org/}{\pkg{downlit}} is an R package that
+#'  provides a syntax highlighting engine in R. It will also do automatic
+#'  linking of R code (requires internet connectivity). It is activated only if
+#'  \code{highlight_downlit = TRUE} and only affects R code, leaving
+#'  highlighting for other languages unchanged. The default color scheme is
+#'  the accessible theme "arrow".
+#'
+#'  It requires some CSS in the template to correctly style links. This is included
+#'  in the default template, but if you want to use with a custom template, you will
+#'  need to add this to your template:
+#'
+#'  \preformatted{
+#' $if(highlight-downlit)$
+#' <style type="text/css">
+#'   code a:any-link {
+#'    color: inherit; /* use colour from syntax highlighting */
+#'    text-decoration: underline;
+#'    text-decoration-color: #ccc;
+#'   }
+#'  </style>
+#'  $endif$}
+#'  }}
+#'
+#' @section Anchor Sections Customization:
+#'
+#'  This will be the default to activate anchor sections link on header
+#'  ```yaml
+#'  output:
+#'    html_document:
+#'      anchor_sections: TRUE
+#'  ````
+#'  There are currently two options to modify the default behavior
+#'
+#'  \describe{
+#'  \item{`style`}{Select a predefined visual style:
+#'   * `style = "dash"`, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.
+#'   * `style = "symbol"` will use a [link symbol](https://codepoints.net/U+1F517) \if{html}{\out{(&#x1F517;&#xFE0E;)}}
+#'   * `style = "icon"` will use an svg icon. \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}
+#'
+#'  You can also customize using a css rule in your
+#'  document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:
+#'  ```css
+#'  a.anchor-section::before {
+#'    content: '\\01F517';
+#'  }
+#'  ```
+#'  About how to apply custom CSS in R Markdown document, see
+#'  <https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html>
+#'  }
+#'  \item{`depth`}{Select the maximum header level to add the
+#'  anchor link to. For example, this yaml will use the symbol style and
+#'  only with level 1 and 2 headings:
+#'  ```yaml
+#'  output:
+#'    html_document:
+#'      anchor_sections:
+#'        style: icon
+#'        depth: 2
+#'  ```
+#'  If omitted, anchor will be added to all headers (equivalent of
+#'  `depth=6`). You can also set anchors manually with `depth = 0` using this syntax
+#'  ```markdown
+#'  # my header {.hasAnchor}
+#'  ```
+#'  }
+#'
+#'  Using anchor sections will add some CSS to your document output for the
+#'  styling, and a JS script if `section_divs = TRUE`. The anchor link itself
+#'  is added using a Lua filter, and hence requires Pandoc 2.0+
+#'  }
+#'
+#' @section Navigation Bars:
 #'
 #'  If you have a set of html documents which you'd like to provide a common
 #'  global navigation bar for, you can include a "_navbar.yml" or "_navbar.html"
@@ -109,7 +274,7 @@
 #'  \url{https://getbootstrap.com/docs/4.5/components/navbar/}.
 #'
 #'
-#'@section Floating Table of Contents:
+#' @section Floating Table of Contents:
 #'
 #'  You may specify a list of options for the \code{toc_float} parameter which
 #'  control the behavior of the floating table of contents. Options include:
@@ -122,7 +287,25 @@
 #'  to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
 #'  whether the table of contents appears when user prints out the HTML page.}}
 #'
-#'@section Tabbed Sections:
+#' @section Code folding:
+#'
+#'  Code blocks become foldable by specifying "show" or "hide" to the
+#'  \code{code_folding} parameter. The state can be toggled individually on
+#'  browsers. The document-wide toggle button is also provided for
+#'  \code{html_document} and some of its extensions such as
+#'  \code{html_notebook}. Note that this feature applies not only to source
+#'  codes of chunks, but also markdown code blocks.
+#'
+#'  Supported languages are R, Python, Bash, SQL, C++, Stan, and Julia. To
+#'  support code blocks with other languages, add \code{foldable} class to them
+#'  (i.e., \code{class.source = "foldable"} as a chunk option).
+#'
+#'  The default initial state of code folding respects the value given to the
+#'  \code{code_folding} parameter. To override the behavior individually, add
+#'  \code{fold-none} to disable, \code{fold-hide} to initially hide,
+#'  \code{fold-show} to initially show.
+#'
+#' @section Tabbed Sections:
 #'
 #'  You can organize content using tabs by applying the \code{.tabset} class
 #'  attribute to headers within a document. This will cause all sub-headers of
@@ -135,15 +318,18 @@
 #'
 #' ### By Region }
 #'
-#'  You can also specify two additional attributes to control the appearance and
-#'  behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
-#'  fade in and out when switching. The \code{.tabset-pills} attribute causes
-#'  the visual appearance of the tabs to be "pill" rather than traditional tabs.
-#'  For example:
+#'  With [html_document()], you can also specify two additional attributes to
+#'  control the appearance and behavior of the tabs. The \code{.tabset-fade}
+#'  attributes causes the tabs to fade in and out when switching. The
+#'  \code{.tabset-pills} attribute causes the visual appearance of the tabs to
+#'  be "pill" rather than traditional tabs. For example:
 #'
 #'  \preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
 #'
-#'@section Templates:
+#'  If tabbed sections relies on [html_dependency_tabset()], for example by
+#'  [html_vignette()], these two attributes are not supported.
+#'
+#' @section Templates:
 #'
 #'  You can provide a custom HTML template to be used for rendering. The syntax
 #'  for templates is described in the
@@ -153,16 +339,19 @@
 #'  Note however that if you choose not to use the "default" HTML template then
 #'  several aspects of HTML document rendering will behave differently:
 #'
-#'  \itemize{ \item{The \code{theme} parameter does not work (you can still
-#'  provide styles using the \code{css} parameter). } \item{For the
-#'  \code{highlight} parameter, the default highlighting style will resolve to
-#'  "pygments" and the "textmate" highlighting style is not available }
-#'  \item{The \code{toc_float} parameter will not work. } \item{The
-#'  \code{code_folding} parameter will not work. } \item{Tabbed sections (as
-#'  described above) will not work.} \item{Navigation bars (as described above)
-#'  will not work. }\item{MathJax will not work if \code{self_contained} is
-#'  \code{TRUE} (these two options can't be used together in normal pandoc
-#'  templates). } }
+#'  \itemize{
+#'  \item{The \code{theme} parameter does not work (you can still provide styles
+#'  using the \code{css} parameter). }
+#'  \item{For the \code{highlight} parameter, the default highlighting engine
+#'  will resolve to Pandoc instead of highlightjs and highlighting style will default to
+#'  "pygments". "textmate" style is not available as related to highlightjs}
+#'  \item{The \code{toc_float} parameter will not work. }
+#'  \item{The \code{code_folding} parameter will not work. }
+#'  \item{Tabbed sections (as described above) will not work.}
+#'  \item{Navigation bars (as described above) will not work. }
+#'  \item{MathJax will not work if \code{self_contained} is \code{TRUE} (these
+#'  two options can't be used together in normal pandoc templates). }
+#'  }
 #'
 #'  Due to the above restrictions, you might consider using the \code{includes}
 #'  parameter as an alternative to providing a fully custom template.
@@ -175,12 +364,13 @@
 #'
 #' render("input.Rmd", html_document(toc = TRUE))
 #' }
+#' @md
 #' @export
 html_document <- function(toc = FALSE,
                           toc_depth = 3,
                           toc_float = FALSE,
                           number_sections = FALSE,
-                          anchor_sections = TRUE,
+                          anchor_sections = FALSE,
                           section_divs = TRUE,
                           fig_width = 7,
                           fig_height = 5,
@@ -193,6 +383,8 @@ html_document <- function(toc = FALSE,
                           self_contained = TRUE,
                           theme = "default",
                           highlight = "default",
+                          highlight_downlit = FALSE,
+                          math_method = "default",
                           mathjax = "default",
                           template = "default",
                           extra_dependencies = NULL,
@@ -204,8 +396,11 @@ html_document <- function(toc = FALSE,
                           pandoc_args = NULL,
                           ...) {
 
-  # build pandoc args
-  args <- c("--standalone")
+  # self_contained = TRUE already uses --standalone
+  args <- if (!self_contained) c("--standalone")
+
+  # to add lua_filters
+  lua_filters <- c()
 
   # use section divs
   if (section_divs)
@@ -213,6 +408,9 @@ html_document <- function(toc = FALSE,
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
+
+  # makes downstream logic easier to reason about
+  theme <- resolve_theme(theme)
 
   # toc_float
   if (toc && !identical(toc_float, FALSE)) {
@@ -277,8 +475,14 @@ html_document <- function(toc = FALSE,
     )
   }
 
-  # highlight
-  args <- c(args, pandoc_html_highlight_args(template, highlight))
+  # highlighting ---------
+  if (highlight_downlit && !xfun::loadable("downlit")) {
+    stop("highlight_downlit=TRUE requires the downlit package to be installed.",
+         call. = FALSE)
+  }
+  args <- c(args,
+            pandoc_html_highlight_args(template, highlight, highlight_downlit)
+  )
 
   # add highlight.js html_dependency if required
   extra_dependencies <- append(
@@ -295,9 +499,6 @@ html_document <- function(toc = FALSE,
   if (number_sections)
     args <- c(args, "--number-sections")
 
-  # additional css
-  for (css_file in css)
-    args <- c(args, "--css", pandoc_path_arg(css_file, backslash = FALSE))
 
   # manage list of exit_actions (backing out changes to knitr options)
   exit_actions <- list()
@@ -326,10 +527,10 @@ html_document <- function(toc = FALSE,
   }
 
   # anchor-sections
-  if (anchor_sections) {
-    extra_dependencies <- append(extra_dependencies,
-                                 list(html_dependency_anchor_sections()))
-  }
+  components <- add_anchor_sections(anchor_sections, section_divs)
+  args <- c(args, components$args)
+  lua_filters <- c(lua_filters, components$lua_filters)
+  extra_dependencies <- append(extra_dependencies, components$extra_dependencies)
 
   # pre-processor for arguments that may depend on the name of the
   # the input file AND which need to inject html dependencies
@@ -362,14 +563,12 @@ html_document <- function(toc = FALSE,
         includes <- list(before_body = navbar)
         args <- c(args, includes_to_pandoc_args(includes,
                                   filter = if (is_shiny_classic(runtime))
-                                    function(x) normalize_path(x, mustWork = FALSE)
+                                    function(x) normalize_path(x, must_work = FALSE)
                                   else
                                     identity))
 
         # flag indicating we need extra navbar css and js
         args <- c(args, pandoc_variable_arg("navbar", "1"))
-        # variables controlling padding from navbar
-        args <- c(args, pandoc_body_padding_variable_args(theme))
 
         # navbar icon dependencies
         iconDeps <- navbar_icon_dependencies(navbar)
@@ -426,7 +625,7 @@ html_document <- function(toc = FALSE,
     # elsewhere.
     args <- c(args, includes_to_pandoc_args(includes,
                       filter = if (is_shiny_classic(runtime))
-                        function(x) normalize_path(x, mustWork = FALSE)
+                        function(x) normalize_path(x, must_work = FALSE)
                       else
                         identity))
 
@@ -434,25 +633,44 @@ html_document <- function(toc = FALSE,
     args
   }
 
+  # post-processor that uses the output file from pandoc
+  post_processor <- function(metadata, input_file, output_file, clean, verbose) {
+
+    # add a post processor for syntax highlighting with downlit if requested
+    if (highlight_downlit) {
+      output_file <- downlit::downlit_html_path(
+        output_file, output_file,
+        classes = downlit::classes_pandoc()
+      )
+    }
+
+    output_file
+  }
+
   # return format
   output_format(
     knitr = knitr_options_html(fig_width, fig_height, fig_retina, keep_md, dev),
     pandoc = pandoc_options(to = "html",
                             from = from_rmarkdown(fig_caption, md_extensions),
-                            args = args),
+                            args = args,
+                            lua_filters = lua_filters),
     keep_md = keep_md,
     clean_supporting = self_contained,
     df_print = df_print,
     pre_knit = pre_knit,
     post_knit = post_knit,
     pre_processor = pre_processor,
+    post_processor = post_processor,
     on_exit = on_exit,
     base_format = html_document_base(theme = theme,
                                      self_contained = self_contained,
-                                     lib_dir = lib_dir, mathjax = mathjax,
+                                     lib_dir = lib_dir,
+                                     math_method = math_method,
+                                     mathjax = mathjax,
                                      template = template,
                                      pandoc_args = pandoc_args,
                                      extra_dependencies = extra_dependencies,
+                                     css = css,
                                      ...)
   )
 }
@@ -486,63 +704,27 @@ knitr_options_html <- function(fig_width,
   knitr_options(opts_chunk = opts_chunk)
 }
 
+# CSS files in inst/rmd/h/bootstrap/css
 themes <- function() {
-  c("default",
+  c("default", # keep for backward compatibility reason, changed to 'bootstrap' internally
+    "bootstrap",
     "cerulean",
-    "journal",
-    "flatly",
-    "darkly",
-    "readable",
-    "spacelab",
-    "united",
     "cosmo",
+    "darkly",
+    "flatly",
+    "journal",
     "lumen",
     "paper",
+    "readable",
     "sandstone",
     "simplex",
+    "spacelab",
+    "united",
     "yeti")
 }
 
 html_highlighters <- function() {
   c(highlighters(), "textmate")
-}
-
-default_mathjax <- function() {
-  paste0("https://mathjax.rstudio.com/latest/", mathjax_config())
-}
-
-mathjax_config <- function() {
-  "MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-}
-
-# variable which controls body offset (depends on height of navbar in theme)
-pandoc_body_padding_variable_args <- function(theme) {
-
-  # height of navbar in bootstrap 3.3.5
-  navbarHeights <- c("default" = 51,
-                     "cerulean" = 51,
-                     "journal" = 61 ,
-                     "flatly" = 60,
-                     "darkly" = 60,
-                     "readable" = 66,
-                     "spacelab" = 52,
-                     "united" = 51,
-                     "cosmo" = 51,
-                     "lumen" = 54,
-                     "paper" = 64,
-                     "sandstone" = 61,
-                     "simplex" = 41,
-                     "yeti" = 45)
-
-  # body padding is navbar height
-  bodyPadding <- navbarHeights[[theme]]
-
-  # header padding is bodyPadding + 5
-  headerPadding <- bodyPadding + 5
-
-  # return variables
-  c(pandoc_variable_arg("body_padding", bodyPadding),
-    pandoc_variable_arg("header_padding", headerPadding))
 }
 
 navbar_html_from_yaml <- function(navbar_yaml) {
@@ -610,6 +792,7 @@ navbar_links_tags <- function(links, depth = 0L) {
                 tags$a(
                   href = "#", class = "dropdown-toggle",
                   `data-toggle` = "dropdown", role = "button",
+                  `data-bs-toggle` = "dropdown", # BS5
                   `aria-expanded` = "false", link_text),
                 tags$ul(class = "dropdown-menu", role = "menu", submenuLinks)
         )
@@ -646,10 +829,62 @@ navbar_link_text <- function(x, ...) {
       iconset <- split[[1]][[1]]
     else
       iconset <- ""
-    tagList(tags$span(class = paste(iconset, x$icon)), " ", x$text, ...)
+    # check if a full class is passed for fontawesome = V5
+    # Add fa deprecated fa prefix otherwise = V4 compatibility
+    # https://github.com/rstudio/rmarkdown/issues/1554
+    class = if (grepl("^fa\\w? fa", iconset)) {
+      # Fontawesome 5 - full new prefix + name must be passed
+      # if old fa prefix is passed - keep it for compatibility
+      x$icon
+    } else if (iconset == "fa") {
+      # Fontawesome 4 compatibility - Add deprecated fa prefix
+      paste("fa", x$icon)
+    } else {
+      # Other Icon sets
+      paste(iconset, x$icon)
+    }
+    tagList(tags$span(class = class), " ", x$text, ...)
   }
   else
     tagList(x$text, ...)
 }
 
+add_anchor_sections <- function(anchor_sections, section_divs = FALSE) {
 
+  # expected output object
+  res <- list(args = NULL, lua_filters = NULL, extra_dependencies = NULL)
+  # Do nothing
+  if (identical(anchor_sections, FALSE)) return(res)
+  # Requires Pandoc 2.0 because using a Lua filter
+  if (!pandoc2.0()) {
+    stop("Using anchor_sections requires Pandoc 2.0+", call. = FALSE)
+  }
+
+  allowed_args <- c("style", "depth")
+  default_style  <- "hash"
+
+  if (isTRUE(anchor_sections)) {
+    style <- default_style
+    depth <- NULL
+  } else if (is.list(anchor_sections)) {
+    # check list elements
+    all_allowed <- all(names(anchor_sections) %in% allowed_args)
+    if (!all_allowed) {
+      stop("`anchor_sections` could be a list with only names in [",
+           paste(allowed_args, collapse = ", "), "]",
+           call. = FALSE)
+    }
+    style <- anchor_sections[["style"]] %||% default_style
+    depth <- anchor_sections[["depth"]]
+  } else {
+    stop("`anchor_sections` should be FALSE, TRUE or a list with names [",
+         paste(allowed_args, collapse = ", "), "]",
+         call. = FALSE)
+  }
+
+  res$args <- if (!is.null(depth)) pandoc_metadata_arg("rmd_anchor_depth", depth)
+  res$lua_filters <- pkg_file_lua("anchor-sections.lua")
+  res$extra_dependencies <- list(html_dependency_anchor_sections(style, section_divs))
+
+  res
+}

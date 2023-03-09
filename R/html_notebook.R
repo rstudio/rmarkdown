@@ -27,6 +27,8 @@ html_notebook <- function(toc = FALSE,
                           code_folding = "show",
                           theme = "default",
                           highlight = "textmate",
+                          highlight_downlit = FALSE,
+                          math_method = "default",
                           mathjax = "default",
                           extra_dependencies = NULL,
                           css = NULL,
@@ -189,6 +191,9 @@ html_notebook <- function(toc = FALSE,
   extra_dependencies <- append(extra_dependencies,
                                list(html_dependency_pagedtable()))
 
+  # Change default value of highlight theme if downlit is to be used
+  if (highlight_downlit && missing(highlight)) highlight <- "default"
+
   # generate actual format
   base_format <- html_document(toc = toc,
                                toc_depth = toc_depth,
@@ -201,6 +206,8 @@ html_notebook <- function(toc = FALSE,
                                code_folding = code_folding,
                                theme = theme,
                                highlight = highlight,
+                               highlight_downlit = highlight_downlit,
+                               math_method = math_method,
                                mathjax = mathjax,
                                extra_dependencies = extra_dependencies,
                                css = css,
@@ -443,16 +450,13 @@ validate_output_source <- function(output_source) {
   error_msg <- sprintf("%s '%s'", prefix, required_signature)
 
   # ensure function
-  if (!is.function(output_source))
-    stop(error_msg, call. = FALSE)
+  if (!is.function(output_source)) stop2(error_msg)
 
   # check formals
   fmls <- names(formals(output_source))
-  if (length(fmls) < 3)
-    stop(error_msg, call. = FALSE)
+  if (length(fmls) < 3) stop2(error_msg)
 
-  if (!("..." %in% fmls))
-    stop(error_msg, call. = FALSE)
+  if (!("..." %in% fmls)) stop2(error_msg)
 
   TRUE
 }

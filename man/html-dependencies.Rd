@@ -10,6 +10,8 @@
 \alias{html_dependency_ionicons}
 \alias{html_dependency_pagedtable}
 \alias{html_dependency_highlightjs}
+\alias{html_dependency_tabset}
+\alias{html_dependency_codefolding_lua}
 \title{Provide common HTML dependencies for R Markdown formats}
 \usage{
 html_dependency_jquery()
@@ -27,12 +29,25 @@ html_dependency_ionicons()
 html_dependency_pagedtable()
 
 html_dependency_highlightjs(highlight)
+
+html_dependency_tabset()
+
+html_dependency_codefolding_lua()
 }
 \arguments{
-\item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
-"darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
-"sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-case you can use the \code{css} parameter to add your own styles).}
+\item{theme}{One of the following:
+\itemize{
+\item A \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object (or a list of \code{\link[bslib:bs_theme]{bslib::bs_theme()}} argument values)
+\itemize{
+\item Use this option for custom themes using Bootstrap 4 or 3.
+\item In this case, any \code{.scss}/\code{.sass} files provided to the \code{css}
+parameter may utilize the \code{theme}'s underlying Sass utilities
+(e.g., variables, mixins, etc).
+}
+\item \code{NULL} for no theme (i.e., no \code{\link[=html_dependency_bootstrap]{html_dependency_bootstrap()}}).
+\item A character string specifying a \href{https://bootswatch.com/3/}{Bootswatch 3}
+theme name (for backwards-compatibility).
+}}
 
 \item{highlight}{Highlighter to use}
 }

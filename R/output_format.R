@@ -21,7 +21,9 @@
 #'   for formats that produce HTML). In addition to the named methods you can
 #'   also pass an arbitrary function to be used for printing data frames. You
 #'   can disable the \code{df_print} behavior entirely by setting the option
-#'   \code{rmarkdown.df_print} to \code{FALSE}.
+#'   \code{rmarkdown.df_print} to \code{FALSE}. See
+#'   \href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+#'   frame printing section} in bookdown book for examples.
 #' @param pre_knit An optional function that runs before knitting which receives
 #'   the \code{input} (input filename passed to \code{render}) and \code{...}
 #'   (for future expansion) arguments.
@@ -260,10 +262,12 @@ knitr_options_pdf <- function(fig_width,
   knit_hooks <- NULL
 
   # apply cropping if requested and we have pdfcrop and ghostscript
-  crop <- fig_crop && find_program("pdfcrop") != '' && tools::find_gs_cmd() != ''
-  if (crop) {
-    knit_hooks = list(crop = knitr::hook_pdfcrop)
-    opts_chunk$crop = TRUE
+  if (identical(fig_crop, 'auto')) fig_crop <- has_crop_tools(FALSE) else {
+    if (fig_crop && !has_crop_tools()) fig_crop <- FALSE
+  }
+  if (fig_crop) {
+    knit_hooks <- list(crop = knitr::hook_pdfcrop)
+    opts_chunk$crop <- TRUE
   }
 
   # return options
@@ -277,9 +281,9 @@ knitr_options_pdf <- function(fig_width,
 #'
 #' Define the pandoc options for an R Markdown output format.
 #'
-#' The \code{from} argument should be used very cautiously as it's
-#' important for users to be able to rely on a stable definition of supported
-#' markdown extensions.
+#' The \code{from} argument should be used very cautiously as it's important for
+#' users to be able to rely on a stable definition of supported markdown
+#' extensions.
 #' @param to Pandoc format to convert to
 #' @param from Pandoc format to convert from
 #' @param args Character vector of command line arguments to pass to pandoc
@@ -288,13 +292,19 @@ knitr_options_pdf <- function(fig_width,
 #' @param latex_engine LaTeX engine to producing PDF output (applies only to
 #'   'latex' and 'beamer' target formats)
 #' @param ext File extension (e.g. ".tex") for output file (if \code{NULL}
-#'   chooses default based on \code{to}). This is typically used to force
-#'   the final output of a latex or beamer conversion to be \code{.tex}
-#'   rather than \code{.pdf}.
+#'   chooses default based on \code{to}). This is typically used to force the
+#'   final output of a latex or beamer conversion to be \code{.tex} rather than
+#'   \code{.pdf}.
 #' @param lua_filters  Character vector of file paths to Lua filters to use with
 #'   this format. They will be added to pandoc command line call using
 #'   \code{--lua-filter} argument. See \code{vignette("lua-filters", package =
 #'   "rmarkdown")} to know more about Lua filters.
+#' @param convert_fun A function to convert the input file to the desired output
+#'   format in \code{\link{render}()}. If not provided,
+#'   \code{\link{pandoc_convert}()} will be used. If a custom function is
+#'   provided, its arguments and returned value should match the
+#'   \code{pandoc_convert()} function. Note that this function does not have to
+#'   use Pandoc but can also use other tools such as \pkg{commonmark}.
 #' @return An list that can be passed as the \code{pandoc} argument of the
 #'   \code{\link{output_format}} function.
 #' @seealso \link{output_format}, \link{rmarkdown_format}
@@ -303,15 +313,17 @@ pandoc_options <- function(to,
                            from = rmarkdown_format(),
                            args = NULL,
                            keep_tex = FALSE,
-                           latex_engine = c("pdflatex", "lualatex", "xelatex"),
+                           latex_engine = c("pdflatex", "lualatex", "xelatex", "tectonic"),
                            ext = NULL,
-                           lua_filters = NULL) {
+                           lua_filters = NULL,
+                           convert_fun = NULL) {
   list(to = to,
        from = from,
        args = args,
        keep_tex = keep_tex,
        latex_engine = match.arg(latex_engine),
        ext = ext,
+       convert_fun = convert_fun,
        lua_filters = lua_filters)
 }
 
@@ -398,7 +410,7 @@ default_output_format <- function(input, output_yaml = NULL) {
 
   # look up the formals of the output function to get the full option list and
   # merge against the explicitly set list
-  format_function <- eval(parse(text = format$name))
+  format_function <- eval(xfun::parse_only(format$name))
   format$options <- merge_lists(as.list(formals(format_function)),
                                 format$options,
                                 recursive = FALSE)
@@ -464,19 +476,20 @@ all_output_formats <- function(input, output_yaml = NULL) {
   enumerate_output_formats(input, output_yaml = output_yaml)
 }
 
-
 # Synthesize the output format for a document from it's YAML. If we can't
-# find an output format then we just return html_document
+# find an output format then we use a default one based on the output_file extension
+# or just return html_document
 output_format_from_yaml_front_matter <- function(input_lines,
                                                  output_options = NULL,
                                                  output_format_name = NULL,
-                                                 output_yaml = NULL) {
+                                                 output_yaml = NULL,
+                                                 output_file = NULL) {
 
   format_name <- output_format_name
 
   # ensure input is the correct data type
   if (!is_null_or_string(format_name)) {
-    stop("Unrecognized output format specified", call. = FALSE)
+    stop2("Unrecognized output format specified")
   }
 
   # parse the yaml
@@ -547,10 +560,13 @@ output_format_from_yaml_front_matter <- function(input_lines,
       }
     }
 
-  # no output formats defined in the file, just take the passed format
-  # by name (or default to html_document if no named format was specified)
+  # no output formats defined in the file, just take the passed format by name,
+  # or default to a format based on the output_file extension if any,
+  # or html_document
   } else {
-    if (is.null(format_name)) format_name <- "html_document"
+    if (is.null(format_name)) {
+      format_name <- output_format_string_from_ext(output_file)
+    }
   }
 
   # merge any output_options passed in the call to render
@@ -578,7 +594,7 @@ create_output_format <- function(name,
 
   # validate the name
   if (is.null(name))
-    stop("The output format name must not be NULL", call. = FALSE)
+    stop2("The output format name must not be NULL")
   if (name == "revealjs_presentation")
     stop("reveal.js presentations are now located in a separate package: ",
          "https://github.com/jjallaire/revealjs")
@@ -589,16 +605,27 @@ create_output_format <- function(name,
   # call the function
   output_format <- do.call(output_format_func, options)
   if (!is_output_format(output_format))
-    stop("Format is not of class rmarkdown_output_format", call. = FALSE)
+    stop2("Format is not of class rmarkdown_output_format")
 
   # return the format
   output_format
 }
 
+output_format_string_from_ext <- function(output_file) {
+  default_format <- "html_document"
+  if (is.null(output_file)) return(default_format)
+  switch(xfun::file_ext(output_file),
+    html = "html_document",
+    pdf = "pdf_document",
+    docx = "word_document",
+    default_format  # always been the default format in R Markdown
+  )
+}
+
 create_output_format_function <- function(name) {
-  output_format_func <- eval(parse(text = name))
+  output_format_func <- eval(xfun::parse_only(name))
   if (!is.function(output_format_func))
-    stop("YAML output format must evaluate to a function", call. = FALSE)
+    stop2("YAML output format must evaluate to a function")
   output_format_func
 }
 
@@ -700,7 +727,7 @@ parse_yaml_front_matter <- function(input_lines) {
 validate_front_matter <- function(front_matter) {
   front_matter <- trim_trailing_ws(front_matter)
   if (grepl(":$", front_matter))
-    stop("Invalid YAML front matter (ends with ':')", call. = FALSE)
+    stop2("Invalid YAML front matter (ends with ':')")
 }
 
 
@@ -772,12 +799,19 @@ is_pandoc_to_html <- function(options) {
 
 citeproc_required <- function(yaml_front_matter,
                               input_lines = NULL) {
+  # TODO: remove the hack below after BETS is updated on CRAN https://github.com/nmecsys/BETS/pull/18
+  if (tryCatch(xfun::check_old_package('BETS', '0.4.9'), error = function(e) FALSE)) return(FALSE)
   (
     is.null(yaml_front_matter$citeproc) ||
       yaml_front_matter$citeproc
   ) && (
     !is.null(yaml_front_matter$bibliography) ||
       !is.null(yaml_front_matter$references) ||
-      length(grep("^references\\:\\s*$", input_lines)) > 0
+      # detect references: and bibliography: outside of yaml header
+      # as Pandoc is supporting
+      # TODO: remove when supporting multiple yaml block
+      # https://github.com/rstudio/rmarkdown/issues/1891
+      length(grep("^references:\\s*$", input_lines)) > 0 ||
+      length(grep("^bibliography:\\s*$", input_lines)) > 0
   )
 }

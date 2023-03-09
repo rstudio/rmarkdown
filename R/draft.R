@@ -63,7 +63,7 @@ draft <- function(file,
 
   # resolve package file
   if (!is.null(package)) {
-    template_path = system.file("rmarkdown", "templates", template,
+    template_path = pkg_file("rmarkdown", "templates", template,
                                 package = package)
     if (!nzchar(template_path)) {
       stop("The template '", template, "' was not found in the ",
@@ -125,29 +125,36 @@ draft <- function(file,
   file.rename(file.path(dirname(file), "skeleton.Rmd"), file)
 
   # invoke the editor if requested
-  if (edit)
-    utils::file.edit(normalizePath(file))
+  if (edit) utils::file.edit(file)
 
   # return the name of the file created
   invisible(file)
 }
 
-# List the template directories that are available for consumption.
-list_template_dirs <- function() {
-
-  # check each installed package for templates
-  packages <- row.names(utils::installed.packages())
-  for (pkg in packages) {
-
-    # check to see if the package includes a template folder
-    template_folder <- system.file("rmarkdown", "templates", package = pkg)
-    if (dir_exists(template_folder)) {
-
-      # it does; list each template directory within the template folder
-      template_dirs <- list.dirs(path = template_folder, recursive = FALSE)
-      for (dir in template_dirs) {
-        cat(pkg, "|", dir, "\n", sep = "")
-      }
-    }
-  }
+#' List available R Markdown template in a package
+#'
+#' List the available template by name that can be used with [draft()] to create
+#' a new document for R Markdown from a package.
+#'
+#' @param package Package to list template from. Default to **rmarkdown**
+#' @param full_path Set to `TRUE` to get the full path to the available templates
+#'
+#' @return A character vector of templates name to use within [draft()]. If
+#'   `full_path = TRUE`, it returns the full path to the templates.
+#' @export
+#' @md
+#' @examples
+#' # List rmarkdown templates & create a draft
+#' available_templates()
+#'
+#' # List rticles templates
+#' available_templates("rticles")
+available_templates <- function(package = "rmarkdown", full_path = FALSE) {
+  template_folder <- pkg_file("rmarkdown", "templates", package = package)
+  if (!dir_exists(template_folder)) return(invisible(character()))
+  templates <- list.files(template_folder, full.names = TRUE)
+  # exclude file in folder if any
+  templates <- templates[utils::file_test('-d', templates)]
+  if (full_path) return(templates)
+  basename(templates)
 }

@@ -9,7 +9,7 @@ html_document(
   toc_depth = 3,
   toc_float = FALSE,
   number_sections = FALSE,
-  anchor_sections = TRUE,
+  anchor_sections = FALSE,
   section_divs = TRUE,
   fig_width = 7,
   fig_height = 5,
@@ -22,6 +22,8 @@ html_document(
   self_contained = TRUE,
   theme = "default",
   highlight = "default",
+  highlight_downlit = FALSE,
+  math_method = "default",
   mathjax = "default",
   template = "default",
   extra_dependencies = NULL,
@@ -46,10 +48,13 @@ options that control the behavior of the floating table of contents. See the
 
 \item{number_sections}{\code{TRUE} to number section headings}
 
-\item{anchor_sections}{\code{TRUE} to show section anchors when mouse hovers}
+\item{anchor_sections}{\code{TRUE} to show section anchors when mouse hovers
+for all headers. A list can also be passed with \code{style} and/or
+\code{depth} to customize the behavior. See
+\link[rmarkdown:html_document]{Anchor Sections Customization section}.}
 
-\item{section_divs}{Wrap sections in <div> tags, and attach identifiers to the
-enclosing <div> rather than the header itself.}
+\item{section_divs}{Wrap sections in \code{<div>} tags, and attach identifiers to the
+enclosing \code{<div>} rather than the header itself.}
 
 \item{fig_width}{Default width (in inches) for figures}
 
@@ -75,14 +80,15 @@ method creates a paginated HTML table (note that this method is only valid
 for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
-\code{rmarkdown.df_print} to \code{FALSE}.}
+\code{rmarkdown.df_print} to \code{FALSE}. See
+\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+frame printing section} in bookdown book for examples.}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
-chunks. Specify \code{"none"} to display all code chunks (assuming
-they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
-code chunks by default (users can show hidden code chunks either
-individually or document-wide). Specify \code{"show"} to show all R code
-chunks by default.}
+chunks. Specify \code{"none"} to display all code chunks. Specify
+\code{"hide"} or \code{"show"} to hide or show all R code chunks by
+default, and let readers toggle the states on browsers. See the
+\emph{Code folding}}
 
 \item{code_download}{Embed the Rmd source code within the document and provide
 a link that can be used by readers to download the code.}
@@ -93,14 +99,78 @@ scripts, stylesheets, images, and videos. Note that even for self contained
 documents MathJax is still loaded externally (this is necessary because of
 its size).}
 
-\item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
-"darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
-"sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-case you can use the \code{css} parameter to add your own styles).}
+\item{theme}{One of the following:
+\itemize{
+\item A \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object (or a list of \code{\link[bslib:bs_theme]{bslib::bs_theme()}} argument values)
+\itemize{
+\item Use this option for custom themes using Bootstrap 4 or 3.
+\item In this case, any \code{.scss}/\code{.sass} files provided to the \code{css}
+parameter may utilize the \code{theme}'s underlying Sass utilities
+(e.g., variables, mixins, etc).
+}
+\item \code{NULL} for no theme (i.e., no \code{\link[=html_dependency_bootstrap]{html_dependency_bootstrap()}}).
+\item A character string specifying a \href{https://bootswatch.com/3/}{Bootswatch 3}
+theme name (for backwards-compatibility).
+}}
 
-\item{highlight}{Syntax highlighting style. Supported styles include
-"default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
-"haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.}
+\item{highlight}{Syntax highlight engine and style. See the
+\emph{Highlighting} section below for details.
+
+"default" (and "textmate") will use highlightjs as syntax highlighting
+engine instead of Pandoc.
+
+Any other value will be passed as Pandoc's highlighting style. Pandoc's
+built-in styles include "tango", "pygments", "kate", "monochrome",
+"espresso", "zenburn", "haddock" and "breezedark".
+
+Two custom styles are also included, "arrow", an accessible color scheme,
+and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+path to a \samp{.theme} to use
+\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{a custom Pandoc
+style}. Note that custom theme requires Pandoc 2.0+.
+
+Pass \code{NULL} to prevent syntax highlighting.}
+
+\item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package as
+syntax highlight engine to highlight inline code and R code chunks
+(including providing hyperlinks to function documentation). The package
+needs to be installed to use this feature.
+
+Only Pandoc color schemes are supported with this engine. With
+\code{highlight = "default"}, it will use the accessible theme called
+"arrow". To learn more about \pkg{downlit} highlighting engine, see
+\url{https://downlit.r-lib.org/}.}
+
+\item{math_method}{Math rendering engine to use. This will define the math method to use with Pandoc.
+\itemize{
+\item It can be a string for the engine, one of "mathjax", "mathml", "webtex", "katex", "gladtex", or "r-katex"
+or "default" for \code{mathjax}.
+\item It can be a list of
+\itemize{
+\item \code{engine}:  one of
+"mathjax", "mathml", "webtex", "katex", or "gladtex".
+\item \code{url}: A specific url to use with \code{mathjax}, \code{katex} or \code{webtex}.
+Note that for \code{engine = "mathjax"}, \code{url = "local"} will use a local version of MathJax (which is
+copied into the output directory).
+}
+}
+
+For example,
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    math_method:
+      engine: katex
+      url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+}\if{html}{\out{</div>}}
+
+See \href{https://pandoc.org/MANUAL.html#math-rendering-in-html}{Pandoc's Manual about Math in HTML} for the details
+about Pandoc supported methods.
+
+Using \code{math_method = "r-katex"} will opt-in server side rendering using
+KaTeX thanks to \href{https://docs.ropensci.org/katex/}{katex} R package. This is
+useful compared to \code{math_method = "katex"} to have no JS dependency, only a
+CSS dependency for styling equation.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is
@@ -114,10 +184,14 @@ Note that if you don't use the "default" template then some features of
 \code{html_document} won't be available (see the Templates section below for
 more details).}
 
-\item{extra_dependencies, ...}{Additional function arguments to pass to the
-base R Markdown HTML output formatter \code{\link{html_document_base}}}
+\item{extra_dependencies}{Extra dependencies as a list of the
+\code{html_dependency} class objects typically generated by
+\code{\link[htmltools:htmlDependency]{htmltools:htmlDependency()}}.}
 
-\item{css}{One or more css files to include}
+\item{css}{CSS and/or Sass files to include. Files with an extension of .sass
+or .scss are compiled to CSS via \code{sass::sass()}. Also, if \code{theme} is a
+\code{\link[bslib:bs_theme]{bslib::bs_theme()}} object, Sass code may reference the relevant Bootstrap
+Sass variables, functions, mixins, etc.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
@@ -129,10 +203,13 @@ bootstrap, etc.) into. By default this will be the name of the document with
 \code{_files} appended to it.}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
+
+\item{...}{Additional function arguments to pass to the base R Markdown HTML
+output formatter \code{\link{html_document_base}}}
 }
 \value{
 R Markdown output format to pass to \code{\link{render}}
@@ -151,22 +228,130 @@ see the documentation on R Markdown \link[=rmd_metadata]{metadata}.
 
 R Markdown documents also support citations. You can find more information on
 the markdown syntax for citations in the
-\href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+\href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 and Citations} article in the online documentation.
 }
+\section{Highlighting}{
+
+
+There are three highlighting engines available to HTML documents:
+
+\describe{
+\item{highlightjs}{It does highlighting in the browser, using javascript It
+can only be used with the default template (i.e \code{template = "default"})
+and it has two styles ("default" and "textmate"). When activated, it adds
+two additional dependencies to the output file: a JS script and a CSS file.
+For now, this is the default engine for the default template - this could
+change in the future.}
+
+\item{Pandoc}{Pandoc's built-in highlighting.engine works with any template,
+default or custom, and style can be chosen among the built-in ones ("tango",
+"pygments", "kate", "monochrome", "espresso", "zenburn", "haddock" and
+"breezedark") or a path to a custom theme ".theme" file (see Details in the
+\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{Pandoc Manual}).
+\pkg{rmarkdown} includes two custom themes to select with \code{highlight}
+parameter:
+\itemize{
+\item{"arrow", an accessible style using colors \href{https://www.a11yproject.com/}{optimized for
+accessibility and color contrast}}
+\item{"rstudio", a color scheme close to RStudio's default highlighting and
+highglightjs's textmate.}
+}
+Custom themes are only available for Pandoc 2.0 and above.}
+
+\item{downlit}{\href{https://downlit.r-lib.org/}{\pkg{downlit}} is an R package that
+provides a syntax highlighting engine in R. It will also do automatic
+linking of R code (requires internet connectivity). It is activated only if
+\code{highlight_downlit = TRUE} and only affects R code, leaving
+highlighting for other languages unchanged. The default color scheme is
+the accessible theme "arrow".
+
+It requires some CSS in the template to correctly style links. This is included
+in the default template, but if you want to use with a custom template, you will
+need to add this to your template:
+
+\preformatted{
+$if(highlight-downlit)$
+<style type="text/css">
+  code a:any-link {
+   color: inherit; /* use colour from syntax highlighting */
+   text-decoration: underline;
+   text-decoration-color: #ccc;
+  }
+ </style>
+ $endif$}
+}}
+}
+
+\section{Anchor Sections Customization}{
+
+
+This will be the default to activate anchor sections link on header
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    anchor_sections: TRUE
+}\if{html}{\out{</div>}}
+
+There are currently two options to modify the default behavior
+
+\describe{
+\item{\code{style}}{Select a predefined visual style:
+\itemize{
+\item \code{style = "dash"}, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.
+\item \code{style = "symbol"} will use a \href{https://codepoints.net/U+1F517}{link symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}
+\item \code{style = "icon"} will use an svg icon. \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}
+}
+
+You can also customize using a css rule in your
+document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{a.anchor-section::before \{
+  content: '\\\\01F517';
+\}
+}\if{html}{\out{</div>}}
+
+About how to apply custom CSS in R Markdown document, see
+\url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
+}
+\item{\code{depth}}{Select the maximum header level to add the
+anchor link to. For example, this yaml will use the symbol style and
+only with level 1 and 2 headings:
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    anchor_sections:
+      style: icon
+      depth: 2
+}\if{html}{\out{</div>}}
+
+If omitted, anchor will be added to all headers (equivalent of
+\code{depth=6}). You can also set anchors manually with \code{depth = 0} using this syntax
+
+\if{html}{\out{<div class="sourceCode markdown">}}\preformatted{# my header \{.hasAnchor\}
+}\if{html}{\out{</div>}}
+
+}
+
+Using anchor sections will add some CSS to your document output for the
+styling, and a JS script if \code{section_divs = TRUE}. The anchor link itself
+is added using a Lua filter, and hence requires Pandoc 2.0+
+}
+}
+
 \section{Navigation Bars}{
 
 
- If you have a set of html documents which you'd like to provide a common
- global navigation bar for, you can include a "_navbar.yml" or "_navbar.html"
- file within the same directory as your html document and it will automatically
- be included at the top of the document.
+If you have a set of html documents which you'd like to provide a common
+global navigation bar for, you can include a "_navbar.yml" or "_navbar.html"
+file within the same directory as your html document and it will automatically
+be included at the top of the document.
 
- The "_navbar.yml" file includes \code{title}, \code{type}, \code{left}, and
- \code{right} fields (to define menu items for the left and right of the navbar
- respectively). Menu items include \code{title} and \code{href} fields. For example:
+The "_navbar.yml" file includes \code{title}, \code{type}, \code{left}, and
+\code{right} fields (to define menu items for the left and right of the navbar
+respectively). Menu items include \code{title} and \code{href} fields. For example:
 
- \preformatted{title: "My Website"
+\preformatted{title: "My Website"
 type: default
 left:
   - text: "Home"
@@ -176,78 +361,104 @@ left:
 right:
   - text: GitHub
     href: https://github.com}
- The \code{type} field is optional and can take the value "default" or "inverse" (which
- provides a different color scheme for the navigation bar).
+The \code{type} field is optional and can take the value "default" or "inverse" (which
+provides a different color scheme for the navigation bar).
 
- Alternatively, you can include a "_navbar.html" file which is a full HTML definition
- of a bootstrap navigation bar. For a simple example of including a navigation bar see
- \url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
-  For additional documentation on creating Bootstrap navigation bars see
- \url{https://getbootstrap.com/docs/4.5/components/navbar/}.
+Alternatively, you can include a "_navbar.html" file which is a full HTML definition
+of a bootstrap navigation bar. For a simple example of including a navigation bar see
+\url{https://github.com/rstudio/rmarkdown-website/blob/master/_navbar.html}.
+For additional documentation on creating Bootstrap navigation bars see
+\url{https://getbootstrap.com/docs/4.5/components/navbar/}.
 }
 
 \section{Floating Table of Contents}{
 
 
- You may specify a list of options for the \code{toc_float} parameter which
- control the behavior of the floating table of contents. Options include:
+You may specify a list of options for the \code{toc_float} parameter which
+control the behavior of the floating table of contents. Options include:
 
- \itemize{ \item{\code{collapsed} (defaults to \code{TRUE}) controls whether
- the table of contents appears with only the top-level (H2) headers. When
- collapsed the table of contents is automatically expanded inline when
- necessary.} \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls
- whether page scrolls are animated when table of contents items are navigated
- to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
- whether the table of contents appears when user prints out the HTML page.}}
+\itemize{ \item{\code{collapsed} (defaults to \code{TRUE}) controls whether
+the table of contents appears with only the top-level (H2) headers. When
+collapsed the table of contents is automatically expanded inline when
+necessary.} \item{\code{smooth_scroll} (defaults to \code{TRUE}) controls
+whether page scrolls are animated when table of contents items are navigated
+to via mouse clicks.} \item{\code{print} (defaults to \code{TRUE}) controls
+whether the table of contents appears when user prints out the HTML page.}}
+}
+
+\section{Code folding}{
+
+
+Code blocks become foldable by specifying "show" or "hide" to the
+\code{code_folding} parameter. The state can be toggled individually on
+browsers. The document-wide toggle button is also provided for
+\code{html_document} and some of its extensions such as
+\code{html_notebook}. Note that this feature applies not only to source
+codes of chunks, but also markdown code blocks.
+
+Supported languages are R, Python, Bash, SQL, C++, Stan, and Julia. To
+support code blocks with other languages, add \code{foldable} class to them
+(i.e., \code{class.source = "foldable"} as a chunk option).
+
+The default initial state of code folding respects the value given to the
+\code{code_folding} parameter. To override the behavior individually, add
+\code{fold-none} to disable, \code{fold-hide} to initially hide,
+\code{fold-show} to initially show.
 }
 
 \section{Tabbed Sections}{
 
 
- You can organize content using tabs by applying the \code{.tabset} class
- attribute to headers within a document. This will cause all sub-headers of
- the header with the \code{.tabset} attribute to appear within tabs rather
- than as standalone sections. For example:
+You can organize content using tabs by applying the \code{.tabset} class
+attribute to headers within a document. This will cause all sub-headers of
+the header with the \code{.tabset} attribute to appear within tabs rather
+than as standalone sections. For example:
 
- \preformatted{## Quarterly Results {.tabset}
+\preformatted{## Quarterly Results {.tabset}
 
 ### By Product
 
 ### By Region }
 
- You can also specify two additional attributes to control the appearance and
- behavior of the tabs. The \code{.tabset-fade} attributes causes the tabs to
- fade in and out when switching. The \code{.tabset-pills} attribute causes
- the visual appearance of the tabs to be "pill" rather than traditional tabs.
- For example:
+With \code{\link[=html_document]{html_document()}}, you can also specify two additional attributes to
+control the appearance and behavior of the tabs. The \code{.tabset-fade}
+attributes causes the tabs to fade in and out when switching. The
+\code{.tabset-pills} attribute causes the visual appearance of the tabs to
+be "pill" rather than traditional tabs. For example:
 
- \preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
+\preformatted{## Quarterly Results {.tabset .tabset-fade .tabset-pills}}
+
+If tabbed sections relies on \code{\link[=html_dependency_tabset]{html_dependency_tabset()}}, for example by
+\code{\link[=html_vignette]{html_vignette()}}, these two attributes are not supported.
 }
 
 \section{Templates}{
 
 
- You can provide a custom HTML template to be used for rendering. The syntax
- for templates is described in the
- \href{https://pandoc.org/MANUAL.html}{pandoc documentation}. You can also use
- the basic pandoc template by passing \code{template = NULL}.
+You can provide a custom HTML template to be used for rendering. The syntax
+for templates is described in the
+\href{https://pandoc.org/MANUAL.html}{pandoc documentation}. You can also use
+the basic pandoc template by passing \code{template = NULL}.
 
- Note however that if you choose not to use the "default" HTML template then
- several aspects of HTML document rendering will behave differently:
+Note however that if you choose not to use the "default" HTML template then
+several aspects of HTML document rendering will behave differently:
 
- \itemize{ \item{The \code{theme} parameter does not work (you can still
- provide styles using the \code{css} parameter). } \item{For the
- \code{highlight} parameter, the default highlighting style will resolve to
- "pygments" and the "textmate" highlighting style is not available }
- \item{The \code{toc_float} parameter will not work. } \item{The
- \code{code_folding} parameter will not work. } \item{Tabbed sections (as
- described above) will not work.} \item{Navigation bars (as described above)
- will not work. }\item{MathJax will not work if \code{self_contained} is
- \code{TRUE} (these two options can't be used together in normal pandoc
- templates). } }
+\itemize{
+\item{The \code{theme} parameter does not work (you can still provide styles
+using the \code{css} parameter). }
+\item{For the \code{highlight} parameter, the default highlighting engine
+will resolve to Pandoc instead of highlightjs and highlighting style will default to
+"pygments". "textmate" style is not available as related to highlightjs}
+\item{The \code{toc_float} parameter will not work. }
+\item{The \code{code_folding} parameter will not work. }
+\item{Tabbed sections (as described above) will not work.}
+\item{Navigation bars (as described above) will not work. }
+\item{MathJax will not work if \code{self_contained} is \code{TRUE} (these
+two options can't be used together in normal pandoc templates). }
+}
 
- Due to the above restrictions, you might consider using the \code{includes}
- parameter as an alternative to providing a fully custom template.
+Due to the above restrictions, you might consider using the \code{includes}
+parameter as an alternative to providing a fully custom template.
 }
 
 \examples{

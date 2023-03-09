@@ -14,7 +14,7 @@
 #'
 #' R Markdown documents also support citations. You can find more information on
 #' the markdown syntax for citations in the
-#' \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{Bibliographies
+#' \href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 #' and Citations} article in the online documentation.
 #'
 #' Many aspects of the LaTeX template used to create PDF documents can be
@@ -41,15 +41,26 @@
 #'    \item{\code{linestretch}}{Options for line spacing (e.g. 1, 1.5, 3)}
 #' }
 #' @inheritParams html_document
-#' @param fig_crop \code{TRUE} to automatically apply the \code{pdfcrop} utility
-#'   (if available) to pdf figures
+#' @param fig_crop Whether to crop PDF figures with the command
+#'   \command{pdfcrop}. This requires the tools \command{pdfcrop} and
+#'   \command{ghostscript} to be installed. By default, \code{fig_crop = TRUE}
+#'   if these two tools are available.
 #' @param dev Graphics device to use for figure output (defaults to pdf)
-#' @param highlight Syntax highlighting style. Supported styles include
-#'   "default", "tango", "pygments", "kate", "monochrome", "espresso",
-#'   "zenburn", and "haddock". Pass \code{NULL} to prevent syntax highlighting.
+#' @param highlight Syntax highlighting style passed to Pandoc.
+#'
+#'  Supported built-in styles include "default", "tango", "pygments", "kate",
+#'  "monochrome", "espresso", "zenburn", "haddock", and "breezedark".
+#'
+#'   Two custom styles are also included, "arrow", an accessible color scheme,
+#'   and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+#'   path to a \samp{.theme} file to use
+#'   \href{https://pandoc.org/MANUAL.html#syntax-highlighting}{a custom Pandoc
+#'   style}. Note that custom theme requires Pandoc 2.0+.
+#'
+#'   Pass \code{NULL} to prevent syntax highlighting.
 #' @param keep_tex Keep the intermediate tex file used in the conversion to PDF
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
-#'   "pdflatex", "lualatex", and "xelatex".
+#'   "pdflatex", "lualatex", "xelatex" and "tectonic".
 #' @param citation_package The LaTeX package to process citations, \code{natbib}
 #'   or \code{biblatex}. Use \code{default} if neither package is to be used,
 #'   which means citations will be processed via the command
@@ -89,7 +100,7 @@ pdf_document <- function(toc = FALSE,
                          number_sections = FALSE,
                          fig_width = 6.5,
                          fig_height = 4.5,
-                         fig_crop = TRUE,
+                         fig_crop = 'auto',
                          fig_caption = TRUE,
                          dev = 'pdf',
                          df_print = "default",
@@ -106,14 +117,10 @@ pdf_document <- function(toc = FALSE,
                          extra_dependencies = NULL) {
 
   # base pandoc options for all PDF output
-  args <- c("--self-contained")
+  args <- self_contained_args()
 
   # table of contents
   args <- c(args, pandoc_toc_args(toc, toc_depth))
-
-  append_in_header <- function(text, file = as_tmpfile(text)) {
-    includes_to_pandoc_args(includes(in_header = file))
-  }
 
   # template path and assets
   if (!is.null(template) && !identical(template, "default")) {
@@ -125,12 +132,11 @@ pdf_document <- function(toc = FALSE,
     args <- c(args, "--number-sections")
 
   # highlighting
-  if (!is.null(highlight))
-    highlight <- match.arg(highlight, highlighters())
+  if (!is.null(highlight)) highlight <- resolve_highlight(highlight, highlighters())
   args <- c(args, pandoc_highlight_args(highlight))
 
   # latex engine
-  latex_engine <- match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex"))
+  latex_engine <- match.arg(latex_engine, c("pdflatex", "lualatex", "xelatex", "tectonic"))
   args <- c(args, pandoc_latex_engine_args(latex_engine))
 
   # citation package
@@ -209,6 +215,19 @@ pdf_document <- function(toc = FALSE,
   )
 }
 
+#' @param ... Arguments passed to \code{pdf_document()}.
+#' @rdname pdf_document
+#' @export
+latex_document <- function(...) {
+  merge_lists(pdf_document(..., keep_tex = TRUE), list(pandoc = list(ext = ".tex")))
+}
+
+#' @rdname pdf_document
+#' @export
+latex_fragment <- function(...) {
+  latex_document(..., template = pkg_file("rmd/fragment/default.tex"))
+}
+
 general_intermediates_generator <- function(
   saved_files_dir, original_input, intermediates_dir
 ) {
@@ -257,11 +276,6 @@ fix_horiz_rule <- function(file) {
   }
 }
 
-process_header_includes <- function(x) {
-  x <- unlist(x[["header-includes"]])
-  gsub('(^|\n)\\s*```\\{=latex\\}\n(.+?\n)```\\s*(\n|$)', '\\1\\2\\3', x)
-}
-
 citation_package_arg <- function(value) {
   value <- value[1]
   if (value == "none") {
@@ -272,20 +286,18 @@ citation_package_arg <- function(value) {
   if (value != "default") paste0("--", value)
 }
 
+# utils
 default_geometry <- function(meta_names, pandoc_args = NULL) {
   !any(c('geometry', 'documentclass') %in% meta_names) &&
     length(grep('^(--(variable|metadata)=)?documentclass:', pandoc_args)) == 0
 }
 
-#' @param ... Arguments passed to \code{pdf_document()}.
-#' @rdname pdf_document
-#' @export
-latex_document <- function(...) {
-  merge_lists(pdf_document(..., keep_tex = TRUE), list(pandoc = list(ext = ".tex")))
+process_header_includes <- function(x) {
+  x <- unlist(x[["header-includes"]])
+  gsub('(^|\n)\\s*```\\{=latex\\}\n(.+?\n)```\\s*(\n|$)', '\\1\\2\\3', x)
 }
 
-#' @rdname pdf_document
-#' @export
-latex_fragment <- function(...) {
-  latex_document(..., template = pkg_file("rmd/fragment/default.tex"))
+append_in_header <- function(text, file = as_tmpfile(text)) {
+  includes_to_pandoc_args(includes(in_header = file))
 }
+

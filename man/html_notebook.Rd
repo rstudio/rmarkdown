@@ -16,6 +16,8 @@ html_notebook(
   code_folding = "show",
   theme = "default",
   highlight = "textmate",
+  highlight_downlit = FALSE,
+  math_method = "default",
   mathjax = "default",
   extra_dependencies = NULL,
   css = NULL,
@@ -52,36 +54,103 @@ outputting HTML directly into the markdown document).}
 \item{fig_caption}{\code{TRUE} to render figures with captions}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
-chunks. Specify \code{"none"} to display all code chunks (assuming
-they were knit with \code{echo = TRUE}). Specify \code{"hide"} to hide all R
-code chunks by default (users can show hidden code chunks either
-individually or document-wide). Specify \code{"show"} to show all R code
-chunks by default.}
+chunks. Specify \code{"none"} to display all code chunks. Specify
+\code{"hide"} or \code{"show"} to hide or show all R code chunks by
+default, and let readers toggle the states on browsers. See the
+\emph{Code folding}}
 
-\item{theme}{Visual theme ("default", "cerulean", "journal", "flatly",
-"darkly", "readable", "spacelab", "united", "cosmo", "lumen", "paper",
-"sandstone", "simplex", or "yeti"). Pass \code{NULL} for no theme (in this
-case you can use the \code{css} parameter to add your own styles).}
+\item{theme}{One of the following:
+\itemize{
+\item A \code{\link[bslib:bs_theme]{bslib::bs_theme()}} object (or a list of \code{\link[bslib:bs_theme]{bslib::bs_theme()}} argument values)
+\itemize{
+\item Use this option for custom themes using Bootstrap 4 or 3.
+\item In this case, any \code{.scss}/\code{.sass} files provided to the \code{css}
+parameter may utilize the \code{theme}'s underlying Sass utilities
+(e.g., variables, mixins, etc).
+}
+\item \code{NULL} for no theme (i.e., no \code{\link[=html_dependency_bootstrap]{html_dependency_bootstrap()}}).
+\item A character string specifying a \href{https://bootswatch.com/3/}{Bootswatch 3}
+theme name (for backwards-compatibility).
+}}
 
-\item{highlight}{Syntax highlighting style. Supported styles include
-"default", "tango", "pygments", "kate", "monochrome", "espresso", "zenburn",
-"haddock", and "textmate". Pass \code{NULL} to prevent syntax highlighting.}
+\item{highlight}{Syntax highlight engine and style. See the
+\emph{Highlighting} section below for details.
+
+"default" (and "textmate") will use highlightjs as syntax highlighting
+engine instead of Pandoc.
+
+Any other value will be passed as Pandoc's highlighting style. Pandoc's
+built-in styles include "tango", "pygments", "kate", "monochrome",
+"espresso", "zenburn", "haddock" and "breezedark".
+
+Two custom styles are also included, "arrow", an accessible color scheme,
+and "rstudio", which mimics the default IDE theme. Alternatively, supply a
+path to a \samp{.theme} to use
+\href{https://pandoc.org/MANUAL.html#syntax-highlighting}{a custom Pandoc
+style}. Note that custom theme requires Pandoc 2.0+.
+
+Pass \code{NULL} to prevent syntax highlighting.}
+
+\item{highlight_downlit}{\code{TRUE} to use the \pkg{downlit} package as
+syntax highlight engine to highlight inline code and R code chunks
+(including providing hyperlinks to function documentation). The package
+needs to be installed to use this feature.
+
+Only Pandoc color schemes are supported with this engine. With
+\code{highlight = "default"}, it will use the accessible theme called
+"arrow". To learn more about \pkg{downlit} highlighting engine, see
+\url{https://downlit.r-lib.org/}.}
+
+\item{math_method}{Math rendering engine to use. This will define the math method to use with Pandoc.
+\itemize{
+\item It can be a string for the engine, one of "mathjax", "mathml", "webtex", "katex", "gladtex", or "r-katex"
+or "default" for \code{mathjax}.
+\item It can be a list of
+\itemize{
+\item \code{engine}:  one of
+"mathjax", "mathml", "webtex", "katex", or "gladtex".
+\item \code{url}: A specific url to use with \code{mathjax}, \code{katex} or \code{webtex}.
+Note that for \code{engine = "mathjax"}, \code{url = "local"} will use a local version of MathJax (which is
+copied into the output directory).
+}
+}
+
+For example,
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+  html_document:
+    math_method:
+      engine: katex
+      url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+}\if{html}{\out{</div>}}
+
+See \href{https://pandoc.org/MANUAL.html#math-rendering-in-html}{Pandoc's Manual about Math in HTML} for the details
+about Pandoc supported methods.
+
+Using \code{math_method = "r-katex"} will opt-in server side rendering using
+KaTeX thanks to \href{https://docs.ropensci.org/katex/}{katex} R package. This is
+useful compared to \code{math_method = "katex"} to have no JS dependency, only a
+CSS dependency for styling equation.}
 
 \item{mathjax}{Include mathjax. The "default" option uses an https URL from a
 MathJax CDN. The "local" option uses a local version of MathJax (which is
 copied into the output directory). You can pass an alternate URL or pass
 \code{NULL} to exclude MathJax entirely.}
 
-\item{extra_dependencies}{Additional function arguments to pass to the
-base R Markdown HTML output formatter \code{\link{html_document_base}}}
+\item{extra_dependencies}{Extra dependencies as a list of the
+\code{html_dependency} class objects typically generated by
+\code{\link[htmltools:htmlDependency]{htmltools:htmlDependency()}}.}
 
-\item{css}{One or more css files to include}
+\item{css}{CSS and/or Sass files to include. Files with an extension of .sass
+or .scss are compiled to CSS via \code{sass::sass()}. Also, if \code{theme} is a
+\code{\link[bslib:bs_theme]{bslib::bs_theme()}} object, Sass code may reference the relevant Bootstrap
+Sass variables, functions, mixins, etc.}
 
 \item{includes}{Named list of additional content to include within the
 document (typically created using the \code{\link{includes}} function).}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
-default definition or R Markdown. See the \code{\link{rmarkdown_format}} for
+default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
@@ -96,8 +165,8 @@ dependencies. Defaults to \code{TRUE}. In notebooks, setting this to
 \code{FALSE} is not recommended, since the setting does not apply to
 embedded notebook output such as plots and HTML widgets.}
 
-\item{...}{Additional function arguments to pass to the
-base R Markdown HTML output formatter \code{\link{html_document_base}}}
+\item{...}{Additional function arguments to pass to the base R Markdown HTML
+output formatter \code{\link{html_document_base}}}
 }
 \description{
 Format for converting from R Markdown to an HTML notebook.

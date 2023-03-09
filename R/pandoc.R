@@ -88,6 +88,10 @@ pandoc_convert <- function(input,
               pandoc_citeproc_args())
   }
 
+  # change the --self-contained argument for Pandoc 2.19+
+  i <- match('--self-contained', args)
+  if (!is.na(i) && pandoc_available('2.19')) args <- c(args[-i], self_contained_args())
+
   # build the conversion command
   command <- paste(quoted(pandoc()), paste(quoted(args), collapse = " "))
 
@@ -100,7 +104,7 @@ pandoc_convert <- function(input,
     result <- system(command)
   })
   if (result != 0)
-    stop("pandoc document conversion failed with error ", result, call. = FALSE)
+    stop2("pandoc document conversion failed with error ", result)
 
   invisible(NULL)
 }
@@ -157,6 +161,8 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
     stop("Error ", status, " occurred building shared library.")
   }
 
+  Encoding(result) <- "UTF-8"
+
   # convert the output if requested
   if (type == "list") {
     jsonlite::fromJSON(result, simplifyVector = FALSE)
@@ -207,7 +213,7 @@ pandoc_available <- function(version = NULL,
     "pandoc", if (!is.null(version)) c("version", version, "or higher"),
     "is required and was not found (see the help page ?rmarkdown::pandoc_available)."
   )
-  if (error && !found) stop(paste(msg, collapse = " "), call. = FALSE)
+  if (error && !found) stop2(paste(msg, collapse = " "))
 
   found
 }
@@ -236,7 +242,7 @@ pandoc_version <- function() {
 #' @param toc_depth Depth of headers to include in table of contents.
 #' @param highlight The name of a pandoc syntax highlighting theme.
 #' @param latex_engine LaTeX engine for producing PDF output. Options are
-#'   "pdflatex", "lualatex", and "xelatex".
+#'   "pdflatex", "lualatex", "xelatex", and "tectonic".
 #' @param default The highlighting theme to use if "default"
 #'   is specified.
 #' @return A character vector with pandoc command line arguments.
@@ -430,12 +436,12 @@ pandoc_template <- function(metadata, template, output, verbose = FALSE) {
 pandoc_self_contained_html <- function(input, output) {
 
   # make input file path absolute
-  input <- normalizePath(input)
+  input <- normalize_path(input)
 
   # ensure output file exists and make it's path absolute
   if (!file.exists(output))
     file.create(output)
-  output <- normalizePath(output)
+  output <- normalize_path(output)
 
   # create a simple body-only template
   template <- tempfile(fileext = ".html")
@@ -461,7 +467,7 @@ pandoc_self_contained_html <- function(input, output) {
     from = from,
     output = output,
     options = c(
-      "--self-contained",
+      self_contained_args(),
       "--template", template
     )
   )
@@ -470,50 +476,25 @@ pandoc_self_contained_html <- function(input, output) {
 }
 
 
-validate_self_contained <- function(mathjax) {
-
-  if (identical(mathjax, "local"))
-    stop("Local MathJax isn't compatible with self_contained\n",
-         "(you should set self_contained to FALSE)", call. = FALSE)
+validate_self_contained <- function(math) {
+  if (identical(math$engine, "mathjax") && identical(math$url, "local"))
+    stop2("Local MathJax isn't compatible with self_contained\n",
+         "(you should set self_contained to FALSE)")
 }
 
-pandoc_mathjax_args <- function(mathjax,
-                                template,
-                                self_contained,
-                                files_dir,
-                                output_dir) {
-  args <- c()
+pandoc_math_engines <- function() {
+  c("mathjax", "mathml", "webtex", "katex", "gladtex")
+}
 
-  if (!is.null(mathjax)) {
+pandoc_math_args <- function(engine, url = NULL) {
 
-    if (identical(mathjax, "default")) {
-      if (identical(template, "default"))
-        mathjax <- default_mathjax()
-      else
-        mathjax <- NULL
-    }
-    else if (identical(mathjax, "local")) {
-      mathjax_path <- pandoc_mathjax_local_path()
-      mathjax_path <- render_supporting_files(mathjax_path,
-                                              files_dir,
-                                              "mathjax-local")
-      mathjax <- paste(normalized_relative_to(output_dir, mathjax_path), "/",
-                       mathjax_config(), sep = "")
-    }
+  engine <- match.arg(engine, choices = pandoc_math_engines())
 
-    if (identical(template, "default")) {
-      args <- c(args, "--mathjax")
-      args <- c(args, "--variable", paste0("mathjax-url:", mathjax))
-    } else if (!self_contained) {
-      args <- c(args, paste(c("--mathjax", mathjax), collapse = "="))
-    } else {
-      warning("MathJax doesn't work with self_contained when not ",
-              "using the rmarkdown \"default\" template.", call. = FALSE)
-    }
-
+  if (!is.null(url) && engine %in% c("mathml", "gladtex")) {
+    stop2(sprintf("%s does not support setting a URL.", engine))
   }
 
-  args
+  paste0(c("--", engine, if (!is.null(url)) c("=", url)), collapse = "")
 }
 
 
@@ -551,27 +532,49 @@ unix_mathjax_path <- function() {
 
 
 pandoc_html_highlight_args <- function(template,
-                                       highlight) {
+                                       highlight,
+                                       highlight_downlit = FALSE) {
+
+  # Reminder: we do not use pandoc_path_arg() for argument to --highlight-style
+  # https://github.com/rstudio/rmarkdown/issues/1976
 
   args <- c()
 
-  if (is.null(highlight)) {
-    args <- c(args, "--no-highlight")
-  }
-  else if (!identical(template, "default")) {
-    if (identical(highlight, "default"))
-      highlight <- "pygments"
-    args <- c(args, "--highlight-style", highlight)
-  }
-  else {
-    highlight <- match.arg(highlight, html_highlighters())
-    if (is_highlightjs(highlight)) {
-      args <- c(args, "--no-highlight")
-      args <- c(args, "--variable", "highlightjs=1")
+  # no highlighting engine
+  if (is.null(highlight)) return(pandoc_highlight_args(NULL))
+
+  highlight <- resolve_highlight(highlight, html_highlighters())
+
+  check_highlightjs <- function(highlight, engine) {
+    if (highlight != "default" && is_highlightjs(highlight)) {
+      stop(
+        sprintf(c(
+          "'%s' theme is for highlightjs highlighting engine ",
+          "and can't be used with %s engine."), c(highlight, engine)),
+        call. = FALSE
+      )
     }
-    else {
-      args <- c(args, "--highlight-style", highlight)
-    }
+  }
+
+  # downlit engine
+  if (highlight_downlit) {
+    check_highlightjs(highlight, "downlit")
+    default <- if (pandoc2.0()) resolve_highlight("arrow") else "pygments"
+    args <- c(
+      pandoc_highlight_args(highlight, default = default),
+      # variable used to insert some css in a Pandoc template
+      pandoc_variable_arg("highlight-downlit")
+    )
+  } else if (identical(template, "default") && is_highlightjs(highlight)) {
+    # highlightjs engine for default template only
+    args <- c(pandoc_highlight_args(NULL),
+              # variable used to insert some css and js
+              # in the Pandoc default template
+              pandoc_variable_arg("highlightjs", "1"))
+  } else {
+    # Pandoc engine
+    check_highlightjs(highlight, "Pandoc")
+    args <- pandoc_highlight_args(highlight, default = "pygments")
   }
 
   args
@@ -579,6 +582,38 @@ pandoc_html_highlight_args <- function(template,
 
 is_highlightjs <- function(highlight) {
   !is.null(highlight) && (highlight %in% c("default", "textmate"))
+}
+
+resolve_highlight <- function(highlight, supported = highlighters()) {
+  # for backward compatibility, partial match still need to work
+  i <- pmatch(highlight, supported, nomatch = 0L)
+  if (i > 0L) return(supported[i])
+
+  # Otherwise it could be a custom (built-in) .theme file
+  if (!pandoc2.0()) {
+    stop("Using a custom highlighting style requires Pandoc 2.0 and above",
+         call. = FALSE)
+  }
+  custom <- list(
+    # from distill
+    # https://raw.githubusercontent.com/apreshill/distill/arrow/inst/rmarkdown/templates/distill_article/resources/arrow.theme
+    arrow = pkg_file_highlight("arrow.theme"),
+    # from distill
+    # https://github.com/rstudio/distill/blob/c98d332192ff75f268ddf69bddace34e4db6d89b/inst/rmarkdown/templates/distill_article/resources/rstudio.theme
+    rstudio = pkg_file_highlight("rstudio.theme")
+  )
+  # if not an alias use the provided custom path
+  highlight <- custom[[highlight]] %||% highlight
+  # Check for extension or give informative error otherwise
+  if (!identical(xfun::file_ext(highlight), "theme")) {
+    msg <- c(
+      sprintf("`highlight` argument must be one of %s",
+              knitr::combine_words(c(supported, names(custom)), and = " or ", before = "`")),
+      " or a file with extension `.theme`."
+    )
+    stop(msg, call. = FALSE)
+  }
+  highlight
 }
 
 #' Find the \command{pandoc} executable
@@ -651,6 +686,15 @@ get_pandoc_version <- function(pandoc_dir) {
   )
   version <- strsplit(info, "\n")[[1]][1]
   version <- strsplit(version, " ")[[1]][2]
+  components <- strsplit(version, "-")[[1]]
+  version <- components[1]
+  # pandoc nightly adds -nightly-YYYY-MM-DD to last release version
+  # https://github.com/jgm/pandoc/issues/8016
+  # mark it as devel appending YYYY.MM.DD
+  nightly <- match("nightly", components)
+  if (!is.na(nightly)) version <- paste(c(
+    version, grep("^[0-9]+$", components[-(1:nightly)], value = TRUE)
+  ), collapse = ".")
   numeric_version(version)
 }
 
@@ -786,6 +830,11 @@ find_pandoc_theme_variable <- function(args) {
 
 pandoc2.0 <- function() {
   pandoc_available("2.0")
+}
+
+# Pandoc 2.19 deprecated --self-contained
+self_contained_args <- function() {
+  if (pandoc_available('2.19')) c('--embed-resources', '--standalone') else '--self-contained'
 }
 
 #' Get the path of the pandoc executable

@@ -1,0 +1,26 @@
+# TODO: to remove when switching the package to edition 3
+local_edition(3)
+
+test_that("anchor_sections() adds correct component", {
+  skip_if_not_pandoc("2.0")
+  res <- list(args = NULL, lua_filters = NULL, extra_dependencies = NULL)
+  expect_equal(add_anchor_sections(FALSE),
+               list(args = NULL, lua_filters = NULL, extra_dependencies = NULL))
+  expect_error(add_anchor_sections(list(dummy = "smg")), "a list with")
+  expect_error(add_anchor_sections("dummy"), "a list with")
+  components <- add_anchor_sections(TRUE)
+  expect_match(components$lua_filters, "anchor-sections.lua$")
+  expect_s3_class(components$extra_dependencies[[1]], "html_dependency")
+  expect_equal(components$extra_dependencies[[1]]$name, "anchor-sections")
+  expect_null(components$args)
+  components <- add_anchor_sections(list(style = "icon"))
+  expect_match(components$lua_filters, "anchor-sections.lua$")
+  expect_s3_class(components$extra_dependencies[[1]], "html_dependency")
+  expect_equal(components$extra_dependencies[[1]]$name, "anchor-sections")
+  expect_null(components$args)
+  components <- add_anchor_sections(list(depth = "3"))
+  expect_match(components$lua_filters, "anchor-sections.lua$")
+  expect_s3_class(components$extra_dependencies[[1]], "html_dependency")
+  expect_equal(components$extra_dependencies[[1]]$name, "anchor-sections")
+  expect_equal(components$args, c("--metadata", "rmd_anchor_depth=3"))
+})
