@@ -867,3 +867,20 @@ output_format_dependency <- function(name,
 knit_print.output_format_dependency <- function(x, ...) {
   knitr::asis_output(list(), meta = list(x))
 }
+
+merge_output_format_dependency <- function(fmt, dep) {
+  dep$name <- NULL
+  do.call(output_format,
+          c(dep, list(knitr = NULL, pandoc = list(), base_format = fmt)))
+}
+
+merge_output_format_dependencies <- function(fmt, deps) {
+  applied <- c()
+  for (d in deps) {
+    if (inherits(d, "output_format_dependency") && is.null(applied[d$name])) {
+      applied[d$name] <- TRUE
+      fmt <- merge_output_format_dependency(fmt, d)
+    }
+  }
+  fmt
+}
