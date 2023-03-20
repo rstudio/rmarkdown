@@ -968,7 +968,7 @@ render <- function(input,
     # if the output format is LaTeX, first convert .md to .tex, and then convert
     # .tex to .pdf via latexmk() if PDF output is requested (in rmarkdown <=
     # v1.8, we used to call Pandoc to convert .md to .tex and .pdf separately)
-    if (output_format$pandoc$keep_tex || pandoc_to %in% c("latex", "beamer")) {
+    if (output_format$pandoc$keep_tex || knitr::is_latex_output()) {
       # do not use pandoc-citeproc if needs to build bibliography
       convert(texfile, run_citeproc && !need_bibtex)
       # patch the .tex output generated from the default Pandoc LaTeX template
@@ -1036,11 +1036,11 @@ render <- function(input,
     intermediates <- setdiff(intermediates, c(input, intermediates_fig))
     # did not run pandoc; returns the markdown output with attributes of the
     # knitr meta data and intermediate files
-    structure(input,
+    invisible(structure(input,
               knit_meta = knit_meta,
               files_dir = files_dir,
               intermediates_dir = intermediates_fig,
-              intermediates = intermediates)
+              intermediates = intermediates))
   }
 }
 

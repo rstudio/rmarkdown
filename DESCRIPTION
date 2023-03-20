@@ -60,6 +60,7 @@ Depends:
 Imports:
     bslib (>= 0.2.5.1),
     evaluate (>= 0.13),
+    fontawesome (>= 0.5.0),
     htmltools (>= 0.5.1),
     jquerylib,
     jsonlite,

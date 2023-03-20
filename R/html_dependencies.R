@@ -183,15 +183,7 @@ html_dependency_accessible_code_block <- function() {
 #' @rdname html-dependencies
 #' @export
 html_dependency_font_awesome <- function() {
-
-  htmlDependency(
-    "font-awesome",
-    "5.1.0",
-    src = pkg_file("rmd/h/fontawesome"),
-    stylesheet = c(
-      "css/all.css",
-      "css/v4-shims.css")
-  )
+  fontawesome::fa_html_dependency()
 }
 
 # Create an HTML dependency for Ionicons
