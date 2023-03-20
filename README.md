@@ -40,7 +40,8 @@ install.packages("rmarkdown")
 If you want to use the development version of the rmarkdown package (either with or without RStudio), you can install the package from GitHub via the [**remotes** package](https://remotes.r-lib.org):
 
 ```r
-remotes::install_github('rstudio/rmarkdown')
+# install.packages("pak")
+pak::pak('rstudio/rmarkdown')
 ```
 
 If not using the RStudio IDE, you'll need to install a recent version of Pandoc (>= 1.12.3); see the [Pandoc installation instructions](https://pandoc.org/installing.html) for help.
