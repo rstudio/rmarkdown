@@ -1,4 +1,5 @@
-# rmarkdown <img src='man/figures/logo.png' align="right" height="138.5" />
+# rmarkdown <a href="https://pkgs.rstudio.com/rmarkdown/"><img src="man/figures/logo.png" align="right" height="138" /></a>
+
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/rstudio/rmarkdown/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/rmarkdown/actions)
