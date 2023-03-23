@@ -499,7 +499,7 @@ render <- function(input,
 
   # Stop the render process early if the output directory does not exist
   if (!dir_exists(output_dir)) {
-    stop2("The directory '", output_dir, "' does not not exist.")
+    stop2("The directory '", output_dir, "' does not exist.")
   }
 
   # use output filename based files dir
