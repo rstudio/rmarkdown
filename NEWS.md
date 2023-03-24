@@ -3,6 +3,9 @@ rmarkdown 2.21
 
 - Now HTML output formats use the Font Awesome HTML dependency from the **fontawesome** package instead of shipping an outdated version of Font Awesome in **rmarkdown** (thanks, @rich-iannone, #2451).
 
+- Fixed a bug caused by a change in the `is_blank()` function in **xfun** 0.38 (thanks, @andreahgsin, #2469).
+
+
 rmarkdown 2.20
 ================================================================================
 
