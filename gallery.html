@@ -14,7 +14,7 @@
 <title>Gallery</title>
 
 <script src="site_libs/header-attrs/header-attrs.js"></script>
-<script src="site_libs/jquery/jquery.min.js"></script>
+<script src="site_libs/jquery/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap/js/bootstrap.min.js"></script>
@@ -40,19 +40,9 @@
 <script type="text/javascript" src="js/redirect.js"></script>
 <script type="text/javascript" src="js/rmarkdown.js"></script>
 
-<!-- Google Analytics -->
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-20375833-3', 'auto', {'allowLinker': true});
-ga('require', 'linker');
-ga('linker:autoLink', ['rstudio.com', 'rstudio.github.io', 'rviews.rstudio.com', 'community.rstudio.com', 'rpubs.rstudio.com', 'environments.rstudio.com', 'rstudio.org', 'dailies.rstudio.com', 'pages.rstudio.com', 'db.rstudio.com', 'solutions.rstudio.com', 'docs.rstudio.com', 'spark.rstudio.com', 'shiny.rstudio.com', 'education.rstudio.com', 'rstudio.cloud', 'shinyapps.io', 'team-admin.rstudio.com', 'blog.rstudio.com', 'support.rstudio.com', 'blogs.rstudio.com', 'keras.rstudio.com', 'swag.rstudio.com', 'tensorflow.rstudio.com', 'packagemanager.rstudio.com'] );
-ga('send', 'pageview');
-</script>
-<!-- End Google Analytics -->
+<!-- Google Tag Manager -->
+ <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KHBDBW7');</script>
+ <!-- End Google Tag Manager -->
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -74,6 +64,7 @@ if (window.hljs) {
   }
 }
 </script>
+
 
 
 
@@ -104,6 +95,9 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
 pre code {
   padding: 0;
 }
@@ -123,8 +117,8 @@ pre code {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -132,16 +126,9 @@ pre code {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -181,6 +168,10 @@ pre code {
 
 
 
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KHBDBW7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <div id="rStudioHeader" class="alwaysShrunk">
   <div class="innards bandContent">
@@ -378,7 +369,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
         <a href="/" class="galleryItemLabel">R Markdown</a>
         <div class="galleryItemDescription">The <a href="/">R Markdown website</a> is itself built with R Markdown. <a href="https://github.com/rstudio/rmarkdown/tree/gh-pages">Example Code</a>.</div>
       </div>
-      <div class="galleryItem">
+    <div class="galleryItem">
         <a href="https://pkgs.rstudio.com/flexdashboard"><img class="galleryItemImage" src="galleryImages/gallery-site-flexdashboard.png"/></a>
         <a href="https://pkgs.rstudio.com/flexdashboard" class="galleryItemLabel">flexDashboard</a>
         <div class="galleryItemDescription">flexdashboard extends R Markdown to make administrative dashboards. Its website shows example built from R Markdown. <a href="https://pkgs.rstudio.com/flexdashboard/articles/examples.html">Example Code</a>.</div>
