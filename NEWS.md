@@ -1,6 +1,8 @@
 rmarkdown 2.22
 ================================================================================
 
+- Add a `pandoc_metadata_file_arg()` function to match Pandoc's CLI flag `--metadata-file`.
+
 - Mentions that **webshot** or **webshot2** is required to take screenshot of HTML widget. When not installed, an error message mentionning `always_allow_html: true` solution will be shown, but setting this is not the solution (quarto-dev/quarto-cli#4225).
 
 rmarkdown 2.21
