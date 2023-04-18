@@ -1,5 +1,5 @@
 This a jQuery UI custom build, downloaded from:
-http://jqueryui.com/download/#!version=1.11.4&components=1111111111110111111111111111111111111
+https://jqueryui.com/download/#!version=1.13.2&components=111111111111111111111101111111111111111111111111
 
 It includes all components except the datepicker, because it conflicts with
 bootstrap-datepicker that is packaged with Shiny.
