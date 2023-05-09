@@ -4,6 +4,7 @@
 \alias{pandoc_args}
 \alias{pandoc_variable_arg}
 \alias{pandoc_metadata_arg}
+\alias{pandoc_metadata_file_arg}
 \alias{pandoc_include_args}
 \alias{pandoc_highlight_args}
 \alias{pandoc_latex_engine_args}
@@ -15,6 +16,8 @@
 pandoc_variable_arg(name, value)
 
 pandoc_metadata_arg(name, value)
+
+pandoc_metadata_file_arg(file)
 
 pandoc_include_args(in_header = NULL, before_body = NULL, after_body = NULL)
 
