@@ -559,7 +559,7 @@ render <- function(input,
 
   # call any pre_knit handler
   if (!is.null(output_format$pre_knit)) {
-    output_format$pre_knit(input = original_input)
+    output_format$pre_knit(input = original_input, metadata = front_matter)
   }
 
   # function used to call post_knit handler
