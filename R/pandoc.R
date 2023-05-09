@@ -279,6 +279,7 @@ pandoc_metadata_arg <- function(name,
 }
 
 #' @rdname pandoc_args
+#' @param file string. Path to a file
 #' @export
 pandoc_metadata_file_arg <- function(file) {
 

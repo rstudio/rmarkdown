@@ -36,6 +36,8 @@ pandoc_lua_filter_args(lua_files)
 
 \item{value}{Value of template variable (defaults to \code{true} if missing).}
 
+\item{file}{string. Path to a file}
+
 \item{in_header}{One or more files with content to be included in the
 header of the document.}
 
