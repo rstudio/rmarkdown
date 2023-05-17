@@ -2,8 +2,8 @@ context("resource discovery")
 
 test_that("R Markdown resource discovery finds expected resources", {
   # Test with the current version of the template
-  file.copy(pkg_file("rmd/h/default.html"), 'resources/template.html')
-  resources <- find_external_resources("resources/rmarkdown.Rmd")
+  file.copy(pkg_file("rmd/h/default.html"), test_path('resources/template.html'), overwrite = TRUE)
+  resources <- find_external_resources(test_path("resources/rmarkdown.Rmd"))
   expected <- data.frame(
     path = c("empty.md", "empty.png", "empty.tsv", "empty.Rmd", "empty.css",
              "empty.jpg", "empty.html", "template.html", "empty.csv"),
