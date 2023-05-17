@@ -1,3 +1,12 @@
+rmarkdown 2.22
+================================================================================
+
+- Add a `pandoc_metadata_file_arg()` function to match Pandoc's CLI flag `--metadata-file`.
+
+- Mentions that **webshot** or **webshot2** is required to take screenshot of HTML widget. When not installed, an error message mentionning `always_allow_html: true` solution will be shown, but setting this is not the solution (quarto-dev/quarto-cli#4225).
+
+- Fix an issue with YAML header ending with a commented line containing incomplete yaml (thanks, @keithnewman, #2483).
+
 rmarkdown 2.21
 ================================================================================
 
@@ -9,6 +18,9 @@ rmarkdown 2.21
   child directories with RMarkdown files. #146 and #1859.
 
 - Now HTML output formats use the Font Awesome HTML dependency from the **fontawesome** package instead of shipping an outdated version of Font Awesome in **rmarkdown** (thanks, @rich-iannone, #2451).
+
+- Fixed a bug caused by a change in the `is_blank()` function in **xfun** 0.38 (thanks, @andreahgsin, #2469).
+
 
 rmarkdown 2.20
 ================================================================================

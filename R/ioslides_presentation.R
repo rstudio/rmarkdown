@@ -428,7 +428,7 @@ ioslides_presentation <- function(number_sections = FALSE,
     # duration of the Pandoc command. Without this, Pandoc fails when attempting
     # to hand UTF-8 encoded non-ASCII characters over to the custom Lua writer.
     # See https://github.com/rstudio/rmarkdown/issues/134
-    if (is_windows()) {
+    if (is_windows() && !pandoc2.0()) {
       # 'chcp' returns e.g., "Active code page: 437"; strip characters and parse
       # the number
       codepage <- as.numeric(gsub("\\D", "", system2("chcp", stdout = TRUE)))

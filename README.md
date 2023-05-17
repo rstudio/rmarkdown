@@ -1,7 +1,8 @@
-# rmarkdown <img src='man/figures/logo.png' align="right" height="138.5" />
+# rmarkdown <a href="https://pkgs.rstudio.com/rmarkdown/"><img src="man/figures/logo.png" align="right" height="138" /></a>
+
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/rstudio/rmarkdown/workflows/R-CMD-check/badge.svg)](https://github.com/rstudio/rmarkdown/actions)
+[![R-CMD-check](https://github.com/rstudio/rmarkdown/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rstudio/rmarkdown/actions/workflows/R-CMD-check.yaml)
 [![CRAN release](https://www.r-pkg.org/badges/version/rmarkdown)](https://cran.r-project.org/package=rmarkdown)
 [![Codecov test coverage](https://codecov.io/gh/rstudio/rmarkdown/branch/main/graph/badge.svg)](https://app.codecov.io/gh/rstudio/rmarkdown?branch=main)
 <!-- badges: end -->
@@ -39,7 +40,8 @@ install.packages("rmarkdown")
 If you want to use the development version of the rmarkdown package (either with or without RStudio), you can install the package from GitHub via the [**remotes** package](https://remotes.r-lib.org):
 
 ```r
-remotes::install_github('rstudio/rmarkdown')
+# install.packages("pak")
+pak::pak('rstudio/rmarkdown')
 ```
 
 If not using the RStudio IDE, you'll need to install a recent version of Pandoc (>= 1.12.3); see the [Pandoc installation instructions](https://pandoc.org/installing.html) for help.

@@ -51,9 +51,9 @@ navbar:
         - text: "------------------"
         - text: "Blog posts"
         - text: "Version 2.7"
-          href: https://blog.rstudio.com/2021/04/15/2021-spring-rmd-news/
+          href: https://posit.co/blog/2021-spring-rmd-news/
         - text: "Version 2.6"
-          href: https://blog.rstudio.com/2020/12/21/rmd-news
+          href: https://posit.co/blog/rmd-news/
 
 
 reference:

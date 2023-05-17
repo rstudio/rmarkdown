@@ -499,7 +499,7 @@ render <- function(input,
 
   # Stop the render process early if the output directory does not exist
   if (!dir_exists(output_dir)) {
-    stop2("The directory '", output_dir, "' does not not exist.")
+    stop2("The directory '", output_dir, "' does not exist.")
   }
 
   # use output filename based files dir
@@ -795,9 +795,11 @@ render <- function(input,
       if (!isTRUE(front_matter$always_allow_html)) {
         stop2("Functions that produce HTML output found in document targeting ",
              pandoc_to, " output.\nPlease change the output type ",
-             "of this document to HTML. Alternatively, you can allow\n",
-             "HTML output in non-HTML formats by adding this option to the YAML front",
-             "-matter of\nyour rmarkdown file:\n\n",
+             "of this document to HTML.\n",
+             "If your aiming to have some HTML widgets shown in non-HTML format as a screenshot,\n",
+             "please install webshot or webshot2 R package for knitr to do the screenshot.\n",
+             "Alternatively, you can allow HTML output in non-HTML formats\n",
+             "by adding this option to the YAML front-matter of\nyour rmarkdown file:\n\n",
              "  always_allow_html: true\n\n",
              "Note however that the HTML output will not be visible in non-HTML formats.\n\n"
         )
