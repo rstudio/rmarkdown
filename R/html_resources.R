@@ -218,12 +218,12 @@ discover_rmd_resources <- function(rmd_file, discover_single_resource) {
           'includes', 'pandoc_args', 'logo', 'reference_doc', 'reference_docx', 'template'
         )])
         # css needs to be copied for sass or bslib processing in formate rendering
-        if (
-          is_bs_theme(output_format["theme"]) ||
-          any(needed <- needs_sass(output_format['css']))
-        ) {
-          output_render_files <- c(output_render_files, unlist(output_format['css'][needed]))
+        if (is_bs_theme(resolve_theme(output_format[["theme"]]))) {
+          output_render_files <- c(output_render_files, unlist(output_format['css']))
+        } else if (any(needed <- needs_sass(output_format[['css']]))) {
+          output_render_files <- c(output_render_files, unlist(output_format[['css']][needed]))
         }
+
         lapply(output_render_files, discover_render_resource)
       }
     }
