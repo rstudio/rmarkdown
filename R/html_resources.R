@@ -214,7 +214,6 @@ discover_rmd_resources <- function(rmd_file, discover_single_resource) {
     for (output_format in output_formats) {
       if (is.list(output_format)) {
         output_render_files <- unlist(output_format[c(
-          # css is needed as it could be used by bslib and needs to be available
           'includes', 'pandoc_args', 'logo', 'reference_doc', 'reference_docx', 'template'
         )])
         # css needs to be copied for sass or bslib processing in formate rendering
