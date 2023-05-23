@@ -1,9 +1,16 @@
 context("resource discovery")
 
+sort_resources <- function(resources) {
+  # sort by filename and remove rownames to avoid errors arising from file ordering
+  # -- we don't really care what order these come back in
+  resources <- as.data.frame(resources[order(resources[[1]]), , drop = FALSE])
+  rownames(resources) <- NULL
+}
+
 test_that("R Markdown resource discovery finds expected resources", {
   # Test with the current version of the template
-  file.copy(pkg_file("rmd/h/default.html"), 'resources/template.html')
-  resources <- find_external_resources("resources/rmarkdown.Rmd")
+  file.copy(pkg_file("rmd/h/default.html"), test_path('resources/template.html'), overwrite = TRUE)
+  resources <- find_external_resources(test_path("resources/rmarkdown.Rmd"))
   expected <- data.frame(
     path = c("empty.md", "empty.png", "empty.tsv", "empty.Rmd", "empty.css",
              "empty.jpg", "empty.html", "template.html", "empty.csv"),
@@ -11,13 +18,64 @@ test_that("R Markdown resource discovery finds expected resources", {
     web      = c(FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE,  TRUE,  FALSE,  FALSE),
     stringsAsFactors = FALSE)
 
-  # sort by filename and remove rownames to avoid errors arising from file ordering
-  # -- we don't really care what order these come back in
-  resources <- as.data.frame(resources[order(resources[[1]]), , drop = FALSE])
-  expected <- as.data.frame(expected[order(expected[[1]]), , drop = FALSE])
-  rownames(resources) <- rownames(expected) <- NULL
+  resources <- sort_resources(resources)
+  expected <- sort_resources(expected)
 
   expect_equal(resources, expected)
+})
+
+test_that("R Markdown resource discovery finds expected scss when sass is used", {
+  skip_if_not_installed("sass")
+  css_files <- c("empty.scss", "empty.css", "empty2.scss", "empty2.css")
+  yaml <- yaml::as.yaml(list(
+    title = "test",
+    output = list(
+      html_document = list(
+        css = c("empty.scss", "empty.css", "empty2.scss", "empty2.css"),
+        theme = "cerulean"
+      )
+    )
+  ))
+  rmd <- local_rmd_file(knitr::knit_expand(text = c("---", "{{yaml}}", "---", "", "# test")))
+  withr::local_dir(dirname(rmd))
+  file.create(css_files)
+  resources <- find_external_resources(basename(rmd))
+  resource <- resources[resources$path %in% css_files, ]
+  expected <- data.frame(
+    path = css_files,
+    explicit = rep_len(FALSE, length(css_files)),
+    web      = !needs_sass(css_files),
+    stringsAsFactors = FALSE)
+  resource <- sort_resources(resource)
+  expected <- sort_resources(expected)
+  expect_equal(resource, expected)
+})
+
+test_that("R Markdown resource discovery finds expected scss and css when bslib is used", {
+  skip_if_not_installed("bslib")
+  css_files <- c("empty.scss", "empty.css", "empty2.scss", "empty2.css")
+  yaml <- yaml::as.yaml(list(
+    title = "test",
+    output = list(
+      html_document = list(
+        css = c("empty.scss", "empty.css", "empty2.scss", "empty2.css"),
+        theme = list(version = "5")
+      )
+    )
+  ))
+  rmd <- local_rmd_file(knitr::knit_expand(text = c("---", "{{yaml}}", "---", "", "# test")))
+  withr::local_dir(dirname(rmd))
+  file.create(css_files)
+  resources <- find_external_resources(basename(rmd))
+  resource <- resources[resources$path %in% css_files, ]
+  expected <- data.frame(
+    path = css_files,
+    explicit = rep_len(FALSE, length(css_files)),
+    web      = rep_len(FALSE, length(css_files)),
+    stringsAsFactors = FALSE)
+  resource <- sort_resources(resource)
+  expected <- sort_resources(expected)
+  expect_equal(resource, expected)
 })
 
 

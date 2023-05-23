@@ -153,6 +153,10 @@ theme_version <- function(theme) {
   substr(html_dependency_bootstrap("default")$version, 1, 1)
 }
 
+needs_sass <- function(css) {
+  grepl("\\.s[ac]ss$", css)
+}
+
 
 # Create an HTML dependency for tocify
 #' @rdname html-dependencies

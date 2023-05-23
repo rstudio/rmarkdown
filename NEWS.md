@@ -1,11 +1,15 @@
 rmarkdown 2.22
 ================================================================================
 
+- Using `css` with `.scss` and `.sass` file, or with a bslib theme, now works as expected with a shiny runtime (thanks, @cpsievert, #2443, #2447).
+
 - Add a `pandoc_metadata_file_arg()` function to match Pandoc's CLI flag `--metadata-file`.
 
 - Mentions that **webshot** or **webshot2** is required to take screenshot of HTML widget. When not installed, an error message mentionning `always_allow_html: true` solution will be shown, but setting this is not the solution (quarto-dev/quarto-cli#4225).
 
 - `html_dependency_jqueryui()` updated to 1.13.2 from version bundled in shiny (thanks, @daschnerm, #2477).
+
+- Fix an issue with YAML header ending with a commented line containing incomplete yaml (thanks, @keithnewman, #2483).
 
 rmarkdown 2.21
 ================================================================================
