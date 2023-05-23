@@ -26,7 +26,7 @@ html_dependency_jqueryui <- function() {
 
   htmlDependency(
     name = "jqueryui",
-    version = "1.11.4",
+    version = version_jqueryui,
     src = pkg_file("rmd/h/jqueryui"),
     script = "jquery-ui.min.js")
 }
