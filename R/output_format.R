@@ -851,11 +851,13 @@ citeproc_required <- function(yaml_front_matter,
 #'
 #' @export
 output_format_dependency <- function(name,
+                                     pandoc = list(),
                                      pre_processor = NULL,
                                      post_processor = NULL,
                                      file_scope = NULL,
                                      on_exit = NULL) {
   structure(list(name = name,
+                 pandoc = pandoc,
                  pre_processor = pre_processor,
                  post_processor = post_processor,
                  file_scope = file_scope,
@@ -871,7 +873,7 @@ knit_print.output_format_dependency <- function(x, ...) {
 merge_output_format_dependency <- function(fmt, dep) {
   dep$name <- NULL
   do.call(output_format,
-          c(dep, list(knitr = NULL, pandoc = list(), base_format = fmt)))
+          c(dep, list(knitr = NULL, base_format = fmt)))
 }
 
 merge_output_format_dependencies <- function(fmt, deps) {
