@@ -871,9 +871,12 @@ knit_print.output_format_dependency <- function(x, ...) {
 }
 
 merge_output_format_dependency <- function(fmt, dep) {
+  # remove name because it is not an argument of output_format
   dep$name <- NULL
-  do.call(output_format,
-          c(dep, list(knitr = NULL, base_format = fmt)))
+  # ignore knitr because the merge happens after knit
+  dep$knitr <- list()
+  dep$base_format <- fmt
+  do.call(output_format, dep)
 }
 
 merge_output_format_dependencies <- function(fmt, deps) {
