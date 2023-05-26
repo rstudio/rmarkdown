@@ -52,9 +52,11 @@
 #' @param file_scope A function that will split markdown input to pandoc into
 #'   multiple named files. This is useful when the caller has concatenated a set
 #'   of Rmd files together (as \pkg{bookdown} does), and those files may need to
-#'   processed by pandoc using the \code{--file-scope} option. The function
-#'   should return a named list of files w/ \code{name} and \code{content} for
-#'   each file.
+#'   processed by pandoc using the \code{--file-scope} option. The first
+#'   argument is input file paths and the second is \code{NULL} or current file
+#'   scope which is a named list of files w/ \code{name} and \code{content} for
+#'   each file. The return is the new file scope. Also, the arguments should
+#'   include \code{...} for the future extensions.
 #' @param base_format An optional format to extend.
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
@@ -157,6 +159,26 @@ merge_post_processors <- function(base,
   }
 }
 
+merge_file_scope <- function(base,
+                             overlay) {
+  if (is.null(overlay)) {
+    return(base)
+  }
+  has_ellipsis <- "..." %in% names(formals(overlay))
+  if (!has_ellipsis) {
+    warning("file_scope lacks ... as an argument. ",
+            "Otherwise, file_scope replaces file_scope without merging.")
+  }
+  if (is.null(base) || !has_ellipsis) {
+    return(overlay)
+  }
+  if (has_ellipsis) {
+    return(function(x, current_scope = NULL, ...) {
+      overlay(x, base(x, current_scope, ...), ...)
+    })
+  }
+}
+
 # merges two output formats
 merge_output_formats <- function(base,
                                  overlay) {
@@ -181,6 +203,7 @@ merge_output_formats <- function(base,
                              overlay$intermediates_generator, c),
     post_processor =
       merge_post_processors(base$post_processor, overlay$post_processor),
+    file_scope = merge_file_scope(base$file_scope, overlay$file_scope),
     on_exit =
       merge_on_exit(base$on_exit, overlay$on_exit)
   ), class = "rmarkdown_output_format")
