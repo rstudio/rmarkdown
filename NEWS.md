@@ -11,6 +11,9 @@ rmarkdown 2.22
 
 - Fix an issue with YAML header ending with a commented line containing incomplete yaml (thanks, @keithnewman, #2483).
 
+- When code folding is enabled in `html_document()`, the text on the button to show the content has been changed from "Code" to "Show", because the content to show is not necessarily code, e.g., yihui/knitr#2227.
+
+
 rmarkdown 2.21
 ================================================================================
 
