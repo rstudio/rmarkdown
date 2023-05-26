@@ -7,6 +7,7 @@ test_that("all elements can be NULL", {
 
 test_that("inherits base format", {
   base_fmt <- html_document()
+  base_fmt$file_scope <- identity
   out_fmt <- output_format(
     knitr = NULL, pandoc = NULL, keep_md = NULL, clean_supporting = NULL,
     base_format = base_fmt
@@ -15,6 +16,23 @@ test_that("inherits base format", {
   expect_identical(lapply(out_fmt, class), classes)
   not_fun <- vapply(classes, function(x) !"function" %in% x, NA)
   expect_identical(out_fmt[not_fun], base_fmt[not_fun])
+})
+
+test_that("file_scope replaces base format", {
+  base_fmt <- html_document()
+  base_fmt$file_scope <- function(input_file, file_scope, ...) {
+    return(list("foo" = "foo"))
+  }
+  out_fmt <- output_format(
+    knitr = NULL, pandoc = NULL, keep_md = NULL, clean_supporting = NULL,
+    file_scope = function(input_file, file_scope, ...) {
+      file_scope$bar <- "bar"
+      return(file_scope)
+    },
+    base_format = base_fmt
+  )
+  expect_identical(out_fmt$file_scope("input", NULL),
+                   list("foo" = "foo", "bar" = "bar"))
 })
 
 test_that("clean_supporting is coerced to FALSE only if keep_md is TRUE", {
