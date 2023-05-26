@@ -174,7 +174,8 @@ merge_file_scope <- function(base,
   }
   if (has_ellipsis) {
     return(function(x, current_scope = NULL, ...) {
-      overlay(x, base(x, current_scope, ...), ...)
+      scope <- base(x, current_scope, ...)
+      overlay(x, scope, ...)
     })
   }
 }
