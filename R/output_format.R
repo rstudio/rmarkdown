@@ -882,10 +882,10 @@ merge_output_format_dependency <- function(fmt, dep) {
 }
 
 merge_output_format_dependencies <- function(fmt, deps) {
-  applied <- c()
+  skip <- c()
   for (d in deps) {
-    if (inherits(d, "output_format_dependency") && is.null(applied[d$name])) {
-      applied[d$name] <- TRUE
+    if (inherits(d, "output_format_dependency") && !isTRUE(skip[d$name])) {
+      skip[d$name] <- TRUE
       fmt <- merge_output_format_dependency(fmt, d)
     }
   }
