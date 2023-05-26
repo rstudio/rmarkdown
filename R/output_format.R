@@ -856,9 +856,14 @@ output_format_dependency <- function(name,
                                      post_processor = NULL,
                                      file_scope = NULL,
                                      on_exit = NULL) {
+  # Some arguments are NULL
+  # to ensure inheriting the values from the base output format
   structure(list(name = name,
+                 knitr = NULL, # must be NULL because merge happens after knit
                  pandoc = pandoc,
                  pre_processor = pre_processor,
+                 keep_md = NULL,
+                 clean_supporting = NULL,
                  post_processor = post_processor,
                  file_scope = file_scope,
                  on_exit = on_exit),
@@ -871,10 +876,7 @@ knit_print.output_format_dependency <- function(x, ...) {
 }
 
 merge_output_format_dependency <- function(fmt, dep) {
-  # remove name because it is not an argument of output_format
-  dep$name <- NULL
-  # ignore knitr because the merge happens after knit
-  dep$knitr <- list()
+  dep$name <- NULL # remove to be consistent with arguments of output_format
   dep$base_format <- fmt
   do.call(output_format, dep)
 }
