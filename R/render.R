@@ -1200,7 +1200,11 @@ resolve_df_print <- function(df_print) {
 output_metadata = knitr:::new_defaults()
 
 file_scope_split <- function(input, fun) {
-  inputs <- fun(input)
+  inputs <- if (length(formals(fun)) == 1L) {
+    fun(input) # for the backward compatibility
+  } else {
+    fun(input, NULL) # the second argument implies current file scope
+  }
 
   # file_scope_fun should split the input file in several
   # do nothing if not and return input file unsplited
