@@ -84,6 +84,7 @@ bootstrap_dependencies <- function(theme) {
   if (inherits(deps, "html_dependency")) list(deps) else deps
 }
 
+# resolves boostrap theme for bslib compatibility
 resolve_theme <- function(theme) {
   # theme = NULL means no Bootstrap
   if (is.null(theme)) return(theme)

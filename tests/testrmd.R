@@ -39,4 +39,8 @@ if (.Platform$OS.type == 'unix' && !isTRUE(as.logical(Sys.getenv("CI"))) && rmar
   # https://github.com/rstudio/rmarkdown/pull/1964
   rmarkdown::render("rmd/anchor-sections.Rmd")
 
+  # Finding resource in custom formats
+  # https://github.com/rstudio/rmarkdown/issues/2493
+  rmarkdown::render("rmd/clean-format.Rmd")
+
 }
