@@ -216,8 +216,9 @@ discover_rmd_resources <- function(rmd_file, discover_single_resource) {
         output_render_files <- unlist(output_format[c(
           'includes', 'pandoc_args', 'logo', 'reference_doc', 'reference_docx', 'template'
         )])
+        resolved_theme <- tryCatch(resolve_theme(output_format[["theme"]]), error = function(e) NULL)
         # css needs to be copied for sass or bslib processing in formate rendering
-        needed <- if (is_bs_theme(resolve_theme(output_format[["theme"]]))) TRUE else {
+        needed <- if (is_bs_theme(resolved_theme)) TRUE else {
           needs_sass(output_format[['css']])
         }
         output_render_files <- c(output_render_files, output_format[['css']][needed])
