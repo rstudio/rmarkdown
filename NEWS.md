@@ -3,6 +3,9 @@ rmarkdown 2.23
 
 - `find_external_resources()` works with formats defining there own `theme` argument, like `cleanrmd::html_document_clean()`, not related to **bslib** supports (thanks, @gadenbuie, #2493, r-lib/pkgdown#2319).
 
+- Fixed version number comparison problems as requested by CRAN.
+
+
 rmarkdown 2.22
 ================================================================================
 
