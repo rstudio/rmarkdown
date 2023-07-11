@@ -1,7 +1,7 @@
 rmarkdown 2.24
 ================================================================================
 
-
+- Fixed `file_scope` being lost when extending output formats that considers the `file_scope` using `output_format()`. Merge behavior is to apply overlay `file_scope` function onto the result of `base_format`'s `file_scope` function. This implies that `file_scope` gains second argument which receives the returned values of the base `file_scope` (thanks, @atusy, #2488).
 
 rmarkdown 2.23
 ================================================================================
