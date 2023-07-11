@@ -90,8 +90,8 @@ output format, e.g., \code{"-smart"} means the output format will be
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
 
-\item{context_path}{Path of the ConTeXt executable. If not provided, ConTeXt has
-to be available from the \code{PATH} environment variable.}
+\item{context_path}{Path of the ConTeXt executable. If not provided, ConTeXt
+has to be available from the \code{PATH} environment variable.}
 
 \item{context_args}{Command line arguments passed to ConTeXt.}
 
@@ -101,13 +101,10 @@ to be available from the \code{PATH} environment variable.}
 R Markdown output format to pass to \code{\link{render}}.
 }
 \description{
-Format for converting from R Markdown to PDF using
-\href{https://wiki.contextgarden.net/Main_Page}{ConTeXt}.
+Format for converting from R Markdown to PDF using ConTeXt.
 }
 \details{
-ConTeXt needs to be installed. To install the most recent version, see
-\url{https://wiki.contextgarden.net/Installation}. A less recent version is
-also available in TeX Live, you can install it with
+ConTeXt needs to be installed, e.g., you can install it with
 \code{tinytex::tlmgr_install("context")}.
 
 R Markdown documents can have optional metadata that is used to generate a

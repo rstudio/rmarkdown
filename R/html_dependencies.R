@@ -26,7 +26,7 @@ html_dependency_jqueryui <- function() {
 
   htmlDependency(
     name = "jqueryui",
-    version = "1.11.4",
+    version = version_jqueryui,
     src = pkg_file("rmd/h/jqueryui"),
     script = "jquery-ui.min.js")
 }
@@ -84,6 +84,7 @@ bootstrap_dependencies <- function(theme) {
   if (inherits(deps, "html_dependency")) list(deps) else deps
 }
 
+# resolves boostrap theme for bslib compatibility
 resolve_theme <- function(theme) {
   # theme = NULL means no Bootstrap
   if (is.null(theme)) return(theme)
@@ -151,6 +152,10 @@ is_bs_theme <- function(theme) {
 theme_version <- function(theme) {
   if (is_bs_theme(theme)) return(bslib::theme_version(theme))
   substr(html_dependency_bootstrap("default")$version, 1, 1)
+}
+
+needs_sass <- function(css) {
+  grepl("\\.s[ac]ss$", css)
 }
 
 

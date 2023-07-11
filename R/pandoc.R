@@ -278,6 +278,14 @@ pandoc_metadata_arg <- function(name,
   c("--metadata", if (missing(value)) name else paste(name, "=", value, sep = ""))
 }
 
+#' @rdname pandoc_args
+#' @param file string. Path to a file
+#' @export
+pandoc_metadata_file_arg <- function(file) {
+
+  c("--metadata-file", pandoc_path_arg(file))
+}
+
 
 #' @rdname pandoc_args
 #' @export

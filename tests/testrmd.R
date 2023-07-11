@@ -1,5 +1,5 @@
 # only run this test on CI platforms
-if (.Platform$OS.type == 'unix' && !isTRUE(as.logical(Sys.getenv("CI"))) && rmarkdown::pandoc_available()) {
+if (.Platform$OS.type == 'unix' && isTRUE(as.logical(Sys.getenv("CI"))) && rmarkdown::pandoc_available()) {
 
   # test if Word documents can be rendered with a specified intermediate dir
   # (https://github.com/rstudio/rmarkdown/issues/1431)
@@ -38,5 +38,9 @@ if (.Platform$OS.type == 'unix' && !isTRUE(as.logical(Sys.getenv("CI"))) && rmar
   # anchor_sections should work without Lua error
   # https://github.com/rstudio/rmarkdown/pull/1964
   rmarkdown::render("rmd/anchor-sections.Rmd")
+
+  # Finding resource in custom formats
+  # https://github.com/rstudio/rmarkdown/issues/2493
+  rmarkdown::render("rmd/clean-format.Rmd")
 
 }
