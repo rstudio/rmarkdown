@@ -6,6 +6,7 @@
 \usage{
 output_format_dependency(
   name,
+  pandoc = list(),
   pre_processor = NULL,
   post_processor = NULL,
   file_scope = NULL,
@@ -15,6 +16,9 @@ output_format_dependency(
 \arguments{
 \item{name}{A dependency name. If some dependencies share the same name,
 then only the first one will be attached.}
+
+\item{pandoc}{Pandoc options for an output format (see
+\code{\link{pandoc_options}})}
 
 \item{pre_processor}{An optional pre-processor function that receives the
 \code{metadata}, \code{input_file}, \code{runtime}, \code{knit_meta},
@@ -29,9 +33,11 @@ to pass to pandoc.}
 \item{file_scope}{A function that will split markdown input to pandoc into
 multiple named files. This is useful when the caller has concatenated a set
 of Rmd files together (as \pkg{bookdown} does), and those files may need to
-processed by pandoc using the \code{--file-scope} option. The function
-should return a named list of files w/ \code{name} and \code{content} for
-each file.}
+processed by pandoc using the \code{--file-scope} option. The first
+argument is input file paths and the second is \code{NULL} or current file
+scope which is a named list of files w/ \code{name} and \code{content} for
+each file. The return is the new file scope. Also, the arguments should
+include \code{...} for the future extensions.}
 
 \item{on_exit}{A function to call when \code{rmarkdown::render()} finishes
 execution (as registered with a \code{\link{on.exit}} handler).}
