@@ -5,6 +5,8 @@ rmarkdown 2.24
 
 - Added `output_format_dependency()` which allows extending output format from within chunks (thanks, @atusy, #2462)
 
+- Fix an issue with shiny prerendered document where dependencies context were written twice leasing to parsing error (thanks, @gadenbuie, rstudio/learn#597, #2500).
+
 rmarkdown 2.23
 ================================================================================
 
