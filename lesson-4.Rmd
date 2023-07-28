@@ -8,7 +8,7 @@ output:
       after_body: [include_lessons_nav_end.html, include_footer.html]
 ---
 
-Code results can be inserted directly into the text of a .Rmd file by enclosing the code with `` `r `  ``. The file below uses `` `r `  `` twice to call `colorFunc`, which returns "heat.colors." You can open the file [here](https://rstudio.cloud/project/181921) in RStudio Cloud.
+Code results can be inserted directly into the text of a .Rmd file by enclosing the code with `` `r `  ``. The file below uses `` `r `  `` twice to call `colorFunc`, which returns "heat.colors." You can open the file [here](https://posit.cloud/content/181921) in RStudio Cloud.
 
 ![](lesson-images/inline-1-heat.png)
 </br>

@@ -239,7 +239,7 @@ $(".main-container").removeClass("main-container").removeClass("container-fluid"
 </div>
 
 
-<p>Set the <code>output_format</code> argument of <code>render</code> to render your .Rmd file into any of R Markdown’s supported formats. For example, the code below renders 1-example.Rmd to a Microsoft Word document. You can try it out <a href="https://rstudio.cloud/project/181952">here</a> on RStudio Cloud.</p>
+<p>Set the <code>output_format</code> argument of <code>render</code> to render your .Rmd file into any of R Markdown’s supported formats. For example, the code below renders 1-example.Rmd to a Microsoft Word document. You can try it out <a href="https://posit.cloud/content/181952">here</a> on RStudio Cloud.</p>
 <pre class="r"><code>library(rmarkdown)
 render(&quot;1-example.Rmd&quot;, output_format = &quot;word_document&quot;)</code></pre>
 <p><img src="lesson-images/outputs-1-word.png" /> </br></p>
@@ -283,7 +283,7 @@ render(&quot;1-example.Rmd&quot;, output_format = &quot;word_document&quot;)</co
 </div>
 <div id="output-options" class="section level2">
 <h2>Output Options</h2>
-<p>Each output format is implemented as a function in R. You can customize the output by passing arguments to the function as sub-values of the <code>output</code> field. For example, <a href="https://rstudio.cloud/project/181952">8-outputs.Rmd</a> would render with a floating table of contents.</p>
+<p>Each output format is implemented as a function in R. You can customize the output by passing arguments to the function as sub-values of the <code>output</code> field. For example, <a href="https://posit.cloud/content/181952">8-outputs.Rmd</a> would render with a floating table of contents.</p>
 <p><img src="lesson-images/outputs-3-toc.png" /> </br></p>
 <p>To learn which arguments a format takes, read the format’s help page in R, e.g. <code>?html_document</code>.</p>
 <hr />
