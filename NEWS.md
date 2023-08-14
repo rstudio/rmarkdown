@@ -7,6 +7,7 @@ rmarkdown 2.24
 
 - Fix an issue with shiny prerendered document where dependencies context were written twice leasing to parsing error (thanks, @gadenbuie, rstudio/learn#597, #2500).
 
+
 rmarkdown 2.23
 ================================================================================
 
