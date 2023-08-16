@@ -1,6 +1,13 @@
 rmarkdown 2.25
 ================================================================================
 
+- `html_document` output allows `lib_dir` to point to a parent of the output 
+  directory if the `allow_uptree_lib_dir` parameter is set to `TRUE`. This used
+  to throw an error, "The path <file> does not appear to be a descendant of 
+  <dir>". This makes it possible to have a directory structure for HTML output
+  where there is a shared master library with css, javascript, etc. and separate 
+  child directories with RMarkdown files. #146 and #1859.
+  (thanks, @jonathan-g, #2199)
 
 
 rmarkdown 2.24
@@ -39,13 +46,6 @@ rmarkdown 2.22
 
 rmarkdown 2.21
 ================================================================================
-
-- `html_document` output allows `lib_dir` to point to a parent of the output 
-  directory if the `allow_uptree_lib_dir` parameter is set to `TRUE`. This used
-  to throw an error, "The path <file> does not appear to be a descendant of 
-  <dir>". This makes it possible to have a directory structure for HTML output
-  where there is a shared master library with css, javascript, etc. and separate 
-  child directories with RMarkdown files. #146 and #1859.
 
 - Now HTML output formats use the Font Awesome HTML dependency from the **fontawesome** package instead of shipping an outdated version of Font Awesome in **rmarkdown** (thanks, @rich-iannone, #2451).
 

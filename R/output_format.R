@@ -884,7 +884,14 @@ knit_print.output_format_dependency <- function(x, ...) {
 merge_output_format_dependency <- function(fmt, dep) {
   dep$name <- NULL # remove to be consistent with arguments of output_format
   dep$base_format <- fmt
-  do.call(output_format, dep)
+  fmt2 <- do.call(output_format, dep)
+  cls <- class(fmt2)
+  # Make sure named elements are in the same order, to pass tests.
+  fmt2 <- fmt2[c(intersect(names(fmt), names(fmt2)),
+                 setdiff(names(fmt), names(fmt2)),
+                 setdiff(names(fmt2), names(fmt)))]
+  class(fmt2) <- cls
+  fmt2
 }
 
 merge_output_format_dependencies <- function(fmt, deps) {
