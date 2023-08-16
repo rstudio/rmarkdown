@@ -155,8 +155,7 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
 
   # extract dependencies from html
   html_lines <- read_utf8(rendered_html)
-  dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
-  dependencies <- jsonlite::unserializeJSON(dependencies_json)
+  dependencies <- shiny_prerendered_extract_context_serialized(html_lines, "dependencies")
 
   # resolve package paths (this will happen automatically for the
   # development version of htmltools but this isn't on CRAN yet)
@@ -255,8 +254,14 @@ shiny_prerendered_prerender <- function(
   html_lines <- read_utf8(rendered_html)
 
   # check that all html dependencies exist
-  dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
-  dependencies <- jsonlite::unserializeJSON(dependencies_json)
+  dependencies <- tryCatch(
+    shiny_prerendered_extract_context_serialized(html_lines, "dependencies"),
+    error = function(...) NULL
+  )
+  if (is.null(dependencies)) {
+    # Pre-render needed: failed to parse deps from pre-rendered HTML
+    return(TRUE)
+  }
 
   pkgsSeen <- list()
   for (dep in dependencies) {
@@ -291,8 +296,14 @@ shiny_prerendered_prerender <- function(
   # all html dependencies are accounted for
 
   # check for execution package version differences
-  execution_json <- shiny_prerendered_extract_context(html_lines, "execution_dependencies")
-  execution_info <- jsonlite::unserializeJSON(execution_json)
+  execution_info <- tryCatch(
+    shiny_prerendered_extract_context_serialized(html_lines, "execution_dependencies"),
+    error = function(...) NULL
+  )
+  if (is.null(execution_info)) {
+    # Pre-render needed: failed to parse execution deps from pre-rendered HTML
+    return(TRUE)
+  }
   execution_pkg_names <- execution_info$packages$packages
   execution_pkg_versions <- execution_info$packages$version
   for (i in seq_along(execution_pkg_names)) {
@@ -378,6 +389,16 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
     pretty = FALSE
   )
   shiny_prerendered_append_context(con, "execution_dependencies", execution_json)
+}
+
+shiny_prerendered_extract_context_serialized <- function(html_lines, context = "dependencies") {
+  json_str <- shiny_prerendered_extract_context(html_lines, context)
+  json_str <- unique(json_str)
+  if (length(json_str) > 1) {
+    warning("Multiple ", context, " contexts found in prerendered HTML, using last.")
+    json_str <- json_str[length(json_str)]
+  }
+  jsonlite::unserializeJSON(json_str)
 }
 
 

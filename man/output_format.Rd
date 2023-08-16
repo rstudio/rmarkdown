@@ -83,9 +83,11 @@ execution (as registered with a \code{\link{on.exit}} handler).}
 \item{file_scope}{A function that will split markdown input to pandoc into
 multiple named files. This is useful when the caller has concatenated a set
 of Rmd files together (as \pkg{bookdown} does), and those files may need to
-processed by pandoc using the \code{--file-scope} option. The function
-should return a named list of files w/ \code{name} and \code{content} for
-each file.}
+processed by pandoc using the \code{--file-scope} option. The first
+argument is input file paths and the second is \code{NULL} or current file
+scope which is a named list of files w/ \code{name} and \code{content} for
+each file. The return is the new file scope. Also, the arguments should
+include \code{...} for the future extensions.}
 
 \item{base_format}{An optional format to extend.}
 

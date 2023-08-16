@@ -1,11 +1,41 @@
+rmarkdown 2.25
+================================================================================
+
+
+
+rmarkdown 2.24
+================================================================================
+
+- Fixed `file_scope` being lost when extending output formats that considers the `file_scope` using `output_format()`. Merge behavior is to apply overlay `file_scope` function onto the result of `base_format`'s `file_scope` function. This implies that `file_scope` gains second argument which receives the returned values of the base `file_scope` (thanks, @atusy, #2488).
+
+- Added `output_format_dependency()` which allows extending output format from within chunks (thanks, @atusy, #2462)
+
+- Fix an issue with shiny prerendered document where dependencies context were written twice leasing to parsing error (thanks, @gadenbuie, rstudio/learn#597, #2500).
+
+
+rmarkdown 2.23
+================================================================================
+
+- `find_external_resources()` works with formats defining there own `theme` argument, like `cleanrmd::html_document_clean()`, not related to **bslib** supports (thanks, @gadenbuie, #2493, r-lib/pkgdown#2319).
+
+- Fixed version number comparison problems as requested by CRAN.
+
+
 rmarkdown 2.22
 ================================================================================
+
+- Using `css` with `.scss` and `.sass` file, or with a bslib theme, now works as expected with a shiny runtime (thanks, @cpsievert, #2443, #2447).
 
 - Add a `pandoc_metadata_file_arg()` function to match Pandoc's CLI flag `--metadata-file`.
 
 - Mentions that **webshot** or **webshot2** is required to take screenshot of HTML widget. When not installed, an error message mentionning `always_allow_html: true` solution will be shown, but setting this is not the solution (quarto-dev/quarto-cli#4225).
 
+- `html_dependency_jqueryui()` updated to 1.13.2 from version bundled in shiny (thanks, @daschnerm, #2477).
+
 - Fix an issue with YAML header ending with a commented line containing incomplete yaml (thanks, @keithnewman, #2483).
+
+- When code folding is enabled in `html_document()`, the text on the button to show the content has been changed from "Code" to "Show", because the content to show is not necessarily code, e.g., yihui/knitr#2227.
+
 
 rmarkdown 2.21
 ================================================================================

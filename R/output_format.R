@@ -52,9 +52,11 @@
 #' @param file_scope A function that will split markdown input to pandoc into
 #'   multiple named files. This is useful when the caller has concatenated a set
 #'   of Rmd files together (as \pkg{bookdown} does), and those files may need to
-#'   processed by pandoc using the \code{--file-scope} option. The function
-#'   should return a named list of files w/ \code{name} and \code{content} for
-#'   each file.
+#'   processed by pandoc using the \code{--file-scope} option. The first
+#'   argument is input file paths and the second is \code{NULL} or current file
+#'   scope which is a named list of files w/ \code{name} and \code{content} for
+#'   each file. The return is the new file scope. Also, the arguments should
+#'   include \code{...} for the future extensions.
 #' @param base_format An optional format to extend.
 #' @param allow_uptree_lib_dir Allow \code{lib_dir} output parameter not to
 #'   be a descendent of the output directory.
@@ -161,6 +163,27 @@ merge_post_processors <- function(base,
   }
 }
 
+merge_file_scope <- function(base,
+                             overlay) {
+  if (is.null(overlay)) {
+    return(base)
+  }
+  has_ellipsis <- "..." %in% names(formals(overlay))
+  if (!has_ellipsis) {
+    warning("file_scope lacks ... as an argument. ",
+            "Otherwise, file_scope replaces file_scope without merging.")
+  }
+  if (is.null(base) || !has_ellipsis) {
+    return(overlay)
+  }
+  if (has_ellipsis) {
+    return(function(x, current_scope = NULL, ...) {
+      scope <- base(x, current_scope, ...)
+      overlay(x, scope, ...)
+    })
+  }
+}
+
 # merges two output formats
 merge_output_formats <- function(base,
                                  overlay) {
@@ -187,6 +210,7 @@ merge_output_formats <- function(base,
                              overlay$intermediates_generator, c),
     post_processor =
       merge_post_processors(base$post_processor, overlay$post_processor),
+    file_scope = merge_file_scope(base$file_scope, overlay$file_scope),
     on_exit =
       merge_on_exit(base$on_exit, overlay$on_exit)
   ), class = "rmarkdown_output_format")
@@ -812,4 +836,64 @@ citeproc_required <- function(yaml_front_matter,
       length(grep("^references:\\s*$", input_lines)) > 0 ||
       length(grep("^bibliography:\\s*$", input_lines)) > 0
   )
+}
+
+#' Define an R Markdown's output format dependency
+#'
+#' Define the dependency such as and pre/post-processors dynamically from
+#' within chunks. This function shares some arguments with
+#' \code{\link{output_format}}, but lacks the others because dependency
+#' is resolved after \code{post_knit} and before \code{pre_processor}.
+#'
+#' @param name A dependency name. If some dependencies share the same name,
+#'   then only the first one will be attached.
+#' @inheritParams output_format
+#' @return An list of arguments with the "rmd_dependency" class.
+#' @examples
+#' # Add lua filters from within a chunk
+#' output_format_dependency("lua_filter", pre_processor = function(...) {
+#'   pandoc_lua_filter_args(c("example1.lua", "example2.lua"))
+#' })
+#'
+#' @export
+output_format_dependency <- function(name,
+                                     pandoc = list(),
+                                     pre_processor = NULL,
+                                     post_processor = NULL,
+                                     file_scope = NULL,
+                                     on_exit = NULL) {
+  # Some arguments are NULL
+  # to ensure inheriting the values from the base output format
+  structure(list(name = name,
+                 knitr = NULL, # must be NULL because merge happens after knit
+                 pandoc = pandoc,
+                 pre_processor = pre_processor,
+                 keep_md = NULL,
+                 clean_supporting = NULL,
+                 post_processor = post_processor,
+                 file_scope = file_scope,
+                 on_exit = on_exit),
+            class = "output_format_dependency")
+}
+
+#' @export
+knit_print.output_format_dependency <- function(x, ...) {
+  knitr::asis_output(list(), meta = list(x))
+}
+
+merge_output_format_dependency <- function(fmt, dep) {
+  dep$name <- NULL # remove to be consistent with arguments of output_format
+  dep$base_format <- fmt
+  do.call(output_format, dep)
+}
+
+merge_output_format_dependencies <- function(fmt, deps) {
+  skip <- c()
+  for (d in deps) {
+    if (inherits(d, "output_format_dependency") && !isTRUE(skip[d$name])) {
+      skip[d$name] <- TRUE
+      fmt <- merge_output_format_dependency(fmt, d)
+    }
+  }
+  fmt
 }

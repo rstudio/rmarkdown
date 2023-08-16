@@ -99,7 +99,7 @@ html_document_base <- function(theme = NULL,
 
     # Process css files as Pandoc argument if not already been processed by bslib
     for (f in css) {
-      if (grepl("\\.s[ac]ss$", f)) {
+      if (needs_sass(f)) {
         if (!xfun::loadable("sass")) {
           stop2("Using `.sass` or `.scss` file in `css` argument requires the sass package.")
         }

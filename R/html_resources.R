@@ -55,7 +55,7 @@ find_external_resources <- function(input_file, encoding = 'UTF-8') {
   # ensure we're working with valid input
   ext <- tolower(xfun::file_ext(input_file))
   if (!(ext %in% c("md", "rmd", "qmd", "html", "htm", "r", "css"))) {
-    stop("Resource discovery is only supported for R Markdown files or HTML files.")
+    stop("Resource discovery is only supported for R Markdown, Quarto files or HTML (and CSS) files.")
   }
 
   if (!file.exists(input_file)) {
@@ -138,7 +138,7 @@ find_external_resources <- function(input_file, encoding = 'UTF-8') {
   # clean row names (they're not meaningful)
   rownames(discovered_resources) <- NULL
 
-  # convert paths from factors if necssary, and clean any redundant ./ leaders
+  # convert paths from factors if necessary, and clean any redundant ./ leaders
   discovered_resources$path <- as.character(discovered_resources$path)
   has_prefix <- grepl("^\\./", discovered_resources$path)
   discovered_resources$path[has_prefix] <- substring(discovered_resources$path[has_prefix], 3)
@@ -216,6 +216,13 @@ discover_rmd_resources <- function(rmd_file, discover_single_resource) {
         output_render_files <- unlist(output_format[c(
           'includes', 'pandoc_args', 'logo', 'reference_doc', 'reference_docx', 'template'
         )])
+        resolved_theme <- tryCatch(resolve_theme(output_format[["theme"]]), error = function(e) NULL)
+        # css needs to be copied for sass or bslib processing in formate rendering
+        needed <- if (is_bs_theme(resolved_theme)) TRUE else {
+          needs_sass(output_format[['css']])
+        }
+        output_render_files <- c(output_render_files, output_format[['css']][needed])
+
         lapply(output_render_files, discover_render_resource)
       }
     }
