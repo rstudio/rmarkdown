@@ -79,12 +79,14 @@ github_document <- function(toc = FALSE,
   if (!hard_line_breaks) variant <- paste0(variant, "-hard_line_breaks")
 
   # atx headers are the default in pandoc 2.11.2 and the flag has been deprecated
-  # to be replace by `--markdown-headings=atx|setx`
+  # to be replaced by `--markdown-headings=atx|setx`
   if (!pandoc_available("2.11.2")) pandoc_args <- c(
     "--atx-headers", pandoc_args
   )
 
-  if ((toc || number_sections) && !isTRUE(grepl("gfm_auto_identifiers", md_extensions))) {
+  if ((toc || number_sections) &&
+      !isTRUE(grepl("gfm_auto_identifiers", md_extensions)) &&
+      pandoc2) {
     md_extensions <- c(md_extensions, "+gfm_auto_identifiers")
   }
 
