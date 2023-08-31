@@ -3,6 +3,7 @@ rmarkdown 2.25
 
 - Fixed a bug that filenames beginning with `-` cause incorrect invocation of Pandoc (thanks, @mbaynton, #2503).
 
+- Added `attach_output_format_dependency` which explicitly attach the dependency to output format compared to the attachment via `knit_print`. See PR description for the example usage (thanks, @atusy, #2507)
 
 rmarkdown 2.24
 ================================================================================
