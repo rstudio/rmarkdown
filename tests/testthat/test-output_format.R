@@ -167,3 +167,12 @@ test_that("output format dependencies are merged once per name", {
     merge_output_format_dependencies(fmt, list(d1, d1, d2, d1, d2))
   )
 })
+
+test_that("output format dependency can be attached", {
+  knit_meta_reset()
+
+  dep <- output_format_dependency("d1", pandoc = list(lua_filters = "d1.lua"))
+  attach_output_format_dependency(dep)
+  expect_equal(knitr::knit_meta(), list(dep))
+  expect_error(attach_output_format_dependency(unclass(dep)))
+})
