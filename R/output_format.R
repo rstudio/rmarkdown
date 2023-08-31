@@ -891,3 +891,36 @@ merge_output_format_dependencies <- function(fmt, deps) {
   }
   fmt
 }
+
+#' Attach output format dependency to knit metadata
+#'
+#' The attached dependency is merged to output format after calling the 
+#' post_knit handler and before calling the pre_processor handler.
+#'
+#' @param dep A dependency created by \code{output_format_dependency()}
+#' @param force attach even if \code{knitr::knit()} is not in progress
+#'   (default: \code{FALSE})
+#'
+#' @return invisible \code{NULL}
+#'
+#' @examples
+#' # a function that attaches lua filters
+#' f <- function() {
+#'   dep <- output_format_dependency(
+#'     "lua_filter",
+#'     pre_processor = function(...) {
+#'       pandoc_lua_filter_args(c("example1.lua", "example2.lua"))
+#'     }
+#'   )
+#'   attach_output_format_dependency(dep)
+#' }
+#'
+#' @export
+attach_output_format_dependency <- function(dep, force = FALSE) {
+  if (!inherits(dep, "output_format_dependency")) {
+    stop("dep must be an object of a class output_format_dependency")
+  }
+  if (force || !is.null(knitr::opts_knit$get("out.format"))) {
+    knitr::knit_meta_add(list(dep), label = knitr::opts_current$get("label"))
+  }
+}
