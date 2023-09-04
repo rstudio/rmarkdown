@@ -3,6 +3,7 @@ rmarkdown 2.25
 
 - Fixed a bug that filenames beginning with `-` cause incorrect invocation of Pandoc (thanks, @mbaynton, #2503).
 
+- Documented how to merge `output_format_dependency()` to the output format (thanks, @atusy, #2508)
 
 rmarkdown 2.24
 ================================================================================
