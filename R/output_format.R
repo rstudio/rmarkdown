@@ -841,7 +841,7 @@ citeproc_required <- function(yaml_front_matter,
 #' the best way for package developers to share the dependency. On the
 #' contrary, the latter is useful to declare a document-specific dependency.
 #' This function shares some arguments with \code{\link{output_format}},
-#' out lacks the others because dependency is resolved after \code{post_knit}
+#' but lacks the others because dependency is resolved after \code{post_knit}
 #' and before \code{pre_processor}.
 #'
 #' @param name A dependency name. If some dependencies share the same name,
