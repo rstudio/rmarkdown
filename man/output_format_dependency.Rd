@@ -2,7 +2,7 @@
 % Please edit documentation in R/output_format.R
 \name{output_format_dependency}
 \alias{output_format_dependency}
-\title{Define an R Markdown's output format dependency}
+\title{Define and merge an R Markdown's output format dependency}
 \usage{
 output_format_dependency(
   name,
@@ -15,7 +15,7 @@ output_format_dependency(
 }
 \arguments{
 \item{name}{A dependency name. If some dependencies share the same name,
-then only the first one will be attached.}
+then only the first one will be merged to the output format.}
 
 \item{pandoc}{Pandoc options for an output format (see
 \code{\link{pandoc_options}})}
@@ -46,15 +46,35 @@ execution (as registered with a \code{\link{on.exit}} handler).}
 An list of arguments with the "rmd_dependency" class.
 }
 \description{
-Define the dependency such as and pre/post-processors dynamically from
-within chunks. This function shares some arguments with
-\code{\link{output_format}}, but lacks the others because dependency
-is resolved after \code{post_knit} and before \code{pre_processor}.
+Define and merge a dependency such as pre/post-processors from within
+chunks. The merge happens explicitly when a list of dependencies are
+passed to \code{knitr::knit_meta_add()} or implicitly when a dependency
+is \code{knitr::knit_print}ed. Defining a function that does the former is
+the best way for package developers to share the dependency. On the
+contrary, the latter is useful to declare a document-specific dependency.
+This function shares some arguments with \code{\link{output_format}},
+but lacks the others because dependency is resolved after \code{post_knit}
+and before \code{pre_processor}.
 }
 \examples{
-# Add lua filters from within a chunk
-output_format_dependency("lua_filter", pre_processor = function(...) {
-  pandoc_lua_filter_args(c("example1.lua", "example2.lua"))
-})
+# Implicitly add lua filters from within a chunk
+# This relies on (implicit) printing of the dependency in a chunk via
+# knitr::knit_print()`
+output_format_dependency(
+  "lua_filter1",
+  pandoc = list(lua_filters = "example1.lua")
+)
+
+# Explicitly add lua filters from within a chunk
+knitr::knit_meta_add(list(output_format_dependency(
+  "lua_filter2",
+  pandoc = list(lua_filters = "example2.lua")
+)))
+
+# List the available dependencies
+# Note that the list may include dependencies with duplicated names. In that
+# case, the first one is merged to the output format and the others are
+# discarded.
+str(knitr::knit_meta("output_format_dependency", clean = FALSE))
 
 }
