@@ -3,7 +3,9 @@ rmarkdown 2.25
 
 - Fixed a bug that filenames beginning with `-` cause incorrect invocation of Pandoc (thanks, @mbaynton, #2503).
 
-- Documented how to merge `output_format_dependency()` to the output format (thanks, @atusy, #2508)
+- Documented how to merge `output_format_dependency()` to the output format (thanks, @atusy, #2508).
+
+- `ioslides_presentation()` now correctly works with new **shiny** 1.7.5 (thanks, @nicolasgaraycoa, #2514, @gadenbuie, #2516).
 
 rmarkdown 2.24
 ================================================================================
