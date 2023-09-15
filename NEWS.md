@@ -7,7 +7,7 @@ rmarkdown 2.25
 
 - `ioslides_presentation()` now correctly works with new **shiny** 1.7.5 (thanks, @nicolasgaraycoa, #2514, @gadenbuie, #2516).
 
-- Added a new argument `metadata` to the `pre_knit` function in `output_format()` so that users will have access to the YAML metadata of the input document before knitting it (#2485). Please note that if you define `pre_knit` for a custom output format, you are strongly recommended to leave a `...` argument in `pre_knit`, so we (**rmarkdown** package authors) are free to add more arguments to `pre_knit` without breaking your code.
+- Added a new argument `metadata` to the `pre_knit` function in `output_format()` so that users will have access to the YAML metadata of the input document before knitting it (#2485). Please note that if you define `pre_knit` for a custom output format, you are strongly recommended to leave a `...` argument in `pre_knit`, so we (**rmarkdown** package authors) are free to add more arguments to `pre_knit` without breaking your code. If your `pre_knit` function does not have the `...` argument, you will get a warning.
 
 
 rmarkdown 2.24
