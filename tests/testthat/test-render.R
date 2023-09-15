@@ -16,7 +16,7 @@ test_that("Metadata is available before pre_knit", {
 })
 
 test_that("file_scope split correctly input file", {
-  skip_if_not(getRversion() >= 3.5)
+  skip_if_not(getRversion() >= '3.5')
   rmd <- local_rmd_file(c("# H1", "content1", "# H2", "content2"))
   file_scope_fun <- function(file) {
     x <- xfun::read_utf8(file)

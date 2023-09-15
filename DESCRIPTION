@@ -1,7 +1,7 @@
 Type: Package
 Package: rmarkdown
 Title: Dynamic Documents for R
-Version: 2.21.4
+Version: 2.24.3
 Authors@R: c(
     person("JJ", "Allaire", , "jj@posit.co", role = "aut"),
     person("Yihui", "Xie", , "xie@yihui.name", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0645-5666")),
@@ -29,7 +29,7 @@ Authors@R: c(
     person("Ruben", "Arslan", , "ruben.arslan@uni-goettingen.de", role = "ctb"),
     person("Sergio", "Oller", role = "ctb"),
     person(given = "Posit Software, PBC", role = c("cph", "fnd")),
-    person(, "jQuery UI contributors", role = c("ctb", "cph"), comment = "jQuery UI library; authors listed in inst/rmd/h/jqueryui-AUTHORS.txt"),
+    person(, "jQuery UI contributors", role = c("ctb", "cph"), comment = "jQuery UI library; authors listed in inst/rmd/h/jqueryui/AUTHORS.txt"),
     person("Mark", "Otto", role = "ctb", comment = "Bootstrap library"),
     person("Jacob", "Thornton", role = "ctb", comment = "Bootstrap library"),
     person(, "Bootstrap contributors", role = "ctb", comment = "Bootstrap library"),
@@ -83,6 +83,7 @@ Suggests:
     testthat (>= 3.0.3),
     tibble,
     vctrs,
+    cleanrmd,
     withr (>= 2.4.2)
 VignetteBuilder: knitr
 Config/Needs/website: rstudio/quillt, pkgdown

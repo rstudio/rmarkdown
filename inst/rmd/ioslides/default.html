@@ -201,6 +201,11 @@ $endif$
          window.jQuery(e.target).trigger('shown');
       });
     }
+    if (window.Shiny) {
+      // Initialize slides when this script appears on the page, since it
+      // indicates that the <slides> markup has been fully loaded.
+      window.loadDeck();
+    }
   })();
 </script>
 
