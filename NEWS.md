@@ -1,6 +1,7 @@
 rmarkdown 2.26
 ================================================================================
 
+- Get rid of the superfluous warning in `find_pandoc()` (thanks, @jszhao, #2527).
 
 
 rmarkdown 2.25

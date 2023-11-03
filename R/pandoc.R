@@ -695,7 +695,7 @@ get_pandoc_version <- function(pandoc_dir) {
   info <- with_pandoc_safe_environment(
     system(paste(shQuote(path), "--version"), intern = TRUE)
   )
-  version <- strsplit(info, "\n")[[1]][1]
+  version <- strsplit(info, "\n", useBytes = TRUE)[[1]][1]
   version <- strsplit(version, " ")[[1]][2]
   components <- strsplit(version, "-")[[1]]
   version <- components[1]
