@@ -50,8 +50,10 @@ can disable the \code{df_print} behavior entirely by setting the option
 frame printing section} in bookdown book for examples.}
 
 \item{pre_knit}{An optional function that runs before knitting which receives
-the \code{input} (input filename passed to \code{render}) and \code{...}
-(for future expansion) arguments.}
+the \code{input} (input filename passed to \code{render}), \code{metadata}
+(the parsed front matter of the Rmd file) and \code{...} (for future
+expansion) arguments. This function can be used to add side effects before
+knitting step.}
 
 \item{post_knit}{An optional function that runs after knitting which receives
 the \code{metadata}, \code{input_file}, \code{runtime}, and \code{...} (for

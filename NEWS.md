@@ -1,4 +1,4 @@
-rmarkdown 2.25
+rmarkdown 2.26
 ================================================================================
 
 - `html_document` output allows `lib_dir` to point to a parent of the output 
@@ -8,6 +8,20 @@ rmarkdown 2.25
   where there is a shared master library with css, javascript, etc. and separate 
   child directories with RMarkdown files. #146 and #1859.
   (thanks, @jonathan-g, #2199)
+
+- Get rid of the superfluous warning in `find_pandoc()` (thanks, @jszhao, #2527).
+
+
+rmarkdown 2.25
+================================================================================
+
+- Fixed a bug that filenames beginning with `-` cause incorrect invocation of Pandoc (thanks, @mbaynton, #2503).
+
+- Documented how to merge `output_format_dependency()` to the output format (thanks, @atusy, #2508).
+
+- `ioslides_presentation()` now correctly works with new **shiny** 1.7.5 (thanks, @nicolasgaraycoa, #2514, @gadenbuie, #2516).
+
+- Added a new argument `metadata` to the `pre_knit` function in `output_format()` so that users will have access to the YAML metadata of the input document before knitting it (#2485). Please note that if you define `pre_knit` for a custom output format, you are strongly recommended to leave a `...` argument in `pre_knit`, so we (**rmarkdown** package authors) are free to add more arguments to `pre_knit` without breaking your code. If your `pre_knit` function does not have the `...` argument, you will get a warning.
 
 
 rmarkdown 2.24
@@ -35,7 +49,7 @@ rmarkdown 2.22
 
 - Add a `pandoc_metadata_file_arg()` function to match Pandoc's CLI flag `--metadata-file`.
 
-- Mentions that **webshot** or **webshot2** is required to take screenshot of HTML widget. When not installed, an error message mentionning `always_allow_html: true` solution will be shown, but setting this is not the solution (quarto-dev/quarto-cli#4225).
+- Mentions that **webshot** or **webshot2** is required to take screenshot of HTML widget. When not installed, an error message mentioning `always_allow_html: true` solution will be shown, but setting this is not the solution (quarto-dev/quarto-cli#4225).
 
 - `html_dependency_jqueryui()` updated to 1.13.2 from version bundled in shiny (thanks, @daschnerm, #2477).
 

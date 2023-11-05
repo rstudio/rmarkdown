@@ -30,8 +30,8 @@ jobs:
       matrix:
         config:
           # testing R release with last shipped pandoc version in RStudio IDE and new pandoc
-          - {os: windows-latest, pandoc: '3.1.1',    r: 'release'}
-          - {os: macOS-latest,   pandoc: '3.1.1',    r: 'release'}
+          - {os: windows-latest, pandoc: '3.1.6.2',  r: 'release'}
+          - {os: macOS-latest,   pandoc: '3.1.6.2',  r: 'release'}
           - {os: ubuntu-latest,  pandoc: 'devel',    r: 'release'}
           # testing older pandoc versions
           - {os: ubuntu-latest,  pandoc: '2.19.2',   r: 'release'}

@@ -61,7 +61,7 @@ pandoc_convert <- function(input,
   on.exit(setwd(oldwd), add = TRUE)
 
   # input file and formats
-  args <- c(input)
+  args <- pandoc_path_arg(input)
   if (!is.null(to)) {
     if (to == 'html') to <- 'html4'
     if (to == 'pdf') to <- 'latex'
@@ -72,7 +72,7 @@ pandoc_convert <- function(input,
 
   # output file
   if (!is.null(output))
-    args <- c(args, "--output", output)
+    args <- c(args, "--output", pandoc_path_arg(output))
 
   # set pandoc stack size
   args <- prepend_pandoc_stack_size(args)
@@ -393,6 +393,9 @@ pandoc_path_arg <- function(path, backslash = TRUE) {
 
   # remove redundant ./ prefix if present
   path <- sub('^[.]/', '', path)
+  # paths starting with - shouldn't be treated as command-line options (#2503)
+  i <- grepl('^-', path) & xfun::is_rel_path(path)
+  path[i] <- paste0('./', path[i])
 
   if (is_windows()) {
     i <- grep(' ', path)
@@ -692,7 +695,7 @@ get_pandoc_version <- function(pandoc_dir) {
   info <- with_pandoc_safe_environment(
     system(paste(shQuote(path), "--version"), intern = TRUE)
   )
-  version <- strsplit(info, "\n")[[1]][1]
+  version <- strsplit(info, "\n", useBytes = TRUE)[[1]][1]
   version <- strsplit(version, " ")[[1]][2]
   components <- strsplit(version, "-")[[1]]
   version <- components[1]
