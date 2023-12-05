@@ -66,9 +66,9 @@ test_that("render_site respects 'new_session' in the config", {
   a <- readLines(file.path(site_dir, "_site", "PageA.html"))
   b <- readLines(file.path(site_dir, "_site", "PageB.html"))
 
-  # pkg loaded in PageA (bslib) should show up in search path of PageB
-  expect_match(a, "library(bslib)", fixed = TRUE, all = FALSE)
-  expect_true(any(grepl("bslib", b, fixed = TRUE)))
+  # pkg loaded in PageA (tinytex) should show up in search path of PageB
+  expect_match(a, "library(tinytex)", fixed = TRUE, all = FALSE)
+  expect_true(any(grepl("tinytex", b, fixed = TRUE)))
 
   # edit config --> new_session: true
   cat("new_session: true", file = file.path(site_dir, "_site.yml"), append = TRUE)
@@ -77,9 +77,9 @@ test_that("render_site respects 'new_session' in the config", {
   a <- readLines(file.path(site_dir, "_site", "PageA.html"))
   b <- readLines(file.path(site_dir, "_site", "PageB.html"))
 
-  # pkg loaded in PageA (bslib) should NOT show up in search path of PageB
-  expect_match(a, "library(bslib)", fixed = TRUE, all = FALSE)
-  expect_false(any(grepl("bslib", b, fixed = TRUE)))
+  # pkg loaded in PageA (tinytex) should NOT show up in search path of PageB
+  expect_match(a, "library(tinytex)", fixed = TRUE, all = FALSE)
+  expect_false(any(grepl("tinytex", b, fixed = TRUE)))
 })
 
 test_that("clean_site gives notices before removing", {
