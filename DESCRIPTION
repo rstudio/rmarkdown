@@ -65,7 +65,6 @@ Imports:
     jsonlite,
     knitr (>= 1.22),
     methods,
-    stringr (>= 1.2.0),
     tinytex (>= 0.31),
     tools,
     utils,

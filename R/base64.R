@@ -10,7 +10,9 @@ process_html_res <- function(html, reg, processor) {
       character(1)
     )
   }
-  html <- stringr::str_replace_all(html, reg, process_img_src)
+  m <- gregexpr(reg, html, perl = TRUE)
+  regmatches(html, m) <- lapply(regmatches(html, m), process_img_src)
+
   strsplit(html, "\n", fixed = TRUE)[[1]]
 }
 

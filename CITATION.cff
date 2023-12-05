@@ -2,7 +2,7 @@
 # CITATION file created with {cffr} R package, v0.4.1
 # See also: https://docs.ropensci.org/cffr/
 # -----------------------------------------------------------
- 
+
 cff-version: 1.2.0
 message: 'To cite package "rmarkdown" in publications use:'
 type: software
@@ -271,18 +271,6 @@ references:
   year: '2023'
   institution:
     name: R Foundation for Statistical Computing
-- type: software
-  title: stringr
-  abstract: 'stringr: Simple, Consistent Wrappers for Common String Operations'
-  notes: Imports
-  url: https://stringr.tidyverse.org
-  repository: https://CRAN.R-project.org/package=stringr
-  authors:
-  - family-names: Wickham
-    given-names: Hadley
-    email: hadley@rstudio.com
-  year: '2023'
-  version: '>= 1.2.0'
 - type: software
   title: tinytex
   abstract: 'tinytex: Helper Functions to Install and Maintain TeX Live, and Compile

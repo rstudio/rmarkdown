@@ -3,6 +3,8 @@ rmarkdown 2.26
 
 - Get rid of the superfluous warning in `find_pandoc()` (thanks, @jszhao, #2527).
 
+- Removed the **stringr** dependency since it is used only once in the package and the equivalent base R code is simple enough (thanks, @etiennebacher, #2530).
+
 
 rmarkdown 2.25
 ================================================================================
