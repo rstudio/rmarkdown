@@ -3,24 +3,21 @@
 process_html_res <- function(html, reg, processor) {
   html <- one_string(html)
   process_img_src <- function(img_src) {
-    src <- sub(reg, '\\1', img_src)
+    src <- sub(reg, '\\1', img_src, ignore.case = TRUE)
     vapply(
       seq_along(img_src),
       function(i) processor(img_src[[i]], src[[i]]),
       character(1)
     )
   }
-  m <- gregexpr(reg, html, perl = TRUE)
+  m <- gregexpr(reg, html, perl = TRUE, ignore.case = TRUE)
   regmatches(html, m) <- lapply(regmatches(html, m), process_img_src)
 
   strsplit(html, "\n", fixed = TRUE)[[1]]
 }
 
 process_images <- function(html, processor) {
-  process_html_res(
-    html,
-    "<\\s*[Ii][Mm][Gg]\\s+.*?[Ss][Rr][Cc]\\s*=\\s*[\"']([^\"']+)[\"']",
-    processor)
+  process_html_res(html, "<\\s*img\\s+.*?src\\s*=\\s*[\"']([^\"']+)[\"']", processor)
 }
 
 base64_encode_images <- function(html) {
