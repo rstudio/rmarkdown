@@ -10,7 +10,15 @@ process_html_res <- function(html, reg, processor) {
       character(1)
     )
   }
-  html <- stringr::str_replace_all(html, reg, process_img_src)
+
+  # base R alternative to stringr::str_replace_all() with a function in
+  # replacement
+  mtchs <- regmatches(html, gregexpr(reg, html, perl = TRUE))[[1]]
+  if (length(mtchs) > 0) {
+    for (i in rev(mtchs)) {
+      html <- gsub(i, process_img_src(i), html, fixed = TRUE)
+    }
+  }
   strsplit(html, "\n", fixed = TRUE)[[1]]
 }
 
