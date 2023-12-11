@@ -315,9 +315,7 @@ find_program <- function(program) {
   }
 }
 
-has_crop_tools <- function(warn = TRUE) {
- knitr:::has_crop_tools(warn)
-}
+has_crop_tools <- function(...) knitr:::has_crop_tools(...)
 
 # given a string, escape the regex metacharacters it contains:
 # regex metas are these,
