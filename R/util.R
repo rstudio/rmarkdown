@@ -316,7 +316,7 @@ find_program <- function(program) {
 }
 
 has_crop_tools <- function(warn = TRUE) {
-  if (packageVersion("knitr")>= "1.43")) return(knitr:::has_crop_tools(warn))
+  if (packageVersion("knitr")>= "1.43") return(knitr:::has_crop_tools(warn))
 
   # TODO: Remove when we update knitr requirement
   tools <- c(
