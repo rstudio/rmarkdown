@@ -1,13 +1,13 @@
 rmarkdown 2.26
 ================================================================================
 
-- **rmarkdown** has now a dependency on **knitr** >= 1.43.
+- **rmarkdown** now requires **knitr** >= 1.43.
 
 - Get rid of the superfluous warning in `find_pandoc()` (thanks, @jszhao, #2527).
 
 - Removed the **stringr** dependency since it is used only once in the package and the equivalent base R code is simple enough (thanks, @etiennebacher, #2530).
 
-- When `fig_crop: auto`, it will now uses the same logic as in knitr to decide if cropping is possible (yihui/knitr#2246).
+- For the output format option `fig_crop: auto`, it will now use the same logic as in **knitr** to decide if cropping is possible (yihui/knitr#2246).
 
 
 rmarkdown 2.25
