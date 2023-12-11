@@ -316,21 +316,7 @@ find_program <- function(program) {
 }
 
 has_crop_tools <- function(warn = TRUE) {
-  if (packageVersion("knitr")>= "1.43") return(knitr:::has_crop_tools(warn))
-
-  # TODO: Remove when we update knitr requirement
-  tools <- c(
-    pdfcrop = unname(find_program("pdfcrop")),
-    ghostscript = unname(tools::find_gs_cmd())
-  )
-  missing <- tools[tools == ""]
-  if (length(missing) == 0) return(TRUE)
-  x <- paste0(names(missing), collapse = ", ")
-  if (warn) warning(
-    sprintf("\nTool(s) not installed or not in PATH: %s", x),
-    "\n-> As a result, figure cropping will be disabled."
-  )
-  FALSE
+  return(knitr:::has_crop_tools(warn))
 }
 
 # given a string, escape the regex metacharacters it contains:

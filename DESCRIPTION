@@ -63,7 +63,7 @@ Imports:
     htmltools (>= 0.5.1),
     jquerylib,
     jsonlite,
-    knitr (>= 1.22),
+    knitr (>= 1.43),
     methods,
     tinytex (>= 0.31),
     tools,
