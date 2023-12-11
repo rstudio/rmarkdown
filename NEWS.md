@@ -5,6 +5,8 @@ rmarkdown 2.26
 
 - Removed the **stringr** dependency since it is used only once in the package and the equivalent base R code is simple enough (thanks, @etiennebacher, #2530).
 
+- When `fig_crop: auto`, it will now uses the same logic as in knitr to decide if cropping is possible (yihui/knitr#2246). This fix an issue with detecting Ghostscript on Windows. It requires **knitr** 1.43 for this fix to apply.
+
 
 rmarkdown 2.25
 ================================================================================
