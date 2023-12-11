@@ -89,8 +89,8 @@ pkg_file_lua <- function(filters = NULL, package = "rmarkdown") {
   pandoc_path_arg(files)
 }
 
-pkg_file_highlight <- function(file) {
-  pkg_file("rmarkdown", "highlight", file, mustWork = TRUE)
+pkg_file_highlight <- function(...) {
+  pkg_file("rmarkdown", "highlight", ..., mustWork = TRUE)
 }
 
 #' @rdname rmarkdown_format
@@ -487,6 +487,10 @@ replace_binding <- function(binding, package, override) {
 
 join <- function(..., sep = "", collapse = "") {
   paste(..., sep = sep, collapse = collapse)
+}
+
+detect_pattern <- function(pattern, vec, ...) {
+  any(grepl(pattern, vec, ...))
 }
 
 shell_exec <- function(cmd, intern = FALSE, wait = TRUE, ...) {

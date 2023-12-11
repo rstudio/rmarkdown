@@ -11,6 +11,7 @@
 \alias{pandoc_toc_args}
 \alias{pandoc_citeproc_args}
 \alias{pandoc_lua_filter_args}
+\alias{pandoc_syntax_definition_args}
 \title{Functions for generating pandoc command line arguments}
 \usage{
 pandoc_variable_arg(name, value)
@@ -30,6 +31,8 @@ pandoc_toc_args(toc, toc_depth = 3)
 pandoc_citeproc_args()
 
 pandoc_lua_filter_args(lua_files)
+
+pandoc_syntax_definition_args(xml_files)
 }
 \arguments{
 \item{name}{Name of template variable to set.}
@@ -60,6 +63,9 @@ is specified.}
 \item{toc_depth}{Depth of headers to include in table of contents.}
 
 \item{lua_files}{Character vector of file paths to Lua filter files. Paths
+will be transformed by \code{\link{pandoc_path_arg}}.}
+
+\item{xml_files}{Character vector of file paths to KDE syntax files. Paths
 will be transformed by \code{\link{pandoc_path_arg}}.}
 }
 \value{

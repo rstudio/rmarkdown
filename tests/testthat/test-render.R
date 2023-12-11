@@ -32,3 +32,48 @@ test_that("file_scope split correctly input file", {
   expect_snapshot_file(splitted[1])
   expect_snapshot_file(splitted[2])
 })
+
+test_that("syntax definition file is correctly added", {
+  # do nothing cases
+  expect_identical(add_syntax_definition("--no-highlight"), "--no-highlight")
+  expect_identical(
+    add_syntax_definition(c("--no-highlight", "--other")),
+    c("--no-highlight", "--other")
+  )
+  withr::with_options(
+    list(rmarkdown.highlighting.xml.add = FALSE),
+    expect_identical(add_syntax_definition(""), "")
+  )
+  if (!pandoc_available("2.15")) {
+    expect_identical(add_syntax_definition("arg1"), "arg1")
+  }
+  expect_identical(add_syntax_definition("arg1", "markdown"), "arg1")
+
+  # Add custom xml files cases
+  skip_if_not_pandoc("2.15")
+  args <- add_syntax_definition(NULL)
+  ## Defaults files are added
+  expect_length(
+    args1 <- setdiff(args, "--syntax-definition"),
+    length(.syntax_highlight_bundled_language())
+  )
+  reg <- sprintf("(%s)", paste0(.syntax_highlight_bundled_language(), collapse = "|"))
+  expect_match(args1, reg)
+  ## User provided file is kept
+  args <- add_syntax_definition(c("arg1", pandoc_syntax_definition_args("dummy/r.xml")))
+  expect_match(args, "dummy.+r[.]xml$", all = FALSE)
+  expect_length(grep("r[.]xml$", args), 1L)
+  ## Opt in specific
+  withr::with_options(list(rmarkdown.highlighting.xml.add = "markdown"), {
+      args <- add_syntax_definition(c("arg1"))
+      expect_length(args, 3)
+      expect_match(args[3], "markdown[.]xml$")
+    }
+  )
+  ## Opt out specific
+  withr::with_options(list(rmarkdown.highlighting.xml.remove = "r"), {
+      args <- add_syntax_definition(c("arg1"))
+      expect_no_match(args, "r[.]xml$")
+    }
+  )
+})
