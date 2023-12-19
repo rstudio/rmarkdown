@@ -315,20 +315,7 @@ find_program <- function(program) {
   }
 }
 
-has_crop_tools <- function(warn = TRUE) {
-  tools <- c(
-    pdfcrop = unname(find_program("pdfcrop")),
-    ghostscript = unname(tools::find_gs_cmd())
-  )
-  missing <- tools[tools == ""]
-  if (length(missing) == 0) return(TRUE)
-  x <- paste0(names(missing), collapse = ", ")
-  if (warn) warning(
-    sprintf("\nTool(s) not installed or not in PATH: %s", x),
-    "\n-> As a result, figure cropping will be disabled."
-  )
-  FALSE
-}
+has_crop_tools <- function(...) knitr:::has_crop_tools(...)
 
 # given a string, escape the regex metacharacters it contains:
 # regex metas are these,

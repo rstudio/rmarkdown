@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Let's load a package (from existing dependencies) and make sure it's not on the search path when rendering a subsequent file.
 
 ```{r}
-library(stringr)
+library(tinytex)
 plot(cars)
 ```
 
