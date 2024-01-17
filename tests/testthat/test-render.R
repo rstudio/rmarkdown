@@ -37,6 +37,7 @@ test_that("Input file is not corrupted", {
   input <- tempfile()
   on.exit(unlink(input), add = TRUE, after = FALSE)
   saveRDS("test", input)
-  rmarkdown::render(input, quiet = TRUE)
+  # try() is necessary for Pandoc <= 2.14.2
+  try(render(input, quiet = TRUE))
   expect_equal(readRDS(input), "test")
 })
