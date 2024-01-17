@@ -37,6 +37,6 @@ test_that("Input file is not corrupted", {
   input <- tempfile()
   on.exit(unlink(input), add = TRUE, after = FALSE)
   saveRDS("test", input)
-  try(rmarkdown::render(file, quiet = TRUE), silent = TRUE)
+ rmarkdown::render(input, quiet = TRUE)
   expect_equal(readRDS(input), "test")
 })
