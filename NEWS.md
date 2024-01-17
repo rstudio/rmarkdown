@@ -9,6 +9,8 @@ rmarkdown 2.26
 
 - For the output format option `fig_crop: auto`, it will now use the same logic as in **knitr** to decide if cropping is possible (yihui/knitr#2246).
 
+- Avoid corrupting input files by accident (thanks, @J-Moravec, #2534).
+
 
 rmarkdown 2.25
 ================================================================================

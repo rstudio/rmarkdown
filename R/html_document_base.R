@@ -251,7 +251,7 @@ html_document_base <- function(theme = NULL,
 }
 
 extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks) {
-  input_str <- read_utf8(input_file)
+  input_str <- one_string(read_utf8(input_file))
   preserve <- extract(input_str)
   if (!identical(preserve$value, input_str)) write_utf8(preserve$value, input_file)
   preserve$chunks
