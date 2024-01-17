@@ -32,3 +32,11 @@ test_that("file_scope split correctly input file", {
   expect_snapshot_file(splitted[1])
   expect_snapshot_file(splitted[2])
 })
+
+test_that("Input file is not corrupted", {
+  input <- tempfile()
+  on.exit(unlink(input), add = TRUE, after = FALSE)
+  saveRDS("test", input)
+  rmarkdown::render(input, quiet = TRUE)
+  expect_equal(readRDS(input), "test")
+})
