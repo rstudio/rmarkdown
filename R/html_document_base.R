@@ -251,6 +251,11 @@ html_document_base <- function(theme = NULL,
 }
 
 extract_preserve_chunks <- function(input_file, extract = extractPreserveChunks) {
+  # Don't try to modify the input file if it's not .md, otherwise the original
+  # input could be corrupted (#2534). In theory, preserved chunks should only
+  # exist in the intermediate .md file from knit(). If the .md file is not
+  # intermediate but original, this processing should be harmless.
+  if (!xfun::file_ext(input_file) %in% c('md', 'markdown')) return()
   input_str <- one_string(read_utf8(input_file))
   preserve <- extract(input_str)
   if (!identical(preserve$value, input_str)) write_utf8(preserve$value, input_file)
