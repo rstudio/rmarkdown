@@ -78,10 +78,6 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - name: Remove default installed Pandoc
-        if: runner.os == 'Linux'
-        run: sudo dpkg -r pandoc
-
       - uses: r-lib/actions/setup-pandoc@v2-branch
         with:
           pandoc-version: ${{ matrix.config.pandoc }}
