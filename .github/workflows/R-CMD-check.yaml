@@ -30,10 +30,12 @@ jobs:
       matrix:
         config:
           # testing R release with last shipped pandoc version in RStudio IDE and new pandoc
-          - {os: windows-latest, pandoc: '3.1.6.2',  r: 'release'}
-          - {os: macOS-latest,   pandoc: '3.1.6.2',  r: 'release'}
-          - {os: ubuntu-latest,  pandoc: 'devel',    r: 'release'}
+          - {os: windows-latest, pandoc: 'latest',  r: 'release'}
+          - {os: windows-latest, pandoc: 'latest',  r: 'release'}
+          - {os: macOS-latest,   pandoc: 'latest',  r: 'release'}
+          - {os: ubuntu-latest,  pandoc: 'nightly', r: 'release'}
           # testing older pandoc versions
+          - {os: ubuntu-latest,  pandoc: '3.1.11',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.19.2',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.18',     r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.17.1.1', r: 'release'}
@@ -80,13 +82,10 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo dpkg -r pandoc
 
-      - uses: r-lib/actions/setup-pandoc@v2
-        if: matrix.config.pandoc != 'devel'
+      - uses: r-lib/actions/setup-pandoc@v2-branch
         with:
           pandoc-version: ${{ matrix.config.pandoc }}
-
-      - uses: cderv/actions/setup-pandoc-nightly@nightly-pandoc
-        if: matrix.config.pandoc == 'devel'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pandoc and Tinytex info
         run: |
