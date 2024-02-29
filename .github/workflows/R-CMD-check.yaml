@@ -31,7 +31,6 @@ jobs:
         config:
           # testing R release with latest  pandoc version and their dev version
           - {os: windows-latest, pandoc: 'latest',  r: 'release'}
-          - {os: windows-latest, pandoc: 'latest',  r: 'release'}
           - {os: macOS-latest,   pandoc: 'latest',  r: 'release'}
           - {os: ubuntu-latest,  pandoc: 'nightly', r: 'release'}
           # testing older pandoc versions
