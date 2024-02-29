@@ -78,7 +78,7 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - uses: r-lib/actions/setup-pandoc@v2-branch
+      - uses: r-lib/actions/setup-pandoc@v2
         with:
           pandoc-version: ${{ matrix.config.pandoc }}
           token: ${{ secrets.GITHUB_TOKEN }}
