@@ -34,3 +34,59 @@ render("input.Rmd", pdf_document(toc = TRUE, pandoc_args = "--listings"))
 \link{render}, \link{html_document}, \link{pdf_document},
   \link{word_document}, \link{beamer_presentation}
 }
+\author{
+\strong{Maintainer}: Yihui Xie \email{xie@yihui.name} (\href{https://orcid.org/0000-0003-0645-5666}{ORCID})
+
+Authors:
+\itemize{
+  \item JJ Allaire \email{jj@posit.co}
+  \item Christophe Dervieux \email{cderv@posit.co} (\href{https://orcid.org/0000-0003-4474-2498}{ORCID})
+  \item Jonathan McPherson \email{jonathan@posit.co}
+  \item Javier Luraschi
+  \item Kevin Ushey \email{kevin@posit.co}
+  \item Aron Atkins \email{aron@posit.co}
+  \item Hadley Wickham \email{hadley@posit.co}
+  \item Joe Cheng \email{joe@posit.co}
+  \item Winston Chang \email{winston@posit.co}
+  \item Richard Iannone \email{rich@posit.co} (\href{https://orcid.org/0000-0003-3925-190X}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Andrew Dunning (\href{https://orcid.org/0000-0003-0464-5036}{ORCID}) [contributor]
+  \item Atsushi Yasumoto (\href{https://orcid.org/0000-0002-8335-495X}{ORCID}) (Number sections Lua filter) [contributor, copyright holder]
+  \item Barret Schloerke [contributor]
+  \item Carson Sievert (\href{https://orcid.org/0000-0002-4958-2844}{ORCID}) [contributor]
+  \item Devon Ryan \email{dpryan79@gmail.com} (\href{https://orcid.org/0000-0002-8549-0971}{ORCID}) [contributor]
+  \item Frederik Aust \email{frederik.aust@uni-koeln.de} (\href{https://orcid.org/0000-0003-4900-788X}{ORCID}) [contributor]
+  \item Jeff Allen \email{jeff@posit.co} [contributor]
+  \item JooYoung Seo (\href{https://orcid.org/0000-0002-4064-6012}{ORCID}) [contributor]
+  \item Malcolm Barrett [contributor]
+  \item Rob Hyndman \email{Rob.Hyndman@monash.edu} [contributor]
+  \item Romain Lesur [contributor]
+  \item Roy Storey [contributor]
+  \item Ruben Arslan \email{ruben.arslan@uni-goettingen.de} [contributor]
+  \item Sergio Oller [contributor]
+  \item Posit Software, PBC [copyright holder, funder]
+  \item  jQuery UI contributors (jQuery UI library; authors listed in inst/rmd/h/jqueryui/AUTHORS.txt) [contributor, copyright holder]
+  \item Mark Otto (Bootstrap library) [contributor]
+  \item Jacob Thornton (Bootstrap library) [contributor]
+  \item  Bootstrap contributors (Bootstrap library) [contributor]
+  \item  Twitter, Inc (Bootstrap library) [copyright holder]
+  \item Alexander Farkas (html5shiv library) [contributor, copyright holder]
+  \item Scott Jehl (Respond.js library) [contributor, copyright holder]
+  \item Ivan Sagalaev (highlight.js library) [contributor, copyright holder]
+  \item Greg Franko (tocify library) [contributor, copyright holder]
+  \item John MacFarlane (Pandoc templates) [contributor, copyright holder]
+  \item  Google, Inc. (ioslides library) [contributor, copyright holder]
+  \item Dave Raggett (slidy library) [contributor]
+  \item  W3C (slidy library) [copyright holder]
+  \item Dave Gandy (Font-Awesome) [contributor, copyright holder]
+  \item Ben Sperry (Ionicons) [contributor]
+  \item  Drifty (Ionicons) [copyright holder]
+  \item Aidan Lister (jQuery StickyTabs) [contributor, copyright holder]
+  \item Benct Philip Jonsson (pagebreak Lua filter) [contributor, copyright holder]
+  \item Albert Krewinkel (pagebreak Lua filter) [contributor, copyright holder]
+}
+
+}
