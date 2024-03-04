@@ -235,7 +235,7 @@ pipe (|) character. For example:
 
 The following single character keyboard shortcuts enable alternate display
 modes:
-\itemize{
+\describe{
 \item{\code{'f'}      }{enable fullscreen mode}
 \item{\code{'w'}      }{toggle widescreen mode}
 \item{\code{'o'}      }{enable overview mode}

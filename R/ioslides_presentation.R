@@ -87,7 +87,7 @@
 #' @section Display Modes:
 #'   The following single character keyboard shortcuts enable alternate display
 #'   modes:
-#'   \itemize{
+#'   \describe{
 #'     \item{`'f'`      }{enable fullscreen mode}
 #'     \item{`'w'`      }{toggle widescreen mode}
 #'     \item{`'o'`      }{enable overview mode}
