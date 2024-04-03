@@ -184,11 +184,7 @@ file_with_meta_ext <- function(file, meta_ext, ext = xfun::file_ext(file)) {
 }
 
 knitr_files_dir <- function(file) {
-  if (!is.null(getOption("rmarkdown.files.suffix"))) {
-    suffix <- getOption("rmarkdown.files.suffix")
-  } else {
-    suffix <- "_files"
-  }
+  suffix <- getOption("rmarkdown.files.suffix", "_files")
   paste(xfun::sans_ext(file), suffix, sep = "")
 }
 
