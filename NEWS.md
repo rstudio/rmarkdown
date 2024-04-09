@@ -1,6 +1,8 @@
 rmarkdown 2.27
 ================================================================================
 
+- Provide a global option `rmarkdown.files.suffix` to configure the suffix of the directory for auxiliary files (thanks, @certara-tzweers, #2550). By default, this suffix is `_files`, which can cause HTML output files to be deleted automatically on Microsoft OneDrive or Google Drive. If that is the case for you, you may set a different suffix in your `.Rprofile`, e.g., `options(rmarkdown.files.suffix = "_rmdfiles")`.
+
 
 rmarkdown 2.26
 ================================================================================
