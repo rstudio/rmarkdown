@@ -7,7 +7,7 @@ assignees: ''
 ---
 
 <!--
-Welcome to the rmarkdown GitHub repo!
+Welcome to the rmarkdown GitHub repo !
 
 We are always happy to hear feedback from our users. 
 
@@ -31,4 +31,5 @@ When filing a _bug report_, please check the boxes below to confirm that you hav
 
 - [ ] upgraded all your packages to their latest versions (including your versions of R, the RStudio IDE, and relevant R packages)?
 
-- [ ] installed and tested your bug with the development version of the rmarkdown package using `remotes::install_github("rstudio/rmarkdown")`?
+- [ ] installed and tested your bug with the development version of the rmarkdown package using `remotes::install_github("rstudio/rmarkdown")` ?
+
