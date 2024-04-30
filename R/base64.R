@@ -1,6 +1,7 @@
 # processes an HTML resource, given a regular expression that locates
 # instances of that resource
 process_html_res <- function(html, reg, processor) {
+  html <- one_string(html)
   m <- gregexpr(reg, html, perl = TRUE, ignore.case = TRUE)
   regmatches(html, m) <- lapply(regmatches(html, m), function(img_src) {
     src <- sub(reg, '\\1', img_src, ignore.case = TRUE)
@@ -10,7 +11,7 @@ process_html_res <- function(html, reg, processor) {
       character(1)
     )
   })
-  html
+  strsplit(html, "\n", fixed = TRUE)[[1]]
 }
 
 process_images <- function(html, processor) {
