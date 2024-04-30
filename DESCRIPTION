@@ -83,7 +83,8 @@ Suggests:
     tibble,
     vctrs,
     cleanrmd,
-    withr (>= 2.4.2)
+    withr (>= 2.4.2),
+    xml2
 VignetteBuilder: knitr
 Config/Needs/website: rstudio/quillt, pkgdown
 Encoding: UTF-8
