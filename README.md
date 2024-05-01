@@ -69,7 +69,7 @@ You can also click "Knit to HTML" again to render the full document with all cod
 
 There are two main places to get help:
 
-1. The [RStudio community](https://community.rstudio.com/c/r-markdown/10) is a friendly place to ask any questions about rmarkdown and the R Markdown family of packages.
+1. The [Posit community](https://forum.posit.co/c/quarto-r-markdown/10) is a friendly place to ask any questions about rmarkdown and the R Markdown family of packages.
 
 1. [Stack Overflow](https://stackoverflow.com/questions/tagged/r-markdown) is a great source of answers to common rmarkdown questions. It is also a great place to get help, once you have created a reproducible example that illustrates your problem.
 
