@@ -27,7 +27,8 @@ beamer_presentation(
   self_contained = TRUE,
   includes = NULL,
   md_extensions = NULL,
-  pandoc_args = NULL
+  pandoc_args = NULL,
+  extra_dependencies = NULL
 )
 }
 \arguments{
@@ -129,6 +130,13 @@ default definition of R Markdown. See the \code{\link{rmarkdown_format}} for
 additional details.}
 
 \item{pandoc_args}{Additional command line options to pass to pandoc}
+
+\item{extra_dependencies}{A LaTeX dependency \code{latex_dependency()}, a
+list of LaTeX dependencies, a character vector of LaTeX package names (e.g.
+\code{c("framed", "hyperref")}), or a named list of LaTeX package options
+with the names being package names (e.g. \code{list(hyperef =
+c("unicode=true", "breaklinks=true"), lmodern = NULL)}). It can be used to
+add custom LaTeX packages to the .tex header.}
 }
 \value{
 R Markdown output format to pass to \code{\link[=render]{render()}}
