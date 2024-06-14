@@ -71,7 +71,8 @@ beamer_presentation <- function(toc = FALSE,
                                 self_contained = TRUE,
                                 includes = NULL,
                                 md_extensions = NULL,
-                                pandoc_args = NULL) {
+                                pandoc_args = NULL,
+                                extra_dependencies = NULL) {
 
   # base pandoc options for all beamer output
   args <- c()
@@ -143,6 +144,12 @@ beamer_presentation <- function(toc = FALSE,
     # Same in PDF for beamer
     # https://github.com/rstudio/rmarkdown/issues/2294
     args <- append_in_header(process_header_includes(metadata))
+
+    if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
+      extra_dependencies <- latex_dependencies(extra_dependencies)
+      all_dependencies <- append(extra_dependencies, flatten_latex_dependencies(knit_meta))
+      args <- c(args, append_in_header(latex_dependencies_as_string(all_dependencies)))
+    }
 
     # no-op other than caching dir location
     args
