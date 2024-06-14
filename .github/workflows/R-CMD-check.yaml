@@ -29,10 +29,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          # testing R release with latest  pandoc version and their dev version
+          # testing R release with last shipped pandoc version in RStudio IDE and new pandoc
           - {os: windows-latest, pandoc: 'latest',  r: 'release'}
           - {os: macOS-latest,   pandoc: 'latest',  r: 'release'}
-          - {os: ubuntu-latest,  pandoc: 'nightly', r: 'release'}
+          - {os: ubuntu-latest,  pandoc: 'devel',    r: 'release'}
           # testing older pandoc versions
           - {os: ubuntu-latest,  pandoc: '3.1.11',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.19.2',   r: 'release'}
@@ -80,10 +80,17 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      - name: Remove default installed Pandoc
+        if: runner.os == 'Linux'
+        run: sudo dpkg -r pandoc
+
       - uses: r-lib/actions/setup-pandoc@v2
+        if: matrix.config.pandoc != 'devel'
         with:
           pandoc-version: ${{ matrix.config.pandoc }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: cderv/actions/setup-pandoc-nightly@nightly-pandoc
+        if: matrix.config.pandoc == 'devel'
 
       - name: Pandoc and Tinytex info
         run: |
