@@ -82,7 +82,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           pandoc-version: ${{ matrix.config.pandoc }}
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pandoc and Tinytex info
         run: |
