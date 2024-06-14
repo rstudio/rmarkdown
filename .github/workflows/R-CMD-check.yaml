@@ -80,6 +80,7 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v2
         with:
           pandoc-version: ${{ matrix.config.pandoc }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pandoc and Tinytex info
         run: |
