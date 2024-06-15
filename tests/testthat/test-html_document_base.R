@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("Absolute path for image from output directory are made relative to output directory", {
   skip_if_not_pandoc("2.0")
   skip_if_not_installed("xml2")

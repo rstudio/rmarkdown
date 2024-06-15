@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("Correct anchor_sections style is used", {
   deps <- html_dependency_anchor_sections
   expect_s3_class(deps(), "html_dependency")

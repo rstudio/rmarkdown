@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("toc has correct identifier", {
   skip_on_cran() # avoid pandoc issue on CRAN
   skip_if_not_pandoc("2.10.1") # changes in gfm writer break this test for earlier versions

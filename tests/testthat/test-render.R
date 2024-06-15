@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("Metadata is available before pre_knit", {
   message_pre_knit = 'pre_knit handles metadata'
   fmt <- md_document()

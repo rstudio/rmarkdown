@@ -1,6 +1,3 @@
-# TODO: added for new tests - to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("HTML template contains special comment when in shiny prerendered", {
   skip_if_not_pandoc()
   special_comment <- "<!-- HEAD_CONTENT -->"
