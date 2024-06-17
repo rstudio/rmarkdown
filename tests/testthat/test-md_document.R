@@ -1,5 +1,3 @@
-local_edition(3)
-
 test_that("adapt_md_variant() adds extensions to markdown variants", {
   expect_identical(adapt_md_variant("markdown"), "markdown-yaml_metadata_block-pandoc_title_block")
   expect_identical(adapt_md_variant("markdown_phpextra"), "markdown_phpextra-yaml_metadata_block")

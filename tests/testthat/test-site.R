@@ -1,5 +1,3 @@
-local_edition(3)
-
 # copy part of our demo site to a tempdir
 local_create_site <- function(files, env = parent.frame()) {
   site_dir <- tempfile()

@@ -1,7 +1,7 @@
 rmarkdown 2.28
 ================================================================================
 
-
+- `beamer_presentation` support handling latex dependencies via the new `extra_dependencies` argument and declarations within chunks (e.g., `knitr::asis_output("", meta = list(rmarkdown::latex_dependency("longtable")))`) (thanks, @cderv, @atusy, #2478).
 
 rmarkdown 2.27
 ================================================================================

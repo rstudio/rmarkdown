@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 .generate_md_and_convert <- function(content, output_format) {
   input_file <- local_rmd_file(c("---\ntitle: Test\n---\n", content))
   res <- .render_and_read(input_file, output_format = output_format)
