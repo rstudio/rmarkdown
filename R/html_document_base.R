@@ -8,6 +8,8 @@
 #' @param dependency_resolver A dependency resolver
 #' @param copy_resources Copy resources
 #' @param bootstrap_compatible Bootstrap compatible
+#' @param allow_uptree_lib_dir Allow lib_dir not to be a descendent of the
+#'   output directory.
 #' @param ... Ignored
 #'
 #' @return HTML base output format.
@@ -25,6 +27,7 @@ html_document_base <- function(theme = NULL,
                                extra_dependencies = NULL,
                                css = NULL,
                                bootstrap_compatible = FALSE,
+                               allow_uptree_lib_dir = FALSE,
                                ...) {
 
   # default for dependency_resolver
@@ -141,12 +144,21 @@ html_document_base <- function(theme = NULL,
       # If we can add bootstrap for Shiny, do it
       format_deps <- append(format_deps, bootstrap_dependencies("bootstrap"))
     }
+
+    # Allow the user to override default dependencies by injecting alternate
+    # dependencies with the same name into extra_dependencies.
+    if (length(format_deps) > 0  && length(extra_dependencies) > 0) {
+      names(format_deps) <- lapply(format_deps, function(x) x$name)
+      names(extra_dependencies) <- lapply(extra_dependencies, function(x) x$name)
+      format_deps <- format_deps[setdiff(names(format_deps),
+                                         names(extra_dependencies))]
+    }
     format_deps <- append(format_deps, extra_dependencies)
 
     extras <- html_extras_for_document(knit_meta, runtime, dependency_resolver,
                                        format_deps)
     args <- c(args, pandoc_html_extras_args(extras, self_contained, lib_dir,
-                                            output_dir))
+                                            output_dir, allow_uptree_lib_dir))
 
     preserved_chunks <<- extract_preserve_chunks(input_file)
 

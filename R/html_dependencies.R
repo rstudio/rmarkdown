@@ -311,16 +311,114 @@ html_reference_path <- function(path, lib_dir, output_dir) {
     relative_to(output_dir, path)
 }
 
+copy_if_changed <- function(from, to, recursive = FALSE,
+                            overwrite = FALSE, copy.mode = FALSE) {
+  isdir = dir.exists(from)
+  if (isdir) {
+    if (! dir.exists(to)) {
+      dir.create(to, recursive = TRUE)
+    }
+    if (recursive) {
+      from2 = list.files(from, recursive = FALSE, include.dirs = TRUE,
+                        all.files = TRUE, no.. = TRUE)
+      mapply(copy_if_changed, from = file.path(from, from2),
+             to = file.path(to, from2),
+             MoreArgs = list(recursive = recursive, overwrite = overwrite,
+                             copy.mode = copy.mode))
+    }
+  } else {
+    digests <- tools::md5sum(c(from, to))
+    if (!isTRUE(digests[1] == digests[2])) {
+      file.copy(from, to, overwrite = TRUE, copy.mode = FALSE)
+    }
+  }
+}
+
+# This is an almost exact copy of htmltools::copyDependencyToDir, except that
+# it only copies files if necessary.
+#
+# Sometimes, a process (e.g., web server) will be accessing an HTML dependency
+# file when RMarkdown tries to overwrite it, and R throws an error reporting
+# insufficient privilege to delete or overwrite the file or directory.
+#
+# This function reduces that by only copying if the file has changed.
+#
+copy_html_dependency <- function(dependency, outputDir, mustWork = TRUE) {
+  dir <- dependency$src$file
+  if (is.null(dir)) {
+    if (mustWork) {
+      stop("Dependency ", dependency$name, " ",
+           dependency$version, " is not disk-based")
+    }
+    else {
+      return(dependency)
+    }
+  }
+  if (!is.null(dependency$package))
+    dir <- system.file(dir, package = dependency$package)
+  if (length(outputDir) != 1 || outputDir %in% c("",
+                                                 "/"))
+    stop("outputDir must be of length 1 and cannot be \"\" or \"/\"")
+  target_dir <- if (getOption("htmltools.dir.version",
+                              TRUE)) {
+    paste(dependency$name, dependency$version, sep = "-")
+  }
+  else dependency$name
+  target_dir <- file.path(outputDir, target_dir)
+  if (same_path(dir, target_dir))
+    return(dependency)
+  if (!dir_exists(outputDir))
+    dir.create(outputDir)
+
+  # Unlike htmltools::copyDependencyToDir(),
+  # we do not delete the target directory,  but we
+  # do create it if necessary.
+  if (! dir_exists(target_dir)) dir.create(target_dir)
+  files <- if (dependency$all_files)
+    list.files(dir)
+  else {
+    unlist(dependency[c("script", "stylesheet",
+                        "attachment")])
+  }
+  srcfiles <- file.path(dir, files)
+  if (any(!file.exists(srcfiles))) {
+    stop(sprintf("Can't copy dependency files that don't exist: '%s'",
+                 paste(srcfiles, collapse = "', '")))
+  }
+  destfiles <- file.path(target_dir, files)
+  isdir <- file.info(srcfiles)$isdir
+  destfiles <- ifelse(isdir, dirname(destfiles), destfiles)
+  mapply(copy_if_changed, from = srcfiles, to = destfiles,
+         recursive = isdir,
+         MoreArgs = list(overwrite = TRUE, copy.mode = FALSE))
+  dependency$src$file <- normalizePath(target_dir, "/", TRUE)
+  dependency
+}
+
 # return the html dependencies as an HTML string suitable for inclusion
 # in the head of a document
-html_dependencies_as_string <- function(dependencies, lib_dir, output_dir) {
+html_dependencies_as_string <- function(dependencies, lib_dir, output_dir,
+                                        allow_uptree_lib_dir = FALSE) {
   if (!is.null(lib_dir)) {
-    # using mustWork=FALSE insures non-disk based dependencies are
-    # return untouched, keeping the order of all deps.
-    dependencies <- lapply(dependencies, copyDependencyToDir,
-                           outputDir = lib_dir, mustWork = FALSE)
-    dependencies <- lapply(dependencies, makeDependencyRelative,
-                           basepath = output_dir, mustWork = FALSE)
+    if (allow_uptree_lib_dir && grepl("^\\.\\.", lib_dir)) {
+      abs_lib_dir <- normalizePath(lib_dir, winslash = "/")
+      dependencies <- lapply(dependencies, copy_html_dependency, abs_lib_dir,
+                             mustWork = FALSE)
+      dependencies <- lapply(dependencies, makeDependencyRelative, abs_lib_dir,
+                             mustWork = FALSE)
+      return(renderDependencies(dependencies, "file", encodeFunc = identity,
+                                hrefFilter = function(path) {
+                                  file.path(lib_dir, path)
+                                }))
+    } else {
+      # using mustWork=FALSE insures non-disk based dependencies are
+      # return untouched, keeping the order of all deps.
+      dependencies <- lapply(dependencies, copyDependencyToDir,
+                             outputDir = lib_dir, mustWork = FALSE)
+      dependencies <- lapply(dependencies, makeDependencyRelative,
+                             basepath = output_dir, mustWork = FALSE)
+    }
+
   }
 
   # Dependencies are iterated on as file based dependencies needs to be
