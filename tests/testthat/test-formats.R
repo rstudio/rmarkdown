@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("formats successfully produce a document", {
 
   testFormat <- function(output_format, df_print = NULL) {

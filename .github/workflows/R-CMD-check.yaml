@@ -30,10 +30,11 @@ jobs:
       matrix:
         config:
           # testing R release with last shipped pandoc version in RStudio IDE and new pandoc
-          - {os: windows-latest, pandoc: '3.1.6.2',  r: 'release'}
-          - {os: macOS-latest,   pandoc: '3.1.6.2',  r: 'release'}
+          - {os: windows-latest, pandoc: 'latest',  r: 'release'}
+          - {os: macOS-latest,   pandoc: 'latest',  r: 'release'}
           - {os: ubuntu-latest,  pandoc: 'devel',    r: 'release'}
           # testing older pandoc versions
+          - {os: ubuntu-latest,  pandoc: '3.1.11',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.19.2',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.18',     r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.17.1.1', r: 'release'}
@@ -43,14 +44,17 @@ jobs:
           - {os: ubuntu-latest,  pandoc: '2.7.3',    r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.5',      r: 'release'}
           # testing other R versions
-          - {os: ubuntu-latest,  pandoc: '2.11.4',   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.11.4',   r: 'oldrel-1'}
-          - {os: ubuntu-latest,  pandoc: '2.11.4',   r: 'oldrel-2'}
-          - {os: ubuntu-latest,  pandoc: '2.11.4',   r: 'oldrel-3'}
+          - {os: ubuntu-latest,  pandoc: 'latest',   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest,  pandoc: 'latest',   r: 'oldrel-1'}
+          - {os: ubuntu-latest,  pandoc: 'latest',   r: 'oldrel-2'}
+          - {os: ubuntu-latest,  pandoc: 'latest',   r: 'oldrel-3'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+
+    permissions:
+      actions: read
 
     steps:
       - uses: actions/checkout@v3

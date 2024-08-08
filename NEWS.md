@@ -1,3 +1,16 @@
+rmarkdown 2.28
+================================================================================
+
+- `beamer_presentation` support handling latex dependencies via the new `extra_dependencies` argument and declarations within chunks (e.g., `knitr::asis_output("", meta = list(rmarkdown::latex_dependency("longtable")))`) (thanks, @cderv, @atusy, #2478).
+
+rmarkdown 2.27
+================================================================================
+
+- Provide a global option `rmarkdown.files.suffix` to configure the suffix of the directory for auxiliary files (thanks, @certara-tzweers, #2550). By default, this suffix is `_files`, which can cause HTML output files to be deleted automatically on Microsoft OneDrive or Google Drive. If that is the case for you, you may set a different suffix in your `.Rprofile`, e.g., `options(rmarkdown.files.suffix = "_rmdfiles")`.
+
+- Fix a regression in 2.26 regarding image paths post-processing in `html_document_base()`. Now absolute paths to image in the output directory (`output_dir`) are correctly made relative to the output directory again.
+
+
 rmarkdown 2.26
 ================================================================================
 
@@ -16,6 +29,8 @@ rmarkdown 2.26
 - Removed the **stringr** dependency since it is used only once in the package and the equivalent base R code is simple enough (thanks, @etiennebacher, #2530).
 
 - For the output format option `fig_crop: auto`, it will now use the same logic as in **knitr** to decide if cropping is possible (yihui/knitr#2246).
+
+- Avoid corrupting input files by accident (thanks, @J-Moravec, #2534).
 
 
 rmarkdown 2.25

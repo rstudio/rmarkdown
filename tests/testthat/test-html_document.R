@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("anchor_sections() adds correct component", {
   skip_if_not_pandoc("2.0")
   res <- list(args = NULL, lua_filters = NULL, extra_dependencies = NULL)

@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("build highlight args for pandoc correctly", {
   hl_style <- function(name) c("--highlight-style", name)
   expect_equal(pandoc_highlight_args(NULL), "--no-highlight")

@@ -25,5 +25,4 @@
 #'   \link{word_document}, \link{beamer_presentation}
 #' @name rmarkdown-package
 #' @aliases rmarkdown
-#' @docType package
-NULL
+"_PACKAGE"

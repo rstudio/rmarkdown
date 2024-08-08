@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("Metadata is available before pre_knit", {
   message_pre_knit = 'pre_knit handles metadata'
   fmt <- md_document()
@@ -31,4 +28,13 @@ test_that("file_scope split correctly input file", {
   expect_match(splitted, "[.]split[.]md$")
   expect_snapshot_file(splitted[1])
   expect_snapshot_file(splitted[2])
+})
+
+test_that("Input file is not corrupted", {
+  input <- tempfile()
+  on.exit(unlink(input), add = TRUE, after = FALSE)
+  saveRDS("test", input)
+  # try() is necessary for Pandoc <= 2.14.2
+  try(render(input, quiet = TRUE))
+  expect_equal(readRDS(input), "test")
 })

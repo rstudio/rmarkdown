@@ -238,6 +238,7 @@ paged_table <- function(x, options = NULL) {
   x
 }
 
+#' @export
 print.paged_df <- function(x, ...) {
   knitr::asis_output(
     paged_table_html(x, options = attr(x, "options")),

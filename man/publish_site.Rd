@@ -23,12 +23,11 @@ there is no `name` specified).}
 
 \item{method}{Publishing method (currently only "rsconnect" is available)}
 
-\item{server}{Server name. Required only if you use the same account name on
-multiple servers.}
+\item{account, server}{Uniquely identify a remote server with either your
+user \code{account}, the \code{server} name, or both. If neither are supplied, and
+there are multiple options, you'll be prompted to pick one.
 
-\item{account}{Account to deploy application to. This parameter is only required for
-the initial deployment of an application when there are multiple accounts configured
-on the system.}
+Use \code{\link[rsconnect:accounts]{accounts()}} to see the full list of available options.}
 
 \item{render}{`TRUE` to render the site locally before publishing.}
 
