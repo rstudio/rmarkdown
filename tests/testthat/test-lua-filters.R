@@ -108,14 +108,15 @@ test_that("formats have the expected Lua filter", {
   }
   # different lua filter
   pgb <- "pagebreak"; lxd <- "latex-div"
+  tbl <- if (pandoc_available("3.2.1")) "table-classes"
   nbs <- "number-sections"; acs <- "anchor-sections"
   expect_filters(beamer_presentation(), c(pgb, lxd))
   expect_filters(github_document(number_sections = TRUE),
                  md_document(number_sections = TRUE))
-  expect_filters(html_document(), c(pgb, lxd))
-  expect_filters(html_document(anchor_sections = TRUE), c(pgb, lxd, acs))
-  expect_filters(html_document(anchor_sections = list(depth = 3)), c(pgb, lxd, acs))
-  expect_filters(html_document_base(), c(pgb, lxd))
+  expect_filters(html_document(), c(pgb, lxd, tbl))
+  expect_filters(html_document(anchor_sections = TRUE), c(pgb, lxd, tbl, acs))
+  expect_filters(html_document(anchor_sections = list(depth = 3)), c(pgb, lxd, tbl, acs))
+  expect_filters(html_document_base(), c(pgb, lxd, tbl))
   expect_filters(latex_document(), c(pgb, lxd))
   expect_filters(context_document(ext = ".tex"), c(pgb))
   expect_filters(md_document(number_sections = TRUE), c(nbs))
@@ -123,7 +124,7 @@ test_that("formats have the expected Lua filter", {
   expect_filters(powerpoint_presentation(number_sections = TRUE), c(nbs))
   expect_filters(odt_document(number_sections = TRUE), c(pgb, nbs))
   expect_filters(rtf_document(number_sections = TRUE), c(nbs))
-  expect_filters(slidy_presentation(number_sections = TRUE), c(pgb, lxd, nbs))
+  expect_filters(slidy_presentation(number_sections = TRUE), c(pgb, lxd, tbl, nbs))
   expect_filters(
     word_document(number_sections = TRUE),
     c(pgb, if (!pandoc_available("2.10.1")) nbs)
