@@ -1,7 +1,10 @@
 rmarkdown 2.28
 ================================================================================
 
+- Add classes `odd`, `even`, and `header` back to table rows for Pandoc >= 3.2.1, so tables can be styled properly (thanks, @therealgenna, #2567).
+
 - `beamer_presentation` support handling latex dependencies via the new `extra_dependencies` argument and declarations within chunks (e.g., `knitr::asis_output("", meta = list(rmarkdown::latex_dependency("longtable")))`) (thanks, @cderv, @atusy, #2478).
+
 
 rmarkdown 2.27
 ================================================================================
