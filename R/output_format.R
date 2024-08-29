@@ -60,6 +60,8 @@
 #'   each file. The return is the new file scope. Also, the arguments should
 #'   include \code{...} for the future extensions.
 #' @param base_format An optional format to extend.
+#' @param allow_uptree_lib_dir Allow \code{lib_dir} output parameter not to
+#'   be a descendent of the output directory.
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
 #' @seealso \link{render}, \link{knitr_options}, \link{pandoc_options}
@@ -81,7 +83,8 @@ output_format <- function(knitr,
                           post_processor = NULL,
                           on_exit = NULL,
                           file_scope = NULL,
-                          base_format = NULL) {
+                          base_format = NULL,
+                          allow_uptree_lib_dir = FALSE) {
 
   format <- list(
     knitr = knitr,
@@ -95,7 +98,8 @@ output_format <- function(knitr,
     intermediates_generator = intermediates_generator,
     post_processor = post_processor,
     file_scope = file_scope,
-    on_exit = on_exit
+    on_exit = on_exit,
+    allow_uptree_lib_dir = allow_uptree_lib_dir
   )
 
   class(format) <- "rmarkdown_output_format"
@@ -191,6 +195,8 @@ merge_output_formats <- function(base,
     pandoc = merge_pandoc_options(base$pandoc, overlay$pandoc),
     keep_md =
       merge_scalar(base$keep_md, overlay$keep_md),
+    allow_uptree_lib_dir =
+      merge_scalar(base$allow_uptree_lib_dir, overlay$allow_uptree_lib_dir),
     clean_supporting =
       merge_scalar(base$clean_supporting, overlay$clean_supporting),
     df_print =
@@ -902,7 +908,14 @@ knit_print.output_format_dependency <- function(x, ...) {
 merge_output_format_dependency <- function(fmt, dep) {
   dep$name <- NULL # remove to be consistent with arguments of output_format
   dep$base_format <- fmt
-  do.call(output_format, dep)
+  fmt2 <- do.call(output_format, dep)
+  cls <- class(fmt2)
+  # Make sure named elements are in the same order, to pass tests.
+  fmt2 <- fmt2[c(intersect(names(fmt), names(fmt2)),
+                 setdiff(names(fmt), names(fmt2)),
+                 setdiff(names(fmt2), names(fmt)))]
+  class(fmt2) <- cls
+  fmt2
 }
 
 merge_output_format_dependencies <- function(fmt, deps) {

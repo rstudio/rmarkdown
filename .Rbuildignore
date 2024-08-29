@@ -7,6 +7,8 @@
 ^tests/testthat/site/_site/
 ^tests/testthat/site/lib/
 ^tests/testthat/site/.*_files/
+^tests/testthat/html-uptree-lib_dir/.*\.html$
+^tests/testthat/html-uptree-lib_dir/.*\.gitkeep$
 ^tests/manual/
 ^\.github$
 ^pkgdown$
