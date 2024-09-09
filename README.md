@@ -37,7 +37,7 @@ If you want to use the rmarkdown package outside of RStudio, you can install the
 install.packages("rmarkdown")
 ```
 
-If you want to use the development version of the rmarkdown package (either with or without RStudio), you can install the package from GitHub via the [**remotes** package](https://remotes.r-lib.org):
+If you want to use the development version of the rmarkdown package (either with or without RStudio), you can install the package from GitHub via the [**pak** package](https://pak.r-lib.org):
 
 ```r
 # install.packages("pak")
