@@ -102,8 +102,8 @@ github_document <- function(toc = FALSE,
         # don't activate math in Pandoc and pass it as is
         # https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/
         math <- NULL
-        # TODO: Check for version - should be the default in Pandoc 2.19+
-        variant <- paste0(variant, "+tex_math_dollars")
+        # Pandoc 3.4 uses +tex_math_gfm by default to write special gfm syntax. We choose to keep $$ and $ which are still supported by Github
+        variant <- if (pandoc_available("3.4")) paste0(variant, "-tex_math_gfm") else paste0(variant, "+tex_math_dollars")
         preview_math <- check_math_argument("mathjax")
       } else {
         # fallback to webtex
