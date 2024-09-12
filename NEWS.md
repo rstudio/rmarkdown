@@ -3,6 +3,9 @@ rmarkdown 2.29
 
 - `find_external_resources()` now correctly detects knitr child document provided with option like `child = c("child.Rmd")` (thanks, @rempsyc, #2574).
 
+- A parameter allowing multiple selections uses a select input control by default regardless of the number of choices.
+
+
 rmarkdown 2.28
 ================================================================================
 
