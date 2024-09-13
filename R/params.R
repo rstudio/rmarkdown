@@ -162,7 +162,7 @@ params_get_input <- function(param) {
   if (is.null(input)) {
     if (!is.null(param$choices)) {
       ## select for a large number of choices and multiple choices.
-      if (params_allows_multiple(param)) {
+      if (isTRUE(param$multiple)) {
         input <- "select"
       } else if (length(param$choices) > 4) {
         input <- "select"
@@ -213,10 +213,6 @@ params_get_control <- function(param) {
   control
 }
 
-  params_allows_multiple <- function(param) {
-    return(!is.null(param$multiple) && param$multiple)
-  }
-  
 # Returns true if the parameter can be configurable with Shiny UI elements.
 params_configurable <- function(param) {
   inputControlFn <- params_get_control(param)
@@ -225,7 +221,7 @@ params_configurable <- function(param) {
   }
   # Some inputs (like selectInput) support the selection of
   # multiple entries through a "multiple" argument.
-  if (params_allows_multiple(param)) {
+  if (isTRUE(param$multiple)) {
     return(TRUE)
   }
   # sliderInput supports either one or two-value inputs.
