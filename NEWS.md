@@ -1,6 +1,7 @@
 rmarkdown 2.29
 ================================================================================
 
+- `find_external_resources()` now correctly detects knitr child document provided with option like `child = c("child.Rmd")` (thanks, @rempsyc, #2574).
 
 rmarkdown 2.28
 ================================================================================
