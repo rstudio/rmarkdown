@@ -316,7 +316,7 @@ discover_rmd_resources <- function(rmd_file, discover_single_resource) {
         rmd_content[idx], chunk_start,
         chunk_start + attr(chunk_line, "capture.length", exact = TRUE) - 2
       )
-      for (child_expr in c("\\bchild\\s*=\\s*'([^']+)'", "\\bchild\\s*=\\s*\"([^\"]+)\"")) {
+      for (child_expr in c("\\bchild\\s*=\\s*(?:c\\()?'([^']+)'\\)?", "\\bchild\\s*=\\s*(?:c\\()?\"([^\"]+)\"\\)?")) {
         child_match <- gregexpr(child_expr, chunk_text, perl = TRUE)[[1]]
         if (child_match > 0) {
           child_start <- attr(child_match, "capture.start", exact = TRUE)

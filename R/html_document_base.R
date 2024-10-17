@@ -249,7 +249,10 @@ html_document_base <- function(theme = NULL,
     knitr = NULL,
     pandoc = pandoc_options(
       to = "html", from = NULL, args = args,
-      lua_filters = pkg_file_lua(c("pagebreak.lua", "latex-div.lua"))
+      lua_filters = pkg_file_lua(c(
+        "pagebreak.lua", "latex-div.lua",
+        if (pandoc_available("3.2.1")) "table-classes.lua"
+      ))
     ),
     keep_md = FALSE,
     clean_supporting = FALSE,

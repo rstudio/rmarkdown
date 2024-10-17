@@ -1,7 +1,36 @@
+rmarkdown 2.29
+================================================================================
+
+- `find_external_resources()` now correctly detects knitr child document provided with option like `child = c("child.Rmd")` (thanks, @rempsyc, #2574).
+
+- `knit_params_ask()` uses a `select` input for parameters which allow multiple selected values. Previously, a `radio` input was incorrectly used when the parameter had a small number of choices.
+
+    ```yaml
+    params:
+        primaries:
+            choices: ["red", "yellow", "blue"]
+            multiple: true
+    ```
+    
+    When `multiple` is not enabled, parameter configuration still uses `radio` when there are fewer than five choices.
+
+    The `input` parameter field can still be used to force the configuration control.
+    
+    ```yaml
+    params:
+        grade:
+            input: radio
+            choices: ["A", "B", "C", "D", "F"]
+    ```
+
+
 rmarkdown 2.28
 ================================================================================
 
+- Add classes `odd`, `even`, and `header` back to table rows for Pandoc >= 3.2.1, so tables can be styled properly (thanks, @therealgenna, #2567).
+
 - `beamer_presentation` support handling latex dependencies via the new `extra_dependencies` argument and declarations within chunks (e.g., `knitr::asis_output("", meta = list(rmarkdown::latex_dependency("longtable")))`) (thanks, @cderv, @atusy, #2478).
+
 
 rmarkdown 2.27
 ================================================================================

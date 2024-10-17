@@ -13,7 +13,7 @@ test_that("toc has correct identifier", {
   } else {
     "before-pandoc-2.18"
   }
-  res <- render(tmp_file, github_document(toc = TRUE, html_preview = FALSE))
+  res <- render(tmp_file, github_document(toc = TRUE, html_preview = FALSE), quiet = TRUE)
   expect_snapshot_file(res, "github-toc.md", compare = compare_file_text, variant = pandoc_version)
 })
 
@@ -32,7 +32,7 @@ test_that("toc has correct identifier also when sections are numbered ", {
   } else {
     "before-pandoc-2.18"
   }
-  res <- render(tmp_file, github_document(toc = TRUE, number_sections = TRUE, html_preview = FALSE))
+  res <- render(tmp_file, github_document(toc = TRUE, number_sections = TRUE, html_preview = FALSE), quiet = TRUE)
   expect_snapshot_file(res, "github-toc-numbered.md", compare = compare_file_text, variant = pandoc_version)
 })
 
@@ -41,7 +41,7 @@ test_that("github_document produces atx-header", {
   skip_on_cran() # avoid pandoc issue on CRAN
   h <- paste0(Reduce(paste0, rep("#", 5), accumulate = TRUE), " title ", 1:5, "\n\n")
   tmp_file <- local_rmd_file(h)
-  res <- render(tmp_file, github_document(html_preview = FALSE))
+  res <- render(tmp_file, github_document(html_preview = FALSE), quiet = TRUE)
   expect_snapshot_file(res, "github-atx.md", compare = compare_file_text)
 })
 

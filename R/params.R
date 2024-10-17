@@ -161,11 +161,13 @@ params_get_input <- function(param) {
   input <- param$input
   if (is.null(input)) {
     if (!is.null(param$choices)) {
-      ## radio buttons for a small number of choices, select otherwise.
-      if (length(param$choices) <= 4) {
-        input <- "radio"
-      } else {
+      ## select for a large number of choices and multiple choices.
+      if (isTRUE(param$multiple)) {
         input <- "select"
+      } else if (length(param$choices) > 4) {
+        input <- "select"
+      } else {
+        input <- "radio"
       }
     } else {
       ## Not choices. Look at the value type to find what input control we
@@ -219,8 +221,7 @@ params_configurable <- function(param) {
   }
   # Some inputs (like selectInput) support the selection of
   # multiple entries through a "multiple" argument.
-  multiple_ok <- (!is.null(param$multiple) && param$multiple)
-  if (multiple_ok) {
+  if (isTRUE(param$multiple)) {
     return(TRUE)
   }
   # sliderInput supports either one or two-value inputs.

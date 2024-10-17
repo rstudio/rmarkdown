@@ -263,3 +263,24 @@ test_that("multiple resources in the includes option can be discovered", {
 
   expect_equal(resources, expected)
 })
+
+test_that("knitr child are correctly discovered as resources from chunk options", {
+  expect_child_resource_found <- function(child_opts, child) {
+    dir <- withr::local_tempdir("find-child")
+    withr::local_dir(dir)
+    rmd <- "test.Rmd"
+    xfun::write_utf8(
+      text = knitr::knit_expand(text = c("```{r,<<child_opts>>}", "```"), delim = c("<<", ">>")),
+      rmd
+    )
+    xfun::write_utf8(c("Content"), child)
+    expect_contains(find_external_resources(!!rmd)$path, !!child)
+  }
+  child <- "child.Rmd"
+  expect_child_resource_found('child="child.Rmd"', child)
+  expect_child_resource_found(' child = "child.Rmd"', child)
+  expect_child_resource_found('child=c("child.Rmd")', child)
+  expect_child_resource_found("child='child.Rmd'", child)
+  expect_child_resource_found(" child = 'child.Rmd'", child)
+  expect_child_resource_found("child=c('child.Rmd')", child)
+})
