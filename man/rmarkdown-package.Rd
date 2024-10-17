@@ -87,6 +87,7 @@ Other contributors:
   \item Aidan Lister (jQuery StickyTabs) [contributor, copyright holder]
   \item Benct Philip Jonsson (pagebreak Lua filter) [contributor, copyright holder]
   \item Albert Krewinkel (pagebreak Lua filter) [contributor, copyright holder]
+  \item Jonathan Gilligan \email{jonathan.gilligan@gmail.com} (\href{https://orcid.org/0000-0003-1375-6686}{ORCID}) [contributor]
 }
 
 }
