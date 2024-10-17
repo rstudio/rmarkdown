@@ -1,6 +1,14 @@
 rmarkdown 2.29
 ================================================================================
 
+- `html_document` output allows `lib_dir` to point to a parent of the output 
+  directory if the `allow_uptree_lib_dir` parameter is set to `TRUE`. This used
+  to throw an error, "The path <file> does not appear to be a descendant of 
+  <dir>". This makes it possible to have a directory structure for HTML output
+  where there is a shared master library with css, javascript, etc. and separate 
+  child directories with RMarkdown files. #146 and #1859.
+  (thanks, @jonathan-g, #2199)
+
 - `find_external_resources()` now correctly detects knitr child document provided with option like `child = c("child.Rmd")` (thanks, @rempsyc, #2574).
 
 - `knit_params_ask()` uses a `select` input for parameters which allow multiple selected values. Previously, a `radio` input was incorrectly used when the parameter had a small number of choices.
@@ -42,14 +50,6 @@ rmarkdown 2.27
 
 rmarkdown 2.26
 ================================================================================
-
-- `html_document` output allows `lib_dir` to point to a parent of the output 
-  directory if the `allow_uptree_lib_dir` parameter is set to `TRUE`. This used
-  to throw an error, "The path <file> does not appear to be a descendant of 
-  <dir>". This makes it possible to have a directory structure for HTML output
-  where there is a shared master library with css, javascript, etc. and separate 
-  child directories with RMarkdown files. #146 and #1859.
-  (thanks, @jonathan-g, #2199)
 
 - **rmarkdown** now requires **knitr** >= 1.43.
 
