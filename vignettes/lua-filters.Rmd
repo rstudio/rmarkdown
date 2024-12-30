@@ -101,7 +101,7 @@ and the style will be applied to this class from the CSS included in the chunk.
 
 This customisation can also be achieved by setting the environnement variable `PANDOC_NEWPAGE_HTML_CLASS` in the R session that will render the document (or in `.Renviron` file for example)
 
-Let's note that in this example we use [`break-after`](https://developer.mozilla.org/en-US/docs/Web/CSS/break-after) property instead of `page-break-after` as it is recommended now to use the former which is the replacement. The latter is kept around for [compatibility reason with browsers](https://caniuse.com/#search=page-break).
+Let's note that in this example we use [`break-after`](https://developer.mozilla.org/en-US/docs/Web/CSS/break-after) property instead of `page-break-after` as it is recommended now to use the former which is the replacement. The latter is kept around for compatibility reason with browsers.
 
 ### Using with Word documents {#word}
 

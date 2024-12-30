@@ -1,7 +1,7 @@
 Type: Package
 Package: rmarkdown
 Title: Dynamic Documents for R
-Version: 2.28.2
+Version: 2.29.1
 Authors@R: c(
     person("JJ", "Allaire", , "jj@posit.co", role = "aut"),
     person("Yihui", "Xie", , "xie@yihui.name", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0645-5666")),
@@ -50,7 +50,6 @@ Authors@R: c(
     person("Albert", "Krewinkel", role = c("ctb", "cph"), comment = "pagebreak Lua filter"),
     person("Jonathan", "Gilligan", role = "ctb", email = "jonathan.gilligan@gmail.com", comment = c(ORCID = "0000-0003-1375-6686"))
   )
-Maintainer: Yihui Xie <xie@yihui.name>
 Description: Convert R Markdown documents into a variety of formats.
 License: GPL-3
 URL: https://github.com/rstudio/rmarkdown, https://pkgs.rstudio.com/rmarkdown/
