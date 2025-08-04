@@ -46,6 +46,10 @@ pandoc_convert <- function(input,
                            verbose = FALSE,
                            wd = NULL) {
 
+  # ensure pandoc is available
+  if (!pandoc_available()) 
+    stop2("pandoc not found, ensure pandoc is installed")
+  
   # ensure we've scanned for pandoc
   find_pandoc()
 
