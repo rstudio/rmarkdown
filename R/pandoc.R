@@ -46,8 +46,8 @@ pandoc_convert <- function(input,
                            verbose = FALSE,
                            wd = NULL) {
 
-  # ensure we've scanned for pandoc
-  find_pandoc()
+  # ensure pandoc is available
+  pandoc_available(error = TRUE)
 
   # evaluate path arguments before changing working directory
   force(output)
