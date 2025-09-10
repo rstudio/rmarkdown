@@ -139,6 +139,8 @@
 #'  default definition of R Markdown. See the [`rmarkdown_format`] for
 #'  additional details.
 #' @param pandoc_args Additional command line options to pass to pandoc
+#' @param allow_uptree_lib_dir Allow dependencies to be placed in a directory
+#'   above the current document's location in the directory tree.
 #' @param ... Additional function arguments to pass to the base R Markdown HTML
 #'   output formatter [`html_document_base`]
 #' @return R Markdown output format to pass to [`render`]
@@ -349,6 +351,52 @@
 #'  Due to the above restrictions, you might consider using the `includes`
 #'  parameter as an alternative to providing a fully custom template.
 #'
+#'@section Directory structure:
+#'
+#'  By default \code{html_document} and related HTML document types put
+#'  dependency files into the main output directory or a subdirectory specified
+#'  by the \code{lib_dir} parameter:
+#'  If \code{lib_dir} is not a direct descendant of the main output directory,
+#'  \code{render()} will throw and error with the message
+#'  "The path &lt;file&gt; does not appear to be a descendant of &lt;dir&gt;".
+#'
+#'  Sometimes it is useful to have a directory tree where the different
+#'  HTML documents are in their own subdirectories and the dependencies are in
+#'  a common directory at the root of the site.
+#'
+#'  \itemize{
+#'  \item
+#'  \code{main_dir/}
+#'  \itemize{
+#'  \item
+#'  \code{lib/}
+#'  \itemize{
+#'  \item dependencies go here
+#'  }
+#'  }
+#'  \item \code{index.Rmd}
+#'  \item
+#'  \code{node-01/}
+#'  \itemize{
+#'  \item \code{index.Rmd}
+#'  }
+#'  \item
+#'  \code{node-02/}
+#'  \itemize{
+#'  \item \code{index.Rmd}
+#'  }
+#'  }
+#'
+#'  One way to achieve this is with the `render_site` command, but knitting
+#'  individual documents in subdirectories (such as with the RStudio "knit"
+#'  button) will result in errors.
+#'
+#'  It is possible to achieve this directory structure by setting the
+#'  `allow_uptree_lib_dir` parameter to `yes` or `true` in the
+#'  `output/html_document` section of the YAML header
+#'  and set `lib_dir` to a relative path, such as `../lib` or `../site_lib`
+#'  in `node-01/index.Rmd` and `node-02/index.Rmd` in the example above.
+#'
 #' @examples
 #' \dontrun{
 #' library(rmarkdown)
@@ -388,6 +436,7 @@ html_document <- function(
   lib_dir = NULL,
   md_extensions = NULL,
   pandoc_args = NULL,
+  allow_uptree_lib_dir = FALSE,
   ...
 ) {
   # self_contained = TRUE already uses --standalone
@@ -721,6 +770,7 @@ html_document <- function(
       pandoc_args = pandoc_args,
       extra_dependencies = extra_dependencies,
       css = css,
+      allow_uptree_lib_dir = allow_uptree_lib_dir,
       ...
     )
   )
