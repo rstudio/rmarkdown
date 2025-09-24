@@ -9,6 +9,8 @@ rmarkdown 2.30
 
 - `convert_ipynb()` no longer drops raw cells with no `format` in metadata (thanks, @katrinabrock, #2587).
 
+- Fixed a bug that prevents `render()` from working when converting `.md` input to PDF (thanks, @mrainers, #2599).
+
 
 rmarkdown 2.29
 ================================================================================
