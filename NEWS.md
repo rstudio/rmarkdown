@@ -7,6 +7,8 @@ rmarkdown 2.30
 
 - Dropped the temporary workaround that used to support syntax highlighting of `|>` and `=>`. The workaround has no longer been necessary since [Pandoc 2.18](https://github.com/jgm/pandoc/releases/tag/2.18), which was released more than 3 years ago (#2290).
 
+- `convert_ipynb()` no longer drops raw cells with no `format` in metadata (thanks, @katrinabrock, #2587).
+
 
 rmarkdown 2.29
 ================================================================================
