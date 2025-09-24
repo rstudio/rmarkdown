@@ -799,7 +799,6 @@ pandoc_lua_filter_args <- function(lua_files) {
   if (pandoc2.0()) c(rbind("--lua-filter", pandoc_path_arg(lua_files)))
 }
 
-
 # quote args if they need it
 quoted <- function(args) {
 

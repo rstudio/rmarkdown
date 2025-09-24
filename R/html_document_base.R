@@ -165,22 +165,14 @@ html_document_base <- function(theme = NULL,
     if (identical(math_method, "r-katex") && xfun::pkg_available("katex", "1.4.0")) {
       katex::render_math_in_html(output_file, output = output_file)
     }
-
-    # Other processing ----
+    
+    # if there are no preserved chunks to restore and no resource to copy then no
+    # post-processing is necessary
+    if (length(preserved_chunks) == 0 && !isTRUE(copy_resources) && self_contained)
+      return(output_file)
 
     # read the output file
     output_str <- read_utf8(output_file)
-
-    # TODO: remove this temporary fix after the syntax highlighting problem is
-    # fixed in Pandoc https://github.com/rstudio/bookdown/issues/1157
-    s1 <- '<span class="sc">|</span><span class="er">&gt;</span>'
-    s2 <- '<span class="ot">=</span><span class="er">&gt;</span>'
-
-    # if there are no preserved chunks to restore and no resource to copy then no
-    # post-processing is necessary
-    if ((length(preserved_chunks) == 0 && !isTRUE(copy_resources) && self_contained) &&
-        !length(c(grep(s1, output_str, fixed = TRUE), grep(s2, output_str, fixed = TRUE))))
-      return(output_file)
 
     # if we preserved chunks, restore them
     if (length(preserved_chunks) > 0) {
@@ -218,10 +210,6 @@ html_document_base <- function(theme = NULL,
       }
       output_str <- process_images(output_str, image_relative)
     }
-
-    # fix the issue mentioned in TODO above
-    output_str <- gsub(s1, '<span class="sc">|&gt;</span>', output_str, fixed = TRUE)
-    output_str <- gsub(s2, '<span class="ot">=&gt;</span>', output_str, fixed = TRUE)
 
     write_utf8(output_str, output_file)
 

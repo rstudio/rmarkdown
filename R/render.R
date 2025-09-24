@@ -899,6 +899,7 @@ render <- function(input,
       input  <- path.expand(input)
       output <- path.expand(output)
 
+      # Tweak Pandoc argument for all formats
       pandoc_args <- output_format$pandoc$args
 
       # if Lua filters are provided, add the command line switch
