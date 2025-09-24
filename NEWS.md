@@ -3,6 +3,8 @@ rmarkdown 2.30
 
 - `pandoc_convert()` will throw an error if Pandoc is not available (thanks, @brianperdomo, #2600).
 
+- Use the argument `--syntax-highlighting=none` for Pandoc >= 3.8 since `--no-highlight` has been deprecated (#2602).
+
 
 rmarkdown 2.29
 ================================================================================
