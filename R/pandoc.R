@@ -799,14 +799,6 @@ pandoc_lua_filter_args <- function(lua_files) {
   if (pandoc2.0()) c(rbind("--lua-filter", pandoc_path_arg(lua_files)))
 }
 
-#' @rdname pandoc_args
-#' @param xml_files Character vector of file paths to KDE syntax files. Paths
-#'   will be transformed by \code{\link{pandoc_path_arg}}.
-#' @export
-pandoc_syntax_definition_args <- function(xml_files) {
-  c(rbind("--syntax-definition", pandoc_path_arg(xml_files)))
-}
-
 # quote args if they need it
 quoted <- function(args) {
 

@@ -490,10 +490,6 @@ join <- function(..., sep = "", collapse = "") {
   paste(..., sep = sep, collapse = collapse)
 }
 
-detect_pattern <- function(pattern, vec, ...) {
-  any(grepl(pattern, vec, ...))
-}
-
 shell_exec <- function(cmd, intern = FALSE, wait = TRUE, ...) {
   if (Sys.info()[["sysname"]] == "Windows")
     shell(cmd, intern = intern, wait = wait, ...)

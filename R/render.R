@@ -908,11 +908,6 @@ render <- function(input,
       }
       pandoc_args <- c(lua_filters, pandoc_args)
 
-      # if pandoc highlighting is used, add the syntax definition file
-      # supporting new pipe operator. Only done for Pandoc 2.15+
-      # TODO: remove when updated upstream
-      pandoc_args <- add_syntax_definition(pandoc_args, pandoc_to)
-
       # in case the output format turns on the --file-scope flag, run its
       # file_scope function to split the input into multiple files
       input_files <- input
@@ -1233,49 +1228,4 @@ file_scope_split <- function(input, fun) {
   })
 
   unlist(input_files)
-}
-
-add_syntax_definition <- function(args, pandoc_to = "html") {
-  if (
-    # do nothing if opt-out
-    xfun::isFALSE(lang <- getOption("rmarkdown.highlighting.xml.add", TRUE)) ||
-    # do not add before Pandoc 2.15 due to issues with xml parsing,
-    !pandoc_available("2.15") ||
-    # do not add if no Pandoc highlighting,
-    detect_pattern("--no-highlight", args) ||
-    # do not add if format does not support highlight
-    !(pandoc_to %in% c("html", "html4", "html5", "revealjs", "slidy",
-                     "latex", "pdf", "beamer",
-                     "epub", "epub3", "docx", "pptx", "odt"))
-  ) {
-    return(args)
-  }
-
-  # default language to add
-  if (!is.character(lang)) lang <- .syntax_highlight_bundled_language()
-  lang <- setdiff(lang, c(
-    # user provided argument
-    .find_syntax_args(args),
-    # is user asking to remove one ?
-    getOption("rmarkdown.highlighting.xml.remove")
-  ))
-
-  # create the CLI flags
-  c(args,
-    pandoc_syntax_definition_args(
-      pkg_file_highlight(xfun::with_ext(lang, "xml"))
-    )
-  )
-}
-
-.syntax_highlight_bundled_language <- function() {
-  xfun::sans_ext(list.files(pkg_file_highlight(), pattern = "[.]xml$"))
-}
-
-.find_syntax_args <- function(args) {
-  if (!detect_pattern("--syntax-definition", args)) return(character(0))
-  default_lang <- .syntax_highlight_bundled_language()
-  xml_pattern <- sprintf("%s[.]xml", default_lang)
-  found <- vapply(xml_pattern, detect_pattern, vec = args, FUN.VALUE = logical(1))
-  default_lang[found]
 }
