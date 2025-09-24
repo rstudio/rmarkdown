@@ -1,5 +1,5 @@
 # -----------------------------------------------------------
-# CITATION file created with {cffr} R package, v0.2.1
+# CITATION file created with {cffr} R package, v0.4.1
 # See also: https://docs.ropensci.org/cffr/
 # -----------------------------------------------------------
 
@@ -8,40 +8,43 @@ message: 'To cite package "rmarkdown" in publications use:'
 type: software
 license: GPL-3.0-only
 title: 'rmarkdown: Dynamic Documents for R'
-version: '2.11'
+version: 2.20.1
 abstract: Convert R Markdown documents into a variety of formats.
 authors:
 - family-names: Allaire
   given-names: JJ
-  email: jj@rstudio.com
+  email: jj@posit.co
 - family-names: Xie
   given-names: Yihui
   email: xie@yihui.name
   orcid: https://orcid.org/0000-0003-0645-5666
+- family-names: Dervieux
+  given-names: Christophe
+  email: cderv@posit.co
+  orcid: https://orcid.org/0000-0003-4474-2498
 - family-names: McPherson
   given-names: Jonathan
-  email: jonathan@rstudio.com
+  email: jonathan@posit.co
 - family-names: Luraschi
   given-names: Javier
-  email: javier@rstudio.com
 - family-names: Ushey
   given-names: Kevin
-  email: kevin@rstudio.com
+  email: kevin@posit.co
 - family-names: Atkins
   given-names: Aron
-  email: aron@rstudio.com
+  email: aron@posit.co
 - family-names: Wickham
   given-names: Hadley
-  email: hadley@rstudio.com
+  email: hadley@posit.co
 - family-names: Cheng
   given-names: Joe
-  email: joe@rstudio.com
+  email: joe@posit.co
 - family-names: Chang
   given-names: Winston
-  email: winston@rstudio.com
+  email: winston@posit.co
 - family-names: Iannone
   given-names: Richard
-  email: rich@rstudio.com
+  email: rich@posit.co
   orcid: https://orcid.org/0000-0003-3925-190X
 preferred-citation:
   type: manual
@@ -49,43 +52,45 @@ preferred-citation:
   authors:
   - family-names: Allaire
     given-names: JJ
-    email: jj@rstudio.com
+    email: jj@posit.co
   - family-names: Xie
     given-names: Yihui
     email: xie@yihui.name
     orcid: https://orcid.org/0000-0003-0645-5666
+  - family-names: Dervieux
+    given-names: Christophe
+    email: cderv@posit.co
+    orcid: https://orcid.org/0000-0003-4474-2498
   - family-names: McPherson
     given-names: Jonathan
-    email: jonathan@rstudio.com
+    email: jonathan@posit.co
   - family-names: Luraschi
     given-names: Javier
-    email: javier@rstudio.com
   - family-names: Ushey
     given-names: Kevin
-    email: kevin@rstudio.com
+    email: kevin@posit.co
   - family-names: Atkins
     given-names: Aron
-    email: aron@rstudio.com
+    email: aron@posit.co
   - family-names: Wickham
     given-names: Hadley
-    email: hadley@rstudio.com
+    email: hadley@posit.co
   - family-names: Cheng
     given-names: Joe
-    email: joe@rstudio.com
+    email: joe@posit.co
   - family-names: Chang
     given-names: Winston
-    email: winston@rstudio.com
+    email: winston@posit.co
   - family-names: Iannone
     given-names: Richard
-    email: rich@rstudio.com
+    email: rich@posit.co
     orcid: https://orcid.org/0000-0003-3925-190X
-  year: '2021'
-  notes: R package version 2.11
+  year: '2023'
+  notes: R package version 2.20.1
   url: https://github.com/rstudio/rmarkdown
 repository: https://CRAN.R-project.org/package=rmarkdown
 repository-code: https://github.com/rstudio/rmarkdown
 url: https://pkgs.rstudio.com/rmarkdown/
-date-released: '2021-09-14'
 contact:
 - family-names: Xie
   given-names: Yihui
@@ -112,7 +117,7 @@ references:
     name: Chapman and Hall/CRC
     address: Boca Raton, Florida
   year: '2018'
-  notes: ISBN 9781138359338
+  isbn: '9781138359338'
   url: https://bookdown.org/yihui/rmarkdown
 - type: book
   title: R Markdown Cookbook
@@ -127,20 +132,159 @@ references:
     name: Chapman and Hall/CRC
     address: Boca Raton, Florida
   year: '2020'
-  notes: ISBN 9780367563837
+  isbn: '9780367563837'
   url: https://bookdown.org/yihui/rmarkdown-cookbook
 - type: software
   title: 'R: A Language and Environment for Statistical Computing'
   notes: Depends
+  url: https://www.R-project.org/
   authors:
   - name: R Core Team
   location:
     name: Vienna, Austria
-  year: '2022'
-  url: https://www.R-project.org/
+  year: '2023'
   institution:
     name: R Foundation for Statistical Computing
   version: '>= 3.0'
+- type: software
+  title: bslib
+  abstract: 'bslib: Custom ''Bootstrap'' ''Sass'' Themes for ''shiny'' and ''rmarkdown'''
+  notes: Imports
+  url: https://rstudio.github.io/bslib/
+  repository: https://CRAN.R-project.org/package=bslib
+  authors:
+  - family-names: Sievert
+    given-names: Carson
+    email: carson@rstudio.com
+    orcid: https://orcid.org/0000-0002-4958-2844
+  - family-names: Cheng
+    given-names: Joe
+    email: joe@rstudio.com
+  year: '2023'
+  version: '>= 0.2.5.1'
+- type: software
+  title: evaluate
+  abstract: 'evaluate: Parsing and Evaluation Tools that Provide More Details than
+    the Default'
+  notes: Imports
+  url: https://github.com/r-lib/evaluate
+  repository: https://CRAN.R-project.org/package=evaluate
+  authors:
+  - family-names: Wickham
+    given-names: Hadley
+  - family-names: Xie
+    given-names: Yihui
+    email: xie@yihui.name
+    orcid: https://orcid.org/0000-0003-0645-5666
+  year: '2023'
+  version: '>= 0.13'
+- type: software
+  title: fontawesome
+  abstract: 'fontawesome: Easily Work with ''Font Awesome'' Icons'
+  notes: Imports
+  url: https://rstudio.github.io/fontawesome/
+  repository: https://CRAN.R-project.org/package=fontawesome
+  authors:
+  - family-names: Iannone
+    given-names: Richard
+    email: rich@rstudio.com
+    orcid: https://orcid.org/0000-0003-3925-190X
+  year: '2023'
+  version: '>= 0.5.0'
+- type: software
+  title: htmltools
+  abstract: 'htmltools: Tools for HTML'
+  notes: Imports
+  url: https://rstudio.github.io/htmltools/
+  repository: https://CRAN.R-project.org/package=htmltools
+  authors:
+  - family-names: Cheng
+    given-names: Joe
+    email: joe@rstudio.com
+  - family-names: Sievert
+    given-names: Carson
+    email: carson@rstudio.com
+    orcid: https://orcid.org/0000-0002-4958-2844
+  - family-names: Schloerke
+    given-names: Barret
+    email: barret@rstudio.com
+    orcid: https://orcid.org/0000-0001-9986-114X
+  - family-names: Chang
+    given-names: Winston
+    email: winston@rstudio.com
+    orcid: https://orcid.org/0000-0002-1576-2126
+  - family-names: Xie
+    given-names: Yihui
+    email: yihui@rstudio.com
+  - family-names: Allen
+    given-names: Jeff
+    email: jeff@rstudio.com
+  year: '2023'
+  version: '>= 0.5.1'
+- type: software
+  title: jquerylib
+  abstract: 'jquerylib: Obtain ''jQuery'' as an HTML Dependency Object'
+  notes: Imports
+  repository: https://CRAN.R-project.org/package=jquerylib
+  authors:
+  - family-names: Sievert
+    given-names: Carson
+    email: carson@rstudio.com
+    orcid: https://orcid.org/0000-0002-4958-2844
+  - family-names: Cheng
+    given-names: Joe
+    email: joe@rstudio.com
+  year: '2023'
+- type: software
+  title: jsonlite
+  abstract: 'jsonlite: A Simple and Robust JSON Parser and Generator for R'
+  notes: Imports
+  url: https://arxiv.org/abs/1403.2805
+  repository: https://CRAN.R-project.org/package=jsonlite
+  authors:
+  - family-names: Ooms
+    given-names: Jeroen
+    email: jeroen@berkeley.edu
+    orcid: https://orcid.org/0000-0002-4035-0289
+  year: '2023'
+- type: software
+  title: knitr
+  abstract: 'knitr: A General-Purpose Package for Dynamic Report Generation in R'
+  notes: Imports
+  url: https://yihui.org/knitr/
+  repository: https://CRAN.R-project.org/package=knitr
+  authors:
+  - family-names: Xie
+    given-names: Yihui
+    email: xie@yihui.name
+    orcid: https://orcid.org/0000-0003-0645-5666
+  year: '2023'
+  version: '>= 1.22'
+- type: software
+  title: methods
+  abstract: 'R: A Language and Environment for Statistical Computing'
+  notes: Imports
+  authors:
+  - name: R Core Team
+  location:
+    name: Vienna, Austria
+  year: '2023'
+  institution:
+    name: R Foundation for Statistical Computing
+- type: software
+  title: tinytex
+  abstract: 'tinytex: Helper Functions to Install and Maintain TeX Live, and Compile
+    LaTeX Documents'
+  notes: Imports
+  url: https://github.com/rstudio/tinytex
+  repository: https://CRAN.R-project.org/package=tinytex
+  authors:
+  - family-names: Xie
+    given-names: Yihui
+    email: xie@yihui.name
+    orcid: https://orcid.org/0000-0003-0645-5666
+  year: '2023'
+  version: '>= 0.31'
 - type: software
   title: tools
   abstract: 'R: A Language and Environment for Statistical Computing'
@@ -149,8 +293,7 @@ references:
   - name: R Core Team
   location:
     name: Vienna, Austria
-  year: '2022'
-  url: https://www.R-project.org/
+  year: '2023'
   institution:
     name: R Foundation for Statistical Computing
 - type: software
@@ -161,27 +304,31 @@ references:
   - name: R Core Team
   location:
     name: Vienna, Austria
-  year: '2022'
-  url: https://www.R-project.org/
+  year: '2023'
   institution:
     name: R Foundation for Statistical Computing
 - type: software
-  title: knitr
-  abstract: 'knitr: A General-Purpose Package for Dynamic Report Generation in R'
+  title: xfun
+  abstract: 'xfun: Supporting Functions for Packages Maintained by ''Yihui Xie'''
   notes: Imports
+  url: https://github.com/yihui/xfun
+  repository: https://CRAN.R-project.org/package=xfun
   authors:
   - family-names: Xie
     given-names: Yihui
     email: xie@yihui.name
     orcid: https://orcid.org/0000-0003-0645-5666
-  year: '2022'
-  url: https://CRAN.R-project.org/package=knitr
-  version: '>= 1.22'
+  year: '2023'
+  version: '>= 0.36'
 - type: software
   title: yaml
   abstract: 'yaml: Methods to Convert R Data to YAML and Back'
   notes: Imports
+  url: https://github.com/vubiostat/r-yaml/
+  repository: https://CRAN.R-project.org/package=yaml
   authors:
+  - family-names: Garbett
+    given-names: Shawn P
   - family-names: Stephens
     given-names: Jeremy
   - family-names: Simonov
@@ -205,193 +352,14 @@ references:
     given-names: Michael
   - family-names: Kamvar
     given-names: Zhian N.
-  year: '2022'
-  url: https://CRAN.R-project.org/package=yaml
+  year: '2023'
   version: '>= 2.1.19'
-- type: software
-  title: htmltools
-  abstract: 'htmltools: Tools for HTML'
-  notes: Imports
-  authors:
-  - family-names: Cheng
-    given-names: Joe
-    email: joe@rstudio.com
-  - family-names: Sievert
-    given-names: Carson
-    email: carson@rstudio.com
-    orcid: https://orcid.org/0000-0002-4958-2844
-  - family-names: Schloerke
-    given-names: Barret
-    email: barret@rstudio.com
-    orcid: https://orcid.org/0000-0001-9986-114X
-  - family-names: Chang
-    given-names: Winston
-    email: winston@rstudio.com
-    orcid: https://orcid.org/0000-0002-1576-2126
-  - family-names: Xie
-    given-names: Yihui
-    email: yihui@rstudio.com
-  - family-names: Allen
-    given-names: Jeff
-    email: jeff@rstudio.com
-  year: '2022'
-  url: https://CRAN.R-project.org/package=htmltools
-  version: '>= 0.3.5'
-- type: software
-  title: evaluate
-  abstract: 'evaluate: Parsing and Evaluation Tools that Provide More Details than
-    the Default'
-  notes: Imports
-  authors:
-  - family-names: Wickham
-    given-names: Hadley
-  - family-names: Xie
-    given-names: Yihui
-    email: xie@yihui.name
-    orcid: https://orcid.org/0000-0003-0645-5666
-  year: '2022'
-  url: https://CRAN.R-project.org/package=evaluate
-  version: '>= 0.13'
-- type: software
-  title: jsonlite
-  abstract: 'jsonlite: A Simple and Robust JSON Parser and Generator for R'
-  notes: Imports
-  authors:
-  - family-names: Ooms
-    given-names: Jeroen
-    email: jeroen@berkeley.edu
-    orcid: https://orcid.org/0000-0002-4035-0289
-  year: '2022'
-  url: https://CRAN.R-project.org/package=jsonlite
-- type: software
-  title: tinytex
-  abstract: 'tinytex: Helper Functions to Install and Maintain TeX Live, and Compile
-    LaTeX Documents'
-  notes: Imports
-  authors:
-  - family-names: Xie
-    given-names: Yihui
-    email: xie@yihui.name
-    orcid: https://orcid.org/0000-0003-0645-5666
-  year: '2022'
-  url: https://CRAN.R-project.org/package=tinytex
-  version: '>= 0.31'
-- type: software
-  title: xfun
-  abstract: 'xfun: Supporting Functions for Packages Maintained by ''Yihui Xie'''
-  notes: Imports
-  authors:
-  - family-names: Xie
-    given-names: Yihui
-    email: xie@yihui.name
-    orcid: https://orcid.org/0000-0003-0645-5666
-  year: '2022'
-  url: https://CRAN.R-project.org/package=xfun
-  version: '>= 0.21'
-- type: software
-  title: jquerylib
-  abstract: 'jquerylib: Obtain ''jQuery'' as an HTML Dependency Object'
-  notes: Imports
-  authors:
-  - family-names: Sievert
-    given-names: Carson
-    email: carson@rstudio.com
-    orcid: https://orcid.org/0000-0002-4958-2844
-  - family-names: Cheng
-    given-names: Joe
-    email: joe@rstudio.com
-  year: '2022'
-  url: https://CRAN.R-project.org/package=jquerylib
-- type: software
-  title: methods
-  abstract: 'R: A Language and Environment for Statistical Computing'
-  notes: Imports
-  authors:
-  - name: R Core Team
-  location:
-    name: Vienna, Austria
-  year: '2022'
-  url: https://www.R-project.org/
-  institution:
-    name: R Foundation for Statistical Computing
-- type: software
-  title: stringr
-  abstract: 'stringr: Simple, Consistent Wrappers for Common String Operations'
-  notes: Imports
-  authors:
-  - family-names: Wickham
-    given-names: Hadley
-    email: hadley@rstudio.com
-  year: '2022'
-  url: https://CRAN.R-project.org/package=stringr
-  version: '>= 1.2.0'
-- type: software
-  title: shiny
-  abstract: 'shiny: Web Application Framework for R'
-  notes: Suggests
-  authors:
-  - family-names: Chang
-    given-names: Winston
-    email: winston@rstudio.com
-    orcid: https://orcid.org/0000-0002-1576-2126
-  - family-names: Cheng
-    given-names: Joe
-    email: joe@rstudio.com
-  - family-names: Allaire
-    given-names: JJ
-    email: jj@rstudio.com
-  - family-names: Sievert
-    given-names: Carson
-    email: carson@rstudio.com
-    orcid: https://orcid.org/0000-0002-4958-2844
-  - family-names: Schloerke
-    given-names: Barret
-    email: barret@rstudio.com
-    orcid: https://orcid.org/0000-0001-9986-114X
-  - family-names: Xie
-    given-names: Yihui
-    email: yihui@rstudio.com
-  - family-names: Allen
-    given-names: Jeff
-    email: jeff@rstudio.com
-  - family-names: McPherson
-    given-names: Jonathan
-    email: jonathan@rstudio.com
-  - family-names: Dipert
-    given-names: Alan
-  - family-names: Borges
-    given-names: Barbara
-  year: '2022'
-  url: https://shiny.rstudio.com/
-  version: '>= 1.6.0'
-- type: software
-  title: tufte
-  abstract: 'tufte: Tufte''s Styles for R Markdown Documents'
-  notes: Suggests
-  authors:
-  - family-names: Xie
-    given-names: Yihui
-    email: xie@yihui.name
-    orcid: https://orcid.org/0000-0003-0645-5666
-  - family-names: Allaire
-    given-names: JJ
-  year: '2022'
-  url: https://github.com/rstudio/tufte
-- type: software
-  title: testthat
-  abstract: 'testthat: Unit Testing for R'
-  notes: Suggests
-  authors:
-  - family-names: Wickham
-    given-names: Hadley
-    email: hadley@rstudio.com
-  year: '2022'
-  url: https://CRAN.R-project.org/package=testthat
-  version: '>= 3.0.0'
 - type: software
   title: digest
   abstract: 'digest: Create Compact Hash Digests of R Objects'
   notes: Suggests
+  url: http://dirk.eddelbuettel.com/code/digest.html
+  repository: https://CRAN.R-project.org/package=digest
   authors:
   - family-names: Lucas
     given-names: Dirk Eddelbuettel with contributions by Antoine
@@ -440,13 +408,14 @@ references:
     given-names: Dirk
   - family-names: Chang.
     given-names: and Winston
-  year: '2022'
-  url: https://CRAN.R-project.org/package=digest
+  year: '2023'
 - type: software
   title: dygraphs
   abstract: 'dygraphs: Interface to ''Dygraphs'' Interactive Time Series Charting
     Library'
   notes: Suggests
+  url: https://github.com/rstudio/dygraphs
+  repository: https://CRAN.R-project.org/package=dygraphs
   authors:
   - family-names: Vanderkam
     given-names: Dan
@@ -458,41 +427,13 @@ references:
     given-names: Daniel
   - family-names: Thieurmel
     given-names: Benoit
-  year: '2022'
-  url: https://CRAN.R-project.org/package=dygraphs
-- type: software
-  title: vctrs
-  abstract: 'vctrs: Vector Helpers'
-  notes: Suggests
-  authors:
-  - family-names: Wickham
-    given-names: Hadley
-    email: hadley@rstudio.com
-  - family-names: Henry
-    given-names: Lionel
-    email: lionel@rstudio.com
-  - family-names: Vaughan
-    given-names: Davis
-    email: davis@rstudio.com
-  year: '2022'
-  url: https://CRAN.R-project.org/package=vctrs
-- type: software
-  title: tibble
-  abstract: 'tibble: Simple Data Frames'
-  notes: Suggests
-  authors:
-  - family-names: Müller
-    given-names: Kirill
-    email: krlmlr+r@mailbox.org
-  - family-names: Wickham
-    given-names: Hadley
-    email: hadley@rstudio.com
-  year: '2022'
-  url: https://CRAN.R-project.org/package=tibble
+  year: '2023'
 - type: software
   title: fs
   abstract: 'fs: Cross-Platform File System Operations Based on ''libuv'''
   notes: Suggests
+  url: https://fs.r-lib.org
+  repository: https://CRAN.R-project.org/package=fs
   authors:
   - family-names: Hester
     given-names: Jim
@@ -502,65 +443,54 @@ references:
   - family-names: Csárdi
     given-names: Gábor
     email: csardi.gabor@gmail.com
-  year: '2022'
-  url: https://CRAN.R-project.org/package=fs
+  year: '2023'
 - type: software
   title: rsconnect
   abstract: 'rsconnect: Deployment Interface for R Markdown Documents and Shiny Applications'
   notes: Suggests
+  url: https://github.com/rstudio/rsconnect
+  repository: https://CRAN.R-project.org/package=rsconnect
   authors:
   - family-names: Atkins
     given-names: Aron
-    email: aron@rstudio.com
+    email: aron@posit.co
   - family-names: McPherson
     given-names: Jonathan
-    email: jonathan@rstudio.com
+    email: jonathan@posit.co
   - family-names: Allaire
     given-names: JJ
-  year: '2022'
-  url: https://CRAN.R-project.org/package=rsconnect
+  year: '2023'
 - type: software
-  title: withr
-  abstract: 'withr: Run Code ''With'' Temporarily Modified Global State'
+  title: downlit
+  abstract: 'downlit: Syntax Highlighting and Automatic Linking'
   notes: Suggests
+  url: https://downlit.r-lib.org/
+  repository: https://CRAN.R-project.org/package=downlit
   authors:
-  - family-names: Hester
-    given-names: Jim
-  - family-names: Henry
-    given-names: Lionel
-    email: lionel@rstudio.com
-  - family-names: Müller
-    given-names: Kirill
-    email: krlmlr+r@mailbox.org
-  - family-names: Ushey
-    given-names: Kevin
-    email: kevinushey@gmail.com
   - family-names: Wickham
     given-names: Hadley
     email: hadley@rstudio.com
-  - family-names: Chang
-    given-names: Winston
-  year: '2022'
-  version: '>= 2.4.2'
+  year: '2023'
+  version: '>= 0.4.0'
 - type: software
-  title: bslib
-  abstract: 'bslib: Custom ''Bootstrap'' ''Sass'' Themes for ''shiny'' and ''rmarkdown'''
+  title: katex
+  abstract: 'katex: Rendering Math to HTML, ''MathML'', or R-Documentation Format'
   notes: Suggests
+  url: https://docs.ropensci.org/katex/
+  repository: https://CRAN.R-project.org/package=katex
   authors:
-  - family-names: Sievert
-    given-names: Carson
-    email: carson@rstudio.com
-    orcid: https://orcid.org/0000-0002-4958-2844
-  - family-names: Cheng
-    given-names: Joe
-    email: joe@rstudio.com
-  year: '2022'
-  url: https://CRAN.R-project.org/package=bslib
-  version: '>= 0.2.5.1'
+  - family-names: Ooms
+    given-names: Jeroen
+    email: jeroen@berkeley.edu
+    orcid: https://orcid.org/0000-0002-4035-0289
+  year: '2023'
+  version: '>= 1.4.0'
 - type: software
   title: sass
   abstract: 'sass: Syntactically Awesome Style Sheets (''Sass'')'
   notes: Suggests
+  url: https://rstudio.github.io/sass/
+  repository: https://CRAN.R-project.org/package=sass
   authors:
   - family-names: Cheng
     given-names: Joe
@@ -580,6 +510,114 @@ references:
     given-names: Carson
     email: carson@rstudio.com
     orcid: https://orcid.org/0000-0002-4958-2844
-  year: '2022'
-  url: https://CRAN.R-project.org/package=sass
+  year: '2023'
   version: '>= 0.4.0'
+- type: software
+  title: shiny
+  abstract: 'shiny: Web Application Framework for R'
+  notes: Suggests
+  url: https://shiny.rstudio.com/
+  repository: https://CRAN.R-project.org/package=shiny
+  authors:
+  - family-names: Chang
+    given-names: Winston
+    email: winston@rstudio.com
+    orcid: https://orcid.org/0000-0002-1576-2126
+  - family-names: Cheng
+    given-names: Joe
+    email: joe@rstudio.com
+  - family-names: Allaire
+    given-names: JJ
+    email: jj@rstudio.com
+  - family-names: Sievert
+    given-names: Carson
+    email: carson@rstudio.com
+    orcid: https://orcid.org/0000-0002-4958-2844
+  - family-names: Schloerke
+    given-names: Barret
+    email: barret@rstudio.com
+    orcid: https://orcid.org/0000-0001-9986-114X
+  - family-names: Xie
+    given-names: Yihui
+    email: yihui@rstudio.com
+  - family-names: Allen
+    given-names: Jeff
+    email: jeff@rstudio.com
+  - family-names: McPherson
+    given-names: Jonathan
+    email: jonathan@rstudio.com
+  - family-names: Dipert
+    given-names: Alan
+  - family-names: Borges
+    given-names: Barbara
+  year: '2023'
+  version: '>= 1.6.0'
+- type: software
+  title: testthat
+  abstract: 'testthat: Unit Testing for R'
+  notes: Suggests
+  url: https://testthat.r-lib.org
+  repository: https://CRAN.R-project.org/package=testthat
+  authors:
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@rstudio.com
+  year: '2023'
+  version: '>= 3.0.3'
+- type: software
+  title: tibble
+  abstract: 'tibble: Simple Data Frames'
+  notes: Suggests
+  url: https://tibble.tidyverse.org/
+  repository: https://CRAN.R-project.org/package=tibble
+  authors:
+  - family-names: Müller
+    given-names: Kirill
+    email: kirill@cynkra.com
+    orcid: https://orcid.org/0000-0002-1416-3412
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@rstudio.com
+  year: '2023'
+- type: software
+  title: vctrs
+  abstract: 'vctrs: Vector Helpers'
+  notes: Suggests
+  url: https://vctrs.r-lib.org/
+  repository: https://CRAN.R-project.org/package=vctrs
+  authors:
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@rstudio.com
+  - family-names: Henry
+    given-names: Lionel
+    email: lionel@rstudio.com
+  - family-names: Vaughan
+    given-names: Davis
+    email: davis@rstudio.com
+  year: '2023'
+- type: software
+  title: withr
+  abstract: 'withr: Run Code ''With'' Temporarily Modified Global State'
+  notes: Suggests
+  url: https://withr.r-lib.org
+  repository: https://CRAN.R-project.org/package=withr
+  authors:
+  - family-names: Hester
+    given-names: Jim
+  - family-names: Henry
+    given-names: Lionel
+    email: lionel@rstudio.com
+  - family-names: Müller
+    given-names: Kirill
+    email: krlmlr+r@mailbox.org
+  - family-names: Ushey
+    given-names: Kevin
+    email: kevinushey@gmail.com
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@rstudio.com
+  - family-names: Chang
+    given-names: Winston
+  year: '2023'
+  version: '>= 2.4.2'

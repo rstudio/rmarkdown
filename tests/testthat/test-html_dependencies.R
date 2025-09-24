@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("Correct anchor_sections style is used", {
   deps <- html_dependency_anchor_sections
   expect_s3_class(deps(), "html_dependency")
@@ -209,4 +206,14 @@ test_that("html_dependencies_fonts loads the correct fonts dep", {
 test_that("header-attr can be opt-out", {
   withr::local_options(list(rmarkdown.html_dependency.header_attr = FALSE))
   expect_null(html_dependency_header_attrs())
+})
+
+test_that('needs_saas', {
+  expect_true(needs_sass('dummy.scss'))
+  expect_true(needs_sass('dummy.sass'))
+  expect_false(needs_sass('dummy.css'))
+  expect_identical(
+    needs_sass(c('dummy.scss', 'dummy.sass', 'dummy.css')),
+    c(TRUE, TRUE, FALSE)
+  )
 })

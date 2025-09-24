@@ -72,7 +72,7 @@ The book is structured into four parts:
 <br>
 <br>
 
-# Going further wih examples
+# Going further with examples
 
 <a href="https://bookdown.org/yihui/rmarkdown-cookbook/"><img src="https://bookdown.org/yihui/rmarkdown-cookbook/images/cover.png" alt="R Markdown Cookbook" data-external=1 width="250" style="padding: 0 15px; float: right;"/></a>
 

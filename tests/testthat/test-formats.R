@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("formats successfully produce a document", {
 
   testFormat <- function(output_format, df_print = NULL) {
@@ -25,9 +22,6 @@ test_that("formats successfully produce a document", {
   testFormat(beamer_presentation(), df_print = "kable")
   testFormat(word_document(), df_print = "kable")
   suppressWarnings(testFormat(html_vignette()))
-
-  if (requireNamespace("tufte", quietly = TRUE))
-    suppressWarnings(testFormat(tufte_handout()))
 })
 
 test_that("documents with spaces in names can be rendered", {

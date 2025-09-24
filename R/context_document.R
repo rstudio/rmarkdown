@@ -1,11 +1,8 @@
 #' Convert to a ConTeXt document
 #'
-#' Format for converting from R Markdown to PDF using
-#' \href{https://wiki.contextgarden.net/Main_Page}{ConTeXt}.
+#' Format for converting from R Markdown to PDF using ConTeXt.
 #'
-#' ConTeXt needs to be installed. To install the most recent version, see
-#' \url{https://wiki.contextgarden.net/Installation}. A less recent version is
-#' also available in TeX Live, you can install it with
+#' ConTeXt needs to be installed, e.g., you can install it with
 #' \code{tinytex::tlmgr_install("context")}.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
@@ -17,8 +14,8 @@
 #' \href{https://pandoc.org/MANUAL.html#citations}{Bibliographies
 #' and Citations} article in the online documentation.
 #' @inheritParams pdf_document
-#' @param context_path Path of the ConTeXt executable. If not provided, ConTeXt has
-#'   to be available from the \code{PATH} environment variable.
+#' @param context_path Path of the ConTeXt executable. If not provided, ConTeXt
+#'   has to be available from the \code{PATH} environment variable.
 #' @param context_args Command line arguments passed to ConTeXt.
 #' @param ext Format of the output document (defaults to ".pdf").
 #' @return R Markdown output format to pass to \code{\link{render}}.
@@ -50,9 +47,7 @@ context_document <- function(toc = FALSE,
                              context_path = NULL,
                              context_args = NULL,
                              ext = c(".pdf", ".tex")) {
-  if (!is.null(context_path)) {
-    context_path <- normalizePath(context_path, mustWork = TRUE)
-  }
+  context_path <- normalize_path(context_path, must_work = TRUE)
   sys_context <- if (is.null(context_path)) find_program("context") else context_path
   ext <- match.arg(ext)
   if (identical(ext, ".pdf") && !nzchar(sys_context))

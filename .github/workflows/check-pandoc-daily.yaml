@@ -18,7 +18,7 @@ jobs:
         config:
           - {os: windows-latest}
           - {os: macOS-latest}
-          - {os: ubuntu-18.04}
+          - {os: ubuntu-latest}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -26,7 +26,7 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-r@v2
         with:
@@ -64,3 +64,5 @@ jobs:
         shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true

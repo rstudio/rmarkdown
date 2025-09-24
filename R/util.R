@@ -184,7 +184,8 @@ file_with_meta_ext <- function(file, meta_ext, ext = xfun::file_ext(file)) {
 }
 
 knitr_files_dir <- function(file) {
-  paste(xfun::sans_ext(file), "_files", sep = "")
+  suffix <- getOption("rmarkdown.files.suffix", "_files")
+  paste(xfun::sans_ext(file), suffix, sep = "")
 }
 
 knitr_root_cache_dir <- function(file) {
@@ -281,7 +282,7 @@ same_path <- function(path1, path2, ...) {
 # cannot be represented in the current system locale, even if the file exists
 abs_path <- function(x) {
   if (!file.exists(x)) stop("The file '", x, "' does not exist.")
-  res <- normalize_path(x, mustWork = FALSE)
+  res <- normalize_path(x, must_work = FALSE)
   if (file.exists(res)) return(res)
   if (!requireNamespace('fs', quietly = TRUE)) warning(
     'normalizePath() cannot make the path(s) absolute. The fs package is required.'
@@ -315,20 +316,7 @@ find_program <- function(program) {
   }
 }
 
-has_crop_tools <- function(warn = TRUE) {
-  tools <- c(
-    pdfcrop = unname(find_program("pdfcrop")),
-    ghostscript = unname(tools::find_gs_cmd())
-  )
-  missing <- tools[tools == ""]
-  if (length(missing) == 0) return(TRUE)
-  x <- paste0(names(missing), collapse = ", ")
-  if (warn) warning(
-    sprintf("\nTool(s) not installed or not in PATH: %s", x),
-    "\n-> As a result, figure cropping will be disabled."
-  )
-  FALSE
-}
+has_crop_tools <- function(...) knitr:::has_crop_tools(...)
 
 # given a string, escape the regex metacharacters it contains:
 # regex metas are these,
@@ -536,13 +524,15 @@ xfun_session_info <- function() {
 
 # given a path of a file (or dir) in a potential project (e.g., an R package),
 # figure out the project root
-proj_root <- function(path, file = '^DESCRIPTION$', pattern = '^Package: ') {
+proj_root <- function(path, file = '^DESCRIPTION$', pattern = '^Package: ', stop_when = NULL) {
   dir <- if (dir_exists(path)) path else dirname(path)
   if (same_path(dir, file.path(dir, '..'))) return()
   for (f in list.files(dir, file, full.names = TRUE)) {
     if (length(grep(pattern, read_utf8(f)))) return(dir)
   }
-  proj_root(dirname(dir), file, pattern)
+  if (is.function(stop_when) && stop_when(dir)) return()
+  dir <- normalize_path(dir)
+  proj_root(dirname(dir), file, pattern, stop_when)
 }
 
 

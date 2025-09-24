@@ -25,8 +25,10 @@
 #'   \href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
 #'   frame printing section} in bookdown book for examples.
 #' @param pre_knit An optional function that runs before knitting which receives
-#'   the \code{input} (input filename passed to \code{render}) and \code{...}
-#'   (for future expansion) arguments.
+#'   the \code{input} (input filename passed to \code{render}), \code{metadata}
+#'   (the parsed front matter of the Rmd file) and \code{...} (for future
+#'   expansion) arguments. This function can be used to add side effects before
+#'   knitting step.
 #' @param post_knit An optional function that runs after knitting which receives
 #'   the \code{metadata}, \code{input_file}, \code{runtime}, and \code{...} (for
 #'   future expansion) arguments. This function can return additional arguments
@@ -52,9 +54,11 @@
 #' @param file_scope A function that will split markdown input to pandoc into
 #'   multiple named files. This is useful when the caller has concatenated a set
 #'   of Rmd files together (as \pkg{bookdown} does), and those files may need to
-#'   processed by pandoc using the \code{--file-scope} option. The function
-#'   should return a named list of files w/ \code{name} and \code{content} for
-#'   each file.
+#'   processed by pandoc using the \code{--file-scope} option. The first
+#'   argument is input file paths and the second is \code{NULL} or current file
+#'   scope which is a named list of files w/ \code{name} and \code{content} for
+#'   each file. The return is the new file scope. Also, the arguments should
+#'   include \code{...} for the future extensions.
 #' @param base_format An optional format to extend.
 #' @return An R Markdown output format definition that can be passed to
 #'   \code{\link{render}}.
@@ -157,6 +161,27 @@ merge_post_processors <- function(base,
   }
 }
 
+merge_file_scope <- function(base,
+                             overlay) {
+  if (is.null(overlay)) {
+    return(base)
+  }
+  has_ellipsis <- "..." %in% names(formals(overlay))
+  if (!has_ellipsis) {
+    warning("file_scope lacks ... as an argument. ",
+            "Otherwise, file_scope replaces file_scope without merging.")
+  }
+  if (is.null(base) || !has_ellipsis) {
+    return(overlay)
+  }
+  if (has_ellipsis) {
+    return(function(x, current_scope = NULL, ...) {
+      scope <- base(x, current_scope, ...)
+      overlay(x, scope, ...)
+    })
+  }
+}
+
 # merges two output formats
 merge_output_formats <- function(base,
                                  overlay) {
@@ -181,6 +206,7 @@ merge_output_formats <- function(base,
                              overlay$intermediates_generator, c),
     post_processor =
       merge_post_processors(base$post_processor, overlay$post_processor),
+    file_scope = merge_file_scope(base$file_scope, overlay$file_scope),
     on_exit =
       merge_on_exit(base$on_exit, overlay$on_exit)
   ), class = "rmarkdown_output_format")
@@ -281,9 +307,9 @@ knitr_options_pdf <- function(fig_width,
 #'
 #' Define the pandoc options for an R Markdown output format.
 #'
-#' The \code{from} argument should be used very cautiously as it's
-#' important for users to be able to rely on a stable definition of supported
-#' markdown extensions.
+#' The \code{from} argument should be used very cautiously as it's important for
+#' users to be able to rely on a stable definition of supported markdown
+#' extensions.
 #' @param to Pandoc format to convert to
 #' @param from Pandoc format to convert from
 #' @param args Character vector of command line arguments to pass to pandoc
@@ -292,13 +318,19 @@ knitr_options_pdf <- function(fig_width,
 #' @param latex_engine LaTeX engine to producing PDF output (applies only to
 #'   'latex' and 'beamer' target formats)
 #' @param ext File extension (e.g. ".tex") for output file (if \code{NULL}
-#'   chooses default based on \code{to}). This is typically used to force
-#'   the final output of a latex or beamer conversion to be \code{.tex}
-#'   rather than \code{.pdf}.
+#'   chooses default based on \code{to}). This is typically used to force the
+#'   final output of a latex or beamer conversion to be \code{.tex} rather than
+#'   \code{.pdf}.
 #' @param lua_filters  Character vector of file paths to Lua filters to use with
 #'   this format. They will be added to pandoc command line call using
 #'   \code{--lua-filter} argument. See \code{vignette("lua-filters", package =
 #'   "rmarkdown")} to know more about Lua filters.
+#' @param convert_fun A function to convert the input file to the desired output
+#'   format in \code{\link{render}()}. If not provided,
+#'   \code{\link{pandoc_convert}()} will be used. If a custom function is
+#'   provided, its arguments and returned value should match the
+#'   \code{pandoc_convert()} function. Note that this function does not have to
+#'   use Pandoc but can also use other tools such as \pkg{commonmark}.
 #' @return An list that can be passed as the \code{pandoc} argument of the
 #'   \code{\link{output_format}} function.
 #' @seealso \link{output_format}, \link{rmarkdown_format}
@@ -309,13 +341,15 @@ pandoc_options <- function(to,
                            keep_tex = FALSE,
                            latex_engine = c("pdflatex", "lualatex", "xelatex", "tectonic"),
                            ext = NULL,
-                           lua_filters = NULL) {
+                           lua_filters = NULL,
+                           convert_fun = NULL) {
   list(to = to,
        from = from,
        args = args,
        keep_tex = keep_tex,
        latex_engine = match.arg(latex_engine),
        ext = ext,
+       convert_fun = convert_fun,
        lua_filters = lua_filters)
 }
 
@@ -702,7 +736,6 @@ parse_yaml_front_matter <- function(input_lines) {
     if (length(front_matter) > 2) {
       front_matter <- front_matter[2:(length(front_matter) - 1)]
       front_matter <- one_string(front_matter)
-      validate_front_matter(front_matter)
       parsed_yaml <- yaml_load(front_matter)
       if (is.list(parsed_yaml))
         parsed_yaml
@@ -715,13 +748,6 @@ parse_yaml_front_matter <- function(input_lines) {
   else
     list()
 }
-
-validate_front_matter <- function(front_matter) {
-  front_matter <- trim_trailing_ws(front_matter)
-  if (grepl(":$", front_matter))
-    stop2("Invalid YAML front matter (ends with ':')")
-}
-
 
 partition_yaml_front_matter <- function(input_lines) {
 
@@ -806,4 +832,86 @@ citeproc_required <- function(yaml_front_matter,
       length(grep("^references:\\s*$", input_lines)) > 0 ||
       length(grep("^bibliography:\\s*$", input_lines)) > 0
   )
+}
+
+#' Define and merge an R Markdown's output format dependency
+#'
+#' Define and merge a dependency such as pre/post-processors from within
+#' chunks. The merge happens explicitly when a list of dependencies are
+#' passed to \code{knitr::knit_meta_add()} or implicitly when a dependency
+#' is \code{knitr::knit_print}ed. Defining a function that does the former is
+#' the best way for package developers to share the dependency. On the
+#' contrary, the latter is useful to declare a document-specific dependency.
+#' This function shares some arguments with \code{\link{output_format}},
+#' but lacks the others because dependency is resolved after \code{post_knit}
+#' and before \code{pre_processor}.
+#'
+#' @param name A dependency name. If some dependencies share the same name,
+#'   then only the first one will be merged to the output format.
+#' @inheritParams output_format
+#'
+#' @return An list of arguments with the "rmd_dependency" class.
+#'
+#' @examples
+#' # Implicitly add lua filters from within a chunk
+#' # This relies on (implicit) printing of the dependency in a chunk via
+#' # knitr::knit_print()`
+#' output_format_dependency(
+#'   "lua_filter1",
+#'   pandoc = list(lua_filters = "example1.lua")
+#' )
+#'
+#' # Explicitly add lua filters from within a chunk
+#' knitr::knit_meta_add(list(output_format_dependency(
+#'   "lua_filter2",
+#'   pandoc = list(lua_filters = "example2.lua")
+#' )))
+#'
+#' # List the available dependencies
+#' # Note that the list may include dependencies with duplicated names. In that
+#' # case, the first one is merged to the output format and the others are
+#' # discarded.
+#' str(knitr::knit_meta("output_format_dependency", clean = FALSE))
+#'
+#' @export
+output_format_dependency <- function(name,
+                                     pandoc = list(),
+                                     pre_processor = NULL,
+                                     post_processor = NULL,
+                                     file_scope = NULL,
+                                     on_exit = NULL) {
+  # Some arguments are NULL
+  # to ensure inheriting the values from the base output format
+  structure(list(name = name,
+                 knitr = NULL, # must be NULL because merge happens after knit
+                 pandoc = pandoc,
+                 pre_processor = pre_processor,
+                 keep_md = NULL,
+                 clean_supporting = NULL,
+                 post_processor = post_processor,
+                 file_scope = file_scope,
+                 on_exit = on_exit),
+            class = "output_format_dependency")
+}
+
+#' @export
+knit_print.output_format_dependency <- function(x, ...) {
+  knitr::asis_output(list(), meta = list(x))
+}
+
+merge_output_format_dependency <- function(fmt, dep) {
+  dep$name <- NULL # remove to be consistent with arguments of output_format
+  dep$base_format <- fmt
+  do.call(output_format, dep)
+}
+
+merge_output_format_dependencies <- function(fmt, deps) {
+  skip <- c()
+  for (d in deps) {
+    if (inherits(d, "output_format_dependency") && !isTRUE(skip[d$name])) {
+      skip[d$name] <- TRUE
+      fmt <- merge_output_format_dependency(fmt, d)
+    }
+  }
+  fmt
 }

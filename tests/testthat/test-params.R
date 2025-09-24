@@ -105,6 +105,86 @@ test_that("parameters are configurable", {
       value = c(10, 20, 30))))
 })
 
+test_that("params_get_input", {
+  # input derived from value type.
+  expect_equal(params_get_input(list(
+    value = TRUE
+  )), "checkbox")
+  expect_equal(params_get_input(list(
+    value = as.integer(42)
+  )), "numeric")
+  expect_equal(params_get_input(list(
+    value = 7.5
+  )), "numeric")
+  expect_equal(params_get_input(list(
+    value = "character"
+  )), "text")
+  expect_equal(params_get_input(list(
+    value = Sys.Date()
+  )), "date")
+  expect_equal(params_get_input(list(
+    value = Sys.time()
+  )), "datetime")
+
+  # numeric becomes a slider with both min and max
+  expect_equal(params_get_input(list(
+    value = as.integer(42),
+    min = 0
+  )), "numeric")
+  expect_equal(params_get_input(list(
+    value = as.integer(42),
+    max = 100
+  )), "numeric")
+  expect_equal(params_get_input(list(
+    value = as.integer(42),
+    min = 0,
+    max = 100
+  )), "slider")
+  expect_equal(params_get_input(list(
+    value = 7.5,
+    min = 0
+  )), "numeric")
+  expect_equal(params_get_input(list(
+    value = 7.5,
+    max = 10
+  )), "numeric")
+  expect_equal(params_get_input(list(
+    value = 7.5,
+    min = 0,
+    max = 10
+  )), "slider")
+
+  # choices implies radio or select
+  expect_equal(params_get_input(list(
+    value = "red",
+    choices = c("red", "green", "blue")
+  )), "radio")
+  expect_equal(params_get_input(list(
+    value = "red",
+    multiple = TRUE,
+    choices = c("red", "green", "blue")
+  )), "select")
+  expect_equal(params_get_input(list(
+    value = "red",
+    choices = c("red", "green", "blue", "yellow", "black", "white")
+  )), "select")
+  expect_equal(params_get_input(list(
+    value = "red",
+    multiple = TRUE,
+    choices = c("red", "green", "blue", "yellow", "black", "white")
+  )), "select")
+
+  # explicit input overrides inference
+  expect_equal(params_get_input(list(
+    input = "slider",
+    value = 42
+  )), "slider")
+  expect_equal(params_get_input(list(
+    input = "file",
+    value = "data.csv"
+  )), "file")
+})
+
 test_that("params hidden w/o show_default", {
 
   # file input is always NULL

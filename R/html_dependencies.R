@@ -26,7 +26,7 @@ html_dependency_jqueryui <- function() {
 
   htmlDependency(
     name = "jqueryui",
-    version = "1.11.4",
+    version = version_jqueryui,
     src = pkg_file("rmd/h/jqueryui"),
     script = "jquery-ui.min.js")
 }
@@ -84,6 +84,7 @@ bootstrap_dependencies <- function(theme) {
   if (inherits(deps, "html_dependency")) list(deps) else deps
 }
 
+# resolves boostrap theme for bslib compatibility
 resolve_theme <- function(theme) {
   # theme = NULL means no Bootstrap
   if (is.null(theme)) return(theme)
@@ -153,6 +154,10 @@ theme_version <- function(theme) {
   substr(html_dependency_bootstrap("default")$version, 1, 1)
 }
 
+needs_sass <- function(css) {
+  grepl("\\.s[ac]ss$", css)
+}
+
 
 # Create an HTML dependency for tocify
 #' @rdname html-dependencies
@@ -183,15 +188,7 @@ html_dependency_accessible_code_block <- function() {
 #' @rdname html-dependencies
 #' @export
 html_dependency_font_awesome <- function() {
-
-  htmlDependency(
-    "font-awesome",
-    "5.1.0",
-    src = pkg_file("rmd/h/fontawesome"),
-    stylesheet = c(
-      "css/all.css",
-      "css/v4-shims.css")
-  )
+  fontawesome::fa_html_dependency()
 }
 
 # Create an HTML dependency for Ionicons
@@ -536,6 +533,18 @@ html_dependency_tabset <- function() {
     src = pkg_file("rmd/h/tabset"),
     script = "tabset.js",
     stylesheet = "tabset.css",
+    all_files = FALSE
+  )
+}
+
+#' @rdname html-dependencies
+#' @export
+html_dependency_codefolding_lua <- function() {
+  htmlDependency(
+    "codefolding-lua",
+    version = "1.1",
+    src = pkg_file("rmd/h/navigation-1.1"),
+    stylesheet = "codefolding-lua.css",
     all_files = FALSE
   )
 }

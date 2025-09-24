@@ -1,26 +1,26 @@
 Type: Package
 Package: rmarkdown
 Title: Dynamic Documents for R
-Version: 2.13.1
+Version: 2.29.3
 Authors@R: c(
-    person("JJ", "Allaire", , "jj@rstudio.com", role = "aut"),
+    person("JJ", "Allaire", , "jj@posit.co", role = "aut"),
     person("Yihui", "Xie", , "xie@yihui.name", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0645-5666")),
-    person("Jonathan", "McPherson", , "jonathan@rstudio.com", role = "aut"),
-    person("Javier", "Luraschi", , "javier@rstudio.com", role = "aut"),
-    person("Kevin", "Ushey", , "kevin@rstudio.com", role = "aut"),
-    person("Aron", "Atkins", , "aron@rstudio.com", role = "aut"),
-    person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
-    person("Joe", "Cheng", , "joe@rstudio.com", role = "aut"),
-    person("Winston", "Chang", , "winston@rstudio.com", role = "aut"),
-    person("Richard", "Iannone", , "rich@rstudio.com", role = "aut", comment = c(ORCID = "0000-0003-3925-190X")),
+    person("Christophe", "Dervieux", , "cderv@posit.co", role = "aut", comment = c(ORCID = "0000-0003-4474-2498")),
+    person("Jonathan", "McPherson", , "jonathan@posit.co", role = "aut"),
+    person("Javier", "Luraschi", role = "aut"),
+    person("Kevin", "Ushey", , "kevin@posit.co", role = "aut"),
+    person("Aron", "Atkins", , "aron@posit.co", role = "aut"),
+    person("Hadley", "Wickham", , "hadley@posit.co", role = "aut"),
+    person("Joe", "Cheng", , "joe@posit.co", role = "aut"),
+    person("Winston", "Chang", , "winston@posit.co", role = "aut"),
+    person("Richard", "Iannone", , "rich@posit.co", role = "aut", comment = c(ORCID = "0000-0003-3925-190X")),
     person("Andrew", "Dunning", role = "ctb", comment = c(ORCID = "0000-0003-0464-5036")),
     person("Atsushi", "Yasumoto", role = c("ctb", "cph"), comment = c(ORCID = "0000-0002-8335-495X", cph = "Number sections Lua filter")),
     person("Barret", "Schloerke", role = "ctb"),
     person("Carson", "Sievert", role = "ctb", comment = c(ORCID = "0000-0002-4958-2844")), 
-    person("Christophe", "Dervieux", role = "ctb"),
     person("Devon", "Ryan", , "dpryan79@gmail.com", role = "ctb", comment = c(ORCID = "0000-0002-8549-0971")),
     person("Frederik", "Aust", , "frederik.aust@uni-koeln.de", role = "ctb", comment = c(ORCID = "0000-0003-4900-788X")),
-    person("Jeff", "Allen", , "jeff@rstudio.com", role = "ctb"), 
+    person("Jeff", "Allen", , "jeff@posit.co", role = "ctb"), 
     person("JooYoung", "Seo", role = "ctb", comment = c(ORCID = "0000-0002-4064-6012")),
     person("Malcolm", "Barrett", role = "ctb"),
     person("Rob", "Hyndman", , "Rob.Hyndman@monash.edu", role = "ctb"),
@@ -28,8 +28,8 @@ Authors@R: c(
     person("Roy", "Storey", role = "ctb"),
     person("Ruben", "Arslan", , "ruben.arslan@uni-goettingen.de", role = "ctb"),
     person("Sergio", "Oller", role = "ctb"),
-    person(, "RStudio, PBC", role = "cph"),
-    person(, "jQuery UI contributors", role = c("ctb", "cph"), comment = "jQuery UI library; authors listed in inst/rmd/h/jqueryui-AUTHORS.txt"),
+    person(given = "Posit Software, PBC", role = c("cph", "fnd")),
+    person(, "jQuery UI contributors", role = c("ctb", "cph"), comment = "jQuery UI library; authors listed in inst/rmd/h/jqueryui/AUTHORS.txt"),
     person("Mark", "Otto", role = "ctb", comment = "Bootstrap library"),
     person("Jacob", "Thornton", role = "ctb", comment = "Bootstrap library"),
     person(, "Bootstrap contributors", role = "ctb", comment = "Bootstrap library"),
@@ -49,7 +49,6 @@ Authors@R: c(
     person("Benct Philip", "Jonsson", role = c("ctb", "cph"), comment = "pagebreak Lua filter"),
     person("Albert", "Krewinkel", role = c("ctb", "cph"), comment = "pagebreak Lua filter")
   )
-Maintainer: Yihui Xie <xie@yihui.name>
 Description: Convert R Markdown documents into a variety of formats.
 License: GPL-3
 URL: https://github.com/rstudio/rmarkdown, https://pkgs.rstudio.com/rmarkdown/
@@ -59,16 +58,16 @@ Depends:
 Imports:
     bslib (>= 0.2.5.1),
     evaluate (>= 0.13),
-    htmltools (>= 0.3.5),
+    fontawesome (>= 0.5.0),
+    htmltools (>= 0.5.1),
     jquerylib,
     jsonlite,
-    knitr (>= 1.22),
+    knitr (>= 1.43),
     methods,
-    stringr (>= 1.2.0),
     tinytex (>= 0.31),
     tools,
     utils,
-    xfun (>= 0.30),
+    xfun (>= 0.36),
     yaml (>= 2.1.19)
 Suggests:
     digest,
@@ -81,11 +80,13 @@ Suggests:
     shiny (>= 1.6.0),
     testthat (>= 3.0.3),
     tibble,
-    tufte,
     vctrs,
-    withr (>= 2.4.2)
+    cleanrmd,
+    withr (>= 2.4.2),
+    xml2
 VignetteBuilder: knitr
 Config/Needs/website: rstudio/quillt, pkgdown
+Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org

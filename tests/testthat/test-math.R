@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("check_math_argument()", {
   # valid value
   expect_null(check_math_argument(NULL))

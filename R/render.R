@@ -291,6 +291,7 @@ render <- function(input,
   # then recursively call this function with each format by name
   if (is.character(output_format) && length(output_format) > 1) {
     outputs <- character()
+    if (length(output_file) == 1) output_file <- rep(output_file, length(output_format))
     for (i in seq_along(output_format)) {
       # the output_file argument is intentionally ignored (we can't give
       # the same name to each rendered output); copy the rest by name
@@ -389,7 +390,7 @@ render <- function(input,
   oldwd <- setwd(dirname(abs_path(input)))
   on.exit(setwd(oldwd), add = TRUE)
 
-  # reset the name of the input file to be relative and generete the name of
+  # reset the name of the input file to be relative and generate the name of
   # the intermediate knitted file. The extension can be set as an option mainly for blogdown
   # as `.md~` will be ignored.
   input <- basename(input)
@@ -498,7 +499,7 @@ render <- function(input,
 
   # Stop the render process early if the output directory does not exist
   if (!dir_exists(output_dir)) {
-    stop2("The directory '", output_dir, "' does not not exist.")
+    stop2("The directory '", output_dir, "' does not exist.")
   }
 
   # use output filename based files dir
@@ -558,7 +559,12 @@ render <- function(input,
 
   # call any pre_knit handler
   if (!is.null(output_format$pre_knit)) {
-    output_format$pre_knit(input = original_input)
+    if ('...' %in% names(formals(output_format$pre_knit))) {
+      output_format$pre_knit(input = original_input, metadata = front_matter)
+    } else {
+      warning("The 'pre_knit' function of the output format should have a '...' argument.")
+      output_format$pre_knit(input = original_input)
+    }
   }
 
   # function used to call post_knit handler
@@ -598,13 +604,10 @@ render <- function(input,
 
     # specify that htmltools::htmlPreserve() should use the Pandoc raw attribute
     # by default (e.g. ```{=html}) rather than preservation tokens when pandoc
-    # >= v2.0. Note that this option will have the intended effect only for
-    # versions of htmltools >= 0.5.1.
-    if (pandoc2.0() && packageVersion("htmltools") >= "0.5.1") {
-      if (is.null(prev <- getOption("htmltools.preserve.raw"))) {
-        options(htmltools.preserve.raw = TRUE)
-        on.exit(options(htmltools.preserve.raw = prev), add = TRUE)
-      }
+    # >= v2.0.
+    if (pandoc2.0() && is.null(prev <- getOption("htmltools.preserve.raw"))) {
+      options(htmltools.preserve.raw = TRUE)
+      on.exit(options(htmltools.preserve.raw = prev), add = TRUE)
     }
 
     # run render on_exit (run after the knit hooks are saved so that
@@ -685,7 +688,7 @@ render <- function(input,
         # check for 'global' chunk label
         if (identical(knitr::opts_current$get("label"), "global")) {
 
-          # check list of previously evaludated global chunks
+          # check list of previously evaluated global chunks
           code_string <- one_string(code)
           if (!code_string %in% .globals$evaluated_global_chunks) {
 
@@ -797,9 +800,11 @@ render <- function(input,
       if (!isTRUE(front_matter$always_allow_html)) {
         stop2("Functions that produce HTML output found in document targeting ",
              pandoc_to, " output.\nPlease change the output type ",
-             "of this document to HTML. Alternatively, you can allow\n",
-             "HTML output in non-HTML formats by adding this option to the YAML front",
-             "-matter of\nyour rmarkdown file:\n\n",
+             "of this document to HTML.\n",
+             "If you're aiming to have some HTML widgets shown in non-HTML format as a screenshot,\n",
+             "please install webshot or webshot2 R package for knitr to do the screenshot, and configure it by looking at its documentation.\n",
+             "Alternatively, you can allow HTML output in non-HTML formats\n",
+             "by adding this option to the YAML front-matter of\nyour rmarkdown file:\n\n",
              "  always_allow_html: true\n\n",
              "Note however that the HTML output will not be visible in non-HTML formats.\n\n"
         )
@@ -840,6 +845,9 @@ render <- function(input,
 
     perf_timer_start("pre-processor")
 
+    if (has_dependencies(knit_meta, "output_format_dependency")) {
+        output_format <- merge_output_format_dependencies(output_format, knit_meta)
+    }
     # call any pre_processor
     if (!is.null(output_format$pre_processor)) {
       extra_args <- output_format$pre_processor(front_matter,
@@ -919,13 +927,18 @@ render <- function(input,
         }
       }
 
+      # use the convert function from the output format if provided
+      if (!is.function(convert_fun <- output_format$pandoc$convert_fun))
+        convert_fun <- pandoc_convert
+      convert_it <- function(output) convert_fun(
+        output = output, input_files, pandoc_to, output_format$pandoc$from,
+        citeproc, pandoc_args, !quiet
+      )
+
       # if we don't detect any invalid shell characters in the
       # target path, then just call pandoc directly
       if (!grepl(.shell_chars_regex, output) && !grepl(.shell_chars_regex, input)) {
-        return(pandoc_convert(
-          input_files, pandoc_to, output_format$pandoc$from, output,
-          citeproc, pandoc_args, !quiet
-        ))
+        return(convert_it(output))
       }
 
       # render to temporary file (preserve extension)
@@ -942,10 +955,7 @@ render <- function(input,
       on.exit(unlink(pandoc_output_tmp), add = TRUE)
 
       # call pandoc to render file
-      status <- pandoc_convert(
-        input_files, pandoc_to, output_format$pandoc$from, pandoc_output_tmp,
-        citeproc, pandoc_args, !quiet
-      )
+      status <- convert_it(pandoc_output_tmp)
 
       # construct output path (when passed only a file name to '--output',
       # pandoc seems to render in the same directory as the input file)
@@ -974,7 +984,7 @@ render <- function(input,
     # if the output format is LaTeX, first convert .md to .tex, and then convert
     # .tex to .pdf via latexmk() if PDF output is requested (in rmarkdown <=
     # v1.8, we used to call Pandoc to convert .md to .tex and .pdf separately)
-    if (output_format$pandoc$keep_tex || pandoc_to %in% c("latex", "beamer")) {
+    if (output_format$pandoc$keep_tex || knitr::is_latex_output()) {
       # do not use pandoc-citeproc if needs to build bibliography
       convert(texfile, run_citeproc && !need_bibtex)
       # patch the .tex output generated from the default Pandoc LaTeX template
@@ -1042,11 +1052,11 @@ render <- function(input,
     intermediates <- setdiff(intermediates, c(input, intermediates_fig))
     # did not run pandoc; returns the markdown output with attributes of the
     # knitr meta data and intermediate files
-    structure(input,
+    invisible(structure(input,
               knit_meta = knit_meta,
               files_dir = files_dir,
               intermediates_dir = intermediates_fig,
-              intermediates = intermediates)
+              intermediates = intermediates))
   }
 }
 
@@ -1204,7 +1214,11 @@ resolve_df_print <- function(df_print) {
 output_metadata = knitr:::new_defaults()
 
 file_scope_split <- function(input, fun) {
-  inputs <- fun(input)
+  inputs <- if (length(formals(fun)) == 1L) {
+    fun(input) # for the backward compatibility
+  } else {
+    fun(input, NULL) # the second argument implies current file scope
+  }
 
   # file_scope_fun should split the input file in several
   # do nothing if not and return input file unsplited

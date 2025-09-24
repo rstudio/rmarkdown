@@ -1,9 +1,6 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 test_that("build highlight args for pandoc correctly", {
   hl_style <- function(name) c("--highlight-style", name)
-  expect_equal(pandoc_highlight_args(NULL), "--no-highlight")
+  expect_equal(pandoc_highlight_args(NULL), if (pandoc_available("3.8")) "--syntax-highlighting=none" else "--no-highlight")
   expect_equal(pandoc_highlight_args("default"), hl_style("tango"))
   expect_equal(pandoc_highlight_args("default", "zenburn"), hl_style("zenburn"))
   expect_equal(pandoc_highlight_args("zenburn"), hl_style("zenburn"))

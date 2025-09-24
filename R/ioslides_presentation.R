@@ -87,7 +87,7 @@
 #' @section Display Modes:
 #'   The following single character keyboard shortcuts enable alternate display
 #'   modes:
-#'   \itemize{
+#'   \describe{
 #'     \item{`'f'`      }{enable fullscreen mode}
 #'     \item{`'w'`      }{toggle widescreen mode}
 #'     \item{`'o'`      }{enable overview mode}
@@ -128,7 +128,7 @@
 #'   ---
 #'   ````
 #'   You can also enable the `smaller` option on a slide-by-slide basis
-#'   by adding the `.smaller` attibute to the slide header:
+#'   by adding the `.smaller` attribute to the slide header:
 #'   ```markdown
 #'   ## Getting up {.smaller}
 #'   ```
@@ -332,6 +332,8 @@ ioslides_presentation <- function(number_sections = FALSE,
   if (!length(grep('--wrap', pandoc_args)))
     pandoc_args <- c('--wrap', 'none', pandoc_args)
 
+  logo_placeholder <- "data:,LOGO"
+
   # pre-processor for arguments that may depend on the name of the
   # the input file (e.g. ones that need to copy supporting files)
   pre_processor <- function(metadata, input_file, runtime, knit_meta, files_dir,
@@ -360,7 +362,8 @@ ioslides_presentation <- function(number_sections = FALSE,
         file.copy(from = logo, to = logo_path)
         logo_path <- normalized_relative_to(output_dir, logo_path)
       } else {
-        logo_path <- pandoc_path_arg(logo_path)
+        # placeholder, will be replaced by base64-encoded logo in post_processor
+        logo_path <- logo_placeholder
       }
       args <- c(args, "--variable", paste("logo=", logo_path, sep = ""))
     }
@@ -425,7 +428,7 @@ ioslides_presentation <- function(number_sections = FALSE,
     # duration of the Pandoc command. Without this, Pandoc fails when attempting
     # to hand UTF-8 encoded non-ASCII characters over to the custom Lua writer.
     # See https://github.com/rstudio/rmarkdown/issues/134
-    if (is_windows()) {
+    if (is_windows() && !pandoc2.0()) {
       # 'chcp' returns e.g., "Active code page: 437"; strip characters and parse
       # the number
       codepage <- as.numeric(gsub("\\D", "", system2("chcp", stdout = TRUE)))
@@ -450,13 +453,17 @@ ioslides_presentation <- function(number_sections = FALSE,
     # read the slides
     slides_lines <- read_utf8(output_tmpfile)
 
+    # read the output file
+    output_lines <- read_utf8(output_file)
+
     # base64 encode if needed
     if (self_contained) {
       slides_lines <- base64_encode_images(slides_lines)
+      if (!is.null(logo)) {
+        logo_base64 <- if (grepl("^data:", logo)) logo else xfun::base64_uri(logo)
+        output_lines <- gsub(logo_placeholder, logo_base64, output_lines, fixed = TRUE)
+      }
     }
-
-    # read the output file
-    output_lines <- read_utf8(output_file)
 
     # substitute slides for the sentinel line
     sentinel_line <- grep("^RENDERED_SLIDES$", output_lines)

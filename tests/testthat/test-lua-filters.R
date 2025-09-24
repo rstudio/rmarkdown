@@ -1,6 +1,3 @@
-# TODO: to remove when switching the package to edition 3
-local_edition(3)
-
 .generate_md_and_convert <- function(content, output_format) {
   input_file <- local_rmd_file(c("---\ntitle: Test\n---\n", content))
   res <- .render_and_read(input_file, output_format = output_format)
@@ -34,10 +31,20 @@ test_that("number_sections Lua filter works", {
   headers <- c("# A", "## B", "# C", "## D")
   rmd <- c(paste0(headers, "\n\n"), "See [A]")
   # Variant for snapshot: pandoc 2.11.2 default to atx headers
-  pandoc_2.11.2 <- ifelse(pandoc_available("2.11.2"), "pandoc-2.11.2", "pandoc-before-2.11.2")
+  pandoc_versions <- if (pandoc_available("3")) {
+    "pandoc-3"
+  } else if (pandoc_available("2.18.0.1")) {
+    "after-pandoc-2.18"
+  } else if (pandoc_available("2.18")) {
+    "pandoc-2.18"
+  } else if (pandoc_available("2.11.2")) {
+    "after-pandoc-2.11.2"
+  } else {
+    "before-pandoc-2.11.2"
+  }
   # -gfm_auto_identifiers
   result <- .generate_md_and_convert(rmd, md_document(number_sections = TRUE))
-  expect_snapshot_output(result, variant = pandoc_2.11.2)
+  expect_snapshot_output(result, variant = pandoc_versions)
 
   # +gfm_auto_identifiers
   skip_if_not_pandoc("2.5") # gfm_auto_identifiers is not working the same before
@@ -45,12 +52,12 @@ test_that("number_sections Lua filter works", {
     rmd,
     md_document(number_sections = TRUE, md_extensions = "+gfm_auto_identifiers")
   )
-  expect_snapshot_output(result, variant = pandoc_2.11.2)
+  expect_snapshot_output(result, variant = pandoc_versions)
 
   # Github document
   skip_if_not_pandoc("2.10.1") # changes in gfm writer break this test for earlier versions
   result <- .generate_md_and_convert(rmd, github_document(number_sections = TRUE, toc = TRUE))
-  expect_snapshot_output(result, variant = pandoc_2.11.2)
+  expect_snapshot_output(result, variant = pandoc_versions)
 })
 
 test_that("latex-divs.lua works with HTML doc", {
@@ -101,14 +108,15 @@ test_that("formats have the expected Lua filter", {
   }
   # different lua filter
   pgb <- "pagebreak"; lxd <- "latex-div"
+  tbl <- if (pandoc_available("3.2.1")) "table-classes"
   nbs <- "number-sections"; acs <- "anchor-sections"
   expect_filters(beamer_presentation(), c(pgb, lxd))
   expect_filters(github_document(number_sections = TRUE),
                  md_document(number_sections = TRUE))
-  expect_filters(html_document(), c(pgb, lxd))
-  expect_filters(html_document(anchor_sections = TRUE), c(pgb, lxd, acs))
-  expect_filters(html_document(anchor_sections = list(depth = 3)), c(pgb, lxd, acs))
-  expect_filters(html_document_base(), c(pgb, lxd))
+  expect_filters(html_document(), c(pgb, lxd, tbl))
+  expect_filters(html_document(anchor_sections = TRUE), c(pgb, lxd, tbl, acs))
+  expect_filters(html_document(anchor_sections = list(depth = 3)), c(pgb, lxd, tbl, acs))
+  expect_filters(html_document_base(), c(pgb, lxd, tbl))
   expect_filters(latex_document(), c(pgb, lxd))
   expect_filters(context_document(ext = ".tex"), c(pgb))
   expect_filters(md_document(number_sections = TRUE), c(nbs))
@@ -116,7 +124,7 @@ test_that("formats have the expected Lua filter", {
   expect_filters(powerpoint_presentation(number_sections = TRUE), c(nbs))
   expect_filters(odt_document(number_sections = TRUE), c(pgb, nbs))
   expect_filters(rtf_document(number_sections = TRUE), c(nbs))
-  expect_filters(slidy_presentation(number_sections = TRUE), c(pgb, lxd, nbs))
+  expect_filters(slidy_presentation(number_sections = TRUE), c(pgb, lxd, tbl, nbs))
   expect_filters(
     word_document(number_sections = TRUE),
     c(pgb, if (!pandoc_available("2.10.1")) nbs)

@@ -24,7 +24,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
 
   # extract the code used for server startup (this encompasses both the
   # context="server-start" code and the context="data" code). This can be
-  # retreived later via the shiny_prerendered_server_start_code function. The
+  # retrieved later via the shiny_prerendered_server_start_code function. The
   # purpose of this is for appliations which want to run user in other
   # processes while still duplicating the setup context (e.g. tutorials).
   server_start_code <- one_string(c(server_start_context,
@@ -39,7 +39,7 @@ shiny_prerendered_app <- function(input_rmd, render_args) {
     eval(xfun::parse_only(server_start_context), envir = server_envir)
     shiny_prerendered_data_load(input_rmd, server_envir)
 
-    # lock the environment to prevent inadvertant assignments
+    # lock the environment to prevent inadvertent assignments
     lockEnvironment(server_envir)
   }
 
@@ -131,7 +131,7 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
   }
 
   # normalize paths
-  rendered_html <- normalize_path(rendered_html, winslash = "/")
+  rendered_html <- normalize_path(rendered_html)
   output_dir <- dirname(rendered_html)
 
   add_resource_path <- function(path, prefix = basename(path), temporary = TRUE) {
@@ -155,8 +155,7 @@ shiny_prerendered_html <- function(input_rmd, render_args) {
 
   # extract dependencies from html
   html_lines <- read_utf8(rendered_html)
-  dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
-  dependencies <- jsonlite::unserializeJSON(dependencies_json)
+  dependencies <- shiny_prerendered_extract_context_serialized(html_lines, "dependencies")
 
   # resolve package paths (this will happen automatically for the
   # development version of htmltools but this isn't on CRAN yet)
@@ -255,8 +254,14 @@ shiny_prerendered_prerender <- function(
   html_lines <- read_utf8(rendered_html)
 
   # check that all html dependencies exist
-  dependencies_json <- shiny_prerendered_extract_context(html_lines, "dependencies")
-  dependencies <- jsonlite::unserializeJSON(dependencies_json)
+  dependencies <- tryCatch(
+    shiny_prerendered_extract_context_serialized(html_lines, "dependencies"),
+    error = function(...) NULL
+  )
+  if (is.null(dependencies)) {
+    # Pre-render needed: failed to parse deps from pre-rendered HTML
+    return(TRUE)
+  }
 
   pkgsSeen <- list()
   for (dep in dependencies) {
@@ -291,8 +296,14 @@ shiny_prerendered_prerender <- function(
   # all html dependencies are accounted for
 
   # check for execution package version differences
-  execution_json <- shiny_prerendered_extract_context(html_lines, "execution_dependencies")
-  execution_info <- jsonlite::unserializeJSON(execution_json)
+  execution_info <- tryCatch(
+    shiny_prerendered_extract_context_serialized(html_lines, "execution_dependencies"),
+    error = function(...) NULL
+  )
+  if (is.null(execution_info)) {
+    # Pre-render needed: failed to parse execution deps from pre-rendered HTML
+    return(TRUE)
+  }
   execution_pkg_names <- execution_info$packages$packages
   execution_pkg_versions <- execution_info$packages$version
   for (i in seq_along(execution_pkg_names)) {
@@ -359,9 +370,13 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
   # remove NULLs (excluded dependencies)
   dependencies <- dependencies[!sapply(dependencies, is.null)]
 
-  # append them to the file (guarnateed to be UTF-8)
+  # append them to the file (guaranteed to be UTF-8)
   con <- file(input, open = "at", encoding = "UTF-8")
   on.exit(close(con), add = TRUE)
+
+  # Add newline before adding any raw html dependency script
+  # https://github.com/rstudio/rmarkdown/issues/2336
+  writeLines("", con = con)
 
   # write deps to connection
   dependencies_json <- jsonlite::serializeJSON(dependencies, pretty = FALSE)
@@ -374,6 +389,16 @@ shiny_prerendered_append_dependencies <- function(input, # always UTF-8
     pretty = FALSE
   )
   shiny_prerendered_append_context(con, "execution_dependencies", execution_json)
+}
+
+shiny_prerendered_extract_context_serialized <- function(html_lines, context = "dependencies") {
+  json_str <- shiny_prerendered_extract_context(html_lines, context)
+  json_str <- unique(json_str)
+  if (length(json_str) > 1) {
+    warning("Multiple ", context, " contexts found in prerendered HTML, using last.")
+    json_str <- json_str[length(json_str)]
+  }
+  jsonlite::unserializeJSON(json_str)
 }
 
 
@@ -480,7 +505,7 @@ shiny_prerendered_option_hook <- function(input) {
 
     if (identical(options$context, "server")) {
       # if empty server context, set a default server function
-      if (xfun::is_blank(options$code)) {
+      if (all(xfun::is_blank(options$code))) {
         options$code <- "# empty server context"
       }
     }
@@ -654,7 +679,7 @@ shiny_prerendered_append_contexts <- function(runtime, file) {
     # append the contexts as script tags
     for (context in shiny_prerendered_contexts) {
 
-      # resovle singletons
+      # resolve singletons
       if (isTRUE(context$singleton)) {
         found_singleton <- FALSE
         for (singleton in singletons) {
@@ -706,7 +731,7 @@ shiny_prerendered_data_dir <- function(input, create = FALSE) {
 #     ensures that we only read .RData for chunks that were
 #     included in the last rendered document.
 #
-# (2) We want to load data into the server environemnt in the
+# (2) We want to load data into the server environment in the
 #     exact same chunk order that it appears in the document.
 #
 shiny_prerendered_data_load <- function(input_rmd, server_envir) {

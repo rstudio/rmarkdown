@@ -117,7 +117,9 @@ copied into the output directory).
 }
 }
 
-For example,\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
+For example,
+
+\if{html}{\out{<div class="sourceCode yaml">}}\preformatted{output:
   html_document:
     math_method:
       engine: katex
@@ -153,7 +155,7 @@ document (typically created using the \code{\link{includes}} function).}
 
 \item{lib_dir}{Directory to copy dependent HTML libraries (e.g. jquery,
 bootstrap, etc.) into. By default this will be the name of the document with
-\code{_files} appended to it.}
+\verb{_files} appended to it.}
 
 \item{md_extensions}{Markdown extensions to be added or removed from the
 default definition of R Markdown. See the \code{\link{rmarkdown_format}} for

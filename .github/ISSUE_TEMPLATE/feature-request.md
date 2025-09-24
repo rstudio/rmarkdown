@@ -8,7 +8,7 @@ assignees: ''
 
 <!--
 
-Welcome to the rmarkdown GitHub repo 👋
+Welcome to the rmarkdown GitHub repo !
 
 Thanks for taking the time to file a feature request! Please start by searching for an existing feature request to avoid creating duplicate requests. If you find an existing feature request, please give it a thumbs-up reaction, as we'll use these reactions to help prioritize the implementation of these features in the future.
 

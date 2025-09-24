@@ -69,7 +69,7 @@ md_document <- function(variant = "markdown_strict",
   # pandoc args
   args <- c(args, pandoc_args)
 
-  # Preprocess number_sections if variant is a markdown flavor +gfm_auto_identifers
+  # Preprocess number_sections if variant is a markdown flavor +gfm_auto_identifiers
   if (number_sections && !pandoc_available("2.1")) {
     warning("`number_sections = TRUE` requires at least Pandoc 2.1. The feature will be deactivated",
             call. = FALSE)
@@ -157,7 +157,7 @@ adapt_md_variant <- function(variant) {
       gfm = ,
       commonmark = ,
       commonmark_x = {
-        if (pandoc_available(2.13)) {
+        if (pandoc_available("2.13")) {
           set_extension(variant_extensions, "yaml_metadata_block", FALSE)
         } else {
           # Unsupported extension before YAML 2.13

@@ -46,8 +46,8 @@ pandoc_convert <- function(input,
                            verbose = FALSE,
                            wd = NULL) {
 
-  # ensure we've scanned for pandoc
-  find_pandoc()
+  # ensure pandoc is available
+  pandoc_available(error = TRUE)
 
   # evaluate path arguments before changing working directory
   force(output)
@@ -61,7 +61,7 @@ pandoc_convert <- function(input,
   on.exit(setwd(oldwd), add = TRUE)
 
   # input file and formats
-  args <- c(input)
+  args <- pandoc_path_arg(input)
   if (!is.null(to)) {
     if (to == 'html') to <- 'html4'
     if (to == 'pdf') to <- 'latex'
@@ -72,7 +72,7 @@ pandoc_convert <- function(input,
 
   # output file
   if (!is.null(output))
-    args <- c(args, "--output", output)
+    args <- c(args, "--output", pandoc_path_arg(output))
 
   # set pandoc stack size
   args <- prepend_pandoc_stack_size(args)
@@ -87,6 +87,10 @@ pandoc_convert <- function(input,
     args <- c(args[!args %in% c("--natbib", "--biblatex")],
               pandoc_citeproc_args())
   }
+
+  # change the --self-contained argument for Pandoc 2.19+
+  i <- match('--self-contained', args)
+  if (!is.na(i) && pandoc_available('2.19')) args <- c(args[-i], self_contained_args())
 
   # build the conversion command
   command <- paste(quoted(pandoc()), paste(quoted(args), collapse = " "))
@@ -274,6 +278,14 @@ pandoc_metadata_arg <- function(name,
   c("--metadata", if (missing(value)) name else paste(name, "=", value, sep = ""))
 }
 
+#' @rdname pandoc_args
+#' @param file string. Path to a file
+#' @export
+pandoc_metadata_file_arg <- function(file) {
+
+  c("--metadata-file", pandoc_path_arg(file))
+}
+
 
 #' @rdname pandoc_args
 #' @export
@@ -296,20 +308,12 @@ pandoc_include_args <- function(in_header = NULL,
 
 #' @rdname pandoc_args
 #' @export
-pandoc_highlight_args <- function(highlight,
-                                  default = "tango") {
-
-  args <- c()
-
-  if (is.null(highlight))
-    args <- c(args, "--no-highlight")
-  else {
-    if (identical(highlight, "default"))
-      highlight <- default
-    args <- c(args, "--highlight-style", highlight)
+pandoc_highlight_args <- function(highlight, default = "tango") {
+  if (is.null(highlight)) {
+    if (pandoc_available("3.8")) "--syntax-highlighting=none" else "--no-highlight"
+  } else {
+    c("--highlight-style", if (identical(highlight, "default")) default else highlight)
   }
-
-  args
 }
 
 #' @rdname pandoc_args
@@ -381,6 +385,9 @@ pandoc_path_arg <- function(path, backslash = TRUE) {
 
   # remove redundant ./ prefix if present
   path <- sub('^[.]/', '', path)
+  # paths starting with - shouldn't be treated as command-line options (#2503)
+  i <- grepl('^-', path) & xfun::is_rel_path(path)
+  path[i] <- paste0('./', path[i])
 
   if (is_windows()) {
     i <- grep(' ', path)
@@ -432,12 +439,12 @@ pandoc_template <- function(metadata, template, output, verbose = FALSE) {
 pandoc_self_contained_html <- function(input, output) {
 
   # make input file path absolute
-  input <- normalizePath(input)
+  input <- normalize_path(input)
 
   # ensure output file exists and make it's path absolute
   if (!file.exists(output))
     file.create(output)
-  output <- normalizePath(output)
+  output <- normalize_path(output)
 
   # create a simple body-only template
   template <- tempfile(fileext = ".html")
@@ -463,7 +470,7 @@ pandoc_self_contained_html <- function(input, output) {
     from = from,
     output = output,
     options = c(
-      "--self-contained",
+      self_contained_args(),
       "--template", template
     )
   )
@@ -680,8 +687,17 @@ get_pandoc_version <- function(pandoc_dir) {
   info <- with_pandoc_safe_environment(
     system(paste(shQuote(path), "--version"), intern = TRUE)
   )
-  version <- strsplit(info, "\n")[[1]][1]
+  version <- strsplit(info, "\n", useBytes = TRUE)[[1]][1]
   version <- strsplit(version, " ")[[1]][2]
+  components <- strsplit(version, "-")[[1]]
+  version <- components[1]
+  # pandoc nightly adds -nightly-YYYY-MM-DD to last release version
+  # https://github.com/jgm/pandoc/issues/8016
+  # mark it as devel appending YYYY.MM.DD
+  nightly <- match("nightly", components)
+  if (!is.na(nightly)) version <- paste(c(
+    version, grep("^[0-9]+$", components[-(1:nightly)], value = TRUE)
+  ), collapse = ".")
   numeric_version(version)
 }
 
@@ -824,6 +840,11 @@ find_pandoc_theme_variable <- function(args) {
 
 pandoc2.0 <- function() {
   pandoc_available("2.0")
+}
+
+# Pandoc 2.19 deprecated --self-contained
+self_contained_args <- function() {
+  if (pandoc_available('2.19')) c('--embed-resources', '--standalone') else '--self-contained'
 }
 
 #' Get the path of the pandoc executable
