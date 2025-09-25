@@ -185,7 +185,7 @@ documentation} for additional details on using the \code{slidy_presentation}
 format.
 
 For more information on markdown syntax for presentations see the
-\href{https://pandoc.org/README.html}{pandoc online documentation}.
+\href{https://pandoc.org/MANUAL.html}{pandoc online documentation}.
 }
 \examples{
 \dontrun{
