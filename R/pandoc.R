@@ -309,11 +309,13 @@ pandoc_include_args <- function(in_header = NULL,
 #' @rdname pandoc_args
 #' @export
 pandoc_highlight_args <- function(highlight, default = "tango") {
+  p38 <- pandoc_available("3.8")
   if (is.null(highlight)) {
-    if (pandoc_available("3.8")) "--syntax-highlighting=none" else "--no-highlight"
-  } else {
-    c("--highlight-style", if (identical(highlight, "default")) default else highlight)
+    if (!p38) return("--no-highlight")
+    highlight <- "none"
   }
+  if (identical(highlight, "default")) highlight <- default
+  c(if (p38) "--syntax-highlighting" else "--highlight-style", highlight)
 }
 
 #' @rdname pandoc_args
