@@ -1,9 +1,8 @@
 test_that("build highlight args for pandoc correctly", {
-  hl_style <- function(name) c("--highlight-style", name)
-  expect_equal(pandoc_highlight_args(NULL), "--no-highlight")
-  expect_equal(pandoc_highlight_args("default"), hl_style("tango"))
-  expect_equal(pandoc_highlight_args("default", "zenburn"), hl_style("zenburn"))
-  expect_equal(pandoc_highlight_args("zenburn"), hl_style("zenburn"))
+  expect_equal(pandoc_highlight_args(NULL), if (pandoc_available("3.8")) c("--syntax-highlighting", "none") else "--no-highlight")
+  expect_equal(pandoc_highlight_args("default")[2], "tango")
+  expect_equal(pandoc_highlight_args("default", "zenburn")[2], "zenburn")
+  expect_equal(pandoc_highlight_args("zenburn")[2], "zenburn")
 })
 
 test_that("Detect if a theme file is providing in highlight", {

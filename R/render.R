@@ -899,6 +899,7 @@ render <- function(input,
       input  <- path.expand(input)
       output <- path.expand(output)
 
+      # Tweak Pandoc argument for all formats
       pandoc_args <- output_format$pandoc$args
 
       # if Lua filters are provided, add the command line switch
@@ -978,7 +979,7 @@ render <- function(input,
     # if the output format is LaTeX, first convert .md to .tex, and then convert
     # .tex to .pdf via latexmk() if PDF output is requested (in rmarkdown <=
     # v1.8, we used to call Pandoc to convert .md to .tex and .pdf separately)
-    if (output_format$pandoc$keep_tex || knitr::is_latex_output()) {
+    if (output_format$pandoc$keep_tex || grepl("^(latex|beamer)($|[-+].*)", pandoc_to)) {
       # do not use pandoc-citeproc if needs to build bibliography
       convert(texfile, run_citeproc && !need_bibtex)
       # patch the .tex output generated from the default Pandoc LaTeX template

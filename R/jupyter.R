@@ -104,9 +104,9 @@ r_line_magics <- paste0('^%?(', paste(line_magics, collapse = '|'), ')($|\\s)')
 
 # convert raw text/html and text/latex cells to raw ```{=format}` Markdown blocks
 cell_raw <- function(x, fmt) {
-  if (length(fmt) != 1) return()
+  if (length(fmt) != 1) return(x)
   fmt <- switch(fmt, 'text/html' = 'html', 'text/latex' = 'latex')
-  if (length(fmt) == 0) return()
+  if (length(fmt) == 0) return(x)
   c(sprintf('```{=%s}', fmt), x, '```')
 }
 

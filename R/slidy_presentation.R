@@ -7,7 +7,7 @@
 #' format.
 #'
 #' For more information on markdown syntax for presentations see the
-#' \href{https://pandoc.org/README.html}{pandoc online documentation}.
+#' \href{https://pandoc.org/MANUAL.html}{pandoc online documentation}.
 #' @inheritParams pdf_document
 #' @inheritParams html_document
 #' @inheritParams beamer_presentation
