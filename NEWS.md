@@ -1,6 +1,14 @@
 rmarkdown 2.31
 ================================================================================
 
+- `html_document` output allows `lib_dir` to point to a parent of the output 
+  directory if the `allow_uptree_lib_dir` parameter is set to `TRUE`. This used
+  to throw an error, "The path <file> does not appear to be a descendant of 
+  <dir>". This makes it possible to have a directory structure for HTML output
+  where there is a shared master library with css, javascript, etc. and separate 
+  child directories with RMarkdown files. #146 and #1859.
+  (thanks, @jonathan-g, #2199)
+
 - Use the argument `--syntax-highlighting` for Pandoc >= 3.8 since `--highlight-style` has been deprecated (thanks, @ywwry66, #2602).
 
 
