@@ -643,10 +643,14 @@ render <- function(input,
     # use filename based figure and cache directories
     base_pandoc_to <- gsub('[-+].*', '', pandoc_to)
     if (base_pandoc_to == 'html4') base_pandoc_to <- 'html'
-    knitr::opts_chunk$set(fig.path = paste0(
+    fig_path <- paste0(
       pandoc_path_arg(files_dir_slash, backslash = FALSE),
       "/figure-", base_pandoc_to, "/"
-    ))
+    )
+    knitr::opts_chunk$set(fig.path = fig_path)
+    if (!("--extract-media" %in% output_format$pandoc$args)) {
+      output_format$pandoc$args <- c(output_format$pandoc$args, "--extract-media", fig_path)
+    }
     cache_dir <- knitr_cache_dir(input, base_pandoc_to)
     knitr::opts_chunk$set(cache.path = cache_dir)
 

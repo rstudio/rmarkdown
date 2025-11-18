@@ -1,7 +1,7 @@
 Type: Package
 Package: rmarkdown
 Title: Dynamic Documents for R
-Version: 2.30.1
+Version: 2.30.2
 Authors@R: c(
     person("JJ", "Allaire", , "jj@posit.co", role = "aut"),
     person("Yihui", "Xie", , "xie@yihui.name", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0645-5666")),
@@ -88,5 +88,5 @@ VignetteBuilder: knitr
 Config/Needs/website: rstudio/quillt, pkgdown
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org

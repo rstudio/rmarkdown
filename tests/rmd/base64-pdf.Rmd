@@ -1,0 +1,10 @@
+---
+title: Base64 test
+output: pdf_document
+---
+
+There should be an image below.
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQz0AEYBxVSF+FABJADveWkH6oAAAAAElFTkSuQmCC)
+
+There should be an image above.
