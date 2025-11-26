@@ -436,7 +436,12 @@ default_output_format <- function(input, output_yaml = NULL) {
 
   # look up the formals of the output function to get the full option list and
   # merge against the explicitly set list
-  format_function <- eval(xfun::parse_only(format$name))
+  format_function <- tryCatch(
+    eval(xfun::parse_only(format$name)), error = function(e) NULL
+  )
+  # if we can't find the function, default to html_document with no options
+  if (!is.function(format_function))
+    return(list(name = "html_document", options = list()))
   format$options <- merge_lists(as.list(formals(format_function)),
                                 format$options,
                                 recursive = FALSE)

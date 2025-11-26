@@ -5,6 +5,8 @@ rmarkdown 2.31
 
 - Use the argument `--syntax-highlighting` for Pandoc >= 3.8 since `--highlight-style` has been deprecated (thanks, @ywwry66, #2602).
 
+- `default_output_format()` will fall back to `html_document` if the output format in YAML cannot be recognized.
+
 
 rmarkdown 2.30
 ================================================================================
