@@ -649,7 +649,7 @@ render <- function(input,
     )
     knitr::opts_chunk$set(fig.path = fig_path)
     if (!("--extract-media" %in% output_format$pandoc$args)) {
-      output_format$pandoc$args <- c(output_format$pandoc$args, "--extract-media", fig_path)
+      output_format$pandoc$args <- c(output_format$pandoc$args, "--extract-media", pandoc_path_arg(files_dir_slash, backslash = FALSE))
     }
     cache_dir <- knitr_cache_dir(input, base_pandoc_to)
     knitr::opts_chunk$set(cache.path = cache_dir)
