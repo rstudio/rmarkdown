@@ -63,19 +63,19 @@ test_that("number_sections Lua filter works", {
 test_that("latex-divs.lua works with HTML doc", {
   rmd <- "::: custom\ncontent\n:::\n\n some other content"
   res <- .generate_md_and_convert(rmd, "html_document")
-  expect_match(grep('custom', res, value = TRUE), '<div class="custom"')
+  expect_match(grep('<div.*class="custom"', res, value = TRUE), '<div class="custom"')
   rmd <- "::: {.custom #id}\ncontent\n:::\n\n some other content"
   res <- .generate_md_and_convert(rmd, "html_document")
-  expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom">')
+  expect_match(grep('<div.*class="custom"', res, value = TRUE), '<div id="id" class="custom">')
   rmd <- "::: {.custom #id data-latex=''}\ncontent\n:::\n\n some other content"
   res <- .generate_md_and_convert(rmd, "html_document")
-  expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom">')
+  expect_match(grep('<div.*class="custom"', res, value = TRUE), '<div id="id" class="custom">')
   rmd <- "::: {.custom #id latex=true}\ncontent\n:::\n\n some other content"
   res <- .generate_md_and_convert(rmd, "html_document")
-  expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom">')
+  expect_match(grep('<div.*class="custom"', res, value = TRUE), '<div id="id" class="custom">')
   rmd <- "::: {.custom #id latex=1}\ncontent\n:::\n\n some other content"
   res <- .generate_md_and_convert(rmd, "html_document")
-  expect_match(grep('custom', res, value = TRUE), '<div id="id" class="custom">')
+  expect_match(grep('<div.*class="custom"', res, value = TRUE), '<div id="id" class="custom">')
 })
 
 test_that("latex-divs.lua works with LaTeX (PDF)", {
