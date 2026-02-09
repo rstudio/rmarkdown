@@ -3,7 +3,7 @@
     This filter contains utility functions that are useful in several filters.
 
   USAGE
-    This script is loaded in other script by an RMARKDOW_LUA_SHARED environment variable
+    This script is loaded in other script by an RMARKDOWN_LUA_SHARED environment variable
     set inside rmarkdown R package by `render()`.
 
     Use this line in other script to use this function
