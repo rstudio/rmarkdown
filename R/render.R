@@ -648,8 +648,10 @@ render <- function(input,
       "/figure-", base_pandoc_to, "/"
     )
     knitr::opts_chunk$set(fig.path = fig_path)
-    if (!("--extract-media" %in% output_format$pandoc$args)) {
-      output_format$pandoc$args <- c(output_format$pandoc$args, "--extract-media", fig_path)
+    # Use --extract-media for non-HTML formats to handle base64-encoded images
+    # For HTML formats, don't use it as it can interfere with file management (e.g., pkgdown)
+    if (!knitr::is_html_output() && !("--extract-media" %in% output_format$pandoc$args)) {
+      output_format$pandoc$args <- c(output_format$pandoc$args, "--extract-media", files_dir)
     }
     cache_dir <- knitr_cache_dir(input, base_pandoc_to)
     knitr::opts_chunk$set(cache.path = cache_dir)
