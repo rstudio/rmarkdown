@@ -12,7 +12,7 @@
 #' * uses a custom css stylesheet
 #'
 #' See the [online
-#' documentation](https://bookdown.org/yihui/rmarkdown/r-package-vignette.html)
+#' documentation](https://yihui.org/rmarkdown/r-package-vignette.html)
 #' for additional details on using the `html_vignette()` format.
 #' @inheritParams html_document
 #' @param highlight,... Additional arguments passed to

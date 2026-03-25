@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to an ODT document.
 #'
-#' See the \href{https://bookdown.org/yihui/rmarkdown/opendocument-text-document.html}{online
+#' See the \href{https://yihui.org/rmarkdown/opendocument-text-document.html}{online
 #' documentation} for additional details on using the \code{odt_document} format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a

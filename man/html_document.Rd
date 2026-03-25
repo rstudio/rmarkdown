@@ -81,7 +81,7 @@ for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
 \code{rmarkdown.df_print} to \code{FALSE}. See
-\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+\href{https://yihui.org/rmarkdown/html-document.html#data-frame-printing}{Data
 frame printing section} in bookdown book for examples.}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
@@ -160,7 +160,7 @@ For example,
   html_document:
     math_method:
       engine: katex
-      url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+      url: https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/
 }\if{html}{\out{</div>}}
 
 See \href{https://pandoc.org/MANUAL.html#math-rendering-in-html}{Pandoc's Manual about Math in HTML} for the details
@@ -217,7 +217,7 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to an HTML document.
 }
 \details{
-See the \href{https://bookdown.org/yihui/rmarkdown/html-document.html}{online documentation} for additional details on using the \code{html_document}
+See the \href{https://yihui.org/rmarkdown/html-document.html}{online documentation} for additional details on using the \code{html_document}
 format.
 
 R Markdown documents can have optional metadata that is used to generate a
@@ -310,7 +310,7 @@ document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:
 }\if{html}{\out{</div>}}
 
 About how to apply custom CSS in R Markdown document, see
-\url{https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html}
+\url{https://yihui.org/rmarkdown-cookbook/html-css.html}
 }
 \item{\code{depth}}{Select the maximum header level to add the
 anchor link to. For example, this yaml will use the symbol style and

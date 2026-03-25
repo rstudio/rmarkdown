@@ -27,7 +27,7 @@
 #' @return R Markdown output format to pass to [render()].
 #' @details
 #'   See the [
-#'   online documentation](https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html) for additional details on using the
+#'   online documentation](https://yihui.org/rmarkdown/ioslides-presentation.html) for additional details on using the
 #'   `ioslides_presentation` format.
 #'
 #'   Note that, if a `before_body` include is specified in `includes`,

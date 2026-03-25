@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to a slidy presentation.
 #'
-#' See the \href{https://bookdown.org/yihui/rmarkdown/slidy-presentation.html}{online
+#' See the \href{https://yihui.org/rmarkdown/slidy-presentation.html}{online
 #' documentation} for additional details on using the \code{slidy_presentation}
 #' format.
 #'

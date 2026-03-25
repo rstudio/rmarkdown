@@ -20,7 +20,7 @@ bibentry(
   address = 'Boca Raton, Florida',
   year = '2018',
   isbn = '9781138359338',
-  url = 'https://bookdown.org/yihui/rmarkdown',
+  url = 'https://yihui.org/rmarkdown/',
 )
 
 bibentry(
@@ -31,5 +31,5 @@ bibentry(
   address = 'Boca Raton, Florida',
   year = '2020',
   isbn = '9780367563837',
-  url = 'https://bookdown.org/yihui/rmarkdown-cookbook',
+  url = 'https://yihui.org/rmarkdown-cookbook',
 )

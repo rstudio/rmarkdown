@@ -65,7 +65,7 @@ For example,
   html_document:
     math_method:
       engine: katex
-      url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+      url: https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/
 }\if{html}{\out{</div>}}
 
 See \href{https://pandoc.org/MANUAL.html#math-rendering-in-html}{Pandoc's Manual about Math in HTML} for the details

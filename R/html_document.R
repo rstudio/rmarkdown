@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to an HTML document.
 #'
-#' See the [online documentation](https://bookdown.org/yihui/rmarkdown/html-document.html) for additional details on using the `html_document`
+#' See the [online documentation](https://yihui.org/rmarkdown/html-document.html) for additional details on using the `html_document`
 #' format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
@@ -103,7 +103,7 @@
 #'    html_document:
 #'      math_method:
 #'        engine: katex
-#'        url: https://cdn.jsdelivr.net/npm/katex@0.11.1/dist
+#'        url: https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/
 #'  ```
 #'
 #'  See [Pandoc's Manual about Math in
@@ -216,7 +216,7 @@
 #'  }
 #'  ```
 #'  About how to apply custom CSS in R Markdown document, see
-#'  <https://bookdown.org/yihui/rmarkdown-cookbook/html-css.html>
+#'  <https://yihui.org/rmarkdown-cookbook/html-css.html>
 #'  }
 #'  \item{`depth`}{Select the maximum header level to add the
 #'  anchor link to. For example, this yaml will use the symbol style and
