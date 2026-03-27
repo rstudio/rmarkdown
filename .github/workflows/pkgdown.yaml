@@ -30,7 +30,7 @@ jobs:
 
       - uses: yihui/actions/setup-r-dependencies@HEAD
         with:
-          extra-packages: pkgdown .
+          extra-packages: pkgdown rstudio/quillt .
 
       - name: Build pkgdown site
         run: pkgdown::build_site(new_process = FALSE, install = FALSE)
