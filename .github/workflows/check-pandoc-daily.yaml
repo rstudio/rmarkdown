@@ -51,10 +51,7 @@ jobs:
           cat(readLines("~/.Rprofile"), sep = "\n")
         shell: Rscript {0}
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck
-          needs: check
+      - uses: yihui/actions/setup-r-dependencies@HEAD
 
       - name: Pandoc and Tinytex info
         run: |
@@ -63,6 +60,4 @@ jobs:
           tinytex::tl_pkgs()
         shell: Rscript {0}
 
-      - uses: r-lib/actions/check-r-package@v2
-        with:
-          upload-snapshots: true
+      - uses: yihui/actions/check-r-package@HEAD

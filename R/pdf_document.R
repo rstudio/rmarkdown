@@ -2,7 +2,7 @@
 #'
 #' Formats for converting from R Markdown to a PDF or LaTeX document.
 #'
-#' See the \href{https://bookdown.org/yihui/rmarkdown/pdf-document.html}{online
+#' See the \href{https://yihui.org/rmarkdown/pdf-document.html}{online
 #' documentation} for additional details on using the \code{pdf_document}
 #' format.
 #'

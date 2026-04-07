@@ -43,4 +43,8 @@ if (.Platform$OS.type == 'unix' && isTRUE(as.logical(Sys.getenv("CI"))) && rmark
   # https://github.com/rstudio/rmarkdown/issues/2493
   rmarkdown::render("rmd/clean-format.Rmd")
 
+  # base64 encoded images should work for PDF output
+  # https://github.com/rstudio/rmarkdown/issues/2604
+  rmarkdown::render("rmd/base64-pdf.Rmd")
+
 }

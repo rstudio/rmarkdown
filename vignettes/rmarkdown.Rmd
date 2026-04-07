@@ -55,28 +55,28 @@ You can also access links to all these tutorials in the **"Get Started"** sectio
 
 # User Guide
 
-Written by the authors of the **rmarkdown** package, [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) provides a comprehensive user guide to the complete R Markdown ecosystem for authoring documents. The book is published by Chapman & Hall/CRC, and you can read it online for free.
+Written by the authors of the **rmarkdown** package, [R Markdown: The Definitive Guide](https://yihui.org/rmarkdown/) provides a comprehensive user guide to the complete R Markdown ecosystem for authoring documents. The book is published by Chapman & Hall/CRC, and you can read it online for free.
 
-<a href="https://bookdown.org/yihui/rmarkdown/"><img src="https://bookdown.org/yihui/rmarkdown/images/cover.png" alt="R Markdown: The Definitive Guide" data-external=1 width="250" style="padding: 0 15px; float: right;"/></a>
+<a href="https://yihui.org/rmarkdown/"><img src="https://yihui.org/rmarkdown/images/cover.png" alt="R Markdown: The Definitive Guide" data-external=1 width="250" style="padding: 0 15px; float: right;"/></a>
 
 The book is structured into four parts:
 
-* [Part I](https://bookdown.org/yihui/rmarkdown/installation.html) introduces how to install the relevant packages, and provides an overview of R Markdown, including the possible output formats, the Markdown syntax, the R code chunk syntax, and how to use other languages in R Markdown.
+* [Part I](https://yihui.org/rmarkdown/installation.html) introduces how to install the relevant packages, and provides an overview of R Markdown, including the possible output formats, the Markdown syntax, the R code chunk syntax, and how to use other languages in R Markdown.
 
-* [Part II](https://bookdown.org/yihui/rmarkdown/documents.html) is the detailed documentation of built-in output formats in the rmarkdown package, including document formats and presentation formats. These output formats are "built-in" because you do not need any other R packages other than rmarkdown to use them.
+* [Part II](https://yihui.org/rmarkdown/documents.html) is the detailed documentation of built-in output formats in the rmarkdown package, including document formats and presentation formats. These output formats are "built-in" because you do not need any other R packages other than rmarkdown to use them.
 
-* [Part III](https://bookdown.org/yihui/rmarkdown/dashboards.html) documents several R Markdown extension packages that enable you to build different applications or generate output documents with different styles. These output formats are "extensions" because you will need to install R packages, in addition to rmarkdown, to use them.
+* [Part III](https://yihui.org/rmarkdown/dashboards.html) documents several R Markdown extension packages that enable you to build different applications or generate output documents with different styles. These output formats are "extensions" because you will need to install R packages, in addition to rmarkdown, to use them.
 
-* [Part IV](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html) covers advanced topics about R Markdown.
+* [Part IV](https://yihui.org/rmarkdown/parameterized-reports.html) covers advanced topics about R Markdown.
 
 <br>
 <br>
 
 # Going further with examples
 
-<a href="https://bookdown.org/yihui/rmarkdown-cookbook/"><img src="https://bookdown.org/yihui/rmarkdown-cookbook/images/cover.png" alt="R Markdown Cookbook" data-external=1 width="250" style="padding: 0 15px; float: right;"/></a>
+<a href="https://yihui.org/rmarkdown-cookbook/"><img src="https://yihui.org/rmarkdown-cookbook/images/cover.png" alt="R Markdown Cookbook" data-external=1 width="250" style="padding: 0 15px; float: right;"/></a>
 
-[R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) provides a range of examples on how to extend the functionality of your R Markdown documents. As a cookbook, this guide is recommended to new and intermediate R Markdown users who desire to enhance the efficiency of using R Markdown and also explore the power of R Markdown. The book is published by Chapman & Hall/CRC, and you can read it online for free.
+[R Markdown Cookbook](https://yihui.org/rmarkdown-cookbook/) provides a range of examples on how to extend the functionality of your R Markdown documents. As a cookbook, this guide is recommended to new and intermediate R Markdown users who desire to enhance the efficiency of using R Markdown and also explore the power of R Markdown. The book is published by Chapman & Hall/CRC, and you can read it online for free.
 
 This cookbook is not a full technical reference for R Markdown but aims to supplement, instead of replace, the existing literature. The book is thus organized by topics with example as self-contained as possible so that readers can read this book with specific tasks in mind to do with R Markdown. 
 
@@ -85,34 +85,34 @@ The topics are the following
 ```{r, results='asis', echo = FALSE, eval = FALSE}
 # run this to update the content below
 xfun::pkg_attach2("xml2")
-html <- read_html("https://bookdown.org/yihui/rmarkdown-cookbook/")
+html <- read_html("https://yihui.org/rmarkdown-cookbook/")
 chapters <- xml_find_all(html, "//li[@class='chapter']")
 first_level <- chapters[which(purrr::map_lgl(xml_attr(chapters, 'data-level'), ~ grepl('^\\d+$', .x)))]
 titles <- xml_text(xml_find_all(first_level, "a"))
 titles <- gsub("^(\\d+)", "\\1.", titles)
 titles <- gsub("^(.*) \\([*])$", "\\1", titles)
-url <- file.path("https://bookdown.org/yihui/rmarkdown-cookbook", xml_attr(first_level, "data-path"))
+url <- file.path("https://yihui.org/rmarkdown-cookbook", xml_attr(first_level, "data-path"))
 formatted <- sprintf("* [%s](%s)", titles, url)
 cat(formatted, sep = "\n")
 ```
 
-* [1. Installation](https://bookdown.org/yihui/rmarkdown-cookbook/installation.html)
-* [2. Conceptual Overview](https://bookdown.org/yihui/rmarkdown-cookbook/conceptual-overview.html)
-* [3. Basics](https://bookdown.org/yihui/rmarkdown-cookbook/basics.html)
-* [4. Document Elements](https://bookdown.org/yihui/rmarkdown-cookbook/document-elements.html)
-* [5. Formatting](https://bookdown.org/yihui/rmarkdown-cookbook/formatting.html)
-* [6. LaTeX Output](https://bookdown.org/yihui/rmarkdown-cookbook/latex-output.html)
-* [7. HTML Output](https://bookdown.org/yihui/rmarkdown-cookbook/html-output.html)
-* [8. Word](https://bookdown.org/yihui/rmarkdown-cookbook/word.html)
-* [9. Multiple Output Formats](https://bookdown.org/yihui/rmarkdown-cookbook/multi-formats.html)
-* [10. Tables](https://bookdown.org/yihui/rmarkdown-cookbook/tables.html)
-* [11. Chunk Options](https://bookdown.org/yihui/rmarkdown-cookbook/chunk-options.html)
-* [12. Output Hooks](https://bookdown.org/yihui/rmarkdown-cookbook/output-hooks.html)
-* [13. Chunk Hooks](https://bookdown.org/yihui/rmarkdown-cookbook/chunk-hooks.html)
-* [14. Miscellaneous knitr Tricks](https://bookdown.org/yihui/rmarkdown-cookbook/knitr-misc.html)
-* [15. Other Languages](https://bookdown.org/yihui/rmarkdown-cookbook/other-languages.html)
-* [16. Managing Projects](https://bookdown.org/yihui/rmarkdown-cookbook/managing-projects.html)
-* [17. Workflow](https://bookdown.org/yihui/rmarkdown-cookbook/workflow.html)
+* [1. Installation](https://yihui.org/rmarkdown-cookbook/installation.html)
+* [2. Conceptual Overview](https://yihui.org/rmarkdown-cookbook/conceptual-overview.html)
+* [3. Basics](https://yihui.org/rmarkdown-cookbook/basics.html)
+* [4. Document Elements](https://yihui.org/rmarkdown-cookbook/document-elements.html)
+* [5. Formatting](https://yihui.org/rmarkdown-cookbook/formatting.html)
+* [6. LaTeX Output](https://yihui.org/rmarkdown-cookbook/latex-output.html)
+* [7. HTML Output](https://yihui.org/rmarkdown-cookbook/html-output.html)
+* [8. Word](https://yihui.org/rmarkdown-cookbook/word.html)
+* [9. Multiple Output Formats](https://yihui.org/rmarkdown-cookbook/multi-formats.html)
+* [10. Tables](https://yihui.org/rmarkdown-cookbook/tables.html)
+* [11. Chunk Options](https://yihui.org/rmarkdown-cookbook/chunk-options.html)
+* [12. Output Hooks](https://yihui.org/rmarkdown-cookbook/output-hooks.html)
+* [13. Chunk Hooks](https://yihui.org/rmarkdown-cookbook/chunk-hooks.html)
+* [14. Miscellaneous knitr Tricks](https://yihui.org/rmarkdown-cookbook/knitr-misc.html)
+* [15. Other Languages](https://yihui.org/rmarkdown-cookbook/other-languages.html)
+* [16. Managing Projects](https://yihui.org/rmarkdown-cookbook/managing-projects.html)
+* [17. Workflow](https://yihui.org/rmarkdown-cookbook/workflow.html)
 
 <br>
 <br>

@@ -75,10 +75,7 @@ jobs:
           # install full prebuilt version
           TINYTEX_INSTALLER: TinyTeX
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck
-          needs: check
+      - uses: yihui/actions/setup-r-dependencies@HEAD
 
       - name: Remove default installed Pandoc
         if: runner.os == 'Linux'
@@ -99,13 +96,11 @@ jobs:
           tinytex::tl_pkgs()
         shell: Rscript {0}
 
-      - uses: r-lib/actions/check-r-package@v2
-        with:
-          upload-snapshots: true
+      - uses: yihui/actions/check-r-package@HEAD
 
       - name: Test coverage
         if: success() && runner.os == 'Linux' && matrix.config.r == 'release' && matrix.config.pandoc == '2.19.2'
         run: |
-          pak::pkg_install('covr')
+          xfun::pkg_load2('covr')
           covr::codecov()
         shell: Rscript {0}

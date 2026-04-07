@@ -28,10 +28,9 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - uses: yihui/actions/setup-r-dependencies@HEAD
         with:
-          extra-packages: any::pkgdown, local::.
-          needs: website
+          extra-packages: pkgdown rstudio/quillt .
 
       - name: Build pkgdown site
         run: pkgdown::build_site(new_process = FALSE, install = FALSE)

@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to a Beamer presentation.
 #'
-#' See the [online documentation](https://bookdown.org/yihui/rmarkdown/beamer-presentation.html)
+#' See the [online documentation](https://yihui.org/rmarkdown/beamer-presentation.html)
 #' for additional details on using the `beamer_presentation` format.
 #'
 #' Creating Beamer output from R Markdown requires that LaTeX be installed.

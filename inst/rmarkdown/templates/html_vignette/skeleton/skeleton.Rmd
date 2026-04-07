@@ -58,8 +58,3 @@ You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footn
 ```{r, echo=FALSE, results='asis'}
 knitr::kable(head(mtcars, 10))
 ```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))

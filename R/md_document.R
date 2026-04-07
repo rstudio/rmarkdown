@@ -4,7 +4,7 @@
 #' strict markdown or github flavored markdown)
 #'
 #' See the [online
-#' documentation](https://bookdown.org/yihui/rmarkdown/markdown-document.html)
+#' documentation](https://yihui.org/rmarkdown/markdown-document.html)
 #' for additional details on using the `md_document()` format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a

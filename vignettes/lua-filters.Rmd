@@ -208,11 +208,11 @@ We show some \emph{verbatim} text here.
 \end{verbatim}
 ```
 
-This feature we call _Custom blocks_ is documented in details in the [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html)
+This feature we call _Custom blocks_ is documented in details in the [R Markdown Cookbook](https://yihui.org/rmarkdown-cookbook/custom-blocks.html)
 
 ## About Lua filters {#lua-filter}
 
-Since pandoc 2.0, it is possible to use Lua filters to add some extra functionality to pandoc document conversion. Adding a pagebreak command in markdown to be compatible with several output documents is one of them. You can find some more informations about Lua filters in [pandoc's documentation](https://pandoc.org/lua-filters.html) and also some examples in [a collection of Lua filters for pandoc](https://github.com/pandoc/lua-filters). These examples, and any other Lua filters, can be use in your Rmarkdown document directly by adding [a pandoc argument](https://bookdown.org/yihui/rmarkdown/html-document.html#pandoc-arguments) in yaml header
+Since pandoc 2.0, it is possible to use Lua filters to add some extra functionality to pandoc document conversion. Adding a pagebreak command in markdown to be compatible with several output documents is one of them. You can find some more informations about Lua filters in [pandoc's documentation](https://pandoc.org/lua-filters.html) and also some examples in [a collection of Lua filters for pandoc](https://github.com/pandoc/lua-filters). These examples, and any other Lua filters, can be use in your Rmarkdown document directly by adding [a pandoc argument](https://yihui.org/rmarkdown/html-document.html) in yaml header
 
 ```html
 ---

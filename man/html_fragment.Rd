@@ -52,7 +52,7 @@ for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
 \code{rmarkdown.df_print} to \code{FALSE}. See
-\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+\href{https://yihui.org/rmarkdown/html-document.html#data-frame-printing}{Data
 frame printing section} in bookdown book for examples.}
 
 \item{mathjax}{\code{TRUE} to convert $ and $$ math blocks into MathJax
@@ -82,7 +82,7 @@ assumes you will include the output into an existing document (e.g. a blog
 post).
 }
 \details{
-See the \href{https://bookdown.org/yihui/rmarkdown/html-document.html}{online
+See the \href{https://yihui.org/rmarkdown/html-document.html}{online
 documentation} for additional details on using the \code{html_fragment}
 format.
 }

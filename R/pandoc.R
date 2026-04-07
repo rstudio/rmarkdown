@@ -308,20 +308,14 @@ pandoc_include_args <- function(in_header = NULL,
 
 #' @rdname pandoc_args
 #' @export
-pandoc_highlight_args <- function(highlight,
-                                  default = "tango") {
-
-  args <- c()
-
-  if (is.null(highlight))
-    args <- c(args, "--no-highlight")
-  else {
-    if (identical(highlight, "default"))
-      highlight <- default
-    args <- c(args, "--highlight-style", highlight)
+pandoc_highlight_args <- function(highlight, default = "tango") {
+  p38 <- pandoc_available("3.8")
+  if (is.null(highlight)) {
+    if (!p38) return("--no-highlight")
+    highlight <- "none"
   }
-
-  args
+  if (identical(highlight, "default")) highlight <- default
+  c(if (p38) "--syntax-highlighting" else "--highlight-style", highlight)
 }
 
 #' @rdname pandoc_args
@@ -806,7 +800,6 @@ pandoc_lua_filter_args <- function(lua_files) {
   # Lua filters was introduced in pandoc 2.0
   if (pandoc2.0()) c(rbind("--lua-filter", pandoc_path_arg(lua_files)))
 }
-
 
 # quote args if they need it
 quoted <- function(args) {

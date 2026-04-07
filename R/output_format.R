@@ -22,7 +22,7 @@
 #'   also pass an arbitrary function to be used for printing data frames. You
 #'   can disable the \code{df_print} behavior entirely by setting the option
 #'   \code{rmarkdown.df_print} to \code{FALSE}. See
-#'   \href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+#'   \href{https://yihui.org/rmarkdown/html-document.html#data-frame-printing}{Data
 #'   frame printing section} in bookdown book for examples.
 #' @param pre_knit An optional function that runs before knitting which receives
 #'   the \code{input} (input filename passed to \code{render}), \code{metadata}
@@ -442,7 +442,12 @@ default_output_format <- function(input, output_yaml = NULL) {
 
   # look up the formals of the output function to get the full option list and
   # merge against the explicitly set list
-  format_function <- eval(xfun::parse_only(format$name))
+  format_function <- tryCatch(
+    eval(xfun::parse_only(format$name)), error = function(e) NULL
+  )
+  # if we can't find the function, default to html_document with no options
+  if (!is.function(format_function))
+    return(list(name = "html_document", options = list()))
   format$options <- merge_lists(as.list(formals(format_function)),
                                 format$options,
                                 recursive = FALSE)

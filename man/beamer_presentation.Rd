@@ -73,7 +73,7 @@ for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
 \code{rmarkdown.df_print} to \code{FALSE}. See
-\href{https://bookdown.org/yihui/rmarkdown/html-document.html#data-frame-printing}{Data
+\href{https://yihui.org/rmarkdown/html-document.html#data-frame-printing}{Data
 frame printing section} in bookdown book for examples.}
 
 \item{theme}{Beamer theme (e.g. "AnnArbor").}
@@ -145,7 +145,7 @@ R Markdown output format to pass to \code{\link[=render]{render()}}
 Format for converting from R Markdown to a Beamer presentation.
 }
 \details{
-See the \href{https://bookdown.org/yihui/rmarkdown/beamer-presentation.html}{online documentation}
+See the \href{https://yihui.org/rmarkdown/beamer-presentation.html}{online documentation}
 for additional details on using the \code{beamer_presentation} format.
 
 Creating Beamer output from R Markdown requires that LaTeX be installed.

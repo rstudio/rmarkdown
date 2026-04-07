@@ -643,10 +643,16 @@ render <- function(input,
     # use filename based figure and cache directories
     base_pandoc_to <- gsub('[-+].*', '', pandoc_to)
     if (base_pandoc_to == 'html4') base_pandoc_to <- 'html'
-    knitr::opts_chunk$set(fig.path = paste0(
+    fig_path <- paste0(
       pandoc_path_arg(files_dir_slash, backslash = FALSE),
       "/figure-", base_pandoc_to, "/"
-    ))
+    )
+    knitr::opts_chunk$set(fig.path = fig_path)
+    # Use --extract-media for non-HTML formats to handle base64-encoded images
+    # For HTML formats, don't use it as it can interfere with file management (e.g., pkgdown)
+    if (!knitr::is_html_output() && !("--extract-media" %in% output_format$pandoc$args)) {
+      output_format$pandoc$args <- c(output_format$pandoc$args, "--extract-media", files_dir)
+    }
     cache_dir <- knitr_cache_dir(input, base_pandoc_to)
     knitr::opts_chunk$set(cache.path = cache_dir)
 
@@ -899,6 +905,7 @@ render <- function(input,
       input  <- path.expand(input)
       output <- path.expand(output)
 
+      # Tweak Pandoc argument for all formats
       pandoc_args <- output_format$pandoc$args
 
       # if Lua filters are provided, add the command line switch
@@ -978,7 +985,7 @@ render <- function(input,
     # if the output format is LaTeX, first convert .md to .tex, and then convert
     # .tex to .pdf via latexmk() if PDF output is requested (in rmarkdown <=
     # v1.8, we used to call Pandoc to convert .md to .tex and .pdf separately)
-    if (output_format$pandoc$keep_tex || knitr::is_latex_output()) {
+    if (output_format$pandoc$keep_tex || grepl("^(latex|beamer)($|[-+].*)", pandoc_to)) {
       # do not use pandoc-citeproc if needs to build bibliography
       convert(texfile, run_citeproc && !need_bibtex)
       # patch the .tex output generated from the default Pandoc LaTeX template

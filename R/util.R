@@ -89,8 +89,8 @@ pkg_file_lua <- function(filters = NULL, package = "rmarkdown") {
   pandoc_path_arg(files)
 }
 
-pkg_file_highlight <- function(file) {
-  pkg_file("rmarkdown", "highlight", file, mustWork = TRUE)
+pkg_file_highlight <- function(...) {
+  pkg_file("rmarkdown", "highlight", ..., mustWork = TRUE)
 }
 
 #' @rdname rmarkdown_format
