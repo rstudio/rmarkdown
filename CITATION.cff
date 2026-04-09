@@ -6,7 +6,7 @@
 cff-version: 1.2.0
 message: 'To cite package "rmarkdown" in publications use:'
 type: software
-license: GPL-3.0-only
+license: MIT
 title: 'rmarkdown: Dynamic Documents for R'
 version: 2.20.1
 abstract: Convert R Markdown documents into a variety of formats.

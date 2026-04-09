@@ -50,7 +50,7 @@ Authors@R: c(
     person("Albert", "Krewinkel", role = c("ctb", "cph"), comment = "pagebreak Lua filter")
   )
 Description: Convert R Markdown documents into a variety of formats.
-License: GPL-3
+License: MIT + file LICENSE
 URL: https://github.com/rstudio/rmarkdown, https://pkgs.rstudio.com/rmarkdown/
 BugReports: https://github.com/rstudio/rmarkdown/issues
 Depends:
