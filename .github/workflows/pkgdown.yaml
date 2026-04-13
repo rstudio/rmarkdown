@@ -51,7 +51,7 @@ jobs:
               --message "Deploy from GHA: $GITHUB_SHA")
           fi
           echo "$DEPLOY_OUTPUT"
-          DEPLOY_URL=$(echo "$DEPLOY_OUTPUT" | grep -E "Website (Draft )?URL:" | tail -1 | awk '{print $NF}')
+          DEPLOY_URL=$(echo "$DEPLOY_OUTPUT" | grep -oP 'https://[^\s>]+\.netlify\.app' | head -1)
           echo "url=$DEPLOY_URL" >> "$GITHUB_OUTPUT"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
