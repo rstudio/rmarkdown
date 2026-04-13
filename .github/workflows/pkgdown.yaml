@@ -20,7 +20,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -38,17 +38,50 @@ jobs:
 
       - name: Deploy to Netlify
         id: netlify-deploy
-        uses: nwtgck/actions-netlify@v1.1
-        with:
-          publish-dir: 'reference'
-          production-branch: main
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message:
-            'Deploy from GHA: ${{ github.event.head_commit.message }} (${{ github.sha }})'
-          enable-pull-request-comment: false
-          enable-commit-comment: false
-          enable-commit-status: true
-          alias: deploy-preview-${{ github.event.number }}
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            DEPLOY_OUTPUT=$(npx --yes netlify-cli deploy \
+              --dir=reference --prod --no-build \
+              --message "Deploy from GHA: $GITHUB_SHA")
+          else
+            DEPLOY_OUTPUT=$(npx --yes netlify-cli deploy \
+              --dir=reference \
+              --alias="deploy-preview-${{ github.event.number }}" \
+              --no-build \
+              --message "Deploy from GHA: $GITHUB_SHA")
+          fi
+          echo "$DEPLOY_OUTPUT"
+          DEPLOY_URL=$(echo "$DEPLOY_OUTPUT" | grep -E "Website (Draft )?URL:" | tail -1 | awk '{print $NF}')
+          echo "url=$DEPLOY_URL" >> "$GITHUB_OUTPUT"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+      - name: Set commit status
+        if: always()
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const outcome = '${{ steps.netlify-deploy.outcome }}';
+            const deployUrl = '${{ steps.netlify-deploy.outputs.url }}';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: outcome === 'success' ? 'success' : 'failure',
+              target_url: deployUrl || undefined,
+              description: outcome === 'success' ? 'Deploy preview ready' : 'Deploy failed',
+              context: 'netlify/deploy'
+            });
+
+      - name: Comment deploy URL on PR
+        if: github.event_name == 'pull_request' && steps.netlify-deploy.outcome == 'success'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🚀 Netlify deploy preview: ${{ steps.netlify-deploy.outputs.url }}`
+            });
