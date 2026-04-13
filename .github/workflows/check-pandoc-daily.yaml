@@ -41,6 +41,7 @@ jobs:
         uses: r-lib/actions/setup-pandoc@v2
         with:
           version: nightly
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: r-lib/actions/setup-tinytex@v2
         env:
