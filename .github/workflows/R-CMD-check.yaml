@@ -76,6 +76,8 @@ jobs:
           TINYTEX_INSTALLER: TinyTeX
 
       - uses: yihui/actions/setup-r-dependencies@HEAD
+        with:
+          r-universe: cran
 
       - name: Remove default installed Pandoc
         if: runner.os == 'Linux'
