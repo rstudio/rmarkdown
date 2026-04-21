@@ -19,3 +19,5 @@
 ^CITATION\.cff$
 ^LICENSE\.md$
 ^revdep$
+^\.positai$
+^\.claude$
