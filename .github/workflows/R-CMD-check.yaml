@@ -52,6 +52,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      USE_BUNDLED_LIBUV: 1
 
     permissions:
       actions: read
@@ -75,6 +76,8 @@ jobs:
           TINYTEX_INSTALLER: TinyTeX
 
       - uses: yihui/actions/setup-r-dependencies@HEAD
+        with:
+          apt-packages: ${{ matrix.config.r == 'devel' && 'libcurl4-openssl-dev' || '' }}
 
       - name: Remove default installed Pandoc
         if: runner.os == 'Linux'
