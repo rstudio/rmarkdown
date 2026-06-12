@@ -229,12 +229,18 @@ test_that("copy_file_with_dir does not copy or delete files outside dest dir", {
   external_file <- file.path(sibling_dir, "external.txt")
   xfun::write_utf8("external content", external_file)
 
-  # a path using '..' traverses outside dest_dir
+  # a path using '..' traverses outside dest_dir – should be skipped
   result <- copy_file_with_dir("../sibling/external.txt", dest_dir, sibling_dir)
 
   expect_null(result)                      # nothing returned for cleanup
   expect_true(file.exists(external_file))  # original file untouched
   expect_length(list.files(dest_dir), 0L)  # nothing placed in dest_dir
+
+  # positive case: a path that stays inside dest_dir is copied normally
+  xfun::write_utf8("inner content", file.path(sibling_dir, "inner.txt"))
+  result2 <- copy_file_with_dir("inner.txt", dest_dir, sibling_dir)
+  expect_true(file.exists(file.path(dest_dir, "inner.txt")))
+  expect_equal(result2, normalizePath(file.path(dest_dir, "inner.txt")))
 })
 
 test_that("external files not deleted when render() uses intermediates_dir", {
@@ -267,6 +273,8 @@ test_that("external files not deleted when render() uses intermediates_dir", {
   suppressMessages(render(rmd, output_file = output_file,
                           intermediates_dir = out_dir, quiet = TRUE))
 
+  expect_true(file.exists(output_file),
+    info = "Render must complete successfully and produce output")
   expect_true(file.exists(external_file),
     info = "External file must not be deleted by render() with intermediates_dir")
 })
