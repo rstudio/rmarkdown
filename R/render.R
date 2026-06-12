@@ -648,10 +648,20 @@ render <- function(input,
       "/figure-", base_pandoc_to, "/"
     )
     knitr::opts_chunk$set(fig.path = fig_path)
-    # Use --extract-media for non-HTML formats to handle base64-encoded images
-    # For HTML formats, don't use it as it can interfere with file management (e.g., pkgdown)
+    # For non-HTML formats, use a Lua filter to extract only base64-encoded data URI
+    # images to files (pandoc cannot use data URIs in LaTeX/PDF output).
+    # We use a Lua filter instead of pandoc's --extract-media flag, because
+    # --extract-media also copies locally referenced image files to the _files
+    # directory, changing the paths in the output and preventing the _files
+    # directory from being cleaned up; see https://github.com/rstudio/rmarkdown/issues/2620
+    # For HTML formats, no extraction is needed (data URIs are supported natively).
     if (!knitr::is_html_output() && !("--extract-media" %in% output_format$pandoc$args)) {
-      output_format$pandoc$args <- c(output_format$pandoc$args, "--extract-media", files_dir)
+      extract_media_env <- xfun::set_envvar(c(RMARKDOWN_EXTRACT_MEDIA = sub("/$", "", fig_path)))
+      on.exit(xfun::set_envvar(extract_media_env), add = TRUE)
+      output_format$pandoc$args <- c(
+        output_format$pandoc$args,
+        "--lua-filter", pkg_file_lua("extract-data-uri.lua")
+      )
     }
     cache_dir <- knitr_cache_dir(input, base_pandoc_to)
     knitr::opts_chunk$set(cache.path = cache_dir)
@@ -835,10 +845,14 @@ render <- function(input,
     # if no figure is generated, clean the whole files_dir (#1664)
     files_dir_fig <- list.files(files_dir, '^figure-.+')
 
-    if (length(files_dir_fig) < 1 || identical(files_dir_fig, basename(fig_path))) {
-      files_dir
-    } else {
+    if (basename(fig_path) %in% files_dir_fig && length(files_dir_fig) > 1) {
+      # fig.path is one of several figure subdirs: only clean fig.path so that
+      # figures from other formats (#1472, #1503) are preserved
       fig_path
+    } else {
+      # no figure subdirs, or all belong to this format, or fig.path is outside
+      # files_dir — clean the whole files_dir in all these cases
+      files_dir
     }
   }
   intermediates <- c(intermediates, intermediates_fig)
