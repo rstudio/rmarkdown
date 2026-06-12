@@ -16,17 +16,50 @@ local extract_dir = os.getenv("RMARKDOWN_EXTRACT_MEDIA")
 if not extract_dir or extract_dir == "" then return {} end
 extract_dir = extract_dir:gsub("[/\\]+$", "")
 
-function Image(img)
-  if not img.src:match("^data:") then return img end
+-- Pure-Lua base64 decoder (avoids relying on pandoc.mediabag.fetch, whose
+-- behaviour with data URIs varies across pandoc 2.x versions).
+local b64chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+local b64lookup = {}
+for i = 1, #b64chars do b64lookup[b64chars:sub(i, i)] = i - 1 end
 
-  local ok, mime_type, content = pcall(pandoc.mediabag.fetch, img.src)
-  if not ok or not mime_type or not content or #content == 0 then return img end
+local function decode_base64(data)
+  data = data:gsub('[^' .. b64chars .. ']', '')  -- strip whitespace / padding
+  local out = {}
+  for i = 1, #data - 1, 4 do
+    local a = b64lookup[data:sub(i,   i  )] or 0
+    local b = b64lookup[data:sub(i+1, i+1)] or 0
+    local c = b64lookup[data:sub(i+2, i+2)]
+    local d = b64lookup[data:sub(i+3, i+3)]
+    local n = a * 0x40000 + b * 0x1000 + (c or 0) * 0x40 + (d or 0)
+    out[#out+1] = string.char(math.floor(n / 0x10000))
+    if c then out[#out+1] = string.char(math.floor(n / 0x100) % 0x100) end
+    if d then out[#out+1] = string.char(n % 0x100) end
+  end
+  return table.concat(out)
+end
+
+local image_index = 0
+
+function Image(img)
+  -- Only handle base64 data URIs; leave plain data: URIs and file paths alone.
+  local mime_type, b64data = img.src:match("^data:([^;,]+);base64,(.+)$")
+  if not mime_type then return img end
+
+  local content = decode_base64(b64data)
+  if #content == 0 then return img end
 
   local ext = (mime_type:match("/([^/;]+)") or "bin")
     :gsub("svg%+xml", "svg"):gsub("jpeg", "jpg")
-  -- sha1 gives a collision-free filename; skip extraction on very old pandoc
-  if not (pandoc.utils and pandoc.utils.sha1) then return img end
-  local outfile = extract_dir .. "/" .. pandoc.utils.sha1(img.src) .. "." .. ext
+
+  -- Use sha1 for a collision-free filename when available; otherwise a counter.
+  local stem
+  if pandoc.utils and pandoc.utils.sha1 then
+    stem = pandoc.utils.sha1(img.src)
+  else
+    image_index = image_index + 1
+    stem = "data-uri-" .. image_index
+  end
+  local outfile = extract_dir .. "/" .. stem .. "." .. ext
 
   make_directory(extract_dir)
   local f = io.open(outfile, "wb")
