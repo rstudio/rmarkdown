@@ -428,9 +428,17 @@ copy_render_intermediates <- function(original_input, intermediates_dir, skip_we
 # original dir structure, e.g., if we copy foo/bar.txt to /tmp, the destination
 # file should be /tmp/foo/bar.txt instead of /tmp/bar.txt
 copy_file_with_dir <- function(path, dest, from = '.') {
+  dest_dir <- dest  # save original destination dir before overwriting
   dest <- file.path(dest, path)
   path <- file.path(from, path)
   if (!file.exists(path)) return()
+  # Normalize the destination to resolve any '..' components (e.g. from
+  # resource paths like '../sibling/file.txt'). If the resolved destination
+  # falls outside dest_dir, skip copying to avoid overwriting or later
+  # deleting external files that are not intermediates.
+  dest <- normalizePath(dest, winslash = "/", mustWork = FALSE)
+  dest_dir <- normalizePath(dest_dir, winslash = "/", mustWork = FALSE)
+  if (!startsWith(dest, paste0(dest_dir, "/"))) return()
   if (!dir_exists(dirname(dest))) dir.create(dirname(dest), recursive = TRUE)
   file.copy(path, dest)
   dest

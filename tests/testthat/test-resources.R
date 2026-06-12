@@ -214,6 +214,63 @@ test_that("resources not deleted when intermediates_dir is same as input", {
   expect_true(file.exists("empty.csv"))
 })
 
+test_that("copy_file_with_dir does not copy or delete files outside dest dir", {
+  # regression test for https://github.com/rstudio/rmarkdown/issues/2619
+  # copy_file_with_dir should skip (and return NULL for) any path that resolves
+  # outside the destination directory to prevent accidentally overwriting or
+  # later deleting external files via unlink(intermediates)
+  root <- withr::local_tempdir("copy-file-with-dir-test")
+  dest_dir <- file.path(root, "dest")
+  sibling_dir <- file.path(root, "sibling")
+  dir.create(dest_dir)
+  dir.create(sibling_dir)
+
+  # create a file in sibling dir that should never be touched
+  external_file <- file.path(sibling_dir, "external.txt")
+  xfun::write_utf8("external content", external_file)
+
+  # a path using '..' traverses outside dest_dir
+  result <- copy_file_with_dir("../sibling/external.txt", dest_dir, sibling_dir)
+
+  expect_null(result)                      # nothing returned for cleanup
+  expect_true(file.exists(external_file))  # original file untouched
+  expect_length(list.files(dest_dir), 0L)  # nothing placed in dest_dir
+})
+
+test_that("external files not deleted when render() uses intermediates_dir", {
+  # regression test for https://github.com/rstudio/rmarkdown/issues/2619:
+  # render() with intermediates_dir must not delete external input files that
+  # are referenced from the Rmd but live outside intermediates_dir
+  skip_if_not_pandoc()
+
+  root <- withr::local_tempdir("intermediates-dir-test")
+  input_dir <- file.path(root, "input")
+  data_dir  <- file.path(root, "data")
+  out_dir   <- file.path(root, "output")
+  dir.create(input_dir)
+  dir.create(data_dir)
+  dir.create(out_dir)
+
+  # external data file in sibling directory – must survive render()
+  external_file <- file.path(data_dir, "external.csv")
+  xfun::write_utf8("x,y\n1,2", external_file)
+
+  # Rmd that references the external file via a '..' path so that it is
+  # discovered by find_external_resources() and fed to copy_file_with_dir()
+  rmd <- file.path(input_dir, "test.Rmd")
+  xfun::write_utf8(c(
+    "---", "title: Test", "output: html_document", "---", "",
+    "```{r}", 'read.csv("../data/external.csv")', "```"
+  ), rmd)
+
+  output_file <- withr::local_tempfile(fileext = ".html")
+  suppressMessages(render(rmd, output_file = output_file,
+                          intermediates_dir = out_dir, quiet = TRUE))
+
+  expect_true(file.exists(external_file),
+    info = "External file must not be deleted by render() with intermediates_dir")
+})
+
 test_that("empty quoted strings don't confuse resource discovery", {
   resources <- find_external_resources("resources/quotes.Rmd")
   expected <- data.frame(
