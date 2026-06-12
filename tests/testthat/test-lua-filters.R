@@ -162,6 +162,7 @@ test_that("extract-data-uri.lua: base64 data URI images are extracted to _files"
 
   expect_false(any(grepl("data:image", res$tex, fixed = TRUE)))
   extracted <- list.files(res$files_dir, recursive = TRUE, pattern = "\\.png$", full.names = TRUE)
-  expect_true(length(extracted) >= 1L)
-  expect_true(any(grepl(basename(extracted[[1]]), res$tex, fixed = TRUE)))
+  expect_gte(length(extracted), 1L)
+  if (length(extracted) >= 1L)
+    expect_true(any(grepl(basename(extracted[[1]]), res$tex, fixed = TRUE)))
 })

@@ -24,9 +24,9 @@ function Image(img)
 
   local ext = (mime_type:match("/([^/;]+)") or "bin")
     :gsub("svg%+xml", "svg"):gsub("jpeg", "jpg")
-  local name = (pandoc.utils and pandoc.utils.sha1 and pandoc.utils.sha1(img.src))
-    or string.format("data-uri-%x", #content)
-  local outfile = extract_dir .. "/" .. name .. "." .. ext
+  -- sha1 gives a collision-free filename; skip extraction on very old pandoc
+  if not (pandoc.utils and pandoc.utils.sha1) then return img end
+  local outfile = extract_dir .. "/" .. pandoc.utils.sha1(img.src) .. "." .. ext
 
   make_directory(extract_dir)
   local f = io.open(outfile, "wb")
