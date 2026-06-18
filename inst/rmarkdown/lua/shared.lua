@@ -70,6 +70,22 @@ function print_debug(label,obj,iter)
 end
 
 
+--- Creates a directory, including parents, if it does not already exist.
+function make_directory(path)
+  -- pandoc.system.make_directory (with parents support) was added in pandoc 2.19;
+  -- earlier versions have pandoc.system but not make_directory, so we fall back to
+  -- shell commands for those versions.
+  if pandocAvailable({2, 8}) and pandoc.system and pandoc.system.make_directory then
+    pcall(pandoc.system.make_directory, path, true)
+  elseif package.config:sub(1, 1) == '\\' then
+    local winpath = path:gsub("/", "\\")
+    os.execute('if not exist "' .. winpath .. '" mkdir "' .. winpath .. '"')
+  else
+    os.execute('mkdir -p "' .. path .. '"')
+  end
+end
+
+
 --- Returns the type of a metadata value.
 --  Author: Albert Krewinkel
 --  Source: https://github.com/pandoc/lua-filters/commit/3057acc52d1d6cfb7134c934a5039ce170bf78fa

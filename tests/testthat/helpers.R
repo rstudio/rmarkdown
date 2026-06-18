@@ -11,6 +11,17 @@ local_rmd_file <- function(..., .env = parent.frame()) {
   xfun::read_utf8(res)
 }
 
+# Render an Rmd to latex_document and return tex content + _files path.
+# The caller may set up additional files in dirname(rmd_file) before calling.
+.render_latex_check <- function(rmd_file) {
+  skip_if_not_pandoc()
+  output <- rmarkdown::render(rmd_file, output_format = "latex_document", quiet = TRUE)
+  list(
+    tex       = xfun::read_utf8(output),
+    files_dir = paste0(xfun::sans_ext(output), "_files")
+  )
+}
+
 # Use to test pandoc availability or version lower than
 skip_if_not_pandoc <- function(ver = NULL) {
   if (!pandoc_available(ver)) {
