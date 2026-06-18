@@ -428,12 +428,21 @@ copy_render_intermediates <- function(original_input, intermediates_dir, skip_we
 # original dir structure, e.g., if we copy foo/bar.txt to /tmp, the destination
 # file should be /tmp/foo/bar.txt instead of /tmp/bar.txt
 copy_file_with_dir <- function(path, dest, from = '.') {
-  dest <- file.path(dest, path)
+  # Normalize dest_dir first (the directory should exist, so symlinks are
+  # resolved correctly, e.g. /var -> /private/var on macOS).
+  dest_dir <- normalizePath(dest, winslash = "/", mustWork = FALSE)
+  # Build dest from the already-normalized dest_dir so both share the same
+  # canonical prefix, then normalize to resolve any '..' in path.
+  dest <- normalizePath(file.path(dest_dir, path), winslash = "/", mustWork = FALSE)
   path <- file.path(from, path)
   if (!file.exists(path)) return()
+  # If the resolved destination falls outside dest_dir (e.g. via '../sibling/'),
+  # skip copying to avoid overwriting or later deleting external files that are
+  # not intermediates.
+  if (!startsWith(dest, paste0(dest_dir, "/"))) return()
   if (!dir_exists(dirname(dest))) dir.create(dirname(dest), recursive = TRUE)
   file.copy(path, dest)
-  dest
+  normalizePath(dest, mustWork = FALSE)
 }
 
 discover_css_resources <- function(css_file, discover_single_resource) {

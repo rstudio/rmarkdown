@@ -5,6 +5,8 @@ rmarkdown 2.32
 
 - Replaced the Pandoc argument `--extract-media` with a Lua filter to fix the `*_files/` cleanup regression (thanks, @bastistician, #2620).
 
+- Fixed the bug that the `intermediates_dir` argument may delete external input files during `rmarkdown::render()` (thanks, @BerndGit, #2619).
+
 
 rmarkdown 2.31
 ================================================================================
