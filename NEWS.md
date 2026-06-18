@@ -3,7 +3,7 @@ rmarkdown 2.32
 
 - Relicensed this package to MIT (thanks, @karangattu, #2615).
 
-- Replaced the Pandoc argument `--extract-media` with a Lua filter to fix the `*_files/` cleanup regression (thanks, @BerndGit, #2619).
+- Replaced the Pandoc argument `--extract-media` with a Lua filter to fix the `*_files/` cleanup regression (thanks, @bastistician, #2620).
 
 
 rmarkdown 2.31
