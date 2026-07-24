@@ -7,6 +7,8 @@ rmarkdown 2.32
 
 - Fixed the bug that the `intermediates_dir` argument may delete external input files during `rmarkdown::render()` (thanks, @BerndGit, #2619).
 
+- The `html_vignette` template now uses a literal YAML block for vignette metadata, preserving the required line breaks between directives (thanks, @t-kalinowski, #2624).
+
 
 rmarkdown 2.31
 ================================================================================
