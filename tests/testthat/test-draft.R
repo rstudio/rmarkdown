@@ -16,6 +16,20 @@ test_that("draft() correctly creates template from a package", {
   expect_match(xfun::read_utf8(rmd), "github_document", all = FALSE)
 })
 
+test_that("html vignette template preserves directive line breaks", {
+  rmd <- withr::local_tempfile(fileext = ".Rmd")
+  draft(rmd, "html_vignette", "rmarkdown", edit = FALSE)
+
+  expect_identical(
+    strsplit(yaml_front_matter(rmd)$vignette, "\n", fixed = TRUE)[[1]],
+    c(
+      "%\\VignetteIndexEntry{Vignette Title}",
+      "%\\VignetteEngine{knitr::rmarkdown}",
+      "%\\VignetteEncoding{UTF-8}"
+    )
+  )
+})
+
 test_that("draft() correctly creates template from a path", {
   # No template
   template_dir <- withr::local_tempdir("template")
