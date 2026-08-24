@@ -9,6 +9,8 @@ rmarkdown 2.32
 
 - The `html_vignette` template now uses a literal YAML block for vignette metadata, preserving the required line breaks between directives (thanks, @t-kalinowski, #2624).
 
+- Bumped the minimum version of **knitr** to 1.50 to avoid an incompatible combination of **knitr** (< 1.50) and **xfun** (>= 0.56), which fails to load because `xfun::attr()` was removed in xfun 0.56 (thanks, @jsinnett, #2627).
+
 
 rmarkdown 2.31
 ================================================================================
