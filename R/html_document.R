@@ -502,9 +502,6 @@ html_document <- function(
     extra_dependencies,
     if (identical(template, "default") && is_highlightjs(highlight)) {
       list(html_dependency_highlightjs(highlight))
-    } else if (!is.null(highlight)) {
-      # for screen-reader accessibility improvement
-      list(html_dependency_accessible_code_block())
     }
   )
 

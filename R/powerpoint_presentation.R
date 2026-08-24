@@ -39,15 +39,7 @@ powerpoint_presentation <- function(toc = FALSE,
 
   # incremental
   if (incremental) {
-    if (!pandoc_available('2.15')) {
-      warning(
-        "`incremental = TRUE` for powerpoint presentation is supported since Pandoc 2.15.\n",
-        " It will have no effect with current Pandoc version used: ", pandoc_version(), ".",
-        call. = FALSE
-      )
-    } else {
-      args <- c(args, "--incremental")
-    }
+    args <- c(args, "--incremental")
   }
 
   # slide level

@@ -152,12 +152,7 @@ adapt_md_variant <- function(variant) {
       gfm = ,
       commonmark = ,
       commonmark_x = {
-        if (pandoc_available("2.13")) {
-          set_extension(variant_extensions, "yaml_metadata_block", FALSE)
-        } else {
-          # Unsupported extension before YAML 2.13
-          variant_extensions
-        }
+        set_extension(variant_extensions, "yaml_metadata_block", FALSE)
       },
       markdown = set_extension(variant_extensions, c("yaml_metadata_block", "pandoc_title_block"), FALSE),
       markdown_mmd = set_extension(variant_extensions, c("yaml_metadata_block", "mmd_title_block"), FALSE),

@@ -88,4 +88,4 @@ VignetteBuilder: knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
 RoxygenNote: 7.3.3
-SystemRequirements: pandoc (>= 2.8) - http://pandoc.org
+SystemRequirements: pandoc (>= 3.0) - http://pandoc.org

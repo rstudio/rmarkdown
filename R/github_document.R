@@ -73,12 +73,6 @@ github_document <- function(toc = FALSE,
   variant <- "gfm"
   if (!hard_line_breaks) variant <- paste0(variant, "-hard_line_breaks")
 
-  # atx headers are the default in pandoc 2.11.2 and the flag has been deprecated
-  # to be replaced by `--markdown-headings=atx|setx`
-  if (!pandoc_available("2.11.2")) pandoc_args <- c(
-    "--atx-headers", pandoc_args
-  )
-
   if ((toc || number_sections) &&
       !isTRUE(grepl("gfm_auto_identifiers", md_extensions))) {
     md_extensions <- c(md_extensions, "+gfm_auto_identifiers")
@@ -92,17 +86,12 @@ github_document <- function(toc = FALSE,
       stop("Markdown output format only support 'default' for native Github Math support or 'webtex' for using a Webtex online service to render math.")
     }
     if (math$engine == "default") {
-      if (pandoc_available("2.10.1")) {
-        # don't activate math in Pandoc and pass it as is
-        # https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/
-        math <- NULL
-        # Pandoc 3.4 uses +tex_math_gfm by default to write special gfm syntax. We choose to keep $$ and $ which are still supported by Github
-        variant <- if (pandoc_available("3.4")) paste0(variant, "-tex_math_gfm") else paste0(variant, "+tex_math_dollars")
-        preview_math <- check_math_argument("mathjax")
-      } else {
-        # fallback to webtex
-        math <- check_math_argument("webtex")
-      }
+      # don't activate math in Pandoc and pass it as is
+      # https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/
+      math <- NULL
+      # Pandoc 3.4 uses +tex_math_gfm by default to write special gfm syntax. We choose to keep $$ and $ which are still supported by Github
+      variant <- if (pandoc_available("3.4")) paste0(variant, "-tex_math_gfm") else paste0(variant, "+tex_math_dollars")
+      preview_math <- check_math_argument("mathjax")
     }
     if (!is.null(math) && math$engine == "webtex") {
       if (is.null(math$url)) {

@@ -63,11 +63,7 @@ word_document <- function(toc = FALSE,
 
   # numbered sections
   if (number_sections) {
-    if (pandoc_available("2.10.1")) {
-      args <- c(args, "--number-sections")
-    } else {
-      lua_filters <- c(lua_filters, pkg_file_lua("number-sections.lua"))
-    }
+    args <- c(args, "--number-sections")
   }
 
   # highlighting

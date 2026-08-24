@@ -172,18 +172,6 @@ html_dependency_tocify <- function() {
     stylesheet = "jquery.tocify.css")
 }
 
-# Create an HTML dependency for Pandoc code block accessibility
-html_dependency_accessible_code_block <- function() {
-  ver <- pandoc_version()
-  if (ver < '2.7.3' || ver > '2.9.2.1') return()
-  htmlDependency(
-    name = "accessible-code-block",
-    version = "0.0.1",
-    src = pkg_file("rmd/h/accessibility"),
-    script = "empty-anchor.js"
-  )
-}
-
 # Create an HTML dependency for FontAwesome
 #' @rdname html-dependencies
 #' @export
@@ -456,7 +444,7 @@ html_dependency_rsiframe <- function() {
 # Pandoc 2.9 adds attributes on both headers and their parent divs. We remove
 # the ones on headers since they are unnecessary (#1723).
 html_dependency_header_attrs <- function() {
-  if (getOption('rmarkdown.html_dependency.header_attr', TRUE) && pandoc_available('2.9')) {
+  if (getOption('rmarkdown.html_dependency.header_attr', TRUE)) {
     list(
       htmlDependency(
         "header-attrs",

@@ -88,9 +88,9 @@ pandoc_convert <- function(input,
               pandoc_citeproc_args())
   }
 
-  # change the --self-contained argument for Pandoc 2.19+
+  # --self-contained was deprecated in Pandoc 2.19 in favor of --embed-resources
   i <- match('--self-contained', args)
-  if (!is.na(i) && pandoc_available('2.19')) args <- c(args[-i], self_contained_args())
+  if (!is.na(i)) args <- c(args[-i], self_contained_args())
 
   # build the conversion command
   command <- paste(quoted(pandoc()), paste(quoted(args), collapse = " "))
@@ -130,23 +130,13 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
   # resolve type
   type <- match.arg(type)
 
-  if (pandoc_available("2.11")) {
-    bin <- pandoc()
-    to <- switch(type,
-                 list = "csljson",
-                 json = "csljson",
-                 yaml = "markdown"
-    )
-    args <- c(file, "-s", "-t", to)
-  } else {
-    bin <- pandoc_citeproc()
-    conversion <- switch(type,
-                         list = "--bib2json",
-                         json = "--bib2json",
-                         yaml = "--bib2yaml"
-    )
-    args <- c(conversion, file)
-  }
+  bin <- pandoc()
+  to <- switch(type,
+               list = "csljson",
+               json = "csljson",
+               yaml = "markdown"
+  )
+  args <- c(file, "-s", "-t", to)
 
   # build the conversion command
   command <- paste(quoted(bin), paste(quoted(args), collapse = " "))
@@ -196,7 +186,7 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
 #' if (pandoc_available())
 #'   cat("pandoc", as.character(pandoc_version()), "is available!\n")
 #'
-#' if (pandoc_available("2.8"))
+#' if (pandoc_available("3.0"))
 #'   cat("required version of pandoc is available!\n")
 #' }
 #' @export
@@ -354,17 +344,12 @@ pandoc_toc_args <- function(toc,
 }
 
 #' @section About Pandoc citeproc:
-#' For Pandoc version before 2.11, a pandoc filter \samp{pandoc-citeproc} is
-#' used. Since Pandoc 2.11, the feature is built-in and activated using
-#' \samp{--citeproc} flag. \samp{pandoc_citeproc_arg} will return the correct
-#' switches depending on the Pandoc version in use.
+#' Citation processing is built into Pandoc and activated using the
+#' \samp{--citeproc} flag returned by \samp{pandoc_citeproc_args}.
 #' @rdname pandoc_args
 #' @export
 pandoc_citeproc_args <- function() {
-  if (pandoc_available("2.11"))
-    "--citeproc"
-  else
-    c("--filter", pandoc_citeproc())
+  "--citeproc"
 }
 
 
@@ -771,16 +756,6 @@ pandoc <- function() {
   file.path(.pandoc$dir, "pandoc")
 }
 
-
-# get the path to the pandoc-citeproc binary
-pandoc_citeproc <- function() {
-  find_pandoc()
-  bin <- "pandoc-citeproc"
-  p <- file.path(.pandoc$dir, bin)
-  if (xfun::is_windows()) p <- xfun::with_ext(p, "exe")
-  if (file.exists(p)) p else bin
-}
-
 #' @rdname pandoc_args
 #' @param lua_files Character vector of file paths to Lua filter files. Paths
 #'   will be transformed by \code{\link{pandoc_path_arg}}.
@@ -820,9 +795,9 @@ find_pandoc_theme_variable <- function(args) {
 .pandoc$dir <- NULL
 .pandoc$version <- NULL
 
-# Pandoc 2.19 deprecated --self-contained
+# Pandoc 2.19 deprecated --self-contained in favor of --embed-resources
 self_contained_args <- function() {
-  if (pandoc_available('2.19')) c('--embed-resources', '--standalone') else '--self-contained'
+  c('--embed-resources', '--standalone')
 }
 
 #' Get the path of the pandoc executable
