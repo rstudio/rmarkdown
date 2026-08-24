@@ -47,7 +47,8 @@ test_that("number_sections Lua filter works", {
   expect_snapshot_output(result, variant = pandoc_versions)
 
   # +gfm_auto_identifiers
-  skip_if_not_pandoc("2.5") # gfm_auto_identifiers is not working the same before
+  # the markdown reader rejects gfm_auto_identifiers before Pandoc 2.11 (#6604)
+  skip_if_not_pandoc("2.11")
   result <- .generate_md_and_convert(
     rmd,
     md_document(number_sections = TRUE, md_extensions = "+gfm_auto_identifiers")
