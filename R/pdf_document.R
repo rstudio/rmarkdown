@@ -172,10 +172,6 @@ pdf_document <- function(toc = FALSE,
       # set the margin to 1 inch if no geometry options or document class specified
       if (default_geometry(names(metadata), pandoc_args))
         args <- c(args, "--variable", "geometry:margin=1in")
-      # support subtitle for Pandoc < 2.6
-      if (("subtitle" %in% names(metadata)) && !pandoc_available("2.6")) args <- c(
-        args, append_in_header(file = pkg_file("rmd/latex/subtitle.tex"))
-      )
     }
 
     if (length(extra_dependencies) || has_latex_dependencies(knit_meta)) {
@@ -269,16 +265,6 @@ patch_tex_output <- function(file) {
   write_utf8(x, file)
 }
 
-# patch output from Pandoc < 2.8: https://github.com/jgm/pandoc/issues/5801
-fix_horiz_rule <- function(file) {
-  if (pandoc_available('2.8')) return()
-  x <- read_utf8(file)
-  i <- x == '\\begin{center}\\rule{0.5\\linewidth}{\\linethickness}\\end{center}'
-  if (any(i)) {
-    x[i] <- '\\begin{center}\\rule{0.5\\linewidth}{0.5pt}\\end{center}'
-    write_utf8(x, file)
-  }
-}
 
 citation_package_arg <- function(value) {
   value <- value[1]

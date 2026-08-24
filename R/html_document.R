@@ -910,10 +910,6 @@ add_anchor_sections <- function(anchor_sections, section_divs = FALSE) {
   if (identical(anchor_sections, FALSE)) {
     return(res)
   }
-  # Requires Pandoc 2.0 because using a Lua filter
-  if (!pandoc2.0()) {
-    stop("Using anchor_sections requires Pandoc 2.0+", call. = FALSE)
-  }
 
   allowed_args <- c("style", "depth")
   default_style <- "hash"

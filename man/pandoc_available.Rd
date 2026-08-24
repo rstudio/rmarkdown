@@ -40,7 +40,7 @@ library(rmarkdown)
 if (pandoc_available())
   cat("pandoc", as.character(pandoc_version()), "is available!\n")
 
-if (pandoc_available("1.12.3"))
+if (pandoc_available("2.8"))
   cat("required version of pandoc is available!\n")
 }
 }

@@ -20,16 +20,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 -- REQUIREMENTS: Load shared lua filter - see `shared.lua` for more details.
 dofile(os.getenv 'RMARKDOWN_LUA_SHARED')
 
---[[
-  About the requirement:
-  * PANDOC_VERSION -> 2.1
-  * pandoc.utils -> 2.1
-]]
-if (not pandocAvailable {2,1}) then
-  io.stderr:write("[WARNING] (pagebreak.lua) requires at least Pandoc 2.1. Lua Filter skipped.\n")
-  return {}
-end
-
 -- START OF THE FILTER'S FUNCTIONS --
 
 local stringify_orig = (require 'pandoc.utils').stringify

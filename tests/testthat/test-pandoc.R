@@ -13,13 +13,9 @@ test_that("Detect if a theme file is providing in highlight", {
   expect_equal(
     resolve_highlight("textmate", html_highlighters()), "textmate"
   )
-  if (pandoc_available("2.0")) {
-    expect_equal(resolve_highlight("arrow"), pkg_file_highlight("arrow.theme"))
-    expect_equal(resolve_highlight("custom.theme"), "custom.theme")
-    expect_error(resolve_highlight("custom.json"), "a file with extension")
-  } else {
-    expect_error(resolve_highlight("arrow"), "requires Pandoc 2.0")
-  }
+  expect_equal(resolve_highlight("arrow"), pkg_file_highlight("arrow.theme"))
+  expect_equal(resolve_highlight("custom.theme"), "custom.theme")
+  expect_error(resolve_highlight("custom.json"), "a file with extension")
 })
 
 test_that("Correct HTML highlighting argument as requested", {
@@ -51,7 +47,6 @@ test_that("Correct HTML highlighting argument as requested", {
   expect_error(hl_args("textmate", "dummy.html", TRUE), "downlit engine")
   expect_error(hl_args("textmate", "default", TRUE), "downlit engine")
   # custom theme
-  skip_if_not(pandoc2.0())
   expect_equal(hl_args("default", "default", TRUE), c(arrow_theme, downlit))
   expect_equal(hl_args("default", "dummy.html", TRUE), c(arrow_theme, downlit))
   expect_equal(hl_args("arrow", "default", FALSE), c(arrow_theme))

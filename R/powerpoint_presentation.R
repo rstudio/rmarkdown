@@ -23,9 +23,6 @@ powerpoint_presentation <- function(toc = FALSE,
                                     reference_doc = "default",
                                     pandoc_args = NULL) {
 
-  # PowerPoint has been supported since Pandoc 2.0.5
-  pandoc_available('2.0.5', error = TRUE)
-
   # knitr options and hooks
   knitr <- knitr_options(opts_chunk = list(
     dev = 'png', dpi = 96, fig.width = fig_width, fig.height = fig_height

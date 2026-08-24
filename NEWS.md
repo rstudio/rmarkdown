@@ -1,6 +1,8 @@
 rmarkdown 2.32
 ================================================================================
 
+- The minimum required version of Pandoc is now 2.8 (previously 1.14). Dropping support for Pandoc 1.x and early 2.x allowed a simplification of internal version guards (#2622).
+
 - Relicensed this package to MIT (thanks, @karangattu, #2615).
 
 - Replaced the Pandoc argument `--extract-media` with a Lua filter to fix the `*_files/` cleanup regression (thanks, @bastistician, #2620).

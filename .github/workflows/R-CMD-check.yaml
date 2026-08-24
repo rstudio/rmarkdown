@@ -32,8 +32,10 @@ jobs:
           # testing R release with last shipped pandoc version in RStudio IDE and new pandoc
           - {os: windows-latest, pandoc: 'latest',  r: 'release'}
           - {os: macOS-latest,   pandoc: 'latest',  r: 'release'}
+          - {os: ubuntu-latest,  pandoc: 'latest',  r: 'release'}
           - {os: ubuntu-latest,  pandoc: 'nightly',    r: 'release'}
-          # testing older pandoc versions
+          # testing older pandoc versions (rmarkdown requires Pandoc >= 2.8)
+          - {os: ubuntu-latest,  pandoc: '3.8.3',    r: 'release'}
           - {os: ubuntu-latest,  pandoc: '3.1.11',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.19.2',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.18',     r: 'release'}
@@ -41,8 +43,7 @@ jobs:
           - {os: ubuntu-latest,  pandoc: '2.16.2',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.14.2',   r: 'release'}
           - {os: ubuntu-latest,  pandoc: '2.11.4',   r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.7.3',    r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.5',      r: 'release'}
+          - {os: ubuntu-latest,  pandoc: '2.8',      r: 'release'}
           # testing other R versions
           - {os: ubuntu-latest,  pandoc: 'latest',   r: 'devel'}
           - {os: ubuntu-latest,  pandoc: 'latest',   r: 'oldrel-1'}
@@ -98,7 +99,7 @@ jobs:
       - uses: yihui/actions/check-r-package@HEAD
 
       - name: Test coverage
-        if: success() && runner.os == 'Linux' && matrix.config.r == 'release' && matrix.config.pandoc == '2.19.2'
+        if: success() && runner.os == 'Linux' && matrix.config.r == 'release' && matrix.config.pandoc == 'latest'
         run: |
           xfun::pkg_load2('covr')
           covr::codecov()

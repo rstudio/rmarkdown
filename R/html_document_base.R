@@ -296,11 +296,6 @@ add_math_support <- function(math, template, files_dir, output_dir) {
     stop2(sprintf("`math_method='%s'` is not supported.", math$engine))
   }
 
-  # support only mathjax for Pandoc before 2.0+
-  if (!pandoc2.0() && !identical(math$engine, "mathjax")) {
-    stop2("only `math_method = 'mathjax'` is supported with earlier version than Pandoc 2.0 ")
-  }
-
   # change default for url for webtex to use SVG
   # Pandoc still uses PNG
   if (identical(math$engine, "webtex")) {
