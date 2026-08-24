@@ -1,7 +1,7 @@
 rmarkdown 2.32
 ================================================================================
 
-- The minimum required version of Pandoc is now 2.8 (previously 1.14). Dropping support for Pandoc 1.x and early 2.x allowed a simplification of internal version guards (#2622).
+- The minimum required version of Pandoc is now 2.8 (previously 1.14). Dropping support for Pandoc 1.x and early 2.x allowed a simplification of internal version guards (#2623).
 
 - Relicensed this package to MIT (thanks, @karangattu, #2615).
 
