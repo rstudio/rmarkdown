@@ -236,6 +236,14 @@ function Plain(s)
   return s
 end
 
+function Figure(s, content, attr)
+  if fig_caption and string.len(s) > 0 then
+    return content .. "<p class='caption'>" .. s .. "</p>"
+  else
+    return content
+  end
+end
+
 function Para(s)
   return "<p>" .. s .. "</p>"
 end
