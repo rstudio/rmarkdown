@@ -630,7 +630,12 @@ render <- function(input,
       rmarkdown.keep_md = output_format$keep_md,
       rmarkdown.df_print = output_format$df_print,
       rmarkdown.version = 2,
-      rmarkdown.runtime = runtime
+      rmarkdown.runtime = runtime,
+      # directory of the final output document, so that knitr can convert
+      # absolute image paths (e.g. in include_graphics()) to paths relative to
+      # the output location rather than the input/working directory
+      # (yihui/knitr#2171; see also r-lib/pkgdown#2334)
+      rmarkdown.output_dir = normalize_path(output_dir)
     )
 
     # read root directory from argument (has precedence) or front matter
