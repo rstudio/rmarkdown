@@ -1216,6 +1216,7 @@ resolve_df_print <- function(df_print) {
 .globals <- new.env(parent = emptyenv())
 .globals$evaluated_global_chunks <- character()
 .globals$level <- 0L
+.globals$tmpfiles <- NULL
 
 
 #' The output metadata object

@@ -3,6 +3,8 @@ rmarkdown 2.32
 
 - Relicensed this package to MIT (thanks, @karangattu, #2615).
 
+- Fixed a `pandoc: ... openBinaryFile: does not exist` error when calling `render()` in parallel via a fork cluster. Temp files created by `render()` are now tracked per process and cleaned up individually, instead of deleting all files matching the `rmarkdown-str*.html` pattern in the shared `tempdir()`, which could remove sibling renders' files while Pandoc still needed them (#1632).
+
 - Replaced the Pandoc argument `--extract-media` with a Lua filter to fix the `*_files/` cleanup regression (thanks, @bastistician, #2620).
 
 - Fixed the bug that the `intermediates_dir` argument may delete external input files during `rmarkdown::render()` (thanks, @BerndGit, #2619).
