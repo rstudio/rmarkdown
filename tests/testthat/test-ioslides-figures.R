@@ -28,5 +28,5 @@ test_that("ioslides renders figures with Pandoc 3", {
   expect_false(any(grepl("Undefined function 'Figure'", messages, fixed = TRUE)))
   rendered <- paste(readLines(output), collapse = "\n")
   expect_match(rendered, "image.jpg", fixed = TRUE)
-  expect_match(rendered, "caption", fixed = TRUE)
+  expect_match(rendered, "<p class='caption'>caption</p>", fixed = TRUE)
 })

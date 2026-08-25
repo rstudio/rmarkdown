@@ -11,6 +11,8 @@ rmarkdown 2.32
 
 - Bumped the minimum version of **knitr** to 1.50 to avoid an incompatible combination of **knitr** (< 1.50) and **xfun** (>= 0.56), which fails to load because `xfun::attr()` was removed in xfun 0.56 (thanks, @jsinnett, #2627).
 
+- Fixed captioned figures disappearing from `ioslides_presentation()` output with Pandoc 3, which represents standalone captioned images as `Figure` elements not handled by the custom writer (thanks, @LeonidasZhak, #2607).
+
 
 rmarkdown 2.31
 ================================================================================
