@@ -82,15 +82,3 @@ jobs:
               description: outcome === 'success' ? 'Deploy preview ready' : 'Deploy failed',
               context: 'netlify/deploy'
             });
-
-      - name: Comment deploy URL on PR
-        if: github.event_name == 'pull_request' && env.CAN_DEPLOY == 'true' && steps.netlify-deploy.outcome == 'success'
-        uses: actions/github-script@v8
-        with:
-          script: |
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: `🚀 Netlify deploy preview: ${{ steps.netlify-deploy.outputs.url }}`
-            });
