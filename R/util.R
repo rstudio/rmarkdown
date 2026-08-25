@@ -156,16 +156,20 @@ as_tmpfile <- function(str) {
   if (length(str) == 0) return()
   f <- tempfile(tmpfile_pattern, fileext = ".html")
   write_utf8(str, f)
+  # register this file so clean_tmpfiles() can remove exactly the files created
+  # by this process, instead of globbing the whole tempdir() (#1632): parallel
+  # renders (e.g. via a fork cluster) share tempdir(), so globbing would delete
+  # sibling renders' files while pandoc still needs them
+  .globals$tmpfiles <- c(.globals$tmpfiles, f)
   f
 }
 
 # temp files created by as_tmpfile() cannot be immediately removed because they
 # are needed later by the pandoc conversion; we have to clean up the temp files
-# that have the pattern specified in `tmpfile_pattern` when render() exits
+# registered in `.globals$tmpfiles` when render() exits
 clean_tmpfiles <- function() {
-  unlink(list.files(
-    tempdir(), sprintf("^%s[0-9a-f]+[.]html$", tmpfile_pattern), full.names = TRUE
-  ))
+  unlink(.globals$tmpfiles)
+  .globals$tmpfiles <- NULL
 }
 
 # test if all paths in x are directories
