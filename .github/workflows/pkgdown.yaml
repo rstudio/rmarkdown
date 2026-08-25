@@ -11,6 +11,11 @@ on:
 
 name: pkgdown
 
+permissions:
+  contents: read
+  statuses: write
+  pull-requests: write
+
 jobs:
   pkgdown:
     runs-on: ubuntu-latest
@@ -19,6 +24,9 @@ jobs:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      # Deploy previews and commit statuses need repo secrets and a
+      # writable token, neither of which is available to PRs from forks.
+      CAN_DEPLOY: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     steps:
       - uses: actions/checkout@v6
 
@@ -38,6 +46,7 @@ jobs:
 
       - name: Deploy to Netlify
         id: netlify-deploy
+        if: env.CAN_DEPLOY == 'true'
         run: |
           if [ "${{ github.ref }}" = "refs/heads/main" ]; then
             DEPLOY_OUTPUT=$(npx --yes netlify-cli deploy \
@@ -58,7 +67,7 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
       - name: Set commit status
-        if: always()
+        if: always() && env.CAN_DEPLOY == 'true'
         uses: actions/github-script@v8
         with:
           script: |
@@ -75,7 +84,7 @@ jobs:
             });
 
       - name: Comment deploy URL on PR
-        if: github.event_name == 'pull_request' && steps.netlify-deploy.outcome == 'success'
+        if: github.event_name == 'pull_request' && env.CAN_DEPLOY == 'true' && steps.netlify-deploy.outcome == 'success'
         uses: actions/github-script@v8
         with:
           script: |
