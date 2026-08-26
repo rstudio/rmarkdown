@@ -217,3 +217,50 @@ test_that('needs_saas', {
     c(TRUE, TRUE, FALSE)
   )
 })
+
+test_that("a lib_dir outside the output dir yields an up-tree reference", {
+  # Fake site: out/lib is a sibling of the output dir out/node, so the copied
+  # dependency lives up-tree relative to the document being rendered. This used
+  # to abort with "does not appear to be a descendant of".
+  root <- withr::local_tempdir()
+  src_dir <- file.path(root, "src")
+  lib_dir <- file.path(root, "out", "lib")
+  output_dir <- file.path(root, "out", "node")
+  dir.create(src_dir, recursive = TRUE)
+  dir.create(output_dir, recursive = TRUE)
+  writeLines("p { color: red; }", file.path(src_dir, "styles.css"))
+  # a dependency with more than one file, so the path vector passed to
+  # html_reference_path() has length > 1
+  writeLines("var x = 1;", file.path(src_dir, "script.js"))
+
+  dep <- htmltools::htmlDependency(
+    "uptree", "1.0", src = src_dir,
+    stylesheet = "styles.css", script = "script.js"
+  )
+
+  html <- html_dependencies_as_string(list(dep), lib_dir, output_dir)
+
+  # The files were copied into lib_dir...
+  expect_true(file.exists(file.path(lib_dir, "uptree-1.0", "styles.css")))
+  expect_true(file.exists(file.path(lib_dir, "uptree-1.0", "script.js")))
+  # ...and each emitted reference steps up out of output_dir into the shared lib.
+  expect_match(as.character(html), "\\.\\./lib/uptree-1\\.0/styles\\.css")
+  expect_match(as.character(html), "\\.\\./lib/uptree-1\\.0/script\\.js")
+})
+
+test_that("a lib_dir under the output dir still yields a plain relative ref", {
+  root <- withr::local_tempdir()
+  src_dir <- file.path(root, "src")
+  output_dir <- file.path(root, "out")
+  lib_dir <- file.path(output_dir, "lib")
+  dir.create(src_dir, recursive = TRUE)
+  dir.create(output_dir, recursive = TRUE)
+  writeLines("p { color: red; }", file.path(src_dir, "styles.css"))
+
+  dep <- htmltools::htmlDependency(
+    "descend", "1.0", src = src_dir, stylesheet = "styles.css"
+  )
+
+  html <- html_dependencies_as_string(list(dep), lib_dir, output_dir)
+  expect_match(as.character(html), "\"lib/descend-1\\.0/styles\\.css\"")
+})
