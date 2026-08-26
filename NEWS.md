@@ -1,6 +1,8 @@
 rmarkdown 2.32
 ================================================================================
 
+- LaTeX auxiliary files (`.aux`, `.log`, etc.) generated while producing PDF output are now written to the output directory instead of the input directory. Previously `latexmk()` ran in the input file's directory, so PDF rendering failed when the input directory was read-only (e.g. in production or Shiny deployments) even when `output_dir` pointed to a writable location (thanks, @cderv #1975, @siddharthab #1615).
+
 - HTML output no longer errors when `lib_dir` points outside the output directory (e.g. `lib_dir = "../lib"`), so documents in sibling subdirectories can share a single library directory. Such dependencies are now referenced with an up-tree relative path instead of failing with "The path <file> does not appear to be a descendant of <dir>" (thanks, @gaborcsardi #146, @jonathan-g #1859 #2199).
 
 - The minimum required version of Pandoc is now 2.8 (previously 1.14). Dropping support for Pandoc 1.x and early 2.x allowed a simplification of internal version guards (#2623).
