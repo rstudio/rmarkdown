@@ -1,6 +1,8 @@
 rmarkdown 2.32
 ================================================================================
 
+- HTML output no longer errors when `lib_dir` points outside the output directory (e.g. `lib_dir = "../lib"`), so documents in sibling subdirectories can share a single library directory. Such dependencies are now referenced with an up-tree relative path instead of failing with "The path <file> does not appear to be a descendant of <dir>" (#146, #1859, #2199).
+
 - The minimum required version of Pandoc is now 2.8 (previously 1.14). Dropping support for Pandoc 1.x and early 2.x allowed a simplification of internal version guards (#2623).
 
 - Relicensed this package to MIT (thanks, @karangattu, #2615).
