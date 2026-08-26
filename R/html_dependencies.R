@@ -306,15 +306,17 @@ html_dependency_resolver <- function(all_dependencies) {
 html_reference_path <- function(path, lib_dir, output_dir) {
   # write the full OS-specific path if no library
   if (is.null(lib_dir))
-    pandoc_path_arg(path)
-  else if (xfun::is_abs_path(path))
-    # An absolute path reaches here only when makeDependencyRelative() could not
-    # relativize the dependency, i.e. lib_dir is not under output_dir (e.g.
-    # lib_dir = "../lib"). Unlike relative_to(), xfun::relative_path() can emit
-    # paths that step up the tree, so the reference still resolves.
-    xfun::relative_path(path, output_dir)
-  else
+    return(pandoc_path_arg(path))
+  # `path` may be a vector (a dependency with several files), so decide
+  # per-element. An absolute path reaches here only when makeDependencyRelative()
+  # could not relativize the dependency, i.e. lib_dir is not under output_dir
+  # (e.g. lib_dir = "../lib"). Unlike relative_to(), xfun::relative_path() can
+  # emit paths that step up the tree, so such references still resolve.
+  ifelse(
+    xfun::is_abs_path(path),
+    xfun::relative_path(path, output_dir),
     relative_to(output_dir, path)
+  )
 }
 
 # return the html dependencies as an HTML string suitable for inclusion

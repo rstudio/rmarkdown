@@ -229,17 +229,23 @@ test_that("a lib_dir outside the output dir yields an up-tree reference", {
   dir.create(src_dir, recursive = TRUE)
   dir.create(output_dir, recursive = TRUE)
   writeLines("p { color: red; }", file.path(src_dir, "styles.css"))
+  # a dependency with more than one file, so the path vector passed to
+  # html_reference_path() has length > 1
+  writeLines("var x = 1;", file.path(src_dir, "script.js"))
 
   dep <- htmltools::htmlDependency(
-    "uptree", "1.0", src = src_dir, stylesheet = "styles.css"
+    "uptree", "1.0", src = src_dir,
+    stylesheet = "styles.css", script = "script.js"
   )
 
   html <- html_dependencies_as_string(list(dep), lib_dir, output_dir)
 
-  # The stylesheet was copied into lib_dir...
+  # The files were copied into lib_dir...
   expect_true(file.exists(file.path(lib_dir, "uptree-1.0", "styles.css")))
-  # ...and the emitted href steps up out of output_dir into the shared lib.
+  expect_true(file.exists(file.path(lib_dir, "uptree-1.0", "script.js")))
+  # ...and each emitted reference steps up out of output_dir into the shared lib.
   expect_match(as.character(html), "\\.\\./lib/uptree-1\\.0/styles\\.css")
+  expect_match(as.character(html), "\\.\\./lib/uptree-1\\.0/script\\.js")
 })
 
 test_that("a lib_dir under the output dir still yields a plain relative ref", {
