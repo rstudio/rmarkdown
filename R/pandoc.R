@@ -196,7 +196,7 @@ pandoc_citeproc_convert <- function(file, type = c("list", "json", "yaml")) {
 #' if (pandoc_available())
 #'   cat("pandoc", as.character(pandoc_version()), "is available!\n")
 #'
-#' if (pandoc_available("1.12.3"))
+#' if (pandoc_available("2.8"))
 #'   cat("required version of pandoc is available!\n")
 #' }
 #' @export
@@ -322,8 +322,7 @@ pandoc_highlight_args <- function(highlight, default = "tango") {
 #' @export
 pandoc_latex_engine_args <- function(latex_engine) {
 
-  c(if (pandoc2.0()) "--pdf-engine" else "--latex-engine",
-    find_latex_engine(latex_engine))
+  c("--pdf-engine", find_latex_engine(latex_engine))
 }
 
 # For macOS, use a full path to the latex engine since the stripping
@@ -458,13 +457,7 @@ pandoc_self_contained_html <- function(input, output) {
   # we still need to do this "conversion" to get the
   # base64 encoding)
 
-  # determine from (there are bugs in pandoc < 1.17 that
-  # cause markdown_strict to hang on very large script
-  # elements)
-  from <- if (pandoc_available("1.17"))
-            "markdown_strict"
-          else
-            "markdown"
+  from <- "markdown_strict"
 
   # do the conversion
   pandoc_convert(
@@ -564,7 +557,7 @@ pandoc_html_highlight_args <- function(template,
   # downlit engine
   if (highlight_downlit) {
     check_highlightjs(highlight, "downlit")
-    default <- if (pandoc2.0()) resolve_highlight("arrow") else "pygments"
+    default <- resolve_highlight("arrow")
     args <- c(
       pandoc_highlight_args(highlight, default = default),
       # variable used to insert some css in a Pandoc template
@@ -595,10 +588,6 @@ resolve_highlight <- function(highlight, supported = highlighters()) {
   if (i > 0L) return(supported[i])
 
   # Otherwise it could be a custom (built-in) .theme file
-  if (!pandoc2.0()) {
-    stop("Using a custom highlighting style requires Pandoc 2.0 and above",
-         call. = FALSE)
-  }
   custom <- list(
     # from distill
     # https://raw.githubusercontent.com/apreshill/distill/arrow/inst/rmarkdown/templates/distill_article/resources/arrow.theme
@@ -797,8 +786,7 @@ pandoc_citeproc <- function() {
 #'   will be transformed by \code{\link{pandoc_path_arg}}.
 #' @export
 pandoc_lua_filter_args <- function(lua_files) {
-  # Lua filters was introduced in pandoc 2.0
-  if (pandoc2.0()) c(rbind("--lua-filter", pandoc_path_arg(lua_files)))
+  c(rbind("--lua-filter", pandoc_path_arg(lua_files)))
 }
 
 # quote args if they need it
@@ -831,10 +819,6 @@ find_pandoc_theme_variable <- function(args) {
 .pandoc <- new.env()
 .pandoc$dir <- NULL
 .pandoc$version <- NULL
-
-pandoc2.0 <- function() {
-  pandoc_available("2.0")
-}
 
 # Pandoc 2.19 deprecated --self-contained
 self_contained_args <- function() {

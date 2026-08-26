@@ -69,13 +69,8 @@ github_document <- function(toc = FALSE,
     pkg_file_arg("rmarkdown/templates/github_document/resources/default.md")
   )
 
-  pandoc2 <- pandoc2.0()
   # use md_document as base
-  if (pandoc2) {
-    variant <-  "gfm"
-  } else {
-    variant <- "markdown_github"
-  }
+  variant <- "gfm"
   if (!hard_line_breaks) variant <- paste0(variant, "-hard_line_breaks")
 
   # atx headers are the default in pandoc 2.11.2 and the flag has been deprecated
@@ -85,13 +80,12 @@ github_document <- function(toc = FALSE,
   )
 
   if ((toc || number_sections) &&
-      !isTRUE(grepl("gfm_auto_identifiers", md_extensions)) &&
-      pandoc2) {
+      !isTRUE(grepl("gfm_auto_identifiers", md_extensions))) {
     md_extensions <- c(md_extensions, "+gfm_auto_identifiers")
   }
 
   # math support
-  if (!is.null(math_method) && pandoc_available("2.0.4")) {
+  if (!is.null(math_method)) {
     math <- check_math_argument(math_method)
     preview_math <- NULL
     if (!math$engine %in% c("default", "webtex")) {
@@ -146,7 +140,7 @@ github_document <- function(toc = FALSE,
         "--template", pkg_file_arg(
           "rmarkdown/templates/github_document/resources/preview.html"),
         "--variable", paste0("github-markdown-css:", css),
-        if (pandoc2) c("--metadata", "pagetitle=PREVIEW"),  # HTML5 requirement
+        "--metadata", "pagetitle=PREVIEW",  # HTML5 requirement
         if (!is.null(preview_math)) preview_math$args
       )
 

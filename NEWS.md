@@ -1,6 +1,8 @@
 rmarkdown 2.32
 ================================================================================
 
+- The minimum required version of Pandoc is now 2.8 (previously 1.14). Dropping support for Pandoc 1.x and early 2.x allowed a simplification of internal version guards (#2623).
+
 - Relicensed this package to MIT (thanks, @karangattu, #2615).
 
 - Fixed a `pandoc: ... openBinaryFile: does not exist` error when calling `render()` in parallel via a fork cluster. Temp files created by `render()` are now tracked per process and cleaned up individually, instead of deleting all files matching the `rmarkdown-str*.html` pattern in the shared `tempdir()`, which could remove sibling renders' files while Pandoc still needed them (#1632).

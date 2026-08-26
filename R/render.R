@@ -316,7 +316,7 @@ render <- function(input,
 
   # check for required version of pandoc if we are running pandoc
   if (run_pandoc) {
-    required_pandoc <- "1.12.3"
+    required_pandoc <- "2.8"
     pandoc_available(required_pandoc, error = TRUE)
   }
 
@@ -603,9 +603,8 @@ render <- function(input,
     on.exit(knitr::opts_template$restore(templates), add = TRUE)
 
     # specify that htmltools::htmlPreserve() should use the Pandoc raw attribute
-    # by default (e.g. ```{=html}) rather than preservation tokens when pandoc
-    # >= v2.0.
-    if (pandoc2.0() && is.null(prev <- getOption("htmltools.preserve.raw"))) {
+    # by default (e.g. ```{=html}) rather than preservation tokens
+    if (is.null(prev <- getOption("htmltools.preserve.raw"))) {
       options(htmltools.preserve.raw = TRUE)
       on.exit(options(htmltools.preserve.raw = prev), add = TRUE)
     }
@@ -1009,7 +1008,6 @@ render <- function(input,
       convert(texfile, run_citeproc && !need_bibtex)
       # patch the .tex output generated from the default Pandoc LaTeX template
       if (!("--template" %in% output_format$pandoc$args)) patch_tex_output(texfile)
-      fix_horiz_rule(texfile)
       # unless the output file has the extension .tex, we assume it is PDF
       if (!grepl('[.]tex$', output_file)) {
         latexmk(texfile, output_format$pandoc$latex_engine, '--biblatex' %in% output_format$pandoc$args)

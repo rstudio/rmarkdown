@@ -106,8 +106,6 @@ word_document <- function(toc = FALSE,
 
 reference_doc_args <- function(type, doc) {
   if (is.null(doc) || identical(doc, "default")) return()
-  c(paste0("--reference-", if (pandoc2.0()) "doc" else {
-    match.arg(type, c("docx", "odt", "doc"))
-  }), pandoc_path_arg(doc))
+  c("--reference-doc", pandoc_path_arg(doc))
 }
 
