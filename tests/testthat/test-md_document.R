@@ -12,20 +12,12 @@ test_that("adapt_md_variant() ignored unknown variants", {
   expect_identical(adapt_md_variant("markdown_new"), "markdown_new")
 })
 
-test_that("adapt_md_variant() with special variants (pandoc >= 2.13)", {
-  skip_if_not_pandoc('2.13')
+test_that("adapt_md_variant() with special variants", {
   expect_identical(adapt_md_variant("commonmark"), "commonmark-yaml_metadata_block")
   expect_identical(adapt_md_variant("gfm"), "gfm-yaml_metadata_block")
   expect_identical(adapt_md_variant("commonmark"), "commonmark-yaml_metadata_block")
   expect_identical(adapt_md_variant("gfm+yaml_metadata_block"), "gfm+yaml_metadata_block")
   expect_identical(adapt_md_variant("gfm-yaml_metadata_block"), "gfm-yaml_metadata_block")
-})
-
-test_that("adapt_md_variant() with special variants (pandoc < 2.13)", {
-  skip_if_pandoc('2.13')
-  expect_identical(adapt_md_variant("commonmark"), "commonmark")
-  expect_identical(adapt_md_variant("gfm"), "gfm")
-  expect_identical(adapt_md_variant("commonmark_x"), "commonmark_x")
 })
 
 test_that("md_document() can preserve yaml", {

@@ -71,18 +71,10 @@ end
 
 
 --- Creates a directory, including parents, if it does not already exist.
+--  `pandoc.system.make_directory` (with parents support) has been available
+--  since Pandoc 2.19, the minimum version required by rmarkdown.
 function make_directory(path)
-  -- pandoc.system.make_directory (with parents support) was added in pandoc 2.19;
-  -- earlier versions have pandoc.system but not make_directory, so we fall back to
-  -- shell commands for those versions.
-  if pandocAvailable({2, 8}) and pandoc.system and pandoc.system.make_directory then
-    pcall(pandoc.system.make_directory, path, true)
-  elseif package.config:sub(1, 1) == '\\' then
-    local winpath = path:gsub("/", "\\")
-    os.execute('if not exist "' .. winpath .. '" mkdir "' .. winpath .. '"')
-  else
-    os.execute('mkdir -p "' .. path .. '"')
-  end
+  pcall(pandoc.system.make_directory, path, true)
 end
 
 
@@ -90,16 +82,9 @@ end
 --  Author: Albert Krewinkel
 --  Source: https://github.com/pandoc/lua-filters/commit/3057acc52d1d6cfb7134c934a5039ce170bf78fa
 --
---  Backward compatible function as retrieving type on Metadata has changed.
---  `pandoc.utils.type()` not available before Pandoc 2.17
---
 -- @param v a metadata value
 -- @treturn string one of `Blocks`, `Inlines`, `List`, `Map`, `string`, `boolean`
 function pandoc_type (v)
-  if pandoc.utils.type == nil then
-    local metatag = type(v) == 'table' and v.t and v.t:gsub('^Meta', '')
-    return metatag and metatag ~= 'Map' and metatag or type(v)
-  end
   return pandoc.utils.type(v)
 end
 

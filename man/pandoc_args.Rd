@@ -77,10 +77,8 @@ parameters are resolved relative to the directory of the input document.
 }
 \section{About Pandoc citeproc}{
 
-For Pandoc version before 2.11, a pandoc filter \samp{pandoc-citeproc} is
-used. Since Pandoc 2.11, the feature is built-in and activated using
-\samp{--citeproc} flag. \samp{pandoc_citeproc_arg} will return the correct
-switches depending on the Pandoc version in use.
+Citation processing is built into Pandoc and activated using the
+\samp{--citeproc} flag returned by \samp{pandoc_citeproc_args}.
 }
 
 \examples{

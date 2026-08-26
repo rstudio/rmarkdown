@@ -316,7 +316,7 @@ render <- function(input,
 
   # check for required version of pandoc if we are running pandoc
   if (run_pandoc) {
-    required_pandoc <- "2.8"
+    required_pandoc <- "3.0"
     pandoc_available(required_pandoc, error = TRUE)
   }
 

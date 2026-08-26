@@ -126,10 +126,7 @@ test_that("formats have the expected Lua filter", {
   expect_filters(odt_document(number_sections = TRUE), c(pgb, nbs))
   expect_filters(rtf_document(number_sections = TRUE), c(nbs))
   expect_filters(slidy_presentation(number_sections = TRUE), c(pgb, lxd, tbl, nbs))
-  expect_filters(
-    word_document(number_sections = TRUE),
-    c(pgb, if (!pandoc_available("2.10.1")) nbs)
-  )
+  expect_filters(word_document(number_sections = TRUE), c(pgb))
 })
 
 test_that("lua file are correctly found", {

@@ -34,16 +34,9 @@ jobs:
           - {os: macOS-latest,   pandoc: 'latest',  r: 'release'}
           - {os: ubuntu-latest,  pandoc: 'latest',  r: 'release'}
           - {os: ubuntu-latest,  pandoc: 'nightly',    r: 'release'}
-          # testing older pandoc versions (rmarkdown requires Pandoc >= 2.8)
+          # testing older pandoc versions (rmarkdown requires Pandoc >= 3.0)
           - {os: ubuntu-latest,  pandoc: '3.8.3',    r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '3.1.11',   r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.19.2',   r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.18',     r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.17.1.1', r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.16.2',   r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.14.2',   r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.11.4',   r: 'release'}
-          - {os: ubuntu-latest,  pandoc: '2.8',      r: 'release'}
+          - {os: ubuntu-latest,  pandoc: '3.0',      r: 'release'}
           # testing other R versions
           - {os: ubuntu-latest,  pandoc: 'latest',   r: 'devel'}
           - {os: ubuntu-latest,  pandoc: 'latest',   r: 'oldrel-1'}
