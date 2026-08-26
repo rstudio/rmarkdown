@@ -21,3 +21,4 @@
 ^revdep$
 ^\.positai$
 ^\.claude$
+^\.posit/assistant$

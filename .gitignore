@@ -10,3 +10,4 @@ reference
 
 /.luarc.json
 .positai
+.posit/assistant
