@@ -30,3 +30,25 @@ test_that("pdf_document() incorporates latex dependencies", {
   expect_true(file.exists(included))
   expect_identical(readLines(included), expected_dependencies)
 })
+
+test_that("LaTeX aux files are written next to the output, not the input dir (#1975, #1615)", {
+  skip_if_not_latex()
+
+  # separate, writable input and output directories
+  input_dir <- withr::local_tempdir()
+  output_dir <- withr::local_tempdir()
+  input <- file.path(input_dir, "demo.Rmd")
+  xfun::write_utf8(c("---", "output: pdf_document", "---", "", "Hello."), input)
+
+  # keep aux files so we can observe where they land
+  withr::local_options(tinytex.clean = FALSE)
+  out <- render(input, output_dir = output_dir, quiet = TRUE)
+  on.exit(unlink(out), add = TRUE)
+
+  expect_true(file.exists(out))
+  # the aux/log files must be created in the output dir ...
+  expect_true(file.exists(file.path(output_dir, "demo.log")))
+  # ... and NOT in the input dir, which may be read-only in production
+  expect_false(file.exists(file.path(input_dir, "demo.log")))
+  expect_false(file.exists(file.path(input_dir, "demo.aux")))
+})

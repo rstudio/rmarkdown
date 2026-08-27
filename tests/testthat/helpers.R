@@ -34,6 +34,15 @@ skip_if_not_pandoc <- function(ver = NULL) {
   }
 }
 
+# Skip unless a LaTeX toolchain is available to actually compile PDFs
+skip_if_not_latex <- function() {
+  skip_if_not_pandoc()
+  skip_on_cran()
+  if (!nzchar(Sys.which("pdflatex")) && !tinytex::is_tinytex()) {
+    skip("No LaTeX installation available")
+  }
+}
+
 # Use to test version greater than
 skip_if_pandoc <- function(ver = NULL) {
   if (pandoc_available(ver)) {
