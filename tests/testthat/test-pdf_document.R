@@ -52,3 +52,42 @@ test_that("LaTeX aux files are written next to the output, not the input dir (#1
   expect_false(file.exists(file.path(input_dir, "demo.log")))
   expect_false(file.exists(file.path(input_dir, "demo.aux")))
 })
+
+test_that("render() to PDF works with intermediates_dir set (#2183)", {
+  skip_if_not_latex()
+
+  input_dir <- withr::local_tempdir()
+  input <- file.path(input_dir, "demo.Rmd")
+  xfun::write_utf8(c("---", "output: pdf_document", "---", "", "Hello."), input)
+
+  # intermediates_dir made pandoc write the .tex into that directory while
+  # patch_tex_output()/latexmk() looked for it in the working directory,
+  # causing a "cannot open file 'demo.tex'" error (#2183)
+  int_dir <- file.path(input_dir, "tmp")
+  out <- render(input, intermediates_dir = int_dir, quiet = TRUE)
+  on.exit(unlink(out), add = TRUE)
+
+  expect_true(file.exists(out))
+  expect_identical(xfun::file_ext(out), "pdf")
+  # the intermediate .tex should not be left behind next to the output
+  expect_false(file.exists(file.path(input_dir, "demo.tex")))
+})
+
+test_that("keep_tex + intermediates_dir leaves the .tex next to the output (#2183)", {
+  skip_if_not_latex()
+
+  input_dir <- withr::local_tempdir()
+  input <- file.path(input_dir, "demo.Rmd")
+  xfun::write_utf8(c("---", "output:", "  pdf_document:", "    keep_tex: true",
+                     "---", "", "Hello."), input)
+
+  int_dir <- file.path(input_dir, "tmp")
+  out <- render(input, intermediates_dir = int_dir, quiet = TRUE)
+  tex <- file.path(input_dir, "demo.tex")
+  on.exit(unlink(c(out, tex)), add = TRUE)
+
+  expect_true(file.exists(out))
+  # the kept .tex must sit next to the output, not be stranded in int_dir
+  expect_true(file.exists(tex))
+  expect_false(file.exists(file.path(int_dir, "demo.tex")))
+})
