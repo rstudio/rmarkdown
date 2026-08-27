@@ -997,6 +997,12 @@ render <- function(input,
       status
     }
     texfile <- file_with_ext(output_file, "tex")
+    # when pandoc is given a bare output filename, it writes the .tex next to
+    # its input (the knitted .md); if that input lives in an intermediates
+    # directory, resolve texfile to that actual location so that
+    # patch_tex_output() and latexmk() below can find it (#2183)
+    if (basename(texfile) == texfile)
+      texfile <- file.path(dirname(input), texfile)
     # determine whether we need to run citeproc (based on whether we have
     # references in the input)
     run_citeproc <- citeproc_required(front_matter, input_lines)
@@ -1023,6 +1029,14 @@ render <- function(input,
         if (!output_format$pandoc$keep_tex) {
           texfile <- normalize_path(texfile)
           on.exit(unlink(texfile), add = TRUE)
+        } else {
+          # if we kept the .tex but it was written to the intermediates
+          # directory, move it next to the output so it is not left behind in
+          # (or cleaned away with) the intermediates directory (#2183)
+          wanted_tex <- file_with_ext(output_file, "tex")
+          if (!same_path(texfile, wanted_tex, must_work = FALSE) &&
+              file.exists(texfile))
+            file.rename(texfile, wanted_tex)
         }
       }
     } else {
