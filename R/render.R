@@ -1014,13 +1014,10 @@ render <- function(input,
         # directory) so that LaTeX aux files (.aux, .log, ...) are written there
         # instead of the working directory (the input directory), which may be
         # read-only, e.g. in production/Shiny settings (#1975, #1615)
-        xfun::in_dir(
-          dirname(texfile),
-          latexmk(
-            basename(texfile), output_format$pandoc$latex_engine,
-            '--biblatex' %in% output_format$pandoc$args
-          )
-        )
+        xfun::in_dir(dirname(texfile), latexmk(
+          basename(texfile), output_format$pandoc$latex_engine,
+          '--biblatex' %in% output_format$pandoc$args
+        ))
         file.rename(file_with_ext(texfile, "pdf"), output_file)
         # clean up the tex file if necessary
         if (!output_format$pandoc$keep_tex) {
