@@ -81,7 +81,7 @@ for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
 \code{rmarkdown.df_print} to \code{FALSE}. See
-\href{https://yihui.org/rmarkdown/html-document.html#data-frame-printing}{Data
+\href{https://pkg.yihui.org/rmarkdown-book/html-document.html#data-frame-printing}{Data
 frame printing section} in bookdown book for examples.}
 
 \item{code_folding}{Enable document readers to toggle the display of R code
@@ -217,7 +217,7 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to an HTML document.
 }
 \details{
-See the \href{https://yihui.org/rmarkdown/html-document.html}{online documentation} for additional details on using the \code{html_document}
+See the \href{https://pkg.yihui.org/rmarkdown-book/html-document.html}{online documentation} for additional details on using the \code{html_document}
 format.
 
 R Markdown documents can have optional metadata that is used to generate a
@@ -297,7 +297,7 @@ There are currently two options to modify the default behavior
 \item{\code{style}}{Select a predefined visual style:
 \itemize{
 \item \code{style = "dash"}, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.
-\item \code{style = "symbol"} will use a \href{https://codepoints.net/U+1F517}{link symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}
+\item \code{style = "symbol"} will use a \href{https://www.compart.com/en/unicode/U+1F517}{link symbol} \if{html}{\out{(&#x1F517;&#xFE0E;)}}
 \item \code{style = "icon"} will use an svg icon. \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}
 }
 
@@ -310,7 +310,7 @@ document. For example, to get a pictogram \if{html}{\out{(&#x1F517;)}}:
 }\if{html}{\out{</div>}}
 
 About how to apply custom CSS in R Markdown document, see
-\url{https://yihui.org/rmarkdown-cookbook/html-css.html}
+\url{https://pkg.yihui.org/rmarkdown-cookbook/html-css.html}
 }
 \item{\code{depth}}{Select the maximum header level to add the
 anchor link to. For example, this yaml will use the symbol style and

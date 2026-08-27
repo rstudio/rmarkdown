@@ -39,6 +39,7 @@ render("input.Rmd", pdf_document(toc = TRUE, pandoc_args = "--listings"))
 
 Authors:
 \itemize{
+  \item Yihui Xie \email{xie@yihui.name} (\href{https://orcid.org/0000-0003-0645-5666}{ORCID})
   \item JJ Allaire \email{jj@posit.co}
   \item Christophe Dervieux \email{cderv@posit.co} (\href{https://orcid.org/0000-0003-4474-2498}{ORCID})
   \item Jonathan McPherson \email{jonathan@posit.co}
@@ -54,7 +55,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Andrew Dunning (\href{https://orcid.org/0000-0003-0464-5036}{ORCID}) [contributor]
-  \item Atsushi Yasumoto (\href{https://orcid.org/0000-0002-8335-495X}{ORCID}) (Number sections Lua filter) [contributor, copyright holder]
+  \item Atsushi Yasumoto (\href{https://orcid.org/0000-0002-8335-495X}{ORCID}) (cph: Number sections Lua filter) [contributor, copyright holder]
   \item Barret Schloerke [contributor]
   \item Carson Sievert (\href{https://orcid.org/0000-0002-4958-2844}{ORCID}) [contributor]
   \item Devon Ryan \email{dpryan79@gmail.com} (\href{https://orcid.org/0000-0002-8549-0971}{ORCID}) [contributor]

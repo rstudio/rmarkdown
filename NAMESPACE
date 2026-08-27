@@ -107,13 +107,15 @@ import(methods)
 import(stats)
 import(utils)
 importFrom(evaluate,evaluate)
-importFrom(htmltools,HTML)
-importFrom(htmltools,copyDependencyToDir)
-importFrom(htmltools,extractPreserveChunks)
-importFrom(htmltools,htmlDependency)
-importFrom(htmltools,makeDependencyRelative)
-importFrom(htmltools,renderDependencies)
-importFrom(htmltools,restorePreserveChunks)
-importFrom(htmltools,tagList)
-importFrom(htmltools,tags)
+importFrom(htmltools,
+  HTML,
+  copyDependencyToDir,
+  extractPreserveChunks,
+  htmlDependency,
+  makeDependencyRelative,
+  renderDependencies,
+  restorePreserveChunks,
+  tagList,
+  tags
+)
 importFrom(knitr,knit_print)

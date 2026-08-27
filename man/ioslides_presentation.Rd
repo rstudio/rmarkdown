@@ -73,7 +73,7 @@ for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
 \code{rmarkdown.df_print} to \code{FALSE}. See
-\href{https://yihui.org/rmarkdown/html-document.html#data-frame-printing}{Data
+\href{https://pkg.yihui.org/rmarkdown-book/html-document.html#data-frame-printing}{Data
 frame printing section} in bookdown book for examples.}
 
 \item{smart}{Produce typographically correct output, converting straight
@@ -172,7 +172,7 @@ Format for converting from R Markdown to an
 \href{https://code.google.com/archive/p/io-2012-slides/}{ioslides} presentation.
 }
 \details{
-See the \href{https://yihui.org/rmarkdown/ioslides-presentation.html}{ online documentation} for additional details on using the
+See the \href{https://pkg.yihui.org/rmarkdown-book/ioslides-presentation.html}{ online documentation} for additional details on using the
 \code{ioslides_presentation} format.
 
 Note that, if a \code{before_body} include is specified in \code{includes},

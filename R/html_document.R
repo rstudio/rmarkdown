@@ -2,7 +2,7 @@
 #'
 #' Format for converting from R Markdown to an HTML document.
 #'
-#' See the [online documentation](https://yihui.org/rmarkdown/html-document.html) for additional details on using the `html_document`
+#' See the [online documentation](https://pkg.yihui.org/rmarkdown-book/html-document.html) for additional details on using the `html_document`
 #' format.
 #'
 #' R Markdown documents can have optional metadata that is used to generate a
@@ -205,7 +205,7 @@
 #'  \describe{
 #'  \item{`style`}{Select a predefined visual style:
 #'   * `style = "dash"`, the default, uses \samp{#}, a minimalist choice that evokes the id selector from HTML and CSS.
-#'   * `style = "symbol"` will use a [link symbol](https://codepoints.net/U+1F517) \if{html}{\out{(&#x1F517;&#xFE0E;)}}
+#'   * `style = "symbol"` will use a [link symbol](https://www.compart.com/en/unicode/U+1F517) \if{html}{\out{(&#x1F517;&#xFE0E;)}}
 #'   * `style = "icon"` will use an svg icon. \if{html}{(\figure{link-black-18dp.svg}{options: alt="icon link"})}
 #'
 #'  You can also customize using a css rule in your
@@ -216,7 +216,7 @@
 #'  }
 #'  ```
 #'  About how to apply custom CSS in R Markdown document, see
-#'  <https://yihui.org/rmarkdown-cookbook/html-css.html>
+#'  <https://pkg.yihui.org/rmarkdown-cookbook/html-css.html>
 #'  }
 #'  \item{`depth`}{Select the maximum header level to add the
 #'  anchor link to. For example, this yaml will use the symbol style and

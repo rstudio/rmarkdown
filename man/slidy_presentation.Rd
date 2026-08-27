@@ -81,7 +81,7 @@ for formats that produce HTML). In addition to the named methods you can
 also pass an arbitrary function to be used for printing data frames. You
 can disable the \code{df_print} behavior entirely by setting the option
 \code{rmarkdown.df_print} to \code{FALSE}. See
-\href{https://yihui.org/rmarkdown/html-document.html#data-frame-printing}{Data
+\href{https://pkg.yihui.org/rmarkdown-book/html-document.html#data-frame-printing}{Data
 frame printing section} in bookdown book for examples.}
 
 \item{self_contained}{Produce a standalone HTML file with no external
@@ -180,7 +180,7 @@ R Markdown output format to pass to \code{\link{render}}
 Format for converting from R Markdown to a slidy presentation.
 }
 \details{
-See the \href{https://yihui.org/rmarkdown/slidy-presentation.html}{online
+See the \href{https://pkg.yihui.org/rmarkdown-book/slidy-presentation.html}{online
 documentation} for additional details on using the \code{slidy_presentation}
 format.
 

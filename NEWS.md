@@ -5,7 +5,7 @@ rmarkdown 2.32
 
 - Fixed a `cannot open file '<name>.tex'` error when rendering to PDF with the `intermediates_dir` argument set. Pandoc wrote the intermediate `.tex` into `intermediates_dir`, but `rmarkdown` looked for it in the input directory. The `.tex` is now resolved to its actual location, and with `keep_tex: true` the retained `.tex` is moved next to the output instead of being left behind in `intermediates_dir` (thanks, @beerda, #2183).
 
-- HTML output no longer errors when `lib_dir` points outside the output directory (e.g. `lib_dir = "../lib"`), so documents in sibling subdirectories can share a single library directory. Such dependencies are now referenced with an up-tree relative path instead of failing with "The path <file> does not appear to be a descendant of <dir>" (thanks, @gaborcsardi #146, @jonathan-g #1859 #2199).
+- HTML output no longer errors when `lib_dir` points outside the output directory (e.g. `lib_dir = "../lib"`), so documents in sibling subdirectories can share a single library directory. Such dependencies are now referenced with an up-tree relative path instead of failing with `"The path <file> does not appear to be a descendant of <dir>"` (thanks, @gaborcsardi #146, @jonathan-g #1859 #2199).
 
 - The minimum required version of Pandoc is now 2.8 (previously 1.14). Dropping support for Pandoc 1.x and early 2.x allowed a simplification of internal version guards (#2623).
 

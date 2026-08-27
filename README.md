@@ -22,14 +22,14 @@ R Markdown documents can be rendered to many output formats including HTML docum
 
 ## Books
 
-<a href="https://yihui.org/rmarkdown/"><img class="book" src="https://yihui.org/rmarkdown/images/cover.png" alt="R Markdown: The Definitive Guide" height="400"></a>
-<a href="https://yihui.org/rmarkdown-cookbook/"><img class="book" src="https://yihui.org/rmarkdown-cookbook/images/cover.png" alt="R Markdown Cookbook" height="400"></a>
+<a href="https://pkg.yihui.org/rmarkdown-book/"><img class="book" src="https://pkg.yihui.org/rmarkdown-book/images/cover.png" alt="R Markdown: The Definitive Guide" height="400"></a>
+<a href="https://pkg.yihui.org/rmarkdown-cookbook/"><img class="book" src="https://pkg.yihui.org/rmarkdown-cookbook/images/cover.png" alt="R Markdown Cookbook" height="400"></a>
 
 See more about them in [Get Started](https://pkgs.rstudio.com/rmarkdown/articles/rmarkdown.html).
 
 ## Installation
 
-The easiest way to install the **rmarkdown** package is from within the [RStudio IDE](https://posit.co/download/rstudio-desktop/), but you don't need to explicitly install it or load it, as RStudio automatically does both when needed. A recent version of Pandoc (>= 1.12.3) is also required; RStudio also automatically includes this too so you do not need to download Pandoc if you plan to use rmarkdown from the RStudio IDE.
+The easiest way to install the **rmarkdown** package is from within the [RStudio IDE](https://docs.posit.co/ide/user/#rstudio-ide-oss-downloads?ref=rstudio-legacy), but you don't need to explicitly install it or load it, as RStudio automatically does both when needed. A recent version of Pandoc (>= 1.12.3) is also required; RStudio also automatically includes this too so you do not need to download Pandoc if you plan to use rmarkdown from the RStudio IDE.
 
 If you want to use the rmarkdown package outside of RStudio, you can install the package from CRAN as follows:
 
