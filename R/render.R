@@ -1020,7 +1020,19 @@ render <- function(input,
         # directory) so that LaTeX aux files (.aux, .log, ...) are written there
         # instead of the working directory (the input directory), which may be
         # read-only, e.g. in production/Shiny settings (#1975, #1615)
-        xfun::in_dir(dirname(texfile), latexmk(
+        texdir <- dirname(texfile)
+        # when the .tex is not in the working (input) directory, add the input
+        # directory to TEXINPUTS so that LaTeX can still find resources (e.g.
+        # static images referenced by relative paths in the document) that live
+        # next to the input file rather than in the output directory (#2637)
+        if (!same_path(texdir, getwd(), must_work = FALSE)) {
+          # a trailing path separator preserves LaTeX's default search paths
+          texinputs_env <- xfun::set_envvar(c(TEXINPUTS = paste0(
+            getwd(), .Platform$path.sep, Sys.getenv('TEXINPUTS')
+          )))
+          on.exit(xfun::set_envvar(texinputs_env), add = TRUE)
+        }
+        xfun::in_dir(texdir, latexmk(
           basename(texfile), output_format$pandoc$latex_engine,
           '--biblatex' %in% output_format$pandoc$args
         ))
