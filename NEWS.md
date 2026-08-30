@@ -1,7 +1,7 @@
 rmarkdown 2.32
 ================================================================================
 
-- LaTeX auxiliary files (`.aux`, `.log`, etc.) generated while producing PDF output are now written to the output directory instead of the input directory. Previously `latexmk()` ran in the input file's directory, so PDF rendering failed when the input directory was read-only (e.g. in production or Shiny deployments) even when `output_dir` pointed to a writable location (thanks, @cderv #1975, @siddharthab #1615).
+- LaTeX auxiliary files (`.aux`, `.log`, etc.) generated while producing PDF output are now written to the output directory instead of the input directory. Previously `latexmk()` ran in the input file's directory, so PDF rendering failed when the input directory was read-only (e.g. in production or Shiny deployments) even when `output_dir` pointed to a writable location (thanks, @cderv #1975, @siddharthab #1615). The input directory is added to `TEXINPUTS` so that LaTeX can still find static resources (e.g. images referenced by relative paths) that live next to the input file rather than in the output directory (#2637).
 
 - Fixed a `cannot open file '<name>.tex'` error when rendering to PDF with the `intermediates_dir` argument set. Pandoc wrote the intermediate `.tex` into `intermediates_dir`, but `rmarkdown` looked for it in the input directory. The `.tex` is now resolved to its actual location, and with `keep_tex: true` the retained `.tex` is moved next to the output instead of being left behind in `intermediates_dir` (thanks, @beerda, #2183).
 
