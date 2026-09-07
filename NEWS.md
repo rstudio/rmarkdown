@@ -1,5 +1,7 @@
-rmarkdown 2.32
-================================================================================
+# rmarkdown 2.33
+
+
+# rmarkdown 2.32
 
 - The math-engine Pandoc arguments (`--mathjax`, `--katex`, `--webtex`, `--mathml`, `--gladtex`) are now emitted as `--math-method=ENGINE[:URL]` when Pandoc >= 3.11 is available, since Pandoc 3.11 deprecated the per-engine flags and emits a `Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead.` warning for them (thanks, @neuwirthe, #2638).
 
@@ -28,8 +30,7 @@ rmarkdown 2.32
 - Fixed captioned figures disappearing from `ioslides_presentation()` output with Pandoc 3, which represents standalone captioned images as `Figure` elements not handled by the custom writer (thanks, @LeonidasZhak, #2607).
 
 
-rmarkdown 2.31
-================================================================================
+# rmarkdown 2.31
 
 - Base64 encoded images work with non-HTML output formats now (thanks, @averissimo, #2604).
 
@@ -38,8 +39,7 @@ rmarkdown 2.31
 - `default_output_format()` will fall back to `html_document` if the output format in YAML cannot be recognized.
 
 
-rmarkdown 2.30
-================================================================================
+# rmarkdown 2.30
 
 - `pandoc_convert()` will throw an error if Pandoc is not available (thanks, @brianperdomo, #2600).
 
@@ -52,8 +52,7 @@ rmarkdown 2.30
 - Fixed a bug that prevents `render()` from working when converting `.md` input to PDF (thanks, @mrainers, #2599).
 
 
-rmarkdown 2.29
-================================================================================
+# rmarkdown 2.29
 
 - `find_external_resources()` now correctly detects knitr child document provided with option like `child = c("child.Rmd")` (thanks, @rempsyc, #2574).
 
@@ -78,24 +77,21 @@ rmarkdown 2.29
     ```
 
 
-rmarkdown 2.28
-================================================================================
+# rmarkdown 2.28
 
 - Add classes `odd`, `even`, and `header` back to table rows for Pandoc >= 3.2.1, so tables can be styled properly (thanks, @therealgenna, #2567).
 
 - `beamer_presentation` support handling latex dependencies via the new `extra_dependencies` argument and declarations within chunks (e.g., `knitr::asis_output("", meta = list(rmarkdown::latex_dependency("longtable")))`) (thanks, @cderv, @atusy, #2478).
 
 
-rmarkdown 2.27
-================================================================================
+# rmarkdown 2.27
 
 - Provide a global option `rmarkdown.files.suffix` to configure the suffix of the directory for auxiliary files (thanks, @certara-tzweers, #2550). By default, this suffix is `_files`, which can cause HTML output files to be deleted automatically on Microsoft OneDrive or Google Drive. If that is the case for you, you may set a different suffix in your `.Rprofile`, e.g., `options(rmarkdown.files.suffix = "_rmdfiles")`.
 
 - Fix a regression in 2.26 regarding image paths post-processing in `html_document_base()`. Now absolute paths to image in the output directory (`output_dir`) are correctly made relative to the output directory again.
 
 
-rmarkdown 2.26
-================================================================================
+# rmarkdown 2.26
 
 - **rmarkdown** now requires **knitr** >= 1.43.
 
@@ -108,8 +104,7 @@ rmarkdown 2.26
 - Avoid corrupting input files by accident (thanks, @J-Moravec, #2534).
 
 
-rmarkdown 2.25
-================================================================================
+# rmarkdown 2.25
 
 - Fixed a bug that filenames beginning with `-` cause incorrect invocation of Pandoc (thanks, @mbaynton, #2503).
 
@@ -120,8 +115,7 @@ rmarkdown 2.25
 - Added a new argument `metadata` to the `pre_knit` function in `output_format()` so that users will have access to the YAML metadata of the input document before knitting it (#2485). Please note that if you define `pre_knit` for a custom output format, you are strongly recommended to leave a `...` argument in `pre_knit`, so we (**rmarkdown** package authors) are free to add more arguments to `pre_knit` without breaking your code. If your `pre_knit` function does not have the `...` argument, you will get a warning.
 
 
-rmarkdown 2.24
-================================================================================
+# rmarkdown 2.24
 
 - Fixed `file_scope` being lost when extending output formats that considers the `file_scope` using `output_format()`. Merge behavior is to apply overlay `file_scope` function onto the result of `base_format`'s `file_scope` function. This implies that `file_scope` gains second argument which receives the returned values of the base `file_scope` (thanks, @atusy, #2488).
 
@@ -130,16 +124,14 @@ rmarkdown 2.24
 - Fix an issue with shiny prerendered document where dependencies context were written twice leasing to parsing error (thanks, @gadenbuie, rstudio/learn#597, #2500).
 
 
-rmarkdown 2.23
-================================================================================
+# rmarkdown 2.23
 
 - `find_external_resources()` works with formats defining there own `theme` argument, like `cleanrmd::html_document_clean()`, not related to **bslib** supports (thanks, @gadenbuie, #2493, r-lib/pkgdown#2319).
 
 - Fixed version number comparison problems as requested by CRAN.
 
 
-rmarkdown 2.22
-================================================================================
+# rmarkdown 2.22
 
 - Using `css` with `.scss` and `.sass` file, or with a bslib theme, now works as expected with a shiny runtime (thanks, @cpsievert, #2443, #2447).
 
@@ -154,16 +146,14 @@ rmarkdown 2.22
 - When code folding is enabled in `html_document()`, the text on the button to show the content has been changed from "Code" to "Show", because the content to show is not necessarily code, e.g., yihui/knitr#2227.
 
 
-rmarkdown 2.21
-================================================================================
+# rmarkdown 2.21
 
 - Now HTML output formats use the Font Awesome HTML dependency from the **fontawesome** package instead of shipping an outdated version of Font Awesome in **rmarkdown** (thanks, @rich-iannone, #2451).
 
 - Fixed a bug caused by a change in the `is_blank()` function in **xfun** 0.38 (thanks, @andreahgsin, #2469).
 
 
-rmarkdown 2.20
-================================================================================
+# rmarkdown 2.20
 
 - The defunct `tufte_handout()` has been removed from **rmarkdown**. Please use `tufte::tufte_handout()` instead.
 
@@ -174,38 +164,33 @@ rmarkdown 2.20
 - Make sure `logo` is properly embedded in `ioslides_presentation()` when `self_contained = TRUE` (thanks, @mnazarov, #2428).
 
 
-rmarkdown 2.19
-================================================================================
+# rmarkdown 2.19
 
 - No longer use `xfun::isFALSE()` internally.
 
 
-rmarkdown 2.18
-================================================================================
+# rmarkdown 2.18
 
 - `rmarkdown::render()` argument `output_file` is now used for all output formats, if there is only one name for multiple output formats (thanks, @MaelAstruc, #2421).
 
 - Custom output formats can provide a custom function to convert Markdown input to the desired output format now. To do so, define the output format via `output_format(pandoc = pandoc_options(convert_fun = function(...) {}))`. The default converting function is `pandoc_convert()` in this package. See the help page `?pandoc_options` for more details.
 
 
-rmarkdown 2.17
-================================================================================
+# rmarkdown 2.17
 
 - `rmarkdown::render_site()` will now also look for `index.rmd` in addition to `index.Rmd` for custom site generator in YAML with `site:` (thanks, @kamalsacranie, #2409).
 
 - Icons in tabset dropdown are now correctly shown, including when `self_contained: false` (thanks, @cpsievert, #1697).
 
 
-rmarkdown 2.16
-================================================================================
+# rmarkdown 2.16
 
 - Pandoc 2.19 has deprecated the argument `--self-contained`. If you have installed Pandoc 2.19+,  **rmarkdown** will use `--embed-resources --standalone` as recommended by Pandoc for output formats that use the option `self_contained = TRUE` (#2382).
 
 - `pandoc_version()` returns a version number of the form `X.Y.Z.YYYY.MM.DD` for the nightly build of Pandoc now, where `YYYY.MM.DD` is its build date. Previously it would return `X.Y.Z.9999` to indicate the nightly version.
 
 
-rmarkdown 2.15
-================================================================================
+# rmarkdown 2.15
 
 - Fix navbar issue with website when using Boostrap 5 with **bslib** (thanks, @guasi, #2379, @cpsievert, #2384).
 
@@ -214,8 +199,7 @@ rmarkdown 2.15
 - `github_document()` gains `math_method = "default"` and defaults to it. No special processing will be done to inline maths in `$` and block maths in `$$` as now [Github supports it](https://github.blog/changelog/2022-05-19-render-mathematical-expressions-in-markdown/) and will render using Mathjax (thanks, @kylebutts, #2361).
 
 
-rmarkdown 2.14
-================================================================================
+# rmarkdown 2.14
 
 - Improved highlighting theme `arrow` regarding accessibility.
 
@@ -232,8 +216,7 @@ rmarkdown 2.14
 - When using a development version of Pandoc, a `.9999` suffix is appended to version number so that `pandoc_available()` can correctly compared version with last release.
 
 
-rmarkdown 2.13
-================================================================================
+# rmarkdown 2.13
 
 - Fix an issue with older R version and vignette building (#2324).
 
@@ -242,8 +225,7 @@ rmarkdown 2.13
 - Long title in `ioslides_presentation` failed to work with Pandoc 2.17.x (thanks, @Am386DX-40, #2327).
 
 
-rmarkdown 2.12
-================================================================================
+# rmarkdown 2.12
 
 - `html_document()` and `html_document_base()` gains the `math_method` argument to support [all the math rendering engines from Pandoc](https://pandoc.org/MANUAL.html#math-rendering-in-html): "mathjax", "katex", "mathml", "webtex", and "gladtex". For backward compatibility, the `mathjax` argument still works and will take precedence over `math_method`, but we recommend using the new `math_method` argument instead of the `mathjax` argument, and the latter could be deprecated in the future.
 
@@ -326,8 +308,7 @@ rmarkdown 2.12
 - Add opt-in `tabset` option to the `html_vignette`. In contrast to the similar feature from `html_document`, this feature supports navigation from ToC and URL. Any custom formats can introduce this feature by using an exported function `html_dependency_tabset()` (thanks, @atusy, #2313).
 
 
-rmarkdown 2.11
-================================================================================
+# rmarkdown 2.11
 
 - Relative paths in parent directories in the `css` argument of `html_document()` were incorrectly normalized to absolute paths by #2095 in v2.8. Now relative paths in parent directories will no longer be converted to absolute paths (thanks, @daijiang, yihui/xaringan#331).
 
@@ -340,8 +321,7 @@ rmarkdown 2.11
 - The previously unexported function `convert_ipynb()` is exported now (thanks, @acircleda).
 
 
-rmarkdown 2.10
-================================================================================
+# rmarkdown 2.10
 
 - `md_document()` will now handle correctly `preserve_yaml` value for all variants and all pandoc versions (#2190). 
   * with `preserve_yaml = TRUE`, markdown output will keep the YAML metadata block from the Rmd file.
@@ -356,8 +336,7 @@ rmarkdown 2.10
 - Fixed the syntax highlighting issue with R's pipe operator `|>` (thanks, @edzer, rstudio/bookdown#1157).
 
 
-rmarkdown 2.9
-================================================================================
+# rmarkdown 2.9
 
 - Fix a regression in version 2.8 when a url is used in `css` argument (thanks, @vnijs, #2163).
 
@@ -378,8 +357,7 @@ rmarkdown 2.9
 - `rmarkdown::site_generator()` can hang session waiting for input when the `site` field is not found in the YAML frontmatter of `index.Rmd` (thanks, @kevinushey @mirh, #2043).
 
 
-rmarkdown 2.8
-================================================================================
+# rmarkdown 2.8
 
 - Fix a issue with Pandoc 2.5 and `latex-div.lua` - documents can now be rendered as expected without error (thanks, @davidwales, #2121).
 
@@ -416,8 +394,7 @@ rmarkdown 2.8
 - `rmarkdown::tufte_handout` has been deprecated and will be removed in the future from this package. It has been moved to the **tufte** package since **rmarkdown** 0.9.5 (released on 2016-02-22). Please use `tufte::tufte_handout` instead.
 
 
-rmarkdown 2.7
-================================================================================
+# rmarkdown 2.7
 
 - `html_document` (and `html_document_base`)'s `theme` parameter now understands `bslib::bs_theme()` objects/arguments, meaning that one may opt-into Bootstrap 4 and more easily create custom themes. For examples, see <https://github.com/rstudio/rmarkdown/pull/1706>, and for context, see <https://rstudio.github.io/bslib/> (thanks, @cpsievert, #1706).
 
@@ -444,8 +421,7 @@ rmarkdown 2.7
 - Fix an issue with `knit_print.data.frame`. The `...` arguments are no more passed to `print()` to avoid passing `knit_print()` arguments `options` and `encoding` to custom `print()` methods (#2047).
 
 
-rmarkdown 2.6
-================================================================================
+# rmarkdown 2.6
 
 - Encoding is correctly handled now in `html_vignette` when checking for identical title and vignette index entry (thanks, @py-b, #1978).
 
@@ -484,8 +460,7 @@ rmarkdown 2.6
 - Fix Fontawesome 5 icons in navbar by correctly handling new prefix as `fa` has been deprecated in favor of `fas` or `fab` (#1967)
 
 
-rmarkdown 2.5
-================================================================================
+# rmarkdown 2.5
 
 - Tables without header rows (wich can be possible in Pandoc's [simple table](https://pandoc.org/MANUAL.html#extension-simple_tables)) are now formatted correctly when using `html_document()` format (thanks, @fkohrt, #1893).
 
@@ -506,8 +481,7 @@ rmarkdown 2.5
 - Introduce `runtime: shinyrmd` as a more user friendly alias for `runtime: shiny_prerendered`.
 
 
-rmarkdown 2.4
-================================================================================
+# rmarkdown 2.4
 
 - Lua filters handling has been improved internally with some user-facing changes (#1899):
     - New exported function `pandoc_lua_filter_args()` to return the Pandoc command-line argument to add a Lua filter.
@@ -536,8 +510,7 @@ rmarkdown 2.4
 - Ported some CSS styles (e.g., underlines, small caps, and multi-column layouts) from the latest Pandoc's HTML template into **rmarkdown**s HTML templates (thanks, @atusy, #1878, #1908).
 
 
-rmarkdown 2.3
-================================================================================
+# rmarkdown 2.3
 
 - Addressed an accessibility issue in highlighted code blocks of HTML output for screen reader users: screen readers no longer read out an unnecessary code line id values (thanks, @jooyoungseo and @atusy, #1833).
 
@@ -554,8 +527,7 @@ rmarkdown 2.3
 - `html_document()` can apply `code_folding` on any chunk engines if the `foldable` class is added to a source code block via the chunk options (`class.source` or `attr.source`). You may apply this feature to all the source code blocks, for example, by setting `knitr::opts_chunk$set(class.source = "foldable")` at the beginning of your document (thanks, @atusy, #1835).
 
 
-rmarkdown 2.2
-================================================================================
+# rmarkdown 2.2
 
 - Exported the internal function `find_pandoc()`, and also added two arguments, `dir` and `version`, so that users can provide a custom directory under which this function may find Pandoc, as well as an expected version of Pandoc to be found (thanks, @connorp, #1785).
 
@@ -586,8 +558,7 @@ rmarkdown 2.2
 - `render(run_pandoc = FALSE)` no longer cleans up the Markdown file (typically knitted from Rmd) (thanks, @BrianDiggs, #1812).
 
 
-rmarkdown 2.1
-================================================================================
+# rmarkdown 2.1
 
 - Added the returned output from `shiny::runApp()` within `rmarkdown::run()` (thanks, @schloerke, #1760).
 
@@ -606,8 +577,7 @@ rmarkdown 2.1
 - For `pdf_document`, horizontal rules generated by Pandoc (before v2.8) stopped working in recent versions of TeX Live, and the same fix as the one to https://github.com/jgm/pandoc/issues/5801 (i.e., hard-code `\linethickness` to `0.5pt`) was applied in **rmarkdown** (thanks, @cderv, https://stackoverflow.com/a/58646915/559676).
 
 
-rmarkdown 2.0
-================================================================================
+# rmarkdown 2.0
 
 - For the output format `pdf_document()`, we no longer adjust the vertical spacing of the title area. This means there will be a larger spacing above the document title in PDF. If you prefers the old (smaller) spacing, please download https://github.com/rstudio/rmarkdown/blob/f6961af/inst/rmd/latex/compact-title.tex and include it to the preamble via the `includes` option of `pdf_document`. However, please note that this means you won't be able to have multiple authors in the `author` field of the YAML frontmatter, unless you use a custom LaTeX template. With the default LaTeX template, you will run into the error in #1716. Besides, the `compact-title` option in YAML is no longer supported.
 
@@ -634,8 +604,7 @@ rmarkdown 2.0
 - The `pdf_document` format failed to work if the `header-includes` field in YAML is an empty list (thanks, @cderv, #1728).
 
 
-rmarkdown 1.18
-================================================================================
+# rmarkdown 1.18
 
 - For `pdf_document()`, now we patch Pandoc's built-in LaTeX template to include the document subtitle (unnecessary with pandoc 2.6 onwards) and reduce the vertical spacing before title using `--include-in-header` rather than overwriting the built-in template, avoiding compability problems with newer versions of Pandoc (thanks, @adunning, #1563).
 
@@ -652,8 +621,7 @@ rmarkdown 1.18
 - Removed the `xmlns` attribute in the `<html>` tag in the default HTML template (thanks, @grady #1640, @spgarbet #995).
 
 
-rmarkdown 1.17
-================================================================================
+# rmarkdown 1.17
 
 - `html_vignette()` passes `self_contained` argument value to base format (thanks, @cderv, #1668).
 
@@ -666,8 +634,7 @@ rmarkdown 1.17
 - Fixed the Pandoc LaTeX templates to avoid the error `File `grffile.sty' not found`. This is because the LaTeX **grffile** is no longer available in TeX Live (thanks, @cderv #1691, @smmurphy #1692, @JacobD05 https://github.com/yihui/tinytex/issues/152).
 
 
-rmarkdown 1.16
-================================================================================
+# rmarkdown 1.16
 
 - The `pandoc-citeproc` binary can now be found correctly on Windows. This fixes an issue with `pandoc_citeproc_convert()` (thanks @cderv, #1651).
 
@@ -684,8 +651,7 @@ rmarkdown 1.16
 - Added `keep_html` argument to `github_document` so to save a preview HTML file in a working directory (thanks, @atusy, #1650).
 
 
-rmarkdown 1.15
-================================================================================
+# rmarkdown 1.15
 
 - Exclude `README.R?md` from files processed by `render_site()`,
 
@@ -694,8 +660,7 @@ rmarkdown 1.15
 - The `extra_dependencies` argument only works with `template: default` in `pdf_document`. Now it works with any Pandoc LaTeX templates as long as the template uses the `header-includes` variable.
 
 
-rmarkdown 1.14
-================================================================================
+# rmarkdown 1.14
 
 - Fixed a regression in `ioslides_presentation` that background colors via the `data-background` attribute on slides stopped working (thanks, @ShKlinkenberg, #1265).
 
@@ -710,8 +675,7 @@ rmarkdown 1.14
 - Fixed the bug #1593: in HTML documents, when a MathJax URL is used with a custom template, the source code of the MathJax library is included in the document. This bug was first declared in **bookdown** (thanks, @topepo for the bug report rstudio/bookdown#683, and @RLesur for the fix #1594).
 
 
-rmarkdown 1.13
-================================================================================
+# rmarkdown 1.13
 
 - For `pdf_document()`, do not override margins to 1 inch when a custom document class or geometry settings are specified in the YAML front matter (thanks, @adunning, #1550)
 
@@ -730,8 +694,7 @@ rmarkdown 1.13
 - Added an `output_extensions` argument to `pdf_document()` to make it possible to enable/disable Pandoc extensions for the LaTeX output format (thanks, @hongyuanjia, rstudio/bookdown#687).
 
 
-rmarkdown 1.12
-================================================================================
+# rmarkdown 1.12
 
 * Fixed file extensions of output files when using non-markdown Pandoc extensions such as `docx+styles` (#1494, @noamross).
 
@@ -748,8 +711,7 @@ rmarkdown 1.12
 * The `<em>` tags in the subtitle, date, and author are removed from the default HTML template (thanks, @royfrancis, #1544).
 
 
-rmarkdown 1.11
-================================================================================
+# rmarkdown 1.11
 
 * Fixed #1483, which prevented the triangle to be displayed in Firefox when `<details><summary>...</summary></details>` was used (#1485, @bisaloo)
 
@@ -790,8 +752,7 @@ rmarkdown 1.11
 * Fixed #1358: calling `render()` with `intermediates_dir` will fail if the Rmd document contains bibliography files that are dynamically generated.
 
 
-rmarkdown 1.10
-================================================================================
+# rmarkdown 1.10
 
 * Added a new argument `slide_level` to `powerpoint_presentation()` (#1270).
 
@@ -818,8 +779,7 @@ rmarkdown 1.10
 * Enable post processors that change the output file to specify that the base post processor should still be applied to the original output file.
 
 
-rmarkdown 1.9
-================================================================================
+# rmarkdown 1.9
 
 ## NEW FEATURES
 
@@ -842,8 +802,7 @@ rmarkdown 1.9
 * Fixed the obscure error `Error: path for html_dependency not found:`, which was due to the HTML dependency of highlight.js (thanks, @bborgesr, #1213).
 
 
-rmarkdown 1.8
-================================================================================
+# rmarkdown 1.8
 
 ## BUG FIXES
 
@@ -856,8 +815,7 @@ rmarkdown 1.8
 * With Pandoc 2.x, `github_document()` generates the wrong filename extension `.gfm-ascii_identifiers` instead of `.md`, and line height of code blocks in the HTML preview is too big (#1200).
 
 
-rmarkdown 1.7
-================================================================================
+# rmarkdown 1.7
 
 * Fixed an issue with `df_print: paged` where row names where not printed and added support for `rownames.print` option to control when they print.
 
@@ -908,8 +866,7 @@ rmarkdown 1.7
 * For `md_document()`, when `variant == 'markdown'` and `perserve_yaml = TRUE`, the Pandoc argument `--standalone` should not be used (#656).
 
 
-rmarkdown 1.6
-================================================================================
+# rmarkdown 1.6
 
 * Fixed an issue where headers with non-ASCII text would not be linked to correctly in the table of contents.
 
@@ -926,8 +883,7 @@ rmarkdown 1.6
 * Allow paged tables to render even when page load / visibility has a long delay
 
 
-rmarkdown 1.5
-================================================================================
+# rmarkdown 1.5
 
 * Fixed an issue where code within Shiny pre-rendered documents was not rendered correctly.
 
@@ -936,8 +892,7 @@ rmarkdown 1.5
 * Use RStudio redirection URL to replace deprecated MathJax CDN
 
 
-rmarkdown 1.4
-================================================================================
+# rmarkdown 1.4
 
 * `data.table` expressions involving `:=` are no longer automatically printed within R Markdown documents. (#829)
 
@@ -960,8 +915,7 @@ rmarkdown 1.4
 * Remove data-context="(data|server|server-start)" chunks from HTML served to client in shiny_prerendered
 
 
-rmarkdown 1.3
-================================================================================
+# rmarkdown 1.3
 
 * Fix v1.2 regression in ordering of CSS for ioslides_presentation.
 
@@ -972,8 +926,7 @@ rmarkdown 1.3
 * Add `citeproc` argument to YAML header; controls whether pandoc-citeproc is used (#831)
 
 
-rmarkdown 1.2
-================================================================================
+# rmarkdown 1.2
 
 * Add support for df_print to handle additional dplyr classes: grouped_df, rowwise_df and tbl_sql.
 
@@ -1008,8 +961,7 @@ rmarkdown 1.2
 * Bibliography file paths in YAML containing forward slashes could not be rendered (#875)
 
 
-rmarkdown 1.1
-================================================================================
+# rmarkdown 1.1
 
 * Fixed an issue where attempts to render an R Notebook could fail if the path contained multibyte characters.
 
@@ -1046,8 +998,7 @@ rmarkdown 1.1
 * Export `navbar_html` and `yaml_front_matter` functions
 
 
-rmarkdown 1.0
-================================================================================
+# rmarkdown 1.0
 
 * `toc_float` no longer automatically sets `toc = TRUE`
 
@@ -1076,8 +1027,7 @@ rmarkdown 1.0
 * Try to install the latexmk package automatically on Windows if the executable latexmk.exe exists.
 
 
-rmarkdown 0.9.6
-================================================================================
+# rmarkdown 0.9.6
 
 * Ability to set `opts_hooks` in `knitr_options()` (#672)
 
@@ -1128,8 +1078,7 @@ rmarkdown 0.9.6
 * Removed the extra tag `<p></p>` around HTML output (typically generated by htmltools) from code chunks, to avoid invalid HTML like `<p><div>...</div><p>` (#685)
 
 
-rmarkdown 0.9.5
-================================================================================
+# rmarkdown 0.9.5
 
 * Added odt_document format for OpenDocument Text output
 
@@ -1180,22 +1129,19 @@ rmarkdown 0.9.5
 * Render Shiny documents in a clean environment; fixes issue in which code in Shiny documents could access internal R Markdown state
 
 
-rmarkdown 0.9.2
-================================================================================
+# rmarkdown 0.9.2
 
 * Added a fix to #580 for Windows users.
 
 
-rmarkdown 0.9.1
-================================================================================
+# rmarkdown 0.9.1
 
 * Fix for a bug causing certain files to be deleted as intermediate files. (#580)
 
 * PDF/LaTeX output no longer uses natbib as the citation package by default. If you do want to use natbib or biblatex, you may still use the argument citation_package = 'natbib' or 'biblatex'. (#577)
 
 
-rmarkdown 0.9
-================================================================================
+# rmarkdown 0.9
 
 * Fix for JS exception in slidy_presentation when served from the filesystem (don't call pushState for file:// urls)
 
@@ -1216,8 +1162,7 @@ rmarkdown 0.9
 * Fix for an issue causing resources not to be discovered in some documents containing an empty quoted string (`""`) in an R chunk.
 
 
-rmarkdown 0.8.1
-================================================================================
+# rmarkdown 0.8.1
 
 * Support for table of contents in word_document (requires pandoc >= 1.14)
 
@@ -1232,8 +1177,7 @@ rmarkdown 0.8.1
 * Allow specifying an R file in calls to find_all_resources
 
 
-rmarkdown 0.8
-================================================================================
+# rmarkdown 0.8
 
 * Add support for keep_md to word_document
 
@@ -1250,8 +1194,7 @@ rmarkdown 0.8
 * Bugfix: Handle slashes correctly on Windows for slidy_presentation when self_contained = FALSE
 
 
-rmarkdown 0.7
-================================================================================
+# rmarkdown 0.7
 
 * Add latex_engine option to beamer_presentation format
 
@@ -1270,8 +1213,7 @@ rmarkdown 0.7
 * Fix several issues causing pandoc errors when an intermediates directory is used, including during render for Shiny documents
 
 
-rmarkdown 0.6
-================================================================================
+# rmarkdown 0.6
 
 * Support for parameterized reports. Parameter names and default values are defined in YAML and can be specified via the 'params' argument to the render function
 
@@ -1290,8 +1232,7 @@ rmarkdown 0.6
 * Various improvements to tufte_handout format
 
 
-rmarkdown 0.5.1
-================================================================================
+# rmarkdown 0.5.1
 
 * Add 'dev' option to output formats to specify output device for figures
 
@@ -1300,8 +1241,7 @@ rmarkdown 0.5.1
 * Various improvements related to directory detection/handling on Windows
 
 
-rmarkdown 0.4.2
-================================================================================
+# rmarkdown 0.4.2
 
 * Sync to the latest LaTeX and Beamer templates from pandoc-templates
 
@@ -1318,7 +1258,6 @@ rmarkdown 0.4.2
 * Serve index.html as fallback default file for rmarkdown::run
 
 
-rmarkdown 0.3.11
-================================================================================
+# rmarkdown 0.3.11
 
 Initial release to CRAN
