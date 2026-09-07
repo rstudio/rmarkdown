@@ -24,6 +24,9 @@ jobs:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      # capture Pandoc's stderr and turn "Deprecated: ..." messages into R
+      # warnings, so this job flags deprecated Pandoc arguments in advance (#2638)
+      RMARKDOWN_PANDOC_WARN_DEPRECATED: true
 
     steps:
       - uses: actions/checkout@v6

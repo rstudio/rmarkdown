@@ -99,6 +99,25 @@ pandoc_convert <- function(input,
   if (verbose)
     cat(command, "\n")
 
+  # When RMARKDOWN_PANDOC_WARN_DEPRECATED is set (e.g. in the daily
+  # nightly-Pandoc CI job), capture Pandoc's stderr so we can turn any
+  # "Deprecated: ..." message into an R warning. Deprecated arguments only warn
+  # (they do not fail the conversion), so they would otherwise go unnoticed
+  # until Pandoc eventually removes the argument (#2638). This is opt-in because
+  # capturing stderr changes how Pandoc's output is relayed to the user, and a
+  # naive shell redirection is not portable (it broke on Windows).
+  if (pandoc_warn_deprecated_enabled()) {
+    with_pandoc_safe_environment({
+      stderr <- system2(pandoc(), quoted(args), stderr = TRUE, stdout = TRUE)
+    })
+    status <- attr(stderr, "status") %||% 0L
+    if (length(stderr)) message(paste(stderr, collapse = "\n"))
+    warn_if_pandoc_deprecated(stderr)
+    if (status != 0)
+      stop2("pandoc document conversion failed with error ", status)
+    return(invisible(NULL))
+  }
+
   # run the conversion
   with_pandoc_safe_environment({
     result <- system(command)
@@ -107,6 +126,28 @@ pandoc_convert <- function(input,
     stop2("pandoc document conversion failed with error ", result)
 
   invisible(NULL)
+}
+
+# Whether to capture Pandoc's stderr and warn on deprecated arguments; opt-in
+# via the RMARKDOWN_PANDOC_WARN_DEPRECATED environment variable.
+pandoc_warn_deprecated_enabled <- function() {
+  isTRUE(as.logical(Sys.getenv("RMARKDOWN_PANDOC_WARN_DEPRECATED", "false")))
+}
+
+# Pandoc prints "[WARNING] Deprecated: <arg>. ..." on stderr when it is given a
+# deprecated command-line argument. Turn any such line into an R warning so it
+# is visible and can be caught in tests via expect_warning() regardless of
+# which argument triggered it -- no need to enumerate deprecated args one by one.
+warn_if_pandoc_deprecated <- function(stderr_lines) {
+  deprecated <- grep("Deprecated:", stderr_lines, value = TRUE, ignore.case = TRUE)
+  if (length(deprecated) == 0) return(invisible())
+  # strip the leading "[WARNING] " prefix that Pandoc adds
+  deprecated <- sub("^\\s*\\[[A-Z]+\\]\\s*", "", deprecated)
+  warning(
+    "Pandoc reported deprecated command-line argument(s):\n",
+    paste0("  ", deprecated, collapse = "\n"),
+    call. = FALSE
+  )
 }
 
 

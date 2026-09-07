@@ -1,5 +1,7 @@
 # rmarkdown 2.33
 
+- When the environment variable `RMARKDOWN_PANDOC_WARN_DEPRECATED` is set to a truthy value, `pandoc_convert()` (and hence `render()`) captures Pandoc's stderr and relays any `Deprecated: ...` message as an R warning. This lets our daily nightly-Pandoc CI job detect deprecated command-line arguments in advance, since deprecated arguments only warn and do not fail the conversion (#2638).
+
 
 # rmarkdown 2.32
 
