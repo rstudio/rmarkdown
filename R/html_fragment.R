@@ -31,7 +31,7 @@ html_fragment <- function(number_sections = FALSE,
                           ...) {
 
   if (mathjax)
-    pandoc_args <- c(pandoc_args, "--mathjax")
+    pandoc_args <- c(pandoc_args, pandoc_math_args("mathjax"))
 
   html_document(
     number_sections = number_sections, fig_width = fig_width,

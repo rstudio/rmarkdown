@@ -492,6 +492,12 @@ pandoc_math_args <- function(engine, url = NULL) {
     stop2(sprintf("%s does not support setting a URL.", engine))
   }
 
+  # Pandoc 3.11 introduced --math-method=METHOD[:URL] and deprecated the
+  # per-engine flags (--mathjax, --katex, ...) which now emit a warning.
+  if (pandoc_available("3.11")) {
+    return(paste0(c("--math-method=", engine, if (!is.null(url)) c(":", url)), collapse = ""))
+  }
+
   paste0(c("--", engine, if (!is.null(url)) c("=", url)), collapse = "")
 }
 

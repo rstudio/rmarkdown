@@ -77,7 +77,13 @@ test_that("Converting bib file is working", {
 })
 
 test_that("pandoc_math_args() build correct CLI flag", {
-  expect_identical(pandoc_math_args("katex"), c("--katex"))
-  expect_identical(pandoc_math_args("webtex", "url"), c("--webtex=url"))
+  if (pandoc_available("3.11")) {
+    # Pandoc 3.11 deprecated the per-engine flags in favor of --math-method
+    expect_identical(pandoc_math_args("katex"), c("--math-method=katex"))
+    expect_identical(pandoc_math_args("webtex", "url"), c("--math-method=webtex:url"))
+  } else {
+    expect_identical(pandoc_math_args("katex"), c("--katex"))
+    expect_identical(pandoc_math_args("webtex", "url"), c("--webtex=url"))
+  }
   expect_error(pandoc_math_args("gladtex", "CDN"), "gladtex does not support")
 })
