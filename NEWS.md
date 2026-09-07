@@ -3,6 +3,8 @@ rmarkdown 2.32
 
 - The math-engine Pandoc arguments (`--mathjax`, `--katex`, `--webtex`, `--mathml`, `--gladtex`) are now emitted as `--math-method=ENGINE[:URL]` when Pandoc >= 3.11 is available, since Pandoc 3.11 deprecated the per-engine flags and emits a `Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead.` warning for them (thanks, @neuwirthe, #2638).
 
+- `pandoc_convert()` (and hence `render()`) now relays Pandoc's `Deprecated: ...` messages as R warnings instead of letting them pass silently, so deprecated command-line arguments are surfaced to users and can be detected before Pandoc eventually removes them (#2638).
+
 - LaTeX auxiliary files (`.aux`, `.log`, etc.) generated while producing PDF output are now written to the output directory instead of the input directory. Previously `latexmk()` ran in the input file's directory, so PDF rendering failed when the input directory was read-only (e.g. in production or Shiny deployments) even when `output_dir` pointed to a writable location (thanks, @cderv #1975, @siddharthab #1615).
 
 - Fixed a `cannot open file '<name>.tex'` error when rendering to PDF with the `intermediates_dir` argument set. Pandoc wrote the intermediate `.tex` into `intermediates_dir`, but `rmarkdown` looked for it in the input directory. The `.tex` is now resolved to its actual location, and with `keep_tex: true` the retained `.tex` is moved next to the output instead of being left behind in `intermediates_dir` (thanks, @beerda, #2183).

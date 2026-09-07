@@ -1,36 +1,68 @@
 # Guard against emitting Pandoc command-line arguments that Pandoc has
-# deprecated. Deprecated args only trigger a warning (not an error), so they
-# slip past the daily nightly-Pandoc CI job silently (#2638). This test runs
-# the real Pandoc binary and fails if it prints a "Deprecated" warning for any
-# argument we generate, giving us advance notice before an arg is removed.
+# deprecated. Deprecated args only trigger a warning on stderr (not an error),
+# so they slip past the daily nightly-Pandoc CI job silently (#2638).
+#
+# pandoc_convert() captures Pandoc's stderr and turns any "Deprecated: ..."
+# line into an R warning, so we can catch deprecations generically -- without
+# enumerating the deprecated arguments one by one -- by rendering documents and
+# asserting no such warning is raised.
 
-# Run pandoc with `args` on a small math document and return its stderr.
-pandoc_stderr <- function(args) {
-  input <- withr::local_tempfile(fileext = ".md")
-  xfun::write_utf8("$e = mc^2$", input)
-  suppressWarnings(system2(
-    pandoc(),
-    c(shQuote(input), "-t", "html", args),
-    stdout = FALSE, stderr = TRUE
-  ))
-}
-
-test_that("math_method args are not deprecated by Pandoc", {
-  skip_if_not_pandoc()
-  skip_on_cran()
-  for (engine in pandoc_math_engines()) {
-    err <- pandoc_stderr(pandoc_math_args(engine))
-    expect_no_match(
-      err, "Deprecated",
-      info = sprintf("Pandoc reports a deprecated arg for engine '%s': %s",
-                     engine, paste(err, collapse = " "))
-    )
-  }
+test_that("warn_if_pandoc_deprecated() parses Pandoc's stderr generically", {
+  # nothing to warn about
+  expect_silent(warn_if_pandoc_deprecated(character()))
+  expect_silent(warn_if_pandoc_deprecated(c("[INFO] all good", "done")))
+  # a single deprecation, with the "[WARNING] " prefix stripped
+  expect_warning(
+    warn_if_pandoc_deprecated(
+      "[WARNING] Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead."
+    ),
+    "Deprecated: --mathjax\\. Use --math-method"
+  )
+  # case-insensitive, and multiple deprecations reported together
+  expect_warning(
+    warn_if_pandoc_deprecated(c(
+      "[WARNING] Deprecated: --foo.",
+      "[WARNING] deprecated: --bar."
+    )),
+    "--foo.*--bar"
+  )
 })
 
-test_that("self_contained args are not deprecated by Pandoc", {
+# Render a minimal document with math to the given format and collect any
+# warning message raised by pandoc_convert().
+render_warning <- function(output_format, ...) {
+  input <- local_rmd_file("---", "title: t", "---", "", "$e = mc^2$", "")
+  output <- withr::local_tempfile()
+  msg <- NULL
+  withCallingHandlers(
+    rmarkdown::render(
+      input, output_format = output_format, output_file = output,
+      quiet = TRUE, ...
+    ),
+    warning = function(w) {
+      msg <<- c(msg, conditionMessage(w))
+      invokeRestart("muffleWarning")
+    }
+  )
+  msg
+}
+
+test_that("built-in HTML formats do not emit deprecated Pandoc args", {
   skip_if_not_pandoc()
   skip_on_cran()
-  err <- pandoc_stderr(self_contained_args())
-  expect_no_match(err, "Deprecated", info = paste(err, collapse = " "))
+  formats <- list(
+    html_document(),
+    html_document(math_method = "katex"),
+    html_document(math_method = "webtex"),
+    html_document(math_method = "mathml"),
+    html_fragment(),
+    html_vignette()
+  )
+  for (fmt in formats) {
+    msg <- render_warning(fmt)
+    expect_false(
+      any(grepl("Deprecated", msg %||% "")),
+      info = paste(msg, collapse = " ")
+    )
+  }
 })
