@@ -92,17 +92,8 @@ pandoc_convert <- function(input,
   i <- match('--self-contained', args)
   if (!is.na(i) && pandoc_available('2.19')) args <- c(args[-i], self_contained_args())
 
-  # capture pandoc's stderr to a temp file so we can inspect it for deprecation
-  # warnings (which do not fail the conversion), while still relaying it to the
-  # user; the "2> file" redirection works on both POSIX shells and cmd.exe
-  stderr_file <- tempfile("pandoc-stderr-", fileext = ".txt")
-  on.exit(unlink(stderr_file), add = TRUE)
-
   # build the conversion command
-  command <- paste(
-    quoted(pandoc()), paste(quoted(args), collapse = " "),
-    "2>", shQuote(stderr_file)
-  )
+  command <- paste(quoted(pandoc()), paste(quoted(args), collapse = " "))
 
   # show it in verbose mode
   if (verbose)
@@ -112,36 +103,10 @@ pandoc_convert <- function(input,
   with_pandoc_safe_environment({
     result <- system(command)
   })
-
-  # relay pandoc's stderr and warn about any deprecated arguments it reports
-  pandoc_stderr <- if (file.exists(stderr_file)) read_utf8(stderr_file) else character()
-  if (length(pandoc_stderr)) {
-    message(paste(pandoc_stderr, collapse = "\n"))
-    warn_if_pandoc_deprecated(pandoc_stderr)
-  }
-
   if (result != 0)
     stop2("pandoc document conversion failed with error ", result)
 
   invisible(NULL)
-}
-
-# Pandoc prints "[WARNING] Deprecated: <arg>. ..." on stderr when it is given a
-# deprecated command-line argument. Such arguments do not fail the conversion,
-# so they can go unnoticed (e.g. --mathjax deprecated in Pandoc 3.11, #2638).
-# Turn any such line into an R warning so it is visible to users and can be
-# caught in tests via expect_warning() regardless of which argument triggered
-# it -- no need to enumerate deprecated arguments one by one.
-warn_if_pandoc_deprecated <- function(stderr_lines) {
-  deprecated <- grep("Deprecated:", stderr_lines, value = TRUE, ignore.case = TRUE)
-  if (length(deprecated) == 0) return(invisible())
-  # strip the leading "[WARNING] " prefix that Pandoc adds
-  deprecated <- sub("^\\s*\\[[A-Z]+\\]\\s*", "", deprecated)
-  warning(
-    "Pandoc reported deprecated command-line argument(s):\n",
-    paste0("  ", deprecated, collapse = "\n"),
-    call. = FALSE
-  )
 }
 
 
