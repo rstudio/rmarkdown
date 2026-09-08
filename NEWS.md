@@ -1,9 +1,8 @@
 # rmarkdown 2.33
 
+- The math-engine Pandoc arguments (`--mathjax`, `--katex`, `--webtex`, `--mathml`, `--gladtex`) are now emitted as `--math-method=ENGINE[:URL]` when Pandoc >= 3.11 is available, since Pandoc 3.11 deprecated the per-engine flags and emits a `Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead.` warning for them (thanks, @neuwirthe, #2638).
 
 # rmarkdown 2.32
-
-- The math-engine Pandoc arguments (`--mathjax`, `--katex`, `--webtex`, `--mathml`, `--gladtex`) are now emitted as `--math-method=ENGINE[:URL]` when Pandoc >= 3.11 is available, since Pandoc 3.11 deprecated the per-engine flags and emits a `Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead.` warning for them (thanks, @neuwirthe, #2638).
 
 - LaTeX auxiliary files (`.aux`, `.log`, etc.) generated while producing PDF output are now written to the output directory instead of the input directory. Previously `latexmk()` ran in the input file's directory, so PDF rendering failed when the input directory was read-only (e.g. in production or Shiny deployments) even when `output_dir` pointed to a writable location (thanks, @cderv #1975, @siddharthab #1615).
 

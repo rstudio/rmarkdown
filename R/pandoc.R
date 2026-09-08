@@ -494,11 +494,11 @@ pandoc_math_args <- function(engine, url = NULL) {
 
   # Pandoc 3.11 introduced --math-method=METHOD[:URL] and deprecated the
   # per-engine flags (--mathjax, --katex, ...) which now emit a warning.
-  if (pandoc_available("3.11")) {
-    return(paste0(c("--math-method=", engine, if (!is.null(url)) c(":", url)), collapse = ""))
-  }
-
-  paste0(c("--", engine, if (!is.null(url)) c("=", url)), collapse = "")
+  p311 <- pandoc_available("3.11")
+  paste0(c(
+    if (p311) "--math-method=" else "--", engine,
+    if (!is.null(url)) c(if (p311) ":" else "=", url)), collapse = ""
+  )
 }
 
 
