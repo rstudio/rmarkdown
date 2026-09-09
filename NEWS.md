@@ -1,6 +1,6 @@
 # rmarkdown 2.33
 
-- When the environment variable `RMARKDOWN_PANDOC_WARN_DEPRECATED` is set to a truthy value, `pandoc_convert()` (and hence `render()`) captures Pandoc's stderr and relays any `Deprecated: ...` message as an R warning. This lets our daily nightly-Pandoc CI job detect deprecated command-line arguments in advance, since deprecated arguments only warn and do not fail the conversion (#2638).
+- When the environment variable `RMARKDOWN_PANDOC_WARN` is set to a truthy value, `pandoc_convert()` (and hence `render()`) captures Pandoc's stderr and relays any `[WARNING]` message (e.g. deprecated command-line arguments) as an R warning. This lets our daily nightly-Pandoc CI job detect Pandoc warnings in advance, since they do not fail the conversion (#2638).
 
 - The math-engine Pandoc arguments (`--mathjax`, `--katex`, `--webtex`, `--mathml`, `--gladtex`) are now emitted as `--math-method=ENGINE[:URL]` when Pandoc >= 3.11 is available, since Pandoc 3.11 deprecated the per-engine flags and emits a `Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead.` warning for them (thanks, @neuwirthe, #2638).
 
