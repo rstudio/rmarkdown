@@ -1,5 +1,3 @@
-context("resource discovery")
-
 sort_resources <- function(resources) {
   # sort by filename and remove rownames to avoid errors arising from file ordering
   # -- we don't really care what order these come back in

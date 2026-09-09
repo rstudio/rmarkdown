@@ -1,5 +1,3 @@
-context("spin")
-
 test_that("default metadata are included if no metadata is provided", {
   content <- c(
     "#' # Header 1",

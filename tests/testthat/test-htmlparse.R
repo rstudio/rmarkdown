@@ -1,5 +1,3 @@
-context("HTML parsing")
-
 accumulated <- data.frame(tag = c(), attribute = c(), value = c())
 
 reset_accumulator <- function() {

@@ -99,6 +99,20 @@ pandoc_convert <- function(input,
   if (verbose)
     cat(command, "\n")
 
+  # When RMARKDOWN_PANDOC_ERROR_ON_WARNING is set, capture Pandoc's stderr and
+  # abort on any "[WARNING] ..." message (#2640).
+  if (pandoc_error_on_warning()) {
+    with_pandoc_safe_environment({
+      stderr <- system2(pandoc(), quoted(args), stderr = TRUE, stdout = TRUE)
+    })
+    status <- attr(stderr, "status") %||% 0L
+    if (length(stderr)) message(paste(stderr, collapse = "\n"))
+    stop_on_pandoc_warning(stderr)
+    if (status != 0)
+      stop2("pandoc document conversion failed with error ", status)
+    return(invisible(NULL))
+  }
+
   # run the conversion
   with_pandoc_safe_environment({
     result <- system(command)
@@ -107,6 +121,21 @@ pandoc_convert <- function(input,
     stop2("pandoc document conversion failed with error ", result)
 
   invisible(NULL)
+}
+
+# Whether to abort on Pandoc warnings; opt-in via the
+# RMARKDOWN_PANDOC_ERROR_ON_WARNING environment variable.
+pandoc_error_on_warning <- function() {
+  isTRUE(as.logical(Sys.getenv("RMARKDOWN_PANDOC_ERROR_ON_WARNING", "false")))
+}
+
+# Abort on any "[WARNING] <message>" line that Pandoc printed on stderr.
+stop_on_pandoc_warning <- function(stderr_lines) {
+  warnings <- grep("^\\s*\\[WARNING\\]", stderr_lines, value = TRUE)
+  if (length(warnings) == 0) return(invisible())
+  # strip the leading "[WARNING] " prefix that Pandoc adds
+  warnings <- sub("^\\s*\\[WARNING\\]\\s*", "", warnings)
+  stop2("Pandoc reported warning(s):\n", paste0("  ", warnings, collapse = "\n"))
 }
 
 

@@ -1,5 +1,3 @@
-context("notebook")
-
 # expect that the default evaluate hook is restored after the notebook is
 # rendered and parsed
 hook_evaluate_get <- function() knitr::knit_hooks$get("evaluate")
