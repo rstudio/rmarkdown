@@ -1,24 +1,20 @@
-# Pandoc prints "[WARNING] <message>" on stderr for non-fatal issues, e.g.
-# deprecated command-line arguments (#2638) or duplicate header identifiers.
-# These do not fail the conversion, so they slip past the daily nightly-Pandoc
-# CI job silently. When RMARKDOWN_PANDOC_WARN is set, pandoc_convert() captures
-# Pandoc's stderr and turns such lines into R warnings, so we can catch any
-# Pandoc warning generically -- without enumerating them one by one.
+# When RMARKDOWN_PANDOC_ERROR_ON_WARNING is set, pandoc_convert() aborts on any
+# Pandoc "[WARNING] ..." message (#2638).
 
-test_that("warn_if_pandoc_warning() parses Pandoc's stderr generically", {
-  # nothing to warn about
-  expect_silent(warn_if_pandoc_warning(character()))
-  expect_silent(warn_if_pandoc_warning(c("[INFO] all good", "done")))
+test_that("stop_on_pandoc_warning() parses Pandoc's stderr generically", {
+  # nothing to abort on
+  expect_silent(stop_on_pandoc_warning(character()))
+  expect_silent(stop_on_pandoc_warning(c("[INFO] all good", "done")))
   # a single warning, with the "[WARNING] " prefix stripped
-  expect_warning(
-    warn_if_pandoc_warning(
+  expect_error(
+    stop_on_pandoc_warning(
       "[WARNING] Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead."
     ),
     "Deprecated: --mathjax\\. Use --math-method"
   )
   # multiple warnings of any kind reported together
-  expect_warning(
-    warn_if_pandoc_warning(c(
+  expect_error(
+    stop_on_pandoc_warning(c(
       "[WARNING] Deprecated: --foo.",
       "[WARNING] Could not fetch resource bar."
     )),
@@ -26,7 +22,7 @@ test_that("warn_if_pandoc_warning() parses Pandoc's stderr generically", {
   )
 })
 
-test_that("pandoc_convert() warns on Pandoc warnings only when enabled", {
+test_that("pandoc_convert() aborts on Pandoc warnings only when enabled", {
   skip_if_not_pandoc()
   skip_on_cran()
 
@@ -40,13 +36,13 @@ test_that("pandoc_convert() warns on Pandoc warnings only when enabled", {
     pandoc_convert(input, to = "html", output = output)
   }
 
-  # disabled by default: no capture, no warning
-  withr::with_envvar(c(RMARKDOWN_PANDOC_WARN = "false"), {
-    expect_no_warning(convert())
+  # disabled by default: the warning does not abort the conversion
+  withr::with_envvar(c(RMARKDOWN_PANDOC_ERROR_ON_WARNING = "false"), {
+    expect_no_error(convert())
   })
 
-  # enabled: Pandoc's warning surfaces as an R warning
-  withr::with_envvar(c(RMARKDOWN_PANDOC_WARN = "true"), {
-    expect_warning(convert(), "[Dd]uplicate")
+  # enabled: Pandoc's warning aborts the conversion (so R CMD check fails)
+  withr::with_envvar(c(RMARKDOWN_PANDOC_ERROR_ON_WARNING = "true"), {
+    expect_error(convert(), "[Dd]uplicate")
   })
 })
