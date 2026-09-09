@@ -30,10 +30,11 @@ test_that("pandoc_convert() warns on Pandoc warnings only when enabled", {
   skip_if_not_pandoc()
   skip_on_cran()
 
-  # two headers with the same text produce a duplicate identifier, which makes
-  # Pandoc emit a [WARNING] on all supported versions without failing
+  # two headers with the same explicit identifier make Pandoc emit a
+  # "[WARNING] Duplicate identifier" on all supported versions without failing
+  # (auto-generated identifiers would be de-duplicated silently instead)
   input <- withr::local_tempfile(fileext = ".md")
-  xfun::write_utf8(c("# Dup", "", "# Dup"), input)
+  xfun::write_utf8(c("# A {#dup}", "", "# B {#dup}"), input)
   output <- withr::local_tempfile(fileext = ".html")
   convert <- function() {
     pandoc_convert(input, to = "html", output = output)
