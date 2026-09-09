@@ -1,5 +1,3 @@
-context("params")
-
 test_that("setting of params works", {
 
   params_sample <- '---\ntitle: "test"\noutput: html_document\nparams:\n  field1:\n    value: "defaulthere"\n  field2: null\n  field3: \n  field4: NULL\n---'

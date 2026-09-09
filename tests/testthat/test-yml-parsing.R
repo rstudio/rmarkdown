@@ -1,5 +1,3 @@
-context("yaml front matter")
-
 test_that("yaml header is correctly parsed", {
   tmp_file <- tempfile(fileext = ".Rmd")
   on.exit(unlink(tmp_file), add = TRUE)

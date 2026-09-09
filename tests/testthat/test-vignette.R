@@ -1,5 +1,3 @@
-context("html_vignette format")
-
 .generate_temp_vignette <- function(title = NULL,
                                     indexentry = NULL,
                                     envir = parent.frame()) {

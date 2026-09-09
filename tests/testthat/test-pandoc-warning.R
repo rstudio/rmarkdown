@@ -1,7 +1,7 @@
 # Pandoc prints "[WARNING] <message>" on stderr for non-fatal issues, e.g.
-# deprecated command-line arguments (#2638) or missing references. These do not
-# fail the conversion, so they slip past the daily nightly-Pandoc CI job
-# silently. When RMARKDOWN_PANDOC_WARN is set, pandoc_convert() captures
+# deprecated command-line arguments (#2638) or duplicate header identifiers.
+# These do not fail the conversion, so they slip past the daily nightly-Pandoc
+# CI job silently. When RMARKDOWN_PANDOC_WARN is set, pandoc_convert() captures
 # Pandoc's stderr and turns such lines into R warnings, so we can catch any
 # Pandoc warning generically -- without enumerating them one by one.
 
@@ -30,13 +30,13 @@ test_that("pandoc_convert() warns on Pandoc warnings only when enabled", {
   skip_if_not_pandoc()
   skip_on_cran()
 
-  # a citation with no bibliography makes Pandoc emit a [WARNING] on any
-  # supported version, without failing the conversion
+  # two headers with the same text produce a duplicate identifier, which makes
+  # Pandoc emit a [WARNING] on all supported versions without failing
   input <- withr::local_tempfile(fileext = ".md")
-  xfun::write_utf8("See [@missing].", input)
+  xfun::write_utf8(c("# Dup", "", "# Dup"), input)
   output <- withr::local_tempfile(fileext = ".html")
   convert <- function() {
-    pandoc_convert(input, to = "html", output = output, options = "--citeproc")
+    pandoc_convert(input, to = "html", output = output)
   }
 
   # disabled by default: no capture, no warning
@@ -46,6 +46,6 @@ test_that("pandoc_convert() warns on Pandoc warnings only when enabled", {
 
   # enabled: Pandoc's warning surfaces as an R warning
   withr::with_envvar(c(RMARKDOWN_PANDOC_WARN = "true"), {
-    expect_warning(convert(), "[Ww]arning|missing|citeproc|@missing")
+    expect_warning(convert(), "[Dd]uplicate")
   })
 })

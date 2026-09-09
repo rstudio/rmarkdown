@@ -1,5 +1,3 @@
-context('utility functions')
-
 test_that('default_geometry() decides whether to pass a default geometry variable to Pandoc', {
   expect_false(default_geometry('geometry'))
   expect_false(default_geometry('documentclass'))
