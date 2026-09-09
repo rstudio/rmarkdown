@@ -100,7 +100,7 @@ pandoc_convert <- function(input,
     cat(command, "\n")
 
   # When RMARKDOWN_PANDOC_ERROR_ON_WARNING is set, capture Pandoc's stderr and
-  # abort on any "[WARNING] ..." message (#2638).
+  # abort on any "[WARNING] ..." message (#2640).
   if (pandoc_error_on_warning()) {
     with_pandoc_safe_environment({
       stderr <- system2(pandoc(), quoted(args), stderr = TRUE, stdout = TRUE)

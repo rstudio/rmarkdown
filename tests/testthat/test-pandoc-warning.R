@@ -1,5 +1,5 @@
 # When RMARKDOWN_PANDOC_ERROR_ON_WARNING is set, pandoc_convert() aborts on any
-# Pandoc "[WARNING] ..." message (#2638).
+# Pandoc "[WARNING] ..." message (#2640).
 
 test_that("stop_on_pandoc_warning() parses Pandoc's stderr generically", {
   # nothing to abort on
