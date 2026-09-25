@@ -25,8 +25,9 @@ md_document(
 \arguments{
 \item{variant}{Markdown variant to produce (defaults to "markdown_strict").
 Other valid values are "commonmark", "gfm", "commonmark_x", "markdown_mmd",
-markdown_phpextra", "markdown_github", or even "markdown" (which produces
-pandoc markdown). You can also compose custom markdown variants, see the
+markdown_phpextra", "markdown_github" (deprecated by Pandoc; use "gfm"
+instead), or even "markdown" (which produces pandoc markdown). You can
+also compose custom markdown variants, see the
 \href{https://pandoc.org/MANUAL.html}{pandoc online documentation} for
 details.}
 
@@ -99,6 +100,6 @@ library(rmarkdown)
 
 render("input.Rmd", md_document())
 
-render("input.Rmd", md_document(variant = "markdown_github"))
+render("input.Rmd", md_document(variant = "gfm"))
 }
 }
