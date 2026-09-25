@@ -31,7 +31,9 @@ normalized_relative_to <- function(dir, file) {
     normalize_path(file, must_work = FALSE))
 }
 
-# If a path is a relative path, it should be the same as ./path
+# Use xfun's syntactic check: same_path(path, file.path('.', path)) does not
+# work here because on Unix, normalizePath(mustWork = FALSE) leaves
+# nonexistent relative paths untouched, so 'lib' and './lib' compare unequal.
 is_relative <- function(path) {
-  same_path(path, file.path('.', path), must_work = FALSE)
+  xfun::is_rel_path(path)
 }
