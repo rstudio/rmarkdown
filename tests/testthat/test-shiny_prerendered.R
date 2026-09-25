@@ -42,6 +42,26 @@ test_that("Special HEAD comment is added if none in rendered HTML when in shiny 
   expect_equal(grep(special_comment, xfun::split_lines(html)), 2)
 })
 
+test_that("dependencies from a source package inst/ dir use the installed layout", {
+  # A package dev-loaded with pkgload::load_all() has its files under inst/,
+  # but they are installed at top-level. Serialized paths must be relative to
+  # the installed layout so system.file() can resolve them later (pkgload's
+  # system.file() shim rejects paths starting with "inst/").
+  pkg <- withr::local_tempdir()
+  dir.create(lib <- file.path(pkg, "inst", "lib"), recursive = TRUE)
+  xfun::write_utf8(c("Package: fakepkg", "Version: 1.0"),
+                   file.path(pkg, "DESCRIPTION"))
+  dep <- htmltools::htmlDependency("fake", "1.0", lib, script = "fake.js")
+  html <- withr::local_tempfile(fileext = ".html")
+  xfun::write_utf8("", html)
+  shiny_prerendered_append_dependencies(
+    html, list(deps = list(dep)), files_dir = tempdir(), output_dir = tempdir())
+  deps <- shiny_prerendered_extract_context_serialized(
+    xfun::read_utf8(html), "dependencies")
+  expect_equal(deps[[1]]$package, "fakepkg")
+  expect_equal(deps[[1]]$src$file, "lib")
+})
+
 test_that("html can be annotated as being a full document with deps attached", {
   html <- HTML("dummy")
   deps <- list(htmltools::htmlDependency("a", "1.1", c(href = "/")))
