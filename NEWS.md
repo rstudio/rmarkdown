@@ -1,5 +1,7 @@
 # rmarkdown 2.33
 
+- `md_document(variant = "markdown_github")` now signals a deprecation warning, as Pandoc deprecated the `markdown_github` format in favor of `gfm` (which is also more accurate). The variant is still passed through to Pandoc for now and rendering succeeds as before, but please switch to `variant = "gfm"`. Note that under the strict `RMARKDOWN_PANDOC_ERROR_ON_WARNING` mode (see below), rendering with `variant = "markdown_github"` now aborts on Pandoc's own deprecation warning for this format; this is expected, as that mode is designed to surface any Pandoc deprecation.
+
 - When the environment variable `RMARKDOWN_PANDOC_ERROR_ON_WARNING` is set to a truthy value, `pandoc_convert()` (and hence `render()`) aborts the conversion on any Pandoc `[WARNING]` message, e.g. a deprecated command-line argument (#2640).
 
 - The math-engine Pandoc arguments (`--mathjax`, `--katex`, `--webtex`, `--mathml`, `--gladtex`) are now emitted as `--math-method=ENGINE[:URL]` when Pandoc >= 3.11 is available, since Pandoc 3.11 deprecated the per-engine flags and emits a `Deprecated: --mathjax. Use --math-method=mathjax[:URL] instead.` warning for them (thanks, @neuwirthe, #2638).

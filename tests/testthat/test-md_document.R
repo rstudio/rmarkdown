@@ -39,11 +39,17 @@ test_that("md_document() can preserve yaml", {
   expect_snapshot_md("markdown_phpextra", preserve_yaml = FALSE)
   expect_snapshot_md("markdown_mmd", preserve_yaml = FALSE)
   expect_snapshot_md("markdown_strict", preserve_yaml = FALSE)
-  expect_snapshot_md("markdown_github", preserve_yaml = FALSE)
+  expect_snapshot_md("gfm", preserve_yaml = FALSE)
   expect_snapshot_md("markdown", preserve_yaml = TRUE)
   expect_snapshot_md("markdown_phpextra", preserve_yaml = TRUE)
   expect_snapshot_md("markdown_mmd", preserve_yaml = TRUE)
   expect_snapshot_md("markdown_strict", preserve_yaml = TRUE)
-  expect_snapshot_md("markdown_github", preserve_yaml = TRUE)
+  expect_snapshot_md("gfm", preserve_yaml = TRUE)
+})
+
+test_that("md_document() warns about the deprecated markdown_github variant", {
+  expect_warning(md_document("markdown_github"), "deprecated by Pandoc")
+  expect_warning(md_document("markdown_github+smart"), "deprecated by Pandoc")
+  expect_no_warning(md_document("gfm"))
 })
 

@@ -1,0 +1,10 @@
+{
+  // This project is not formatted with Air; opt out of the Air extension's
+  // R language defaults (format on save + default formatter) for this repo.
+  "[r]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnType": false,
+    "editor.formatOnPaste": false,
+    "editor.defaultFormatter": null
+  }
+}
