@@ -41,7 +41,13 @@ if (.Platform$OS.type == 'unix' && isTRUE(as.logical(Sys.getenv("CI"))) && rmark
 
   # Finding resource in custom formats
   # https://github.com/rstudio/rmarkdown/issues/2493
-  rmarkdown::render("rmd/clean-format.Rmd")
+  # cleanrmd::html_document_clean() passes the --no-highlight flag, deprecated
+  # since Pandoc 3.8, which errors with RMARKDOWN_PANDOC_ERROR_ON_WARNING=true.
+  # Disable the check for this render until cleanrmd is fixed and released.
+  withr::with_envvar(
+    c(RMARKDOWN_PANDOC_ERROR_ON_WARNING = "false"),
+    rmarkdown::render("rmd/clean-format.Rmd")
+  )
 
   # base64 encoded images should work for PDF output
   # https://github.com/rstudio/rmarkdown/issues/2604
