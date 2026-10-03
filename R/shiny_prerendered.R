@@ -416,7 +416,7 @@ shiny_prerendered_extract_context_serialized <- function(html_lines, context = "
 #' Clean prerendered content for the specified Rmd input file
 #'
 #' Remove the associated html file and supporting _files directory
-#' for a shiny_prerendered documet.
+#' for a shiny_prerendered document.
 #'
 #' @param input Rmd input file to clean content for
 #'
