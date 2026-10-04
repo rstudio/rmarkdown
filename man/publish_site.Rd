@@ -23,12 +23,6 @@ there is no `name` specified).}
 
 \item{method}{Publishing method (currently only "rsconnect" is available)}
 
-\item{account, server}{Uniquely identify a remote server with either your
-user \code{account}, the \code{server} name, or both. If neither are supplied, and
-there are multiple options, you'll be prompted to pick one.
-
-Use \code{\link[rsconnect:accounts]{accounts()}} to see the full list of available options.}
-
 \item{render}{`TRUE` to render the site locally before publishing.}
 
 \item{launch_browser}{If `TRUE`, the system's default web browser will be launched
