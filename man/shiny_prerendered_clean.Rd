@@ -11,5 +11,5 @@ shiny_prerendered_clean(input)
 }
 \description{
 Remove the associated html file and supporting _files directory
-for a shiny_prerendered documet.
+for a shiny_prerendered document.
 }
