@@ -7,9 +7,7 @@ output:
     css: empty.css
     includes:
       before_body: empty.md
-    pandoc_args: [
-      "--title-prefix", "empty.png"
-    ]
+    pandoc_args: ["--title-prefix", "empty.png"]
 resource_files:
 - empty.tsv
 ---
