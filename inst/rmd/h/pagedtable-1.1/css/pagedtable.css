@@ -30,6 +30,7 @@
 
 .pagedtable td {
   padding: 0 4px 0 4px;
+  white-space: pre-wrap;
 }
 
 .pagedtable .even {
