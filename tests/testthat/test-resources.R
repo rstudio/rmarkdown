@@ -364,3 +364,25 @@ test_that("in-body child options work with an intermediates directory", {
   output <- render("test.Rmd", intermediates_dir = withr::local_tempdir(), quiet = TRUE)
   expect_true(any(grepl("Included child text", xfun::read_utf8(output), fixed = TRUE)))
 })
+
+test_that("in-body child options are discovered in a variety of chunk layouts", {
+  find_body_child <- function(chunk, files) {
+    dir <- withr::local_tempdir("find-body-child")
+    withr::local_dir(dir)
+    xfun::write_utf8(c("---", "output: html_document", "---", "", chunk), "test.Rmd")
+    for (f in files) xfun::write_utf8("Content", f)
+    find_external_resources("test.Rmd")$path
+  }
+  expect_contains(
+    find_body_child(c("```{r}", '#| child: ["a.Rmd", "b.Rmd"]', "```"), c("a.Rmd", "b.Rmd")),
+    c("a.Rmd", "b.Rmd")
+  )
+  expect_contains(
+    find_body_child(c("> ```{r}", '> #| child: "a.Rmd"', "> ```"), "a.Rmd"),
+    "a.Rmd"
+  )
+  expect_contains(
+    find_body_child(c("````{r}", '#| child: "a.Rmd"', "```", "````"), "a.Rmd"),
+    "a.Rmd"
+  )
+})
