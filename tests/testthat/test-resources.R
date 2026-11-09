@@ -347,3 +347,42 @@ test_that("knitr child are correctly discovered as resources from chunk options"
   expect_child_resource_found(" child = 'child.Rmd'", child)
   expect_child_resource_found("child=c('child.Rmd')", child)
 })
+
+test_that("in-body child options work with an intermediates directory", {
+  skip_if_not_pandoc()
+  dir <- withr::local_tempdir("find-child")
+  withr::local_dir(dir)
+  xfun::write_utf8(c(
+    "---", "title: Test", "output: html_vignette", "vignette: >",
+    "  %\\VignetteIndexEntry{Test}", "  %\\VignetteEngine{knitr::rmarkdown}",
+    "  %\\VignetteEncoding{UTF-8}", "---", "",
+    "```{r}", '#| child: "child.Rmd"', "```"
+  ), "test.Rmd")
+  xfun::write_utf8("Included child text", "child.Rmd")
+
+  expect_contains(find_external_resources("test.Rmd")$path, "child.Rmd")
+  output <- render("test.Rmd", intermediates_dir = withr::local_tempdir(), quiet = TRUE)
+  expect_true(any(grepl("Included child text", xfun::read_utf8(output), fixed = TRUE)))
+})
+
+test_that("in-body child options are discovered in a variety of chunk layouts", {
+  find_body_child <- function(chunk, files) {
+    dir <- withr::local_tempdir("find-body-child")
+    withr::local_dir(dir)
+    xfun::write_utf8(c("---", "output: html_document", "---", "", chunk), "test.Rmd")
+    for (f in files) xfun::write_utf8("Content", f)
+    find_external_resources("test.Rmd")$path
+  }
+  expect_contains(
+    find_body_child(c("```{r}", '#| child: ["a.Rmd", "b.Rmd"]', "```"), c("a.Rmd", "b.Rmd")),
+    c("a.Rmd", "b.Rmd")
+  )
+  expect_contains(
+    find_body_child(c("> ```{r}", '> #| child: "a.Rmd"', "> ```"), "a.Rmd"),
+    "a.Rmd"
+  )
+  expect_contains(
+    find_body_child(c("````{r}", '#| child: "a.Rmd"', "```", "````"), "a.Rmd"),
+    "a.Rmd"
+  )
+})

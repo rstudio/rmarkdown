@@ -1,5 +1,7 @@
 # rmarkdown 2.33
 
+- `find_external_resources()` now discovers child documents specified in in-body chunk options, so rendering with `intermediates_dir` no longer fails to find them (thanks, @maelle #2393, @Don-Yin #2647).
+
 - Fixed an error (`Paths can't start with 'inst'`) when rendering `runtime: shiny_prerendered` documents with the rmarkdown package loaded by `pkgload::load_all()` (e.g. during development with `devtools::test()`). HTML dependencies located in a source package's `inst/` directory are now serialized relative to the package's installed layout, so they can be resolved with `system.file()` under both installed and dev-loaded packages.
 
 - `md_document(variant = "markdown_github")` now signals a deprecation warning, as Pandoc deprecated the `markdown_github` format in favor of `gfm` (which is also more accurate). The variant is still passed through to Pandoc for now and rendering succeeds as before, but please switch to `variant = "gfm"`. Note that under the strict `RMARKDOWN_PANDOC_ERROR_ON_WARNING` mode (see below), rendering with `variant = "markdown_github"` now aborts on Pandoc's own deprecation warning for this format; this is expected, as that mode is designed to surface any Pandoc deprecation.
