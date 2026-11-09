@@ -1,6 +1,6 @@
 # rmarkdown 2.33
 
-- `find_external_resources()` now discovers child documents specified in in-body chunk options, so rendering with `intermediates_dir` no longer fails to find them (thanks, @maelle, #2393).
+- `find_external_resources()` now discovers child documents specified in in-body chunk options, so rendering with `intermediates_dir` no longer fails to find them (thanks, @maelle #2393, @Don-Yin #2647).
 
 - Fixed an error (`Paths can't start with 'inst'`) when rendering `runtime: shiny_prerendered` documents with the rmarkdown package loaded by `pkgload::load_all()` (e.g. during development with `devtools::test()`). HTML dependencies located in a source package's `inst/` directory are now serialized relative to the package's installed layout, so they can be resolved with `system.file()` under both installed and dev-loaded packages.
 
