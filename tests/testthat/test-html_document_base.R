@@ -55,3 +55,15 @@ test_that("Absolute path from output_dir from img tag created through pandoc are
   # # is the path correctly made relative to _files ?
   expect_match(xml2::xml_attr(img, "src"), sprintf("^%s", knitr_files_dir(basename(rmd))))
 })
+
+test_that("data URIs in img tags are left untouched", {
+  skip_if_not_installed("withr")
+  html <- withr::local_tempfile(fileext = ".html")
+  # a percent-encoded 1x1 GIF; decoding it as a path gives an embedded nul
+  img <- paste0('<img src="data:image/gif,GIF89a%01%00%01%00%80%00%00%00%00%00',
+                '%FF%FF%FF%21%F9%04%01%00%00%00%00%2C%00%00%00%00%01%00%01%00%00%02%01%44%00%3B">')
+  writeLines(img, html)
+  fmt <- html_document_base(self_contained = FALSE)
+  fmt$post_processor(list(), NULL, html, TRUE, FALSE)
+  expect_identical(readLines(html), img)
+})

@@ -198,6 +198,7 @@ html_document_base <- function(theme = NULL,
       # if we're not self-contained, find absolute references to the output
       # directory and replace them with relative ones
       image_relative <- function(img_src, src) {
+        if (grepl('^data:', src, ignore.case = TRUE)) return(img_src)
         in_file <- utils::URLdecode(src)
         # do not process paths that are already relative
         if (grepl('^[.][.]', in_file)) return(img_src)
