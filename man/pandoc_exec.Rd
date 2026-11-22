@@ -7,7 +7,7 @@
 pandoc_exec()
 }
 \description{
-Returns the path of the pandoc executable used by functions in the the
+Returns the path of the pandoc executable used by functions in the
 \pkg{rmarkdown} package. This is the most recent version of pandoc found in
 either the system path or shipped with RStudio.
 }

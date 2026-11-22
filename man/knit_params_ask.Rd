@@ -22,7 +22,7 @@ knit_params_ask(
 
 \item{shiny_args}{Additional arguments to \code{\link[shiny:runApp]{runApp}}.}
 
-\item{save_caption}{Caption to use use for button that saves/confirms parameters.}
+\item{save_caption}{Caption to use for button that saves/confirms parameters.}
 
 \item{encoding}{Ignored. The encoding is always assumed to be UTF-8.}
 }
