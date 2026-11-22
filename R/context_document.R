@@ -109,7 +109,7 @@ context_document <- function(toc = FALSE,
       ))
 
       # ConTeXt is extremely verbose
-      # Pandoc output these information when run in its verbose mode
+      # Pandoc output this information when run in its verbose mode
       # Replicate Pandoc's behavior
       is_pandoc_verbose <- !is.na(match("--verbose", pandoc_args))
       stdout <- if (is_pandoc_verbose) "" else FALSE
