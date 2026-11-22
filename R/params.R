@@ -245,7 +245,7 @@ params_namedList <- function() {
 #' @param input_lines Content of the R Markdown document. If \code{NULL}, the contents of \code{file} will be read.
 #' @param params A named list of optional parameter overrides used in place of the document defaults.
 #' @param shiny_args Additional arguments to \code{\link[shiny:runApp]{runApp}}.
-#' @param save_caption Caption to use use for button that saves/confirms parameters.
+#' @param save_caption Caption to use for button that saves/confirms parameters.
 #' @inheritParams render
 #' @return named list with overridden parameter names and value.
 #'
