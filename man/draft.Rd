@@ -49,12 +49,15 @@ An R Markdown template consists of a directory that contains a
   \code{quarterly_report/template.yaml} \cr
   \code{quarterly_report/skeleton/skeleton.Rmd} \cr
 
-  The \code{template.yaml} file should include a \code{name} field. If you
-  want to ensure that a new directory is always created for a given template,
-  then you can add the \code{create_dir} field to the \code{template.yaml}
-  file. For example:
+  The \code{template.yaml} file must include \code{name} and
+  \code{description} fields. Set the optional \code{create_dir} field to
+  \code{true} to create a new directory by default.
 
-  \code{create_dir: true} \cr
+  \preformatted{
+  name: Quarterly Report
+  description: A template for quarterly reports
+  create_dir: true
+  }
 
   The \code{skeleton/skeleton.Rmd} file should include the initial contents
   you want for files created from this template. Additional files can be
