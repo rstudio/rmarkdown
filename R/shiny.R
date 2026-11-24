@@ -30,6 +30,13 @@
 #'   \item{The file \file{index.html} (or \file{index.htm}), if it exists in \code{dir}.}
 #' }
 #'
+#' Documents with \code{runtime: shiny} render for each Shiny session. To
+#' pair a UI-only \file{ui.Rmd} with a \file{server.R} in the same directory,
+#' set \code{server: shiny} in the YAML metadata of \file{ui.Rmd}. This
+#' selects the prerendered Shiny runtime, which loads the server function
+#' from \file{server.R}. R Markdown also accepts \code{runtime: shinyrmd} and
+#' \code{runtime: shiny_prerendered} for this setup.
+#'
 #' If you wish to share R code between your documents, place it in a file
 #' named \code{global.R} in \code{dir}; it will be sourced into the global
 #' environment.
